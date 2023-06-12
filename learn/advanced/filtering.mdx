@@ -86,17 +86,6 @@ release_date > 795484800
 
 ### Filter operators
 
-Meilisearch supports the following filter operators:
-
-- [Equality `=`](#equality)
-- [Inequality `!=`](#inequality)
-- [Comparison `> < <= >=`](#comparison)
-- [`EXISTS`](#exists)
-- [`IN`](#in)
-- [`NOT`](#not)
-- [`AND`](#and)
-- [`OR`](#or)
-
 #### Equality
 
 The equality operator (`=`) returns all documents containing a specific value for a given attribute. When operating on strings, `=` is case-insensitive.
@@ -160,6 +149,48 @@ The negated form of the above expression can be written as:
 ```
 release_date NOT EXISTS
 NOT release_date EXISTS
+```
+
+Both forms are equivalent.
+
+#### `IS EMPTY`
+
+The `IS EMPTY` operator selects documents in which the specified attribute exists but contains empty values. The following expression only returns documents with an empty `overview` field:
+
+```
+overview IS EMPTY
+```
+
+`IS EMPTY` matches the following JSON values:
+
+- `""`
+- `[]`
+- `{}`
+
+Meilisearch does not treat `null` values as empty. To match `null` fields, use the [`IS NULL`](#is-null) operator.
+
+Use `NOT` to build the negated form of `IS EMPTY`. This returns documents in which the specified attribute either does not exist or does not contain empty values:
+
+```
+overview IS NOT EMPTY
+NOT overview IS EMPTY
+```
+
+Both forms are equivalent.
+
+#### `IS NULL`
+
+The `IS NULL` operator selects documents in which the specified attribute exists but contains a `null` value. The following expression only returns documents with a `null` `overview` field:
+
+```
+overview IS NULL
+```
+
+Use `NOT` to build the negated form of `IS NULL`. This returns documents in which the specified attribute is either not `null` or does not contain empty values:
+
+```
+overview IS NOT NULL
+NOT overview IS NULL
 ```
 
 Both forms are equivalent.
@@ -336,7 +367,7 @@ If you only want recent `Planet of the Apes` movies that weren't directed by `Ti
 
 `NOT director = "Tim Burton"` will include both documents that do not contain `"Tim Burton"` in its `director` field and documents without a `director` field. To return only documents that have a `director` field, expand the filter expression with the `EXISTS` operator:
 
-```SQL
+```
 release_date > 1577884550 AND (NOT director = "Tim Burton" AND director EXISTS)
 ```
 

@@ -2,7 +2,9 @@
 
 The `/multi-search` route allows you to perform multiple search queries on one or more indexes by bundling them into a single HTTP request. Multi-search is also known as federated search.
 
-## POST route
+## Perform a multi-search
+
+Bundle multiple search queries in a single API request. Use this endpoint to search through multiple indexes at once.
 
 <RouteHighlighter method="POST" route="/multi-search"/>
 
@@ -11,6 +13,10 @@ The `/multi-search` route allows you to perform multiple search queries on one o
 | Name          | Type             | Description                                                                                                                                          |
 | :------------ | :--------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **`queries`** | Array of objects | Contains the list of search queries to perform. The [`indexUid`](#search-parameters) search parameter is required, all other parameters are optional |
+
+<Capsule intent="warning">
+If Meilisearch encounters an error when handling any of the queries in a multi-search request, it immediately stops processing the request and returns an error message. The returned message will only address the first error encountered.
+</Capsule>
 
 #### Search parameters
 
@@ -64,10 +70,6 @@ Each search result object is composed of the following fields:
 ### Example
 
 <CodeSamples id="multi_search_1" />
-
-<Capsule intent="warning">
-If Meilisearch encounters an error when handling any of the queries in a multi-search request, it immediately stops processing the request and returns an error message. The returned message will only address the first error encountered.
-</Capsule>
 
 #### Response: `200 Ok`
 
