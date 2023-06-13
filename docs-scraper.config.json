@@ -26,7 +26,13 @@
   "scrap_start_urls": true,
   "custom_settings": {
       "searchableAttributes": [
-          "*"
+          "content",
+          "hierarchy_lvl0",
+          "hierarchy_lvl1",
+          "hierarchy_lvl2",
+          "hierarchy_lvl3",
+          "hierarchy_lvl4",
+          "hierarchy_lvl5"
       ],
       "synonyms": {
           "relevancy": [
