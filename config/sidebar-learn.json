@@ -109,7 +109,7 @@
         "routes": [
             {
                 "source": "learn/async/asynchronous_operations.mdx",
-                "label": "Task and asynchronous operations",
+                "label": "Tasks and asynchronous operations",
                 "slug": "asynchronous_operations"
             },
             {
