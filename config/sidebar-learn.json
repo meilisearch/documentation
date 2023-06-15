@@ -99,6 +99,22 @@
       ]
   },
   {
+        "title": "Tasks and asynchronous workflow",
+        "slug": "async",
+        "routes": [
+            {
+                "source": "learn/async/asynchronous_operations.mdx",
+                "label": "Tasks and asynchronous operations",
+                "slug": "asynchronous_operations"
+            },
+            {
+                "source": "learn/async/managing_tasks.mdx",
+                "label": "Managing the task database",
+                "slug": "managing_tasks"
+            }
+    ]
+  }, 
+  {
       "title": "Configuration",
       "slug": "configuration",
       "routes": [
@@ -212,17 +228,6 @@
 							"slug": "versioning"
 					}
 			]
-	},
-	{
-			"title": "Advanced topics",
-			"slug": "advanced",
-			"routes": [
-					{
-							"source": "learn/advanced/asynchronous_operations.mdx",
-							"label": "Tasks and asynchronous operations",
-							"slug": "asynchronous_operations"
-					}
-		]
 	},
 	{
 			"title": "Data backup",
