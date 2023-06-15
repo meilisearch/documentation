@@ -116,21 +116,15 @@ The following response shows the facet distribution when searching for `classics
 }
 ```
 
-`facetDistribution` contains an object for every attribute passed to the `facets` parameter. Each object contains the different values for that attribute and the count of matching documents with that value. Meilisearch does not return empty facets: if there are no results for the Arabic language, it will not be present in `facetDistribution`.
+`facetDistribution` contains an object for every attribute passed to the `facets` parameter. Each object contains different values for that attribute and the count of matching documents with that value. Meilisearch does not return empty facets: if there are no results for the Arabic language, it will not be present in `facetDistribution`.
 
-<Capsule intent="note">
 By default, `facets` returns a maximum of 100 facet values for each faceted field. You can change this value using the `maxValuesPerFacet` property of the [`faceting` index settings](/reference/api/settings#faceting).
-</Capsule>
 
 ### Facet stats
 
-When using the `facets` parameter, Meilisearch results include a `facetStats` object. `facetStats` contains the lowest (`min`) and highest (`max`) numerical values across all documents in each facet.
+When using the `facets` parameter, Meilisearch results include a `facetStats` object. `facetStats` contains the lowest (`min`) and highest (`max`) numerical values across all documents in each facet. Meilisearch ignores numeric strings like `"21"` when computing `facetStats`.
 
 `facetStats` is useful when creating UI components such as range sliders. These allow users to refine their search by selecting from a range of facet values.
-
-<Capsule intent="note">
-Meilisearch ignores numeric strings like `"21"` when computing `facetStats`.
-</Capsule>
 
 The following response shows the lowest and highest book ratings when searching for `"classic"`:
 
