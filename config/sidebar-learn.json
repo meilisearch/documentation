@@ -100,7 +100,7 @@
   },
   {
         "title": "Tasks and asynchronous workflow",
-        "slug": "async",
+        "slug": "tasks",
         "routes": [
             {
                 "source": "learn/async/asynchronous_operations.mdx",
