@@ -157,6 +157,37 @@
 			]
 	},
 	{
+			"title": "Fine-tuning results",
+			"slug": "fine_tuning_results",
+			"routes": [
+					{
+							"source": "learn/fine_tuning_results/faceted_search.mdx",
+							"label": "Faceted search",
+							"slug": "faceted_search"
+					},
+					{
+							"source": "learn/fine_tuning_results/filtering.mdx",
+							"label": "Filtering",
+							"slug": "filtering"
+					},
+					{
+							"source": "learn/fine_tuning_results/working_with_dates.mdx",
+							"label": "Filtering and sorting by date",
+							"slug": "working_with_dates"
+					},
+					{
+							"source": "learn/fine_tuning_results/geosearch.mdx",
+							"label": "Geosearch",
+							"slug": "geosearch"
+					},			
+					{
+							"source": "learn/fine_tuning_results/sorting.mdx",
+							"label": "Sorting",
+							"slug": "sorting"
+					}
+		]
+	},		
+	{
 			"title": "Security and permissions",
 			"slug": "security",
 			"routes": [
@@ -197,37 +228,6 @@
 							"slug": "versioning"
 					}
 			]
-	},
-	{
-			"title": "Advanced topics",
-			"slug": "advanced",
-			"routes": [
-					{
-							"source": "learn/advanced/filtering.mdx",
-							"label": "Filtering",
-							"slug": "filtering"
-					},
-					{
-						"source": "learn/advanced/faceted_search.mdx",
-						"label": "Faceted search",
-						"slug": "faceted_search"
-					},
-					{
-							"source": "learn/advanced/geosearch.mdx",
-							"label": "Geosearch",
-							"slug": "geosearch"
-					},
-					{
-							"source": "learn/advanced/sorting.mdx",
-							"label": "Sorting",
-							"slug": "sorting"
-					},
-					{
-							"source": "learn/advanced/working_with_dates.mdx",
-							"label": "Working with dates",
-							"slug": "working_with_dates"
-					}
-		]
 	},
 	{
 			"title": "Data backup",

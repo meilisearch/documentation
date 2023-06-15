@@ -45,7 +45,7 @@ By default, `filterableAttributes` is empty. Filters do not work without first e
 
 Filters work with numeric and string values. Empty fields or fields containing an empty array will be ignored.
 
-Filters do not work with [`NaN`](https://en.wikipedia.org/wiki/NaN) and infinite values such as `inf` and `-inf` as they are [not supported by JSON](https://en.wikipedia.org/wiki/JSON#Data_types). It is possible to filter infinite and `NaN` values if you parse them as strings, except when handling [`_geo` fields](/learn/advanced/geosearch#preparing-documents-for-location-based-search).
+Filters do not work with [`NaN`](https://en.wikipedia.org/wiki/NaN) and infinite values such as `inf` and `-inf` as they are [not supported by JSON](https://en.wikipedia.org/wiki/JSON#Data_types). It is possible to filter infinite and `NaN` values if you parse them as strings, except when handling [`_geo` fields](/learn/fine_tuning_results/geosearch#preparing-documents-for-location-based-search).
 
 We recommend homogeneous typing across fields, especially when dealing with large numbers. This is because Meilisearch does not enforce a specific schema when indexing data, the filtering engine will try to coerce the type of `value`. This can lead to undefined behavior when big floats are coerced into integers and reciprocally.
 
@@ -377,7 +377,7 @@ If your documents contain `_geo` data, you can filter results according to their
 
 <CodeSamples id="geosearch_guide_filter_usage_1" />
 
-[Read more about filtering results with `_geoRadius` and `_geoBoundingBox` in our geosearch guide.](/learn/advanced/geosearch#filtering-results-with-georadius-and-geoboundingbox)
+[Read more about filtering results with `_geoRadius` and `_geoBoundingBox` in our geosearch guide.](/learn/fine_tuning_results/geosearch#filtering-results-with-georadius-and-geoboundingbox)
 
 ### Filtering by nested fields
 
