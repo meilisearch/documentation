@@ -81,9 +81,9 @@ Tasks always contain a field indicating the task's current `status`. This field 
 - **`failed`**: a failure occurred when processing the task. No changes were made to the database
 - **`canceled`**: the task was canceled
 
-`succeeded`, `failed`, and `canceled` tasks are finished tasks. Meilisearch keeps them in the task database, but has finished processing these tasks.
+`succeeded`, `failed`, and `canceled` tasks are finished tasks. Meilisearch keeps them in the task database but has finished processing these tasks.
 
-`enqueued` and `processing` tasks are unfinished tasks. Meilisearch is either processing them, or will do so in the future.
+`enqueued` and `processing` tasks are unfinished tasks. Meilisearch is either processing them or will do so in the future.
 
 #### Global tasks
 
@@ -126,7 +126,7 @@ All other tasks are processed in the order they were enqueued.
 
 When you make a [request for an asynchronous operation](#which-operations-are-asynchronous), Meilisearch processes all tasks following the same steps:
 
-1. Meilisearch creates a task, puts it in the task queue, and returns a [summarized `task` object](/learn/advanced/asynchronous_operations#summarized-task-objects). Task `status` set to `enqueued`
+1. Meilisearch creates a task, puts it in the task queue, and returns a [summarized `task` object](/learn/async/asynchronous_operations#summarized-task-objects). Task `status` set to `enqueued`
 2. When your task reaches the front of the queue, Meilisearch begins working on it. Task `status` set to `processing`
 3. Meilisearch finishes the task. Status set to `succeeded` if task was successfully processed, or `failed` if there was an error
 
@@ -223,98 +223,3 @@ Had the task failed, the response would have included a detailed `error` object:
 If the task had been [canceled](/reference/api/tasks#cancel-tasks) while it was `enqueued` or `processing`, it would have the `canceled` status and a non-`null` value for the `canceledBy` field.
 
 After a task has been [deleted](/reference/api/tasks#delete-tasks), trying to access it returns a [`task_not_found`](/reference/errors/error_codes#task-not-found) error.
-
-## Filtering tasks
-
-Querying the [get tasks endpoint](/reference/api/tasks#get-tasks) returns all tasks that have not been deleted. Use query parameters to filter tasks based on `uid`, `status`, `type`, `indexUid`, `canceledBy`, or date. Separate multiple values with a comma (`,`).
-
-### Filter by `uid`
-
-The following code sample returns tasks with `uid`s `5`, `10`, and `13`:
-
-<CodeSamples id="async_guide_filter_by_ids_1" />
-
-### Filter by `status`
-
-The following code sample returns tasks with the `failed` and `canceled` statuses:
-
-<CodeSamples id="async_guide_filter_by_statuses_1" />
-
-### Filter by `type`
-
-The following code sample returns `dumpCreation` and `indexSwap` tasks:
-
-<CodeSamples id="async_guide_filter_by_types_1" />
-
-### Filter by `indexUid`
-
-The following command returns all tasks belonging to the index `movies`. Note that the `indexUid` is case-sensitive:
-
-<CodeSamples id="async_guide_filter_by_index_uids_1" />
-
-### Filter by `canceledBy`
-
-Use the `canceledBy` filter to view all tasks canceled by one or more `taskCancelation` tasks:
-
-<CodeSamples id="async_guide_canceled_by_1" />
-
-### Filter by date
-
-You can filter tasks by their `enqueuedAt`, `startedAt`, and `finishedAt` fields. To do so, prepend either `before` or `after` to each field name:
-
-- `enqueuedAt` → `beforeEnqueuedAt` or `afterEnqueuedAt`
-- `startedAt` → `beforeStartedAt` or `afterStartedAt`
-- `finishedAt` →`beforeFinishedAt`  or `afterFinishedAt`
-
-This filter accepts dates formatted according to [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt):
-
-- `YYYY-MM-DD`
-- `YYYY-MM-DDTHH:MM:SSZ`
-- `YYYY-MM-DDTHH:MM:SS+01:00`
-
-<CodeSamples id="async_guide_filter_by_date_1" />
-
-The above code sample will return all tasks `enqueued` **after** 11:49:53:00 on 11 Oct 2020.
-
-<Capsule intent="note">
-Date filters are equivalent to `<` or `>` operations and do not include the specified value. It is not possible to perform `≤` or `≥` operations with a task date filter.
-</Capsule>
-
-### Combine filters
-
-You can combine task filters. Use the ampersand character (`&`) to combine filters, equivalent to a logical `AND`.
-
-The following code sample returns all tasks in the `movies` index that have the type `documentAdditionOrUpdate` or `documentDeletion` and have the `status` of `processing`.
-
-<CodeSamples id="async_guide_multiple_filters_1" />
-
-**`OR` operations between different filters are not supported.** For example, you cannot view only tasks which have a type of `documentAddition` **or** a status of `failed`.
-
-## Paginating tasks
-
-By default, Meilisearch returns a list of 20 tasks for each request. You can adjust the number of tasks returned using the `limit` parameter, and control where the list begins using the `from` parameter.
-
-For each call to this endpoint, the response will include the `next` field. When you call the endpoint again, pass this value as the `from` parameter to view the next set of results.
-
-The following command returns two tasks at a time, starting from task `uid` `10`:
-
-<CodeSamples id="get_all_tasks_paginating_1" />
-
-**Response:**
-
-```json
-{
-  "results": [
-    …
-  ],
-  "limit": 2,
-  "from": 10,
-  "next": 8
-}
-```
-
-To view the next set of results, you would repeat the same query, replacing the value of `from` with the value of `next`:
-
-<CodeSamples id="get_all_tasks_paginating_2" />
-
-When the returned value of `next` is `null`, you have reached the final set of results.
