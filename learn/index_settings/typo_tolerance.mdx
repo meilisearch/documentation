@@ -45,15 +45,11 @@ For more about typo calculations, [see below](#understanding-typo-calculations).
 
 ### `disableOnWords`
 
-You can disable typo tolerance for a list of query terms by adding them to `disableOnWords`.
+You can disable typo tolerance for a list of query terms by adding them to `disableOnWords`. `disableOnWords` is case insensitive.
 
 <CodeSamples id="typo_tolerance_guide_3" />
 
 Meilisearch won't apply typo tolerance on the query term `Shrek` or `shrek` at search time to match documents.
-
-<Capsule intent="note">
-`disableOnWords` is case insensitive.
-</Capsule>
 
 ### `disableOnAttributes`
 
