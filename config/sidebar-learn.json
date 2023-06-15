@@ -125,7 +125,7 @@
 					},
 					{
 							"source": "learn/index_settings/displayed_searchable_attributes.mdx",
-							"label": "Displayed searchable attributes",
+							"label": "Displayed and searchable attributes",
 							"slug": "displayed_searchable_attributes"
 					},
 					{
