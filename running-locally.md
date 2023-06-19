@@ -10,7 +10,7 @@
 
 ## Running a local copy of the docs
 
-By default, this will build use the content at the tip of the `main` branch:
+By default, this will use the content at the tip of the `main` branch:
 
 1. Clone the `meilisearch.com` repository: `git clone git@github.com:meilisearch/meilisearch.com.git`
 2. Move into the local copy of the cloned repository: `cd meilisearch.com`
@@ -27,6 +27,6 @@ By default, this will build use the content at the tip of the `main` branch:
 ### Using a different branch
 
 1. Open `/src/lib/docs/constants.ts`
-2. Search for `BRANCH = main`
+2. Search for `BRANCH = 'main'`
 3. Change `main` to the specific remote branch you're targeting
 4. Relaunch local server and point web browser to `localhost:3000/docs`
