@@ -1061,3 +1061,11 @@ delete_documents_by_filter_1: |-
     --data-binary '{
       "filter": "genres = action OR genres = adventure"
     }'
+facet_search_1: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/books/facet-search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{ 
+      "facetQuery": "fiction",
+      "facetName": "genres"
+    }'
