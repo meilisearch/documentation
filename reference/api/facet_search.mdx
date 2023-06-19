@@ -1,0 +1,15 @@
+# Facet search
+
+The `/facet-search` route allows you to search facet values. Facet search supports prefix search and typo tolerance. The returned hits are sorted lexicographically in ascending order
+
+## Perform a facet search
+
+Search facet values.
+
+<RouteHighlighter method="POST" route="/indexes/{index_uid}/facet-search"/>
+
+### Body
+
+| Name         | Type   | Default value | Description                          |
+| :----------- | :----- | :------------ | :----------------------------------- |
+| `facetQuery` | String | `null`        | Search query for a given facet value |
