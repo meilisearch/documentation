@@ -894,3 +894,179 @@ With the above code sample, Meilisearch will first return documents that contain
 <CodeSamples id="search_parameter_guide_matching_strategy_2" />
 
 The above code sample would only return documents containing all three words.
+
+### Ranking score
+
+**Parameter**: `showRankingScore`<br />
+**Expected value**: `true` or `false`<br />
+**Default value**: `false`
+
+Adds a global ranking score field, `_rankingScore`, to each document. The `_rankingScore` is  between `0` and `1`. The higher the `_rankingScore`, the higher the document will rank.
+
+<Capsule intent="note">
+The `sort` and `geosort` ranking rules do not influence the `_rankingScore`.
+</Capsule>
+
+#### Example
+
+The code sample below returns the `_rankingScore` when searching for `dragon` in `movies`:
+
+<CodeSamples id="search_parameter_guide_show_ranking_score_1" />
+
+If two documents have the same `_rankingScore`, **they are returned in an unspecified order.**
+
+```json
+{
+  "hits": [
+    {
+      "id": 31072,
+      "title": "Dragon",
+      "overview": "In a desperate attempt to save her kingdom…",
+      "genres": [
+        "Fantasy"
+      ],
+      "poster": "https://image.tmdb.org/t/p/w500/h4m1hIVO3OKaMqEzNDEBKKOuXiQ.jpg",
+      "release_date": 1165881600,
+      "_rankingScore": 0.9166666666666666
+    },
+    {
+      "id": 70057,
+      "title": "Dragon",
+      "overview": "A sinful martial arts expert wants…",
+      "genres": [
+        "Drama",
+        "Action",
+        "Thriller"
+      ],
+      "poster": "https://image.tmdb.org/t/p/w500/gGHCYaUzQmmKUqxMMD5rKAyJ21a.jpg",
+      "release_date": 1309737600,
+      "_rankingScore": 0.9166666666666666
+    },
+    …
+  ],
+  "query": "dragon",
+  "processingTimeMs": 4,
+  "limit": 20,
+  "offset": 0,
+  "estimatedTotalHits": 222
+}
+```
+
+### Ranking score details
+
+**Parameter**: `showRankingScoreDetails`<br />
+**Expected value**: `true` or `false`<br />
+**Default value**: `false`
+
+Adds a `_rankingScoreDetails` object to each document. This object shows details for each ranking rule.
+
+| Ranking rule | Field description |
+| --- | --- |
+| words | score <br />order: the ranking rule order. From 0-? <br /> matchingWords: number of words in the query that match in the document. The higher the better.<br />maxMatchingWords: max number of words in the query that can match in the document for this iteration of the words ranking rule. Usually, the query length. If one of the query terms is set as a stop word, it won’t be counted here |
+| typo | score <br />order<br />typoCount: number of typos to correct in the query so that the document matches for this iteration of the typo ranking rule. If the query is badman, it will have 0 typo when matching the movie Angel and the Badman but it will have 1 typo when matching the movie Batman returns <br />maxTypoCount: max number of typos possible in a document for this iteration of the typo ranking rule. |
+| proximity | score |
+| attribute | score<br />- attribute_ranking_order: results sorted based on the attribute ranking order<br />- attribute_query_word_order: documents with attributes containing the query words at the beginning of the attribute will be considered more relevant than documents containing the query words at the end of the attributes. |
+| sort | score |
+| exactness | score <br /> matchType: has one of the following values:<br />   - exactMatch: the query exactly matches the entire value of an attribute
+   <br />- matchesStart: the query exactly matches the start of the value of an attribute <br />   - noExactMatch <br />
+- matchingWords: for matchesStart, the number of exact words contained in an attribute. The higher the better. <br />- maxMatchingWords: for matchesStart, the maximum number of exact words contained in an attribute <br />- score : score local to this ranking rule. The higher the better. |
+| field_name:direction | The sort rule isn’t shown. Instead, if you have any custom rules, they will be displayed instead.
+score<br />value: value of the attribute in the matching document <br />If the field used for sorting is not displayed, it will be hidden. You will get:
+<br /><redacted>: <redacted> ”order”: 1, ”value”: <redacted> |
+
+<CodeSamples id="search_parameter_guide_show_ranking_score_details_1" />
+
+```json
+{
+  "hits": [
+    {
+      "id": 31072,
+      "title": "Dragon",
+      "overview": "In a desperate attempt to save her kingdom…",
+      "genres": [
+        "Fantasy"
+      ],
+      "poster": "https://image.tmdb.org/t/p/w500/h4m1hIVO3OKaMqEzNDEBKKOuXiQ.jpg",
+      "release_date": 1165881600,
+      "_rankingScore": 0.9166666666666666,
+      "_rankingScoreDetails": {
+        "words": {
+          "order": 0,
+          "matchingWords": 1,
+          "maxMatchingWords": 1,
+          "score": 1
+        },
+        "typo": {
+          "order": 1,
+          "typoCount": 0,
+          "maxTypoCount": 1,
+          "score": 1
+        },
+        "proximity": {
+          "order": 2,
+          "score": 1
+        },
+        "attribute": {
+          "order": 3,
+          "attributes_ranking_order": 0.8333333333333334,
+          "attributes_query_word_order": 1,
+          "score": 0.8333333333333334
+        },
+        "exactness": {
+          "order": 4,
+          "matchType": "exactMatch",
+          "score": 1
+        }
+      }
+    },
+    {
+      "id": 70057,
+      "title": "Dragon",
+      "overview": "A sinful martial arts expert wants…",
+      "genres": [
+        "Drama",
+        "Action",
+        "Thriller"
+      ],
+      "poster": "https://image.tmdb.org/t/p/w500/gGHCYaUzQmmKUqxMMD5rKAyJ21a.jpg",
+      "release_date": 1309737600,
+      "_rankingScore": 0.9166666666666666,
+      "_rankingScoreDetails": {
+        "words": {
+          "order": 0,
+          "matchingWords": 1,
+          "maxMatchingWords": 1,
+          "score": 1
+        },
+        "typo": {
+          "order": 1,
+          "typoCount": 0,
+          "maxTypoCount": 1,
+          "score": 1
+        },
+        "proximity": {
+          "order": 2,
+          "score": 1
+        },
+        "attribute": {
+          "order": 3,
+          "attributes_ranking_order": 0.8333333333333334,
+          "attributes_query_word_order": 1,
+          "score": 0.8333333333333334
+        },
+        "exactness": {
+          "order": 4,
+          "matchType": "exactMatch",
+          "score": 1
+        }
+      }
+    },
+   …
+  ],
+  "query": "dragon",
+  "processingTimeMs": 1,
+  "limit": 20,
+  "offset": 0,
+  "estimatedTotalHits": 222
+}
+```
