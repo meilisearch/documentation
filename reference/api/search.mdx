@@ -907,11 +907,7 @@ The above code sample would only return documents containing all three words.
 
 Adds a global ranking score field, `_rankingScore`, to each document. The `_rankingScore` is  between `0` and `1`. The higher the `_rankingScore`, the higher the document will rank.
 
-Excluding the `sort` and `geosort` ranking rules, if two documents have the same `_rankingScore`, they are returned in an unspecified order. For `sort` and `geosort`, the document order is determined by the value of the field they are sorted on.
-
-<Capsule intent="note">
-The `sort` and `geosort` ranking rules do not influence the `_rankingScore`.
-</Capsule>
+The `sort` and `geosort` ranking rules do not influence the `_rankingScore`. Instead, the document order is determined by the value of the field they are sorted on. Excluding the `sort` and `geosort` ranking rules, if two documents have the same `_rankingScore`, they are returned in an unspecified order.
 
 #### Example
 
@@ -965,18 +961,17 @@ The code sample below returns the `_rankingScore` when searching for `dragon` in
 Adds a `_rankingScoreDetails` object to each document. This object shows details for each ranking rule.
 
 <Capsule intent="note">
-The `sort` and `geosort` ranking rules do not influence the `_rankingScore`. The `sort` rule isn’t shown in the `_rankingScoreDetails` object. If you have any custom rules, they will be displayed.
+The `sort` and `geosort` ranking rules do not influence the `_rankingScore`. The `sort` rule isn’t shown in the `_rankingScoreDetails` object. If you have any custom rules, they will be displayed instead.
 </Capsule>
 
 | Ranking rule           | Field description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
 | :--------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `words`                | `score`: The score local to this ranking rule. The higher the better<br />`order`: The order in which the ranking rules were applied<br />`matchingWords`: Number of words in the query that match in the document. The higher the better<br />`maxMatchingWords`: Maximum number of words in the query that can match in the document for this iteration of the `words` ranking rule. Usually, the query length, but if one of the query terms is set as a stop word, it won’t be counted here                                                                                                                    |
-| `typo`                 | `score`: The score local to this ranking rule. The higher the better<br />`order`: The order in which the ranking rules were applied<br />`typoCount`: Number of typos to correct in the query so that the document matches for this iteration of the `typo` ranking rule. If the query is `badman`, it will have `0` typos when matching the movie `Angel and the Badman` but it will have `1` typo when matching the movie `Batman returns` <br />`maxTypoCount`: Maximum number of typos possible in a document for this iteration of the `typo` ranking rule.                                                  |
+| `words`                | `score`: The score local to this ranking rule. The higher the better<br />`order`: The order in which the ranking rules were applied<br />`matchingWords`: Number of words in the query that match in the document. The higher the better<br />`maxMatchingWords`: Maximum number of words in the query that can match in the document for this iteration of the `words` ranking rule. Usually, the query length, but if one of the query terms is set as a [stop word](/reference/api/settings#stop-words), it won’t be counted here                                                                                                                    |
+| `typo`                 | `score`: The score local to this ranking rule. The higher the better<br />`order`: The order in which the ranking rules were applied<br />`typoCount`: Number of typos to correct in the query so that the document matches for this iteration of the `typo` ranking rule. If the query is `badman`, it will have `0` typos when matching the movie `Angel and the Badman`, but it will have `1` typo when matching the movie `Batman returns` <br />`maxTypoCount`: Maximum number of typos possible in a document for this iteration of the `typo` ranking rule. This is based on the [typo tolerance settings](/learn/configuration/typo_tolerance) of the index                                                   |
 | `proximity`            | `score`: The score local to this ranking rule. The higher the better<br />`order`: The order in which the ranking rules were applied                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
-| `attribute`            | `score`: The score local to this ranking rule. The higher the better<br />`order`: The order in which the ranking rules were applied<br />`attribute_ranking_order`: Results sorted based on the attribute ranking order<br />`attribute_query_word_order`: Documents with attributes containing the query words at the beginning of the attribute will be considered more relevant than documents containing the query words at the end of the attributes                                                                                                                                                         |
-| `sort`                 | `score`: The score local to this ranking rule. The higher the better<br />`order`: The order in which the ranking rules were applied                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
-| `exactness`            | `score`: The score local to this ranking rule. The higher the better<br />`order`: The order in which the ranking rules were applied<br />`matchType`: It has one of the following values:<br />`exactMatch`: The query exactly matches the entire value of an attribute<br />`matchesStart`: The query exactly matches the start of the value of an attribute <br />`noExactMatch` <br />`matchingWords`: for `matchesStart`, the number of exact words contained in an attribute. The higher the better<br />`maxMatchingWords`: for `matchesStart`, the maximum number of exact words contained in an attribute |
-| `field_name:direction` | The `sort` rule isn’t shown. Instead, if you have any custom rules, they will be displayed here instead. `score`: The score local to this ranking rule. The higher the better<br />`order`: The order in which the ranking rules were applied<br />`value`: value of the attribute in the matching document <br />If the field used for sorting is not displayed, it will be hidden. You will get:<br />`"<hidden-rule-5>"`: {<br />`"order": 5`,<br />`"value": "<hidden>"`<br />}                                                                                                                                |
+| `attribute`            | `score`: The score local to this ranking rule. The higher the better<br />`order`: The order in which the ranking rules were applied<br />`attribute_ranking_order`: Results sorted based on the [attribute ranking order](/learn/core_concepts/relevancy#attribute-ranking-order)<br />`attribute_query_word_order`: Documents with attributes containing the query words at the beginning of the attribute will be considered more relevant than documents containing the query words at the end of the attributes                                                                                                                                                         |
+| `exactness`            | `score`: The score local to this ranking rule. The higher the better<br />`order`: The order in which the ranking rules were applied<br />`matchType`: It has one of the following values:<br />`exactMatch`: The query exactly matches the entire value of an attribute<br />`matchesStart`: The query exactly matches the start of the value of an attribute <br />`noExactMatch`: The query doesn't exactly match a document <br />`matchingWords`: for `matchesStart`, the number of exact words contained in an attribute. The higher the better<br />`maxMatchingWords`: for `matchesStart`, the maximum number of exact words contained in an attribute |
+| `field_name:direction` | The `sort` rule isn’t displayed in the `_rankingScoreDetails` object. If you have any custom rules, they will be displayed here. `score`: The score local to this ranking rule. The higher the better<br />`order`: The order in which the ranking rules were applied<br />`value`: value of the attribute in the matching document <br />If the field used for sorting is not added to [`displayedAttributes`](/learn/configuration/displayed_searchable_attributes#displayed-fields), it will be hidden:<br />`"<hidden-rule-5>"`: {<br />`"order": 5`,<br />`"value": "<hidden>"`<br />}                                                                                                                                |
 
 <CodeSamples id="search_parameter_guide_show_ranking_score_details_1" />
 
@@ -1018,9 +1013,9 @@ The `sort` and `geosort` ranking rules do not influence the `_rankingScore`
           "matchType": "exactMatch",
           "score": 1
         },
-        "<hidden-rule-5>": {
+        "release_date:asc": {
           "order": 5,
-          "value": "<hidden>"
+          "value": 1165881600
         }
       }
     },
@@ -1061,9 +1056,9 @@ The `sort` and `geosort` ranking rules do not influence the `_rankingScore`
           "matchType": "matchesStart",
           "score": 0.6666666666666666
         },
-        "<hidden-rule-5>": {
+        "release_date:asc": {
           "order": 5,
-          "value": "<hidden>"
+          "value": 380419200
         }
       }
     },
