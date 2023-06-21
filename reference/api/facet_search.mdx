@@ -13,33 +13,27 @@ This endpoint will not work without first explicitly adding attributes to the [`
 </Capsule>
 
 <Capsule intent="warning">
-Multi-word facets are not supported in some cases. Suppose your dataset has an `author` field, searching for `Jane` will return `Jane Austen`, but searching for `Austen` will not return `Jane Austen`.
+Multi-word facets are not supported in some cases. Suppose your dataset has an `author` facet, searching for `Jane` will return `Jane Austen`, but searching for `Austen` will not return `Jane Austen`.
 </Capsule>
 
 ### Body
 
-| Name                                                          | Type             | Default value | Description                                         |
-| :------------------------------------------------------------ | :--------------- | :------------ | :-------------------------------------------------- |
-| `facetQuery`                                                  | String           | `null`        | Search query for a given facet value                |
-| `facetName`                                                   | String           | `null`        | Facet in which to search for `facetQuery`           |
-| [`q`](/reference/api/search#q)                                | String           | `""`          | Query string                                        |
-| [`filter`](/reference/api/search#filter)                      | Array of strings | `null`        | Filter queries by an attribute's value              |
-| [`matchingStrategy`](/reference/api/search#matching-strategy) | String           | `last`        | Strategy used to match query terms within documents |
+| Name                                                              | Type             | Default value | Description                                         |
+| :---------------------------------------------------------------- | :--------------- | :------------ | :-------------------------------------------------- |
+| **`facetQuery`**                                                  | String           | `null`        | Search query for a given facet value                |
+| **`facetName`** *                                                 | String           | `null`        | Facet in which to search for `facetQuery`           |
+| [**`q`**](/reference/api/search#q)                                | String           | `""`          | Query string                                        |
+| **[`filter`](/reference/api/search#filter)**                      | Array of strings | `null`        | Filter queries by an attribute's value              |
+| **[`matchingStrategy`](/reference/api/search#matching-strategy)** | String           | `last`        | Strategy used to match query terms within documents |
 
 ### Response
 
-| Name                   | Type             | Description                                                             |
-| :--------------------- | :--------------- | :---------------------------------------------------------------------- |
-| **`facetHits`**        | Array of objects | Array of objects for the facet search. Each object represents one facet |
-| **`facetQuery`**       | String           | The original `facetQuery`                                               |
-| **`processingTimeMs`** | Number           | Processing time of the query                                            |
-
-#### `facetHits` array
-
-| Name        | Type    | Description                           |
-| :---------- | :------ | :------------------------------------ |
-| **`value`** | String  | Facet value matching the `facetQuery` |
-| **`count`** | Integer | Count of the value in the documents   |
+| Name                   | Type    | Description                                             |
+| :--------------------- | :------ | :------------------------------------------------------ |
+| **`facetHits.value`**  | String  | Facet value matching the `facetQuery`                   |
+| **`facetHits.count`**  | Integer | Number of documents with a facet value matching `value` |
+| **`facetQuery`**       | String  | The original `facetQuery`                               |
+| **`processingTimeMs`** | Number  | Processing time of the query                            |
 
 ### Example
 
@@ -52,7 +46,7 @@ Multi-word facets are not supported in some cases. Suppose your dataset has an `
   "facetHits":[
     {
       "value":"fiction",
-      "count":11
+      "count":7
     }
   ],
   "facetQuery":"fiction",

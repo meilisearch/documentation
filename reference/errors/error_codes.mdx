@@ -164,6 +164,10 @@ The [`offset`](/reference/api/documents#query-parameters) parameter is invalid. 
 
 The provided `_geo` field of one or more documents is invalid. Meilisearch expects `_geo` to be an object with two fields, `lat` and `lng`, each containing geographic coordinates expressed as a string or floating point number. Read more about `_geo` and how to troubleshoot it in [our dedicated guide](/learn/fine_tuning_results/geosearch).
 
+## `invalid_facet_search_facet_name`
+
+The attribute used for the `facetName` field is not defined in the [`filterableAttributes` list](/reference/api/settings#filterable-attributes).
+
 ## `invalid_index_limit`
 
 The [`limit`](/reference/api/indexes#query-parameters) parameter is invalid. It should be an integer.
@@ -427,6 +431,10 @@ A document does not contain any value for the required primary key, and is thus 
 ## `missing_index_uid`
 
 The payload is missing the [`uid`](/reference/api/indexes#index-object) field.
+
+## `missing_facet_search_facet_name`
+
+The [`facetName`](/reference/api/facet_search#body) parameter is required.
 
 ## `missing_master_key`
 

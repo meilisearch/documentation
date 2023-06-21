@@ -149,6 +149,52 @@ The following response shows the lowest and highest book ratings when searching 
 
 If none of the matching documents have a numeric value for a facet, that facet is not included in the `facetStats` object. Since `rating` was the only numeric facet in our example, it is the only facet returned in the `facetStats` object.
 
+## Searching facet values
+
+Once you have configured [filterableAttributes](/reference/api/settings#filterable-attributes), you can also search for facet values with the [facet search endpoint](/reference/api/facet_search).
+
+The following code sample searches the `genres` facet for values starting with `c`:
+
+<CodeSamples id="faceted_search_2" />
+
+The response contains a `facetHits`object:
+
+```json
+{
+  "facetHits": [
+    {
+      "value": "Children's Literature",
+      "count": 1
+    },
+    {
+      "value": "Classics",
+      "count": 6
+    },
+    {
+      "value": "Comedy",
+      "count": 2
+    },
+    {
+      "value": "Coming-of-Age",
+      "count": 1
+    }
+  ],
+  "facetQuery": "c",
+  "processingTimeMs": 0
+}
+```
+
+Each object contains the following fields:
+
+- `value`: Facet value matching the `facetQuery`
+- `count`: Number of documents with a facet value matching `value`
+
+<Capsule intent="warning">
+Multi-word facets are not supported in some cases. Suppose your dataset has an `author` facet, searching for `Jane` will return `Jane Austen`, but searching for `Austen` will not return `Jane Austen`.
+</Capsule>
+
+You can further refine results using the `q`, `filter`, and `matchingStrategy` parameters. [Learn more about them in the API reference.](/reference/api/facet_search)
+
 ## Facet types
 
 ### Conjunctive facets

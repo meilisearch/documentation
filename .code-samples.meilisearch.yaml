@@ -1067,5 +1067,14 @@ facet_search_1: |-
     -H 'Content-Type: application/json' \
     --data-binary '{ 
       "facetQuery": "fiction",
-      "facetName": "genres"
+      "facetName": "genres",
+      "filter": "rating>3"
     }'
+faceted_search_2: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/books/facet-search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{ 
+      "facetQuery": "c",
+      "facetName": "genres"
+  }'
