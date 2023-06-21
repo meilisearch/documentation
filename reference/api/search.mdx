@@ -50,6 +50,7 @@ By default, [this endpoint returns a maximum of 1000 results](/learn/advanced/kn
 | **[`showMatchesPosition`](#show-matches-position)**     | Boolean          | `false`       | Return matching terms location                      |
 | **[`sort`](#sort)**                                     | Array of strings | `null`        | Sort search results by an attribute's value         |
 | **[`matchingStrategy`](#matching-strategy)**            | String           | `last`        | Strategy used to match query terms within documents |
+| **[`attributesToSearchOn`](#select-attributes-to-search)**            | Array of strings           | `null`        | Restrict search to a subset of document fields |
 
 [Learn more about how to use each search parameter](#search-parameters).
 
@@ -166,6 +167,7 @@ By default, [this endpoint returns a maximum of 1000 results](/learn/advanced/kn
 | **[`showMatchesPosition`](#show-matches-position)**     | Boolean          | `false`       | Return matching terms location                      |
 | **[`sort`](#sort)**                                     | Array of strings | `null`        | Sort search results by an attribute's value         |
 | **[`matchingStrategy`](#matching-strategy)**            | String           | `last`        | Strategy used to match query terms within documents |
+| **[`attributesToSearchOn`](#select-attributes-to-search)**            | Array of strings           | `null`        | Restrict search to a subset of document fields |
 
 [Learn more about how to use each search parameter](#search-parameters).
 
@@ -258,6 +260,7 @@ This is not necessary when using the `POST` route or one of our [SDKs](/learn/wh
 | **[`showMatchesPosition`](#show-matches-position)**     | Boolean          | `false`       | Return matching terms location                      |
 | **[`sort`](#sort)**                                     | Array of strings | `null`        | Sort search results by an attribute's value         |
 | **[`matchingStrategy`](#matching-strategy)**            | String           | `last`        | Strategy used to match query terms within documents |
+| **[`attributesToSearchOn`](#select-attributes-to-search)**            | Array of strings           | `null`        | Restrict search to a subset of document fields |
 
 ### Query (q)
 
@@ -894,3 +897,21 @@ With the above code sample, Meilisearch will first return documents that contain
 <CodeSamples id="search_parameter_guide_matching_strategy_2" />
 
 The above code sample would only return documents containing all three words.
+
+### Select attributes to search
+
+**Parameter**: `attributesToSearchOn`<br />
+**Expected value**: A list of attributes written as an array<br />
+**Default value**: `null`
+
+Configures a subset of search fields for a given query. `attributesToSearchOn` limits search only to the specified attributes.
+
+<Capsule intent="warning">
+Attributes passed to `attributesToSearchOn` must also be present in the `searchableAttributes` list.
+</Capsule>
+
+#### Example
+
+The following query returns documents whose `genre` includes `adventure` and excludes documents containing `adventure` in their `title` or `synopsis` fields:
+
+<CodeSamples id="search_parameter_guide_attributes_to_search_on_1" />

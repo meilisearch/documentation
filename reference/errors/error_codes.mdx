@@ -126,6 +126,10 @@ The [`offset`](/reference/api/keys#query-parameters) parameter is invalid. It sh
 
 The given [`uid`](/reference/api/keys#uid) is invalid. The `uid` must follow the [uuid v4](https://www.sohamkamani.com/uuid-versions-explained) format.
 
+## `invalid_attributes_to_search_on`
+
+The value passed to [`attributesToSearchOn`](/reference/api/search#select-attributes-to-search) is invalid. `attributesToSearchOn` accepts an array of strings indicating document attributes. Attributes given to `attributesToSearchOn` must be present in the [`searchableAttributes` list](/learn/index_settings/displayed_searchable_attributes#the-searchable-attributes-list).
+
 ## `invalid_content_type`
 
 The [Content-Type header](/reference/api/overview#content-type) is not supported by Meilisearch. Currently, Meilisearch only supports JSON, CSV, and NDJSON.
