@@ -905,7 +905,7 @@ The above code sample would only return documents containing all three words.
 **Expected value**: A list of attributes written as an array<br />
 **Default value**: `null`
 
-Specifies a subset of search fields a given query. `attributesToSearchOn` limits search only to the specified attributes.
+Configures a query to only look for terms in a subset of your index's `searchableAttributes`. The order of attributes passed to `attributesToSearchOn` does not affect relevancy.
 
 <Capsule intent="warning">
 Attributes passed to `attributesToSearchOn` must also be present in the `searchableAttributes` list.
@@ -913,6 +913,8 @@ Attributes passed to `attributesToSearchOn` must also be present in the `searcha
 
 #### Example
 
-The following query returns documents whose `genre` includes `adventure` and excludes documents containing `adventure` in their `title` or `synopsis` fields:
+The following query returns documents whose `overview` includes `"adventure"`:
 
 <CodeSamples id="search_parameter_guide_attributes_to_search_on_1" />
+
+Results would not include documents containing `"adventure"` in other fields such as `title` or `genre`, even if these fields were present in the `searchableAttributes` list.

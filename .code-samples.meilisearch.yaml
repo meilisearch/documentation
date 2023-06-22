@@ -1068,5 +1068,5 @@ curl \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "q": "adventure",
-    "attributesToSearchOn": ["genre"]
+    "attributesToSearchOn": ["synopsis"]
   }'
