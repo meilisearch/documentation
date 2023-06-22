@@ -177,6 +177,16 @@ In general, `sort` will be most useful when you want to allow users to define wh
 
 Custom ranking rules, instead, are always active once configured and will be useful when you want to promote certain types of results. A good use-case for custom ranking rules is ensuring discounted products in a webshop always feature among the top results.
 
+### Ranking score
+
+When using the [`showRankingScore` search parameter](/reference/api/search#show-ranking-score), Meilisearch adds a global ranking score field, `_rankingScore`, to each document. The `_rankingScore` is between `0` and `1`. The higher the ranking score, the more relevant the document. Meilisearch will never return a document with `_rankingScore: 0`.
+
+Ranking rules sort documents either by relevancy (`words`, `typo`, `proximity`, `exactness`, `attribute`) or by the value of a field (`sort`). Since `sort`  doesn't rank documents by relevancy, it does not influence the `_rankingScore`. Excluding `sort`, if two documents have the same `_rankingScore`, they are returned in an unspecified order.
+
+<Capsule intent="note">
+The ranking score of a document is independent of other documents in an index. Adding documents to an index should not change the ranking score of existing documents.
+</Capsule>
+
 ## Attribute ranking order
 
 In a typical dataset, some fields are more relevant to search than others. A `title`, for example, has a value more meaningful to a movie search than its `overview` or its `release_date`.

@@ -906,7 +906,7 @@ The above code sample would only return documents containing all three words.
 
 Adds a global ranking score field, `_rankingScore`, to each document. The `_rankingScore` is  between `0` and `1`. The higher the `_rankingScore`, the higher the document will rank.
 
-The `sort` and `geosort` ranking rules do not influence the `_rankingScore`. Instead, the document order is determined by the value of the field they are sorted on. Excluding the `sort` and `geosort` ranking rules, if two documents have the same `_rankingScore`, they are returned in an unspecified order.
+The `sort` ranking rule does not influence the `_rankingScore`. Instead, the document order is determined by the value of the field they are sorted on. Excluding `sort`, if two documents have the same `_rankingScore`, they are returned in an unspecified order.
 
 <Capsule intent="note">
 The ranking score of a document is independent of other documents in the index. Adding documents to an index does not change the ranking score of existing documents.
