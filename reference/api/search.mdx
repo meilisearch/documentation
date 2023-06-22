@@ -908,6 +908,10 @@ Adds a global ranking score field, `_rankingScore`, to each document. The `_rank
 
 The `sort` and `geosort` ranking rules do not influence the `_rankingScore`. Instead, the document order is determined by the value of the field they are sorted on. Excluding the `sort` and `geosort` ranking rules, if two documents have the same `_rankingScore`, they are returned in an unspecified order.
 
+<Capsule intent="note">
+The ranking score of a document is independent of other documents in the index. Adding documents to an index does not change the ranking score of existing documents.
+</Capsule>
+
 #### Example
 
 The code sample below returns the `_rankingScore` when searching for `dragon` in `movies`:
