@@ -116,7 +116,7 @@ The following response shows the facet distribution when searching for `classics
 }
 ```
 
-`facetDistribution` contains an object for every attribute passed to the `facets` parameter. Each object contains different values for that attribute and the count of matching documents with that value. Meilisearch does not return empty facets: if there are no results for the Arabic language, it will not be present in `facetDistribution`.
+`facetDistribution` contains an object for every attribute passed to the `facets` parameter. Each object contains the returned values for that attribute and the count of matching documents with that value. Meilisearch does not return empty facets: if there are no results for the Arabic language, it will not be present in `facetDistribution`.
 
 By default, `facets` returns a maximum of 100 facet values for each faceted field. You can change this value using the `maxValuesPerFacet` property of the [`faceting` index settings](/reference/api/settings#faceting).
 
