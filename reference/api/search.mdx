@@ -50,6 +50,7 @@ By default, [this endpoint returns a maximum of 1000 results](/learn/advanced/kn
 | **[`showMatchesPosition`](#show-matches-position)**     | Boolean          | `false`       | Return matching terms location                      |
 | **[`sort`](#sort)**                                     | Array of strings | `null`        | Sort search results by an attribute's value         |
 | **[`matchingStrategy`](#matching-strategy)**            | String           | `last`        | Strategy used to match query terms within documents |
+| **[`showRankingScore`](#show-ranking-score)**           | Boolean          | `false`       | Display the global ranking score of a document      |
 
 [Learn more about how to use each search parameter](#search-parameters).
 
@@ -147,27 +148,26 @@ By default, [this endpoint returns a maximum of 1000 results](/learn/advanced/kn
 
 ### Query parameters
 
-| Search Parameter                                             | Type             | Default value | Description                                         |
-| :----------------------------------------------------------- | :--------------- | :------------ | :-------------------------------------------------- |
-| **[`q`](#query-q)**                                          | String           | `""`          | Query string                                        |
-| **[`offset`](#offset)**                                      | Integer          | `0`           | Number of documents to skip                         |
-| **[`limit`](#limit)**                                        | Integer          | `20`          | Maximum number of documents returned                |
-| **[`hitsPerPage`](#number-of-results-per-page)**             | Integer          | `1`           | Maximum number of documents returned for a page     |
-| **[`page`](#page)**                                          | Integer          | `1`           | Request a specific page of results                  |
-| **[`filter`](#filter)**                                      | Array of strings | `null`        | Filter queries by an attribute's value              |
-| **[`facets`](#facets)**                                      | Array of strings | `null`        | Display the count of matches per facet              |
-| **[`attributesToRetrieve`](#attributes-to-retrieve)**        | Array of strings | `["*"]`       | Attributes to display in the returned documents     |
-| **[`attributesToCrop`](#attributes-to-crop)**                | Array of strings | `null`        | Attributes whose values have to be cropped          |
-| **[`cropLength`](#crop-length)**                             | Integer          | `10`          | Maximum length of cropped value in words            |
-| **[`cropMarker`](#crop-marker)**                             | String           | `"…"`         | String marking crop boundaries                      |
-| **[`attributesToHighlight`](#attributes-to-highlight)**      | Array of strings | `null`        | Highlight matching terms contained in an attribute  |
-| **[`highlightPreTag`](#highlight-tags)**                     | String           | `"<em>"`      | String inserted at the start of a highlighted term  |
-| **[`highlightPostTag`](#highlight-tags)**                    | String           | `"</em>"`     | String inserted at the end of a highlighted term    |
-| **[`showMatchesPosition`](#show-matches-position)**          | Boolean          | `false`       | Return matching terms location                      |
-| **[`sort`](#sort)**                                          | Array of strings | `null`        | Sort search results by an attribute's value         |
-| **[`matchingStrategy`](#matching-strategy)**                 | String           | `last`        | Strategy used to match query terms within documents |
-| **[`showRankingScore`](#show-ranking-score)**                | Boolean          | `false`       | Display the global ranking score of a document      |
-| **[`showRankingScoreDetails`](#show-ranking-score-details)** | Boolean          | `false`       | Display the ranking score details of a document     |
+| Search Parameter                                        | Type             | Default value | Description                                         |
+| :------------------------------------------------------ | :--------------- | :------------ | :-------------------------------------------------- |
+| **[`q`](#query-q)**                                     | String           | `""`          | Query string                                        |
+| **[`offset`](#offset)**                                 | Integer          | `0`           | Number of documents to skip                         |
+| **[`limit`](#limit)**                                   | Integer          | `20`          | Maximum number of documents returned                |
+| **[`hitsPerPage`](#number-of-results-per-page)**        | Integer          | `1`           | Maximum number of documents returned for a page     |
+| **[`page`](#page)**                                     | Integer          | `1`           | Request a specific page of results                  |
+| **[`filter`](#filter)**                                 | Array of strings | `null`        | Filter queries by an attribute's value              |
+| **[`facets`](#facets)**                                 | Array of strings | `null`        | Display the count of matches per facet              |
+| **[`attributesToRetrieve`](#attributes-to-retrieve)**   | Array of strings | `["*"]`       | Attributes to display in the returned documents     |
+| **[`attributesToCrop`](#attributes-to-crop)**           | Array of strings | `null`        | Attributes whose values have to be cropped          |
+| **[`cropLength`](#crop-length)**                        | Integer          | `10`          | Maximum length of cropped value in words            |
+| **[`cropMarker`](#crop-marker)**                        | String           | `"…"`         | String marking crop boundaries                      |
+| **[`attributesToHighlight`](#attributes-to-highlight)** | Array of strings | `null`        | Highlight matching terms contained in an attribute  |
+| **[`highlightPreTag`](#highlight-tags)**                | String           | `"<em>"`      | String inserted at the start of a highlighted term  |
+| **[`highlightPostTag`](#highlight-tags)**               | String           | `"</em>"`     | String inserted at the end of a highlighted term    |
+| **[`showMatchesPosition`](#show-matches-position)**     | Boolean          | `false`       | Return matching terms location                      |
+| **[`sort`](#sort)**                                     | Array of strings | `null`        | Sort search results by an attribute's value         |
+| **[`matchingStrategy`](#matching-strategy)**            | String           | `last`        | Strategy used to match query terms within documents |
+| **[`showRankingScore`](#show-ranking-score)**           | Boolean          | `false`       | Display the global ranking score of a document      |
 
 [Learn more about how to use each search parameter](#search-parameters).
 
@@ -241,27 +241,26 @@ This is not necessary when using the `POST` route or one of our [SDKs](/learn/wh
 
 ### Overview
 
-| Search Parameter                                             | Type             | Default value | Description                                         |
-| :----------------------------------------------------------- | :--------------- | :------------ | :-------------------------------------------------- |
-| **[`q`](#query-q)**                                          | String           | `""`          | Query string                                        |
-| **[`offset`](#offset)**                                      | Integer          | `0`           | Number of documents to skip                         |
-| **[`limit`](#limit)**                                        | Integer          | `20`          | Maximum number of documents returned                |
-| **[`hitsPerPage`](#number-of-results-per-page)**             | Integer          | `1`           | Maximum number of documents returned for a page     |
-| **[`page`](#page)**                                          | Integer          | `1`           | Request a specific page of results                  |
-| **[`filter`](#filter)**                                      | Array of strings | `null`        | Filter queries by an attribute's value              |
-| **[`facets`](#facets)**                                      | Array of strings | `null`        | Display the count of matches per facet              |
-| **[`attributesToRetrieve`](#attributes-to-retrieve)**        | Array of strings | `["*"]`       | Attributes to display in the returned documents     |
-| **[`attributesToCrop`](#attributes-to-crop)**                | Array of strings | `null`        | Attributes whose values have to be cropped          |
-| **[`cropLength`](#crop-length)**                             | Integer          | `10`          | Maximum length of cropped value in words            |
-| **[`cropMarker`](#crop-marker)**                             | String           | `"…"`         | String marking crop boundaries                      |
-| **[`attributesToHighlight`](#attributes-to-highlight)**      | Array of strings | `null`        | Highlight matching terms contained in an attribute  |
-| **[`highlightPreTag`](#highlight-tags)**                     | String           | `"<em>"`      | String inserted at the start of a highlighted term  |
-| **[`highlightPostTag`](#highlight-tags)**                    | String           | `"</em>"`     | String inserted at the end of a highlighted term    |
-| **[`showMatchesPosition`](#show-matches-position)**          | Boolean          | `false`       | Return matching terms location                      |
-| **[`sort`](#sort)**                                          | Array of strings | `null`        | Sort search results by an attribute's value         |
-| **[`matchingStrategy`](#matching-strategy)**                 | String           | `last`        | Strategy used to match query terms within documents |
-| **[`showRankingScore`](#show-ranking-score)**                | Boolean          | `false`       | Display the global ranking score of a document      |
-| **[`showRankingScoreDetails`](#show-ranking-score-details)** | Boolean          | `false`       | Display the ranking score details of a document     |
+| Search Parameter                                        | Type             | Default value | Description                                         |
+| :------------------------------------------------------ | :--------------- | :------------ | :-------------------------------------------------- |
+| **[`q`](#query-q)**                                     | String           | `""`          | Query string                                        |
+| **[`offset`](#offset)**                                 | Integer          | `0`           | Number of documents to skip                         |
+| **[`limit`](#limit)**                                   | Integer          | `20`          | Maximum number of documents returned                |
+| **[`hitsPerPage`](#number-of-results-per-page)**        | Integer          | `1`           | Maximum number of documents returned for a page     |
+| **[`page`](#page)**                                     | Integer          | `1`           | Request a specific page of results                  |
+| **[`filter`](#filter)**                                 | Array of strings | `null`        | Filter queries by an attribute's value              |
+| **[`facets`](#facets)**                                 | Array of strings | `null`        | Display the count of matches per facet              |
+| **[`attributesToRetrieve`](#attributes-to-retrieve)**   | Array of strings | `["*"]`       | Attributes to display in the returned documents     |
+| **[`attributesToCrop`](#attributes-to-crop)**           | Array of strings | `null`        | Attributes whose values have to be cropped          |
+| **[`cropLength`](#crop-length)**                        | Integer          | `10`          | Maximum length of cropped value in words            |
+| **[`cropMarker`](#crop-marker)**                        | String           | `"…"`         | String marking crop boundaries                      |
+| **[`attributesToHighlight`](#attributes-to-highlight)** | Array of strings | `null`        | Highlight matching terms contained in an attribute  |
+| **[`highlightPreTag`](#highlight-tags)**                | String           | `"<em>"`      | String inserted at the start of a highlighted term  |
+| **[`highlightPostTag`](#highlight-tags)**               | String           | `"</em>"`     | String inserted at the end of a highlighted term    |
+| **[`showMatchesPosition`](#show-matches-position)**     | Boolean          | `false`       | Return matching terms location                      |
+| **[`sort`](#sort)**                                     | Array of strings | `null`        | Sort search results by an attribute's value         |
+| **[`matchingStrategy`](#matching-strategy)**            | String           | `last`        | Strategy used to match query terms within documents |
+| **[`showRankingScore`](#show-ranking-score)**           | Boolean          | `false`       | Display the global ranking score of a document      |
 
 ### Query (q)
 
@@ -946,117 +945,6 @@ The code sample below returns the `_rankingScore` when searching for `dragon` in
   ],
   "query": "dragon",
   "processingTimeMs": 4,
-  "limit": 20,
-  "offset": 0,
-  "estimatedTotalHits": 222
-}
-```
-
-### Ranking score details
-
-**Parameter**: `showRankingScoreDetails`<br />
-**Expected value**: `true` or `false`<br />
-**Default value**: `false`
-
-Adds a `_rankingScoreDetails` object to each document. This object shows details for each ranking rule.
-
-<Capsule intent="note">
-The `sort` and `geosort` ranking rules do not influence the `_rankingScore`. The `sort` rule isn’t shown in the `_rankingScoreDetails` object. If you have any custom rules, they will be displayed instead.
-</Capsule>
-
-<CodeSamples id="search_parameter_guide_show_ranking_score_details_1" />
-
-```json
-{
-  "hits": [
-    {
-      "id": 31072,
-      "title": "Dragon",
-      "overview": "In a desperate attempt to save her kingdom…",
-      "genres": [
-        "Fantasy"
-      ],
-      "_rankingScoreDetails": {
-        "words": {
-          "order": 0,
-          "matchingWords": 1,
-          "maxMatchingWords": 1,
-          "score": 1
-        },
-        "typo": {
-          "order": 1,
-          "typoCount": 0,
-          "maxTypoCount": 1,
-          "score": 1
-        },
-        "proximity": {
-          "order": 2,
-          "score": 1
-        },
-        "attribute": {
-          "order": 3,
-          "attributes_ranking_order": 0.8333333333333334,
-          "attributes_query_word_order": 1,
-          "score": 0.8333333333333334
-        },
-        "exactness": {
-          "order": 4,
-          "matchType": "exactMatch",
-          "score": 1
-        },
-        "release_date:asc": {
-          "order": 5,
-          "value": 1165881600
-        }
-      }
-    },
-    …
-    {
-      "id": 16407,
-      "title": "Dragon Lord",
-      "overview": "Dragon and his madcap pal Cowboy spend their days getting into mischief…",
-      "genres": [
-        "Action",
-        "Comedy"
-      ],
-      "_rankingScoreDetails": {
-        "words": {
-          "order": 0,
-          "matchingWords": 1,
-          "maxMatchingWords": 1,
-          "score": 1
-        },
-        "typo": {
-          "order": 1,
-          "typoCount": 0,
-          "maxTypoCount": 1,
-          "score": 1
-        },
-        "proximity": {
-          "order": 2,
-          "score": 1
-        },
-        "attribute": {
-          "order": 3,
-          "attributes_ranking_order": 0.8333333333333334,
-          "attributes_query_word_order": 1,
-          "score": 0.8333333333333334
-        },
-        "exactness": {
-          "order": 4,
-          "matchType": "matchesStart",
-          "score": 0.6666666666666666
-        },
-        "release_date:asc": {
-          "order": 5,
-          "value": 380419200
-        }
-      }
-    },
-    …
-  ],
-  "query": "dragon",
-  "processingTimeMs": 3,
   "limit": 20,
   "offset": 0,
   "estimatedTotalHits": 222
