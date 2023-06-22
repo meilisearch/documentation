@@ -868,8 +868,14 @@ update_faceting_settings_1: |-
     -X PATCH 'http://localhost:7700/indexes/books/settings/faceting' \
     -H 'Content-Type: application/json' \
     --data-binary '{
-      "maxValuesPerFacet": 2
-    }'
+      "maxValuesPerFacet": 2,
+      {
+        "sortFacetValuesBy": {
+          "*": "alpha",
+          "genres": count
+        }
+      }
+  }'
 reset_faceting_settings_1: |-
   curl \
     -X DELETE 'http://localhost:7700/indexes/books/settings/faceting'
@@ -885,7 +891,12 @@ getting_started_faceting: |-
     -X PATCH 'http://localhost:7700/indexes/movies/settings/faceting' \
     -H 'Content-Type: application/json' \
     --data-binary '{
-      "maxValuesPerFacet": 2
+      "maxValuesPerFacet": 2,
+      {
+        "sortFacetValuesBy": {
+          "*": "count"
+        }
+      }
     }'
 getting_started_pagination: |-
   curl \
@@ -1071,6 +1082,17 @@ facet_search_1: |-
       "filter": "rating>3"
     }'
 faceted_search_2: |-
+  curl \
+    -X PATCH 'http://localhost:7700/indexes/books/settings/faceting' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      {
+        "sortFacetValuesBy": {
+          "genres": count
+        }
+      }
+  }'
+faceted_search_3: |-
   curl \
     -X POST 'http://localhost:7700/indexes/books/facet-search' \
     -H 'Content-Type: application/json' \
