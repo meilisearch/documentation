@@ -869,13 +869,11 @@ update_faceting_settings_1: |-
     -H 'Content-Type: application/json' \
     --data-binary '{
       "maxValuesPerFacet": 2,
-      {
-        "sortFacetValuesBy": {
-          "*": "alpha",
-          "genres": count
-        }
+      "sortFacetValuesBy": {
+        "*": "alpha",
+        "genres": "count"
       }
-  }'
+    }'
 reset_faceting_settings_1: |-
   curl \
     -X DELETE 'http://localhost:7700/indexes/books/settings/faceting'
@@ -1086,11 +1084,9 @@ faceted_search_2: |-
     -X PATCH 'http://localhost:7700/indexes/books/settings/faceting' \
     -H 'Content-Type: application/json' \
     --data-binary '{
-      {
-        "sortFacetValuesBy": {
-          "genres": count
-        }
-      }
+      "sortFacetValuesBy": {
+        "genres": "count"
+    }
   }'
 faceted_search_3: |-
   curl \

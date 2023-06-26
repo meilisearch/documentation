@@ -454,10 +454,8 @@ Get the faceting settings of an index.
 ```json
 {
   "maxValuesPerFacet": 100,
-  {
-    "sortFacetValuesBy": {
-      "*": "alpha"
-    }
+  "sortFacetValuesBy": {
+    "*": "alpha"
   }
 }
 ```
@@ -478,9 +476,8 @@ Partially update the faceting settings for an index. Any parameters not provided
 
 ```
 {
-  "maxValuesPerFacet": <Integer>},
-  {
-    "sortFacetValuesBy":{
+  "maxValuesPerFacet": <Integer>,
+  "sortFacetValuesBy":{
       <String>: "count",
       <String>: "alpha"
   }
@@ -520,7 +517,7 @@ You can use the returned `taskUid` to get more details on [the status of the tas
 
 ### Reset faceting settings
 
-Reset an index's faceting settings to their [default value](#faceting-object). Setting `sortFacetValuesBy` to `null`, will restore it to the default value (`"*": "alpha"`).
+Reset an index's faceting settings to their [default value](#faceting-object). Setting `sortFacetValuesBy` to `null`(` --data-binary '{ "sortFacetValuesBy": null }'`), will restore it to the default value (`"*": "alpha"`).
 
 #### Path parameters
 
