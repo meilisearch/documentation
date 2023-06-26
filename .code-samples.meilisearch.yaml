@@ -890,11 +890,9 @@ getting_started_faceting: |-
     -H 'Content-Type: application/json' \
     --data-binary '{
       "maxValuesPerFacet": 2,
-      {
-        "sortFacetValuesBy": {
-          "*": "count"
-        }
-      }
+       "sortFacetValuesBy": {
+         "*": "count"
+       }
     }'
 getting_started_pagination: |-
   curl \
