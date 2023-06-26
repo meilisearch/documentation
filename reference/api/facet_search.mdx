@@ -18,13 +18,13 @@ Multi-word facets are not supported in some cases. Suppose your dataset has an `
 
 ### Body
 
-| Name                                                              | Type             | Default value | Description                                         |
-| :---------------------------------------------------------------- | :--------------- | :------------ | :-------------------------------------------------- |
-| **`facetQuery`**                                                  | String           | `null`        | Search query for a given facet value                |
-| **`facetName`** *                                                 | String           | `null`        | Facet in which to search for `facetQuery`           |
-| [**`q`**](/reference/api/search#q)                                | String           | `""`          | Query string                                        |
-| **[`filter`](/reference/api/search#filter)**                      | Array of strings | `null`        | Filter queries by an attribute's value              |
-| **[`matchingStrategy`](/reference/api/search#matching-strategy)** | String           | `last`        | Strategy used to match query terms within documents |
+| Name                                                              | Type                                                               | Default value | Description                                         |
+| :---------------------------------------------------------------- | :----------------------------------------------------------------- | :------------ | :-------------------------------------------------- |
+| **`facetQuery`**                                                  | String                                                             | `null`        | Search query for a given facet value                |
+| **`facetName`** *                                                 | String                                                             | `null`        | Facet in which to search for `facetQuery`           |
+| [**`q`**](/reference/api/search#q)                                | String                                                             | `""`          | Query string                                        |
+| **[`filter`](/reference/api/search#filter)**                      | [String*](/learn/fine_tuning_results/filtering#filter-expressions) | `null`        | Filter queries by an attribute's value              |
+| **[`matchingStrategy`](/reference/api/search#matching-strategy)** | String                                                             | `last`        | Strategy used to match query terms within documents |
 
 ### Response
 
