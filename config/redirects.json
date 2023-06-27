@@ -64,5 +64,69 @@
     "source": "/docs/learn/what_is_meilisearch/philosophy",
     "destination": "/docs/learn/what_is_meilisearch/overview#philosophy",
     "permanent": true
-  }
+  },
+  {
+    "source": "/docs/learn/getting_started/quick_start#front-end-integration",
+    "destination": "/docs/learn/front_end/front_end_integration"
+  },
+  {
+    "source": "/docs/reference/api/search#search-in-an-index-with-post-route",
+    "destination": "/docs/reference/api/search#search-in-an-index-with-post"
+  },
+  {
+    "source": "/docs/reference/api/search#search-in-an-index-with-get-route",
+    "destination": "/docs/reference/api/search#search-in-an-index-with-get"
+  },
+  {
+    "source": "/docs/reference/api/documents#get-documents",
+    "destination": "/docs/reference/api/documents#get-documents-with-get"
+  },
+  {
+    "source": "/docs/reference/api/multi_search#post-route",
+    "destination": "/docs/reference/api/multi_search#perform-a-multi-search"
+  },
+  {
+    "source": "/docs/learn/what_is_meilisearch/overview#sdks-and-integrations",
+    "destination": "/docs/learn/what_is_meilisearch/sdks"
+  },
+  {
+    "source": "/docs/learn/what_is_meilisearch/overview#alternatives",
+    "destination": "/docs/learn/what_is_meilisearch/comparison_to_alternatives"
+  },
+  {
+    "source": "/docs/learn/advanced/asynchronous_operations#filtering-tasks",
+    "destination": "/docs/learn/async/managing_tasks#filtering-tasks"
+  },
+  {
+    "source": "/docs/learn/advanced/asynchronous_operations#paginating-tasks",
+    "destination": "/docs/learn/async/managing_tasks#paginating-tasks"
+  },
+  {
+    "source": "/docs/learn/advanced/asynchronous_operations#filter-by-uid",
+    "destination": "/docs/learn/async/managing_tasks#filter-by-uid"
+  },
+  {
+    "source": "/docs/learn/advanced/asynchronous_operations#filter-by-status",
+    "destination": "/docs/learn/async/managing_tasks#filter-by-status"
+  },
+  {
+    "source": "/docs/learn/advanced/asynchronous_operations#filter-by-type",
+    "destination": "/docs/learn/async/managing_tasks#filter-by-type"
+  },
+  {
+    "source": "/docs/learn/advanced/asynchronous_operations#filter-by-indexuid",
+    "destination": "/docs/learn/async/managing_tasks#filter-by-indexuid"
+  },
+  {
+    "source": "/docs/learn/advanced/asynchronous_operations#filter-by-canceledby",
+    "destination": "/docs/learn/async/managing_tasks#filter-by-canceledby"
+  },
+  {
+    "source": "/docs/learn/advanced/asynchronous_operations#filter-by-date",
+    "destination": "/docs/learn/async/managing_tasks#filter-by-date"
+  },
+  {
+    "source": "/docs/learn/advanced/asynchronous_operations#combine-filters",
+    "destination": "/docs/learn/async/managing_tasks#combine-filters"
+  }  
 ]
