@@ -1,0 +1,75 @@
+# Experimental
+
+The `/experimental` route configures Meilisearch's [experimental features](/learn/experimental/overview). All operations in this route are synchronous.
+
+<Capsule intent="danger">
+The experimental API route is not compatible with all experimental features. Consult the [experimental feature overview](/learn/experimental/overview) for a compatibility list.
+</Capsule>
+
+## Experimental features object
+
+```json
+{
+  "scoreDetails": false,
+  "vectorSearch": false
+}
+```
+
+| Name                    | Type    | Description                                                                                                                                                                            |
+| :---------------------- | :------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`scoreDetails`**      | Boolean | `true` if feature is currently active, `false` otherwise
+| **`vectorSearch`**      | Boolean | `true` if feature is currently active, `false` otherwise
+
+
+## Get all experimental features
+
+<RouteHighlighter method="GET" route="/experimental"/>
+
+Get a list of all experimental features that can be configured during runtime and their current status.
+
+### Example
+
+```sh
+curl \
+  -X GET 'http://localhost:7700/experimental-features/' \
+  -H 'Content-Type: application/json'  \
+```
+
+#### Response: `200 Ok`
+
+```json
+{
+  "scoreDetails": false,
+  "vectorSearch": false
+}
+```
+
+## Configure experimental features
+
+<RouteHighlighter method="PATCH" route="/experimental"/>
+
+Activate or deactivate experimental featues.
+
+```sh
+curl \
+  -X PATCH 'http://localhost:7700/experimental-features/' \
+  -H 'Content-Type: application/json'  \
+  --data-binary '{
+    "scoreDetails": true
+  }'
+```
+
+#### Body
+
+```
+{<featureName>: <Boolean>}
+```
+
+#### Response: `200 Ok`
+
+```json
+{
+  "scoreDetails": true,
+  "vectorSearch": false
+}
+```
