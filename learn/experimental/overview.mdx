@@ -12,18 +12,17 @@ There are two main ways to activate and deactivate experimental features. Some m
 
 ## Configuring experimental features at launch
 
-To [configure experimental features at launch](/learn/configuration/instance_options), use their dedicated options. Activating or deactivating experimental features this way requires you to interrupt and relaunch Meilisearch.
+To [configure experimental features at launch](/learn/configuration/instance_options), use their when running the Meilisearch binary. Configuration options for experimental features are always prefixed with `--experimental` in the case of command-line flags and `EXPERIMENTAL` for environment variables. Activating or deactivating experimental features this way requires you to interrupt and relaunch Meilisearch.
 
-### The `/experimental-features` API route
+### Configuring experimental features during runtime
 
-To configure experimental features during runtime, [use the `/experimental-features` API route](/reference/api/experimental). Activating or deactivating experimental features this way does not require you to relaunch Meilisearch. Due to technical constraints, this option is not available for all experimental features.
+To configure experimental features during runtime, [use the `/experimental-features` API route](/reference/api/experimental). Activating or deactivating experimental features this way does not require you to relaunch Meilisearch.
 
 ## Current experimental features
 
-| Name                                                                             | Description                                                | Configured with                                  |
-|----------------------------------------------------------------------------------|------------------------------------------------------------|--------------------------------------------------|
-| [Metrics API](/learn/experimental/metrics)                                       | Exposes Prometheus-compatible analytics data               | At launch with CLI flag and environment variable |
-| [Ranking score details](/learn/experimental/ranking_rule_score_details)          | Exposes advanced result ranking score data                 | During runtime with API route                    |
-| [Reduce indexing memory usage](/learn/experimental/reduce-indexing-memory-usage) | Optimizes indexing performance                             | At launch with CLI flag and environment          |
-| [Vector search](/learn/experimental/vector_search)                               | Allows Meilisearch to function as a vector embedding store | During runtime with API route                    |
-
+| Name                                                                             | Description                                                | How to configure                                  |
+|----------------------------------------------------------------------------------|------------------------------------------------------------|---------------------------------------------------|
+| [Metrics API](/learn/experimental/metrics)                                       | Exposes Prometheus-compatible analytics data               | At launch with a CLI flag or environment variable |
+| [Ranking score details](/learn/experimental/ranking_rule_score_details)          | Exposes advanced result ranking score data                 | During runtime with the API route                 |
+| [Reduce indexing memory usage](/learn/experimental/reduce-indexing-memory-usage) | Optimizes indexing performance                             | At launch with a CLI flag or environment variable |
+| [Vector search](/learn/experimental/vector_search)                               | Allows Meilisearch to function as a vector embedding store | During runtime with the API route                 |

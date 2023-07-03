@@ -28,11 +28,7 @@ Get a list of all experimental features that can be configured during runtime an
 
 ### Example
 
-```sh
-curl \
-  -X GET 'http://localhost:7700/experimental-features/' \
-  -H 'Content-Type: application/json'  \
-```
+<CodeSamples id="get_experimental_features_1" />
 
 #### Response: `200 Ok`
 
@@ -47,16 +43,11 @@ curl \
 
 <RouteHighlighter method="PATCH" route="/experimental-features"/>
 
-Activate or deactivate experimental featues.
+Activate or deactivate experimental features.
 
-```sh
-curl \
-  -X PATCH 'http://localhost:7700/experimental-features/' \
-  -H 'Content-Type: application/json'  \
-  --data-binary '{
-    "scoreDetails": true
-  }'
-```
+<CodeSamples id="update_experimental_features_1" />
+
+Setting a field to `null` leaves its value unchanged.
 
 #### Body
 

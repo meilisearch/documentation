@@ -1061,3 +1061,14 @@ delete_documents_by_filter_1: |-
     --data-binary '{
       "filter": "genres = action OR genres = adventure"
     }'
+get_experimental_features_1: |-
+  curl \
+    -X GET 'http://localhost:7700/experimental-features/' \
+    -H 'Content-Type: application/json'  \
+update_experimental_features_1: |-
+  curl \
+    -X PATCH 'http://localhost:7700/experimental-features/' \
+    -H 'Content-Type: application/json'  \
+    --data-binary '{
+      "scoreDetails": true
+    }'
