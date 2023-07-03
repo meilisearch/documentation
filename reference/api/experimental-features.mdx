@@ -1,6 +1,6 @@
 # Experimental
 
-The `/experimental` route configures Meilisearch's [experimental features](/learn/experimental/overview). All operations in this route are synchronous.
+The `/experimental-features` route configures Meilisearch's [experimental features](/learn/experimental/overview). All operations in this route are synchronous.
 
 <Capsule intent="danger">
 The experimental API route is not compatible with all experimental features. Consult the [experimental feature overview](/learn/experimental/overview) for a compatibility list.
@@ -15,15 +15,14 @@ The experimental API route is not compatible with all experimental features. Con
 }
 ```
 
-| Name                    | Type    | Description                                                                                                                                                                            |
-| :---------------------- | :------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **`scoreDetails`**      | Boolean | `true` if feature is currently active, `false` otherwise
-| **`vectorSearch`**      | Boolean | `true` if feature is currently active, `false` otherwise
-
+| Name               | Type    | Description                                              |
+|-:------------------|-:-------|-:--------------------------------------------------------|
+| **`scoreDetails`** | Boolean | `true` if feature is currently active, `false` otherwise |
+| **`vectorSearch`** | Boolean | `true` if feature is currently active, `false` otherwise |
 
 ## Get all experimental features
 
-<RouteHighlighter method="GET" route="/experimental"/>
+<RouteHighlighter method="GET" route="/experimental-features"/>
 
 Get a list of all experimental features that can be configured during runtime and their current status.
 
@@ -46,7 +45,7 @@ curl \
 
 ## Configure experimental features
 
-<RouteHighlighter method="PATCH" route="/experimental"/>
+<RouteHighlighter method="PATCH" route="/experimental-features"/>
 
 Activate or deactivate experimental featues.
 
