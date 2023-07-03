@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "7c8a1884-d78a-418b-84a4-b9edac7f06c5",
+		"_postman_id": "9af30364-5ea5-4166-9d06-1770e7f96f77",
 		"name": "Meilisearch v1.3",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -121,7 +121,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/indexes/{{indexUID}}/documents?csvDelimiter=;",
+							"raw": "{{url}}/indexes/{{indexUID}}/documents",
 							"host": [
 								"{{url}}"
 							],
@@ -161,7 +161,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/indexes/{{indexUID}}/documents?csvDelimiter=;",
+							"raw": "{{url}}/indexes/{{indexUID}}/documents",
 							"host": [
 								"{{url}}"
 							],
@@ -2134,6 +2134,40 @@
 							""
 						]
 					}
+				}
+			]
+		},
+		{
+			"name": "Experimental features",
+			"item": [
+				{
+					"name": "Get all runtime experimental features",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Update runtime experimental features",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"scoreDetails\": true\n}"
+						},
+						"url": {
+							"raw": "{{url}}/experimental-features",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"experimental-features"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}
