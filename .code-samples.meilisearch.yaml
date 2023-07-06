@@ -1063,10 +1063,10 @@ delete_documents_by_filter_1: |-
     }'
 
 search_parameter_guide_attributes_to_search_on_1: |-
-curl \
-  -X POST 'http://localhost:7700/indexes/movies/search' \
-  -H 'Content-Type: application/json' \
-  --data-binary '{
-    "q": "adventure",
-    "attributesToSearchOn": ["synopsis"]
-  }'
+  curl \
+    -X POST 'http://localhost:7700/indexes/movies/search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "q": "adventure",
+      "attributesToSearchOn": ["overview"]
+    }'
