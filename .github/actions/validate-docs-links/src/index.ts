@@ -10,15 +10,14 @@ import matter from 'gray-matter'
 import * as github from '@actions/github'
 import { setFailed } from '@actions/core'
 import type { Node, Data } from 'unist'
-
 /**
- * This script validates internal links in /docs and /errors including internal,
+ * This script validates internal links in /docs including internal,
  * hash, source and related links. It does not validate external links.
- * 1. Collects all .mdx files in /docs and /errors.
+ * 1. Collects all .mdx files.
  * 2. For each file, it extracts the content, metadata, and heading slugs.
  * 3. It creates a document map to efficiently lookup documents by path.
  * 4. It then traverses each document modified in the PR and...
- *    - Checks if each internal link (links starting with "/docs/") points
+ *    - Checks if each internal link points
  *      to an existing document
  *    - Validates hash links (links starting with "#") against the list of
  *      headings in the current document.
@@ -32,10 +31,7 @@ interface Document {
   body: string
   path: string
   headings: string[]
-  source?: string
-  related?: {
-    links: string[]
-  }
+  sidebarDepth?: number
 }
 
 interface Errors {
@@ -52,8 +48,20 @@ interface Comment {
   id: number
 }
 
-const DOCS_PATH = '/docs/'
-const ERRORS_PATH = '/errors/'
+type FooterConfigSchema = Array< {
+  "source": string,
+  "label": string,
+  "slug": string
+} |
+{
+  "to": string,
+  "label": string,
+  "slug": string
+}>
+
+type ConfigSchema =  Array<{title: string, slug: string, routes: Array<{source: string, label: string, slug: string}>}>
+
+const RELATIVE_PATH = '/'
 const EXCLUDED_HASHES = ['top']
 const COMMENT_TAG = '<!-- LINK_CHECKER_COMMENT -->'
 
@@ -65,26 +73,19 @@ const sha = pullRequest.head.sha
 
 const slugger = new GithubSlugger()
 
-// Collect the paths of all .mdx files in the passed directories
-async function getAllMdxFilePaths(
-  directoriesToScan: string[],
-  fileList: string[] = []
-): Promise<string[]> {
-  for (const dir of directoriesToScan) {
-    const dirPath = path.join('.', dir)
-    const files = await fs.readdir(dirPath)
-    for (const file of files) {
-      const filePath = path.join(dirPath, file)
-      const stats = await fs.stat(filePath)
-      if (stats.isDirectory()) {
-        fileList = await getAllMdxFilePaths([filePath], fileList)
-      } else if (path.extname(file) === '.mdx') {
-        fileList.push(filePath)
-      }
-    }
+// Collect the paths of all .mdx files present in the config files
+async function getAllMdxFilePaths(): Promise<string[]> {
+  const sidebarLearn = await fs.readFile('./config/sidebar-learn.json', 'utf8')
+  const sidebarReference = await fs.readFile('./config/sidebar-reference.json', 'utf8')
+  const footer: FooterConfigSchema = JSON.parse(await fs.readFile('./config/sidebar-footer.json', 'utf8'))
+
+  const config: ConfigSchema = {...JSON.parse(sidebarLearn), ...JSON.parse(sidebarReference), ...footer.filter(item => 'source' in item)} 
+  let paths: string[] = []
+  for (const group of config) {
+    paths = paths.concat(group.routes.map(route => path.join('.', route.source)))
   }
 
-  return fileList
+  return paths
 }
 
 // Returns the slugs of all headings in a tree
@@ -121,36 +122,6 @@ const markdownProcessor = unified()
     }
   })
 
-// Github APIs returns `errors/*` and `docs/*` paths
-function normalizePath(filePath: string): string {
-  if (filePath.startsWith(ERRORS_PATH.substring(1))) {
-    return (
-      filePath
-        // Remap repository file path to the next-site url path
-        // e.g. `errors/example.mdx` -> `docs/messages/example`
-        .replace(ERRORS_PATH.substring(1), DOCS_PATH.substring(1) + 'messages/')
-        .replace('.mdx', '')
-    )
-  }
-
-  return (
-    // Remap repository file path to the next-site url path without `/docs/`
-    // e.g. `docs/01-api/getting-started/index.mdx` -> `api/getting-started`
-    filePath
-      // We remove `docs/` to normalize paths between regular links
-      // e.g. `/docs/api/example` and related/source links e.g `api/example`
-      // TODO:
-      //  - Fix `next-site` to handle full paths for related/source links
-      //  - Update doc files to use full paths for related/source links
-      //  - Remove this workaround
-      .replace(DOCS_PATH.substring(1), '')
-      // Remove prefix numbers used for ordering
-      .replace(/(\d\d-)/g, '')
-      .replace('.mdx', '')
-      .replace('/index', '')
-  )
-}
-
 // use Map for faster lookup
 let documentMap: Map<string, Document>
 
@@ -167,10 +138,9 @@ async function prepareDocumentMapEntry(
     const { content, data } = matter(mdxContent)
     const tree = markdownProcessor.parse(content)
     const headings = getHeadingsFromMarkdownTree(tree)
-    const normalizedUrlPath = normalizePath(filePath)
 
     return [
-      normalizedUrlPath,
+      filePath,
       { body: content, path: filePath, headings, ...data },
     ]
   } catch (error) {
@@ -182,34 +152,27 @@ async function prepareDocumentMapEntry(
 // Checks if the links point to existing documents
 function validateInternalLink(errors: Errors, href: string): void {
   // /docs/api/example#heading -> ["api/example", "heading""]
-  const [link, hash] = href.replace(DOCS_PATH, '').split('#')
+  const [link, hash] = href.split('#')
 
-  let foundPage
-
-  if (link.startsWith('messages/')) {
-    // check if error page exists, key is the full url path
-    // e.g. `docs/messages/example`
-    foundPage = documentMap.get(DOCS_PATH.substring(1) + link)
-  } else {
-    // check if doc page exists, key is the url path without `/docs/`
-    // e.g. `api/example`
-    foundPage = documentMap.get(link)
-  }
+  // check if doc page exists
+  const foundPage = documentMap.get(link)
+  
 
   if (!foundPage) {
     errors.link.push(href)
   } else if (hash && !EXCLUDED_HASHES.includes(hash)) {
-    // Account for documents that pull their content from another document
-    const foundPageSource = foundPage.source
-      ? documentMap.get(foundPage.source)
-      : undefined
+    // TODO: Check if this block is still needed
+    // // Account for documents that pull their content from another document
+    // const foundPageSource = foundPage.source
+    //   ? documentMap.get(foundPage.source)
+    //   : undefined
 
-    // Check if the hash link points to an existing section within the document
-    const hashFound = (foundPageSource || foundPage).headings.includes(hash)
+    // // Check if the hash link points to an existing section within the document
+    // const hashFound = (foundPageSource || foundPage).headings.includes(hash)
 
-    if (!hashFound) {
+    // if (!hashFound) {
       errors.hash.push(href)
-    }
+    // }
   }
 }
 
@@ -224,19 +187,8 @@ function validateHashLink(errors: Errors, href: string, doc: Document): void {
 
 // Checks if the source link points to an existing document
 function validateSourceLinks(doc: Document, errors: Errors): void {
-  if (doc.source && !documentMap.get(doc.source)) {
-    errors.source.push(doc.source)
-  }
-}
-
-// Checks if the related links point to existing documents
-function validateRelatedLinks(doc: Document, errors: Errors): void {
-  if (doc.related && doc.related.links) {
-    doc.related.links.forEach((link) => {
-      if (!documentMap.get(link)) {
-        errors.related.push(link)
-      }
-    })
+  if (doc.path && !documentMap.get(doc.path)) {
+    errors.source.push(doc.path)
   }
 }
 
@@ -257,7 +209,7 @@ function traverseTreeAndValidateLinks(tree: any, doc: Document): Errors {
 
         if (!href) return
 
-        if (href.startsWith(DOCS_PATH)) {
+        if (href.startsWith(RELATIVE_PATH)) {
           validateInternalLink(errors, href)
         } else if (href.startsWith('#')) {
           validateHashLink(errors, href, doc)
@@ -266,7 +218,6 @@ function traverseTreeAndValidateLinks(tree: any, doc: Document): Errors {
     })
 
     validateSourceLinks(doc, errors)
-    validateRelatedLinks(doc, errors)
   } catch (error) {
     setFailed('Error traversing tree: ' + error)
   }
@@ -392,14 +343,14 @@ async function updateCheckStatus(
 // Main function that triggers link validation across .mdx files
 async function validateAllInternalLinks(): Promise<void> {
   try {
-    const allMdxFilePaths = await getAllMdxFilePaths([DOCS_PATH, ERRORS_PATH])
+    const allMdxFilePaths = await getAllMdxFilePaths()
 
     documentMap = new Map(
       await Promise.all(allMdxFilePaths.map(prepareDocumentMapEntry))
     )
 
     const docProcessingPromises = allMdxFilePaths.map(async (filePath) => {
-      const doc = documentMap.get(normalizePath(filePath))
+      const doc = documentMap.get(filePath)
       if (doc) {
         const tree = (await markdownProcessor.process(doc.body)).contents
         return traverseTreeAndValidateLinks(tree, doc)
