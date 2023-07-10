@@ -1,8 +1,8 @@
 # Experimental features
 
-Meilisearch periodically introduces new experimental features. Experimental features are new features that are not yet ready for production, but which might benefit some users.
+Meilisearch periodically introduces new experimental features. Experimental features are not yet ready for production, but offer functionality that might benefit some users.
 
-Experimental features are unstable: their API might significantly change and become incompatible between releases. Meilisearch does not recommend using experimental features in a production environment.
+An experimental feature's API can change significantly and become incompatible between releases. Meilisearch does not recommend using experimental features in a production environment.
 
 Meilisearch makes experimental features available expecting they will become stable in a future release. However, it is not possible to guarantee when and if this will happen.
 
@@ -12,11 +12,23 @@ There are two main ways to activate and deactivate experimental features. Some m
 
 ## Configuring experimental features at launch
 
-To [configure experimental features at launch](/learn/configuration/instance_options), use their when running the Meilisearch binary. Configuration options for experimental features are always prefixed with `--experimental` in the case of command-line flags and `EXPERIMENTAL` for environment variables. Activating or deactivating experimental features this way requires you to interrupt and relaunch Meilisearch.
+Launch Meilisearch using [configuration options](/learn/configuration/instance_options) to activate an experimental feature:
+
+```sh
+./meilisearch --experimental-enable-metrics
+```
+
+Consult the documentation for the specific features you are interested in to find their respective options. Command-line flags for experimental features are always prefixed with `--experimental`. Environment variables for experimental features are always prefixed with `EXPERIMENTAL`.
+
+Activating or deactivating experimental features this way requires you to relaunch Meilisearch.
 
 ### Configuring experimental features during runtime
 
-To configure experimental features during runtime, [use the `/experimental-features` API route](/reference/api/experimental). Activating or deactivating experimental features this way does not require you to relaunch Meilisearch.
+[Use the `/experimental-features` API route](/reference/api/experimental) to configure experimental features during runtime:
+
+<CodeSamples id="update_experimental_features_1" />
+
+Activating or deactivating experimental features this way does not require you to relaunch Meilisearch.
 
 ## Current experimental features
 
