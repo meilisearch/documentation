@@ -124,7 +124,7 @@ By default, `facets` returns a maximum of 100 facet values for each faceted fiel
 
 ### Facet stats
 
-When using the `facets` parameter, Meilisearch results include a `facetStats` object. `facetStats` contains the lowest (`min`) and highest (`max`) numerical values across all documents in each facet. Meilisearch ignores numeric strings like `"21"` when computing `facetStats`.
+When using the `facets` parameter, search results include a `facetStats` object. `facetStats` contains the lowest (`min`) and highest (`max`) numerical values across all documents in each facet. Only numeric values are considered; string values are ignored, even if the string contains a number.
 
 `facetStats` is useful when creating UI components such as range sliders. These allow users to refine their search by selecting from a range of facet values.
 
