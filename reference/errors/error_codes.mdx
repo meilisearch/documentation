@@ -166,7 +166,11 @@ The provided `_geo` field of one or more documents is invalid. Meilisearch expec
 
 ## `invalid_facet_search_facet_name`
 
-The attribute used for the `facetName` field is not defined in the [`filterableAttributes` list](/reference/api/settings#filterable-attributes).
+The attribute used for the `facetName` field is either not a string or not defined in the [`filterableAttributes` list](/reference/api/settings#filterable-attributes).
+
+## `invalid_facet_search_facet_query`
+
+The provided value for `facetQuery` is invalid. It should either be a string or `null`.
 
 ## `invalid_index_limit`
 

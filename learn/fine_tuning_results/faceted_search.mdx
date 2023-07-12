@@ -151,7 +151,7 @@ If none of the matching documents have a numeric value for a facet, that facet i
 
 ## Sorting facet values
 
-By default, all facet values are sorted in ascending alphanumeric order. You can change this using the using the `sortFacetValuesBy` property of the [`faceting` index settings](/reference/api/settings#faceting):
+By default, all facet values are sorted in ascending alphanumeric order. You can change this using the `sortFacetValuesBy` property of the [`faceting` index settings](/reference/api/settings#faceting):
 
 <CodeSamples id="faceted_search_2" />
 
@@ -185,6 +185,10 @@ The above code sample sorts the `genres` facet by descending value count. If you
 ## Searching facet values
 
 Once you have configured [filterableAttributes](/reference/api/settings#filterable-attributes), you can also search for facet values with the [facet search endpoint](/reference/api/facet_search). Facet search supports [prefix search](/learn/advanced/prefix) and [typo tolerance](/learn/configuration/typo_tolerance).
+
+<Capsule intent="Facet search on numbers">
+Internally, Meilisearch represents numbers as [`float64`](https://en.wikipedia.org/wiki/Double-precision_floating-point_format). Since they lack precision and can be written in different ways, Meilisearch does not support facet search on numbers.
+</Capsule>
 
 The following code sample searches the `genres` facet for values starting with `c`:
 
@@ -223,7 +227,7 @@ Each object in `facetHits` contains the following fields:
 - `count`: Number of documents with a facet value matching `value`
 
 <Capsule intent="warning">
-Multi-word facets are not supported in some cases. Suppose your dataset has an `author` facet, searching for `Jane` will return `Jane Austen`, but searching for `Austen` will not return `Jane Austen`.
+Multi-word facets are not supported as Meilisearch only considers one term for `facetQuery`. For example, `Jane Austen` is considered a single term, searching for `Jane` will return `Jane Austen`, but searching for `Austen` will not return `Jane Austen`.
 </Capsule>
 
 You can further refine results using the `q`, `filter`, and `matchingStrategy` parameters. [Learn more about them in the API reference.](/reference/api/facet_search)
