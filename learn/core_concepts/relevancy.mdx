@@ -187,6 +187,16 @@ Ranking rules sort documents either by relevancy (`words`, `typo`, `proximity`, 
 The ranking score of a document is independent of other documents in an index. Adding documents to an index should not change the ranking score of existing documents.
 </Capsule>
 
+The table below details all the index settings that can influence the `_rankingScore`. **Unlisted settings do not influence the ranking score.**
+
+| Index setting          | Influences if                        | Rationale                                                                                                                                                      |
+| :--------------------- | :----------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `searchableAttributes` | The `attribute` ranking rule is used | The `attribute` ranking rule rates the document depending on the attribute in which the query terms show up. The order is determined by `searchableAttributes` |
+| `rankingRules`         | Always                               | The score is computed by computing the subscore of each ranking rule with a weight that depends on their order                                                 |
+| `stopWords`            | Always                               | Stop words influence the `words` ranking rule, which is almost always used                                                                                     |
+| `synonyms`             | Always                               | Synonyms influence the `words` ranking rule, which is almost always used                                                                                       |
+| `typoTolerance`        | The `typo` ranking rule is used      | Used to compute the maximum number of typos for a query                                                                                                        |
+
 ## Attribute ranking order
 
 In a typical dataset, some fields are more relevant to search than others. A `title`, for example, has a value more meaningful to a movie search than its `overview` or its `release_date`.
