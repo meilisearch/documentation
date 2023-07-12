@@ -1075,7 +1075,7 @@ facet_search_1: |-
     --data-binary '{ 
       "facetQuery": "fiction",
       "facetName": "genres",
-      "filter": "rating>3"
+      "filter": "rating > 3"
     }'
 faceted_search_2: |-
   curl \
