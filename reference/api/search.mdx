@@ -50,7 +50,7 @@ By default, [this endpoint returns a maximum of 1000 results](/learn/advanced/kn
 | **[`showMatchesPosition`](#show-matches-position)**     | Boolean          | `false`       | Return matching terms location                      |
 | **[`sort`](#sort)**                                     | Array of strings | `null`        | Sort search results by an attribute's value         |
 | **[`matchingStrategy`](#matching-strategy)**            | String           | `last`        | Strategy used to match query terms within documents |
-| **[`attributesToSearchOn`](#customize-attributes-to-search-on-at-search-time)**            | Array of strings           | `null`        | Restrict search to the specified attributes |
+| **[`attributesToSearchOn`](#customize-attributes-to-search-on-at-search-time)**            | Array of strings           | `["*"]`        | Restrict search to the specified attributes |
 
 [Learn more about how to use each search parameter](#search-parameters).
 
@@ -260,7 +260,7 @@ This is not necessary when using the `POST` route or one of our [SDKs](/learn/wh
 | **[`showMatchesPosition`](#show-matches-position)**     | Boolean          | `false`       | Return matching terms location                      |
 | **[`sort`](#sort)**                                     | Array of strings | `null`        | Sort search results by an attribute's value         |
 | **[`matchingStrategy`](#matching-strategy)**            | String           | `last`        | Strategy used to match query terms within documents |
-| **[`attributesToSearchOn`](#customize-attributes-to-search-on-at-search-time)**            | Array of strings           | `null`        | Restrict search to the specified attributes |
+| **[`attributesToSearchOn`](#customize-attributes-to-search-on-at-search-time)**            | Array of strings           | `["*"]`        | Restrict search to the specified attributes |
 
 ### Query (q)
 
@@ -901,10 +901,12 @@ The above code sample would only return documents containing all three words.
 #### Customize attributes to search on at search time
 
 **Parameter**: `attributesToSearchOn`<br />
-**Expected value**: A list of attributes written as an array<br />
-**Default value**: `null`
+**Expected value**: A list of searchable attributes written as an array<br />
+**Default value**: `["*"]`
 
 Configures a query to only look for terms in the specified attributes.
+
+Instead of a list of attribtues, you can pass a wildcard value (`["*"]`) and `null` to `attributesToSearchOn`. In both cases, Meilisearch will search for matches in all searchable attributes.
 
 <Capsule intent="warning">
 Attributes passed to `attributesToSearchOn` must also be present in the `searchableAttributes` list.
