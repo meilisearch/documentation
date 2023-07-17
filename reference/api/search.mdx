@@ -904,12 +904,14 @@ The above code sample would only return documents containing all three words.
 **Expected value**: `true` or `false`<br />
 **Default value**: `false`
 
-Adds a global ranking score field, `_rankingScore`, to each document. The `_rankingScore` is  between `0` and `1`. The higher the `_rankingScore`, the higher the document will rank.
+Adds a global ranking score field, `_rankingScore`, to each document. The `_rankingScore` is a numeric value between `0.0` and `1.0`. The higher the `_rankingScore`, the more relevant the document.
 
 The `sort` ranking rule does not influence the `_rankingScore`. Instead, the document order is determined by the value of the field they are sorted on. Excluding `sort`, if two documents have the same `_rankingScore`, they are returned in an unspecified order.
 
 <Capsule intent="note">
-The ranking score of a document is independent of other documents in the index. Adding documents to an index does not change the ranking score of existing documents.
+A document's ranking score does not change based on the scores of other documents in the same index.
+
+For example, if a document A has a score of `0.5` for a query term, this value remains constant no matter the score of documents B, C, or D.
 </Capsule>
 
 #### Example
@@ -925,32 +927,18 @@ The code sample below returns the `_rankingScore` when searching for `dragon` in
       "id": 31072,
       "title": "Dragon",
       "overview": "In a desperate attempt to save her kingdom…",
-      "genres": [
-        "Fantasy"
-      ],
-      "poster": "https://image.tmdb.org/t/p/w500/h4m1hIVO3OKaMqEzNDEBKKOuXiQ.jpg",
-      "release_date": 1165881600,
-      "_rankingScore": 0.9166666666666666
+      …
+      "_rankingScore": 0.92
     },
     {
       "id": 70057,
       "title": "Dragon",
       "overview": "A sinful martial arts expert wants…",
-      "genres": [
-        "Drama",
-        "Action",
-        "Thriller"
-      ],
-      "poster": "https://image.tmdb.org/t/p/w500/gGHCYaUzQmmKUqxMMD5rKAyJ21a.jpg",
-      "release_date": 1309737600,
-      "_rankingScore": 0.9166666666666666
+      …
+      "_rankingScore": 0.91
     },
     …
   ],
-  "query": "dragon",
-  "processingTimeMs": 4,
-  "limit": 20,
-  "offset": 0,
-  "estimatedTotalHits": 222
+  …
 }
 ```

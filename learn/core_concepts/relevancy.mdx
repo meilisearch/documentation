@@ -181,10 +181,12 @@ Custom ranking rules, instead, are always active once configured and will be use
 
 When using the [`showRankingScore` search parameter](/reference/api/search#show-ranking-score), Meilisearch adds a global ranking score field, `_rankingScore`, to each document. The `_rankingScore` is between `0` and `1`. The higher the ranking score, the more relevant the document. Meilisearch will never return a document with `_rankingScore: 0`.
 
-Ranking rules sort documents either by relevancy (`words`, `typo`, `proximity`, `exactness`, `attribute`) or by the value of a field (`sort`). Since `sort`  doesn't rank documents by relevancy, it does not influence the `_rankingScore`. Excluding `sort`, if two documents have the same `_rankingScore`, they are returned in an unspecified order.
+Ranking rules sort documents either by relevancy (`words`, `typo`, `proximity`, `exactness`, `attribute`) or by the value of a field (`sort`). Since `sort`  doesn't rank documents by relevancy, it does not influence the `_rankingScore`.
 
 <Capsule intent="note">
-The ranking score of a document is independent of other documents in an index. Adding documents to an index should not change the ranking score of existing documents.
+A document's ranking score does not change based on the scores of other documents in the same index.
+
+For example, if a document A has a score of `0.5` for a query term, this value remains constant no matter the score of documents B, C, or D.```
 </Capsule>
 
 The table below details all the index settings that can influence the `_rankingScore`. **Unlisted settings do not influence the ranking score.**
