@@ -189,7 +189,7 @@ Once you have configured [filterableAttributes](/reference/api/settings#filterab
 <Capsule intent="Facet search on numbers">
 Meilisearch does not support facet search on numbers. Convert numeric facets to strings to make them searchable.
 
-Internally, Meilisearch represents numbers as [`float64`](https://en.wikipedia.org/wiki/Double-precision_floating-point_format). This means they lack precision and can be represented in different ways, making difficult to facet search effectively.
+Internally, Meilisearch represents numbers as [`float64`](https://en.wikipedia.org/wiki/Double-precision_floating-point_format). This means they lack precision and can be represented in different ways, making it difficult to search facet values effectively.
 </Capsule>
 
 The following code sample searches the `genres` facet for values starting with `c`:
@@ -219,7 +219,7 @@ The response contains a `facetHits` array:
     }
   ],
   "facetQuery": "c",
-  "processingTimeMs": 0
+  …
 }
 ```
 
@@ -229,7 +229,7 @@ Each object in `facetHits` contains the following fields:
 - `count`: Number of documents with a facet value matching `value`
 
 <Capsule intent="warning">
-Meilisearch's facet search does not support multi-word facets and only considers the first term in both `facetQuery` and the facet name.
+Meilisearch's facet search does not support multi-word facets and only considers the first term in the `facetQuery`.
 
 For example, searching for `Jane` will return `Jane Austen`, but searching for `Austen` will not return `Jane Austen`.
 </Capsule>
