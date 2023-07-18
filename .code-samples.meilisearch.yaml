@@ -1077,7 +1077,7 @@ facet_search_1: |-
       "facetName": "genres",
       "filter": "rating > 3"
     }'
-faceted_search_2: |-
+facet_search_2: |-
   curl \
     -X PATCH 'http://localhost:7700/indexes/books/settings/faceting' \
     -H 'Content-Type: application/json' \
@@ -1086,7 +1086,7 @@ faceted_search_2: |-
         "genres": "count"
     }
   }'
-faceted_search_3: |-
+facet_search_3: |-
   curl \
     -X POST 'http://localhost:7700/indexes/books/facet-search' \
     -H 'Content-Type: application/json' \

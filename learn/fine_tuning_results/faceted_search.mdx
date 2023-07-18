@@ -153,7 +153,7 @@ If none of the matching documents have a numeric value for a facet, that facet i
 
 By default, all facet values are sorted in ascending alphanumeric order. You can change this using the `sortFacetValuesBy` property of the [`faceting` index settings](/reference/api/settings#faceting):
 
-<CodeSamples id="faceted_search_2" />
+<CodeSamples id="facet_search_2" />
 
 The above code sample sorts the `genres` facet by descending value count. If you searched the `books` index for `classic` using the new settings, you would get the following response:
 
@@ -192,7 +192,7 @@ Internally, Meilisearch represents numbers as [`float64`](https://en.wikipedia.o
 
 The following code sample searches the `genres` facet for values starting with `c`:
 
-<CodeSamples id="faceted_search_3" />
+<CodeSamples id="facet_search_3" />
 
 The response contains a `facetHits` array:
 
