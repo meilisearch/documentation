@@ -228,6 +228,8 @@ function traverseTreeAndValidateLinks(tree: any, doc: Document): Errors {
         if (!href) return
 
         if (href.startsWith(RELATIVE_PATH)) {
+          if (!doc.slug)  console.log('HOMEPAGE Slug in tree validation', href, doc)
+        
           validateInternalLink(errors, href)
         } else if (href.startsWith('#')) {
           validateHashLink(errors, href, doc)
@@ -369,6 +371,7 @@ async function validateAllInternalLinks(): Promise<void> {
 
     const docProcessingPromises = allMdxFilePaths.map(async (route) => {
       const doc = documentMap.get(route.slug)
+      if (!route.slug)  console.log('HOMEPAGE Slug in docProcessingPromises', doc)
       if (doc) {
         const tree = (await markdownProcessor.process(doc.body)).contents
         return traverseTreeAndValidateLinks(tree, doc)
