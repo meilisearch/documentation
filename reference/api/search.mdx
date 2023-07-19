@@ -906,7 +906,7 @@ The above code sample would only return documents containing all three words.
 
 Adds a global ranking score field, `_rankingScore`, to each document. The `_rankingScore` is a numeric value between `0.0` and `1.0`. The higher the `_rankingScore`, the more relevant the document.
 
-The `sort` ranking rule does not influence the `_rankingScore`. Instead, the document order is determined by the value of the field they are sorted on. Excluding `sort`, if two documents have the same `_rankingScore`, they are returned in an unspecified order.
+The `sort` ranking rule does not influence the `_rankingScore`. Instead, the document order is determined by the value of the field they are sorted on.
 
 <Capsule intent="note">
 A document's ranking score does not change based on the scores of other documents in the same index.
