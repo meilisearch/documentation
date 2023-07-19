@@ -92,11 +92,12 @@ async function getAllMdxFilePaths(): Promise<RouteFragment[]> {
     ...sidebarReference.map(group => ({...group, slug: path.join('reference/', group.slug)}))
   ]
 
-  let allRoutes: RouteSchema[] = [{source: 'home.mdx', slug: '/', label: 'Homepage'}]
+  let allRoutes: RouteSchema[] = [{source: './home.mdx', slug: '', label: 'Homepage'}]
   for (const group of config) {
     allRoutes = allRoutes.concat(group.routes.map(route => ({
       ...route,
-      slug: path.join('.', group.slug, route.slug)
+      slug: path.join(group.slug, route.slug),
+      source: path.join('.', route.source)
     })))
   }
   footer.forEach(item => 'source' in item && allRoutes.push({...item, source: path.join('.', item.source)}))
