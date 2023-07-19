@@ -30,6 +30,7 @@ import type { Node, Data } from 'unist'
 interface Document {
   body: string
   path: string
+  slug: string
   headings: string[]
   sidebarDepth?: number
 }
@@ -48,18 +49,25 @@ interface Comment {
   id: number
 }
 
-type FooterConfigSchema = Array< {
-  "source": string,
-  "label": string,
-  "slug": string
-} |
+/** Label: Is the text that will be displayed in the sidebar */
+type RouteSchema = {source: string, label: string, slug: string}
+
+/**
+* Source: Is the path to the .mdx file
+*
+* Slug: Is the route we will use to access the page in the browser
+*/
+type RouteFragment = Omit<RouteSchema, 'label'>
+
+type FooterConfigSchema = Array<RouteSchema |
 {
   "to": string,
   "label": string,
   "slug": string
 }>
 
-type ConfigSchema =  Array<{title: string, slug: string, routes: Array<{source: string, label: string, slug: string}>}>
+
+type ConfigSchema =  Array<{title: string, slug: string, routes: Array<RouteSchema>}>
 
 const RELATIVE_PATH = '/'
 const EXCLUDED_HASHES = ['top']
@@ -74,18 +82,26 @@ const sha = pullRequest.head.sha
 const slugger = new GithubSlugger()
 
 // Collect the paths of all .mdx files present in the config files
-async function getAllMdxFilePaths(): Promise<string[]> {
-  const sidebarLearn = await fs.readFile('./config/sidebar-learn.json', 'utf8')
-  const sidebarReference = await fs.readFile('./config/sidebar-reference.json', 'utf8')
+async function getAllMdxFilePaths(): Promise<RouteFragment[]> {
+  const sidebarLearn: ConfigSchema = JSON.parse(await fs.readFile('./config/sidebar-learn.json', 'utf8'))
+  const sidebarReference: ConfigSchema = JSON.parse(await fs.readFile('./config/sidebar-reference.json', 'utf8'))
   const footer: FooterConfigSchema = JSON.parse(await fs.readFile('./config/sidebar-footer.json', 'utf8'))
 
-  const config: ConfigSchema = {...JSON.parse(sidebarLearn), ...JSON.parse(sidebarReference), ...footer.filter(item => 'source' in item)} 
-  let paths: string[] = []
-  for (const group of config) {
-    paths = paths.concat(group.routes.map(route => path.join('.', route.source)))
-  }
+  const config = [
+    ...sidebarLearn.map(group => ({...group, slug: path.join('learn',  group.slug)})),
+    ...sidebarReference.map(group => ({...group, slug: path.join('reference/', group.slug)}))
+  ]
 
-  return paths
+  let allRoutes: RouteSchema[] = [{source: 'home.mdx', slug: '/', label: 'Homepage'}]
+  for (const group of config) {
+    allRoutes = allRoutes.concat(group.routes.map(route => ({
+      ...route,
+      slug: path.join('.', group.slug, route.slug)
+    })))
+  }
+  footer.forEach(item => 'source' in item && allRoutes.push({...item, source: path.join('.', item.source)}))
+
+  return allRoutes
 }
 
 // Returns the slugs of all headings in a tree
@@ -131,20 +147,20 @@ let documentMap: Map<string, Document>
 // error pages: `/docs/messages/example`
 // doc pages: `api/example`
 async function prepareDocumentMapEntry(
-  filePath: string
+  route: RouteFragment
 ): Promise<[string, Document]> {
   try {
-    const mdxContent = await fs.readFile(filePath, 'utf8')
+    const mdxContent = await fs.readFile(route.source, 'utf8')
     const { content, data } = matter(mdxContent)
     const tree = markdownProcessor.parse(content)
     const headings = getHeadingsFromMarkdownTree(tree)
 
     return [
-      filePath,
-      { body: content, path: filePath, headings, ...data },
+      route.slug,
+      { body: content, path: route.source, slug: route.slug, headings, ...data },
     ]
   } catch (error) {
-    setFailed(`Error preparing document map for file ${filePath}: ${error}`)
+    setFailed(`Error preparing document map for file ${route}: ${error}`)
     return ['', {} as Document]
   }
 }
@@ -155,7 +171,7 @@ function validateInternalLink(errors: Errors, href: string): void {
   const [link, hash] = href.split('#')
 
   // check if doc page exists
-  const foundPage = documentMap.get(link)
+  const foundPage = documentMap.get(link.replace(/^\/+/, ''))
   
 
   if (!foundPage) {
@@ -167,12 +183,13 @@ function validateInternalLink(errors: Errors, href: string): void {
     //   ? documentMap.get(foundPage.source)
     //   : undefined
 
-    // // Check if the hash link points to an existing section within the document
+    // Check if the hash link points to an existing section within the document
     // const hashFound = (foundPageSource || foundPage).headings.includes(hash)
+    const hashFound = foundPage.headings.includes(hash)
 
-    // if (!hashFound) {
+    if (!hashFound) {
       errors.hash.push(href)
-    // }
+    }
   }
 }
 
@@ -187,7 +204,7 @@ function validateHashLink(errors: Errors, href: string, doc: Document): void {
 
 // Checks if the source link points to an existing document
 function validateSourceLinks(doc: Document, errors: Errors): void {
-  if (doc.path && !documentMap.get(doc.path)) {
+  if (doc.slug && !documentMap.get(doc.slug)) {
     errors.source.push(doc.path)
   }
 }
@@ -289,7 +306,7 @@ const formatTableRow = (
   errorType: ErrorType,
   docPath: string
 ) => {
-  return `| ${link} | ${errorType} | [/${docPath}](https://github.com/vercel/next.js/blob/${sha}/${docPath}) | \n`
+  return `| ${link} | ${errorType} | [/${docPath}](https://github.com/meilisearch/documentation/blob/${sha}/${docPath}) | \n`
 }
 
 async function updateCheckStatus(
@@ -349,8 +366,8 @@ async function validateAllInternalLinks(): Promise<void> {
       await Promise.all(allMdxFilePaths.map(prepareDocumentMapEntry))
     )
 
-    const docProcessingPromises = allMdxFilePaths.map(async (filePath) => {
-      const doc = documentMap.get(filePath)
+    const docProcessingPromises = allMdxFilePaths.map(async (route) => {
+      const doc = documentMap.get(route.slug)
       if (doc) {
         const tree = (await markdownProcessor.process(doc.body)).contents
         return traverseTreeAndValidateLinks(tree, doc)
