@@ -398,6 +398,10 @@
 									"key": "hitsPerPage",
 									"value": "50",
 									"disabled": true
+								},
+								{
+									"key": "showRankingScore",
+									"value": "true"
 								}
 							]
 						}
@@ -1767,7 +1771,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"maxValuesPerFacet\": 3000\n}"
+									"raw": "{\n    \"maxValuesPerFacet\": 3000,\n    \"sortFacetValuesBy\": {\n        \"*\": \"alpha\",\n        \"genre\": \"count\"\n      }\n}"
 								},
 								"url": {
 									"raw": "{{url}}/indexes/{{indexUID}}/settings/faceting",
@@ -2134,6 +2138,38 @@
 							""
 						]
 					}
+				}
+			]
+		},
+		{
+			"name": "Facet search",
+			"item": [
+				{
+					"name": "Search for facet values",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \n      \"facetQuery\": \"adventure\",\n      \"facetName\": \"genre\",\n      \"q\": \"prinec\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/indexes/{{indexUID}}//facet-search",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"facet-search"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}
