@@ -2160,7 +2160,7 @@
 							"raw": "{ \n      \"facetQuery\": \"adventure\",\n      \"facetName\": \"genre\",\n      \"q\": \"prinec\"\n}"
 						},
 						"url": {
-							"raw": "{{url}}/facet-search",
+							"raw": "{{url}}/indexes/{{indexUID}}/facet-search",
 							"host": [
 								"{{url}}"
 							],
