@@ -214,3 +214,13 @@ This list is liable to change with every new version of Meilisearch. It's not be
 | `per_filter`                                       | `true` if `POST /indexes/:indexUid/documents/fetch`, `GET /indexes/:indexUid/documents/`, or `POST /indexes/:indexUid/documents/delete` endpoints were used, otherwise `false` | false
 | `clear_all`                                        | `true` if `DELETE /indexes/:indexUid/documents` endpoint was used, otherwise `false`        | false
 | `per_batch`                                        | `true` if the `POST /indexes/:indexUid/documents/delete-batch` endpoint was used, otherwise `false`   | false
+| `facets.total_distinct_facet_count`                | Total number of distinct facets queried for the aggregated event                            | false
+| `facets.additional_search_parameters_provided`     | `true` if additional search parameters were provided for the aggregated event, otherwise `false`                         | false
+| `faceting.sort_facet_values_by_star_count`         | `true` if all fields are set to be sorted by count, otherwise `fasle`                       | false
+| `faceting.sort_facet_values_by_total`              | The number of different values that were set                                                | 10
+| `scoring.show_ranking_score`                       | `true` if `showRankingScore` used in the aggregated event, otherwise `false`                | true
+| `scoring.show_ranking_score_details`               | `true` if `showRankingScoreDetails` was used in the aggregated event, otherwise `false`     | true
+| `vector_store`                                     | `true` if the vector store feature is enabled, otherwise `false`                            | true
+| `score_details`                                    |  `true` if the score details feature is enabled, otherwise `false`                          | true
+| `attributes_to_search_on.total_number_of_uses`     | `true` if the vector store feature is enabled, otherwise `false`                            | true
+| `vector.max_vector_size`                           | Highest number of dimensions given for the `vector` parameter in this batch                 | 1536

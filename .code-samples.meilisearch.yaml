@@ -868,7 +868,11 @@ update_faceting_settings_1: |-
     -X PATCH 'http://localhost:7700/indexes/books/settings/faceting' \
     -H 'Content-Type: application/json' \
     --data-binary '{
-      "maxValuesPerFacet": 2
+      "maxValuesPerFacet": 2,
+      "sortFacetValuesBy": {
+        "*": "alpha",
+        "genres": "count"
+      }
     }'
 reset_faceting_settings_1: |-
   curl \
@@ -885,7 +889,10 @@ getting_started_faceting: |-
     -X PATCH 'http://localhost:7700/indexes/movies/settings/faceting' \
     -H 'Content-Type: application/json' \
     --data-binary '{
-      "maxValuesPerFacet": 2
+      "maxValuesPerFacet": 2,
+       "sortFacetValuesBy": {
+         "*": "count"
+       }
     }'
 getting_started_pagination: |-
   curl \
@@ -1070,4 +1077,46 @@ update_experimental_features_1: |-
     -H 'Content-Type: application/json'  \
     --data-binary '{
       "scoreDetails": true
+    }'
+facet_search_1: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/books/facet-search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{ 
+      "facetQuery": "fiction",
+      "facetName": "genres",
+      "filter": "rating > 3"
+    }'
+facet_search_2: |-
+  curl \
+    -X PATCH 'http://localhost:7700/indexes/books/settings/faceting' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "sortFacetValuesBy": {
+        "genres": "count"
+    }
+  }'
+facet_search_3: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/books/facet-search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{ 
+      "facetQuery": "c",
+      "facetName": "genres"
+  }'
+search_parameter_guide_show_ranking_score_1: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/movies/search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "q": "dragon",
+      "showRankingScore": true
+    }'
+search_parameter_guide_attributes_to_search_on_1: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/movies/search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "q": "adventure",
+      "attributesToSearchOn": ["overview"]
     }'

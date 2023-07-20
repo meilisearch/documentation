@@ -165,3 +165,8 @@ get_documents_post_1: |-
 delete_documents_by_filter_1: |-
 get_experimental_features_1: |-
 update_experimental_features_1: |-
+search_parameter_guide_show_ranking_score_1: |-
+facet_search_1: |-
+facet_search_2: |-
+facet_search_3: |-
+search_parameter_guide_attributes_to_search_on_1: |-

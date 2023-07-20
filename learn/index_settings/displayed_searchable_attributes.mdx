@@ -68,6 +68,10 @@ Suppose that you manage a database of movies with the following fields: `id`, `o
 
 <CodeSamples id="field_properties_guide_searchable_1" />
 
+### Customizing attributes to search on at search time
+
+By default, all queries search through all attributes in the `searchableAttributes` list. Use [the `attributesToSearchOn` search parameter](/reference/api/search#customize-attributes-to-search-on-at-search-time) to restrict specific queries to a subset of your index's `searchableAttributes`.
+
 ## Data storing
 
 All fields are stored in the database. **This behavior cannot be changed**.
