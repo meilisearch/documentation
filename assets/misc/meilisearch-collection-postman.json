@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "9af30364-5ea5-4166-9d06-1770e7f96f77",
+		"_postman_id": "cb21218d-e0e4-4480-a36c-ff73c5b4136c",
 		"name": "Meilisearch v1.3",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -305,7 +305,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/indexes/{{indexUID}}/search?q=prinec",
+							"raw": "{{url}}/indexes/{{indexUID}}/search?q=prinec&showRankingScore=true",
 							"host": [
 								"{{url}}"
 							],
@@ -398,6 +398,10 @@
 									"key": "hitsPerPage",
 									"value": "50",
 									"disabled": true
+								},
+								{
+									"key": "showRankingScore",
+									"value": "true"
 								}
 							]
 						}
@@ -1767,7 +1771,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"maxValuesPerFacet\": 3000\n}"
+									"raw": "{\n    \"maxValuesPerFacet\": 3000,\n    \"sortFacetValuesBy\": {\n        \"*\": \"alpha\",\n        \"genre\": \"count\"\n      }\n}"
 								},
 								"url": {
 									"raw": "{{url}}/indexes/{{indexUID}}/settings/faceting",
@@ -2138,18 +2142,59 @@
 			]
 		},
 		{
+			"name": "Facet search",
+			"item": [
+				{
+					"name": "Search for facet values",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \n      \"facetQuery\": \"adventure\",\n      \"facetName\": \"genre\",\n      \"q\": \"prinec\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/facet-search",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"facet-search"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Experimental features",
 			"item": [
 				{
-					"name": "Get all runtime experimental features",
+					"name": "Get all experimental features Copy",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "{{url}}/experimental-features",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"experimental-features"
+							]
+						}
 					},
 					"response": []
 				},
 				{
-					"name": "Update runtime experimental features",
+					"name": "Configure an experimental feature",
 					"request": {
 						"method": "PATCH",
 						"header": [],
