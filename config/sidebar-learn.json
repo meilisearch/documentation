@@ -394,9 +394,9 @@
 							"slug": "reduce-indexing-memory-usage"
 					},
 					{
-							"source": "learn/experimental/vector-search.mdx",
+							"source": "learn/experimental/vector_search.mdx",
 							"label": "Vector search",
-							"slug": "vector-search"
+							"slug": "vector_search"
 					}
 			]
 	},
