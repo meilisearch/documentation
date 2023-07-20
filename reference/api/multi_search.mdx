@@ -20,8 +20,8 @@ If Meilisearch encounters an error when handling any of the queries in a multi-s
 
 #### Search parameters
 
-| Search parameter                                                                | Type             | Default value | Description                                         |
-| :------------------------------------------------------------------------------ | :--------------- | :------------ | :-------------------------------------------------- |
+| Search parameter                                                             | Type             | Default value | Description                                         |
+| :--------------------------------------------------------------------------- | :--------------- | :------------ | :-------------------------------------------------- |
 | **[`indexUid`](/learn/core_concepts/indexes#index-uid)**                     | String           | N/A           | `uid` of the requested index                        |
 | **[`q`](/reference/api/search#query-q)**                                     | String           | `""`          | Query string                                        |
 | **[`offset`](/reference/api/search#offset)**                                 | Integer          | `0`           | Number of documents to skip                         |
@@ -40,6 +40,8 @@ If Meilisearch encounters an error when handling any of the queries in a multi-s
 | **[`showMatchesPosition`](/reference/api/search#show-matches-position)**     | Boolean          | `false`       | Return matching terms location                      |
 | **[`sort`](/reference/api/search#sort)**                                     | Array of strings | `null`        | Sort search results by an attribute's value         |
 | **[`matchingStrategy`](/reference/api/search#matching-strategy)**            | String           | `last`        | Strategy used to match query terms within documents |
+| **[`showRankingScore`](/reference/api/search#show-ranking-score)**           | Boolean          | `false`       | Display the global ranking score of a document      |
+| **[`attributesToSearchOn`](#customize-attributes-to-search-on-at-search-time)**            | Array of strings           | `["*"]`        | Restrict search to the specified attributes |
 
 [Learn more about how to use each search parameter](/reference/api/search#search-parameters).
 
@@ -51,21 +53,21 @@ If Meilisearch encounters an error when handling any of the queries in a multi-s
 
 Each search result object is composed of the following fields:
 
-| Name                     | Type             | Description                                                                             |
-| :----------------------- | :--------------- | :-------------------------------------------------------------------------------------- |
-| **`indexUid`**           | String           | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index               |
-| **`hits`**               | Array of objects | Results of the query                                                                    |
-| **`offset`**             | Number           | Number of documents skipped                                                             |
-| **`limit`**              | Number           | Number of documents to take                                                             |
-| **`estimatedTotalHits`** | Number           | Estimated total number of matches                                                       |
-| **`totalHits`**          | Number           | Exhaustive total number of matches                                                      |
-| **`totalPages`**         | Number           | Exhaustive total number of search result pages                                          |
-| **`hitsPerPage`**        | Number           | Number of results on each page                                                          |
-| **`page`**               | Number           | Current search results page                                                             |
-| **`facetDistribution`**  | Object           | **[Distribution of the given facets](/reference/api/search#facetdistribution)**      |
+| Name                     | Type             | Description                                                                      |
+| :----------------------- | :--------------- | :------------------------------------------------------------------------------- |
+| **`indexUid`**           | String           | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index           |
+| **`hits`**               | Array of objects | Results of the query                                                             |
+| **`offset`**             | Number           | Number of documents skipped                                                      |
+| **`limit`**              | Number           | Number of documents to take                                                      |
+| **`estimatedTotalHits`** | Number           | Estimated total number of matches                                                |
+| **`totalHits`**          | Number           | Exhaustive total number of matches                                               |
+| **`totalPages`**         | Number           | Exhaustive total number of search result pages                                   |
+| **`hitsPerPage`**        | Number           | Number of results on each page                                                   |
+| **`page`**               | Number           | Current search results page                                                      |
+| **`facetDistribution`**  | Object           | **[Distribution of the given facets](/reference/api/search#facetdistribution)**  |
 | **`facetStats`**         | Object           | [The numeric `min` and `max` values per facet](/reference/api/search#facetstats) |
-| **`processingTimeMs`**   | Number           | Processing time of the query                                                            |
-| **`query`**              | String           | Query originating the response                                                          |
+| **`processingTimeMs`**   | Number           | Processing time of the query                                                     |
+| **`query`**              | String           | Query originating the response                                                   |
 
 ### Example
 

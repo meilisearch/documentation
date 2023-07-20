@@ -394,6 +394,11 @@
 							"slug": "reduce-indexing-memory-usage"
 					},
 					{
+						  "source": "learn/experimental/ranking_rule_score_details.mdx",
+						  "label": "Ranking score details",
+						  "slug": "ranking_rule_score_details"
+				  },
+					{
 							"source": "learn/experimental/vector_search.mdx",
 							"label": "Vector search",
 							"slug": "vector_search"
