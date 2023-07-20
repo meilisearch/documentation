@@ -155,9 +155,12 @@ Meilisearch allows you to create faceted search interfaces, refining search resu
 
 When creating a faceted search interface, it is helpful to display how results are distributed between the different categories. For example, a user might want to know how many of their results have a `genre` of `comedy` and how many have a `genre` of `horror`. Meilisearch supports this with [the `facets` search parameter](/reference/api/search#facets).
 
-Using the faceting settings, you can configure the maximum number of facet values returned for each facet.
+Using the faceting settings, you can:
 
-Suppose your results contain the following values for the `genres` facet: `Action`, `Adventure`, `Science Fiction`, and `Comedy`. After running the below code sample, you would only see how results are distributed between the `Action` and `Adventure` genres.
+- Configure the maximum number of facet values returned for each facet
+- Sort facet values by value count or alphanumeric order
+
+Suppose your results contain the following values for the `genres` facet: `Action`, `Adventure`, `Science Fiction`, and `Comedy`. After running the below code sample, you would only see how results are distributed between the `Action` and `Adventure` genres. `Action` and `Adventure` will be sorted by descending value count.
 
 <CodeSamples id= "getting_started_faceting" />
 

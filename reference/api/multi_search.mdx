@@ -41,6 +41,7 @@ If Meilisearch encounters an error when handling any of the queries in a multi-s
 | **[`sort`](/reference/api/search#sort)**                                     | Array of strings | `null`        | Sort search results by an attribute's value         |
 | **[`matchingStrategy`](/reference/api/search#matching-strategy)**            | String           | `last`        | Strategy used to match query terms within documents |
 | **[`showRankingScore`](/reference/api/search#show-ranking-score)**           | Boolean          | `false`       | Display the global ranking score of a document      |
+| **[`attributesToSearchOn`](#customize-attributes-to-search-on-at-search-time)**            | Array of strings           | `["*"]`        | Restrict search to the specified attributes |
 
 [Learn more about how to use each search parameter](/reference/api/search#search-parameters).
 

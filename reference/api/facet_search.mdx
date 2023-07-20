@@ -1,0 +1,64 @@
+# Facet search
+
+The `/facet-search` route allows you to search for facet values. Facet search supports [prefix search](/learn/advanced/prefix) and [typo tolerance](/learn/configuration/typo_tolerance). The returned hits are sorted lexicographically in ascending order. You can configure how facets are sorted using the [`sortFacetValuesBy`](/reference/api/settings#faceting-object) property of the `faceting` index settings.
+
+<Capsule intent="note" title="Facet search on numbers">
+Meilisearch does not support facet search on numbers. Convert numeric facets to strings to make them searchable.
+
+Internally, Meilisearch represents numbers as [`float64`](https://en.wikipedia.org/wiki/Double-precision_floating-point_format). This means they lack precision and can be represented in different ways, making it difficult to search facet values effectively.
+</Capsule>
+
+## Perform a facet search
+
+Search for a facet value within a given facet.
+
+<RouteHighlighter method="POST" route="/indexes/{index_uid}/facet-search"/>
+
+<Capsule intent="warning">
+This endpoint will not work without first explicitly adding attributes to the [`filterableAttributes`](/reference/api/settingss#update-filterable-attributes) list. [Learn more about facets in our dedicated guide.](/learn/fine_tuning_results/faceted_search#configuring-and-using-facets)
+</Capsule>
+
+<Capsule intent="warning">
+Meilisearch's facet search does not support multi-word facets and only considers the first term in the`facetQuery`.
+
+For example, searching for `Jane` will return `Jane Austen`, but searching for `Austen` will not return `Jane Austen`.
+</Capsule>
+
+### Body
+
+| Name                                                                                                  | Type                                                               | Default value | Description                                                                                                                                                                                                                                                                                                     |
+| :---------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------- | :------------ | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`facetName`** *                                                                                     | String                                                             | `null`        | Facet name to search values on                                                                                                                                                                                                                                                                                  |
+| **`facetQuery`**                                                                                      | String                                                             | `null`        | Search query for a given facet value. If `facetQuery` isn't specified, Meilisearch performs a [placeholder search](/reference/api/search#placeholder-search) which returns all facet values for the searched facet, limited by the [`maxValuesPerFacet` index setting](/reference/api/settings#faceting-object) |
+| [**`q`**](/reference/api/search#q)                                                                    | String                                                             | `""`          | Query string                                                                                                                                                                                                                                                                                                    |
+| **[`filter`](/reference/api/search#filter)**                                                          | [String*](/learn/fine_tuning_results/filtering#filter-expressions) | `null`        | Filter queries by an attribute's value                                                                                                                                                                                                                                                                          |
+| **[`matchingStrategy`](/reference/api/search#matching-strategy)**                                     | String                                                             | `last`        | Strategy used to match query terms within documents                                                                                                                                                                                                                                                             |
+| **[`attributesToSearchOn`](/reference/api/search##customize-attributes-to-search-on-at-search-time)** | Array of strings                                                   | `null`        | Restrict search to the specified attributes                                                                                                                                                                                                                                                                     |
+
+### Response
+
+| Name                   | Type    | Description                                             |
+| :--------------------- | :------ | :------------------------------------------------------ |
+| **`facetHits.value`**  | String  | Facet value matching the `facetQuery`                   |
+| **`facetHits.count`**  | Integer | Number of documents with a facet value matching `value` |
+| **`facetQuery`**       | String  | The original `facetQuery`                               |
+| **`processingTimeMs`** | Number  | Processing time of the query                            |
+
+### Example
+
+<CodeSamples id="facet_search_1" />
+
+#### Response: `200 Ok`
+
+```json
+{
+  "facetHits":[
+    {
+      "value":"fiction",
+      "count":7
+    }
+  ],
+  "facetQuery":"fiction",
+  "processingTimeMs":0
+}
+```

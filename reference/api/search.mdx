@@ -51,6 +51,7 @@ By default, [this endpoint returns a maximum of 1000 results](/learn/advanced/kn
 | **[`sort`](#sort)**                                     | Array of strings | `null`        | Sort search results by an attribute's value         |
 | **[`matchingStrategy`](#matching-strategy)**            | String           | `last`        | Strategy used to match query terms within documents |
 | **[`showRankingScore`](#show-ranking-score)**           | Boolean          | `false`       | Display the global ranking score of a document      |
+| **[`attributesToSearchOn`](#customize-attributes-to-search-on-at-search-time)**            | Array of strings           | `["*"]`        | Restrict search to the specified attributes |
 
 [Learn more about how to use each search parameter](#search-parameters).
 
@@ -168,6 +169,7 @@ By default, [this endpoint returns a maximum of 1000 results](/learn/advanced/kn
 | **[`sort`](#sort)**                                     | Array of strings | `null`        | Sort search results by an attribute's value         |
 | **[`matchingStrategy`](#matching-strategy)**            | String           | `last`        | Strategy used to match query terms within documents |
 | **[`showRankingScore`](#show-ranking-score)**           | Boolean          | `false`       | Display the global ranking score of a document      |
+**[`attributesToSearchOn`](#customize-attributes-to-search-on-at-search-time)**            | Array of strings           | `["*"]`        | Restrict search to the specified attributes |
 
 [Learn more about how to use each search parameter](#search-parameters).
 
@@ -261,6 +263,7 @@ This is not necessary when using the `POST` route or one of our [SDKs](/learn/wh
 | **[`sort`](#sort)**                                     | Array of strings | `null`        | Sort search results by an attribute's value         |
 | **[`matchingStrategy`](#matching-strategy)**            | String           | `last`        | Strategy used to match query terms within documents |
 | **[`showRankingScore`](#show-ranking-score)**           | Boolean          | `false`       | Display the global ranking score of a document      |
+| **[`attributesToSearchOn`](#customize-attributes-to-search-on-at-search-time)**            | Array of strings           | `["*"]`        | Restrict search to the specified attributes |
 
 ### Query (q)
 
@@ -942,3 +945,28 @@ The code sample below returns the `_rankingScore` when searching for `dragon` in
   …
 }
 ```
+
+#### Customize attributes to search on at search time
+
+**Parameter**: `attributesToSearchOn`<br />
+**Expected value**: A list of searchable attributes written as an array<br />
+**Default value**: `["*"]`
+
+Configures a query to only look for terms in the specified attributes.
+
+Instead of a list of attributes, you can pass a wildcard value (`["*"]`) and `null` to `attributesToSearchOn`. In both cases, Meilisearch will search for matches in all searchable attributes.
+
+<Capsule intent="warning">
+Attributes passed to `attributesToSearchOn` must also be present in the `searchableAttributes` list.
+</Capsule>
+
+The order of attributes in `attributesToSearchOn` does not affect relevancy.
+
+#### Example
+
+The following query returns documents whose `overview` includes `"adventure"`:
+
+<CodeSamples id="search_parameter_guide_attributes_to_search_on_1" />
+
+Results would not include documents containing `"adventure"` in other fields such as `title` or `genre`, even if these fields were present in the `searchableAttributes` list.
+
