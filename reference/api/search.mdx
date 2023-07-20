@@ -25,8 +25,8 @@ By default, [this endpoint returns a maximum of 1000 results](/learn/advanced/kn
 
 ### Path parameters
 
-| Name              | Type   | Description                                                               |
-| :---------------- | :----- | :------------------------------------------------------------------------ |
+| Name              | Type   | Description                                                            |
+| :---------------- | :----- | :--------------------------------------------------------------------- |
 | **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
 
 ### Body
@@ -50,6 +50,7 @@ By default, [this endpoint returns a maximum of 1000 results](/learn/advanced/kn
 | **[`showMatchesPosition`](#show-matches-position)**     | Boolean          | `false`       | Return matching terms location                      |
 | **[`sort`](#sort)**                                     | Array of strings | `null`        | Sort search results by an attribute's value         |
 | **[`matchingStrategy`](#matching-strategy)**            | String           | `last`        | Strategy used to match query terms within documents |
+| **[`showRankingScore`](#show-ranking-score)**           | Boolean          | `false`       | Display the global ranking score of a document      |
 | **[`attributesToSearchOn`](#customize-attributes-to-search-on-at-search-time)**            | Array of strings           | `["*"]`        | Restrict search to the specified attributes |
 
 [Learn more about how to use each search parameter](#search-parameters).
@@ -142,8 +143,8 @@ By default, [this endpoint returns a maximum of 1000 results](/learn/advanced/kn
 
 ### Path parameters
 
-| Name              | Type   | Description                                                               |
-| :---------------- | :----- | :------------------------------------------------------------------------ |
+| Name              | Type   | Description                                                            |
+| :---------------- | :----- | :--------------------------------------------------------------------- |
 | **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
 
 ### Query parameters
@@ -167,6 +168,7 @@ By default, [this endpoint returns a maximum of 1000 results](/learn/advanced/kn
 | **[`showMatchesPosition`](#show-matches-position)**     | Boolean          | `false`       | Return matching terms location                      |
 | **[`sort`](#sort)**                                     | Array of strings | `null`        | Sort search results by an attribute's value         |
 | **[`matchingStrategy`](#matching-strategy)**            | String           | `last`        | Strategy used to match query terms within documents |
+| **[`showRankingScore`](#show-ranking-score)**           | Boolean          | `false`       | Display the global ranking score of a document      |
 **[`attributesToSearchOn`](#customize-attributes-to-search-on-at-search-time)**            | Array of strings           | `["*"]`        | Restrict search to the specified attributes |
 
 [Learn more about how to use each search parameter](#search-parameters).
@@ -260,6 +262,7 @@ This is not necessary when using the `POST` route or one of our [SDKs](/learn/wh
 | **[`showMatchesPosition`](#show-matches-position)**     | Boolean          | `false`       | Return matching terms location                      |
 | **[`sort`](#sort)**                                     | Array of strings | `null`        | Sort search results by an attribute's value         |
 | **[`matchingStrategy`](#matching-strategy)**            | String           | `last`        | Strategy used to match query terms within documents |
+| **[`showRankingScore`](#show-ranking-score)**           | Boolean          | `false`       | Display the global ranking score of a document      |
 | **[`attributesToSearchOn`](#customize-attributes-to-search-on-at-search-time)**            | Array of strings           | `["*"]`        | Restrict search to the specified attributes |
 
 ### Query (q)
@@ -898,6 +901,51 @@ With the above code sample, Meilisearch will first return documents that contain
 
 The above code sample would only return documents containing all three words.
 
+### Ranking score
+
+**Parameter**: `showRankingScore`<br />
+**Expected value**: `true` or `false`<br />
+**Default value**: `false`
+
+Adds a global ranking score field, `_rankingScore`, to each document. The `_rankingScore` is a numeric value between `0.0` and `1.0`. The higher the `_rankingScore`, the more relevant the document.
+
+The `sort` ranking rule does not influence the `_rankingScore`. Instead, the document order is determined by the value of the field they are sorted on.
+
+<Capsule intent="note">
+A document's ranking score does not change based on the scores of other documents in the same index.
+
+For example, if a document A has a score of `0.5` for a query term, this value remains constant no matter the score of documents B, C, or D.
+</Capsule>
+
+#### Example
+
+The code sample below returns the `_rankingScore` when searching for `dragon` in `movies`:
+
+<CodeSamples id="search_parameter_guide_show_ranking_score_1" />
+
+```json
+{
+  "hits": [
+    {
+      "id": 31072,
+      "title": "Dragon",
+      "overview": "In a desperate attempt to save her kingdom…",
+      …
+      "_rankingScore": 0.92
+    },
+    {
+      "id": 70057,
+      "title": "Dragon",
+      "overview": "A sinful martial arts expert wants…",
+      …
+      "_rankingScore": 0.91
+    },
+    …
+  ],
+  …
+}
+```
+
 #### Customize attributes to search on at search time
 
 **Parameter**: `attributesToSearchOn`<br />
@@ -921,3 +969,4 @@ The following query returns documents whose `overview` includes `"adventure"`:
 <CodeSamples id="search_parameter_guide_attributes_to_search_on_1" />
 
 Results would not include documents containing `"adventure"` in other fields such as `title` or `genre`, even if these fields were present in the `searchableAttributes` list.
+

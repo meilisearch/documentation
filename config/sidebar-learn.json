@@ -392,7 +392,12 @@
 							"source": "learn/experimental/reduce-indexing-memory-usage.mdx",
 							"label": "Reduce indexing memory usage",
 							"slug": "reduce-indexing-memory-usage"
-					}
+					},
+					{
+						"source": "learn/experimental/ranking_rule_score_details.mdx",
+						"label": "Ranking score details",
+						"slug": "ranking_rule_score_details"
+				  }
 			]
 	},
 	{
