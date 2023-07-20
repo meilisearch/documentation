@@ -1068,6 +1068,7 @@ delete_documents_by_filter_1: |-
     --data-binary '{
       "filter": "genres = action OR genres = adventure"
     }'
+
 facet_search_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/books/facet-search' \
@@ -1094,3 +1095,11 @@ facet_search_3: |-
       "facetQuery": "c",
       "facetName": "genres"
   }'
+search_parameter_guide_attributes_to_search_on_1: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/movies/search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "q": "adventure",
+      "attributesToSearchOn": ["overview"]
+    }'
