@@ -233,6 +233,7 @@ Task results are [paginated](/learn/async/managing_tasks#paginating-tasks) and c
 | Name          | Type    | Description                                                                                                                    |
 | :------------ | :------ | :----------------------------------------------------------------------------------------------------------------------------- |
 | **`results`** | Array   | An array of [task objects](#task-object)                                                                                       |
+| **`total`**   | Integer | Total number of tasks matching the filter or query                                                                             |
 | **`limit`**   | Integer | Number of tasks returned                                                                                                       |
 | **`from`**    | Integer | `uid` of the first task returned                                                                                               |
 | **`next`**    | Integer | Value passed to `from` to view the next "page" of results. When the value of `next` is `null`, there are no more tasks to view |
@@ -279,6 +280,7 @@ Task results are [paginated](/learn/async/managing_tasks#paginating-tasks) and c
       "finishedAt":"2021-08-11T10:03:16.000000Z"
     }
   ],
+  "total": 50,
   "limit": 20,
   "from": 1,
   "next":null
