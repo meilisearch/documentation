@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "7c8a1884-d78a-418b-84a4-b9edac7f06c5",
+		"_postman_id": "cb21218d-e0e4-4480-a36c-ff73c5b4136c",
 		"name": "Meilisearch v1.3",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -121,7 +121,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/indexes/{{indexUID}}/documents?csvDelimiter=;",
+							"raw": "{{url}}/indexes/{{indexUID}}/documents",
 							"host": [
 								"{{url}}"
 							],
@@ -161,7 +161,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/indexes/{{indexUID}}/documents?csvDelimiter=;",
+							"raw": "{{url}}/indexes/{{indexUID}}/documents",
 							"host": [
 								"{{url}}"
 							],
@@ -305,7 +305,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/indexes/{{indexUID}}/search?q=prinec",
+							"raw": "{{url}}/indexes/{{indexUID}}/search?q=prinec&showRankingScore=true",
 							"host": [
 								"{{url}}"
 							],
@@ -2160,12 +2160,60 @@
 							"raw": "{ \n      \"facetQuery\": \"adventure\",\n      \"facetName\": \"genre\",\n      \"q\": \"prinec\"\n}"
 						},
 						"url": {
-							"raw": "{{url}}/indexes/{{indexUID}}//facet-search",
+							"raw": "{{url}}/indexes/{{indexUID}}/facet-search",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"facet-search"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Experimental features",
+			"item": [
+				{
+					"name": "Get all experimental features Copy",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/experimental-features",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"experimental-features"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Configure an experimental feature",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"scoreDetails\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/experimental-features",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"experimental-features"
 							]
 						}
 					},
