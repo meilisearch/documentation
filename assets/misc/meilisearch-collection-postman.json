@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "cb21218d-e0e4-4480-a36c-ff73c5b4136c",
+		"_postman_id": "af5f1b99-255f-4eb3-9756-6636be3a0f16",
 		"name": "Meilisearch v1.3",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -305,7 +305,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/indexes/{{indexUID}}/search?q=prinec&showRankingScore=true",
+							"raw": "{{url}}/indexes/{{indexUID}}/search?q=prinec",
 							"host": [
 								"{{url}}"
 							],
@@ -401,7 +401,13 @@
 								},
 								{
 									"key": "showRankingScore",
-									"value": "true"
+									"value": "true",
+									"disabled": true
+								},
+								{
+									"key": "attributesToSearchOn",
+									"value": "title",
+									"disabled": true
 								}
 							]
 						}
@@ -2160,7 +2166,7 @@
 							"raw": "{ \n      \"facetQuery\": \"adventure\",\n      \"facetName\": \"genre\",\n      \"q\": \"prinec\"\n}"
 						},
 						"url": {
-							"raw": "{{url}}/indexes/{{indexUID}}/facet-search",
+							"raw": "{{url}}/facet-search",
 							"host": [
 								"{{url}}"
 							],
@@ -2177,7 +2183,7 @@
 			"name": "Experimental features",
 			"item": [
 				{
-					"name": "Get all experimental features Copy",
+					"name": "Get all experimental features",
 					"request": {
 						"method": "GET",
 						"header": [],
