@@ -1,0 +1,67 @@
+# Experimental
+
+The `/experimental-features` route allows you to activate or deactivate some of Meilisearch's [experimental features](/learn/experimental/overview).
+
+This route is **synchronous**. This means that no task object will be returned, and any activated or deactivated features will be made available or unavailable immediately.
+
+<Capsule intent="danger">
+The experimental API route is not compatible with all experimental features. Consult the [experimental feature overview](/learn/experimental/overview#current-experimental-features) for a compatibility list.
+</Capsule>
+
+## Experimental features object
+
+```json
+{
+  "scoreDetails": false,
+  "vectorSearch": false
+}
+```
+
+| Name               | Type    | Description                                              |
+|-:------------------|-:-------|-:--------------------------------------------------------|
+| **`scoreDetails`** | Boolean | `true` if feature is active, `false` otherwise |
+| **`vectorSearch`** | Boolean | `true` if feature is active, `false` otherwise |
+
+## Get all experimental features
+
+<RouteHighlighter method="GET" route="/experimental-features"/>
+
+Get a list of all experimental features that can be activated via the `/experimental-features` route and whether or not they are currently activated.
+
+### Example
+
+<CodeSamples id="get_experimental_features_1" />
+
+#### Response: `200 Ok`
+
+```json
+{
+  "scoreDetails": false,
+  "vectorSearch": false
+}
+```
+
+## Configure experimental features
+
+<RouteHighlighter method="PATCH" route="/experimental-features"/>
+
+Activate or deactivate experimental features.
+
+<CodeSamples id="update_experimental_features_1" />
+
+Setting a field to `null` leaves its value unchanged.
+
+#### Body
+
+```
+{<featureName>: <Boolean>}
+```
+
+#### Response: `200 Ok`
+
+```json
+{
+  "scoreDetails": true,
+  "vectorSearch": false
+}
+```

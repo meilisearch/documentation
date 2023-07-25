@@ -384,6 +384,11 @@
 			"slug": "experimental",
 			"routes": [
 					{
+							"source": "learn/experimental/overview.mdx",
+							"label": "Overview",
+							"slug": "overview"
+					},
+					{
 							"source": "learn/experimental/metrics.mdx",
 							"label": "Metrics",
 							"slug": "metrics"

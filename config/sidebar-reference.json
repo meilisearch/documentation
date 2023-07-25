@@ -67,6 +67,11 @@
             "source": "reference/api/dump.mdx",
             "label": "Dumps",
             "slug": "dump"
+        },
+        {
+            "source": "reference/api/experimental_features.mdx",
+            "label": "Experimental features",
+            "slug": "experimental_features"
         }
       ]
   },
