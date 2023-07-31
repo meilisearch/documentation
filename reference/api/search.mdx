@@ -38,7 +38,7 @@ By default, [this endpoint returns a maximum of 1000 results](/learn/advanced/kn
 | **[`limit`](#limit)**                                   | Integer          | `20`          | Maximum number of documents returned                |
 | **[`hitsPerPage`](#number-of-results-per-page)**        | Integer          | `1`           | Maximum number of documents returned for a page     |
 | **[`page`](#page)**                                     | Integer          | `1`           | Request a specific page of results                  |
-| **[`filter`](#filter)**                                 | Array of strings | `null`        | Filter queries by an attribute's value              |
+| **[`filter`](/reference/api/search#filter)**                                 | [String](/learn/fine_tuning_results/filtering#filter-expressions) | `null`        | Filter queries by an attribute's value              |
 | **[`facets`](#facets)**                                 | Array of strings | `null`        | Display the count of matches per facet              |
 | **[`attributesToRetrieve`](#attributes-to-retrieve)**   | Array of strings | `["*"]`       | Attributes to display in the returned documents     |
 | **[`attributesToCrop`](#attributes-to-crop)**           | Array of strings | `null`        | Attributes whose values have to be cropped          |
@@ -156,7 +156,7 @@ By default, [this endpoint returns a maximum of 1000 results](/learn/advanced/kn
 | **[`limit`](#limit)**                                   | Integer          | `20`          | Maximum number of documents returned                |
 | **[`hitsPerPage`](#number-of-results-per-page)**        | Integer          | `1`           | Maximum number of documents returned for a page     |
 | **[`page`](#page)**                                     | Integer          | `1`           | Request a specific page of results                  |
-| **[`filter`](#filter)**                                 | Array of strings | `null`        | Filter queries by an attribute's value              |
+| **[`filter`](/reference/api/search#filter)**                                 | [String](/learn/fine_tuning_results/filtering#filter-expressions) | `null`        | Filter queries by an attribute's value              |
 | **[`facets`](#facets)**                                 | Array of strings | `null`        | Display the count of matches per facet              |
 | **[`attributesToRetrieve`](#attributes-to-retrieve)**   | Array of strings | `["*"]`       | Attributes to display in the returned documents     |
 | **[`attributesToCrop`](#attributes-to-crop)**           | Array of strings | `null`        | Attributes whose values have to be cropped          |
@@ -169,7 +169,7 @@ By default, [this endpoint returns a maximum of 1000 results](/learn/advanced/kn
 | **[`sort`](#sort)**                                     | Array of strings | `null`        | Sort search results by an attribute's value         |
 | **[`matchingStrategy`](#matching-strategy)**            | String           | `last`        | Strategy used to match query terms within documents |
 | **[`showRankingScore`](#show-ranking-score)**           | Boolean          | `false`       | Display the global ranking score of a document      |
-**[`attributesToSearchOn`](#customize-attributes-to-search-on-at-search-time)**            | Array of strings           | `["*"]`        | Restrict search to the specified attributes |
+| **[`attributesToSearchOn`](#customize-attributes-to-search-on-at-search-time)**            | Array of strings           | `["*"]`        | Restrict search to the specified attributes |
 
 [Learn more about how to use each search parameter](#search-parameters).
 
