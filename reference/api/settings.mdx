@@ -419,15 +419,19 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 ## Faceting
 
-With Meilisearch, you can create [faceted search interfaces](/learn/fine_tuning_results/faceted_search). This setting allows you to define the maximum number of values returned by the `facets` search parameter.
+With Meilisearch, you can create [faceted search interfaces](/learn/fine_tuning_results/faceted_search). This setting allows you to:
+
+- Define the maximum number of values returned by the `facets` search parameter
+- Sort facet values by value count or alphanumeric order
 
 [To learn more about faceting, refer to our dedicated guide.](/learn/fine_tuning_results/faceted_search)
 
 ### Faceting object
 
-| Name                    | Type    | Default value | Description                                                                                                  |
-| :---------------------- | :------ | :------------ | :----------------------------------------------------------------------------------------------------------- |
-| **`maxValuesPerFacet`** | Integer | `100`         | Maximum number of facet values returned for each facet. Values are sorted in ascending lexicographical order |
+| Name                    | Type    | Default value                                                                | Description                                                                                                  |
+| :---------------------- | :------ | :--------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------- |
+| **`maxValuesPerFacet`** | Integer | `100`                                                                        | Maximum number of facet values returned for each facet. Values are sorted in ascending lexicographical order |
+| **`sortFacetValuesBy`** | Object  | All facet values are sorted in ascending alphanumeric order (`"*": "alpha"`) | Customize facet order to sort by descending value count (`count`) or ascending alphanumeric order (`alpha`)        |
 
 ### Get faceting settings
 
@@ -437,8 +441,8 @@ Get the faceting settings of an index.
 
 #### Path parameters
 
-| Name              | Type   | Description                                                               |
-| :---------------- | :----- | :------------------------------------------------------------------------ |
+| Name              | Type   | Description                                                            |
+| :---------------- | :----- | :--------------------------------------------------------------------- |
 | **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
 
 #### Example
@@ -449,7 +453,10 @@ Get the faceting settings of an index.
 
 ```json
 {
-  "maxValuesPerFacet": 100
+  "maxValuesPerFacet": 100,
+  "sortFacetValuesBy": {
+    "*": "alpha"
+  }
 }
 ```
 
@@ -461,27 +468,36 @@ Partially update the faceting settings for an index. Any parameters not provided
 
 #### Path parameters
 
-| Name              | Type   | Description                                                               |
-| :---------------- | :----- | :------------------------------------------------------------------------ |
+| Name              | Type   | Description                                                            |
+| :---------------- | :----- | :--------------------------------------------------------------------- |
 | **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
 
 #### Body
 
 ```
-{maxValuesPerFacet: <Integer>}
+{
+  "maxValuesPerFacet": <Integer>,
+  "sortFacetValuesBy":{
+      <String>: "count",
+      <String>: "alpha"
+  }
+}
 ```
 
-| Name                    | Type    | Default value | Description                                                                                                  |
-| :---------------------- | :------ | :------------ | :----------------------------------------------------------------------------------------------------------- |
-| **`maxValuesPerFacet`** | Integer | `100`         | Maximum number of facet values returned for each facet. Values are sorted in ascending lexicographical order |
+| Name                    | Type    | Default value                                                                | Description                                                                                                  |
+| :---------------------- | :------ | :--------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------- |
+| **`maxValuesPerFacet`** | Integer | `100`                                                                        | Maximum number of facet values returned for each facet. Values are sorted in ascending lexicographical order |
+| **`sortFacetValuesBy`** | Object  | All facet values are sorted in ascending alphanumeric order (`"*": "alpha"`) | Customize facet order to sort by descending value count(`count`) or ascending alphanumeric order (`alpha`)         |
 
-For example, suppose a query's search results contain a total of three values for a `colors` facet: `blue`, `green`, and `red`. If you set `maxValuesPerFacet` to `2`, Meilisearch will only return `blue` and `green` in the response body's `facetDistribution` object.
+Suppose a query's search results contain a total of three values for a `colors` facet: `blue`, `green`, and `red`. If you set `maxValuesPerFacet` to `2`, Meilisearch will only return `blue` and `green` in the response body's `facetDistribution` object.
 
 <Capsule intent="note">
 Setting `maxValuesPerFacet` to a high value might negatively impact performance.
 </Capsule>
 
 #### Example
+
+The following code sample sets `maxValuesPerFacet` to `2`, sorts the `genres` facet by descending count, and all other facets in ascending alphanumeric order:
 
 <CodeSamples id="update_faceting_settings_1" />
 
@@ -501,7 +517,7 @@ You can use the returned `taskUid` to get more details on [the status of the tas
 
 ### Reset faceting settings
 
-Reset an index's faceting settings to their [default value](#faceting-object).
+Reset an index's faceting settings to their [default value](#faceting-object). Setting `sortFacetValuesBy` to `null`(` --data-binary '{ "sortFacetValuesBy": null }'`), will restore it to the default value (`"*": "alpha"`).
 
 #### Path parameters
 

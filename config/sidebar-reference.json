@@ -29,6 +29,11 @@
             "slug": "multi_search"
         },
         {
+            "source": "reference/api/facet_search.mdx",
+            "label": "Facet search",
+            "slug": "facet_search"
+        },
+        {
             "source": "reference/api/tasks.mdx",
             "label": "Tasks",
             "slug": "tasks"
@@ -62,6 +67,11 @@
             "source": "reference/api/dump.mdx",
             "label": "Dumps",
             "slug": "dump"
+        },
+        {
+            "source": "reference/api/experimental_features.mdx",
+            "label": "Experimental features",
+            "slug": "experimental_features"
         }
       ]
   },

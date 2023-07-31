@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "01fa1db8-f183-4b88-adaa-d139f7d945e3",
-		"name": "Meilisearch v1.2",
+		"_postman_id": "af5f1b99-255f-4eb3-9756-6636be3a0f16",
+		"name": "Meilisearch v1.3",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -121,7 +121,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/indexes/{{indexUID}}/documents?csvDelimiter=;",
+							"raw": "{{url}}/indexes/{{indexUID}}/documents",
 							"host": [
 								"{{url}}"
 							],
@@ -161,7 +161,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/indexes/{{indexUID}}/documents?csvDelimiter=;",
+							"raw": "{{url}}/indexes/{{indexUID}}/documents",
 							"host": [
 								"{{url}}"
 							],
@@ -397,6 +397,16 @@
 								{
 									"key": "hitsPerPage",
 									"value": "50",
+									"disabled": true
+								},
+								{
+									"key": "showRankingScore",
+									"value": "true",
+									"disabled": true
+								},
+								{
+									"key": "attributesToSearchOn",
+									"value": "title",
 									"disabled": true
 								}
 							]
@@ -1767,7 +1777,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"maxValuesPerFacet\": 3000\n}"
+									"raw": "{\n    \"maxValuesPerFacet\": 3000,\n    \"sortFacetValuesBy\": {\n        \"*\": \"alpha\",\n        \"genre\": \"count\"\n      }\n}"
 								},
 								"url": {
 									"raw": "{{url}}/indexes/{{indexUID}}/settings/faceting",
@@ -2134,6 +2144,86 @@
 							""
 						]
 					}
+				}
+			]
+		},
+		{
+			"name": "Facet search",
+			"item": [
+				{
+					"name": "Search for facet values",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \n      \"facetQuery\": \"adventure\",\n      \"facetName\": \"genre\",\n      \"q\": \"prinec\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/facet-search",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"facet-search"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Experimental features",
+			"item": [
+				{
+					"name": "Get all experimental features",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/experimental-features",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"experimental-features"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Configure an experimental feature",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"scoreDetails\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/experimental-features",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"experimental-features"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}

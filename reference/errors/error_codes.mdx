@@ -126,6 +126,10 @@ The [`offset`](/reference/api/keys#query-parameters) parameter is invalid. It sh
 
 The given [`uid`](/reference/api/keys#uid) is invalid. The `uid` must follow the [uuid v4](https://www.sohamkamani.com/uuid-versions-explained) format.
 
+## `invalid_search_attributes_to_search_on`
+
+The value passed to [`attributesToSearchOn`](/reference/api/search#select-attributes-to-search) is invalid. `attributesToSearchOn` accepts an array of strings indicating document attributes. Attributes given to `attributesToSearchOn` must be present in the [`searchableAttributes` list](/learn/index_settings/displayed_searchable_attributes#the-searchable-attributes-list).
+
 ## `invalid_content_type`
 
 The [Content-Type header](/reference/api/overview#content-type) is not supported by Meilisearch. Currently, Meilisearch only supports JSON, CSV, and NDJSON.
@@ -163,6 +167,14 @@ The [`offset`](/reference/api/documents#query-parameters) parameter is invalid. 
 ## `invalid_document_geo_field`
 
 The provided `_geo` field of one or more documents is invalid. Meilisearch expects `_geo` to be an object with two fields, `lat` and `lng`, each containing geographic coordinates expressed as a string or floating point number. Read more about `_geo` and how to troubleshoot it in [our dedicated guide](/learn/fine_tuning_results/geosearch).
+
+## `invalid_facet_search_facet_name`
+
+The attribute used for the `facetName` field is either not a string or not defined in the [`filterableAttributes` list](/reference/api/settings#filterable-attributes).
+
+## `invalid_facet_search_facet_query`
+
+The provided value for `facetQuery` is invalid. It should either be a string or `null`.
 
 ## `invalid_index_limit`
 
@@ -267,7 +279,11 @@ The value of [displayed attributes](/learn/configuration/displayed_searchable_at
 
 The value of [distinct attributes](/learn/configuration/distinct) is invalid. It should be a string or set to `null`.
 
-## `invalid_settings_faceting`
+## `invalid_settings_faceting_sort_facet_values_by`
+
+The value provided for the [`sortFacetValuesBy`](/reference/api/settings#faceting-object) object is incorrect. The accepted values are `alpha` or `count`.
+
+## `invalid_settings_faceting_max_values_per_facet`
 
 The value for the [`maxValuesPerFacet`](/reference/api/settings#faceting-object) field is invalid. It should either be an integer or set to `null`.
 
@@ -427,6 +443,10 @@ A document does not contain any value for the required primary key, and is thus 
 ## `missing_index_uid`
 
 The payload is missing the [`uid`](/reference/api/indexes#index-object) field.
+
+## `missing_facet_search_facet_name`
+
+The [`facetName`](/reference/api/facet_search#body) parameter is required.
 
 ## `missing_master_key`
 

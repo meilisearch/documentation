@@ -384,6 +384,11 @@
 			"slug": "experimental",
 			"routes": [
 					{
+							"source": "learn/experimental/overview.mdx",
+							"label": "Overview",
+							"slug": "overview"
+					},
+					{
 							"source": "learn/experimental/metrics.mdx",
 							"label": "Metrics",
 							"slug": "metrics"
@@ -392,6 +397,16 @@
 							"source": "learn/experimental/reduce-indexing-memory-usage.mdx",
 							"label": "Reduce indexing memory usage",
 							"slug": "reduce-indexing-memory-usage"
+					},
+					{
+						  "source": "learn/experimental/ranking_rule_score_details.mdx",
+						  "label": "Detailed ranking scores",
+						  "slug": "ranking_rule_score_details"
+				  },
+					{
+							"source": "learn/experimental/vector_search.mdx",
+							"label": "Vector search",
+							"slug": "vector_search"
 					}
 			]
 	},
