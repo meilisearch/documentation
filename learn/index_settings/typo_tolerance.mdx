@@ -63,7 +63,7 @@ With the above settings, matches in the `title` attribute will not tolerate any 
 
 ## Impact of typo tolerance on the `typo` ranking rule
 
-The [`typo` ranking rule](/learn/core_concepts/relevancy#_2-typo) sorts search results by increasing number of typos on matched query words. Documents with 0 typos will rank highest, followed by those with 1 and then 2 typos.
+The [`typo` ranking rule](/learn/core_concepts/relevancy#2-typo) sorts search results by increasing number of typos on matched query words. Documents with 0 typos will rank highest, followed by those with 1 and then 2 typos.
 
 The presence or absence of the `typo` ranking rule has no impact on the typo tolerance setting. However, **[disabling the typo tolerance setting](#configuring-typo-tolerance) effectively also disables the `typo` ranking rule.** This is because all returned documents will contain `0` typos.
 

@@ -74,7 +74,7 @@ For security reasons, we do not recommend creating keys that can perform all act
 
 | Name                   | Description                                                                                                                                                                                                                                                                                                                  |
 | :--------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **`search`**           | Provides access to both [`POST`](/reference/api/search#search-in-an-index-with-post-route) and [`GET`](/reference/api/search#search-in-an-index-with-get-route) search endpoints                                                                                                                                             |
+| **`search`**           | Provides access to both [`POST`](/reference/api/search#search-in-an-index-with-post) and [`GET`](/reference/api/search#search-in-an-index-with-get) search endpoints                                                                                                                                             |
 | **`documents.add`**    | Provides access to the [add documents](/reference/api/documents#add-or-replace-documents) and [update documents](/reference/api/documents#add-or-update-documents) endpoints                                                                                                                                                 |
 | **`documents.get`**    | Provides access to the [get one document](/reference/api/documents#get-one-document), [get documents with POST](/reference/api/documents#get-documents-with-post), and [get documents with GET](/reference/api/documents#get-documents-with-get) endpoints  endpoints                                                        |
 | **`documents.delete`** | Provides access to the [delete one document](/reference/api/documents#delete-one-document), [delete all documents](/reference/api/documents#delete-all-documents), [batch delete](/reference/api/documents#delete-documents-by-batch), and [delete by filter](/reference/api/documents#delete-documents-by-filter) endpoints |
@@ -217,7 +217,7 @@ API keys are displayed in descending order based on their `createdAt` date. This
 
 <RouteHighlighter method="GET" route="/keys/{key_or_uid}"/>
 
-Get information on the specified key. Attempting to use this endpoint with a non-existent or deleted key will result in [an error](/reference/errors/error_codes#api-key-not-found).
+Get information on the specified key. Attempting to use this endpoint with a non-existent or deleted key will result in [an error](/reference/errors/error_codes#api_key_not_found).
 
 ### Path parameters
 
