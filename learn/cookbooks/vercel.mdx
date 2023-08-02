@@ -1,0 +1,65 @@
+# Integrate Meilisearch Cloud with Vercel
+
+
+Getting a Meilisearch cloud instance created and linked to your Vercel projects has never been easier. 
+
+## Introducing our tools
+### What is Vercel?
+
+[Vercel](https://vercel.com/) is a cloud platform for building and deploying web applications easily. It works seamlessly out of the box with most popular web development tools.
+
+### What is Meilisearch Cloud?
+[Meilisearch Cloud](https://www.meilisearch.com/cloud) is a cloud-based SaaS platform, built on top of the Meilisearch open-source search engine, a flexible and powerful user-focused search engine that can be added to any website or application. 
+
+## Create a Vercel project and integrate Meilisearch
+From your Vercel dashboard, create a new project. You can create a project from a template, or import a Git repository.
+
+![Create a new project on Vercel dashboard](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/vercel/01.create-new-project-on-vercel-dashboard.png)
+
+
+Select the project of your choice and then click on **Deploy**. Once the deployment is complete, you will be able to go back to your project’s dashboard. 
+
+Go to the project settings tab, and then click on **Integrations**, on the left-side menu.
+
+![Selecting the integration tab in the project settings](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/vercel/02.project-settings-integrations-tab.png)
+
+Search for the [Meilisearch Cloud integration](https://vercel.com/integrations/meilisearch) in the search bar. The integration page should look like this. Click on the **Add integration** button.
+
+![Meilisearch Cloud integration page in Vercel's marketplace](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/vercel/03.meilisearch-cloud-integration-page-in-marketplace.png)
+
+Select the Vercel account or team and the project you want to add the integration to. You have the flexibility to add it to all your projects or select specific ones (one or multiple projects).
+
+![Form to add Meilisearch Cloud integration, the "Specific projects" option is selected](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/vercel/04.add-meilisearch-cloud-form.png)
+
+Click on **Continue**. It will display the list of rights the integration needs to work properly, you can then click on **Add Integration**.
+
+Next, it will take you to the Meilisearch Cloud page. Log in or create an account. New accounts enjoy a 14-day free trial period.
+
+You can choose an existing project or create a new one. To do so, complete the form with the project name and the region.
+
+![Meilisearch Cloud form to create a project complete, with "search-app" as the project's name and "Frankfurt" as the region](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/vercel/05.create-a-meilisearch-cloud-project-form.png)
+
+Once you click on **Create project**, you should see the following message:
+“Your Meilisearch + Vercel integration is one click away from being completed.” and a button to finish the setup. On clicking the button, it should redirect you to the integration page in your Vercel Dashboard.
+
+![Meilisearch Cloud integration page in Vercel's dashboard](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/vercel/06.meilisearch-cloud-integration-page-in-vercel-dashboard.png)
+
+Meilisearch creates two default API keys: [`Default Search API Key` and `Default Admin API Key`](https://www.meilisearch.com/docs/learn/security/master_api_keys#using-default-api-keys-for-authorization). With the `Default Admin API Key`, you can control who can access or create new documents, indexes, or change the configuration. The `Default Search API Key` can only be used to access the [search route](https://www.meilisearch.com/docs/reference/api/search). It is the one you want to use in your front end.
+
+Both keys are automatically added to Vercel along with the Meilisearch host or URL.
+
+You can now go back to your project settings and check the new Meilisearch Environment Variables:
+- `MEILISEARCH_ADMIN_KEY`
+- `MEILISEARCH_URL`
+- `MEILISEARCH_SEARCH_KEY`
+
+![Display the environment variables in the project settings](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/vercel/07.project-settings-environment-variables-tab.png)
+
+The master key–which hasn’t been added to Vercel–grants users full control over an instance, you can find it in your project’s overview on your [Meilisearch Cloud dashboard](https://cloud.meilisearch.com/projects/). Read more about [Meilisearch security](https://www.meilisearch.com/docs/learn/security/master_api_keys).
+
+![Meilisearch Cloud dashboard: overview of the "search-app" project](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/vercel/08.meilisearch-cloud-dashboard.png)
+
+From your [Meilisearch Cloud dashboard](https://cloud.meilisearch.com/projects/), you can easily index your documents and manage your settings. 
+We also provide a big set of [SDKs and tools](https://www.meilisearch.com/docs/learn/what_is_meilisearch/sdks), so you can use Meilisearch in your favorite language or framework. Check out our [quick start guide](https://www.meilisearch.com/docs/learn/getting_started/quick_start#add-documents).
+
+You are now ready to start searching!
