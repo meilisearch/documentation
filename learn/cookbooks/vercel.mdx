@@ -9,7 +9,7 @@ Getting a Meilisearch cloud instance created and linked to your Vercel projects 
 [Vercel](https://vercel.com/) is a cloud platform for building and deploying web applications easily. It works seamlessly out of the box with most popular web development tools.
 
 ### What is Meilisearch Cloud?
-[Meilisearch Cloud](https://www.meilisearch.com/cloud) is a cloud-based SaaS platform, built on top of the Meilisearch open-source search engine, a flexible and powerful user-focused search engine that can be added to any website or application. 
+[Meilisearch Cloud](https://www.meilisearch.com/cloud) is a cloud-based SaaS platform, built on top of the Meilisearch open-source search engine.
 
 ## Create a Vercel project and integrate Meilisearch
 From your Vercel dashboard, create a new project. You can create a project from a template, or import a Git repository.
@@ -44,7 +44,7 @@ Once you click on **Create project**, you should see the following message:
 
 ![Meilisearch Cloud integration page in Vercel's dashboard](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/vercel/06.meilisearch-cloud-integration-page-in-vercel-dashboard.png)
 
-Meilisearch creates two default API keys: [`Default Search API Key` and `Default Admin API Key`](https://www.meilisearch.com/docs/learn/security/master_api_keys#using-default-api-keys-for-authorization). With the `Default Admin API Key`, you can control who can access or create new documents, indexes, or change the configuration. The `Default Search API Key` can only be used to access the [search route](https://www.meilisearch.com/docs/reference/api/search). It is the one you want to use in your front end.
+Meilisearch creates two default API keys: [`Default Search API Key` and `Default Admin API Key`](/learn/security/master_api_keys#using-default-api-keys-for-authorization). With the `Default Admin API Key`, you can control who can access or create new documents, indexes, or change the configuration. The `Default Search API Key` can only be used to access the [search route](/reference/api/search). It is the one you want to use in your front end.
 
 Both keys are automatically added to Vercel along with the Meilisearch host or URL.
 
@@ -60,6 +60,6 @@ The master key–which hasn’t been added to Vercel–grants users full control
 ![Meilisearch Cloud dashboard: overview of the "search-app" project](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/vercel/08.meilisearch-cloud-dashboard.png)
 
 From your [Meilisearch Cloud dashboard](https://cloud.meilisearch.com/projects/), you can easily index your documents and manage your settings. 
-We also provide a big set of [SDKs and tools](https://www.meilisearch.com/docs/learn/what_is_meilisearch/sdks), so you can use Meilisearch in your favorite language or framework. Check out our [quick start guide](https://www.meilisearch.com/docs/learn/getting_started/quick_start#add-documents).
+We also provide a big set of [SDKs and tools](/learn/what_is_meilisearch/sdks), so you can use Meilisearch in your favorite language or framework. Check out our [quick start guide](https://www.meilisearch.com/docs/learn/getting_started/quick_start#add-documents).
 
-You are now ready to start searching!
+You are now ready to [start searching]((/reference/api/search))!

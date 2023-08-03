@@ -2,4 +2,4 @@
 .code-samples.meilisearch.yaml @meilisearch/integration-team
 
 # CaroFG is responsible for updating the Vercel cookbook
-learn/cookbooks/vercel.mdx @CaroFG
+/learn/cookbooks/vercel.mdx @CaroFG
