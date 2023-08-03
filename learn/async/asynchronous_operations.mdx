@@ -222,4 +222,4 @@ Had the task failed, the response would have included a detailed `error` object:
 
 If the task had been [canceled](/reference/api/tasks#cancel-tasks) while it was `enqueued` or `processing`, it would have the `canceled` status and a non-`null` value for the `canceledBy` field.
 
-After a task has been [deleted](/reference/api/tasks#delete-tasks), trying to access it returns a [`task_not_found`](/reference/errors/error_codes#task-not-found) error.
+After a task has been [deleted](/reference/api/tasks#delete-tasks), trying to access it returns a [`task_not_found`](/reference/errors/error_codes#task_not_found) error.
