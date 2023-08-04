@@ -51,7 +51,7 @@ Use the `Default Admin API Key`, to control who can access or create new documen
 
 Use the `Default Search API Key` to access the [search route](/reference/api/search). This is the one you want to use in your front end.
 
-Both keys are automatically added to Vercel along with the Meilisearch host or URL.
+Both keys are automatically added to Vercel along with the Meilisearch URL.
 
 Go back to your project settings and check the new Meilisearch environment variables:
 - `MEILISEARCH_ADMIN_KEY`
@@ -60,7 +60,9 @@ Go back to your project settings and check the new Meilisearch environment varia
 
 ![Display the environment variables in the project settings](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/vercel/07.project-settings-environment-variables-tab.png)
 
-The master key–which hasn’t been added to Vercel–grants users full control over an instance, you can find it in your project’s overview on your [Meilisearch Cloud dashboard](https://cloud.meilisearch.com/projects/). Read more about [Meilisearch security](https://www.meilisearch.com/docs/learn/security/master_api_keys).
+<Capsule intent="tip">
+The master key–which hasn’t been added to Vercel–grants users full control over an instance. You can find it in your project’s overview on your [Meilisearch Cloud dashboard](https://cloud.meilisearch.com/projects/). Read more about [Meilisearch security](https://www.meilisearch.com/docs/learn/security/master_api_keys).
+</Capsule>
 
 ![Meilisearch Cloud dashboard: overview of the "search-app" project](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/vercel/08.meilisearch-cloud-dashboard.png)
 
