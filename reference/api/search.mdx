@@ -57,7 +57,7 @@ By default, [this endpoint returns a maximum of 1000 results](/learn/advanced/kn
 
 #### Placeholder search
 
-Placeholder search is a search with an empty `q` parameter. Since there is no query term, the [built-in ranking rules](/learn/core_concepts/relevancy#ranking-rules) **do not apply.** Only [sort](/learn/core_concepts/relevancy#_5-sort) and [custom ranking rules](/learn/core_concepts/relevancy#custom-rules) are taken into account.
+Placeholder search is a search with an empty `q` parameter. Since there is no query term, the [built-in ranking rules](/learn/core_concepts/relevancy#ranking-rules) **do not apply.** Only [sort](/learn/core_concepts/relevancy#5-sort) and [custom ranking rules](/learn/core_concepts/relevancy#custom-rules) are taken into account.
 
 If the index has no sort or custom ranking rules, the results are returned in the order of their internal database position.
 
@@ -495,7 +495,7 @@ Meilisearch will throw an error if the top right corner is under the bottom left
 
 </Tabs.Container>
 
-If any parameters are invalid or missing, Meilisearch returns an [`invalid_search_filter`](/reference/errors/error_codes#invalid-search-filter) error.
+If any parameters are invalid or missing, Meilisearch returns an [`invalid_search_filter`](/reference/errors/error_codes#invalid_search_filter) error.
 
 ### Facets
 
@@ -843,7 +843,7 @@ When using the `POST` route, `sort` expects an array of strings.
 
 When using the `GET` route, `sort` expects the list as a comma-separated string.
 
-[Read more about sorting search results in our dedicated guide.](/learn/advanced/sorting)
+[Read more about sorting search results in our dedicated guide.](/learn/fine_tuning_results/sorting)
 
 #### Example
 
@@ -875,7 +875,7 @@ Queries using `_geoPoint` will always include a `geoDistance` field containing t
 ]
 ```
 
-[You can read more about location-based sorting in our dedicated guide.](/learn/fine_tuning_results/geosearch#sorting-results-with-geopoint)
+[You can read more about location-based sorting in our dedicated guide.](/learn/fine_tuning_results/geosearch#sorting-results-with-_geopoint)
 
 ### Matching strategy
 
