@@ -22,6 +22,8 @@ This repository is the documentation for the **open-source search engine API [Me
 
 ## Contributing
 
+Test
+
 Hey, thank you so much for wanting to contribute! If you'd like to help improve this documentation, we'd love to have you!
 
 For more information, see the [contributing overview](/learn/contributing/contributing_docs.mdx).
