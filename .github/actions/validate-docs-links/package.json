@@ -1,11 +1,12 @@
 {
   "private": true,
   "exports": "./lib/index.js",
+  "type": "module",
   "files": [
     "src"
   ],
   "scripts": {
-    "test": "yarn ts-node --files src/checker.ts",
+    "test": "yarn ts-node --esm --files src/checker.ts",
     "build": "yarn run types && ncc -m -o ./lib build src/index.ts --license licenses.txt",
     "types": "tsc"
   },
