@@ -1,22 +1,23 @@
 {
   "private": true,
-  "type": "module",
   "exports": "./lib/index.js",
   "files": [
     "src"
   ],
   "scripts": {
-    "build": "npm run types && ncc -m -o ./lib build src/index.ts --license licenses.txt",
+    "test": "yarn ts-node --files src/checker.ts",
+    "build": "yarn run types && ncc -m -o ./lib build src/index.ts --license licenses.txt",
     "types": "tsc"
   },
   "devDependencies": {
     "@types/github-slugger": "^1.3.0",
-    "@vercel/ncc": "0.34.0"
+    "@types/node": "^20.4.9",
+    "@vercel/ncc": "0.34.0",
+    "ts-node": "^10.9.1"
   },
   "dependencies": {
     "@actions/core": "^1.10.0",
     "@actions/github": "^5.1.1",
-    "@types/node": "^20.4.1",
     "github-slugger": "1.2.0",
     "gray-matter": "4.0.2",
     "rehype-raw": "4.0.1",
