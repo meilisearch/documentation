@@ -4,9 +4,12 @@
   "files": [
     "src"
   ],
+  "type": "module",
   "scripts": {
-    "test": "ts-node --files src/checker.ts",
-    "build": "yarn run types && ncc -m -o ./lib build src/index.ts --target es --license licenses.txt",
+    "local:build": "yarn run types && ncc -m -o ./dist build src/checker.ts && yarn local:check",
+    "local:check": "node lib/checker --run-local-checker",
+    "action:build": "yarn run types && ncc -m -o ./lib build src/index.ts --license licenses.txt",
+    "build": "yarn action:build",
     "types": "tsc"
   },
   "devDependencies": {

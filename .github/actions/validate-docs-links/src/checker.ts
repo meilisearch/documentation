@@ -66,7 +66,7 @@ type FailureFunction =  (message: string) => void
 const RELATIVE_PATH = '/'
 const EXCLUDED_HASHES = ['top']
 
-const slugger = (require.main === module) ? {
+const slugger = (process.argv[2] === '--run-local-checker') ? {
   slug: (str: string) => str.replace(/\s+/g, '-').toLowerCase(),
   reset: () => null
 } : new GithubSlugger()
@@ -240,7 +240,7 @@ const formatTableRow = (
   docPath: string,
   sha?: string
 ) => {
-  if (require.main === module) return `| ${link} | ${errorType} | /${docPath} | \n`
+  if (process.argv[2] === '--run-local-checker') return `| ${link} | ${errorType} | /${docPath} | \n`
   return `| ${link} | ${errorType} | [/${docPath}](https://github.com/meilisearch/documentation/blob/${sha}/${docPath}) | \n`
 }
 
@@ -322,6 +322,6 @@ export async function validateAllInternalLinks(basePath: string, setFailed: Fail
   }
 }
 
-if (require.main === module) {
+if (process.argv[2] === '--run-local-checker') {
   validateAllInternalLinks('../../../', (message) => {throw new Error(message)})
 }

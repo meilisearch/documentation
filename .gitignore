@@ -120,4 +120,7 @@ yarn-error.log
 
 .vuepress/code-samples/generated-samples.json
 
+### Links checker
+.github/actions/validate-docs-links/dist
+
 # End of https://www.gitignore.io/api/vue,node,vuejs
