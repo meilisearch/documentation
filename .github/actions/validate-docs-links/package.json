@@ -7,7 +7,7 @@
   "type": "module",
   "scripts": {
     "local:build": "yarn run types && ncc -m -o ./dist build src/checker.ts && yarn local:check",
-    "local:check": "node lib/checker --run-local-checker",
+    "local:check": "node dist --run-local-checker",
     "action:build": "yarn run types && ncc -m -o ./lib build src/index.ts --license licenses.txt",
     "build": "yarn action:build",
     "types": "tsc"
