@@ -6,7 +6,7 @@
   ],
   "scripts": {
     "test": "ts-node --files src/checker.ts",
-    "build": "yarn run types && ncc -m -o ./lib build src/index.ts --target es2015 --license licenses.txt",
+    "build": "yarn run types && ncc -m -o ./lib build src/index.ts --target es --license licenses.txt",
     "types": "tsc"
   },
   "devDependencies": {
