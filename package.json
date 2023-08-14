@@ -5,7 +5,7 @@
   "main": "index.js",
   "dependencies": {},
   "scripts": {
-    "links-check": "cd .github/actions/validate-docs-links && yarn && yarn local:build" 
+    "links-check": "cd .github/actions/validate-docs-links && yarn && yarn local:check" 
   },
   "repository": {
     "type": "git",
