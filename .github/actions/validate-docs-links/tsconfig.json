@@ -6,6 +6,13 @@
     "rootDir": "./src",
     "strict": true,
     "noImplicitAny": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+  },
+  "ts-node": {
+    // "esModuleInterop": true,
+    // "esm": true,
+    // "compilerOptions": {
+    //   "module": "CommonJS",
+    // }
   }
 }
