@@ -64,12 +64,9 @@ type ConfigSchema =  Array<{title: string, slug: string, routes: Array<RouteSche
 type FailureFunction =  (message: string) => void
 
 const RELATIVE_PATH = '/'
-const EXCLUDED_HASHES = ['top']
+const EXCLUDED_HASHES: string[] = []
 
-const slugger = (process.argv[2] === '--run-local-checker') ? {
-  slug: (str: string) => str.replace(/\s+/g, '-').toLowerCase(),
-  reset: () => null
-} : new GithubSlugger()
+const slugger = new GithubSlugger()
 
 // Collect the paths of all .mdx files present in the config files
 async function getAllMdxFilePaths(basePath: string): Promise<RouteFragment[]> {
