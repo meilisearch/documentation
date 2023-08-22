@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "dependencies": {},
-  "scripts": {},
+  "scripts": {
+    "links-check": "cd .github/actions/validate-docs-links && yarn && yarn local:check" 
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/meilisearch/documentation.git"

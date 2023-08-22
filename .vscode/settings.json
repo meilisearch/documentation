@@ -1,0 +1,3 @@
+{
+    "typescript.tsdk": ".github/actions/validate-docs-links/node_modules/typescript/lib"
+}
