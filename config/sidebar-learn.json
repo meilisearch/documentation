@@ -335,6 +335,11 @@
 							"source": "learn/cookbooks/http2_ssl.mdx",
 							"label": "Set up HTTP/2 SSL",
 							"slug": "http2_ssl"
+					},
+					{
+						"source": "learn/cookbooks/vercel.mdx",
+						"label": "Integrate Meilisearch Cloud with Vercel",
+						"slug": "vercel"
 					}
 			]
 	},

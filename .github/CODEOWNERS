@@ -1,2 +1,5 @@
 # The integrations-team is responsible for reviewing the code-samples.
 .code-samples.meilisearch.yaml @meilisearch/integration-team
+
+# CaroFG is responsible for updating the Vercel cookbook
+/learn/cookbooks/vercel.mdx @CaroFG
