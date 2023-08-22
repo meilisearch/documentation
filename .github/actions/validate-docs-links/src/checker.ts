@@ -309,7 +309,7 @@ export async function validateAllInternalLinks(basePath: string, setFailed: Fail
       })
 
       console.log('This PR introduces broken links to the docs:')
-      console.table(errorTableData, ['link', 'type', 'docPath'])
+      console.table(errorTableData, ['link', 'errorType', 'docPath'])
     } else {
       await useComment?.('All broken links are now fixed, thank you!', errorsExist)
       console.log("This PR doesn't introduce any broken links to the docs. :D")
