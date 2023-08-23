@@ -1,94 +1,94 @@
 [
   {
-      "title": "API reference",
-      "slug": "api",
-      "routes": [
-        {
-            "source": "reference/api/overview.mdx",
-            "label": "Overview",
-            "slug": "overview"
-        },
-        {
-            "source": "reference/api/indexes.mdx",
-            "label": "Indexes",
-            "slug": "indexes"
-        },
-        {
-            "source": "reference/api/documents.mdx",
-            "label": "Documents",
-            "slug": "documents"
-        },
-        {
-            "source": "reference/api/search.mdx",
-            "label": "Search",
-            "slug": "search"
-        },
-        {
-            "source": "reference/api/multi_search.mdx",
-            "label": "Multi-search",
-            "slug": "multi_search"
-        },
-        {
-            "source": "reference/api/facet_search.mdx",
-            "label": "Facet search",
-            "slug": "facet_search"
-        },
-        {
-            "source": "reference/api/tasks.mdx",
-            "label": "Tasks",
-            "slug": "tasks"
-        },
-        {
-            "source": "reference/api/keys.mdx",
-            "label": "Keys",
-            "slug": "keys"
-        },
-        {
-            "source": "reference/api/settings.mdx",
-            "label": "Settings",
-            "slug": "settings"
-        },
-        {
-            "source": "reference/api/stats.mdx",
-            "label": "Stats",
-            "slug": "stats"
-        },
-        {
-            "source": "reference/api/health.mdx",
-            "label": "Health",
-            "slug": "health"
-        },
-        {
-            "source": "reference/api/version.mdx",
-            "label": "Version",
-            "slug": "version"
-        },
-        {
-            "source": "reference/api/dump.mdx",
-            "label": "Dumps",
-            "slug": "dump"
-        },
-        {
-            "source": "reference/api/experimental_features.mdx",
-            "label": "Experimental features",
-            "slug": "experimental_features"
-        }
-      ]
+    "title": "API reference",
+    "slug": "api",
+    "routes": [
+      {
+        "source": "reference/api/overview.mdx",
+        "label": "Overview",
+        "slug": "overview"
+      },
+      {
+        "source": "reference/api/indexes.mdx",
+        "label": "Indexes",
+        "slug": "indexes"
+      },
+      {
+        "source": "reference/api/documents.mdx",
+        "label": "Documents",
+        "slug": "documents"
+      },
+      {
+        "source": "reference/api/search.mdx",
+        "label": "Search",
+        "slug": "search"
+      },
+      {
+        "source": "reference/api/multi_search.mdx",
+        "label": "Multi-search",
+        "slug": "multi_search"
+      },
+      {
+        "source": "reference/api/facet_search.mdx",
+        "label": "Facet search",
+        "slug": "facet_search"
+      },
+      {
+        "source": "reference/api/tasks.mdx",
+        "label": "Tasks",
+        "slug": "tasks"
+      },
+      {
+        "source": "reference/api/keys.mdx",
+        "label": "Keys",
+        "slug": "keys"
+      },
+      {
+        "source": "reference/api/settings.mdx",
+        "label": "Settings",
+        "slug": "settings"
+      },
+      {
+        "source": "reference/api/stats.mdx",
+        "label": "Stats",
+        "slug": "stats"
+      },
+      {
+        "source": "reference/api/health.mdx",
+        "label": "Health",
+        "slug": "health"
+      },
+      {
+        "source": "reference/api/version.mdx",
+        "label": "Version",
+        "slug": "version"
+      },
+      {
+        "source": "reference/api/dump.mdx",
+        "label": "Dumps",
+        "slug": "dump"
+      },
+      {
+        "source": "reference/api/experimental_features.mdx",
+        "label": "Experimental features",
+        "slug": "experimental_features"
+      }
+    ]
   },
   {
     "title": "Errors",
     "slug": "errors",
     "routes": [
-        {
-            "source": "reference/errors/overview.mdx",
-            "label": "Overview",
-            "slug": "overview"
-        },
-        {
-            "source": "reference/errors/error_codes.mdx",
-            "label": "Error codes",
-            "slug": "error_codes"
-        }
+      {
+        "source": "reference/errors/overview.mdx",
+        "label": "Overview",
+        "slug": "overview"
+      },
+      {
+        "source": "reference/errors/error_codes.mdx",
+        "label": "Error codes",
+        "slug": "error_codes"
+      }
     ]
   }
 ]
