@@ -30,10 +30,6 @@ Go to the project settings tab and click on **Integrations** on the sidebar menu
 
 Search for the [Meilisearch integration](https://vercel.com/integrations/meilisearch-cloud) in the search bar. Click on the **Add integration** button.
 
-<Capsule intent="warning">
-Meilisearch integration is currently not accessible via Vercel's marketplace search. You can access the integration directly by visiting the [Meilisearch integration page](https://vercel.com/integrations/meilisearch-cloud).
-</Capsule>
-
 ![Meilisearch integration page in Vercel's marketplace](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/vercel/03.meilisearch-cloud-integration-page-in-marketplace.png)
 
 Select the Vercel account or team and the project you to which you want to add the integration. You may add the Meilisearch integration to one or more projects in this menu.
@@ -80,6 +76,10 @@ Go back to your project settings and check the new Meilisearch environment varia
 - `MEILISEARCH_SEARCH_KEY`
 
 ![Display the environment variables in the project settings](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/vercel/07.project-settings-environment-variables-tab.png)
+
+<Capsule intent="tip">
+When using [Next.js](https://nextjs.org/), ensure you prefix your browser-facing environment variables with `NEXT_PUBLIC_`. This makes them available to the browser side of your application.
+</Capsule>
 
 ## Take advantage of the Meilisearch Cloud dashboard
 
