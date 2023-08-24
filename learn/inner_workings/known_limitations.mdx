@@ -127,7 +127,7 @@ user = 1 OR user = 2 […] OR user = 1500 OR user = 1501 […] OR user = 2000 OR
 
 ## Facet Search limitation
 
-**Limitation:** The current limitation of retrievable facets is 100. When altering the facet amount the search will still only return 100.
+**Limitation:** When [searching for facet values](reference/api/facet_search), Meilisearch returns a maximum of 100 facets.
 
 **Explanation:** This facet limit is not customizable at the current time, the maxValuesPerFacet attribute does not change the amount of facets shown by the facet value feature but the number which is shown by facetDistribution. This will be considered for future implementation.
 
