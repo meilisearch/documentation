@@ -124,3 +124,10 @@ user = 1 OR user = 2 […] OR user = 1500 OR user = 1501 […] OR user = 2000 OR
 **Limitation:** Meilisearch can accommodate an arbitrary number of indexes as long as their size does not exceed 2TiB. When dealing with larger indexes, Meilisearch can accommodate up to 20 indexes as long as their combined size does not exceed the OS's virtual address space limit.
 
 **Explanation:** While Meilisearch supports an arbitrary number of indexes under 2TiB, accessing hundreds of different databases in short periods of time might lead to decreased performance and should be avoided when possible.
+
+## Facet Search limitation
+
+**Limitation:** When [searching for facet values](reference/api/facet_search), Meilisearch returns a maximum of 100 facets.
+
+**Explanation:** the limit to the maximum number of returned facets has been implemented to offer a good balance between usability and comprehensive results. Facet search allows users to filter a large list of facets so they may quickly find categories relevant to their query. This is different from searching through an index of documents. Faceting index settings such as `maxValuesPerFacet` limit the have no impact in facet search and only affect queries searching through documents.
+
