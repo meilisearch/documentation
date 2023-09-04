@@ -45,6 +45,11 @@
         "slug": "quick_start"
       },
       {
+        "source": "learn/getting_started/cloud_quick_start.mdx",
+        "label": "Getting started with Meilisearch Cloud",
+        "slug": "cloud_quick_start"
+      },
+      {
         "source": "learn/getting_started/search_preview.mdx",
         "label": "Search preview",
         "slug": "search_preview"
