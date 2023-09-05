@@ -2,6 +2,7 @@ const fs = require('fs/promises')
 const path = require('path')
 const unified = require('unified')
 const markdown = require('remark-parse')
+const remarkMdx = require('remark-mdx')
 const remarkToRehype = require('remark-rehype')
 const raw = require('rehype-raw')
 const visit = require('unist-util-visit')
@@ -65,6 +66,7 @@ type FailureFunction =  (message: string) => void
 
 const RELATIVE_PATH = '/'
 const EXCLUDED_HASHES: string[] = []
+const EXCLUDED_TAGS = ['a', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'code', 'img', 'iframe', 'nav', 'blockquote', 'hr', 'li', 'ol', 'pre', 'ul']
 
 const slugger = new GithubSlugger()
 
@@ -115,6 +117,7 @@ function getHeadingsFromMarkdownTree(tree: Node<Data>): string[] {
 // Create a processor to parse MDX content
 const markdownProcessor = unified()
   .use(markdown)
+  .use(remarkMdx)
   .use(remarkToRehype, { allowDangerousHTML: true })
   .use(raw)
   .use(function compiler() {
@@ -166,14 +169,6 @@ function validateInternalLink(errors: Errors, href: string): void {
   if (!foundPage) {
     errors.link.push(href)
   } else if (hash && !EXCLUDED_HASHES.includes(hash)) {
-    // TODO: Check if this block is still needed
-    // // Account for documents that pull their content from another document
-    // const foundPageSource = foundPage.source
-    //   ? documentMap.get(foundPage.source)
-    //   : undefined
-
-    // Check if the hash link points to an existing section within the document
-    // const hashFound = (foundPageSource || foundPage).headings.includes(hash)
     const hashFound = foundPage.headings.includes(hash)
 
     if (!hashFound) {
@@ -198,6 +193,9 @@ function validateSourceLinks(doc: Document, errors: Errors): void {
   }
 }
 
+
+
+
 // Traverse the document tree and validate links
 function traverseTreeAndValidateLinks(tree: any, doc: Document, setFailed: FailureFunction): Errors {
   const errors: Errors = {
@@ -207,26 +205,39 @@ function traverseTreeAndValidateLinks(tree: any, doc: Document, setFailed: Failu
     source: [],
     related: [],
   }
-
-  try {
-    visit(tree, (node: any) => {
-      if (node.type === 'element' && node.tagName === 'a') {
-        const href = node.properties.href
-
-        if (!href) return
-
-        if (href.startsWith(RELATIVE_PATH)) {
-          validateInternalLink(errors, href)
-        } else if (href.startsWith('#')) {
-          validateHashLink(errors, href, doc)
-        }
+  
+  function validateNodes (node: any, parse: boolean = false) {
+    if (node.type === 'text' && parse) {
+      const customComponentTree = markdownProcessor.parse(node.value)
+      traverseRecursively(customComponentTree)
+    }
+  
+    if (node.type === 'element' && !EXCLUDED_TAGS.includes(node.tagName)) {
+      node.children.forEach((child: any) => validateNodes(child, true))
+    }
+  
+    if (node.type === 'element' && node.tagName === 'a' || node.type === 'link') {
+      const href = node.properties?.href ?? node.url
+      if (!href) return
+  
+      if (href.startsWith(RELATIVE_PATH)) {
+        validateInternalLink(errors, href)
+      } else if (href.startsWith('#')) {
+        validateHashLink(errors, href, doc)
       }
-    })
-
-    validateSourceLinks(doc, errors)
-  } catch (error) {
-    setFailed('Error traversing tree: ' + error)
+    }
   }
+
+  function traverseRecursively (tree: any) {
+    try {
+      visit(tree, validateNodes)
+      validateSourceLinks(doc, errors)
+    } catch (error) {
+      setFailed('Error traversing tree: ' + error)
+    }
+  }
+
+  traverseRecursively(tree)
 
   return errors
 }
