@@ -66,7 +66,6 @@ type FailureFunction =  (message: string) => void
 
 const RELATIVE_PATH = '/'
 const EXCLUDED_HASHES: string[] = []
-const EXCLUDED_TAGS = ['a', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'code', 'img', 'iframe', 'nav', 'blockquote', 'hr', 'li', 'ol', 'pre', 'ul']
 
 const slugger = new GithubSlugger()
 
@@ -195,6 +194,7 @@ function validateSourceLinks(doc: Document, errors: Errors): void {
 
 
 
+let counter = 0
 
 // Traverse the document tree and validate links
 function traverseTreeAndValidateLinks(tree: any, doc: Document, setFailed: FailureFunction): Errors {
@@ -205,17 +205,18 @@ function traverseTreeAndValidateLinks(tree: any, doc: Document, setFailed: Failu
     source: [],
     related: [],
   }
-  
+  const linkRegex = /\[[^\[\]]+\]\([^\(\)]+\)/gm
   function validateNodes (node: any, parse: boolean = false) {
-    if (node.type === 'text' && parse) {
+    // Handle links in custom components that were not correctly parsed
+    if (node.type === 'text' && linkRegex.test(node.value)) {
+      if (counter < 7) {
+        console.log('\n\n\nNODE: ',JSON.stringify(node))
+        counter++;
+      }
       const customComponentTree = markdownProcessor.parse(node.value)
       traverseRecursively(customComponentTree)
     }
-  
-    if (node.type === 'element' && !EXCLUDED_TAGS.includes(node.tagName)) {
-      node.children.forEach((child: any) => validateNodes(child, true))
-    }
-  
+
     if (node.type === 'element' && node.tagName === 'a' || node.type === 'link') {
       const href = node.properties?.href ?? node.url
       if (!href) return
