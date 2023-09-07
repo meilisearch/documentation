@@ -27,7 +27,6 @@
     "rehype-raw": "4.0.1",
     "remark-parse": "7.0.1",
     "remark-rehype": "5.0.0",
-    "remark-gfm": "^3.0.1",
     "remark-mdx": "^2.3.0",
     "typescript": "^5.1.6",
     "unified": "8.4.1",

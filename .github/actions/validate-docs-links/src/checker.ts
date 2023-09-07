@@ -195,10 +195,6 @@ function validateSourceLinks(doc: Document, errors: Errors): void {
   }
 }
 
-
-
-let counter = 0
-
 // Traverse the document tree and validate links
 function traverseTreeAndValidateLinks(tree: any, doc: Document, setFailed: FailureFunction): Errors {
   const errors: Errors = {
