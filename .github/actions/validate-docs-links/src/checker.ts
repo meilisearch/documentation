@@ -66,6 +66,7 @@ type FailureFunction =  (message: string) => void
 
 const RELATIVE_PATH = '/'
 const EXCLUDED_HASHES: string[] = []
+const EXCLUDED_PATHS: string[] = ['/movies.json']
 
 const slugger = new GithubSlugger()
 
@@ -161,6 +162,8 @@ function validateInternalLink(errors: Errors, href: string): void {
   // /docs/api/example#heading -> ["api/example", "heading""]
   const [link, hash] = href.split('#')
 
+  if (EXCLUDED_PATHS.includes(link)) return
+
   // check if doc page exists
   const foundPage = documentMap.get(link.replace(/^\/+/, ''))
   
@@ -205,19 +208,20 @@ function traverseTreeAndValidateLinks(tree: any, doc: Document, setFailed: Failu
     source: [],
     related: [],
   }
+
+  // Matches markdown links like [text](link)
   const linkRegex = /\[[^\[\]]+\]\([^\(\)]+\)/gm
+  // Matches all links that use some kind of protocol (e.g. http://, https://, mailto:, etc.)
+  const nonInternalLinkRegex = /^(?:[a-z+]+:)?\/\/|^[a-z]+:/i;
+
   function validateNodes (node: any, parse: boolean = false) {
     // Handle links in custom components that were not correctly parsed
     if (node.type === 'text' && linkRegex.test(node.value)) {
-      if (counter < 7) {
-        console.log('\n\n\nNODE: ',JSON.stringify(node))
-        counter++;
-      }
       const customComponentTree = markdownProcessor.parse(node.value)
       traverseRecursively(customComponentTree)
     }
 
-    if (node.type === 'element' && node.tagName === 'a' || node.type === 'link') {
+    if (node.type === 'element' && node.tagName === 'a' || node.type === 'link' || node.type === 'buttonlink') {
       const href = node.properties?.href ?? node.url
       if (!href) return
   
@@ -225,6 +229,8 @@ function traverseTreeAndValidateLinks(tree: any, doc: Document, setFailed: Failu
         validateInternalLink(errors, href)
       } else if (href.startsWith('#')) {
         validateHashLink(errors, href, doc)
+      } else if (!nonInternalLinkRegex.test(href)) {
+        errors.related.push(href)
       }
     }
   }
