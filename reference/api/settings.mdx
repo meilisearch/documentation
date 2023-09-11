@@ -32,6 +32,7 @@ By default, the settings object looks like this. All fields are modifiable.
     "exactness"
   ],
   "stopWords": [],
+  "dictionary": [],
   "synonyms": {},
   "distinctAttribute": null,
   "typoTolerance": {
@@ -94,6 +95,7 @@ Get the settings of an index.
     "exactness"
   ],
   "stopWords": [],
+  "dictionary": [],
   "synonyms": {},
   "distinctAttribute": null,
   "typoTolerance": {
@@ -136,12 +138,13 @@ If the provided index does not exist, it will be created.
 
 | Name                                                 | Type             | Default value                                                                                    | Description                                                                      |
 | :--------------------------------------------------- | :--------------- | :----------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------- |
+| **[`dictionary`](#user-defined-dictionary)**         | Array of strings | Empty                                                                                            | List of strings Meilisearch should parse as a single term                        |
 | **[`displayedAttributes`](#displayed-attributes)**   | Array of strings | All attributes: `["*"]`                                                                          | Fields displayed in the returned documents                                       |
 | **[`distinctAttribute`](#distinct-attribute)**       | String           | `null`                                                                                           | Search returns documents with distinct (different) values of the given field     |
 | **[`faceting`](#faceting)**                          | Object           | [Default object](#faceting-object)                                                               | Faceting settings                                                                |
 | **[`filterableAttributes`](#filterable-attributes)** | Array of strings | Empty                                                                                            | Attributes to use as filters and facets                                          |
 | **[`pagination`](#pagination)**                      | Object           | [Default object](#pagination-object)                                                             | Pagination settings                                                              |
-| **[`rankingRules`](#ranking-rules)**                 | Array of strings | `["words",`<br />`"typo",`<br />`"proximity",`<br />`"attribute",`<br />`"sort",`<br />`"exactness"]` | List of ranking rules in order of importance                                     |
+| **[`rankingRules`](#ranking-rules)**                 | Array of strings | `["words",`<br />`"typo",`<br />`"proximity",`<br />`"attribute",`<br />`"sort",`<br />`"exactness"]` | List of ranking rules in order of importance                                |
 | **[`searchableAttributes`](#searchable-attributes)** | Array of strings | All attributes: `["*"]`                                                                          | Fields in which to search for matching query words sorted by order of importance |
 | **[`sortableAttributes`](#sortable-attributes)**     | Array of strings | Empty                                                                                            | Attributes to use when sorting search results                                    |
 | **[`stopWords`](#stop-words)**                       | Array of strings | Empty                                                                                            | List of words ignored by Meilisearch when present in search queries              |
@@ -1482,6 +1485,100 @@ Reset an index's typo tolerance settings to their [default value](#typo-toleranc
 #### Example
 
 <CodeSamples id="reset_typo_tolerance_1" />
+
+##### Response: `202 Accepted`
+
+```json
+{
+  "taskUid": 1,
+  "indexUid": "books",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2022-04-14T20:53:32.863107Z"
+}
+```
+
+You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+
+## Dictionary
+
+In languages where words are not separated by spaces such as Japanese, Meilisearch relies on dictionaries to delimit where one term begins and ends. This setting allows users to instruct Meilisearch to consider groups of strings as a single term by adding dictionaries of user-defined terms.
+
+Custom dictionaries are also useful in a few use-cases for space-separated languages, such as datasets with names such as `"J. R. R. Tolkien"` and `"W. E. B. Du Bois"`.
+
+### Get dictionary
+
+<RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/dictionary"/>
+
+Get the index's user-defined dictionary.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+
+#### Example
+
+<CodeSamples id="get_dictionary_1" />
+
+##### Response: `200 OK`
+
+```json
+[]
+```
+
+### Update dictionary 
+
+<RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/dictionary"/>
+
+Update the index's user-defined dictionary.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+
+#### Body
+
+```json
+["J. R. R.", "W. E. B."]
+```
+
+#### Example
+
+<CodeSamples id="update_dictionary_1" />
+
+##### Response: `202 Accepted`
+
+```json
+{
+  "taskUid": 1,
+  "indexUid": "books",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2023-09-11T15:39:06.073314Z"
+}
+```
+
+You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+
+### Reset dictionary
+
+<RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings/dictionary"/>
+
+Reset the index's dictionary to its default value, `[]`.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+
+#### Example
+
+<CodeSamples id="reset_dictionary_1" />
 
 ##### Response: `202 Accepted`
 
