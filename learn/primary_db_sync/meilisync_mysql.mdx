@@ -1,8 +1,8 @@
 # Syncing databases with MySQL and `meilisync`
 
-Though Meilisearch is a database, it is optimized for search and underperforms when used as a primary data store. It is highly recommended you use an external database to store your data and periodically synchronise it with Meilisearch to ensure comprehensive and accurate search results.
+Though Meilisearch is a database, it is not recommended you use it as your primary data store. Instead, you should use an external database to store your data and periodically synchronise it with Meilisearch.
 
-This guide uses [`meilisync`](https://github.com/long2ice/meilisync) to keep Meilisearch up to date with a MySQL database.
+This guide teaches you to use [`meilisync`](https://github.com/long2ice/meilisync) to keep Meilisearch up to date with a MySQL database.
 
 ## Requirements
 
@@ -10,7 +10,7 @@ This guide uses [`meilisync`](https://github.com/long2ice/meilisync) to keep Mei
 - A MySQL database populated with data
 - A Meilisearch instance, either self-hosted or in a service like [Meilisearch Cloud](https://cloud.meilisearch.com)
 
-## Installation
+## Install `meilisync`
 
 You can install `meilisync` manually or with Docker:
 
@@ -19,7 +19,7 @@ You can install `meilisync` manually or with Docker:
 <Tabs.Content label="Docker">
 ### Docker
 
-First, create a `docker-compose.yml` file in your Docker project directory. Open the file with a text editor and add the following content to it:
+First, create a `docker-compose.yml` file in your Docker project directory. Open the file with a text editor and add the following content:
 
 ```yaml
 services:
@@ -30,7 +30,7 @@ services:
       - ./config.yml:/meilisync/config.yml
 ```
 
-If your project already has a `docker-compose.yml`, add the `meilisync` settings to the existing file's `services` field.
+If your project already has a `docker-compose.yml`, add the `meilisync` settings to the `services` field.
 
 When you are done, open your console, move to your Docker project directory, and run the following command:
 
@@ -46,13 +46,13 @@ After a few seconds, Docker will inform you it has successfully installed `meili
 
 First, make sure you have Python 3.9 and `pip` installed.
 
-Then, open your command-line console and run the following command to install `meilisync` in your machine:
+Then, open your command-line console and run the following command to install `meilisync`:
 
 ```sh
 pip install meilisync
 ```
 
-Once `pip` is done, run `meilisync`:
+`pip` will install `meilisync`. Once it is done, run the following command to verify your installation:
 
 ```sh
 meilisync --help
@@ -64,7 +64,7 @@ If the install process was successful, you should see a brief description of `me
 
 ## Connect `meilisync` to Meilisearch
 
-The first step is informing `meilisync` where and how it should connect to your Meilisearch instance. 
+With `meilisync` installed, you now need to connect it to your Meilisearch instance. 
 
 Create a `config.yml` file in your project's directory. Open it with a text editor and add the following configuration options depending on whether you are using Docker or not:
 
@@ -95,9 +95,11 @@ Replace `MEILISEARCH_API_KEY` with an API key able to create, update, and delete
 
 ## Configure MySQL
 
+After connecting `meilisync` to Meilisearch, you need to connect it to your MySQL database.
+
 ### Binary log format
 
-To use `meilisync` with a MySQL database, you must set your binary log format to `ROW`.
+To use `meilisync` with MySQL, you must set your binary log format to `ROW`.
 
 Launch your MySQL server using the `--binlog-format` command-line option:
 
@@ -108,7 +110,7 @@ mysql --binlog-format=ROW
 Alternatively, set the binary log format during runtime by running the following command in your MySQL server console:
 
 ```sql
-mysql> SET GLOBAL binlog_format = 'ROW';
+SET GLOBAL binlog_format = 'ROW';
 ```
 
 ### Connect `meilisync` and MySQL
