@@ -343,7 +343,7 @@
       },
       {
         "source": "learn/primary_db_sync/meilisync_mysql.mdx",
-        "label": "Syncing databases with MySQL and `meilisync`",
+        "label": "Syncing databases with MySQL and meilisync",
         "slug": "meilisync_mysql"
       }
     ]
