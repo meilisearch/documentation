@@ -8,18 +8,17 @@ This guide teaches you to use [`meilisync`](https://github.com/long2ice/meilisyn
 
 - A command-line console, such as macOS's terminal or Window's Cygwin
 - A MySQL database populated with data
-- A Meilisearch instance, either self-hosted or in a service like [Meilisearch Cloud](https://cloud.meilisearch.com)
+- A Meilisearch instance, either self-hosted or via [Meilisearch Cloud](https://cloud.meilisearch.com)
 
 ## Install `meilisync`
 
-You can install `meilisync` manually or with Docker:
+Install `meilisync` to the same location as your primary database. You can do this manually or with Docker:
 
 <Tabs.Container labels={["Docker", "Manual install"]}>
-
 <Tabs.Content label="Docker">
 ### Docker
 
-First, create a `docker-compose.yml` file in your Docker project directory. Open the file with a text editor and add the following content:
+First, create a `docker-compose.yml` file in your Docker project directory. Open it with a text editor and add the following content:
 
 ```yaml
 services:
@@ -30,15 +29,15 @@ services:
       - ./config.yml:/meilisync/config.yml
 ```
 
-If your project already has a `docker-compose.yml`, add the `meilisync` settings to the `services` field.
+If your project already has a `docker-compose.yml`, add the `meilisync` settings to the existing `services` field.
 
-When you are done, open your console, move to your Docker project directory, and run the following command:
+When you are done, open your console, navigate to your Docker project directory, and run the following command:
 
 ```sh
-docker-compose up
+docker-compose pull
 ```
 
-After a few seconds, Docker will inform you it has successfully installed `meilisync`.
+After a few seconds, Docker will inform you it has successfully pulled `meilisync`'s image.
 </Tabs.Content>
 
 <Tabs.Content label="Manual install">
@@ -69,7 +68,6 @@ With `meilisync` installed, you now need to connect it to your Meilisearch insta
 Create a `config.yml` file in your project's directory. Open it with a text editor and add the following configuration options depending on whether you are using Docker or not:
 
 <Tabs.Container labels={["Docker", "Manual install"]}>
-
 <Tabs.Content label="Docker">
 ```yaml
 meilisearch:
@@ -153,11 +151,21 @@ This tutorial describes a fairly basic `meilisync` setup. For more customization
 
 ## Run `meilisync`
 
-With the configuration done, open your command-line prompt once again and run `meilisync`:
+With the configuration done, open your command-line prompt once again and run `meilisync` with Docker or your manual install:
 
-```sh
-meilisync start
-```
+<Tabs.Container labels={["Docker", "Manual install"]}>
+  <Tabs.Content label="Docker">
+    ```sh
+    docker-compose up
+    ```
+  </Tabs.Content>
+
+  <Tabs.Content label="Manual install">
+    ```sh
+    meilisync start
+    ```
+  </Tabs.Content>
+</Tabs.Container>
 
 `meilisync` should immediately start syncing your primary MySQL database with your Meilisearch instance.
 
