@@ -15,10 +15,14 @@ A string is passed to a tokenizer and is then broken into separate string tokens
 - For Latin-based languages, the words are separated by **space**.
 - For Kanji characters, the words are separated by **character**.
 
-For Latin-based languages, there are two kinds of **space separators**:
+For Latin-based languages, there are two kinds of **space separators**: soft and hard. Hard separators indicate significant context switch such as a new sentence or paragraph, while soft separators only delimit one word from another.
+
+The list below presents some of the most common separators in languages using the Latin alphabet:
 
 - **Soft spaces** (distance: 1): whitespaces, quotes, `'-' | '_' | '\'' | ':' | '/' | '\\' | '@' | '"' | '+' | '~' | '=' | '^' | '*' | '#'`
 - **Hard spaces** (distance: 8): `'.' | ';' | ',' | '!' | '?' | '(' | ')' | '[' | ']' | '{' | '}'| '|'`
+
+For other languages and uncommon Latin alphabet separators, [consult this exhaustive list](https://docs.rs/charabia/0.8.3/src/charabia/separators.rs.html#16-62).
 
 Distance plays an essential role in determining whether documents are relevant since [one of the ranking rules is the **proximity** rule](/learn/core_concepts/relevancy). The proximity rule sorts the results by increasing distance between matched query terms. Then, two words separated by a soft space are closer and thus considered **more relevant** than two words separated by a hard space.
 
