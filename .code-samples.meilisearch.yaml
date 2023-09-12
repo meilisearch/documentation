@@ -1122,10 +1122,10 @@ search_parameter_guide_attributes_to_search_on_1: |-
     }'
 get_dictionary_1: |-
   curl \
-    -X GET 'http://localhost:7700/indexes/movies/settings/dictionary'
+    -X GET 'http://localhost:7700/indexes/books/settings/dictionary'
 update_dictionary_1: |-
   curl \
-    -X PUT 'http://localhost:7700/indexes/movies/settings/dictionary' \
+    -X PUT 'http://localhost:7700/indexes/books/settings/dictionary' \
     -H 'Content-Type: application/json' \
     --data-binary '[
       "J. R. R.",
@@ -1133,4 +1133,4 @@ update_dictionary_1: |-
     ]'
 reset_dictionary_1: |-
   curl \
-    -X DELETE 'http://localhost:7700/indexes/movies/settings/dictionary'
+    -X DELETE 'http://localhost:7700/indexes/books/settings/dictionary'
