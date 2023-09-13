@@ -1041,9 +1041,9 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 ## Separator tokens
 
-Configure strings as custom separator tokens delimiting when a word ends and begins.
+Configure strings as custom separator tokens indicating where a word ends and begins.
 
-Tokens in the `separatorTokens` list are added on top of [Meilisearch's default list of separators](/learn/advanced/datatypes#string). To remove separators from the default list, use the `nonSeparatorTokens` setting.
+Tokens in the `separatorTokens` list are added on top of [Meilisearch's default list of separators](/learn/advanced/datatypes#string). To remove separators from the default list, use [the `nonSeparatorTokens` setting](#non-separator-tokens).
 
 ### Get separator tokens
 
@@ -1085,7 +1085,7 @@ Update an index's list of custom separator tokens.
 ["|", "&hellip;"]
 ```
 
-An array of strings, with each string indicating a word delimiter.
+An array of strings, with each string indicating a word separator.
 
 #### Example
 
@@ -1176,10 +1176,10 @@ Update an index's list of non-separator tokens.
 #### Body
 
 ```
-["#"]
+["@", "#"]
 ```
 
-An array of strings, with each string indicating a word delimiter present in [list of word separators](/learn/advanced/datatypes#string).
+An array of strings, with each string indicating a token present in [list of word separators](/learn/advanced/datatypes#string).
 
 #### Example
 
