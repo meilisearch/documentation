@@ -347,7 +347,7 @@ filtering_guide_2: |-
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "Batman",
-      "filter": "release_date > 795484800 AND (director = \"Tim Burton\" OR director = \"Christopher Nolan\")" 
+      "filter": "release_date > 795484800 AND (director = \"Tim Burton\" OR director = \"Christopher Nolan\")"
     }'
 filtering_guide_3: |-
   curl \
@@ -420,7 +420,7 @@ search_parameter_guide_crop_1: |-
     --data-binary '{
       "q": "shifu",
       "attributesToCrop": ["overview"],
-      "cropLength": 5 
+      "cropLength": 5
     }'
 search_parameter_guide_crop_marker_1: |-
   curl \
@@ -435,7 +435,7 @@ search_parameter_guide_highlight_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/search' \
     -H 'Content-Type: application/json' \
-    --data-binary '{ 
+    --data-binary '{
       "q": "winter feast",
       "attributesToHighlight": ["overview"]
     }'
@@ -525,7 +525,7 @@ getting_started_synonyms: |-
     -X PUT 'http://localhost:7700/indexes/movies/settings/synonyms' \
     -H 'Content-Type: application/json' \
     --data-binary '{
-      "winnie": ["piglet"], 
+      "winnie": ["piglet"],
       "piglet": ["winnie"]
     }'
 getting_started_filtering: |-
@@ -564,18 +564,6 @@ getting_started_configure_settings: |-
         "mass",
         "_geo"
       ]
-    }'
-getting_started_communicating_with_a_protected_instance: |-
-  curl \ 
-    -X POST 'http://localhost:7700/indexes/movies/search' \
-    -H 'Authorization: Bearer API_KEY'    
-faceted_search_facets_1: |-
-  curl \
-    -X POST 'http://localhost:7700/indexes/movies/search' \
-    -H 'Content-Type: application/json' \
-    --data-binary '{
-      "q": "Batman",
-      "facets": ["genres"]
     }'
 faceted_search_walkthrough_filter_1: |-
   curl \
@@ -825,7 +813,7 @@ updating_guide_check_version_new_authorization_header: |-
 updating_guide_check_version_old_authorization_header: |-
   curl \
     -X GET 'http://<your-domain-name>/version' \
-    -H 'X-Meili-API-Key: API_KEY'  
+    -H 'X-Meili-API-Key: API_KEY'
 updating_guide_get_displayed_attributes_old_authorization_header: |-
   # whenever you see {index_uid}, replace it with your index's unique id
   curl \
@@ -908,7 +896,7 @@ search_parameter_guide_matching_strategy_1: |-
     --data-binary '{
       "q": "big fat liar",
       "matchingStrategy": "last"
-    }'      
+    }'
 search_parameter_guide_matching_strategy_2: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/search' \
@@ -916,7 +904,7 @@ search_parameter_guide_matching_strategy_2: |-
     --data-binary '{
       "q": "big fat liar",
       "matchingStrategy": "all"
-    }'    
+    }'
 date_guide_index_1: |-
   curl \
     -x POST 'http://localhost:7700/indexes/games/documents' \
@@ -972,7 +960,7 @@ async_guide_filter_by_index_uids_1: |-
     -X GET 'http://localhost:7700/tasks?indexUids=movies'
 async_guide_canceled_by_1: |-
   curl \
-    -X GET 'http://localhost:7700/tasks?canceledBy=9,15'      
+    -X GET 'http://localhost:7700/tasks?canceledBy=9,15'
 delete_tasks_1: |-
   curl \
     -X DELETE 'http://localhost:7700/tasks?uids=1,2'
@@ -1056,7 +1044,7 @@ get_documents_post_1: |-
   curl \
     -X POST http://localhost:7700/indexes/books/documents/fetch \
     -H 'Content-Type: application/json' \
-    --data-binary '{ 
+    --data-binary '{
       "filter": "(rating > 3 AND (genres = Adventure OR genres = Fiction)) AND language = English",
       "fields": ["title", "genres", "rating", "language"],
       "limit": 3
@@ -1082,7 +1070,7 @@ facet_search_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/books/facet-search' \
     -H 'Content-Type: application/json' \
-    --data-binary '{ 
+    --data-binary '{
       "facetQuery": "fiction",
       "facetName": "genres",
       "filter": "rating > 3"
@@ -1100,7 +1088,7 @@ facet_search_3: |-
   curl \
     -X POST 'http://localhost:7700/indexes/books/facet-search' \
     -H 'Content-Type: application/json' \
-    --data-binary '{ 
+    --data-binary '{
       "facetQuery": "c",
       "facetName": "genres"
   }'
