@@ -212,7 +212,7 @@ This is particularly useful when working with datasets containing many domain-sp
 Custom dictionaries are also useful in a few use-cases for space-separated languages, such as datasets with names such as `"J. R. R. Tolkien"` and `"W. E. B. Du Bois"`.
 
 <Capsule intent="tip">
-User-defined dictionaries can be used together with synonyms. It can be useful to configure Meilisearch so different spellings of an author's initials are equivalent:
+User-defined dictionaries can be used together with synonyms. It can be useful to configure Meilisearch so different spellings of an author's initials return the same results:
 
 ```json
 "dictionary": ["W. E. B.", "W.E.B."],
