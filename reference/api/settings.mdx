@@ -32,6 +32,8 @@ By default, the settings object looks like this. All fields are modifiable.
     "exactness"
   ],
   "stopWords": [],
+  "nonSeparatorTokens": [],
+  "separatorTokens": [],
   "dictionary": [],
   "synonyms": {},
   "distinctAttribute": null,
@@ -95,6 +97,8 @@ Get the settings of an index.
     "exactness"
   ],
   "stopWords": [],
+  "nonSeparatorTokens": [],
+  "separatorTokens": [],
   "dictionary": [],
   "synonyms": {},
   "distinctAttribute": null,
@@ -146,6 +150,8 @@ If the provided index does not exist, it will be created.
 | **[`pagination`](#pagination)**                      | Object           | [Default object](#pagination-object)                                                             | Pagination settings                                                              |
 | **[`rankingRules`](#ranking-rules)**                 | Array of strings | `["words",`<br />`"typo",`<br />`"proximity",`<br />`"attribute",`<br />`"sort",`<br />`"exactness"]` | List of ranking rules in order of importance                                |
 | **[`searchableAttributes`](#searchable-attributes)** | Array of strings | All attributes: `["*"]`                                                                          | Fields in which to search for matching query words sorted by order of importance |
+| **[`separatorTokens`](#separator-tokens)**           | Array of strings | Empty                                                                                            | List of characters delimiting where one term begins and ends                     |
+| **[`noSeparatorTokens`](#non-separator-tokens)**     | Array of strings | Empty                                                                                            | List of characters not delimiting where one term begins and ends                 |
 | **[`sortableAttributes`](#sortable-attributes)**     | Array of strings | Empty                                                                                            | Attributes to use when sorting search results                                    |
 | **[`stopWords`](#stop-words)**                       | Array of strings | Empty                                                                                            | List of words ignored by Meilisearch when present in search queries              |
 | **[`synonyms`](#synonyms)**                          | Object           | Empty                                                                                            | List of associated words treated similarly                                       |
@@ -1143,6 +1149,196 @@ Reset the searchable attributes of the index to the default value.
 ```
 
 You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+
+## Separator tokens
+
+Configure strings as custom separator tokens indicating where a word ends and begins.
+
+Tokens in the `separatorTokens` list are added on top of [Meilisearch's default list of separators](/learn/advanced/datatypes#string). To remove separators from the default list, use [the `nonSeparatorTokens` setting](#non-separator-tokens).
+
+### Get separator tokens
+
+<RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/separator-tokens" />
+
+Get an index's list of custom separator tokens.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+
+#### Example
+
+<CodeSamples id="get_separator_tokens_1"/>
+
+##### Response: `200 Ok`
+
+```json
+[]
+```
+
+### Update separator tokens
+
+<RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/separator-tokens" />
+
+Update an index's list of custom separator tokens.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+
+#### Body
+
+```
+["|", "&hellip;"]
+```
+
+An array of strings, with each string indicating a word separator.
+
+#### Example
+
+<CodeSamples id="update_separator_tokens_1"/>
+
+##### Response: `202 Accepted`
+
+```json
+{
+  "taskUid": 1,
+  "indexUid": "movies",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+}
+```
+
+Use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+
+### Reset separator tokens
+
+<RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings/separator-tokens"/>
+
+Reset an index's list of custom separator tokens to its default value, `[]`.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+
+#### Example
+
+<CodeSamples id="reset_separator_tokens_1"/>
+
+##### Response: `202 Accepted`
+
+```json
+{
+  "taskUid": 1,
+  "indexUid": "movies",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+}
+```
+
+Use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+
+## Non-separator tokens
+
+Remove tokens from Meilisearch's default [list of word separators](/learn/advanced/datatypes#string).
+
+### Get non-separator tokens
+
+<RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/non-separator-tokens" />
+
+Get an index's list of non-separator tokens.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+
+#### Example
+
+<CodeSamples id="get_non_separator_tokens_1"/>
+
+##### Response: `200 Ok`
+
+```json
+[]
+```
+
+### Update non-separator tokens
+
+<RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/non-separator-tokens" />
+
+Update an index's list of non-separator tokens.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+
+#### Body
+
+```
+["@", "#"]
+```
+
+An array of strings, with each string indicating a token present in [list of word separators](/learn/advanced/datatypes#string).
+
+#### Example
+
+<CodeSamples id="update_non_separator_tokens_1"/>
+
+##### Response: `202 Accepted`
+
+```json
+{
+  "taskUid": 1,
+  "indexUid": "movies",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+}
+```
+
+Use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+
+### Reset non-separator tokens
+
+<RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings/non-separator-tokens"/>
+
+Reset an index's list of non-separator tokens to its default value, `[]`.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+
+#### Example
+
+<CodeSamples id="reset_separator_tokens_1"/>
+
+##### Response: `202 Accepted`
+
+```json
+{
+  "taskUid": 1,
+  "indexUid": "movies",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+}
+```
+
+Use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
 
 ## Sortable attributes
 

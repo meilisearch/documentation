@@ -12,13 +12,30 @@ String tokenization is the process of **splitting a string into a list of indivi
 
 A string is passed to a tokenizer and is then broken into separate string tokens. A token is a **word**.
 
-- For Latin-based languages, the words are separated by **space**.
-- For Kanji characters, the words are separated by **character**.
+### Tokenization
 
-For Latin-based languages, there are two kinds of **space separators**:
+Tokenization relies on two main processes to identifying words and separating them into tokens: separators and dictionaries.
+
+#### Separators
+
+Separators are characters that indicate where one word ends and another word begins. In languages using the Latin alphabet, for example, words are usually delimited by white space. In Japanese, word boundaries are more commonly indicated in other ways, such as appending particles like `に` and `で` to the end of a word.
+
+There are two kinds of separators in Meilisearch: soft and hard. Hard separators signal a significant context switch such as a new sentence or paragraph. Soft separators only delimit one word from another but do not imply a major change of subject.
+
+The list below presents some of the most common separators in languages using the Latin alphabet:
 
 - **Soft spaces** (distance: 1): whitespaces, quotes, `'-' | '_' | '\'' | ':' | '/' | '\\' | '@' | '"' | '+' | '~' | '=' | '^' | '*' | '#'`
 - **Hard spaces** (distance: 8): `'.' | ';' | ',' | '!' | '?' | '(' | ')' | '[' | ']' | '{' | '}'| '|'`
+
+For more separators, including those used in other writing systems like Cyrillic and Thai, [consult this exhaustive list](https://docs.rs/charabia/0.8.3/src/charabia/separators.rs.html#16-62).
+
+#### Dictionaries
+
+For the tokenization process, dictionaries are lists of groups of characters which should be considered as single term. Dictionaries are particularly useful when identifying words in languages like Japanese, where words are not always marked by separator tokens.
+
+Meilisearch comes with a number of general-use dictionaries for its officially supported languages. When working with documents containing many domain-specific terms, such as a legal documents or academic papers, providing a [custom dictionary](/reference/api/settings#dictionary) may improve search result relevancy.
+
+### Distance
 
 Distance plays an essential role in determining whether documents are relevant since [one of the ranking rules is the **proximity** rule](/learn/core_concepts/relevancy). The proximity rule sorts the results by increasing distance between matched query terms. Then, two words separated by a soft space are closer and thus considered **more relevant** than two words separated by a hard space.
 
