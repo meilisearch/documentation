@@ -340,6 +340,11 @@
         "source": "learn/cookbooks/vercel.mdx",
         "label": "Integrate Meilisearch Cloud with Vercel",
         "slug": "vercel"
+      },
+      {
+        "source": "learn/primary_db_sync/meilisync_mysql.mdx",
+        "label": "Syncing databases with MySQL and meilisync",
+        "slug": "meilisync_mysql"
       }
     ]
   },

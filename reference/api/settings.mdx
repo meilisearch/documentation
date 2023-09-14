@@ -34,6 +34,7 @@ By default, the settings object looks like this. All fields are modifiable.
   "stopWords": [],
   "nonSeparatorTokens": [],
   "separatorTokens": [],
+  "dictionary": [],
   "synonyms": {},
   "distinctAttribute": null,
   "typoTolerance": {
@@ -98,6 +99,7 @@ Get the settings of an index.
   "stopWords": [],
   "nonSeparatorTokens": [],
   "separatorTokens": [],
+  "dictionary": [],
   "synonyms": {},
   "distinctAttribute": null,
   "typoTolerance": {
@@ -140,12 +142,13 @@ If the provided index does not exist, it will be created.
 
 | Name                                                 | Type             | Default value                                                                                    | Description                                                                      |
 | :--------------------------------------------------- | :--------------- | :----------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------- |
+| **[`dictionary`](#dictionary)**         | Array of strings | Empty                                                                                            | List of strings Meilisearch should parse as a single term                        |
 | **[`displayedAttributes`](#displayed-attributes)**   | Array of strings | All attributes: `["*"]`                                                                          | Fields displayed in the returned documents                                       |
 | **[`distinctAttribute`](#distinct-attribute)**       | String           | `null`                                                                                           | Search returns documents with distinct (different) values of the given field     |
 | **[`faceting`](#faceting)**                          | Object           | [Default object](#faceting-object)                                                               | Faceting settings                                                                |
 | **[`filterableAttributes`](#filterable-attributes)** | Array of strings | Empty                                                                                            | Attributes to use as filters and facets                                          |
 | **[`pagination`](#pagination)**                      | Object           | [Default object](#pagination-object)                                                             | Pagination settings                                                              |
-| **[`rankingRules`](#ranking-rules)**                 | Array of strings | `["words",`<br />`"typo",`<br />`"proximity",`<br />`"attribute",`<br />`"sort",`<br />`"exactness"]` | List of ranking rules in order of importance                                     |
+| **[`rankingRules`](#ranking-rules)**                 | Array of strings | `["words",`<br />`"typo",`<br />`"proximity",`<br />`"attribute",`<br />`"sort",`<br />`"exactness"]` | List of ranking rules in order of importance                                |
 | **[`searchableAttributes`](#searchable-attributes)** | Array of strings | All attributes: `["*"]`                                                                          | Fields in which to search for matching query words sorted by order of importance |
 | **[`separatorTokens`](#separator-tokens)**           | Array of strings | Empty                                                                                            | List of characters delimiting where one term begins and ends                     |
 | **[`noSeparatorTokens`](#non-separator-tokens)**     | Array of strings | Empty                                                                                            | List of characters not delimiting where one term begins and ends                 |
@@ -205,6 +208,114 @@ Reset all the settings of an index to their [default value](#settings-object).
 ```
 
 You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+
+## Dictionary
+
+Allows users to instruct Meilisearch to consider groups of strings as a single term by adding a supplementary dictionary of user-defined terms.
+
+This is particularly useful when working with datasets containing many domain-specific words, and in languages where words are not separated by whitespace such as Japanese.
+
+Custom dictionaries are also useful in a few use-cases for space-separated languages, such as datasets with names such as `"J. R. R. Tolkien"` and `"W. E. B. Du Bois"`.
+
+<Capsule intent="tip">
+User-defined dictionaries can be used together with synonyms. It can be useful to configure Meilisearch so different spellings of an author's initials return the same results:
+
+```json
+"dictionary": ["W. E. B.", "W.E.B."],
+"synonyms": {
+  "W. E. B.": ["W.E.B."],
+  "W.E.B.": ["W. E. B."]
+}
+```
+</Capsule>
+
+### Get dictionary
+
+<RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/dictionary"/>
+
+Get an index's user-defined dictionary.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+
+#### Example
+
+<CodeSamples id="get_dictionary_1" />
+
+##### Response: `200 OK`
+
+```json
+[]
+```
+
+### Update dictionary 
+
+<RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/dictionary"/>
+
+Update an index's user-defined dictionary.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+
+#### Body
+
+```json
+["J. R. R.", "W. E. B."]
+```
+
+#### Example
+
+<CodeSamples id="update_dictionary_1" />
+
+##### Response: `202 Accepted`
+
+```json
+{
+  "taskUid": 1,
+  "indexUid": "books",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2023-09-11T15:39:06.073314Z"
+}
+```
+
+Use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+
+### Reset dictionary
+
+<RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings/dictionary"/>
+
+Reset an index's dictionary to its default value, `[]`.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+
+#### Example
+
+<CodeSamples id="reset_dictionary_1" />
+
+##### Response: `202 Accepted`
+
+```json
+{
+  "taskUid": 1,
+  "indexUid": "books",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2022-04-14T20:53:32.863107Z"
+}
+```
+
+Use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
 
 ## Displayed attributes
 

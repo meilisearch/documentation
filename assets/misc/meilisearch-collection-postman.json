@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "af5f1b99-255f-4eb3-9756-6636be3a0f16",
-		"name": "Meilisearch v1.3",
+		"_postman_id": "0f0a76a3-b6d0-4f7d-a8d6-532647b46074",
+		"name": "Meilisearch v1.4",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -1809,6 +1809,297 @@
 										"{{indexUID}}",
 										"settings",
 										"faceting"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get dictionary",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/dictionary",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"dictionary"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update dictionary",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[\"J. R. R.\", \"W. E. B.\"]"
+								},
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/dictionary",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"dictionary"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Reset dictionary",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/dictionary",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"dictionary"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get separator tokens",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/separator-tokens",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"separator-tokens"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update separator tokens",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[\"|\", \"&hellip;\"]"
+								},
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/separator-tokens",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"separator-tokens"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Reset separator tokens",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/separator-tokens",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"separator-tokens"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get non-separator tokens",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/non-separator-tokens",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"non-separator-tokens"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update non-separator tokens",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[\"@\", \"#\"]"
+								},
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/non-separator-tokens",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"non-separator-tokens"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Reset non-separator tokens",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/non-separator-tokens",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"non-separator-tokens"
 									]
 								}
 							},
