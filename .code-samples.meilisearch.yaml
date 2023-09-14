@@ -1120,3 +1120,17 @@ search_parameter_guide_attributes_to_search_on_1: |-
       "q": "adventure",
       "attributesToSearchOn": ["overview"]
     }'
+get_dictionary_1: |-
+  curl \
+    -X GET 'http://localhost:7700/indexes/books/settings/dictionary'
+update_dictionary_1: |-
+  curl \
+    -X PUT 'http://localhost:7700/indexes/books/settings/dictionary' \
+    -H 'Content-Type: application/json' \
+    --data-binary '[
+      "J. R. R.",
+      "W. E. B."
+    ]'
+reset_dictionary_1: |-
+  curl \
+    -X DELETE 'http://localhost:7700/indexes/books/settings/dictionary'
