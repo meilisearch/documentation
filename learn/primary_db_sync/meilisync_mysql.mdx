@@ -38,6 +38,7 @@ docker-compose pull
 ```
 
 After a few seconds, Docker will inform you it has successfully pulled `meilisync`'s image.
+
 </Tabs.Content>
 
 <Tabs.Content label="Manual install">
@@ -58,12 +59,13 @@ meilisync --help
 ```
 
 If the install process was successful, you should see a brief description of `meilisync`'s options.
+
 </Tabs.Content>
 </Tabs.Container>
 
 ## Connect `meilisync` to Meilisearch
 
-With `meilisync` installed, you now need to connect it to your Meilisearch instance. 
+With `meilisync` installed, you now need to connect it to your Meilisearch instance.
 
 Create a `config.yml` file in your project's directory. Open it with a text editor and add the following configuration options depending on whether you are using Docker or not:
 
@@ -125,11 +127,11 @@ source:
   password: MYSQL_PASSWORD
 ```
 
-Replace MYSQL_DATABASE_NAME, MYSQL_USERNAME, and MYSQL_PASSWORD with the name of your database, a user with read access to that database, and its credentials. 
+Replace MYSQL_DATABASE_NAME, MYSQL_USERNAME, and MYSQL_PASSWORD with the name of your database, a user with read access to that database, and its credentials.
 
 ## Configure `meilisync`
 
-The last configuration step is specifying which tables in your database should be synced to which Meiliearch indexes.
+The last configuration step is specifying which tables in your database should be synced to which Meilisearch indexes.
 
 Open `config.yml` and append the following settings to the bottom of the file:
 
@@ -146,7 +148,9 @@ sync:
 Replace `MYSQL_TABLE_NAME_1` and `MEILISEARCH_INDEX_NAME_1` with the names of your tables and indexes. As the above example demonstrates, you may sync multiple tables.
 
 <Capsule intent="tip" title="Customizing `meilisync`">
-This tutorial describes a fairly basic `meilisync` setup. For more customization options, consult [`meilisync`'s documentation](https://github.com/long2ice/meilisync#configuration).
+  This tutorial describes a fairly basic `meilisync` setup. For more
+  customization options, consult [`meilisync`'s
+  documentation](https://github.com/long2ice/meilisync#configuration).
 </Capsule>
 
 ## Run `meilisync`
