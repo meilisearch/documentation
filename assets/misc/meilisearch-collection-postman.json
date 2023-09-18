@@ -927,12 +927,11 @@
 							"raw": "[\n    { \"indexes\": [\"books\", \"books_temp\"] }\n]"
 						},
 						"url": {
-							"raw": "{{url}}/indexes/swap-indexes",
+							"raw": "{{url}}/swap-indexes",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
-								"indexes",
 								"swap-indexes"
 							]
 						}
