@@ -345,6 +345,11 @@
         "source": "learn/primary_db_sync/meilisync_mysql.mdx",
         "label": "Syncing databases with MySQL and meilisync",
         "slug": "meilisync_mysql"
+      },
+      {
+        "source": "learn/primary_db_sync/meilisync_postgresql.mdx",
+        "label": "Syncing databases with PostgreSQL and meilisync",
+        "slug": "meilisync_postgresql"
       }
     ]
   },

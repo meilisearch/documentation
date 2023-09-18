@@ -1,0 +1,192 @@
+# Syncing databases with PostgreSQL and meilisync
+
+Though Meilisearch is a database, it is not recommended you use it as your primary data store. Instead, you should use an external database to store your data and periodically synchronise it with Meilisearch.
+
+This guide teaches you to use [`meilisync`](https://github.com/long2ice/meilisync) to keep Meilisearch up to date with a PostgreSQL database.
+
+## Requirements
+
+- A command-line console, such as macOS's terminal or Window's Cygwin
+- A PostgreSQL database populated with data
+- A Meilisearch instance, either self-hosted or via [Meilisearch Cloud](https://cloud.meilisearch.com)
+
+## Install `meilisync`
+
+Install `meilisync` to the same location as your primary database. You can do this manually or with Docker:
+
+<Tabs.Container labels={["Docker", "Manual install"]}>
+<Tabs.Content label="Docker">
+### Docker
+
+First, create a `docker-compose.yml` file in your Docker project directory. Open it with a text editor and add the following content:
+
+```yaml
+services:
+  meilisync:
+    platform: linux/x86_64
+    image: long2ice/meilisync
+    volumes:
+      - ./config.yml:/meilisync/config.yml
+```
+
+If your project already has a `docker-compose.yml`, add the `meilisync` settings to the existing `services` field.
+
+When you are done, open your console, navigate to your Docker project directory, and run the following command:
+
+```sh
+docker-compose pull
+```
+
+After a few seconds, Docker will inform you it has successfully pulled `meilisync`'s image.
+
+</Tabs.Content>
+
+<Tabs.Content label="Manual install">
+### Manual install
+
+First, make sure you have Python 3.9 and `pip` installed.
+
+Then, open your command-line console and run the following command to install `meilisync`:
+
+```sh
+pip install meilisync
+```
+
+`pip` will install `meilisync`. Once it is done, run the following command to verify your installation:
+
+```sh
+meilisync --help
+```
+
+If the install process was successful, you should see a brief description of `meilisync`'s options.
+
+</Tabs.Content>
+</Tabs.Container>
+
+## Connect `meilisync` to Meilisearch
+
+With `meilisync` installed, you now need to connect it to your Meilisearch instance.
+
+Create a `config.yml` file in your project's directory. Open it with a text editor and add the following configuration options depending on whether you are using Docker or not:
+
+<Tabs.Container labels={["Docker", "Manual install"]}>
+<Tabs.Content label="Docker">
+```yaml
+meilisearch:
+  api_url: http://host.docker.internal:7700/
+  api_key: 'MEILISEARCH_API_KEY'
+  insert_size: 1000
+  insert_interval: 10
+```
+</Tabs.Content>
+
+<Tabs.Content label="Manual install">
+```yaml
+meilisearch:
+  api_url: MEILISEARCH_API_URL
+  api_key: 'MEILISEARCH_API_KEY'
+  insert_size: 1000
+  insert_interval: 10
+```
+</Tabs.Content>
+</Tabs.Container>
+
+Replace `MEILISEARCH_API_KEY` with an API key able to create, update, and delete documents and indexes. Replace `MEILISEARCH_API_URL` with the your instance's API URL. If you are using [Meilisearch Cloud](https://cloud.meilisearch.com), this URL should look similar to this: https://ms-4d85L33tC0d3-5041.fra.meilisearch.io
+
+## Configure PostgreSQL
+
+After connecting `meilisync` to Meilisearch, you need to connect it to your PostgreSQL database.
+
+### Enable logical replication
+
+To use `meilisync` with PostgreSQL, you need to enable the [`wal2json`](https://github.com/eulerto/wal2json) extension.
+
+The `wal2json` extension requires the [Write-Ahead Log settings](https://www.postgresql.org/docs/current/runtime-config-wal.html) to be set to `logical`.
+
+This can be done by adding the following line to your PostgreSQL server's `postgresql.conf` file:
+
+```conf
+wal_level = logical
+#
+# these parameters only need to set in versions 9.4, 9.5 and 9.6
+# default values are ok in version 10 or later
+#
+max_replication_slots = 10
+max_wal_senders = 10
+```
+
+Alternatively, set the binary log format during runtime by running the following command in your PostgreSQL server console:
+
+```sql
+ALTER SYSTEM SET wal_level = logical;
+```
+
+This will require a server configuration reload to take effect. Read more about this in the [`ALTER SYSTEM` documentation](https://www.postgresql.org/docs/current/sql-altersystem.html).
+
+### Connect `meilisync` and PostgreSQL
+
+Open `meilisync`'s `config.yml` once again and append the following settings to the bottom of the file:
+
+```yaml
+source:
+  type: postgres
+  host: 127.0.0.1
+  port: 5432
+  database: POSTGRESQL_DATABASE_NAME
+  user: POSTGRESQL_USERNAME
+  password: POSTGRESQL_PASSWORD
+```
+
+Replace POSTGRESQL_DATABASE_NAME, POSTGRESQL_USERNAME, and POSTGRESQL_PASSWORD with the name of your database, a user with read access to that database, and its credentials.
+
+## Configure `meilisync`
+
+The last configuration step is specifying which tables in your database should be synced to which Meiliearch indexes.
+
+Open `config.yml` and append the following settings to the bottom of the file:
+
+```yaml
+sync:
+  - table: POSTGRES_TABLE_NAME_1
+    index: MEILISEARCH_INDEX_NAME_1
+    full: true
+  - table: POSTGRES_TABLE_NAME_2
+    index: MEILISEARCH_INDEX_NAME_2
+    full: true
+```
+
+Replace `POSTGRES_TABLE_NAME_1` and `MEILISEARCH_INDEX_NAME_1` with the names of your tables and indexes. As the above example demonstrates, you may sync multiple tables.
+
+<Capsule intent="tip" title="Customizing `meilisync`">
+  This tutorial describes a fairly basic `meilisync` setup. For more
+  customization options, consult [`meilisync`'s
+  documentation](https://github.com/long2ice/meilisync#configuration).
+</Capsule>
+
+## Run `meilisync`
+
+With the configuration done, open your command-line prompt once again and run `meilisync` with Docker or your manual install:
+
+<Tabs.Container labels={["Docker", "Manual install"]}>
+  <Tabs.Content label="Docker">
+    ```sh
+    docker-compose up
+    ```
+  </Tabs.Content>
+
+  <Tabs.Content label="Manual install">
+    ```sh
+    meilisync start
+    ```
+  </Tabs.Content>
+</Tabs.Container>
+
+`meilisync` should immediately start syncing your primary PostgreSQL database with your Meilisearch instance.
+
+Once `meilisync` is done, use Meilisearch's search preview to perform a few test searches and confirm data has been successfully synced between your primary database and Meilisearch.
+
+## Conclusion
+
+Congratulations—you have successfully set up `meilisync`.
+
+You may leave the process running permanently on the background so all changes to your primary database are automatically synced, or you may interrupt the process and only run it when you update your database again.
