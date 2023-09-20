@@ -71,23 +71,29 @@ If your query is `Hello - World`:
 
 ## Maximum filter depth
 
-**Limitation:** Meilisearch does not accept searches with more than 2000 `OR` filters.
+**Limitation:** Meilisearch accepts filtering searches (using the `filter` search parameter) with a maximum filtering depth of 2000.
 
-**Explanation:** `OR` filters create nested structures which can lead to a stack overflow.
+**Explanation:** Regarding filering, the depth increases when mixing and alterning `AND` and `OR` operators filters creating nested structures which can lead to a stack overflow.
 
 ### Example
 
-Either of these filter expressions would cause a search query to fail:
+The following filter with the chained `OR` operators corresponds to a depth of 1:
 
 ```sql
-user = 1 OR user = 2 […] OR user = 1500 OR user = 1501 […] OR user = 2000 OR user = 2001
+user = 1 OR user = 2 […] OR user = 10000
 ```
 
-```json
-[
-  ["user = 1", "user = 2", […], "user = 1500", "user = 1501", […], "user = 2000", "user = 2001"]
-]
-```  
+We got the same behavior with chained `AND` operators: the depth is still 1.
+
+However, when mixing and alterning `AND` and `OR` operators, we create depths:
+
+```sql
+# AND is nested inside the ORs, so we have a depth of 2
+id = 1 OR id = 2 AND id = 3
+
+# Here we have a depth of 4
+id = 1 OR (id = 2 AND (id = 3 OR (id = 4 AND id = 5)))
+```
 
 ## Size of integer fields
 
