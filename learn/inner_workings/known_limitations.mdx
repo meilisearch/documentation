@@ -93,6 +93,9 @@ id = 1 OR id = 2 AND id = 3
 
 # Here we have a depth of 4
 id = 1 OR (id = 2 AND (id = 3 OR (id = 4 AND id = 5)))
+
+# But here the depth is still 2
+id = 1 OR (id = 2 AND id = 3) OR (id = 4 AND id = 5) OR id = 6
 ```
 
 ## Size of integer fields
