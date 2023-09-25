@@ -1108,3 +1108,39 @@ search_parameter_guide_attributes_to_search_on_1: |-
       "q": "adventure",
       "attributesToSearchOn": ["overview"]
     }'
+get_separator_tokens_1: |-
+  curl \
+    -X GET 'http://localhost:7700/indexes/articles/settings/separator-tokens'
+update_separator_tokens_1: |-
+  curl \
+    -X PUT 'http://localhost:7700/indexes/articles/settings/separator-tokens' \
+    -H 'Content-Type: application/json'  \
+    --data-binary '["|", "&hellip;"]'
+reset_separator_tokens_1: |-
+  curl \
+    -X DELETE 'http://localhost:7700/indexes/articles/settings/separator-tokens'
+get_non_separator_tokens_1: |-
+  curl \
+    -X GET 'http://localhost:7700/indexes/articles/settings/non-separator-tokens'
+update_non_separator_tokens_1: |-
+  curl \
+    -X PUT 'http://localhost:7700/indexes/articles/settings/non-separator-tokens' \
+    -H 'Content-Type: application/json'  \
+    --data-binary '["@", "#"]'
+reset_non_separator_tokens_1: |-
+  curl \
+    -X DELETE 'http://localhost:7700/indexes/articles/settings/non-separator-tokens'
+get_dictionary_1: |-
+  curl \
+    -X GET 'http://localhost:7700/indexes/books/settings/dictionary'
+update_dictionary_1: |-
+  curl \
+    -X PUT 'http://localhost:7700/indexes/books/settings/dictionary' \
+    -H 'Content-Type: application/json' \
+    --data-binary '[
+      "J. R. R.",
+      "W. E. B."
+    ]'
+reset_dictionary_1: |-
+  curl \
+    -X DELETE 'http://localhost:7700/indexes/books/settings/dictionary'
