@@ -11,7 +11,7 @@ const GithubSlugger = require('github-slugger')
 import type { Node, Data } from 'unist'
 /**
  * This script validates internal links in /docs including internal,
- * hash, source and related links. It does not validate external links.
+ * hash, source and relative links. It does not validate external links.
  * 1. Collects all .mdx files.
  * 2. For each file, it extracts the content, metadata, and heading slugs.
  * 3. It creates a document map to efficiently lookup documents by path.
@@ -39,7 +39,7 @@ interface Errors {
   link: string[]
   hash: string[]
   source: string[]
-  related: string[]
+  relative: string[]
 }
 
 type ErrorType = Exclude<keyof Errors, 'doc'>
@@ -202,7 +202,7 @@ function traverseTreeAndValidateLinks(tree: any, doc: Document, setFailed: Failu
     link: [],
     hash: [],
     source: [],
-    related: [],
+    relative: [],
   }
 
   // Matches markdown links like [text](link)
@@ -226,7 +226,7 @@ function traverseTreeAndValidateLinks(tree: any, doc: Document, setFailed: Failu
       } else if (href.startsWith('#')) {
         validateHashLink(errors, href, doc)
       } else if (!nonInternalLinkRegex.test(href)) {
-        errors.related.push(href)
+        errors.relative.push(href)
       }
     }
   }
@@ -275,7 +275,7 @@ export async function validateAllInternalLinks(basePath: string, setFailed: Fail
           link: [],
           hash: [],
           source: [],
-          related: [],
+          relative: [],
         } as Errors
       }
     })
@@ -286,7 +286,7 @@ export async function validateAllInternalLinks(basePath: string, setFailed: Fail
 
     let errorRows: string[] = []
 
-    const errorTypes: ErrorType[] = ['link', 'hash', 'source', 'related']
+    const errorTypes: ErrorType[] = ['link', 'hash', 'source', 'relative']
     allErrors.forEach((errors) => {
       const {
         doc: { path: docPath },
