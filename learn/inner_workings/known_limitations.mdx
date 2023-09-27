@@ -89,17 +89,24 @@ Replacing `OR` with `AND` does not change the filter structure. The following fi
 genre = "romance" AND genre = "horror" AND genre = "adventure"
 ```
 
-However, when mixing and alterning `AND` and `OR` operators, we create depths:
+Nesting only occurs when alternating `AND` and `OR` operators. The following example fetches documents that either belong only to `user` `1`, or belong to users `2` and `3`:
 
 ```sql
-# AND is nested inside the ORs, so we have a depth of 2
-id = 1 OR id = 2 AND id = 3
+# AND is nested inside OR, creating a second level of nesting
+user = 1 OR user = 2 AND user = 3
+```
 
-# Here we have a depth of 4
-id = 1 OR (id = 2 AND (id = 3 OR (id = 4 AND id = 5)))
+Adding parentheses can help visualizing nesting depth:
 
-# But here the depth is still 2
-id = 1 OR (id = 2 AND id = 3) OR (id = 4 AND id = 5) OR id = 6
+```sql
+# Depth 2
+user = 1 OR (user = 2 AND user = 3)
+
+# Depth 4
+user = 1 OR (user = 2 AND (user = 3 OR (user = 4 AND user = 5)))
+
+# Though this filter is longer, its nesting depth is still 2
+user = 1 OR (user = 2 AND user = 3) OR (user = 4 AND user = 5) OR user = 6
 ```
 
 ## Size of integer fields
