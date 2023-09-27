@@ -77,7 +77,7 @@ If your query is `Hello - World`:
 
 ### Example
 
-The following filter with the chained `OR` operators corresponds to a depth of 1:
+The following filter is composed of a number of filter expressions. Since these statements are all chained with `OR` operators, there is no nesting:
 
 ```sql
 user = 1 OR user = 2 […] OR user = 10000
