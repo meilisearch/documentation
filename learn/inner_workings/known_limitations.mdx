@@ -80,7 +80,7 @@ If your query is `Hello - World`:
 The following filter is composed of a number of filter expressions. Since these statements are all chained with `OR` operators, there is no nesting:
 
 ```sql
-user = 1 OR user = 2 […] OR user = 10000
+genre = "romance" OR genre = "horror" OR genre = "adventure"
 ```
 
 We got the same behavior with chained `AND` operators: the depth is still 1.
