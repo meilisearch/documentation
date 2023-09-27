@@ -71,7 +71,7 @@ If your query is `Hello - World`:
 
 ## Maximum filter depth
 
-**Limitation:** Meilisearch accepts filtering searches (using the `filter` search parameter) with a maximum filtering depth of 2000.
+**Limitation:** searches using the [`filter` search parameter](/reference/api/search#filter) may have a maximum filtering depth of 2000.
 
 **Explanation:** mixing and alternating `AND` and `OR` operators filters creates nested logic structures. Excessive nesting can lead to stack overflow.
 
