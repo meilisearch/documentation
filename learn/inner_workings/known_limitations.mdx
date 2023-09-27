@@ -73,7 +73,7 @@ If your query is `Hello - World`:
 
 **Limitation:** Meilisearch accepts filtering searches (using the `filter` search parameter) with a maximum filtering depth of 2000.
 
-**Explanation:** Regarding filering, the depth increases when mixing and alterning `AND` and `OR` operators filters creating nested structures which can lead to a stack overflow.
+**Explanation:** mixing and alternating `AND` and `OR` operators filters creates nested logic structures. Excessive nesting can lead to stack overflow.
 
 ### Example
 
