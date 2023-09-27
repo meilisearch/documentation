@@ -83,7 +83,11 @@ The following filter is composed of a number of filter expressions. Since these 
 genre = "romance" OR genre = "horror" OR genre = "adventure"
 ```
 
-We got the same behavior with chained `AND` operators: the depth is still 1.
+Replacing `OR` with `AND` does not change the filter structure. The following filter's nesting level remains 1:
+
+```sql
+genre = "romance" AND genre = "horror" AND genre = "adventure"
+```
 
 However, when mixing and alterning `AND` and `OR` operators, we create depths:
 
