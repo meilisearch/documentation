@@ -71,23 +71,43 @@ If your query is `Hello - World`:
 
 ## Maximum filter depth
 
-**Limitation:** Meilisearch does not accept searches with more than 2000 `OR` filters.
+**Limitation:** searches using the [`filter` search parameter](/reference/api/search#filter) may have a maximum filtering depth of 2000.
 
-**Explanation:** `OR` filters create nested structures which can lead to a stack overflow.
+**Explanation:** mixing and alternating `AND` and `OR` operators filters creates nested logic structures. Excessive nesting can lead to stack overflow.
 
 ### Example
 
-Either of these filter expressions would cause a search query to fail:
+The following filter is composed of a number of filter expressions. Since these statements are all chained with `OR` operators, there is no nesting:
 
 ```sql
-user = 1 OR user = 2 […] OR user = 1500 OR user = 1501 […] OR user = 2000 OR user = 2001
+genre = "romance" OR genre = "horror" OR genre = "adventure"
 ```
 
-```json
-[
-  ["user = 1", "user = 2", […], "user = 1500", "user = 1501", […], "user = 2000", "user = 2001"]
-]
-```  
+Replacing `OR` with `AND` does not change the filter structure. The following filter's nesting level remains 1:
+
+```sql
+genre = "romance" AND genre = "horror" AND genre = "adventure"
+```
+
+Nesting only occurs when alternating `AND` and `OR` operators. The following example fetches documents that either belong only to `user` `1`, or belong to users `2` and `3`:
+
+```sql
+# AND is nested inside OR, creating a second level of nesting
+user = 1 OR user = 2 AND user = 3
+```
+
+Adding parentheses can help visualizing nesting depth:
+
+```sql
+# Depth 2
+user = 1 OR (user = 2 AND user = 3)
+
+# Depth 4
+user = 1 OR (user = 2 AND (user = 3 OR (user = 4 AND user = 5)))
+
+# Though this filter is longer, its nesting depth is still 2
+user = 1 OR (user = 2 AND user = 3) OR (user = 4 AND user = 5) OR user = 6
+```
 
 ## Size of integer fields
 
