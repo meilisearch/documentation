@@ -1,13 +1,13 @@
-# Syncing databases with MySQL and meilisync
+# Syncing databases with PostgreSQL and meilisync
 
 Though Meilisearch is a database, it is not recommended you use it as your primary data store. Instead, you should use an external database to store your data and periodically synchronise it with Meilisearch.
 
-This guide teaches you to use [`meilisync`](https://github.com/long2ice/meilisync) to keep Meilisearch up to date with a MySQL database.
+This guide teaches you to use [`meilisync`](https://github.com/long2ice/meilisync) to keep Meilisearch up to date with a PostgreSQL database.
 
 ## Requirements
 
 - A command-line console, such as macOS's terminal or Window's Cygwin
-- A MySQL database populated with data
+- A PostgreSQL database populated with data
 - A Meilisearch instance, either self-hosted or via [Meilisearch Cloud](https://cloud.meilisearch.com)
 
 ## Install `meilisync`
@@ -38,7 +38,6 @@ docker-compose pull
 ```
 
 After a few seconds, Docker will inform you it has successfully pulled `meilisync`'s image.
-
 </Tabs.Content>
 
 <Tabs.Content label="Manual install">
@@ -59,7 +58,6 @@ meilisync --help
 ```
 
 If the install process was successful, you should see a brief description of `meilisync`'s options.
-
 </Tabs.Content>
 </Tabs.Container>
 
@@ -93,41 +91,51 @@ meilisearch:
 
 Replace `MEILISEARCH_API_KEY` with an API key able to create, update, and delete documents and indexes. Replace `MEILISEARCH_API_URL` with your instance's API URL. If you are using [Meilisearch Cloud](https://cloud.meilisearch.com), this URL should look similar to this: https://ms-4d85L33tC0d3-5041.fra.meilisearch.io
 
-## Configure MySQL
+## Configure PostgreSQL
 
-After connecting `meilisync` to Meilisearch, you need to connect it to your MySQL database.
+After connecting `meilisync` to Meilisearch, you need to connect it to your PostgreSQL database.
 
-### Binary log format
+### Enable logical replication
 
-To use `meilisync` with MySQL, you must set your binary log format to `ROW`.
+To use `meilisync` with PostgreSQL, you need to enable the [`wal2json`](https://github.com/eulerto/wal2json) extension.
 
-Launch your MySQL server using the `--binlog-format` command-line option:
+The `wal2json` extension requires the [Write-Ahead Log settings](https://www.postgresql.org/docs/current/runtime-config-wal.html) to be set to `logical`.
 
-```sh
-mysql --binlog-format=ROW
+This can be done by adding the following line to your PostgreSQL server's `postgresql.conf` file:
+
+```conf
+wal_level = logical
+#
+# these parameters only need to set in versions 9.4, 9.5 and 9.6
+# default values are ok in version 10 or later
+#
+max_replication_slots = 10
+max_wal_senders = 10
 ```
 
-Alternatively, set the binary log format during runtime by running the following command in your MySQL server console:
+Alternatively, set the binary log format during runtime by running the following command in your PostgreSQL server console:
 
 ```sql
-SET GLOBAL binlog_format = 'ROW';
+ALTER SYSTEM SET wal_level = logical;
 ```
 
-### Connect `meilisync` and MySQL
+This will require a server configuration reload to take effect. Read more about this in the [`ALTER SYSTEM` documentation](https://www.postgresql.org/docs/current/sql-altersystem.html).
+
+### Connect `meilisync` and PostgreSQL
 
 Open `meilisync`'s `config.yml` once again and append the following settings to the bottom of the file:
 
 ```yaml
 source:
-  type: mysql
-  host: 127.0.0.1 # assuming your MySQL server is running on the same machine as `meilisync`
-  port: 3306
-  database: MYSQL_DATABASE_NAME
-  user: MYSQL_USERNAME
-  password: MYSQL_PASSWORD
+  type: postgres
+  host: 127.0.0.1 # assuming your PostgreSQL server is running on the same machine as `meilisync`
+  port: 5432
+  database: POSTGRESQL_DATABASE_NAME
+  user: POSTGRESQL_USERNAME
+  password: POSTGRESQL_PASSWORD
 ```
 
-Replace MYSQL_DATABASE_NAME, MYSQL_USERNAME, and MYSQL_PASSWORD with the name of your database, a user with read access to that database, and its credentials.
+Replace POSTGRESQL_DATABASE_NAME, POSTGRESQL_USERNAME, and POSTGRESQL_PASSWORD with the name of your database, a user with read access to that database, and its credentials.
 
 ## Configure `meilisync`
 
@@ -137,18 +145,20 @@ Open `config.yml` and append the following settings to the bottom of the file:
 
 ```yaml
 sync:
-  - table: MYSQL_TABLE_NAME_1
+  - table: POSTGRES_TABLE_NAME_1
     index: MEILISEARCH_INDEX_NAME_1
     full: true
-  - table: MYSQL_TABLE_NAME_2
+  - table: POSTGRES_TABLE_NAME_2
     index: MEILISEARCH_INDEX_NAME_2
     full: true
 ```
 
-Replace `MYSQL_TABLE_NAME_1` and `MEILISEARCH_INDEX_NAME_1` with the names of your tables and indexes. As the above example demonstrates, you may sync multiple tables.
+Replace `POSTGRES_TABLE_NAME_1` and `MEILISEARCH_INDEX_NAME_1` with the names of your tables and indexes. As the above example demonstrates, you may sync multiple tables.
 
 <Capsule intent="tip" title="Customizing `meilisync`">
-This tutorial describes a fairly basic `meilisync` setup. For more customization options, consult [`meilisync`'s documentation](https://github.com/long2ice/meilisync#configuration).
+  This tutorial describes a fairly basic `meilisync` setup. For more
+  customization options, consult [`meilisync`'s
+  documentation](https://github.com/long2ice/meilisync#configuration).
 </Capsule>
 
 ## Run `meilisync`
@@ -169,7 +179,7 @@ With the configuration done, open your command-line prompt once again and run `m
   </Tabs.Content>
 </Tabs.Container>
 
-`meilisync` should immediately start syncing your primary MySQL database with your Meilisearch instance.
+`meilisync` should immediately start syncing your primary PostgreSQL database with your Meilisearch instance.
 
 Once `meilisync` is done, use Meilisearch's search preview to perform a few test searches and confirm data has been successfully synced between your primary database and Meilisearch.
 
