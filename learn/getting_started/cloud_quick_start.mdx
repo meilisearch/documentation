@@ -10,19 +10,19 @@ To use Meilisearch Cloud, you must first create a project. Projects act as conta
 
 Click the "New project" button on the top menu. If you have a free trial account and this is your first project, the button will read "Start free trial" instead:
 
-![The Meilisearch Cloud menu, featuring the "New Project" button](https://raw.githubusercontent.com/meilisearch/documentation/cloud-quick-start/assets/images/cloud-getting-started/1-new-project.png)
+![The Meilisearch Cloud menu, featuring the "New Project" button](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/cloud-getting-started/1-new-project.png)
 
 Name your project `meilisearch-quick-start` and select the region closest to you, then click on "Create project":
 
-![A modal window with two mandatory fields: "Project name" and "Select a region"](https://raw.githubusercontent.com/meilisearch/documentation/cloud-quick-start/assets/images/cloud-getting-started/2-create-project.png)
+![A modal window with two mandatory fields: "Project name" and "Select a region"](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/cloud-getting-started/2-create-project.png)
 
 If you are not using a free trial account, you must also choose a billing plan based on the size of your dataset and number of searches per month:
 
-![A variation of the previous modal window with an extra mandatory field: "Select a plan". There are four billing plan options, from cheapest to most expensive: "Build", "Grow", "Pro", and "Enterprise"](https://raw.githubusercontent.com/meilisearch/documentation/cloud-quick-start/assets/images/cloud-getting-started/3-project-billing.png)
+![A variation of the previous modal window with an extra mandatory field: "Select a plan". There are four billing plan options, from cheapest to most expensive: "Build", "Grow", "Pro", and "Enterprise"](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/cloud-getting-started/3-project-billing.png)
 
 Creating your project might take a few minutes. Check the project list to follow its status. Once the project is ready, click on its name to go to the project overview page:
 
-![Meilisearch Cloud's main list of projects. It features only one project, "meilisearch-quick-start", and shows information such as API keys, URL, and number of monthly searches](https://raw.githubusercontent.com/meilisearch/documentation/cloud-quick-start/assets/images/cloud-getting-started/4-project-list.png)
+![Meilisearch Cloud's main list of projects. It features only one project, "meilisearch-quick-start", and shows information such as API keys, URL, and number of monthly searches](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/cloud-getting-started/4-project-list.png)
 
 ## Creating an index and adding documents
 
@@ -30,27 +30,27 @@ After creating your project, you must index the data you want to search. Meilise
 
 First, click on the indexes tab in the project page menu:
 
-![The project overview page, featuring a secondary menu with several links. A red arrow points at a menu item: "Indexes"](https://raw.githubusercontent.com/meilisearch/documentation/cloud-quick-start/assets/images/cloud-getting-started/5-project-page-menu-indexes.png)
+![The project overview page, featuring a secondary menu with several links. A red arrow points at a menu item: "Indexes"](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/cloud-getting-started/5-project-page-menu-indexes.png)
 
 This leads you to the index listing. Click on "Create an index":
 
-![An empty list of indexes in this project with a button on the upper right corner](https://raw.githubusercontent.com/meilisearch/documentation/cloud-quick-start/assets/images/cloud-getting-started/6-index-list-empty.png)
+![An empty list of indexes in this project with a button on the upper right corner](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/cloud-getting-started/6-index-list-empty.png)
 
 Write `movies` in the name field and click on "Create Index":
 
-![A modal window with one mandatory field: "Index name"](https://raw.githubusercontent.com/meilisearch/documentation/cloud-quick-start/assets/images/cloud-getting-started/7-create-index.png)
+![A modal window with one mandatory field: "Index name"](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/cloud-getting-started/7-create-index.png)
 
 The final step in creating an index is to add data to it. Choose "File upload":
 
-![Another modal window with three options. A red arrow points at the chosen option, "File upload"](https://raw.githubusercontent.com/meilisearch/documentation/cloud-quick-start/assets/images/cloud-getting-started/8-file-upload.png)
+![Another modal window with three options. A red arrow points at the chosen option, "File upload"](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/cloud-getting-started/8-file-upload.png)
 
 Meilisearch Cloud will ask you for your dataset. To follow along with this tutorial, use this <ButtonLink as="a" id="downloadMovie" href="/movies.json" download="movies.json">list of movies</ButtonLink>. Download the file to your computer, drag and drop it into the specified area, then click on "Import documents":
 
-![Another modal window with a large drag-and-drop area. It indicates a file named "movies.json" will be uploaded](https://raw.githubusercontent.com/meilisearch/documentation/cloud-quick-start/assets/images/cloud-getting-started/9-data-import.png)
+![Another modal window with a large drag-and-drop area. It indicates a file named "movies.json" will be uploaded](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/cloud-getting-started/9-data-import.png)
 
 Meilisearch Cloud will index your documents. This may take a moment. Click on "See index list" and wait. Once it is done, click on "Settings" to visit the index overview:
 
-![A list of all indexes in this project. It shows a single index, `movies`, and indicates it contains over 30,000 documents](https://raw.githubusercontent.com/meilisearch/documentation/cloud-quick-start/assets/images/cloud-getting-started/10-index-list-filled.png)
+![A list of all indexes in this project. It shows a single index, `movies`, and indicates it contains over 30,000 documents](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/cloud-getting-started/10-index-list-filled.png)
 
 ## Searching
 
@@ -58,15 +58,15 @@ With all data uploaded and processed, the last step is to run a few test searche
 
 Click on the project name on the breadcrumb menu to return to the project overview:
 
-![The index list page. A red arrow points at the breadcrumb menu](https://raw.githubusercontent.com/meilisearch/documentation/cloud-quick-start/assets/images/cloud-getting-started/11-index-list-breadcrumb.png)
+![The index list page. A red arrow points at the breadcrumb menu](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/cloud-getting-started/11-index-list-breadcrumb.png)
 
 Meilisearch Cloud comes with a search preview interface. Click on "Search preview" to access it:
 
-![The project overview page. A red arrow points at a menu item named "Search preview"](https://raw.githubusercontent.com/meilisearch/documentation/cloud-quick-start/assets/images/cloud-getting-started/12-project-page-url.png)
+![The project overview page. A red arrow points at a menu item named "Search preview"](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/cloud-getting-started/12-project-page-url.png)
 
 Finally, try searching for a few movies, like "Solaris":
 
-![The search preview interface, with "solaris" written in the search bar](https://raw.githubusercontent.com/meilisearch/documentation/cloud-quick-start/assets/images/cloud-getting-started/13-search-preview.png)
+![The search preview interface, with "solaris" written in the search bar](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/cloud-getting-started/13-search-preview.png)
 
 If you can see the results coming in as you type, congratulations: you now know all the basic steps to using Meilisearch Cloud.
 
