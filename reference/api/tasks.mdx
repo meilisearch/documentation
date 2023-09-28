@@ -294,7 +294,7 @@ Task results are [paginated](/learn/async/managing_tasks#paginating-tasks) and c
 Get a single task.
 
 <Capsule intent="note">
-If you try retrieving a deleted task, Meilisearch will return a [`task_not_found`](/reference/errors/error_codes#task-not-found) error.
+If you try retrieving a deleted task, Meilisearch will return a [`task_not_found`](/reference/errors/error_codes#task_not_found) error.
 </Capsule>
 
 ### Path parameters
@@ -343,7 +343,7 @@ Cancel any number of `enqueued` or `processing` tasks based on their `uid`, `sta
 Task cancelation is an atomic transaction: **either all tasks are successfully canceled or none are**.
 
 <Capsule intent="warning">
-To prevent users from accidentally canceling all enqueued and processing tasks, Meilisearch throws the [`missing_task_filters`](/reference/errors/error_codes#missing-task-filters) error if this route is used without any filters (`POST /tasks/cancel`).
+To prevent users from accidentally canceling all enqueued and processing tasks, Meilisearch throws the [`missing_task_filters`](/reference/errors/error_codes#missing_task_filters) error if this route is used without any filters (`POST /tasks/cancel`).
 </Capsule>
 
 <Capsule intent="tip" title="Did you know?">
@@ -408,7 +408,7 @@ The API key used must have access to all indexes (`"indexes": [*]`) and the [`ta
 Delete a finished (`succeeded`, `failed`, or `canceled`) task based on `uid`, `status`, `type`, `indexUid`, `canceledBy`, or date. Task deletion is an atomic transaction: **either all tasks are successfully deleted, or none are**.
 
 <Capsule intent="warning">
-To prevent users from accidentally deleting the entire task history, Meilisearch throws the [`missing_task_filters`](/reference/errors/error_codes#missing-task-filters) error if this route is used without any filters (DELETE `/tasks`).
+To prevent users from accidentally deleting the entire task history, Meilisearch throws the [`missing_task_filters`](/reference/errors/error_codes#missing_task_filters) error if this route is used without any filters (DELETE `/tasks`).
 </Capsule>
 
 ### Query parameters

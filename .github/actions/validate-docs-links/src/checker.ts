@@ -2,6 +2,7 @@ const fs = require('fs/promises')
 const path = require('path')
 const unified = require('unified')
 const markdown = require('remark-parse')
+const remarkMdx = require('remark-mdx')
 const remarkToRehype = require('remark-rehype')
 const raw = require('rehype-raw')
 const visit = require('unist-util-visit')
@@ -10,7 +11,7 @@ const GithubSlugger = require('github-slugger')
 import type { Node, Data } from 'unist'
 /**
  * This script validates internal links in /docs including internal,
- * hash, source and related links. It does not validate external links.
+ * hash, source and relative links. It does not validate external links.
  * 1. Collects all .mdx files.
  * 2. For each file, it extracts the content, metadata, and heading slugs.
  * 3. It creates a document map to efficiently lookup documents by path.
@@ -38,7 +39,7 @@ interface Errors {
   link: string[]
   hash: string[]
   source: string[]
-  related: string[]
+  relative: string[]
 }
 
 type ErrorType = Exclude<keyof Errors, 'doc'>
@@ -65,6 +66,7 @@ type FailureFunction =  (message: string) => void
 
 const RELATIVE_PATH = '/'
 const EXCLUDED_HASHES: string[] = []
+const EXCLUDED_PATHS: string[] = ['/movies.json']
 
 const slugger = new GithubSlugger()
 
@@ -115,6 +117,7 @@ function getHeadingsFromMarkdownTree(tree: Node<Data>): string[] {
 // Create a processor to parse MDX content
 const markdownProcessor = unified()
   .use(markdown)
+  .use(remarkMdx)
   .use(remarkToRehype, { allowDangerousHTML: true })
   .use(raw)
   .use(function compiler() {
@@ -159,6 +162,8 @@ function validateInternalLink(errors: Errors, href: string): void {
   // /docs/api/example#heading -> ["api/example", "heading""]
   const [link, hash] = href.split('#')
 
+  if (EXCLUDED_PATHS.includes(link)) return
+
   // check if doc page exists
   const foundPage = documentMap.get(link.replace(/^\/+/, ''))
   
@@ -166,14 +171,6 @@ function validateInternalLink(errors: Errors, href: string): void {
   if (!foundPage) {
     errors.link.push(href)
   } else if (hash && !EXCLUDED_HASHES.includes(hash)) {
-    // TODO: Check if this block is still needed
-    // // Account for documents that pull their content from another document
-    // const foundPageSource = foundPage.source
-    //   ? documentMap.get(foundPage.source)
-    //   : undefined
-
-    // Check if the hash link points to an existing section within the document
-    // const hashFound = (foundPageSource || foundPage).headings.includes(hash)
     const hashFound = foundPage.headings.includes(hash)
 
     if (!hashFound) {
@@ -205,28 +202,45 @@ function traverseTreeAndValidateLinks(tree: any, doc: Document, setFailed: Failu
     link: [],
     hash: [],
     source: [],
-    related: [],
+    relative: [],
   }
 
-  try {
-    visit(tree, (node: any) => {
-      if (node.type === 'element' && node.tagName === 'a') {
-        const href = node.properties.href
+  // Matches markdown links like [text](link)
+  const linkRegex = /\[[^\[\]]+\]\([^\(\)]+\)/gm
+  // Matches all links that use some kind of protocol (e.g. http://, https://, mailto:, etc.)
+  const nonInternalLinkRegex = /^(?:[a-z+]+:)?\/\/|^[a-z]+:/i;
 
-        if (!href) return
+  function validateNodes (node: any, parse: boolean = false) {
+    // Handle links in custom components that were not correctly parsed
+    if (node.type === 'text' && linkRegex.test(node.value)) {
+      const customComponentTree = markdownProcessor.parse(node.value)
+      traverseRecursively(customComponentTree)
+    }
 
-        if (href.startsWith(RELATIVE_PATH)) {
-          validateInternalLink(errors, href)
-        } else if (href.startsWith('#')) {
-          validateHashLink(errors, href, doc)
-        }
+    if (node.type === 'element' && node.tagName === 'a' || node.type === 'link' || node.type === 'buttonlink') {
+      const href = node.properties?.href ?? node.url
+      if (!href) return
+  
+      if (href.startsWith(RELATIVE_PATH)) {
+        validateInternalLink(errors, href)
+      } else if (href.startsWith('#')) {
+        validateHashLink(errors, href, doc)
+      } else if (!nonInternalLinkRegex.test(href)) {
+        errors.relative.push(href)
       }
-    })
-
-    validateSourceLinks(doc, errors)
-  } catch (error) {
-    setFailed('Error traversing tree: ' + error)
+    }
   }
+
+  function traverseRecursively (tree: any) {
+    try {
+      visit(tree, validateNodes)
+      validateSourceLinks(doc, errors)
+    } catch (error) {
+      setFailed('Error traversing tree: ' + error)
+    }
+  }
+
+  traverseRecursively(tree)
 
   return errors
 }
@@ -261,7 +275,7 @@ export async function validateAllInternalLinks(basePath: string, setFailed: Fail
           link: [],
           hash: [],
           source: [],
-          related: [],
+          relative: [],
         } as Errors
       }
     })
@@ -272,7 +286,7 @@ export async function validateAllInternalLinks(basePath: string, setFailed: Fail
 
     let errorRows: string[] = []
 
-    const errorTypes: ErrorType[] = ['link', 'hash', 'source', 'related']
+    const errorTypes: ErrorType[] = ['link', 'hash', 'source', 'relative']
     allErrors.forEach((errors) => {
       const {
         doc: { path: docPath },
