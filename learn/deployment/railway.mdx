@@ -16,9 +16,13 @@ To follow along, you need a [Railway account](https://railway.app). If you don't
 
 Click the button below to deploy a Meilisearch instance to Railway quickly.
 
-[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template/TXxa09?referralCode=YltNo3)
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template/meilisearch)
 
-Do not forget to replace the `MEILI_MASTER_KEY` environment variable with a strong key to secure your Meilisearch instance.
+### Environment Variables
+
+`MEILI_ENV` - By default, this template sets the `MEILI_ENV` environment variable to `production`.  If you would like access to the Meilisearch [search preview](/learn/getting_started/search_preview), update `MEILI_ENV` to `development`.
+
+`MEILI_MASTER_KEY` - Replace the `MEILI_MASTER_KEY` environment variable with a strong key to secure your Meilisearch instance.
 
 If you want to quickly generate a secure random key, you can run the following command from your terminal:
 
@@ -43,6 +47,8 @@ Setting a master key is optional, but without it, your server will accept uniden
 </Capsule>
 
 ### Test Meilisearch
+
+If you have updated the `MEILI_ENV` environment variable to `development` in the Railway service, you will have access to the Meilisearch [search preview](/learn/getting_started/search_preview).
 
 Copy the public URL (for example, `meilisearch-production-up.railway.app`) of your project from your [Railway account dashboard](https://railway.app/dashboard) and paste it into your browser.
 
