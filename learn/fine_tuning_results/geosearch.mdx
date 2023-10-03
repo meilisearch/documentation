@@ -370,6 +370,5 @@ When using `_geoPoint`, all returned documents will contain one extra field: `_g
 <Capsule intent="warning">
 Using `_geoRadius` filter will not cause results to include `_geoDistance`.
 
-`_geoDistance` will only be computed in a returned document if the query uses `_geoPoint` and the `sort` search parameter.
-`_geo` must be configured as a [`displayedAttribute`](learn/configuration/displayed_searchable_attributes) to see `_geoDistance`.
+`_geoDistance` will only be computed in a returned document if the query uses `_geoPoint` and the `sort` search parameter. Additionally, returned documents will only include `_geoDistance` if `_geo` is present in the [`displayedAttributes` list](learn/configuration/displayed_searchable_attributes).
 </Capsule>
