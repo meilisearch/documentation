@@ -200,6 +200,87 @@ After flattening, it would look like this:
 
 Once all objects inside a document have been flattened, Meilisearch will continue processing it as described in the previous sections. For example, arrays will be flattened, and numeric and boolean values will be turned into strings.
 
+### Querying nested documents
+
+Meilisearch has no concept of subdocuments. In the previous example, the connection between the `2022-01-01` appointment and `Jester Lavorre` is lost when flattening the `appointments` array. The only information Meilisearch retains is that the patient had appointments in 2022 and 2019, and that they saw doctors `Jester Lavorre` and `Dorian Storm`:
+
+```json
+…
+  "appointments.date": [
+    "2022-01-01",
+    "2019-01-01"
+  ],
+  "appointments.doctor": [
+    "Jester Lavorre",
+    "Dorian Storm"
+  ],
+…
+}
+```
+
+This may lead to unexpected behavior during search. The following dataset shows the appointments for two patients:
+
+```json
+[
+  {
+    "id": 0,
+    "patient_name": "Imogen Temult",
+    "appointments": [
+      {
+        "date": "2022-01-01",
+        "doctor": "Jester Lavorre"
+      }
+    ]
+  },
+  {
+    "id": 1,
+    "patient_name": "Caleb Widowgast",
+    "appointments": [
+      {
+        "date": "2022-01-01",
+        "doctor": "Dorian Storm"
+      },
+      {
+        "date": "2023-01-01",
+        "doctor": "Jester Lavorre"
+      }
+    ]
+  }
+]
+```
+
+Unintuitively, the following query returns documents `0` and `1`:
+
+```sh
+curl \
+  -X POST 'http://localhost:7700/indexes/movie_ratings/search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "q": "",
+    "filter": "(appointments.date CONTAINS 2022-01-01 AND appointments.doctor CONTAINS 'Jester Lavorre')"
+  }'
+```
+
+This happens because, when flattened, both documents contain both `2022-01-01` and `Jester Lavorre`:
+
+```json
+[
+  {
+    "id": 0,
+    "patient_name": "Imogen Temult",
+    "appointments.date": ["2022-01-01"],
+    "appointments.doctor": ["Jester Lavorre"]
+  },
+  {
+    "id": 1,
+    "patient_name": "Caleb Widowgast",
+    "appointments.date": ["2022-01-01", "2023-01-01"],
+    "appointments.doctor": ["Jester Lavorre", "Dorian Storm"]
+  }
+]
+
+```
+
 ## Possible tokenization issues
 
 Even if it behaves exactly as expected, the tokenization process may lead to counterintuitive results in some cases, such as:
