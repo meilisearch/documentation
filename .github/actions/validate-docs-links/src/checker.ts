@@ -256,7 +256,7 @@ const formatTableRow = (
 }
 
 // Main function that triggers link validation across .mdx files
-export async function validateAllInternalLinks(basePath: string, setFailed: FailureFunction, sha?: string, useComment?: (comment: string, errorsExist: boolean) => Promise<void>): Promise<void> {
+export async function validateAllInternalLinks(basePath: string, setFailed: FailureFunction, sha?: string): Promise<void> {
   try {
     const allMdxFilePaths = await getAllMdxFilePaths(basePath)
 
@@ -302,14 +302,7 @@ export async function validateAllInternalLinks(basePath: string, setFailed: Fail
       })
     })
 
-    const errorComment = [
-      'Hi there :wave:\n\nIt looks like this PR introduces broken links to the docs, please take a moment to fix them before merging:\n\n| Broken link | Type | File | \n| ----------- | ----------- | ----------- | \n',
-      ...errorRows,
-      '\nThank you :pray:',
-    ].join('')
-
     if (errorsExist) {
-      await useComment?.(errorComment, errorsExist)
       const errorTableData = allErrors.flatMap((errors) => {
         const { doc } = errors
 
@@ -322,10 +315,9 @@ export async function validateAllInternalLinks(basePath: string, setFailed: Fail
         )
       })
 
-      console.log('This PR introduces broken links to the docs:')
+      setFailed('This PR introduces broken links to the docs:')
       console.table(errorTableData, ['link', 'errorType', 'docPath'])
     } else {
-      await useComment?.('All broken links are now fixed, thank you!', errorsExist)
       console.log("This PR doesn't introduce any broken links to the docs. :D")
     }
   } catch (error) {
