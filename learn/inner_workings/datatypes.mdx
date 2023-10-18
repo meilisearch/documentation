@@ -200,9 +200,9 @@ After flattening, it would look like this:
 
 Once all objects inside a document have been flattened, Meilisearch will continue processing it as described in the previous sections. For example, arrays will be flattened, and numeric and boolean values will be turned into strings.
 
-### Querying nested documents
+### Nested document querying and subdocuments
 
-Meilisearch has no concept of subdocuments. In the previous example, the connection between the `2022-01-01` appointment and `Jester Lavorre` is lost when flattening the `appointments` array. The only information Meilisearch retains is that the patient had appointments in 2022 and 2019, and that they saw doctors `Jester Lavorre` and `Dorian Storm`:
+Meilisearch has no concept of subdocuments and cannot perform nested document querying. In the previous example, the relationship between an appointment's date and doctor is lost when flattening the `appointments` array:
 
 ```json
 …
@@ -217,7 +217,7 @@ Meilisearch has no concept of subdocuments. In the previous example, the connect
 …
 ```
 
-This may lead to unexpected behavior during search. The following dataset shows the appointments for two patients:
+This may lead to unexpected behavior during search. The following dataset shows two patients and their respective appointments:
 
 ```json
 [
@@ -248,7 +248,7 @@ This may lead to unexpected behavior during search. The following dataset shows 
 ]
 ```
 
-Unintuitively, the following query returns documents `0` and `1`:
+The following query returns patients `0` and `1`:
 
 ```sh
 curl \
@@ -260,24 +260,7 @@ curl \
   }'
 ```
 
-This happens because, when flattened, both documents contain both `2022-01-01` and `Jester Lavorre`:
-
-```json
-[
-  {
-    "id": 0,
-    "patient_name": "Imogen Temult",
-    "appointments.date": ["2022-01-01"],
-    "appointments.doctor": ["Jester Lavorre"]
-  },
-  {
-    "id": 1,
-    "patient_name": "Caleb Widowgast",
-    "appointments.date": ["2022-01-01", "2023-01-01"],
-    "appointments.doctor": ["Jester Lavorre", "Dorian Storm"]
-  }
-]
-```
+Meilisearch is unable to only return patients who had an appointment with `Jester Lavorre` in `2022-01-01`. Instead, it returns patients who had an appointment with `Jester Lavorre`, and patients who had an appointment in `2022-01-01`.
 
 ## Possible tokenization issues
 
