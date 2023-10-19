@@ -256,7 +256,7 @@ curl \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "q": "",
-    "filter": "(appointments.date CONTAINS 2022-01-01 AND appointments.doctor CONTAINS 'Jester Lavorre')"
+    "filter": "(appointments.date = 2022-01-01 AND appointments.doctor = 'Jester Lavorre')"
   }'
 ```
 
