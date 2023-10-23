@@ -1,6 +1,11 @@
-# Migrating from a self-hosted Meilisearch install to Meilisearch Cloud
+---
+title: Migrating to Meilisearch Cloud — Meilisearch Documentation
+description: Meilisearch Cloud is the recommended way of using Meilisearch. This guide walks you through migrating Meilisearch from a self-hosted installation to Meilisearch Cloud.
+---
 
-This guide walks you through migrating Meilisearch from a self-hosted installation to Meilisearch Cloud. Meilisearch Cloud is the officially recommended way of using Meilisearch. 
+# Migrating to Meilisearch Cloud
+
+Meilisearch Cloud is the recommended way of using Meilisearch. This guide walks you through migrating Meilisearch from a self-hosted installation to Meilisearch Cloud.
 
 ## Requirements
 
@@ -10,7 +15,7 @@ To follow this guide you need:
 - A command-line terminal
 - A Meilisearch Cloud account
 
-## Export a dump
+## Export a dump from your self-hosted installation
 
 To migrate Meilisearch, you must first [export a dump](/learn/advanced/dumps). A dump is a compressed file containing all your indexes, documents, and settings.
 
@@ -20,50 +25,36 @@ To export a dump, make sure your self-hosted Meilisearch instance is running. Th
 curl  -X POST 'http://MEILISEARCH_URL:7700/dumps'
 ```
 
-Meilisearch will return a summarized task object:
+Meilisearch will return a summarized task object and begin creating the dump. [Use the returned object's `taskUid` to monitor its progress.](/learn/async/asynchronous_operations)
 
-```json
-{
-  "taskUid": 1,
-  "indexUid": null,
-  "status": "enqueued",
-  "type": "dumpCreation",
-  "enqueuedAt": "2022-06-21T16:10:29.217688Z"
-}
-```
-
-Depending on your dataset size, this operation might take a few moments. [Use the returned `taskUid` to monitor its progress.](/learn/async/asynchronous_operations)
-
-Once the task is completed, you can find it in your project's dump directory. By default, this is `/dumps`.
+Once the task has been completed, you can find the dump in your project's dump directory. By default, this is `/dumps`.
 
 <Capsule intent="note" title="Command-line options and environment variables">
-Instance configuration options or experimental features that can only be activated at launch are not included in dumps. Additionally, not all instance options are supported in the Cloud.
+Instance configuration options and experimental features that can only be activated at launch are not included in dumps.
 
-Once you have successfully migrated your data to Meilisearch Cloud, use the project overview interface to reactivate available options.
+Once you have successfully migrated your data to Meilisearch Cloud, use the project overview interface to reactivate available options. Not all instance options are supported in the Cloud.
 </Capsule>
 
 ## Create a Meilisearch Cloud project and import dump
 
-Navigate to Meilisearch Cloud in your browser and log in. If you don't have a Meilisearch Cloud account yet, you can create one for free.
+Navigate to Meilisearch Cloud in your browser and log in. If you don't have a Meilisearch Cloud account yet, [create one for free](https://cloud.meilisearch.com/register).
 
 You can only import dumps into new Meilisearch Cloud projects. Create a new project by clicking on the "New project" button:
 
-![The Meilisearch Cloud menu, featuring the "New Project" button](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/cloud-getting-started/1-new-project.png)
+![The Meilisearch Cloud menu, featuring the "New Project" button](https://raw.githubusercontent.com/meilisearch/documentation/migration-self-hosted-to-cloud/assets/images/cloud-getting-started/1-new-project.png)
 
-This will launch the project creation interface. Fill in your project name, choose a server location, and select your plan. Then, click on the "Import .dump" button and select the dump file you generated in the previous step:
+Fill in your project name, choose a server location, and select your plan. Then, click on the "Import .dump" button and select the dump file you generated in the previous step:
 
-![A modal window with three mandatory fields: "Project name", "Select a region", and "Select a plan". Further down, an optional field: "Import .dump"](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/cloud-getting-started/2-import-dump.png)
+![A modal window with three mandatory fields: "Project name", "Select a region", and "Select a plan". Further down, an optional field: "Import .dump"](https://raw.githubusercontent.com/meilisearch/documentation/migration-self-hosted-to-cloud/assets/images/cloud-getting-started/2-import-dump.png)
 
-Meilisearch will start creating a new project and importing your data into it. This might take a few moments depending on the size of your dataset. Monitor the project creation status in the  project overview page.
+Meilisearch will start creating a new project and importing your data. This might take a few moments depending on the size of your dataset. Monitor the project creation status in the project overview page.
 
 <Capsule intent="danger" title="Master key and API keys">
-Meilisearch Cloud automatically generates a new master key during migration. If you were using security keys before the migration, so you need to update your application so it uses the new Meilisearch Cloud API keys.
+Meilisearch Cloud automatically generates a new master key during project creation. If you are using [security keys](/learn/security/master_api_keys), update your application so it uses the newly created Meilisearch Cloud API keys.
 </Capsule>
 
 ## Search preview
 
-Once your project is ready, click on its URL. This will bring you to the search preview interface, where you can type a few searches and ensure all data was migrated successfully.
+Once your project is ready, click on "Search preview" in the top bar menu. This will bring you to the search preview interface. Run a few test searches to ensure all data was migrated successfully.
 
-Congratulations, you have now migrated to Meilisearch Cloud, the officially recommended way to use Meilisearch. 
-
-If you encountered any problems during this process, reach out to our support team on Discord.
+Congratulations, you have now migrated to Meilisearch Cloud, the recommended way to use Meilisearch. If you encountered any problems during this process, reach out to our support team on [Discord](https://discord.gg/meilisearch).
