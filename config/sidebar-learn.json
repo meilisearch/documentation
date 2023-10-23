@@ -213,6 +213,11 @@
     "slug": "update_and_migration",
     "routes": [
       {
+        "source": "learn/update_and_migration/migrating_cloud.mdx",
+        "label": "Migrating to Meilisearch Cloud",
+        "slug": "migrating_cloud"
+      },
+      {
         "source": "learn/update_and_migration/updating.mdx",
         "label": "Updating Meilisearch",
         "slug": "updating"
