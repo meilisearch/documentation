@@ -22,7 +22,7 @@ To migrate Meilisearch, you must first [export a dump](/learn/advanced/dumps). A
 To export a dump, make sure your self-hosted Meilisearch instance is running. Then, open your terminal and run the following command, replacing `MEILISEARCH_URL` with your instance's address:
 
 ```sh
-curl  -X POST 'http://MEILISEARCH_URL:7700/dumps'
+curl -X POST 'http://MEILISEARCH_URL:7700/dumps'
 ```
 
 Meilisearch will return a summarized task object and begin creating the dump. [Use the returned object's `taskUid` to monitor its progress.](/learn/async/asynchronous_operations)
