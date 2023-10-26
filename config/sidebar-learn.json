@@ -57,27 +57,6 @@
     ]
   },
   {
-    "title": "Meilisearch 101",
-    "slug": "getting_started",
-    "routes": [
-      {
-        "source": "learn/meilisearch_101/filtering_and_sorting.mdx",
-        "label": "Filtering and sorting",
-        "slug": "filtering_and_sorting"
-      },
-      {
-        "source": "learn/meilisearch_101/customizing_relevancy.mdx",
-        "label": "Customizing relevancy",
-        "slug": "customizing_relevancy"
-      },
-      {
-        "source": "learn/meilisearch_101/getting_ready_for_production.mdx",
-        "label": "Getting ready for production",
-        "slug": "getting_ready_for_production"
-      }
-    ]
-  },
-  {
     "title": "Core concepts",
     "slug": "core_concepts",
     "routes": [
