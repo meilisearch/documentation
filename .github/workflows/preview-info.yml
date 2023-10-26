@@ -1,6 +1,6 @@
 name: Show preview on PRs
 
-# test
+# test2
 on:
   pull_request:
     types: [opened]
