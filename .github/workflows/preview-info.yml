@@ -1,0 +1,27 @@
+name: Show preview on PRs
+
+on:
+  pull_request:
+    types: [opened]
+
+env:
+  GH_TOKEN: ${{ secrets.MEILI_BOT_GH_PAT }}
+  CURRENT_BRANCH: ${{ github.event.pull_request.head.ref }}
+
+jobs:
+  preview-info:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Prepare comment content
+        run: |
+          echo '## How to see the preview of this PR?' >> comment.txt
+          echo '' >> comment.txt
+          echo '⚠️ Accessible for internal Meili people only.' >> comment.txt
+          echo '' >> comment.txt
+          echo "Go to this URL: https://website-git-deploy-preview-mei-16-meili.vercel.app/docs/branch%3A$CURRENT_BRANCH" >> comment.txt
+          echo '' >> comment.txt
+          echo "Credentials to access the page are in the company\'s password manager as \"Docs deploy preview\"." >> comment.txt
+      - name: Add comment to PR with preview information
+        run: |
+          gh pr comment $CURRENT_BRANCH --body-file comment.txt
