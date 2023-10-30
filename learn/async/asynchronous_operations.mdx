@@ -1,6 +1,9 @@
 ---
+title: Tasks and asynchronous operations — Meilisearch documentation
+description: Meilisearch uses a task queue to handle asynchronous operations. This in-depth guide explains tasks, their uses, and how to manage them using Meilisearch's API.
 sidebarDepth: 3
 ---
+
 # Tasks and asynchronous operations
 
 Many operations in Meilisearch are processed **asynchronously**. These API requests are not handled immediately—instead, Meilisearch places them in a queue and processes them in the order they were received.
