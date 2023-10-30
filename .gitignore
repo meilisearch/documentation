@@ -2,6 +2,9 @@
 # Created by https://www.gitignore.io/api/vue,node,vuejs
 # Edit at https://www.gitignore.io/?templates=vue,node,vuejs
 
+# IDE related
+.vscode
+
 ### Node ###
 # Logs
 logs

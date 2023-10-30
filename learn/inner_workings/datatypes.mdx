@@ -205,6 +205,90 @@ After flattening, it would look like this:
 
 Once all objects inside a document have been flattened, Meilisearch will continue processing it as described in the previous sections. For example, arrays will be flattened, and numeric and boolean values will be turned into strings.
 
+### Nested document querying and subdocuments
+
+Meilisearch has no concept of subdocuments and cannot perform nested document querying. In the previous example, the relationship between an appointment's date and doctor is lost when flattening the `appointments` array:
+
+```json
+…
+  "appointments.date": [
+    "2022-01-01",
+    "2019-01-01"
+  ],
+  "appointments.doctor": [
+    "Jester Lavorre",
+    "Dorian Storm"
+  ],
+…
+```
+
+This may lead to unexpected behavior during search. The following dataset shows two patients and their respective appointments:
+
+```json
+[
+  {
+    "id": 0,
+    "patient_name": "Imogen Temult",
+    "appointments": [
+      {
+        "date": "2022-01-01",
+        "doctor": "Jester Lavorre"
+      }
+    ]
+  },
+  {
+    "id": 1,
+    "patient_name": "Caleb Widowgast",
+    "appointments": [
+      {
+        "date": "2022-01-01",
+        "doctor": "Dorian Storm"
+      },
+      {
+        "date": "2023-01-01",
+        "doctor": "Jester Lavorre"
+      }
+    ]
+  }
+]
+```
+
+The following query returns patients `0` and `1`:
+
+```sh
+curl \
+  -X POST 'http://localhost:7700/indexes/movie_ratings/search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "q": "",
+    "filter": "(appointments.date = 2022-01-01 AND appointments.doctor = 'Jester Lavorre')"
+  }'
+```
+
+Meilisearch is unable to only return patients who had an appointment with `Jester Lavorre` in `2022-01-01`. Instead, it returns patients who had an appointment with `Jester Lavorre`, and patients who had an appointment in `2022-01-01`.
+
+The best way to work around this limitation is reformatting your data. The above example could be fixed by merging appointment data in a new `appointmentsMerged` field so the relationship between appointment and doctor remains intact:
+
+```json
+[
+  {
+    "id": 0,
+    "patient_name": "Imogen Temult",
+    "appointmentsMerged": [
+      "2022-01-01 Jester Lavorre"
+    ]
+  },
+  {
+    "id": 1,
+    "patient_name": "Caleb Widowgast",
+    "appointmentsMerged": [
+      "2023-01-01 Jester Lavorre"
+      "2022-01-01 Dorian Storm"
+    ]
+  }
+]
+```
+
 ## Possible tokenization issues
 
 Even if it behaves exactly as expected, the tokenization process may lead to counterintuitive results in some cases, such as:
