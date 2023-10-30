@@ -44,7 +44,7 @@ jobs:
     runs-on: ubuntu-20.04
     name: scrape and push content on Meilisearch instance
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Run docs-scraper
         env:
           HOST_URL: ${{ secrets.MEILISEARCH_HOST_URL }}
