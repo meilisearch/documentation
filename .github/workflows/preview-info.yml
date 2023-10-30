@@ -19,7 +19,7 @@ jobs:
           echo '' >> comment.txt
           echo '⚠️  Private link, only accessible to Meilisearch employees.' >> comment.txt
           echo '' >> comment.txt
-          echo "Go to this URL: https://website-git-deploy-preview-mei-16-meili.vercel.app/docs/branch%3A$CURRENT_BRANCH" >> comment.txt
+          echo "Go to this URL: https://website-git-deploy-preview-mei-16-meili.vercel.app/docs/branch:$CURRENT_BRANCH" >> comment.txt
           echo '' >> comment.txt
           echo "Credentials to access the page are in the company\'s password manager as \"Docs deploy preview\"." >> comment.txt
       - name: Add comment to PR with preview information
