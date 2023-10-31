@@ -7,7 +7,8 @@
   "scripts": {
     "links-check": "cd .github/actions/validate-docs-links && yarn && yarn local:check",
     "marklint:fix": "markdownlint '**/*.mdx' --config .markdownlint.jsonc --fix",
-    "marklint": "markdownlint '**/*.mdx' --config .markdownlint.jsonc"
+    "marklint": "markdownlint '**/*.mdx' --config .markdownlint.jsonc",
+    "proselint": "vale **/*.mdx"
   },
   "repository": {
     "type": "git",
@@ -21,6 +22,7 @@
   },
   "homepage": "https://meilisearch.com/docs",
   "devDependencies": {
+    "@ocular-d/vale-bin": "^2.29.6",
     "markdownlint-cli": "^0.37.0"
   }
 }

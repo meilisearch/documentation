@@ -1,0 +1,15 @@
+---
+# Error: Meilisearch.Spacing.yml
+
+# Use a space between words, sentences, and punctuation marks
+extends: existence
+message: "'%s' should have one space."
+link: https://docs.microsoft.com/en-us/style-guide/punctuation/periods
+level: error
+nonword: true
+tokens:
+  - '[a-z]\s{2,}[a-z]' # ensure only one space between words
+  - '[a-z][.?!:;",] {2,}[A-Z]' # one space between sentences (end.  new)
+  - '[a-z][.?!:;",][A-Z]' #(end.new)
+  - '[\w.?!,\(\)\-":] {2,}[\w.?!,\(\)\-":]' #only one space after ,.?
+  

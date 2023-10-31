@@ -1,0 +1,14 @@
+---
+# Warning: Meilisearch.URLFormat.yml
+
+# Use "a URL"/"an HTML" instead of "an URL"/"a HTML"
+extends: substitution
+message: "Use '%s' instead of '%s'."
+ignorecase: true
+level: warning
+action:
+  name: replace
+swap:
+  URL for: URL of
+  an URL: a URL
+  a HTML: an HTML
