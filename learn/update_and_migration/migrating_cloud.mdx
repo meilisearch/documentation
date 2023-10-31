@@ -1,0 +1,60 @@
+---
+title: Migrating to Meilisearch Cloud — Meilisearch Documentation
+description: Meilisearch Cloud is the recommended way of using Meilisearch. This guide walks you through migrating Meilisearch from a self-hosted installation to Meilisearch Cloud.
+---
+
+# Migrating to Meilisearch Cloud
+
+Meilisearch Cloud is the recommended way of using Meilisearch. This guide walks you through migrating Meilisearch from a self-hosted installation to Meilisearch Cloud.
+
+## Requirements
+
+To follow this guide you need:
+
+- A running Meilisearch instance
+- A command-line terminal
+- A Meilisearch Cloud account
+
+## Export a dump from your self-hosted installation
+
+To migrate Meilisearch, you must first [export a dump](/learn/advanced/dumps). A dump is a compressed file containing all your indexes, documents, and settings.
+
+To export a dump, make sure your self-hosted Meilisearch instance is running. Then, open your terminal and run the following command, replacing `MEILISEARCH_URL` with your instance's address:
+
+```sh
+curl -X POST 'http://MEILISEARCH_URL:7700/dumps'
+```
+
+Meilisearch will return a summarized task object and begin creating the dump. [Use the returned object's `taskUid` to monitor its progress.](/learn/async/asynchronous_operations)
+
+Once the task has been completed, you can find the dump in your project's dump directory. By default, this is `/dumps`.
+
+<Capsule intent="note" title="Command-line options and environment variables">
+Instance configuration options and experimental features that can only be activated at launch are not included in dumps.
+
+Once you have successfully migrated your data to Meilisearch Cloud, use the project overview interface to reactivate available options. Not all instance options are supported in the Cloud.
+</Capsule>
+
+## Create a Meilisearch Cloud project and import dump
+
+Navigate to Meilisearch Cloud in your browser and log in. If you don't have a Meilisearch Cloud account yet, [create one for free](https://cloud.meilisearch.com/register).
+
+You can only import dumps into new Meilisearch Cloud projects. If this is your first time using Meilisearch Cloud, create a new project by clicking on the "Create a project" button. Otherwise, click on the "New project" button:
+
+![The Meilisearch Cloud menu, featuring the "New Project" button](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/cloud-migration/1-new-project.png)
+
+Fill in your project name, choose a server location, and select your plan. Then, click on the "Import .dump" button and select the dump file you generated in the previous step:
+
+![A modal window with three mandatory fields: "Project name", "Select a region", and "Select a plan". Further down, an optional field: "Import .dump"](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/cloud-migration/2-import-dump.png)
+
+Meilisearch will start creating a new project and importing your data. This might take a few moments depending on the size of your dataset. Monitor the project creation status in the project overview page.
+
+<Capsule intent="danger" title="Master key and API keys">
+Meilisearch Cloud automatically generates a new master key during project creation. If you are using [security keys](/learn/security/master_api_keys), update your application so it uses the newly created Meilisearch Cloud API keys.
+</Capsule>
+
+## Search preview
+
+Once your project is ready, click on it to enter the project overview. From there, click on "Search preview" in the top bar menu. This will bring you to the search preview interface. Run a few test searches to ensure all data was migrated successfully.
+
+Congratulations, you have now migrated to Meilisearch Cloud, the recommended way to use Meilisearch. If you encountered any problems during this process, reach out to our support team on [Discord](https://discord.gg/meilisearch).
