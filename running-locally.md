@@ -1,6 +1,6 @@
 # Run a local copy of the docs site
 
-⚠️ To run a local copy of the docs site, you must have access to https://github.com/meilisearch/meilisearch.com/. You must also be a member of Meilisearch's team on Vercel. If you are Meilisearch employee and don't have access to either of them, contact your manager.
+⚠️ To run a local copy of the docs site, you must have access to <https://github.com/meilisearch/meilisearch.com/>. You must also be a member of Meilisearch's team on Vercel. If you are Meilisearch employee and don't have access to either of them, contact your manager.
 
 ## Requirements
 
