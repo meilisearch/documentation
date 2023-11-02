@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "ca046707-e482-4e2c-a524-0574bd10dd5f",
-		"name": "Meilisearch v1.4",
+		"_postman_id": "0f0a76a3-b6d0-4f7d-a8d6-532647b46074",
+		"name": "Meilisearch v1.5",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -927,11 +927,12 @@
 							"raw": "[\n    { \"indexes\": [\"books\", \"books_temp\"] }\n]"
 						},
 						"url": {
-							"raw": "{{url}}/swap-indexes",
+							"raw": "{{url}}/indexes/swap-indexes",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
+								"indexes",
 								"swap-indexes"
 							]
 						}
@@ -2438,6 +2439,51 @@
 			]
 		},
 		{
+			"name": "Snapshots",
+			"item": [
+				{
+					"name": "Create a snapshot",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/snapshots",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"snapshots"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
 			"name": "Facet search",
 			"item": [
 				{
@@ -2456,13 +2502,11 @@
 							"raw": "{ \n      \"facetQuery\": \"adventure\",\n      \"facetName\": \"genre\",\n      \"q\": \"prinec\"\n}"
 						},
 						"url": {
-							"raw": "{{url}}/indexes/{{indexUID}}/facet-search",
+							"raw": "{{url}}/facet-search",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
-								"indexes",
-								"{{indexUID}}",
 								"facet-search"
 							]
 						}
