@@ -1144,3 +1144,6 @@ update_dictionary_1: |-
 reset_dictionary_1: |-
   curl \
     -X DELETE 'http://localhost:7700/indexes/books/settings/dictionary'
+create_snapshot_1: |-
+  curl \
+    -X POST 'http://localhost:7700/snapshots'
