@@ -21,21 +21,21 @@ This will return a summarized task object. Use [the `/tasks` route](/reference/a
 
 ### Scheduling periodic snapshots
 
-Use the [`--schedule-snapshot` configuration option](/learn/configuration/instance_options#schedule-snapshot-creation) to create snapshots periodically:
+Use the [`--schedule-snapshot` configuration option](/learn/configuration/instance_options#schedule-snapshot-creation) to create snapshots at regular time intervals:
 
 ```bash
 meilisearch --schedule-snapshot
 ```
 
-The first snapshot is created on launching Meilisearch. After that, snapshots are created routinely on a set interval until you deactivate snapshots by ending the Meilisearch instance. By default, one snapshot is taken every 24 hours.
+The first snapshot is created on launching Meilisearch. After that, snapshots are created on a set interval until you deactivate snapshots by ending the Meilisearch instance. By default, one snapshot is taken every 24 hours.
 
-The interval between each new snapshot can be modified by providing an integer to [`--schedule-snapshot`](/learn/configuration/instance_options#schedule-snapshot-creation):
+Modify the interval between each new snapshot by providing an integer to [`--schedule-snapshot`](/learn/configuration/instance_options#schedule-snapshot-creation):
 
 ```bash
 meilisearch --schedule-snapshot=3600
 ```
 
-[More about snapshots flags and environment variables](/learn/configuration/instance_options#schedule-snapshot-creation)
+[Learn more about snapshots flags and environment variables.](/learn/configuration/instance_options#schedule-snapshot-creation)
 
 ### Snapshot directory
 

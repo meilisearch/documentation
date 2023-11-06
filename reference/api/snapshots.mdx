@@ -1,19 +1,19 @@
 ---
 title: Snapshots — Meilisearch API reference
-description: The /snapshots route allows the creation of database snapshots. Use snapshots to create backup your Meilisearch data.
+description: The /snapshots route creates database snapshots. Use snapshots to backup your Meilisearch data.
 ---
 
 # Snapshots
 
-The `/snapshot` route allows the creation of database snapshots. Snapshots are `.snapshot` files that can be used to make quick backups of Meilisearch data.
+The `/snapshot` route allows you to create database snapshots. Snapshots are `.snapshot` files that can be used to make quick backups of Meilisearch data.
 
-[Learn more about snapshots](/learn/advanced/snapshots).
+[Learn more about snapshots.](/learn/advanced/snapshots)
 
 ## Create a snapshot
 
 <RouteHighlighter method="POST" route="/snapshots"/>
 
-Triggers a snapshot creation task. Once the process is complete, a snapshot is created in the [snapshot directory](/learn/configuration/instance_options#snapshot-destination). If the snapshot directory does not exist yet, it will be created.
+Triggers a snapshot creation task. Once the process is complete, Meilisearch creates a snapshot in the [snapshot directory](/learn/configuration/instance_options#snapshot-destination). If the snapshot directory does not exist yet, it will be created.
 
 Snapshot tasks take priority over all other tasks in the queue. This means that a newly created snapshot task will be processed as soon as the current task is finished.
 
