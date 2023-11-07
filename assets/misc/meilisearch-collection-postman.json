@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "0f0a76a3-b6d0-4f7d-a8d6-532647b46074",
+		"_postman_id": "5ac31b23-8cd6-41d5-b1ed-a47123edc334",
 		"name": "Meilisearch v1.5",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -927,12 +927,11 @@
 							"raw": "[\n    { \"indexes\": [\"books\", \"books_temp\"] }\n]"
 						},
 						"url": {
-							"raw": "{{url}}/indexes/swap-indexes",
+							"raw": "{{url}}/swap-indexes",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
-								"indexes",
 								"swap-indexes"
 							]
 						}
@@ -2502,11 +2501,13 @@
 							"raw": "{ \n      \"facetQuery\": \"adventure\",\n      \"facetName\": \"genre\",\n      \"q\": \"prinec\"\n}"
 						},
 						"url": {
-							"raw": "{{url}}/facet-search",
+							"raw": "{{url}}/indexes/{{indexUID}}/facet-search",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
+								"indexes",
+								"{{indexUID}}",
 								"facet-search"
 							]
 						}
