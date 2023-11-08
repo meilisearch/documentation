@@ -5,19 +5,11 @@ description: Deploy Meilisearch in a Digital Ocean droplet. Covers installation,
 
 # Running Meilisearch in production
 
-## A quick introduction
+[Meilisearch Cloud](https://www.meilisearch.com/pricing?utm_campaign=oss&utm_source=docs&utm_medium=running-production-oss) is the recommended way to run Meilisearch in production environments. However, it is also possible to self-host Meilisearch.
 
-Hopefully, you already know that [Meilisearch](https://github.com/meilisearch/meilisearch) is a powerful and fast open-source search engine built in [Rust](https://www.rust-lang.org). It was designed to provide users with a very useful and customizable search experience including out-of-the-box features such as typo-tolerance, filtering, and synonyms for any kind of project.
+This tutorial will guide you through setting up a Debian server, installing Meilisearch, and setting up your environment.
 
-Running a Meilisearch instance for testing purposes is incredibly easy and can be done in [many ways](/learn/getting_started/quick_start): using Docker, Homebrew, Aptitude, binaries, a simple `curl`, or even the source code. If you are new to Meilisearch, we suggest that you take a tour around the documentation.
-
-Using Meilisearch on your own machine for your weekend project is fun, let's agree on that. However, you may want to go live and deploy a project in production, to take it to the next level. What steps and details would you need to **deploy Meilisearch in production** and ensure it is **safe and ready to use**?
-
-## Get your Meilisearch ready for production
-
-For this tutorial, we will be using a Debian 10 server, running on DigitalOcean. You can easily try it on your own, with plans starting at $5/month. And if you want some credits to start running your Meilisearch and are not already registered on DigitalOcean, you can get $100 for free using [this referral link](https://m.do.co/c/7c67bd97e101).
-
-## Prerequisites
+## Requirements
 
 + An up-to-date server that runs Debian 10
 + An ssh key pair to connect to that machine
@@ -28,7 +20,7 @@ Learn how to connect via SSH to your [DigitalOcean droplet](https://www.digitalo
 
 ## Step 1: Install Meilisearch
 
-Installing and running Meilisearch is easy and straightforward. In order to keep this tutorial as simple as possible, let's use a script that will carry out the installation process. It will copy a binary of Meilisearch to your machine and enable you to use it immediately.
+To keep this tutorial as simple as possible, let's use a script that will carry out the installation process. It will copy a binary of Meilisearch to your machine and enable you to use it immediately.
 
 Once you are logged in into your machine via SSH, ensure your system and its dependencies are up-to-date before proceeding with the installation.
 
