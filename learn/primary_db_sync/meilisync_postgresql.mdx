@@ -161,7 +161,7 @@ sync:
 
 Replace `POSTGRES_TABLE_NAME_1` and `MEILISEARCH_INDEX_NAME_1` with the names of your tables and indexes. As the above example demonstrates, you may sync multiple tables.
 
-**Primary key inference**
+### Primary key inference
 
 If your table contains multiple columns with `id` in their name, `meilisync` will not be able to infer which column is the primary key. In this case, you must specify the primary key manually by adding a `pk` field to the table's configuration.
 
