@@ -57,6 +57,17 @@
     ]
   },
   {
+    "title": "Cloud features",
+    "slug": "cloud",
+    "routes": [
+      {
+        "source": "learn/cloud/analytics.mdx",
+        "label": "Analytics",
+        "slug": "analytics"
+      }
+    ]
+  },
+  {
     "title": "Core concepts",
     "slug": "core_concepts",
     "routes": [
