@@ -15,7 +15,7 @@ The `/snapshot` route allows you to create database snapshots. Snapshots are `.s
 
 Triggers a snapshot creation task. Once the process is complete, Meilisearch creates a snapshot in the [snapshot directory](/learn/configuration/instance_options#snapshot-destination). If the snapshot directory does not exist yet, it will be created.
 
-Snapshot tasks take priority over all other tasks in the queue. This means that a newly created snapshot task will be processed as soon as the current task is finished.
+Snapshot tasks take priority over other tasks in the queue.
 
 [Learn more about asynchronous operations](/learn/async/asynchronous_operations).
 
