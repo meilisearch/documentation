@@ -30,7 +30,7 @@ For more information, see the [contributing overview](/learn/contributing/contri
 
 Feel free to contact us about any questions you may have:
 
-- Join our [Discord community](https://discord.gg/meilisearch).
+- Join our [Discord community](https://discord.meilisearch.com).
 - Open an [issue](https://github.com/meilisearch/documentation/issues)!
 
 Any suggestion or feedback is highly appreciated. Thank you for your support!

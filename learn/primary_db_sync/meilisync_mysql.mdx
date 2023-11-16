@@ -144,6 +144,7 @@ Open `config.yml` and append the following settings to the bottom of the file:
 sync:
   - table: MYSQL_TABLE_NAME_1
     index: MEILISEARCH_INDEX_NAME_1
+    pk: id # Read the "Primary key inference" section below
     full: true
   - table: MYSQL_TABLE_NAME_2
     index: MEILISEARCH_INDEX_NAME_2
@@ -151,6 +152,10 @@ sync:
 ```
 
 Replace `MYSQL_TABLE_NAME_1` and `MEILISEARCH_INDEX_NAME_1` with the names of your tables and indexes. As the above example demonstrates, you may sync multiple tables.
+
+### Primary key inference
+
+If your table contains multiple columns with `id` in their name, `meilisync` will not be able to infer which column is the primary key. In this case, you must specify the primary key manually by adding a `pk` field to the table's configuration.
 
 <Capsule intent="tip" title="Customizing `meilisync`">
 This tutorial describes a fairly basic `meilisync` setup. For more customization options, consult [`meilisync`'s documentation](https://github.com/long2ice/meilisync#configuration).
