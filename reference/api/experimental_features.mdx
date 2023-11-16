@@ -19,15 +19,17 @@ The experimental API route is not compatible with all experimental features. Con
 {
   "metrics": false,
   "scoreDetails": false,
-  "vectorSearch": false
+  "vectorSearch": false,
+  "exportPuffinReports": false
 }
 ```
 
-| Name               | Type    | Description                                                               |
-| :----------------- | :------ | :--------------------------------------------- |
-| **`metrics`**      | Boolean | `true` if feature is active, `false` otherwise |
-| **`scoreDetails`** | Boolean | `true` if feature is active, `false` otherwise |
-| **`vectorSearch`** | Boolean | `true` if feature is active, `false` otherwise |
+| Name                      | Type    | Description                                                               |
+| :------------------------ | :------ | :--------------------------------------------- |
+| **`metrics`**             | Boolean | `true` if feature is active, `false` otherwise |
+| **`scoreDetails`**        | Boolean | `true` if feature is active, `false` otherwise |
+| **`vectorSearch`**        | Boolean | `true` if feature is active, `false` otherwise |
+| **`exportPuffinReports`** | Boolean | `true` if feature is active, `false` otherwise |
 
 ## Get all experimental features
 
@@ -45,7 +47,8 @@ Get a list of all experimental features that can be activated via the `/experime
 {
   "metrics": false,
   "scoreDetails": false,
-  "vectorSearch": false
+  "vectorSearch": false,
+  "exportPuffinReports": false
 }
 ```
 
@@ -71,6 +74,7 @@ Setting a field to `null` leaves its value unchanged.
 {
   "metrics": false,
   "scoreDetails": true,
-  "vectorSearch": false
+  "vectorSearch": false,
+  "exportPuffinReports": false
 }
 ```
