@@ -124,10 +124,7 @@ To create a mutual association between four words, this is the JSON syntax that 
 
 ## Multi-word synonyms
 
-Multi-word synonyms follow a different set of rules than single-word synonyms:
-
-- Meilisearch treats multi-word synonyms as [phrases](/reference/api/search#phrase-search-2)
-- Multi-word synonyms are limited to a maximum of three words
+Meilisearch treats multi-word synonyms as [phrases](/reference/api/search#phrase-search-2).
 
 #### Example
 
@@ -148,7 +145,6 @@ If you input `SF` as a search query, Meilisearch will also return results contai
 
 ## Maximum number of synonyms per term
 
-A single term may have up to 50 synonyms. Meilisearch ignores any synonyms beyond this limit. For example, if you configure 51 synonyms for `book`, Meilisearch will only return results containing the term itself and the first 50 synonyms.
+A single term may have up to 50 synonyms. Meilisearch silently ignores any synonyms beyond this limit. For example, if you configure 51 synonyms for `book`, Meilisearch will only return results containing the term itself and the first 50 synonyms.
 
-If any synonyms for a term contain more than one word, the sum of all words across all synonyms for that term cannot exceed 100 words. Meilisearch ignores any synonyms beyond this limit. For example, if you identify 40 synonyms for `computer` in your application, taken together these synonyms must contain fewer than 100 words.
-
+If any synonyms for a term contain more than one word, the sum of all words across all synonyms for that term cannot exceed 100 words. Meilisearch silently ignores any synonyms beyond this limit. For example, if you configure 40 synonyms for `computer` in your application, taken together these synonyms must contain fewer than 100 words.
