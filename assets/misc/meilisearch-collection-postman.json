@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "ca046707-e482-4e2c-a524-0574bd10dd5f",
-		"name": "Meilisearch v1.4",
+		"_postman_id": "5ac31b23-8cd6-41d5-b1ed-a47123edc334",
+		"name": "Meilisearch v1.5",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -2410,6 +2410,51 @@
 							],
 							"path": [
 								"dumps"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Snapshots",
+			"item": [
+				{
+					"name": "Create a snapshot",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/snapshots",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"snapshots"
 							]
 						}
 					},

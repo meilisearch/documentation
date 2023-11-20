@@ -20,12 +20,6 @@ We can break down the tokenization process like so:
 1. Crawl the document(s), splitting each field by script
 2. Go back over the documents part-by-part, running the corresponding tokenization pipeline, if it exists
 
-Pipelines include many language-specific operations. Currently, we have five pipelines:
+Pipelines include many language-specific operations. Currently, we have a number of pipelines, including a default pipeline for languages that use whitespace to separate words, and dedicated pipelines for Chinese, Japanese, Hebrew, Thai, and Khmer.
 
-1. A default Meilisearch pipeline for languages that use whitespace to separate words. Uses [Unicode segmenter](https://github.com/unicode-rs/unicode-segmentation)
-2. A specialized Chinese pipeline using [Jieba](https://github.com/messense/jieba-rs)
-3. A specialized Japanese and Korean pipeline using [Lindera](https://github.com/lindera-morphology/lindera)
-4. A specialized Hebrew pipeline based off the default Meilisearch pipeline. Uses [Niqqud](https://docs.rs/niqqud/latest/niqqud/) for normalization
-5. A specialized Thai pipeline using [dictionary-based](https://github.com/PyThaiNLP/nlpo3) segmentation
-
-For more details, check out the [tokenizer contribution guide](https://github.com/meilisearch/charabia/blob/main/CONTRIBUTING.md).
+For more details, check out the [tokenizer contribution guide](https://github.com/meilisearch/charabia).

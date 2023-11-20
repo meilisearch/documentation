@@ -398,6 +398,11 @@
         "slug": "metrics"
       },
       {
+        "source": "learn/experimental/puffin_reports.mdx",
+        "label": "Puffin reports",
+        "slug": "puffin_reports"
+      },
+      {
         "source": "learn/experimental/reduce-indexing-memory-usage.mdx",
         "label": "Reduce indexing memory usage",
         "slug": "reduce-indexing-memory-usage"
