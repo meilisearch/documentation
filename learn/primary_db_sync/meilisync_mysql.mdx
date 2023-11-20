@@ -5,7 +5,7 @@ description: Learn how to keep Meilisearch up to date with your MySQL database.
 
 # Syncing databases with MySQL and meilisync
 
-Though Meilisearch is a database, it is not recommended you use it as your primary data store. Instead, you should use an external database to store your data and periodically synchronise it with Meilisearch.
+Though Meilisearch is a database, it is not recommended you use it as your primary data store. Instead, you should use an external database to store your data and periodically synchronize it with Meilisearch.
 
 This guide teaches you to use [`meilisync`](https://github.com/long2ice/meilisync) to keep Meilisearch up to date with a MySQL database.
 
@@ -13,7 +13,7 @@ This guide teaches you to use [`meilisync`](https://github.com/long2ice/meilisyn
 
 - A command-line console, such as macOS's terminal or Window's Cygwin
 - A MySQL database populated with data
-- A Meilisearch instance, either self-hosted or via [Meilisearch Cloud](https://cloud.meilisearch.com)
+- A Meilisearch instance, either managed via [Meilisearch Cloud](https://meilisearch.com/cloud?utm_campaign=oss&utm_source=docs&utm_medium=meilisync) or self-hosted
 
 ## Install `meilisync`
 
@@ -96,7 +96,7 @@ meilisearch:
 </Tabs.Content>
 </Tabs.Container>
 
-Replace `MEILISEARCH_API_KEY` with an API key able to create, update, and delete documents and indexes. Replace `MEILISEARCH_API_URL` with your instance's API URL. If you are using [Meilisearch Cloud](https://cloud.meilisearch.com), this URL should look similar to this: https://ms-4d85L33tC0d3-5041.fra.meilisearch.io
+Replace `MEILISEARCH_API_KEY` with an API key able to create, update, and delete documents and indexes. Replace `MEILISEARCH_API_URL` with your instance's API URL. If you are using [Meilisearch Cloud](https://cloud.meilisearch.com?utm_campaign=oss&utm_source=docs&utm_medium=meilisync), this URL should look similar to this: https://ms-4d85L33tC0d3-5041.fra.meilisearch.io
 
 ## Configure MySQL
 
