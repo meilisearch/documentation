@@ -62,6 +62,27 @@ To create a one-way synonym list, this is the JSON syntax that should be [added 
 }
 ```
 
+## Relevancy
+
+**The exact search query will always take precedence over its synonyms.** The `exactness` ranking rule favors exact words over synonyms when ranking search results.
+
+Taking the following set of search results:
+
+```json
+[
+  {
+    "id": 0,
+    "title": "Ghouls 'n Ghosts"
+  },
+  {
+    "id": 1,
+    "title": "Phoenix Wright: Spirit of Justice"
+  }
+]
+```
+
+If you configure `ghost` as a synonym of `spirit`, queries searching for `spirit` will return document `1` before document `0`.
+
 ## Mutual association
 
 By associating one or more synonyms with each other, they will be considered the same in both directions.
@@ -103,12 +124,7 @@ To create a mutual association between four words, this is the JSON syntax that 
 
 ## Multi-word synonyms
 
-Multi-word synonyms follow a different set of rules than single-word synonyms:
-
-- When a multi-word phrase is set as a synonym, **the exact search query will always take precedence over its multi-word synonym(s)**
-- Meilisearch treats multi-word synonyms as [phrases](/reference/api/search#phrase-search-2)
-- Multi-word synonyms are limited to a maximum of three words
-
+Meilisearch treats multi-word synonyms as [phrases](/reference/api/search#phrase-search-2).
 
 #### Example
 
@@ -126,3 +142,9 @@ Suppose you set `San Francisco` and `SF` as synonyms with a [mutual association]
 ```
 
 If you input `SF` as a search query, Meilisearch will also return results containing the phrase `San Francisco`. However, depending on the ranking rules, they might be considered less [relevant](/learn/core_concepts/relevancy) than those containing `SF`. The reverse is also true: if your query is `San Francisco`, documents containing `San Francisco` may rank higher than those containing `SF`.
+
+## Maximum number of synonyms per term
+
+A single term may have up to 50 synonyms. Meilisearch silently ignores any synonyms beyond this limit. For example, if you configure 51 synonyms for `book`, Meilisearch will only return results containing the term itself and the first 50 synonyms.
+
+If any synonyms for a term contain more than one word, the sum of all words across all synonyms for that term cannot exceed 100 words. Meilisearch silently ignores any synonyms beyond this limit. For example, if you configure 40 synonyms for `computer` in your application, taken together these synonyms must contain fewer than 100 words.
