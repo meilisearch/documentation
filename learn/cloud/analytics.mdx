@@ -50,7 +50,7 @@ curl \
   -H 'Authorization: Bearer DEFAULT_SEARCH_API_KEY'
   --data-binary '{ 
     "eventType": "click",
-    "eventName": "Search result clicked",
+    "eventName": "Search Result Clicked",
     "indexUid": "products",
     "objectID": "0",
     "position": 0
@@ -90,7 +90,7 @@ curl \
   -H 'Authorization: Bearer Meilisearch_API_Key'
   --data-binary '{ 
     "eventType": "conversion",
-    "eventName": "Product Added to Cart",
+    "eventName": "Product Added To Cart",
     "indexUid": "products",
     "objectID": "0",
     "position": 0
@@ -106,7 +106,7 @@ The `conversion` event must deliver an object with the following fields:
 ```json
 {
   "eventType": "conversion",
-  "eventName": "Product added to cart",
+  "eventName": "Product Added To Cart",
   "indexUid": "products",
   "objectID": "0",
   "position": 0
