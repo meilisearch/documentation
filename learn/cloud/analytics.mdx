@@ -6,11 +6,11 @@ sidebarDepth: 3
 
 # Analytics
 
-Enable Meilisearch Cloud analytics to gain insight on what your users are searching for, how often they find it, and how much they have to wait between typing a query and receiving results.
+Enable Meilisearch Cloud analytics to gain insight on what your users are searching for, how often they find it, and whether they take any actions after clicking on search result.
 
 ## Requirements
 
-You must have a Meilisearch Cloud account to have access to search analytics.
+You must have a [Meilisearch Cloud](https://meilisearch.com/cloud?utm_campaign=oss&utm_source=docs&utm_medium=analytics) account to have access to search analytics.
 
 ## Activating analytics
 
@@ -24,7 +24,7 @@ Meilisearch Cloud will begin processing your request. The "Analytics" section wi
 
 ### Update URLs in your application
 
-Enabling analytics generates a new URL for your project. Meilisearch Cloud is only able to track metrics for queries sent to this URL. 
+When you enable analytics, Meilisearch Cloud changes your project's API URL. Meilisearch Cloud is only able to track metrics for queries sent to this URL. 
 
 Update your application so all API requests point to the new URL:
 
@@ -35,15 +35,11 @@ curl \
   --data-binary '{ "q": "green socks" }'
 ```
 
-Your old project URL will remain functional, but API calls using the old URL will not be reflected in the analytics interface.
-
-<Capsule intent="note" title="Analytics and latency">
-To capture and process search analytics data, Meilisearch Cloud must route API requests through a proxy. This might increase latency in some applications.
-</Capsule>
+**The previous API URL will remain functional**, but requests targeting it will not send any data to the analytics interface.
 
 ### Configuring click-through rate and average click position
 
-To track metrics like clickthrough rate and average click position, Meilisearch Cloud needs to know when users click on search results.
+To track metrics like click-through rate and average click position, Meilisearch Cloud needs to know when users click on search results.
 
 Every time a user clicks on a search result, your application must send a `click` event to the `POST` endpoint of Meilisearch Cloud analytics route:
 
@@ -51,10 +47,10 @@ Every time a user clicks on a search result, your application must send a `click
 curl \
   -X POST 'http://edge.meilisearch.com' \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer Meilisearch_API_Key'
+  -H 'Authorization: Bearer DEFAULT_SEARCH_API_KEY'
   --data-binary '{ 
     "eventType": "click",
-    "eventName": "search result click",
+    "eventName": "Search result clicked",
     "indexUid": "products",
     "objectID": "0",
     "position": 0
@@ -68,7 +64,7 @@ The `click` event must deliver an object with the following fields:
 ```json
 {
   "eventType": "click",
-  "eventName": "search result click",
+  "eventName": "Search Result Clicked",
   "indexUid": "products",
   "objectID": "0",
   "position": 0
@@ -94,7 +90,7 @@ curl \
   -H 'Authorization: Bearer Meilisearch_API_Key'
   --data-binary '{ 
     "eventType": "conversion",
-    "eventName": "product added to cart",
+    "eventName": "Product Added to Cart",
     "indexUid": "products",
     "objectID": "0",
     "position": 0
@@ -110,7 +106,7 @@ The `conversion` event must deliver an object with the following fields:
 ```json
 {
   "eventType": "conversion",
-  "eventName": "product added to cart",
+  "eventName": "Product added to cart",
   "indexUid": "products",
   "objectID": "0",
   "position": 0
@@ -118,60 +114,10 @@ The `conversion` event must deliver an object with the following fields:
 ```
 
 - `eventType`: indicates this is a `conversion` event
-- `eventName`: an arbitrary string describing the event
+- `eventName`: a string describing the event
 - `indexUid`: the document's index
 - `objectID`: the document's primary key
 - `position`: the document's position in the list of search results
-
-## Understanding the analytics interface
-
-### Total users and user ids
-
-Indicates the total number of user ids. User ids are set with the `X-MS-USER-ID` HTTP header. If `X-MS-USER-ID` is not present, user ids are generated based on `User-Agent` and `CF-Connecting-IP`.
-
-### Total searches and search IDs
-
-The total number of generated search ids. Meilisearch Cloud generates a new search id for each [user id](#total-users-and-user-ids) after 3 seconds of user inactivity. Multiple queries may be associated with a single search id.
-
-### Most searched queries 
-
-Indicates the most common search terms in the specified time period. Meilisearch Cloud calculates this based on [search ids](#total-searches-and-search-ids). If multiple queries correspond to the same search id, Meilisearch Cloud only tracks the last query associated with it.
-
-### Searches with no results and no result rate
-
-Searches with no results indicates search terms that did not return any results. If multiple queries correspond to the same [search id](#total-searches-and-search-ids), Meilisearch Cloud only tracks the last query associated with it.
-
-The no result rate is the number of searches with no results divided by the total number of searches.
-
-### Conversion rate
-
-A conversion is when users take action relevant to your business beyond clicking on a search result. Exactly what counts as a conversion depends on your specific application. For example, a web shop might count adding a product to their shopping cart as a conversion.
-
-Conversion rate indicates the number of searches that resulted in a `conversion` event divided by the total number of searches.
-
-To track conversion rates, [configure your application to send `conversion` events to Meilisearch Cloud](#configuring-conversion-rate).
-
-### Click-through rate and average click position
-
-Click-through rate is the number of times users have clicked on a search result divided by the total number of searches.
-
-Average click position indicates the average position of the search results users clicked on, with 0 indicating the first search result. 
-
-In both metrics, lower values indicate searches are returning relevant results.
-
-To track click-through rate and average click position, [configure your application to send `click` events to Meilisearch Cloud](#configuring-click-through-rate-and-average-click-position). 
-
-### Search requests
-
-Indicates the total amount of queries targeting the `/search` route. This count is not dependent on search IDs and includes all search queries.
-
-### Search latency
-
-The amount of time between a user submitting a search request and receiving search results in return. Lower numbers indicate the interface is responding quickly, leading to a better search experience.
-
-### Countries with most searches
-
-The number of searches per country, with the countries with biggest amount of searches at the top of the list.
 
 ## Deactivating analytics
 
@@ -183,7 +129,7 @@ Log into your Meilisearch Cloud account and navigate to your project's overview.
 
 ### Update URLs in your application
 
-Disabling analytics changes your project URL to its previous value. Update your application so all API requests point to the correct URL:
+Disabling analytics changes your API URL. Update your application so all API requests point to the correct URL:
 
 ```sh
 curl \
@@ -191,6 +137,8 @@ curl \
   -H 'Content-Type: application/json' \
   --data-binary '{ "q": "green socks" }'
 ```
+
+**The previous API URL will remain functional**, but Meilisearch recommends not using it after disabling analytics in your project.
 
 ### Update `conversion` and `click` events
 
