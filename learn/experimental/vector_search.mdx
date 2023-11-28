@@ -5,14 +5,63 @@ description: Vector search is an experimental technology that uses Large Languag
 
 # Vector search
 
-Vector search is an experimental technology that uses Large Language Models to retrieve search results. This feature is useful when you are interested in results based on the meaning and context of a query, such as suggesting related products in webshop or articles in an online magazine. [Meilisearch Cloud](https://www.meilisearch.com/cloud?utm_campaign=oss&utm_source=docs&utm_medium=vector-search) is the most robust way of using vector search.
+[Vector search](https://meilisearch.com/solutions/vector-search) is an experimental technology that uses Large Language Models to retrieve search results based on the meaning and context of a query.
 
-[Visit the GitHub discussion to learn how to get started with vector search in Meilisearch](https://github.com/meilisearch/product/discussions/621).
+This feature can improve search relevancy for queries that do not to match keywords in your dataset, allow your users to search images and other non-textual media, suggest related products in webshops, and create conversational search interfaces.
 
-Are you using this feature? Meilisearch wants to hear from you! Tell us about your experience in the [GitHub discussion](https://github.com/meilisearch/product/discussions/621). All feedback is useful and helps make Meilisearch better and easier to use.
+Vector search is available to all users. [Meilisearch Cloud](https://www.meilisearch.com/cloud?utm_campaign=oss&utm_source=docs&utm_medium=vector-search) is the recommended way of using vector search.
 
-<Capsule intent="warning">
-This is an experimental feature. Experimental features are unstable: their API might significantly change and become incompatible between releases. Meilisearch does not recommend using experimental features in a production environment.
+## Using vector search
 
-Meilisearch makes experimental features available expecting they will become stable in a future release. However, it is not possible to guarantee when and if this will happen.
+### Activate vector search
+
+Use the `/experimental` route to activate vector search during runtime:
+
+```sh
+curl \
+  -X PATCH 'http://localhost:7700/experimental-features/' \
+  -H 'Content-Type: application/json'  \
+  --data-binary '{
+    "vectorSearch": true
+  }'
+```
+
+### Generate vector embeddings using a third-party tool
+
+To use vector search, you must generate embeddings with a third-party tool such as OpenAI, HuggingFace, Cohere.AI, and Anthropic API.
+
+<Capsule intent="note" title="What is an embedding?">
+Vector search relies on embeddings to function. Vector embeddings are a way of representing data that identify similarities in meaning and context.
 </Capsule>
+
+### Add embeddings to Meilisearch
+
+Use the `/documents` endpoint to upload vectorized documents. Store vector data in your documents' `_vector` field:
+
+```sh
+curl -X POST -H 'content-type: application/json' \
+'localhost:7700/indexes/myvectors/documents' \
+--data-binary '[
+    { "id": 0, "_vectors": [0, 0.8, -0.2], "text": "Hello World" },
+    { "id": 1, "_vectors": [1, -0.2, 0], "text": "Hello Doggy" },
+    { "id": 2, "_vectors": [[0.5, 3, 1], [-0.2, 4, 6]], "text": "Hello People" }
+]'
+```
+
+### Use `vector` to query Meilisearch
+
+Use the `vector` search parameter to perform vector searches:
+
+```sh
+curl -X POST -H 'content-type: application/json' \
+  'localhost:7700/indexes/myvectors/search' \
+  --data-binary '{ "vector": [0, 1, 2] }'
+```
+
+Meilisearch does not calculate search vectors. Generate these using a third-party tool.
+
+## Other resources
+
+For a step-by-step approach, check out the Meilisearch blog post for a [tutorial on building semantic search with LangChain](https://blog.meilisearch.com/langchain-semantic-search-tutorial/)
+
+Join the [product discussion on GitHub](https://github.com/orgs/meilisearch/discussions/621) for the latest information on using vector search with Meilisearch. This feature is undergoing active development and any feedback you might have is welcome.
