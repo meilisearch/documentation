@@ -5,11 +5,11 @@ description: Vector search is an experimental technology that uses Large Languag
 
 # Vector search
 
-[Vector search](https://meilisearch.com/solutions/vector-search) is an experimental technology that uses Large Language Models to retrieve search results based on the meaning and context of a query.
+[Vector search](https://meilisearch.com/solutions/vector-search?utm_campaign=vector-search&utm_source=docs) is an experimental technology that uses Large Language Models to retrieve search results based on the meaning and context of a query.
 
 This feature can improve search relevancy for queries that do not to match keywords in your dataset, allow your users to search images and other non-textual media, suggest related products in webshops, and create conversational search interfaces.
 
-Vector search is available to all users. [Meilisearch Cloud](https://www.meilisearch.com/cloud?utm_campaign=oss&utm_source=docs&utm_medium=vector-search) is the recommended way of using vector search.
+Vector search is available to all users. [Meilisearch Cloud](https://www.meilisearch.com/cloud?utm_campaign=vector-search&utm_source=docs) is the recommended way of using vector search.
 
 ## Using vector search
 
@@ -67,17 +67,17 @@ curl -X POST -H 'content-type: application/json' \
 `vector` can be used together with [other search parameters](/reference/api/search), including [`filter`](/reference/api/search#filter) and [`sort`](/reference/api/search#sort):
 
 ```sh
-curl -X POST -H 'content-type: application/json' \  
-  'localhost:7700/indexes/products/search' \  
-  --data-binary '{ 
-    "vector": [0, 1, 2], 
+curl -X POST -H 'content-type: application/json' \
+  'localhost:7700/indexes/products/search' \
+  --data-binary '{
+    "vector": [0, 1, 2],
     "filter": "price < 10",
     "sort": ["price:asc"]
   }'
 ```
 
 <Capsule intent="tip" title="Other resources">
-Check out the Meilisearch blog post for a [tutorial on implementing semantic search with LangChain](https://blog.meilisearch.com/langchain-semantic-search-tutorial/).
+Check out the Meilisearch blog post for a [tutorial on implementing semantic search with LangChain](https://blog.meilisearch.com/langchain-semantic-search-tutorial/?utm_campaign=vector-search&utm_source=docs).
 </Capsule>
 
 ## More information
