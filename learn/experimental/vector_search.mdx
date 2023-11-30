@@ -64,6 +64,18 @@ curl -X POST -H 'content-type: application/json' \
 
 `vector` must be an array of numbers indicating the search vector. Meilisearch does not calculate search vectors, so you must generate them using a third-party tool.
 
+`vector` can be used together with [other search parameters](/reference/api/search), including [`filter`](/reference/api/search#filter) and [`sort`](/reference/api/search#sort):
+
+```sh
+curl -X POST -H 'content-type: application/json' \  
+  'localhost:7700/indexes/products/search' \  
+  --data-binary '{ 
+    "vector": [0, 1, 2], 
+    "filter": "price < 10",
+    "sort": ["price:asc"]
+  }'
+```
+
 <Capsule intent="tip" title="Other resources">
 Check out the Meilisearch blog post for a [tutorial on implementing semantic search with LangChain](https://blog.meilisearch.com/langchain-semantic-search-tutorial/).
 </Capsule>
