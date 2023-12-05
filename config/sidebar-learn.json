@@ -64,7 +64,13 @@
         "source": "learn/cloud/analytics.mdx",
         "label": "Analytics",
         "slug": "analytics"
+      },
+      {
+        "source": "learn/cloud/monitoring.mdx",
+        "label": "Monitoring",
+        "slug": "monitoring"
       }
+
     ]
   },
   {
