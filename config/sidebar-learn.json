@@ -53,6 +53,11 @@
         "source": "learn/getting_started/search_preview.mdx",
         "label": "Search preview",
         "slug": "search_preview"
+      },
+      {
+        "source": "learn/getting_started/supported_os.mdx",
+        "label": "Supported operating systems",
+        "slug": "supported_os"
       }
     ]
   },

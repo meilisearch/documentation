@@ -4,19 +4,17 @@ description: Use Meilisearch with either Meilisearch Cloud, another cloud servic
 sidebarDepth: 3
 ---
 
-# Installation and operating systems
-
-## Installation
+# Installation
 
 You can install Meilisearch locally or deploy it over a cloud service.
 
-### Meilisearch Cloud
+## Meilisearch Cloud
 
 [Meilisearch Cloud](https://www.meilisearch.com/cloud?utm_campaign=oss&utm_source=docs&utm_medium=installation-guide) greatly simplifies installing, maintaining, and updating Meilisearch. [Get started with a 14-day free trial](https://cloud.meilisearch.com/register?utm_campaign=oss&utm_source=docs&utm_medium=installation-guide).
 
 Take a look at our [Meilisearch Cloud tutorial](/learn/getting_started/cloud_quick_start) for more information on setting up and using Meilisearch's cloud service.
 
-### Local installation
+## Local installation
 
 <Tabs.Container labels={["cURL", "Homebrew", "Docker", "APT", "Source", "Windows", "Direct download"]}>
 
@@ -158,7 +156,7 @@ chmod +x meilisearch
 
 </Tabs.Container>
 
-### Cloud deploy
+## Other cloud services
 
 To deploy Meilisearch on a cloud service, follow one of our dedicated guides:
 
@@ -170,7 +168,7 @@ To deploy Meilisearch on a cloud service, follow one of our dedicated guides:
 - [Qovery](/learn/cookbooks/qovery)
 - [Railway](/learn/cookbooks/railway)
 
-### Installing older versions of Meilisearch
+## Installing older versions of Meilisearch
 
 We discourage the use of older Meilisearch versions. Before installing an older version, please [contact support](https://discord.meilisearch.com) to check if the latest version might work as well.
 
@@ -272,27 +270,3 @@ chmod +x meilisearch
 </Tabs.Content>
 
 </Tabs.Container>
-
-## Supported operating systems
-
-This section lists operating systems Meilisearch officially supports and tests with every new release. Meilisearch binaries might still run in unsupported environments.
-
-If the provided [binaries](/learn/getting_started/installation#local-installation) do not work on your operating system, try building Meilisearch [from source](#local-installation). If compilation fails, Meilisearch is not compatible with your machine.
-
-### Linux
-
-The Meilisearch binary works on all Linux distributions with `amd64/x86_64` or `aarch64/arm64` architecture using glibc 2.27 and later. You can check your glibc version using:
-
-```
-ldd --version
-```
-
-### macOS
-
-The Meilisearch binary works with macOS 12 and later with `amd64` or `arm64` architecture.
-
-### Windows
-
-The Meilisearch binary works on Windows Server 2022 and later.
-
-It is likely the Meilisearch binary also works with Windows OS 10 and later. However, due to the differences between Windows OS and Windows Server, Meilisearch does not officially support Windows OS.
