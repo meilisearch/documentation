@@ -35,7 +35,7 @@ curl \
   --data-binary '{ "q": "green socks" }'
 ```
 
-**The previous API URL will remain functional**, but requests targeting it will not send any data to the analytics interface.
+**The previous API URL will remain functional**, but requests targeting it will not send any data to the analytics interface. If you created any custom API keys using the previous URL, you will need to replace them.
 
 <Capsule intent="danger" title="Analytics and multi-search queries">
 Meilisearch Cloud analytics silently ignores requests to [the `/multi-search` route](/reference/api/multi_search). This is a known bug and will be fixed in a future Cloud update.
@@ -142,7 +142,7 @@ curl \
   --data-binary '{ "q": "green socks" }'
 ```
 
-**The previous API URL will remain functional**, but Meilisearch recommends not using it after disabling analytics in your project.
+**The previous API URL will remain functional**, but Meilisearch recommends not using it after disabling analytics in your project. If you created any custom API keys using the previous URL, you will need to replace them.
 
 ### Update `conversion` and `click` events
 
