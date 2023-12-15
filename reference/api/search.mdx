@@ -57,16 +57,6 @@ By default, [this endpoint returns a maximum of 1000 results](/learn/advanced/kn
 
 [Learn more about how to use each search parameter](#search-parameters).
 
-#### Placeholder search
-
-Placeholder search is a search with an empty `q` parameter. Since there is no query term, the [built-in ranking rules](/learn/core_concepts/relevancy#ranking-rules) **do not apply.** Only [sort](/learn/core_concepts/relevancy#5-sort) and [custom ranking rules](/learn/core_concepts/relevancy#custom-rules) are taken into account.
-
-If the index has no sort or custom ranking rules, the results are returned in the order of their internal database position.
-
-#### Phrase search
-
-Query terms enclosed in double quotes are treated as [phrase searches](#query-q).
-
 ### Response
 
 | Name                     | Type             | Description                                                 |
@@ -174,14 +164,6 @@ By default, [this endpoint returns a maximum of 1000 results](/learn/advanced/kn
 | **[`attributesToSearchOn`](#customize-attributes-to-search-on-at-search-time)**            | Array of strings           | `["*"]`        | Restrict search to the specified attributes |
 
 [Learn more about how to use each search parameter](#search-parameters).
-
-#### Placeholder search
-
-When no search query is specified, a [placeholder search](#query-q) is run instead.
-
-#### Phrase search
-
-Query terms enclosed in double quotes are treated as [phrase searches](#query-q).
 
 ### Response
 
