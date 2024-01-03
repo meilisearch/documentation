@@ -1,0 +1,26 @@
+---
+title: Maximum batched tasks — Meilisearch documentation
+description: Use this experimental feature to limit the number of tasks Meilisearch performs in a single batch. May improve system stability in some cases.
+---
+
+# Maximum batched tasks
+
+Use this experimental feature to limit the number of tasks Meilisearch performs in a single batch. May improve stability in systems handling a large queue of resource-intensive tasks.
+
+To enable it, relaunch Meilisearch with the `--experimental-max-number-of-batched-tasks` command-line option, specifying the maximum amount of tasks you want to process in a single batch:
+
+```sh
+./meilisearch --experimental-max-number-of-batched-tasks 100
+```
+
+You may also activate this option with environment variables or in the configuration file by using `MEILI_EXPERIMENTAL_MAX_NUMBER_OF_BATCHED_TASKS`.
+
+[Visit the GitHub discussion to learn how to use this feature](https://github.com/meilisearch/product/discussions/625).
+
+Are you using this feature? Meilisearch wants to hear from you! Tell us about your experience in the [GitHub discussion](https://github.com/meilisearch/product/discussions/625). All feedback is useful and helps make Meilisearch better and easier to use.
+
+<Capsule intent="warning">
+This is an experimental feature. Experimental features are unstable: their API might significantly change and become incompatible between releases. Meilisearch does not recommend using experimental features in a production environment.
+
+Meilisearch makes experimental features available expecting they will become stable in a future release. However, it is not possible to guarantee when and if this will happen.
+</Capsule>
