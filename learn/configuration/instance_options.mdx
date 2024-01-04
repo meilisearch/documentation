@@ -417,6 +417,26 @@ Prevents a Meilisearch instance with an existing database from throwing an error
 
 This command will throw an error if `--import-snapshot` is not defined.
 
+### Task webhook URL
+
+**Environment variable**: `MEILI_TASK_WEBHOOK_URL`<br />
+**CLI option**: `--task-webhook-url`<br />
+**Default value**: `None`<br />
+**Expected value**: a URL string
+
+Notifies the configured URL whenever Meilisearch [finishes processing a task](/learn/async/asynchronous_operations#task-status) or batch of tasks. Meilisearch uses the URL as given, retaining any specified query parameters.
+
+The webhook payload contains the list of finished tasks in [ndjson](https://ndjson.org/).
+
+### Task webhook authorization header
+
+**Environment variable**: `MEILI_TASK_AUTHORIZATION_HEADER`<br />
+**CLI option**: `--task-webhook-authorization-header`<br />
+**Default value**: `None`<br />
+**Expected value**: an authentication token string
+
+Sends an authentication token when notifying the [webhook URL](#task-webhook-url).
+
 ### SSL options
 
 #### SSL authentication path
