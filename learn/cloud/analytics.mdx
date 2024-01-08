@@ -30,7 +30,7 @@ Update your application so all API requests point to the new URL:
 
 ```sh
 curl \
-  -X POST 'http://edge.meilisearch.com/indexes/products/search' \
+  -X POST 'https://edge.meilisearch.com/indexes/products/search' \
   -H 'Content-Type: application/json' \
   --data-binary '{ "q": "green socks" }'
 ```
@@ -49,7 +49,7 @@ Every time a user clicks on a search result, your application must send a `click
 
 ```sh
 curl \
-  -X POST 'http://edge.meilisearch.com' \
+  -X POST 'https://edge.meilisearch.com' \
   -H 'Content-Type: application/json' \
   -H 'Authorization: Bearer DEFAULT_SEARCH_API_KEY'
   --data-binary '{ 
@@ -89,7 +89,7 @@ Once you have established what counts as a conversion in your application, confi
 
 ```sh
 curl \
-  -X POST 'http://edge.meilisearch.com' \
+  -X POST 'https://edge.meilisearch.com' \
   -H 'Content-Type: application/json' \
   -H 'Authorization: Bearer Meilisearch_API_Key'
   --data-binary '{ 
@@ -137,7 +137,7 @@ Disabling analytics changes your API URL. Update your application so all API req
 
 ```sh
 curl \
-  -X POST 'http://PROJECT_URL/indexes/products/search' \
+  -X POST 'https://PROJECT_URL/indexes/products/search' \
   -H 'Content-Type: application/json' \
   --data-binary '{ "q": "green socks" }'
 ```
