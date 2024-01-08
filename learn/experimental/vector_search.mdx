@@ -32,13 +32,15 @@ curl \
 
 ### Generate vector embeddings
 
-Embedders generate vector data from your documents. Meilisearch natively supports OpenAI and HuggingFace embedders.
+To use vector search, first configure the `embedders` index setting. You may configure multiple embedders for an index. 
 
-#### Automatically generate embeddings
+Embedders generate vector data from your documents. Meilisearch natively supports [OpenAI](https://openai.com/) and [HuggingFace](https://huggingface.co/) embedders. 
 
-You can configure Meilisearch to automatically generate embeddings via OpenAI and HuggingFace.
+It is also possible to use custom embedders. In this case, you must generate the embeddings manually and add include them as a field in your documents.
 
-Use the `embedders` index setting of the update `/settings` endpoint to configure one or more embedders for an index:
+#### Generate auto-embeddings with OpenAI 
+
+Use the `embedders` index setting of the [update `/settings` endpoint](/reference/api/settings) to configure one or more embedders for an index:
 
 ```sh
 curl \
@@ -56,17 +58,36 @@ curl \
   }'
 ```
 
-`embedders` must be a collection of embedder objects. If you are using multiple embeddings for an index, you must name one of them `default`.
+`documentTemplate` is an optional field you can use to send only relevant data to the model. `documentTemplate` must be a [Liquid template](https://shopify.github.io/liquid/).
 
-When using auto-embeddings, embedder objects must contain the following fields:
-- `source`: accepts `"openAI"` or `"huggingFace"`
-- `apiKey`: string, mandatory when source is `"openAI"`
-- `model`: string, mandatory when source is `"openAI"` or `"huggingFace"`
-- `documentTemplate`: a [Liquid template](https://shopify.github.io/liquid/) indicating what information Meilisearch will send to the embedder
+#### Generate auto-embeddings with HuggingFace 
 
-#### Provide custom embeddings
+Use the `embedders` index setting of the [update `/settings` endpoint](/reference/api/settings) to configure one or more embedders for an index:
 
-You may also provide your own embeddings. In this case, you must manually update your embeddings when adding, updating, and removing documents to your index.
+```sh
+curl \
+  -X PATCH 'http://localhost:7700/indexes/movies/settings' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "embedders": {
+      "default": {
+        "source":  "huggingFace",
+        "model": "bge-base-en-v1.5",
+        "documentTemplate": "A movie titled '{{doc.title}}' whose description starts with {{doc.overview|truncatewords: 20}}"
+      }
+    }
+  }'
+```
+
+`documentTemplate` is an optional field you can use to send only relevant data to the model. `documentTemplate` must be a [Liquid template](https://shopify.github.io/liquid/).
+
+<Capsule intent="note">
+The HuggingFace computes embedders locally. This is a resource-intensive operation and might affect performance.
+</Capsule>
+
+#### Custom embeddings
+
+You may also provide custom embeddings. In this case, you must manually update your embeddings when adding, updating, and removing documents to your index.
 
 Configure the `embedder` index setting:
 
@@ -78,15 +99,11 @@ curl \
     "embedders": {
       "default": {
         "source":  "userProvided",
-        "dimensions": 512
+        "dimensions": 3
       }
     }
   }'
 ```
-
-When providing your own embeddings, the embedder object must contain the following fields:
-- `source`: must be `"userProvided"`
-- `dimensions`: integer indicating embeddings size, mandatory
 
 Then, use [the `/documents` endpoint](/reference/api/documents) to upload vectorized documents. Store vector data in your documents' `_vector` field:
 
@@ -101,7 +118,7 @@ curl -X POST -H 'content-type: application/json' \
 
 ### Vector search with auto-embeddings
 
-Use `q` together with `hybrid` to retrieve search results using both keyword and semantic search:
+Perform searches with `q` and `hybrid` to retrieve search results using both keyword and semantic search:
 
 ```sh
 curl -X POST -H 'content-type: application/json' \
