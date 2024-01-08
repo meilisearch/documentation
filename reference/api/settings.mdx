@@ -54,7 +54,7 @@ By default, the settings object looks like this. All fields are modifiable.
   "pagination": {
     "maxTotalHits": 1000
   },
-  "proximityPrecision": null
+  "proximityPrecision": "byWord"
 }
 ```
 
@@ -120,7 +120,7 @@ Get the settings of an index.
   "pagination": {
     "maxTotalHits": 1000
   },
-  "proximityPrecision": null
+  "proximityPrecision": "byWord"
 }
 ```
 
@@ -918,7 +918,7 @@ Get the proximity precision settings of an index.
 
 ```json
 {
-  "proximityPrecision": null
+  "proximityPrecision": "byWord"
 }
 ```
 
@@ -937,10 +937,8 @@ Update the pagination settings for an index.
 #### Body
 
 ```
-"byAttribute"
+"byWord"|"byAttribute"
 ```
-
-Setting `proximityPrecision` to `null` resets it to the default value: `"byWord"`.
 
 #### Example
 
@@ -962,7 +960,7 @@ You can use the returned `taskUid` to get more details on [the status of the tas
 
 ### Reset proximity precision settings
 
-Reset an index's proximity precision setting to its default value
+Reset an index's proximity precision setting to its default value.
 
 #### Path parameters
 
