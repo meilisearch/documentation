@@ -49,14 +49,14 @@ Every time a user clicks on a search result, your application must send a `click
 
 ```sh
 curl \
-  -X POST 'https://edge.meilisearch.com' \
+  -X POST 'https://edge.meilisearch.com/events' \
   -H 'Content-Type: application/json' \
   -H 'Authorization: Bearer DEFAULT_SEARCH_API_KEY'
   --data-binary '{ 
     "eventType": "click",
     "eventName": "Search Result Clicked",
     "indexUid": "products",
-    "objectID": "0",
+    "objectId": "0",
     "position": 0
   }'
 ```
@@ -70,7 +70,7 @@ The `click` event must deliver an object with the following fields:
   "eventType": "click",
   "eventName": "Search Result Clicked",
   "indexUid": "products",
-  "objectID": "0",
+  "objectId": "0",
   "position": 0
 }
 ```
@@ -78,7 +78,7 @@ The `click` event must deliver an object with the following fields:
 - `eventType`: a string indicating this is a `click` event
 - `eventName`: a string describing the event
 - `indexUid`: a string indicating the clicked document's index
-- `objectID`: a string indicating the clicked document's primary key
+- `objectId`: a string indicating the clicked document's primary key
 - `position`: an integer indicating the clicked document's position in the list of search results
 
 ### Configuring conversion rate
@@ -89,14 +89,14 @@ Once you have established what counts as a conversion in your application, confi
 
 ```sh
 curl \
-  -X POST 'https://edge.meilisearch.com' \
+  -X POST 'https://edge.meilisearch.com/events' \
   -H 'Content-Type: application/json' \
   -H 'Authorization: Bearer Meilisearch_API_Key'
   --data-binary '{ 
     "eventType": "conversion",
     "eventName": "Product Added To Cart",
     "indexUid": "products",
-    "objectID": "0",
+    "objectId": "0",
     "position": 0
   }'
 ```
