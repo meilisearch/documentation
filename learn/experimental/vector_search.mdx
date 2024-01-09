@@ -36,7 +36,7 @@ To use vector search, first configure the `embedders` index setting. You may con
 
 Embedders generate vector data from your documents. Meilisearch natively supports [OpenAI](https://openai.com/) and [HuggingFace](https://huggingface.co/) embedders. 
 
-It is also possible to use custom embedders. In this case, you must generate the embeddings manually and add include them as a field in your documents.
+It is also possible to use custom embedders. In this case, you must generate the embeddings manually and include them as a field in your documents.
 
 #### Generate auto-embeddings with OpenAI 
 
@@ -82,7 +82,7 @@ curl \
 `documentTemplate` is an optional field you can use to send only relevant data to the model. `documentTemplate` must be a [Liquid template](https://shopify.github.io/liquid/).
 
 <Capsule intent="note">
-The HuggingFace computes embedders locally. This is a resource-intensive operation and might affect performance.
+The HuggingFace computes embeddings locally. This is a resource-intensive operation and might affect indexing performance.
 </Capsule>
 
 #### Custom embeddings
@@ -105,7 +105,7 @@ curl \
   }'
 ```
 
-Then, use [the `/documents` endpoint](/reference/api/documents) to upload vectorized documents. Store vector data in your documents' `_vector` field:
+Then, use [the `/documents` endpoint](/reference/api/documents) to upload vectorized documents. Store vector data in your documents' `_vectors` field:
 
 ```sh
 curl -X POST -H 'content-type: application/json' \
