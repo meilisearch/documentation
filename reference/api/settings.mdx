@@ -891,7 +891,7 @@ You can use the returned `taskUid` to get more details on [the status of the tas
 
 ## Proximity precision
 
-Calculating the distance between words is a resource-intensive operation. Lowering the precision of this operation may significantly improve performance and will have little impact on result relevancy in most use-cases. Meilisearch uses word distance when ranking results according to proximity and when users perform phrase searches.
+Calculating the distance between words is a resource-intensive operation. Lowering the precision of this operation may significantly improve performance and will have little impact on result relevancy in most use-cases. Meilisearch uses word distance when [ranking results according to proximity](/learn/core_concepts/relevancy#3-proximity) and when users perform [phrase searches](/reference/api/search#phrase-search).
 
 `proximityPrecision` accepts one of the following string values:
 
