@@ -891,12 +891,12 @@ You can use the returned `taskUid` to get more details on [the status of the tas
 
 ## Proximity precision
 
-Calculating the [proximity ranking rule](/learn/core_concepts/relevancy#3-proximity) is a resource-intensive operation. Lowering its precision may significantly improve performance and will have little impact on result relevancy in most use-cases.
+Calculating the distance between words is a resource-intensive operation. Lowering the precision of this operation may significantly improve performance and will have little impact on result relevancy in most use-cases. Meilisearch uses word distance when ranking results according to proximity and when users perform phrase searches.
 
 `proximityPrecision` accepts one of the following string values:
 
-- `"byWord"`: calculate precise distance between query terms. Higher precision, but may lead to longer indexing time. This is the default setting
-- `"byAttribute"`: detect if multiple query terms are present in the same attribute. Lower precision, but shorter indexing time
+- `"byWord"`: calculate the precise distance between query terms. Higher precision, but may lead to longer indexing time. This is the default setting
+- `"byAttribute"`: determine if multiple query terms are present in the same attribute. Lower precision, but shorter indexing time
 
 ### Get proximity precision settings
 
