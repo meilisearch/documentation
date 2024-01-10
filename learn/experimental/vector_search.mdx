@@ -58,12 +58,12 @@ curl \
   }'
 ```
 
-`apiKey` is a mandatory field when using an OpenAI embedder. [Generate an API key](https://platform.openai.com/api-keys) from your OpenAI account. Use [tier 2 keys](https://platform.openai.com/docs/guides/rate-limits/usage-tiers?context=tier-two) for optimal performance.
+It is mandatory to pass an OpenAI API key through the `OPENAI_API_KEY` environment variable or the `apiKey` field when using an OpenAI embedder. [Generate an API key](https://platform.openai.com/api-keys) from your OpenAI account. Use [tier 2 keys](https://platform.openai.com/docs/guides/rate-limits/usage-tiers?context=tier-two) or above for optimal performance.
 
 `documentTemplate` is an optional field you can use to customize the data you send to the embedder. It is highly recommended you configure a custom template for your documents.
 
 <Capsule intent="tip" title="`documentTemplate` usage">
-`documentTemplate` must be a [Liquid template](https://shopify.github.io/liquid/). Use `{{ doc.attribute }}` to access document field values. Meilisearch also exposes a `{{ fields }}` array containing one object per document field, which you may access with `{{ field.name }}` and `{{ field.value }}`.
+`documentTemplate` must be a [Liquid template](https://shopify.github.io/liquid/). Use `{{ doc.attribute }}` to access the `attribute` field value of your documents. Any field you refer to in this way must exist in all documents or an error will be raised at indexing time.
 
 For best results, use short strings indicating the type of document in that index, only include highly relevant document fields, and truncate long fields.  
 </Capsule>
