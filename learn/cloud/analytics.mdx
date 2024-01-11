@@ -24,7 +24,7 @@ Meilisearch Cloud will begin processing your request. The "Analytics" section wi
 
 ### Update URLs in your application
 
-When you enable analytics, Meilisearch Cloud changes your project's API URL. Meilisearch Cloud is only able to track metrics for queries sent to this URL. 
+When you enable analytics, Meilisearch Cloud changes your project's API URL. Meilisearch Cloud is only able to track metrics for queries sent to this URL.
 
 Update your application so all API requests point to the new URL:
 
@@ -38,7 +38,9 @@ curl \
 **The previous API URL will remain functional**, but requests targeting it will not send any data to the analytics interface. If you created any custom API keys using the previous URL, you will need to replace them.
 
 <Capsule intent="danger" title="Analytics and multi-search queries">
-Meilisearch Cloud analytics silently ignores requests to [the `/multi-search` route](/reference/api/multi_search). This is a known bug and will be fixed in a future Cloud update.
+  Meilisearch Cloud analytics silently ignores requests to [the `/multi-search`
+  route](/reference/api/multi_search). This is a known bug and will be fixed in
+  a future Cloud update.
 </Capsule>
 
 ### Configuring click-through rate and average click position
@@ -52,7 +54,7 @@ curl \
   -X POST 'https://edge.meilisearch.com/events' \
   -H 'Content-Type: application/json' \
   -H 'Authorization: Bearer DEFAULT_SEARCH_API_KEY'
-  --data-binary '{ 
+  --data-binary '{
     "eventType": "click",
     "eventName": "Search Result Clicked",
     "indexUid": "products",
@@ -60,6 +62,13 @@ curl \
     "position": 0
   }'
 ```
+
+<Capsule intent="tip" title="Be advised!">
+  Meilisearch will try to automatically associate analytic events with the most
+  recent search of the user who triggered them. If you want to manually bind a
+  event to a search, include the same `X-MS-USER-ID` header in your search and
+  event request.
+</Capsule>
 
 #### The `click` event object
 
@@ -83,7 +92,7 @@ The `click` event must deliver an object with the following fields:
 
 ### Configuring conversion rate
 
-To track conversion rate, first identify what should count as a conversion for your application. For example, in a web shop, a conversion might be a user finalizing the checkout process. 
+To track conversion rate, first identify what should count as a conversion for your application. For example, in a web shop, a conversion might be a user finalizing the checkout process.
 
 Once you have established what counts as a conversion in your application, configure it to send a `conversion` event to the `POST` endpoint of Meilisearch Cloud analytics route:
 
@@ -92,7 +101,7 @@ curl \
   -X POST 'https://edge.meilisearch.com/events' \
   -H 'Content-Type: application/json' \
   -H 'Authorization: Bearer Meilisearch_API_Key'
-  --data-binary '{ 
+  --data-binary '{
     "eventType": "conversion",
     "eventName": "Product Added To Cart",
     "indexUid": "products",
