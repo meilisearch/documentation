@@ -409,6 +409,11 @@
         "slug": "overview"
       },
       {
+        "source": "learn/experimental/max_number_of_batched_tasks.mdx",
+        "label": "Limit number of batched tasks",
+        "slug": "max_number_of_batched_tasks"
+      },
+      {
         "source": "learn/experimental/metrics.mdx",
         "label": "Metrics",
         "slug": "metrics"

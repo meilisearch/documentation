@@ -30,31 +30,143 @@ curl \
   }'
 ```
 
-### Generate vector embeddings using a third-party tool
+### Generate vector embeddings
 
-To use vector search, you must generate embeddings with a third-party tool such as [OpenAI](https://openai.com/), [HuggingFace](https://huggingface.co/), and [Cohere.AI](https://cohere.com/).
+To use vector search, first configure the `embedders` index setting. You may configure multiple embedders for an index. 
 
-<Capsule intent="note" title="What is an embedding?">
-Vector search relies on embeddings. Vector embeddings are a way of representing data that identify similarities in meaning and context.
+Embedders generate vector data from your documents. Meilisearch natively supports [OpenAI](https://openai.com/) and [HuggingFace](https://huggingface.co/) embedders. 
+
+It is also possible to use custom embedders. In this case, you must generate the embeddings manually and include them as a field in your documents.
+
+#### Generate auto-embeddings with OpenAI 
+
+Use the `embedders` index setting of the [update `/settings` endpoint](/reference/api/settings) to configure one or more embedders for an index:
+
+```sh
+curl \
+  -X PATCH 'http://localhost:7700/indexes/movies/settings' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "embedders": {
+      "default": {
+        "source":  "openAI",
+        "apiKey": "anOpenAiApiKey",
+        "model": "text-embedding-ada-002",
+        "documentTemplate": "A movie titled '{{doc.title}}' whose description starts with {{doc.overview|truncatewords: 20}}"
+      }
+    }
+  }'
+```
+
+It is mandatory to pass an OpenAI API key through the `OPENAI_API_KEY` environment variable or the `apiKey` field when using an OpenAI embedder. [Generate an API key](https://platform.openai.com/api-keys) from your OpenAI account. Use [tier 2 keys](https://platform.openai.com/docs/guides/rate-limits/usage-tiers?context=tier-two) or above for optimal performance.
+
+`documentTemplate` is an optional field you can use to customize the data you send to the embedder. It is highly recommended you configure a custom template for your documents.
+
+<Capsule intent="tip" title="`documentTemplate` usage">
+`documentTemplate` must be a [Liquid template](https://shopify.github.io/liquid/). Use `{{ doc.attribute }}` to access the `attribute` field value of your documents. Any field you refer to in this way must exist in all documents or an error will be raised at indexing time.
+
+For best results, use short strings indicating the type of document in that index, only include highly relevant document fields, and truncate long fields.  
 </Capsule>
 
-### Add embeddings to Meilisearch
+#### Generate auto-embeddings with HuggingFace 
 
-Use [the `/documents` endpoint](/reference/api/documents) to upload vectorized documents. Store vector data in your documents' `_vector` field:
+The HuggingFace embedder computes embeddings locally. This is a resource-intensive operation and might affect indexing performance.
+
+Use the `embedders` index setting of the [update `/settings` endpoint](/reference/api/settings) to configure one or more embedders for an index:
+
+```sh
+curl \
+  -X PATCH 'http://localhost:7700/indexes/movies/settings' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "embedders": {
+      "default": {
+        "source": "huggingFace",
+        "model": "bge-base-en-v1.5",
+        "documentTemplate": "A movie titled '{{doc.title}}' whose description starts with {{doc.overview|truncatewords: 20}}"
+      }
+    }
+  }'
+```
+
+`documentTemplate` is an optional field you can use to customize the data you send to the embedder. It is highly recommended you configure a custom template for your documents.
+
+<Capsule intent="tip" title="`documentTemplate` usage">
+`documentTemplate` must be a [Liquid template](https://shopify.github.io/liquid/). Use `{{ doc.attribute }}` to access document field values. Meilisearch also exposes a `{{ fields }}` array containing one object per document field, which you may access with `{{ field.name }}` and `{{ field.value }}`.
+
+For best results, use short strings indicating the type of document in that index, only include highly relevant document fields, and truncate long fields.  
+</Capsule>
+
+#### Custom embeddings
+
+You may also provide custom embeddings. In this case, you must manually update your embeddings when adding, updating, and removing documents to your index.
+
+Configure the `embedder` index setting:
+
+```sh
+curl \
+  -X PATCH 'http://localhost:7700/indexes/movies/settings' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "embedders": {
+      "image2text": {
+        "source":  "userProvided",
+        "dimensions": 3
+      }
+    }
+  }'
+```
+
+Then, use [the `/documents` endpoint](/reference/api/documents) to upload vectorized documents. Store vector data in your documents' `_vectors` field:
 
 ```sh
 curl -X POST -H 'content-type: application/json' \
 'localhost:7700/indexes/products/documents' \
 --data-binary '[
-    { "id": 0, "_vectors": [0, 0.8, -0.2], "name": "frying pan" },
-    { "id": 1, "_vectors": [1, -0.2, 0], "text": "baking dish" },
-    { "id": 2, "_vectors": [[0.5, 3, 1], [-0.2, 4, 6]], "text": "spork" }
+    { "id": 0, "_vectors": {"image2text": [0, 0.8, -0.2]}, "text": "frying pan" },
+    { "id": 1, "_vectors": {"image2text": [1, -0.2, 0]}, "text": "baking dish" }
 ]'
 ```
 
-### Use `vector` to query Meilisearch
+### Vector search with auto-embeddings
 
-Use the `vector` search parameter to perform vector searches:
+Perform searches with `q` and `hybrid` to retrieve search results using both keyword and semantic search:
+
+```sh
+curl -X POST -H 'content-type: application/json' \
+  'localhost:7700/indexes/products/search' \
+  --data-binary '{ 
+    "q": "kitchen utensils",
+    "hybrid": {
+      "semanticRatio": 0.9,
+      "embedder": "default"
+    }
+  }'
+```
+
+`hybrid` is an object and accepts two fields:
+- `semanticRatio`: number between `0` and `1`. `0` indicates full keyword search, `1` indicates full semantic search. Defaults to `0.5`
+- `embedder`: string, indicating one of the embedders configured for the queried index. Defaults to `"default"`
+
+`hybrid` can be used together with [other search parameters](/reference/api/search), including [`filter`](/reference/api/search#filter) and [`sort`](/reference/api/search#sort):
+
+```sh
+curl -X POST -H 'content-type: application/json' \
+  'localhost:7700/indexes/products/search' \
+  --data-binary '{
+    "q": "kitchen utensils",
+    "hybrid": {
+      "semanticRatio": 0.9,
+      "embedder": "default"
+    },
+    "filter": "price < 10",
+    "sort": ["price:asc"]
+  }'
+```
+
+### Vector search with user-provided embeddings
+
+Use the `vector` search parameter to perform vector searches: 
 
 ```sh
 curl -X POST -H 'content-type: application/json' \
@@ -62,7 +174,7 @@ curl -X POST -H 'content-type: application/json' \
   --data-binary '{ "vector": [0, 1, 2] }'
 ```
 
-`vector` must be an array of numbers indicating the search vector. Meilisearch does not calculate search vectors, so you must generate them using a third-party tool.
+`vector` must be an array of numbers indicating the search vector. You must generate these yourself when using vector search with user-provided embeddings.
 
 `vector` can be used together with [other search parameters](/reference/api/search), including [`filter`](/reference/api/search#filter) and [`sort`](/reference/api/search#sort):
 
@@ -79,6 +191,33 @@ curl -X POST -H 'content-type: application/json' \
 <Capsule intent="tip" title="Other resources">
 Check out the Meilisearch blog post for a [tutorial on implementing semantic search with LangChain](https://blog.meilisearch.com/langchain-semantic-search-tutorial/?utm_campaign=vector-search&utm_source=docs).
 </Capsule>
+
+## Deactivate vector search
+
+Manually remove all embedder configuration from your index:
+
+```sh
+curl \
+  -X DELETE 'http://localhost:7700/indexes/movies/settings/embedders' \
+  -H 'Content-Type: application/json'
+```
+
+<Capsule intent="warning">
+If you don't remove all embedders, Meilisearch will continue auto-generating embeddings for you documents. This will happen even if `vectorStore` has been set to `false` and may lead to unexpected expenses when using OpenAI's paid tiers.
+</Capsule>
+
+If using Meilisearch Cloud, navigate to your project overview and find "Experimental features", then uncheck the "vector store" box.
+
+Alternatively, use [the `/experimental` route](/reference/api/experimental_features):
+
+```sh
+curl \
+  -X PATCH 'http://localhost:7700/experimental-features/' \
+  -H 'Content-Type: application/json'  \
+  --data-binary '{
+    "vectorStore": false
+  }'
+```
 
 ## More information
 

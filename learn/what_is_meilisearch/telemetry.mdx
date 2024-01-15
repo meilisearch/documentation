@@ -196,6 +196,8 @@ This list is liable to change with every new version of Meilisearch. It's not be
 | `pagination.max_total_hits`                        | The defined value for the `pagination.maxTotalHits` property                                | 1000
 | `faceting.max_values_per_facet`                    | The defined value for the `faceting.maxValuesPerFacet` property                             | 100
 | `distinct_attribute.set`                           | `true` if a field name is specified, otherwise `false`                                      | false
+| `proximity_precision.set`                          | `true` if the setting has been manually set, otherwise `false`.                             | `false`
+| `proximity_precision.value`                        | `byWord` or `byAttribute`.                    | `byWord`
 | `displayed_attributes.total`                       | Number of displayed attributes                                                              | 3
 | `displayed_attributes.with_wildcard`               | `true` if `*` is specified as a displayed attribute, otherwise `false`                      | false
 | `stop_words.total`                                 | Number of stop words                                                                        | 3
@@ -226,6 +228,13 @@ This list is liable to change with every new version of Meilisearch. It's not be
 | `scoring.show_ranking_score`                       | `true` if `showRankingScore` used in the aggregated event, otherwise `false`                | true
 | `scoring.show_ranking_score_details`               | `true` if `showRankingScoreDetails` was used in the aggregated event, otherwise `false`     | true
 | `vector_store`                                     | `true` if the vector store feature is enabled, otherwise `false`                            | true
-| `score_details`                                    |  `true` if the score details feature is enabled, otherwise `false`                          | true
+| `score_details`                                    | `true` if the score details feature is enabled, otherwise `false`                           | true
 | `attributes_to_search_on.total_number_of_uses`     | `true` if the vector store feature is enabled, otherwise `false`                            | true
 | `vector.max_vector_size`                           | Highest number of dimensions given for the `vector` parameter in this batch                 | 1536
+| `hybrid.enabled`                                   | `true` if hybrid search been used in the aggregated event, otherwise `false`                | true
+| `hybrid.semantic_ratio`                            | `true` if semanticRatio was used in this batch, otherwise false                             | false
+| `hybrid.embedder`                                  | `true` if a specific embedder was used in this batch, otherwise false                       | true 
+| `embedders.total`                                  | Numbers of defined embedders                                                                | 2
+| `embedders.sources`                                | An array representing the different provided sources                                        | [”huggingFace”, “userProvided”]
+| `embedders.document_template_used`                 | A boolean indicating if one of the provided embedders has a custom template defined         | true
+| `infos.task_queue_webhook`                         | `true` if the instance is launched with a task queue webhook, otherwise `false`             | `false`

@@ -59,6 +59,8 @@ Results are sorted by **increasing number of typos**. Returns documents that mat
 
 Results are sorted by **increasing distance between matched query terms**. Returns documents where query terms occur close together and in the same order as the query string first.
 
+[It is possible to lower the precision of this ranking rule.](/reference/api/settings#proximity-precision) This may significantly improve indexing performance. In a minority of use cases, lowering precision may also lead to lower search relevancy for queries using multiple search terms.
+
 #### 4. Attribute
 
 Results are sorted according to the **[attribute ranking order](/learn/core_concepts/relevancy#attribute-ranking-order)**. Returns documents that contain query terms in more important attributes first.
