@@ -192,6 +192,33 @@ curl -X POST -H 'content-type: application/json' \
 Check out the Meilisearch blog post for a [tutorial on implementing semantic search with LangChain](https://blog.meilisearch.com/langchain-semantic-search-tutorial/?utm_campaign=vector-search&utm_source=docs).
 </Capsule>
 
+## Deactivate vector search
+
+Manually remove all embedder configuration from your index:
+
+```sh
+curl \
+  -X DELETE 'http://localhost:7700/indexes/movies/settings/embedders' \
+  -H 'Content-Type: application/json'
+```
+
+<Capsule intent="warning">
+If you don't remove all embedders, Meilisearch will continue auto-generating embeddings for you documents. This will happen even if `vectorStore` has been set to `false` and may lead to unexpected expenses when using OpenAI's paid tiers.
+</Capsule>
+
+If using Meilisearch Cloud, navigate to your project overview and find "Experimental features", then uncheck the "vector store" box.
+
+Alternatively, use [the `/experimental` route](/reference/api/experimental_features):
+
+```sh
+curl \
+  -X PATCH 'http://localhost:7700/experimental-features/' \
+  -H 'Content-Type: application/json'  \
+  --data-binary '{
+    "vectorStore": false
+  }'
+```
+
 ## More information
 
 Consult the [feature discussion on GitHub](https://github.com/orgs/meilisearch/discussions/621) for the latest information on using vector search with Meilisearch. This feature is undergoing active development and any feedback you might have is welcome.
