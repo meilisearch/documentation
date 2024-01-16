@@ -8,7 +8,7 @@
     "links-check": "cd .github/actions/validate-docs-links && yarn && yarn local:check",
     "marklint:fix": "markdownlint '**/*.mdx' --config .markdownlint.jsonc --fix",
     "marklint": "markdownlint '**/*.mdx' --config .markdownlint.jsonc",
-    "proselint": "vale **/*.mdx"
+    "proselint": "vale --glob='!.github/*' ."
   },
   "repository": {
     "type": "git",
