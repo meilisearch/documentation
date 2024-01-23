@@ -1,0 +1,153 @@
+---
+title: Analytics
+description: Meilisearch Cloud offers in-depth search analytics to help you understand how users search in your application.
+sidebarDepth: 3
+---
+
+# Analytics
+
+Enable Meilisearch Cloud analytics to gain insight on what your users are searching for, how often they find it, and whether they take any actions after clicking on a search result.
+
+## Requirements
+
+You must have a [Meilisearch Cloud](https://meilisearch.com/cloud?utm_campaign=oss&utm_source=docs&utm_medium=analytics) account to access search analytics.
+
+## Activating analytics
+
+### Enable analytics in the project overview
+
+Log into your Meilisearch Cloud account and navigate to your project's overview. Find the "Analytics" section and click on the "Enable analytics" button:
+
+![The analytics section of the project overview. It shows one button, "Enable analytics", and a short explanation of the feature.](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/cloud-analytics/01-analytics-enable.png)
+
+Meilisearch Cloud will begin processing your request. The "Analytics" section will update when the feature is enabled.
+
+### Update URLs in your application
+
+When you enable analytics, Meilisearch Cloud changes your project's API URL. Meilisearch Cloud is only able to track metrics for queries sent to this URL.
+
+Update your application so all API requests point to the new URL:
+
+```sh
+curl \
+  -X POST 'https://edge.meilisearch.com/indexes/products/search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{ "q": "green socks" }'
+```
+
+**The previous API URL will remain functional**, but requests targeting it will not send any data to the analytics interface. If you created any custom API keys using the previous URL, you will need to replace them.
+
+<Capsule intent="danger" title="Analytics and multi-search queries">
+Meilisearch Cloud analytics silently ignores requests to [the `/multi-search` route](/reference/api/multi_search). This is a known bug and will be fixed in a future Cloud update.
+</Capsule>
+
+### Configuring click-through rate and average click position
+
+To track metrics like click-through rate and average click position, Meilisearch Cloud needs to know when users click on search results.
+
+Every time a user clicks on a search result, your application must send a `click` event to the `POST` endpoint of Meilisearch Cloud analytics route:
+
+```sh
+curl \
+  -X POST 'https://edge.meilisearch.com/events' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer DEFAULT_SEARCH_API_KEY'
+  --data-binary '{
+    "eventType": "click",
+    "eventName": "Search Result Clicked",
+    "indexUid": "products",
+    "objectId": "0",
+    "position": 0
+  }'
+```
+
+<Capsule intent="tip" title="Binding analytics events to a search">
+Meilisearch automatically associates analytics events with the most recent search of the user who triggered them. To manually bind an analytics event to a specific search, include the same `X-MS-USER-ID` header in your search and event requests.
+</Capsule>
+
+#### The `click` event object
+
+The `click` event must deliver an object with the following fields:
+
+```json
+{
+  "eventType": "click",
+  "eventName": "Search Result Clicked",
+  "indexUid": "products",
+  "objectId": "0",
+  "position": 0
+}
+```
+
+- `eventType`: a string indicating this is a `click` event
+- `eventName`: a string describing the event
+- `indexUid`: a string indicating the clicked document's index
+- `objectId`: a string indicating the clicked document's primary key
+- `position`: an integer indicating the clicked document's position in the list of search results
+
+### Configuring conversion rate
+
+To track conversion rate, first identify what should count as a conversion for your application. For example, in a web shop, a conversion might be a user finalizing the checkout process.
+
+Once you have established what counts as a conversion in your application, configure it to send a `conversion` event to the `POST` endpoint of Meilisearch Cloud analytics route:
+
+```sh
+curl \
+  -X POST 'https://edge.meilisearch.com/events' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer Meilisearch_API_Key'
+  --data-binary '{
+    "eventType": "conversion",
+    "eventName": "Product Added To Cart",
+    "indexUid": "products",
+    "objectId": "0",
+    "position": 0
+  }'
+```
+
+It is not possible to associate multiple `conversion` events with the same search.
+
+#### The `conversion` event object
+
+The `conversion` event must deliver an object with the following fields:
+
+```json
+{
+  "eventType": "conversion",
+  "eventName": "Product Added To Cart",
+  "indexUid": "products",
+  "objectID": "0",
+  "position": 0
+}
+```
+
+- `eventType`: indicates this is a `conversion` event
+- `eventName`: a string describing the event
+- `indexUid`: the document's index
+- `objectID`: the document's primary key
+- `position`: the document's position in the list of search results
+
+## Deactivating analytics
+
+### Disable analytics in the project overview
+
+Log into your Meilisearch Cloud account and navigate to your project's overview. Find the "Analytics" section and press the "Disable analytics" button:
+
+![The analytics section of the project overview. It shows one button, "Disable analytics", and a short explanation of the feature.](https://raw.githubusercontent.com/meilisearch/documentation/cloud-analytics-guide/assets/images/main/02-analytics-disable.png)
+
+### Update URLs in your application
+
+Disabling analytics changes your API URL. Update your application so all API requests point to the correct URL:
+
+```sh
+curl \
+  -X POST 'https://PROJECT_URL/indexes/products/search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{ "q": "green socks" }'
+```
+
+**The previous API URL will remain functional**, but Meilisearch recommends not using it after disabling analytics in your project. If you created any custom API keys using the previous URL, you will need to replace them.
+
+### Update `conversion` and `click` events
+
+Update your application so it is no longer sending `conversion` and `click` events to Meilisearch Cloud.

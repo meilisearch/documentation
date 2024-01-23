@@ -84,7 +84,7 @@ Tasks always contain a field indicating the task's current `status`. This field 
 - **`failed`**: a failure occurred when processing the task. No changes were made to the database
 - **`canceled`**: the task was canceled
 
-`succeeded`, `failed`, and `canceled` tasks are finished tasks. Meilisearch keeps them in the task database but has finished processing these tasks.
+`succeeded`, `failed`, and `canceled` tasks are finished tasks. Meilisearch keeps them in the task database but has finished processing these tasks. It is possible to [configure a webhook](/learn/configuration/instance_options#task-webhook-url) to notify external services when a task is finished.
 
 `enqueued` and `processing` tasks are unfinished tasks. Meilisearch is either processing them or will do so in the future.
 

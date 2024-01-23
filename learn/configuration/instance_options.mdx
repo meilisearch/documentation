@@ -133,6 +133,22 @@ import_dump = "./example.dump"
 Specifying the `config_file_path` option within the configuration file will throw an error. This is the only configuration option that cannot be set within a configuration file.
 </Capsule>
 
+## Configuring cloud-hosted instances
+
+To configure Meilisearch with command-line options in a cloud-hosted instance, edit its [service file](/learn/cookbooks/running_production#step-4-run-meilisearch-as-a-service). The default location of the service file is `/etc/systemd/system/meilisearch.service`.
+
+To configure Meilisearch with environment variables in a cloud-hosted instance, modify Meilisearch's `env` file. Its default location is `/var/opt/meilisearch/env`.
+
+After editing your configuration options, relaunch the Meilisearch service:
+
+```sh
+systemctl restart meilisearch
+```
+
+<Capsule intent="tip" title="Configuring Meilisearch Cloud">
+[Meilisearch Cloud](https://www.meilisearch.com/cloud?utm_campaign=oss&utm_source=docs&utm_medium=instance-options) offers an optimal pre-configured environment. You do not need to use any of the configuration options listed in this page when hosting your project on Meilisearch Cloud.
+</Capsule>
+
 ## All instance options
 
 ### Configuration file path
@@ -399,6 +415,26 @@ This command will throw an error if `--import-snapshot` is not defined.
 Prevents a Meilisearch instance with an existing database from throwing an error when using `--import-snapshot`. Instead, the snapshot will be ignored and Meilisearch will launch using the existing database.
 
 This command will throw an error if `--import-snapshot` is not defined.
+
+### Task webhook URL
+
+**Environment variable**: `MEILI_TASK_WEBHOOK_URL`<br />
+**CLI option**: `--task-webhook-url`<br />
+**Default value**: `None`<br />
+**Expected value**: a URL string
+
+Notifies the configured URL whenever Meilisearch [finishes processing a task](/learn/async/asynchronous_operations#task-status) or batch of tasks. Meilisearch uses the URL as given, retaining any specified query parameters.
+
+The webhook payload contains the list of finished tasks in [ndjson](https://ndjson.org/).
+
+### Task webhook authorization header
+
+**Environment variable**: `MEILI_TASK_AUTHORIZATION_HEADER`<br />
+**CLI option**: `--task-webhook-authorization-header`<br />
+**Default value**: `None`<br />
+**Expected value**: an authentication token string
+
+Includes an authentication token in the authorization header when notifying the [webhook URL](#task-webhook-url).
 
 ### SSL options
 

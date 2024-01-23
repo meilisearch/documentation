@@ -53,6 +53,22 @@
         "source": "learn/getting_started/search_preview.mdx",
         "label": "Search preview",
         "slug": "search_preview"
+      },
+      {
+        "source": "learn/getting_started/supported_os.mdx",
+        "label": "Supported operating systems",
+        "slug": "supported_os"
+      }
+    ]
+  },
+  {
+    "title": "Cloud features",
+    "slug": "cloud",
+    "routes": [
+      {
+        "source": "learn/cloud/analytics.mdx",
+        "label": "Analytics",
+        "slug": "analytics"
       }
     ]
   },
@@ -393,9 +409,19 @@
         "slug": "overview"
       },
       {
+        "source": "learn/experimental/max_number_of_batched_tasks.mdx",
+        "label": "Limit number of batched tasks",
+        "slug": "max_number_of_batched_tasks"
+      },
+      {
         "source": "learn/experimental/metrics.mdx",
         "label": "Metrics",
         "slug": "metrics"
+      },
+      {
+        "source": "learn/experimental/puffin_reports.mdx",
+        "label": "Puffin reports",
+        "slug": "puffin_reports"
       },
       {
         "source": "learn/experimental/reduce-indexing-memory-usage.mdx",

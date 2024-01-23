@@ -1144,3 +1144,17 @@ update_dictionary_1: |-
 reset_dictionary_1: |-
   curl \
     -X DELETE 'http://localhost:7700/indexes/books/settings/dictionary'
+create_snapshot_1: |-
+  curl \
+    -X POST 'http://localhost:7700/snapshots'
+get_proximity_precision_settings_1: |-
+  curl \
+    -X GET 'http://localhost:7700/indexes/books/settings/proximity-precision'
+update_proximity_precision_settings_1: |-
+  curl \
+    -X PUT 'http://localhost:7700/indexes/books/settings/proximity-precision' \
+    -H 'Content-Type: application/json' \
+    --data-binary '"byAttribute"'
+reset_proximity_precision_settings_1: |-
+  curl \
+    -X DELETE 'http://localhost:7700/indexes/books/settings/proximity-precision'

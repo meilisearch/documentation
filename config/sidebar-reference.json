@@ -49,6 +49,11 @@
         "slug": "settings"
       },
       {
+        "source": "reference/api/snapshots.mdx",
+        "label": "Snapshots",
+        "slug": "snapshots"
+      },
+      {
         "source": "reference/api/stats.mdx",
         "label": "Stats",
         "slug": "stats"

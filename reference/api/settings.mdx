@@ -53,7 +53,8 @@ By default, the settings object looks like this. All fields are modifiable.
   },
   "pagination": {
     "maxTotalHits": 1000
-  }
+  },
+  "proximityPrecision": "byWord"
 }
 ```
 
@@ -118,7 +119,8 @@ Get the settings of an index.
   },
   "pagination": {
     "maxTotalHits": 1000
-  }
+  },
+  "proximityPrecision": "byWord"
 }
 ```
 
@@ -144,16 +146,17 @@ If the provided index does not exist, it will be created.
 
 | Name                                                 | Type             | Default value                                                                                    | Description                                                                      |
 | :--------------------------------------------------- | :--------------- | :----------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------- |
-| **[`dictionary`](#dictionary)**         | Array of strings | Empty                                                                                            | List of strings Meilisearch should parse as a single term                        |
+| **[`dictionary`](#dictionary)**                      | Array of strings | Empty                                                                                                         | List of strings Meilisearch should parse as a single term                        |
 | **[`displayedAttributes`](#displayed-attributes)**   | Array of strings | All attributes: `["*"]`                                                                          | Fields displayed in the returned documents                                       |
 | **[`distinctAttribute`](#distinct-attribute)**       | String           | `null`                                                                                           | Search returns documents with distinct (different) values of the given field     |
 | **[`faceting`](#faceting)**                          | Object           | [Default object](#faceting-object)                                                               | Faceting settings                                                                |
 | **[`filterableAttributes`](#filterable-attributes)** | Array of strings | Empty                                                                                            | Attributes to use as filters and facets                                          |
 | **[`pagination`](#pagination)**                      | Object           | [Default object](#pagination-object)                                                             | Pagination settings                                                              |
+| **[`proximityPrecision`](#proximity-precision)**     | String           | `"byWord"`                                                                                       |  Precision level when calculating the proximity ranking rule                                                              |
 | **[`rankingRules`](#ranking-rules)**                 | Array of strings | `["words",`<br />`"typo",`<br />`"proximity",`<br />`"attribute",`<br />`"sort",`<br />`"exactness"]` | List of ranking rules in order of importance                                |
 | **[`searchableAttributes`](#searchable-attributes)** | Array of strings | All attributes: `["*"]`                                                                          | Fields in which to search for matching query words sorted by order of importance |
 | **[`separatorTokens`](#separator-tokens)**           | Array of strings | Empty                                                                                            | List of characters delimiting where one term begins and ends                     |
-| **[`noSeparatorTokens`](#non-separator-tokens)**     | Array of strings | Empty                                                                                            | List of characters not delimiting where one term begins and ends                 |
+| **[`nonSeparatorTokens`](#non-separator-tokens)**    | Array of strings | Empty                                                                                            | List of characters not delimiting where one term begins and ends                 |
 | **[`sortableAttributes`](#sortable-attributes)**     | Array of strings | Empty                                                                                            | Attributes to use when sorting search results                                    |
 | **[`stopWords`](#stop-words)**                       | Array of strings | Empty                                                                                            | List of words ignored by Meilisearch when present in search queries              |
 | **[`synonyms`](#synonyms)**                          | Object           | Empty                                                                                            | List of associated words treated similarly                                       |
@@ -882,6 +885,103 @@ Reset an index's pagination settings to their [default value](#pagination-object
   "status": "enqueued",
   "type": "settingsUpdate",
   "enqueuedAt": "2022-04-14T20:53:32.863107Z"
+}
+```
+
+You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+
+## Proximity precision
+
+Calculating the distance between words is a resource-intensive operation. Lowering the precision of this operation may significantly improve performance and will have little impact on result relevancy in most use-cases. Meilisearch uses word distance when [ranking results according to proximity](/learn/core_concepts/relevancy#3-proximity) and when users perform [phrase searches](/reference/api/search#phrase-search).
+
+`proximityPrecision` accepts one of the following string values:
+
+- `"byWord"`: calculate the precise distance between query terms. Higher precision, but may lead to longer indexing time. This is the default setting
+- `"byAttribute"`: determine if multiple query terms are present in the same attribute. Lower precision, but shorter indexing time
+
+### Get proximity precision settings
+
+<RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/proximity-precision"/>
+
+Get the proximity precision settings of an index.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                            |
+| :---------------- | :----- | :--------------------------------------------------------------------- |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+
+#### Example
+
+<CodeSamples id="get_proximity_precision_settings_1" />
+
+##### Response: `200 OK`
+
+```json
+{
+  "proximityPrecision": "byWord"
+}
+```
+
+### Update proximity precision settings
+
+<RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/proximity-precision"/>
+
+Update the pagination settings for an index.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                            |
+| :---------------- | :----- | :--------------------------------------------------------------------- |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+
+#### Body
+
+```
+"byWord"|"byAttribute"
+```
+
+#### Example
+
+<CodeSamples id="update_proximity_precision_settings_1" />
+
+##### Response: `202 Accepted`
+
+```json
+{
+  "taskUid": 1,
+  "indexUid": "books",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2023-04-14T15:50:29.821044Z"
+}
+```
+
+You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+
+### Reset proximity precision settings
+
+Reset an index's proximity precision setting to its default value.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                            |
+| :---------------- | :----- | :--------------------------------------------------------------------- |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+
+#### Example
+
+<CodeSamples id="reset_proximity_precision_settings_1" />
+
+##### Response: `202 Accepted`
+
+```json
+{
+  "taskUid": 1,
+  "indexUid": "books",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2023-04-14T15:51:47.821044Z"
 }
 ```
 

@@ -11,13 +11,35 @@ Since databases are bound to the Meilisearch version that created them and snaps
 
 ## Creating snapshots
 
-To create snapshots, use the [`--schedule-snapshot` configuration option](/learn/configuration/instance_options#schedule-snapshot-creation):
+### Creating a single snapshot
+
+Use [the `/snapshots` route](/reference/api/snapshots) to generate a single snapshot:
+
+<CodeSamples id="create_snapshot_1" />
+
+This will return a summarized task object. Use [the `/tasks` route](/reference/api/tasks) to monitor the status of this operation.
+
+### Scheduling periodic snapshots
+
+Use the [`--schedule-snapshot` configuration option](/learn/configuration/instance_options#schedule-snapshot-creation) to create snapshots at regular time intervals:
 
 ```bash
 meilisearch --schedule-snapshot
 ```
 
-By default, Meilisearch creates snapshots in a directory called `snapshots/` at the root of your Meilisearch.
+The first snapshot is created on launching Meilisearch. After that, snapshots are created on a set interval until you deactivate snapshots by ending the Meilisearch instance. By default, one snapshot is taken every 24 hours.
+
+Modify the interval between each new snapshot by providing an integer to [`--schedule-snapshot`](/learn/configuration/instance_options#schedule-snapshot-creation):
+
+```bash
+meilisearch --schedule-snapshot=3600
+```
+
+[Learn more about snapshots flags and environment variables.](/learn/configuration/instance_options#schedule-snapshot-creation)
+
+### Snapshot directory
+
+By default, Meilisearch creates snapshots in a directory called `snapshots/` at the root of your project.
 
 The destination can be modified with [`--snapshot-dir`](/learn/configuration/instance_options#snapshot-destination):
 
@@ -25,21 +47,7 @@ The destination can be modified with [`--snapshot-dir`](/learn/configuration/ins
 meilisearch --schedule-snapshot --snapshot-dir mySnapShots/
 ```
 
-Now snapshots are created in `mySnapShots/` directory.
-
-The first snapshot is created on launching Meilisearch. After that, snapshots are created routinely on a set interval until you deactivate snapshots by ending the Meilisearch instance. By default, one snapshot is taken every 24 hours.
-
-The interval between each new snapshot can be modified by providing an integer to [`--schedule-snapshot`](/learn/configuration/instance_options#schedule-snapshot-creation):
-
-```bash
-meilisearch --schedule-snapshot=3600
-```
-
-After running the above code, a snapshot is created every hour (3600 seconds).
-
-During snapshot creation, old snapshots are **automatically overwritten**. This means only the most recent snapshot should be present in the folder at any given time.
-
-[More about snapshots flags and environment variables](/learn/configuration/instance_options#schedule-snapshot-creation)
+Old snapshots are **automatically overwritten** during snapshot creation. Only the most recent snapshot will be present in the folder at any given time.
 
 ## Starting from a snapshot
 
