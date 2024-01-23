@@ -7,4 +7,3 @@ message: "Use '%s' instead of '%s'."
 level: warning
 swap:
   indexation: indexing
-  

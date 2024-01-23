@@ -12,4 +12,3 @@ tokens:
   - '[a-z][.?!:;",] {2,}[A-Z]' # one space between sentences (end.  new)
   - '[a-z][.?!:;",][A-Z]' #(end.new)
   - '[\w.?!,\(\)\-":] {2,}[\w.?!,\(\)\-":]' #only one space after ,.?
-  
