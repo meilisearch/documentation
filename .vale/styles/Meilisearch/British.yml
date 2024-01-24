@@ -1,0 +1,24 @@
+---
+# Suggestion: Meilisearch.British.yml
+# Checks for American  spelling
+#
+extends: substitution
+message: 'Use the American spelling "%s" instead of the British "%s".'
+link: https://about.gitlab.com/handbook/communication/#top-misused-terms
+level: suggestion
+ignorecase: true
+swap:
+  analyse: analyze
+  behaviour: behavior
+  centre: center
+  colour: color
+  dependant: dependent
+  favourite: favorite
+  initialled: initialed
+  initialling: initialing
+  labelling: labeling
+  labelled: labeled
+  programme: program
+  licence: license
+  cancelled: canceled
+  cancellation: cancelation

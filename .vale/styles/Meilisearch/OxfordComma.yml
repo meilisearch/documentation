@@ -1,0 +1,11 @@
+---
+# Suggestion: Meilisearch.OxfordComma.yml
+
+# Use the Oxford comma, this may not work as intended for complex sentences with many commas
+extends: existence
+message: "Use the Oxford comma in '%s'."
+link: 'https://developers.google.com/style/commas'
+scope: sentence
+level: suggestion
+tokens:
+  - '(?:[^,]+,){1,}\s\w+\s(?:and|or)'

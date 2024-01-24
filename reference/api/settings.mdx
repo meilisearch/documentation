@@ -232,6 +232,7 @@ User-defined dictionaries can be used together with synonyms. It can be useful t
   "W.E.B.": ["W. E. B."]
 }
 ```
+
 </Capsule>
 
 ### Get dictionary
@@ -256,7 +257,7 @@ Get an index's user-defined dictionary.
 []
 ```
 
-### Update dictionary 
+### Update dictionary
 
 <RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/dictionary"/>
 
@@ -639,7 +640,7 @@ You can use the returned `taskUid` to get more details on [the status of the tas
 
 ### Reset faceting settings
 
-Reset an index's faceting settings to their [default value](#faceting-object). Setting `sortFacetValuesBy` to `null`(` --data-binary '{ "sortFacetValuesBy": null }'`), will restore it to the default value (`"*": "alpha"`).
+Reset an index's faceting settings to their [default value](#faceting-object). Setting `sortFacetValuesBy` to `null`(`--data-binary '{ "sortFacetValuesBy": null }'`), will restore it to the default value (`"*": "alpha"`).
 
 #### Path parameters
 

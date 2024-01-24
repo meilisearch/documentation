@@ -1,0 +1,9 @@
+---
+# Warning: Meilisearch.Spelling.yml
+
+# Checks if your words exist in the dictionary. Any exceptions (including Meilisearch) should be defined in `styles/Vocab/word_list/accept.txt`
+extends: spelling
+message: "Did you really mean '%s'?"
+level: warning
+filters:
+  - 'Vale.*\b'

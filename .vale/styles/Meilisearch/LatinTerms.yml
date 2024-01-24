@@ -1,0 +1,17 @@
+---
+# Error: Meilisearch.LatinTerms.yml
+
+# Avoid Latin terms like `i.e.` and `e.g.` as everyone does not understand them
+extends: substitution
+message: "Use '%s' instead of '%s', but consider rewriting the sentence."
+link: https://developers.google.com/style/abbreviations#dont-use
+level: warning
+nonword: true
+ignorecase: true
+swap:
+  e\.g\.: for example
+  e\. g\.: for example
+  e\.g: for example
+  i\.e\.: that is
+  i\. e\.: that is
+  i\.e: that is

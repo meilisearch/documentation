@@ -1,0 +1,12 @@
+---
+# Error: Meilisearch.Typos.yml
+
+# Lists any possible typos and the correct spelling 
+extends: substitution
+message: "Use '%s' instead of '%s'."
+level: error
+swap:
+  MeiliSearch: Meilisearch
+  MieliSearch: Meilisearch
+  meiliSearch: Meilisearch
+  od: of

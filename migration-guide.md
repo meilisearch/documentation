@@ -80,7 +80,7 @@ To add new code samples:
 
 ## Static assets (images/datasets)
 
-The build process does not currently support static assets with relative paths. Images and sample datasets must be linked via an external service. 
+The build process does not currently support static assets with relative paths. Images and sample datasets must be linked via an external service.
 
 At the moment, we're adding hard absolute links to the files on GitHub:
 

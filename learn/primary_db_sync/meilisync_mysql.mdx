@@ -21,6 +21,7 @@ Install `meilisync` to the same location as your primary database. You can do th
 
 <Tabs.Container labels={["Docker", "Manual install"]}>
 <Tabs.Content label="Docker">
+
 ### Docker
 
 First, create a `docker-compose.yml` file in your Docker project directory. Open it with a text editor and add the following content:
@@ -47,6 +48,7 @@ After a few seconds, Docker will inform you it has successfully pulled `meilisyn
 </Tabs.Content>
 
 <Tabs.Content label="Manual install">
+
 ### Manual install
 
 First, make sure you have Python 3.9 and `pip` installed.
@@ -76,6 +78,7 @@ Create a `config.yml` file in your project's directory. Open it with a text edit
 
 <Tabs.Container labels={["Docker", "Manual install"]}>
 <Tabs.Content label="Docker">
+
 ```yaml
 meilisearch:
   api_url: http://host.docker.internal:7700/
@@ -83,9 +86,11 @@ meilisearch:
   insert_size: 1000
   insert_interval: 10
 ```
+
 </Tabs.Content>
 
 <Tabs.Content label="Manual install">
+
 ```yaml
 meilisearch:
   api_url: MEILISEARCH_API_URL
@@ -93,10 +98,11 @@ meilisearch:
   insert_size: 1000
   insert_interval: 10
 ```
+
 </Tabs.Content>
 </Tabs.Container>
 
-Replace `MEILISEARCH_API_KEY` with an API key able to create, update, and delete documents and indexes. Replace `MEILISEARCH_API_URL` with your instance's API URL. If you are using [Meilisearch Cloud](https://cloud.meilisearch.com?utm_campaign=oss&utm_source=docs&utm_medium=meilisync), this URL should look similar to this: https://ms-4d85L33tC0d3-5041.fra.meilisearch.io
+Replace `MEILISEARCH_API_KEY` with an API key able to create, update, and delete documents and indexes. Replace `MEILISEARCH_API_URL` with your instance's API URL. If you are using [Meilisearch Cloud](https://cloud.meilisearch.com?utm_campaign=oss&utm_source=docs&utm_medium=meilisync), this URL should look similar to this: `https://ms-4d85L33tC0d3-5041.fra.meilisearch.io`.
 
 ## Configure MySQL
 
@@ -167,15 +173,19 @@ With the configuration done, open your command-line prompt once again and run `m
 
 <Tabs.Container labels={["Docker", "Manual install"]}>
   <Tabs.Content label="Docker">
-    ```sh
-    docker-compose up
-    ```
+
+```sh
+docker-compose up
+```
+
   </Tabs.Content>
 
   <Tabs.Content label="Manual install">
-    ```sh
-    meilisync start
-    ```
+
+```sh
+meilisync start
+```
+
   </Tabs.Content>
 </Tabs.Container>
 

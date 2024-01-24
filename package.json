@@ -5,7 +5,10 @@
   "main": "index.js",
   "dependencies": {},
   "scripts": {
-    "links-check": "cd .github/actions/validate-docs-links && yarn && yarn local:check" 
+    "links-check": "cd .github/actions/validate-docs-links && yarn && yarn local:check",
+    "marklint:fix": "markdownlint '**/*.mdx' --config .markdownlint.jsonc --fix",
+    "marklint": "markdownlint '**/*.mdx' --config .markdownlint.jsonc",
+    "proselint": "vale --glob='!.github/*' ."
   },
   "repository": {
     "type": "git",
@@ -17,5 +20,9 @@
   "bugs": {
     "url": "https://github.com/meilisearch/documentation/issues"
   },
-  "homepage": "https://meilisearch.com/docs"
+  "homepage": "https://meilisearch.com/docs",
+  "devDependencies": {
+    "@ocular-d/vale-bin": "^2.29.6",
+    "markdownlint-cli": "^0.37.0"
+  }
 }
