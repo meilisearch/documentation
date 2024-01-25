@@ -52,9 +52,9 @@ To easily create a single-page React application, you can use [Create React App]
 
 ## Code
 
-For this example, we only need two files: App.js and index.js. App.js will contain your app's code, and index.js will initialize your React App.
+For this example, we only need two files: `App.js` and `index.js`. `App.js` will contain your app's code, and `index.js` will initialize your React App.
 
-Your index.js file should look like this:
+Your `index.js` file should look like this:
 
 ```jsx
 import React from 'react';
@@ -70,7 +70,7 @@ ReactDOM.render(
 );
 ```
 
-You shouldn't have to modify index.js at all, so let's take a look at the code for App.js.
+You shouldn't have to modify `index.js` at all, so let's take a look at the code for `App.js`.
 
 ```jsx
 import "instantsearch.css/themes/algolia-min.css";
@@ -86,8 +86,8 @@ import "./App.css";
 import { instantMeiliSearch } from "@meilisearch/instant-meilisearch";
 
 const searchClient = instantMeiliSearch(
-  "http://localhost:7700",
-  ""
+  "<your Meilisearch host>",
+  "<your Meilisearch API key>"
 );
 
 const App = () => (
@@ -120,9 +120,9 @@ const Hit = ({ hit }) => (
 export default App;
 ```
 
-Let's dissect it component by component.
+Let's take a closer look at this code.
 
-## Importing the required components
+### Importing the required components
 
 The following lines of code import the components and the client we need for search, along with the style.
 
@@ -140,21 +140,22 @@ import "./App.css";
 import { instantMeiliSearch } from "@meilisearch/instant-meilisearch";
 ```
 
-## Initializing the search client
+### Initializing the search client
 
-Next, we need to initialize the search client that will communicate with Meilisearch. Add your Meilisearch credentials: host and API key, as the first and second parameters of the instantMeilisearch function. If you have followed our quick start guide to the letter, your Meilisearch host should be http://127.0.0.1:7700. Since we did not set any API key, we can leave the second parameter as an empty string.
+Next, we need to initialize the search client that will communicate with Meilisearch. Add your Meilisearch credentials: host and API key, as the first and second parameters of the instantMeilisearch function.
 
 ```jsx
 const searchClient = instantMeiliSearch(
-  "http://localhost:7700",
-  "" //your Meilisearch API key, if any
+  "<your Meilisearch host>",
+  "<your Meilisearch API key>"
 );
 ```
 
-CAPSULE:
-By default, Meilisearch's API is unprotected. To protect a Meilisearch instance from unauthorized use, you must supply a master key at launch. You can learn more about it in our documentation.
+<Capsule intent="note">
+  In production environments, make sure to [secure your instance](/learn/security/master_api_keys) and use a read-only key.
+</Capsule>
 
-## Adding our components
+### Adding our components
 
 The following code adds the different components we need:
 
@@ -191,14 +192,14 @@ export default App;
 
 Let's go step-by-step to understand what each component does:
 
-- `<InstantSearch>`: a mandatory wrapper for our instant search. We need to provide the searchClient as a prop to this component, along with the index name
+- `<InstantSearch>`: a mandatory wrapper for our instant search. We need to provide the searchClient as a prop to this component, along with the [index UID](/learn/core_concepts/indexes#index-uid)
 - `<Stats>`: shows the number of documents and the time it took Meilisearch to find the search results
 - `<SearchBox>`: adds the search bar
 - `<InfiniteHits>`: a wrapper around the different Hits. It takes Hit (declared in line 29) as a prop
-- `Hit`: a custom component we created to determine which attribute of our restaurants we would showcase
+- `<Hit>`: a custom component we created to determine which attribute of our restaurants we would showcase
 
 
-## The Hit component
+### The Hit component
 
 ```jsx
 const Hit = ({ hit }) => (
@@ -225,10 +226,10 @@ And that's it; with just a few lines of code, we have built a search interface. 
 
 ## Conclusion
 
-To go further, we could use filters to create a faceted search interface and allow users to refine search results based on restaurant categories. But I wanted to keep this tutorial as simple as possible to help you understand how easy it is to integrate InstantSearch.js with Meilisearch to create a great search experience!
+To go further, we could use filters to create a [faceted search](/learn/advanced/faceted_search) interface and allow users to refine search results based on restaurant categories. But I wanted to keep this tutorial as simple as possible to help you understand how easy it is to integrate InstantSearch.js with Meilisearch to create a great search experience!
 
-👉 Not using React? Don’t worry; we have other front-end integrations. Check out the list on GitHub.
+<Capsule intent="note">
+  Prefer some other flavor of Javascript? Check out all our [front-end integrations](/learn/what_is_meilisearch/sdks#front-end-tools).
+</Capsule>
 
-Want to know more about the customization possibilities offered by Meilisearch? You can take a look at the Meilisearch 101.
-
-If you have any questions, please join us on Discord; we are always happy to hear from you. If you want to support us, you can star our GitHub repository or share our work 🥰
+Encountering any issues? Don't hesitate to use the help channel on [Discord](https://discord.meilisearch.com/) 🙌
