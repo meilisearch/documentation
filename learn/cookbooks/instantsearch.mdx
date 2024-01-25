@@ -6,19 +6,20 @@ sidebarDepth: 3
 
 # InstantSearch guide
 
-Meilisearch allows you to search through your data in no time at all via a RESTful API. When in development mode, it provides a search preview where you can test your search settings without implementing a front end.
+Meilisearch allows you to search through your data in no time at all via a RESTful API. When in development mode, it provides a [search preview](/learn/getting_started/search_preview) where you can test your search settings without implementing a front end.
 
-INSERT IMG
+![Animated gif in which a user types "trumen show" and sees "The Truman Show" as the top result](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/search_preview/trumen.gif)
 
 I know it’s beautiful, but unfortunately, it’s only for the developers’ eyes. If you need a front-end search interface for your end-users, you’ve got to do it yourself. But don’t worry, it’s not as difficult as it sounds. In this tutorial, you’ll learn exactly that: how to effortlessly create a custom front-end search. For this purpose, we will be using two main tools:
 
-InstantSearch.js: an open-source library of front-end search components
-instant-meilisearch: a plugin to establish the communication between your Meilisearch instance and InstantSearch.js
+- [InstantSearch.js](https://github.com/algolia/instantsearch.js): an open-source library of front-end search components
+- [instant-meilisearch](https://github.com/meilisearch/meilisearch-js-plugins/tree/main/packages/instant-meilisearch): a plugin to establish the communication between your Meilisearch instance and InstantSearch.js
+
 Combined, they allow you to easily integrate a delightful search experience into your front end.
 
 ## Introducing the dataset
 
-The dataset used in this tutorial directly references the dataset used in our Strapi tutorial. We have supplemented it with more dummy restaurants created thanks to faker, a library that generates fake data. We have added a picture field to the restaurants with random restaurant image URLs from Unsplash. Each restaurant has the following fields:
+The dataset used in this tutorial directly references the dataset used in our [Strapi tutorial](https://blog.meilisearch.com/strapi-v4-plugin-meilisearch/). Don't worry though—we'll provide the updated dataset below. We have supplemented it with more dummy restaurants created thanks to faker, a library that generates fake data. We have added a picture field to the restaurants with random restaurant image URLs from Unsplash. Each restaurant has the following fields:
 
 - `name`
 - `description`
@@ -32,21 +33,22 @@ We added two extra fields to help us credit the pictures’ authors:
 
 The front end will look like this:
 
-INSERT IMG
+![Searching through a list of restaurants](https://raw.githubusercontent.com/meilisearch/documentation/migrate-instantsearch-guide/assets/images/instantsearch/restaurants-list.gif)
 
 ## Requirements
 
-1. A running instance of Meilisearch v1 with the restaurants’ dataset indexed. If you need help with this part, you can follow our quick start guide up to the Add documents step. The easiest way to run a Meilisearch instance is using Meilisearch Cloud, there's a free 14-day trial, no credit card required.
-2. A React environment with the following packages installed:
+1. A running instance of Meilisearch (v >= 1.x) with the [restaurants’ dataset](https://github.com/meilisearch/datasets/blob/main/datasets/restaurants/restaurants.json) indexed. If you need help with this part, you can follow our [quick start guide](/learn/getting_started/cloud_quick_start).
+2. A [React](https://reactjs.org/) environment with the following packages installed:
 
 ```bash
 yarn add @meilisearch/instant-meilisearch@^0.11.1 instantsearch.css@^8.0.0 react-instantsearch-dom@^6.39.1
 ```
 
-CAPSULE:
-We have pre-selected the specific package versions above to ensure this tutorial has a long lifespan. Note that this tutorial may not work as intended if these versions are not respected. In case you’re using newer versions of these packages, you may want to check their changelogs to understand how they have evolved since this post was published.
+<Capsule intent="note">
+  If you’re using newer versions of the packages, you may want to check their changelogs.
+</Capsule>
 
-To easily create a single-page React application, you can use Create React App.
+To easily create a single-page React application, you can use [Create React App](https://create-react-app.dev/).
 
 ## Code
 
