@@ -355,6 +355,11 @@
         "source": "learn/primary_db_sync/meilisync_postgresql.mdx",
         "label": "Syncing databases with PostgreSQL and meilisync",
         "slug": "meilisync_postgresql"
+      },
+      {
+        "source": "learn/cookbooks/task_webhook.mdx",
+        "label": "Using task webhooks",
+        "slug": "task_webhook"
       }
     ]
   },

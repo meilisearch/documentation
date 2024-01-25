@@ -1,0 +1,50 @@
+# Using task webhooks
+
+Meilisearch processes result in tasks that are added to a queue and processed asynchronously. This guide teaches you how to use webhooks to notify a URL when a task has been completed.
+
+## Requirements
+
+- a command-line console
+- a self-hosted Meilisearch instance
+- a server configured to receive `POST` requests with an ndjson payload
+
+## Configure the webhook URL
+
+Restart your Meilisearch instance providing the webhook URL to `--task-webhook-URL`:
+
+```sh
+meilisearch --task-webhook-url http://localhost:8000
+```
+
+You may also define the webhook URL with environment variables or in the configuration file with `MEILI_TASK_WEBHOOK_URL`.
+
+## Optional: configure an authorization header
+
+Depending on your setup, you may need to provide an authorization header. Provide it to `task-webhook-authorization-header`:
+
+```sh
+meilisearch --task-webhook-url http://localhost:8000 --task-webhook-authorization-header Bearer aSampleMasterKey
+```
+
+## Test the webhook
+
+A common asynchronous operation is adding or updating documents to an index. The following example adds a test document to our `books` index:
+
+```sh
+curl \
+  -X POST 'http://localhost:7700/indexes/books/documents' \
+  -H 'Content-Type: application/json' \
+  --data-binary '[
+    {
+      "id": 1,
+      "title": "Nuestra parte de noche",
+      "author": "Mariana Enríquez"
+    }
+  ]'
+```
+
+When Meilisearch finishes indexing this document, it will send a `POST` request the URL you configured with `--task-webhook-url`. The request body will be one or more task objects in ndjson format:
+
+```ndjson
+{"uid":4,"indexUid":"books","status":"succeeded","type":"documentAdditionOrUpdate","canceledBy":null,"details.receivedDocuments":1,"details.indexedDocuments":1,"duration":"PT0.001192S","enqueuedAt":"2022-08-04T12:28:15.159167Z","startedAt":"2022-08-04T12:28:15.161996Z","finishedAt":"2022-08-04T12:28:15.163188Z"}
+```
