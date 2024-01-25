@@ -91,6 +91,8 @@ curl \
 
 `documentTemplate` is an optional field you can use to customize the data you send to the embedder. It is highly recommended you configure a custom template for your documents.
 
+`model` is mandatory and must indicate a BERT embedding model.
+
 <Capsule intent="tip" title="`documentTemplate` usage">
 `documentTemplate` must be a [Liquid template](https://shopify.github.io/liquid/). Use `{{ doc.attribute }}` to access document field values. Meilisearch also exposes a `{{ fields }}` array containing one object per document field, which you may access with `{{ field.name }}` and `{{ field.value }}`.
 
