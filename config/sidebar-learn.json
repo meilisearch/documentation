@@ -332,6 +332,11 @@
         "slug": "docker"
       },
       {
+        "source": "learn/cookbooks/instantsearch.mdx",
+        "label": "Integrate InstantSearch",
+        "slug": "instantsearch"
+      },
+      {
         "source": "learn/cookbooks/search_bar_for_docs.mdx",
         "label": "Add a search bar to your docs",
         "slug": "search_bar_for_docs"
