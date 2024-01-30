@@ -306,6 +306,11 @@
         "slug": "front_end_integration"
       },
       {
+        "source": "learn/front_end/react_instantsearch.mdx",
+        "label": "Integrate with React InstantSearch",
+        "slug": "react_instantsearch"
+      },
+      {
         "source": "learn/front_end/pagination.mdx",
         "label": "Search result pagination",
         "slug": "pagination"
@@ -330,11 +335,6 @@
         "source": "learn/cookbooks/docker.mdx",
         "label": "Use with Docker",
         "slug": "docker"
-      },
-      {
-        "source": "learn/cookbooks/instantsearch.mdx",
-        "label": "Integrate with InstantSearch",
-        "slug": "instantsearch"
       },
       {
         "source": "learn/cookbooks/search_bar_for_docs.mdx",
