@@ -17,15 +17,12 @@ The search preview is a development tool and not suited for end-users. In this t
 
 ## Introducing the dataset
 
-The dataset used in this tutorial directly references the dataset used in our [Strapi tutorial](https://blog.meilisearch.com/strapi-v4-plugin-meilisearch/). Don't worry though—we'll provide the updated dataset below. We have supplemented it with more dummy restaurants created thanks to faker, a library that generates fake data. We have added a picture field to the restaurants with random restaurant image URLs from Unsplash. Each restaurant has the following fields:
+This guide uses a dataset of restaurants generated with faker, a library that generates fake data, and uses Unsplash image URLs. Each restaurant has the following fields:
 
 - `name`
 - `description`
 - `picture`
 - `categories`
-
-We added two extra fields to help us credit the pictures’ authors:
-
 - `picture_author`
 - `picture_author_profile_link`
 
@@ -50,7 +47,7 @@ To create a single-page React application, use [Create React App](https://create
 
 ## Code
 
-For this example, we only need two files: `App.js` and `index.js`. `App.js` will contain your app's code, and `index.js` will initialize your React App.
+For this guide, you only need two files: `App.js` and `index.js`. `App.js` will contain your app's code, and `index.js` will initialize your React App.
 
 Your `index.js` file should look like this:
 
@@ -68,7 +65,9 @@ ReactDOM.render(
 );
 ```
 
-You shouldn't have to modify `index.js` at all, so let's take a look at the code for `App.js`.
+You shouldn't have to modify `index.js`.
+
+Your `App.js` file should look like this:
 
 ```jsx
 import "instantsearch.css/themes/algolia-min.css";
@@ -118,11 +117,9 @@ const Hit = ({ hit }) => (
 export default App;
 ```
 
-Let's take a closer look at this code.
-
 ### Importing the required components
 
-The following lines of code import the components and the client we need for search, along with the style.
+The following lines of code import the components and the search client, along with CSS styling:
 
 ```jsx
 import "instantsearch.css/themes/algolia-min.css";
@@ -140,7 +137,7 @@ import { instantMeiliSearch } from "@meilisearch/instant-meilisearch";
 
 ### Initializing the search client
 
-Next, we need to initialize the search client that will communicate with Meilisearch. Add your Meilisearch credentials: host and API key, as the first and second parameters of the instantMeilisearch function.
+Next, you need to initialize the search client that will communicate with Meilisearch. Add your Meilisearch credentials: host and API key, as the first and second parameters of the instantMeilisearch function.
 
 ```jsx
 const searchClient = instantMeiliSearch(
@@ -150,12 +147,12 @@ const searchClient = instantMeiliSearch(
 ```
 
 <Capsule intent="note">
-  In production environments, make sure to [secure your instance](/learn/security/master_api_keys) and use a read-only key.
+In production environments, make sure to [secure your instance](/learn/security/master_api_keys) and use a read-only key.
 </Capsule>
 
-### Adding our components
+### Adding components
 
-The following code adds the different components we need:
+The following code adds the necessary components:
 
 ```jsx
 const App = () => (
@@ -188,13 +185,11 @@ const Hit = ({ hit }) => (
 export default App;
 ```
 
-Let's go step-by-step to understand what each component does:
-
-- `<InstantSearch>`: a mandatory wrapper for our instant search. We need to provide the searchClient as a prop to this component, along with the [index UID](/learn/core_concepts/indexes#index-uid)
+- `<InstantSearch>`: a mandatory wrapper for our instant search. You must to provide  `searchClient` as a prop to this component, along with the [index UID](/learn/core_concepts/indexes#index-uid)
 - `<Stats>`: shows the number of documents and the time it took Meilisearch to find the search results
 - `<SearchBox>`: adds the search bar
-- `<InfiniteHits>`: a wrapper around the different Hits. It takes Hit (declared in line 29) as a prop
-- `<Hit>`: a custom component we created to determine which attribute of our restaurants we would showcase
+- `<InfiniteHits>`: a wrapper around the different Hits. It takes `Hit` (declared in line 29) as a prop
+- `<Hit>`: a custom component that determines which restaurant attribute to showcase
 
 
 ### The `Hit` component
