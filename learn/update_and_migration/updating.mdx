@@ -285,6 +285,8 @@ Execute the command below to import the dump at launch:
 ```bash
 # replace {dump_uid.dump} with the name of your dump file
 ./meilisearch --import-dump dumps/{dump_uid.dump} --master-key="MASTER_KEY"
+# Or, if you chose another location for data files and dumps before the update, also add the same parameters
+./meilisearch --import-dump dumps/{dump_uid.dump} --master-key="MASTER_KEY" --db-path {your/path/to}/data.ms --dump-dir {your/path/to}/dumps
 ```
 
 </Tabs.Content>
