@@ -1,0 +1,58 @@
+---
+title: How to implement multitenancy with Node.js — Meilisearch documentation
+description: Learn how to build secure, multi-tenant search in your Node.js application.
+sidebarDepth: 3
+---
+
+# How to implement multi-tenancy with Node.js
+
+## What is multitenancy?
+
+In software development, multitenancy means that multiple users — also called tenants — share the same computing resources but have different access to system-wide data. In Meilisearch, you might have one index containing data belonging to many distinct tenants. In such cases, your tenants must only be able to search through their own documents.
+
+You can implement this using [tenant tokens](/learn/security/tenant_tokens).
+
+## Requirements
+
+For this guide, you will need:
+- Node.js (we recommend the latest LTS version)
+- A package manager like `npm`, `yarn`, or `pnpm`
+- [Meilisearch JavaScript SDK](/learn/what_is_meilisearch/sdks#)
+
+## Creating a tenant token
+
+A **tenant token** can be created using the `generateTenantToken` function available in the Meilisearch Javascript SDK.
+
+This example creates a tenant token using this function:
+
+```js
+const apiKey = '<YOUR_SEARCH_API_KEY>';
+const apiKeyUid = '<YOUR_SEARCH_API_KEY_UID>';
+
+const client = new Meilisearch({
+	host: '<http://localhost:7700>',
+	apiKey: apiKey
+})
+
+
+// These rules gives access only to documents that belong to a given organization
+const organizationId = 1 // Retrieve the organizationId from your database, etc.
+const searchRules = {
+	'*': {
+		'filter': `organization_id = ${organizationId}`
+	}
+}
+
+const tenantToken = client.generateTenantToken(
+  apiKeyUid,
+  searchRules,
+  {
+    expiresAt: new Date('2025-01-01'), // Choose an expiration date
+    apiKey: apiKey,
+  }
+)
+```
+
+When Meilisearch gets a search query with a tenant token, it decodes it and applies the search rules to the search request. In this example, the results are filtered by the `organization_id` field, thus preventing access to documents that do not belong to the organization.
+
+This tenant token can now be used as public API key to make search against your Meilisearch instance. 🎉
