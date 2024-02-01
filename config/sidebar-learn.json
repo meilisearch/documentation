@@ -306,6 +306,11 @@
         "slug": "front_end_integration"
       },
       {
+        "source": "learn/front_end/react_instantsearch.mdx",
+        "label": "Integrate with React InstantSearch",
+        "slug": "react_instantsearch"
+      },
+      {
         "source": "learn/front_end/pagination.mdx",
         "label": "Search result pagination",
         "slug": "pagination"

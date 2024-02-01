@@ -1,0 +1,225 @@
+---
+title: How to integrate InstantSearch — Meilisearch documentation
+description: Learn how to integrate search-as-you-type into your React front end with InstantSearch and Instant Meilisearch.
+sidebarDepth: 3
+---
+
+# How to integrate Meilisearch with React InstantSearch
+
+Meilisearch allows you to search through your data via a RESTful API. When in development mode, it provides a [search preview](/learn/getting_started/search_preview) where you can test your search settings without implementing a front end.
+
+![Animated gif in which a user types "trumen show" and sees "The Truman Show" as the top result](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/search_preview/trumen.gif)
+
+The search preview is a development tool and not suited for end-users. In this tutorial, you’ll learn how to create a custom search interface using two open-source tools:
+
+- [InstantSearch](https://github.com/algolia/instantsearch): an open-source library of front-end search components
+- [instant-meilisearch](https://github.com/meilisearch/meilisearch-js-plugins/tree/main/packages/instant-meilisearch): a plugin to establish the communication between your Meilisearch instance and InstantSearch
+
+## Introducing the dataset
+
+This guide uses a dataset of restaurants generated with faker, a library that generates fake data, and uses Unsplash image URLs. Each restaurant has the following fields:
+
+- `name`
+- `description`
+- `picture`
+- `categories`
+- `picture_author`
+- `picture_author_profile_link`
+
+The front end will look like this:
+
+![Searching through a list of restaurants](https://raw.githubusercontent.com/meilisearch/documentation/migrate-instantsearch-guide/assets/images/instantsearch/restaurants-list.gif)
+
+## Requirements
+
+1. A running instance of Meilisearch (v >= 1.x) with the [restaurants’ dataset](https://github.com/meilisearch/datasets/blob/main/datasets/restaurants/restaurants.json) indexed. If you need help with this part, you can follow our [quick start guide](/learn/getting_started/cloud_quick_start).
+2. A [React](https://reactjs.org/) environment with the following packages installed:
+
+```bash
+yarn add @meilisearch/instant-meilisearch@^0.11.1 instantsearch.css@^8.0.0 react-instantsearch-dom@^6.39.1
+```
+
+<Capsule intent="note">
+If you’re using newer versions of the packages, you may want to check their changelogs.
+</Capsule>
+
+To create a single-page React application, use [Create React App](https://create-react-app.dev/).
+
+## Implementation
+
+For this guide, you only need two files: `App.js` and `index.js`. `App.js` will contain your app's code, and `index.js` will initialize your React App.
+
+Your `index.js` file should look like this:
+
+```jsx
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
+
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById('root')
+);
+```
+
+You shouldn't have to modify `index.js`.
+
+Your `App.js` file should look like this:
+
+```jsx
+import "instantsearch.css/themes/algolia-min.css";
+import React from "react";
+import {
+  InstantSearch,
+  InfiniteHits,
+  SearchBox,
+  Stats,
+  Highlight
+} from "react-instantsearch-dom";
+import "./App.css";
+import { instantMeiliSearch } from "@meilisearch/instant-meilisearch";
+
+const searchClient = instantMeiliSearch(
+  "<your Meilisearch host>",
+  "<your Meilisearch API key>"
+);
+
+const App = () => (
+  <div className="ais-InstantSearch">
+    <h1>Restaurants Demo with Meilisearch</h1>
+    <InstantSearch indexName="restaurant" searchClient={searchClient}>
+      <Stats />
+      <SearchBox />
+      <InfiniteHits hitComponent={Hit} />
+    </InstantSearch>
+  </div>
+);
+
+const Hit = ({ hit }) => (
+  <div key={hit.id}>
+    <div className="hit-name">
+      <Highlight attribute="name" hit={hit} />
+    </div>
+    <p className="hit-categories"><Highlight attribute="categories" hit={hit} /></p>
+    <div className="hit-image">
+      <img src={hit.picture} alt={hit.name} width="200px" />
+      <p className="image-credit">Picture by <a href={hit.picture_author_profile_link}>{hit.picture_author}</a> on <a href="https://unsplash.com/?utm_source=restaurants_demo&utm_medium=referral">Unsplash</a></p>
+    </div>
+    <div className="hit-description">
+      <Highlight attribute="description" hit={hit} />
+    </div>
+  </div>
+);
+
+export default App;
+```
+
+### Importing the required components
+
+The following lines of code import the components and the search client, along with CSS styling:
+
+```jsx
+import "instantsearch.css/themes/algolia-min.css";
+import React from "react";
+import {
+  InstantSearch,
+  InfiniteHits,
+  SearchBox,
+  Stats,
+  Highlight
+} from "react-instantsearch-dom";
+import "./App.css";
+import { instantMeiliSearch } from "@meilisearch/instant-meilisearch";
+```
+
+### Initializing the search client
+
+Next, you need to initialize the search client that will communicate with Meilisearch. Add your Meilisearch credentials: host and API key, as the first and second parameters of the instantMeilisearch function.
+
+```jsx
+const searchClient = instantMeiliSearch(
+  "<your Meilisearch host>",
+  "<your Meilisearch API key>"
+);
+```
+
+<Capsule intent="note">
+In production environments, make sure to [secure your instance](/learn/security/master_api_keys) and use a read-only key.
+</Capsule>
+
+### Adding components
+
+The following code adds the necessary components:
+
+```jsx
+const App = () => (
+  <div className="ais-InstantSearch">
+    <h1>Restaurants Demo with Meilisearch</h1>
+    <InstantSearch indexName="restaurant" searchClient={searchClient}>
+      <Stats />
+      <SearchBox />
+      <InfiniteHits hitComponent={Hit} />
+    </InstantSearch>
+  </div>
+);
+
+const Hit = ({ hit }) => (
+  <div key={hit.id}>
+    <div className="hit-name">
+      <Highlight attribute="name" hit={hit} />
+    </div>
+    <p className="hit-categories"><Highlight attribute="categories" hit={hit} /></p>
+    <div className="hit-image">
+      <img src={hit.picture} alt={hit.name} width="200px" />
+      <p className="image-credit">Picture by <a href={hit.picture_author_profile_link}>{hit.picture_author}</a> on <a href="https://unsplash.com/?utm_source=restaurants_demo&utm_medium=referral">Unsplash</a></p>
+    </div>
+    <div className="hit-description">
+      <Highlight attribute="description" hit={hit} />
+    </div>
+  </div>
+);
+
+export default App;
+```
+
+- `<InstantSearch>`: a mandatory wrapper for our instant search. You must to provide  `searchClient` as a prop to this component, along with the [index UID](/learn/core_concepts/indexes#index-uid)
+- `<Stats>`: shows the number of documents and the time it took Meilisearch to find the search results
+- `<SearchBox>`: adds the search bar
+- `<InfiniteHits>`: a wrapper around the different Hits. It takes `Hit` (declared in line 29) as a prop
+- `<Hit>`: a custom component that determines which restaurant attribute to showcase
+
+### The `Hit` component
+
+```jsx
+const Hit = ({ hit }) => (
+  <div key={hit.id}>
+    <div className="hit-name">
+      <Highlight attribute="name" hit={hit} />
+    </div>
+    <p className="hit-categories"><Highlight attribute="categories" hit={hit} /></p>
+    <div className="hit-image">
+      <img src={hit.picture} alt={hit.name} width="200px" />
+      <p className="image-credit">Picture by <a href={hit.picture_author_profile_link}>{hit.picture_author}</a> on <a href="https://unsplash.com/?utm_source=restaurants_demo&utm_medium=referral">Unsplash</a></p>
+    </div>
+    <div className="hit-description">
+      <Highlight attribute="description" hit={hit} />
+    </div>
+  </div>
+);
+```
+
+- `<img>` takes hit.picture as prop to show the picture of each restaurant
+- The `<Highlight>` component takes the attribute as the prop. If there are matches of the query in that attribute they'll be highlighted. In the first case, `name`, in the second, `categories`, and in the third case, `description`
+
+## Conclusion
+
+That's it—you have a fully functioning search front end powered by InstantSearch. To go further, you might want to use filters to create a [faceted search](/learn/fine_tuning_results/faceted_search) interface and allow users to refine search results based on restaurant categories.
+
+<Capsule intent="note">
+Prefer some other flavor of JavaScript? Check out this list of [Meilisearch front-end integrations](/learn/what_is_meilisearch/sdks#front-end-tools).
+</Capsule>
+
+Encountering any issues? Don't hesitate to use the help channel on [Discord](https://discord.meilisearch.com/). 🙌

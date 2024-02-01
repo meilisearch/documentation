@@ -3,3 +3,6 @@
 
 # CaroFG is responsible for updating the Vercel cookbook
 /learn/cookbooks/vercel.mdx @CaroFG
+
+# DevRel is responsible for this guide
+/learn/front_end/react_instantsearch.mdx @meilisearch/devrel-team
