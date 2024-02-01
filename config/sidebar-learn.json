@@ -111,6 +111,11 @@
         "source": "learn/async/managing_tasks.mdx",
         "label": "Managing the task database",
         "slug": "managing_tasks"
+      },
+      {
+        "source": "learn/async/task_webhook.mdx",
+        "label": "Using task webhooks",
+        "slug": "task_webhook"
       }
     ]
   },

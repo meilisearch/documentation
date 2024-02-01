@@ -425,7 +425,7 @@ This command will throw an error if `--import-snapshot` is not defined.
 
 Notifies the configured URL whenever Meilisearch [finishes processing a task](/learn/async/asynchronous_operations#task-status) or batch of tasks. Meilisearch uses the URL as given, retaining any specified query parameters.
 
-The webhook payload contains the list of finished tasks in [ndjson](https://ndjson.org/).
+The webhook payload contains the list of finished tasks in [ndjson](https://github.com/ndjson/ndjson-spec). For more information, [consult the dedicated task webhook guide](/learn/async/task_webhook).
 
 ### Task webhook authorization header
 
