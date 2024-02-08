@@ -1,0 +1,63 @@
+---
+title: Configuring index settings — Meilisearch documentation
+description: 
+---
+
+# Configuring index settings with the Meilisearch Cloud interface
+
+This tutorial will show you how to check and change an index setting using the [Meilisearch Cloud](https://cloud.meilisearch.com) interface.
+
+## Requirements
+
+- an active [Meilisearch Cloud](https://cloud.meilisearch.com) account
+- a Meilisearch Cloud project with at least one index
+
+## Accessing a project's index settings
+
+Log into your Meilisearch account and navigate to your project. Then, click on "Indexes".
+
+![](https://raw.githubusercontent.com/meilisearch/documentation/cloud-index-settings/assets/images/cloud-index-settings/01-indexes-tab.png)
+
+Find the index you want to configure and click on its "Settings" button.
+
+![](https://raw.githubusercontent.com/meilisearch/documentation/cloud-index-settings/assets/images/cloud-index-settings/02-index-settings.png)
+
+## Checking a setting's current value
+
+First, you need to verify what is a setting's current value. Using the menu on the left-hand side, click on "Attributes". 
+
+![](https://raw.githubusercontent.com/meilisearch/documentation/cloud-index-settings/assets/images/cloud-index-settings/03-general-settings.png)
+
+Scroll and look for "Searchable attributes". If this is a new index, you should see the default value, `["*"]`.
+
+## Updating a setting
+
+In most datasets, setting the primary key attribute slows as a searchable performance and does not improve relevancy. Now you know Meilisearch is currently searching through all attributes, you can improve your application search experience by changing this setting.
+
+Click on the input box with the current value. Then, replace it with an array of strings containing all attributes in your index except the primary key.
+
+![](https://raw.githubusercontent.com/meilisearch/documentation/cloud-index-settings/assets/images/cloud-index-settings/04-searchable-attributes.png)
+
+Two buttons will appear on the bottom of the screen when you start editing a field. Once you're finished editing a setting, click on "Save".
+
+![](https://raw.githubusercontent.com/meilisearch/documentation/cloud-index-settings/assets/images/cloud-index-settings/05-save.png)
+
+The button icon will change to a spinning wheel to indicate Meilisearch is processing the changes. Depending on the size of your dataset and the setting you have edited, this might take some time.
+
+![](https://raw.githubusercontent.com/meilisearch/documentation/cloud-index-settings/assets/images/cloud-index-settings/06-saving.png)
+
+Once Meilisearch is ready, the button should change to a green color. You will also see a notification pop-up on the right-hand side of your screen.
+
+![](https://raw.githubusercontent.com/meilisearch/documentation/cloud-index-settings/assets/images/cloud-index-settings/07-saved.png)
+
+## Conclusion
+
+You have used the Meilisearch Cloud interface to check the value of an index setting. Then, you changed it to improve your project's performance.
+
+This tutorial used the searchable attributes setting, but the procedure is the same no matter which index setting you are editing.
+
+## What's next
+
+If you prefer to access the settings API directly through your console, you can also [configure index settings using the Meilisearch Cloud API](/learn/configuring_index_settings_with_api).
+
+For a comprehensive reference of all index settings, consult the [settings API reference](/reference/api/settings). 
