@@ -6,28 +6,37 @@ sidebarDepth: 3
 
 # Laravel multitenancy guide
 
-This guide will show you how to implement search in a multitenant Laravel application.
+This guide will walk you through implementing search in a multitenant Laravel application.
 
 ## Requirements
 
-For this guide, you will need a Laravel 10 application with Laravel Scout installed and configured to use the `meilisearch` driver. Follow the official [Scout documentation](https://laravel.com/docs/10.x/scout) to get started.
+Before proceeding, you need a working Laravel 10 application with Laravel Scout installed and configured to use the `meilisearch` driver. Follow the official [Scout documentation](https://laravel.com/docs/10.x/scout) to get started.
+
+Additionally, you will need to have a Meilisearch server running and accessible from your Laravel application. If you don't have a Meilisearch server running, follow our [quick start guide](/learn/getting_started/cloud_quick_start) to get started with Meilisearch Cloud. If you prefer self-hosting, read our [installation guide](/learn/getting_started/installation).
+
+To generate tenant tokens, you will need:
+- A search API key
+- A search API key UID — retrieve it using the [keys endpoints](/references/api/keys)
+
+<Capsule>
+A _Search API key_ is a key that provides **read-only access** to your Meilisearch instance. You can retrieve it in your Meilisearch dashboard.
+</Capsule>
 
 ## Use case
 
-This guide will use the example of a basic customer relationship manager (CRM) application. This is a multitenant application where each user belong to an organization. Within the application, users only have access to resources that belong to their organization.
+This guide uses the example of a customer relationship manager (CRM) application that allows users to store contacts. This CRM is a multitenant application, where each user can only access data belonging to their organization. In our example, this means that users will only be able to search contacts of their organization.
 
 On a technical level, this means:
 - A `User` model that belongs to an `Organization`
-- A `Contact` model that belongs to an `Organization` (this can only be accessed by users from the same organization)
-- An `Organization` model that has many `User`s and many `Contact`s
+- A `Contact` model that belongs to an `Organization` (can only be accessed by users from the same organization)
+- An `Organization` model that has many `User` and many `Contact`s
 
-Let's translate this in Laravel code. This means your project should have the following:
+Below you will find the Laravel code that defines such relationship between our models.
 
 In `app/Models/Contact.php`:
 
 ```php
 <?php
-// app/Models/Contact.php
 
 namespace App\Models;
 
@@ -50,7 +59,6 @@ In `app/Models/User.php`:
 
 ```php
 <?php
-// app/Models/User.php
 
 namespace App\Models;
 
@@ -104,8 +112,6 @@ And in `app/Models/Organization.php`:
 
 ```php
 <?php
-// app/Models/Organization.php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -120,8 +126,12 @@ class Organization extends Model
 }
 ```
 
+Now that we've taken a look at our models and their relationships, let's see how to generate tenant tokens.
 
 ## Generating tenant tokens
+
+In this example, we will generate a tenant token for each *organization*. This token will be used to authenticate requests to Meilisearch and ensure that users can only access data from their organization. All `User` within the same `Organization` will share the same token.
+
 
 you will need:
 - search API key
