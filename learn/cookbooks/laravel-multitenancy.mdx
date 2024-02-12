@@ -211,12 +211,20 @@ class Organization extends Model
 }
 ```
 
-## Providing Laravel views with the search token
+Now that our `Organization` model is generating tenant tokens, we need to provide the front-end with these tokens so that it can access Meilisearch securely.
+
+## Using tenant tokens with Laravel Blade
+
+We will use [view composers](https://laravel.com/docs/10.x/views#view-composers) to provide our views with the search token. This way, we can ensure that the token is available in all views, without having to pass it manually.
+
+<Capsule intent="tip">
+If you prefer, you can pass the token manually to each view using the `with` method.
+</Capsule>
+
+Let's create a `app/View/Composers/AuthComposer.php` file:
 
 ```php
 <?php
-
-// app/View/Composers/AuthComposer.php
 
 namespace App\View\Composers;
 
@@ -239,14 +247,49 @@ class AuthComposer
     {
         $user = Auth::user();
         $view->with([
-            // Other data you want to your views to have access to...
             'meilisearchToken' => $user->organization->meilisearch_token,
         ]);
     }
 }
 ```
 
+Now, let's register this view composer in our `AppServiceProvider`:
+
+```php
+<?php
+
+namespace App\Providers;
+
+use App\View\Composers\AuthComposer;
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\ServiceProvider;
+
+class AppServiceProvider extends ServiceProvider
+{
+    /**
+     * Register any application services.
+     */
+    public function register(): void
+    {
+        //
+    }
+
+    /**
+     * Bootstrap any application services.
+     */
+    public function boot(): void
+    {
+        // Use this view composer in all views
+        View::composer('*', AuthComposer::class);
+    }
+}
+```
+
+And ta-da! All of our views have access to the `meilisearchToken` variable. We can now use this variable in our frontend.
+
 ## Building the search UI
+
+This guide uses **Vue InstantSearch** to build our search interface. Vue InstantSearch is a set of components and helpers to build a search UI in your Vue application. If you prefer other flavours of JavaScript, check out our other [front-end integrations](/learn/front_end/front_end_integration).
 
 ```js
 // resources/js/vue-app.js
