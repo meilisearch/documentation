@@ -24,7 +24,9 @@ A _Search API key_ provides **read-only** access to your Meilisearch instance. Y
 
 ## Use case
 
-Let's use the example of a customer relationship manager (CRM) application that allows users to store contacts. This CRM is a multitenant application, where each user can only access data belonging to their organization. In our example, this means that users will only be able to search contacts of their organization.
+Let's use the example of a customer relationship manager (CRM) application that allows users to store contacts.
+
+Our CRM is a multitenant application, where each user can only access data belonging to their organization. In our example, this means that users will only be able to search contacts of their organization.
 
 On a technical level, this means:
 - A `User` model that belongs to an `Organization`
@@ -130,13 +132,11 @@ Now that we've taken a look at our models and their relationships, let's see how
 
 ## Generating tenant tokens
 
-In this example, we will generate a tenant token for each *organization*. This token will be used to authenticate requests to Meilisearch and ensure that users can only access data from their organization. All `User` within the same `Organization` will share the same token.
+We want to generate a tenant token for each organization. This token will be used to authenticate requests to Meilisearch and ensure that users can only access data from their organization. All `User` within the same `Organization` will share the same token.
 
-You can choose when you want to generate the token. Here, we will generate the token when the organization is retrieved from the database.
+You can choose when you want to generate the token. Here, we will generate the token when the organization is retrieved from the database. If the organization has no token, we will generate one and store it in the `meilisearch_token` attribute.
 
-In the `Organization` model, we will hook on the model's `retrieved` event to generate a token when the organization is retrieved from the database. If the organization has no token, we will store it in the `meilisearch_token` attribute.
-
-Let's update the code in our `app/Models/Organization.php` file to include the logic for generating tenant tokens:
+Let's update the code in our `app/Models/Organization.php` code:
 
 ```php
 <?php
