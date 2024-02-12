@@ -320,7 +320,7 @@ The `Meilisearch` component is responsible for initializing a Vue Instantsearch 
 
 Let's create it in `resources/js/components/Meilisearch.vue`:
 
-```html
+```vue
 <script setup lang="ts">
 import { instantMeiliSearch } from "@meilisearch/instant-meilisearch"
 
@@ -343,7 +343,7 @@ const { searchClient } = instantMeiliSearch(props.host, props.apiKey)
 
 Now that we have our `Meilisearch` component, we can use it in any of our Blade views and provide it with the tenant token. Don't forget to add the `@vite` directive to include the Vue app in your view.
 
-```php
+```blade
 <!-- resources/views/contacts/index.blade.php -->
 
 <div id="vue-app">
