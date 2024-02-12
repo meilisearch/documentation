@@ -291,13 +291,17 @@ And ta-da! All of our views have access to the `meilisearchToken` variable. We c
 
 This guide uses **Vue InstantSearch** to build our search interface. Vue InstantSearch is a set of components and helpers to build a search UI in your Vue application. If you prefer other flavours of JavaScript, check out our other [front-end integrations](/learn/front_end/front_end_integration).
 
-```js
-// resources/js/vue-app.js
+First, let's install the dependencies:
 
+```bash
+npm install vue-instantsearch @meilisearch/instant-meilisearch
+```
+
+Now, let's create a Vue app that uses Vue InstantSearch. We will create a new `resources/js/vue-app.js` file:
+
+```js
 import { createApp } from 'vue'
 import InstantSearch from 'vue-instantsearch/vue3/es'
-
-// Vue Components
 import Meilisearch from './components/Meilisearch.vue'
 
 const app = createApp({
@@ -310,31 +314,13 @@ app.use(InstantSearch)
 app.mount('#vue-app')
 ```
 
-```php
-// resources/views/components/search.blade.php
+This file initializes our Vue app and configures it to use Vue InstantSearch. It also registers the `Meilisearch` component that we will create next.
 
-@props(['meilisearchToken'])
+The `Meilisearch` component is responsible for initializing a Vue Instantsearch client. It uses the `@meilisearch/instant-meilisearch` package to create a search client compatible with Instantsearch.
 
-<div id="vue-app">
-    <meilisearch index-name="companies" api-key="{{ $meilisearchToken }}" host="https://edge.meilisearch.com">
-    </meilisearch>
-</div>
-
-@push('scripts')
-    @vite('resources/js/vue-app.js')
-@endpush
-```
+Let's create it in `resources/js/components/Meilisearch.vue`:
 
 ```html
-<!-- resources/js/components/Meilisearch.vue -->
-
-<template>
-  <ais-instant-search :search-client="searchClient" :index-name="props.indexName">
-    <!-- This slot allows you to render content inside this component -->
-    <slot name="default"></slot>
-  </ais-instant-search>
-</template>
-
 <script setup lang="ts">
 import { instantMeiliSearch } from "@meilisearch/instant-meilisearch"
 
@@ -344,11 +330,30 @@ const props = defineProps<{
   indexName: string,
 }>()
 
-const searchClient = instantMeiliSearch(
-  props.host,
-  props.apiKey
-)
+const { searchClient } = instantMeiliSearch(props.host, props.apiKey)
 </script>
+
+<template>
+  <ais-instant-search :search-client="searchClient" :index-name="props.indexName">
+    <!-- Slots allow you to render content inside this component, e.g. search results -->
+    <slot name="default"></slot>
+  </ais-instant-search>
+</template>
+```
+
+Now that we have our `Meilisearch` component, we can use it in any of our Blade views and provide it with the tenant token. Don't forget to add the `@vite` directive to include the Vue app in your view.
+
+```php
+<!-- resources/views/contacts/index.blade.php -->
+
+<div id="vue-app">
+    <meilisearch index-name="contacts" api-key="{{ $meilisearchToken }}" host="https://edge.meilisearch.com">
+    </meilisearch>
+</div>
+
+@push('scripts')
+    @vite('resources/js/vue-app.js')
+@endpush
 ```
 
 ## Conclusion
