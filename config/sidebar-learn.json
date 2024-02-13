@@ -370,6 +370,11 @@
         "source": "learn/primary_db_sync/meilisync_postgresql.mdx",
         "label": "Syncing databases with PostgreSQL and meilisync",
         "slug": "meilisync_postgresql"
+      },
+      {
+        "source": "learn/cookbooks/laravel-scout.mdx",
+        "label": "Laravel Scout guide",
+        "slug": "laravel-scout"
       }
     ]
   },
