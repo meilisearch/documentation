@@ -1,0 +1,188 @@
+---
+title: Laravel Scout guide — Meilisearch documentation
+description: Learn how to use Meilisearch with Laravel Scout.
+sidebarDepth: 3
+---
+
+# Laravel Scout guide
+
+This guide will help you to configure Laravel Scout to use Meilisearch to power full-text search in your Laravel 10 applications.
+
+## Prerequisites
+
+Before you start, make sure you have the following installed on your machin:
+- PHP
+- [Composer](https://getcomposer.org/)
+
+You will also need a Laravel application. If you don't have one, you can create a new one by running the following command:
+
+```sh
+composer create-project laravel/laravel my-application
+```
+
+## Installing Laravel Scout
+
+Laravel comes with out-of-the-box full-text search capabilities via [Laravel Scout](https://laravel.com/docs/10.x/scout).
+
+To enable it, navigate to your Laravel application directory and install Scout via the Composer package manager:
+
+```sh
+composer require laravel/scout
+```
+
+After installing Scout, you need to publish the Scout configuration file. You can do this by running the following artisan command:
+
+```sh
+php artisan vendor:publish --provider="Laravel\Scout\ScoutServiceProvider"
+```
+
+This command should create a new configuration file in your application directory: `config/scout.php`.
+
+## Configuring the Laravel Scout driver
+
+Let’s configure Laravel Scout to use the Meilisearch driver. First, install the dependencies required to use Scout with Meilisearch via Composer:
+
+```sh
+composer require meilisearch/meilisearch-php http-interop/http-factory-guzzle
+```
+
+Then, update the environment variables in your `.env` file:
+
+```sh
+SCOUT_DRIVER=meilisearch
+# Use the host below if you're running Meilisearch via Laravel Sail
+MEILISEARCH_HOST=http://meilisearch:7700
+MEILISEARCH_KEY=masterKey
+```
+
+### Local development
+
+Laravel’s official Docker development environment, Laravel Sail, comes with a Meilisearch service out-of-the-box. Please note that when running Meilisearch via Sail, Meilisearch’s host is `http://meilisearch:7700`.
+
+<Capsule intent="tip">
+This comes from Docker [Bridge network driver](https://docs.docker.com/network/drivers/bridge/#differences-between-user-defined-bridges-and-the-default-bridge) behavior.
+</Capsule>
+
+### Running in production
+
+For production use cases, we recommend using a managed Meilisearch via [Meilisearch Cloud](https://www.meilisearch.com/cloud?utm_campaign=laravel&utm_source=docs&utm_medium=laravel-scout-guide). On Meilisearch Cloud, you can find your host URL in your project settings.
+
+<Capsule intent="tip">
+Learn [how to get started with Meilisearch Cloud](/learn/getting_started/cloud_quick_start?utm_campaign=laravel&utm_source=docs&utm_medium=laravel-scout-guide).
+</Capsule>
+
+## Making Eloquent models searchable
+
+With Scout installed and configured, add the `Laravel\Scout\Searchable` trait to your Eloquent models to make them searchable. 🎉
+
+This trait will use Laravel’s model observers to keep the data in your model in sync with Meilisearch.
+
+Here’s an example model:
+
+```php
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
+
+class Contact extends Model
+{
+	use Searchable;
+}
+```
+
+To configure which fields to store in Meilisearch, use the `toSearchableArray` method. You can use this technique to store a model and its relationships’ data in the same document.
+
+The example below shows how to store a model's relationships data in Meilisearch:
+
+```php
+<?php
+
+namespace App\Models;
+
+use App\Models\Company;
+use Laravel\Scout\Searchable;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
+class Contact extends Model
+{
+    use Searchable;
+
+    public function company(): BelongsTo
+    {
+        return $this->belongsTo(Company::class);
+    }
+
+    public function toSearchableArray(): array
+    {
+	      // All model attributes are made searchable
+        $array = $this->toArray();
+
+		    // Then we add some additional fields
+        $array['organization_id'] = $this->company->organization->id;
+        $array['company_name'] = $this->company->name;
+        $array['company_url'] = $this->company->url;
+
+        return $array;
+    }
+}
+```
+
+## Configuring filterable and sortable attributes
+
+Configure which attributes are [filterable](/learn/fine_tuning_results/filtering?utm_campaign=laravel&utm_source=docs&utm_medium=laravel-scout-guide) and [sortable](/learn/fine_tuning_results/sorting?utm_campaign=laravel&utm_source=docs&utm_medium=laravel-scout-guide) via your Meilisearch index settings.
+
+In Laravel, you can configure your index settings via the `config/scout.php` file:
+
+```php
+<?php
+
+use App\Models\Contact;
+
+return [
+	  // Other Scout configuration...
+
+    'meilisearch' => [
+        'host' => env('MEILISEARCH_HOST', 'https://edge.meilisearch.com'),
+        'key' => env('MEILISEARCH_KEY'),
+        'index-settings' => [
+            Contact::class => [
+                'filterableAttributes' => ['organization_id'],
+                'sortableAttributes' => ['name', 'company_name']
+            ],
+        ],
+    ],
+];
+```
+
+The example above updates Meilisearch index settings for the `Contact` model:
+
+- it makes the `organization_id` field filterable
+- it makes the `name` and `company_name` fields sortable
+
+After changing your index settings, you will need to synchronize your Scout index settings.
+
+## Synchronizing your index settings
+
+To synchronize your index settings, run the following command:
+
+```sh
+php artisan scout:sync-index-settings
+```
+
+## Example usage
+
+We built an example application to demonstrate how to use Meilisearch with Laravel Scout. It showcases an app-wide search in a CRM (Customer Relationship Management) application.
+
+[![Laravel Scout example application](https://raw.githubusercontent.com/meilisearch/documentation/add-laravel-multitenancy-guide/assets/images/demos/saas-demo-screenshot.png)](https://saas.meilisearch.com/?utm_campaign=laravel&utm_source=docs&utm_medium=laravel-scout-guide)
+
+This demo application uses the following search features:
+- [Multi-search](/reference/api/multi_search?utm_campaign=laravel&utm_source=docs&utm_medium=laravel-scout-guide) (search across multiple indexes)
+- [Multi-tenancy](/learn/security/tenant_tokens?utm_campaign=laravel&utm_source=docs&utm_medium=laravel-scout-guide)
+- [Filtering](/learn/fine_tuning_results/filtering?utm_campaign=laravel&utm_source=docs&utm_medium=laravel-scout-guide)
+- [Sorting](/learn/fine_tuning_results/sorting?utm_campaign=laravel&utm_source=docs&utm_medium=laravel-scout-guide)
+
+Of course, the code is open-sourced on [Github](https://github.com/meilisearch/saas-demo). 🎉
