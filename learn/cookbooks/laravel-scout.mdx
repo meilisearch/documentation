@@ -6,7 +6,7 @@ sidebarDepth: 3
 
 # Laravel Scout guide
 
-This guide will help you to configure Laravel Scout to use Meilisearch to power full-text search in your Laravel 10 applications.
+In this guide, you will learn to setup [Laravel Scout](https://laravel.com/docs/10.x/scout) to use Meilisearch in your Laravel 10 application.
 
 ## Prerequisites
 
@@ -22,7 +22,7 @@ composer create-project laravel/laravel my-application
 
 ## Installing Laravel Scout
 
-Laravel comes with out-of-the-box full-text search capabilities via [Laravel Scout](https://laravel.com/docs/10.x/scout).
+Laravel comes with out-of-the-box full-text search capabilities via Laravel Scout.
 
 To enable it, navigate to your Laravel application directory and install Scout via the Composer package manager:
 
@@ -59,7 +59,7 @@ MEILISEARCH_KEY=masterKey
 
 Laravel’s official Docker development environment, Laravel Sail, comes with a Meilisearch service out-of-the-box. Please note that when running Meilisearch via Sail, Meilisearch’s host is `http://meilisearch:7700`.
 
-<Capsule intent="tip">
+<Capsule intent="note">
 This comes from Docker [Bridge network driver](https://docs.docker.com/network/drivers/bridge/#differences-between-user-defined-bridges-and-the-default-bridge) behavior.
 </Capsule>
 
@@ -179,7 +179,7 @@ We built an example application to demonstrate how to use Meilisearch with Larav
 
 [![Laravel Scout example application](https://raw.githubusercontent.com/meilisearch/documentation/add-laravel-multitenancy-guide/assets/images/demos/saas-demo-screenshot.png)](https://saas.meilisearch.com/?utm_campaign=laravel&utm_source=docs&utm_medium=laravel-scout-guide)
 
-This demo application uses the following search features:
+This demo application uses the following features:
 - [Multi-search](/reference/api/multi_search?utm_campaign=laravel&utm_source=docs&utm_medium=laravel-scout-guide) (search across multiple indexes)
 - [Multi-tenancy](/learn/security/tenant_tokens?utm_campaign=laravel&utm_source=docs&utm_medium=laravel-scout-guide)
 - [Filtering](/learn/fine_tuning_results/filtering?utm_campaign=laravel&utm_source=docs&utm_medium=laravel-scout-guide)
