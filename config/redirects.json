@@ -140,5 +140,10 @@
   {
     "source": "/docs/learn/getting_started/getting_ready_for_production",
     "destination": "/docs/learn/getting_started/cloud_quick_start"
-  }
+  },
+  {
+    "source": "/docs/learn/security/master_api_keys",
+    "destination": "/docs/learn/security/basic_security",
+    "permanent": true
+  },
 ]

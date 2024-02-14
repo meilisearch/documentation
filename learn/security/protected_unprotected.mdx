@@ -1,0 +1,21 @@
+---
+title: Protected and unprotected Meilisearch projects — Meilisearch documentation
+description: Protect your self-hosted Meilisearch instance by setting a master key
+---
+
+
+# Protected and unprotected Meilisearch projects
+
+Meilisearch projects and self-hosted instances may be protected or unprotected.
+
+## Protected projects
+
+In protected projects, all Meilisearch API routes and endpoints can only be accessed by requests bearing an API key. The only exception to this rule is the `/health` endpoint, which may still be queried with unauthorized requests.
+
+Meilisearch Cloud projects are protected by default. Self-hosted instances are only protected if you launch them with a master key.
+
+## Unprotected projects
+
+In unprotected projects and self-hosted instances, any user may access any API endpoint. Never leave a publicly accessible instance unprotected. Only use unprotected instances in safe development environments.
+
+Meilisearch Cloud projects are always protected. Meilisearch self-hosted instances are unprotected by default.

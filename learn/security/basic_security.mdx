@@ -1,0 +1,149 @@
+---
+title: Setting up basic security protection — Meilisearch documentation
+description: Protect your self-hosted Meilisearch instance by setting a master key
+---
+
+# Setting up basic security protection
+
+This tutorial will show you how to secure Meilisearch by setting up a master key. Then, you will see how to safely send requests to the Meilisearch API using an API key.
+
+## Step 1: Configuring the master key
+
+The master key is the first and most important step to secure your Meilisearch project. When you configure the master key, the Meilisearch API is only accessible to authorized users.
+
+## Configuring the master key in Meilisearch Cloud 
+
+Meilisearch Cloud automatically generates a master key for each project. This means Meilisearch Cloud projects are secure by default.
+
+You can view your master key by visiting your project overview:
+
+![An interface element named "API keys" showing three obscured keys: "Master key", "Default Search API Key", and "Default Admin API Key"](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/security/01-master-api-keys.png)
+
+### Configuring the master key in a self-hosted instance
+
+To protect your self-hosted instance, relaunch it using the `--master-key` command-line option or the `MEILI_MASTER_KEY` environment variable:
+
+<Tabs.Container labels={['CLI', 'Environment variable']}>
+<Tabs.Content label="CLI">
+
+```sh
+./meilisearch --master-key="MASTER_KEY"
+```
+
+</Tabs.Content>
+
+<Tabs.Content label="Environment variable">
+
+UNIX:
+
+```sh
+export MEILI_MASTER_KEY="MASTER_KEY"
+./meilisearch
+```
+
+Windows:
+
+```sh
+set MEILI_MASTER_KEY="MASTER_KEY"
+./meilisearch
+```
+
+</Tabs.Content>
+</Tabs.Container>
+
+<Capsule intent="tip" title="Tools for generating a master key">
+The master key must be at least 16-bytes-long and composed of valid UTF-8 characters. Use one of the following tools to generate a secure master key:
+
+- [`uuidgen`](https://www.digitalocean.com/community/tutorials/workflow-command-line-basics-generating-uuids)
+- [`openssl rand`](https://www.openssl.org/docs/man1.0.2/man1/rand.html)
+- [`shasum`](https://www.commandlinux.com/man-page/man1/shasum.1.html)
+- [randomkeygen.com](https://randomkeygen.com/)
+</Capsule>
+
+Meilisearch should launch as usual. The start up log should include a message informing you the instance is protected:
+
+```
+A master key has been set. Requests to Meilisearch won't be authorized unless you provide an authentication key.
+```
+
+## Step 2: get API keys
+
+Your project is now protected. Meilisearch has automatically generated two API keys: `Default Search API Key` and `Default Admin API Key`. API keys are authorization tokens designed to safely communicate with the Meilisearch API. 
+
+### Obtaining API keys in Meilisearch Cloud 
+
+Find your API keys in the same section where you previously located the master key:
+
+![An interface element named "API keys" showing three obscured keys: "Master key", "Default Search API Key", and "Default Admin API Key"](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/security/01-master-api-keys.png)
+
+### Obtaining API keys in a self-hosted instance
+
+Use your master key to query the `/keys` endpoint to view all API keys in your instance:
+
+```sh
+curl -X GET 'http://localhost:7700/keys' -H 'Authorization: Bearer MASTER_KEY'
+```
+
+<Capsule intent="danger" title="Do not use the master key for API requests">
+Only use the master key to manage API keys. Never use the master key to perform searches or other common operations.
+</Capsule>
+
+Meilisearch's response will include at least the two default API keys:
+
+```json
+{
+  "results": [
+    {
+      "name": "Default Search API Key",
+      "description": "Use it to search from the frontend",
+      "key": "0beec7b5ea3f0fdbc95d0dd47f3c5bc275da8a33",
+      "uid": "123-345-456-987-abc",
+      "actions": [
+        "search"
+      ],
+      "indexes": [
+        "*"
+      ],
+      "expiresAt": null,
+      "createdAt": "2024-01-25T16:19:53.949636Z",
+      "updatedAt": "2024-01-25T16:19:53.949636Z"
+    },
+    {
+      "name": "Default Admin API Key",
+      "description": "Use it for anything that is not a search operation. Caution! Do not expose it on a public frontend",
+      "key": "62cdb7020ff920e5aa642c3d4066950dd1f01f4d",
+      "uid": "123-345-456-987-abc",
+      "actions": [
+        "*"
+      ],
+      "indexes": [
+        "*"
+      ],
+      "expiresAt": null,
+      "createdAt": "2024-01-25T16:19:53.94816Z",
+      "updatedAt": "2024-01-25T16:19:53.94816Z"
+    }
+  ],
+  …
+}
+```
+
+## Step 3: safely sending API requests to Meilisearch
+
+Now you have your API keys, you can safely query the Meilisearch API. Add API keys to requests using an `Authorization` bearer token header. 
+
+Use the `Default Search API Key` to perform search operations:
+
+<CodeSamples id="security_guide_search_key_1" />
+
+Use the `Default Admin API Key` to perform other operations, such as updating an index setting:
+
+<CodeSamples id="security_guide_search_key_1" />
+
+## Conclusion
+
+You have successfully secured Meilisearch by configuring a master key. You then saw how to access the Meilisearch API by adding an API key to your request's authorization header.
+
+## Next steps
+
+You have secured your instance in this guide. Next, you should understand how to access it with authorization tokens.
