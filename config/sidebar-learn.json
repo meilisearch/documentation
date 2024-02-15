@@ -372,9 +372,9 @@
         "slug": "meilisync_postgresql"
       },
       {
-        "source": "learn/cookbooks/laravel_multitenancy.mdx",
+        "source": "learn/cookbooks/laravel-multitenancy.mdx",
         "label": "Multitenancy with Laravel",
-        "slug": "laravel_multitenancy"
+        "slug": "laravel-multitenancy"
       }
     ]
   },
