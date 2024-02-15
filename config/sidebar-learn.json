@@ -374,7 +374,7 @@
       {
         "source": "learn/cookbooks/laravel-multitenancy.mdx",
         "label": "Multitenancy with Laravel",
-        "slug": "cookbooks"
+        "slug": "laravel_multitenancy"
       }
     ]
   },
