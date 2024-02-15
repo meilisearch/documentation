@@ -127,7 +127,7 @@ Now you have a solid understanding of your application's models and their relati
 
 ## Generating tenant tokens
 
-We want to generate a tenant token for each organization. This token will be used to authenticate requests to Meilisearch and ensure that users can only access data from their organization. All `User` within the same `Organization` will share the same token.
+Currently, all `User`s can search through data belonging to all `Organizations`. To prevent that from happening, you need to generate a tenant token for each organization. You can then use this token to authenticate requests to Meilisearch and ensure that users can only access data from their organization. All `User` within the same `Organization` will share the same token.
 
 In this guide, you will generate the token when the organization is retrieved from the database. If the organization has no token, you will generate one and store it in the `meilisearch_token` attribute.
 
