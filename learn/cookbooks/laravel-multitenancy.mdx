@@ -5,27 +5,23 @@ description: Learn how to implement secure, multitenant search in your Laravel a
 
 # Laravel multitenancy guide
 
-This guide will walk you through implementing search in a multitenant Laravel application.
+This guide will walk you through implementing search in a multitenant Laravel application. We'll use the example of a customer relationship manager (CRM) application that allows users to store contacts.
 
 ## Requirements
 
-Before proceeding, you need a working Laravel 10 application with Laravel Scout installed and configured to use the `meilisearch` driver. Follow the official [Scout documentation](https://laravel.com/docs/10.x/scout) to get started.
-
-Additionally, you will need to have a Meilisearch server running and accessible from your Laravel application. If you don't have a Meilisearch server running, follow our [quick start guide](/learn/getting_started/cloud_quick_start) to get started with Meilisearch Cloud.
+This guide requires:
+- A Laravel 10 application with [Laravel Scout](https://laravel.com/docs/10.x/scout) configured to use the `meilisearch` driver
+- A Meilisearch server running — see our [quick start](/learn/getting_started/cloud_quick_start)
+- A search API key — available in your Meilisearch dashboard
+- A search API key UID — retrieve it using the [keys endpoints](/references/api/keys)
 
 <Capsule intent="tip">
 Prefer self-hosting? Read our [installation guide](/learn/getting_started/installation).
 </Capsule>
 
-To generate tenant tokens, you will need:
-- A search API key — available in your Meilisearch dashboard
-- A search API key UID — retrieve it using the [keys endpoints](/references/api/keys)
+## Models & relationships
 
-## Use case
-
-Let's use the example of a customer relationship manager (CRM) application that allows users to store contacts.
-
-Our CRM is a multitenant application, where each user can only access data belonging to their organization. In our example, this means that users will only be able to search contacts of their organization.
+Our example CRM is a multitenant application, where each user can only access data belonging to their organization.
 
 On a technical level, this means:
 - A `User` model that belongs to an `Organization`
