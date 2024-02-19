@@ -6,11 +6,11 @@ sidebarDepth: 3
 
 # Laravel Scout guide
 
-In this guide, you will learn to setup [Laravel Scout](https://laravel.com/docs/10.x/scout) to use Meilisearch in your Laravel 10 application.
+In this guide, you will see how to setup [Laravel Scout](https://laravel.com/docs/10.x/scout) to use Meilisearch in your Laravel 10 application.
 
 ## Prerequisites
 
-Before you start, make sure you have the following installed on your machin:
+Before you start, make sure you have the following installed on your machine:
 - PHP
 - [Composer](https://getcomposer.org/)
 
@@ -30,7 +30,7 @@ To enable it, navigate to your Laravel application directory and install Scout v
 composer require laravel/scout
 ```
 
-After installing Scout, you need to publish the Scout configuration file. You can do this by running the following artisan command:
+After installing Scout, you need to publish the Scout configuration file. You can do this by running the following `artisan` command:
 
 ```sh
 php artisan vendor:publish --provider="Laravel\Scout\ScoutServiceProvider"
@@ -40,7 +40,7 @@ This command should create a new configuration file in your application director
 
 ## Configuring the Laravel Scout driver
 
-Let’s configure Laravel Scout to use the Meilisearch driver. First, install the dependencies required to use Scout with Meilisearch via Composer:
+Now you need to configure Laravel Scout to use the Meilisearch driver. First, install the dependencies required to use Scout with Meilisearch via Composer:
 
 ```sh
 composer require meilisearch/meilisearch-php http-interop/http-factory-guzzle
@@ -68,14 +68,12 @@ This comes from Docker [Bridge network driver](https://docs.docker.com/network/d
 For production use cases, we recommend using a managed Meilisearch via [Meilisearch Cloud](https://www.meilisearch.com/cloud?utm_campaign=laravel&utm_source=docs&utm_medium=laravel-scout-guide). On Meilisearch Cloud, you can find your host URL in your project settings.
 
 <Capsule intent="tip">
-Read our [Meilisearch Cloud quick start](/learn/getting_started/cloud_quick_start?utm_campaign=laravel&utm_source=docs&utm_medium=laravel-scout-guide).
+Read the [Meilisearch Cloud quick start](/learn/getting_started/cloud_quick_start?utm_campaign=laravel&utm_source=docs&utm_medium=laravel-scout-guide).
 </Capsule>
 
 ## Making Eloquent models searchable
 
-With Scout installed and configured, add the `Laravel\Scout\Searchable` trait to your Eloquent models to make them searchable. 🎉
-
-This trait will use Laravel’s model observers to keep the data in your model in sync with Meilisearch.
+With Scout installed and configured, add the `Laravel\Scout\Searchable` trait to your Eloquent models to make them searchable. This trait will use Laravel’s model observers to keep the data in your model in sync with Meilisearch.
 
 Here’s an example model:
 
@@ -175,7 +173,7 @@ php artisan scout:sync-index-settings
 
 ## Example usage
 
-We built an example application to demonstrate how to use Meilisearch with Laravel Scout. It showcases an app-wide search in a CRM (Customer Relationship Management) application.
+You built an example application to demonstrate how to use Meilisearch with Laravel Scout. It showcases an app-wide search in a CRM (Customer Relationship Management) application.
 
 [![Laravel Scout example application](https://raw.githubusercontent.com/meilisearch/documentation/add-laravel-multitenancy-guide/assets/images/demos/saas-demo-screenshot.png)](https://saas.meilisearch.com/?utm_campaign=laravel&utm_source=docs&utm_medium=laravel-scout-guide)
 
