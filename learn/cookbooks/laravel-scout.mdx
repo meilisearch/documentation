@@ -57,10 +57,10 @@ MEILISEARCH_KEY=masterKey
 
 ### Local development
 
-Laravel’s official Docker development environment, Laravel Sail, comes with a Meilisearch service out-of-the-box. Please note that when running Meilisearch via Sail, Meilisearch’s host is `http://meilisearch:7700`.
+Laravel’s official Docker development environment, Laravel Sail, comes with a Meilisearch service out-of-the-box. Please note that when running Meilisearch via Sail, Meilisearch’s host is `http://meilisearch:7700` (instead of say, `http://localhost:7700`).
 
 <Capsule intent="note">
-This comes from Docker [Bridge network driver](https://docs.docker.com/network/drivers/bridge/#differences-between-user-defined-bridges-and-the-default-bridge) behavior.
+Check out Docker [Bridge network driver](https://docs.docker.com/network/drivers/bridge/#differences-between-user-defined-bridges-and-the-default-bridge) documentation for further detail.
 </Capsule>
 
 ### Running in production
@@ -70,6 +70,8 @@ For production use cases, we recommend using a managed Meilisearch via [Meilisea
 <Capsule intent="tip">
 Read the [Meilisearch Cloud quick start](/learn/getting_started/cloud_quick_start?utm_campaign=laravel&utm_source=docs&utm_medium=laravel-scout-guide).
 </Capsule>
+
+If you prefer to self-host, read our guide for [running Meilisearch in production](/learn/cookbooks/running_production?utm_campaign=laravel&utm_source=docs&utm_medium=laravel-scout-guide).
 
 ## Making Eloquent models searchable
 
