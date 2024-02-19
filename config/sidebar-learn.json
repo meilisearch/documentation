@@ -372,9 +372,9 @@
         "slug": "meilisync_postgresql"
       },
       {
-        "source": "learn/cookbooks/laravel_scout.mdx",
+        "source": "learn/cookbooks/laravel-scout.mdx",
         "label": "Laravel Scout guide",
-        "slug": "laravel_scout"
+        "slug": "laravel-scout"
       }
     ]
   },
