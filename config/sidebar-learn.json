@@ -203,7 +203,7 @@
     "routes": [
       {
         "source": "learn/security/basic_security.mdx",
-        "label": "Setting up basic security measures with the master key",
+        "label": "Securing your project",
         "slug": "basic_security"
       },
       {
