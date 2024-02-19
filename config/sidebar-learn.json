@@ -208,7 +208,7 @@
       },
       {
         "source": "learn/security/managing_api_keys.mdx",
-        "label": "Using the master key to manage API keys",
+        "label": "Managing API keys",
         "slug": "managing_api_keys"
       },
       {
@@ -222,7 +222,7 @@
         "slug": "differences_master_api_keys"
       },
       {
-        "source": "learn/security/differences_master_api_keys.mdx",
+        "source": "learn/security/protected_unprotected.mdx",
         "label": "Protected and unprotected Meilisearch projects",
         "slug": "protected_unprotected"
       },
