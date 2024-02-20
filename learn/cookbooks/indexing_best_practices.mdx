@@ -9,9 +9,9 @@ In this guide, we will review the best practices to help you index your data eff
 
 To speed up indexing, review your list of [searchable attributes](/learn/configuration/displayed_searchable_attributes?utm_campaign=oss&utm_source=docs&utm_medium=indexing-guide#searchable-fields) and ensure it includes only the fields you want to be checked for query word matches. This improves both relevance and search speed by removing irrelevant data from your database. It will also keep your disk usage to the necessary minimum.
 
-## Define filterable and sortable attributes
+### Review filterable and sortable attributes
 
-All document fields might not contain text, but they might still be vital for [filtering](/learn/fine_tuning_results/filtering?utm_campaign=oss&utm_source=docs&utm_medium=indexing-guide) and [sorting](/learn/fine_tuning_results/sorting?utm_campaign=oss&utm_source=docs&utm_medium=indexing-guide) results. Evaluate if numeric and boolean field values can be part of the filterable or sortable attributes lists.
+Some document fields are necessary for [filtering](/learn/fine_tuning_results/filtering?utm_campaign=oss&utm_source=docs&utm_medium=indexing-guide) and [sorting](/learn/fine_tuning_results/sorting?utm_campaign=oss&utm_source=docs&utm_medium=indexing-guide) results, but they dot not need to be _searchable_. Generally, **numeric and boolean fields** fall into this category. Make sure to review your list of searchable attributes and remove any fields that are only used for filtering or sorting.
 
 ## Set ranking rules before importing data
 
