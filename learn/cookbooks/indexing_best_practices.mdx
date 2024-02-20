@@ -9,26 +9,26 @@ In this guide, we will review the best practices to help you index your data eff
 
 ## Define searchable attributes
 
-To speed up indexing, review your list of [searchable attributes](/learn/configuration/displayed_searchable_attributes?utm_campaign=oss&utm_source=docs&utm_medium=indexing-guide#searchable-fields) and ensure it includes only the fields you want to be checked for query word matches. This improves both relevance and search speed by removing irrelevant data from your database. It will also keep your disk usage to the necessary minimum.
+To speed up indexing, review your list of [searchable attributes](/learn/configuration/displayed_searchable_attributes#searchable-fields) and ensure it includes only the fields you want to be checked for query word matches. This improves both relevance and search speed by removing irrelevant data from your database. It will also keep your disk usage to the necessary minimum.
 
 ### Review filterable and sortable attributes
 
-Some document fields are necessary for [filtering](/learn/fine_tuning_results/filtering?utm_campaign=oss&utm_source=docs&utm_medium=indexing-guide) and [sorting](/learn/fine_tuning_results/sorting?utm_campaign=oss&utm_source=docs&utm_medium=indexing-guide) results, but they dot not need to be _searchable_. Generally, **numeric and boolean fields** fall into this category. Make sure to review your list of searchable attributes and remove any fields that are only used for filtering or sorting.
+Some document fields are necessary for [filtering](/learn/fine_tuning_results/filtering) and [sorting](/learn/fine_tuning_results/sorting) results, but they dot not need to be _searchable_. Generally, **numeric and boolean fields** fall into this category. Make sure to review your list of searchable attributes and remove any fields that are only used for filtering or sorting.
 
 ## Set ranking rules before indexing
 
-Whenever you update your [ranking rules](/learn/core_concepts/relevancy?utm_campaign=oss&utm_source=docs&utm_medium=indexing-guide), Meilisearch will trigger a reindexing of all your documents. This can be a time-consuming process, especially if you have a large dataset. For this reason, it is better to define your ranking rules before indexing your data.
+Whenever you update your [ranking rules](/learn/core_concepts/relevancy), Meilisearch will trigger a reindexing of all your documents. This can be a time-consuming process, especially if you have a large dataset. For this reason, it is better to define your ranking rules before indexing your data.
 
 ## Optimize document size
 
-Smaller documents are processed faster—so make sure to trim down any unncessary data from your documents. When a document field is missing from the list of [searchable](/reference/api/settingsutm_campaign=oss&utm_source=docs&utm_medium=indexing-guide#searchable-attributes), [filterable](/reference/api/settings?utm_campaign=oss&utm_source=docs&utm_medium=indexing-guide#filterable-attributes), [sortable](/reference/api/settings?utm_campaign=oss&utm_source=docs&utm_medium=indexing-guide#sortable-attributes), or [displayed](/reference/api/settings?utm_campaign=oss&utm_source=docs&utm_medium=indexing-guide#displayed-attributes) attributes, it might be best to remove it from the document. To go further, consider compressing your data using methods such as `br`, `deflate`, or `gzip` supported by Meilisearch (see the [supported encoding formats](/reference/api/overview#content-encoding).)
+Smaller documents are processed faster—so make sure to trim down any unncessary data from your documents. When a document field is missing from the list of [searchable](/reference/api/settingsutm_campaign=oss&utm_source=docs&utm_medium=indexing-guide#searchable-attributes), [filterable](/reference/api/settings#filterable-attributes), [sortable](/reference/api/settings#sortable-attributes), or [displayed](/reference/api/settings#displayed-attributes) attributes, it might be best to remove it from the document. To go further, consider compressing your data using methods such as `br`, `deflate`, or `gzip` supported by Meilisearch (see the [supported encoding formats](/reference/api/overview#content-encoding).)
 
 ## Keep your Meilisearch up-to-date!
 
-The team at Meilisearch is constantly working to improve the indexing process. Make sure to keep your Meilisearch instance up-to-date to benefit from the latest improvements, like the [2x speed increase in v1.6](https://blog.meilisearch.com/meilisearch-1-6/?utm_campaign=oss&utm_source=docs&utm_medium=indexing-guide#performance-optimization). You can see a list of all our releases [here](https://blog.meilisearch.com/tag/release/?utm_campaign=oss&utm_source=docs&utm_medium=indexing-guide).
+The team at Meilisearch is constantly working to improve the indexing process. Make sure to keep your Meilisearch instance up-to-date to benefit from the latest improvements, like the [2x speed increase in v1.6](https://blog.meilisearch.com/meilisearch-1-6/#performance-optimization). You can see a list of all our releases [here](https://blog.meilisearch.com/tag/release/).
 
 <Capsule intent="note">
-For a comprehensive explanation of how indexing works under the hood, read our [indexing deep dive](https://blog.meilisearch.com/best-practices-for-faster-indexing/?utm_campaign=oss&utm_source=docs&utm_medium=indexing-guide) article.
+For a comprehensive explanation of how indexing works under the hood, read our [indexing deep dive](https://blog.meilisearch.com/best-practices-for-faster-indexing/) article.
 </Capsule>
 
 By following these recommendations, you can optimize the indexing process of Meilisearch and enhance the overall search experience for your users. Go build something great! 🚀
