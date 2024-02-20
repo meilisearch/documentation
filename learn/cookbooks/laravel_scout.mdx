@@ -68,10 +68,10 @@ Check out Docker [Bridge network driver](https://docs.docker.com/network/drivers
 For production use cases, we recommend using a managed Meilisearch via [Meilisearch Cloud](https://www.meilisearch.com/cloud?utm_campaign=laravel&utm_source=docs&utm_medium=laravel-scout-guide). On Meilisearch Cloud, you can find your host URL in your project settings.
 
 <Capsule intent="tip">
-Read the [Meilisearch Cloud quick start](/learn/getting_started/cloud_quick_start?utm_campaign=laravel&utm_source=docs&utm_medium=laravel-scout-guide).
+Read the [Meilisearch Cloud quick start](/learn/getting_started/cloud_quick_start).
 </Capsule>
 
-If you prefer to self-host, read our guide for [running Meilisearch in production](/learn/cookbooks/running_production?utm_campaign=laravel&utm_source=docs&utm_medium=laravel-scout-guide).
+If you prefer to self-host, read our guide for [running Meilisearch in production](/learn/cookbooks/running_production).
 
 ## Making Eloquent models searchable
 
@@ -133,7 +133,7 @@ class Contact extends Model
 
 ## Configuring filterable and sortable attributes
 
-Configure which attributes are [filterable](/learn/fine_tuning_results/filtering?utm_campaign=laravel&utm_source=docs&utm_medium=laravel-scout-guide) and [sortable](/learn/fine_tuning_results/sorting?utm_campaign=laravel&utm_source=docs&utm_medium=laravel-scout-guide) via your Meilisearch index settings.
+Configure which attributes are [filterable](/learn/fine_tuning_results/filtering) and [sortable](/learn/fine_tuning_results/sorting) via your Meilisearch index settings.
 
 In Laravel, you can configure your index settings via the `config/scout.php` file:
 
@@ -180,9 +180,9 @@ You built an example application to demonstrate how to use Meilisearch with Lara
 [![Laravel Scout example application](https://raw.githubusercontent.com/meilisearch/documentation/add-laravel-multitenancy-guide/assets/images/demos/saas-demo-screenshot.png)](https://saas.meilisearch.com/?utm_campaign=laravel&utm_source=docs&utm_medium=laravel-scout-guide)
 
 This demo application uses the following features:
-- [Multi-search](/reference/api/multi_search?utm_campaign=laravel&utm_source=docs&utm_medium=laravel-scout-guide) (search across multiple indexes)
-- [Multi-tenancy](/learn/security/tenant_tokens?utm_campaign=laravel&utm_source=docs&utm_medium=laravel-scout-guide)
-- [Filtering](/learn/fine_tuning_results/filtering?utm_campaign=laravel&utm_source=docs&utm_medium=laravel-scout-guide)
-- [Sorting](/learn/fine_tuning_results/sorting?utm_campaign=laravel&utm_source=docs&utm_medium=laravel-scout-guide)
+- [Multi-search](/reference/api/multi_search) (search across multiple indexes)
+- [Multi-tenancy](/learn/security/tenant_tokens)
+- [Filtering](/learn/fine_tuning_results/filtering)
+- [Sorting](/learn/fine_tuning_results/sorting)
 
 Of course, the code is open-sourced on [Github](https://github.com/meilisearch/saas-demo). 🎉
