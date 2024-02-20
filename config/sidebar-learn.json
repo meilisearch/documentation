@@ -375,6 +375,11 @@
         "source": "learn/cookbooks/laravel_scout.mdx",
         "label": "Laravel Scout guide",
         "slug": "laravel_scout"
+      },
+      {
+        "source": "learn/cookbooks/laravel_multitenancy.mdx",
+        "label": "Multitenancy with Laravel",
+        "slug": "laravel_multitenancy"
       }
     ]
   },

@@ -1,0 +1,360 @@
+---
+title: Laravel multitenancy guide — Meilisearch documentation
+description: Learn how to implement secure, multitenant search in your Laravel applications.
+---
+
+# Laravel multitenancy guide
+
+This guide will walk you through implementing search in a multitenant Laravel application. We'll use the example of a customer relationship manager (CRM) application that allows users to store contacts.
+
+## Requirements
+
+This guide requires:
+- A Laravel 10 application with [Laravel Scout](https://laravel.com/docs/10.x/scout) configured to use the `meilisearch` driver
+- A Meilisearch server running — see our [quick start](/learn/getting_started/cloud_quick_start)
+- A search API key — available in your Meilisearch dashboard
+- A search API key UID — retrieve it using the [keys endpoints](/reference/api/keys)
+
+<Capsule intent="tip">
+Prefer self-hosting? Read our [installation guide](/learn/getting_started/installation).
+</Capsule>
+
+## Models & relationships
+
+Our example CRM is a multitenant application, where each user can only access data belonging to their organization.
+
+On a technical level, this means:
+- A `User` model that belongs to an `Organization`
+- A `Contact` model that belongs to an `Organization` (can only be accessed by users from the same organization)
+- An `Organization` model that has many `User`s and many `Contact`s
+
+With that in mind, the first step is to define such these models and their relationship:
+
+In `app/Models/Contact.php`:
+
+```php
+<?php
+
+namespace App\Models;
+
+use Laravel\Scout\Searchable;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
+class Contact extends Model
+{
+    use Searchable;
+
+    public function organization(): BelongsTo
+    {
+        return $this->belongsTo(Organization::class, 'organization_id');
+    }
+}
+```
+
+In `app/Models/User.php`:
+
+```php
+<?php
+
+namespace App\Models;
+
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
+
+class User extends Authenticatable
+{
+    use HasApiTokens, Notifiable;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+    ];
+
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<int, string>
+     */
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
+    ];
+
+    public function organization()
+    {
+        return $this->belongsTo(Organization::class, 'organization_id');
+    }
+}
+```
+
+And in `app/Models/Organization.php`:
+
+```php
+<?php
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
+class Organization extends Model
+{
+    public function contacts(): HasMany
+    {
+        return $this->hasMany(Contact::class);
+    }
+}
+```
+
+Now you have a solid understanding of your application's models and their relationships, you are ready to generate tenant tokens.
+
+## Generating tenant tokens
+
+Currently, all `User`s can search through data belonging to all `Organizations`. To prevent that from happening, you need to generate a tenant token for each organization. You can then use this token to authenticate requests to Meilisearch and ensure that users can only access data from their organization. All `User` within the same `Organization` will share the same token.
+
+In this guide, you will generate the token when the organization is retrieved from the database. If the organization has no token, you will generate one and store it in the `meilisearch_token` attribute.
+
+Update `app/Models/Organization.php`:
+
+```php
+<?php
+
+namespace App\Models;
+
+use DateTime;
+use Laravel\Scout\EngineManager;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Log;
+
+class Organization extends Model
+{
+
+    public function contacts(): HasMany
+    {
+        return $this->hasMany(Contact::class);
+    }
+
+    protected static function booted()
+    {
+        static::retrieved(function (Organization $organization) {
+            // You may want to add some logic to skip generating tokens in certain environments
+            if (env('SCOUT_DRIVER') === 'array' && env('APP_ENV') === 'testing') {
+                $organization->meilisearch_token = 'fake-tenant-token';
+                return;
+            }
+
+            // Early return if the organization already has a token
+            if ($organization->meilisearch_token) {
+                Log::debug('Organization ' . $organization->id . ': already has a token');
+                return;
+            }
+            Log::debug('Generating tenant token for organization ID: ' . $organization->id);
+
+            // The object belows is used to generate a tenant token that:
+            // • applies to all indexes
+            // • filters only documents where `organization_id` is equal to this org ID
+            $searchRules = (object) [
+                '*' => (object) [
+                    'filter' => 'organization_id = ' . $organization->id,
+                ]
+            ];
+
+            // Replace with your own Search API key and API key UID
+            $meiliApiKey = env('MEILISEARCH_SEARCH_KEY');
+            $meiliApiKeyUid = env('MEILISEARCH_SEARCH_KEY_UID');
+
+            // Generate the token
+            $token = self::generateMeiliTenantToken($meiliApiKeyUid, $searchRules, $meiliApiKey);
+
+            // Save the token in the database
+            $organization->meilisearch_token = $token;
+            $organization->save();
+        });
+    }
+
+    protected static function generateMeiliTenantToken($meiliApiKeyUid, $searchRules, $meiliApiKey)
+    {
+        $meilisearch = resolve(EngineManager::class)->engine();
+
+        return $meilisearch->generateTenantToken(
+            $meiliApiKeyUid,
+            $searchRules,
+            [
+                'apiKey' => $meiliApiKey,
+                'expiresAt' => new DateTime('2030-12-31'),
+            ]
+        );
+    }
+}
+```
+
+Now the `Organization` model is generating tenant tokens, you need to provide the front-end with these tokens so that it can access Meilisearch securely.
+
+## Using tenant tokens with Laravel Blade
+
+Use [view composers](https://laravel.com/docs/10.x/views#view-composers) to provide views with your search token. This way, you ensure the token is available in all views, without having to pass it manually.
+
+<Capsule intent="tip">
+If you prefer, you can pass the token manually to each view using the `with` method.
+</Capsule>
+
+Create a new `app/View/Composers/AuthComposer.php` file:
+
+```php
+<?php
+
+namespace App\View\Composers;
+
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Vite;
+use Illuminate\View\View;
+
+class AuthComposer
+{
+    /**
+     * Create a new profile composer.
+     */
+    public function __construct() {}
+
+    /**
+     * Bind data to the view.
+     */
+    public function compose(View $view): void
+    {
+        $user = Auth::user();
+        $view->with([
+            'meilisearchToken' => $user->organization->meilisearch_token,
+        ]);
+    }
+}
+```
+
+Now, register this view composer in the `AppServiceProvider`:
+
+```php
+<?php
+
+namespace App\Providers;
+
+use App\View\Composers\AuthComposer;
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\ServiceProvider;
+
+class AppServiceProvider extends ServiceProvider
+{
+    /**
+     * Register any application services.
+     */
+    public function register(): void
+    {
+        //
+    }
+
+    /**
+     * Bootstrap any application services.
+     */
+    public function boot(): void
+    {
+        // Use this view composer in all views
+        View::composer('*', AuthComposer::class);
+    }
+}
+```
+
+And ta-da! All views now have access to the `meilisearchToken` variable. You use this variable in your front end.
+
+## Building the search UI
+
+This guide uses **Vue InstantSearch** to build your search interface. Vue InstantSearch is a set of components and helpers to build a search UI in Vue applications. If you prefer other flavours of JavaScript, check out our other [front-end integrations](/learn/front_end/front_end_integration).
+
+First, install the dependencies:
+
+```bash
+npm install vue-instantsearch @meilisearch/instant-meilisearch
+```
+
+Now, create a Vue app that uses Vue InstantSearch. Open a new `resources/js/vue-app.js` file:
+
+```js
+import { createApp } from 'vue'
+import InstantSearch from 'vue-instantsearch/vue3/es'
+import Meilisearch from './components/Meilisearch.vue'
+
+const app = createApp({
+  components: {
+    Meilisearch
+  }
+})
+
+app.use(InstantSearch)
+app.mount('#vue-app')
+```
+
+This file initializes your Vue app and configures it to use Vue InstantSearch. It also registers the `Meilisearch` component you will create next.
+
+The `Meilisearch` component is responsible for initializing a Vue Instantsearch client. It uses the `@meilisearch/instant-meilisearch` package to create a search client compatible with Instantsearch.
+
+Create it in `resources/js/components/Meilisearch.vue`:
+
+```vue
+<script setup lang="ts">
+import { instantMeiliSearch } from "@meilisearch/instant-meilisearch"
+
+const props = defineProps<{
+  host: string,
+  apiKey: string,
+  indexName: string,
+}>()
+
+const { searchClient } = instantMeiliSearch(props.host, props.apiKey)
+</script>
+
+<template>
+  <ais-instant-search :search-client="searchClient" :index-name="props.indexName">
+    <!-- Slots allow you to render content inside this component, e.g. search results -->
+    <slot name="default"></slot>
+  </ais-instant-search>
+</template>
+```
+
+You can use the `Meilisearch` component it in any Blade view by providing it with the tenant token. Don't forget to add the `@vite` directive to include the Vue app in your view.
+
+```blade
+<!-- resources/views/contacts/index.blade.php -->
+
+<div id="vue-app">
+    <meilisearch index-name="contacts" api-key="{{ $meilisearchToken }}" host="https://edge.meilisearch.com">
+    </meilisearch>
+</div>
+
+@push('scripts')
+    @vite('resources/js/vue-app.js')
+@endpush
+```
+
+Et voilà! You now have a search interface that is secure and multitenant. Users can only access data from their organization, and you can rest assured that data from other tenants is safe.
+
+## Conclusion
+
+In this guide, you saw how to implement secure, multitenant search in a Laravel application. You then generated tenant tokens for each organization and used them to secure access to Meilisearch. You also built a search interface using Vue InstantSearch and provided it with the tenant token.
+
+All the code in this guide is a simplified example of what we implemented in the [Laravel CRM](https://saas.meilisearch.com/?utm_campaign=oss&utm_source=docs&utm_medium=laravel-multitenancy) example application. Find the full code on [GitHub](https://github.com/meilisearch/saas-demo).
