@@ -15,7 +15,7 @@ To speed up indexing, review your list of [searchable attributes](/learn/configu
 
 Some document fields are necessary for [filtering](/learn/fine_tuning_results/filtering?utm_campaign=oss&utm_source=docs&utm_medium=indexing-guide) and [sorting](/learn/fine_tuning_results/sorting?utm_campaign=oss&utm_source=docs&utm_medium=indexing-guide) results, but they dot not need to be _searchable_. Generally, **numeric and boolean fields** fall into this category. Make sure to review your list of searchable attributes and remove any fields that are only used for filtering or sorting.
 
-## Set ranking rules before importing data
+## Set ranking rules before indexing
 
 Whenever you update your [ranking rules](/learn/core_concepts/relevancy?utm_campaign=oss&utm_source=docs&utm_medium=indexing-guide), Meilisearch will trigger a reindexing of all your documents. This can be a time-consuming process, especially if you have a large dataset. For this reason, it is better to define your ranking rules before indexing your data.
 
