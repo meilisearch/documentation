@@ -58,7 +58,7 @@ If you want to pass command-line arguments to Meilisearch with Docker, you must 
 docker run -it --rm \
   -p 7700:7700 \
   -v $(pwd)/meili_data:/meili_data \
-  getmeili/meilisearch:v1.6
+  getmeili/meilisearch:v1.6 \
   meilisearch --master-key="MASTER_KEY"
 ```
 
@@ -91,7 +91,7 @@ To import a dump, use Meilisearch's `--import-dump` command-line option and spec
 docker run -it --rm \
   -p 7700:7700 \
   -v $(pwd)/meili_data:/meili_data \
-  getmeili/meilisearch:v1.6
+  getmeili/meilisearch:v1.6 \
   meilisearch --import-dump /meili_data/dumps/20200813-042312213.dump
 ```
 
@@ -111,7 +111,7 @@ To generate a Meilisearch snapshot with Docker, launch Meilisearch with `--sched
 docker run -it --rm \
   -p 7700:7700 \
   -v $(pwd)/meili_data:/meili_data \
-  getmeili/meilisearch:v1.6
+  getmeili/meilisearch:v1.6 \
   meilisearch --schedule-snapshot --snapshot-dir /meili_data/snapshots
 ```
 
@@ -123,7 +123,7 @@ To import a snapshot, launch Meilisearch with the `--import-snapshot` option:
 docker run -it --rm \
   -p 7700:7700 \
   -v $(pwd)/meili_data:/meili_data \
-  getmeili/meilisearch:v1.6
+  getmeili/meilisearch:v1.6 \
   meilisearch --import-snapshot /meili_data/snapshots/data.ms.snapshot
 ```
 
