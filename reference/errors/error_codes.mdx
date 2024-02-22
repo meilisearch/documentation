@@ -97,7 +97,7 @@ The requested index already has a primary key that [cannot be changed](/learn/co
 
 ## `invalid_api_key`
 
-The requested resources are protected with an API key. The provided API key is invalid. Read more about it in our [dedicated guide](/learn/security/master_api_keys).
+The requested resources are protected with an API key. The provided API key is invalid. Read more about it in our [security tutorial](/learn/security/basic_security).
 
 ## `invalid_api_key_actions`
 
@@ -430,7 +430,7 @@ The [`indexes`](/reference/api/keys#indexes) field is missing from payload.
 
 This error happens if:
 
-- The requested resources are protected with an API key that was not provided in the request header. Check our guide on [security](/learn/security/master_api_keys) for more information
+- The requested resources are protected with an API key that was not provided in the request header. Check our [security tutorial](/learn/security/basic_security) for more information
 - You are using the wrong authorization header for your version. **v0.24 and below** use `X-MEILI-API-KEY: apiKey`, whereas **v0.25 and above** use `Authorization: Bearer apiKey`
 
 ## `missing_content_type`
@@ -455,7 +455,7 @@ The [`facetName`](/reference/api/facet_search#body) parameter is required.
 
 ## `missing_master_key`
 
-You need to set a master key before you can access the `/keys` route. Read more about setting a master key at launch in our [dedicated guide](/learn/security/master_api_keys#protecting-a-meilisearch-instance).
+You need to set a master key before you can access the `/keys` route. Read more about setting a master key at launch in our [security tutorial](/learn/security/basic_security).
 
 ## `missing_payload`
 
