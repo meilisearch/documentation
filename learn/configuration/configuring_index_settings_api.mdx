@@ -18,10 +18,7 @@ Start by checking the value of the searchable attributes index setting.
 
 Use the `GET` endpoint of the `/settings/searchable-attributes` subroute, replacing `INDEX_NAME` with your index:
 
-```sh
-curl \
-  -X GET 'http://localhost:7700/indexes/INDEX_NAME/settings/searchable-attributes'
-```
+<CodeSamples id="index_settings_tutorial_api_get_setting_1" />
 
 Depending on your setup, you might also need to replace `localhost:7700` with the appropriate address and port.
 
@@ -41,15 +38,7 @@ All documents include a primary key attribute. In most cases, this attribute doe
 
 Use the `PUT` endpoint of the `/settings/searchable-attributes` subroute, replacing `INDEX_NAME` with your index and the sample attributes `"title"` and `"overview"` with attributes present in your dataset:
 
-```sh
-curl \
-  -X PUT 'http://localhost:7700/indexes/INDEX_NAME/settings/searchable-attributes' \
-  -H 'Content-Type: application/json' \
-  --data-binary '[
-    "title",
-    "overview"
-  ]'
-```
+<CodeSamples id="index_settings_tutorial_api_put_setting_1" />
 
 This time, Meilisearch will not process your request immediately. Instead, you will receive a summarized task object while the search engine works on updating your index setting as soon as it has enough resources:
 
@@ -65,10 +54,7 @@ This time, Meilisearch will not process your request immediately. Instead, you w
 
 Processing the index setting change might take some time, depending on how many documents you have in your index. Wait a few seconds and use the task object's `taskUid` to monitor the status of your request:
 
-```sh
-curl \
-  -X GET 'http://localhost:7700/tasks/TASK_UID'
-```
+<CodeSamples id="index_settings_tutorial_api_task_1" />
 
 Meilisearch will respond with a task object:
 
@@ -86,10 +72,7 @@ If `status` is `enqueued` or `processed`, wait a few more moments and check the 
 
 If task `status` is `succeeded`, you successfully updated your index's searchable attributes. Use the subroute to check the new setting's value:
 
-```sh
-curl \
-  -X GET 'http://localhost:7700/indexes/INDEX_NAME/settings/searchable-attributes'
-```
+<CodeSamples id="index_settings_tutorial_api_get_setting_1" />
 
 Meilisearch should return an array with the new values:
 

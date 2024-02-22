@@ -1158,3 +1158,17 @@ update_proximity_precision_settings_1: |-
 reset_proximity_precision_settings_1: |-
   curl \
     -X DELETE 'http://localhost:7700/indexes/books/settings/proximity-precision'
+index_settings_tutorial_api_get_setting_1: |-
+  curl \
+    -X GET 'http://localhost:7700/indexes/INDEX_NAME/settings/searchable-attributes'
+index_settings_tutorial_api_put_setting_1: |-
+  curl \
+    -X PUT 'http://localhost:7700/indexes/INDEX_NAME/settings/searchable-attributes' \
+    -H 'Content-Type: application/json' \
+    --data-binary '[
+      "title",
+      "overview"
+    ]'
+index_settings_tutorial_api_task_1: |-
+curl \
+  -X GET 'http://localhost:7700/tasks/TASK_UID'
