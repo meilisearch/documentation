@@ -1,8 +1,9 @@
-# The integrations-team is responsible for reviewing the code-samples.
+# Notify integrations team about updates to code samples
 .code-samples.meilisearch.yaml @meilisearch/integration-team
 
-# CaroFG is responsible for updating the Vercel cookbook
+# Content maintained by DevRel
+/learn/front_end/react_instantsearch.mdx @meilisearch/devrel-team
 /learn/cookbooks/vercel.mdx @CaroFG
 
-# DevRel is responsible for this guide
-/learn/front_end/react_instantsearch.mdx @meilisearch/devrel-team
+# Content maintained by Product
+/learn/what_is_meilisearch/comparison_to_alternatives.mdx @meilisearch/product-team
