@@ -80,9 +80,7 @@ Find your API keys in the same section where you previously located the master k
 
 Use your master key to query the `/keys` endpoint to view all API keys in your instance:
 
-```sh
-curl -X GET 'http://localhost:7700/keys' -H 'Authorization: Bearer MASTER_KEY'
-```
+<CodeSamples id="basic_security_tutorial_listing_1" />
 
 <Capsule intent="danger" title="Do not use the master key for API requests">
 Only use the master key to manage API keys. Never use the master key to perform searches or other common operations.
@@ -134,26 +132,11 @@ Now you have your API keys, you can safely query the Meilisearch API. Add API ke
 
 Use the `Default Admin API Key` to perform sensitive operations, such as creating a new index:
 
-```sh
-curl \
-  -X POST 'http://localhost:7700/indexes' \
-  -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer DEFAULT_ADMIN_API_KEY' \
-  --data-binary '{
-    "uid": "medical_records",
-    "primaryKey": "id"
-  }'
-```
+<CodeSamples id="basic_security_tutorial_admin_1" />
 
 Then use the `Default Search API Key` to perform search operations in the index you just created:
 
-```sh
-curl \
-  -X POST 'http://localhost:7700/indexes/medical_records/search' \
-  -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer DEFAULT_SEARCH_API_KEY' \
-  --data-binary '{ "q": "appointments" }'
-```
+<CodeSamples id="basic_security_tutorial_search_1" />
 
 ## Conclusion
 

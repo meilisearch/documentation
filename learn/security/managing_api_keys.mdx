@@ -9,73 +9,15 @@ This guide shows you how to access and configure API keys.
 
 ## Accessing the `/keys` API route
 
-You can access the [`/keys` route](/reference/api/keys) using the master key or an API key with access to the `keys.get`, `keys.create`, `keys.update`, or `keys.delete` actions.
-
-## Updating an API key
-
-You can only update the `name` and `description` of an API key, even after it expires.
-
-For example, we can update the `Default Search API Key` and change its description:
-
-<CodeSamples id="security_guide_update_key_1" />
-
-```json
-{
-  "name": "Default Search API Key",
-  "description": "Default Search API Key",
-  "key": "d0552b41536279a0ad88bd595327b96f01176a60c2243e906c52ac02375f9bc4",
-  "uid":"74c9c733-3368-4738-bbe5-1d18a5fecb37",
-  "actions": [
-    "search"
-  ],
-  "indexes": [
-    "*"
-  ],
-  "expiresAt": null,
-  "createdAt": "2022-01-01T10:00:00Z",
-  "updatedAt": "2022-01-01T10:00:00Z"
-}
-```
-
-To update an API key, you must use the [update API key endpoint](/reference/api/keys#update-a-key), which can only be accessed with the master key or an API key with the `keys.update` action.
-
-Meilisearch supports partial updates with the `PATCH` route. This means your payload only needs to contain the data you want to update—in this case, `description`.
-
-## Creating an API key
-
-You can create API keys by using the [create key endpoint](/reference/api/keys#create-a-key). This endpoint is always protected and can only be accessed with the master key or an API key with the `keys.create` action.
-
-Let's create a new API key so authorized users can search through out `patient_medical_records` index:
-
-<CodeSamples id="security_guide_create_key_1" />
-
-All [`/keys` endpoints](/reference/api/keys) are synchronous, so your key will be generated immediately:
-
-```json
-{
-  "name": null,
-  "description": "Search patient records key",
-  "key": "d0552b41536279a0ad88bd595327b96f01176a60c2243e906c52ac02375f9bc4",
-  "uid": "ac5cd97d-5a4b-4226-a868-2d0eb6d197ab",
-  "actions": [
-    "search"
-  ],
-  "indexes": [
-    "patient_medical_records"
-  ],
-  "expiresAt": "2023-01-01T00:00:00Z",
-  "createdAt": "2022-01-01T10:00:00Z",
-  "updatedAt": "2022-01-01T10:00:00Z"
-}
-```
-
-It is good practice to always set an expiry date when creating a new API key. If you are sure this is not necessary in your application, you can create an API key with no expiry date by explicitly passing a `null` value to `expiresAt`.
+You can access the [`/keys` route](/reference/api/keys) using the master key or an API key with access to the [`keys.get`, `keys.create`, `keys.update`, or `keys.delete` actions](/reference/api/keys#actions).
 
 ## Listing API keys
 
-You can use the [list keys endpoint](/reference/api/keys) to obtain information on any active key in your Meilisearch instance. This is useful when you need an overview of existing keys and their permissions.
+You can use the [list keys endpoint](/reference/api/keys) to obtain information on any active key in your Meilisearch instance. This is useful when you need an overview of existing keys and their permissions. Meilisearch automatically generates two default API keys for all protected projects: `Default Search API Key` and `Default Admin API Key`.
 
-By default, [`GET /keys`](/reference/api/keys#get-all-keys) returns the 20 most recently created keys. You can change this using the [`limit`](/reference/api/keys#get-all-keys) query parameter. **Expired keys will appear in the response, but deleted keys will not**. As with creating, deleting, and updating API keys, you either need the master key or an API key with the `keys.get` action to access this endpoint.
+By default, [`GET /keys`](/reference/api/keys#get-all-keys) returns the 20 most recently created keys. You can change this using the [`limit`](/reference/api/keys#get-all-keys) query parameter. **Expired keys will appear in the response, but deleted keys will not**.
+
+As with creating, deleting, and updating API keys, you either need the master key or an API key with the `keys.get` action to access this endpoint.
 
 [`GET /keys/{key_or_uid}`](/reference/api/keys#get-one-key) returns information on a single key. `{key_or_uid}` should be replaced with the full `key` or `uid` value obtained during key creation.
 
@@ -137,6 +79,66 @@ We can query our instance to confirm which active keys can search our `patient_m
   "total":3
 }
 ```
+
+## Creating an API key
+
+You can create API keys by using the [create key endpoint](/reference/api/keys#create-a-key). This endpoint is always protected and can only be accessed with the master key or an API key with the [`keys.create` action](/reference/api/keys#actions).
+
+Let's create a new API key so authorized users can search through out `patient_medical_records` index:
+
+<CodeSamples id="security_guide_create_key_1" />
+
+All [`/keys` endpoints](/reference/api/keys) are synchronous, so your key will be generated immediately:
+
+```json
+{
+  "name": null,
+  "description": "Search patient records key",
+  "key": "d0552b41536279a0ad88bd595327b96f01176a60c2243e906c52ac02375f9bc4",
+  "uid": "ac5cd97d-5a4b-4226-a868-2d0eb6d197ab",
+  "actions": [
+    "search"
+  ],
+  "indexes": [
+    "patient_medical_records"
+  ],
+  "expiresAt": "2023-01-01T00:00:00Z",
+  "createdAt": "2022-01-01T10:00:00Z",
+  "updatedAt": "2022-01-01T10:00:00Z"
+}
+```
+
+It is good practice to always set an expiry date when creating a new API key. If you are sure this is not necessary in your application, you can create an API key with no expiry date by explicitly passing a `null` value to `expiresAt`.
+
+## Updating an API key
+
+You can only update the `name` and `description` of an API key, even after it expires.
+
+For example, we can update the `Default Search API Key` and change its description:
+
+<CodeSamples id="security_guide_update_key_1" />
+
+```json
+{
+  "name": "Default Search API Key",
+  "description": "Default Search API Key",
+  "key": "d0552b41536279a0ad88bd595327b96f01176a60c2243e906c52ac02375f9bc4",
+  "uid":"74c9c733-3368-4738-bbe5-1d18a5fecb37",
+  "actions": [
+    "search"
+  ],
+  "indexes": [
+    "*"
+  ],
+  "expiresAt": null,
+  "createdAt": "2022-01-01T10:00:00Z",
+  "updatedAt": "2022-01-01T10:00:00Z"
+}
+```
+
+To update an API key, you must use the [update API key endpoint](/reference/api/keys#update-a-key), which can only be accessed with the master key or an API key with the [`keys.update` action](/reference/api/keys#actions).
+
+Meilisearch supports partial updates with the `PATCH` route. This means your payload only needs to contain the data you want to update—in this case, `description`.
 
 ## Deleting an API key
 
