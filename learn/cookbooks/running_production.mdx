@@ -122,7 +122,7 @@ WantedBy=multi-user.target
 EOF
 ```
 
-To run Meilisearch in a production environment, use the `--env` flag. Set a master key of at least 16 bytes using the `--master-key` option. When you launch an instance for the first time, Meilisearch creates two default API keys: [`Default Search API Key` and `Default Admin API Key`](/learn/security/basic_security#using-default-api-keys-for-authorization). With the `Default Admin API Key`, you can control who can access or create new documents, indexes, or change the configuration.
+To run Meilisearch in a production environment, use the `--env` flag. Set a master key of at least 16 bytes using the `--master-key` option. When you launch an instance for the first time, Meilisearch creates two default API keys: [`Default Search API Key` and `Default Admin API Key`](/learn/security/basic_security#obtaining-api-keys). With the `Default Admin API Key`, you can control who can access or create new documents, indexes, or change the configuration.
 
 Remember to choose a safe and random key and avoid exposing it in publicly accessible applications.
 
