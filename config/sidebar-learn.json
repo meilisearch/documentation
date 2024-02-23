@@ -347,11 +347,6 @@
         "slug": "docker"
       },
       {
-        "source": "learn/cookbooks/multitenancy_nodejs.mdx",
-        "label": "Multitenancy with Node.js",
-        "slug": "multitenancy_nodejs"
-      },
-      {
         "source": "learn/cookbooks/search_bar_for_docs.mdx",
         "label": "Add a search bar to your docs",
         "slug": "search_bar_for_docs"
@@ -385,6 +380,11 @@
         "source": "learn/cookbooks/laravel_multitenancy.mdx",
         "label": "Multitenancy with Laravel",
         "slug": "laravel_multitenancy"
+      },
+      {
+        "source": "learn/cookbooks/multitenancy_nodejs.mdx",
+        "label": "Multitenancy with Node.js",
+        "slug": "multitenancy_nodejs"
       }
     ]
   },

@@ -6,6 +6,8 @@ sidebarDepth: 3
 
 # Node.js multitenancy guide
 
+This guide will walk you through implementing search in a multitenant Node.js application. We'll use the example of a medical application that stores private details of patients' appointments.
+
 ## What is multitenancy?
 
 In software development, multitenancy means that multiple users — also called tenants — share the same computing resources but have different access to system-wide data.
@@ -15,44 +17,194 @@ In Meilisearch, you might have one index containing data belonging to many disti
 ## Requirements
 
 For this guide, you will need:
-- [Node.js](https://nodejs.org/en) (we recommend the latest LTS version)
-- A package manager like `npm`, `yarn`, or `pnpm`
+- [Node.js](https://nodejs.org/en) and a package manager like `npm`, `yarn`, or `pnpm`
 - [Meilisearch JavaScript SDK](/learn/what_is_meilisearch/sdks)
+- A Meilisearch server running — see our [quick start](/learn/getting_started/cloud_quick_start)
+- A search API key — available in your Meilisearch dashboard
+- A search API key UID — retrieve it using the [keys endpoints](/reference/api/keys)
+
+<Capsule intent="tip">
+Prefer self-hosting? Read our [installation guide](/learn/getting_started/installation).
+</Capsule>
+
+## Data models
+
+In this guide, we'll use a simple data model to represent medical appointments. The documents in the Meilisearch index will look like this:
+
+```json
+[
+  {
+    "id": 1,
+    "patient": "John Doe",
+    "details": "I think I caught a cold. Can you help me?",
+    "status": "pending"
+  },
+  {
+    "id": 2,
+    "patient": "Zia Ahmed",
+    "details": "I'm suffering from fever. I need an appointment ASAP.",
+    "status": "pending"
+  },
+  {
+    "id": 3,
+    "patient": "Kevin Smith",
+    "details": "Some confidential information Kevin has shared.",
+    "status": "confirmed"
+  }
+]
+```
+
+For the purpose of this guide, we assume documents are stored in an `appointments` index.
 
 ## Creating a tenant token
 
-The example below uses the `generateTenantToken` function to create a tenant token that will be used to search through documents belonging to a given organization.
+You will generate a tenant token that will allow a given patient to search only for their appointments. To achieve this, you wil create a tenant token that filters the results based on the patient's ID.
+
+In a `search.js` file, you can create the tenant token like this:
 
 ```js
 import { Meilisearch } from 'meilisearch'
 
-const apiKey = '<YOUR_SEARCH_API_KEY>';
-const apiKeyUid = '<YOUR_SEARCH_API_KEY_UID>';
+const apiKey = '<YOUR_SEARCH_API_KEY>'
+const apiKeyUid = '<YOUR_SEARCH_API_KEY_UID>'
+const indexName = 'appointments'
 
 const client = new Meilisearch({
 	host: 'https://edge.meilisearch.com', // Your Meilisearch host
 	apiKey: apiKey
 })
 
-
-// These rules gives access only to documents that belong to a given organization
-const organizationId = 1 // Retrieve the organizationId from your database, etc.
-const searchRules = {
-	'*': {
-		'filter': `organization_id = ${organizationId}`
-	}
-}
-
-const tenantToken = client.generateTenantToken(
-  apiKeyUid,
-  searchRules,
-  {
-    expiresAt: new Date('2025-01-01'), // Choose an expiration date
-    apiKey: apiKey,
+export function createTenantToken(patientId) {
+  const searchRules = {
+    [indexName]: {
+      'filter': `id = ${patientId}`
+    }
   }
-)
+
+  const tenantToken = client.generateTenantToken(
+    apiKeyUid,
+    searchRules,
+    {
+      expiresAt: new Date('2030-01-01'), // Choose an expiration date
+      apiKey: apiKey,
+    }
+  )
+  return tenantToken
+}
 ```
 
-When Meilisearch gets a search query with a tenant token, it decodes it and applies the search rules to the search request. In this example, the results are filtered by the `organization_id` field, thus preventing access to documents that do not belong to the organization.
+When Meilisearch gets a search query with a tenant token, it decodes it and applies the search rules to the search request. In this example, the results are filtered by the `id` field, thus preventing access to documents that do not belong to the patient.
 
 Use this tenant token to perform searches against your Meilisearch instance. Like all search API keys, you can safely share it in your front-end applications.
+
+## Using the tenant token
+
+Now that you have a tenant token, you can use it to perform searches. You will need to:
+- create an endpoint to send the token to your front-end
+- use the token to perform searches
+
+### Serving the tenant token
+
+This guide uses [Express.js](https://expressjs.com/en/starter/installing.html) to create a server. You can use any other server framework of your choice.
+
+You can install `express` by running:
+
+```sh
+# with NPM
+npm i express
+# with Yarn
+yarn add express
+# with pnpm
+pnpm add express
+```
+
+Then, add the following code in a `server.js` file:
+
+```node
+import express from 'express'
+import { createTenantToken } from './search.js'
+
+const server = express()
+
+server.get('/token', async (request, response) => {
+  const { id: patientId } = request.query
+  const token = createTenantToken(patientId)
+  return response.json({ token });
+})
+
+server.listen(3000, () => {
+  console.log('Server is running on port 3000')
+})
+```
+
+This code creates an endpoint at `http://localhost:3000/token` that accepts a `patientId` query parameter and returns a tenant token. You can use this endpoint to retrieve the tenant token in your front-end application.
+
+### Making a search
+
+In your front-end application, you can use the tenant token to perform searches. In this guide, we will use [InstantSearch.js](learn/front_end/front_end_integration) to create a search interface.
+
+In a `client.html` file, insert the following code:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@meilisearch/instant-meilisearch/templates/basic_search.css" />
+  </head>
+  <body>
+    <div class="wrapper">
+      <div id="searchbox" focus></div>
+      <div id="hits"></div>
+    </div>
+  </body>
+  <script src="https://cdn.jsdelivr.net/npm/@meilisearch/instant-meilisearch/dist/instant-meilisearch.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const patientId = 1 // Replace with the patient's ID
+      const response = await fetch(`http://localhost:3000/token?id=${patientId}`)
+      const { token } = await response.json()
+
+      const search = instantsearch({
+        indexName: 'appointments',
+        searchClient: instantMeiliSearch(
+          'https://edge.meilisearch.com',
+          token
+        ).searchClient
+      })
+
+      search.addWidgets([
+        instantsearch.widgets.searchBox({
+          container: "#searchbox"
+        }),
+        instantsearch.widgets.hits({
+          container: "#hits",
+          templates: {
+          item: `
+            <div>
+              <div class="hit-name">
+                    {{#helpers.highlight}}{ "attribute": "patient" }{{/helpers.highlight}}
+              </div>
+              <div class="hit-description">
+                {{#helpers.highlight}}{ "attribute": "details" }{{/helpers.highlight}}
+              </div>
+            </div>
+          `
+          }
+        })
+      ])
+
+      search.start()
+    })
+  </script>
+</html>
+```
+
+Ta-da! You have successfully implemented a secure, multitenant search in your Node.js application. Users will only be able to search for documents that belong to them.
+
+## Conclusion
+
+In this guide, you saw how to implement secure, multitenant search in a Node.js application. You then created an endpoint to generate tenant tokens for each user. You also built a search interface using InstantSearch and to make searches using the tenant token.
+
+All the code in this guide is a taken from our [multitenacy example](https://tenant-token.meilisearch.com/?utm_campaign=oss&utm_source=docs&utm_medium=node-multitenancy) application. The code is available on [GitHub](https://github.com/meilisearch/tutorials/tree/main/src/tenant-token-tutorial).
