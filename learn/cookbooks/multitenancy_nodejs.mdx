@@ -35,19 +35,19 @@ In this guide, we'll use a simple data model to represent medical appointments. 
 [
   {
     "id": 1,
-    "patient": "John Doe",
+    "patient": "John",
     "details": "I think I caught a cold. Can you help me?",
     "status": "pending"
   },
   {
     "id": 2,
-    "patient": "Zia Ahmed",
+    "patient": "Zia",
     "details": "I'm suffering from fever. I need an appointment ASAP.",
     "status": "pending"
   },
   {
     "id": 3,
-    "patient": "Kevin Smith",
+    "patient": "Kevin",
     "details": "Some confidential information Kevin has shared.",
     "status": "confirmed"
   }
@@ -63,6 +63,8 @@ You will generate a tenant token that will allow a given patient to search only 
 In a `search.js` file, you can create the tenant token like this:
 
 ```js
+// search.js
+
 import { Meilisearch } from 'meilisearch'
 
 const apiKey = '<YOUR_SEARCH_API_KEY>'
@@ -74,10 +76,10 @@ const client = new Meilisearch({
 	apiKey: apiKey
 })
 
-export function createTenantToken(patientId) {
+export function createTenantToken(patientName) {
   const searchRules = {
     [indexName]: {
-      'filter': `id = ${patientId}`
+      'filter': `patient = ${patientName}`
     }
   }
 
@@ -93,21 +95,21 @@ export function createTenantToken(patientId) {
 }
 ```
 
-When Meilisearch gets a search query with a tenant token, it decodes it and applies the search rules to the search request. In this example, the results are filtered by the `id` field, thus preventing access to documents that do not belong to the patient.
+When Meilisearch gets a search query with a tenant token, it decodes it and applies the search rules to the search request. In this example, the results are filtered by the `patient` field. This means that a patient can only search for their own appointments.
 
-Use this tenant token to perform searches against your Meilisearch instance. Like all search API keys, you can safely share it in your front-end applications.
+Next, you will use this tenant token to perform searches against your Meilisearch instance.
 
 ## Using the tenant token
 
-Now that you have a tenant token, you can use it to perform searches. You will need to:
-- create an endpoint to send the token to your front-end
-- use the token to perform searches
+Now that you have a tenant token, you will use it to perform searches. Like all search API keys, you can safely use it in client-side code.
+
+To achieve this, you will need to:
+- On the server—Create an endpoint to send the token to your front-end
+- On the client—Retrieve the token and use it to perform searches
 
 ### Serving the tenant token
 
-This guide uses [Express.js](https://expressjs.com/en/starter/installing.html) to create a server. You can use any other server framework of your choice.
-
-You can install `express` by running:
+This guide uses [Express.js](https://expressjs.com/en/starter/installing.html) to create a server. You can install `express` by running:
 
 ```sh
 # with NPM
@@ -120,7 +122,9 @@ pnpm add express
 
 Then, add the following code in a `server.js` file:
 
-```node
+```js
+// server.js
+
 import express from 'express'
 import { createTenantToken } from './search.js'
 
@@ -137,13 +141,13 @@ server.listen(3000, () => {
 })
 ```
 
-This code creates an endpoint at `http://localhost:3000/token` that accepts a `patientId` query parameter and returns a tenant token. You can use this endpoint to retrieve the tenant token in your front-end application.
+This code creates an endpoint at `http://localhost:3000/token` that accepts an `id` query parameter and returns a tenant token. You will use this endpoint to retrieve the tenant token in your front-end application.
 
 ### Making a search
 
-In your front-end application, you can use the tenant token to perform searches. In this guide, we will use [InstantSearch.js](learn/front_end/front_end_integration) to create a search interface.
+This guide uses [InstantSearch.js](learn/front_end/front_end_integration) to create a search interface. You will use CDN links to include InstantSearch.js and the Meilisearch InstantSearch.js connector in your HTML file.
 
-In a `client.html` file, insert the following code:
+Create `client.html` file and insert this code:
 
 ```html
 <!DOCTYPE html>
