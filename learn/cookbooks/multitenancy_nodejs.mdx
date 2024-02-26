@@ -58,7 +58,7 @@ For the purpose of this guide, we assume documents are stored in an `appointment
 
 ## Creating a tenant token
 
-You will generate a tenant token that will allow a given patient to search only for their appointments. To achieve this, you wil create a tenant token that filters the results based on the patient's ID.
+You will generate a tenant token that will allow a given patient to search only for their appointments. To achieve this, you will create a tenant token that filters the results based on the patient's ID.
 
 In a `search.js` file, you can create the tenant token like this:
 
@@ -209,6 +209,6 @@ Ta-da! You have successfully implemented a secure, multitenant search in your No
 
 ## Conclusion
 
-In this guide, you saw how to implement secure, multitenant search in a Node.js application. You then created an endpoint to generate tenant tokens for each user. You also built a search interface using InstantSearch and to make searches using the tenant token.
+In this guide, you saw how to implement secure, multitenant search in a Node.js application. You then created an endpoint to generate tenant tokens for each user. You also built a search interface with InstantSearch to make searches using the tenant token.
 
 All the code in this guide is a taken from our [multitenacy example](https://tenant-token.meilisearch.com/?utm_campaign=oss&utm_source=docs&utm_medium=node-multitenancy) application. The code is available on [GitHub](https://github.com/meilisearch/tutorials/tree/main/src/tenant-token-tutorial).
