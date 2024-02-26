@@ -380,6 +380,11 @@
         "source": "learn/cookbooks/laravel_multitenancy.mdx",
         "label": "Multitenancy with Laravel",
         "slug": "laravel_multitenancy"
+      },
+      {
+        "source": "learn/cookbooks/strapi_v4.mdx",
+        "label": "Strapi v4 guide",
+        "slug": "strapi_v4"
       }
     ]
   },
