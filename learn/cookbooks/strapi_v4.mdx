@@ -14,7 +14,6 @@ Before you start, make sure you have the following installed on your machine:
 - npm >=6.0.0 (installed with Node.js) 
 - A running instance of Meilisearch (v >= 1.x). If you need help with this part, you can consult the [Installation section](/learn/getting_started/installation). 
 
-
 ## Create a back-end using Strapi
 
 Create a directory called `my-app` where you will add our back and front-end parts of the application. Generate a back-end API using Strapi inside `my-app`:
@@ -28,7 +27,6 @@ This command creates a Strapi app in a new directory called `back` and opens the
 ![Strapi sign up form](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/strapi-v4/strapi-signup.png)
 
 Once you have created your account, you should be redirected to Strapi's admin dashboard. This is where you will configure your back-end API.
-
 
 The next step is to create a new collection type. A collection is like a blueprint of your content—in this case, it will be a collection of restaurants. You will create another collection called "Category" to organize your restaurants later.
 
@@ -62,11 +60,9 @@ Next, add the `French food` category on the bottom right corner of the page.
 - Description: `Blue Cheese is not expired, it is how you eat it. With a bit of butter and a lot of happiness.` 
 - Category: `French food`
 
-
 Your Strapi back-end is now up and running. Strapi automatically creates a REST API for your Restaurants collection. Check Strapi's documentation for all available [API endpoints](https://strapi.io/documentation/developer-docs/latest/developer-resources/content-api/content-api.html#api-endpoints).
 
 Now, it’s time to connect Strapi and Meilisearch and start searching through our data.
-
 
 ## Connect Strapi and Meilisearch
 
