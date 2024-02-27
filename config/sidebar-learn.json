@@ -380,6 +380,11 @@
         "source": "learn/cookbooks/laravel_multitenancy.mdx",
         "label": "Multitenancy with Laravel",
         "slug": "laravel_multitenancy"
+      },
+      {
+        "source": "learn/cookbooks/indexing_best_practices.mdx",
+        "label": "Indexing best practices",
+        "slug": "indexing_best_practices"
       }
     ]
   },
