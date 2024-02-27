@@ -25,6 +25,13 @@
   "strip_chars": " .,;:#",
   "scrap_start_urls": true,
   "custom_settings": {
+    "embedders": {
+        "default": {
+          "source":  "openAi",
+          "apiKey": "embedderApiKey",
+          "model": "text-embedding-ada-002"
+        }
+      },
       "searchableAttributes": [
           "hierarchy_lvl1",
           "hierarchy_lvl2",
