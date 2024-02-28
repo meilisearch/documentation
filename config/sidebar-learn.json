@@ -380,6 +380,11 @@
         "source": "learn/cookbooks/laravel_multitenancy.mdx",
         "label": "Multitenancy with Laravel",
         "slug": "laravel_multitenancy"
+      },
+      {
+        "source": "learn/cookbooks/computing_hugging_face_embeddings_gpu.mdx",
+        "label": "Computing Hugging Face embeddings with the GPU",
+        "slug": "computing_hugging_face_embeddings_gpu"
       }
     ]
   },

@@ -34,7 +34,7 @@ curl \
 
 To use vector search, first configure the `embedders` index setting. You may configure multiple embedders for an index. 
 
-Embedders generate vector data from your documents. Meilisearch natively supports [OpenAI](https://openai.com/) and [HuggingFace](https://huggingface.co/) embedders. 
+Embedders generate vector data from your documents. Meilisearch natively supports [OpenAI](https://openai.com/) and [Hugging Face](https://huggingface.co/) embedders. 
 
 It is also possible to use custom embedders. In this case, you must generate the embeddings manually and include them as a field in your documents.
 
@@ -68,9 +68,9 @@ It is mandatory to pass an OpenAI API key through the `OPENAI_API_KEY` environme
 For best results, use short strings indicating the type of document in that index, only include highly relevant document fields, and truncate long fields.  
 </Capsule>
 
-#### Generate auto-embeddings with HuggingFace 
+#### Generate auto-embeddings with Hugging Face 
 
-The HuggingFace embedder computes embeddings locally. This is a resource-intensive operation and might affect indexing performance.
+The Hugging Face embedder computes embeddings locally. This is a resource-intensive operation and might affect indexing performance. You may be able to significantly improve performance by [compiling a CUDA-compatible Meilisearch binary](/learn/cookbooks/computing_hugging_face_embeddings_gpu).
 
 Use the `embedders` index setting of the [update `/settings` endpoint](/reference/api/settings) to configure one or more embedders for an index:
 
