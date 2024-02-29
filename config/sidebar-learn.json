@@ -462,7 +462,13 @@
         "source": "learn/experimental/vector_search.mdx",
         "label": "Vector search",
         "slug": "vector_search"
+      },
+      {
+        "source": "learn/experimental/replication_parameters.mdx",
+        "label": "Replication parameters",
+        "slug": "replication_parameters"
       }
+
     ]
   },
   {
