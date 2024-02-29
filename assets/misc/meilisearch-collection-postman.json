@@ -1,8 +1,9 @@
 {
 	"info": {
-		"_postman_id": "d675505c-cb77-4f2f-8335-7bfe9950caed",
-		"name": "Meilisearch v1.6",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"_postman_id": "4fce48ba-4382-42b4-b740-702192d63ea4",
+		"name": "Meilisearch v1.7",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25294324"
 	},
 	"item": [
 		{
