@@ -936,7 +936,7 @@ The code sample below returns the `_rankingScore` when searching for `dragon` in
 **Expected value**: `true` or `false`<br />
 **Default value**: `false`
 
-Adds a detailed global ranking score field, `_rankingScoreDetails`, to each document. `_rankingScoreDetails` is a nested object corresponding to each active ranking rule.
+Adds a detailed global ranking score field, `_rankingScoreDetails`, to each document. `_rankingScoreDetails` is an object containing a nested object for each active ranking rule.
 
 #### Ranking score details object
 
@@ -944,51 +944,51 @@ Each ranking rule details its score in its own object. Fields vary per ranking r
 
 ##### `words`
 
-- `order`: order in which this specific ranking rule was applied
-- `score`: ranking score for this specific rule
+- `order`: order in which this ranking rule was applied
+- `score`: ranking score for this rule
 - `matchingWords`: number of words in the query that match in the document
 - `maxMatchingWords`: maximum number of words in the query that can match in the document
 
 ##### `typo`
 
 - `order`: order in which this specific ranking rule was applied
-- `score`: ranking score for this specific rule
+- `score`: ranking score for this rule
 - `typoCount`: number of typos corrected so that the document matches the query term
 - `maxTypoCount`: maximum number of typos accepted
 
 ##### `proximity`
 
-- `order`: order in which this specific ranking rule was applied
-- `score`: ranking score for this specific rule
+- `order`: order in which this ranking rule was applied
+- `score`: ranking score for this rule
 
 ##### `attribute`
 
-- `order`: order in which this specific ranking rule was applied
-- `score`: ranking score for this specific rule
+- `order`: order in which this ranking rule was applied
+- `score`: ranking score for this rule
 - `attributeRankingOrderScore`: score computed from the maximum attribute ranking order for the matching attributes
 - `queryWordDistanceScore`: score computed from the distance between the position words in the query and the position of words in matched attributes
 
 ##### `exactness`
 
-- `order`: order in which this specific ranking rule was applied
-- `score`: ranking score for this specific rule
+- `order`: order in which this ranking rule was applied
+- `score`: ranking score for this rule
 - `matchType`: either `exactMatch`, `matchesStart`, or `noExactMatch`:
-  - `exactMatch`: document contains an attribute matching all query terms with no other words between and in the order they were given
-  - `matchesStart`: document contains an attribute with all query terms in the same position as the original query
-  - `noExactMatch`: document contains an attribute with one or more query terms that don't match the original query
-- `matchingWords`: the number of exact words contained in an attribute when `matchType` is `noExactMatch`
-- `maxMatchingWords`: the maximum number of exact words contained in an attribute when `matchType` is `noExactMatch`
+  - `exactMatch`: document contains an attribute matching all query terms with no other words between them and in the order they were given
+  - `matchesStart`: document contains an attribute with all query terms in the same order as the original query
+  - `noExactMatch`: document contains an attribute with at least one query term matching the original query
+- `matchingWords`: the number of exact matches in an attribute when `matchType` is `noExactMatch`
+- `maxMatchingWords`: the maximum number of exact matches in an attribute when `matchType` is `noExactMatch`
 
 ##### `field_name:direction`
 
-The `sort` ranking rule does not appear as a single field in the score details object. Instead, each sorted attribute appears as its own field, followed by its direction.
+The `sort` ranking rule does not appear as a single field in the score details object. Instead, each sorted attribute appears as its own field, followed by a colon (`:`) and the sorting direction: `attribute:direction`.
 
-- `order`: order in which this specific ranking rule was applied
+- `order`: order in which this ranking rule was applied
 - `value`: value of the field used for sorting
 
 ##### `_geoPoint(lat:lng):direction`
 
-- `order`: order in which this specific ranking rule was applied
+- `order`: order in which this ranking rule was applied
 - `value`: value of the field used for sorting
 - `distance`: same as [_geoDistance](/learn/fine_tuning_results/geosearch#finding-the-distance-between-a-document-and-a-_geopoint)
 
