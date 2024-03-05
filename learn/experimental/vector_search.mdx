@@ -65,7 +65,7 @@ It is mandatory to pass an OpenAI API key through the `OPENAI_API_KEY` environme
 
 `documentTemplate` is an optional field. Use it to customize the data you send to the embedder. It is highly recommended you configure a custom template for your documents.
 
-`dimensions` is an optional field. It must be bigger than zero and lower or equal to the chosen model's dimensions. This option is not compatible with `openai-text-embedding-ada-002`. Fewer dimensions may improve performance, but lead to lower search result accuracy.
+`dimensions` is an optional field. It must be bigger than zero and lower or equal to the chosen model's dimensions. This option is not compatible with `text-embedding-ada-002`. Fewer dimensions may improve performance, but lead to lower search result accuracy.
 
 <Capsule intent="tip" title="`documentTemplate` usage">
 `documentTemplate` must be a [Liquid template](https://shopify.github.io/liquid/). Use `{{ doc.attribute }}` to access the `attribute` field value of your documents. Any field you refer to in this way must exist in all documents or an error will be raised at indexing time.
