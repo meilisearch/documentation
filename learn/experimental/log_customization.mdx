@@ -1,19 +1,21 @@
 ---
 title: Log customization — Meilisearch documentation
-description: "You can customize Meilisearch logs with two experimental features: --experimental-logs-mode and --experimental-enable-logs-route."
+description: "Customize Meilisearch logs with two experimental features: --experimental-logs-mode and --experimental-enable-logs-route."
 ---
 
 # Log customization
 
-You can customize Meilisearch logs with two experimental features: `--experimental-logs-mode` and `--experimental-enable-logs-route`.
+Customize Meilisearch logs with two experimental features: `--experimental-logs-mode` and `--experimental-enable-logs-route`.
 
 ## Customize log output
 
-Enable `--experimental-logs-mode` to customize log output:
+Use `--experimental-logs-mode` to customize log output:
 
 ```sh
 ./meilisearch --experimental-logs-mode json
 ```
+
+`--experimental-logs-mode` accepts either `human` or `json`. `human` is the default value.
 
 For more information, [consult this feature's GitHub discussion](https://github.com/orgs/meilisearch/discussions/723).
 
@@ -30,7 +32,7 @@ curl \
   }'
 ```
 
-This will enable two subroutes. Use `/logs/stderr` to customize logging levels:
+Use `/logs/stderr` to customize logging levels for the default logging system:
 
 ```sh
 curl \
@@ -53,7 +55,9 @@ curl \
   }'
 ```
 
-The stream will continue to run until you interrupt it with a `DELETE` request:
+Configure the stream using the same parameters as regular logging: `mode` and `target`. The stream will continue to run indefinitely until you interrupt it.
+
+Use the `DELETE` endpoint of `/logs/stream` to interrupt a stream:
 
 ```sh
 curl \
@@ -61,7 +65,6 @@ curl \
 ```
 
 For more information, [consult this feature's GitHub discussion](https://github.com/orgs/meilisearch/discussions/721).
-
 
 <Capsule intent="warning">
 These features are experimental. Experimental features are unstable: their API might significantly change and become incompatible between releases. Meilisearch does not recommend using experimental features in a production environment.
