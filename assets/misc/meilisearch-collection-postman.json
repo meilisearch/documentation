@@ -406,6 +406,11 @@
 									"disabled": true
 								},
 								{
+									"key": "showRankingScoreDetails",
+									"value": "true",
+									"disabled": true
+								},
+								{
 									"key": "attributesToSearchOn",
 									"value": "title",
 									"disabled": true
@@ -2619,7 +2624,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"scoreDetails\": true\n}",
+							"raw": "{\n    \"exportPuffinReports\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
