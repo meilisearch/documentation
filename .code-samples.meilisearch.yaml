@@ -1064,7 +1064,7 @@ update_experimental_features_1: |-
     -X PATCH 'http://localhost:7700/experimental-features/' \
     -H 'Content-Type: application/json'  \
     --data-binary '{
-      "scoreDetails": true
+      "metrics": true
     }'
 facet_search_1: |-
   curl \
@@ -1100,6 +1100,15 @@ search_parameter_guide_show_ranking_score_1: |-
       "q": "dragon",
       "showRankingScore": true
     }'
+search_parameter_guide_show_ranking_score_details_1: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/movies/search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "q": "dragon",
+      "showRankingScoreDetails": true
+    }'
+
 search_parameter_guide_attributes_to_search_on_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/search' \
