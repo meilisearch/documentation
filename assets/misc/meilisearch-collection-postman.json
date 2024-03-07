@@ -2624,7 +2624,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"exportPuffinReports\": true\n}",
+							"raw": "{\n    \"metrics\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
