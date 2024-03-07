@@ -382,6 +382,11 @@
         "slug": "laravel_multitenancy"
       },
       {
+        "source": "learn/cookbooks/indexing_best_practices.mdx",
+        "label": "Indexing best practices",
+        "slug": "indexing_best_practices"
+      },
+      {
         "source": "learn/cookbooks/computing_hugging_face_embeddings_gpu.mdx",
         "label": "Computing Hugging Face embeddings with the GPU",
         "slug": "computing_hugging_face_embeddings_gpu"
