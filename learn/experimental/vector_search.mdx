@@ -19,11 +19,7 @@ If using Meilisearch Cloud, navigate to your project overview and find "Experime
 
 ![A section of the project overview interface titled "Experimental features". There are two options: "Score details" and "Vector store". "Vector store" is turned on.](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/vector-search/01-cloud-vector-store.png)
 
-<Capsule intent="note" title="Waiting list">
-To ensure proper onboarding and scaling of Meilisearch Cloud's latest AI-powered search offering, you must enter the waitlist before activating vector search.
-</Capsule>
-
-Alternatively, use [the `/experimental` route](/reference/api/experimental_features) to activate vector search during runtime:
+Alternatively, use [the `/experimental-features` route](/reference/api/experimental_features) to activate vector search during runtime:
 
 ```sh
 curl \
@@ -33,6 +29,10 @@ curl \
     "vectorStore": true
   }'
 ```
+
+<Capsule intent="note" title="Meilisearch Cloud AI-powered search waitlist">
+To ensure proper scaling of Meilisearch Cloud's latest AI-powered search offering, you must enter the waitlist before activating vector search. You will not be able to activate vector search in the Cloud interface or via the `/experimental-features` route until your sign up has been approved.
+</Capsule>
 
 ### Generate vector embeddings
 
