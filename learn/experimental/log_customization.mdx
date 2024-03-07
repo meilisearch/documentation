@@ -43,7 +43,7 @@ curl \
   }'
 ```
 
-Use the `POST` endpoint of `/logs/stream` and a listener for focused debugging sessions:
+Use the `POST` endpoint of `/logs/stream` for focused debugging sessions:
 
 ```sh
 curl \
@@ -56,6 +56,10 @@ curl \
 ```
 
 Configure the stream using the same parameters as regular logging: `mode` and `target`. The stream will continue to run indefinitely until you interrupt it.
+
+<Capsule intent="warning" title="HTTP client compatibility">
+Certain HTTP clients such as `httpie` and `xh`, will only dispaly data after you have interrupted the stream with the `DELETE` endpoint.
+</Capsule>
 
 Use the `DELETE` endpoint of `/logs/stream` to interrupt a stream:
 
