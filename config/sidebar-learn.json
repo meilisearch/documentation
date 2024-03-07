@@ -464,11 +464,6 @@
         "slug": "reduce-indexing-memory-usage"
       },
       {
-        "source": "learn/experimental/ranking_rule_score_details.mdx",
-        "label": "Detailed ranking scores",
-        "slug": "ranking_rule_score_details"
-      },
-      {
         "source": "learn/experimental/log_customization.mdx",
         "label": "Log customization",
         "slug": "log_customization"
