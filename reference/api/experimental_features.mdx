@@ -18,7 +18,7 @@ The experimental API route is not compatible with all experimental features. Con
 ```json
 {
   "metrics": false,
-  "scoreDetails": false,
+  "logsRoute": true,
   "vectorSearch": false,
   "exportPuffinReports": false
 }
@@ -28,6 +28,7 @@ The experimental API route is not compatible with all experimental features. Con
 | :------------------------ | :------ | :--------------------------------------------- |
 | **`metrics`**             | Boolean | `true` if feature is active, `false` otherwise |
 | **`scoreDetails`**        | Boolean | `true` if feature is active, `false` otherwise |
+| **`logsRoute`**           | Boolean | `true` if feature is active, `false` otherwise |
 | **`vectorSearch`**        | Boolean | `true` if feature is active, `false` otherwise |
 | **`exportPuffinReports`** | Boolean | `true` if feature is active, `false` otherwise |
 
@@ -46,7 +47,7 @@ Get a list of all experimental features that can be activated via the `/experime
 ```json
 {
   "metrics": false,
-  "scoreDetails": false,
+  "logsRoute": true,
   "vectorSearch": false,
   "exportPuffinReports": false
 }
@@ -73,7 +74,7 @@ Setting a field to `null` leaves its value unchanged.
 ```json
 {
   "metrics": false,
-  "scoreDetails": true,
+  "logsRoute": true,
   "vectorSearch": false,
   "exportPuffinReports": false
 }

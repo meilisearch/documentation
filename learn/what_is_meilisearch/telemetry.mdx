@@ -214,7 +214,11 @@ This list is liable to change with every new version of Meilisearch. It's not be
 | `matching_strategy.most_used_strategy`             | Most used word matching strategy                                                            | last
 | `infos.with_configuration_file`                    | `true` if the instance is launched with a configuration file, otherwise `false`             | false
 | `infos.experimental_enable_metrics`                | `true` if `--experimental-enable-metrics`/`MEILI_EXPERIMENTAL_ENABLE_METRICS` is specified, otherwise `false` | false
+| `infos.experimental_replication_parameters`        | `true` if `--experimental-replication-parameters`/`MEILI_EXPERIMENTAL_REPLICATION_PARAMETERS` is specified at launch, otherwise `false` | `false`
 | `infos.experimental_reduce_indexing_memory_usage`  | `true` if `--experimental-reduce-indexing-memory-usage`/`MEILI_EXPERIMENTAL_REDUCE_INDEXING_MEMORY_USAGE` is specified at launch, otherwise `false` | `false`
+| `infos.experimental_logs_mode`                     | `human` or `json` depending on the value specified.                                         | `human`
+| `infos.experimental_enable_logs_route`             | `true` if  `--experimental-enable-logs-route`/`MEILI_EXPERIMENTAL_ENABLE_LOGS_ROUTE` is specified at launch, otherwise `false` | `false`
+| `infos.gpu_enabled`                                | `true` if Meilisearch was compiled with CUDA support, otherwise `false`                     | `false`
 | `swap_operation_number`                            | Number of swap operations                                                                   | 2
 | `pagination.most_used_navigation`                  | Most used search results navigation                                                         | estimated
 | `per_document_id`                                  | `true` if the `DELETE /indexes/:indexUid/documents/:documentUid` endpoint was used, otherwise `false` | false
@@ -228,7 +232,6 @@ This list is liable to change with every new version of Meilisearch. It's not be
 | `scoring.show_ranking_score`                       | `true` if `showRankingScore` used in the aggregated event, otherwise `false`                | true
 | `scoring.show_ranking_score_details`               | `true` if `showRankingScoreDetails` was used in the aggregated event, otherwise `false`     | true
 | `vector_store`                                     | `true` if the vector store feature is enabled, otherwise `false`                            | true
-| `score_details`                                    | `true` if the score details feature is enabled, otherwise `false`                           | true
 | `attributes_to_search_on.total_number_of_uses`     | `true` if the vector store feature is enabled, otherwise `false`                            | true
 | `vector.max_vector_size`                           | Highest number of dimensions given for the `vector` parameter in this batch                 | 1536
 | `hybrid.enabled`                                   | `true` if hybrid search been used in the aggregated event, otherwise `false`                | true

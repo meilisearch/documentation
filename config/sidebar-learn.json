@@ -385,6 +385,11 @@
         "source": "learn/cookbooks/indexing_best_practices.mdx",
         "label": "Indexing best practices",
         "slug": "indexing_best_practices"
+      },
+      {
+        "source": "learn/cookbooks/computing_hugging_face_embeddings_gpu.mdx",
+        "label": "Computing Hugging Face embeddings with the GPU",
+        "slug": "computing_hugging_face_embeddings_gpu"
       }
     ]
   },
@@ -459,14 +464,19 @@
         "slug": "reduce-indexing-memory-usage"
       },
       {
-        "source": "learn/experimental/ranking_rule_score_details.mdx",
-        "label": "Detailed ranking scores",
-        "slug": "ranking_rule_score_details"
+        "source": "learn/experimental/log_customization.mdx",
+        "label": "Log customization",
+        "slug": "log_customization"
       },
       {
         "source": "learn/experimental/vector_search.mdx",
         "label": "Vector search",
         "slug": "vector_search"
+      },
+      {
+        "source": "learn/experimental/replication_parameters.mdx",
+        "label": "Replication parameters",
+        "slug": "replication_parameters"
       }
     ]
   },
