@@ -6,7 +6,7 @@ sidebarDepth: 3
 
 # Node.js multitenancy guide
 
-This guide will walk you through implementing search in a multitenant Node.js application. We'll use the example of a medical application that stores private details of patients' appointments.
+This guide will walk you through implementing search in a multitenant Node.js application handling sensitive medical data.
 
 ## What is multitenancy?
 
@@ -16,7 +16,6 @@ In Meilisearch, you might have one index containing data belonging to many disti
 
 ## Requirements
 
-For this guide, you will need:
 - [Node.js](https://nodejs.org/en) and a package manager like `npm`, `yarn`, or `pnpm`
 - [Meilisearch JavaScript SDK](/learn/what_is_meilisearch/sdks)
 - A Meilisearch server running — see our [quick start](/learn/getting_started/cloud_quick_start)
@@ -29,7 +28,7 @@ Prefer self-hosting? Read our [installation guide](/learn/getting_started/instal
 
 ## Data models
 
-In this guide, we'll use a simple data model to represent medical appointments. The documents in the Meilisearch index will look like this:
+This guide uses a simple data model to represent medical appointments. The documents in the Meilisearch index will look like this:
 
 ```json
 [
@@ -58,17 +57,17 @@ For the purpose of this guide, we assume documents are stored in an `appointment
 
 ## Creating a tenant token
 
-You will generate a tenant token that will allow a given patient to search only for their appointments. To achieve this, you will create a tenant token that filters the results based on the patient's ID.
+The first step is generating a tenant token that will allow a given patient to search only for their appointments. To achieve this, you must first create a tenant token that filters results based on the patient's ID.
 
-In a `search.js` file, you can create the tenant token like this:
+Create a `search.js` file and use the following code to generate a tenant token:
 
 ```js
 // search.js
 
 import { Meilisearch } from 'meilisearch'
 
-const apiKey = '<YOUR_SEARCH_API_KEY>'
-const apiKeyUid = '<YOUR_SEARCH_API_KEY_UID>'
+const apiKey = 'YOUR_SEARCH_API_KEY'
+const apiKeyUid = 'YOUR_SEARCH_API_KEY_UID'
 const indexName = 'appointments'
 
 const client = new Meilisearch({
@@ -97,19 +96,15 @@ export function createTenantToken(patientName) {
 
 When Meilisearch gets a search query with a tenant token, it decodes it and applies the search rules to the search request. In this example, the results are filtered by the `patient` field. This means that a patient can only search for their own appointments.
 
-Next, you will use this tenant token to perform searches against your Meilisearch instance.
-
 ## Using the tenant token
 
-Now that you have a tenant token, you will use it to perform searches. Like all search API keys, you can safely use it in client-side code.
-
-To achieve this, you will need to:
-- On the server—Create an endpoint to send the token to your front-end
-- On the client—Retrieve the token and use it to perform searches
+Now that you have a tenant token, use it to perform searches. To achieve this, you will need to:
+- On the server: create an endpoint to send the token to your front-end
+- On the client: retrieve the token and use it to perform searches
 
 ### Serving the tenant token
 
-This guide uses [Express.js](https://expressjs.com/en/starter/installing.html) to create a server. You can install `express` by running:
+This guide uses [Express.js](https://expressjs.com/en/starter/installing.html) to create the server. You can install `express` by running:
 
 ```sh
 # with NPM
