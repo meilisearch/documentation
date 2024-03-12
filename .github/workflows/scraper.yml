@@ -45,6 +45,11 @@ jobs:
     name: scrape and push content on Meilisearch instance
     steps:
       - uses: actions/checkout@v4
+      
+      - name: Prepare config file
+        run: |
+          jq '.custom_settings.embedders.default.apiKey = "${{ secrets.OPENAI_API_KEY }}"' "${{ github.workspace }}/docs-scraper.config.json" > "${{ github.workspace }}/temp-config.json" && mv "${{ github.workspace }}/temp-config.json" "${{ github.workspace }}/docs-scraper.config.json"
+
       - name: Run docs-scraper
         env:
           HOST_URL: ${{ secrets.MEILISEARCH_HOST_URL }}
