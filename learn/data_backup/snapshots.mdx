@@ -1,29 +1,21 @@
 ---
-title: Snapshots — Meilisearch documentation
+title: Exporting and using Snapshots — Meilisearch documentation
 description: Snapshots are exact copies of Meilisearch databases. They are often useful for periodical backups.
 ---
 
-# Snapshots
+# Exporting and using snapshots
 
-A snapshot is an exact copy of the Meilisearch database, located by default in `./data.ms`. Snapshots are useful as quick backups.
+A [snapshot](/learn/advanced/snapshots_vs_dumps#snapshots) is an exact copy of the Meilisearch database. Snapshots are useful as quick backups, but cannot be used to migrate to a new Meilisearch release.
 
-Since databases are bound to the Meilisearch version that created them and snapshots are direct copies of the database, you cannot use snapshots to migrate data when upgrading Meilisearch.
+This tutorial shows you how to schedule snapshot creation to ensure you always have a recent backup of your instance ready to use. You will also see how to start Meilisearch from this snapshot.
 
 <Capsule intent="warning" title="Meilisearch Cloud and snapshots">
 Meilisearch Cloud does not support snapshots.
 </Capsule>
 
-## Creating snapshots
+## Scheduling periodic snapshots
 
-### Creating a single snapshot
-
-Use [the `/snapshots` route](/reference/api/snapshots) to generate a single snapshot:
-
-<CodeSamples id="create_snapshot_1" />
-
-This will return a summarized task object. Use [the `/tasks` route](/reference/api/tasks) to monitor the status of this operation.
-
-### Scheduling periodic snapshots
+It is good practice to create regular backups of your Meilisearch data. This ensures that you can recover from critical failures quickly in case your Meilisearch instance becomes compromised.
 
 Use the [`--schedule-snapshot` configuration option](/learn/configuration/instance_options#schedule-snapshot-creation) to create snapshots at regular time intervals:
 
@@ -31,60 +23,34 @@ Use the [`--schedule-snapshot` configuration option](/learn/configuration/instan
 meilisearch --schedule-snapshot
 ```
 
-The first snapshot is created on launching Meilisearch. After that, snapshots are created on a set interval until you deactivate snapshots by ending the Meilisearch instance. By default, one snapshot is taken every 24 hours.
+The first snapshot is created on launch. You will find it the [snapshot directory](/learn/configuration/instance_options#snapshot-destination), `/snapshots`. Meilisearch will then create a new snapshot every 24 hours until you terminate your instance.
 
-Modify the interval between each new snapshot by providing an integer to [`--schedule-snapshot`](/learn/configuration/instance_options#schedule-snapshot-creation):
+Meilisearch **automatically overwrites** old snapshots during snapshot creation. Only the most recent snapshot will be present in the folder at any given time.
+
+In cases where your database is updated several times a day, it might be better to modify the interval between each new snapshot:
 
 ```bash
 meilisearch --schedule-snapshot=3600
 ```
 
-[Learn more about snapshots flags and environment variables.](/learn/configuration/instance_options#schedule-snapshot-creation)
+This instructs Meilisearch to create a new snapshot once every hour.
 
-### Snapshot directory
-
-By default, Meilisearch creates snapshots in a directory called `snapshots/` at the root of your project.
-
-The destination can be modified with [`--snapshot-dir`](/learn/configuration/instance_options#snapshot-destination):
-
-```bash
-meilisearch --schedule-snapshot --snapshot-dir mySnapShots/
-```
-
-Old snapshots are **automatically overwritten** during snapshot creation. Only the most recent snapshot will be present in the folder at any given time.
+<Capsule intent="tip">
+If you need to generate a single snapshot without relaunching your instance, use [the `/snapshots` route](/reference/api/snapshots).
+</Capsule>
 
 ## Starting from a snapshot
 
-Because snapshots are exact copies of your database that haven't gone through any processing besides compression, starting a Meilisearch instance from a snapshot is significantly faster than adding documents manually or starting from a dump.
-
-Using the CLI flag `--import-snapshot`, Meilisearch will start the server using the provided snapshot.
+To import snapshot data into your instance, launch Meilisearch using `--import-snapshot`:
 
 ```bash
 meilisearch --import-snapshot mySnapShots/data.ms.snapshot
 ```
 
-## Common problems
+Because snapshots are exact copies of your database, starting a Meilisearch instance from a snapshot is much faster than adding documents manually or starting from a dump.
 
-Take note that whenever you launch Meilisearch from a snapshot, it will **stop processing and throw an error** if it encounters either of the two following situations:
+<Capsule intent="warning">
+For security reasons, Meilisearch will never overwrite an existing database. By default, Meilisearch will throw an error when importing a snapshot if there is any data in your instance.
 
-1. A database already exists, meaning you have a non-empty `data.ms` folder in the same directory as your Meilisearch binary
-2. No snapshot is found at the given path
-
-In both cases, **this behavior is [configurable](/learn/configuration/instance_options#ignore-missing-snapshot)**.
-
-If you don't want Meilisearch to throw an error when finding that a database already exists, you can add the following flag: `--ignore-snapshot-if-db-exists=true`. When using this flag, Meilisearch will use the existing database to start an instance instead of throwing an error. The snapshot will be ignored.
-
-If you do not want Meilisearch to throw an error when there is no snapshot at the given path, you can add the following flag: `--ignore-missing-snapshot`. Meilisearch will then continue its process and not import any snapshot.
-
-When starting from a snapshot, chances are that you already have an existing database. **For security reasons, a database is never overwritten**. To load a snapshot when an existing database is present, you will have to manually delete the existing database. By default, this is the contents of the `data.ms` folder (unless you [changed the path](/learn/configuration/instance_options#database-path)) which is located in the same folder as your Meilisearch binary.
-The simplest way to delete your database is with the terminal command `rm -rf data.ms`, after which you should be able to start Meilisearch with a snapshot.
-
-[[More about snapshots flags and environment variables]](/learn/configuration/instance_options#schedule-snapshot-creation)
-
-## Use cases
-
-**Snapshots are safeguards in case of problems**. If your Meilisearch instance encounters a problem or if you make a mistake while manipulating your database, restarting your instance with the latest snapshot is an easy way to recover your data.
-
-### Version compatibility
-
-Since a snapshot is an exact replica of your database, it can only be opened by the same version of Meilisearch that created it.
+You can change this behavior by specifying [`--ignore-snapshot-if-db-exists=true`](/learn/configuration/instance_options#ignore-dump-if-db-exists).
+</Capsule>

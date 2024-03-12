@@ -1,31 +1,31 @@
 ---
-title: Dumps — Meilisearch documentation
+title: Exporting and importing dumps — Meilisearch documentation
 description: Dumps are data backups containing all data related to a Meilisearch instance. They are often useful when migrating to a new Meilisearch release.
 ---
 
-# Dumps
+# Exporting and importing dumps
 
-A dump is a compressed file containing an export of your Meilisearch instance. Use dumps to migrate to new Meilisearch versions.
+A [dump](/learn/advanced/snapshots_vs_dumps#dumps) is a compressed file containing an export of your Meilisearch instance. Use dumps to migrate to new Meilisearch versions. This tutorial shows you how to create and import dumps. 
 
-A dump contains all your indexes, documents, and settings, but in a raw unprocessed form. A dump isn't an exact copy of your database—it is closer to a blueprint that allows you to create an identical dataset.
-
-Creating a dump is also referred to as exporting it, whereas launching Meilisearch with a dump is referred to as importing it.
+Creating a dump is also referred to as exporting it. Launching Meilisearch with a dump is referred to as importing it.
 
 ## Creating a dump
 
-## Creating a dump in Meilisearch Cloud
+### Creating a dump in Meilisearch Cloud
 
-Meilisearch Cloud does not support creating dumps manually. Use the Cloud interface to migrate your project to the most recent Meilisearch release.  
+**You cannot manually export dumps in Meilisearch Cloud**. To migrate your project to the most recent Meilisearch release, use the Cloud interface:  
 
-If you need to create a dump for reasons other than upgrading, contact the support team via the Meilisearch Cloud interface or the official Meilisaerch discord server.
+![The General settings interface displaying various data fields relating to a Meilisearch Cloud project. One of them reads "Meilisearch version". Its value is `v1.6.2`. Next to the value is a button "Update to v1.7.0"](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/cloud-dumps/01-import-dump.png)
 
-## Creating a dump in a self-hosted instance
+If you need to create a dump for reasons other than upgrading, contact the support team via the Meilisearch Cloud interface or the [official Meilisearch Discord server](https://discord.meilisearch.com).
+
+### Creating a dump in a self-hosted instance
 
 To create a dump, use the [create a dump endpoint](/reference/api/dump#create-a-dump):
 
 <CodeSamples id="post_dump_1" />
 
-The above code triggers a dump creation process. It also returns a [summarized task object](/learn/async/asynchronous_operations#summarized-task-objects) that you can use to check the status of your dump.
+This will returns a [summarized task object](/learn/async/asynchronous_operations#summarized-task-objects) that you can use to check the status of your dump.
 
 ```json
 {
@@ -37,11 +37,11 @@ The above code triggers a dump creation process. It also returns a [summarized t
 }
 ```
 
-In the below command, replace `1` with the `taskUid` returned by the previous command.
+The dump creation process is an asynchronous task that takes time proportional to the size of your dataset. Replace `1` with the `taskUid` returned by the previous command:
 
 <CodeSamples id="get_task_1" />
 
-This command should return an object with detailed information about the dump operation:
+This should return an object with detailed information about the dump operation:
 
 ```json
 {
@@ -61,42 +61,32 @@ This command should return an object with detailed information about the dump op
 }
 ```
 
-The dump creation process is an asynchronous task that takes time proportional to the size of your dataset. All indexes of the current instance are exported along with their documents and settings and saved as a single `.dump` file.
+All indexes of the current instance are exported along with their documents and settings and saved as a single `.dump` file.
 
-After dump creation is finished—when `status` is `succeeded`—the dump file is added to the dump directory. By default, this folder is named `dumps` and can be found in the same directory as your Meilisearch binary. You can customize [this using the `--dump-dir` configuration option](/learn/configuration/instance_options#dump-directory). **If the dump directory does not already exist when the dump creation process is called, Meilisearch will create it.**
+Once the task `status` changes to `succeeded`, find the dump file in [the dump directory](/learn/configuration/instance_options#dump-directory). By default, this folder is named `dumps` and can be found in the same directory as your Meilisearch binary.
 
 If a dump file is visible in the file system, the dump process was successfully completed. **Meilisearch will never create a partial dump file**, even if you interrupt an instance while it is generating a dump.
 
 ## Importing a dump
 
-## Importing a dump in Meilisearch Cloud
+### Importing a dump in Meilisearch Cloud
 
-You can import a dump into Meilisearch when creating a new project, below the plan selector.
+You can import a dump into Meilisearch when creating a new project, below the plan selector:
 
 ![The project creation interface, with a few inputs fields: project name, region selection, and plan selection. Right below all of these, is a file upload button named "Import .dump"](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/cloud-dumps/01-import-dump.png)
 
-## Importing a dump in Meilisearch Cloud
+### Importing a dump in Meilisearch Cloud
 
-Import dumps by launching a Meilisearch instance [with the `--import-dump` configuration option](/learn/configuration/instance_options#import-dump).
-
-During a dump import, all indexes contained in the indicated `.dump` file are imported along with their associated documents and settings. Any existing index with the same `uid` as an index in the dump file will be overwritten.
-
-While a dump is being imported, the API is not available to the task queue. As a result, no read or write operations can be performed until the importing process is complete.
-
-<Capsule intent="note">
-We do not recommend using dumps to migrate from a new Meilisearch version to an older one.
-
-For example, you can import a dump from Meilisearch v0.21 into v0.22 without any problems. Importing a dump generated in v0.22 into a v0.21 instance, however, can lead to unexpected behavior.
-</Capsule>
-
-Once you have exported a dump you can use the resulting `.dump` file to [launch Meilisearch with the `--import-dump` configuration option](/learn/configuration/instance_options#import-dump).
-
-As the data contained in the dump needs to be indexed, the process will take some time to complete. Only when the dump has been fully imported will the Meilisearch server start, after which you can begin searching through your data.
+Import a dump by launching a Meilisearch instance with the [`--import-dump` configuration option](/learn/configuration/instance_options#import-dump):
 
 ```bash
 ./meilisearch --import-dump /dumps/20200813-042312213.dump
 ```
 
-## Use cases
+Depending on the size of your dump file, importing it might take a significant amount of time. You will only be able to access Meilisearch and its API once this process is complete.
 
-Dumps are used to restore your database after [updating Meilisearch](/learn/update_and_migration/updating) or to copy your database to other Meilisearch instances without having to worry about their respective versions. For more on this subject, see a [comparison of snapshots and dumps](/learn/advanced/snapshots_vs_dumps).
+Meilisearch imports all data in the dump file. If you have already added data to your instance, existing indexes with the same `uid` as an index in the dump file will be overwritten.
+
+<Capsule intent="note">
+Do not use dumps to migrate from a new Meilisearch version to an older release. Doing so might lead to unexpected behavior.
+</Capsule>
