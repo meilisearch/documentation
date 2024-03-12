@@ -386,6 +386,7 @@
         "label": "Multitenancy with Node.js",
         "slug": "multitenancy_nodejs"
       },
+      {
         "source": "learn/cookbooks/indexing_best_practices.mdx",
         "label": "Indexing best practices",
         "slug": "indexing_best_practices"
