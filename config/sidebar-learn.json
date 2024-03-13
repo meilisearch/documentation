@@ -74,6 +74,11 @@
         "source": "learn/cloud/monitoring.mdx",
         "label": "Monitoring",
         "slug": "monitoring"
+      },
+      {
+        "source": "learn/cloud/teams.mdx",
+        "label": "Teams",
+        "slug": "teams"
       }
     ]
   },
