@@ -5,18 +5,17 @@ description: Learn how to use Meilisearch with Strapi v4.
 
 # Strapi v4 guide
 
-This tutorial will show you how to integrate Meilisearch with [Strapi](https://strapi.io/) to create a search-based web app. We are going to use Strapi’s quick start guide to create a restaurant collection, and then use Meilisearch to search through our collection data.
+This tutorial will show you how to integrate Meilisearch with [Strapi](https://strapi.io/) to create a search-based web app. First, you will use Strapi’s quick start guide to create a restaurant collection, and then search this collection with Meilisearch.
 
 ## Prerequisites
 
-Before you start, make sure you have the following installed on your machine:
 - [Node.js](https://nodejs.org/): active LTS or maintenance LTS versions, currently Node.js >=18.0.0 \<=20.x.x
 - npm >=6.0.0 (installed with Node.js) 
 - A running instance of Meilisearch (v >= 1.x). If you need help with this part, you can consult the [Installation section](/learn/getting_started/installation). 
 
-## Create a back-end using Strapi
+## Create a back end using Strapi
 
-Create a directory called `my-app` where you will add our back and front-end parts of the application. Generate a back-end API using Strapi inside `my-app`:
+Create a directory called `my-app` where you will add the back and front-end parts of the application. Generate a back-end API using Strapi inside `my-app`:
 
 ```bash
 npx create-strapi-app@latest back --quickstart
@@ -62,11 +61,11 @@ Next, add the `French food` category on the bottom right corner of the page.
 
 Your Strapi back-end is now up and running. Strapi automatically creates a REST API for your Restaurants collection. Check Strapi's documentation for all available [API endpoints](https://strapi.io/documentation/developer-docs/latest/developer-resources/content-api/content-api.html#api-endpoints).
 
-Now, it’s time to connect Strapi and Meilisearch and start searching through our data.
+Now, it’s time to connect Strapi and Meilisearch and start searching.
 
 ## Connect Strapi and Meilisearch
 
-In order to add the Meilisearch plugin to Strapi, you need to quit our Strapi app. Go to the terminal window running Strapi and push `Ctrl+C` to kill the process.
+To add the Meilisearch plugin to Strapi, you need to first quit the Strapi app. Go to the terminal window running Strapi and push `Ctrl+C` to kill the process.
 
 Next, install the plugin in the `back` directory.
 
@@ -81,13 +80,13 @@ npm run build
 npm run develop
 ```
 
-At this point, your Strapi app should be running once again on the default address: http://localhost:1337/admin/. Open it in your browser, you should see an admin log-in page; enter the credentials you used to create your account.
+At this point, your Strapi app should be running once again on the default address: http://localhost:1337/admin/. Open it in your browser. You should see an admin log-in page. Enter the credentials you used to create your account.
 
 Once connected, you should see the new `meilisearch` plugin on the left side of the screen.
 
 [Strapi dashboard with plugins side menu: arrow pointing at the 'meilisearch' option](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/strapi-v4/strapi-meilisearch-plugin.png)
 
-Add your Meilisearch credentialson the Settings tab of the `meilisearch` plugin page. 
+Add your Meilisearch credentials on the Settings tab of the `meilisearch` plugin page. 
 
 [Strapi dashboard with Meilisearch plugin selected: arrow pointing to the location of the settings tab](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/strapi-v4/strapi-meilisearch-credentials.png)
 
@@ -107,6 +106,6 @@ Your Strapi entries are sent to Meilisearch as is. You can modify the data befor
 
 ## What's next
 
-This tutorial taught you how to add your Strapi collections to Meilisearch. 
+This tutorial showed you how to add your Strapi collections to Meilisearch. 
 
 In most real-life scenarios, you'll typically build a custom search interface and fetch results using Meilisearch's API. To learn how to quickly build a front-end interface of your own, check out the [Front-end integration page](https://www.meilisearch.com/docs/learn/front_end/front_end_integration) guide.
