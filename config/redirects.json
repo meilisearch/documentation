@@ -140,5 +140,9 @@
   {
     "source": "/docs/learn/getting_started/getting_ready_for_production",
     "destination": "/docs/learn/getting_started/cloud_quick_start"
+  },
+  {
+    "source": "/docs/learn/experimental/ranking_rule_score_details",
+    "destination": "/docs/reference/api/search#ranking_score_details"
   }
 ]
