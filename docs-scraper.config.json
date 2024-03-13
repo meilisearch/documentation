@@ -43,6 +43,10 @@
           "hierarchy_lvl0"
       ],
       "synonyms": {
+          "large language model": [
+            "llm",
+            "LLM"
+          ],
           "relevancy": [
               "relevant",
               "relevance"
