@@ -380,7 +380,7 @@
         "source": "learn/cookbooks/laravel_multitenancy.mdx",
         "label": "Multitenancy with Laravel",
         "slug": "laravel_multitenancy"
-      },
+      },      
       {
         "source": "learn/cookbooks/indexing_best_practices.mdx",
         "label": "Indexing best practices",
@@ -390,7 +390,12 @@
         "source": "learn/cookbooks/computing_hugging_face_embeddings_gpu.mdx",
         "label": "Computing Hugging Face embeddings with the GPU",
         "slug": "computing_hugging_face_embeddings_gpu"
-      }
+      },
+      {
+        "source": "learn/cookbooks/strapi_v4.mdx",
+        "label": "Strapi v4 guide",
+        "slug": "strapi_v4"
+      }      
     ]
   },
   {
