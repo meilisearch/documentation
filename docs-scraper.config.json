@@ -45,7 +45,9 @@
       "synonyms": {
           "large language model": [
             "llm",
-            "LLM"
+          ],
+          "llm": [
+            "large language model"
           ],
           "relevancy": [
               "relevant",
