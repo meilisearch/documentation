@@ -16,25 +16,31 @@ If migrating to the latest version of Meilisearch will cause you to skip multipl
 If you are running Meilisearch as a `systemctl` service using v0.22 or above, try our [migration script](https://github.com/meilisearch/meilisearch-migration).
 </Capsule>
 
-<Capsule intent="danger">
-This guide only works for versions v0.15 and above. If you are using an older version, please [contact support](https://discord.meilisearch.com) for more information.
-</Capsule>
+## Updating Meilisearch Cloud
 
-## Updating on Meilisearch Cloud
+Log into your Meilisearch Cloud account and navigate to the project you want to update.
 
-If you're using Meilisearch Cloud, you don't need to follow the rest of this guide. Clicking the "Update to `vX.Y.Z`" button on the dashboard will take care of the update for you.
+In the "General settings" section, look for "Meilisearch version". This field shows your project's current Meilisearch version. If there's an update available, you will see a button next to the version number.
 
-Click on the project you want to update. Look for the "Project overview" section at the top of the page. Once a new version of Meilisearch is available, you should see an update button next to the "Meilisearch version" field.
+Click on the project you want to update. Look for the "General settings" section at the top of the page. 
+
+Whenever a new version of Meilisearch is available, you will see an update button next to the "Meilisearch version" field.
 
 ![Button to update Meilisearch version to 1.0.2](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/updating/update-button.png)
 
-Clicking the button will open a pop-up warning. Once you agree to the update, the "Status" of your project will change from "running" to "updating".
+To update to the latest Meilisearch release, clicking the "Update to v.X.Y.Z" button. 
+
+This will open a pop-up warning. Read it carefully, then click on "Update". The "Status" of your project will change from "running" to "updating".
 
 ![Project update in progress](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/updating/update-in-progress.png)
 
 Once the project has been successfully updated, you will receive an email confirming the update and the "Status" will change back to "running".
 
-## Updating a local or deployed Meilisearch instance
+## Updating a self-hosted Meilisearch instance
+
+<Capsule intent="warning">
+This guide only works for v0.15 and above. If you are using an older Meilisearch release, please [contact support](https://discord.meilisearch.com) for more information.
+</Capsule>
 
 ### Step 1: Export data
 
