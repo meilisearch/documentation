@@ -3,84 +3,70 @@ title: Running Meilisearch in production — Meilisearch documentation
 description: Deploy Meilisearch in a Digital Ocean droplet. Covers installation,  server configuration, and securing your instance.
 ---
 
-# Running Meilisearch in production
+# Running a self-hosted Meilisearch in production
 
-[Meilisearch Cloud](https://www.meilisearch.com/cloud?utm_campaign=oss&utm_source=docs&utm_medium=running-production-oss) is the recommended way to run Meilisearch in production environments. However, it is also possible to self-host Meilisearch.
+This tutorial will guide you through setting up a production-ready Debian server in a DigitalOcean droplet. It covers installing Meilisearch and setting up a secure environment.
 
-This tutorial will guide you through setting up a Debian server, installing Meilisearch, and setting up your environment.
+<Capsule intent="note">
+[Meilisearch Cloud](https://www.meilisearch.com/cloud?utm_campaign=oss&utm_source=docs&utm_medium=running-production-oss) is the recommended way to run Meilisearch in production environments.
+</Capsule>
 
 ## Requirements
 
-+ An up-to-date server that runs Debian 10
-+ An ssh key pair to connect to that machine
+- A DigitalOcean droplet running Debian 10
+- An SSH key pair to connect to that machine
 
 <Capsule intent="tip">
-Learn how to connect via SSH to your [DigitalOcean droplet](https://www.digitalocean.com/docs/droplets/how-to/connect-with-ssh/) or any [Linux or Windows server](https://phoenixnap.com/kb/ssh-to-connect-to-remote-server-linux-or-windows)
+DigitalOcean has extensive documentation on [how to use SSH to connect to a droplet](https://www.digitalocean.com/docs/droplets/how-to/connect-with-ssh/).
 </Capsule>
 
 ## Step 1: Install Meilisearch
 
-To keep this tutorial as simple as possible, let's use a script that will carry out the installation process. It will copy a binary of Meilisearch to your machine and enable you to use it immediately.
+Log into your server via SSH, update the list of available packages, and install `curl`:
 
-Once you are logged in into your machine via SSH, ensure your system and its dependencies are up-to-date before proceeding with the installation.
-
-```bash
-# Update the list of available packages and their versions
+```sh
 apt update
-# Install curl which is required to install Meilisearch in the next step
 apt install curl -y
+```
+
+Using the latest version of a package is good security practice, especially in production environments.
+
+Next, use `curl` to download and run the Meilisearch command-line installer:
+
+```sh
 # Install Meilisearch latest version from the script
 curl -L https://install.meilisearch.com | sh
 ```
 
-The different Meilisearch installation options are detailed in [this guide](/learn/getting_started/quick_start#setup-and-installation).
+The Meilisearch installer is a set of scripts that ensure you will get the correct binary for your system.
 
-**There are many different ways to get Meilisearch running on your machine.** As an open-source project, you can always compile the latest stable release of Meilisearch from its source code to ensure the binary uses your architecture in the best possible way.
+Give the binary the required execute permission:
 
-You can always check the latest Meilisearch stable version, and get Meilisearch for the Operating System of your choice, by visiting the following link:
-
-**[Latest Meilisearch Stable Version](https://github.com/meilisearch/meilisearch/releases/latest)**
-
-Give the binary execute permission using:
-
-```bash
+```sh
 chmod +x meilisearch
 ```
 
-Meilisearch is finally installed and ready to use. To make it accessible from everywhere in your system, move the binary file into your system binaries folder:
+The last step is to make the binary accessible from anywhere in your system. Move the binary file into `/usr/local/bin`:
 
-```bash
-# Move the Meilisearch binary to your system binaries
+```sh
 mv ./meilisearch /usr/local/bin/
 ```
 
+Meilisearch is now ready to use. 
+
 ## Step 2: Create system user
 
-Running applications as root can introduce security flaws in your system. To prevent that from happening, create a dedicated system user for running Meilisearch:
+Running applications as root exposes you to unnecessary security risks. To prevent that, create a dedicated user for Meilisearch:
 
-```bash
+```sh
 useradd -d /var/lib/meilisearch -b /bin/false -m -r meilisearch
 ```
 
 ## Step 3: Create a configuration file
 
-Download default config to `/etc`:
+After installing Meilisearch and taking the first step towards keeping your data safe, you need to set up a basic configuration file.
 
-```bash
-curl https://raw.githubusercontent.com/meilisearch/meilisearch/latest/config.toml > /etc/meilisearch.toml
-```
-
-Update the following lines so Meilisearch stores its data in the home folder of your newly created user:
-
-```ini
-env = "production"
-master_key = "YOUR_MASTER_KEY_VALUE"
-db_path = "/var/lib/meilisearch/data"
-dump_dir = "/var/lib/meilisearch/dumps"
-snapshot_dir = "/var/lib/meilisearch/snapshots"
-```
-
-Finally, create the directories you added to the configuration file and set proper privileges:
+First, create the directories where Meilisearch will store its data:
 
 ```bash
 mkdir /var/lib/meilisearch/data /var/lib/meilisearch/dumps /var/lib/meilisearch/snapshots
@@ -88,21 +74,35 @@ chown -R meilisearch:meilisearch /var/lib/meilisearch
 chmod 750 /var/lib/meilisearch
 ```
 
+Next, download the default configuration to `/etc`:
+
+```bash
+curl https://raw.githubusercontent.com/meilisearch/meilisearch/latest/config.toml > /etc/meilisearch.toml
+```
+
+Finally, update the following lines so Meilisearch uses the directories you created earlier to store its data, replacing `MASTER_KEY` with a 16-byte string:
+
+```ini
+env = "production"
+master_key = "MASTER_KEY"
+db_path = "/var/lib/meilisearch/data"
+dump_dir = "/var/lib/meilisearch/dumps"
+snapshot_dir = "/var/lib/meilisearch/snapshots"
+```
+
+Remember to choose a safe master key and avoid exposing it in publicly accessible locations.
+
+You have now configured your Meilisearch instance.
+
 ## Step 4: Run Meilisearch as a service
 
-In Linux environments, a `service` is a process that can be launched when the operating system is booting and which will keep running in the background. One of its biggest advantages is making your program available at any moment. Even if some execution problems or crashes occur, the service will be restarted and your program will be run again.
-
-<Capsule intent="note">
-If you are new to services and `systemd`, you can learn more about the basics of Linux services [here](https://www.hostinger.com/tutorials/manage-and-list-services-in-linux/).
-</Capsule>
-
-In Debian and other Linux distributions, `systemd` allows you to create and manage your own custom services. In order to make sure that Meilisearch will always respond to your requests, you can build your own service. This way, you will ensure its availability in case of a crash or in case of system reboot. If any of these occur, `systemd` will automatically restart Meilisearch.
+In Linux environments, a `service` is a process that can be launched when the operating system is booting and which will keep running in the background. If your program stops running for any reason, Linux will immediately restart the service, helping reduce downtime.
 
 ### 4.1. Create a service file
 
-Service files are text files that tell your operating system how to run your program, and when. They live in the `/etc/systemd/system` directory, and your system will load them at boot time. In this case, let's use a very simple service file that will run Meilisearch on port `7700`.
+Service files are text files that tell your operating system how to run your program. 
 
-Run this command to create a service file:
+Run this command to create a service file in `/etc/systemd/system`:
 
 ```bash
 cat << EOF > /etc/systemd/system/meilisearch.service
@@ -122,69 +122,63 @@ WantedBy=multi-user.target
 EOF
 ```
 
-To run Meilisearch in a production environment, use the `--env` flag. Set a master key of at least 16 bytes using the `--master-key` option. When you launch an instance for the first time, Meilisearch creates two default API keys: [`Default Search API Key` and `Default Admin API Key`](/learn/security/master_api_keys#using-default-api-keys-for-authorization). With the `Default Admin API Key`, you can control who can access or create new documents, indexes, or change the configuration.
-
-Remember to choose a safe and random key and avoid exposing it in publicly accessible applications.
-
-<Capsule intent="tip">
-For more information on Meilisearch security and API keys see the [security docs](/learn/security/master_api_keys). You can check our [quick start](/learn/getting_started/quick_start#setup-and-installation) guide for more information on how to get Meilisearch up and running.
-</Capsule>
-
-As for now, it is not time yet to expose your Meilisearch instance to the external world. To keep running it safely inside your own environment, make it available locally at `local`. This means that only programs running on your machine are allowed to make requests to your Meilisearch instance.
-
 ### 4.2. Enable and start service
 
-The service file you just built is all you need for creating your service. Now you must `enable` it to tell the operating system that we want it to run Meilisearch at every boot. You can then `start` the service to make it run immediately. Ensure everything is working smoothly by checking the service `status`.
+With your service file now ready to go, activate the service using `systemctl`:
 
 ```bash
-# Set the service meilisearch
 systemctl enable meilisearch
-
-# Start the meilisearch service
 systemctl start meilisearch
+```
 
-# Verify that the service is actually running
+With `systemctl enable`, you're telling the operating system you want it to run at every boot. `systemctl start` then immediately starts the Meilisearch service.
+
+Ensure everything is working by checking the service status:
+
+```sh
 systemctl status meilisearch
 ```
 
-```bash
--# --- Expected output ---
-● meilisearch.service - MeiliSearch
+You should see a message confirming your service is running: 
+
+```sh
+● meilisearch.service - Meilisearch
    Loaded: loaded (/etc/systemd/system/meilisearch.service; enabled; vendor preset: enabled)
-   Active: active (running) since Fri 2020-04-10 14:27:49 UTC; 1min 8s ago
+   Active: active (running) since Fri 2023-04-10 14:27:49 UTC; 1min 8s ago
  Main PID: 14960 (meilisearch)
 ```
 
-At this point, Meilisearch is installed and running. It is protected from eventual crashes, system restarts, and most of the problems it could find while running. But it is still hidden and protected inside the walls (or firewalls) of your machine, and unreachable from the outside world. You can stop here if all the requests you do to Meilisearch are done by another application living in the same machine.
-
-But you probably want to open your Meilisearch to the outside world, and for now, it is isolated. Let's fix that in a safe way.
-
 ## Step 5: Secure and finish your setup
 
-It's time to safely make your brand new Meilisearch available to be requested from the outside world. For this purpose, you will use two of the main technologies available on the web: a Reverse Proxy and SSL/TLS.
+At this point, Meilisearch is installed and running. It is also protected from eventual crashes and system restarts.
 
-### 5.1. Creating a reverse proxy with [Nginx](https://www.nginx.com/)
-
-A reverse proxy is basically an application that will handle every communication between the outside world and your internal applications. Nginx will receive external HTTP requests and redirect them to Meilisearch. When Meilisearch has done its amazing job, it will communicate its response to Nginx, which will then transfer the latter to the user who originally sent the request. This is a common way to isolate and protect any application by adding a robust, secure, and fast gate-keeper such as Nginx, one of the safest and most efficient tools available online, and of course, open-source!
+The next step is to make your instance publicly accessible. 
 
 <Capsule intent="tip">
-Reverse proxies are very useful regarding security, performance, scalability, and logging concerns. If you are new to Reverse proxies, you may enjoy this article explaining the why and the how of [reverse proxies](https://www.keycdn.com/support/nginx-reverse-proxy).
+If all the requests you send to Meilisearch are done by another application living in the same machine, you can safely skip this section.
 </Capsule>
 
-Configuring Nginx as a proxy server is really simple. First of all, install it on your machine.
+### 5.1. Creating a reverse proxy with Nginx
+
+A [reverse proxy](https://www.keycdn.com/support/nginx-reverse-proxy) is an application that will handle every communication between the outside world and your internal applications. In this tutorial, you will use [Nginx](https://www.nginx.com/) as your reverse proxy to receive external HTTP requests and redirect them to Meilisearch. 
+
+First, install Nginx on your machine:
 
 ```bash
-# Install Nginx on Debian
 apt-get install nginx -y
 ```
 
-First, deleting the default configuration file is important as the default port for HTTP, the `port 80`, is used by Nginx by default. Thus, trying to use it for Meilisearch will create a conflict. Replace the default file by your own configuration file. You can also make Meilisearch listen to another port by specifying it in the Nginx configuration file, but we will not cover this option in this tutorial.
+Next, delete the default configuration file:
 
 ```bash
-# Delete the default configuration file for Nginx
 rm -f /etc/nginx/sites-enabled/default
+```
 
-# Add your configuration file specifying the Reverse Proxy settings
+Nginx comes with a set of default settings, such as its default HTTP port, that might conflict with Meilisearch.
+
+Create a new configuration file specifying the reverse proxy settings:
+
+```sh
 cat << EOF > /etc/nginx/sites-enabled/meilisearch
 server {
     listen 80 default_server;
@@ -197,132 +191,40 @@ server {
 EOF
 ```
 
-Finally, enable and start the Nginx service again to make sure it is still available.
+Finally, enable the Nginx service:
 
 ```bash
-# Reload the operating system daemons / services
 systemctl daemon-reload
-
-# Enable and start Nginx service
 systemctl enable nginx
 systemctl restart nginx
 ```
 
-Meilisearch is now up, deployed in a production environment, using a safe API key, and being served by a Reverse Proxy Nginx. You should now be able to send requests to your server from the outside world. Open your web browser and visit: `http://your-ip-address`. The IP address is the same you used to connect to your machine via SSH in Step 1.
+Your Meilisearch instance is now publicly available.
 
-<Capsule intent="note">
-If you want to learn more about using Nginx as a Reverse Proxy, see [this dedicated documentation](https://docs.nginx.com/nginx/admin-guide/web-server/reverse-proxy/).
-</Capsule>
+### 5.2. Enable HTTPS
 
-The only remaining problem is that Meilisearch processes requests via HTTP without any additional security. The content that is being transmitted over HTTP could easily be read or modified by attackers, and someone could get full or partial access to your data. In order to prevent this to happen, it's important to use the HTTPS, which will enable you to use a SSL/TLS certificate, and securely transmit data.
+The only remaining problem is that Meilisearch processes requests via HTTP without any additional security. This is a major security flaw that could result in an attacker accessing your data.
 
-### 5.2. Set up SSL/TLS for your Meilisearch
+This tutorial assumes you have a registered domain name, and you have correctly configured its DNS's `A record` to point to your DigitalOcean droplet's IP address. Consult the [DigitalOcean DNS documentation](https://docs.digitalocean.com/products/networking/dns/getting-started/dns-registrars/) for more information.
 
-SSL will let the user or client establish an authenticated connection to Meilisearch. In this way, a user can verify server's identity before sending sensitive data or making any request to it. Then, data is sent in an encrypted way that only Meilisearch server will be able to decrypt, providing you a fast, reliable, and automatic layer of security.
+Use [certbot](https://certbot.eff.org/) to configure enable HTTPS in your server.
 
-In most cases, when enabling SSL, you may want to use your own domain name (or a sub-domain). The first step you need to follow is to register your own domain name and change the DNS records. To make your domain name point to your newly installed Meilisearch server, you just need to add an `A record` pointing to the IP address used to connect to your own server. This process is simple and fast but can vary for every domain name provider. Thus, we will not cover that process in this article.
-
-<Capsule intent="tip">
-When you register a domain name and add an `A record`, you should be automatically able to request Meilisearch directly by using that domain name.
-To illustrate this, if you had registered your domain name `example.com`, requesting indexes would be done at http://example.com/indexes
-</Capsule>
-
-Once your domain name has been set up, you are ready to configure SSL/TLS and use HTTPS. You have two different options to achieve this goal. The first one is using [Certbot](https://certbot.eff.org/), an amazing, free, and very easy to use tool. If you already have SSL certificates issued from a `Certificate Authority or CA` for your domain name, the second option covers the steps you need to follow. Then, you will be ready to use Meilisearch safely in production!
-
-#### 5.2.1. Option A: Certbot
-
-Using certbot in your Linux server is very straightforward. This tool will generate a free SSL/TLS certificate for your domain name, and automatically handle its installation on your server. The certbot documentation contains detailed instructions for many operating systems and servers, but we will follow the instructions for [Certbot on Debian with Nginx](https://certbot.eff.org/instructions?ws=nginx&os=debianbuster).
-
-First of all, install the packages on your system:
+First, install the required packages on your system:
 
 ```bash
 sudo apt-get install certbot python-certbot-nginx -y
 ```
 
-Let's run the Certbot script to be guided through the installation process:
+Next, run certbot:
 
 ```bash
 certbot --nginx
 ```
 
-Enter your email address, agree to the Terms and Conditions, and input your domain name. You will then be prompted with these options:
+Enter your email address, agree to the Terms and Conditions, and choose your domain. When prompted if you want to automatically redirect HTTP traffic, choose option `2: Redirect`.
 
-```bash
-Please choose whether or not to redirect HTTP traffic to HTTPS, removing HTTP access.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-1: No redirect - Make no further changes to the webserver configuration.
-2: Redirect - Make all requests redirect to secure HTTPS access. Choose this for
-new sites, or if you're confident your site works on HTTPS. You can undo this
-change by editing your web server's configuration.
-```
-
-We recommend that you choose option 2, to redirect HTTP to HTTPS and always use a secure connection. You should be able to request your domain name with SSL as in `https://example.com` or `https://example.com/indexes`.
-
-#### 5.2.2. Option B: Custom SSL/TLS certificates
-
-When a `Certificate Authority` issues a SSL certificate for you, you receive at least two files with encrypted keys:
-
-+ Your **certificate** (commonly named `your_domain_name.pem` or `example.pem`)
-+ Your **key** (commonly named `your_domain_name.key` or `example.key`)
-
-`example.pem` and `example.key` will be used in the following examples. Make sure to replace `example` by the names of your own certificate files.
-
-All you need to do is store the certificate files in a secure location and use appropriate file system security permissions. Then, set the location of the certificates in Nginx configuration. It is also strongly recommended to redirect all HTTP requests to HTTPS (port 80 to 443).
-
-First, let's copy your certificate files in their conventional directory so the server can find them:
-
-```bash
-# Create a directory /etc/ssl/example to store the certificate files
-mkdir -p /etc/ssl/example
-
-# Move your files to /etc/ssl/example. We will suppose that your
-# files are called example.pem and example.key
-
-mv path-to-your-files/example.pem /etc/ssl/example/
-mv path-to-your-files/example.key /etc/ssl/example/
-```
-
-Finally, we create a new Nginx configuration file, and restart the daemons and Nginx service
-
-Remember to replace `example.com` in both `server_name` fields with your **own domain name**
-
-```bash
-
-# Replace example.com in both `server_name` fields with your own domain name
-
-cat << EOF > /etc/nginx/sites-enabled/meilisearch
-server {
-      listen 80 default_server;
-      listen [::]:80 default_server;
-
-      server_name example.com;
-
-      return 301 https://\$server_name\$request_uri;
-}
-server {
-    server_name example.com;
-
-    location / {
-        proxy_pass  http://localhost:7700;
-    }
-
-    listen [::]:443 ssl ipv6only=on;
-    listen 443 ssl;
-
-    access_log /var/log/nginx/nginx.vhost.access.log;
-    error_log /var/log/nginx/nginx.vhost.error.log;
-    ssl_certificate /etc/ssl/example/example.pem;
-    ssl_certificate_key /etc/ssl/example/example.key;
-}
-EOF
-
-systemctl restart nginx
-```
-
-Your SSL certificates should be working and Nginx should be able to find them. Every request to `http://example.com` will now be redirected to `https://example.com`
+Certbot will finish configuring Nginx. Once it is done, all traffic to your server will use HTTPS and you will have finished securing your Meilisearch instance.
 
 ## Conclusion
 
-You have followed the main steps to provide a safe and stable service. Your Meilisearch instance should be up and running, in a safe environment and ready to stay available even when the most common issues occur. In addition, it is protected by a reverse proxy with your own domain name and API key, so your data and configuration are accessible only to trusted clients. Communication with your server is now encrypted. Furthermore, its identity will be verified every time before sending sensitive data in a fast and automated manner.
-
-You are now ready to start using your **production-ready Meilisearch instance**!
+You have followed the main steps to provide a safe and stable service. Your Meilisearch instance is now up and running in a safe and publicly accessible environment thanks to the combination of a reverse proxy, HTTPS, and Meilisearch's built-in security keys.
