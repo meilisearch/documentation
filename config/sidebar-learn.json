@@ -132,6 +132,16 @@
         "source": "learn/configuration/instance_options.mdx",
         "label": "Configure Meilisearch at launch",
         "slug": "instance_options"
+      },
+      {
+        "source": "learn/configuration/configuring_index_settings.mdx",
+        "label": "Configuring index settings",
+        "slug": "configuring_index_settings"
+      },
+      {
+        "source": "learn/configuration/configuring_index_settings_api.mdx",
+        "label": "Configuring index settings with the Meilisearch API",
+        "slug": "configuring_index_settings_api"
       }
     ]
   },
@@ -390,7 +400,37 @@
         "source": "learn/primary_db_sync/meilisync_postgresql.mdx",
         "label": "Syncing databases with PostgreSQL and meilisync",
         "slug": "meilisync_postgresql"
-      }
+      },
+      {
+        "source": "learn/cookbooks/laravel_scout.mdx",
+        "label": "Laravel Scout guide",
+        "slug": "laravel_scout"
+      },
+      {
+        "source": "learn/cookbooks/laravel_multitenancy.mdx",
+        "label": "Multitenancy with Laravel",
+        "slug": "laravel_multitenancy"
+      },      
+      {
+        "source": "learn/cookbooks/multitenancy_nodejs.mdx",
+        "label": "Multitenancy with Node.js",
+        "slug": "multitenancy_nodejs"
+      },
+      {
+        "source": "learn/cookbooks/indexing_best_practices.mdx",
+        "label": "Indexing best practices",
+        "slug": "indexing_best_practices"
+      },
+      {
+        "source": "learn/cookbooks/computing_hugging_face_embeddings_gpu.mdx",
+        "label": "Computing Hugging Face embeddings with the GPU",
+        "slug": "computing_hugging_face_embeddings_gpu"
+      },
+      {
+        "source": "learn/cookbooks/strapi_v4.mdx",
+        "label": "Strapi v4 guide",
+        "slug": "strapi_v4"
+      }      
     ]
   },
   {
@@ -464,14 +504,19 @@
         "slug": "reduce-indexing-memory-usage"
       },
       {
-        "source": "learn/experimental/ranking_rule_score_details.mdx",
-        "label": "Detailed ranking scores",
-        "slug": "ranking_rule_score_details"
+        "source": "learn/experimental/log_customization.mdx",
+        "label": "Log customization",
+        "slug": "log_customization"
       },
       {
         "source": "learn/experimental/vector_search.mdx",
         "label": "Vector search",
         "slug": "vector_search"
+      },
+      {
+        "source": "learn/experimental/replication_parameters.mdx",
+        "label": "Replication parameters",
+        "slug": "replication_parameters"
       }
     ]
   },

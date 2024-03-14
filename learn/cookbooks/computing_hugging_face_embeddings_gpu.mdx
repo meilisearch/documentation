@@ -1,0 +1,92 @@
+---
+title: Computing Hugging Face embeddings with the GPU — Meilisearch documentation
+description: This guide for experienced users shows you how to compile a Meilisearch binary that generates Hugging Face embeddings with an Nvidia GPU.
+---
+
+# Computing Hugging Face embeddings with the GPU
+
+This guide is aimed at experienced users working with a self-hosted Meilisearch instance. It shows you how to compile a Meilisearch binary that generates Hugging Face embeddings with an Nvidia GPU.
+
+## Prerequisites
+
+- A [CUDA-compatible Linux distribution](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html#id12)
+- An Nvidia GPU with CUDA support
+- A modern Rust compiler
+
+## Install CUDA
+
+Follow Nvidia's [CUDA installation instructions](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html).
+
+## Verify your CUDA install
+
+After you have installed CUDA in your machine, run the following command in your command-line terminal:
+
+```sh
+nvcc --version | head -1
+```
+
+If CUDA is working correctly, you will see the following response:
+
+```
+nvcc: NVIDIA (R) Cuda compiler driver
+```
+
+## Compile Meilisearch
+
+First, clone Meilisearch:
+
+```sh
+git clone https://github.com/meilisearch/meilisearch.git
+```
+
+Then, compile the Meilisearch binary with `cuda` enabled:
+
+```sh
+cargo build --release --features cuda
+```
+
+This might take a few moments. Once the compiler is done, you should have a CUDA-compatible Meilisearch binary.
+
+## Enable vector search
+
+Run your freshly compiled binary:
+
+```sh
+./meilisearch
+```
+
+Next, enable the vector store experimental feature:
+
+```sh
+curl \
+  -X PATCH 'http://localhost:7700/experimental-features/' \
+  -H 'Content-Type: application/json'  \
+  --data-binary '{ "vectorStore": true }'
+```
+
+Then add the Hugging Face embedder to your index settings:
+
+```sh
+curl \
+  -X PATCH 'http://localhost:7700/indexes/INDEX_NAME/settings/embedders' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{ "default": { "source": "huggingFace" } }'
+```
+
+Meilisearch will return a summarized task object and place your request on the task queue:
+
+```json
+{
+  "taskUid": 1,
+  "indexUid": "INDEX_NAME",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2024-03-04T15:05:43.383955Z"
+}
+```
+
+Use the task object's `taskUid` to [monitor the task status](/reference/api/tasks#get-one-task). The Hugging Face embedder will be ready to use once the task is completed.
+
+## Conclusion
+
+You have seen how to compile a Meilisearch binary that uses your Nvidia GPU to compute vector embeddings. Doing this should significantly speed up indexing when using Hugging Face.

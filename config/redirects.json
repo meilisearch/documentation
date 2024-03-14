@@ -146,4 +146,8 @@
     "destination": "/docs/learn/security/basic_security",
     "permanent": true
   },
+  {
+    "source": "/docs/learn/experimental/ranking_rule_score_details",
+    "destination": "/docs/reference/api/search#ranking_score_details"
+  }
 ]

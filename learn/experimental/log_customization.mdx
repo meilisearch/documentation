@@ -1,0 +1,77 @@
+---
+title: Log customization — Meilisearch documentation
+description: "Customize Meilisearch logs with two experimental features: --experimental-logs-mode and --experimental-enable-logs-route."
+---
+
+# Log customization
+
+Customize Meilisearch logs with two experimental features: `--experimental-logs-mode` and `--experimental-enable-logs-route`.
+
+## Customize log output
+
+Use `--experimental-logs-mode` to customize log output:
+
+```sh
+./meilisearch --experimental-logs-mode json
+```
+
+`--experimental-logs-mode` accepts either `human` or `json`. `human` is the default value.
+
+For more information, [consult this feature's GitHub discussion](https://github.com/orgs/meilisearch/discussions/723).
+
+## Log routes
+
+Activate the `/logs` routes during runtime using the `/experimental-features` route:
+
+```sh
+curl \
+  -X PATCH 'http://localhost:7700/experimental-features/' \
+  -H 'Content-Type: application/json'  \
+  --data-binary '{
+    "logsRoute": true
+  }'
+```
+
+Use `/logs/stderr` to customize logging levels for the default logging system:
+
+```sh
+curl \
+	-X POST http://localhost:7700/logs/stderr \
+	-H 'Content-Type: application/json' \
+	--data-binary '{
+      "target": "milli=trace,index_scheduler=info,actix_web=off"
+  }'
+```
+
+Use the `POST` endpoint of `/logs/stream` for focused debugging sessions:
+
+```sh
+curl \
+	-X POST http://localhost:7700/logs/stream \
+	-H 'Content-Type: application/json' \
+	--data-binary '{
+    "mode": "human",
+    "target": "index_scheduler=trace"
+  }'
+```
+
+Configure the stream using the same parameters as regular logging: `mode` and `target`. The stream will continue to run indefinitely until you interrupt it.
+
+<Capsule intent="warning" title="HTTP client compatibility">
+Certain HTTP clients such as `httpie` and `xh`, will only display data after you have interrupted the stream with the `DELETE` endpoint.
+</Capsule>
+
+Use the `DELETE` endpoint of `/logs/stream` to interrupt a stream:
+
+```sh
+curl \
+  -X DELETE http://localhost:7700/logs/stream
+```
+
+For more information, [consult this feature's GitHub discussion](https://github.com/orgs/meilisearch/discussions/721).
+
+<Capsule intent="warning">
+These features are experimental. Experimental features are unstable: their API might significantly change and become incompatible between releases. Meilisearch does not recommend using experimental features in a production environment.
+
+Meilisearch makes experimental features available expecting they will become stable in a future release. However, it is not possible to guarantee when and if this will happen.
+</Capsule>

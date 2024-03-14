@@ -25,6 +25,14 @@
   "strip_chars": " .,;:#",
   "scrap_start_urls": true,
   "custom_settings": {
+    "embedders": {
+        "default": {
+          "source":  "openAi",
+          "apiKey": "embedderApiKey",
+          "model": "text-embedding-ada-002",
+          "documentTemplate": "{% if doc.hierarchy_lvl0 != null %}Starting with the theme '{{doc.hierarchy_lvl0}}'. {% endif %}{% if doc.hierarchy_lvl1 != null %}A document titled '{{doc.hierarchy_lvl1}}'. {% endif %}{% if doc.hierarchy_lvl2 != null %}Under the section '{{doc.hierarchy_lvl2}}'. {% endif %}{% if doc.hierarchy_lvl3 != null %}This is further divided into '{{doc.hierarchy_lvl3}}'. {% endif %}{% if doc.hierarchy_lvl4 != null %}Which includes '{{doc.hierarchy_lvl4}}'. {% endif %}{% if doc.hierarchy_lvl5 != null %}Specifically focusing on '{{doc.hierarchy_lvl5}}'. {% endif %}{% if doc.anchor != null %}It's about {{doc.anchor}}. {% endif %}{% if doc.content != null %}It discusses {{doc.content|truncatewords: 200}}{% endif %}"
+        }
+      },
       "searchableAttributes": [
           "hierarchy_lvl1",
           "hierarchy_lvl2",
@@ -35,6 +43,12 @@
           "hierarchy_lvl0"
       ],
       "synonyms": {
+          "large language model": [
+            "llm",
+          ],
+          "llm": [
+            "large language model"
+          ],
           "relevancy": [
               "relevant",
               "relevance"
