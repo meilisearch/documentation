@@ -132,6 +132,16 @@
         "source": "learn/configuration/instance_options.mdx",
         "label": "Configure Meilisearch at launch",
         "slug": "instance_options"
+      },
+      {
+        "source": "learn/configuration/configuring_index_settings.mdx",
+        "label": "Configuring index settings",
+        "slug": "configuring_index_settings"
+      },
+      {
+        "source": "learn/configuration/configuring_index_settings_api.mdx",
+        "label": "Configuring index settings with the Meilisearch API",
+        "slug": "configuring_index_settings_api"
       }
     ]
   },
