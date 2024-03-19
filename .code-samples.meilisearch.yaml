@@ -1197,5 +1197,5 @@ index_settings_tutorial_api_put_setting_1: |-
       "overview"
     ]'
 index_settings_tutorial_api_task_1: |-
-curl \
-  -X GET 'http://localhost:7700/tasks/TASK_UID'
+  curl \
+    -X GET 'http://localhost:7700/tasks/TASK_UID'
