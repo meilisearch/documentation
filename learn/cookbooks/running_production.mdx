@@ -3,7 +3,7 @@ title: Running Meilisearch in production — Meilisearch documentation
 description: Deploy Meilisearch in a Digital Ocean droplet. Covers installation,  server configuration, and securing your instance.
 ---
 
-# Running a self-hosted Meilisearch in production
+# Running a self-hosted Meilisearch project in production
 
 This tutorial will guide you through setting up a production-ready Debian server in a DigitalOcean droplet. It covers installing Meilisearch and setting up a secure environment.
 
@@ -96,7 +96,7 @@ You have now configured your Meilisearch instance.
 
 ## Step 4: Run Meilisearch as a service
 
-In Linux environments, a `service` is a process that can be launched when the operating system is booting and which will keep running in the background. If your program stops running for any reason, Linux will immediately restart the service, helping reduce downtime.
+In Linux environments, a service is a process that can be launched when the operating system is booting and which will keep running in the background. If your program stops running for any reason, Linux will immediately restart the service, helping reduce downtime.
 
 ### 4.1. Create a service file
 
@@ -160,7 +160,7 @@ If all the requests you send to Meilisearch are done by another application livi
 
 ### 5.1. Creating a reverse proxy with Nginx
 
-A [reverse proxy](https://www.keycdn.com/support/nginx-reverse-proxy) is an application that will handle every communication between the outside world and your internal applications. In this tutorial, you will use [Nginx](https://www.nginx.com/) as your reverse proxy to receive external HTTP requests and redirect them to Meilisearch. 
+A [reverse proxy](https://www.keycdn.com/support/nginx-reverse-proxy) is an application that will handle every communication between the outside world and your application. In this tutorial, you will use [Nginx](https://www.nginx.com/) as your reverse proxy to receive external HTTP requests and redirect them to Meilisearch. 
 
 First, install Nginx on your machine:
 
