@@ -104,24 +104,34 @@
     ]
   },
   {
-    "title": "Tasks and asynchronous workflow",
+    "title": "Tasks and asynchronous operations",
     "slug": "async",
     "routes": [
       {
-        "source": "learn/async/asynchronous_operations.mdx",
-        "label": "Tasks and asynchronous operations",
-        "slug": "asynchronous_operations"
+        "source": "learn/async/working_with_tasks.mdx",
+        "label": "Working with tasks",
+        "slug": "working_with_tasks"
       },
       {
-        "source": "learn/async/managing_tasks.mdx",
-        "label": "Managing the task database",
-        "slug": "managing_tasks"
+        "source": "learn/async/filtering_tasks.mdx",
+        "label": "Filtering tasks",
+        "slug": "filtering_tasks"
+      },
+      {
+        "source": "learn/async/paginating_tasks.mdx",
+        "label": "Paginating tasks",
+        "slug": "paginating_tasks"
       },
       {
         "source": "learn/async/task_webhook.mdx",
         "label": "Using task webhooks",
         "slug": "task_webhook"
-      }
+      },
+      {
+        "source": "learn/async/asynchronous_operations.mdx",
+        "label": "Tasks and asynchronous operations",
+        "slug": "asynchronous_operations"
+      },
     ]
   },
   {

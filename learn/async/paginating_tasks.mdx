@@ -1,0 +1,56 @@
+---
+title: Managing the task database — Meilisearch documentation
+description: Meilisearch uses a task queue to handle asynchronous operations. This document describes how to navigate long task queues with filters and pagination.
+---
+
+# Paginating tasks
+
+By default, Meilisearch returns a list of 20 tasks for each request when you query the get tasks endpoint. This guide shows you how to navigate the task list using query parameters.
+
+## Configuring the number of returned tasks
+
+Use the `limit` parameter to change the number of returned tasks:
+
+<CodeSamples id="get_all_tasks_paginating_1" />
+
+Meilisearch will return a batch of tasks. Each batch of returned tasks is often called a "page" of tasks, and the size of that page is determined by `limit`:  
+
+```json
+{
+  "results": [
+    …
+  ],
+  "total": 50,
+  "limit": 2,
+  "from": 10,
+  "next": 8
+}
+```
+
+It is possible none of the returned tasks are the ones you are looking for. If that's the case, you can use the returned field `next` to fetch the next page of tasks.
+
+## Navigating the task list with `from` and `next`
+
+Use the `next` field included in the response to your previous query to fetch the next set of results:
+
+<CodeSamples id="get_all_tasks_paginating_2" />
+
+This will return a new batch of tasks:
+
+```json
+{
+  "results": [
+    …
+  ],
+  "total": 50,
+  "limit": 2,
+  "from": 8,
+  "next": 6
+}
+```
+
+When the returned value of `next` is `null`, you have reached the final set of results.
+
+<Capsule intent="tip">
+You use `from` and `limit` together with task filtering parameters to navigate filtered task lists.
+</Capsule>
