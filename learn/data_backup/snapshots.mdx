@@ -23,7 +23,7 @@ Use the [`--schedule-snapshot` configuration option](/learn/configuration/instan
 meilisearch --schedule-snapshot
 ```
 
-The first snapshot is created on launch. You will find it the [snapshot directory](/learn/configuration/instance_options#snapshot-destination), `/snapshots`. Meilisearch will then create a new snapshot every 24 hours until you terminate your instance.
+The first snapshot is created on launch. You will find it in the [snapshot directory](/learn/configuration/instance_options#snapshot-destination), `/snapshots`. Meilisearch will then create a new snapshot every 24 hours until you terminate your instance.
 
 Meilisearch **automatically overwrites** old snapshots during snapshot creation. Only the most recent snapshot will be present in the folder at any given time.
 
