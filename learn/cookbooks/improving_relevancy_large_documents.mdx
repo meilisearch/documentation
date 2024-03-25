@@ -1,20 +1,22 @@
 ---
 title: Improving relevancy when working with large documents — Meilisearch documentation
-description: 
+description: Use JavaScript with Node.js to split a single large and configure Meilisearch with a distinct attribute to prevent duplicated results.
+
 ---
 
 Meilisearch is optimized for handling paragraph-sized chunks of text. Datasets with many documents containing large amounts of text may lead to reduced search result relevancy.
 
-In this guide, you will see how to use JavaScript to split a single large and configure Meilisearch with a distinct attribute to prevent duplicated results.
+In this guide, you will see how to use JavaScript with Node.js to split a single large and configure Meilisearch with a distinct attribute to prevent duplicated results.
 
 ## Requirements
 
 - A running Meilisearch project
 - A command-line console
+- Node.js v18
 
 ## Dataset
 
-`stories.json` contains two documents storing the full text of a short story in the `text` field:
+`stories.json` contains two documents, each storing the full text of a short story in its `text` field:
 
 ```json
 [
@@ -33,11 +35,11 @@ In this guide, you will see how to use JavaScript to split a single large and co
 ]
 ```
 
-Both these documents contain more text than Meilisearch can optimally search.
+<Capsule intent="note" title="What is a large document for Meilisearch?">
+Meilisearch works best with documents under four megabytes in size. This may roughly translate to around 200-400 paragraphs of text.
+</Capsule>
 
 ## Splitting documents
-
-There are many ways to parse and format a dataset. In this guide, you will use Node.js to write and run a JavaScript program.
 
 Create a `split_documents.js` file in your working directory:
 
@@ -69,7 +71,13 @@ for (let documentNumber = documents.length, i = 0; i < documentNumber; i += 1) {
 fs.writeFileSync("stories-split.json", JSON.stringify(splitDocuments));
 ```
 
-This script reads a JSON dataset and parses each document in it. For each paragraph in a document's `text` field, it creates a new document with a new `id` and `text` fields.
+Next, run the script on your console, specifying the path to your JSON dataset:
+
+```sh
+node ./split_documents.js ./stories.json
+```
+
+This script accepts one argument: a path pointing to a JSON dataset. It reads the file and parses each document in it. For each paragraph in a document's `text` field, it creates a new document with a new `id` and `text` fields. Finally, it writes the new documents on `stories-split.json`.
 
 ## Generating unique IDs
 
@@ -108,7 +116,7 @@ The script now stores the original document's `id` in `story_id`. It then create
 
 ## Configuring distinct attribute
 
-This dataset is now valid, but since each document effectively points to the same story, search are likely to result in duplicated search results.
+This dataset is now valid, but since each document effectively points to the same story, queries are likely to result in duplicated search results.
 
 To prevent that from happening, configure `story_id` as the index's distinct attribute:
 
@@ -123,4 +131,6 @@ Users searching this dataset will now be able to find more relevant results acro
 
 ## Conclusion
 
-You have seen how to split large documents to improve search relevancy. You also saw how to configure a distinct attribute to prevent duplicate results. Though this guide used JavaScript, you can replicate the process with any programming language you are comfortable using.
+You have seen how to split large documents to improve search relevancy. You also saw how to configure a distinct attribute to prevent duplicate results. 
+
+Though this guide used JavaScript, you can replicate the process with any programming language you are comfortable using.
