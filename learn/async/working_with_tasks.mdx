@@ -1,11 +1,11 @@
 ---
 title: Working with tasks — Meilisearch documentation
-description: 
+description: In this tutorial, you'll use the Meilisearch API to add documents to an index, and then monitor its status.
 ---
 
 # Working with tasks
 
-Many Meilisearch operations are processed asynchronously in a task. Asynchronous tasks allow you to make resource-intensive changes to your Meilisearch project without any downtime for users.
+[Many Meilisearch operations are processed asynchronously](/learn/async/asynchronous_operations) in a task. Asynchronous tasks allow you to make resource-intensive changes to your Meilisearch project without any downtime for users.
 
 In this tutorial, you'll use the Meilisearch API to add documents to an index, and then monitor its status.
 
@@ -16,7 +16,7 @@ In this tutorial, you'll use the Meilisearch API to add documents to an index, a
 
 ## Adding a task to the task queue
 
-Operations that require indexing, such as adding and updating documents or changing an index settings, will always generate a task.
+Operations that require indexing, such as adding and updating documents or changing an index's settings, will always generate a task.
 
 Start by creating an index, then add a large number of documents to this index:
 
@@ -46,7 +46,7 @@ Meilisearch processes tasks in the order they were added to the queue. You can c
 
 ### Monitoring task status in the Meilisearch Cloud interface
 
-Log into your Meilisearch Cloud account and navigate to your project. Click the "Tasks" link in the project menu:
+Log into your [Meilisearch Cloud](https://meilisearch.com/cloud?utm_campaign=oss&utm_source=docs&utm_medium=tasks-tutorial) account and navigate to your project. Click the "Tasks" link in the project menu:
 
 ![](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/cloud-tasks-tutorial/01-tasks-menu.png)
 
@@ -92,4 +92,4 @@ If the task `status` changes to `failed`, Meilisearch was not able to fulfill yo
 
 ## Conclusion
 
-You have seen what happens when an API request adds a task to the task queue, and how to check the status of a that task. Consult the API reference and the tasks explainer for more information on how tasks work.
+You have seen what happens when an API request adds a task to the task queue, and how to check the status of a that task. Consult the [task API reference](/reference/api/tasks) and the [asynchronous operations explanation](/learn/async/asynchronous_operations) for more information on how tasks work.
