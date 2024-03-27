@@ -52,5 +52,5 @@ Because snapshots are exact copies of your database, starting a Meilisearch inst
 <Capsule intent="warning">
 For security reasons, Meilisearch will never overwrite an existing database. By default, Meilisearch will throw an error when importing a snapshot if there is any data in your instance.
 
-You can change this behavior by specifying [`--ignore-snapshot-if-db-exists=true`](/learn/configuration/instance_options#ignore-dump-if-db-exists).
+You can change this behavior by specifying [`--ignore-snapshot-if-db-exists=true`](/learn/configuration/instance_options#ignore-dump-if-db-exists). This will cause Meilisearch to launch with the existing database and ignore the dump without throwing an error.
 </Capsule>

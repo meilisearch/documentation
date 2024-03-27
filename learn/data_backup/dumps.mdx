@@ -13,7 +13,7 @@ Creating a dump is also referred to as exporting it. Launching Meilisearch with 
 
 ### Creating a dump in Meilisearch Cloud
 
-**You cannot manually export dumps in Meilisearch Cloud**. To migrate your project to the most recent Meilisearch release, use the Cloud interface:  
+**You cannot manually export dumps in Meilisearch Cloud**. To [migrate your project to the most recent Meilisearch release](/learn/update_and_migration/updating), use the Cloud interface:  
 
 ![The General settings interface displaying various data fields relating to a Meilisearch Cloud project. One of them reads "Meilisearch version". Its value is `v1.6.2`. Next to the value is a button "Update to v1.7.0"](/assets/images/cloud-dumps/01-import-dump.png)
 
@@ -61,7 +61,7 @@ This should return an object with detailed information about the dump operation:
 }
 ```
 
-All indexes of the current instance are exported along with their documents and settings and saved as a single `.dump` file.
+All indexes of the current instance are exported along with their documents and settings and saved as a single `.dump` file. The dump also includes any tasks registered before Meilisearch start processing the dump creation task.
 
 Once the task `status` changes to `succeeded`, find the dump file in [the dump directory](/learn/configuration/instance_options#dump-directory). By default, this folder is named `dumps` and can be found in the same directory as your Meilisearch binary.
 
