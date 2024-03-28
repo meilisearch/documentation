@@ -1,0 +1,39 @@
+---
+title: Filtering tasks — Meilisearch documentation
+description: This guide shows you how to use query parameters to filter tasks and obtain a more readable list of asynchronous operations.
+---
+
+# Filtering tasks
+
+Querying the [get tasks endpoint](/reference/api/tasks#get-tasks) returns all tasks that have not been deleted. This unfiltered list may be difficult to parse in large projects.
+
+This guide shows you how to use query parameters to filter tasks and obtain a more readable list of asynchronous operations.
+
+## Requirements
+
+- a command-line terminal
+- a running Meilisearch project
+
+## Filtering tasks with a single parameter
+
+Use the get tasks endpoint to fetch all `cancelled` tasks:
+
+<CodeSamples id="async_guide_filter_by_statuses_1" />
+
+Use a comma to separate multiple values and fetch both `cancelled` and `failed` tasks:
+
+<CodeSamples id="async_guide_filter_by_statuses_2" />
+
+You may filter tasks based on `uid`, `status`, `type`, `indexUid`, `canceledBy`, or date. Consult the API reference for a full list of task filtering parameters.
+
+## Combining filters
+
+Use the ampersand character (`&`) to combine filters, equivalent to a logical `AND`:
+
+<CodeSamples id="async_guide_multiple_filters_1" />
+
+This code sample returns all tasks in the `movies` index that have the type `documentAdditionOrUpdate` or `documentDeletion` and have the `status` of `processing`.
+
+<Capsule intent="warning">
+**`OR` operations between different filters are not supported.** For example, you cannot view tasks which have a type of `documentAddition` **or** a status of `failed`.
+</Capsule>
