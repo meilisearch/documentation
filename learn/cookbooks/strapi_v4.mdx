@@ -46,7 +46,8 @@ To follow along, complete "Part B:  Build your data structure with the Content-t
 
 After finishing those steps of Strapi's quick start guide, two new collections named Restaurant and Category should have appeared under `Content Manager > Collection Types`. If you click on `Restaurant`, you can see that there is only one. Add more by clicking the `+ Create new entry` button in the upper-right corner of the dashboard.
 
-[Strapi dashboard: Content manager side menu, arrow indicating the location of the Restaurant Collection Type](/assets/images/strapi-v4/strapi-restaurant-content-type.png)
+
+![Strapi dashboard: Content manager side menu, arrow indicating the location of the Restaurant Collection Type](/assets/images/strapi-v4/strapi-restaurant-content-type.png)
 
 Add the following three restaurants, one by one. For each restaurant, you need to press `Save` and then `Publish`.
 
@@ -55,7 +56,7 @@ Add the following three restaurants, one by one. For each restaurant, you need t
 
 Next, add the `French food` category on the bottom right corner of the page.
 
-[Strapi dashboard: create an entry form, arrow indicating the location of the categorie's location in the right side menu](/assets/images/strapi-v4/strapi-add-category.png)
+![Strapi dashboard: create an entry form, arrow indicating the location of the categorie's location in the right side menu](/assets/images/strapi-v4/strapi-add-category.png)
 
 - Name: `The Slimy Snail` 
 - Description: `Gastronomy is made of garlic and butter.` 
@@ -90,23 +91,24 @@ At this point, your Strapi app should be running once again on the default addre
 
 Once connected, you should see the new `meilisearch` plugin on the left side of the screen.
 
-[Strapi dashboard with plugins side menu: arrow pointing at the 'meilisearch' option](/assets/images/strapi-v4/strapi-meilisearch-plugin.png)
+
+![Strapi dashboard with plugins side menu: arrow pointing at the 'meilisearch' option](/assets/images/strapi-v4/strapi-meilisearch-plugin.png)
 
 Add your Meilisearch credentials on the Settings tab of the `meilisearch` plugin page. 
 
-[Strapi dashboard with Meilisearch plugin selected: arrow pointing to the location of the settings tab](/assets/images/strapi-v4/strapi-meilisearch-credentials.png)
+![Strapi dashboard with Meilisearch plugin selected: arrow pointing to the location of the settings tab](/assets/images/strapi-v4/strapi-meilisearch-credentials.png)
 
 Now it's time to add your Strapi collection to Meilisearch. In the `Collections` tab on the `meilisearch` plugin page, you should see the `restaurant` and `category` content-types.
 
 By clicking on the checkbox next to `restaurant`, the content-type is automatically indexed in Meilisearch.
 
-[GIF showing the mouse clicking on 'restaurant' in the Meilisearch collections tab](/assets/images/strapi-v4/add-collection-to-meilisearch.gif)
+![GIF showing the mouse clicking on 'restaurant' in the Meilisearch collections tab](/assets/images/strapi-v4/add-collection-to-meilisearch.gif)
 
 The word “Hooked” appears when you click on the `restaurant`'s checkbox in the `Collections` tab. This means that each time you add, update or delete an entry in your restaurant content-types, Meilisearch is automatically updated.
 
 Once the indexing finishes, your restaurants are in Meilisearch. Access the [search preview](/learn/getting_started/search_preview) confirm everything is working correctly by searching for “butter”.
 
-[GIF showing the word 'butter' being typed in the search bar and search results appearing instantly](/assets/images/strapi-v4/strapi-search-preview.gif)
+![GIF showing the word 'butter' being typed in the search bar and search results appearing instantly](/assets/images/strapi-v4/strapi-search-preview.gif)
 
 Your Strapi entries are sent to Meilisearch as is. You can modify the data before sending it to Meilisearch, for instance by removing a field. Check out all the customization options on the [strapi-plugin-meilisearch page](https://github.com/meilisearch/strapi-plugin-meilisearch/#-customization).
 
