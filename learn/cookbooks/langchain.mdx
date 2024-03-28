@@ -1,0 +1,186 @@
+---
+title: Building semantic search with LangChain
+description: Learn how to use LangChain with Meilisearch to build semantic search using similarity search.
+---
+
+# Building semantic search with LangChain
+
+Vector search allows you to find documents that share similar characteristics. In this tutorial, we’ll use OpenAI’s text embeddings to measure the similarity between document properties. Then, we’ll use the LangChain framework to seamlessly integrate Meilisearch and build semantic search.
+
+<Capsule intent="tip">
+
+This guide uses Meilisearch’s Python SDK. But you can use Meilisearch with almost any language.
+
+</Capsule>
+
+## Requirements
+
+This tutorial assumes a basic understanding of Python and LangChain. Beginners to LangChain will still find the tutorial accessible.
+
+- Python (LangChain requires >= 3.8.1 and < 4.0) and the pip CLI
+- A Meilisearch >= 1.6 instance running — see our [quick start](/learn/getting_started/cloud_quick_start)
+- An OpenAI API key — [get yours](https://platform.openai.com/account/api-keys)
+
+## Setting up a Meilisearch instance
+
+After creating your Meilisearch instance, make sure to grab your Meilisearch host and an API key with write permissions.
+
+<Capsule intent="warning">
+
+In production, we recommend using different API keys holding only the minimal permissions to operate.
+
+</Capsule>
+
+
+Enable the vector store feature. On Meilisearch Cloud, enable it via your project’s Settings page. For self-hosted Meilisearch, activate the vector store with the [API route](/learn/experimental/vector_search#activate-vector-search).
+
+## Creating the project
+
+Create a folder for our project with an empty `main.py` file for your code.
+
+Before writing the code, install the necessary dependencies:
+
+```bash
+pip install langchain openai meilisearch python-dotenv
+```
+
+<Capsule intent="tip">
+
+This guide uses python-dotenv to load environment variables from a `.env` file. Feel free to load them in any other convenient way for you.
+
+</Capsule>
+
+If using dotenv, first create a .env to store our credentials:
+
+```
+# .env
+
+MEILI_HTTP_ADDR="your Meilisearch host"
+MEILI_API_KEY="your Meilisearch API key"
+OPENAI_API_KEY="your OpenAI API key"
+
+```
+Now that you have your environment variables available, create a `setup.py` file with some boilerplate code for your example:
+
+```python
+# setup.py
+
+import os
+from dotenv import load_dotenv # remove if not using dotenv
+from langchain.vectorstores import Meilisearch
+from langchain.embeddings.openai import OpenAIEmbeddings
+from langchain.document_loaders import JSONLoader
+
+load_dotenv() # remove if not using dotenv
+
+# exit if missing env vars
+if "MEILI_HTTP_ADDR" not in os.environ:
+    raise Exception("Missing MEILI_HTTP_ADDR env var")
+if "MEILI_API_KEY" not in os.environ:
+    raise Exception("Missing MEILI_API_KEY env var")
+if "OPENAI_API_KEY" not in os.environ:
+    raise Exception("Missing OPENAI_API_KEY env var")
+
+# Setup code will go here 👇
+```
+
+## Importing documents and embeddings
+
+Now that the project is ready, import some documents in Meilisearch. First, download this small movies dataset:
+
+[movies-lite.json](https://gist.github.com/Strift/1524ab5e2015e50bbcb215fb4d950a38)
+
+Then, update the setup.py file to load the JSON and store it in Meilisearch. We will also use the OpenAI text search models to generate our vector embeddings.
+
+```python
+# setup.py
+
+# previous code
+
+# Load documents
+loader = JSONLoader(
+    file_path="./movies-lite.json",
+    jq_schema=".[] | {id: .id, overview: .overview, title: .title}",
+    text_content=False,
+)
+documents = loader.load()
+print("Loaded {} documents".format(len(documents)))
+
+# Store documents in Meilisearch
+embeddings = OpenAIEmbeddings()
+embedders = { 
+        "custom": {
+            "source": "userProvided",
+            "dimensions": 1536
+        }
+    }
+embedder_name = "custom" 
+vector_store = Meilisearch.from_documents(documents=documents, embedding=embeddings, embedders=embedders, embedder_name=embedder_name)
+
+print("Started importing documents")
+```
+
+Your Meilisearch instance will now contain your documents. Meilisearch runs tasks like document import asynchronously, so you might need to wait a bit for documents to be available.
+
+## Performing similarity search
+
+Your database should now contain the movies. Create a new `search.py` file to make a semantic search query: searching for documents using similarity search.
+
+```python
+# search.py
+
+import os
+from dotenv import load_dotenv
+from langchain.vectorstores import Meilisearch
+from langchain.embeddings.openai import OpenAIEmbeddings
+import meilisearch
+
+load_dotenv()
+
+# You can use the same code as `setup.py` to check for missing env vars
+
+# Create the vector store
+client = meilisearch.Client(
+    url=os.environ.get("MEILI_HTTP_ADDR"),
+    api_key=os.environ.get("MEILI_API_KEY"),
+)
+embeddings = OpenAIEmbeddings()
+vector_store = Meilisearch(client=client, embedding=embeddings)
+
+# Make similarity search
+embedder_name = "custom"
+query = "superhero fighting evil in a city at night"
+results = vector_store.similarity_search(
+    query=query,
+    embedder_name=embedder_name,
+    k=3,
+)
+
+# Display results
+for result in results:
+    print(result.page_content)
+```
+
+Run our file. If everything works, You should see an output like this:
+
+```
+{"id": 155, "title": "The Dark Knight", "overview": "Batman raises the stakes in his war on crime. With the help of Lt. Jim Gordon and District Attorney Harvey Dent, Batman sets out to dismantle the remaining criminal organizations that plague the streets. The partnership proves to be effective, but they soon find themselves prey to a reign of chaos unleashed by a rising criminal mastermind known to the terrified citizens of Gotham as the Joker."}
+{"id": 314, "title": "Catwoman", "overview": "Liquidated after discovering a corporate conspiracy, mild-mannered graphic artist Patience Phillips washes up on an island, where she's resurrected and endowed with the prowess of a cat -- and she's eager to use her new skills ... as a vigilante. Before you can say \"cat and mouse,\" handsome gumshoe Tom Lone is on her tail."}
+{"id": 268, "title": "Batman", "overview": "Batman must face his most ruthless nemesis when a deformed madman calling himself \"The Joker\" seizes control of Gotham's criminal underworld."}
+```
+
+Congrats 🎉 You managed to make a similarity search using Meilisearch as a LangChain vector store.
+
+## Going further
+
+Using Meilisearch as a LangChain vector store allows you to load documents and search for them in different ways:
+
+- [Import documents from text](https://python.langchain.com/docs/integrations/vectorstores/meilisearch#adding-text-and-embeddings)
+- [Similarity search with score](https://python.langchain.com/docs/integrations/vectorstores/meilisearch#similarity-search-with-score)
+- [Similarity search by vector](https://python.langchain.com/docs/integrations/vectorstores/meilisearch#similarity-search-by-vector)
+
+For additional information, make sure to consult:
+
+[Meilisearch Python SDK docs](https://python-sdk.meilisearch.com/)
+
+Finally, should you want to use Meilisearch's vector search capabilities without LangChain or its hybrid search feature, refer to the [dedicated guide](/learn/experimental/vector_search).
