@@ -74,6 +74,11 @@
         "source": "learn/cloud/monitoring.mdx",
         "label": "Monitoring",
         "slug": "monitoring"
+      },
+      {
+        "source": "learn/cloud/teams.mdx",
+        "label": "Teams",
+        "slug": "teams"
       }
     ]
   },
@@ -212,9 +217,29 @@
     "slug": "security",
     "routes": [
       {
-        "source": "learn/security/master_api_keys.mdx",
-        "label": "Master key and API keys",
-        "slug": "master_api_keys"
+        "source": "learn/security/basic_security.mdx",
+        "label": "Securing your project",
+        "slug": "basic_security"
+      },
+      {
+        "source": "learn/security/managing_api_keys.mdx",
+        "label": "Managing API keys",
+        "slug": "managing_api_keys"
+      },
+      {
+        "source": "learn/security/resetting_master_key.mdx",
+        "label": "Resetting the master key",
+        "slug": "resetting_master_key"
+      },
+      {
+        "source": "learn/security/differences_master_api_keys.mdx",
+        "label": "Differences between the master key and API keys",
+        "slug": "differences_master_api_keys"
+      },
+      {
+        "source": "learn/security/protected_unprotected.mdx",
+        "label": "Protected and unprotected Meilisearch projects",
+        "slug": "protected_unprotected"
       },
       {
         "source": "learn/security/tenant_tokens.mdx",
@@ -259,19 +284,19 @@
     "slug": "advanced",
     "routes": [
       {
-        "source": "learn/data_backup/snapshots_vs_dumps.mdx",
-        "label": "Snapshots vs dumps",
-        "slug": "snapshots_vs_dumps"
-      },
-      {
         "source": "learn/data_backup/dumps.mdx",
-        "label": "Dumps",
+        "label": "Exporting and importing dumps",
         "slug": "dumps"
       },
       {
         "source": "learn/data_backup/snapshots.mdx",
-        "label": "Snapshots",
+        "label": "Exporting and using Snapshots",
         "slug": "snapshots"
+      },
+      {
+        "source": "learn/data_backup/snapshots_vs_dumps.mdx",
+        "label": "Snapshots and dumps",
+        "slug": "snapshots_vs_dumps"
       }
     ]
   },

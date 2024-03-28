@@ -11,10 +11,7 @@ Meilisearch is a RESTful API. This page describes the general behavior of the AP
 
 ### OpenAPI
 
-You can download the Meilisearch OpenAPI specifications at:
-
-- [YAML](https://bump.sh/doc/meilisearch.yaml)
-- [JSON](https://bump.sh/doc/meilisearch.json)
+You can get the [Meilisearch OpenAPI specifications here](https://github.com/meilisearch/open-api/blob/main/open-api.yaml).
 
 ## Document conventions
 
@@ -26,7 +23,7 @@ This API documentation uses the following conventions:
 
 ## Authorization
 
-By [providing Meilisearch with a master key at launch](/learn/security/master_api_keys#protecting-a-meilisearch-instance), you protect your instance from unauthorized requests. The provided master key must be at least 16 bytes. From then on, you must include the `Authorization` header along with a valid API key to access protected routes (all routes except [`/health`](/reference/api/health).
+By [providing Meilisearch with a master key at launch](/learn/security/basic_security), you protect your instance from unauthorized requests. The provided master key must be at least 16 bytes. From then on, you must include the `Authorization` header along with a valid API key to access protected routes (all routes except [`/health`](/reference/api/health).
 
 <CodeSamples id="authorization_header_1" />
 
@@ -38,7 +35,7 @@ v0.24 and below use the `X-MEILI-API-KEY: apiKey` authorization header:
 <CodeSamples id="updating_guide_check_version_old_authorization_header" />
 </Capsule>
 
-[To learn more about keys and security, refer to our dedicated guide.](/learn/security/master_api_keys)
+[To learn more about keys and security, refer to our security tutorial.](/learn/security/basic_security)
 
 ## Pagination
 

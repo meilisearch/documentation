@@ -142,6 +142,11 @@
     "destination": "/docs/learn/getting_started/cloud_quick_start"
   },
   {
+    "source": "/docs/learn/security/master_api_keys",
+    "destination": "/docs/learn/security/basic_security",
+    "permanent": true
+  },
+  {
     "source": "/docs/learn/experimental/ranking_rule_score_details",
     "destination": "/docs/reference/api/search#ranking_score_details"
   }
