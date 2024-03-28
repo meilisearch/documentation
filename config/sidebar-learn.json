@@ -432,7 +432,7 @@
         "slug": "strapi_v4"
       },
       {
-        "source": "learn/cookbooks/improving_relevancy_large_documents",
+        "source": "learn/cookbooks/improve_relevancy_large_documents.mdx",
         "label": "Improve relevancy when working with large documents",
         "slug": "large_documents"
       }
