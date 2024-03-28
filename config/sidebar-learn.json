@@ -435,7 +435,12 @@
         "source": "learn/cookbooks/strapi_v4.mdx",
         "label": "Strapi v4 guide",
         "slug": "strapi_v4"
-      }      
+      },
+      {
+        "source": "learn/cookbooks/improve_relevancy_large_documents.mdx",
+        "label": "Improve relevancy when working with large documents",
+        "slug": "large_documents"
+      }
     ]
   },
   {

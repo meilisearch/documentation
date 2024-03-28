@@ -1,0 +1,137 @@
+---
+title: Improve relevancy when working with large documents — Meilisearch documentation
+description: Use JavaScript with Node.js to split a single large document and configure Meilisearch with a distinct attribute to prevent duplicated results.
+---
+
+# Improve relevancy when working with large documents
+
+Meilisearch is optimized for handling paragraph-sized chunks of text. Datasets with many documents containing large amounts of text may lead to reduced search result relevancy.
+
+In this guide, you will see how to use JavaScript with Node.js to split a single large document and configure Meilisearch with a distinct attribute to prevent duplicated results.
+
+## Requirements
+
+- A running Meilisearch project
+- A command-line console
+- Node.js v18
+
+## Dataset
+
+<a id="downloadstories" href="/assets/datasets/stories.json" download="stories.json">`stories.json`</a> contains two documents, each storing the full text of a short story in its `text` field:
+
+```json
+[
+  {
+    "id": 0,
+    "title": "A Haunted House",
+    "author": "Virginia Woolf",
+    "text": "Whatever hour you woke there was a door shutting. From room to room they went, hand in hand, lifting here, opening there, making sure—a ghostly couple.\n\n \"Here we left it,\" she said. And he added, \"Oh, but here too!\" \"It's upstairs,\" she murmured. \"And in the garden,\" he whispered. \"Quietly,\" they said, \"or we shall wake them.\"\n\nBut it wasn't that you woke us. Oh, no. \"They're looking for it; they're drawing the curtain,\" one might say, and so read on a page or two. \"Now they've found it,\" one would be certain, stopping the pencil on the margin. And then, tired of reading, one might rise and see for oneself, the house all empty, the doors standing open, only the wood pigeons bubbling with content and the hum of the threshing machine sounding from the farm. \"What did I come in here for? What did I want to find?\" My hands were empty. \"Perhaps it's upstairs then?\" The apples were in the loft. And so down again, the garden still as ever, only the book had slipped into the grass.\n\nBut they had found it in the drawing room. Not that one could ever see them. The window panes reflected apples, reflected roses; all the leaves were green in the glass. If they moved in the drawing room, the apple only turned its yellow side. Yet, the moment after, if the door was opened, spread about the floor, hung upon the walls, pendant from the ceiling—what? My hands were empty. The shadow of a thrush crossed the carpet; from the deepest wells of silence the wood pigeon drew its bubble of sound. \"Safe, safe, safe,\" the pulse of the house beat softly. \"The treasure buried; the room ...\" the pulse stopped short. Oh, was that the buried treasure?\n\nA moment later the light had faded. Out in the garden then? But the trees spun darkness for a wandering beam of sun. So fine, so rare, coolly sunk beneath the surface the beam I sought always burnt behind the glass. Death was the glass; death was between us; coming to the woman first, hundreds of years ago, leaving the house, sealing all the windows; the rooms were darkened. He left it, left her, went North, went East, saw the stars turned in the Southern sky; sought the house, found it dropped beneath the Downs. \"Safe, safe, safe,\" the pulse of the house beat gladly. \"The Treasure yours.\"\n\nThe wind roars up the avenue. Trees stoop and bend this way and that. Moonbeams splash and spill wildly in the rain. But the beam of the lamp falls straight from the window. The candle burns stiff and still. Wandering through the house, opening the windows, whispering not to wake us, the ghostly couple seek their joy.\n\n\"Here we slept,\" she says. And he adds, \"Kisses without number.\" \"Waking in the morning—\" \"Silver between the trees—\" \"Upstairs—\" \"In the garden—\" \"When summer came—\" \"In winter snowtime—\" The doors go shutting far in the distance, gently knocking like the pulse of a heart.\n\nNearer they come; cease at the doorway. The wind falls, the rain slides silver down the glass. Our eyes darken; we hear no steps beside us; we see no lady spread her ghostly cloak. His hands shield the lantern. \"Look,\" he breathes. \"Sound asleep. Love upon their lips.\"\n\nStooping, holding their silver lamp above us, long they look and deeply. Long they pause. The wind drives straightly; the flame stoops slightly. Wild beams of moonlight cross both floor and wall, and, meeting, stain the faces bent; the faces pondering; the faces that search the sleepers and seek their hidden joy.\n\n\"Safe, safe, safe,\" the heart of the house beats proudly. \"Long years—\" he sighs. \"Again you found me.\" \"Here,\" she murmurs, \"sleeping; in the garden reading; laughing, rolling apples in the loft. Here we left our treasure—\" Stooping, their light lifts the lids upon my eyes. \"Safe! safe! safe!\" the pulse of the house beats wildly. Waking, I cry \"Oh, is this _your_ buried treasure? The light in the heart."
+  },
+  {
+    "id": 1,
+    "title": "Monday or Tuesday",
+    "author": "Virginia Woolf",
+    "text": "Lazy and indifferent, shaking space easily from his wings, knowing his way, the heron passes over the church beneath the sky. White and distant, absorbed in itself, endlessly the sky covers and uncovers, moves and remains. A lake? Blot the shores of it out! A mountain? Oh, perfect—the sun gold on its slopes. Down that falls. Ferns then, or white feathers, for ever and ever——\n\nDesiring truth, awaiting it, laboriously distilling a few words, for ever desiring—(a cry starts to the left, another to the right. Wheels strike divergently. Omnibuses conglomerate in conflict)—for ever desiring—(the clock asseverates with twelve distinct strokes that it is midday; light sheds gold scales; children swarm)—for ever desiring truth. Red is the dome; coins hang on the trees; smoke trails from the chimneys; bark, shout, cry \"Iron for sale\"—and truth?\n\nRadiating to a point men's feet and women's feet, black or gold-encrusted—(This foggy weather—Sugar? No, thank you—The commonwealth of the future)—the firelight darting and making the room red, save for the black figures and their bright eyes, while outside a van discharges, Miss Thingummy drinks tea at her desk, and plate-glass preserves fur coats——\n\nFlaunted, leaf-light, drifting at corners, blown across the wheels, silver-splashed, home or not home, gathered, scattered, squandered in separate scales, swept up, down, torn, sunk, assembled—and truth?\n\nNow to recollect by the fireside on the white square of marble. From ivory depths words rising shed their blackness, blossom and penetrate. Fallen the book; in the flame, in the smoke, in the momentary sparks—or now voyaging, the marble square pendant, minarets beneath and the Indian seas, while space rushes blue and stars glint—truth? or now, content with closeness?\n\nLazy and indifferent the heron returns; the sky veils her stars; then bares them."
+  }
+]
+```
+
+<Capsule intent="note" title="What is a large document for Meilisearch?">
+Meilisearch works best with documents under 1kb in size. This roughly translates to a maximum of two or three paragraphs of text.
+</Capsule>
+
+## Splitting documents
+
+Create a `split_documents.js` file in your working directory:
+
+```js
+#!/usr/bin/env node
+
+const datasetPath = process.argv[2];
+const datasetFile = fs.readFileSync(datasetPath);
+const documents = JSON.parse(datasetFile);
+
+const splitDocuments = [];
+
+for (let documentNumber = documents.length, i = 0; i < documentNumber; i += 1) {
+  const document = documents[i];
+  const story = document.text;
+
+  const paragraphs = story.split("\n\n");
+  
+  for (let paragraphNumber = paragraphs.length, o = 0; o < paragraphNumber; o += 1) {
+    splitDocuments.push({
+      "id": document.id,
+      "title": document.title,
+      "author": document.author,
+      "text": paragraphs[o]
+    });
+  }
+}
+
+fs.writeFileSync("stories-split.json", JSON.stringify(splitDocuments));
+```
+
+Next, run the script on your console, specifying the path to your JSON dataset:
+
+```sh
+node ./split_documents.js ./stories.json
+```
+
+This script accepts one argument: a path pointing to a JSON dataset. It reads the file and parses each document in it. For each paragraph in a document's `text` field, it creates a new document with a new `id` and `text` fields. Finally, it writes the new documents on `stories-split.json`.
+
+## Generating unique IDs
+
+Right now, Meilisearch would not accept the new dataset because many documents share the same primary key.
+
+Update the script from the previous step to create a new field, `story_id`:
+
+```js
+#!/usr/bin/env node
+
+const datasetPath = process.argv[2];
+const datasetFile = fs.readFileSync(datasetPath);
+const documents = JSON.parse(datasetFile);
+
+const splitDocuments = [];
+
+for (let documentNumber = documents.length, i = 0; i < documentNumber; i += 1) {
+  const document = documents[i];
+  const story = document.text;
+
+  const paragraphs = story.split("\n\n");
+  
+  for (let paragraphNumber = paragraphs.length, o = 0; o < paragraphNumber; o += 1) {
+    splitDocuments.push({
+      "story_id": document.id,
+      "id": `${document.id}-${o}`,
+      "title": document.title,
+      "author": document.author,
+      "text": paragraphs[o]
+    });
+  }
+}
+```
+
+The script now stores the original document's `id` in `story_id`. It then creates a new unique identifier for each new document and stores it in the primary key field.
+
+## Configuring distinct attribute
+
+This dataset is now valid, but since each document effectively points to the same story, queries are likely to result in duplicated search results.
+
+To prevent that from happening, configure `story_id` as the index's distinct attribute:
+
+```sh
+curl \
+  -X PUT 'http://localhost:7700/indexes/INDEX_NAME/settings/distinct-attribute' \
+  -H 'Content-Type: application/json' \
+  --data-binary '"story_id"'
+```
+
+Users searching this dataset will now be able to find more relevant results across large chunks of text, without any loss of performance and no duplicates.
+
+## Conclusion
+
+You have seen how to split large documents to improve search relevancy. You also saw how to configure a distinct attribute to prevent Meilisearch from returning duplicate results. 
+
+Though this guide used JavaScript, you can replicate the process with any programming language you are comfortable using.
