@@ -27,7 +27,7 @@ Meilisearch will return a batch of tasks. Each batch of returned tasks is often 
 }
 ```
 
-It is possible none of the returned tasks are the ones you are looking for. If that's the case, you can use the returned field `next` to fetch the next page of tasks.
+It is possible none of the returned tasks are the ones you are looking for. In that case, you will need to use the [get all tasks request response](/reference/api/tasks#response) to navigate the results.
 
 ## Navigating the task list with `from` and `next`
 

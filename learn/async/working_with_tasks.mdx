@@ -84,7 +84,7 @@ This will return the full task object:
 }
 ```
 
-If the task is still `enqueued` or `processing`, wait a few moments and query the database once again.
+If the task is still `enqueued` or `processing`, wait a few moments and query the database once again. If you are working with a self-hosted Meilisearch instance, you may also [set up a webhook listener](/learn/async/task_webhook).
 
 When `status` changes to `succeeded`, Meilisearch has finished processing your request.
 
