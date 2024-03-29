@@ -221,7 +221,7 @@ function traverseTreeAndValidateLinks(tree: any, doc: Document, setFailed: Failu
       const href = node.properties?.href ?? node.url
       if (!href) return
   
-      if (href.startsWith(RELATIVE_PATH)) {
+      if (href.startsWith(RELATIVE_PATH) && !(/^.*\.[^\\]+$/).test(href)) {
         validateInternalLink(errors, href)
       } else if (href.startsWith('#')) {
         validateHashLink(errors, href, doc)
