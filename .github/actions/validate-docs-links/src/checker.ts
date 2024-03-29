@@ -220,7 +220,8 @@ function traverseTreeAndValidateLinks(tree: any, doc: Document, setFailed: Failu
     if (node.type === 'element' && node.tagName === 'a' || node.type === 'link' || node.type === 'buttonlink') {
       const href = node.properties?.href ?? node.url
       if (!href) return
-  
+      
+      // Check if the link is an internal link and not ending with a file extension
       if (href.startsWith(RELATIVE_PATH) && !(/^.*\.[^\\]+$/).test(href)) {
         validateInternalLink(errors, href)
       } else if (href.startsWith('#')) {
