@@ -205,8 +205,8 @@ function traverseTreeAndValidateLinks(tree: any, doc: Document, setFailed: Failu
     relative: [],
   }
 
-  // Matches markdown links like [text](link)
-  const linkRegex = /\[[^\[\]]+\]\([^\(\)]+\)/gm
+  // Matches markdown links like [text](link) (excluding those that end with a file extension)
+  const linkRegex = /^(?!.*\.[a-zA-Z]+\)$)\[[^\[\]]+\]\([^\(\)]+\)$/gm
   // Matches all links that use some kind of protocol (e.g. http://, https://, mailto:, etc.)
   const nonInternalLinkRegex = /^(?:[a-z+]+:)?\/\/|^[a-z]+:/i;
 
