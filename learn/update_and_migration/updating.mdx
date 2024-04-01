@@ -171,7 +171,7 @@ The response will vary slightly depending on your version. For v0.27 and below, 
 
 ```sh
   curl \
-    -X GET 'http://<your-domain-name>/dumps/:dump_uid/status'
+    -X GET 'http://<your-domain-name>/tasks/:dump_uid'
     -H 'Authorization: Bearer API_KEY' 
   # -H 'X-Meili-API-Key: API_KEY' for v0.24 or below
 ```
@@ -286,7 +286,7 @@ Execute the command below to import the dump at launch:
 # replace {dump_uid.dump} with the name of your dump file
 ./meilisearch --import-dump dumps/{dump_uid.dump} --master-key="MASTER_KEY"
 # Or, if you chose another location for data files and dumps before the update, also add the same parameters
-./meilisearch --import-dump dumps/{dump_uid.dump} --master-key="MASTER_KEY" --db-path PATH_TO_DB_DIR/data.ms --dump-dir path PATH_TO_DUMP_DIR/dumps
+./meilisearch --import-dump dumps/{dump_uid.dump} --master-key="MASTER_KEY" --db-path PATH_TO_DB_DIR/data.ms --dump-dir PATH_TO_DUMP_DIR/dumps
 ```
 
 </Tabs.Content>
