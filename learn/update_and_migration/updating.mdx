@@ -28,7 +28,7 @@ Whenever a new version of Meilisearch is available, you will see an update butto
 
 To update to the latest Meilisearch release, click the "Update to v.X.Y.Z" button. 
 
-This will open a pop-up warning. Read it carefully, then click on "Update". The "Status" of your project will change from "running" to "updating".
+This will open a pop-up with more information about the update process. Read it, then click on "Update". The "Status" of your project will change from "running" to "updating".
 
 ![Project update in progress](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/updating/update-in-progress.png)
 
@@ -170,8 +170,8 @@ The server should return a response that looks like this:
 
 Use the `taskUid` to [track the status](/reference/api/tasks#get-one-task) of your dump. Keep in mind that the process can take some time to complete.
 
-<Capsule intent="note">
-The response will vary slightly depending on your version. For v0.27 and below, the response returns a dump `uid`. You can track the status of the dump using the get dumps status endpoint:
+<Capsule intent="note" title="Meilisearch v0.27 and below">
+For v0.27 and below, the response to your request returns a dump `uid`. Use it  with the `/dumps/:dump_uid/status` route to track the request status:
 
 ```sh
   curl \
@@ -179,7 +179,6 @@ The response will vary slightly depending on your version. For v0.27 and below, 
     -H 'Authorization: Bearer API_KEY' 
   # -H 'X-Meili-API-Key: API_KEY' for v0.24 or below
 ```
-
 </Capsule>
 
 Once the `dumpCreation` task shows `"status": "succeeded"`, you're ready to move on.
