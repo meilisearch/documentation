@@ -1,54 +1,32 @@
 ---
 title: Building semantic search with LangChain
-description: Learn how to use LangChain with Meilisearch to build semantic search using similarity search.
+description: This guide shows you how to implement semantic search using LangChain and similarity search.
 ---
 
-# Building semantic search with LangChain
+# Implementing semantic search with LangChain
 
-Vector search allows you to find documents that share similar characteristics. In this tutorial, we’ll use OpenAI’s text embeddings to measure the similarity between document properties. Then, we’ll use the LangChain framework to seamlessly integrate Meilisearch and build semantic search.
-
-<Capsule intent="tip">
-
-This guide uses Meilisearch’s Python SDK. But you can use Meilisearch with almost any language.
-
-</Capsule>
+In this guide, you’ll use OpenAI’s text embeddings to measure the similarity between document properties. Then, you’ll use the LangChain framework to seamlessly integrate Meilisearch and create an application with semantic search.
 
 ## Requirements
 
-This tutorial assumes a basic understanding of Python and LangChain. Beginners to LangChain will still find the tutorial accessible.
+This guide assumes a basic understanding of Python and LangChain. Beginners to LangChain will still find the tutorial accessible.
 
 - Python (LangChain requires >= 3.8.1 and < 4.0) and the pip CLI
-- A Meilisearch >= 1.6 instance running — see our [quick start](/learn/getting_started/cloud_quick_start)
-- An OpenAI API key — [get yours](https://platform.openai.com/account/api-keys)
-
-## Setting up a Meilisearch instance
-
-After creating your Meilisearch instance, make sure to grab your Meilisearch host and an API key with write permissions.
-
-<Capsule intent="warning">
-
-In production, we recommend using different API keys holding only the minimal permissions to operate.
-
-</Capsule>
+- A [Meilisearch >= 1.6 project](/learn/getting_started/cloud_quick_start)
+- An [OpenAI API key](https://platform.openai.com/account/api-keys)
 
 
 Enable the vector store feature. On Meilisearch Cloud, enable it via your project’s Settings page. For self-hosted Meilisearch, activate the vector store with the [API route](/learn/experimental/vector_search#activate-vector-search).
 
-## Creating the project
+## Creating the application
 
-Create a folder for our project with an empty `main.py` file for your code.
+Create a folder for your application with an empty `main.py` file.
 
-Before writing the code, install the necessary dependencies:
+Before writing any code, install the necessary dependencies:
 
 ```bash
 pip install langchain openai meilisearch python-dotenv
 ```
-
-<Capsule intent="tip">
-
-This guide uses python-dotenv to load environment variables from a `.env` file. Feel free to load them in any other convenient way for you.
-
-</Capsule>
 
 If using dotenv, first create a .env to store our credentials:
 
@@ -58,9 +36,9 @@ If using dotenv, first create a .env to store our credentials:
 MEILI_HTTP_ADDR="your Meilisearch host"
 MEILI_API_KEY="your Meilisearch API key"
 OPENAI_API_KEY="your OpenAI API key"
-
 ```
-Now that you have your environment variables available, create a `setup.py` file with some boilerplate code for your example:
+
+Now that you have your environment variables available, create a `setup.py` file with some boilerplate code:
 
 ```python
 # setup.py
@@ -90,8 +68,9 @@ Now that the project is ready, import some documents in Meilisearch. First, down
 
 [movies-lite.json](https://gist.github.com/Strift/1524ab5e2015e50bbcb215fb4d950a38)
 
-Then, update the setup.py file to load the JSON and store it in Meilisearch. We will also use the OpenAI text search models to generate our vector embeddings.
-To use vector search, we need to set the embedders index setting. In our case, we are using an `userProvided` source which requires to specify the size of the vectors in a `dimensions` field. Default model used by `OpenAIEmbeddings()` is `text-embedding-ada-002`, which has 1,536 dimensions.
+Then, update the setup.py file to load the JSON and store it in Meilisearch. You will also use the OpenAI text search models to generate our vector embeddings.
+
+To use vector search, we need to set the embedders index setting. In this case, you are using an `userProvided` source which requires to specify the size of the vectors in a `dimensions` field. The default model used by `OpenAIEmbeddings()` is `text-embedding-ada-002`, which has 1,536 dimensions.
 
 ```python
 # setup.py
@@ -125,7 +104,7 @@ Your Meilisearch instance will now contain your documents. Meilisearch runs task
 
 ## Performing similarity search
 
-Your database should now contain the movies. Create a new `search.py` file to make a semantic search query: searching for documents using similarity search.
+Your database is now populated with the data from the movies dataset. Create a new `search.py` file to make a semantic search query: searching for documents using similarity search.
 
 ```python
 # search.py
@@ -180,7 +159,7 @@ Using Meilisearch as a LangChain vector store allows you to load documents and s
 - [Similarity search with score](https://python.langchain.com/docs/integrations/vectorstores/meilisearch#similarity-search-with-score)
 - [Similarity search by vector](https://python.langchain.com/docs/integrations/vectorstores/meilisearch#similarity-search-by-vector)
 
-For additional information, make sure to consult:
+For additional information, consult:
 
 [Meilisearch Python SDK docs](https://python-sdk.meilisearch.com/)
 
