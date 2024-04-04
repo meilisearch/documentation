@@ -1,5 +1,5 @@
 ---
-title: Building semantic search with LangChain
+title: Implementing semantic search with LangChain
 description: This guide shows you how to implement semantic search using LangChain and similarity search.
 ---
 
@@ -16,7 +16,11 @@ This guide assumes a basic understanding of Python and LangChain. Beginners to L
 - An [OpenAI API key](https://platform.openai.com/account/api-keys)
 
 
-Enable the vector store feature. On Meilisearch Cloud, enable it via your project’s Settings page. For self-hosted Meilisearch, activate the vector store with the [API route](/learn/experimental/vector_search#activate-vector-search).
+On Meilisearch Cloud, enable the vector store feature via your project’s Settings page. 
+
+![A section of the project overview interface titled "Experimental features". There are two options: "Score details" and "Vector store". "Vector store" is turned on.](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/vector-search/01-cloud-vector-store.png)
+
+If you are working with a self-hosted Meilisearch instance, activate the vector store with the [API route](/learn/experimental/vector_search#activate-vector-search).
 
 ## Creating the application
 
@@ -28,7 +32,7 @@ Before writing any code, install the necessary dependencies:
 pip install langchain openai meilisearch python-dotenv
 ```
 
-If using dotenv, first create a .env to store our credentials:
+First create a .env to store our credentials:
 
 ```
 # .env
@@ -66,7 +70,7 @@ if "OPENAI_API_KEY" not in os.environ:
 
 Now that the project is ready, import some documents in Meilisearch. First, download this small movies dataset:
 
-[movies-lite.json](https://gist.github.com/Strift/1524ab5e2015e50bbcb215fb4d950a38)
+<ButtonLink as="a" id="downloadMoviesLite" href="https://gist.github.com/Strift/1524ab5e2015e50bbcb215fb4d950a38" download="movies-lite.json">movies-lite.json</ButtonLink>
 
 Then, update the setup.py file to load the JSON and store it in Meilisearch. You will also use the OpenAI text search models to generate our vector embeddings.
 
@@ -100,7 +104,7 @@ vector_store = Meilisearch.from_documents(documents=documents, embedding=embeddi
 print("Started importing documents")
 ```
 
-Your Meilisearch instance will now contain your documents. Meilisearch runs tasks like document import asynchronously, so you might need to wait a bit for documents to be available.
+Your Meilisearch instance will now contain your documents. Meilisearch runs tasks like document import asynchronously, so you might need to wait a bit for documents to be available. Consult [the asynchronous operations explanation](/learn/async/asynchronous_operations) for more information on how tasks work.
 
 ## Performing similarity search
 
