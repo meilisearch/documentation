@@ -80,7 +80,7 @@ Next, download the default configuration to `/etc`:
 curl https://raw.githubusercontent.com/meilisearch/meilisearch/latest/config.toml > /etc/meilisearch.toml
 ```
 
-Finally, update the following lines so Meilisearch uses the directories you created earlier to store its data, replacing `MASTER_KEY` with a 16-byte string:
+Finally, update the following lines in the `meilisearch.toml` file so Meilisearch uses the directories you created earlier to store its data, replacing `MASTER_KEY` with a 16-byte string:
 
 ```ini
 env = "production"
