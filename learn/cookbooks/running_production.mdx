@@ -13,7 +13,7 @@ This tutorial will guide you through setting up a production-ready Debian server
 
 ## Requirements
 
-- A DigitalOcean droplet running Debian 10
+- A DigitalOcean droplet running Debian 12
 - An SSH key pair to connect to that machine
 
 <Capsule intent="tip">
@@ -52,7 +52,7 @@ The last step is to make the binary accessible from anywhere in your system. Mov
 mv ./meilisearch /usr/local/bin/
 ```
 
-Meilisearch is now ready to use. 
+Meilisearch is now running, but it is not publicly accessible.
 
 ## Step 2: Create system user
 
@@ -74,6 +74,8 @@ chown -R meilisearch:meilisearch /var/lib/meilisearch
 chmod 750 /var/lib/meilisearch
 ```
 
+In this tutorial, you're creating the directories in your droplet's local disk. If you are using additional block storage, create these directories there. 
+
 Next, download the default configuration to `/etc`:
 
 ```bash
@@ -90,7 +92,7 @@ dump_dir = "/var/lib/meilisearch/dumps"
 snapshot_dir = "/var/lib/meilisearch/snapshots"
 ```
 
-Remember to choose a safe master key and avoid exposing it in publicly accessible locations.
+Remember to choose a [safe master key](/learn/security/basic_security#creating-the-master-key-in-a-self-hosted-instance) and avoid exposing it in publicly accessible locations.
 
 You have now configured your Meilisearch instance.
 
@@ -224,6 +226,14 @@ certbot --nginx
 Enter your email address, agree to the Terms and Conditions, and choose your domain. When prompted if you want to automatically redirect HTTP traffic, choose option `2: Redirect`.
 
 Certbot will finish configuring Nginx. Once it is done, all traffic to your server will use HTTPS and you will have finished securing your Meilisearch instance.
+
+Your security certificate must be renewed every 90 days. Certbot schedules the renewal automatically. Run a test to verify this process is in place:
+
+```bash
+sudo certbot renew --dry-run
+```
+
+If this command returns no errors, you have successfully enabled HTTPS in your Nginx server.
 
 ## Conclusion
 
