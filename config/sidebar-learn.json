@@ -445,7 +445,12 @@
         "source": "learn/cookbooks/strapi_v4.mdx",
         "label": "Strapi v4 guide",
         "slug": "strapi_v4"
-      }      
+      },
+      {
+        "source": "learn/cookbooks/langchain.mdx",
+        "label": "Building semantic search with LangChain",
+        "slug": "langchain"
+      }       
     ]
   },
   {
