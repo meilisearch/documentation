@@ -164,6 +164,8 @@ function validateInternalLink(errors: Errors, href: string): void {
 
   if (EXCLUDED_PATHS.includes(link)) return
 
+  if(link.startsWith('/assets')) return
+
   // check if doc page exists
   const foundPage = documentMap.get(link.replace(/^\/+/, ''))
   

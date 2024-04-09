@@ -66,11 +66,12 @@ Can't find a client you'd like us to support? [Submit your idea or vote for it](
 
 |         | Meilisearch | Algolia | Typesense | Elasticsearch |
 |---|:---:|:----:|:---:|:---:|
-| Schemaless | ✅ | ✅ | ✅ | ✅ |
+| Schemaless | ✅ | ✅ | 🔶 <br /> `id` field is required and must be a string | ✅ |
 | Nested field support | ✅ | ✅ | ✅ | ✅ |
 | Nested document querying | ❌ | ❌ | ❌ | ✅ |
 | Automatic document ID detection | ✅ | ❌ | ❌ | ❌ |
-| Native document formats | `JSON`, `NDJSON`, `CSV` | `JSON` | `JSON`, `NDJSON` | `JSON`, `NDJSON`, `CSV` |
+| Native document formats | `JSON`, `NDJSON`, `CSV` | `JSON` | `NDJSON` | `JSON`, `NDJSON`, `CSV` |
+| Compression Support | Gzip, Deflate, and Brotli | Gzip | ❌ <br /> Reads payload as JSON which can lead to document corruption | Gzip |
 
 ##### Relevancy
 
@@ -103,7 +104,7 @@ Can't find a client you'd like us to support? [Submit your idea or vote for it](
 | Geo search |  ✅  | ✅ | ✅ | ✅ |
 | Sort by  |  ✅  | 🔶 <br /> Limited to one `sort_by` rule per index. Indexes may have to be duplicated for each sort field and sort order | ✅ <br /> Up to 3 sort fields per search query | ✅ |
 | Filtering |  ✅ <br /> Support complex filter queries with an SQL-like syntax.  | 🔶 <br /> Does not support `OR` operation across multiple fields | ✅ | ✅ |
-| Faceted search |  ✅ | ✅ | ✅ <br /> Faceting can take several seconds when >10 million facet values must be returned | ✅ |
+| Faceted search |  ✅ | ✅ | ✅ <br /> Faceted fields must be searchable <br /> Faceting can take several seconds when >10 million facet values must be returned | ✅ |
 | Distinct attributes <br /><div style={{color: "#A9A9A9", fontSize: "0.9em"}}>De-duplicate documents by a field value</div>| ✅ | ✅ | ✅  | ✅ |
 | Grouping <br /><div style={{color: "#A9A9A9", fontSize: "0.9em"}}>Bucket documents by field values</div> | ❌ | ✅ | ✅  | ✅ |
 
@@ -132,6 +133,7 @@ Can't find a client you'd like us to support? [Submit your idea or vote for it](
 |   | Meilisearch | Algolia | Typesense | Elasticsearch |
 |---|:---:|:----:|:---:|:---:|
 | Self-hosted | ✅  | ❌  | ✅  | ✅ |
+| Platform Support | ARM <br /> x86 <br /> x64 | n/a | 🔶 ARM (requires Docker on macOS) <br /> x86 <br /> x64 | ARM <br /> x86 <br /> x64 |
 | Official 1-click deploy | ✅ <br /> [DigitalOcean](https://marketplace.digitalocean.com/apps/meilisearch) <br /> [Platform.sh](https://console.platform.sh/projects/create-project?template=https://raw.githubusercontent.com/platformsh/template-builder/master/templates/meilisearch/.platform.template.yaml) <br /> [Azure](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fcmaneu%2Fmeilisearch-on-azure%2Fmain%2Fmain.json) <br /> [Railway](https://railway.app/new/template/TXxa09?referralCode=YltNo3) <br /> [Koyeb](https://app.koyeb.com/deploy?type=docker&image=getmeili/meilisearch&name=meilisearch-on-koyeb&ports=7700;http;/&env%5BMEILI_MASTER_KEY%5D=REPLACE_ME_WITH_A_STRONG_KEY) | ❌ | 🔶 <br />Only for the cloud-hosted solution | ❌ |
 | Official cloud-hosted solution | [Meilisearch Cloud](https://www.meilisearch.com/cloud?utm_campaign=oss&utm_source=docs&utm_medium=comparison-table) | ✅ | ✅ | ✅ |
 | High availability | Available with [Meilisearch Cloud](https://www.meilisearch.com/cloud?utm_campaign=oss&utm_source=docs&utm_medium=comparison-table) | ✅ | ✅ | ✅ |
