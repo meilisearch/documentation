@@ -1,0 +1,46 @@
+---
+title: When to use keyword, semantic, and hybrid search — Meilisearch documentation
+description: 
+---
+
+# When to use keyword, semantic, and hybrid search
+
+Meilisearch has three types of search: keyword, semantic, and hybrid. In this article, you'll see what are their differences and their intended use cases.
+
+## Keyword search
+
+Keyword search is another name for traditional full-text search. When performing keyword searches, Meilisearch examines the indexed documents searching for acceptable matches to a set of search terms.
+
+For example, when searching for `"pink sandals"`, keyword search will only return clothing items explicitly mentioning these two terms. Searching for `"summer shoes"` is likely to return fewer relevant results.
+
+Keyword search is Meilisearch's default search mode and requires no specific configuration. It is the fastest search option, but is best suited for situations where you need precise matches to a query. Since keyword search is based on a series of algorithms, customizing and debugging relevancy tends to be easier and more straightforward.
+
+## Semantic search
+
+Semantic search is part of Meilisearch's AI-powered search offerings. It integrates with LLM providers such as OpenAI and Hugging Face to generate document embeddings. Meilisearch then uses these embeddings to return search results based on a query's meaning and context.
+
+For example, searching for `"cute pink summer shoes for girls"` will return light-coloured open shoes, including but not restricted to sandals.
+
+Semantic search is more forgiving of long and imprecise queries. Because of that, it is useful when you do not expect your users to search for precise terms. At the same time, search relevancy might be less reliable if your target audience uses very short queries.
+
+Semantic search requires extra configuration and may entail extra costs depending on your chosen model provider. It may also be difficult to tweak search result relevancy, since you have limited ways of directly influencing an embedding generator.
+
+<Capsule intent="warning">
+Currently, semantic search will always return search results. In some cases, this may lead to results with very low relevancy.
+</Capsule>
+
+## Hybrid search
+
+Hybrid search performs keyword and semantic searches simultaneously, then returns both sets of results ordered by relevancy. It will return results quickly for precise queries, but will still deliver relevant results other queries.
+
+For example, searching for `"pink sandals"` will be more efficient, but queries for `"cute pink summer shoes for girls"` will still return relevant results.
+
+To use hybrid search, you must first configure semantic search, then set `semanticRatio` to >0.0 and <1.0.
+
+## When to use keyword, semantic, and hybrid search
+
+Keyword search is a reliable choice that will work well in most scenarios. It is fast, requires fewer resources, and works by default.
+
+Hybrid search offers the flexibility of semantic search, but will make use of keyword search whenever possible for performance gains. It requires extra configuration and may entail extra costs.
+
+In the absolute majority of cases, there is no reason to choose pure semantic search over hybrid search.
