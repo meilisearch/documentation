@@ -62,6 +62,12 @@
     ]
   },
   {
+    "title": "search",
+    "slug": "search",
+    "routes": [
+    ]
+  },
+  {
     "title": "Cloud features",
     "slug": "cloud",
     "routes": [
