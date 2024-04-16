@@ -453,7 +453,7 @@
       },
       {
         "source": "learn/cookbooks/langchain.mdx",
-        "label": "Building semantic search with LangChain",
+        "label": "Implementing semantic search with LangChain",
         "slug": "langchain"
       }
     ]
