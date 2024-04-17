@@ -164,6 +164,8 @@ function validateInternalLink(errors: Errors, href: string): void {
 
   if (EXCLUDED_PATHS.includes(link)) return
 
+  if(link.startsWith('/assets')) return
+
   // check if doc page exists
   const foundPage = documentMap.get(link.replace(/^\/+/, ''))
   
@@ -203,26 +205,35 @@ function traverseTreeAndValidateLinks(tree: any, doc: Document, setFailed: Failu
     hash: [],
     source: [],
     relative: [],
+    
   }
 
-  // Matches markdown links like [text](link)
-  const linkRegex = /\[[^\[\]]+\]\([^\(\)]+\)/gm
-  // Matches all links that use some kind of protocol (e.g. http://, https://, mailto:, etc.)
-  const nonInternalLinkRegex = /^(?:[a-z+]+:)?\/\/|^[a-z]+:/i;
+  // Matches markdown links like [text](link) (excluding those that end with a file extension)
+  const linkRegex = /^(?!.*\.[a-zA-Z]+\)$)\[[^\[\]]+\]\([^\(\)]+\)$/gm
 
-  function validateNodes (node: any, parse: boolean = false) {
+  // Matches all links that use some kind of protocol (e.g. http://, https://, mailto:, etc.)
+  const nonInternalLinkRegex = /^(?:[a-z+]+:)?\/\/|^[a-z]+:/i
+
+  function validateNodes(node: any, parse: boolean = false) {
     // Handle links in custom components that were not correctly parsed
     if (node.type === 'text' && linkRegex.test(node.value)) {
       const customComponentTree = markdownProcessor.parse(node.value)
       traverseRecursively(customComponentTree)
     }
 
-    if (node.type === 'element' && node.tagName === 'a' || node.type === 'link' || node.type === 'buttonlink') {
+    if (
+      (node.type === 'element' && node.tagName === 'a') ||
+      node.type === 'link' ||
+      node.type === 'buttonlink'
+    ) {
       const href = node.properties?.href ?? node.url
       if (!href) return
-  
+
+      // Check if the link is an internal link and not ending with a file extension
       if (href.startsWith(RELATIVE_PATH)) {
-        validateInternalLink(errors, href)
+        if(!/^.*\.[^\\]+$/.test(href)){
+          validateInternalLink(errors, href)
+        }
       } else if (href.startsWith('#')) {
         validateHashLink(errors, href, doc)
       } else if (!nonInternalLinkRegex.test(href)) {
