@@ -5,7 +5,7 @@ description: Deploy Meilisearch in a Digital Ocean droplet. Covers installation,
 
 # Running a self-hosted Meilisearch project in production
 
-This tutorial will guide you through setting up a production-ready Debian server in a DigitalOcean droplet. It covers installing Meilisearch and setting up a secure environment.
+This tutorial will guide you through setting up a production-ready Meilisearch instance. These instructions use a DigitalOcean droplet running Debian, but should be compatible with any hosting service running a Linux distro.
 
 <Capsule intent="note">
 [Meilisearch Cloud](https://www.meilisearch.com/cloud?utm_campaign=oss&utm_source=docs&utm_medium=running-production-oss) is the recommended way to run Meilisearch in production environments.
@@ -40,13 +40,7 @@ curl -L https://install.meilisearch.com | sh
 
 The Meilisearch installer is a set of scripts that ensure you will get the correct binary for your system.
 
-Give the binary the required execute permission:
-
-```sh
-chmod +x meilisearch
-```
-
-The last step is to make the binary accessible from anywhere in your system. Move the binary file into `/usr/local/bin`:
+Next, you need to make the binary accessible from anywhere in your system. Move the binary file into `/usr/local/bin`:
 
 ```sh
 mv ./meilisearch /usr/local/bin/
