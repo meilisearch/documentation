@@ -698,6 +698,24 @@ geosearch_guide_sort_usage_2: |-
         "rating:desc"
       ]
     }'
+basic_security_tutorial_listing_1: |-
+  curl -X GET 'http://localhost:7700/keys' \
+  -H 'Authorization: Bearer MASTER_KEY'
+basic_security_tutorial_admin_1: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes' \
+    -H 'Content-Type: application/json' \
+    -H 'Authorization: Bearer DEFAULT_ADMIN_API_KEY' \
+    --data-binary '{
+      "uid": "medical_records",
+      "primaryKey": "id"
+    }'
+basic_security_tutorial_search_1: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/medical_records/search' \
+    -H 'Content-Type: application/json' \
+    -H 'Authorization: Bearer DEFAULT_SEARCH_API_KEY' \
+    --data-binary '{ "q": "appointments" }'
 security_guide_search_key_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/patient_medical_records/search' \
@@ -940,27 +958,15 @@ date_guide_sort_1: |-
       "q": "",
       "sort": ["release_timestamp:desc"]
     }'
-async_guide_filter_by_date_1: |-
+async_guide_filter_by_statuses_1: |-
   curl \
-    -X GET 'http://localhost:7700/tasks?afterEnqueuedAt=2020-10-11T11:49:53.000Z'
+    -X GET 'http://localhost:7700/tasks?statuses=failed'
+async_guide_filter_by_statuses_2: |-
+  curl \
+    -X GET 'http://localhost:7700/tasks?statuses=failed,canceled'
 async_guide_multiple_filters_1: |-
   curl \
     -X GET 'http://localhost:7700/tasks?indexUids=movies&types=documentAdditionOrUpdate,documentDeletion&statuses=processing'
-async_guide_filter_by_ids_1: |-
-  curl \
-    -X GET 'http://localhost:7700/tasks?uids=5,10,13'
-async_guide_filter_by_statuses_1: |-
-  curl \
-    -X GET 'http://localhost:7700/tasks?statuses=failed,canceled'
-async_guide_filter_by_types_1: |-
-  curl \
-    -X GET 'http://localhost:7700/tasks?types=dumpCreation,indexSwap'
-async_guide_filter_by_index_uids_1: |-
-  curl \
-    -X GET 'http://localhost:7700/tasks?indexUids=movies'
-async_guide_canceled_by_1: |-
-  curl \
-    -X GET 'http://localhost:7700/tasks?canceledBy=9,15'
 delete_tasks_1: |-
   curl \
     -X DELETE 'http://localhost:7700/tasks?uids=1,2'
@@ -1179,5 +1185,5 @@ index_settings_tutorial_api_put_setting_1: |-
       "overview"
     ]'
 index_settings_tutorial_api_task_1: |-
-curl \
-  -X GET 'http://localhost:7700/tasks/TASK_UID'
+  curl \
+    -X GET 'http://localhost:7700/tasks/TASK_UID'
