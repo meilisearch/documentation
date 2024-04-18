@@ -62,6 +62,12 @@ If your query is `Hello - World`:
 
 **Explanation:** This is the largest possible value for a 32-bit unsigned integer. Since Meilisearch's engine uses unsigned integers to identify documents internally, this is the maximum number of documents that can be stored in an index.
 
+## Maximum number of concurrent search requests
+
+**Limitation:** Meilisearch handles a maximum of concurrent 1000 search requests.
+
+**Explanation:** This limit exists to prevent Meilisearch from queueing an unlimited number of requests and potentially consuming an unbounded amount of memory. You may configure it with [`--experimental-search-queue-size`](/learn/experimental/search_queue_size).
+
 ## Length of individual `filterableAttributes` values
 
 **Limitation:** Individual `filterableAttributes` values are limited to 500 bytes.
