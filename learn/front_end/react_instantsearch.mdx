@@ -82,7 +82,7 @@ import {
 import "./App.css";
 import { instantMeiliSearch } from "@meilisearch/instant-meilisearch";
 
-const searchClient = instantMeiliSearch(
+const {searchClient} = instantMeiliSearch(
   "<your Meilisearch host>",
   "<your Meilisearch API key>"
 );
@@ -140,7 +140,7 @@ import { instantMeiliSearch } from "@meilisearch/instant-meilisearch";
 Next, you need to initialize the search client that will communicate with Meilisearch. Add your Meilisearch credentials: host and API key, as the first and second parameters of the instantMeilisearch function.
 
 ```jsx
-const searchClient = instantMeiliSearch(
+const {searchClient} = instantMeiliSearch(
   "<your Meilisearch host>",
   "<your Meilisearch API key>"
 );
