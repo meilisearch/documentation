@@ -178,7 +178,7 @@ This list is liable to change with every new version of Meilisearch. It's not be
 | `searchable_attributes.with_wildcard`              | `true` if `*` is specified as a searchable attribute, otherwise `false`                     | false
 | `per_task_uid`                                     | `true` if a `uids` is used to fetch a particular task resource, otherwise `false`           | true
 | `filtered_by_uid`                                  | `true` if tasks are filtered by the `uids` query parameter, otherwise `false`               | false
-|`filtered_by_index_uid`                             | `true` if tasks are filtered by the `indexUids` query parameter, otherwise `false`          | false
+| `filtered_by_index_uid`                             | `true` if tasks are filtered by the `indexUids` query parameter, otherwise `false`          | false
 | `filtered_by_type`                                 | `true` if tasks are filtered by the `types` query parameter, otherwise `false`              | false
 | `filtered_by_status`                               | `true` if tasks are filtered by the `statuses` query parameter, otherwise `false`           | false
 | `filtered_by_canceled_by`                          | `true` if tasks are filtered by the `canceledBy` query parameter, otherwise `false`         | false
@@ -241,3 +241,6 @@ This list is liable to change with every new version of Meilisearch. It's not be
 | `embedders.sources`                                | An array representing the different provided sources                                        | [”huggingFace”, “userProvided”]
 | `embedders.document_template_used`                 | A boolean indicating if one of the provided embedders has a custom template defined         | true
 | `infos.task_queue_webhook`                         | `true` if the instance is launched with a task queue webhook, otherwise `false`             | `false`
+| `infos.experimental_search_queue_size`             | Size of the search queue                                                                    | 750
+| `searches.total_degraded`                          | Total number of searches cancelled after reaching search time cut-off                       | 100
+| `searches.total_used_negative_operator`            | Count searches using either a negative word or a negative phrase operator.                  | 173
