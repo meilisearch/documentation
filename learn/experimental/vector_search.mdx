@@ -175,7 +175,9 @@ curl \
 </Tabs.Container>
 
 <Capsule intent="tip" title="`documentTemplate` usage">
-`documentTemplate` must be a [Liquid template](https://shopify.github.io/liquid/). Use `{{ doc.attribute }}` to access the `attribute` field value of your documents. Any field you refer to in this way must exist in all documents or an error will be raised at indexing time.
+`documentTemplate` must be a [Liquid template](https://shopify.github.io/liquid/). Use `{{ doc.attribute }}` to access the `attribute` field value of your documents. Meilisearch also exposes a `{{ fields }}` array containing one object per document field, which you may access with `{{ field.name }}` and `{{ field.value }}`.
+
+Any field you refer to in this way must exist in all documents or an error will be raised at indexing time.
 
 For best results, use short strings indicating the type of document in that index, only include highly relevant document fields, and truncate long fields.  
 </Capsule>
