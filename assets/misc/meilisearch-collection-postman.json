@@ -2184,6 +2184,81 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "Get search cut-off",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/search-cuf-off-ms",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"search-cuf-off-ms"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update search cut-off",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "150"
+								},
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/proximity-precision",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"proximity-precision"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Reset search cut-off",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/proximity-precision",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"proximity-precision"
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				},
@@ -2651,7 +2726,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "aSampleMasterKey",
+				"value": "123",
 				"type": "string"
 			}
 		]
