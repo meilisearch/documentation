@@ -2186,7 +2186,7 @@
 							"response": []
 						},
 						{
-							"name": "Get search cut-off",
+							"name": "Get search cutoff",
 							"request": {
 								"method": "GET",
 								"header": [],
@@ -2206,7 +2206,7 @@
 							"response": []
 						},
 						{
-							"name": "Update search cut-off",
+							"name": "Update search cutoff",
 							"protocolProfileBehavior": {
 								"disabledSystemHeaders": {
 									"content-type": true
@@ -2241,7 +2241,7 @@
 							"response": []
 						},
 						{
-							"name": "Reset search cut-off",
+							"name": "Reset search cutoff",
 							"request": {
 								"method": "DELETE",
 								"header": [],
