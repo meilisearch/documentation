@@ -140,6 +140,35 @@ curl -X POST -H 'content-type: application/json' \
 ]'
 ```
 
+### Distribution shift
+
+Hybrid search results do not always use the full vector space uniformly, which may impact relevancy. Use `distributionShift` when configuring an embedder to correct result distribution with an affine transformation:
+
+```sh
+curl \
+  -X PATCH 'http://localhost:7700/indexes/movies/settings' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "embedders": {
+      "default": {
+        "source":  "huggingFace",
+        "model": "MODEL_NAME",
+        "distribution": {
+          "mean": 0.7,
+          "sigma": 0.3
+        }
+      }
+    }
+  }'
+```
+
+`distributionShift` must be an object with two fields:
+
+- `mean`: a number between `0` and `1` indicating the target mean value
+- `sigma`: a number between `0` and `1` indicating the allowed variance
+
+Changing `distributionShift` does not trigger a reindexing operation.
+
 ### Vector search with auto-embeddings
 
 Perform searches with `q` and `hybrid` to retrieve search results using both keyword and semantic search:
