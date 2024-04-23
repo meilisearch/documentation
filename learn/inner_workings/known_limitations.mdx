@@ -66,7 +66,7 @@ If your query is `Hello - World`:
 
 **Limitation:** Meilisearch handles a maximum of concurrent 1000 search requests.
 
-**Explanation:** This limit exists to prevent Meilisearch from queueing an unlimited number of requests and potentially consuming an unbounded amount of memory. You may configure it with [`--experimental-search-queue-size`](/learn/experimental/search_queue_size).
+**Explanation:** This limit exists to prevent Meilisearch from queueing an unlimited number of requests and potentially consuming an unbounded amount of memory. If Meilisearch receives a new request when the queue is already full, it drops a random search request and returns a 503 `too_many_search_requests` error with a `Retry-After` header set to 10 seconds. Configure this limit with [`--experimental-search-queue-size`](/learn/experimental/search_queue_size).
 
 ## Length of individual `filterableAttributes` values
 
