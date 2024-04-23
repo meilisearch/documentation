@@ -2191,7 +2191,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{url}}/indexes/{{indexUID}}/settings/search-cuf-off-ms",
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/search-cutoff-ms",
 									"host": [
 										"{{url}}"
 									],
@@ -2199,7 +2199,7 @@
 										"indexes",
 										"{{indexUID}}",
 										"settings",
-										"search-cuf-off-ms"
+										"search-cutoff-ms"
 									]
 								}
 							},
@@ -2226,7 +2226,7 @@
 									"raw": "150"
 								},
 								"url": {
-									"raw": "{{url}}/indexes/{{indexUID}}/settings/search-cuf-off-ms",
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/search-cutoff-ms",
 									"host": [
 										"{{url}}"
 									],
@@ -2234,7 +2234,7 @@
 										"indexes",
 										"{{indexUID}}",
 										"settings",
-										"search-cuf-off-ms"
+										"search-cutoff-ms"
 									]
 								}
 							},
@@ -2246,7 +2246,7 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "{{url}}/indexes/{{indexUID}}/settings/search-cut-off",
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/search-cutoff-ms",
 									"host": [
 										"{{url}}"
 									],
@@ -2254,7 +2254,7 @@
 										"indexes",
 										"{{indexUID}}",
 										"settings",
-										"search-cut-off"
+										"search-cutoff-ms"
 									]
 								}
 							},
