@@ -2726,7 +2726,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "123",
+				"value": "aSampleMasterKey",
 				"type": "string"
 			}
 		]
