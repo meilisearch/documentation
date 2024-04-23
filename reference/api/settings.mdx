@@ -161,7 +161,7 @@ If the provided index does not exist, it will be created.
 | **[`proximityPrecision`](#proximity-precision)**     | String           | `"byWord"`                                                                                       |  Precision level when calculating the proximity ranking rule                     |
 | **[`rankingRules`](#ranking-rules)**                 | Array of strings | `["words",`<br />`"typo",`<br />`"proximity",`<br />`"attribute",`<br />`"sort",`<br />`"exactness"]` | List of ranking rules in order of importance                                |
 | **[`searchableAttributes`](#searchable-attributes)** | Array of strings | All attributes: `["*"]`                                                                          | Fields in which to search for matching query words sorted by order of importance |
-| **[`searchCutoffMs`](#search-cut-off)**              | Integer          | `null`, or 1500ms                                                                                | Maximum duration of a search query                                               |
+| **[`searchCutoffMs`](#search-cutoff)**              | Integer          | `null`, or 1500ms                                                                                | Maximum duration of a search query                                               |
 | **[`separatorTokens`](#separator-tokens)**           | Array of strings | Empty                                                                                            | List of characters delimiting where one term begins and ends                     |
 | **[`nonSeparatorTokens`](#non-separator-tokens)**    | Array of strings | Empty                                                                                            | List of characters not delimiting where one term begins and ends                 |
 | **[`sortableAttributes`](#sortable-attributes)**     | Array of strings | Empty                                                                                            | Attributes to use when sorting search results                                    |
@@ -1260,17 +1260,17 @@ Reset the searchable attributes of the index to the default value.
 
 You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
 
-## Search cut-off
+## Search cutoff
 
-Configure the maximum duration of a search query. Meilisearch will interrupt any search taking longer than the cut-off value.
+Configure the maximum duration of a search query. Meilisearch will interrupt any search taking longer than the cutoff value.
 
 By default, Meilisearch interrupts searches after 1500 milliseconds.
 
-### Get search cut-off
+### Get search cutoff
 
 <RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/search-cutoff-ms" />
 
-Get an index's search cut-off value.
+Get an index's search cutoff value.
 
 #### Path parameters
 
@@ -1280,7 +1280,7 @@ Get an index's search cut-off value.
 
 #### Example
 
-<CodeSamples id="get_search_cut_off__1"/>
+<CodeSamples id="get_search_cutoff_1"/>
 
 ##### Response: `200 Ok`
 
@@ -1288,11 +1288,11 @@ Get an index's search cut-off value.
 null
 ```
 
-### Update search cut-off
+### Update search cutoff
 
-<RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/search-cut-off-ms" />
+<RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/search-cutoff-ms" />
 
-Update an index's search cut-off value.
+Update an index's search cutoff value.
 
 #### Path parameters
 
@@ -1306,11 +1306,11 @@ Update an index's search cut-off value.
 150
 ```
 
-A single integer indicating the cut-off value in milliseconds.
+A single integer indicating the cutoff value in milliseconds.
 
 #### Example
 
-<CodeSamples id="update_search_cut_off_1"/>
+<CodeSamples id="update_search_cutoff_1"/>
 
 ##### Response: `202 Accepted`
 
@@ -1326,11 +1326,11 @@ A single integer indicating the cut-off value in milliseconds.
 
 Use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
 
-### Reset search cut-off
+### Reset search cutoff
 
-<RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings/search-cut-off-ms"/>
+<RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings/search-cutoff-ms"/>
 
-Reset an index's search cut-off value to its default value, `null`. This translates to a cut-off of 1500ms.
+Reset an index's search cutoff value to its default value, `null`. This translates to a cutoff of 1500ms.
 
 #### Path parameters
 
@@ -1340,7 +1340,7 @@ Reset an index's search cut-off value to its default value, `null`. This transla
 
 #### Example
 
-<CodeSamples id="reset_search_cut_off_1"/>
+<CodeSamples id="reset_search_cutoff_1"/>
 
 ##### Response: `202 Accepted`
 

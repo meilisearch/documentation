@@ -1188,14 +1188,14 @@ index_settings_tutorial_api_put_setting_1: |-
 index_settings_tutorial_api_task_1: |-
   curl \
     -X GET 'http://localhost:7700/tasks/TASK_UID'
-get_search_cut_off_1: |-
+get_search_cutoff_1: |-
   curl \
     -X GET 'http://localhost:7700/indexes/movies/settings/search-cutoff-ms'
-update_search_cut_off_1: |-
+update_search_cutoff_1: |-
   curl \
     -X PUT 'http://localhost:7700/indexes/movies/settings/search-cutoff-ms' \
     -H 'Content-Type: application/json' \
     --data-binary '150'
-reset_search_cut_off_1: |-
+reset_search_cutoff_1: |-
   curl \
     -X DELETE 'http://localhost:7700/indexes/movies/settings/search-cutoff-ms'
