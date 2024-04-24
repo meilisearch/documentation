@@ -317,6 +317,20 @@ You can combine phrase search and normal queries in a single search request. In 
 
 <CodeSamples id="phrase_search_1" />
 
+#### Negative search
+
+Use the minus (`-`) operator in front of a word or phrase to exclude it from search results.
+
+##### Example
+
+The following query returns all documents that do not include the word "escape":
+
+<CodeSamples id="negative_search_1" />
+
+Negative search can be used together with phrase search:
+
+<CodeSamples id="negative_search_2" />
+
 ### Offset
 
 **Parameter**: `offset`<br />

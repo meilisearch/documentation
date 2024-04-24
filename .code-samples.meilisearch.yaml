@@ -1199,3 +1199,13 @@ update_search_cutoff_1: |-
 reset_search_cutoff_1: |-
   curl \
     -X DELETE 'http://localhost:7700/indexes/movies/settings/search-cutoff-ms'
+negative_search_1: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/movies/search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{ "q": "-escape" }'
+negative_search_2: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/movies/search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{ "q": "-\"escape room\"" }'
