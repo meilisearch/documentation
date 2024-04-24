@@ -142,7 +142,7 @@ curl -X POST -H 'content-type: application/json' \
 
 ### Distribution shift
 
-Hybrid search results do not always use the full vector space uniformly, which may impact relevancy. Use `distributionShift` when configuring an embedder to correct result distribution with an affine transformation:
+Semantic search results can sometimes have very close ranking scores. This may result in hybrid searches returning fewer keyword search results than expected. Use `distributionShift` when configuring an embedder to correct result distribution with an affine transformation:
 
 ```sh
 curl \
@@ -164,8 +164,8 @@ curl \
 
 `distributionShift` is an optional field compatible with all embedder sources. It must be an object with two fields:
 
-- `mean`: a number between `0` and `1` indicating the target mean value
-- `sigma`: a number between `0` and `1` indicating the allowed variance
+- `mean`: a number between `0` and `1` indicating the new semantic score mean  
+- `sigma`: a number between `0` and `1` indicating how much semantic score values may deviate from the mean. Use values smaller than 0.4 for larger variance, and larger than 0.4 to keep results close to the mean
 
 Changing `distributionShift` does not trigger a reindexing operation.
 
