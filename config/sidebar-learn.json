@@ -537,6 +537,11 @@
         "source": "learn/experimental/replication_parameters.mdx",
         "label": "Replication parameters",
         "slug": "replication_parameters"
+      },
+      {
+        "source": "learn/experimental/search_queue_size.mdx",
+        "label": "Search queue size",
+        "slug": "search_queue_size"
       }
     ]
   },
