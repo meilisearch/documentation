@@ -142,7 +142,9 @@ curl -X POST -H 'content-type: application/json' \
 
 ### Distribution shift
 
-Semantic search results can sometimes have very close ranking scores. This may result in hybrid searches returning fewer keyword search results than expected. Use `distribution` when configuring an embedder to correct result distribution with an affine transformation:
+For mathematical reasons, the `_rankingScore` of semantic search results tend to be closely grouped around an average value that depends on the embedder and model used. This may result in relevant semantic hits being underrepresented and irrelevant semantic hits being overrepresented compared with keyword search hits.
+
+Use `distribution` when configuring an embedder to correct the returned `_rankingScore`s of the semantic hits with an affine transformation:
 
 ```sh
 curl \
@@ -161,6 +163,8 @@ curl \
     }
   }'
 ```
+
+Configuring `distribution` requires a certain amount of trial and error, in which you must perform semantic searches and monitor the results. Based on their `rankingScore`s and relevancy, add the observed `mean` and `sigma` values for that index.
 
 `distribution` is an optional field compatible with all embedder sources. It must be an object with two fields:
 
