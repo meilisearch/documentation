@@ -37,14 +37,21 @@ To ensure proper scaling of Meilisearch Cloud's latest AI-powered search offerin
 
 ### Generate vector embeddings
 
-To use vector search, first configure the `embedders` index setting. You may configure multiple embedders for an index. 
+To use vector search, first configure the `embedders` index setting. You may configure multiple embedders for an index.
 
-Embedders generate vector data from your documents. Meilisearch natively supports [OpenAI](https://openai.com/) and [Hugging Face](https://huggingface.co/) embedders. 
+Embedders generate vector data from your documents. Meilisearch natively supports the following embedders:
 
-It is also possible to use custom embedders. In this case, you must generate the embeddings manually and include them as a field in your documents.
+- [OpenAI](https://openai.com/)
+- [Hugging Face](https://huggingface.co/)
+- [Ollama](https://ollama.com/)
+- any embedder with a REST interface
 
-#### Generate auto-embeddings with OpenAI 
+It is also possible to [supply custom embeddings](#generate-custom-embeddings-manually). In this case, you must generate the embeddings manually and include them as a field in your documents.
 
+#### Generate auto-embeddings
+
+<Tabs.Container labels={["OpenAI", "Hugging Face", "Ollama", "REST"]}>
+<Tabs.Content label="OpenAI">
 Use the `embedders` index setting of the [update `/settings` endpoint](/reference/api/settings) to configure one or more embedders for an index:
 
 ```sh
@@ -57,7 +64,7 @@ curl \
         "source":  "openAi",
         "apiKey": "anOpenAiApiKey",
         "model": "text-embedding-3-small",
-        "documentTemplate": "A movie titled '{{doc.title}}' whose description starts with {{doc.overview|truncatewords: 20}}",
+        "documentTemplate": "A movie titled {{doc.title}} whose description starts with {{doc.overview|truncatewords: 20}}",
         "dimensions": 1536
       }
     }
@@ -66,20 +73,14 @@ curl \
 
 It is mandatory to pass an OpenAI API key through the `OPENAI_API_KEY` environment variable or the `apiKey` field when using an OpenAI embedder. [Generate an API key](https://platform.openai.com/api-keys) from your OpenAI account. Use [tier 2 keys](https://platform.openai.com/docs/guides/rate-limits/usage-tiers?context=tier-two) or above for optimal performance.
 
-`model` is a mandatory field indicating a compatible OpenAI model. Meilisearch supports the following [OpenAI models](https://platform.openai.com/docs/models/embeddings): `openai-text-embedding-ada-002`, `text-embedding-3-small`, and `text-embedding-3-large`. 
+`model` is a mandatory field indicating a compatible OpenAI model. Meilisearch supports the following [OpenAI models](https://platform.openai.com/docs/models/embeddings): `openai-text-embedding-ada-002`, `text-embedding-3-small`, and `text-embedding-3-large`.
 
 `documentTemplate` is an optional field. Use it to customize the data you send to the embedder. It is highly recommended you configure a custom template for your documents.
 
 `dimensions` is an optional field. It must be bigger than zero and lower or equal to the chosen model's dimensions. This option is not compatible with `text-embedding-ada-002`. Fewer dimensions may improve performance, but lead to lower search result accuracy.
+</Tabs.Content>
 
-<Capsule intent="tip" title="`documentTemplate` usage">
-`documentTemplate` must be a [Liquid template](https://shopify.github.io/liquid/). Use `{{ doc.attribute }}` to access the `attribute` field value of your documents. Any field you refer to in this way must exist in all documents or an error will be raised at indexing time.
-
-For best results, use short strings indicating the type of document in that index, only include highly relevant document fields, and truncate long fields.  
-</Capsule>
-
-#### Generate auto-embeddings with Hugging Face 
-
+<Tabs.Content label="Hugging Face">
 The Hugging Face embedder computes embeddings locally. This is a resource-intensive operation and might affect indexing performance. You may be able to significantly improve performance by [compiling a CUDA-compatible Meilisearch binary](/learn/cookbooks/computing_hugging_face_embeddings_gpu).
 
 Use the `embedders` index setting of the [update `/settings` endpoint](/reference/api/settings) to configure one or more embedders for an index:
@@ -93,7 +94,7 @@ curl \
       "default": {
         "source": "huggingFace",
         "model": "BAAI/bge-base-en-v1.5",
-        "documentTemplate": "A movie titled '{{doc.title}}' whose description starts with {{doc.overview|truncatewords: 20}}"
+        "documentTemplate": "A movie titled {{doc.title}} whose description starts with {{doc.overview|truncatewords: 20}}"
       }
     }
   }'
@@ -102,14 +103,86 @@ curl \
 `documentTemplate` is an optional field you can use to customize the data you send to the embedder. It is highly recommended you configure a custom template for your documents.
 
 `model` is mandatory and must indicate a BERT embedding model.
+</Tabs.Content>
+
+<Tabs.Content label="Ollama">
+Use the `embedders` index setting of the [update `/settings` endpoint](/reference/api/settings) to configure one or more embedders for an index:
+
+```sh
+curl \
+  -X PATCH 'http://localhost:7700/indexes/movies/settings' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "embedders": {
+      "default": {
+        "source": "ollama",
+        "url": "http://localhost:11434/api/embeddings",
+        "apiKey": "OLLAMA_API_KEY",
+        "model": "MODEL_NAME",
+        "documentTemplate": "A document titled {{doc.title}} whose description starts with {{doc.overview|truncatewords: 20}}"
+      }
+    }
+  }'
+```
+
+`url` indicates the embedder address. If not specified, Meilisearch will try to fetch the `MEILI_OLLAMA_URL` environment variable.
+
+`apiKey` is an optional field indicating your Ollama API key, if you have configured it.
+
+`model` is a mandatory field indicating a [compatible model](https://ollama.com/library).
+
+`documentTemplate` is an optional field. Use it to customize the data you send to the embedder. It is highly recommended you configure a custom template for your documents.
+</Tabs.Content>
+
+<Tabs.Content label="REST">
+The generic REST source is compatible with any embedder with a REST API without a dedicated Meilisearch `source`.
+
+Use the `embedders` index setting of the [update `/settings` endpoint](/reference/api/settings) to configure one or more embedders for an index:
+
+```sh
+curl \
+  -X PATCH 'http://localhost:7700/indexes/movies/settings' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "embedders": {
+      "default": {
+        "source": "rest",
+        "url": "http://localhost:12345/api/v1/embed",
+        "apiKey": "SOURCE_API_KEY",
+        "dimensions": 512,
+        "documentTemplate": "A document titled {{doc.title}} whose description starts with {{doc.overview|truncatewords: 20}}",
+        "inputField": ["data", "text"],
+        "inputType": "text",
+        "query": {
+          "model": "MODEL_NAME",
+          "dimensions": 512
+        },
+        "pathToEmbeddings": ["data"],
+        "embeddingObject": ["embedding"]
+      }
+    }
+  }'
+```
+
+`url` indicates the embedder address. If not specified, Meilisearch will try to fetch the `MEILI_OLLAMA_URL` environment variable.
+
+`apiKey` is an optional field indicating your source's API key, if you have configured it.
+
+`model` is a mandatory field indicating a compatible model.
+
+`documentTemplate` is an optional field. Use it to customize the data you send to the embedder. It is highly recommended you configure a custom template for your documents.
+</Tabs.Content>
+</Tabs.Container>
 
 <Capsule intent="tip" title="`documentTemplate` usage">
-`documentTemplate` must be a [Liquid template](https://shopify.github.io/liquid/). Use `{{ doc.attribute }}` to access document field values. Meilisearch also exposes a `{{ fields }}` array containing one object per document field, which you may access with `{{ field.name }}` and `{{ field.value }}`.
+`documentTemplate` must be a [Liquid template](https://shopify.github.io/liquid/). Use `{{ doc.attribute }}` to access the `attribute` field value of your documents. Meilisearch also exposes a `{{ fields }}` array containing one object per document field, which you may access with `{{ field.name }}` and `{{ field.value }}`.
+
+Any field you refer to in this way must exist in all documents or an error will be raised at indexing time.
 
 For best results, use short strings indicating the type of document in that index, only include highly relevant document fields, and truncate long fields.  
 </Capsule>
 
-#### Custom embeddings
+#### Generate custom embeddings manually
 
 You may also provide custom embeddings. In this case, you must manually update your embeddings when adding, updating, and removing documents to your index.
 
@@ -139,6 +212,39 @@ curl -X POST -H 'content-type: application/json' \
     { "id": 1, "_vectors": {"image2text": [1, -0.2, 0]}, "text": "baking dish" }
 ]'
 ```
+
+### Distribution shift
+
+For mathematical reasons, the `_rankingScore` of semantic search results tend to be closely grouped around an average value that depends on the embedder and model used. This may result in relevant semantic hits being underrepresented and irrelevant semantic hits being overrepresented compared with keyword search hits.
+
+Use `distribution` when configuring an embedder to correct the returned `_rankingScore`s of the semantic hits with an affine transformation:
+
+```sh
+curl \
+  -X PATCH 'http://localhost:7700/indexes/movies/settings' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "embedders": {
+      "default": {
+        "source":  "huggingFace",
+        "model": "MODEL_NAME",
+        "distribution": {
+          "mean": 0.7,
+          "sigma": 0.3
+        }
+      }
+    }
+  }'
+```
+
+Configuring `distribution` requires a certain amount of trial and error, in which you must perform semantic searches and monitor the results. Based on their `rankingScore`s and relevancy, add the observed `mean` and `sigma` values for that index.
+
+`distribution` is an optional field compatible with all embedder sources. It must be an object with two fields:
+
+- `mean`: a number between `0` and `1` indicating the semantic score of "somewhat relevant" hits before using the `distribution` setting
+- `sigma`: a number between `0` and `1` indicating the average absolute difference in `_rankingScore`s between "very relevant" hits and "somewhat relevant" hits, and "somewhat relevant" hits and "irrelevant hits".
+
+Changing `distribution` does not trigger a reindexing operation.
 
 ### Vector search with auto-embeddings
 
