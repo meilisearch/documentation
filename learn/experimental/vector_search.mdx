@@ -164,7 +164,7 @@ curl \
 
 `distribution` is an optional field compatible with all embedder sources. It must be an object with two fields:
 
-- `mean`: a number between `0` and `1` indicating the semantic score of "somewhat relevant" hits before using the `distribution` setting.
+- `mean`: a number between `0` and `1` indicating the semantic score of "somewhat relevant" hits before using the `distribution` setting
 - `sigma`: a number between `0` and `1` indicating how much semantic score values may deviate from the mean. Use values smaller than 0.4 for larger variance, and larger than 0.4 to keep results close to the mean
 
 Changing `distribution` does not trigger a reindexing operation.
