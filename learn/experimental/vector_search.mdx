@@ -213,6 +213,39 @@ curl -X POST -H 'content-type: application/json' \
 ]'
 ```
 
+### Distribution shift
+
+For mathematical reasons, the `_rankingScore` of semantic search results tend to be closely grouped around an average value that depends on the embedder and model used. This may result in relevant semantic hits being underrepresented and irrelevant semantic hits being overrepresented compared with keyword search hits.
+
+Use `distribution` when configuring an embedder to correct the returned `_rankingScore`s of the semantic hits with an affine transformation:
+
+```sh
+curl \
+  -X PATCH 'http://localhost:7700/indexes/movies/settings' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "embedders": {
+      "default": {
+        "source":  "huggingFace",
+        "model": "MODEL_NAME",
+        "distribution": {
+          "mean": 0.7,
+          "sigma": 0.3
+        }
+      }
+    }
+  }'
+```
+
+Configuring `distribution` requires a certain amount of trial and error, in which you must perform semantic searches and monitor the results. Based on their `rankingScore`s and relevancy, add the observed `mean` and `sigma` values for that index.
+
+`distribution` is an optional field compatible with all embedder sources. It must be an object with two fields:
+
+- `mean`: a number between `0` and `1` indicating the semantic score of "somewhat relevant" hits before using the `distribution` setting
+- `sigma`: a number between `0` and `1` indicating the average absolute difference in `_rankingScore`s between "very relevant" hits and "somewhat relevant" hits, and "somewhat relevant" hits and "irrelevant hits".
+
+Changing `distribution` does not trigger a reindexing operation.
+
 ### Vector search with auto-embeddings
 
 Perform searches with `q` and `hybrid` to retrieve search results using both keyword and semantic search:
