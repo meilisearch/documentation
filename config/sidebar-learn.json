@@ -66,9 +66,9 @@
     "slug": "search",
     "routes": [
       {
-        "source": "learn/search/difference_keyword_semantic_hybrid_search.mdx",
-        "label": "When to use keyword, semantic, and hybrid search",
-        "slug": "difference_keyword_semantic_hybrid_search"
+        "source": "learn/search/difference_keyword_ai_search.mdx",
+        "label": "Differences between keyword and AI-powered search",
+        "slug": "difference_keyword_ai_search"
       }
     ]
   },
