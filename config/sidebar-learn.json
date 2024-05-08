@@ -65,6 +65,11 @@
     "title": "search",
     "slug": "search",
     "routes": [
+      {
+        "source": "learn/search/difference_keyword_semantic_hybrid_search.mdx",
+        "label": "When to use keyword, semantic, and hybrid search",
+        "slug": "difference_keyword_semantic_hybrid_search"
+      }
     ]
   },
   {
