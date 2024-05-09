@@ -65,6 +65,11 @@
     "title": "AI-powered search",
     "slug": "ai-powered-search",
     "routes": [
+      {
+        "source": "learn/search/getting_started_with_ai_search.mdx",
+        "label": "Getting started with AI-powered search",
+        "slug": "getting_started_with_ai_search"
+      }
     ]
   },
   {
