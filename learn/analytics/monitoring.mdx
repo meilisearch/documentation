@@ -1,10 +1,9 @@
 ---
 title: Configure application monitoring metrics
 description: Meilisearch Cloud offers in-depth metrics to help monitor your application performance.
-sidebarDepth: 3
 ---
 
-# Monitoring
+# Configure application monitoring metrics
 
 Enable Meilisearch Cloud monitoring to keep track of application performance and service status.
 
@@ -12,9 +11,7 @@ Enable Meilisearch Cloud monitoring to keep track of application performance and
 
 You must have a [Meilisearch Cloud](https://meilisearch.com/cloud?utm_campaign=oss&utm_source=docs&utm_medium=monitoring) account to access monitoring metrics.
 
-## Activating monitoring
-
-### Enable monitoring in the project overview
+## Enable monitoring in the project overview
 
 Log into your Meilisearch Cloud account and navigate to your project's overview. Find the "Analytics and monitoring" section and click on the "Enable analytics and monitoring" button:
 
@@ -26,7 +23,7 @@ Meilisearch Cloud will begin processing your request. The "Analytics and monitor
 Activating monitoring will automatically activate [analytics](/learn/cloud/analytics).
 </Capsule>
 
-### Update URLs in your application
+## Update URLs in your application
 
 When you enable monitoring, Meilisearch Cloud changes your project's API URL. Meilisearch Cloud is only able to track metrics for queries sent to this URL. 
 
@@ -40,28 +37,3 @@ curl \
 ```
 
 **The previous API URL will remain functional**, but requests targeting it will not send any data to the monitoring interface.
-
-## Deactivating monitoring
-
-### Disable monitoring in the project overview
-
-Log into your Meilisearch Cloud account and navigate to your project's overview. Find the "Analytics and monitoring" section and press the "Disable analytics and monitoring" button:
-
-![The analytics section of the project overview. It shows one button, "Disable analytics and monitoring", and a short explanation of both features.](/assets/images/cloud-analytics/02-analytics-disable.png)
-
-<Capsule intent="note" title="Monitoring and analytics">
-Deactivating monitoring will automatically deactivate [analytics](/learn/cloud/analytics). 
-</Capsule>
-
-### Update URLs in your application
-
-Disabling monitoring changes your API URL. Update your application so all API requests point to the correct URL:
-
-```sh
-curl \
-  -X POST 'http://PROJECT_URL/indexes/products/search' \
-  -H 'Content-Type: application/json' \
-  --data-binary '{ "q": "green socks" }'
-```
-
-**The previous API URL will remain functional**, but Meilisearch recommends not using it after disabling monitoring in your project.
