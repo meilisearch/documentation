@@ -2019,6 +2019,17 @@ Partially update the embedder settings for an index. When this setting is update
 | **`embeddingObject`**  | String           | {}                                                                       | Name of the embedding object in embedder response                                                                                                              |
 | **`distribution`**     | Object           | Empty                                                                    | Describes the natural distribution of search results. Must contain two fields, `mean` and `sigma`, each containing a numeric value between `0` and `1`         |
 
+##### `documentTemplate`
+
+`documentTemplate` is a string containing a [Liquid template](https://shopify.github.io/liquid/basics/introduction). Meillisearch interpolates the template for each document and sends the resulting text to the embedder. The embedder then generates document vectors based on this text.
+
+You may use the following context values:
+
+- `{{doc.FIELD}}`: `doc` stands for the document itself. `FIELD` must correspond to an attribute present on all documents value will be replaced by the value of that field in the input document
+- `{{fields}}`: a list of all the `field`s appearing in any document in the index. Each `field` object in this list has two properties: `name` and `value`. If a `field` does not exist in a document, `value` is `nil`
+
+For best results, build short templates that only contain highly relevant data. If working with a long field, consider [truncating it](https://shopify.github.io/liquid/filters/truncatewords/). If you do not manually set it, `documentTemplate` will include all document fields. This may lead to suboptimal performance and relevancy.
+
 #### Example
 
 <CodeSamples id="update_embedders_1" />
@@ -2031,7 +2042,7 @@ Partially update the embedder settings for an index. When this setting is update
   "indexUid": "kitchenware",
   "status": "enqueued",
   "type": "settingsUpdate",
-  "enqueuedAt": "2022-04-14T20:56:44.991039Z"
+  "enqueuedAt": "2024-05-11T09:33:12.691402Z"
 }
 ```
 
