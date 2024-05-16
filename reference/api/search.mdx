@@ -54,6 +54,8 @@ By default, [this endpoint returns a maximum of 1000 results](/learn/advanced/kn
 | **[`matchingStrategy`](#matching-strategy)**            | String           | `last`        | Strategy used to match query terms within documents |
 | **[`showRankingScore`](#ranking-score)**                | Boolean          | `false`       | Display the global ranking score of a document      |
 | **[`attributesToSearchOn`](#customize-attributes-to-search-on-at-search-time)**            | Array of strings           | `["*"]`        | Restrict search to the specified attributes |
+| **[`hybrid`](#hybrid-search)**                | Object          | `null`       | Return results based on query keywords and meaning      |
+| **[`vector`](#vector)**                | Array of numbers          | `null`       | Search using a custom query vector      |
 
 [Learn more about how to use each search parameter](#search-parameters).
 
@@ -162,6 +164,8 @@ By default, [this endpoint returns a maximum of 1000 results](/learn/advanced/kn
 | **[`matchingStrategy`](#matching-strategy)**            | String           | `last`        | Strategy used to match query terms within documents |
 | **[`showRankingScore`](#ranking-score)**                | Boolean          | `false`       | Display the global ranking score of a document      |
 | **[`attributesToSearchOn`](#customize-attributes-to-search-on-at-search-time)**            | Array of strings           | `["*"]`        | Restrict search to the specified attributes |
+| **[`hybrid`](#hybrid-search)**                | Object          | `null`       | Return results based on query keywords and meaning      |
+| **[`vector`](#vector)**                | Array of numbers          | `null`       | Search using a custom query vector      |
 
 [Learn more about how to use each search parameter](#search-parameters).
 
@@ -248,6 +252,8 @@ This is not necessary when using the `POST` route or one of our [SDKs](/learn/wh
 | **[`matchingStrategy`](#matching-strategy)**            | String           | `last`        | Strategy used to match query terms within documents |
 | **[`showRankingScore`](#ranking-score)**                | Boolean          | `false`       | Display the global ranking score of a document      |
 | **[`attributesToSearchOn`](#customize-attributes-to-search-on-at-search-time)**            | Array of strings           | `["*"]`        | Restrict search to the specified attributes |
+| **[`hybrid`](#hybrid-search)**                | Object          | `null`       | Return results based on query keywords and meaning      |
+| **[`vector`](#vector)**                | Array of numbers          | `null`       | Search using a custom query vector      |
 
 ### Query (q)
 
@@ -1060,3 +1066,51 @@ The following query returns documents whose `overview` includes `"adventure"`:
 <CodeSamples id="search_parameter_guide_attributes_to_search_on_1" />
 
 Results would not include documents containing `"adventure"` in other fields such as `title` or `genre`, even if these fields were present in the `searchableAttributes` list.
+
+### Hybrid search (experimental)
+
+**Parameter**: `hybrid`<br />
+**Expected value**: An object with two fields: `embedder` and `semanticRatio`<br />
+**Default value**: `null`
+
+Configures Meilisearch to return search results based on a query's meaning and context.
+
+`hybrid` must be an object. It accepts two fields: `embedder` and `semanticRatio`.
+
+`embedder` must be a string indicating an embedder configured with the `/settings` endpoint. Defaults to `"default"`.
+
+`semanticRatio` must be a number between `0.0` and `1.0` indicating the proportion between keyword and semantic search results. `0.0` causes Meilisearch to only return keyword results. `1.0` causes Meilisearch to only return meaning-based results. Defaults to `0.5`.
+
+<Capsule intent="warning">
+Meilisearch will return an error if you use `hybrid` before activating your instance's `vectorStore` and [configuring an embedder](/reference/api/settings#embedders-experimental).
+</Capsule>
+
+#### Example
+
+```sh
+curl -X POST 'localhost:7700/indexes/products/search' \
+   -H 'content-type: application/json' \
+  --data-binary '{ 
+    "q": "kitchen utensils",
+    "hybrid": {
+      "semanticRatio": 0.9,
+      "embedder": "default"
+    }
+  }'
+```
+
+### Vector (experimental)
+
+Use a custom-generated vector to perform a search query. Must be an array of numbers corresponding to the dimensions of the custom vector.
+
+#### Example
+
+```sh
+curl -X POST 'localhost:7700/indexes/products/search' \
+  -H 'content-type: application/json' \
+  --data-binary '{ "vector": [0, 1, 2] }'
+```
+
+<Capsule intent="warning">
+Meilisearch will return an error if you use `vector` before activating your instance's `vectorStore` and [configuring a custom embedder](/reference/api/settings#embedders-experimental).
+</Capsule>

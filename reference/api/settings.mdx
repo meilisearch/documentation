@@ -165,6 +165,7 @@ If the provided index does not exist, it will be created.
 | **[`stopWords`](#stop-words)**                       | Array of strings | Empty                                                                                            | List of words ignored by Meilisearch when present in search queries              |
 | **[`synonyms`](#synonyms)**                          | Object           | Empty                                                                                            | List of associated words treated similarly                                       |
 | **[`typoTolerance`](#typo-tolerance)**               | Object           | [Default object](#typo-tolerance-object)                                                         | Typo tolerance settings                                                          |
+| **[`embedders`](#embedders-experimental)**               | Object of objects           | [Default object](#embedder-object)                                                         | Embedder required for performing meaning-based search queries                                                          |
 
 #### Example
 
@@ -1896,6 +1897,161 @@ Reset an index's typo tolerance settings to their [default value](#typo-toleranc
 #### Example
 
 <CodeSamples id="reset_typo_tolerance_1" />
+
+##### Response: `202 Accepted`
+
+```json
+{
+  "taskUid": 1,
+  "indexUid": "books",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2022-04-14T20:53:32.863107Z"
+}
+```
+
+You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+
+## Embedders (experimental)
+
+Embedders translate documents and queries into vector embeddings. You must configure at least one embedder to use AI-powered search.
+
+### Embedder object
+
+The embedder object may contain an arbitrary number of objects. These objects may contain the following fields:
+
+| Name                   | Type             | Default Value                                                            | Description                                                                                                                                                    |
+|--:---------------------|--:---------------|--:-----------------------------------------------------------------------|--:-------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **`source`**           | String           | Empty                                                                    | The third-party tool that will generate embeddings from documents. Must be `openAi`, `huggingFace`, `ollama`, `rest`, or `userProvided`                        |
+| **`url`**              | String           | `http://localhost:11434/api/embeddings`                                  | URL Meilisearch contacts when querying the embedder                                                                                                        |
+| **`apiKey`**           | String           | Empty                                                                    | Authentication token Meilisearch should send with each request to the embedder. If not present, Meilisearch will attempt to read it from environment variables |
+| **`model`**            | String           | Empty                                                                    | The model your embedder uses when generating vectors                                                                                                           |
+| **`documentTemplate`** | String           | `{% for field in fields %}{{field.name}}: {{field.value}}\n{% endfor %}` | Template defining the data Meilisearch sends the embedder                                                                                                      |
+| **`dimensions`**       | Integer          | Empty                                                                    | Number of dimensions in the chosen model. If not supplied, Meilisearch tries to infer this value                                                               |
+| **`revision`**         | String           | Empty                                                                    | Model revision hash                                                                                                                                            |
+| **`inputField`**       | Array of strings | []                                                                       | Path to location of document data in query Meilisearch sends to embedder                                                                                       |
+| **`inputType`**        | String           | `text`                                                                   | Type of data Meilisearch sends to embedder. Must be `text` or `textArray`                                                                                      |
+| **`query`**            | String           | Object                                                                   | Extra fields Meilisearch adds to queries Meilisearch sends to embedder                                                                                         |
+| **`pathToEmbeddings`** | Array            | []                                                                       | Path to vector embedding data in embedder response                                                                                                             |
+| **`embeddingObject`**  | String           | {}                                                                       | Name of the embedding object in embedder response                                                                                                              |
+| **`distribution`**     | Object           | Empty                                                                    | Describes the natural distribution of search results. Must contain two fields, `mean` and `sigma`, each containing a numeric value between `0` and `1`         |
+
+Depending on your chosen embedder, some of these fields may be mandatory.
+
+### Get embedder settings
+
+<RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/embedders"/>
+
+Get the embedders configured for an index.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+
+#### Example
+
+<CodeSamples id="get_embedders_1" />
+
+##### Response: `200 OK`
+
+```json
+{
+  "default": {
+    "source":  "openAi",
+    "apiKey": "OPENAI_API_KEY",
+    "model": "text-embedding-3-small",
+    "documentTemplate": "A movie titled {{doc.title}} whose description starts with {{doc.overview|truncatewords: 20}}",
+    "dimensions": 1536
+  }
+}
+```
+
+### Update embedder settings
+
+<RouteHighlighter method="PATCH" route="/indexes/{index_uid}/settings/embedders"/>
+
+Partially update the embedder settings for an index. When this setting is updated Meilisearch may reindex all documents and regenerate their embeddings.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+
+#### Body
+
+```json
+"default": {
+  "source": <String>,
+  "url": <String>,
+  "apiKey": <String>,
+  "model": <String>,
+  "documentTemplate": <String>,
+  "dimensions": <Integer>, 
+  "revision": <String>,
+  "inputField": [<String>, <String>, …],
+  "inputType": "text"|"textArray", 
+  "query": <Object>,
+  "pathToEmbeddings": [<String>, <String>, …],
+  "embeddingObject": [<String>, <String>, …], 
+  "distribution": {
+    "mean": <Float>,
+    "sigma": <Float>
+  }
+}
+```
+
+| Name                   | Type             | Default Value                                                            | Description                                                                                                                                                    |
+|--:---------------------|--:---------------|--:-----------------------------------------------------------------------|--:-------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **`source`**           | String           | Empty                                                                    | The third-party tool that will generate embeddings from documents. Must be `openAi`, `huggingFace`, `ollama`, `rest`, or `userProvided`                        |
+| **`url`**              | String           | `http://localhost:11434/api/embeddings`                                  | URL Meilisearch contacts when querying the embedder                                                                                                        |
+| **`apiKey`**           | String           | Empty                                                                    | Authentication token Meilisearch should send with each request to the embedder. If not present, Meilisearch will attempt to read it from environment variables |
+| **`model`**            | String           | Empty                                                                    | The model your embedder uses when generating vectors                                                                                                           |
+| **`documentTemplate`** | String           | `{% for field in fields %}{{field.name}}: {{field.value}}\n{% endfor %}` | Template defining the data Meilisearch sends the embedder                                                                                                      |
+| **`dimensions`**       | Integer          | Empty                                                                    | Number of dimensions in the chosen model. If not supplied, Meilisearch tries to infer this value                                                               |
+| **`revision`**         | String           | Empty                                                                    | Model revision hash                                                                                                                                            |
+| **`inputField`**       | Array of strings | []                                                                       | Path to location of document data in query Meilisearch sends to embedder                                                                                       |
+| **`inputType`**        | String           | `text`                                                                   | Type of data Meilisearch sends to embedder. Must be `text` or `textArray`                                                                                      |
+| **`query`**            | String           | Object                                                                   | Extra fields Meilisearch adds to queries Meilisearch sends to embedder                                                                                         |
+| **`pathToEmbeddings`** | Array            | []                                                                       | Path to vector embedding data in embedder response                                                                                                             |
+| **`embeddingObject`**  | String           | {}                                                                       | Name of the embedding object in embedder response                                                                                                              |
+| **`distribution`**     | Object           | Empty                                                                    | Describes the natural distribution of search results. Must contain two fields, `mean` and `sigma`, each containing a numeric value between `0` and `1`         |
+
+#### Example
+
+<CodeSamples id="update_embedders_1" />
+
+##### Response: `202 Accepted`
+
+```json
+{
+  "taskUid": 1,
+  "indexUid": "kitchenware",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2022-04-14T20:56:44.991039Z"
+}
+```
+
+You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+
+### Reset embedder settings
+
+<RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings/embedders"/>
+
+Removes all embedders from your index.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+
+#### Example
+
+<CodeSamples id="reset_embedders_1" />
 
 ##### Response: `202 Accepted`
 
