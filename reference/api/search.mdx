@@ -1077,7 +1077,7 @@ Configures Meilisearch to return search results based on a query's meaning and c
 
 `hybrid` must be an object. It accepts two fields: `embedder` and `semanticRatio`.
 
-`embedder` must be a string indicating an embedder configured with the `/settings` endpoint. Defaults to `"default"`.
+`embedder` must be a string indicating an embedder configured with the `/settings` endpoint. If you don't specify an embedder and your index contains a single embedder, Meilisearch uses it by default. If an index contains multiple embedders, Meilisearch will use the embedder named `default`.
 
 `semanticRatio` must be a number between `0.0` and `1.0` indicating the proportion between keyword and semantic search results. `0.0` causes Meilisearch to only return keyword results. `1.0` causes Meilisearch to only return meaning-based results. Defaults to `0.5`.
 

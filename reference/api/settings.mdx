@@ -1916,9 +1916,27 @@ You can use the returned `taskUid` to get more details on [the status of the tas
 
 Embedders translate documents and queries into vector embeddings. You must configure at least one embedder to use AI-powered search.
 
-### Embedder object
+### Embedders object
 
-The embedder object may contain an arbitrary number of objects. These objects may contain the following fields:
+The embedders object may contain an arbitrary number of embedder objects:
+
+```json
+{
+  "default": {
+    "source": "huggingFace",
+    "model": "BAAI/bge-base-en-v1.5",
+    "documentTemplate": "A movie titled '{{doc.title}}' whose description starts with {{doc.overview|truncatewords: 20}}"
+  },
+  "openai": {
+    "source": "openAi",
+    "apiKey": "OPENAI_API_KEY",
+    "model": "text-embedding-3-small",
+    "documentTemplate": "A movie titled {{doc.title}} whose description starts with {{doc.overview|truncatewords: 20}}",
+  }
+}
+```
+
+These embedder objects may contain the following fields:
 
 | Name                   | Type             | Default Value                                                            | Description                                                                                                                                                    |
 |--:---------------------|--:---------------|--:-----------------------------------------------------------------------|--:-------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -1983,22 +2001,24 @@ Partially update the embedder settings for an index. When this setting is update
 #### Body
 
 ```json
-"default": {
-  "source": <String>,
-  "url": <String>,
-  "apiKey": <String>,
-  "model": <String>,
-  "documentTemplate": <String>,
-  "dimensions": <Integer>, 
-  "revision": <String>,
-  "inputField": [<String>, <String>, …],
-  "inputType": "text"|"textArray", 
-  "query": <Object>,
-  "pathToEmbeddings": [<String>, <String>, …],
-  "embeddingObject": [<String>, <String>, …], 
-  "distribution": {
-    "mean": <Float>,
-    "sigma": <Float>
+{
+  "default": {
+    "source": <String>,
+    "url": <String>,
+    "apiKey": <String>,
+    "model": <String>,
+    "documentTemplate": <String>,
+    "dimensions": <Integer>, 
+    "revision": <String>,
+    "inputField": [<String>, <String>, …],
+    "inputType": "text"|"textArray", 
+    "query": <Object>,
+    "pathToEmbeddings": [<String>, <String>, …],
+    "embeddingObject": [<String>, <String>, …], 
+    "distribution": {
+      "mean": <Float>,
+      "sigma": <Float>
+    }
   }
 }
 ```
