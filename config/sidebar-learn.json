@@ -62,19 +62,35 @@
     ]
   },
   {
-    "title": "Cloud features",
-    "slug": "cloud",
+    "title": "Analytics",
+    "slug": "analytics",
     "routes": [
       {
-        "source": "learn/cloud/analytics.mdx",
-        "label": "Analytics",
+        "source": "learn/analytics/analytics.mdx",
+        "label": "Configure search analytics",
         "slug": "analytics"
       },
       {
-        "source": "learn/cloud/monitoring.mdx",
-        "label": "Monitoring",
+        "source": "learn/analytics/monitoring.mdx",
+        "label": "Configure application monitoring metrics",
         "slug": "monitoring"
       },
+      {
+        "source": "learn/analytics/deactivate_analytics_monitoring.mdx",
+        "label": "Deactivate search analytics and monitoring",
+        "slug": "deactivate_analytics_monitoring"
+      },
+      {
+        "source": "learn/analytics/events.mdx",
+        "label": "Analytics events reference",
+        "slug": "events"
+      }
+    ]
+  },
+  {
+    "title": "Cloud features",
+    "slug": "cloud",
+    "routes": [
       {
         "source": "learn/cloud/teams.mdx",
         "label": "Teams",

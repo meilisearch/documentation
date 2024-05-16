@@ -1,0 +1,85 @@
+---
+title: Configure search analytics
+description: Meilisearch Cloud offers in-depth search analytics to help you understand how users search in your application.
+---
+
+# Analytics
+
+Enable Meilisearch Cloud analytics to help you understand how users search in your application.
+
+This guide walks you through activating analytics, updating your project URL, and configuring all data points.
+
+## Requirements
+
+You must have a [Meilisearch Cloud](https://meilisearch.com/cloud?utm_campaign=oss&utm_source=docs&utm_medium=analytics) account to access search analytics.
+
+## Enable analytics in the project overview
+
+Log into your Meilisearch Cloud account and navigate to your project's overview. Find the "Analytics and monitoring" section and click on the "Enable analytics and monitoring" button:
+
+![The analytics section of the project overview. It shows one button, "Enable analytics", and a short explanation of the feature.](/assets/images/cloud-analytics/01-analytics-enable.png)
+
+Meilisearch Cloud will begin processing your request. The "Analytics and monitoring" section will update when the feature is enabled.
+
+<Capsule intent="note" title="Monitoring and analytics">
+Activating analytics will automatically activate [monitoring](/learn/cloud/monitoring). 
+</Capsule>
+
+## Update URLs in your application
+
+When you enable analytics, Meilisearch Cloud changes your project's API URL. Meilisearch Cloud is only able to track metrics for queries sent to this URL.
+
+Update your application so all API requests point to the new URL:
+
+```sh
+curl \
+  -X POST 'https://edge.meilisearch.com/indexes/products/search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{ "q": "green socks" }'
+```
+
+**The previous API URL will remain functional**, but requests targeting it will not send any data to the analytics interface. If you created any custom API keys using the previous URL, you will need to replace them.
+
+## Configure click-through rate and average click position
+
+To track metrics like click-through rate and average click position, Meilisearch Cloud needs to know when users click on search results.
+
+Every time a user clicks on a search result, your application must send a `click` event to the `POST` endpoint of Meilisearch Cloud analytics route:
+
+```sh
+curl \
+  -X POST 'https://edge.meilisearch.com/events' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer DEFAULT_SEARCH_API_KEY'
+  --data-binary '{
+    "eventType": "click",
+    "eventName": "Search Result Clicked",
+    "indexUid": "products",
+    "objectId": "0",
+    "position": 0
+  }'
+```
+
+ For more information, consult the [analytics events endpoint reference](/learn/analytics/events_endpoint).
+
+## Configuring conversion rate
+
+To track conversion rate, first identify what should count as a conversion for your application. For example, in a web shop, a conversion might be a user finalizing the checkout process.
+
+Once you have established what counts as a conversion in your application, configure it to send a `conversion` event to the `POST` endpoint of Meilisearch Cloud analytics route:
+
+```sh
+curl \
+  -X POST 'https://edge.meilisearch.com/events' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer DEFAULT_SEARCH_API_KEY'
+  --data-binary '{
+    "eventType": "conversion",
+    "eventName": "Product Added To Cart",
+    "indexUid": "products",
+    "objectId": "0",
+    "position": 0
+  }'
+```
+
+It is not possible to associate multiple `conversion` events with the same search. For more information, consult the [analytics events endpoint reference](/learn/analytics/events_endpoint).

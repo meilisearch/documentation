@@ -1,0 +1,31 @@
+---
+title: Deactivate search analytics and monitoring
+description: Meilisearch Cloud offers in-depth search analytics to help you understand how users search in your application.
+---
+
+# Deactivate search analytics and monitoring
+
+This guide shows you how to deactivate Meilisearch Cloud's search analytics and monitoring.
+
+## Disable analytics and monitoring in the project overview
+
+Log into your Meilisearch Cloud account and navigate to your project's overview. Find the "Analytics and monitoring" section and press the "Disable analytics and monitoring" button:
+
+![The analytics section of the project overview. It shows one button, "Disable analytics and monitoring", and a short explanation of both features.](/assets/images/cloud-analytics/02-analytics-disable.png)
+
+## Update URLs in your application
+
+Disabling analytics and monitoring changes your API URL. Update your application so all API requests point to the correct URL:
+
+```sh
+curl \
+  -X POST 'https://PROJECT_URL/indexes/products/search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{ "q": "green socks" }'
+```
+
+**The previous API URL will remain functional**, but Meilisearch recommends not using it after disabling analytics in your project. If you created any custom API keys using the previous URL, you will need to replace them.
+
+## Update `conversion` and `click` events
+
+If you were tracking `conversion` and `click` events, update your application to stop sending them to Meilisearch Cloud.
