@@ -1209,7 +1209,7 @@ negative_search_2: |-
     -X POST 'http://localhost:7700/indexes/movies/search' \
     -H 'Content-Type: application/json' \
     --data-binary '{ "q": "-\"escape room\"" }'
-analytics_event_send_1: |-
+analytics_event_click_1: |-
   curl \
     -X POST 'https://edge.meilisearch.com/events' \
     -H 'Content-Type: application/json' \
@@ -1217,6 +1217,18 @@ analytics_event_send_1: |-
     --data-binary '{
       "eventType": "click",
       "eventName": "Search Result Clicked",
+      "indexUid": "products",
+      "objectId": "0",
+      "position": 0
+    }'
+analytics_event_conversion_1: |-
+  curl \
+    -X POST 'https://edge.meilisearch.com/events' \
+    -H 'Content-Type: application/json' \
+    -H 'Authorization: Bearer DEFAULT_SEARCH_API_KEY'
+    --data-binary '{
+      "eventType": "conversion",
+      "eventName": "Product Added To Cart",
       "indexUid": "products",
       "objectId": "0",
       "position": 0

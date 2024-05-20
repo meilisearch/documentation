@@ -66,12 +66,12 @@
     "slug": "analytics",
     "routes": [
       {
-        "source": "learn/analytics/analytics.mdx",
+        "source": "learn/analytics/configure_analytics.mdx",
         "label": "Configure search analytics",
         "slug": "analytics"
       },
       {
-        "source": "learn/analytics/monitoring.mdx",
+        "source": "learn/analytics/configure_monitoring.mdx",
         "label": "Configure application monitoring metrics",
         "slug": "monitoring"
       },
@@ -81,9 +81,9 @@
         "slug": "deactivate_analytics_monitoring"
       },
       {
-        "source": "learn/analytics/events.mdx",
-        "label": "Analytics events reference",
-        "slug": "events"
+        "source": "learn/analytics/events_endpoint.mdx",
+        "label": "Analytics events endpoint",
+        "slug": "events_endpoint"
       }
     ]
   },

@@ -22,7 +22,7 @@ Log into your Meilisearch Cloud account and navigate to your project's overview.
 Meilisearch Cloud will begin processing your request. The "Analytics and monitoring" section will update when the feature is enabled.
 
 <Capsule intent="note" title="Monitoring and analytics">
-Activating analytics will automatically activate [monitoring](/learn/cloud/monitoring). 
+Activating analytics will automatically activate [monitoring](/learn/cloud/monitoring).
 </Capsule>
 
 ## Update URLs in your application
@@ -46,21 +46,9 @@ To track metrics like click-through rate and average click position, Meilisearch
 
 Every time a user clicks on a search result, your application must send a `click` event to the `POST` endpoint of Meilisearch Cloud analytics route:
 
-```sh
-curl \
-  -X POST 'https://edge.meilisearch.com/events' \
-  -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer DEFAULT_SEARCH_API_KEY'
-  --data-binary '{
-    "eventType": "click",
-    "eventName": "Search Result Clicked",
-    "indexUid": "products",
-    "objectId": "0",
-    "position": 0
-  }'
-```
+<CodeSamples id="analytics_event_click_1" />
 
- For more information, consult the [analytics events endpoint reference](/learn/analytics/events_endpoint).
+ For more information, consult the [analytics events endpoint reference](/learn/analytics/events_endpoint#the-conversion-event-object).
 
 ## Configuring conversion rate
 
@@ -68,18 +56,8 @@ To track conversion rate, first identify what should count as a conversion for y
 
 Once you have established what counts as a conversion in your application, configure it to send a `conversion` event to the `POST` endpoint of Meilisearch Cloud analytics route:
 
-```sh
-curl \
-  -X POST 'https://edge.meilisearch.com/events' \
-  -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer DEFAULT_SEARCH_API_KEY'
-  --data-binary '{
-    "eventType": "conversion",
-    "eventName": "Product Added To Cart",
-    "indexUid": "products",
-    "objectId": "0",
-    "position": 0
-  }'
-```
+<CodeSamples id="analytics_event_conversion_1" />
 
-It is not possible to associate multiple `conversion` events with the same search. For more information, consult the [analytics events endpoint reference](/learn/analytics/events_endpoint).
+It is not possible to associate multiple `conversion` events with the same search.
+
+For more information, consult the [analytics events endpoint reference](/learn/analytics/events_endpoint#the-conversion-event-object).

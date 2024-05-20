@@ -1,11 +1,11 @@
 ---
-title: Analytics events reference
-description: When using Meilisearch Cloud analytics, certain data points require you to send data to the `/events` route.
+title: Analytics events endpoint
+description: This reference describes /events, the endpoint you should use to submit analytics events to Meilisearch Cloud. It also describes the accepted event objects and the data you must include in them.
 ---
 
-# Analytics events reference
+# Analytics events endpoint
 
-When using Meilisearch Cloud analytics, certain data points require you to send data to the `/events` route.
+This reference describes `/events`, the endpoint you should use to submit analytics events to Meilisearch Cloud. It also describes the accepted event objects and the data you must include in them.
 
 ## The `/events` endpoint
 
@@ -15,7 +15,7 @@ The `/events` endpoint is only available for Meilisearch Cloud projects with ana
 
 <RouteHighlighter method="POST" route="https://edge.meilisearch.com/events"/>
 
-Send an analytics event to Meilisearch Cloud. Accepts `click` and `conversion` events.
+Send an analytics event to Meilisearch Cloud. Accepts [`click`](#the-click-event-object) and [`conversion`](#the-conversion-event-object) events.
 
 <Capsule intent="tip" title="Binding analytics events to a search">
 Meilisearch automatically associates analytics events with the most recent search of the user who triggered them. To manually bind an analytics event to a specific search, include the same `X-MS-USER-ID` header in your search and event requests.
@@ -23,7 +23,7 @@ Meilisearch automatically associates analytics events with the most recent searc
 
 #### Example
 
-<CodeSamples id="analytics_event_send_1" />
+<CodeSamples id="analytics_event_click_1" />
 
 ##### Response: `201 Created`
 
