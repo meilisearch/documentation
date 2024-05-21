@@ -1918,7 +1918,7 @@ Embedders translate documents and queries into vector embeddings. You must confi
 
 ### Embedders object
 
-The embedders object may contain an arbitrary number of embedder objects:
+The embedders object may contain up to 256 embedder objects. Each embedder object must be assigned a unique name:
 
 ```json
 {
@@ -1951,10 +1951,8 @@ These embedder objects may contain the following fields:
 | **`inputType`**        | String           | `text`                                                                   | Type of data Meilisearch sends to embedder. Must be `text` or `textArray`                                                                                      |
 | **`query`**            | String           | Object                                                                   | Extra fields Meilisearch adds to queries Meilisearch sends to embedder                                                                                         |
 | **`pathToEmbeddings`** | Array            | []                                                                       | Path to vector embedding data in embedder response                                                                                                             |
-| **`embeddingObject`**  | String           | {}                                                                       | Name of the embedding object in embedder response                                                                                                              |
+| **`embeddingObject`**  | Array           | []                                                                       | Name of the embedding object in embedder response                                                                                                              |
 | **`distribution`**     | Object           | Empty                                                                    | Describes the natural distribution of search results. Must contain two fields, `mean` and `sigma`, each containing a numeric value between `0` and `1`         |
-
-Depending on your chosen embedder, some of these fields may be mandatory.
 
 ### Get embedder settings
 
@@ -2023,21 +2021,52 @@ Partially update the embedder settings for an index. When this setting is update
 }
 ```
 
-| Name                   | Type             | Default Value                                                            | Description                                                                                                                                                    |
-|--:---------------------|--:---------------|--:-----------------------------------------------------------------------|--:-------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **`source`**           | String           | Empty                                                                    | The third-party tool that will generate embeddings from documents. Must be `openAi`, `huggingFace`, `ollama`, `rest`, or `userProvided`                        |
-| **`url`**              | String           | `http://localhost:11434/api/embeddings`                                  | URL Meilisearch contacts when querying the embedder                                                                                                        |
-| **`apiKey`**           | String           | Empty                                                                    | Authentication token Meilisearch should send with each request to the embedder. If not present, Meilisearch will attempt to read it from environment variables |
-| **`model`**            | String           | Empty                                                                    | The model your embedder uses when generating vectors                                                                                                           |
-| **`documentTemplate`** | String           | `{% for field in fields %}{{field.name}}: {{field.value}}\n{% endfor %}` | Template defining the data Meilisearch sends the embedder                                                                                                      |
-| **`dimensions`**       | Integer          | Empty                                                                    | Number of dimensions in the chosen model. If not supplied, Meilisearch tries to infer this value                                                               |
-| **`revision`**         | String           | Empty                                                                    | Model revision hash                                                                                                                                            |
-| **`inputField`**       | Array of strings | []                                                                       | Path to location of document data in query Meilisearch sends to embedder                                                                                       |
-| **`inputType`**        | String           | `text`                                                                   | Type of data Meilisearch sends to embedder. Must be `text` or `textArray`                                                                                      |
-| **`query`**            | String           | Object                                                                   | Extra fields Meilisearch adds to queries Meilisearch sends to embedder                                                                                         |
-| **`pathToEmbeddings`** | Array            | []                                                                       | Path to vector embedding data in embedder response                                                                                                             |
-| **`embeddingObject`**  | String           | {}                                                                       | Name of the embedding object in embedder response                                                                                                              |
-| **`distribution`**     | Object           | Empty                                                                    | Describes the natural distribution of search results. Must contain two fields, `mean` and `sigma`, each containing a numeric value between `0` and `1`         |
+##### `source`
+
+Use `source` to configure an embedder's source. The following embedders can auto-generate vectors for documents and queries:
+
+- `openAi`
+- `huggingFace`
+- `ollama`
+
+Additionally, use `rest` to auto-generate embeddings with any embedder offering a REST API.
+
+You may also configure a `userProvided` embedder. In this case, you must manually include vector data in your documents' `_vector` field. You must also manually generate vectors for search queries.
+
+This field is mandatory.
+
+##### `url`
+
+Meilisearch queries `url` to generate vector embeddings for queries and documents. `url` must point to a REST-compatible embedder.
+
+This field is mandatory when using `rest` embedders.
+
+This field is optional when using `ollama` embedders.
+
+This field is incompatible with `openAi`, `huggingFace`, and `userProvided` embedders.
+
+##### `apiKey`
+
+Authentication token Meilisearch should send with each request to the embedder.
+
+This field is mandatory if using a protected `rest` embedder.
+
+This field is optional for `openAI` and `ollama` embedders. If you don't specify `apiKey`, Meilisearch will attempt to read it from environment variables `OPENAI_API_KEY` and `MEILI_OLLAMA_URL`, respectively.
+
+This field is incompatible with `huggingFace` and `userProvided` embedders.
+
+##### `model`
+
+The model your embedder uses when generating vectors. These are the officially supported models Meilisearch supports:
+
+- `openAi`: `openai-text-embedding-ada-002`, `text-embedding-3-small`, and `text-embedding-3-large`
+- `huggingFace`: `BAAI/bge-base-en-v1.5`
+
+Other models, such as those provided by Ollama and REST embedders may also be compatible with Meilisearch.
+
+This field is mandatory for `openAi`, `huggingFace`, and `Ollama` embedders.
+
+This field is incompatible with `rest` and `userProvided` embedders.
 
 ##### `documentTemplate`
 
@@ -2049,6 +2078,117 @@ You may use the following context values:
 - `{{fields}}`: a list of all the `field`s appearing in any document in the index. Each `field` object in this list has two properties: `name` and `value`. If a `field` does not exist in a document, `value` is `nil`
 
 For best results, build short templates that only contain highly relevant data. If working with a long field, consider [truncating it](https://shopify.github.io/liquid/filters/truncatewords/). If you do not manually set it, `documentTemplate` will include all document fields. This may lead to suboptimal performance and relevancy.
+
+This field is optional for all embedders.
+
+##### `dimensions`
+
+Number of dimensions in the chosen model. If not supplied, Meilisearch tries to infer this value.
+
+In most cases, `dimensions` should be the exact same value of your chosen model. Setting `dimensions` to a value lower than the model may lead to performance improvements and is only supported in the following OpenAI models:
+
+- `openAi`: `text-embedding-3-small`, `text-embedding-3-large`
+
+This field is mandatory for `rest` and `userProvided` embedders.
+
+This field is optional for `openAi`, `huggingFace`, and `ollama` embedders.
+
+##### `revision`
+
+Use this field to use a specific revision of a model.
+
+This field is optional for the `huggingFace` embedder.
+
+This field is incompatible with all other embedders.
+
+##### `inputField`
+
+Indicates the path to the field containing document data in the query Meilisearch sends to the embedder.
+
+This field must be an array of strings. Each string should indicate a field within the request object. For example, if `inputField` is `["A", "B", "C"]`, the document data should be in `request.A.B.C`.
+
+This field is optional for the `rest` embedder.
+
+This field is incompatible with all other embedders.
+
+##### `inputType`
+
+Defines how Meilisearch sends the data to the embedder.
+
+`text`: Meilisearch submits a single request per document, and receives a single embedding as a response. When using `text`, you must specify the path to the embedding response in `embeddingObject`.
+
+`textArray`: Meilisearch submits multiple documents in a single request, and receives the same number of embeddings as a response. When using `textArray`, you must specify the path to the array of results in `pathToEmbeddings`, then the path from each item of the array to the embedding in `embeddingObject`.
+
+`textArray` results in fewer requests to the embedder and is the preferred `inputType`. However, not all embedders support sending multiple documents in a single request.
+
+This field is optional for the `rest` embedder.
+
+This field is incompatible with all other embedders.
+
+##### `pathToEmbeddings`
+
+Array indicating the path to the field containing all vector embeddings in the embedder response.
+
+This field must be an array of strings. Each string should indicate a field within the request object. If `inputType` is `text`, the last string in the array should indicate an array of numbers with the same dimensions as the embedding models. If `inputType` is `textArray`, the last string in the array should indicate an array of objects, each of which corresponds to a single document in the original request.
+
+For example, if `pathToEmbeddings` is `["A", "B", "C"]`, the document data should be in `response.A.B.C`.
+
+This field is optional for the `rest` embedder.
+
+This field is incompatible with all other embedders.
+
+##### `embeddingObject`
+
+Array indicating the path to the field containing a single set of vector embedding in a `textArray` embedder response.
+
+This field must be an array of strings. Each string should indicate the field containing vector data for a single element when the embedder returns multiple embeddings.
+
+For example, if `pathToEmbeddings` is `["A", "B", "C"]`, the document data should be in `response.A.B.C`, where `C` is an array of objects. For each element in `C`, Meilisearch will look for the path configured in `embeddingObject`. If `embeddingObject` is `["D", "E", "F"]`, vector data should be in `element.D.E.F`.
+
+This field is optional for the `rest` embedder. It is mandatory when `inputType` is `textArray`.
+
+This field is incompatible with all other embedders.
+
+##### `query`
+
+Extra fields Meilisearch adds to queries Meilisearch sends to embedder. These may include the chosen embeddings model and its dimensions.
+
+This field is optional for the `rest` embedder.
+
+This field is incompatible with all other embedders.
+
+##### `distribution`
+
+For mathematical reasons, the `_rankingScore` of semantic search results tend to be closely grouped around an average value that depends on the embedder and model used. This may result in relevant semantic hits being underrepresented and irrelevant semantic hits being overrepresented compared with keyword search hits.
+
+Use `distribution` when configuring an embedder to correct the returned `_rankingScore`s of the semantic hits with an affine transformation:
+
+```sh
+curl \
+  -X PATCH 'http://localhost:7700/indexes/INDEX_NAME/settings' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "embedders": {
+      "default": {
+        "source":  "huggingFace",
+        "model": "MODEL_NAME",
+        "distribution": {
+          "mean": 0.7,
+          "sigma": 0.3
+        }
+      }
+    }
+  }'
+```
+
+Configuring `distribution` requires a certain amount of trial and error, in which you must perform semantic searches and monitor the results. Based on their `rankingScore`s and relevancy, add the observed `mean` and `sigma` values for that index.
+
+`distribution` is an optional field compatible with all embedder sources. It must be an object with two fields:
+
+- `mean`: a number between `0` and `1` indicating the semantic score of "somewhat relevant" hits before using the `distribution` setting
+- `sigma`: a number between `0` and `1` indicating the average absolute difference in `_rankingScore`s between "very relevant" hits and "somewhat relevant" hits, and "somewhat relevant" hits and "irrelevant hits".
+
+Changing `distribution` does not trigger a reindexing operation.
 
 #### Example
 

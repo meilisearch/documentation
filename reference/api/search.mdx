@@ -1087,29 +1087,19 @@ Meilisearch will return an error if you use `hybrid` before activating your inst
 
 #### Example
 
-```sh
-curl -X POST 'localhost:7700/indexes/products/search' \
-   -H 'content-type: application/json' \
-  --data-binary '{ 
-    "q": "kitchen utensils",
-    "hybrid": {
-      "semanticRatio": 0.9,
-      "embedder": "default"
-    }
-  }'
-```
+<CodeSamples id="search_parameter_guide_hybrid_1" />
 
 ### Vector (experimental)
 
-Use a custom-generated vector to perform a search query. Must be an array of numbers corresponding to the dimensions of the custom vector.
+Use a custom vector to perform a search query. Must be an array of numbers corresponding to the dimensions of the custom vector.
+
+`vector` is mandatory when performing searches with `userProvided` embedders. You may also use `vector` to override an embedder's automatic vector generation.
+
+`vector` dimensions must match the dimensions of the embedder.
 
 #### Example
 
-```sh
-curl -X POST 'localhost:7700/indexes/products/search' \
-  -H 'content-type: application/json' \
-  --data-binary '{ "vector": [0, 1, 2] }'
-```
+<CodeSamples id="search_parameter_guide_vector_1" />
 
 <Capsule intent="warning">
 Meilisearch will return an error if you use `vector` before activating your instance's `vectorStore` and [configuring a custom embedder](/reference/api/settings#embedders-experimental).
