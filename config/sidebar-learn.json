@@ -76,7 +76,7 @@
         "slug": "monitoring"
       },
       {
-        "source": "learn/analytics/bind_events_user",
+        "source": "learn/analytics/bind_events_user.mdx",
         "label": "Bind analytics events to a user",
         "slug": "bind_events_user"
       },
