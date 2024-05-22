@@ -1233,3 +1233,23 @@ analytics_event_conversion_1: |-
       "objectId": "0",
       "position": 0
     }'
+analytics_event_bind_search_1: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/INDEX_NAME/search' \
+    -H 'Content-Type: application/json' \
+    -H 'Authorization: Bearer DEFAULT_SEARCH_API_KEY' \
+    -H 'X-MS-USER-ID: MEILISEARCH_USER_ID' \
+    --data-binary '{}'
+analytics_event_bind_event_1: |-
+  curl \
+    -X POST 'https://edge.meilisearch.com/events' \
+    -H 'Content-Type: application/json' \
+    -H 'Authorization: Bearer DEFAULT_SEARCH_API_KEY' \
+    -H 'X-MS-USER-ID: MEILISEARCH_USER_ID' \
+    --data-binary '{
+      "eventType": "click",
+      "eventName": "Search Result Clicked",
+      "indexUid": "products",
+      "objectId": "0",
+      "position": 0
+    }'

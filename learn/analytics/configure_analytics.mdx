@@ -48,15 +48,19 @@ Every time a user clicks on a search result, your application must send a `click
 
 <CodeSamples id="analytics_event_click_1" />
 
- For more information, consult the [analytics events endpoint reference](/learn/analytics/events_endpoint#the-conversion-event-object).
+By default, Meilisearch associates analytics events with the most recent search of the user who triggered them.
 
-## Configuring conversion rate
+For more information, consult the [analytics events endpoint reference](/learn/analytics/events_endpoint#the-conversion-event-object).
+
+## Configure conversion rate
 
 To track conversion rate, first identify what should count as a conversion for your application. For example, in a web shop, a conversion might be a user finalizing the checkout process.
 
 Once you have established what counts as a conversion in your application, configure it to send a `conversion` event to the `POST` endpoint of Meilisearch Cloud analytics route:
 
 <CodeSamples id="analytics_event_conversion_1" />
+
+By default, Meilisearch associates analytics events with the most recent search of the user who triggered them.
 
 It is not possible to associate multiple `conversion` events with the same search.
 

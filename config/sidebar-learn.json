@@ -76,6 +76,11 @@
         "slug": "monitoring"
       },
       {
+        "source": "learn/analytics/bind_events_user",
+        "label": "Bind analytics events to a user",
+        "slug": "bind_events_user"
+      },
+      {
         "source": "learn/analytics/deactivate_analytics_monitoring.mdx",
         "label": "Deactivate search analytics and monitoring",
         "slug": "deactivate_analytics_monitoring"
