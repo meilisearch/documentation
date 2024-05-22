@@ -311,6 +311,32 @@
     ]
   },
   {
+    "title": "Engine",
+    "slug": "engine",
+    "routes": [
+      {
+        "source": "learn/engine/concat.mdx",
+        "label": "Concatenate and split queries",
+        "slug": "concat"
+      },
+      {
+        "source": "learn/engine/datatypes.mdx",
+        "label": "Data types",
+        "slug": "datatypes"
+      },
+      {
+        "source": "learn/engine/prefix.mdx",
+        "label": "Prefix search",
+        "slug": "prefix"
+      },
+      {
+        "source": "learn/engine/storage.mdx",
+        "label": "Storage",
+        "slug": "storage"
+      }
+    ]
+  },
+  {
     "title": "Inner workings",
     "slug": "advanced",
     "routes": [
@@ -320,29 +346,9 @@
         "slug": "indexing"
       },
       {
-        "source": "learn/inner_workings/concat.mdx",
-        "label": "Concatenate and split queries",
-        "slug": "concat"
-      },
-      {
-        "source": "learn/inner_workings/datatypes.mdx",
-        "label": "Data types",
-        "slug": "datatypes"
-      },
-      {
         "source": "learn/inner_workings/known_limitations.mdx",
         "label": "Known limitations",
         "slug": "known_limitations"
-      },
-      {
-        "source": "learn/inner_workings/prefix.mdx",
-        "label": "Prefix search",
-        "slug": "prefix"
-      },
-      {
-        "source": "learn/inner_workings/storage.mdx",
-        "label": "Storage",
-        "slug": "storage"
       },
       {
         "source": "learn/inner_workings/tokenization.mdx",
