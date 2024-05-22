@@ -2021,6 +2021,8 @@ Partially update the embedder settings for an index. When this setting is update
 }
 ```
 
+Set an embedder to `null` to remove it from the embedders list.
+
 ##### `source`
 
 Use `source` to configure an embedder's source. The following embedders can auto-generate vectors for documents and queries:
@@ -2213,6 +2215,8 @@ You can use the returned `taskUid` to get more details on [the status of the tas
 <RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings/embedders"/>
 
 Removes all embedders from your index.
+
+To remove a single embedder, use the [update embedder settings endpoint](#update-embedder-settings) and set the target embedder to `null`.
 
 #### Path parameters
 
