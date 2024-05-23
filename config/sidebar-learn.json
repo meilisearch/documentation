@@ -93,12 +93,12 @@
     ]
   },
   {
-    "title": "Cloud features",
-    "slug": "cloud",
+    "title": "Teams",
+    "slug": "teams",
     "routes": [
       {
-        "source": "learn/cloud/teams.mdx",
-        "label": "Teams",
+        "source": "learn/teams/teams.mdx",
+        "label": "Meilisearch Cloud teams",
         "slug": "teams"
       }
     ]
