@@ -1,0 +1,30 @@
+---
+title: Multitenancy and tenant tokens — Meilisearch documentation
+description: In this article you'll read what multitenancy is and how tenant tokens help managing complex applications and sensitive data.
+---
+
+# Multitenancy and tenant tokens
+
+In this article you'll read what multitenancy is and how tenant tokens help managing complex applications and sensitive data.
+
+## What is multitenancy?
+
+In software development, multitenancy means that multiple users or tenants share the same computing resources with different levels of access to system-wide data. Proper multitenancy is crucial in cloud computing services such as [DigitalOcean's Droplets](https://www.digitalocean.com/products/droplets) and [Amazon's AWS](https://aws.amazon.com/).
+
+If your Meilisearch application stores sensitive data belonging to multiple users in the same index, it is a multi-tenant index. In this context, it is very important to make sure users can only search through their own documents. This can be accomplished with **tenant tokens**.
+
+## What are tenant tokens and how are they different from API keys in Meilisearch?
+
+Tenant tokens are small packages of encrypted data presenting proof a user can access a certain index. They contain not only security credentials, but also instructions on which documents within that index the user is allowed to see. **Tenant tokens only give access to the search endpoints.** They are meant to be short-lived, so Meilisearch does not store nor keep track of generated tokens.
+
+Tenant tokens do not require any specific Meilisearch configuration. Instead, your application must have a system for token generation in place. The quickest method to generate tenant tokens is [using an official SDK](/learn/security/generate_tenant_token_sdk). It is also possible to [generate a token with a third-party library](/learn/security/generate_tenant_token_third_party).
+
+## Sample application
+
+Meilisearch developed an in-app search demo using multi-tenancy in a SaaS CRM. It only allows authenticated users to search through contacts, companies, and deals belonging to their organization.
+
+Check out this [sample application](https://saas.meilisearch.com/?utm_campaign=oss&utm_source=docs&utm_medium=tenant-tokens). Its code is publicly available in a dedicated [GitHub repository](https://github.com/meilisearch/saas-demo/).
+
+<Capsule intent="tip">
+You can also use tenant tokens in role-based access control (RBAC) systems. Consult [How to implement RBAC with Meilisearch](https://blog.meilisearch.com/role-based-access-guide/) on Meilisearch's official blog for more information.
+</Capsule>

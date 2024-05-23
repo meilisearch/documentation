@@ -232,6 +232,16 @@
         "slug": "basic_security"
       },
       {
+        "source": "learn/security/generate_tenant_token_sdk.mdx",
+        "label": "Generate tenant tokens with an official SDK",
+        "slug": "generate_tenant_token_sdk"
+      },
+      {
+        "source": "learn/security/generate_tenant_token_third_party.mdx",
+        "label": "Generate tenant tokens with a third party tool",
+        "slug": "generate_tenant_token_third_party"
+      },
+      {
         "source": "learn/security/managing_api_keys.mdx",
         "label": "Managing API keys",
         "slug": "managing_api_keys"
@@ -240,6 +250,11 @@
         "source": "learn/security/resetting_master_key.mdx",
         "label": "Resetting the master key",
         "slug": "resetting_master_key"
+      },
+      {
+        "source": "learn/security/tenant_token_reference.mdx",
+        "label": "Tenant token payload reference",
+        "slug": "tenant_token_reference"
       },
       {
         "source": "learn/security/differences_master_api_keys.mdx",
@@ -252,9 +267,9 @@
         "slug": "protected_unprotected"
       },
       {
-        "source": "learn/security/tenant_tokens.mdx",
+        "source": "learn/security/multitenancy_tenant_tokens.mdx",
         "label": "Multitenancy and tenant tokens",
-        "slug": "tenant_tokens"
+        "slug": "multitenancy_tenant_tokens"
       }
     ]
   },

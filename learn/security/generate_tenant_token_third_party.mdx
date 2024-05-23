@@ -1,0 +1,95 @@
+---
+title: Multitenancy and tenant tokens — Meilisearch documentation
+description: Use tenant tokens to manage complex applications with many users handling sensitive data.
+---
+
+# Generate tenant tokens without a Meilisearch SDK
+
+Tenant tokens follow the [JWT standard](https://jwt.io). This means you can use a number of [compatible third-party libraries](https://jwt.io/libraries) to generate them. You may also skip all assistance and generate a token from scratch.
+
+## Generate a tenant token with `node-jsonwebtoken`
+
+Using a third-party library for tenant token generation is fairly similar to creating tokens with an official SDK. The following example uses the [`node-jsonwebtoken`](https://github.com/auth0/node-jsonwebtoken) library:
+
+```js
+const jwt = require('jsonwebtoken');
+
+const apiKey = 'my_api_key';
+const apiKeyUid = 'ac5cd97d-5a4b-4226-a868-2d0eb6d197ab';
+const currentUserID = 'a_user_id';
+
+const tokenPayload = {
+  searchRules: {
+    'patient_medical_records': {
+      'filter': `user_id = ${currentUserID}`
+     }
+  },
+  apiKeyUid: apiKeyUid,
+  exp: parseInt(Date.now() / 1000) + 20 * 60 // 20 minutes
+};
+
+const token = jwt.sign(tokenPayload, apiKey, {algorithm: 'HS256'});
+```
+
+`tokenPayload` contains the token payload. It must contain three fields: `searchRules`, `apiKeyUid`, and `exp`.
+
+`searchRules` must be a JSON object containing a set of search rules. These rules specify restrictions applied to every query using this web token.
+
+`apiKeyUid` must be the `uid` of a valid Meilisearch API key.
+
+`exp` is the only optional parameter of a tenant token. It must be a UNIX timestamp specifying the expiration date of the token.
+
+For more information on each one of the tenant token fields, consult the [token payload reference](#tenant-token-payload-reference).
+
+`tokenPayload` is passed to `node-jsonwebtoken`'s `sign` method, together with the complete API key used in the payload and the chosen encryption algorithm. Meilisearch supports the following encryption algorithms: `HS256`, `HS384`, and `HS512`.
+
+Though this example used `node-jsonwebtoken`, a NodeJS package, you may use any JWT-compatible library in whatever language you feel comfortable.
+
+After signing the token, you can use it to make search queries in the same way you would use an API key.
+
+<CodeSamples id="tenant_token_guide_search_no_sdk_1" />
+
+<Capsule intent="note">
+The `curl` example presented here is only for illustration purposes. In production environments, you would likely send the token to the front-end of your application and query indexes from there.
+</Capsule>
+
+## Generate a tenant token from scratch
+
+Generating tenant tokens without a library is possible, but requires more effort for little gain.
+
+Though creating a JWT from scratch is out of scope for this guide, here's a quick summary of the necessary steps.
+
+The full process requires you to create a token header, prepare the data payload with at least one set of search rules, and then sign the token with an API key.
+
+The token header must specify a `JWT` type and an encryption algorithm. Supported tenant token encryption algorithms are `HS256`, `HS384`, and `HS512`.
+
+```json
+{
+  "alg": "HS256",
+  "typ": "JWT"
+}
+```
+
+The token payload contains most of the relevant token data. It must be an object containing a set of search rules and the first 8 characters of a Meilisearch API key. You may optionally set an expiration date for your token. Consult the [token payload reference](#tenant-token-payload-reference) for more information on the requirements for each payload field.
+
+```json
+{
+  "exp": 1646756934,
+  "apiKeyUid": "ac5cd97d-5a4b-4226-a868-2d0eb6d197ab",
+  "searchRules": {
+    "patient_medical_records": {
+      "filter": "user_id = 1"
+    }
+  }
+}
+```
+
+You must then encode both the header and the payload into `base64`, concatenate them, and finally generate the token by signing it using your chosen encryption algorithm.
+
+Once your token is ready, it can seamlessly replace API keys to authorize requests made to the search endpoint:
+
+<CodeSamples id="tenant_token_guide_search_no_sdk_1" />
+
+<Capsule intent="note">
+The `curl` example presented here is only for illustration purposes. In production environments, you would likely send the token to the front-end of your application and query indexes from there.
+</Capsule>

@@ -1,0 +1,28 @@
+---
+title: Multitenancy and tenant tokens — Meilisearch documentation
+description: This guide shows you the main steps when creating tenant tokens using Meilisearch's official SDKs.
+---
+
+# Generating tenant tokens with an official SDK
+
+The code in this example imports the SDK, creates a filter based on the current user's ID, and feeds that data into the SDK's `generateTenantToken` function. Once the token is generated, it is stored in the `token` variable:
+
+<CodeSamples id="tenant_token_guide_generate_sdk_1" />
+
+There are three important parameters to keep in mind when using an SDK to generate a tenant token: **search rules**, **API key**, and **expiration date**. Together, they make the token's payload.
+
+**Search rules** must be a JSON object specifying the restrictions that will be applied to search requests on a given index. It must contain at least one search rule. [To learn more about search rules, take a look at our tenant token payload reference.](#search-rules)
+
+As its name indicates, **API key** must be a valid Meilisearch API key with access to [the search action](/reference/api/keys#actions). A tenant token will have access to the same indexes as the API key used when generating it. If no API key is provided, the SDK might be able to infer it automatically.
+
+**Expiration date** is optional when using an SDK. Tokens become invalid after their expiration date. Tokens without an expiration date will expire when their parent API key does.
+
+You can read more about each element of a tenant token payload in [this guide's final section](#tenant-token-payload-reference).
+
+### Using a tenant token with an SDK
+
+After creating a token, you can send it back to the front-end. There, you can use it to make queries that will only return results whose `user_id` attribute equals the current user's ID:
+
+<CodeSamples id="tenant_token_guide_search_sdk_1" />
+
+Applications may use tenant tokens and API keys interchangeably when searching. For example, the same application might use a default search API key for queries on public indexes and a tenant token for logged-in users searching on private data.
