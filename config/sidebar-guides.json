@@ -4,14 +4,44 @@
     "slug": "cookbooks",
     "routes": [
       {
+        "source": "guides/running_production.mdx",
+        "label": "Run in production",
+        "slug": "running_production"
+      },
+      {
         "source": "guides/postman_collection.mdx",
         "label": "Use with Postman",
         "slug": "postman_collection"
       },
       {
+        "source": "guides/docker.mdx",
+        "label": "Use with Docker",
+        "slug": "docker"
+      },
+      {
         "source": "guides/search_bar_for_docs.mdx",
         "label": "Add a search bar to your docs",
         "slug": "search_bar_for_docs"
+      },
+      {
+        "source": "guides/http2_ssl.mdx",
+        "label": "Set up HTTP/2 SSL",
+        "slug": "http2_ssl"
+      },
+      {
+        "source": "guides/vercel.mdx",
+        "label": "Integrate Meilisearch Cloud with Vercel",
+        "slug": "vercel"
+      },
+      {
+        "source": "learn/primary_db_sync/meilisync_mysql.mdx",
+        "label": "Syncing databases with MySQL and meilisync",
+        "slug": "meilisync_mysql"
+      },
+      {
+        "source": "learn/primary_db_sync/meilisync_postgresql.mdx",
+        "label": "Syncing databases with PostgreSQL and meilisync",
+        "slug": "meilisync_postgresql"
       },
       {
         "source": "guides/laravel_scout.mdx",
@@ -29,6 +59,11 @@
         "slug": "multitenancy_nodejs"
       },
       {
+        "source": "guides/indexing_best_practices.mdx",
+        "label": "Indexing best practices",
+        "slug": "indexing_best_practices"
+      },
+      {
         "source": "guides/computing_hugging_face_embeddings_gpu.mdx",
         "label": "Computing Hugging Face embeddings with the GPU",
         "slug": "computing_hugging_face_embeddings_gpu"
@@ -39,67 +74,14 @@
         "slug": "strapi_v4"
       },
       {
-        "source": "guides/langchain.mdx",
-        "label": "Implementing semantic search with LangChain",
-        "slug": "langchain"
-      }
-    ]
-  },
-  {
-    "title": "Performance",
-    "slug": "performance",
-    "routes": [
-      {
-        "source": "guides/indexing_best_practices.mdx",
-        "label": "Indexing best practices",
-        "slug": "indexing_best_practices"
-      },
-      {
         "source": "guides/improve_relevancy_large_documents.mdx",
         "label": "Improve relevancy when working with large documents",
         "slug": "large_documents"
-      }
-    ]
-  },
-  {
-    "title": "Database",
-    "slug": "database",
-    "routes": [
-      {
-        "source": "learn/primary_db_sync/meilisync_mysql.mdx",
-        "label": "Syncing databases with MySQL and meilisync",
-        "slug": "meilisync_mysql"
       },
       {
-        "source": "learn/primary_db_sync/meilisync_postgresql.mdx",
-        "label": "Syncing databases with PostgreSQL and meilisync",
-        "slug": "meilisync_postgresql"
-      }
-    ]
-  },
-  {
-    "title": "Deployment",
-    "slug": "deployment",
-    "routes": [
-      {
-        "source": "guides/running_production.mdx",
-        "label": "Run in production",
-        "slug": "running_production"
-      },
-      {
-        "source": "guides/docker.mdx",
-        "label": "Use with Docker",
-        "slug": "docker"
-      },
-      {
-        "source": "guides/http2_ssl.mdx",
-        "label": "Set up HTTP/2 SSL",
-        "slug": "http2_ssl"
-      },
-      {
-        "source": "guides/vercel.mdx",
-        "label": "Integrate Meilisearch Cloud with Vercel",
-        "slug": "vercel"
+        "source": "guides/langchain.mdx",
+        "label": "Implementing semantic search with LangChain",
+        "slug": "langchain"
       }
     ]
   }
