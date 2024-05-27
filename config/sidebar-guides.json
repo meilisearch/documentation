@@ -1,31 +1,5 @@
 [
   {
-    "title": "All guides",
-    "slug": "cookbooks",
-    "routes": [
-      {
-        "source": "guides/running_production.mdx",
-        "label": "Run in production",
-        "slug": "running_production"
-      },
-      {
-        "source": "guides/postman_collection.mdx",
-        "label": "Use with Postman",
-        "slug": "postman_collection"
-      },
-      {
-        "source": "guides/docker.mdx",
-        "label": "Use with Docker",
-        "slug": "docker"
-      },
-      {
-        "source": "guides/vercel.mdx",
-        "label": "Integrate Meilisearch Cloud with Vercel",
-        "slug": "vercel"
-      }
-    ]
-  },
-  {
     "title": "Front end",
     "slug": "front_end",
     "routes": [
@@ -141,6 +115,11 @@
     "slug": "deployment",
     "routes": [
       {
+        "source": "guides/running_production.mdx",
+        "label": "Run in production",
+        "slug": "running_production"
+      },
+      {
         "source": "guides/deployment/aws.mdx",
         "label": "Deploy on AWS",
         "slug": "aws"
@@ -174,6 +153,33 @@
         "source": "guides/deployment/railway.mdx",
         "label": "Deploy on Railway",
         "slug": "railway"
+      }
+    ]
+  },
+  {
+    "title": "Integrations",
+    "slug": "integrations",
+    "routes": [
+      {
+        "source": "guides/vercel.mdx",
+        "label": "Integrate Meilisearch Cloud with Vercel",
+        "slug": "vercel"
+      }
+    ]
+  },
+  {
+    "title": "Miscellaneous",
+    "slug": "misc",
+    "routes": [
+      {
+        "source": "guides/postman_collection.mdx",
+        "label": "Use with Postman",
+        "slug": "postman_collection"
+      },
+      {
+        "source": "guides/docker.mdx",
+        "label": "Use with Docker",
+        "slug": "docker"
       }
     ]
   }
