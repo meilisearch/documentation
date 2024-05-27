@@ -34,16 +34,6 @@
         "slug": "vercel"
       },
       {
-        "source": "learn/primary_db_sync/meilisync_mysql.mdx",
-        "label": "Syncing databases with MySQL and meilisync",
-        "slug": "meilisync_mysql"
-      },
-      {
-        "source": "learn/primary_db_sync/meilisync_postgresql.mdx",
-        "label": "Syncing databases with PostgreSQL and meilisync",
-        "slug": "meilisync_postgresql"
-      },
-      {
         "source": "guides/laravel_scout.mdx",
         "label": "Laravel Scout guide",
         "slug": "laravel_scout"
@@ -82,6 +72,22 @@
         "source": "guides/langchain.mdx",
         "label": "Implementing semantic search with LangChain",
         "slug": "langchain"
+      }
+    ]
+  },
+  {
+    "title": "Database",
+    "slug": "database",
+    "routes": [
+      {
+        "source": "guides/database/meilisync_mysql.mdx",
+        "label": "Syncing databases with MySQL and meilisync",
+        "slug": "meilisync_mysql"
+      },
+      {
+        "source": "guides/database/meilisync_postgresql.mdx",
+        "label": "Syncing databases with PostgreSQL and meilisync",
+        "slug": "meilisync_postgresql"
       }
     ]
   },
