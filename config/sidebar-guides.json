@@ -86,6 +86,27 @@
     ]
   },
   {
+    "title": "Front end",
+    "slug": "front_end",
+    "routes": [
+      {
+        "source": "guides/front_end/front_end_integration.mdx",
+        "label": "Front-end integration",
+        "slug": "front_end_integration"
+      },
+      {
+        "source": "guides/front_end/react_instantsearch.mdx",
+        "label": "Integrate with React InstantSearch",
+        "slug": "react_instantsearch"
+      },
+      {
+        "source": "guides/front_end/pagination.mdx",
+        "label": "Search result pagination",
+        "slug": "pagination"
+      }
+    ]
+  },
+  {
     "title": "Deployment",
     "slug": "deployment",
     "routes": [
