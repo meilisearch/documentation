@@ -44,19 +44,9 @@
         "slug": "multitenancy_nodejs"
       },
       {
-        "source": "guides/computing_hugging_face_embeddings_gpu.mdx",
-        "label": "Computing Hugging Face embeddings with the GPU",
-        "slug": "computing_hugging_face_embeddings_gpu"
-      },
-      {
         "source": "guides/strapi_v4.mdx",
         "label": "Strapi v4 guide",
         "slug": "strapi_v4"
-      },
-      {
-        "source": "guides/langchain.mdx",
-        "label": "Implementing semantic search with LangChain",
-        "slug": "langchain"
       }
     ]
   },
@@ -83,6 +73,22 @@
         "source": "guides/front_end/pagination.mdx",
         "label": "Search result pagination",
         "slug": "pagination"
+      }
+    ]
+  },
+  {
+    "title": "Artificial Intelligence",
+    "slug": "ai",
+    "routes": [
+      {
+        "source": "guides/langchain.mdx",
+        "label": "Implementing semantic search with LangChain",
+        "slug": "langchain"
+      },
+      {
+        "source": "guides/computing_hugging_face_embeddings_gpu.mdx",
+        "label": "Computing Hugging Face embeddings with the GPU",
+        "slug": "computing_hugging_face_embeddings_gpu"
       }
     ]
   },
