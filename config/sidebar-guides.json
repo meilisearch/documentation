@@ -22,16 +22,6 @@
         "source": "guides/vercel.mdx",
         "label": "Integrate Meilisearch Cloud with Vercel",
         "slug": "vercel"
-      },
-      {
-        "source": "guides/laravel_scout.mdx",
-        "label": "Laravel Scout guide",
-        "slug": "laravel_scout"
-      },
-      {
-        "source": "guides/strapi_v4.mdx",
-        "label": "Strapi v4 guide",
-        "slug": "strapi_v4"
       }
     ]
   },
@@ -58,6 +48,22 @@
         "source": "guides/front_end/pagination.mdx",
         "label": "Search result pagination",
         "slug": "pagination"
+      }
+    ]
+  },
+  {
+    "title": "Back end",
+    "slug": "back_end",
+    "routes": [
+      {
+        "source": "guides/laravel_scout.mdx",
+        "label": "Laravel Scout guide",
+        "slug": "laravel_scout"
+      },
+      {
+        "source": "guides/strapi_v4.mdx",
+        "label": "Strapi v4 guide",
+        "slug": "strapi_v4"
       }
     ]
   },
