@@ -101,14 +101,14 @@
         "slug": "react_instantsearch"
       },
       {
-        "source": "guides/front_end/pagination.mdx",
-        "label": "Search result pagination",
-        "slug": "pagination"
-      },
-      {
         "source": "guides/search_bar_for_docs.mdx",
         "label": "Add a search bar to your docs",
         "slug": "search_bar_for_docs"
+      },
+      {
+        "source": "guides/front_end/pagination.mdx",
+        "label": "Search result pagination",
+        "slug": "pagination"
       }
     ]
   },
