@@ -153,5 +153,17 @@
   {
     "source": "/docs/learn/async/managing_tasks",
     "destination": "/docs/learn/async/working_with_tasks"
+  },
+  {
+    "source": "/docs/learn/cloud/analytics",
+    "destination": "/docs/learn/analytics/analytics"
+  },
+  {
+    "source": "/docs/learn/cloud/analytics",
+    "destination": "/docs/learn/analytics/monitoring"
+  },
+  {
+    "source": "/docs/learn/cloud/teams",
+    "destination": "/docs/learn/teams/teams"
   }
 ]
