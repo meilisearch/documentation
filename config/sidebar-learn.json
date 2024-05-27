@@ -373,47 +373,6 @@
     ]
   },
   {
-    "title": "Deployment",
-    "slug": "cookbooks",
-    "routes": [
-      {
-        "source": "learn/deployment/aws.mdx",
-        "label": "Deploy on AWS",
-        "slug": "aws"
-      },
-      {
-        "source": "learn/deployment/azure.mdx",
-        "label": "Deploy on Azure",
-        "slug": "azure"
-      },
-      {
-        "source": "learn/deployment/digitalocean.mdx",
-        "label": "Deploy on DigitalOcean",
-        "slug": "digitalocean"
-      },
-      {
-        "source": "learn/deployment/gcp.mdx",
-        "label": "Deploy on GCP",
-        "slug": "gcp"
-      },
-      {
-        "source": "learn/deployment/koyeb.mdx",
-        "label": "Deploy on Koyeb",
-        "slug": "koyeb"
-      },
-      {
-        "source": "learn/deployment/qovery.mdx",
-        "label": "Deploy on Qovery",
-        "slug": "qovery"
-      },
-      {
-        "source": "learn/deployment/railway.mdx",
-        "label": "Deploy on Railway",
-        "slug": "railway"
-      }
-    ]
-  },
-  {
     "title": "Experimental",
     "slug": "experimental",
     "routes": [
