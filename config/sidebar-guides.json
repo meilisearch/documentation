@@ -19,11 +19,6 @@
         "slug": "docker"
       },
       {
-        "source": "guides/http2_ssl.mdx",
-        "label": "Set up HTTP/2 SSL",
-        "slug": "http2_ssl"
-      },
-      {
         "source": "guides/vercel.mdx",
         "label": "Integrate Meilisearch Cloud with Vercel",
         "slug": "vercel"
@@ -32,16 +27,6 @@
         "source": "guides/laravel_scout.mdx",
         "label": "Laravel Scout guide",
         "slug": "laravel_scout"
-      },
-      {
-        "source": "guides/laravel_multitenancy.mdx",
-        "label": "Multitenancy with Laravel",
-        "slug": "laravel_multitenancy"
-      },
-      {
-        "source": "guides/multitenancy_nodejs.mdx",
-        "label": "Multitenancy with Node.js",
-        "slug": "multitenancy_nodejs"
       },
       {
         "source": "guides/strapi_v4.mdx",
@@ -105,6 +90,27 @@
         "source": "guides/improve_relevancy_large_documents.mdx",
         "label": "Improve relevancy when working with large documents",
         "slug": "large_documents"
+      }
+    ]
+  },
+  {
+    "title": "Security",
+    "slug": "security",
+    "routes": [
+      {
+        "source": "guides/http2_ssl.mdx",
+        "label": "Set up HTTP/2 SSL",
+        "slug": "http2_ssl"
+      },
+      {
+        "source": "guides/laravel_multitenancy.mdx",
+        "label": "Multitenancy with Laravel",
+        "slug": "laravel_multitenancy"
+      },
+      {
+        "source": "guides/multitenancy_nodejs.mdx",
+        "label": "Multitenancy with Node.js",
+        "slug": "multitenancy_nodejs"
       }
     ]
   },
