@@ -44,11 +44,6 @@
         "slug": "multitenancy_nodejs"
       },
       {
-        "source": "guides/indexing_best_practices.mdx",
-        "label": "Indexing best practices",
-        "slug": "indexing_best_practices"
-      },
-      {
         "source": "guides/computing_hugging_face_embeddings_gpu.mdx",
         "label": "Computing Hugging Face embeddings with the GPU",
         "slug": "computing_hugging_face_embeddings_gpu"
@@ -59,30 +54,9 @@
         "slug": "strapi_v4"
       },
       {
-        "source": "guides/improve_relevancy_large_documents.mdx",
-        "label": "Improve relevancy when working with large documents",
-        "slug": "large_documents"
-      },
-      {
         "source": "guides/langchain.mdx",
         "label": "Implementing semantic search with LangChain",
         "slug": "langchain"
-      }
-    ]
-  },
-  {
-    "title": "Database",
-    "slug": "database",
-    "routes": [
-      {
-        "source": "guides/database/meilisync_mysql.mdx",
-        "label": "Syncing databases with MySQL and meilisync",
-        "slug": "meilisync_mysql"
-      },
-      {
-        "source": "guides/database/meilisync_postgresql.mdx",
-        "label": "Syncing databases with PostgreSQL and meilisync",
-        "slug": "meilisync_postgresql"
       }
     ]
   },
@@ -109,6 +83,38 @@
         "source": "guides/front_end/pagination.mdx",
         "label": "Search result pagination",
         "slug": "pagination"
+      }
+    ]
+  },
+  {
+    "title": "Performance",
+    "slug": "performance",
+    "routes": [
+      {
+        "source": "guides/indexing_best_practices.mdx",
+        "label": "Indexing best practices",
+        "slug": "indexing_best_practices"
+      },
+      {
+        "source": "guides/improve_relevancy_large_documents.mdx",
+        "label": "Improve relevancy when working with large documents",
+        "slug": "large_documents"
+      }
+    ]
+  },
+  {
+    "title": "Database",
+    "slug": "database",
+    "routes": [
+      {
+        "source": "guides/database/meilisync_mysql.mdx",
+        "label": "Syncing databases with MySQL and meilisync",
+        "slug": "meilisync_mysql"
+      },
+      {
+        "source": "guides/database/meilisync_postgresql.mdx",
+        "label": "Syncing databases with PostgreSQL and meilisync",
+        "slug": "meilisync_postgresql"
       }
     ]
   },
