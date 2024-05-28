@@ -187,5 +187,20 @@
     "source": "/docs/learn/cookbooks/railway",
     "destination": "/docs/guides/deployment/",
     "permanent": true
+  },
+  {
+    "source": "/docs/learn/front_end/front_end_integration",
+    "destination": "/docs/guides/front_end/front_end_integration",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/front_end/react_instantsearch",
+    "destination": "/docs/guides/front_end/react_instantsearch",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/front_end/pagination",
+    "destination": "/docs/guides/front_end/pagination",
+    "permanent": true
   }
 ]
