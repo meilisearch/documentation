@@ -65,6 +65,11 @@
     "title": "AI-powered search",
     "slug": "ai-powered-search",
     "routes": [
+      {
+        "source": "learn/search/difference_keyword_ai_search.mdx",
+        "label": "Differences between keyword and AI-powered search",
+        "slug": "difference_keyword_ai_search"
+      }
     ]
   },
   {
