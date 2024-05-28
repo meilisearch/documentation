@@ -282,5 +282,17 @@
     "source": "/docs/learn/cookbooks/langchain",
     "destination": "/docs/guides/ai/langchain",
     "permanent": true
+  },
+  {
+    "source": "/docs/learn/cloud/analytics",
+    "destination": "/docs/learn/analytics/analytics"
+  },
+  {
+    "source": "/docs/learn/cloud/analytics",
+    "destination": "/docs/learn/analytics/monitoring"
+  },
+  {
+    "source": "/docs/learn/cloud/teams",
+    "destination": "/docs/learn/teams/teams"
   }
 ]
