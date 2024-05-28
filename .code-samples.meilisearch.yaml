@@ -1187,3 +1187,36 @@ index_settings_tutorial_api_put_setting_1: |-
 index_settings_tutorial_api_task_1: |-
   curl \
     -X GET 'http://localhost:7700/tasks/TASK_UID'
+get_embedders_1: |-
+  curl \
+    -X GET 'http://localhost:7700/indexes/INDEX_NAME/settings/embedders'
+update_embedders_1: |-
+  curl \
+    -X PATCH 'http://localhost:7700/indexes/INDEX_NAME/settings' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "embedders": {
+        "default": {
+          "source": "huggingFace",
+          "model": "BAAI/bge-base-en-v1.5",
+          "documentTemplate": "A movie titled '{{doc.title}}' whose description starts with {{doc.overview|truncatewords: 20}}"
+        }
+      }
+    }'
+reset_embedders_1: |-
+  curl \
+    -X DELETE 'http://localhost:7700/indexes/INDEX_NAME/settings/embedders'
+search_parameter_guide_hybrid_1: |-
+  curl -X POST 'localhost:7700/indexes/INDEX_NAME/search' \
+    -H 'content-type: application/json' \
+    --data-binary '{ 
+      "q": "kitchen utensils",
+      "hybrid": {
+        "semanticRatio": 0.9,
+        "embedder": "default"
+      }
+    }'
+search_parameter_guide_vector_1: |-
+  curl -X POST 'localhost:7700/indexes/INDEX_NAME/search' \
+    -H 'content-type: application/json' \
+    --data-binary '{ "vector": [0, 1, 2] }'
