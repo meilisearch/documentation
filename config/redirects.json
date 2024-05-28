@@ -16,8 +16,7 @@
   },
   {
     "source": "/docs/learn/contributing/overview",
-    "destination":
-      "/docs/learn/contributing/contributing_docs#contributing-to-meilisearch",
+    "destination": "/docs/learn/contributing/contributing_docs#contributing-to-meilisearch",
     "permanent": true
   },
   {
@@ -153,5 +152,40 @@
   {
     "source": "/docs/learn/async/managing_tasks",
     "destination": "/docs/learn/async/working_with_tasks"
+  },
+  {
+    "source": "/docs/learn/cookbooks/aws",
+    "destination": "/docs/guides/deployment/aws",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/cookbooks/azure",
+    "destination": "/docs/guides/deployment/azure",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/cookbooks/digitalocean",
+    "destination": "/docs/guides/deployment/digitalocean",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/cookbooks/gcp",
+    "destination": "/docs/guides/deployment/gcp",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/cookbooks/koyeb",
+    "destination": "/docs/guides/deployment/koyeb",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/cookbooks/qovery",
+    "destination": "/docs/guides/deployment/qovery",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/cookbooks/railway",
+    "destination": "/docs/guides/deployment/",
+    "permanent": true
   }
 ]
