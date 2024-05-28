@@ -2064,9 +2064,11 @@ The model your embedder uses when generating vectors. These are the officially s
 - `openAi`: `openai-text-embedding-ada-002`, `text-embedding-3-small`, and `text-embedding-3-large`
 - `huggingFace`: `BAAI/bge-base-en-v1.5`
 
-Other models, such as those provided by Ollama and REST embedders may also be compatible with Meilisearch.
+Other models, such as [HuggingFace's BERT models](https://huggingface.co/models?other=bert) or those provided by Ollama and REST embedders may also be compatible with Meilisearch.
 
-This field is mandatory for `openAi`, `huggingFace`, and `Ollama` embedders.
+This field is mandatory for `Ollama` embedders.
+
+This field is optional for `openAi` and `huggingFace`. By default, Meilisearch uses `text-embedding-3-small` and `BAAI/bge-base-en-v1.5` respectively.
 
 This field is incompatible with `rest` and `userProvided` embedders.
 
@@ -2081,7 +2083,7 @@ You may use the following context values:
 
 For best results, build short templates that only contain highly relevant data. If working with a long field, consider [truncating it](https://shopify.github.io/liquid/filters/truncatewords/). If you do not manually set it, `documentTemplate` will include all document fields. This may lead to suboptimal performance and relevancy.
 
-This field is optional for all embedders.
+This field is optional but strongly encouraged for all embedders.
 
 ##### `dimensions`
 
@@ -2091,9 +2093,9 @@ In most cases, `dimensions` should be the exact same value of your chosen model.
 
 - `openAi`: `text-embedding-3-small`, `text-embedding-3-large`
 
-This field is mandatory for `rest` and `userProvided` embedders.
+This field is mandatory for `userProvided` embedders.
 
-This field is optional for `openAi`, `huggingFace`, and `ollama` embedders.
+This field is optional for `openAi`, `huggingFace`, `ollama`, and `rest` embedders.
 
 ##### `revision`
 
@@ -2147,7 +2149,7 @@ This field must be an array of strings. Each string should indicate the field co
 
 For example, if `pathToEmbeddings` is `["A", "B", "C"]`, the document data should be in `response.A.B.C`, where `C` is an array of objects. For each element in `C`, Meilisearch will look for the path configured in `embeddingObject`. If `embeddingObject` is `["D", "E", "F"]`, vector data should be in `element.D.E.F`.
 
-This field is optional for the `rest` embedder. It is mandatory when `inputType` is `textArray`.
+This field is optional for the `rest` embedder.
 
 This field is incompatible with all other embedders.
 
