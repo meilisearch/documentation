@@ -202,5 +202,85 @@
     "source": "/docs/learn/front_end/pagination",
     "destination": "/docs/guides/front_end/pagination",
     "permanent": true
+  },
+  {
+    "source": "/docs/learn/cookbooks/running_production",
+    "destination": "/docs/guides/deployment/running_production",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/cookbooks/postman_collection",
+    "destination": "/docs/guides/misc/postman_collection",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/cookbooks/docker",
+    "destination": "/docs/guides/misc/docker",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/cookbooks/search_bar_for_docs",
+    "destination": "/docs/guides/front_end/search_bar_for_docs",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/cookbooks/http2_ssl",
+    "destination": "/docs/guides/security/http2_ssl",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/cookbooks/vercel",
+    "destination": "/docs/guides/integrations/vercel",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/cookbooks/meilisync_mysql",
+    "destination": "/docs/guides/database/meilisync_mysql",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/cookbooks/meilisync_postgresql",
+    "destination": "/docs/guides/database/meilisync_postgresql",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/cookbooks/laravel_scout",
+    "destination": "/docs/guides/back_end/laravel_scout",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/cookbooks/laravel_multitenancy",
+    "destination": "/docs/guides/security/laravel_multitenancy",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/cookbooks/multitenancy_nodejs",
+    "destination": "/docs/guides/security/multitenancy_nodejs",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/cookbooks/indexing_best_practices",
+    "destination": "/docs/guides/performance/indexing_best_practices",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/cookbooks/computing_hugging_face_embeddings_gpu",
+    "destination": "/docs/guides/ai/computing_hugging_face_embeddings_gpu",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/cookbooks/strapi_v4",
+    "destination": "/docs/guides/back_end/strapi_v4",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/cookbooks/large_documents",
+    "destination": "/docs/guides/performance/large_documents",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/cookbooks/langchain",
+    "destination": "/docs/guides/ai/langchain",
+    "permanent": true
   }
 ]
