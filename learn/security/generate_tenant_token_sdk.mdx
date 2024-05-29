@@ -5,33 +5,49 @@ description: This guide shows you the main steps when creating tenant tokens usi
 
 # Using tenant tokens with an official SDK
 
-There are two steps to use tenant tokens with an official SDK: generating the tenant token, and including it in a query.
+There are two steps to use tenant tokens with an official SDK: generating the tenant token, and making a search request using that token.
 
 ## Requirements
 
 - a working Meilisearch project
 - an application supporting authenticated users
-- one of Meilisearch's official SDKs
+- one of Meilisearch's official SDKs installed
 
-The code in this example imports the SDK, creates a filter based on the current user's ID, and feeds that data into the SDK's `generateTenantToken` function. Once the token is generated, it is stored in the `token` variable:
+## Generate a tenant token with an official SDK
+
+First, import the SDK. Then create a set of search rules:
+
+```json
+{
+  "patient_medical_records": {
+    "filter": "user_id = 1"
+  }
+}
+```
+
+Search rules must be an object where each key corresponds to an index in your instance. You may configure any number of filters for each index.
+
+Next, find your default search API key. Query the [get an API key endpoint](/reference/api/keys#get-one-key) and inspect the `uid`  field to obtain your API key's UID:
+
+```sh
+curl \
+  -X GET 'http://localhost:7700/keys/API_KEY' \
+  -H 'Authorization: Bearer MASTER_KEY'
+```
+
+For maximum security, you should also define an expiry date for tenant tokens.
+
+Finally, send this data to your chosen SDK's tenant token generator:
 
 <CodeSamples id="tenant_token_guide_generate_sdk_1" />
 
-There are three important parameters to keep in mind when using an SDK to generate a tenant token: **search rules**, **API key**, and **expiration date**. Together, they make the token's payload.
+The SDK will return a valid tenant token.
 
-**Search rules** must be a JSON object specifying the restrictions that will be applied to search requests on a given index. It must contain at least one search rule. [To learn more about search rules, take a look at our tenant token payload reference.](#search-rules)
+## Make a search request using a tenant token
 
-**API key** must be a valid Meilisearch API key with access to [the search action](/reference/api/keys#actions). A tenant token will have access to the same indexes as the API key used when generating it. If no API key is provided, the SDK might be able to infer it automatically.
+After creating a token, you must send it your application's front end. Exactly how to do that depends on your specific setup.
 
-**API key UUID**
-
-**Expiration date** is optional when using an SDK. Tokens become invalid after their expiration date. Tokens without an expiration date will expire when their parent API key does.
-
-You can read more about each element of a tenant token payload in [this guide's final section](#tenant-token-payload-reference).
-
-### Using a tenant token with an SDK
-
-After creating a token, you can send it back to the front-end. There, you can use it to make queries that will only return results whose `user_id` attribute equals the current user's ID:
+Once the tenant token is available, use it to authenticate search requests as if it were an API key:
 
 <CodeSamples id="tenant_token_guide_search_sdk_1" />
 
