@@ -129,7 +129,7 @@ function updatePageNumber() {
     document.querySelector('#previous_button').disabled = false;
   }
 
-  // If Meilisearch returns 20 items or less,
+  // If Meilisearch returns 20 items or fewer,
   // we are on the last page
   if (results.hits.length < 21 ) {
     document.querySelector('#next_button').disabled = true;
