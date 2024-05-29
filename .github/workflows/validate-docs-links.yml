@@ -1,6 +1,5 @@
 name: "Validate Doc Links"
 on:
-  workflow_dispatch:
   pull_request:
     paths:
       - "**.mdx"
