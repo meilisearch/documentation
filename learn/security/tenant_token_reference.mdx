@@ -5,15 +5,15 @@ description: Use tenant tokens to manage complex applications with many users ha
 
 # Tenant token payload reference
 
-Meilisearch's tenant tokens are JWTs. Their payload is made of three elements: [search rules](#search-rules), an [API key](#api-key), and an optional [expiration date](#expiry-date).
-
-You can see each one of them assigned to its own variable in this example:
+Meilisearch's tenant tokens are JWTs. Their payload is made of three elements: [search rules](#search-rules), an [API key](#api-key) and its UUID, and an optional [expiration date](#expiry-date).
 
 <CodeSamples id="tenant_token_guide_generate_sdk_1" />
 
-## Search rules object
+## Search rules
 
 The search rules object are a set of instructions defining search parameters Meilisearch will enforced in every query made with a specific tenant token.
+
+### Search rules object
 
 `searchRules` must contain a JSON object specifying rules that will be enforced on any queries using this token. Each rule is itself a JSON object and must follow this pattern:
 
