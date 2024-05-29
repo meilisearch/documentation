@@ -185,7 +185,7 @@
   },
   {
     "source": "/docs/learn/cookbooks/railway",
-    "destination": "/docs/guides/deployment/",
+    "destination": "/docs/guides/deployment/railway",
     "permanent": true
   },
   {
