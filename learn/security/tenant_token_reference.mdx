@@ -5,9 +5,21 @@ description: Use tenant tokens to manage complex applications with many users ha
 
 # Tenant token payload reference
 
-Meilisearch's tenant tokens are JWTs. Their payload is made of three elements: [search rules](#search-rules), an [API key](#api-key) and its UUID, and an optional [expiration date](#expiry-date).
+Meilisearch's tenant tokens are JSON web tokens (JWTs). Their payload is made of three elements: [search rules](#search-rules), an [API key UID](#api-key-uid), and an optional [expiration date](#expiry-date).
 
-<CodeSamples id="tenant_token_guide_generate_sdk_1" />
+## Example payload
+
+```json
+{
+  "exp": 1646756934,
+  "apiKeyUid": "at5cd97d-5a4b-4226-a868-2d0eb6d197ab",
+  "searchRules": {
+    "INDEX_NAME": {
+      "filter": "attribute = value"
+    }
+  }
+}
+```
 
 ## Search rules
 
@@ -15,23 +27,51 @@ The search rules object are a set of instructions defining search parameters Mei
 
 ### Search rules object
 
-`searchRules` must contain a JSON object specifying rules that will be enforced on any queries using this token. Each rule is itself a JSON object and must follow this pattern:
+`searchRules` must be a JSON object. Each key must correspond to one or more indexes:
 
 ```json
 {
-  "[index_name]": {
-    "[search_parameter]": "[value]"
+  "searchRules": {
+    "*": {},
+    "INDEX_*": {},
+    "INDEX_NAME_A": {}
   }
 }
 ```
 
-The object key must be an index name. A single token may include different rules for specific indexes. You may use the `*` wildcard instead of a specific index name—in this case, search rules will be applied to all indexes.
+Each search rule object may contain a single `filter` key. This `filter`'s value must be a [filter expression](/learn/fine_tuning_results/filtering#filter-expressions):
 
-The object value must consist of `search_parameter:value` pairs. **Tenant tokens only support the `filter` [search parameter](/reference/api/search#filter)**.
+```json
+{
+  "*": {
+    "filter": "attribute_A = value_X AND attribute_B = value_Y"
+  }
+}
+```
 
-### Search rule with a single filter
+Meilisearch applies the filter to all searches made with that tenant token. A token only has access to the indexes present in the `searchRules` object.
 
-In this example, the user may only query a single index, `medical_records`. They will only receive documents whose `user_id` equals `1`:
+A token may contain rules for any number of indexes. **Specific rulesets take precedence and overwrite `*` rules.**
+
+<Capsule intent="danger">
+Because tenant tokens are generated in your application, Meilisearch cannot check if search rule filters are valid. Invalid search rules return throw errors when searching.
+
+Consult the search API reference for [more information on Meilisearch filter syntax](/reference/api/search#filter).
+</Capsule>
+
+The search rule may also be an empty object. In this case, the tenant token will have access to all documents in an index:
+
+```json
+{
+  "INDEX_NAME": {}
+}
+```
+
+### Examples
+
+#### Single filter
+
+In this example, the user will only receive `medical_records` documents whose `user_id` equals `1`:
 
 ```json
 {
@@ -41,9 +81,9 @@ In this example, the user may only query a single index, `medical_records`. They
 }
 ```
 
-### Search rule with multiple filters
+#### Multiple filters
 
-In this example, the user may only query a single index, `medical_records`. They will only receive documents whose `user_id` equals `1` and whose `published` field is `true`:
+In this example, the user will only receive `medical_records` documents whose `user_id` equals `1` and whose `published` field equals `true`:
 
 ```json
 {
@@ -53,11 +93,19 @@ In this example, the user may only query a single index, `medical_records`. They
 }
 ```
 
-### Target multiple indexes with partial wildcard
+#### Give access to all documents in an index
 
-You can use the `*` wildcard by adding it at the end of a string. This allows the tenant token to access all index names starting with that string.
+In this example, the user has access to all documents in `medical_records`:
 
-The following example queries across all indexes starting with the string `medical`. This includes indexes such as `medical_records` and `medical_patents`:
+```json
+{
+  "medical_records": {}
+}
+```
+
+#### Target multiple indexes with a partial wildcard
+
+In this example, the user will receive documents from any index starting with `medical`. This includes indexes such as `medical_records` and `medical_patents`:
 
 ```json
 {
@@ -67,9 +115,9 @@ The following example queries across all indexes starting with the string `medic
 }
 ```
 
-### Target all indexes with a wildcard
+#### Target all indexes with a wildcard
 
-You can use the `*` wildcard instead of an index name. This will apply the search rule to all indexes:
+In this example, the user will receive documents from any index in the whole instance:
 
 ```json
 {
@@ -81,7 +129,7 @@ You can use the `*` wildcard instead of an index name. This will apply the searc
 
 ### Target multiple indexes manually
 
-Manually target each index or group of indexes if you need to set different search rules depending on the index:
+In this example, the user has access to documents with `user_id = 1` for all indexes, except one. When querying `medical_records`, the user will only have access to published documents:
 
 ```json
 {
@@ -94,44 +142,39 @@ Manually target each index or group of indexes if you need to set different sear
 }
 ```
 
-A token may contain rules for any number of indexes. **Specific rulesets take precedence and overwrite `*` rules.**
+## API key UID
 
-<Capsule intent="danger">
-Because tenant tokens are generated in your application, Meilisearch cannot check if search rule filters are valid. Invalid search rules return throw errors when searching.
+Tenant token payloads must include an API key UID to validate requests. The UID is an alphanumeric string identifying an API key:
 
-Consult the search API reference for [more information on Meilisearch filter syntax](/reference/api/search#filter).
-</Capsule>
+```json
+{
+  "apiKeyUid": "at5cd97d-5a4b-4226-a868-2d0eb6d197ab"
+}
+```
 
-## API key
+Query the [get one API key endpoint](/reference/api/keys) to obtain an API key's UID.
 
-Creating a token requires an API key with access to [the search action](/reference/api/keys#actions). A token has access to the same indexes and routes as the API key used to generate it.
+The UID must indicate an API key with access to [the search action](/reference/api/keys#actions). A token has access to the same indexes and routes as the API key used to generate it.
 
-Since a master key is not an API key, **you cannot use a master key to create a tenant token**.
+Since a master key is not an API key, **you cannot use a master key to create a tenant token**. Avoid exposing API keys and **always generate tokens on your application's back end**.
 
-For security reasons, we strongly recommend you avoid exposing the API key whenever possible and **always generate tokens on your application's back-end**.
-
-When using an official Meilisearch SDK, you may indicate which API key you wish to use when generating a token. Consult the documentation of the SDK you are using for more specific instructions.
-
-<Capsule intent="warning">
+<Capsule intent="warning" title="Tenant token and expired API keys">
 If an API key expires, any tenant tokens created with it will become invalid. The same applies if the API key is deleted or regenerated due to a changed master key.
 </Capsule>
 
-[You can read more about API keys in our dedicated guide.](/learn/security/managing_api_keys)
-
-### API key UUID
-
-
-
-
 ## Expiry date
 
-It is good security to define an expiry date when generating a tenant token. Meilisearch recommends setting short token expiry dates to protect your users' data.
+The expiry date must be a UNIX timestamp or `null`:
 
-The expiry date must be a UNIX timestamp or `null`
+```json
+{
+  "exp": 1646756934
+}
+```
 
-A token's expiration date cannot exceed its parent API key's expiration date. For example, if an API key is set to expire on 2022-10-15, a token generated with that API key cannot be set to expire on 2022-10-16.
+A token's expiration date cannot exceed its parent API key's expiration date.
 
-Setting a token expiry date is optional.
+Setting a token expiry date is optional, but highly recommended. Tokens without an expiry date remain valid indefinitely and may be a security liability.
 
 <Capsule intent="danger" intent="Revoking a token without an expirty date">
 The only way to revoke a token without an expiry date is to [delete](/reference/api/keys#delete-a-key) its parent API key.
