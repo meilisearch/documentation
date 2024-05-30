@@ -154,6 +154,7 @@
     "destination": "/docs/learn/async/working_with_tasks"
   },
   {
+<<<<<<< HEAD
     "source": "/docs/learn/cookbooks/aws",
     "destination": "/docs/guides/deployment/aws",
     "permanent": true
@@ -282,6 +283,22 @@
     "source": "/docs/learn/cookbooks/langchain",
     "destination": "/docs/guides/ai/langchain",
     "permanent": true
+  },
+  {
+    "source": "/docs/learn/advanced/concat",
+    "destination": "/docs/learn/engine/concat"
+  },
+  {
+    "source": "/docs/learn/advanced/datatypes",
+    "destination": "/docs/learn/engine/datatypes"
+  },
+  {
+    "source": "/docs/learn/advanced/prefix",
+    "destination": "/docs/learn/engine/prefix"
+  },
+  {
+    "source": "/docs/learn/advanced/storage",
+    "destination": "/docs/learn/engine/storage"
   },
   {
     "source": "/docs/learn/cloud/analytics",
