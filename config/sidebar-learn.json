@@ -62,22 +62,43 @@
     ]
   },
   {
-    "title": "Cloud features",
-    "slug": "cloud",
+    "title": "Analytics",
+    "slug": "analytics",
     "routes": [
       {
-        "source": "learn/cloud/analytics.mdx",
-        "label": "Analytics",
+        "source": "learn/analytics/configure_analytics.mdx",
+        "label": "Configure search analytics",
         "slug": "analytics"
       },
       {
-        "source": "learn/cloud/monitoring.mdx",
-        "label": "Monitoring",
+        "source": "learn/analytics/configure_monitoring.mdx",
+        "label": "Configure application monitoring metrics",
         "slug": "monitoring"
       },
       {
-        "source": "learn/cloud/teams.mdx",
-        "label": "Teams",
+        "source": "learn/analytics/bind_events_user.mdx",
+        "label": "Bind analytics events to a user",
+        "slug": "bind_events_user"
+      },
+      {
+        "source": "learn/analytics/deactivate_analytics_monitoring.mdx",
+        "label": "Deactivate search analytics and monitoring",
+        "slug": "deactivate_analytics_monitoring"
+      },
+      {
+        "source": "learn/analytics/events_endpoint.mdx",
+        "label": "Analytics events endpoint",
+        "slug": "events_endpoint"
+      }
+    ]
+  },
+  {
+    "title": "Teams",
+    "slug": "teams",
+    "routes": [
+      {
+        "source": "learn/teams/teams.mdx",
+        "label": "Meilisearch Cloud teams",
         "slug": "teams"
       }
     ]

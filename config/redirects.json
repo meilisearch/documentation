@@ -169,5 +169,17 @@
   {
     "source": "/docs/learn/advanced/storage",
     "destination": "/docs/learn/engine/storage"
+  },
+  {
+    "source": "/docs/learn/cloud/analytics",
+    "destination": "/docs/learn/analytics/analytics"
+  },
+  {
+    "source": "/docs/learn/cloud/analytics",
+    "destination": "/docs/learn/analytics/monitoring"
+  },
+  {
+    "source": "/docs/learn/cloud/teams",
+    "destination": "/docs/learn/teams/teams"
   }
 ]
