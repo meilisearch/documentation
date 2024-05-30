@@ -238,8 +238,13 @@
       },
       {
         "source": "learn/security/generate_tenant_token_third_party.mdx",
-        "label": "Generate tenant tokens with a third party tool",
+        "label": "Generate tenant tokens with a third-party tool",
         "slug": "generate_tenant_token_third_party"
+      },
+      {
+        "source": "learn/security/generate_tenant_token_scratch.mdx",
+        "label": "Generate tenant tokens without libraries",
+        "slug": "generate_tenant_token_scratch"
       },
       {
         "source": "learn/security/managing_api_keys.mdx",
