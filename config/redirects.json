@@ -155,6 +155,22 @@
     "destination": "/docs/learn/async/working_with_tasks"
   },
   {
+    "source": "/docs/learn/advanced/concat",
+    "destination": "/docs/learn/engine/concat"
+  },
+  {
+    "source": "/docs/learn/advanced/datatypes",
+    "destination": "/docs/learn/engine/datatypes"
+  },
+  {
+    "source": "/docs/learn/advanced/prefix",
+    "destination": "/docs/learn/engine/prefix"
+  },
+  {
+    "source": "/docs/learn/advanced/storage",
+    "destination": "/docs/learn/engine/storage"
+  },
+  {
     "source": "/docs/learn/cloud/analytics",
     "destination": "/docs/learn/analytics/analytics"
   },
