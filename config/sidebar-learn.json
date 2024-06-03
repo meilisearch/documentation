@@ -69,6 +69,11 @@
         "source": "learn/search/getting_started_with_ai_search.mdx",
         "label": "Getting started with AI-powered search",
         "slug": "getting_started_with_ai_search"
+      },
+      {
+        "source": "learn/search/difference_keyword_ai_search.mdx",
+        "label": "Differences between keyword and AI-powered search",
+        "slug": "difference_keyword_ai_search"
       }
     ]
   },
