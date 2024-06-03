@@ -74,7 +74,7 @@ Replace `OPEN_AI_API_KEY` with your [OpenAI API key](https://platform.openai.com
 
 `documentTemplate` describes a short [Liquid template](https://shopify.github.io/liquid/). The text inside curly brackets (`{{`) indicates a document field in dot notation, where `doc` indicates the document itself and the string that comes after the dot indicates a document attribute. Meilisearch replaces these brackets and their contents with the corresponding field value.
 
-The resulting text is the data OpenAI uses to generate document embeddings.
+The resulting text is the prompt OpenAI uses to generate document embeddings.
 
 For example, kitchenware documents have three fields: `id`, `name`, and `price`. If your `documentTemplate` is `"An object used in a kitchen named '{{doc.name}}'"`, the text Meilisearch will send to the embedder when indexing the first document is `"An object used in a kitchen named 'Wooden spoon'"`.
 
@@ -103,4 +103,4 @@ Meilisearch will return a mix of semantic and keyword matches, prioritizing resu
 
 You have seen how to setup and perform AI-powered searches with Meilisearch and OpenAI. For more in-depth information, consult the reference for embedders and the `hybrid` search parameter.
 
-AI-powered is an experimental Meilisearch feature and is undergoing active development—[join the discussion on GitHub](https://github.com/orgs/meilisearch/discussions/621).
+AI-powered is an experimental Meilisearch feature and is undergoing active development—[join the discussion on GitHub](https://github.com/orgs/meilisearch/discussions/677).
