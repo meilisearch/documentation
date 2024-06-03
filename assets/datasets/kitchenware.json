@@ -1,0 +1,27 @@
+[
+  {
+    "id": 0,
+    "name": "Wooden spoon",
+    "price": 1.50
+  },
+  {
+    "id": 1,
+    "name": "Microwave lid",
+    "price": 1.00
+  },
+  {
+    "id": 2,
+    "name": "Wooden chopping board",
+    "price": 9.50
+  },
+  {
+    "id": 3,
+    "name": "Plastic chopping board",
+    "price": 1.50
+  },
+  {
+    "id": 4,
+    "name": "Rolling pin",
+    "price": 2.50
+  }
+]
