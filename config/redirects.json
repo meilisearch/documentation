@@ -154,7 +154,6 @@
     "destination": "/docs/learn/async/working_with_tasks"
   },
   {
-<<<<<<< HEAD
     "source": "/docs/learn/cookbooks/aws",
     "destination": "/docs/guides/deployment/aws",
     "permanent": true
@@ -162,11 +161,6 @@
   {
     "source": "/docs/learn/cookbooks/azure",
     "destination": "/docs/guides/deployment/azure",
-    "permanent": true
-  },
-  {
-    "source": "/docs/learn/cookbooks/digitalocean",
-    "destination": "/docs/guides/deployment/digitalocean",
     "permanent": true
   },
   {
@@ -311,40 +305,5 @@
   {
     "source": "/docs/learn/cloud/teams",
     "destination": "/docs/learn/teams/teams"
-  },
-  {
-    "source": "/docs/learn/cookbooks/aws",
-    "destination": "/docs/guides/deployment/aws",
-    "permanent": true
-  },
-  {
-    "source": "/docs/learn/cookbooks/azure",
-    "destination": "/docs/guides/deployment/azure",
-    "permanent": true
-  },
-  {
-    "source": "/docs/learn/cookbooks/digitalocean",
-    "destination": "/docs/guides/deployment/digitalocean",
-    "permanent": true
-  },
-  {
-    "source": "/docs/learn/cookbooks/gcp",
-    "destination": "/docs/guides/deployment/gcp",
-    "permanent": true
-  },
-  {
-    "source": "/docs/learn/cookbooks/koyeb",
-    "destination": "/docs/guides/deployment/koyeb",
-    "permanent": true
-  },
-  {
-    "source": "/docs/learn/cookbooks/qovery",
-    "destination": "/docs/guides/deployment/qovery",
-    "permanent": true
-  },
-  {
-    "source": "/docs/learn/cookbooks/railway",
-    "destination": "/docs/guides/deployment/",
-    "permanent": true
   }
 ]
