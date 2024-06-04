@@ -210,7 +210,7 @@ This will **not** work:
 <Component propName="_italics_" />
 ```
 
-To format strings inside props, pass an empty React fragment (e.g. `<>`) and format the text withing with raw HTML tags:
+To format strings inside props, pass an empty React fragment (e.g. `<>`) and format the text within with raw HTML tags:
 
 ```jsx
 <Component propName={<>Text in <em>italics</em></>} />

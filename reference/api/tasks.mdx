@@ -136,11 +136,11 @@ This value is always `null` for [global tasks](/learn/async/asynchronous_operati
 | Name                 | Description                                                                                                                                                           |
 | :------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **`matchedTasks`**   | The number of matched tasks. If the API key used for the request doesn’t have access to an index, tasks relating to that index will not be included in `matchedTasks` |
-| **`canceledTasks`**  | The number of tasks successfully canceled. If the task cancelation fails, this will be `0`. `null` when the task status is `enqueued` or `processing`                 |
+| **`canceledTasks`**  | The number of tasks successfully canceled. If the task cancellation fails, this will be `0`. `null` when the task status is `enqueued` or `processing`                 |
 | **`originalFilter`** | The filter used in the [cancel task](#cancel-tasks) request                                                                                                           |
 
 <Capsule intent="note">
-Task cancelation can be successful and still have `canceledTasks: 0`. This happens when `matchedTasks` matches finished tasks (`succeeded`, `failed`, or `canceled`).
+Task cancellation can be successful and still have `canceledTasks: 0`. This happens when `matchedTasks` matches finished tasks (`succeeded`, `failed`, or `canceled`).
 </Capsule>
 
 #### `taskDeletion`
@@ -345,7 +345,7 @@ If you try retrieving a deleted task, Meilisearch will return a [`task_not_found
 
 Cancel any number of `enqueued` or `processing` tasks based on their `uid`, `status`, `type`, `indexUid`, or the date at which they were enqueued, processed, or completed.
 
-Task cancelation is an atomic transaction: **either all tasks are successfully canceled or none are**.
+Task cancellation is an atomic transaction: **either all tasks are successfully canceled or none are**.
 
 <Capsule intent="warning">
 To prevent users from accidentally canceling all enqueued and processing tasks, Meilisearch throws the [`missing_task_filters`](/reference/errors/error_codes#missing_task_filters) error if this route is used without any filters (`POST /tasks/cancel`).
