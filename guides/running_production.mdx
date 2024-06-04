@@ -112,6 +112,7 @@ WorkingDirectory=/var/lib/meilisearch
 ExecStart=/usr/local/bin/meilisearch --config-file-path /etc/meilisearch.toml
 User=meilisearch
 Group=meilisearch
+Restart=always
 
 [Install]
 WantedBy=multi-user.target
