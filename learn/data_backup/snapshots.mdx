@@ -25,6 +25,10 @@ meilisearch --schedule-snapshot
 
 The first snapshot is created on launch. You will find it in the [snapshot directory](/learn/configuration/instance_options#snapshot-destination), `/snapshots`. Meilisearch will then create a new snapshot every 24 hours until you terminate your instance.
 
+<Capsule intent="note" title="API keys and backups">
+Since the `key` field depends on the master key, it is not propagated to snapshots. If a malicious user ever gets access to your snapshots, they will not have access to your instance's API keys.
+</Capsule>
+
 Meilisearch **automatically overwrites** old snapshots during snapshot creation. Only the most recent snapshot will be present in the folder at any given time.
 
 In cases where your database is updated several times a day, it might be better to modify the interval between each new snapshot:

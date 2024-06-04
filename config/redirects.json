@@ -181,5 +181,9 @@
   {
     "source": "/docs/learn/cloud/teams",
     "destination": "/docs/learn/teams/teams"
+  },
+  {
+    "source": "/docs/learn/security/managing_api_keys",
+    "destination": "/docs/reference/api/keys"
   }
 ]
