@@ -243,7 +243,7 @@
       },
       {
         "source": "learn/security/generate_tenant_token_scratch.mdx",
-        "label": "Generate tenant tokens without libraries",
+        "label": "Generate tenant tokens without a library",
         "slug": "generate_tenant_token_scratch"
       },
       {

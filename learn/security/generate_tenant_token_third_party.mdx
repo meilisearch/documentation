@@ -35,10 +35,10 @@ curl \
   -H 'Authorization: Bearer MASTER_KEY'
 ```
 
-For maximum security, you should also set an expiry date for your tenant tokens:
+For maximum security, you should also set an expiry date for your tenant tokens. The following example configures the token to expire 20 minutes after its creation:
 
 ```js
-parseInt(Date.now() / 1000) + 20 * 60 // 20 minutes
+parseInt(Date.now() / 1000) + 20 * 60
 ```
 
 ### Create tenant token
@@ -71,7 +71,7 @@ const token = jwt.sign(tokenPayload, apiKey, {algorithm: 'HS256'});
 Your tenant token is now ready to use.
 
 <Capsule intent="note" title="Using other libraries">
-Though this example used `jsonwebtoken`, a NodeJS package, you may use any JWT-compatible library in whatever language you feel comfortable.
+Though this example used `jsonwebtoken`, a Node.js package, you may use any JWT-compatible library in whatever language you feel comfortable.
 </Capsule>
 
 ## Make a search request using a tenant token

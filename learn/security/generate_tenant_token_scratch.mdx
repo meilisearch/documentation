@@ -1,9 +1,9 @@
 ---
-title: Generate a tenant token without libraries — Meilisearch documentation
+title: Generate a tenant token without a library — Meilisearch documentation
 description: This guide shows you the main steps when creating tenant tokens without using any libraries.
 ---
 
-# Generate a tenant token without libraries
+# Generate a tenant token without a library
 
 Generating tenant tokens without a library is possible, but not recommended. This guide summarizes the necessary steps.
 
@@ -22,7 +22,7 @@ The token header must specify a `JWT` type and an encryption algorithm. Supporte
 
 ## Build token payload
 
-irst, create a set of search rules:
+First, create a set of search rules:
 
 ```json
 {
@@ -40,13 +40,13 @@ curl \
   -H 'Authorization: Bearer MASTER_KEY'
 ```
 
-For maximum security, you should also set an expiry date for your tenant tokens:
+For maximum security, you should also set an expiry date for your tenant tokens. The following Node.js example configures the token to expire 20 minutes after its creation:
 
 ```js
-parseInt(Date.now() / 1000) + 20 * 60 // 20 minutes
+parseInt(Date.now() / 1000) + 20 * 60
 ```
 
-The token payload contains most of the relevant token data. It must be an object containing a set of search rules and the first 8 characters of a Meilisearch API key. You may optionally set an expiration date for your token. Consult the [token payload reference](#tenant-token-payload-reference) for more information on the requirements for each payload field.
+Lastly, assemble all parts of the payload in a single object:
 
 ```json
 {
@@ -60,9 +60,11 @@ The token payload contains most of the relevant token data. It must be an object
 }
 ```
 
+Consult the [token payload reference](#tenant-token-payload-reference) for more information on the requirements for each payload field.
+
 ## Encode header and payload
 
-You must then encode both the header and the payload into `base64`, concatenate them, and finally generate the token by signing it using your chosen encryption algorithm.
+You must then encode both the header and the payload into `base64`, concatenate them, and generate the token by signing it using your chosen encryption algorithm.
 
 ## Make a search request using a tenant token
 
