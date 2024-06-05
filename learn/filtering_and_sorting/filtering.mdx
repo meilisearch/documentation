@@ -1,0 +1,75 @@
+---
+title: Filtering — Meilisearch documentation
+description: In this guide you will see how to configure and use Meilisearch filters in a hypothetical movie database.
+---
+
+# Filtering
+
+In this guide you will see how to configure and use Meilisearch filters in a hypothetical movie database.
+
+## Configure filters
+
+Suppose you have a collection of movies called `movie_ratings` containing the following fields:
+
+```json
+[
+  {
+    "id": 458723,
+    "title": "Us",
+    "director": "Jordan Peele",
+    "genres": [
+      "Thriller",
+      "Horror",
+      "Mystery"
+    ],
+    "rating": {
+      "critics": 86,
+      "users": 73
+    },
+    "overview": "Husband and wife Gabe and Adelaide Wilson take their…"
+  },
+  …
+]
+```
+
+If you want to filter results based on the `director` and `genres` attributes, you must first add them to the `filterableAttributes` list:
+
+<CodeSamples id="filtering_update_settings_1" />
+
+**This step is mandatory and cannot be done at search time**. Updating `filterableAttributes` requires Meilisearch to re-configure your index, which will take an amount of time proportionate to your dataset size and complexity.
+
+<Capsule intent="note">
+By default, `filterableAttributes` is empty. Filters do not work without first explicitly adding attributes to the `filterableAttributes` list.
+</Capsule>
+
+## Using filters
+
+After adding `director`, `release_date`, and `genres` to the [`filterableAttributes` index setting](//reference/api/settings#filterable-attributes), you can use them in your [filter expressions](/learn/filtering_and_sorting/filter_reference).
+
+The following code sample returns `Avengers` movies released after 18 March 1995:
+
+<CodeSamples id="filtering_guide_1" />
+
+Use dot notation to filter results based on a document's [nested fields](/learn/engine/datatypes). The following query only returns thrillers with good user reviews:
+
+<CodeSamples id="filtering_guide_nested_1" />
+
+You can also combine multiple conditions. For example, you can limit your search so it only includes `Batman` movies directed by either `Tim Burton` or `Christopher Nolan`:
+
+<CodeSamples id="filtering_guide_2" />
+
+Here, the parentheses are mandatory: without them, the filter would return movies directed by `Tim Burton` and released after 1995 or any film directed by `Christopher Nolan`, without constraints on its release date. This happens because `AND` takes precedence over `OR`.
+
+If you only want recent `Planet of the Apes` movies that weren't directed by `Tim Burton`, you can use this filter:
+
+<CodeSamples id="filtering_guide_3" />
+
+`NOT director = "Tim Burton"` will include both documents that do not contain `"Tim Burton"` in its `director` field and documents without a `director` field. To return only documents that have a `director` field, expand the filter expression with the `EXISTS` operator:
+
+```
+release_date > 1577884550 AND (NOT director = "Tim Burton" AND director EXISTS)
+```
+
+<Capsule intent="warning">
+[Synonyms](/learn/configuration/synonyms) don't apply to filters. Meaning, if you have `SF` and `San Francisco` set as synonyms, filtering by `SF` and `San Francisco` will show you different results.
+</Capsule>

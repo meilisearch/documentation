@@ -213,34 +213,39 @@
     ]
   },
   {
-    "title": "Fine-tuning results",
-    "slug": "fine_tuning_results",
+    "title": "Filtering and sorting",
+    "slug": "filtering_and_sorting",
     "routes": [
       {
-        "source": "learn/fine_tuning_results/faceted_search.mdx",
+        "source": "learn/filtering_and_sorting/faceted_search.mdx",
         "label": "Faceted search",
         "slug": "faceted_search"
       },
       {
-        "source": "learn/fine_tuning_results/filtering.mdx",
+        "source": "learn/filtering_and_sorting/filtering.mdx",
         "label": "Filtering",
         "slug": "filtering"
       },
       {
-        "source": "learn/fine_tuning_results/working_with_dates.mdx",
+        "source": "learn/filtering_and_sorting/working_with_dates.mdx",
         "label": "Filtering and sorting by date",
         "slug": "working_with_dates"
       },
       {
-        "source": "learn/fine_tuning_results/geosearch.mdx",
+        "source": "learn/filtering_and_sorting/geosearch.mdx",
         "label": "Geosearch",
         "slug": "geosearch"
       },
       {
-        "source": "learn/fine_tuning_results/sorting.mdx",
+        "source": "learn/filtering_and_sorting/sorting.mdx",
         "label": "Sorting",
         "slug": "sorting"
-      }
+      },
+      {
+        "source": "learn/filtering_and_sorting/filter_expression_reference.mdx",
+        "label": "Filter expression reference",
+        "slug": "filter_expression_reference"
+      },
     ]
   },
   {
