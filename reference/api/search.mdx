@@ -505,7 +505,9 @@ Returns the number of documents matching the current search query for each given
 - An array of attributes: `facets=["attributeA", "attributeB", …]`
 - An asterisk—this will return a count for all facets present in `filterableAttributes`
 
-When `facets` is set, the search results object contains the [`facetDistribution`](#facetdistribution) and [`facetStats`](#facetstats) fields.
+By default, `facets` returns a maximum of 100 facet values for each faceted field. You can change this value using the `maxValuesPerFacet` property of the [`faceting` index settings](/reference/api/settings#faceting).
+
+When `facets` is set, the search results object includes the [`facetDistribution`](#facetdistribution) and [`facetStats`](#facetstats) fields.
 
 <Capsule intent="note">
 If an attribute used on `facets` has not been added to the `filterableAttributes` list, it will be ignored.
@@ -513,12 +515,48 @@ If an attribute used on `facets` has not been added to the `filterableAttributes
 
 #### `facetDistribution`
 
-`facetDistribution` contains the number of matching documents distributed among the values of a given facet. Each facet is represented as an object.
+`facetDistribution` contains the number of matching documents distributed among the values of a given facet. Each facet is represented as an object:
+
+```json
+{
+  …
+ "facetDistribution": {
+    "FACET_A": {
+      "FACET_VALUE_X": 6,
+      "FACET_VALUE_Y": 1,
+    },
+    "FACET_B": {
+      "FACET_VALUE_Z": 3,
+      "FACET_VALUE_W": 9,
+    },
+  },
+  …
+}
+```
+
+`facetDistribution` contains an object for every attribute passed to the `facets` parameter. Each object contains the returned values for that attribute and the count of matching documents with that value. Meilisearch does not return empty facets.
+
+<Capsule intent="tip">
+</Capsule>
 
 #### `facetStats`
 
-When using the `facets` parameter, any matching documents with facets containing numeric values are displayed in a `facetStats` object. `facetStats` contains the numeric minimum (`min`) and maximum (`max`) values per facet for all documents matching the search query.
-If none of the matching documents have a numeric value for a facet, that facet is not included in the `facetStats` object.
+`facetStats` contains the lowest (`min`) and highest (`max`) numerical values across all documents in each facet. Only numeric values are considered:
+
+```json
+{
+  …
+"facetStats":{
+  "rating":{
+    "min":2.5,
+    "max":4.7
+    }
+  }
+  …
+}
+```
+
+If none of the matching documents have a numeric value for a facet, that facet is not included in the `facetStats` object. `facetStats` ignores string values, even if the string contains a number.
 
 #### Example
 
