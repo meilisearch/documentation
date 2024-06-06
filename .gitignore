@@ -130,7 +130,7 @@ yarn-error.log
 
 # Yarn 4 https://yarnpkg.com/getting-started/qa#which-files-should-be-gitignored
 .pnp.*
-.yarn/*
+.yarn/
 !.yarn/patches
 !.yarn/plugins
 !.yarn/releases
