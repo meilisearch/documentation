@@ -10,8 +10,8 @@ This tutorial will show you how to integrate Meilisearch with [Strapi](https://s
 ## Prerequisites
 
 - [Node.js](https://nodejs.org/): active LTS or maintenance LTS versions, currently Node.js >=18.0.0 \<=20.x.x
-- npm >=6.0.0 (installed with Node.js) 
-- A running instance of Meilisearch (v >= 1.x). If you need help with this part, you can consult the [Installation section](/learn/getting_started/installation). 
+- npm >=6.0.0 (installed with Node.js)
+- A running instance of Meilisearch (v >= 1.x). If you need help with this part, you can consult the [Installation section](/learn/getting_started/installation).
 
 ## Create a back end using Strapi
 
@@ -51,19 +51,19 @@ After finishing those steps of Strapi's quick start guide, two new collections n
 
 Add the following three restaurants, one by one. For each restaurant, you need to press `Save` and then `Publish`.
 
-- Name: `The Butter Biscotte` 
+- Name: `The Butter Biscotte`
 - Description: `All about butter, nothing about health.`
 
 Next, add the `French food` category on the bottom right corner of the page.
 
 ![Strapi dashboard: create an entry form, arrow indicating the location of the categorie's location in the right side menu](/assets/images/strapi-v4/strapi-add-category.png)
 
-- Name: `The Slimy Snail` 
-- Description: `Gastronomy is made of garlic and butter.` 
+- Name: `The Slimy Snail`
+- Description: `Gastronomy is made of garlic and butter.`
 - Category: `French food`
 
-- Name: `The Smell of Blue` 
-- Description: `Blue Cheese is not expired, it is how you eat it. With a bit of butter and a lot of happiness.` 
+- Name: `The Smell of Blue`
+- Description: `Blue Cheese is not expired, it is how you eat it. With a bit of butter and a lot of happiness.`
 - Category: `French food`
 
 Your Strapi back-end is now up and running. Strapi automatically creates a REST API for your Restaurants collection. Check Strapi's documentation for all available [API endpoints](https://strapi.io/documentation/developer-docs/latest/developer-resources/content-api/content-api.html#api-endpoints).
@@ -94,7 +94,7 @@ Once connected, you should see the new `meilisearch` plugin on the left side of 
 
 ![Strapi dashboard with plugins side menu: arrow pointing at the 'meilisearch' option](/assets/images/strapi-v4/strapi-meilisearch-plugin.png)
 
-Add your Meilisearch credentials on the Settings tab of the `meilisearch` plugin page. 
+Add your Meilisearch credentials on the Settings tab of the `meilisearch` plugin page.
 
 ![Strapi dashboard with Meilisearch plugin selected: arrow pointing to the location of the settings tab](/assets/images/strapi-v4/strapi-meilisearch-credentials.png)
 
@@ -114,6 +114,6 @@ Your Strapi entries are sent to Meilisearch as is. You can modify the data befor
 
 ## What's next
 
-This tutorial showed you how to add your Strapi collections to Meilisearch. 
+This tutorial showed you how to add your Strapi collections to Meilisearch.
 
-In most real-life scenarios, you'll typically build a custom search interface and fetch results using Meilisearch's API. To learn how to quickly build a front-end interface of your own, check out the [Front-end integration page](https://www.meilisearch.com/docs/learn/front_end/front_end_integration) guide.
+In most real-life scenarios, you'll typically build a custom search interface and fetch results using Meilisearch's API. To learn how to quickly build a front-end interface of your own, check out the [Front-end integration page](/guides/front_end/front_end_integration) guide.

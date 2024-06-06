@@ -1,1 +1,227 @@
-[]
+[
+  {
+    "title": "Front end",
+    "slug": "front_end",
+    "routes": [
+      {
+        "source": "guides/front_end/front_end_integration.mdx",
+        "label": "Front-end integration",
+        "slug": "front_end_integration"
+      },
+      {
+        "source": "guides/front_end/react_instantsearch.mdx",
+        "label": "Integrate with React InstantSearch",
+        "slug": "react_instantsearch"
+      },
+      {
+        "source": "guides/front_end/search_bar_for_docs.mdx",
+        "label": "Add a search bar to your docs",
+        "slug": "search_bar_for_docs"
+      },
+      {
+        "source": "guides/front_end/pagination.mdx",
+        "label": "Search result pagination",
+        "slug": "pagination"
+      }
+    ]
+  },
+  {
+    "title": "Back end",
+    "slug": "back_end",
+    "routes": [
+      {
+        "source": "guides/laravel_scout.mdx",
+        "label": "Laravel Scout guide",
+        "slug": "laravel_scout"
+      },
+      {
+        "source": "guides/strapi_v4.mdx",
+        "label": "Strapi v4 guide",
+        "slug": "strapi_v4"
+      }
+    ]
+  },
+  {
+    "title": "Artificial Intelligence",
+    "slug": "ai",
+    "routes": [
+      {
+        "source": "guides/langchain.mdx",
+        "label": "Implementing semantic search with LangChain",
+        "slug": "langchain"
+      },
+      {
+        "source": "guides/computing_hugging_face_embeddings_gpu.mdx",
+        "label": "Computing Hugging Face embeddings with the GPU",
+        "slug": "computing_hugging_face_embeddings_gpu"
+      }
+    ]
+  },
+  {
+    "title": "Performance",
+    "slug": "performance",
+    "routes": [
+      {
+        "source": "guides/indexing_best_practices.mdx",
+        "label": "Indexing best practices",
+        "slug": "indexing_best_practices"
+      },
+      {
+        "source": "guides/improve_relevancy_large_documents.mdx",
+        "label": "Improve relevancy when working with large documents",
+        "slug": "large_documents"
+      }
+    ]
+  },
+  {
+    "title": "Security",
+    "slug": "security",
+    "routes": [
+      {
+        "source": "guides/http2_ssl.mdx",
+        "label": "Set up HTTP/2 SSL",
+        "slug": "http2_ssl"
+      },
+      {
+        "source": "guides/laravel_multitenancy.mdx",
+        "label": "Multitenancy with Laravel",
+        "slug": "laravel_multitenancy"
+      },
+      {
+        "source": "guides/multitenancy_nodejs.mdx",
+        "label": "Multitenancy with Node.js",
+        "slug": "multitenancy_nodejs"
+      }
+    ]
+  },
+  {
+    "title": "Database",
+    "slug": "database",
+    "routes": [
+      {
+        "source": "guides/database/meilisync_mysql.mdx",
+        "label": "Syncing databases with MySQL and meilisync",
+        "slug": "meilisync_mysql"
+      },
+      {
+        "source": "guides/database/meilisync_postgresql.mdx",
+        "label": "Syncing databases with PostgreSQL and meilisync",
+        "slug": "meilisync_postgresql"
+      }
+    ]
+  },
+  {
+    "title": "Deployment",
+    "slug": "deployment",
+    "routes": [
+      {
+        "source": "guides/running_production.mdx",
+        "label": "Run in production",
+        "slug": "running_production"
+      },
+      {
+        "source": "guides/deployment/aws.mdx",
+        "label": "Deploy on AWS",
+        "slug": "aws"
+      },
+      {
+        "source": "guides/deployment/azure.mdx",
+        "label": "Deploy on Azure",
+        "slug": "azure"
+      },
+      {
+        "source": "guides/deployment/digitalocean.mdx",
+        "label": "Deploy on DigitalOcean",
+        "slug": "digitalocean"
+      },
+      {
+        "source": "guides/deployment/gcp.mdx",
+        "label": "Deploy on GCP",
+        "slug": "gcp"
+      },
+      {
+        "source": "guides/deployment/koyeb.mdx",
+        "label": "Deploy on Koyeb",
+        "slug": "koyeb"
+      },
+      {
+        "source": "guides/deployment/qovery.mdx",
+        "label": "Deploy on Qovery",
+        "slug": "qovery"
+      },
+      {
+        "source": "guides/deployment/railway.mdx",
+        "label": "Deploy on Railway",
+        "slug": "railway"
+      }
+    ]
+  },
+  {
+    "title": "Integrations",
+    "slug": "integrations",
+    "routes": [
+      {
+        "source": "guides/vercel.mdx",
+        "label": "Integrate Meilisearch Cloud with Vercel",
+        "slug": "vercel"
+      }
+    ]
+  },
+  {
+    "title": "Miscellaneous",
+    "slug": "misc",
+    "routes": [
+      {
+        "source": "guides/postman_collection.mdx",
+        "label": "Use with Postman",
+        "slug": "postman_collection"
+      },
+      {
+        "source": "guides/docker.mdx",
+        "label": "Use with Docker",
+        "slug": "docker"
+      }
+    ]
+  },
+  {
+    "title": "Deployment",
+    "slug": "deployment",
+    "routes": [
+      {
+        "source": "guides/deployment/aws.mdx",
+        "label": "Deploy on AWS",
+        "slug": "aws"
+      },
+      {
+        "source": "guides/deployment/azure.mdx",
+        "label": "Deploy on Azure",
+        "slug": "azure"
+      },
+      {
+        "source": "guides/deployment/digitalocean.mdx",
+        "label": "Deploy on DigitalOcean",
+        "slug": "digitalocean"
+      },
+      {
+        "source": "guides/deployment/gcp.mdx",
+        "label": "Deploy on GCP",
+        "slug": "gcp"
+      },
+      {
+        "source": "guides/deployment/koyeb.mdx",
+        "label": "Deploy on Koyeb",
+        "slug": "koyeb"
+      },
+      {
+        "source": "guides/deployment/qovery.mdx",
+        "label": "Deploy on Qovery",
+        "slug": "qovery"
+      },
+      {
+        "source": "guides/deployment/railway.mdx",
+        "label": "Deploy on Railway",
+        "slug": "railway"
+      }
+    ]
+  }
+]
