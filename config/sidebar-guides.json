@@ -182,46 +182,5 @@
         "slug": "docker"
       }
     ]
-  },
-  {
-    "title": "Deployment",
-    "slug": "deployment",
-    "routes": [
-      {
-        "source": "guides/deployment/aws.mdx",
-        "label": "Deploy on AWS",
-        "slug": "aws"
-      },
-      {
-        "source": "guides/deployment/azure.mdx",
-        "label": "Deploy on Azure",
-        "slug": "azure"
-      },
-      {
-        "source": "guides/deployment/digitalocean.mdx",
-        "label": "Deploy on DigitalOcean",
-        "slug": "digitalocean"
-      },
-      {
-        "source": "guides/deployment/gcp.mdx",
-        "label": "Deploy on GCP",
-        "slug": "gcp"
-      },
-      {
-        "source": "guides/deployment/koyeb.mdx",
-        "label": "Deploy on Koyeb",
-        "slug": "koyeb"
-      },
-      {
-        "source": "guides/deployment/qovery.mdx",
-        "label": "Deploy on Qovery",
-        "slug": "qovery"
-      },
-      {
-        "source": "guides/deployment/railway.mdx",
-        "label": "Deploy on Railway",
-        "slug": "railway"
-      }
-    ]
   }
 ]
