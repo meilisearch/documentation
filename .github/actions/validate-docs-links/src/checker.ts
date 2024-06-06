@@ -74,11 +74,13 @@ const slugger = new GithubSlugger()
 async function getAllMdxFilePaths(basePath: string): Promise<RouteFragment[]> {
   const sidebarLearn: ConfigSchema = JSON.parse(await fs.readFile(path.join(basePath, 'config/sidebar-learn.json'), 'utf8'))
   const sidebarReference: ConfigSchema = JSON.parse(await fs.readFile(path.join(basePath, 'config/sidebar-reference.json'), 'utf8'))
+  const sidebarGuides: ConfigSchema = JSON.parse(await fs.readFile(path.join(basePath, 'config/sidebar-guides.json'), 'utf8'))
   const footer: FooterConfigSchema = JSON.parse(await fs.readFile(path.join(basePath, 'config/sidebar-footer.json'), 'utf8'))
 
   const config = [
     ...sidebarLearn.map(group => ({...group, slug: path.join('learn',  group.slug)})),
-    ...sidebarReference.map(group => ({...group, slug: path.join('reference/', group.slug)}))
+    ...sidebarReference.map(group => ({...group, slug: path.join('reference/', group.slug)})),
+    ...sidebarGuides.map(group => ({...group, slug: path.join('guides/', group.slug)}))
   ]
 
   let allRoutes: RouteSchema[] = [{source: path.join(basePath, 'home.mdx'), slug: '', label: 'Homepage'}]
