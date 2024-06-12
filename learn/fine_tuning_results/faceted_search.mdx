@@ -10,7 +10,7 @@ You can use Meilisearch filters to build faceted search interfaces. This type of
 
 Facets are common in ecommerce sites like Amazon. When users search for products, they are presented with a list of results and a list of facets which you can see on the sidebar in the image below:
 
-[![Meilisearch demo for an ecommerce website displaying faceting UI](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/faceted-search/facets-ecommerce.png)](https://ecommerce.meilisearch.com/?utm_campaign=oss&utm_source=docs&utm_medium=faceted-search&utm_content=image)
+[![Meilisearch demo for an ecommerce website displaying faceting UI](/assets/images/faceted-search/facets-ecommerce.png)](https://ecommerce.meilisearch.com/?utm_campaign=oss&utm_source=docs&utm_medium=faceted-search&utm_content=image)
 
 Faceted search interfaces often have a count of how many results belong to each facet. This gives users a visual clue of the range of results available for each facet.
 
@@ -26,7 +26,7 @@ Like any other filter, you must add any attributes you want to use as facets to 
 Synonyms don't apply to facets. If you have `SF` and `San Francisco` set as synonyms, faceting by `SF` and `San Francisco` will show you different results.
 </Capsule>
 
-Suppose you have a <a id="downloadBooks" href="https://raw.githubusercontent.com/meilisearch/documentation/main/assets/datasets/books.json" download="books.json">books dataset</a> containing the following fields:
+Suppose you have a <a id="downloadBooks" href="/assets/datasets/books.json" download="books.json">books dataset</a> containing the following fields:
 
 ```json
 {
@@ -182,7 +182,7 @@ The above code sample sorts the `genres` facet by descending value count. If you
 
 ## Searching facet values
 
-Once you have configured [filterableAttributes](/reference/api/settings#filterable-attributes), you can also search for facet values with the [facet search endpoint](/reference/api/facet_search). Facet search supports [prefix search](/learn/advanced/prefix) and [typo tolerance](/learn/configuration/typo_tolerance).
+Once you have configured [filterableAttributes](/reference/api/settings#filterable-attributes), you can also search for facet values with the [facet search endpoint](/reference/api/facet_search). Facet search supports [prefix search](/learn/engine/prefix) and [typo tolerance](/learn/configuration/typo_tolerance).
 
 <Capsule intent="note" title="Facet search on numbers">
 Meilisearch does not support facet search on numbers. Convert numeric facets to strings to make them searchable.
@@ -248,7 +248,7 @@ With conjunctive facets, when a user selects `English` from the `language` facet
 
 The GIF below shows how the facet count for `genres` updates to only include books that meet **all three conditions**.
 
-![Selecting English books with 'Fiction' and 'Literature' as 'genres' for the books dataset](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/faceted-search/conjunctive-factes.gif)
+![Selecting English books with 'Fiction' and 'Literature' as 'genres' for the books dataset](/assets/images/faceted-search/conjunctive-factes.gif)
 
 ### Disjunctive facets
 
@@ -262,7 +262,7 @@ With disjunctive facets, when a user selects `Fiction`, and `Literature`, Meilis
 
 The GIF below shows the `books` dataset with disjunctive facets. Notice how the facet count for `genres` updates based on the selection.
 
-![Selecting 'Fiction' and 'Literature' as 'genres' for the books dataset](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/faceted-search/disjunctive_facets.gif)
+![Selecting 'Fiction' and 'Literature' as 'genres' for the books dataset](/assets/images/faceted-search/disjunctive_facets.gif)
 
 ### Combining conjunctive and disjunctive facets
 
@@ -288,7 +288,7 @@ The user can combine these two filter expressions in one by wrapping them in par
 
 The GIF below shows the `books` dataset with conjunctive and disjunctive facets. Notice how the facet count for each facet updates based on the selection.
 
-![Selecting 'Fiction' and 'Literature' as 'genres' for English books](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/faceted-search/conjunctive-and-disjunctive-facets.gif)
+![Selecting 'Fiction' and 'Literature' as 'genres' for English books](/assets/images/faceted-search/conjunctive-and-disjunctive-facets.gif)
 
 ## Example application
 

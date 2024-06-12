@@ -1,0 +1,39 @@
+---
+title: Configure application monitoring metrics
+description: Meilisearch Cloud offers in-depth metrics to help monitor your application performance.
+---
+
+# Configure application monitoring metrics
+
+Enable Meilisearch Cloud monitoring to keep track of application performance and service status.
+
+## Requirements
+
+You must have a [Meilisearch Cloud](https://meilisearch.com/cloud?utm_campaign=oss&utm_source=docs&utm_medium=monitoring) account to access monitoring metrics.
+
+## Enable monitoring in the project overview
+
+Log into your Meilisearch Cloud account and navigate to your project's overview. Find the "Analytics and monitoring" section and click on the "Enable analytics and monitoring" button:
+
+![The analytics and monitoring section of the project overview. It shows one button, "Enable analytics and monitoring", and a short explanation of both features.](/assets/images/cloud-analytics/01-analytics-enable.png)
+
+Meilisearch Cloud will begin processing your request. The "Analytics and monitoring" section will update with new instruction text and buttons when the feature is enabled.
+
+<Capsule intent="note" title="Monitoring and analytics">
+Activating monitoring will automatically activate [analytics](/learn/cloud/analytics).
+</Capsule>
+
+## Update URLs in your application
+
+When you enable monitoring, Meilisearch Cloud changes your project's API URL. Meilisearch Cloud is only able to track metrics for queries sent to this URL. 
+
+Update your application so all API requests point to the new URL:
+
+```sh
+curl \
+  -X POST 'http://edge.meilisearch.com/indexes/products/search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{ "q": "green socks" }'
+```
+
+**The previous API URL will remain functional**, but requests targeting it will not send any data to the monitoring interface.

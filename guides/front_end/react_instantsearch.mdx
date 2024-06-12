@@ -8,7 +8,7 @@ sidebarDepth: 3
 
 Meilisearch allows you to search through your data via a RESTful API. When in development mode, it provides a [search preview](/learn/getting_started/search_preview) where you can test your search settings without implementing a front end.
 
-![Animated gif in which a user types "trumen show" and sees "The Truman Show" as the top result](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/search_preview/trumen.gif)
+![Animated gif in which a user types "trumen show" and sees "The Truman Show" as the top result](/assets/images/search_preview/trumen.gif)
 
 The search preview is a development tool and not suited for end-users. In this tutorial, you’ll learn how to create a custom search interface using two open-source tools:
 
@@ -28,7 +28,7 @@ This guide uses a dataset of restaurants generated with faker, a library that ge
 
 The front end will look like this:
 
-![Searching through a list of restaurants](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/instantsearch/restaurants-list.gif)
+![Searching through a list of restaurants](/assets/images/instantsearch/restaurants-list.gif)
 
 ## Requirements
 
@@ -82,7 +82,7 @@ import {
 import "./App.css";
 import { instantMeiliSearch } from "@meilisearch/instant-meilisearch";
 
-const searchClient = instantMeiliSearch(
+const {searchClient} = instantMeiliSearch(
   "<your Meilisearch host>",
   "<your Meilisearch API key>"
 );
@@ -140,7 +140,7 @@ import { instantMeiliSearch } from "@meilisearch/instant-meilisearch";
 Next, you need to initialize the search client that will communicate with Meilisearch. Add your Meilisearch credentials: host and API key, as the first and second parameters of the instantMeilisearch function.
 
 ```jsx
-const searchClient = instantMeiliSearch(
+const {searchClient} = instantMeiliSearch(
   "<your Meilisearch host>",
   "<your Meilisearch API key>"
 );

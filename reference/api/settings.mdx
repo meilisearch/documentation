@@ -58,7 +58,8 @@ By default, the settings object looks like this. All fields are modifiable.
   "pagination": {
     "maxTotalHits": 1000
   },
-  "proximityPrecision": "byWord"
+  "proximityPrecision": "byWord",
+  "searchCutoffMs": null
 }
 ```
 
@@ -124,7 +125,8 @@ Get the settings of an index.
   "pagination": {
     "maxTotalHits": 1000
   },
-  "proximityPrecision": "byWord"
+  "proximityPrecision": "byWord",
+  "searchCutoffMs": null
 }
 ```
 
@@ -150,15 +152,16 @@ If the provided index does not exist, it will be created.
 
 | Name                                                 | Type             | Default value                                                                                    | Description                                                                      |
 | :--------------------------------------------------- | :--------------- | :----------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------- |
-| **[`dictionary`](#dictionary)**                      | Array of strings | Empty                                                                                                         | List of strings Meilisearch should parse as a single term                        |
+| **[`dictionary`](#dictionary)**                      | Array of strings | Empty                                                                                            | List of strings Meilisearch should parse as a single term                        |
 | **[`displayedAttributes`](#displayed-attributes)**   | Array of strings | All attributes: `["*"]`                                                                          | Fields displayed in the returned documents                                       |
 | **[`distinctAttribute`](#distinct-attribute)**       | String           | `null`                                                                                           | Search returns documents with distinct (different) values of the given field     |
 | **[`faceting`](#faceting)**                          | Object           | [Default object](#faceting-object)                                                               | Faceting settings                                                                |
 | **[`filterableAttributes`](#filterable-attributes)** | Array of strings | Empty                                                                                            | Attributes to use as filters and facets                                          |
 | **[`pagination`](#pagination)**                      | Object           | [Default object](#pagination-object)                                                             | Pagination settings                                                              |
-| **[`proximityPrecision`](#proximity-precision)**     | String           | `"byWord"`                                                                                       |  Precision level when calculating the proximity ranking rule                                                              |
+| **[`proximityPrecision`](#proximity-precision)**     | String           | `"byWord"`                                                                                       |  Precision level when calculating the proximity ranking rule                     |
 | **[`rankingRules`](#ranking-rules)**                 | Array of strings | `["words",`<br />`"typo",`<br />`"proximity",`<br />`"attribute",`<br />`"sort",`<br />`"exactness"]` | List of ranking rules in order of importance                                |
 | **[`searchableAttributes`](#searchable-attributes)** | Array of strings | All attributes: `["*"]`                                                                          | Fields in which to search for matching query words sorted by order of importance |
+| **[`searchCutoffMs`](#search-cutoff)**              | Integer          | `null`, or 1500ms                                                                                | Maximum duration of a search query                                               |
 | **[`separatorTokens`](#separator-tokens)**           | Array of strings | Empty                                                                                            | List of characters delimiting where one term begins and ends                     |
 | **[`nonSeparatorTokens`](#non-separator-tokens)**    | Array of strings | Empty                                                                                            | List of characters not delimiting where one term begins and ends                 |
 | **[`sortableAttributes`](#sortable-attributes)**     | Array of strings | Empty                                                                                            | Attributes to use when sorting search results                                    |
@@ -791,7 +794,7 @@ To protect your database from malicious scraping, Meilisearch has a default limi
 
 For example, if you set `maxTotalHits` to 100, you will not be able to access search results beyond 100 no matter the value configured for `offset`.
 
-[To learn more about paginating search results with Meilisearch, refer to our dedicated guide.](/learn/front_end/pagination)
+[To learn more about paginating search results with Meilisearch, refer to our dedicated guide.](/guides/front_end/pagination)
 
 ### Pagination object
 
@@ -1258,11 +1261,105 @@ Reset the searchable attributes of the index to the default value.
 
 You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
 
+## Search cutoff
+
+Configure the maximum duration of a search query. Meilisearch will interrupt any search taking longer than the cutoff value.
+
+By default, Meilisearch interrupts searches after 1500 milliseconds.
+
+### Get search cutoff
+
+<RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/search-cutoff-ms" />
+
+Get an index's search cutoff value.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+
+#### Example
+
+<CodeSamples id="get_search_cutoff_1"/>
+
+##### Response: `200 Ok`
+
+```json
+null
+```
+
+### Update search cutoff
+
+<RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/search-cutoff-ms" />
+
+Update an index's search cutoff value.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+
+#### Body
+
+```
+150
+```
+
+A single integer indicating the cutoff value in milliseconds.
+
+#### Example
+
+<CodeSamples id="update_search_cutoff_1"/>
+
+##### Response: `202 Accepted`
+
+```json
+{
+  "taskUid": 1,
+  "indexUid": "movies",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2023-03-21T06:33:41.000000Z"
+}
+```
+
+Use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+
+### Reset search cutoff
+
+<RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings/search-cutoff-ms"/>
+
+Reset an index's search cutoff value to its default value, `null`. This translates to a cutoff of 1500ms.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+
+#### Example
+
+<CodeSamples id="reset_search_cutoff_1"/>
+
+##### Response: `202 Accepted`
+
+```json
+{
+  "taskUid": 1,
+  "indexUid": "movies",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2023-03-21T07:05:16.000000Z"
+}
+```
+
 ## Separator tokens
 
 Configure strings as custom separator tokens indicating where a word ends and begins.
 
-Tokens in the `separatorTokens` list are added on top of [Meilisearch's default list of separators](/learn/advanced/datatypes#string). To remove separators from the default list, use [the `nonSeparatorTokens` setting](#non-separator-tokens).
+Tokens in the `separatorTokens` list are added on top of [Meilisearch's default list of separators](/learn/engine/datatypes#string). To remove separators from the default list, use [the `nonSeparatorTokens` setting](#non-separator-tokens).
 
 ### Get separator tokens
 
@@ -1356,7 +1453,7 @@ Use this `taskUid` to get more details on [the status of the task](/reference/ap
 
 ## Non-separator tokens
 
-Remove tokens from Meilisearch's default [list of word separators](/learn/advanced/datatypes#string).
+Remove tokens from Meilisearch's default [list of word separators](/learn/engine/datatypes#string).
 
 ### Get non-separator tokens
 
@@ -1398,7 +1495,7 @@ Update an index's list of non-separator tokens.
 ["@", "#"]
 ```
 
-An array of strings, with each string indicating a token present in [list of word separators](/learn/advanced/datatypes#string).
+An array of strings, with each string indicating a token present in [list of word separators](/learn/engine/datatypes#string).
 
 #### Example
 
@@ -1478,7 +1575,7 @@ Get the sortable attributes of an index.
 
 ```json
 [
-  "price", 
+  "price",
   "author.surname"
 ]
 ```

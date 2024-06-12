@@ -180,7 +180,8 @@ update_settings_1: |-
       },
       "faceting": {
         "maxValuesPerFacet": 200
-      }
+      },
+      "searchCutoffMs": 150
     }'
 reset_settings_1: |-
   curl \
@@ -1220,3 +1221,68 @@ search_parameter_guide_vector_1: |-
   curl -X POST 'localhost:7700/indexes/INDEX_NAME/search' \
     -H 'content-type: application/json' \
     --data-binary '{ "vector": [0, 1, 2] }'
+get_search_cutoff_1: |-
+  curl \
+    -X GET 'http://localhost:7700/indexes/movies/settings/search-cutoff-ms'
+update_search_cutoff_1: |-
+  curl \
+    -X PUT 'http://localhost:7700/indexes/movies/settings/search-cutoff-ms' \
+    -H 'Content-Type: application/json' \
+    --data-binary '150'
+reset_search_cutoff_1: |-
+  curl \
+    -X DELETE 'http://localhost:7700/indexes/movies/settings/search-cutoff-ms'
+negative_search_1: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/movies/search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{ "q": "-escape" }'
+negative_search_2: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/movies/search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{ "q": "-\"escape room\"" }'
+analytics_event_click_1: |-
+  curl \
+    -X POST 'https://edge.meilisearch.com/events' \
+    -H 'Content-Type: application/json' \
+    -H 'Authorization: Bearer DEFAULT_SEARCH_API_KEY' \
+    --data-binary '{
+      "eventType": "click",
+      "eventName": "Search Result Clicked",
+      "indexUid": "products",
+      "objectId": "0",
+      "position": 0
+    }'
+analytics_event_conversion_1: |-
+  curl \
+    -X POST 'https://edge.meilisearch.com/events' \
+    -H 'Content-Type: application/json' \
+    -H 'Authorization: Bearer DEFAULT_SEARCH_API_KEY'
+    --data-binary '{
+      "eventType": "conversion",
+      "eventName": "Product Added To Cart",
+      "indexUid": "products",
+      "objectId": "0",
+      "position": 0
+    }'
+analytics_event_bind_search_1: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/INDEX_NAME/search' \
+    -H 'Content-Type: application/json' \
+    -H 'Authorization: Bearer DEFAULT_SEARCH_API_KEY' \
+    -H 'X-MS-USER-ID: MEILISEARCH_USER_ID' \
+    --data-binary '{}'
+analytics_event_bind_event_1: |-
+  curl \
+    -X POST 'https://edge.meilisearch.com/events' \
+    -H 'Content-Type: application/json' \
+    -H 'Authorization: Bearer DEFAULT_SEARCH_API_KEY' \
+    -H 'X-MS-USER-ID: MEILISEARCH_USER_ID' \
+    --data-binary '{
+      "eventType": "click",
+      "eventName": "Search Result Clicked",
+      "indexUid": "products",
+      "objectId": "0",
+      "position": 0
+    }'

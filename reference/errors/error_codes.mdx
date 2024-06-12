@@ -313,6 +313,10 @@ This error occurs if:
 
 The value of [searchable attributes](/reference/api/settings#searchable-attributes) is invalid. It should be an empty array, an array of strings or set to `null`.
 
+## `invalid_settings_search_cutoff_ms`
+
+The specified value for [`searchCutoffMs](/reference/api/settings#search-cutoff) is invalid. It should be an integer indicating the cutoff in milliseconds.
+
 ## `invalid_settings_sortable_attributes`
 
 The value of [sortable attributes](/reference/api/settings#sortable-attributes) is invalid. It should be an empty array, an array of strings or set to `null`.
@@ -491,6 +495,10 @@ The requested task does not exist. Please ensure that you are using the correct 
 ## `too_many_open_files`
 
 Indexing a large batch of documents, such as a JSON file over 3.5GB in size, can result in Meilisearch opening too many file descriptors. Depending on your machine, this might reach your system's default resource usage limits and trigger the `too_many_open_files` error. Use [`ulimit`](https://www.ibm.com/docs/en/aix/7.1?topic=u-ulimit-command) or a similar tool to increase resource consumption limits before running Meilisearch. For example, call `ulimit -Sn 3000` in a UNIX environment to raise the number of allowed open file descriptors to 3000.
+
+## `too_many_search_requests`
+
+You have reached the limit of concurrent search requests. You may configure it by relaunching your instance and setting a higher value to [`--experimental-search-queue-size`](/learn/experimental/search_queue_size).
 
 ## `unretrievable_document`
 
