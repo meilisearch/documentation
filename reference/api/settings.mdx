@@ -168,7 +168,7 @@ If the provided index does not exist, it will be created.
 | **[`stopWords`](#stop-words)**                       | Array of strings | Empty                                                                                            | List of words ignored by Meilisearch when present in search queries              |
 | **[`synonyms`](#synonyms)**                          | Object           | Empty                                                                                            | List of associated words treated similarly                                       |
 | **[`typoTolerance`](#typo-tolerance)**               | Object           | [Default object](#typo-tolerance-object)                                                         | Typo tolerance settings                                                          |
-| **[`embedders`](#embedders-experimental)**               | Object of objects           | [Default object](#embedder-object)                                                         | Embedder required for performing meaning-based search queries                                                          |
+| **[`embedders`](#embedders-experimental)**               | Object of objects           | [Default object](#embedders-object)                                                         | Embedder required for performing meaning-based search queries                                                          |
 
 #### Example
 
@@ -2009,7 +2009,7 @@ Reset an index's typo tolerance settings to their [default value](#typo-toleranc
 
 You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
 
-## Embedders <NoticeTag type="experimental" label="experimental" />
+## Embedders<NoticeTag type="experimental" label="experimental" />
 
 Embedders translate documents and queries into vector embeddings. You must configure at least one embedder to use AI-powered search.
 
