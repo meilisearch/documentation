@@ -3,21 +3,21 @@ title: Getting started with AI-powered search — Meilisearch documentation
 description: AI-powered search is an experimental technology that uses LLMs to retrieve search results. This tutorial shows you how to configure an OpenAI embedder and perform your first search.
 ---
 
-# Getting started with AI-powered search
+# Getting started with AI-powered search <NoticeTag type="experimental" label="experimental" />
 
-[AI-powered search](https://meilisearch.com/solutions/vector-search?utm_campaign=vector-search&utm_source=aipowered-tutorial), sometimes also called vector search, is an experimental technology that uses [large language models](https://en.wikipedia.org/wiki/Large_language_model) to retrieve search results based on the meaning and context of a query.
+[AI-powered search](https://meilisearch.com/solutions/vector-search?utm_campaign=vector-search&utm_source=aipowered-tutorial), sometimes also called vector search and hybrid search, is an experimental technology that uses [large language models](https://en.wikipedia.org/wiki/Large_language_model) to retrieve search results based on the meaning and context of a query.
 
 This tutorial will walk you through configuring AI-powered search in your Meilisearch project. You will activate the vector store setting, generate document embeddings with OpenAI, and perform your first search.
 
 ## Requirements
 
-- a running Meilisearch project
-- an [OpenAI API key](https://platform.openai.com/api-keys)
-- a command-line console
+- A running Meilisearch project
+- An [OpenAI API key](https://platform.openai.com/api-keys)
+- A command-line console
 
 ## Create a new index
 
-Create a `kitchenware` index and add [this kitchenware products dataset](/assets/datasets/kitchenware.json) to it. If necessary, consult the quick start for instructions on how to configure a basic Meilisearch install.
+Create a `kitchenware` index and add [this kitchenware products dataset](/assets/datasets/kitchenware.json) to it. If necessary, consult the quick start for instructions on how to configure a basic Meilisearch installation.
 
 ## Activate AI-powered search
 
@@ -30,7 +30,7 @@ If using Meilisearch Cloud, navigate to your project overview and find "Experime
 ![A section of the project overview interface titled "Experimental features". The image shows a few options, including "Vector store".](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/vector-search/01-cloud-vector-store.png)
 
 <Capsule intent="note" title="Meilisearch Cloud AI-powered search waitlist">
-To ensure proper scaling of Meilisearch Cloud's latest AI-powered search offering, you must enter the waitlist before activating vector search. You will not be able to activate vector search in the Cloud interface or via the `/experimental-features` route until your sign up has been approved.
+To ensure proper scaling of Meilisearch Cloud's latest AI-powered search offering, you must enter the waitlist before activating vector search. You will not be able to activate vector search in the Cloud interface or via the `/experimental-features` route until your sign-up has been approved.
 </Capsule>
 
 ### Self-hosted instances
@@ -78,7 +78,7 @@ The resulting text is the prompt OpenAI uses to generate document embeddings.
 
 For example, kitchenware documents have three fields: `id`, `name`, and `price`. If your `documentTemplate` is `"An object used in a kitchen named '{{doc.name}}'"`, the text Meilisearch will send to the embedder when indexing the first document is `"An object used in a kitchen named 'Wooden spoon'"`.
 
-For the best results, always provide a `documentTemplate`. Keep your templates short and only include highly relevant information. This ensures the best indexing performance and search result relevancy.
+For the best results, always provide a `documentTemplate`. Keep your templates short and only include highly relevant information. This ensures optimal indexing performance and search result relevancy.
 
 ## Perform an AI-powered search
 
@@ -97,10 +97,10 @@ curl \
   }'
 ```
 
-Meilisearch will return a mix of semantic and keyword matches, prioritizing results that match the query's meaning and context. If you want Meilisearch to return more results based on the meaning and context of a search, set `semanticRatio` to a value greater than `0.5`. Setting `semanticRatio` to a value lower than `0.5`, instead, will return more keyword matches.
+Meilisearch will return a mix of semantic and full-text matches, prioritizing results that match the query's meaning and context. If you want Meilisearch to return more results based on the meaning and context of a search, set `semanticRatio` to a value greater than `0.5`. Setting `semanticRatio` to a value lower than `0.5`, instead, will return more full-text matches.
 
 ## Conclusion
 
-You have seen how to setup and perform AI-powered searches with Meilisearch and OpenAI. For more in-depth information, consult the reference for embedders and the `hybrid` search parameter.
+You have seen how to set up and perform AI-powered searches with Meilisearch and OpenAI. For more in-depth information, consult the reference for embedders and the `hybrid` search parameter.
 
-AI-powered is an experimental Meilisearch feature and is undergoing active development—[join the discussion on GitHub](https://github.com/orgs/meilisearch/discussions/677).
+AI-powered search is an experimental Meilisearch feature and is undergoing active development—[join the discussion on GitHub](https://github.com/orgs/meilisearch/discussions/677).

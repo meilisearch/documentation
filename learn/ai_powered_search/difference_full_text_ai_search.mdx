@@ -1,0 +1,30 @@
+---
+title: Differences between full-text and AI-powered search — Meilisearch documentation
+description: "Meilisearch offers two types of search: full-text search and AI-powered search. This article explains their differences and intended use cases."
+---
+
+# Differences between full-text and AI-powered search <NoticeTag type="experimental" label="experimental" />
+
+Meilisearch offers two types of search: full-text search and AI-powered search. This article explains their differences and intended use cases.
+
+## Full-text search
+
+This is Meilisearch's default search type. When performing a full-text search, Meilisearch checks the indexed documents for acceptable matches to a set of search terms. It is a fast and reliable search method.
+
+For example, when searching for `"pink sandals"`, full-text search will only return clothing items explicitly mentioning these two terms. Searching for `"pink summer shoes for girls"` is likely to return fewer and less relevant results.
+
+## AI-powered search
+
+AI-powered search is Meilisearch's newest search method. It returns results based on a query's meaning and context.
+
+AI-powered search uses LLM providers such as OpenAI and Hugging Face to generate vector embeddings representing the meaning and context of both query terms and documents. It then compares these vectors to find semantically similar search results.
+
+When using AI-powered search, Meilisearch returns both full-text and semantic results by default. This is also called hybrid search.
+
+With AI-powered search, searching for `"pink sandals"` will be more efficient, but queries for `"cute pink summer shoes for girls"` will still return relevant results including light-colored open shoes.
+
+## Use cases
+
+Full-text search is a reliable choice that works well in most scenarios. It is fast, less resource-intensive, and requires no extra configuration. It is best suited for situations where you need precise matches to a query and your users are familiar with the relevant keywords.
+
+AI-powered search combines the flexibility of semantic search with the performance of full-text search. Most searches, whether short and precise or long and vague, will return very relevant search results. In most cases, AI-powered search will offer your users the best search experience, but will require extra configuration. AI-powered search may also entail extra costs if you use a third-party service such as OpenAI to generate vector embeddings.

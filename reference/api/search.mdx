@@ -55,7 +55,7 @@ By default, [this endpoint returns a maximum of 1000 results](/learn/advanced/kn
 | **[`showRankingScore`](#ranking-score)**                | Boolean          | `false`       | Display the global ranking score of a document      |
 | **[`attributesToSearchOn`](#customize-attributes-to-search-on-at-search-time)**            | Array of strings           | `["*"]`        | Restrict search to the specified attributes |
 | **[`hybrid`](#hybrid-search-experimental)**                | Object          | `null`       | Return results based on query keywords and meaning      |
-| **[`vector`](#vector-experimental)**                | Array of numbers          | `null`       | Search using a custom query vector      |
+| **[`vector`](#vector)**                | Array of numbers          | `null`       | Search using a custom query vector      |
 
 [Learn more about how to use each search parameter](#search-parameters).
 
@@ -165,7 +165,7 @@ By default, [this endpoint returns a maximum of 1000 results](/learn/advanced/kn
 | **[`showRankingScore`](#ranking-score)**                | Boolean          | `false`       | Display the global ranking score of a document      |
 | **[`attributesToSearchOn`](#customize-attributes-to-search-on-at-search-time)**            | Array of strings           | `["*"]`        | Restrict search to the specified attributes |
 | **[`hybrid`](#hybrid-search-experimental)**                | Object          | `null`       | Return results based on query keywords and meaning      |
-| **[`vector`](#vector-experimental)**                | Array of numbers          | `null`       | Search using a custom query vector      |
+| **[`vector`](#vector)**                | Array of numbers          | `null`       | Search using a custom query vector      |
 
 [Learn more about how to use each search parameter](#search-parameters).
 
@@ -253,7 +253,7 @@ This is not necessary when using the `POST` route or one of our [SDKs](/learn/wh
 | **[`showRankingScore`](#ranking-score)**                | Boolean          | `false`       | Display the global ranking score of a document      |
 | **[`attributesToSearchOn`](#customize-attributes-to-search-on-at-search-time)**            | Array of strings           | `["*"]`        | Restrict search to the specified attributes |
 | **[`hybrid`](#hybrid-search-experimental)**                | Object          | `null`       | Return results based on query keywords and meaning      |
-| **[`vector`](#vector-experimental)**                | Array of numbers          | `null`       | Search using a custom query vector      |
+| **[`vector`](#vector)**                | Array of numbers          | `null`       | Search using a custom query vector      |
 
 ### Query (q)
 
@@ -1089,7 +1089,7 @@ Meilisearch will return an error if you use `hybrid` before activating your inst
 
 <CodeSamples id="search_parameter_guide_hybrid_1" />
 
-### Vector (experimental)
+### Vector <NoticeTag type="experimental" label="experimental" />
 
 Use a custom vector to perform a search query. Must be an array of numbers corresponding to the dimensions of the custom vector.
 
