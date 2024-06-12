@@ -66,12 +66,12 @@
     "slug": "ai-powered-search",
     "routes": [
       {
-        "source": "learn/search/getting_started_with_ai_search.mdx",
+        "source": "learn/ai_powered/search/getting_started_with_ai_search.mdx",
         "label": "Getting started with AI-powered search",
         "slug": "getting_started_with_ai_search"
       },
       {
-        "source": "learn/search/difference_full_text_ai_search.mdx",
+        "source": "learn/ai_powered_search/difference_full_text_ai_search.mdx",
         "label": "Differences between keyword and AI-powered search",
         "slug": "difference_full_text_ai_search"
       }
