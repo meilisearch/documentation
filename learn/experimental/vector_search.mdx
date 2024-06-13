@@ -81,7 +81,7 @@ It is mandatory to pass an OpenAI API key through the `OPENAI_API_KEY` environme
 </Tabs.Content>
 
 <Tabs.Content label="Hugging Face">
-The Hugging Face embedder computes embeddings locally. This is a resource-intensive operation and might affect indexing performance. You may be able to significantly improve performance by [compiling a CUDA-compatible Meilisearch binary](/learn/cookbooks/computing_hugging_face_embeddings_gpu).
+The Hugging Face embedder computes embeddings locally. This is a resource-intensive operation and might affect indexing performance. You may be able to significantly improve performance by [compiling a CUDA-compatible Meilisearch binary](/guides/ai/computing_hugging_face_embeddings_gpu).
 
 Use the `embedders` index setting of the [update `/settings` endpoint](/reference/api/settings) to configure one or more embedders for an index:
 
@@ -179,7 +179,7 @@ curl \
 
 Any field you refer to in this way must exist in all documents or an error will be raised at indexing time.
 
-For best results, use short strings indicating the type of document in that index, only include highly relevant document fields, and truncate long fields.  
+For best results, use short strings indicating the type of document in that index, only include highly relevant document fields, and truncate long fields.
 </Capsule>
 
 #### Generate custom embeddings manually
@@ -253,7 +253,7 @@ Perform searches with `q` and `hybrid` to retrieve search results using both key
 ```sh
 curl -X POST -H 'content-type: application/json' \
   'localhost:7700/indexes/products/search' \
-  --data-binary '{ 
+  --data-binary '{
     "q": "kitchen utensils",
     "hybrid": {
       "semanticRatio": 0.9,
@@ -284,7 +284,7 @@ curl -X POST -H 'content-type: application/json' \
 
 ### Vector search with user-provided embeddings
 
-Use the `vector` search parameter to perform vector searches: 
+Use the `vector` search parameter to perform vector searches:
 
 ```sh
 curl -X POST -H 'content-type: application/json' \

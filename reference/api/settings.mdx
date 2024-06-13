@@ -793,7 +793,7 @@ To protect your database from malicious scraping, Meilisearch has a default limi
 
 For example, if you set `maxTotalHits` to 100, you will not be able to access search results beyond 100 no matter the value configured for `offset`.
 
-[To learn more about paginating search results with Meilisearch, refer to our dedicated guide.](/learn/front_end/pagination)
+[To learn more about paginating search results with Meilisearch, refer to our dedicated guide.](/guides/front_end/pagination)
 
 ### Pagination object
 
@@ -1358,7 +1358,7 @@ Reset an index's search cutoff value to its default value, `null`. This translat
 
 Configure strings as custom separator tokens indicating where a word ends and begins.
 
-Tokens in the `separatorTokens` list are added on top of [Meilisearch's default list of separators](/learn/advanced/datatypes#string). To remove separators from the default list, use [the `nonSeparatorTokens` setting](#non-separator-tokens).
+Tokens in the `separatorTokens` list are added on top of [Meilisearch's default list of separators](/learn/engine/datatypes#string). To remove separators from the default list, use [the `nonSeparatorTokens` setting](#non-separator-tokens).
 
 ### Get separator tokens
 
@@ -1452,7 +1452,7 @@ Use this `taskUid` to get more details on [the status of the task](/reference/ap
 
 ## Non-separator tokens
 
-Remove tokens from Meilisearch's default [list of word separators](/learn/advanced/datatypes#string).
+Remove tokens from Meilisearch's default [list of word separators](/learn/engine/datatypes#string).
 
 ### Get non-separator tokens
 
@@ -1494,7 +1494,7 @@ Update an index's list of non-separator tokens.
 ["@", "#"]
 ```
 
-An array of strings, with each string indicating a token present in [list of word separators](/learn/advanced/datatypes#string).
+An array of strings, with each string indicating a token present in [list of word separators](/learn/engine/datatypes#string).
 
 #### Example
 
@@ -1574,7 +1574,7 @@ Get the sortable attributes of an index.
 
 ```json
 [
-  "price", 
+  "price",
   "author.surname"
 ]
 ```
