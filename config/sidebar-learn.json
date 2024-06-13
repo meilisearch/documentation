@@ -62,6 +62,22 @@
     ]
   },
   {
+    "title": "AI-powered search",
+    "slug": "ai-powered-search",
+    "routes": [
+      {
+        "source": "learn/ai_powered_search/getting_started_with_ai_search.mdx",
+        "label": "Getting started with AI-powered search",
+        "slug": "getting_started_with_ai_search"
+      },
+      {
+        "source": "learn/ai_powered_search/difference_full_text_ai_search.mdx",
+        "label": "Differences between keyword and AI-powered search",
+        "slug": "difference_full_text_ai_search"
+      }
+    ]
+  },
+  {
     "title": "Analytics",
     "slug": "analytics",
     "routes": [
