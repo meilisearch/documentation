@@ -13,7 +13,7 @@ In this guide, we discuss two different approaches to pagination supported by Me
 
 There are many UI patterns that help your users navigate through search results. One common and efficient solution in Meilisearch is using `offset` and `limit` to create interfaces centered around ["Previous" and "Next" buttons](#previous-and-next-buttons).
 
-Other solutions, such as [creating a page selector](/learn/front_end/pagination#numbered-page-selectors) allowing users to jump to any search results page, make use of `hitsPerPage` and `page` to obtain the exhaustive total number of matched documents. These tend to be less efficient and may result in decreased performance.
+Other solutions, such as [creating a page selector](/guides/front_end/pagination#numbered-page-selectors) allowing users to jump to any search results page, make use of `hitsPerPage` and `page` to obtain the exhaustive total number of matched documents. These tend to be less efficient and may result in decreased performance.
 
 Whatever UI pattern you choose, there is a limited maximum number of search results Meilisearch will return for any given query. You can use [the `maxTotalHits` index setting](/reference/api/settings#pagination) to configure this, but be aware that higher limits will negatively impact search performance.
 
@@ -97,7 +97,7 @@ function updatePageNumber(elem) {
 
 // Add data to our HTML element stating the user is on the first page
 document.querySelector('.pagination').dataset.pageNumber = 0
-// Each time a user clicks on the previous or next buttons, update the page number 
+// Each time a user clicks on the previous or next buttons, update the page number
 document.querySelector('#previous_button').onclick = function () { updatePageNumber(this) }
 document.querySelector('#next_button').onclick = function () { updatePageNumber(this) }
 ```
@@ -122,18 +122,18 @@ function updatePageNumber() {
   // If offset equals 0, we're on the first results page
   if (offset === 0 ) {
     document.querySelector('#previous_button').disabled = true;
-  } 
+  }
 
   // If offset is bigger than 0, we're not on the first results page
   if (offset > 0 ) {
     document.querySelector('#previous_button').disabled = false;
   }
 
-  // If Meilisearch returns 20 items or less, 
+  // If Meilisearch returns 20 items or fewer,
   // we are on the last page
   if (results.hits.length < 21 ) {
     document.querySelector('#next_button').disabled = true;
-  } 
+  }
 
   // If Meilisearch returns exactly 21 results
   // and our page can only show 20 items at a time,
@@ -183,9 +183,9 @@ The following example returns the first 25 search results for a query:
 
 ```js
 const results = await index.search(
-  "tarkovsky", 
-  { 
-    hitsPerPage: 25, 
+  "tarkovsky",
+  {
+    hitsPerPage: 25,
   }
 );
 ```
@@ -194,10 +194,10 @@ To navigate through pages of search results, use the `page` search parameter. If
 
 ```js
 const results = await index.search(
-  "tarkovsky", 
-  { 
-    hitsPerPage: 25, 
-    page: 2 
+  "tarkovsky",
+  {
+    hitsPerPage: 25,
+    page: 2
   }
 );
 ```
@@ -218,10 +218,10 @@ In the following example, we create a list of page buttons dynamically and highl
 const pageNavigation = document.querySelector('#page-navigation');
 const listContainer = pageNavigation.querySelector('#page-list');
 const results = await index.search(
-  "tarkovsky", 
-  { 
-    hitsPerPage: 25, 
-    page: 1 
+  "tarkovsky",
+  {
+    hitsPerPage: 25,
+    page: 1
   }
 );
 

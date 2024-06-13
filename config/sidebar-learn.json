@@ -253,9 +253,29 @@
         "slug": "basic_security"
       },
       {
+        "source": "learn/security/generate_tenant_token_sdk.mdx",
+        "label": "Generate tenant tokens with an official SDK",
+        "slug": "generate_tenant_token_sdk"
+      },
+      {
+        "source": "learn/security/generate_tenant_token_third_party.mdx",
+        "label": "Generate tenant tokens with a third-party tool",
+        "slug": "generate_tenant_token_third_party"
+      },
+      {
+        "source": "learn/security/generate_tenant_token_scratch.mdx",
+        "label": "Generate tenant tokens without a library",
+        "slug": "generate_tenant_token_scratch"
+      },
+      {
         "source": "learn/security/resetting_master_key.mdx",
         "label": "Resetting the master key",
         "slug": "resetting_master_key"
+      },
+      {
+        "source": "learn/security/tenant_token_reference.mdx",
+        "label": "Tenant token payload reference",
+        "slug": "tenant_token_reference"
       },
       {
         "source": "learn/security/differences_master_api_keys.mdx",
@@ -268,9 +288,9 @@
         "slug": "protected_unprotected"
       },
       {
-        "source": "learn/security/tenant_tokens.mdx",
+        "source": "learn/security/multitenancy_tenant_tokens.mdx",
         "label": "Multitenancy and tenant tokens",
-        "slug": "tenant_tokens"
+        "slug": "multitenancy_tenant_tokens"
       }
     ]
   },
@@ -370,154 +390,6 @@
         "source": "learn/inner_workings/tokenization.mdx",
         "label": "Tokenization",
         "slug": "tokenization"
-      }
-    ]
-  },
-  {
-    "title": "Building a front end",
-    "slug": "front_end",
-    "routes": [
-      {
-        "source": "learn/front_end/front_end_integration.mdx",
-        "label": "Front-end integration",
-        "slug": "front_end_integration"
-      },
-      {
-        "source": "learn/front_end/react_instantsearch.mdx",
-        "label": "Integrate with React InstantSearch",
-        "slug": "react_instantsearch"
-      },
-      {
-        "source": "learn/front_end/pagination.mdx",
-        "label": "Search result pagination",
-        "slug": "pagination"
-      }
-    ]
-  },
-  {
-    "title": "Cookbooks",
-    "slug": "cookbooks",
-    "routes": [
-      {
-        "source": "learn/cookbooks/running_production.mdx",
-        "label": "Run in production",
-        "slug": "running_production"
-      },
-      {
-        "source": "learn/cookbooks/postman_collection.mdx",
-        "label": "Use with Postman",
-        "slug": "postman_collection"
-      },
-      {
-        "source": "learn/cookbooks/docker.mdx",
-        "label": "Use with Docker",
-        "slug": "docker"
-      },
-      {
-        "source": "learn/cookbooks/search_bar_for_docs.mdx",
-        "label": "Add a search bar to your docs",
-        "slug": "search_bar_for_docs"
-      },
-      {
-        "source": "learn/cookbooks/http2_ssl.mdx",
-        "label": "Set up HTTP/2 SSL",
-        "slug": "http2_ssl"
-      },
-      {
-        "source": "learn/cookbooks/vercel.mdx",
-        "label": "Integrate Meilisearch Cloud with Vercel",
-        "slug": "vercel"
-      },
-      {
-        "source": "learn/primary_db_sync/meilisync_mysql.mdx",
-        "label": "Syncing databases with MySQL and meilisync",
-        "slug": "meilisync_mysql"
-      },
-      {
-        "source": "learn/primary_db_sync/meilisync_postgresql.mdx",
-        "label": "Syncing databases with PostgreSQL and meilisync",
-        "slug": "meilisync_postgresql"
-      },
-      {
-        "source": "learn/cookbooks/laravel_scout.mdx",
-        "label": "Laravel Scout guide",
-        "slug": "laravel_scout"
-      },
-      {
-        "source": "learn/cookbooks/laravel_multitenancy.mdx",
-        "label": "Multitenancy with Laravel",
-        "slug": "laravel_multitenancy"
-      },      
-      {
-        "source": "learn/cookbooks/multitenancy_nodejs.mdx",
-        "label": "Multitenancy with Node.js",
-        "slug": "multitenancy_nodejs"
-      },
-      {
-        "source": "learn/cookbooks/indexing_best_practices.mdx",
-        "label": "Indexing best practices",
-        "slug": "indexing_best_practices"
-      },
-      {
-        "source": "learn/cookbooks/computing_hugging_face_embeddings_gpu.mdx",
-        "label": "Computing Hugging Face embeddings with the GPU",
-        "slug": "computing_hugging_face_embeddings_gpu"
-      },
-      {
-        "source": "learn/cookbooks/strapi_v4.mdx",
-        "label": "Strapi v4 guide",
-        "slug": "strapi_v4"
-      },
-      {
-        "source": "learn/cookbooks/improve_relevancy_large_documents.mdx",
-        "label": "Improve relevancy when working with large documents",
-        "slug": "large_documents"
-      },
-      {
-        "source": "learn/cookbooks/langchain.mdx",
-        "label": "Implementing semantic search with LangChain",
-        "slug": "langchain"
-      }
-    ]
-  },
-  {
-    "title": "Deployment",
-    "slug": "cookbooks",
-    "routes": [
-      {
-        "source": "learn/deployment/aws.mdx",
-        "label": "Deploy on AWS",
-        "slug": "aws"
-      },
-      {
-        "source": "learn/deployment/azure.mdx",
-        "label": "Deploy on Azure",
-        "slug": "azure"
-      },
-      {
-        "source": "learn/deployment/digitalocean.mdx",
-        "label": "Deploy on DigitalOcean",
-        "slug": "digitalocean"
-      },
-      {
-        "source": "learn/deployment/gcp.mdx",
-        "label": "Deploy on GCP",
-        "slug": "gcp"
-      },
-      {
-        "source": "learn/deployment/koyeb.mdx",
-        "label": "Deploy on Koyeb",
-        "slug": "koyeb"
-      },
-      {
-        "source": "learn/deployment/qovery.mdx",
-        "label": "Deploy on Qovery",
-        "slug": "qovery"
-      },
-      {
-        "source": "learn/deployment/railway.mdx",
-        "label": "Deploy on Railway",
-        "slug": "railway"
       }
     ]
   },

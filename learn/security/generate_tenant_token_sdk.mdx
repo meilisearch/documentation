@@ -1,0 +1,54 @@
+---
+title: Multitenancy and tenant tokens — Meilisearch documentation
+description: This guide shows you the main steps when creating tenant tokens using Meilisearch's official SDKs.
+---
+
+# Using tenant tokens with an official SDK
+
+There are two steps to use tenant tokens with an official SDK: generating the tenant token, and making a search request using that token.
+
+## Requirements
+
+- a working Meilisearch project
+- an application supporting authenticated users
+- one of Meilisearch's official SDKs installed
+
+## Generate a tenant token with an official SDK
+
+First, import the SDK. Then create a set of [search rules](/learn/security/tenant_token_reference#search-rules):
+
+```json
+{
+  "patient_medical_records": {
+    "filter": "user_id = 1"
+  }
+}
+```
+
+Search rules must be an object where each key corresponds to an index in your instance. You may configure any number of filters for each index.
+
+Next, find your default search API key. Query the [get an API key endpoint](/reference/api/keys#get-one-key) and inspect the `uid`  field to obtain your API key's UID:
+
+```sh
+curl \
+  -X GET 'http://localhost:7700/keys/API_KEY' \
+  -H 'Authorization: Bearer MASTER_KEY'
+```
+
+For maximum security, you should also define an expiry date for tenant tokens.
+
+Finally, send this data to your chosen SDK's tenant token generator:
+
+<CodeSamples id="tenant_token_guide_generate_sdk_1" />
+
+The SDK will return a valid tenant token.
+
+## Make a search request using a tenant token
+
+After creating a token, you must send it your application's front end. Exactly how to do that depends on your specific setup.
+
+Once the tenant token is available, use it to authenticate search requests as if it were an API key:
+
+<CodeSamples id="tenant_token_guide_search_sdk_1" />
+
+Applications may use tenant tokens and API keys interchangeably when searching. For example, the same application might use a default search API key for queries on public indexes and a tenant token for logged-in users searching on private data.
