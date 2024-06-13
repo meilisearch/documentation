@@ -268,11 +268,6 @@
         "slug": "generate_tenant_token_scratch"
       },
       {
-        "source": "learn/security/managing_api_keys.mdx",
-        "label": "Managing API keys",
-        "slug": "managing_api_keys"
-      },
-      {
         "source": "learn/security/resetting_master_key.mdx",
         "label": "Resetting the master key",
         "slug": "resetting_master_key"
