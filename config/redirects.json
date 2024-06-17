@@ -309,5 +309,9 @@
   {
     "source": "/docs/learn/security/managing_api_keys",
     "destination": "/docs/reference/api/keys"
+  },
+  {
+    "source": "/docs/learn/experimental/puffin_reports",
+    "destination": "/docs/learn/experimental/log_customization"
   }
 ]
