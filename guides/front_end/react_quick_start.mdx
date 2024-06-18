@@ -1,0 +1,130 @@
+---
+title: React quick start — Meilisearch documentation
+description: Learn how to integrate a search-as-you-type experience into your React app.
+---
+
+# React quick start
+
+Learn how to integrate a search-as-you-type experience into your React app.
+
+## 1. Create a React application
+
+You can use a [Vite](https://vitejs.dev/) template:
+
+```bash
+npm create vite@latest my-app -- --template react
+```
+
+## 2. Install the library of search components
+
+The fastest way to get started is to use:
+- [React InstantSearch](https://github.com/algolia/instantsearch/): an open-source library that provides all the front-end tools you need to highly customize your search bar environment
+- [instant-meilisearch](https://github.com/meilisearch/meilisearch-js-plugins/tree/main/packages/instant-meilisearch): the Meilisearch client to establish the communication between your Meilisearch instance and the React InstantSearch library
+- [instantsearch.css](https://github.com/algolia/instantsearch/tree/master/packages/instantsearch.css) (optional) is the CSS library to style the search components. Although optional, using it adds basic styles that can significantly enhance your search UI
+
+Navigate to your React app and install `react-instantsearch`, `@meilisearch/instant-meilisearch`, and `instantsearch.css`.
+
+```bash
+npm install react-instantsearch @meilisearch/instant-meilisearch instantsearch.css
+
+# or
+yarn add react-instantsearch @meilisearch/instant-meilisearch instantsearch.css
+
+# or
+pnpm add react-instantsearch @meilisearch/instant-meilisearch instantsearch.css
+```
+
+## 3. Initialize the search client
+
+Use the following URL and API key to connect to a Meilisearch instance which contains data from Steam video games.
+
+```jsx
+import React from 'react';
+import { instantMeiliSearch } from '@meilisearch/instant-meilisearch';
+
+const { searchClient } = instantMeiliSearch(
+  'https://ms-adf78ae33284-106.lon.meilisearch.io',
+  'a63da4928426f12639e19d62886f621130f3fa9ff3c7534c5d179f0f51c4f303'
+);
+```
+
+## 4. Add InstantSearch
+
+`<InstantSearch>` is the mandatory wrapper component for our instant search. It takes two props: the `searchClient` and the [index name](/learn/core_concepts/indexes#index-uid).
+
+```jsx
+import React from 'react';
+import { InstantSearch } from 'react-instantsearch';
+import { instantMeiliSearch } from '@meilisearch/instant-meilisearch';
+
+const { searchClient } = instantMeiliSearch(
+  'https://ms-adf78ae33284-106.lon.meilisearch.io',
+  'a63da4928426f12639e19d62886f621130f3fa9ff3c7534c5d179f0f51c4f303'
+);
+
+const App = () => (
+  <InstantSearch
+    indexName="steam-video-games"
+    searchClient={searchClient}
+  >
+  </InstantSearch>
+);
+
+export default App
+```
+
+## 5. Add a search bar and list search results
+
+Add the `SearchBox` and `InfiniteHits` components inside the `InstantSearch` wrapper component. The Hits component accepts a custom Hit component via the `hitComponent` prop, which allows customizing how each search result is rendered.
+Import the CSS library to style the search components.
+
+```jsx
+import React from 'react';
+import { InstantSearch, SearchBox, InfiniteHits } from 'react-instantsearch';
+import { instantMeiliSearch } from '@meilisearch/instant-meilisearch';
+import 'instantsearch.css/themes/satellite.css';
+
+const { searchClient } = instantMeiliSearch(
+  'https://ms-adf78ae33284-106.lon.meilisearch.io',
+  'a63da4928426f12639e19d62886f621130f3fa9ff3c7534c5d179f0f51c4f303'
+);
+
+const App = () => (
+  <InstantSearch
+    indexName="steam-video-games"
+    searchClient={searchClient}
+  >
+    <SearchBox />
+    <InfiniteHits hitComponent={Hit} />
+  </InstantSearch>
+);
+
+const Hit = ({ hit }) => (
+  <article key={hit.id}>
+    <img src={hit.image} alt={hit.name} />
+    <h1>{hit.name}</h1>
+    <p>${hit.description}</p>
+  </article>
+);
+export default App
+```
+
+<Capsule intent="tip">
+Use the following CSS classes to add custom styles to your components:
+`.ais-InstantSearch`, `.ais-SearchBox`, `.ais-InfiniteHits-list`, `.ais-InfiniteHits-item`
+</Capsule>
+
+## 6. Start the app and search as you type
+
+Start the app, open your browser, go to your React app URL, and start searching!
+
+```bash
+npm run dev
+```
+
+![React app search UI with a search bar at the top and search results for six video games](/assets/images/react_quick_start/react-qs-search-ui.png)
+Encountering issues? Check out the code in action in our live demo!
+
+## Next steps
+
+Want to search through your own data? [Create a project](https://cloud.meilisearch.com) in the Meilisearch Dashboard. Check out our [getting started guide](/learn/getting_started/cloud_quick_start) for step-by-step instructions.

@@ -22,6 +22,11 @@
         "source": "guides/front_end/pagination.mdx",
         "label": "Search result pagination",
         "slug": "pagination"
+      },
+      {
+        "source": "guides/front_end/react_quick_start.mdx",
+        "label": "React quick start",
+        "slug": "react_quick_start"
       }
     ]
   },
