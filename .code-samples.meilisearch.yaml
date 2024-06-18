@@ -1287,3 +1287,13 @@ analytics_event_bind_event_1: |-
       "objectId": "0",
       "position": 0
     }'
+search_parameter_reference_retrieve_vectors_1: |-
+  curl -X POST 'localhost:7700/indexes/INDEX_NAME/search' \
+    -H 'content-type: application/json' \
+    --data-binary '{ 
+      "q": "kitchen utensils",
+      "retrieveVectors": true,
+      "hybrid": {
+        "embedder": "default"
+      }
+    }'

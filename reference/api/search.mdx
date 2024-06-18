@@ -1105,6 +1105,10 @@ Meilisearch will return an error if you use `hybrid` before activating your inst
 
 ### Vector (experimental)
 
+**Parameter**: `vector`<br />
+**Expected value**: an array of numbers<br />
+**Default value**: `null`
+
 Use a custom vector to perform a search query. Must be an array of numbers corresponding to the dimensions of the custom vector.
 
 `vector` is mandatory when performing searches with `userProvided` embedders. You may also use `vector` to override an embedder's automatic vector generation.
@@ -1118,3 +1122,17 @@ Use a custom vector to perform a search query. Must be an array of numbers corre
 <Capsule intent="warning">
 Meilisearch will return an error if you use `vector` before activating your instance's `vectorStore` and [configuring a custom embedder](/reference/api/settings#embedders-experimental).
 </Capsule>
+
+### Display `_vectors` in response (experimental)
+
+**Parameter**: `retrieveVectors`<br />
+**Expected value**: `true` or `false`<br />
+**Default value**: `false`
+
+Return document vector data in AI-powered searches.
+
+This parameter has no effect on queries that do not include `vector` or `hybrid`.
+
+#### Example
+
+<CodeSamples id="search_parameter_reference_retrieve_vectors_1" />
