@@ -248,9 +248,11 @@ An array of documents. Each document is represented as a JSON object.
 ]
 ```
 
-#### `_vector`
+#### `_vectors`
 
-`_vector` is a special document attribute containing vector embeddings for AI-powered search. Its may be array of numbers:
+`_vectors` is a special document attribute containing vector embeddings for AI-powered search. It accepts different types of values.
+
+`_vectors` may be an array of numbers:
 
 ```json
 [
@@ -281,7 +283,7 @@ An array of documents. Each document is represented as a JSON object.
 
 `embeddings` must be an array of numbers.
 
-`regenerate` must be a Boolean value. If `regenerate` is `true`, the supplied embeddings will be overwritten the next time Meilisearch automatically generates document embeddings after a document update. If `regenerate` is `false`, the document's embeddings will be automatically replaced by an embedder.
+`regenerate` must be a Boolean value. If `regenerate` is `true`, the supplied embeddings will be overwritten the next time Meilisearch automatically generates document embeddings. If `regenerate` is `false`, the document's embeddings will be automatically replaced by an embedder.
 
 If `_vectors` is empty or `null`, Meilisearch treats the document as not having any embeddings. This document is then ignored during AI-powered searches.
 
