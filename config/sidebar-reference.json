@@ -29,6 +29,11 @@
         "slug": "multi_search"
       },
       {
+        "source": "reference/api/similar.mdx",
+        "label": "Similar documents",
+        "slug": "similar"
+      },
+      {
         "source": "reference/api/facet_search.mdx",
         "label": "Facet search",
         "slug": "facet_search"

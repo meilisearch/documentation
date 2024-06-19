@@ -1287,3 +1287,14 @@ analytics_event_bind_event_1: |-
       "objectId": "0",
       "position": 0
     }'
+get_similar_post_1: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/INDEX_NAME/similar' \
+    -H 'Content-Type: application/json' \
+    -H 'Authorization: Bearer DEFAULT_SEARCH_API_KEY' \
+    --data-binary '{
+      "id": TARGET_DOCUMENT_ID
+    }'
+get_similar_get_1: |-
+  curl \
+    -X GET 'http://localhost:7700/indexes/INDEX_NAME/similar?id=TARGET_DOCUMENT_ID'
