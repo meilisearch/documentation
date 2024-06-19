@@ -417,7 +417,7 @@ Requests a specific results page. Pages are calculated using the `hitsPerPage` s
 
 Queries containing `page` are exhaustive and do not return an `estimatedTotalHits`. Instead, the response body will include two new fields: `totalHits` and `totalPages`.
 
-If you set `page` to `0`, Meilisearch processes your request, but does not return any documents. In this case, the response body will include the exhaustive values for `totalPages` and `totalHits`.
+If you set `page` to `0`, Meilisearch processes your request, but does not return any documents. In this case, the response body will include the exhaustive values for `facetDistribution`, `totalPages`, and `totalHits`.
 
 You can use `hitsPerPage` and `page` to [paginate search results](/guides/front_end/pagination).
 
