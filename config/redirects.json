@@ -211,7 +211,12 @@
   },
   {
     "source": "/docs/learn/front_end/react_instantsearch",
-    "destination": "/docs/guides/front_end/react_instantsearch",
+    "destination": "/docs/guides/front_end/react_quick_start",
+    "permanent": true
+  },
+  {
+    "source": "/docs/guides/front_end/react_instantsearch",
+    "destination": "/docs/guides/front_end/react_quick_start",
     "permanent": true
   },
   {
