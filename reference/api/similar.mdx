@@ -25,8 +25,9 @@ Retrieve documents similar to a specific search result.
 
 | Parameter                                                                    | Type             | Default value | Description                                    |
 | ---------------------------------------------------------------------------- | ---------------- | ------------- | ---------------------------------------------- |
-| **`id`**                                                                     | String or number | `null`        | ID of the target document (mandatory)          |
+| **`id`**                                                                     | String or number | `null`        | Identifier of the target document (mandatory)  |
 | **[`embedder`](/reference/api/search#embedder)**                             | String           | `"default"`   | Embedder to use when computing recommendations |
+| **[`attributesToRetrieve`](/reference/api/search#attributes-to-retrieve)**   | Array of strings | `["*"]`       | Attributes to display in the returned documents|
 | **[`offset`](/reference/api/search#offset)**                                 | Integer          | `0`           | Number of documents to skip                    |
 | **[`limit`](/reference/api/search#limit)**                                   | Integer          | `20`          | Maximum number of documents returned           |
 | **[`filter`](/reference/api/search#filter)**                                 | String           | `null`        | Filter queries by an attribute's value         |
@@ -80,8 +81,9 @@ Retrieve documents similar to a specific search result.
 
 | Parameter                                                                    | Type             | Default value | Description                                    |
 | ---------------------------------------------------------------------------- | ---------------- | ------------- | ---------------------------------------------- |
-| **`id`**                                                                     | String or number | `null`        | ID of the target document (mandatory)          |
+| **`id`**                                                                     | String or number | `null`        | Identifier of the target document (mandatory)  |
 | **[`embedder`](/reference/api/search#embedder)**                             | String           | `"default"`   | Embedder to use when computing recommendations |
+| **[`attributesToRetrieve`](/reference/api/search#attributes-to-retrieve)**   | Array of strings | `["*"]`       | Attributes to display in the returned documents|
 | **[`offset`](/reference/api/search#offset)**                                 | Integer          | `0`           | Number of documents to skip                    |
 | **[`limit`](/reference/api/search#limit)**                                   | Integer          | `20`          | Maximum number of documents returned           |
 | **[`filter`](/reference/api/search#filter)**                                 | String           | `null`        | Filter queries by an attribute's value         |
