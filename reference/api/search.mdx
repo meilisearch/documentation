@@ -884,7 +884,7 @@ Queries using `_geoPoint` will always include a `geoDistance` field containing t
 ### Matching strategy
 
 **Parameter**: `matchingStrategy`<br />
-**Expected value**: `last` or `all`<br />
+**Expected value**: `last`, `all`, or `frequency`<br />
 **Default value**: `last`
 
 Defines the strategy used to match query terms in documents.
@@ -904,6 +904,14 @@ With the above code sample, Meilisearch will first return documents that contain
 <CodeSamples id="search_parameter_guide_matching_strategy_2" />
 
 The above code sample would only return documents containing all three words.
+
+#### `frequency`
+
+`frequency` gives more weight to the less frequent words, making the search engine focus on the words that differentiate a document from other, very similar documents.
+
+<CodeSamples id="search_parameter_guide_matching_strategy_3" />
+
+In a dataset where many documents contain the term `"shirt"`, the above code sample would prioritize documents containing `"white"`.
 
 ### Ranking score
 

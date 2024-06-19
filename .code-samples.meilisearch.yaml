@@ -924,6 +924,14 @@ search_parameter_guide_matching_strategy_2: |-
       "q": "big fat liar",
       "matchingStrategy": "all"
     }'
+search_parameter_guide_matching_strategy_3: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/movies/search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "q": "white shirt",
+      "matchingStrategy": "frequency"
+    }'
 date_guide_index_1: |-
   curl \
     -x POST 'http://localhost:7700/indexes/games/documents' \
