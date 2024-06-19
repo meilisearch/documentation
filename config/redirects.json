@@ -280,7 +280,8 @@
   },
   {
     "source": "/docs/learn/advanced/concat",
-    "destination": "/docs/learn/engine/concat"
+    "destination": "/docs/learn/engine/concat",
+    "permanent": true
   },
   {
     "source": "/docs/learn/advanced/datatypes",
