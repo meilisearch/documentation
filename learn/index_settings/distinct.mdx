@@ -90,24 +90,8 @@ For more in-depth information on distinct attribute, consult the [API reference]
 
 To use an attribute with `distinct`, first add it to the `filterableAttributes` list:
 
-```sh
-curl \
-  -X PUT 'http://localhost:7700/indexes/movies/settings/filterable-attributes' \
-  -H 'Content-Type: application/json' \
-  --data-binary '[
-    "product_id",
-    "sku"
-  ]'
-```
+<CodeSamples id="distinct_attribute_guide_filterable_1" />
 
-Then use `distinct` in a search query, specifying one or more of the configured attributes:
+Then use `distinct` in a search query, specifying one of the configured attributes:
 
-```sh
-curl \
-  -X POST 'http://localhost:7700/indexes/movies/search' \
-  -H 'Content-Type: application/json' \
-  --data-binary '{
-    "q": "white shirt",
-    "distinct": "product_id"
-  }'
-```
+<CodeSamples id="distinct_attribute_guide_distinct_parameter_1" />
