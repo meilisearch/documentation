@@ -7,6 +7,12 @@ description: Distinct attribute is a field that prevents Meilisearch from return
 
 The distinct attribute is a special, user-designated field. It is most commonly used to prevent Meilisearch from returning a set of several similar documents, instead forcing it to return only one.
 
+You may set a distinct attribute in two ways: using the `distinctAttribute` index setting during configuration, or the `distinct` search parameter at search time.
+
+## `distinctAttribute`
+
+`distinctAttribute` is an index setting that configures a default distinct attribute Meilisearch applies to all searches in that index.
+
 <Capsule intent="warning">
 There can be only one `distinctAttribute` per index. Trying to set multiple fields as a `distinctAttribute` will return an error.
 </Capsule>
@@ -77,3 +83,31 @@ After setting the distinct attribute as shown above, querying for `lee leather j
 ```
 
 For more in-depth information on distinct attribute, consult the [API reference](/reference/api/settings#distinct-attribute).
+
+## `distinct`
+
+`distinct` is a search parameter you may add to any search query. It allows you to selectively use distinct attributes depending on the context. `distinct` takes precedence over `distinctAttribute`.
+
+To use an attribute with `distinct`, first add it to the `filterableAttributes` list:
+
+```sh
+curl \
+  -X PUT 'http://localhost:7700/indexes/movies/settings/filterable-attributes' \
+  -H 'Content-Type: application/json' \
+  --data-binary '[
+    "product_id",
+    "sku"
+  ]'
+```
+
+Then use `distinct` in a search query, specifying one or more of the configured attributes:
+
+```sh
+curl \
+  -X POST 'http://localhost:7700/indexes/movies/search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "q": "white shirt",
+    "distinct": "product_id"
+  }'
+```
