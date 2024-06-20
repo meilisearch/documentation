@@ -563,6 +563,24 @@ The response shows the facet distribution for `genres` and `rating`. Since `rati
 
 [Learn more about facet distribution in the faceted search guide.](/learn/fine_tuning_results/faceted_search#configuring-and-using-facets)
 
+### Distinct attributes at search time
+
+**Parameter**: `distinct`<br />
+**Expected value**: An array of `attribute`s or a single `attribute` present in the `filterableAttributes` list<br />
+**Default value**: `null`
+
+Defines one or more attributes as distinct attributes. Distinct attributes indicate certain documents are equivalent and that only one of them should be returned in search results.
+
+This behavior is similar to the [`distinctAttribute` index setting](/reference/api/settings#distinct-attribute), but can be configured at search time. `distinctAttribute` remains unchanged and acts as a default distinct attribute value that can be overridden by `distinct`.
+
+<Capsule intent="danger">
+Meilisearch will throw an error if you configure `distinct` with attributes not present on the `filterableAttributes` list.
+</Capsule>
+
+#### Examples
+
+<CodeSamples id="search_parameter_reference_distinct_1" />
+
 ### Attributes to retrieve
 
 **Parameter**: `attributesToRetrieve`<br />
