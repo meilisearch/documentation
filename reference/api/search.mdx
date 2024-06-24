@@ -53,6 +53,7 @@ By default, [this endpoint returns a maximum of 1000 results](/learn/advanced/kn
 | **[`sort`](#sort)**                                     | Array of strings | `null`        | Sort search results by an attribute's value         |
 | **[`matchingStrategy`](#matching-strategy)**            | String           | `last`        | Strategy used to match query terms within documents |
 | **[`showRankingScore`](#ranking-score)**                | Boolean          | `false`       | Display the global ranking score of a document      |
+| **[`rankingScoreThreshold`](#ranking-score-threshold)**                | Number          | `null`       | Excludes results with low ranking scores      |
 | **[`attributesToSearchOn`](#customize-attributes-to-search-on-at-search-time)**            | Array of strings           | `["*"]`        | Restrict search to the specified attributes |
 | **[`hybrid`](#hybrid-search-experimental)**                | Object          | `null`       | Return results based on query keywords and meaning      |
 | **[`vector`](#vector-experimental)**                | Array of numbers          | `null`       | Search using a custom query vector      |
@@ -163,6 +164,7 @@ By default, [this endpoint returns a maximum of 1000 results](/learn/advanced/kn
 | **[`sort`](#sort)**                                     | Array of strings | `null`        | Sort search results by an attribute's value         |
 | **[`matchingStrategy`](#matching-strategy)**            | String           | `last`        | Strategy used to match query terms within documents |
 | **[`showRankingScore`](#ranking-score)**                | Boolean          | `false`       | Display the global ranking score of a document      |
+| **[`rankingScoreThreshold`](#ranking-score-threshold)**                | Number          | `null`       | Excludes results with low ranking scores      |
 | **[`attributesToSearchOn`](#customize-attributes-to-search-on-at-search-time)**            | Array of strings           | `["*"]`        | Restrict search to the specified attributes |
 | **[`hybrid`](#hybrid-search-experimental)**                | Object          | `null`       | Return results based on query keywords and meaning      |
 | **[`vector`](#vector-experimental)**                | Array of numbers          | `null`       | Search using a custom query vector      |
@@ -1070,6 +1072,26 @@ The code sample below returns the `_rankingScoreDetail` when searching for `drag
   …
 }
 ```
+
+### Ranking score threshold
+
+**Parameter**: `rankingScoreThreshold`<br />
+**Expected value**: A number between `0.0` and `1.0`<br />
+**Default value**: `null`
+
+Excludes results below the specified ranking score.
+
+Excluded results do not count towards `estimatedTotalHits`, `totalHits`, and facet distribution.
+
+<Capsule intent="warning" title="`rankingScoreThreshold` and `limit`">
+For performance reasons, if the number of documents above `rankingScoreThreshold` is higher than `limit`, Meilisearch does not evaluate the ranking score of the remaining documents. Results ranking below the threshold are not immediately removed from the set of candidates. In this case, Meilisearch may overestimate the count of `estimatedTotalHits`, `totalHits` and facet distribution.
+</Capsule>
+
+#### Example
+
+The following query only returns results with a ranking score bigger than `0.2`:
+
+<CodeSamples id="search_parameter_reference_ranking_score_threshold_1" />
 
 ### Customize attributes to search on at search time
 
