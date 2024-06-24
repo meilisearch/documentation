@@ -9,7 +9,7 @@ The distinct attribute is a special, user-designated field. It is most commonly 
 
 You may set a distinct attribute in two ways: using the `distinctAttribute` index setting during configuration, or the `distinct` search parameter at search time.
 
-## `distinctAttribute`
+## Setting a distinct attribute during configuration
 
 `distinctAttribute` is an index setting that configures a default distinct attribute Meilisearch applies to all searches in that index.
 
@@ -84,7 +84,7 @@ After setting the distinct attribute as shown above, querying for `lee leather j
 
 For more in-depth information on distinct attribute, consult the [API reference](/reference/api/settings#distinct-attribute).
 
-## `distinct`
+## Setting a distinct attribute at search time
 
 `distinct` is a search parameter you may add to any search query. It allows you to selectively use distinct attributes depending on the context. `distinct` takes precedence over `distinctAttribute`.
 
