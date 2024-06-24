@@ -1310,5 +1310,5 @@ distinct_attribute_guide_distinct_parameter_1: |-
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "white shirt",
-      "distinct": "product_id"
+      "distinct": "sku"
     }'
