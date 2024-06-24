@@ -38,6 +38,11 @@
         "source": "guides/strapi_v4.mdx",
         "label": "Strapi v4 guide",
         "slug": "strapi_v4"
+      },
+      {
+        "source": "guides/front_end/rails_quick_start.mdx",
+        "label": "Ruby on Rails quick start",
+        "slug": "rails_quick_start"
       }
     ]
   },
