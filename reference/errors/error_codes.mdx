@@ -264,6 +264,10 @@ The [`page`](/reference/api/search#page) parameter is invalid. It should be an i
 
 The [`q`](/reference/api/search#query-q) parameter is invalid. It should be a string or set to `null`
 
+## `invalid_search_ranking_score_threshold`
+
+The [`rankingScoreThreshold`](/reference/api/search#ranking-score-threshold) in a search or multi-search request is not a number between `0.0` and `1.0`.
+
 ## `invalid_search_show_matches_position`
 
 The [`showMatchesPosition`](/reference/api/search#show-matches-position) parameter is invalid. It should either be a boolean or set to `null`.
@@ -376,6 +380,10 @@ Meilisearch also throws this error if the attribute used for filtering is not de
 ### `invalid_embedder`
 
 [`embedder`](/reference/api/search#embedder) is invalid. It should be a string corresponding to the name of a configured embedder.
+
+## `invalid_similar_ranking_score_threshold`
+
+The [`rankingScoreThreshold`](/reference/api/search#ranking-score-threshold) in a similar documents request is not a number between `0.0` and `1.0`.
 
 ## `invalid_state`
 
