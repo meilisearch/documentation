@@ -907,7 +907,7 @@ The above code sample would only return documents containing all three words.
 
 #### `frequency`
 
-`frequency` gives more weight to terms that appear less frequently in the set of results. Meilisearch will prioritize terms that differentiate a document from other, very similar documents.
+`frequency` returns documents containing all the query terms first. If there are not enough results containing all query terms to meet the requested limit, Meilisearch will remove one query term at a time, starting with the word that is the most frequent in the dataset. `frequency` effectively gives more weight to terms that appear less frequently in a set of results.
 
 <CodeSamples id="search_parameter_guide_matching_strategy_3" />
 
