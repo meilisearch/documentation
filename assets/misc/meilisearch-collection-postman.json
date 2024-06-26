@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "4fce48ba-4382-42b4-b740-702192d63ea4",
-		"name": "Meilisearch v1.8",
+		"_postman_id": "a351f16f-da82-43df-84e4-eb86c413ce85",
+		"name": "Meilisearch v1.9",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "25294324"
 	},
@@ -414,6 +414,21 @@
 									"key": "attributesToSearchOn",
 									"value": "title",
 									"disabled": true
+								},
+								{
+									"key": "retrieveVectors",
+									"value": "false",
+									"disabled": true
+								},
+								{
+									"key": "rankingScoreThreshold",
+									"value": "0.3",
+									"disabled": true
+								},
+								{
+									"key": "distinct",
+									"value": "\"title\"",
+									"disabled": true
 								}
 							]
 						}
@@ -449,6 +464,110 @@
 								"indexes",
 								"{{indexUID}}",
 								"search"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Similar documents",
+			"item": [
+				{
+					"name": "Retrieve similar documents",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/indexes/{{indexUID}}/similar?id=1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"indexes",
+								"{{indexUID}}",
+								"similar"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								},
+								{
+									"key": "embedder",
+									"value": "\"default\"",
+									"disabled": true
+								},
+								{
+									"key": "attributesToRetrieve",
+									"value": "[\"*\"]",
+									"disabled": true
+								},
+								{
+									"key": "offset",
+									"value": "0",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "filter",
+									"value": "genre=\"fantasy\"",
+									"disabled": true
+								},
+								{
+									"key": "showRankingScore",
+									"value": "true",
+									"disabled": true
+								},
+								{
+									"key": "showRankingScoreDetails",
+									"value": "true",
+									"disabled": true
+								},
+								{
+									"key": "rankingScoreThreshold",
+									"value": "0.3",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve similar documents",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 1,\n    \"limit\": 3 \n}"
+						},
+						"url": {
+							"raw": "{{url}}/indexes/{{indexUID}}/similar",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"indexes",
+								"{{indexUID}}",
+								"similar"
 							]
 						}
 					},
