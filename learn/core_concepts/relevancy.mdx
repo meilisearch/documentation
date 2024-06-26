@@ -209,32 +209,11 @@ The table below details all the index settings that can influence the `_rankingS
 
 ## Attribute ranking order
 
-In a typical dataset, some fields are more relevant to search than others. A `title`, for example, has a value more meaningful to a movie search than its `overview` or its `release_date`.
+In most datasets, some fields are more relevant to search than others. A `title`, for example, might be more meaningful to a movie search than its `overview` or its `release_date`.
 
-By default, the attribute ranking order is generated automatically based on the order in which Meilisearch encounters attributes in the indexed documents. In other words, if your first indexed document looks like this:
+When `searchableAttributes` is using its default value, `[*]`, all fields carry the same weight.
 
-```json
-{
-  "a": "some data",
-  "b": "more data",
-  "c": "other data"
-}
-```
-
-The automatically generated attribute ranking order will be `["a", "b", "c"]`. If you then add a second document that looks like this:
-
-```json
-{
-  "c": "other data",
-  "d": "surprise data!",
-  "a": "some data",
-  "b": "more data"
-}
-```
-
-The attribute ranking order will be updated to `["a", "b", "c", "d"]`. In other words, when Meilisearch encounters new attributes in subsequently indexed documents, they are added to the bottom of the attribute ranking order.
-
-The attribute ranking order can also be set manually. For a more detailed look at this subject, see [the searchable attributes list](/learn/configuration/displayed_searchable_attributes#the-searchableattributes-list).
+Configure [the searchable attributes list](/learn/configuration/displayed_searchable_attributes#the-searchableattributes-list) to set the attribute ranking order manually.
 
 ### Example
 
@@ -246,7 +225,22 @@ The attribute ranking order can also be set manually. For a more detailed look a
 ]
 ```
 
-With the above attribute ranking order, matching words found in the `title` field would have a higher impact on relevancy than the same words found in `overview` or `release_date`. If you searched "1984", for example, results like Michael Radford's film "1984" would be ranked higher than movies released in the year 1984.
+With the above attribute ranking order, matching words found in the `title` field would have a higher impact on relevancy than the same words found in `overview` or `release_date`. If you searched for "1984", for example, results like Michael Radford's film "1984" would be ranked higher than movies released in the year 1984.
+
+### Attribute ranking order and nested objects
+
+By default, nested fields share the same weight as their parent attribute. Use dot notation to set different weights for attributes in nested objects:
+
+```json
+[
+  "title", 
+  "review.critic", 
+  "overview", 
+  "review.user"
+]
+```
+
+With the above ranking order, `review.critic` becomes more important than its sibling `review.user` when calculating a document's ranking score.
 
 <Capsule intent="note">
 The `attribute` rule's position in [`rankingRules`](#built-in-rules) determines how the results are sorted. Meaning, **if `attribute` is at the bottom of the ranking rules list, it will have almost no impact on your search results.**

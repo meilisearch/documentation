@@ -924,6 +924,14 @@ search_parameter_guide_matching_strategy_2: |-
       "q": "big fat liar",
       "matchingStrategy": "all"
     }'
+search_parameter_guide_matching_strategy_3: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/movies/search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "q": "white shirt",
+      "matchingStrategy": "frequency"
+    }'
 date_guide_index_1: |-
   curl \
     -x POST 'http://localhost:7700/indexes/games/documents' \
@@ -1297,3 +1305,47 @@ search_parameter_reference_retrieve_vectors_1: |-
         "embedder": "default"
       }
     }'
+search_parameter_reference_distinct_1: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/INDEX_NAME/search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "q": "QUERY TERMS",
+      "distinct": "ATTRIBUTE_A"
+    }'
+distinct_attribute_guide_filterable_1: |-
+  curl \
+    -X PUT 'http://localhost:7700/indexes/products/settings/filterable-attributes' \
+    -H 'Content-Type: application/json' \
+    --data-binary '[
+      "product_id",
+      "sku",
+      "url"
+    ]'
+distinct_attribute_guide_distinct_parameter_1: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/products/search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "q": "white shirt",
+      "distinct": "sku"
+    }'
+get_similar_post_1: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/INDEX_NAME/similar' \
+    -H 'Content-Type: application/json' \
+    -H 'Authorization: Bearer DEFAULT_SEARCH_API_KEY' \
+    --data-binary '{
+      "id": TARGET_DOCUMENT_ID
+    }'
+get_similar_get_1: |-
+  curl \
+    -X GET 'http://localhost:7700/indexes/INDEX_NAME/similar?id=TARGET_DOCUMENT_ID'
+search_parameter_reference_ranking_score_threshold_1: |-
+  curl \
+  -X POST 'http://localhost:7700/indexes/INDEX_NAME/search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+      "q": "badman",
+      "rankingScoreThreshold": 0.2
+  }'

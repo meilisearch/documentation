@@ -53,6 +53,7 @@ By default, [this endpoint returns a maximum of 1000 results](/learn/advanced/kn
 | **[`sort`](#sort)**                                     | Array of strings | `null`        | Sort search results by an attribute's value         |
 | **[`matchingStrategy`](#matching-strategy)**            | String           | `last`        | Strategy used to match query terms within documents |
 | **[`showRankingScore`](#ranking-score)**                | Boolean          | `false`       | Display the global ranking score of a document      |
+| **[`rankingScoreThreshold`](#ranking-score-threshold)**                | Number          | `null`       | Excludes results with low ranking scores      |
 | **[`attributesToSearchOn`](#customize-attributes-to-search-on-at-search-time)**            | Array of strings           | `["*"]`        | Restrict search to the specified attributes |
 | **[`hybrid`](#hybrid-search-experimental)**             | Object           | `null`        | Return results based on query keywords and meaning  |
 | **[`vector`](#vector-experimental)**                    | Array of numbers | `null`        | Search using a custom query vector                  |
@@ -164,6 +165,7 @@ By default, [this endpoint returns a maximum of 1000 results](/learn/advanced/kn
 | **[`sort`](#sort)**                                     | Array of strings | `null`        | Sort search results by an attribute's value         |
 | **[`matchingStrategy`](#matching-strategy)**            | String           | `last`        | Strategy used to match query terms within documents |
 | **[`showRankingScore`](#ranking-score)**                | Boolean          | `false`       | Display the global ranking score of a document      |
+| **[`rankingScoreThreshold`](#ranking-score-threshold)**                | Number          | `null`       | Excludes results with low ranking scores      |
 | **[`attributesToSearchOn`](#customize-attributes-to-search-on-at-search-time)**            | Array of strings           | `["*"]`        | Restrict search to the specified attributes |
 | **[`hybrid`](#hybrid-search-experimental)**             | Object           | `null`        | Return results based on query keywords and meaning  |
 | **[`vector`](#vector-experimental)**                    | Array of numbers | `null`        | Search using a custom query vector                  |
@@ -566,6 +568,20 @@ The response shows the facet distribution for `genres` and `rating`. Since `rati
 
 [Learn more about facet distribution in the faceted search guide.](/learn/fine_tuning_results/faceted_search#configuring-and-using-facets)
 
+### Distinct attributes at search time
+
+**Parameter**: `distinct`<br />
+**Expected value**: An `attribute` present in the `filterableAttributes` list<br />
+**Default value**: `null`
+
+Defines one attribute in the `filterableAttributes` list as a distinct attribute. Distinct attributes indicate documents sharing the same value for the specified field are equivalent and only the most relevant one should be returned in search results.
+
+This behavior is similar to the [`distinctAttribute` index setting](/reference/api/settings#distinct-attribute), but can be configured at search time. `distinctAttribute` acts as a default distinct attribute value you may override with `distinct`.
+
+#### Examples
+
+<CodeSamples id="search_parameter_reference_distinct_1" />
+
 ### Attributes to retrieve
 
 **Parameter**: `attributesToRetrieve`<br />
@@ -887,7 +903,7 @@ Queries using `_geoPoint` will always include a `geoDistance` field containing t
 ### Matching strategy
 
 **Parameter**: `matchingStrategy`<br />
-**Expected value**: `last` or `all`<br />
+**Expected value**: `last`, `all`, or `frequency`<br />
 **Default value**: `last`
 
 Defines the strategy used to match query terms in documents.
@@ -907,6 +923,14 @@ With the above code sample, Meilisearch will first return documents that contain
 <CodeSamples id="search_parameter_guide_matching_strategy_2" />
 
 The above code sample would only return documents containing all three words.
+
+#### `frequency`
+
+`frequency` returns documents containing all the query terms first. If there are not enough results containing all query terms to meet the requested limit, Meilisearch will remove one query term at a time, starting with the word that is the most frequent in the dataset. `frequency` effectively gives more weight to terms that appear less frequently in a set of results.
+
+<CodeSamples id="search_parameter_guide_matching_strategy_3" />
+
+In a dataset where many documents contain the term `"shirt"`, the above code sample would prioritize documents containing `"white"`.
 
 ### Ranking score
 
@@ -1059,6 +1083,26 @@ The code sample below returns the `_rankingScoreDetail` when searching for `drag
   …
 }
 ```
+
+### Ranking score threshold
+
+**Parameter**: `rankingScoreThreshold`<br />
+**Expected value**: A number between `0.0` and `1.0`<br />
+**Default value**: `null`
+
+Excludes results below the specified ranking score.
+
+Excluded results do not count towards `estimatedTotalHits`, `totalHits`, and facet distribution.
+
+<Capsule intent="warning" title="`rankingScoreThreshold` and `limit`">
+For performance reasons, if the number of documents above `rankingScoreThreshold` is higher than `limit`, Meilisearch does not evaluate the ranking score of the remaining documents. Results ranking below the threshold are not immediately removed from the set of candidates. In this case, Meilisearch may overestimate the count of `estimatedTotalHits`, `totalHits` and facet distribution.
+</Capsule>
+
+#### Example
+
+The following query only returns results with a ranking score bigger than `0.2`:
+
+<CodeSamples id="search_parameter_reference_ranking_score_threshold_1" />
 
 ### Customize attributes to search on at search time
 
