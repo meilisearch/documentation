@@ -427,7 +427,7 @@
 								},
 								{
 									"key": "distinct",
-									"value": "\"title\"",
+									"value": "title",
 									"disabled": true
 								}
 							]
@@ -496,12 +496,12 @@
 								},
 								{
 									"key": "embedder",
-									"value": "\"default\"",
+									"value": "default",
 									"disabled": true
 								},
 								{
 									"key": "attributesToRetrieve",
-									"value": "[\"*\"]",
+									"value": "title,author",
 									"disabled": true
 								},
 								{
