@@ -35,6 +35,7 @@ Use `offset` and `limit` to browse through documents.
 | **`limit`**  | Integer                                 | `20`          | Number of documents to return                                         |
 | **`fields`** | Array of strings/`null`                 | `*`           | Document attributes to show (case-sensitive, comma-separated)         |
 | **`filter`** | String/Array of array of strings/`null` | N/A           | Refine results based on attributes in the `filterableAttributes` list |
+| **`retrieveVectors`**    | Boolean                     | `false`       | Return document vector data with search result                        |
 
 <Capsule intent="note">
 Sending an empty payload (`--data-binary '{}'`) will return all documents in the index.
@@ -116,6 +117,7 @@ Using the query parameters `offset` and `limit`, you can browse through all your
 | **`limit`**     | `20`          | Number of documents to return                                         |
 | **`fields`**    | `*`           | Document attributes to show (case-sensitive, comma-separated)         |
 | **`filter`**    | N/A           | Refine results based on attributes in the `filterableAttributes` list |
+| **`retrieveVectors`**    | `false`  | Return document vector data with search result                    |
 
 ### Response
 
@@ -183,6 +185,7 @@ Get one document using its unique id.
 | Query Parameter | Default Value | Description                                                   |
 | :-------------- | :------------ | :------------------------------------------------------------ |
 | **`fields`**    | `*`           | Document attributes to show (case-sensitive, comma-separated) |
+| **`retrieveVectors`**    | `false`  | Return document vector data with search result            |
 
 ### Example
 
