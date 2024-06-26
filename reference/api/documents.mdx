@@ -296,7 +296,7 @@ Vector embeddings added with the shorthand are not replaced when Meilisearch gen
 ```
 
 <Capsule intent="note">
-If the key for an embedder inside `_vectors` is empty or `null`, Meilisearch treats the document as not having any embeddings for that embedder. This document is then ignored during AI-powered searches.
+If the key for an embedder inside `_vectors` is empty or `null`, Meilisearch treats the document as not having any embeddings for that embedder. This document is then returned last during AI-powered searches.
 </Capsule>
 
 ### Example
