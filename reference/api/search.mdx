@@ -571,7 +571,7 @@ The response shows the facet distribution for `genres` and `rating`. Since `rati
 **Expected value**: An `attribute` present in the `filterableAttributes` list<br />
 **Default value**: `null`
 
-Defines one attribute in the `filterableAttributes` list as a distinct attribute. Distinct attributes indicate documents sharing the same value for the specified field are equivalent and only one of them should be returned in search results.
+Defines one attribute in the `filterableAttributes` list as a distinct attribute. Distinct attributes indicate documents sharing the same value for the specified field are equivalent and only the most relevant one should be returned in search results.
 
 This behavior is similar to the [`distinctAttribute` index setting](/reference/api/settings#distinct-attribute), but can be configured at search time. `distinctAttribute` acts as a default distinct attribute value you may override with `distinct`.
 
