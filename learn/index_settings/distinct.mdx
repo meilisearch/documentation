@@ -7,6 +7,12 @@ description: Distinct attribute is a field that prevents Meilisearch from return
 
 The distinct attribute is a special, user-designated field. It is most commonly used to prevent Meilisearch from returning a set of several similar documents, instead forcing it to return only one.
 
+You may set a distinct attribute in two ways: using the `distinctAttribute` index setting during configuration, or the `distinct` search parameter at search time.
+
+## Setting a distinct attribute during configuration
+
+`distinctAttribute` is an index setting that configures a default distinct attribute Meilisearch applies to all searches and facet retrievals in that index.
+
 <Capsule intent="warning">
 There can be only one `distinctAttribute` per index. Trying to set multiple fields as a `distinctAttribute` will return an error.
 </Capsule>
@@ -77,3 +83,15 @@ After setting the distinct attribute as shown above, querying for `lee leather j
 ```
 
 For more in-depth information on distinct attribute, consult the [API reference](/reference/api/settings#distinct-attribute).
+
+## Setting a distinct attribute at search time
+
+`distinct` is a search parameter you may add to any search query. It allows you to selectively use distinct attributes depending on the context. `distinct` takes precedence over `distinctAttribute`.
+
+To use an attribute with `distinct`, first add it to the `filterableAttributes` list:
+
+<CodeSamples id="distinct_attribute_guide_filterable_1" />
+
+Then use `distinct` in a search query, specifying one of the configured attributes:
+
+<CodeSamples id="distinct_attribute_guide_distinct_parameter_1" />
