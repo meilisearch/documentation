@@ -250,25 +250,9 @@ An array of documents. Each document is represented as a JSON object.
 
 #### `_vectors`
 
-`_vectors` is a special document attribute containing vector embeddings for AI-powered search. It must be an object.
+`_vectors` is a special document attribute containing an object with vector embeddings for AI-powered search.
 
-Each key of the `_vectors` object must be the name of a configured embedder and correspond to an array of numbers:
-
-```json
-[
-  {
-    "id": 452,
-    "title": "Female Trouble",
-    "overview": "Delinquent high school student Dawn Davenport runs away from home and embarks upon a life of crime.",
-    "_vectors": {
-      "default": [0.003, 0.1, 0.75],
-      "ollama": [0.1, 0.2, 0.3]
-    }
-  }
-]
-```
-
-Keys of the `_vectors` object may also correspond to an object with two fields, `embeddings` and `regenerate`:
+Each key of the `_vectors` object must be the name of a configured embedder and correspond to a nested object with two fields, `embeddings` and `regenerate`:
 
 ```json
 [
@@ -279,6 +263,10 @@ Keys of the `_vectors` object may also correspond to an object with two fields, 
     "_vectors": {
       "default": {
         "embeddings": [0.1, 0.2, 0.3],
+        "regenerate": false
+      },
+      "ollama": {
+        "embeddings": [0.4, 0.12, 0.6],
         "regenerate": true
       }
     }
@@ -286,11 +274,26 @@ Keys of the `_vectors` object may also correspond to an object with two fields, 
 ]
 ```
 
-`embeddings` must be an array of numbers representing a single embedding for that document. It may also be an array of arrays of numbers representing multiple embeddings for that document. `embeddings` is an optional field.
+`embeddings` must be an array of numbers representing a single embedding for that document. It may also be an array of arrays of numbers representing multiple embeddings for that document. `embeddings` is an optional field and defaults to `null`.
 
-`regenerate` must be a Boolean value. If `regenerate` is `true`, Meilisearch automatically generates embeddings for that document immediately and every time the document is updated. If `regenerate` is `false`, Meilisearch keeps the last value of the embeddings on document updates.
+`regenerate` must be a Boolean value. If `regenerate` is `true`, Meilisearch automatically generates embeddings for that document immediately and every time the document is updated. If `regenerate` is `false`, Meilisearch keeps the last value of the embeddings on document updates. `regenerate` is an optional field and defaults to `false`.
 
-If `_vectors` is empty or `null`, Meilisearch treats the document as not having any embeddings. This document is then ignored during AI-powered searches.
+You may also use an array shorthand to add embeddings to a document:
+
+```json
+"_vectors": {
+  "default": [0.003, 0.1, 0.75]
+}
+```
+
+Vector embeddings added with the shorthand are not replaced when Meilisearch generates new embeddings. The above example is equivalent to:
+
+```json
+"default": {
+  "embeddings": [0.1, 0.2, 0.3],
+  "regenerate": false
+}
+```
 
 <Capsule intent="note">
 If the key for an embedder inside `_vectors` is empty or `null`, Meilisearch treats the document as not having any embeddings for that embedder. This document is then ignored during AI-powered searches.
