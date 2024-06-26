@@ -1,0 +1,27 @@
+---
+title: Faceted search — Meilisearch documentation
+description: Faceted search interfaces provide users with a quick way to narrow down search results by selecting categories relevant to their query.
+sidebarDepth: 3
+---
+
+You can use Meilisearch filters to build faceted search interfaces. This type of interface allows users to refine search results based on broad categories or facets. Faceted search provides users with a quick way to narrow down search results by selecting categories relevant to what they are looking for. A faceted navigation system is an **intuitive interface to display and navigate through content**.
+
+Facets are common in ecommerce sites like Amazon. When users search for products, they are presented with a list of results and a list of facets which you can see on the sidebar in the image below:
+
+[![Meilisearch demo for an ecommerce website displaying faceting UI](/assets/images/faceted-search/facets-ecommerce.png)](https://ecommerce.meilisearch.com/?utm_campaign=oss&utm_source=docs&utm_medium=faceted-search&utm_content=image)
+
+Faceted search interfaces often have a count of how many results belong to each facet. This gives users a visual clue of the range of results available for each facet.
+
+### Filters or facets
+
+Meilisearch does not differentiate between facets and filters. Facets are a specific use-case of filters, meaning you can use any attribute added to `filterableAttributes` as a facet. Whether something is a filter or a facet depends above all on UX and UI design.
+
+## Example application
+
+The Meilisearch ecommerce demo makes heavy use of faceting features to enable:
+- Filtering products by category and brand
+- Filtering products by price range and rating
+- Searching through facet values (e.g. category)
+- Sorting facet values (count or alphabetical order)
+
+Check out the [ecommerce demo](https://ecommerce.meilisearch.com/?utm_campaign=oss&utm_source=docs&utm_medium=faceted-search&utm_content=link) and the [GitHub repository](https://github.com/meilisearch/ecommerce-demo/).

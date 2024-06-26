@@ -1,0 +1,254 @@
+---
+title: Filter expression reference — Meilisearch documentation
+description: The `filter` search parameter expects a filter expression. Filter expressions are made of attributes, values, and several operators.
+---
+
+# Filter expression reference
+
+The `filter` search parameter expects a filter expression. Filter expressions are made of attributes, values, and several operators.
+
+`filter` expects a **filter expression** containing one or more **conditions**. A filter expression can be written as a string, array, or mix of both.
+
+## Data types
+
+Filters accept numeric and string values. Empty fields or fields containing an empty array will be ignored.
+
+Filters do not work with [`NaN`](https://en.wikipedia.org/wiki/NaN) and infinite values such as `inf` and `-inf` as they are [not supported by JSON](https://en.wikipedia.org/wiki/JSON#Data_types). It is possible to filter infinite and `NaN` values if you parse them as strings, except when handling [`_geo` fields](/learn/fine_tuning_results/geosearch#preparing-documents-for-location-based-search).
+
+<Capsule intent="warning" title="Type coercion">
+For best results, enforce homogeneous typing across fields, especially when dealing with large numbers. Meilisearch does not enforce a specific schema when indexing data, but the filtering engine may coerce the type of `value`. This can lead to undefined behavior, such as when big floating-point numbers are coerced into integers.
+</Capsule>
+
+## Conditions
+
+Conditions are a filter's basic building blocks. They are written in the `attribute OPERATOR value` format, where:
+
+- `attribute` is the attribute of the field you want to filter on
+- `OPERATOR` can be `=`, `!=`, `>`, `>=`, `<`, `<=`, `TO`, `EXISTS`, `IN`, `NOT`, `AND`, or `OR`
+- `value` is the value the `OPERATOR` should look for in the `attribute`
+
+### Examples
+
+A basic condition requesting movies whose `genres` attribute is equal to `horror`:
+
+```
+genres = horror
+```
+
+String values containing whitespace must be enclosed in single or double quotes:
+
+```
+director = 'Jordan Peele'
+director = "Tim Burton"
+```
+
+## Filter operators
+
+### Equality (`=`)
+
+The equality operator (`=`) returns all documents containing a specific value for a given attribute:
+
+```
+genres = action
+```
+
+When operating on strings, `=` is case-insensitive.
+
+The equality operator does not return any results for `null` and empty arrays.
+
+### Inequality (`!=`)
+
+The inequality operator (`!=`) returns all documents not selected by the equality operator. When operating on strings, `!=` is case-insensitive.
+
+The following expression returns all movies without the `action` genre:
+
+```
+genres != action
+```
+
+### Comparison (`>`, `<`, `>=`, `<=`)
+
+The comparison operators (`>`, `<`, `>=`, `<=`) select documents satisfying a comparison. Comparison operators only apply only to numerical values.
+
+The expression below returns all documents with a user rating above 85:
+
+```
+rating.users > 85
+```
+
+### `TO`
+
+`TO` is equivalent to `>= AND <=`. The following expression returns all documents with a rating of 80 or above but below 90:
+
+```
+rating.users 80 TO 89
+```
+
+### `EXISTS`
+
+The `EXISTS` operator checks for the existence of a field. Fields with empty or `null` values count as existing.
+
+The following expression returns all documents containing the `release_date` field:
+
+```
+release_date EXISTS
+```
+
+The negated form of the above expression can be written in two equivalent ways:
+
+```
+release_date NOT EXISTS
+NOT release_date EXISTS
+```
+
+### `IS EMPTY`
+
+The `IS EMPTY` operator selects documents in which the specified attribute exists but contains empty values. The following expression only returns documents with an empty `overview` field:
+
+```
+overview IS EMPTY
+```
+
+`IS EMPTY` matches the following JSON values:
+
+- `""`
+- `[]`
+- `{}`
+
+Meilisearch does not treat `null` values as empty. To match `null` fields, use the [`IS NULL`](#is-null) operator.
+
+Use `NOT` to build the negated form of `IS EMPTY`:
+
+```
+overview IS NOT EMPTY
+NOT overview IS EMPTY
+```
+
+### `IS NULL`
+
+The `IS NULL` operator selects documents in which the specified attribute exists but contains a `null` value. The following expression only returns documents with a `null` `overview` field:
+
+```
+overview IS NULL
+```
+
+Use `NOT` to build the negated form of `IS NULL`:
+
+```
+overview IS NOT NULL
+NOT overview IS NULL
+```
+
+### `IN`
+
+`IN` combines equality operators by taking an array of comma-separated values delimited by square brackets. It selects all documents whose chosen field contains at least one of the specified values.
+
+The following expression returns all documents whose `genres` includes either `horror`, `comedy`, or both:
+
+```
+genres IN [horror, comedy]
+genres = horror OR genres = comedy
+```
+
+The negated form of the above expression can be written as:
+
+```
+genres NOT IN [horror, comedy]
+NOT genres IN [horror, comedy]
+```
+
+### `NOT`
+
+The negation operator (`NOT`) selects all documents that do not satisfy a condition. It has higher precedence than `AND` and `OR`.
+
+The following expression will return all documents whose `genres` does not contain `horror` and documents with a missing `genres` field:
+
+```
+NOT genres = horror
+```
+
+## Filter expressions
+
+You can build filter expressions by grouping basic conditions using `AND` and `OR`. Filter expressions can be written as strings, arrays, or a mix of both.
+
+### Filter expression grouping operators
+
+#### `AND`
+
+`AND` connects two conditions and only returns documents that satisfy both of them. `AND` has higher precedence than `OR`.
+
+The following expression returns all documents matching both conditions:
+
+```
+genres = horror AND director = 'Jordan Peele'
+```
+
+#### `OR`
+
+`OR` connects two conditions and returns results that satisfy at least one of them.
+
+The following expression returns documents matching either condition:
+
+```
+genres = horror OR genres = comedy
+```
+
+### Creating filter expressions with string operators and parentheses
+
+Meilisearch reads string expressions from left to right. You can use parentheses to ensure expressions are correctly parsed.
+
+For instance, if you want your results to only include `comedy` and `horror` documents released after March 1995, the parentheses in the following query are mandatory:
+
+```
+(genres = horror OR genres = comedy) AND release_date > 795484800
+```
+
+Failing to add these parentheses will cause the same query to be parsed as:
+
+```
+genres = horror OR (genres = comedy AND release_date > 795484800)
+```
+
+Translated into English, the above expression will only return comedies released after March 1995 or horror movies regardless of their `release_date`.
+
+<Capsule intent="note">
+When creating an expression with a field name or value identical to a filter operator such as `AND` or `NOT`, you must wrap it in quotation marks: `title = "NOT" OR title = "AND"`.
+</Capsule>
+
+### Creating filter expressions with arrays
+
+Array expressions establish logical connectives by nesting arrays of strings. **Array filters can have a maximum depth of two.** Expressions with three or more levels of nesting will throw an error.
+
+Outer array elements are connected by an `AND` operator. The following expression returns `horror` movies directed by `Jordan Peele`:
+
+```
+["genres = horror", "director = 'Jordan Peele'"]
+```
+
+Inner array elements are connected by an `OR` operator. The following expression returns either `horror` or `comedy` films:
+
+```
+[["genres = horror", "genres = comedy"]]
+```
+
+Inner and outer arrays can be freely combined. The following expression returns both `horror` and `comedy` movies directed by `Jordan Peele`:
+
+```
+[["genres = horror", "genres = comedy"], "director = 'Jordan Peele'"]
+```
+
+### Combining arrays and string operators
+
+You can also create filter expressions that use both array and string syntax.
+
+The following filter is written as a string and only returns movies not directed by `Jordan Peele` that belong to the `comedy` or `horror` genres:
+
+```
+"(genres = comedy OR genres = horror) AND director != 'Jordan Peele'"
+```
+
+You can write the same filter mixing arrays and strings:
+
+```
+[["genres = comedy", "genres = horror"], "NOT director = 'Jordan Peele'"]
+```

@@ -1,0 +1,152 @@
+---
+title: Search with facets — Meilisearch documentation
+description: Faceted search interfaces provide users with a quick way to narrow down search results by selecting categories relevant to their query.
+---
+
+# Search with facets
+
+In Meilisearch, facets are a specialized type of filter. This guide shows you how to configure facets and use them when searching a database of books. It also gives you instruction on how to get
+
+## Requirements
+
+- a Meilisearch project
+- a command-line terminal
+
+## Configure facet index settings
+
+First, create a new index using this <a id="downloadBooks" href="/assets/datasets/books.json" download="books.json">books dataset</a>. Documents in this dataset have the following fields:
+
+```json
+{
+  "id": 5,
+  "title": "Hard Times",
+  "genres": ["Classics","Fiction", "Victorian", "Literature"],
+  "publisher": "Penguin Classics",
+  "language": "English",
+  "author": "Charles Dickens",
+  "description":"Hard Times is a novel of social […] ",
+  "format": "Hardcover",
+  "rating": 3
+}
+```
+
+Next, add `genres`, `language`, and `rating` to the list of `filterableAttributes`:
+
+<CodeSamples id="faceted_search_update_settings_1" />
+
+You have now configured your index to use these attributes as filters.
+
+## Use facets in a search query
+
+Make a search query setting the `facets` search parameter:
+
+<CodeSamples id="faceted_search_1" />
+
+The response returns all books matching the query. It also returns two fields you can use to create a faceted search interface, `facetDistribution` and `facetStats`:
+
+```json
+{
+  "hits":[
+    …
+  ],
+  …
+  "facetDistribution":{
+    "genres":{
+      "Classics":6,
+      …
+    },
+    "language":{
+      "English":6,
+      "French":1,
+      "Spanish":1
+    },
+    "rating":{
+      "2.5":1,
+      …
+    }
+  },
+  "facetStats":{
+    "rating":{
+      "min":2.5,
+      "max":4.7
+    }
+  }
+}
+```
+
+`facetDistribution` lists all facets present in your search results, along with the number of documents returned for each facet.
+
+`facetStats` contains the highest and lowest values for all facets containing numeric values.
+
+### Sorting facet values
+
+By default, all facet values are sorted in ascending alphanumeric order. You can change this using the `sortFacetValuesBy` property of the [`faceting` index settings](/reference/api/settings#faceting):
+
+<CodeSamples id="facet_search_2" />
+
+The above code sample sorts the `genres` facet by descending value count.
+
+Repeating the previous query using the new settings will result in a different order in `facetsDistribution`:
+
+```json
+{
+  …
+  "facetDistribution": {
+    "genres": {
+      "Fiction": 8,
+      "Literature": 7,
+      "Classics": 6,
+      "Novel": 2,
+      "Horror": 2,
+      "Fantasy": 2,
+      "Victorian": 2,
+      "Vampires": 1,
+      "Tragedy": 1,
+      "Satire": 1,
+      "Romance": 1,
+      "Historical Fiction": 1,
+      "Coming-of-Age": 1,
+      "Comedy": 1
+    },
+   …
+   }
+}
+```
+
+## Searching facet values
+
+You can also search for facet values with the [facet search endpoint](/reference/api/facet_search):
+
+<CodeSamples id="facet_search_3" />
+
+The following code sample searches the `genres` facet for values starting with `c`:
+
+The response contains a `facetHits` array listing all matching facets, together with the total number of documents that include that facet:
+
+```json
+{
+  …
+  "facetHits": [
+    {
+      "value": "Children's Literature",
+      "count": 1
+    },
+    {
+      "value": "Classics",
+      "count": 6
+    },
+    {
+      "value": "Comedy",
+      "count": 2
+    },
+    {
+      "value": "Coming-of-Age",
+      "count": 1
+    }
+  ],
+  "facetQuery": "c",
+  …
+}
+```
+
+You can further refine results using the `q`, `filter`, and `matchingStrategy` parameters. [Learn more about them in the API reference.](/reference/api/facet_search)
