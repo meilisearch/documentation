@@ -277,9 +277,9 @@ Each key of the `_vectors` object must be the name of a configured embedder and 
 ]
 ```
 
-`embeddings` must be an array of numbers representing a single embedding for that document. It may also be an array of arrays of numbers representing multiple embeddings for that document. `embeddings` is an optional field and defaults to `null`.
+`embeddings` is an optional field. It must be an array of numbers representing a single embedding for that document. It may also be an array of arrays of numbers representing multiple embeddings for that document. `embeddings` defaults to `null`.
 
-`regenerate` must be a Boolean value. If `regenerate` is `true`, Meilisearch automatically generates embeddings for that document immediately and every time the document is updated. If `regenerate` is `false`, Meilisearch keeps the last value of the embeddings on document updates. `regenerate` is an optional field and defaults to `false`.
+`regenerate` is a mandatory field. It must be a Boolean value. If `regenerate` is `true`, Meilisearch automatically generates embeddings for that document immediately and every time the document is updated. If `regenerate` is `false`, Meilisearch keeps the last value of the embeddings on document updates.
 
 You may also use an array shorthand to add embeddings to a document:
 
