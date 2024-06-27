@@ -26,7 +26,7 @@ Retrieve documents similar to a specific search result.
 | Parameter                                                                    | Type             | Default value | Description                                    |
 | ---------------------------------------------------------------------------- | ---------------- | ------------- | ---------------------------------------------- |
 | **`id`**                                                                     | String or number | `null`        | Identifier of the target document (mandatory)  |
-| **[`embedder`](/reference/api/search#embedder)**                             | String           | `"default"`   | Embedder to use when computing recommendations |
+| **[`embedder`](/reference/api/search#hybrid-search-experimental)**           | String           | `"default"`   | Embedder to use when computing recommendations |
 | **[`attributesToRetrieve`](/reference/api/search#attributes-to-retrieve)**   | Array of strings | `["*"]`       | Attributes to display in the returned documents|
 | **[`offset`](/reference/api/search#offset)**                                 | Integer          | `0`           | Number of documents to skip                    |
 | **[`limit`](/reference/api/search#limit)**                                   | Integer          | `20`          | Maximum number of documents returned           |
@@ -34,7 +34,7 @@ Retrieve documents similar to a specific search result.
 | **[`showRankingScore`](/reference/api/search#ranking-score)**                | Boolean          | `false`       | Display the global ranking score of a document |
 | **[`showRankingScoreDetails`](/reference/api/search#ranking-score-details)** | Boolean          | `false`       | Display detailed ranking score information     |
 | **[`rankingScoreThreshold`](/reference/api/search#ranking-score-threshold)** | Number           | `null`        | Exclude results with low ranking scores        |
-| **[`retrieveVectors`](/display-vectors-in-response-experimental)**           | Boolean          | `false`       | Return document vector data                    |
+| **[`retrieveVectors`](/reference/api/search#display-_vectors-in-response-experimental)**           | Boolean          | `false`       | Return document vector data                    |
 
 ### Example
 
@@ -83,7 +83,7 @@ Retrieve documents similar to a specific search result.
 | Parameter                                                                    | Type             | Default value | Description                                    |
 | ---------------------------------------------------------------------------- | ---------------- | ------------- | ---------------------------------------------- |
 | **`id`**                                                                     | String or number | `null`        | Identifier of the target document (mandatory)  |
-| **[`embedder`](/reference/api/search#embedder)**                             | String           | `"default"`   | Embedder to use when computing recommendations |
+| **[`embedder`](/reference/api/search#hybrid-search-experimental)**           | String           | `"default"`   | Embedder to use when computing recommendations |
 | **[`attributesToRetrieve`](/reference/api/search#attributes-to-retrieve)**   | Array of strings | `["*"]`       | Attributes to display in the returned documents|
 | **[`offset`](/reference/api/search#offset)**                                 | Integer          | `0`           | Number of documents to skip                    |
 | **[`limit`](/reference/api/search#limit)**                                   | Integer          | `20`          | Maximum number of documents returned           |
@@ -91,7 +91,7 @@ Retrieve documents similar to a specific search result.
 | **[`showRankingScore`](/reference/api/search#ranking-score)**                | Boolean          | `false`       | Display the global ranking score of a document |
 | **[`showRankingScoreDetails`](/reference/api/search#ranking-score-details)** | Boolean          | `false`       | Display detailed ranking score information     |
 | **[`rankingScoreThreshold`](/reference/api/search#ranking-score-threshold)** | Number           | `null`        | Exclude results with low ranking scores        |
-| **[`retrieveVectors`](/display-vectors-in-response-experimental)**           | Boolean          | `false`       | Return document vector data                    |
+| **[`retrieveVectors`](/reference/api/search#display-_vectors-in-response-experimental)**           | Boolean          | `false`       | Return document vector data                    |
 
 ### Example
 

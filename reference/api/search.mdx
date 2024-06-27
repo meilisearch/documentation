@@ -57,7 +57,7 @@ By default, [this endpoint returns a maximum of 1000 results](/learn/advanced/kn
 | **[`attributesToSearchOn`](#customize-attributes-to-search-on-at-search-time)**            | Array of strings           | `["*"]`        | Restrict search to the specified attributes |
 | **[`hybrid`](#hybrid-search-experimental)**             | Object           | `null`        | Return results based on query keywords and meaning  |
 | **[`vector`](#vector-experimental)**                    | Array of numbers | `null`        | Search using a custom query vector                  |
-| **[`retrieveVectors`](#display-vectors-in-response-experimental)** | Boolean          | `false`       | Return document vector data                         |
+| **[`retrieveVectors`](#display-_vectors-in-response-experimental)** | Boolean          | `false`       | Return document vector data                         |
 
 [Learn more about how to use each search parameter](#search-parameters).
 
@@ -169,7 +169,7 @@ By default, [this endpoint returns a maximum of 1000 results](/learn/advanced/kn
 | **[`attributesToSearchOn`](#customize-attributes-to-search-on-at-search-time)**            | Array of strings           | `["*"]`        | Restrict search to the specified attributes |
 | **[`hybrid`](#hybrid-search-experimental)**             | Object           | `null`        | Return results based on query keywords and meaning  |
 | **[`vector`](#vector-experimental)**                    | Array of numbers | `null`        | Search using a custom query vector                  |
-| **[`retrieveVectors`](#display-vectors-in-response-experimental)** | Boolean          | `false`       | Return document vector data                         |
+| **[`retrieveVectors`](#display-_vectors-in-response-experimental)** | Boolean          | `false`       | Return document vector data                         |
 
 [Learn more about how to use each search parameter](#search-parameters).
 
@@ -258,7 +258,7 @@ This is not necessary when using the `POST` route or one of our [SDKs](/learn/wh
 | **[`attributesToSearchOn`](#customize-attributes-to-search-on-at-search-time)**            | Array of strings           | `["*"]`        | Restrict search to the specified attributes |
 | **[`hybrid`](#hybrid-search-experimental)**             | Object           | `null`        | Return results based on query keywords and meaning  |
 | **[`vector`](#vector-experimental)**                    | Array of numbers | `null`        | Search using a custom query vector                  |
-| **[`retrieveVectors`](#display-vectors-in-response-experimental)** | Boolean          | `false`       | Return document vector data                         |
+| **[`retrieveVectors`](#display-_vectors-in-response-experimental)** | Boolean          | `false`       | Return document vector data                         |
 
 ### Query (q)
 
@@ -1176,7 +1176,7 @@ Meilisearch will return an error if you use `vector` before activating your inst
 **Expected value**: `true` or `false`<br />
 **Default value**: `false`
 
-Return document embedding data with search results. If `true`, Meilisearch will display vector data in each [document's `_vectors` field](/reference/api/documents#vectors).
+Return document embedding data with search results. If `true`, Meilisearch will display vector data in each [document's `_vectors` field](/reference/api/documents#_vectors).
 
 #### Example
 
