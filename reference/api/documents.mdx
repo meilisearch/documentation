@@ -35,6 +35,7 @@ Use `offset` and `limit` to browse through documents.
 | **`limit`**  | Integer                                 | `20`          | Number of documents to return                                         |
 | **`fields`** | Array of strings/`null`                 | `*`           | Document attributes to show (case-sensitive, comma-separated)         |
 | **`filter`** | String/Array of array of strings/`null` | N/A           | Refine results based on attributes in the `filterableAttributes` list |
+| **`retrieveVectors`**    | Boolean                     | `false`       | Return document vector data with search result                        |
 
 <Capsule intent="note">
 Sending an empty payload (`--data-binary '{}'`) will return all documents in the index.
@@ -116,6 +117,7 @@ Using the query parameters `offset` and `limit`, you can browse through all your
 | **`limit`**     | `20`          | Number of documents to return                                         |
 | **`fields`**    | `*`           | Document attributes to show (case-sensitive, comma-separated)         |
 | **`filter`**    | N/A           | Refine results based on attributes in the `filterableAttributes` list |
+| **`retrieveVectors`**    | `false`  | Return document vector data with search result                    |
 
 ### Response
 
@@ -183,6 +185,7 @@ Get one document using its unique id.
 | Query Parameter | Default Value | Description                                                   |
 | :-------------- | :------------ | :------------------------------------------------------------ |
 | **`fields`**    | `*`           | Document attributes to show (case-sensitive, comma-separated) |
+| **`retrieveVectors`**    | `false`  | Return document vector data with search result            |
 
 ### Example
 
@@ -247,6 +250,57 @@ An array of documents. Each document is represented as a JSON object.
   }
 ]
 ```
+
+#### `_vectors`
+
+`_vectors` is a special document attribute containing an object with vector embeddings for AI-powered search.
+
+Each key of the `_vectors` object must be the name of a configured embedder and correspond to a nested object with two fields, `embeddings` and `regenerate`:
+
+```json
+[
+  {
+    "id": 452,
+    "title": "Female Trouble",
+    "overview": "Delinquent high school student Dawn Davenport runs away from home and embarks upon a life of crime.",
+    "_vectors": {
+      "default": {
+        "embeddings": [0.1, 0.2, 0.3],
+        "regenerate": false
+      },
+      "ollama": {
+        "embeddings": [0.4, 0.12, 0.6],
+        "regenerate": true
+      }
+    }
+  }
+]
+```
+
+`embeddings` is an optional field. It must be an array of numbers representing a single embedding for that document. It may also be an array of arrays of numbers representing multiple embeddings for that document. `embeddings` defaults to `null`.
+
+`regenerate` is a mandatory field. It must be a Boolean value. If `regenerate` is `true`, Meilisearch automatically generates embeddings for that document immediately and every time the document is updated. If `regenerate` is `false`, Meilisearch keeps the last value of the embeddings on document updates.
+
+You may also use an array shorthand to add embeddings to a document:
+
+```json
+"_vectors": {
+  "default": [0.003, 0.1, 0.75]
+}
+```
+
+Vector embeddings added with the shorthand are not replaced when Meilisearch generates new embeddings. The above example is equivalent to:
+
+```json
+"default": {
+  "embeddings": [0.003, 0.1, 0.75],
+  "regenerate": false
+}
+```
+
+<Capsule intent="note">
+If the key for an embedder inside `_vectors` is empty or `null`, Meilisearch treats the document as not having any embeddings for that embedder. This document is then returned last during AI-powered searches.
+</Capsule>
 
 ### Example
 

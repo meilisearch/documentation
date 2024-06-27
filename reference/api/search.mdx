@@ -40,7 +40,7 @@ By default, [this endpoint returns a maximum of 1000 results](/learn/advanced/kn
 | **[`limit`](#limit)**                                   | Integer          | `20`          | Maximum number of documents returned                |
 | **[`hitsPerPage`](#number-of-results-per-page)**        | Integer          | `1`           | Maximum number of documents returned for a page     |
 | **[`page`](#page)**                                     | Integer          | `1`           | Request a specific page of results                  |
-| **[`filter`](/reference/api/search#filter)**                                 | [String](/learn/fine_tuning_results/filtering#filter-expressions) | `null`        | Filter queries by an attribute's value              |
+| **[`filter`](/reference/api/search#filter)**            | [String](/learn/fine_tuning_results/filtering#filter-expressions) | `null`        | Filter queries by an attribute's value              |
 | **[`facets`](#facets)**                                 | Array of strings | `null`        | Display the count of matches per facet              |
 | **[`attributesToRetrieve`](#attributes-to-retrieve)**   | Array of strings | `["*"]`       | Attributes to display in the returned documents     |
 | **[`attributesToCrop`](#attributes-to-crop)**           | Array of strings | `null`        | Attributes whose values have to be cropped          |
@@ -55,8 +55,9 @@ By default, [this endpoint returns a maximum of 1000 results](/learn/advanced/kn
 | **[`showRankingScore`](#ranking-score)**                | Boolean          | `false`       | Display the global ranking score of a document      |
 | **[`rankingScoreThreshold`](#ranking-score-threshold)**                | Number          | `null`       | Excludes results with low ranking scores      |
 | **[`attributesToSearchOn`](#customize-attributes-to-search-on-at-search-time)**            | Array of strings           | `["*"]`        | Restrict search to the specified attributes |
-| **[`hybrid`](#hybrid-search-experimental)**                | Object          | `null`       | Return results based on query keywords and meaning      |
-| **[`vector`](#vector-experimental)**                | Array of numbers          | `null`       | Search using a custom query vector      |
+| **[`hybrid`](#hybrid-search-experimental)**             | Object           | `null`        | Return results based on query keywords and meaning  |
+| **[`vector`](#vector-experimental)**                    | Array of numbers | `null`        | Search using a custom query vector                  |
+| **[`retrieveVectors`](#display-vectors-in-response-experimental)** | Boolean          | `false`       | Return document vector data                         |
 
 [Learn more about how to use each search parameter](#search-parameters).
 
@@ -151,7 +152,7 @@ By default, [this endpoint returns a maximum of 1000 results](/learn/advanced/kn
 | **[`limit`](#limit)**                                   | Integer          | `20`          | Maximum number of documents returned                |
 | **[`hitsPerPage`](#number-of-results-per-page)**        | Integer          | `1`           | Maximum number of documents returned for a page     |
 | **[`page`](#page)**                                     | Integer          | `1`           | Request a specific page of results                  |
-| **[`filter`](/reference/api/search#filter)**                                 | [String](/learn/fine_tuning_results/filtering#filter-expressions) | `null`        | Filter queries by an attribute's value              |
+| **[`filter`](/reference/api/search#filter)**            | [String](/learn/fine_tuning_results/filtering#filter-expressions) | `null`        | Filter queries by an attribute's value              |
 | **[`facets`](#facets)**                                 | Array of strings | `null`        | Display the count of matches per facet              |
 | **[`attributesToRetrieve`](#attributes-to-retrieve)**   | Array of strings | `["*"]`       | Attributes to display in the returned documents     |
 | **[`attributesToCrop`](#attributes-to-crop)**           | Array of strings | `null`        | Attributes whose values have to be cropped          |
@@ -166,8 +167,9 @@ By default, [this endpoint returns a maximum of 1000 results](/learn/advanced/kn
 | **[`showRankingScore`](#ranking-score)**                | Boolean          | `false`       | Display the global ranking score of a document      |
 | **[`rankingScoreThreshold`](#ranking-score-threshold)**                | Number          | `null`       | Excludes results with low ranking scores      |
 | **[`attributesToSearchOn`](#customize-attributes-to-search-on-at-search-time)**            | Array of strings           | `["*"]`        | Restrict search to the specified attributes |
-| **[`hybrid`](#hybrid-search-experimental)**                | Object          | `null`       | Return results based on query keywords and meaning      |
-| **[`vector`](#vector-experimental)**                | Array of numbers          | `null`       | Search using a custom query vector      |
+| **[`hybrid`](#hybrid-search-experimental)**             | Object           | `null`        | Return results based on query keywords and meaning  |
+| **[`vector`](#vector-experimental)**                    | Array of numbers | `null`        | Search using a custom query vector                  |
+| **[`retrieveVectors`](#display-vectors-in-response-experimental)** | Boolean          | `false`       | Return document vector data                         |
 
 [Learn more about how to use each search parameter](#search-parameters).
 
@@ -254,8 +256,9 @@ This is not necessary when using the `POST` route or one of our [SDKs](/learn/wh
 | **[`matchingStrategy`](#matching-strategy)**            | String           | `last`        | Strategy used to match query terms within documents |
 | **[`showRankingScore`](#ranking-score)**                | Boolean          | `false`       | Display the global ranking score of a document      |
 | **[`attributesToSearchOn`](#customize-attributes-to-search-on-at-search-time)**            | Array of strings           | `["*"]`        | Restrict search to the specified attributes |
-| **[`hybrid`](#hybrid-search-experimental)**                | Object          | `null`       | Return results based on query keywords and meaning      |
-| **[`vector`](#vector-experimental)**                | Array of numbers          | `null`       | Search using a custom query vector      |
+| **[`hybrid`](#hybrid-search-experimental)**             | Object           | `null`        | Return results based on query keywords and meaning  |
+| **[`vector`](#vector-experimental)**                    | Array of numbers | `null`        | Search using a custom query vector                  |
+| **[`retrieveVectors`](#display-vectors-in-response-experimental)** | Boolean          | `false`       | Return document vector data                         |
 
 ### Query (q)
 
@@ -1149,6 +1152,10 @@ Meilisearch will return an error if you use `hybrid` before activating your inst
 
 ### Vector (experimental)
 
+**Parameter**: `vector`<br />
+**Expected value**: an array of numbers<br />
+**Default value**: `null`
+
 Use a custom vector to perform a search query. Must be an array of numbers corresponding to the dimensions of the custom vector.
 
 `vector` is mandatory when performing searches with `userProvided` embedders. You may also use `vector` to override an embedder's automatic vector generation.
@@ -1162,3 +1169,35 @@ Use a custom vector to perform a search query. Must be an array of numbers corre
 <Capsule intent="warning">
 Meilisearch will return an error if you use `vector` before activating your instance's `vectorStore` and [configuring a custom embedder](/reference/api/settings#embedders-experimental).
 </Capsule>
+
+### Display `_vectors` in response (experimental)
+
+**Parameter**: `retrieveVectors`<br />
+**Expected value**: `true` or `false`<br />
+**Default value**: `false`
+
+Return document embedding data with search results. If `true`, Meilisearch will display vector data in each [document's `_vectors` field](/reference/api/documents#vectors).
+
+#### Example
+
+<CodeSamples id="search_parameter_reference_retrieve_vectors_1" />
+
+```json
+{
+  "hits": [
+    {
+      "id": 0,
+      "title": "DOCUMENT NAME",
+      "_vectors": {
+        "default": {
+          "embeddings": [0.1, 0.2, 0.3],
+          "regenerate": true
+        }
+      }
+      …
+    },
+    …
+  ],
+  …
+}
+```
