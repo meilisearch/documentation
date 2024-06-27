@@ -6,9 +6,9 @@ sidebarDepth: 3
 
 # Search
 
-Meilisearch exposes 2 routes to perform searches:
+Meilisearch exposes two routes to perform searches:
 
-- A POST route: this is the preferred route when using API authentication, as it allows [preflight request](https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request) caching and better performances
+- A POST route: this is the preferred route when using API authentication, as it allows [preflight request](https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request) caching and better performance
 - A GET route: the usage of this route is discouraged, unless you have good reason to do otherwise (specific caching abilities for example)
 
 You may find exhaustive descriptions of the parameters accepted by the two routes [at the end of this article](#search-parameters).
@@ -422,7 +422,7 @@ Requests a specific results page. Pages are calculated using the `hitsPerPage` s
 
 Queries containing `page` are exhaustive and do not return an `estimatedTotalHits`. Instead, the response body will include two new fields: `totalHits` and `totalPages`.
 
-If you set `page` to `0`, Meilisearch processes your request, but does not return any documents. In this case, the response body will include the exhaustive values for `totalPages` and `totalHits`.
+If you set `page` to `0`, Meilisearch processes your request, but does not return any documents. In this case, the response body will include the exhaustive values for `facetDistribution`, `totalPages`, and `totalHits`.
 
 You can use `hitsPerPage` and `page` to [paginate search results](/guides/front_end/pagination).
 

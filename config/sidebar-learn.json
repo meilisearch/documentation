@@ -72,7 +72,7 @@
       },
       {
         "source": "learn/ai_powered_search/difference_full_text_ai_search.mdx",
-        "label": "Differences between keyword and AI-powered search",
+        "label": "Differences between full-text and AI-powered search",
         "slug": "difference_full_text_ai_search"
       }
     ]
