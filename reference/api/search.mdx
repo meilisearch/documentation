@@ -1176,8 +1176,28 @@ Meilisearch will return an error if you use `vector` before activating your inst
 **Expected value**: `true` or `false`<br />
 **Default value**: `false`
 
-Return document vector data with search results.
+Return document embedding data with search results. If `true`, Meilisearch will display vector data in each [document's `_vectors` field](/reference/api/documents#vectors).
 
 #### Example
 
 <CodeSamples id="search_parameter_reference_retrieve_vectors_1" />
+
+```json
+{
+  "hits": [
+    {
+      "id": 0,
+      "title": "DOCUMENT NAME",
+      "_vectors": {
+        "default": {
+          "embeddings": [0.1, 0.2, 0.3],
+          "regenerate": true
+        }
+      }
+      …
+    },
+    …
+  ],
+  …
+}
+```
