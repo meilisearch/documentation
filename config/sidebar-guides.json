@@ -153,6 +153,11 @@
         "source": "guides/deployment/railway.mdx",
         "label": "Deploy on Railway",
         "slug": "railway"
+      },
+      {
+        "source": "guides/deployment/sealos.mdx",
+        "label": "Deploy on Sealos",
+        "slug": "sealos"
       }
     ]
   },
