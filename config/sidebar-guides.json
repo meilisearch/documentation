@@ -14,6 +14,11 @@
         "slug": "react_quick_start"
       },
       {
+        "source": "guides/front_end/vue_quick_start.mdx",
+        "label": "Vue quick start",
+        "slug": "vue_quick_start"
+      },
+      {
         "source": "guides/front_end/search_bar_for_docs.mdx",
         "label": "Add a search bar to your docs",
         "slug": "search_bar_for_docs"
