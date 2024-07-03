@@ -343,5 +343,10 @@
     "source": "/docs/learn/security/managing_api_keys",
     "destination": "/docs/reference/api/keys",
     "permanent": true
+  },
+  {
+    "source": "/docs/learn/experimental/puffin_reports",
+    "destination": "/docs/learn/experimental/log_customization",
+    "permanent": true
   }
 ]
