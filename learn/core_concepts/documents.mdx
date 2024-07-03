@@ -154,6 +154,6 @@ Tasks within the same batch share the same values for `startedAt`, `finishedAt`,
 
 If a task fails due to an invalid document, it will be removed from the batch. The rest of the batch will still process normally. If an [`internal`](/reference/errors/overview#errors) error occurs, the whole batch will fail and all tasks within it will share the same `error` object.
 
-#### Auto-batching and task cancelation
+#### Auto-batching and task cancellation
 
 If the task you’re canceling is part of a batch, Meilisearch interrupts the whole process, discards all progress, and cancels that task. Then, it automatically creates a new batch without the canceled task and immediately starts processing it.
