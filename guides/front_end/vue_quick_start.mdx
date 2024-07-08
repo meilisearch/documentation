@@ -41,7 +41,7 @@ app.mount('#app');
 
 ## 4. Initialize the search client
 
-Use the following URL and API key to connect to a Meilisearch instance which contains data from Steam video games. Add the code below to the `App.vue` file.
+Add the code below to the `App.vue` file.
 
 ```js
 <template>
@@ -65,9 +65,11 @@ export default {
 </script>
 ```
 
- The `ais-instant-search` widget is the mandatory wrapper that allows you to configure your search. It takes two props: the `search-client` and the [`index-name`](/learn/core_concepts/indexes#index-uid).
+These URL and API key point to a public Meilisearch instance that contains data from Steam video games.
 
- ## 5. Add a search bar and list search results
+The `ais-instant-search` widget is the mandatory wrapper that allows you to configure your search. It takes two props: the `search-client` and the [`index-name`](/learn/core_concepts/indexes#index-uid).
+
+## 5. Add a search bar and list search results
 
 Add the `ais-search-box` and `ais-hits` widgets inside the `ais-instant-search` wrapper widget. 
 
