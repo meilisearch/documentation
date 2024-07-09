@@ -1,0 +1,135 @@
+---
+title: Vue3 quick start — Meilisearch documentation
+description: Integrate a search-as-you-type experience into your Vue app.
+---
+
+# Vue3 quick start
+
+## 1. Create a Vue application
+
+Run the `npm create` tool to install base dependencies and create your app folder structure.
+
+```bash
+npm create vue@latest my-app
+```
+
+## 2. Install the library of search components
+
+Navigate to your Vue app and install `vue-instantsearch`, `@meilisearch/instant-meilisearch`, and `instantsearch.css`.
+
+```bash
+npm install vue-instantsearch @meilisearch/instant-meilisearch instantsearch.css
+```
+
+- [Vue InstantSearch](https://github.com/algolia/instantsearch/): front-end tools to customize your search environment
+- [instant-meilisearch](https://github.com/meilisearch/meilisearch-js-plugins/tree/main/packages/instant-meilisearch): Meilisearch client to connect with Vue InstantSearch
+- [instantsearch.css](https://github.com/algolia/instantsearch/tree/master/packages/instantsearch.css) (optional): CSS library to add basic styles to the search components
+
+## 3. Add InstantSearch
+
+Include InstantSearch into `main.js` to include the Vue InstantSearch library.
+
+```js
+import { createApp } from 'vue';
+import App from './App.vue';
+import InstantSearch from 'vue-instantsearch/vue3/es';
+
+const app = createApp(App);
+app.use(InstantSearch);
+app.mount('#app');
+```
+
+## 4. Initialize the search client
+
+Add the code below to the `App.vue` file.
+
+```js
+<template>
+  <ais-instant-search :search-client="searchClient" index-name="steam-video-games">
+  </ais-instant-search>
+</template>
+
+<script>
+import { instantMeiliSearch } from "@meilisearch/instant-meilisearch";
+
+export default {
+  data() {
+    return {
+      searchClient: instantMeiliSearch(
+        'https://ms-adf78ae33284-106.lon.meilisearch.io',
+        'a63da4928426f12639e19d62886f621130f3fa9ff3c7534c5d179f0f51c4f303',
+      ).searchClient,
+    };
+  },
+};
+</script>
+```
+
+These URL and API key point to a public Meilisearch instance that contains data from Steam video games.
+
+The `ais-instant-search` widget is the mandatory wrapper that allows you to configure your search. It takes two props: the `search-client` and the [`index-name`](/learn/core_concepts/indexes#index-uid).
+
+## 5. Add a search bar and list search results
+
+Add the `ais-search-box` and `ais-hits` widgets inside the `ais-instant-search` wrapper widget. 
+
+Import the CSS library to style the search components.
+
+```
+<template>
+  <ais-instant-search :search-client="searchClient" index-name="steam-video-games">
+  <ais-search-box />
+    <ais-hits>
+      <template v-slot:item="{ item }">
+	  <div>
+	    <img :src="item.image" align="left" :alt="item.name"/>
+          <h2>{{ item.name }}</h2>
+	    <p> {{ item.description }}</p>
+	  </div>
+      </template>
+    </ais-hits>
+  </ais-instant-search>
+</template>
+
+<script>
+import { instantMeiliSearch } from "@meilisearch/instant-meilisearch";
+import "instantsearch.css/themes/satellite-min.css";
+
+
+export default {
+data() {
+    return {
+    searchClient: instantMeiliSearch(
+        'https://ms-adf78ae33284-106.lon.meilisearch.io',
+        'a63da4928426f12639e19d62886f621130f3fa9ff3c7534c5d179f0f51c4f303',
+    ).searchClient,
+    };
+},
+};
+</script>
+```
+
+Use the slot directive to customize how each search result is rendered.
+
+<Capsule intent="tip">
+Use the following CSS classes to add custom styles to your components:
+`.ais-InstantSearch`, `.ais-SearchBox`, `.ais-InfiniteHits-list`, `.ais-InfiniteHits-item`
+</Capsule>
+
+## 6.Start the app and search as you type
+
+Start the app by running:
+
+```bash
+npm run dev
+```
+
+Now open your browser, navigate to your Vue app URL (e.g., `localhost:5173`), and start searching.
+
+![Vue app search UI with a search bar at the top and search results for a few video games](/assets/images/react_quick_start/react-qs-search-ui.png)
+
+Encountering issues? Check out the code in action in our [live demo](https://codesandbox.io/p/sandbox/ms-vue3-is-forked-wsrkl8)!
+
+## Next steps
+
+Want to search through your own data? [Create a project](https://cloud.meilisearch.com) in the Meilisearch Dashboard. Check out our [getting started guide](/learn/getting_started/cloud_quick_start) for step-by-step instructions.
