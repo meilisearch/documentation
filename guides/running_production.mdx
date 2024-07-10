@@ -53,7 +53,7 @@ Meilisearch is now running, but it is not publicly accessible.
 Running applications as root exposes you to unnecessary security risks. To prevent that, create a dedicated user for Meilisearch:
 
 ```sh
-useradd -d /var/lib/meilisearch -b /bin/false -m -r meilisearch
+useradd -d /var/lib/meilisearch -s /bin/false -m -r meilisearch
 ```
 
 ## Step 3: Create a configuration file
@@ -112,6 +112,7 @@ WorkingDirectory=/var/lib/meilisearch
 ExecStart=/usr/local/bin/meilisearch --config-file-path /etc/meilisearch.toml
 User=meilisearch
 Group=meilisearch
+Restart=on-failure
 
 [Install]
 WantedBy=multi-user.target

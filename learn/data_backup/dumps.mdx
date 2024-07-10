@@ -67,6 +67,10 @@ Once the task `status` changes to `succeeded`, find the dump file in [the dump d
 
 If a dump file is visible in the file system, the dump process was successfully completed. **Meilisearch will never create a partial dump file**, even if you interrupt an instance while it is generating a dump.
 
+<Capsule intent="note" title="API keys and backups">
+Since the `key` field depends on the master key, it is not propagated to dumps. If a malicious user ever gets access to your dumps, they will not have access to your instance's API keys.
+</Capsule>
+
 ## Importing a dump
 
 ### Importing a dump in Meilisearch Cloud

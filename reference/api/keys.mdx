@@ -11,8 +11,6 @@ The `/keys` route allows you to create, manage, and delete API keys. To use thes
 Accessing the `/keys` route without setting a master key will throw a [`missing_master_key`](/reference/errors/error_codes#missing_master_key) error.
 </Capsule>
 
-[Learn more about managing keys and their rights](/learn/security/managing_api_keys).
-
 ## Key object
 
 ```json
@@ -60,9 +58,13 @@ Accessing the `/keys` route without setting a master key will throw a [`missing_
 This value is also used as the `{key}` path variable to [update](#update-a-key), [delete](#delete-a-key), or [get](#get-one-key) a specific key.
 
 <Capsule intent="note">
-Since `key` is a hash of the `uid` and master key, `key` values are deterministic between instances sharing the same configuration. This means if the master key changes, all `key` values are automatically changed.
+Since `key` is a hash of the `uid` and master key, `key` values are deterministic between instances sharing the same configuration. You can determine the value of an API key with the following command, replacing `HYPHENATED_UUID` and `MASTER_KEY` with the correct values for your key and instance:
 
-Since the `key` field depends on the master key, it is computed at runtime and therefore not propagated to dumps and snapshots. As a result, even if a malicious user comes into possession of your dumps or snapshots, they will not have access to your instance's API keys.
+```sh
+echo -n $HYPHENATED_UUID | openssl dgst -sha256 -hmac $MASTER_KEY
+```
+
+This also means that, if the master key changes, all `key` values are automatically changed.
 </Capsule>
 
 ### `actions`
@@ -115,6 +117,10 @@ You can also use the `*` character as a wildcard by adding it at the end of a st
 **Type**: String<br />
 **Default value**: N/A<br />
 **Description**: Date and time when the key will expire, represented in [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. `null` if the key never expires
+
+<Capsule intent="note">
+Once a key is past its `expiresAt` date, using it for API authorization will return an error.
+</Capsule>
 
 ### `createdAt`
 
