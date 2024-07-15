@@ -13,7 +13,7 @@ The `filter` search parameter expects a filter expression. Filter expressions ar
 
 Filters accept numeric and string values. Empty fields or fields containing an empty array will be ignored.
 
-Filters do not work with [`NaN`](https://en.wikipedia.org/wiki/NaN) and infinite values such as `inf` and `-inf` as they are [not supported by JSON](https://en.wikipedia.org/wiki/JSON#Data_types). It is possible to filter infinite and `NaN` values if you parse them as strings, except when handling [`_geo` fields](/learn/fine_tuning_results/geosearch#preparing-documents-for-location-based-search).
+Filters do not work with [`NaN`](https://en.wikipedia.org/wiki/NaN) and infinite values such as `inf` and `-inf` as they are [not supported by JSON](https://en.wikipedia.org/wiki/JSON#Data_types). It is possible to filter infinite and `NaN` values if you parse them as strings, except when handling [`_geo` fields](/learn/filtering_and_sorting/geosearch#preparing-documents-for-location-based-search).
 
 <Capsule intent="warning" title="Type coercion">
 For best results, enforce homogeneous typing across fields, especially when dealing with large numbers. Meilisearch does not enforce a specific schema when indexing data, but the filtering engine may coerce the type of `value`. This can lead to undefined behavior, such as when big floating-point numbers are coerced into integers.

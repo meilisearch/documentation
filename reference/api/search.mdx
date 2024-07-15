@@ -315,7 +315,7 @@ When `q` isn't specified, Meilisearch performs a **placeholder search**.  A plac
 If the index has no sort or custom ranking rules, the results are returned in the order of their internal database position.
 
 <Capsule intent="tip">
-Placeholder search is particularly useful when building a [faceted search interfaces](/learn/fine_tuning_results/faceted_search), as it allows users to view the catalog and alter sorting rules without entering a query.
+Placeholder search is particularly useful when building a [faceted search interfaces](/learn/filtering_and_sorting/faceted_search), as it allows users to view the catalog and alter sorting rules without entering a query.
 </Capsule>
 
 #### Phrase search
@@ -606,7 +606,7 @@ The response shows the facet distribution for `genres` and `rating`. Since `rati
 }
 ```
 
-[Learn more about facet distribution in the faceted search guide.](/learn/fine_tuning_results/faceted_search#configuring-and-using-facets)
+[Learn more about facet distribution in the faceted search guide.](/learn/filtering_and_sorting/faceted_search#configuring-and-using-facets)
 
 ### Distinct attributes at search time
 
@@ -906,7 +906,7 @@ When using the `POST` route, `sort` expects an array of strings.
 
 When using the `GET` route, `sort` expects the list as a comma-separated string.
 
-[Read more about sorting search results in our dedicated guide.](/learn/fine_tuning_results/sorting)
+[Read more about sorting search results in our dedicated guide.](/learn/filtering_and_sorting/sorting)
 
 #### Example
 
@@ -938,7 +938,7 @@ Queries using `_geoPoint` will always include a `geoDistance` field containing t
 ]
 ```
 
-[You can read more about location-based sorting in our dedicated guide.](/learn/fine_tuning_results/geosearch#sorting-results-with-_geopoint)
+[You can read more about location-based sorting in our dedicated guide.](/learn/filtering_and_sorting/geosearch#sorting-results-with-_geopoint)
 
 ### Matching strategy
 
@@ -1077,7 +1077,7 @@ The `sort` ranking rule does not appear as a single field in the score details o
 
 - `order`: order in which this ranking rule was applied
 - `value`: value of the field used for sorting
-- `distance`: same as [_geoDistance](/learn/fine_tuning_results/geosearch#finding-the-distance-between-a-document-and-a-_geopoint)
+- `distance`: same as [_geoDistance](/learn/filtering_and_sorting/geosearch#finding-the-distance-between-a-document-and-a-_geopoint)
 
 ##### `vectorSort(target_vector)`
 
