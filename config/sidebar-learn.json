@@ -238,9 +238,9 @@
         "slug": "faceted_search"
       },
       {
-        "source": "learn/filtering_and_sorting/filtering.mdx",
-        "label": "Filtering",
-        "slug": "filtering"
+        "source": "learn/filtering_and_sorting/filter_search_resuls.mdx",
+        "label": "Filter search results",
+        "slug": "filter_search_results"
       },
       {
         "source": "learn/filtering_and_sorting/working_with_dates.mdx",
