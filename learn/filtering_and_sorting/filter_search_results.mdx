@@ -32,7 +32,7 @@ Suppose you have a collection of movies called `movie_ratings` containing the fo
 ]
 ```
 
-If you want to filter results based on the `director` and `genres` attributes, you must first add them to the `filterableAttributes` list:
+If you want to filter results based on an attribute, you must first add it to the `filterableAttributes` list:
 
 <CodeSamples id="filtering_update_settings_1" />
 
@@ -44,7 +44,7 @@ By default, `filterableAttributes` is empty. Filters do not work without first e
 
 ## Use `filter` when searching
 
-After adding `director`, `ratings`, and `genres` to the [`filterableAttributes` index setting](//reference/api/settings#filterable-attributes), you can use `filter` to fine-tune your search results.
+After updating the [`filterableAttributes` index setting](//reference/api/settings#filterable-attributes), you can use `filter` to fine-tune your search results.
 
 `filter` is a search parameter you may use at search time. `filter` accepts [filter expressions](/learn/filtering_and_sorting/filter_reference) built using any attributes present in the `filterableAttributes` list.
 
