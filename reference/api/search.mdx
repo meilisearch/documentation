@@ -40,7 +40,7 @@ By default, [this endpoint returns a maximum of 1000 results](/learn/advanced/kn
 | **[`limit`](#limit)**                                   | Integer          | `20`          | Maximum number of documents returned                |
 | **[`hitsPerPage`](#number-of-results-per-page)**        | Integer          | `1`           | Maximum number of documents returned for a page     |
 | **[`page`](#page)**                                     | Integer          | `1`           | Request a specific page of results                  |
-| **[`filter`](/reference/api/search#filter)**            | [String](/learn/filtering_and_sorting/filter_search_results#filter-expressions) | `null`        | Filter queries by an attribute's value              |
+| **[`filter`](/reference/api/search#filter)**            | [String](/learn/filtering_and_sorting/filter_expression_reference) | `null`        | Filter queries by an attribute's value              |
 | **[`facets`](#facets)**                                 | Array of strings | `null`        | Display the count of matches per facet              |
 | **[`attributesToRetrieve`](#attributes-to-retrieve)**   | Array of strings | `["*"]`       | Attributes to display in the returned documents     |
 | **[`attributesToCrop`](#attributes-to-crop)**           | Array of strings | `null`        | Attributes whose values have to be cropped          |
@@ -129,7 +129,7 @@ You can [read more about pagination in our dedicated guide](/guides/front_end/pa
 Search for documents matching a specific query in the given index.
 
 <Capsule intent="warning">
-This endpoint only accepts [string filter expressions](/learn/filtering_and_sorting/filter_search_results#filter-expressions).
+This endpoint only accepts [string filter expressions](/learn/filtering_and_sorting/filter_expression_reference).
 </Capsule>
 
 This endpoint should only be used when no API key is required. If an API key is required, use the [POST](/reference/api/search#search-in-an-index-with-post) route instead.
@@ -153,7 +153,7 @@ By default, [this endpoint returns a maximum of 1000 results](/learn/advanced/kn
 | **[`limit`](#limit)**                                   | Integer          | `20`          | Maximum number of documents returned                |
 | **[`hitsPerPage`](#number-of-results-per-page)**        | Integer          | `1`           | Maximum number of documents returned for a page     |
 | **[`page`](#page)**                                     | Integer          | `1`           | Request a specific page of results                  |
-| **[`filter`](/reference/api/search#filter)**            | [String](/learn/filtering_and_sorting/filter_search_results#filter-expressions) | `null`        | Filter queries by an attribute's value              |
+| **[`filter`](/reference/api/search#filter)**            | [String](/learn/filtering_and_sorting/filter_expression_reference) | `null`        | Filter queries by an attribute's value              |
 | **[`facets`](#facets)**                                 | Array of strings | `null`        | Display the count of matches per facet              |
 | **[`attributesToRetrieve`](#attributes-to-retrieve)**   | Array of strings | `["*"]`       | Attributes to display in the returned documents     |
 | **[`attributesToCrop`](#attributes-to-crop)**           | Array of strings | `null`        | Attributes whose values have to be cropped          |
