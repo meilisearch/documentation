@@ -1054,6 +1054,7 @@ filtering_update_settings_1: |-
     --data-binary '[
       "genres",
       "director",
+      "release_date",
       "ratings"
     ]'
 get_documents_post_1: |-
