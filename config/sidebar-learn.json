@@ -413,9 +413,9 @@
         "slug": "typo_tolerance_calculations"
       },
       {
-        "source": "learn/relevancy/distinct.mdx",
+        "source": "learn/relevancy/distinct_attribute.mdx",
         "label": "Distinct attribute",
-        "slug": "distinct"
+        "slug": "distinct_attribute"
       },
       {
         "source": "learn/relevancy/displayed_searchable_attributes.mdx",

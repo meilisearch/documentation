@@ -348,5 +348,30 @@
     "source": "/docs/learn/experimental/puffin_reports",
     "destination": "/docs/learn/experimental/log_customization",
     "permanent": true
+  },
+  {
+    "source": "learn/index_settings/distinct",
+    "destination": "learn/relevancy/distinct_attribute",
+    "permanent": true
+  },
+  {
+    "source": "learn/index_settings/displayed_searchable_attributes",
+    "destination": "learn/relevancy/displayed_searchable_attributes",
+    "permanent": true
+  },
+  {
+    "source": "learn/index_settings/synonyms",
+    "destination": "learn/relevancy/synonyms",
+    "permanent": true
+  },
+  {
+    "source": "learn/index_settings/typo_tolerance",
+    "destination": "learn/relevancy/typo_tolerance",
+    "permanent": true
+  },
+  {
+    "source": "learn/core_concepts/relevancy",
+    "destination": "learn/relevancy/relevancy",
+    "permanent": true
   }
 ]
