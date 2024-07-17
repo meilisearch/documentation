@@ -375,7 +375,7 @@
     "permanent": true
   },
   {
-    "source": "learn/index_settings/settings",
+    "source": "learn/configuration/settings",
     "destination": "reference/api/settings",
     "permanent": true
   }
