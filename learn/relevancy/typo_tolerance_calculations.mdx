@@ -9,7 +9,7 @@ Typo tolerance helps users find relevant results even when their search queries 
 
 Meilisearch uses a prefix [Levenshtein algorithm](https://en.wikipedia.org/wiki/Levenshtein_distance) to determine if a word in a document could be a possible match for a query term.
 
-The [number of typos referenced above](/learn/relevancy/typo_tolerance_settings#minwordsizefortypossizefortypos) is roughly equivalent to Levenshtein distance. The Levenshtein distance between two words _M_ and _P_ can be thought of as "the minimum cost of transforming _M_ into _P_" by performing the following elementary operations on _M_:
+The [number of typos referenced above](/learn/relevancy/typo_tolerance_settings#minwordsizefortypos) is roughly equivalent to Levenshtein distance. The Levenshtein distance between two words _M_ and _P_ can be thought of as "the minimum cost of transforming _M_ into _P_" by performing the following elementary operations on _M_:
 
 - substitution of a character (for example, `kitten` → `sitten`)
 - insertion of a character (for example, `siting` → `sitting`)
@@ -26,7 +26,7 @@ This means that `saturday` which is `7` characters long, uses the second rule an
 - `saturday` is accepted because it is the same word
 - `satuday` is accepted because it contains **one typo**
 - `sutuday` is not accepted because it contains **two typos**
-- `caturday` is not accepted because it contains **two typos** (as explained [above](/learn/relevancy/typo_tolerance_settings#minwordsizefortypossizefortypos), a typo on the first letter of a word is treated as two typos)
+- `caturday` is not accepted because it contains **two typos** (as explained [above](/learn/relevancy/typo_tolerance_settings#minwordsizefortypos), a typo on the first letter of a word is treated as two typos)
 
 ## Impact of typo tolerance on the `typo` ranking rule
 
