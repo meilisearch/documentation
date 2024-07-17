@@ -20,11 +20,11 @@ _Meilisearch helps you find where to watch a movie at [where2watch.meilisearch.c
 
 - **Blazing fast**: Answers in less than 50 milliseconds
 - **Search as you type**: Results are updated on each keystroke using [prefix-search](/learn/engine/prefix#prefix-search)
-- [Typo tolerance](/learn/configuration/typo_tolerance): Get relevant matches even when queries contain typos and misspellings
+- [Typo tolerance](/learn/relevancy/typo_tolerance_settings): Get relevant matches even when queries contain typos and misspellings
 - [Comprehensive language support](/learn/what_is_meilisearch/language): Optimized support for **Chinese, Japanese, Hebrew, and languages using the Latin alphabet**
 - **Returns the whole document**: The entire document is returned upon search
 - **Highly customizable search and indexing**: Customize search behavior to better meet your needs
-  - [Custom ranking](/learn/core_concepts/relevancy): Customize the relevancy of the search engine and the ranking of the search results
+  - [Custom ranking](/learn/relevancy/relevancy): Customize the relevancy of the search engine and the ranking of the search results
   - [Filtering](/learn/fine_tuning_results/filtering) and [faceted search](/learn/fine_tuning_results/faceted_search): Enhance user search experience with custom filters and build a faceted search interface in a few lines of code
   - [Highlighting](/reference/api/search#highlight-tags): Highlighted search results in documents
   - [Stop words](/reference/api/settings#stop-words): Ignore common non-relevant words like `of` or `the`
@@ -41,9 +41,9 @@ _Meilisearch helps you find where to watch a movie at [where2watch.meilisearch.c
 
 Our goal is to provide a simple and intuitive experience for both developers and end-users. Ease of use was the primary focus of Meilisearch from its first release, and it continues to drive its development today.
 
-Meilisearch's ease-of-use goes hand-in-hand with ultra relevant search results. Meilisearch **sorts results according to a set of [ranking rules](/learn/core_concepts/relevancy#ranking-rules)**. Our default ranking rules work for most use cases as we developed them by working directly with our users. You can also **configure the [search parameters](/reference/api/search)** to refine your search even further.
+Meilisearch's ease-of-use goes hand-in-hand with ultra relevant search results. Meilisearch **sorts results according to a set of [ranking rules](/learn/relevancy/relevancy#ranking-rules)**. Our default ranking rules work for most use cases as we developed them by working directly with our users. You can also **configure the [search parameters](/reference/api/search)** to refine your search even further.
 
-Meilisearch should **not be your main data store**. It is a search engine, not a database. Meilisearch should contain only the data you want your users to search through. If you must add data that is irrelevant to search, be sure to [make those fields non-searchable](/learn/configuration/displayed_searchable_attributes#searchable-fields) to improve relevancy and response time.
+Meilisearch should **not be your main data store**. It is a search engine, not a database. Meilisearch should contain only the data you want your users to search through. If you must add data that is irrelevant to search, be sure to [make those fields non-searchable](/learn/relevancy/displayed_searchable_attributes#searchable-fields) to improve relevancy and response time.
 
 Meilisearch provides an intuitive search-as-you-type experience with response times under 50 milliseconds, no matter whether you are developing a site or an app. This helps end-users find what they are looking for quickly and efficiently. To make that happen, we are fully committed to the philosophy of [prefix search](/learn/engine/prefix).
 

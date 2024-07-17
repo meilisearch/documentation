@@ -132,11 +132,11 @@ Meilisearch is designed to be fast (≤50ms response time), so speeding it up is
 In general, we recommend the former. However, if you need to reduce the size of your database for any reason, keep in mind that:
 
 - **More relevancy rules => a larger database**
-  - The proximity [ranking rule](/learn/core_concepts/relevancy#ranking-rules) alone can be responsible for almost 80% of database size
+  - The proximity [ranking rule](/learn/relevancy/relevancy#ranking-rules) alone can be responsible for almost 80% of database size
 - Adding many attributes to [`filterableAttributes`](/reference/api/settings#filterable-attributes) also consumes a large amount of disk space
 - Multi-lingual datasets are costly, so split your dataset—one language per index
 - [Stop words](/reference/api/settings#stop-words) are essential to reducing database size
-- Not all attributes need to be [searchable](/learn/configuration/displayed_searchable_attributes#searchable-fields). Avoid indexing unique IDs.
+- Not all attributes need to be [searchable](/learn/relevancy/displayed_searchable_attributes#searchable-fields). Avoid indexing unique IDs.
 
 ## Why does Meilisearch send data to Segment? Does Meilisearch track its users?
 

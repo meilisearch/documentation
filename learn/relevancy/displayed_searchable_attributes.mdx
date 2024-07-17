@@ -7,8 +7,8 @@ description: Displayed and searchable attributes define what data Meilisearch re
 
 By default, whenever a document is added to Meilisearch, all new attributes found in it are automatically added to two lists:
 
-- [`displayedAttributes`](/learn/configuration/displayed_searchable_attributes#displayed-fields): Attributes whose fields are displayed in documents
-- [`searchableAttributes`](/learn/configuration/displayed_searchable_attributes#the-searchableattributes-list): Attributes whose values are searched for matching query words
+- [`displayedAttributes`](/learn/relevancy/displayed_searchable_attributes#displayed-fields): Attributes whose fields are displayed in documents
+- [`searchableAttributes`](/learn/relevancy/displayed_searchable_attributes#the-searchableattributes-list): Attributes whose values are searched for matching query words
 
 By default, every field in a document is **displayed** and **searchable**. These properties can be modified in the [settings](/reference/api/settings).
 
@@ -40,12 +40,12 @@ Even if you make a field non-searchable, it will remain [stored in the database]
 
 ### The `searchableAttributes` list
 
-Meilisearch uses an ordered list to determine which attributes are searchable. The order in which attributes appear in this list also determines their [impact on relevancy](/learn/core_concepts/relevancy#attribute-ranking-order), from most impactful to least.
+Meilisearch uses an ordered list to determine which attributes are searchable. The order in which attributes appear in this list also determines their [impact on relevancy](/learn/relevancy/relevancy#attribute-ranking-order), from most impactful to least.
 
 In other words, the `searchableAttributes` list serves two purposes:
 
 1. It designates the fields that are searchable
-2. It dictates the [attribute ranking order](/learn/core_concepts/relevancy#attribute-ranking-order)
+2. It dictates the [attribute ranking order](/learn/relevancy/relevancy#attribute-ranking-order)
 
 There are two possible modes for the `searchableAttributes` list.
 
@@ -59,7 +59,7 @@ If you'd like to restore your searchable attributes list to this default behavio
 
 #### Manual
 
-You may want to make some attributes non-searchable, or change the [attribute ranking order](/learn/core_concepts/relevancy#attribute-ranking-order) after documents have been indexed. To do so, place the attributes in the desired order and send the updated list using the [update searchable attributes endpoint](/reference/api/settings#update-searchable-attributes).
+You may want to make some attributes non-searchable, or change the [attribute ranking order](/learn/relevancy/relevancy#attribute-ranking-order) after documents have been indexed. To do so, place the attributes in the desired order and send the updated list using the [update searchable attributes endpoint](/reference/api/settings#update-searchable-attributes).
 
 After manually updating the `searchableAttributes` list, **subsequent new attributes will no longer be automatically added** unless the settings are [reset](/reference/api/settings#reset-searchable-attributes).
 

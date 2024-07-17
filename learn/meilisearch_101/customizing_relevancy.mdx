@@ -30,13 +30,13 @@ The order of the `rankingRules` array matters: the first rule has the most impac
 ]
 ```
 
-You can read more about each ranking rule and what it does in our [dedicated guide](/learn/core_concepts/relevancy#built-in-rules).
+You can read more about each ranking rule and what it does in our [dedicated guide](/learn/relevancy/relevancy#built-in-rules).
 
 In this example, we change the order of the ranking rules for the `movies` index by moving `exactness` to the top:
 
 <CodeSamples id= "getting_started_update_ranking_rules" />
 
-You can read more about ranking rules in our [dedicated guide](/learn/core_concepts/relevancy).
+You can read more about ranking rules in our [dedicated guide](/learn/relevancy/relevancy).
 
 ## Displayed attributes
 
@@ -46,7 +46,7 @@ If you only want to display the `title`, `poster`, and `overview` for the `movie
 
 <CodeSamples id= "getting_started_update_displayed_attributes" />
 
-You can read more about displayed attributes in our [dedicated guide](/learn/configuration/displayed_searchable_attributes#displayed-fields).
+You can read more about displayed attributes in our [dedicated guide](/learn/relevancy/displayed_searchable_attributes#displayed-fields).
 
 ## Distinct attribute
 
@@ -113,7 +113,7 @@ The order of the `searchableAttributes` array corresponds to the order of import
   ]
 ```
 
-With the above order, matching words found in the `overview` field will have a higher impact on relevancy than the same words found in `title`. You can read more about this in our [relevancy guide](/learn/core_concepts/relevancy#attribute-ranking-order).
+With the above order, matching words found in the `overview` field will have a higher impact on relevancy than the same words found in `title`. You can read more about this in our [relevancy guide](/learn/relevancy/relevancy#attribute-ranking-order).
 
 ## Stop words
 
@@ -152,7 +152,7 @@ Meilisearch accepts one typo for query terms containing `5` or more characters b
 
 The above code sample sets the minimum word size for one typo to `4` characters. If you search for `swaj` now, you should get some results.
 
-You can read more about typo tolerance in our [dedicated guide](/learn/configuration/typo_tolerance).
+You can read more about typo tolerance in our [dedicated guide](/learn/relevancy/typo_tolerance_settings).
 
 ## Faceting
 

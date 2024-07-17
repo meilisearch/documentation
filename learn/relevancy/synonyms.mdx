@@ -11,7 +11,7 @@ Words set as synonyms won't always return the same results. With the default set
 
 <CodeSamples id="synonyms_guide_1" />
 
-With the new settings, searching for `great` returns 595 results and `fantastic` returns 423 results. This is due to various factors like [typos](/learn/configuration/typo_tolerance#minwordsizefortypos) and [splitting the query](/learn/engine/concat#split-queries) to find relevant documents. The search for `great` will allow only one typo (for example, `create`) and take into account all variations of `great` (for instance, `greatest`) along with `fantastic`.
+With the new settings, searching for `great` returns 595 results and `fantastic` returns 423 results. This is due to various factors like [typos](/learn/relevancy/typo_tolerance_settings#minwordsizefortypos) and [splitting the query](/learn/engine/concat#split-queries) to find relevant documents. The search for `great` will allow only one typo (for example, `create`) and take into account all variations of `great` (for instance, `greatest`) along with `fantastic`.
 
 <Capsule intent="warning">
 The number of search results may vary depending on changes to the `movies` dataset.
@@ -48,7 +48,7 @@ phone => iphone
 
 A search for `phone` will return documents containing `iphone` as if they contained the word `phone`.
 
-However, if you search for `iphone`, documents containing `phone` will be ranked lower in the results due to [the typo rule](/learn/core_concepts/relevancy#ranking-rules).
+However, if you search for `iphone`, documents containing `phone` will be ranked lower in the results due to [the typo rule](/learn/relevancy/relevancy#ranking-rules).
 
 #### Example
 
@@ -141,7 +141,7 @@ Suppose you set `San Francisco` and `SF` as synonyms with a [mutual association]
 }
 ```
 
-If you input `SF` as a search query, Meilisearch will also return results containing the phrase `San Francisco`. However, depending on the ranking rules, they might be considered less [relevant](/learn/core_concepts/relevancy) than those containing `SF`. The reverse is also true: if your query is `San Francisco`, documents containing `San Francisco` may rank higher than those containing `SF`.
+If you input `SF` as a search query, Meilisearch will also return results containing the phrase `San Francisco`. However, depending on the ranking rules, they might be considered less [relevant](/learn/relevancy/relevancy) than those containing `SF`. The reverse is also true: if your query is `San Francisco`, documents containing `San Francisco` may rank higher than those containing `SF`.
 
 ## Maximum number of synonyms per term
 

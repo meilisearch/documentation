@@ -366,7 +366,7 @@
   },
   {
     "source": "learn/index_settings/typo_tolerance",
-    "destination": "learn/relevancy/typo_tolerance",
+    "destination": "learn/relevancy/typo_tolerance_settings",
     "permanent": true
   },
   {

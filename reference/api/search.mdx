@@ -310,7 +310,7 @@ Normalization also converts all letters to lowercase. Searching for `"Video"` re
 
 #### Placeholder search
 
-When `q` isn't specified, Meilisearch performs a **placeholder search**.  A placeholder search returns all searchable documents in an index, modified by any search parameters used and sorted by that index's [custom ranking rules](/learn/core_concepts/relevancy#custom-rules). Since there is no query term, the [built-in ranking rules](/learn/core_concepts/relevancy#ranking-rules) **do not apply.**
+When `q` isn't specified, Meilisearch performs a **placeholder search**.  A placeholder search returns all searchable documents in an index, modified by any search parameters used and sorted by that index's [custom ranking rules](/learn/relevancy/relevancy#custom-rules). Since there is no query term, the [built-in ranking rules](/learn/relevancy/relevancy#ranking-rules) **do not apply.**
 
 If the index has no sort or custom ranking rules, the results are returned in the order of their internal database position.
 
@@ -324,7 +324,7 @@ If you enclose search terms in double quotes (`"`), Meilisearch will only return
 
 Phrase searches are case-insensitive and ignore [soft separators such as `-`, `,`, and `:`](/learn/engine/datatypes). Using a hard separator within a phrase search effectively splits it into multiple separate phrase searches: `"Octavia.Butler"` will return the same results as `"Octavia" "Butler"`.
 
-You can combine phrase search and normal queries in a single search request. In this case, Meilisearch will first fetch all documents with exact matches to the given phrase(s), and [then proceed with its default behavior](/learn/core_concepts/relevancy).
+You can combine phrase search and normal queries in a single search request. In this case, Meilisearch will first fetch all documents with exact matches to the given phrase(s), and [then proceed with its default behavior](/learn/relevancy/relevancy).
 
 ##### Example
 
@@ -723,7 +723,7 @@ By default highlighted elements are enclosed in `<em>` and `</em>` tags. You may
 </Capsule>
 
 <Capsule intent="warning">
-`attributesToHighlight` will highlight matches within all attributes added to the `attributesToHighlight` array, even if those attributes are not set as [`searchableAttributes`](/learn/configuration/displayed_searchable_attributes#searchable-fields).
+`attributesToHighlight` will highlight matches within all attributes added to the `attributesToHighlight` array, even if those attributes are not set as [`searchableAttributes`](/learn/relevancy/displayed_searchable_attributes#searchable-fields).
 </Capsule>
 
 #### Example
@@ -801,7 +801,7 @@ Though it is not necessary to use `highlightPreTag` and `highlightPostTag` in co
 Adds a `_matchesPosition` object to the search response that contains the location of each occurrence of queried terms across all fields. This is useful when you need more control than offered by our [built-in highlighting](#attributes-to-highlight). `showMatchesPosition` only works for strings, numbers, and arrays of strings and numbers.
 
 <Capsule intent="warning">
-`showMatchesPosition` returns the location of matched query terms within all attributes, even attributes that are not set as [`searchableAttributes`](/learn/configuration/displayed_searchable_attributes#searchable-fields).
+`showMatchesPosition` returns the location of matched query terms within all attributes, even attributes that are not set as [`searchableAttributes`](/learn/relevancy/displayed_searchable_attributes#searchable-fields).
 </Capsule>
 
 The beginning of a matching term within a field is indicated by `start`, and its length by `length`.
