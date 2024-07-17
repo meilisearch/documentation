@@ -1,0 +1,127 @@
+---
+title: Ruby on Rails quick start — Meilisearch documentation
+description: Integrate Meilisearch into your Ruby on Rails app.
+---
+
+# Ruby on Rails quick start
+
+Integrate Meilisearch into your Ruby on Rails app.
+
+## 1. Create a Meilisearch project
+
+[Create a project](https://cloud.meilisearch.com) in the Meilisearch Cloud dashboard. Check out our [getting started guide](/learn/getting_started/cloud_quick_start) for step-by-step instructions.
+
+If you prefer to use the self-hosted version of Meilisearch, you can follow the[ quick start](https://www.meilisearch.com/docs/learn/getting_started/quick_start) tutorial.
+
+## 2. Create a Rails app
+
+Ensure your environment uses at least Ruby 2.7.0 and Rails 6.1.
+
+```bash
+rails new blog
+```
+
+## 3. Install the meilisearch-rails gem
+
+Navigate to your Rails app and install the `meilisearch-rails` gem.
+
+```bash
+bundle add meilisearch-rails
+```
+
+## 4. Add your Meilisearch credentials
+
+Run the following command to create a `config/initializers/meilisearch.rb` file.
+
+```bash
+bin/rails meilisearch:install
+```
+
+Then add your Meilisearch URL and [Default Admin API Key](/learn/security/basic_security#obtaining-api-keys). On Meilisearch Cloud, you can find your credentials in your project settings.
+
+```Ruby
+MeiliSearch::Rails.configuration = {
+  meilisearch_url: '<your Meilisearch URL>',
+  meilisearch_api_key: '<your Meilisearch API key>'
+}
+```
+
+## 5. Generate the model and run the database migration
+
+Create an example `Article` model and generate the migration files.
+
+```bash
+bin/rails generate model Article title:string body:text
+
+bin/rails db:migrate
+```
+
+## 6. Index your model into Meilisearch
+
+Include the `MeiliSearch::Rails` module and the `meilisearch` block.
+
+```Ruby
+class Article < ApplicationRecord
+    include MeiliSearch::Rails
+    
+    meilisearch do
+    # index settings
+	# all attributes will be sent to Meilisearch if block is left empty
+    end
+end
+```
+
+This code creates an `Article` index and adds search capabilities to your `Article` model. 
+
+Once configured, `meilisearch-rails` automatically syncs your table data with your Meilisearch instance.
+
+
+## 7. Create new records in the database
+
+Use the Rails console to create new entries in the database.
+
+```bash
+bin/rails console
+```
+
+```Ruby
+# Use a loop to create and save 5 unique articles with predefined titles and bodies
+titles = ["Welcome to Rails", "Exploring Rails", "Advanced Rails", "Rails Tips", "Rails in Production"]
+bodies = [
+  "This is your first step into Ruby on Rails.",
+  "Dive deeper into the Rails framework.",
+  "Explore advanced features of Rails.",
+  "Quick tips for Rails developers.",
+  "Managing Rails applications in production environments."
+]
+
+titles.each_with_index do |title, index|
+  article = Article.new(title: title, body: bodies[index])
+  article.save # Saves the entry to the database
+end
+```
+
+## 8. Start searching
+
+### Backend search
+
+The backend search returns ORM-compliant objects reloaded from your database.
+
+```Ruby
+# Meilisearch is typo-tolerant:
+hits = Article.search('deepre')
+hits.first
+```
+We strongly recommend using the frontend search to enjoy the swift and responsive search-as-you-type experience.
+
+### Frontend search
+
+For testing purposes, you can explore the records using our built-in [search preview](/learn/getting_started/search_preview).
+
+![Searching through Rails table data with Meilisearch search preview UI](/assets/images/rails_quick_start/rails-qs-search-preview.gif)
+
+We also provide resources to help you quickly build your own [frontend interface](/guides/front_end/front_end_integration).
+
+## Next steps
+
+When you're ready to use your own data, make sure to configure your [index settings](/learn/configuration/settings) first to follow [best practices](/guides/performance/indexing_best_practices). For a full configuration example, see the [meilisearch-rails gem README](https://github.com/meilisearch/meilisearch-rails?tab=readme-ov-file#%EF%B8%8F-settings).
