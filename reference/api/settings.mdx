@@ -448,7 +448,7 @@ The distinct attribute is a field whose value will always be unique in the retur
 Updating distinct attributes will re-index all documents in the index, which can take some time. We recommend updating your index settings first and then adding documents as this reduces RAM consumption.
 </Capsule>
 
-[To learn more about the distinct attribute, refer to our dedicated guide.](/learn/configuration/distinct)
+[To learn more about the distinct attribute, refer to our dedicated guide.](/learn/relevancy/distinct_attribute)
 
 ### Get distinct attribute
 
@@ -498,7 +498,7 @@ If an attribute contains an object, you can use dot notation to set one or more 
 If the field does not exist, no error will be thrown.
 </Capsule>
 
-[To learn more about the distinct attribute, refer to our dedicated guide.](/learn/configuration/distinct)
+[To learn more about the distinct attribute, refer to our dedicated guide.](/learn/relevancy/distinct_attribute)
 
 #### Example
 
@@ -1772,7 +1772,7 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 The `synonyms` object contains words and their respective synonyms. A synonym in Meilisearch is considered equal to its associated word for the purposes of calculating search results.
 
-[To learn more about synonyms, refer to our dedicated guide.](/learn/configuration/synonyms)
+[To learn more about synonyms, refer to our dedicated guide.](/learn/relevancy/synonyms)
 
 ### Get synonyms
 
@@ -1812,7 +1812,7 @@ Get the list of synonyms of an index.
 
 <RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/synonyms"/>
 
-Update the list of synonyms of an index. Synonyms are [normalized](/learn/configuration/synonyms#normalization).
+Update the list of synonyms of an index. Synonyms are [normalized](/learn/relevancy/synonyms#normalization).
 
 #### Path parameters
 
@@ -1831,7 +1831,7 @@ Update the list of synonyms of an index. Synonyms are [normalized](/learn/config
 
 An object that contains all synonyms and their associated words. Add the associated words in an array to set a synonym for a word.
 
-[To learn more about synonyms, refer to our dedicated guide.](/learn/configuration/synonyms)
+[To learn more about synonyms, refer to our dedicated guide.](/learn/relevancy/synonyms)
 
 #### Example
 

@@ -373,5 +373,10 @@
     "source": "learn/core_concepts/relevancy",
     "destination": "learn/relevancy/relevancy",
     "permanent": true
+  },
+  {
+    "source": "learn/index_settings/settings",
+    "destination": "reference/api/settings",
+    "permanent": true
   }
 ]
