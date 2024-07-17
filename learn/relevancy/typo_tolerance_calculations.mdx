@@ -30,7 +30,7 @@ This means that `saturday` which is `7` characters long, uses the second rule an
 
 ## Impact of typo tolerance on the `typo` ranking rule
 
-The [`typo` ranking rule](/learn/relevancy/relevancy#2-typo) sorts search results by increasing number of typos on matched query words. Documents with 0 typos will rank highest, followed by those with 1 and then 2 typos.
+The [`typo` ranking rule](/learn/relevancy/ranking_rules#2-typo) sorts search results by increasing number of typos on matched query words. Documents with 0 typos will rank highest, followed by those with 1 and then 2 typos.
 
 The presence or absence of the `typo` ranking rule has no impact on the typo tolerance setting. However, **[disabling the typo tolerance setting](#configuring-typo-tolerance) effectively also disables the `typo` ranking rule.** This is because all returned documents will contain `0` typos.
 
