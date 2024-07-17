@@ -1,0 +1,114 @@
+---
+title: Built-in ranking rules — Meilisearch documentation
+description: Built-in ranking rules are the core of Meilisearch's relevancy calculations.
+---
+
+# Built-in ranking rules
+
+There are two types of ranking rules in Meilisearch: built-in ranking rules and [custom ranking rules](/learn/relevancy/custom_ranking_rules). This article describes the main aspects of using and configuring custom ranking rules.
+
+Built-in ranking rules are the core of Meilisearch's relevancy calculations.
+
+## List of built-in ranking rules
+
+Meilisearch contains six built-in ranking rules in the following order:
+
+```json
+[
+  "words",
+  "typo",
+  "proximity",
+  "attribute",
+  "sort",
+  "exactness"
+]
+```
+
+Depending on your needs, you might want to change this order. To do so, use the [update settings endpoint](/reference/api/settings#update-settings) or [update ranking rules endpoint](/reference/api/settings#update-ranking-rules).
+
+## 1. Words
+
+Results are sorted by **decreasing number of matched query terms**. Returns documents that contain all query terms first.
+
+<Capsule intent="note">
+The `words` rule works from right to left. Therefore, the order of the query string impacts the order of results.
+
+For example, if someone were to search `batman dark knight`, the `words` rule would rank documents containing all three terms first, documents containing only `batman` and `dark` second, and documents containing only `batman` third.
+</Capsule>
+
+## 2. Typo
+
+Results are sorted by **increasing number of typos**. Returns documents that match query terms with fewer typos first.
+
+## 3. Proximity
+
+Results are sorted by **increasing distance between matched query terms**. Returns documents where query terms occur close together and in the same order as the query string first.
+
+[It is possible to lower the precision of this ranking rule.](/reference/api/settings#proximity-precision) This may significantly improve indexing performance. In a minority of use cases, lowering precision may also lead to lower search relevancy for queries using multiple search terms.
+
+## 4. Attribute
+
+Results are sorted according to the **[attribute ranking order](/learn/core_concepts/relevancy#attribute-ranking-order)**. Returns documents that contain query terms in more important attributes first.
+
+Also, note the documents with attributes containing the query words at the beginning of the attribute will be considered more relevant than documents containing the query words at the end of the attributes.
+
+## 5. Sort
+
+Results are sorted **according to parameters decided at query time**. When the `sort` ranking rule is in a higher position, sorting is exhaustive: results will be less relevant but follow the user-defined sorting order more closely. When `sort` is in a lower position, sorting is relevant: results will be very relevant but might not always follow the order defined by the user.
+
+<Capsule intent="note">
+Differently from other ranking rules, sort is only active for queries containing the [`sort` search parameter](/reference/api/search#sort). If a search request does not contain `sort`, or if its value is invalid, this rule will be ignored.
+</Capsule>
+
+## 6. Exactness
+
+Results are sorted by **the similarity of the matched words with the query words**. Returns documents that contain exactly the same terms as the ones queried first.
+
+## Examples
+
+<Tabs.Container labels={["Typo", "Proximity", "Attribute", "Exactness"]}>
+
+<Tabs.Content label="Typo">
+
+![Demonstrating the typo ranking rule by searching for 'vogli'](/assets/images/ranking-rules/vogli3.png)
+
+##### Typo
+
+- `vogli`: 0 typo
+- `volli`: 1 typo
+
+The `typo` rule sorts the results by increasing number of typos on matched query words.
+
+</Tabs.Content>
+
+<Tabs.Content label="Proximity">
+![Demonstrating the proximity ranking rule by searching for 'new road'](/assets/images/ranking-rules/new_road.png)
+
+##### Proximity
+
+The reason why `Creature` is listed before `Mississippi Grind` is because of the `proximity` rule. The smallest **distance** between the matching words in `creature` is smaller than the smallest **distance** between the matching words in `Mississippi Grind`.
+
+The `proximity` rule sorts the results by increasing distance between matched query terms.
+</Tabs.Content>
+
+<Tabs.Content label="Attribute">
+![Demonstrating the attribute ranking rule by searching for 'belgium'](/assets/images/ranking-rules/belgium.png)
+
+##### Attribute
+
+`If It's Tuesday, This must be Belgium` is the first document because the matched word `Belgium` is found in the `title` attribute and not the `overview`.
+
+The `attribute` rule sorts the results by [attribute importance](/learn/core_concepts/relevancy#attribute-ranking-order).
+
+</Tabs.Content>
+
+<Tabs.Content label="Exactness">
+![Demonstrating the exactness ranking rule by searching for 'Knight'](/assets/images/ranking-rules/knight.png?raw=true)
+
+##### Exactness
+
+`Knight Moves` is displayed before `Knights of Badassdom`. `Knight` is exactly the same as the search query `Knight` whereas there is a letter of difference between `Knights` and the search query `Knight`.
+
+</Tabs.Content>
+
+</Tabs.Container>

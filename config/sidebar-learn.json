@@ -134,11 +134,6 @@
         "slug": "indexes"
       },
       {
-        "source": "learn/core_concepts/relevancy.mdx",
-        "label": "Relevancy",
-        "slug": "relevancy"
-      },
-      {
         "source": "learn/core_concepts/primary_key.mdx",
         "label": "Primary key",
         "slug": "primary_key"
@@ -194,37 +189,6 @@
         "source": "learn/configuration/configuring_index_settings_api.mdx",
         "label": "Configuring index settings with the Meilisearch API",
         "slug": "configuring_index_settings_api"
-      }
-    ]
-  },
-  {
-    "title": "Index settings",
-    "slug": "configuration",
-    "routes": [
-      {
-        "source": "learn/index_settings/all_index_settings.mdx",
-        "label": "All index settings",
-        "slug": "settings"
-      },
-      {
-        "source": "learn/index_settings/distinct.mdx",
-        "label": "Distinct attribute",
-        "slug": "distinct"
-      },
-      {
-        "source": "learn/index_settings/displayed_searchable_attributes.mdx",
-        "label": "Displayed and searchable attributes",
-        "slug": "displayed_searchable_attributes"
-      },
-      {
-        "source": "learn/index_settings/synonyms.mdx",
-        "label": "Synonyms",
-        "slug": "synonyms"
-      },
-      {
-        "source": "learn/index_settings/typo_tolerance.mdx",
-        "label": "Typo tolerance",
-        "slug": "typo_tolerance"
       }
     ]
   },
@@ -406,6 +370,62 @@
         "source": "learn/inner_workings/tokenization.mdx",
         "label": "Tokenization",
         "slug": "tokenization"
+      }
+    ]
+  },
+  {
+    "title": "Relevancy",
+    "slug": "relevancy",
+    "routes": [
+      {
+        "source": "learn/relevancy/relevancy.mdx",
+        "label": "Relevancy",
+        "slug": "relevancy"
+      },
+      {
+        "source": "learn/relevancy/ranking_rules.mdx",
+        "label": "Built-in ranking rules",
+        "slug": "ranking_rules"
+      },
+      {
+        "source": "learn/relevancy/custom_ranking_rules.mdx",
+        "label": "Custom ranking rules",
+        "slug": "custom_ranking_rules"
+      },
+      {
+        "source": "learn/relevancy/ranking_score.mdx",
+        "label": "Ranking score",
+        "slug": "ranking_score"
+      },
+      {
+        "source": "learn/relevancy/attribute_ranking_order.mdx",
+        "label": "Attribute ranking order",
+        "slug": "attribute_ranking_order"
+      },
+      {
+        "source": "learn/relevancy/typo_tolerance_settings.mdx",
+        "label": "Typo tolerance settings",
+        "slug": "typo_tolerance_settings"
+      },
+      {
+        "source": "learn/relevancy/typo_tolerance_calculations.mdx",
+        "label": "Typo tolerance calculations",
+        "slug": "typo_tolerance_calculations"
+      },
+      {
+        "source": "learn/relevancy/distinct.mdx",
+        "label": "Distinct attribute",
+        "slug": "distinct"
+      },
+      {
+        "source": "learn/relevancy/displayed_searchable_attributes.mdx",
+        "label": "Displayed and searchable attributes",
+        "slug": "displayed_searchable_attributes"
+      },
+      {
+        "source": "learn/relevancy/synonyms.mdx",
+        "label": "Synonyms",
+        "slug": "synonyms"
       }
     ]
   },

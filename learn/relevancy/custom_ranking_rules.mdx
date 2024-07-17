@@ -1,0 +1,67 @@
+---
+title: Custom ranking rules — Meilisearch documentation
+description: Custom ranking rules promote certain documents over other search results that are otherwise equally relevant.
+---
+
+# Custom ranking rules
+
+There are two types of ranking rules in Meilisearch: [built-in ranking rules](/learn/relevancy/ranking_rules) and custom ranking rules. This article describes the main aspects of using and configuring custom ranking rules.
+
+Custom ranking rules promote certain documents over other search results that are otherwise equally relevant.
+
+## Ascending and descending sorting rules
+
+Meilisearch supports two types of custom rules: one for ascending sort and one for descending sort.
+
+To add a custom ranking rule, you have to communicate the attribute name followed by a colon (`:`) and either `asc` for ascending order or `desc` for descending order.
+
+- To apply an **ascending sort** (results sorted by increasing value of the attribute): `attribute_name:asc`
+
+- To apply a **descending sort** (results sorted by decreasing value of the attribute): `attribute_name:desc`
+
+**The attribute must have either a numeric or a string value** in all of the documents contained in that index.
+
+You can add this rule to the existing list of ranking rules using the [update settings endpoint](/reference/api/settings#update-settings) or [update ranking rules endpoint](/reference/api/settings#update-ranking-rules).
+
+## Example
+
+Suppose you have a movie dataset. The documents contain the fields `release_date` with a timestamp as value, and `movie_ranking`, an integer that represents its ranking.
+
+The following example creates a rule that makes older movies more relevant than recent ones. A movie released in 1999 will appear before a movie released in 2020.
+
+```
+release_date:asc
+```
+
+The following example will create a rule that makes movies with a good rank more relevant than movies with a lower rank. Movies with a higher ranking will appear first.
+
+```
+movie_ranking:desc
+```
+
+The following array includes all built-in ranking rules and places the custom rules at the bottom of the processing order:
+
+```json
+[
+  "words",
+  "typo",
+  "proximity",
+  "attribute",
+  "sort",
+  "exactness",
+  "release_date:asc",
+  "movie_ranking:desc"
+]
+```
+
+## Sorting at search time and custom ranking rules
+
+Meilisearch allows users to define [sorting order at query time](/learn/fine_tuning_results/sorting) by using the [`sort` search parameter](/reference/api/search#sort). There is some overlap between sorting and custom ranking rules, but the two do have different uses.
+
+In general, `sort` will be most useful when you want to allow users to define what type of results they want to see first. A good use-case for `sort` is creating a webshop interface where customers can sort products by descending or ascending product price.
+
+Custom ranking rules, instead, are always active once configured and are useful when you want to promote certain types of results. A good use-case for custom ranking rules is ensuring discounted products in a webshop always feature among the top results.
+
+<Capsule intent="tip" title="Promoting search results and document pinning">
+Meilisearch does not offer native support for promoting, pinning, and boosting specific documents so they are displayed more prominently than other search results. Consult these Meilisearch blog articles for workarounds on [implementing promoted search results with React InstantSearch](https://blog.meilisearch.com/promoted-search-results-with-react-instantsearch) and [document boosting](https://blog.meilisearch.com/document-boosting).
+</Capsule>
