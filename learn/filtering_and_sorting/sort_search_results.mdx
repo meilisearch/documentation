@@ -1,10 +1,10 @@
 ---
-title: Sorting — Meilisearch documentation
+title: Sort search results — Meilisearch documentation
 description: By default, Meilisearch sorts results according to their relevancy. You can alter this behavior so users can decide at search time results they want to see first.
 sidebarDepth: 3
 ---
 
-# Sorting
+# Sort search results
 
 By default, Meilisearch focuses on ordering results according to their relevancy. You can alter this sorting behavior so users can decide at search time what type of results they want to see first.
 
@@ -14,7 +14,7 @@ This can be useful in many situations, such as when a user wants to see the chea
 Sorting at search time can be particularly effective when combined with [placeholder searches](/reference/api/search#placeholder-search).
 </Capsule>
 
-## Configuring Meilisearch for sorting at search time
+## Configure Meilisearch for sorting at search time
 
 To allow your users to sort results at search time you must:
 
@@ -28,21 +28,17 @@ Meilisearch sorts strings in lexicographic order based on their byte values. For
 Uppercase letters are sorted as if they were lowercase. They will still appear uppercase in search results.
 </Capsule>
 
-### Select attributes for sorting
+### Add attributes to `sortableAttributes`
 
 Meilisearch allows you to sort results based on document fields. Only fields containing numbers, strings, arrays of numeric values, and arrays of string values can be used for sorting.
+
+After you have decided which fields you will allow your users to sort on, you must add their attributes to the [`sortableAttributes` index setting](/reference/api/settings#sortable-attributes).
 
 <Capsule intent="warning">
 If a field has values of different types across documents, Meilisearch will give precedence to numbers over strings. This means documents with numeric field values will be ranked higher than those with string values.
 
-This can lead to unexpected behavior when sorting, so we strongly recommend you only allow sorting at query time on fields containing the same type of value.
+This can lead to unexpected behavior when sorting. For optimal user experience, only sort based on fields containing the same type of value.
 </Capsule>
-
-### Adding attributes to `sortableAttributes`
-
-After you have decided which fields you will allow your users to sort on, you must add their attributes to the [`sortableAttributes` index setting](/reference/api/settings#sortable-attributes).
-
-`sortableAttributes` accepts an array of strings, each corresponding to one attribute. Note that the attribute order in `sortableAttributes` has no impact on sorting.
 
 #### Example
 
@@ -60,46 +56,6 @@ Suppose you have collection of books containing the following fields:
     "rating": {
       "critics": 95,
       "users": 87
-    },
-    "price": 5.00
-  },
-  {
-    "id": 2,
-    "title": "The Parable of the Sower",
-    "author": "Octavia E. Butler",
-    "genres": [
-      "science fiction"
-    ],
-    "rating": {
-      "critics": 90,
-      "users": 92
-    },
-    "price": 10.00
-  },
-  {
-    "id": 3,
-    "title": "Gender Trouble",
-    "author": "Judith Butler",
-    "genres": [
-      "feminism",
-      "philosophy"
-    ],
-    "rating": {
-      "critics": 86,
-      "users": 73
-    },
-    "price": 10.00
-  },
-  {
-    "id": 4,
-    "title": "Wild Seed",
-    "author": "Octavia E. Butler",
-    "genres": [
-      "fantasy"
-    ],
-    "rating": {
-      "critics": 84,
-      "users": 80
     },
     "price": 5.00
   },
@@ -142,15 +98,13 @@ If your users care more about finding cheaper books than they care about finding
 
 <CodeSamples id="sorting_guide_update_ranking_rules_1" />
 
-## Sorting results at search time
+## Sort results at search time
 
 After configuring `sortableAttributes`, you can use the [`sort` search parameter](/reference/api/search#sort) to control the sorting order of your search results.
 
-### Using `sort`
-
 `sort` expects a list of attributes that have been added to the `sortableAttributes` list.
 
-**Attributes must be given as** `attribute:sorting_order`. In other words, each attribute must be followed by a colon (`:`) and a sorting order: either ascending (`asc`) or descending (`desc`).
+Attributes must be given as `attribute:sorting_order`. In other words, each attribute must be followed by a colon (`:`) and a sorting order: either ascending (`asc`) or descending (`desc`).
 
 When using the `POST` route, `sort` expects an array of strings:
 
@@ -166,8 +120,6 @@ When using the `GET` route, `sort` expects a comma-separated string:
 ```
 sort="price:desc,author:asc"
 ```
-
-We strongly recommend using `POST` over `GET` routes whenever possible.
 
 The order of `sort` values matter: the higher an attribute is in the search parameter value, the more Meilisearch will prioritize it over attributes placed lower. In our example, if multiple documents have the same value for `price`, Meilisearch will decide the order between these similarly-priced documents based on their `author`.
 
@@ -259,7 +211,7 @@ It is common to search books based on an author's name. `sort` can help grouping
 ]
 ```
 
-#### Sorting by nested fields
+### Sort by nested fields
 
 Use dot notation to sort results based on a document's nested fields. The following query sorts returned documents by their user review scores:
 
@@ -272,44 +224,6 @@ There is a lot of overlap between sorting and configuring [custom ranking rules]
 Sorting is most useful when you want your users to be able to alter the order of returned results at query time. For example, webshop users might want to order results by price depending on what they are searching and to change whether they see the most expensive or the cheapest products first.
 
 Custom ranking rules, instead, establish a default sorting rule that is enforced in every search. This approach can be useful when you want to promote certain results above all others, regardless of a user's preferences. For example, you might want a webshop to always feature discounted products first, no matter what a user is searching for.
-
-## Sorting with `_geoPoint`
-
-If your documents contain `_geo` data, you can use `_geoPoint` to sort results based on their distance from a geographic position.
-
-`_geoPoint` is a sorting function that requires two floating point numbers indicating a location's latitude and longitude. You must also specify whether the sort should be ascending (`asc`) or descending (`desc`):
-
-```json
-{
-  "sort": [
-    "_geoPoint(0.0, 0.0):asc"
-  ]
-}
-```
-
-Queries using `_geoPoint` will always include a `geoDistance` field containing the distance in meters between the document location and the `_geoPoint`:
-
-```json
-[
-  {
-    "id": 1,
-    "name": "Nàpiz' Milano",
-    "_geo": {
-      "lat": 45.4777599,
-      "lng": 9.1967508
-    },
-    "_geoDistance": 1532
-  }
-]
-```
-
-[You can read more about location-based sorting in our geosearch guide.](/learn/fine_tuning_results/geosearch#sorting-results-with-_geopoint)
-
-### Example
-
-The following query will sort results based on how close they are to the Eiffel Tower:
-
-<CodeSamples id="geosearch_guide_sort_usage_1" />
 
 ## Example application
 

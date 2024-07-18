@@ -127,7 +127,7 @@ In order to filter results based on their location, you must add the `_geo` attr
 
 Meilisearch will rebuild your index whenever you update `filterableAttributes`. Depending on the size of your dataset, this might take a considerable amount of time.
 
-[You can read more about configuring `filterableAttributes` in our dedicated filtering guide.](/learn/fine_tuning_results/filtering#configuring-filters)
+[You can read more about configuring `filterableAttributes` in our dedicated filtering guide.](/learn/filtering_and_sorting/filter_search_results)
 
 ### Usage
 
@@ -230,7 +230,7 @@ Before using geosearch for sorting, you must add the `_geo` attribute to the `so
 
 Note that Meilisearch will rebuild your index whenever you update `sortableAttributes`. Depending on the size of your dataset, this might take a considerable amount of time.
 
-[You can read more about configuring `sortableAttributes` in our dedicated sorting guide.](/learn/fine_tuning_results/sorting#configuring-meilisearch-for-sorting-at-search-time)
+[You can read more about configuring `sortableAttributes` in our dedicated sorting guide.](/learn/filtering_and_sorting/sort_search_results)
 
 ### Usage
 
@@ -244,7 +244,7 @@ _geoPoint(0.0, 0.0):asc
 
 If either `lat` or `lng` is invalid or missing, Meilisearch will return an [`invalid_search_sort`](/reference/errors/error_codes#invalid_search_sort) error. An error will also be thrown if you fail to indicate a sorting order.
 
-[You can read more about sorting in our dedicated guide.](/learn/fine_tuning_results/sorting#sorting-results-at-search-time)
+[You can read more about sorting in our dedicated guide.](/learn/filtering_and_sorting/sort_search_results)
 
 <Capsule intent="warning">
 `_geo`, `_geoDistance`, and `_geoRadius` are not valid `sort` values. Trying to use any of them with the `sort` search parameter will result in an [`invalid_search_sort`](/reference/errors/error_codes#invalid_search_sort) error.
@@ -346,7 +346,7 @@ By default, Meilisearch emphasizes relevant sorting over exhaustive sorting. Thi
 
 Since `_geoPoint` is part of the `sort` search parameter, its weight when ranking results is controlled by the position of the `"sort"` rule in the `rankingRules` array.
 
-[You can read more about the `"sort"` ranking rule and how to customize it in our dedicated sorting guide.](/learn/fine_tuning_results/sorting#sorting-and-custom-ranking-rules)
+[You can read more about the `"sort"` ranking rule and how to customize it in our dedicated sorting guide.](/learn/filtering_and_sorting/sort_search_results#sorting-and-custom-ranking-rules)
 
 ## Finding the distance between a document and a `_geoPoint`
 

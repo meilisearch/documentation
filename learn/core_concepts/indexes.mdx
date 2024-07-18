@@ -99,7 +99,7 @@ Facets are a specific use-case of filters in Meilisearch: whether something is a
 
 By default, Meilisearch returns `100` facet values for each faceted field. You can change this using the [update settings endpoint](/reference/api/settings#update-settings) or the [update faceting settings endpoint](/reference/api/settings#update-faceting-settings).
 
-[Learn more about faceting.](/learn/fine_tuning_results/faceted_search)
+[Learn more about faceting.](/learn/filtering_and_sorting/search_with_facet_filters)
 
 ### Filterable attributes
 
@@ -107,7 +107,7 @@ Filtering allows you to refine your search based on different categories. For ex
 
 Before filtering on any document attribute, you must add it to `filterableAttributes` using the [update settings endpoint](/reference/api/settings#update-settings) or the [update filterable attributes endpoint](/reference/api/settings#update-filterable-attributes). Then, make a search query using the [`filter` search parameter](/reference/api/search#filter).
 
-[Learn more about filtering.](/learn/fine_tuning_results/filtering)
+[Learn more about filtering.](/learn/filtering_and_sorting/filter_search_results)
 
 ### Pagination
 
@@ -129,7 +129,7 @@ By default, Meilisearch orders results according to their relevancy. You can alt
 
 Add the attributes you'd like to sort by to `sortableAttributes` using the [update settings endpoint](/reference/api/settings#update-settings) or the [update sortable attributes endpoint](/reference/api/settings#update-sortable-attributes). You can then use the [`sort` search parameter](/reference/api/search#sort) to sort your results in ascending or descending order.
 
-[Learn more about sorting.](/learn/fine_tuning_results/sorting)
+[Learn more about sorting.](/learn/filtering_and_sorting/sort_search_results)
 
 ### Stop words
 

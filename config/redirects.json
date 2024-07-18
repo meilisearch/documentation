@@ -51,7 +51,7 @@
   },
   {
     "source": "/docs/learn/advanced/sorting",
-    "destination": "/docs/learn/filtering_and_sorting/sorting",
+    "destination": "/docs/learn/filtering_and_sorting/sort_search_results",
     "permanent": true
   },
   {
@@ -377,6 +377,31 @@
   {
     "source": "learn/configuration/settings",
     "destination": "reference/api/settings",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/fine_tuning_results/faceted_search",
+    "destination": "/docs/learn/filtering_and_sorting/search_with_facet_filters",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/fine_tuning_results/filtering",
+    "destination": "/docs/learn/filtering_and_sorting/filter_search_results",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/fine_tuning_results/working_with_dates",
+    "destination": "/docs/learn/filtering_and_sorting/working_with_dates",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/fine_tuning_results/geosearch",
+    "destination": "/docs/learn/filtering_and_sorting/geosearch",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/fine_tuning_results/sorting",
+    "destination": "/docs/learn/filtering_and_sorting/sort_search_results",
     "permanent": true
   }
 ]

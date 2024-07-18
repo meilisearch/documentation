@@ -1053,7 +1053,9 @@ filtering_update_settings_1: |-
     -H 'Content-Type: application/json' \
     --data-binary '[
       "genres",
-      "director"
+      "director",
+      "release_date",
+      "ratings"
     ]'
 get_documents_post_1: |-
   curl \

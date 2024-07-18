@@ -159,7 +159,7 @@ This error occurs if:
   - It should be a string, array of strings, or array of array of strings for the [get documents with POST endpoint](/reference/api/documents#get-documents-with-post)
   - It should be a string for the [get documents with GET endpoint](/reference/api/documents#get-documents-with-get)
 - The attribute used for filtering is not defined in the [`filterableAttributes` list](/reference/api/settings#filterable-attributes)
-- The [filter expression](/learn/fine_tuning_results/filtering#filter-expressions) has a missing or invalid operator. [Read more about our supported operators](/learn/fine_tuning_results/filtering#filter-operators)
+- The [filter expression](/learn/filtering_and_sorting/filter_expression_reference) has a missing or invalid operator. [Read more about our supported operators](/learn/filtering_and_sorting/filter_expression_reference)
 
 ## `invalid_document_limit`
 
@@ -171,7 +171,7 @@ The [`offset`](/reference/api/documents#query-parameters) parameter is invalid. 
 
 ## `invalid_document_geo_field`
 
-The provided `_geo` field of one or more documents is invalid. Meilisearch expects `_geo` to be an object with two fields, `lat` and `lng`, each containing geographic coordinates expressed as a string or floating point number. Read more about `_geo` and how to troubleshoot it in [our dedicated guide](/learn/fine_tuning_results/geosearch).
+The provided `_geo` field of one or more documents is invalid. Meilisearch expects `_geo` to be an object with two fields, `lat` and `lng`, each containing geographic coordinates expressed as a string or floating point number. Read more about `_geo` and how to troubleshoot it in [our dedicated guide](/learn/filtering_and_sorting/geosearch).
 
 ## `invalid_facet_search_facet_name`
 
