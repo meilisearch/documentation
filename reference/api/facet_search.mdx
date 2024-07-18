@@ -5,7 +5,7 @@ description: The /facet-search route allows you to search for facet values.
 
 # Facet search
 
-The `/facet-search` route allows you to search for facet values. Facet search supports [prefix search](/learn/engine/prefix) and [typo tolerance](/learn/configuration/typo_tolerance). The returned hits are sorted lexicographically in ascending order. You can configure how facets are sorted using the [`sortFacetValuesBy`](/reference/api/settings#faceting-object) property of the `faceting` index settings.
+The `/facet-search` route allows you to search for facet values. Facet search supports [prefix search](/learn/engine/prefix) and [typo tolerance](/learn/relevancy/typo_tolerance_settings). The returned hits are sorted lexicographically in ascending order. You can configure how facets are sorted using the [`sortFacetValuesBy`](/reference/api/settings#faceting-object) property of the `faceting` index settings.
 
 <Capsule intent="note" title="Facet search on numbers">
 Meilisearch does not support facet search on numbers. Convert numeric facets to strings to make them searchable.

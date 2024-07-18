@@ -337,7 +337,7 @@ The attributes added to the `displayedAttributes` list appear in search results.
 
 By default, the `displayedAttributes` array is equal to all fields in your dataset. This behavior is represented by the value `["*"]`.
 
-[To learn more about displayed attributes, refer to our dedicated guide.](/learn/configuration/displayed_searchable_attributes#displayed-fields)
+[To learn more about displayed attributes, refer to our dedicated guide.](/learn/relevancy/displayed_searchable_attributes#displayed-fields)
 
 ### Get displayed attributes
 
@@ -448,7 +448,7 @@ The distinct attribute is a field whose value will always be unique in the retur
 Updating distinct attributes will re-index all documents in the index, which can take some time. We recommend updating your index settings first and then adding documents as this reduces RAM consumption.
 </Capsule>
 
-[To learn more about the distinct attribute, refer to our dedicated guide.](/learn/configuration/distinct)
+[To learn more about the distinct attribute, refer to our dedicated guide.](/learn/relevancy/distinct_attribute)
 
 ### Get distinct attribute
 
@@ -498,7 +498,7 @@ If an attribute contains an object, you can use dot notation to set one or more 
 If the field does not exist, no error will be thrown.
 </Capsule>
 
-[To learn more about the distinct attribute, refer to our dedicated guide.](/learn/configuration/distinct)
+[To learn more about the distinct attribute, refer to our dedicated guide.](/learn/relevancy/distinct_attribute)
 
 #### Example
 
@@ -900,7 +900,7 @@ You can use the returned `taskUid` to get more details on [the status of the tas
 
 ## Proximity precision
 
-Calculating the distance between words is a resource-intensive operation. Lowering the precision of this operation may significantly improve performance and will have little impact on result relevancy in most use-cases. Meilisearch uses word distance when [ranking results according to proximity](/learn/core_concepts/relevancy#3-proximity) and when users perform [phrase searches](/reference/api/search#phrase-search).
+Calculating the distance between words is a resource-intensive operation. Lowering the precision of this operation may significantly improve performance and will have little impact on result relevancy in most use-cases. Meilisearch uses word distance when [ranking results according to proximity](/learn/relevancy/ranking_rules#3-proximity) and when users perform [phrase searches](/reference/api/search#phrase-search).
 
 `proximityPrecision` accepts one of the following string values:
 
@@ -999,7 +999,7 @@ You can use the returned `taskUid` to get more details on [the status of the tas
 
 Ranking rules are built-in rules that rank search results according to certain criteria. They are applied in the same order in which they appear in the `rankingRules` array.
 
-[To learn more about ranking rules, refer to our dedicated guide.](/learn/core_concepts/relevancy)
+[To learn more about ranking rules, refer to our dedicated guide.](/learn/relevancy/relevancy)
 
 ### Ranking rules array
 
@@ -1086,7 +1086,7 @@ If some documents do not contain the attribute defined in a custom ranking rule,
 Make sure that any attribute used in a custom ranking rule is present in all of your documents. For example, if you set the custom ranking rule `desc(year)`, make sure that all your documents contain the attribute `year`.
 </Capsule>
 
-[To learn more about ranking rules, refer to our dedicated guide.](/learn/core_concepts/relevancy#ranking-rules)
+[To learn more about ranking rules, refer to our dedicated guide.](/learn/relevancy/ranking_rules)
 
 #### Example
 
@@ -1142,7 +1142,7 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 ## Searchable attributes
 
-The values associated with attributes in the `searchableAttributes` list are searched for matching query words. The order of the list also determines the [attribute ranking order](/learn/core_concepts/relevancy#attribute-ranking-order).
+The values associated with attributes in the `searchableAttributes` list are searched for matching query words. The order of the list also determines the [attribute ranking order](/learn/relevancy/attribute_ranking_order).
 
 By default, the `searchableAttributes` array is equal to all fields in your dataset. This behavior is represented by the value `["*"]`.
 
@@ -1150,7 +1150,7 @@ By default, the `searchableAttributes` array is equal to all fields in your data
 Updating searchable attributes will re-index all documents in the index, which can take some time. We recommend updating your index settings first and then adding documents as this reduces RAM consumption.
 </Capsule>
 
-[To learn more about searchable attributes, refer to our dedicated guide.](/learn/configuration/displayed_searchable_attributes#searchable-fields)
+[To learn more about searchable attributes, refer to our dedicated guide.](/learn/relevancy/displayed_searchable_attributes#searchable-fields)
 
 ### Get searchable attributes
 
@@ -1201,7 +1201,7 @@ Due to an implementation bug, manually updating `searchableAttributes` will chan
 [<String>, <String>, …]
 ```
 
-An array of strings. Each string should be an attribute that exists in the selected index. The array should be given in [order of importance](/learn/core_concepts/relevancy#attribute-ranking-order): from the most important attribute to the least important attribute.
+An array of strings. Each string should be an attribute that exists in the selected index. The array should be given in [order of importance](/learn/relevancy/attribute_ranking_order): from the most important attribute to the least important attribute.
 
 If an attribute contains an object, you can use dot notation to set one or more of its keys as a value for this setting: `"searchableAttributes": ["release_date.year"]`.
 
@@ -1209,7 +1209,7 @@ If an attribute contains an object, you can use dot notation to set one or more 
 If the field does not exist, no error will be thrown.
 </Capsule>
 
-[To learn more about searchable attributes, refer to our dedicated guide.](/learn/configuration/displayed_searchable_attributes#searchable-fields)
+[To learn more about searchable attributes, refer to our dedicated guide.](/learn/relevancy/displayed_searchable_attributes#searchable-fields)
 
 #### Example
 
@@ -1772,7 +1772,7 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 The `synonyms` object contains words and their respective synonyms. A synonym in Meilisearch is considered equal to its associated word for the purposes of calculating search results.
 
-[To learn more about synonyms, refer to our dedicated guide.](/learn/configuration/synonyms)
+[To learn more about synonyms, refer to our dedicated guide.](/learn/relevancy/synonyms)
 
 ### Get synonyms
 
@@ -1812,7 +1812,7 @@ Get the list of synonyms of an index.
 
 <RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/synonyms"/>
 
-Update the list of synonyms of an index. Synonyms are [normalized](/learn/configuration/synonyms#normalization).
+Update the list of synonyms of an index. Synonyms are [normalized](/learn/relevancy/synonyms#normalization).
 
 #### Path parameters
 
@@ -1831,7 +1831,7 @@ Update the list of synonyms of an index. Synonyms are [normalized](/learn/config
 
 An object that contains all synonyms and their associated words. Add the associated words in an array to set a synonym for a word.
 
-[To learn more about synonyms, refer to our dedicated guide.](/learn/configuration/synonyms)
+[To learn more about synonyms, refer to our dedicated guide.](/learn/relevancy/synonyms)
 
 #### Example
 
@@ -1885,7 +1885,7 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 Typo tolerance helps users find relevant results even when their search queries contain spelling mistakes or typos. This setting allows you to configure the minimum word size for typos and disable typo tolerance for specific words or attributes.
 
-[To learn more about typo tolerance, refer to our dedicated guide.](/learn/configuration/typo_tolerance)
+[To learn more about typo tolerance, refer to our dedicated guide.](/learn/relevancy/typo_tolerance_settings)
 
 ### Typo tolerance object
 
