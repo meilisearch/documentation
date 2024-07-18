@@ -1,0 +1,20 @@
+---
+title: Relevancy — Meilisearch documentation
+description: Relevancy refers to the accuracy of search results. If search results tend to be appropriate for a given query, then they can be considered relevant.
+---
+
+# Relevancy
+
+**Relevancy** refers to the accuracy and effectiveness of search results. If search results are almost always appropriate, then they can be considered relevant, and vice versa.
+
+Meilisearch has a number of features for fine-tuning the relevancy of search results. The most important tool among them is **ranking rules**. There are two types of ranking rules: [built-in ranking rules](/learn/relevancy/ranking_rules) and custom ranking rules.
+
+## Behavior
+
+Each index possesses a list of ranking rules stored as an array in the [settings object](/reference/api/settings). This array is fully customizable, meaning you can delete existing rules, add new ones, and reorder them as needed.
+
+Meilisearch uses a [bucket sort](https://en.wikipedia.org/wiki/Bucket_sort) algorithm to rank documents whenever a search query is made. The first ranking rule applies to all documents, while each subsequent rule is only applied to documents considered equal under the previous rule as a tiebreaker.
+
+**The order in which ranking rules are applied matters.** The first rule in the array has the most impact, and the last rule has the least. Our default configuration meets most standard needs, but [you can change it](/reference/api/settings#update-ranking-rules).
+
+Deleting a rule means that Meilisearch will no longer sort results based on that rule. For example, **if you delete the [typo ranking rule](/learn/relevancy/ranking_rules#2-typo), documents with typos will still be considered during search**, but they will no longer be sorted by increasing number of typos.

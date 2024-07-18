@@ -20,7 +20,7 @@ To allow your users to sort results at search time you must:
 
 1. Decide which attributes you want to use for sorting
 2. Add those attributes to the `sortableAttributes` index setting
-3. Update Meilisearch's [ranking rules](/learn/core_concepts/relevancy) (optional)
+3. Update Meilisearch's [ranking rules](/learn/relevancy/relevancy) (optional)
 
 <Capsule intent="note">
 Meilisearch sorts strings in lexicographic order based on their byte values. For example, `á`, which has a value of 225, will be sorted after `z`, which has a value of 122.
@@ -69,7 +69,7 @@ If you are using this dataset in a webshop, you might want to allow your users t
 
 ### Customize ranking rule order (optional)
 
-When users sort results at search time, [Meilisearch's ranking rules](/learn/core_concepts/relevancy) are set up so the top matches emphasize relevant results over sorting order. You might need to alter this behavior depending on your application's needs.
+When users sort results at search time, [Meilisearch's ranking rules](/learn/relevancy/relevancy) are set up so the top matches emphasize relevant results over sorting order. You might need to alter this behavior depending on your application's needs.
 
 This is the default configuration of Meilisearch's ranking rules:
 
@@ -219,7 +219,7 @@ Use dot notation to sort results based on a document's nested fields. The follow
 
 ## Sorting and custom ranking rules
 
-There is a lot of overlap between sorting and configuring [custom ranking rules](/learn/core_concepts/relevancy#custom-rules), as both can greatly influence which results a user will see first.
+There is a lot of overlap between sorting and configuring [custom ranking rules](/learn/relevancy/custom_ranking_rules), as both can greatly influence which results a user will see first.
 
 Sorting is most useful when you want your users to be able to alter the order of returned results at query time. For example, webshop users might want to order results by price depending on what they are searching and to change whether they see the most expensive or the cheapest products first.
 

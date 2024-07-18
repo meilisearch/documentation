@@ -10,7 +10,7 @@ In this guide, you will find some of the best practices to index your data effic
 
 ## Define searchable attributes
 
-To speed up indexing, review your list of [searchable attributes](/learn/configuration/displayed_searchable_attributes#searchable-fields) and ensure it includes only the fields you want to be checked for query word matches. This improves both relevance and search speed by removing irrelevant data from your database. It will also keep your disk usage to the necessary minimum.
+To speed up indexing, review your list of [searchable attributes](/learn/relevancy/displayed_searchable_attributes#searchable-fields) and ensure it includes only the fields you want to be checked for query word matches. This improves both relevance and search speed by removing irrelevant data from your database. It will also keep your disk usage to the necessary minimum.
 
 ### Review filterable and sortable attributes
 
@@ -18,7 +18,7 @@ Some document fields are necessary for [filtering](/learn/filtering_and_sorting/
 
 ## Set ranking rules before indexing
 
-Whenever you update your [ranking rules](/learn/core_concepts/relevancy), Meilisearch will trigger a reindexing of all your documents. This can be a time-consuming process, especially if you have a large dataset. For this reason, it is better to define your ranking rules before indexing your data.
+Whenever you update your [ranking rules](/learn/relevancy/relevancy), Meilisearch will trigger a reindexing of all your documents. This can be a time-consuming process, especially if you have a large dataset. For this reason, it is better to define your ranking rules before indexing your data.
 
 ## Optimize document size
 

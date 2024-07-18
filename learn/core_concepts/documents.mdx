@@ -34,7 +34,7 @@ Every field has a data type dictated by its value. Every value must be a valid [
 
 If a field contains an object, Meilisearch flattens it during indexing using dot notation and brings the object's keys and values to the root level of the document itself. This flattened object is only an intermediary representation—you will get the original structure upon search. You can read more about this in our [dedicated guide](/learn/engine/datatypes#objects).
 
-With [ranking rules](/learn/core_concepts/relevancy#ranking-rules), you can decide which fields are more relevant than others. For example, you may decide recent movies should be more relevant than older ones. You can also designate certain fields as displayed or searchable.
+With [ranking rules](/learn/relevancy/ranking_rules), you can decide which fields are more relevant than others. For example, you may decide recent movies should be more relevant than older ones. You can also designate certain fields as displayed or searchable.
 
 <Capsule intent="note" title="Reserved attributes">
 Some features require Meilisearch to reserve attributes. For example, to use [geosearch functionality](/learn/filtering_and_sorting/geosearch) your documents must include a `_geo` field.
@@ -52,9 +52,9 @@ You can modify this behavior using the [update settings endpoint](/reference/api
 - Displayed but not searchable
 - Neither displayed nor searchable
 
-In the latter case, the field will be completely ignored during search. However, it will still be [stored](/learn/configuration/displayed_searchable_attributes#data-storing) in the document.
+In the latter case, the field will be completely ignored during search. However, it will still be [stored](/learn/relevancy/displayed_searchable_attributes#data-storing) in the document.
 
-To learn more, refer to our [displayed and searchable attributes guide](/learn/configuration/displayed_searchable_attributes).
+To learn more, refer to our [displayed and searchable attributes guide](/learn/relevancy/displayed_searchable_attributes).
 
 ## Primary field
 

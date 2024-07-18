@@ -1,0 +1,26 @@
+---
+title: Ranking score — Meilisearch documentation
+description: This article explains how the order of attributes in the `searchableAttributes` array impacts search result relevancy.
+---
+
+# Ranking score
+
+When using the [`showRankingScore` search parameter](/reference/api/search#ranking-score), Meilisearch adds a global ranking score field, `_rankingScore`, to each document. The `_rankingScore` is between `0.0` and `1.0`. The higher the ranking score, the more relevant the document.
+
+Ranking rules sort documents either by relevancy (`words`, `typo`, `proximity`, `exactness`, `attribute`) or by the value of a field (`sort`). Since `sort`  doesn't rank documents by relevancy, it does not influence the `_rankingScore`.
+
+<Capsule intent="note">
+A document's ranking score does not change based on the scores of other documents in the same index.
+
+For example, if a document A has a score of `0.5` for a query term, this value remains constant no matter the score of documents B, C, or D.
+</Capsule>
+
+The table below details all the index settings that can influence the `_rankingScore`. **Unlisted settings do not influence the ranking score.**
+
+| Index setting          | Influences if                        | Rationale                                                                                                                                                      |
+| :--------------------- | :----------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `searchableAttributes` | The `attribute` ranking rule is used | The `attribute` ranking rule rates the document depending on the attribute in which the query terms show up. The order is determined by `searchableAttributes` |
+| `rankingRules`         | Always                               | The score is computed by computing the subscore of each ranking rule with a weight that depends on their order                                                 |
+| `stopWords`            | Always                               | Stop words influence the `words` ranking rule, which is almost always used                                                                                     |
+| `synonyms`             | Always                               | Synonyms influence the `words` ranking rule, which is almost always used                                                                                       |
+| `typoTolerance`        | The `typo` ranking rule is used      | Used to compute the maximum number of typos for a query                                                                                                        |
