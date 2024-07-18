@@ -401,7 +401,7 @@
   },
   {
     "source": "/docs/learn/fine_tuning_results/sorting",
-    "destination": "/docs/learn/filtering_and_sorting/sorting",
+    "destination": "/docs/learn/filtering_and_sorting/sort_search_results",
     "permanent": true
   }
 ]

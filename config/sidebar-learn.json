@@ -243,14 +243,14 @@
         "slug": "working_with_dates"
       },
       {
+        "source": "learn/filtering_and_sorting/sort_search_results.mdx",
+        "label": "Sort search results",
+        "slug": "sort_search_results"
+      },
+      {
         "source": "learn/filtering_and_sorting/geosearch.mdx",
         "label": "Geosearch",
         "slug": "geosearch"
-      },
-      {
-        "source": "learn/filtering_and_sorting/sorting.mdx",
-        "label": "Sorting",
-        "slug": "sorting"
       },
       {
         "source": "learn/filtering_and_sorting/filter_expression_reference.mdx",
