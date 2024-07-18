@@ -197,18 +197,18 @@
     "slug": "filtering_and_sorting",
     "routes": [
       {
-        "source": "learn/filtering_and_sorting/faceted_search.mdx",
-        "label": "Faceted search",
-        "slug": "faceted_search"
-      },
-      {
         "source": "learn/filtering_and_sorting/filter_search_results.mdx",
         "label": "Filter search results",
         "slug": "filter_search_results"
       },
       {
+        "source": "learn/filtering_and_sorting/search_with_facet_filters.mdx",
+        "label": "Search with facet filters",
+        "slug": "search_with_facet_filters"
+      },
+      {
         "source": "learn/filtering_and_sorting/working_with_dates.mdx",
-        "label": "Filtering and sorting by date",
+        "label": "Filter and sort by date",
         "slug": "working_with_dates"
       },
       {
