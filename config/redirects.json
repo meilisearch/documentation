@@ -350,33 +350,33 @@
     "permanent": true
   },
   {
-    "source": "learn/index_settings/distinct",
-    "destination": "learn/relevancy/distinct_attribute",
+    "source": "/docs/learn/index_settings/distinct",
+    "destination": "/docs/learn/relevancy/distinct_attribute",
     "permanent": true
   },
   {
-    "source": "learn/index_settings/displayed_searchable_attributes",
-    "destination": "learn/relevancy/displayed_searchable_attributes",
+    "source": "/docs/learn/index_settings/displayed_searchable_attributes",
+    "destination": "/docs/learn/relevancy/displayed_searchable_attributes",
     "permanent": true
   },
   {
-    "source": "learn/index_settings/synonyms",
-    "destination": "learn/relevancy/synonyms",
+    "source": "/docs/learn/index_settings/synonyms",
+    "destination": "/docs/learn/relevancy/synonyms",
     "permanent": true
   },
   {
-    "source": "learn/index_settings/typo_tolerance",
-    "destination": "learn/relevancy/typo_tolerance_settings",
+    "source": "/docs/learn/index_settings/typo_tolerance",
+    "destination": "/docs/learn/relevancy/typo_tolerance_settings",
     "permanent": true
   },
   {
-    "source": "learn/core_concepts/relevancy",
-    "destination": "learn/relevancy/relevancy",
+    "source": "/docs/learn/core_concepts/relevancy",
+    "destination": "/docs/learn/relevancy/relevancy",
     "permanent": true
   },
   {
-    "source": "learn/configuration/settings",
-    "destination": "reference/api/settings",
+    "source": "/docs/learn/configuration/settings",
+    "destination": "/docs/reference/api/settings",
     "permanent": true
   },
   {
