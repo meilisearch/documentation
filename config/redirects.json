@@ -423,5 +423,10 @@
     "source": "/docs/learn/advanced/known_limitations",
     "destination": "/docs/learn/resources/known_limitations",
     "permanent": true
+  },
+  {
+    "source": "/docs/faq",
+    "destination": "/docs/learn/resources/faq",
+    "permanent": true
   }
 ]
