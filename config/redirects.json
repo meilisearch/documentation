@@ -403,5 +403,20 @@
     "source": "/docs/learn/fine_tuning_results/sorting",
     "destination": "/docs/learn/filtering_and_sorting/sort_search_results",
     "permanent": true
+  },
+  {
+    "source": "/docs/learn/advanced/indexing",
+    "destination": "/docs/learn/indexing/indexing_best_practices",
+    "permanent": true
+  },
+  {
+    "source": "/docs/guides/performance/indexing_best_practices",
+    "destination": "/docs/learn/indexing/indexing_best_practices",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/advanced/tokenization",
+    "destination": "/docs/learn/indexing/tokenization",
+    "permanent": true
   }
 ]

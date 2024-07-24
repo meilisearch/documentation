@@ -72,11 +72,6 @@
     "slug": "performance",
     "routes": [
       {
-        "source": "guides/indexing_best_practices.mdx",
-        "label": "Indexing best practices",
-        "slug": "indexing_best_practices"
-      },
-      {
         "source": "guides/improve_relevancy_large_documents.mdx",
         "label": "Improve relevancy when working with large documents",
         "slug": "large_documents"
