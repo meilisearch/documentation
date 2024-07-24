@@ -379,17 +379,6 @@
     ]
   },
   {
-    "title": "Inner workings",
-    "slug": "advanced",
-    "routes": [
-      {
-        "source": "learn/inner_workings/known_limitations.mdx",
-        "label": "Known limitations",
-        "slug": "known_limitations"
-      }
-    ]
-  },
-  {
     "title": "Relevancy",
     "slug": "relevancy",
     "routes": [
@@ -442,6 +431,22 @@
         "source": "learn/relevancy/synonyms.mdx",
         "label": "Synonyms",
         "slug": "synonyms"
+      }
+    ]
+  },
+  {
+    "title": "Resources",
+    "slug": "resources",
+    "routes": [
+      {
+        "source": "learn/resources/known_limitations.mdx",
+        "label": "Known limitations",
+        "slug": "known_limitations"
+      },
+      {
+        "source": "learn/resources/faq.mdx",
+        "label": "FAQ",
+        "slug": "faq"
       }
     ]
   },

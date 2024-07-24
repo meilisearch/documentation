@@ -418,5 +418,10 @@
     "source": "/docs/learn/advanced/tokenization",
     "destination": "/docs/learn/indexing/tokenization",
     "permanent": true
+  },
+  {
+    "source": "/docs/learn/advanced/known_limitations",
+    "destination": "/docs/learn/resources/known_limitations",
+    "permanent": true
   }
 ]
