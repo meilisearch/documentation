@@ -35,16 +35,6 @@
     "slug": "getting_started",
     "routes": [
       {
-        "source": "learn/getting_started/installation.mdx",
-        "label": "Installation",
-        "slug": "installation"
-      },
-      {
-        "source": "learn/getting_started/quick_start.mdx",
-        "label": "Quick start",
-        "slug": "quick_start"
-      },
-      {
         "source": "learn/getting_started/cloud_quick_start.mdx",
         "label": "Getting started with Meilisearch Cloud",
         "slug": "cloud_quick_start"
@@ -53,11 +43,6 @@
         "source": "learn/getting_started/search_preview.mdx",
         "label": "Search preview",
         "slug": "search_preview"
-      },
-      {
-        "source": "learn/getting_started/supported_os.mdx",
-        "label": "Supported operating systems",
-        "slug": "supported_os"
       }
     ]
   },
@@ -74,6 +59,32 @@
         "source": "learn/ai_powered_search/difference_full_text_ai_search.mdx",
         "label": "Differences between full-text and AI-powered search",
         "slug": "difference_full_text_ai_search"
+      }
+    ]
+  },
+  {
+    "title": "Self-hosted",
+    "slug": "self_hosted",
+    "routes": [
+      {
+        "source": "learn/self_hosted/configure_meilisearch_at_launch.mdx",
+        "label": "Configure Meilisearch at launch",
+        "slug": "configure_meilisearch_at_launch"
+      },
+      {
+        "source": "learn/self_hosted/install_meilisearch_locally.mdx",
+        "label": "Install Meilisearch locally",
+        "slug": "install_meilisearch_locally"
+      },
+      {
+        "source": "learn/self_hosted/getting_started_with_self_hosted_meilisearch.mdx",
+        "label": "Quick start",
+        "slug": "getting_started_with_self_hosted_meilisearch"
+      },
+      {
+        "source": "learn/self_hosted/supported_os.mdx",
+        "label": "Supported operating systems",
+        "slug": "supported_os"
       }
     ]
   },
@@ -175,11 +186,6 @@
     "title": "Configuration",
     "slug": "configuration",
     "routes": [
-      {
-        "source": "learn/configuration/instance_options.mdx",
-        "label": "Configure Meilisearch at launch",
-        "slug": "instance_options"
-      },
       {
         "source": "learn/configuration/configuring_index_settings.mdx",
         "label": "Configuring index settings",
