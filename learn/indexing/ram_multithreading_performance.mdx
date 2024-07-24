@@ -5,7 +5,7 @@ description: Adding new documents to a Meilisearch index is a multi-threaded and
 
 # Impact of RAM and multi-threading on indexing performance
 
-Adding new documents to an index is a multi-threaded and memory-intensive operation. Meilisearch's indexes are at the core of what makes our search engine fast, relevant, and reliable. In this article, we will go over some of the details regarding RAM consumption and multi-threading.
+Adding new documents to an index is a multi-threaded and memory-intensive operation. Meilisearch's indexes are at the core of what makes our search engine fast, relevant, and reliable. This article explains some of the details regarding RAM consumption and multi-threading.
 
 ## RAM
 
@@ -35,8 +35,8 @@ Multi-threading is unfortunately not possible in machines with only one processo
 
 In some cases, the OS will interrupt Meilisearch and stop all its processes. Most of these crashes happen during indexing and are a result of a machine running out of RAM. This means your computer does not have enough memory to process your dataset.
 
-We are aware of this issue and actively trying to resolve it. If you are struggling with memory-related crashes, we recommend:
+Meilisearch is aware of this issue and actively trying to resolve it. If you are struggling with memory-related crashes, consider:
 
 - Adding new documents in smaller batches
 - Increasing your machine's RAM
-- Improving indexing performance [as described in the previous section](#improving-indexing-performance). Notable exception: increasing payload size is not advised if you are experiencing memory-related issues
+- [Following indexing best practices](/learn/indexing/indexing_best_practices)
