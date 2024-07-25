@@ -28,7 +28,7 @@ A field is a set of two data items linked together: an attribute and a value. Do
 
 An **attribute** functions a bit like a variable in most programming languages. It is a name that allows you to store, access, and describe some data. 
 
-That data is the attribute's **value**. In the case of strings, a value **[can contain at most 65535 positions](/learn/advanced/known_limitations#maximum-number-of-words-per-attribute)**. Words exceeding the 65535 position limit will be ignored.
+That data is the attribute's **value**. In the case of strings, a value **[can contain at most 65535 positions](/learn/resources/known_limitations#maximum-number-of-words-per-attribute)**. Words exceeding the 65535 position limit will be ignored.
 
 Every field has a data type dictated by its value. Every value must be a valid [JSON data type](https://www.w3schools.com/js/js_json_datatypes.asp).
 
@@ -66,7 +66,7 @@ To learn more, refer to the [primary key explanation](/learn/core_concepts/prima
 
 By default, Meilisearch limits the size of all payloads—and therefore document uploads—to 100MB. You can [change the payload size limit](/learn/configuration/instance_options#payload-limit-size) at runtime using the `http-payload-size-limit` option.
 
-Meilisearch uses a lot of RAM when indexing documents. Be aware of your [RAM availability](/faq#what-are-the-recommended-requirements-for-hosting-a-meilisearch-instance) as you increase your batch size as this could cause Meilisearch to crash.
+Meilisearch uses a lot of RAM when indexing documents. Be aware of your [RAM availability](/learn/resources/faq#what-are-the-recommended-requirements-for-hosting-a-meilisearch-instance) as you increase your batch size as this could cause Meilisearch to crash.
 
 When using the [add new documents endpoint](/reference/api/documents#add-or-update-documents), ensure:
 

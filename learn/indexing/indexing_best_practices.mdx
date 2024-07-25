@@ -1,0 +1,62 @@
+---
+title: Indexing best practices — Meilisearch documentation
+description: Tips to speed up your documents indexing process.
+---
+
+# Indexing best practices
+
+In this guide, you will find some of the best practices to index your data efficiently and speed up the indexing process.
+
+## Define searchable attributes
+
+Review your list of [searchable attributes](/learn/relevancy/displayed_searchable_attributes#searchable-fields) and ensure it includes only the fields you want to be checked for query word matches. This improves both relevancy and search speed by removing irrelevant data from your database. It will also keep your disk usage to the necessary minimum.
+
+By default, all document fields are searchable. The fewer fields Meilisearch needs to index, the faster the indexing process.
+
+### Review filterable and sortable attributes
+
+Some document fields are necessary for [filtering](/learn/filtering_and_sorting/filter_search_results) and [sorting](/learn/filtering_and_sorting/sort_search_results) results, but they dot not need to be _searchable_. Generally, **numeric and boolean fields** fall into this category. Make sure to review your list of searchable attributes and remove any fields that are only used for filtering or sorting.
+
+## Configure your index before adding documents
+
+When creating a new index, first [configure its settings](/reference/api/settings) and only then add your documents. Whenever you update settings such as [ranking rules](/learn/relevancy/relevancy), Meilisearch will trigger a reindexing of all your documents. This can be a time-consuming process, especially if you have a large dataset. For this reason, it is better to define ranking rules and other settings before indexing your data.
+
+## Optimize document size
+
+Smaller documents are processed faster, so make sure to trim down any unnecessary data from your documents. When a document field is missing from the list of [searchable](/reference/api/settings#searchable-attributes), [filterable](/reference/api/settings#filterable-attributes), [sortable](/reference/api/settings#sortable-attributes), or [displayed](/reference/api/settings#displayed-attributes) attributes, it might be best to remove it from the document. To go further, consider compressing your data using methods such as `br`, `deflate`, or `gzip`. Consult the [supported encoding formats reference](/reference/api/overview#content-encoding).
+
+## Prefer bigger HTTP payloads
+
+A single large HTTP payload is processed more quickly than multiple smaller payloads. For example, adding the same 100,000 documents in two batches of 50,000 documents will be quicker than adding them in four batches of 25,000 documents. By default, Meilisearch sets the maximum payload size to 100MB, but [you can change this value if necessary](/learn/configuration/instance_options#payload-limit-size).
+
+<Capsule intent="warning">
+Larger payload consume more RAM. An instance may crash if it requires more memory than is currently available in a machine.
+</Capsule>
+
+## Keep Meilisearch up-to-date
+
+Make sure to keep your Meilisearch instance up-to-date to benefit from the latest improvements. You can see [a list of all our engine releases on GitHub](https://github.com/meilisearch/meilisearch/releases?q=prerelease%3Afalse).
+
+<Capsule intent="note">
+For more information on how indexing works under the hood, take a look [this blog post about indexing best practices](https://blog.meilisearch.com/best-practices-for-faster-indexing/).
+</Capsule>
+
+## Do not use Meilisearch as your main database
+
+Meilisearch is optimized for information retrieval was not designed to be your main data container. The more documents you add, the longer will indexing and search take. Only index documents you want to retrieve when searching.
+
+## Create separate indexes for multiple languages
+
+If you have a multilingual dataset, create a separate index for each language.
+
+## Remove I/O operation limits
+
+Ensure there is no limit to I/O operations in your machine. The restrictions imposed by cloud providers such as [AWS's Amazon EBS service](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-volume-types.html#IOcredit) can severely impact indexing performance.
+
+## Consider upgrading to machines with SSDs, more RAM, and multi-threaded processors
+
+If you have followed the previous tips in this guide and are still experiencing slow indexing times, consider upgrading your machine.
+
+Indexing is a memory-intensive and multi-threaded operation. The more memory and processor cores available, the faster Meilisearch will index new documents. When trying to improve indexing speed, using a machine with more processor cores is more effective than increasing RAM.
+
+Due to how Meilisearch works, it is best to avoid HDDs (Hard Disk Drives) as they can easily become performance bottlenecks.

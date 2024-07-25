@@ -1,10 +1,5 @@
 [
   {
-    "source": "resources/faq.mdx",
-    "label": "FAQ",
-    "slug": "faq"
-  },
-  {
     "to": "/",
     "label": "Back to meilisearch.com",
     "slug": "landing"
