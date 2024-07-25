@@ -27,7 +27,7 @@ If Meilisearch encounters an error when handling any of the queries in a multi-s
 
 | Search parameter                                                             | Type             | Default value | Description                                         |
 | :--------------------------------------------------------------------------- | :--------------- | :------------ | :-------------------------------------------------- |
-| **[`indexUid`](/learn/core_concepts/indexes#index-uid)**                     | String           | N/A           | `uid` of the requested index                        |
+| **[`indexUid`](/learn/getting_started/indexes#index-uid)**                     | String           | N/A           | `uid` of the requested index                        |
 | **[`q`](/reference/api/search#query-q)**                                     | String           | `""`          | Query string                                        |
 | **[`offset`](/reference/api/search#offset)**                                 | Integer          | `0`           | Number of documents to skip                         |
 | **[`limit`](/reference/api/search#limit)**                                   | Integer          | `20`          | Maximum number of documents returned                |
@@ -60,7 +60,7 @@ Each search result object is composed of the following fields:
 
 | Name                     | Type             | Description                                                                      |
 | :----------------------- | :--------------- | :------------------------------------------------------------------------------- |
-| **`indexUid`**           | String           | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index           |
+| **`indexUid`**           | String           | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index           |
 | **`hits`**               | Array of objects | Results of the query                                                             |
 | **`offset`**             | Number           | Number of documents skipped                                                      |
 | **`limit`**              | Number           | Number of documents to take                                                      |
