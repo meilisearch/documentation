@@ -27,7 +27,7 @@ Smaller documents are processed faster, so make sure to trim down any unnecessar
 
 ## Prefer bigger HTTP payloads
 
-A single large HTTP payload is processed more quickly than multiple smaller payloads. For example, adding the same 100,000 documents in two batches of 50,000 documents will be quicker than adding them in four batches of 25,000 documents. By default, Meilisearch sets the maximum payload size to 100MB, but [you can change this value if necessary](/learn/configuration/instance_options#payload-limit-size).
+A single large HTTP payload is processed more quickly than multiple smaller payloads. For example, adding the same 100,000 documents in two batches of 50,000 documents will be quicker than adding them in four batches of 25,000 documents. By default, Meilisearch sets the maximum payload size to 100MB, but [you can change this value if necessary](/learn/self_hosted/configure_meilisearch_at_launch#payload-limit-size).
 
 <Capsule intent="warning">
 Larger payload consume more RAM. An instance may crash if it requires more memory than is currently available in a machine.
