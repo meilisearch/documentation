@@ -338,6 +338,27 @@
     ]
   },
   {
+    "title": "Indexing",
+    "slug": "indexing",
+    "routes": [
+      {
+        "source": "learn/indexing/indexing_best_practices.mdx",
+        "label": "Indexing best practices",
+        "slug": "indexing_best_practices"
+      },
+      {
+        "source": "learn/indexing/ram_multithreading_performance.mdx",
+        "label": "Impact of RAM and multi-threading on indexing performance",
+        "slug": "ram_multithreading_performance"
+      },
+      {
+        "source": "learn/indexing/tokenization.mdx",
+        "label": "Tokenization",
+        "slug": "tokenization"
+      }
+    ]
+  },
+  {
     "title": "Engine",
     "slug": "engine",
     "routes": [
@@ -360,27 +381,6 @@
         "source": "learn/engine/storage.mdx",
         "label": "Storage",
         "slug": "storage"
-      }
-    ]
-  },
-  {
-    "title": "Inner workings",
-    "slug": "advanced",
-    "routes": [
-      {
-        "source": "learn/inner_workings/indexing.mdx",
-        "label": "Indexing and performance",
-        "slug": "indexing"
-      },
-      {
-        "source": "learn/inner_workings/known_limitations.mdx",
-        "label": "Known limitations",
-        "slug": "known_limitations"
-      },
-      {
-        "source": "learn/inner_workings/tokenization.mdx",
-        "label": "Tokenization",
-        "slug": "tokenization"
       }
     ]
   },
@@ -437,6 +437,22 @@
         "source": "learn/relevancy/synonyms.mdx",
         "label": "Synonyms",
         "slug": "synonyms"
+      }
+    ]
+  },
+  {
+    "title": "Resources",
+    "slug": "resources",
+    "routes": [
+      {
+        "source": "learn/resources/known_limitations.mdx",
+        "label": "Known limitations",
+        "slug": "known_limitations"
+      },
+      {
+        "source": "learn/resources/faq.mdx",
+        "label": "FAQ",
+        "slug": "faq"
       }
     ]
   },

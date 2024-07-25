@@ -423,5 +423,30 @@
     "source": "/docs/learn/getting_started/supported_os",
     "destination": "/docs/learn/self_hosted/supported_os",
     "permanent": true
+  },
+  {
+    "source": "/docs/learn/advanced/indexing",
+    "destination": "/docs/learn/indexing/indexing_best_practices",
+    "permanent": true
+  },
+  {
+    "source": "/docs/guides/performance/indexing_best_practices",
+    "destination": "/docs/learn/indexing/indexing_best_practices",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/advanced/tokenization",
+    "destination": "/docs/learn/indexing/tokenization",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/advanced/known_limitations",
+    "destination": "/docs/learn/resources/known_limitations",
+    "permanent": true
+  },
+  {
+    "source": "/docs/faq",
+    "destination": "/docs/learn/resources/faq",
+    "permanent": true
   }
 ]
