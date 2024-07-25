@@ -1,36 +1,5 @@
 [
   {
-    "title": "What is Meilisearch",
-    "slug": "what_is_meilisearch",
-    "routes": [
-      {
-        "source": "learn/what_is_meilisearch/overview.mdx",
-        "label": "Overview",
-        "slug": "overview"
-      },
-      {
-        "source": "learn/what_is_meilisearch/sdks.mdx",
-        "label": "Official SDKs/libraries",
-        "slug": "sdks"
-      },
-      {
-        "source": "learn/what_is_meilisearch/comparison_to_alternatives.mdx",
-        "label": "Comparison to alternatives",
-        "slug": "comparison_to_alternatives"
-      },
-      {
-        "source": "learn/what_is_meilisearch/telemetry.mdx",
-        "label": "Telemetry",
-        "slug": "telemetry"
-      },
-      {
-        "source": "learn/what_is_meilisearch/language.mdx",
-        "label": "Language",
-        "slug": "language"
-      }
-    ]
-  },
-  {
     "title": "Getting started",
     "slug": "getting_started",
     "routes": [
@@ -38,6 +7,26 @@
         "source": "learn/getting_started/cloud_quick_start.mdx",
         "label": "Getting started with Meilisearch Cloud",
         "slug": "cloud_quick_start"
+      },
+      {
+        "source": "learn/getting_started/what_is_meilisearch.mdx",
+        "label": "Overview",
+        "slug": "overview"
+      },
+      {
+        "source": "learn/getting_started/documents.mdx",
+        "label": "Documents",
+        "slug": "documents"
+      },
+      {
+        "source": "learn/getting_started/indexes.mdx",
+        "label": "Indexes",
+        "slug": "indexes"
+      },
+      {
+        "source": "learn/getting_started/primary_key.mdx",
+        "label": "Primary key",
+        "slug": "primary_key"
       },
       {
         "source": "learn/getting_started/search_preview.mdx",
@@ -127,27 +116,6 @@
         "source": "learn/teams/teams.mdx",
         "label": "Meilisearch Cloud teams",
         "slug": "teams"
-      }
-    ]
-  },
-  {
-    "title": "Core concepts",
-    "slug": "core_concepts",
-    "routes": [
-      {
-        "source": "learn/core_concepts/documents.mdx",
-        "label": "Documents",
-        "slug": "documents"
-      },
-      {
-        "source": "learn/core_concepts/indexes.mdx",
-        "label": "Indexes",
-        "slug": "indexes"
-      },
-      {
-        "source": "learn/core_concepts/primary_key.mdx",
-        "label": "Primary key",
-        "slug": "primary_key"
       }
     ]
   },
@@ -308,11 +276,6 @@
         "source": "learn/update_and_migration/previous_docs_version.mdx",
         "label": "Accessing previous docs versions",
         "slug": "previous_docs_version"
-      },
-      {
-        "source": "learn/update_and_migration/versioning.mdx",
-        "label": "Versioning policy",
-        "slug": "versioning"
       }
     ]
   },
@@ -453,6 +416,36 @@
         "source": "learn/resources/faq.mdx",
         "label": "FAQ",
         "slug": "faq"
+      },
+      {
+        "source": "learn/resources/sdks.mdx",
+        "label": "Official SDKs/libraries",
+        "slug": "sdks"
+      },
+      {
+        "source": "learn/resources/comparison_to_alternatives.mdx",
+        "label": "Comparison to alternatives",
+        "slug": "comparison_to_alternatives"
+      },
+      {
+        "source": "learn/resources/telemetry.mdx",
+        "label": "Telemetry",
+        "slug": "telemetry"
+      },
+      {
+        "source": "learn/resources/language.mdx",
+        "label": "Language",
+        "slug": "language"
+      },
+      {
+        "source": "learn/resources/versioning.mdx",
+        "label": "Versioning policy",
+        "slug": "versioning"
+      },
+      {
+        "source": "learn/resources/contributing_docs.mdx",
+        "label": "Contributing to our documentation",
+        "slug": "contributing_docs"
       }
     ]
   },
@@ -499,17 +492,6 @@
         "source": "learn/experimental/search_queue_size.mdx",
         "label": "Search queue size",
         "slug": "search_queue_size"
-      }
-    ]
-  },
-  {
-    "title": "Contributing",
-    "slug": "contributing",
-    "routes": [
-      {
-        "source": "learn/contributing/contributing_docs.mdx",
-        "label": "Contributing to our documentation",
-        "slug": "contributing_docs"
       }
     ]
   }
