@@ -405,6 +405,26 @@
     "permanent": true
   },
   {
+    "source": "/docs/learn/configuration/instance_options",
+    "destination": "/docs/learn/self_hosted/configure_meilisearch_at_launch",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/getting_started/installation",
+    "destination": "/docs/learn/self_hosted/install_meilisearch_locally",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/getting_started/quick_start",
+    "destination": "/docs/learn/self_hosted/getting_started_with_self_hosted_meilisearch",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/getting_started/supported_os",
+    "destination": "/docs/learn/self_hosted/supported_os",
+    "permanent": true
+  },
+  {
     "source": "/docs/learn/advanced/indexing",
     "destination": "/docs/learn/indexing/indexing_best_practices",
     "permanent": true
