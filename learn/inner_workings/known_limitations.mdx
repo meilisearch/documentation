@@ -68,11 +68,18 @@ If your query is `Hello - World`:
 
 **Explanation:** This limit exists to prevent Meilisearch from queueing an unlimited number of requests and potentially consuming an unbounded amount of memory. If Meilisearch receives a new request when the queue is already full, it drops a random search request and returns a 503 `too_many_search_requests` error with a `Retry-After` header set to 10 seconds. Configure this limit with [`--experimental-search-queue-size`](/learn/experimental/search_queue_size).
 
+## Length of primary key values
+
+**Limitation:** Primary key values are limited to 512 bytes.
+
+**Explanation:** Meilisearch stores the primary key values as keys in LMDB, a data type whose size is limited to 512 bytes.
+If a primary key value exceeds 512 bytes, the task containing these documents will fail.
+
 ## Length of individual `filterableAttributes` values
 
-**Limitation:** Individual `filterableAttributes` values are limited to 500 bytes.
+**Limitation:** Individual `filterableAttributes` values are limited to 512 bytes.
 
-**Explanation:** Meilisearch stores `filterableAttributes` values as keys in LMDB, a data type whose size is limited to approximately 500 bytes. Note that this only applies to individual values—for example, a `genres` attribute can contain any number of values such as `horror`, `comedy`, or `cyberpunk` as long as each one of them is smaller than 500 bytes.
+**Explanation:** Meilisearch stores `filterableAttributes` values as keys in LMDB, a data type whose size is limited to 512 bytes. Note that this only applies to individual values—for example, a `genres` attribute can contain any number of values such as `horror`, `comedy`, or `cyberpunk` as long as each one of them is smaller than 512 bytes.
 
 ## Maximum filter depth
 
