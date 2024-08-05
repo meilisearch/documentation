@@ -1,0 +1,232 @@
+---
+title: Sort search results — Meilisearch documentation
+description: By default, Meilisearch sorts results according to their relevancy. You can alter this behavior so users can decide at search time results they want to see first.
+sidebarDepth: 3
+---
+
+# Sort search results
+
+By default, Meilisearch focuses on ordering results according to their relevancy. You can alter this sorting behavior so users can decide at search time what type of results they want to see first.
+
+This can be useful in many situations, such as when a user wants to see the cheapest products available in a webshop.
+
+<Capsule intent="tip">
+Sorting at search time can be particularly effective when combined with [placeholder searches](/reference/api/search#placeholder-search).
+</Capsule>
+
+## Configure Meilisearch for sorting at search time
+
+To allow your users to sort results at search time you must:
+
+1. Decide which attributes you want to use for sorting
+2. Add those attributes to the `sortableAttributes` index setting
+3. Update Meilisearch's [ranking rules](/learn/relevancy/relevancy) (optional)
+
+<Capsule intent="note">
+Meilisearch sorts strings in lexicographic order based on their byte values. For example, `á`, which has a value of 225, will be sorted after `z`, which has a value of 122.
+
+Uppercase letters are sorted as if they were lowercase. They will still appear uppercase in search results.
+</Capsule>
+
+### Add attributes to `sortableAttributes`
+
+Meilisearch allows you to sort results based on document fields. Only fields containing numbers, strings, arrays of numeric values, and arrays of string values can be used for sorting.
+
+After you have decided which fields you will allow your users to sort on, you must add their attributes to the [`sortableAttributes` index setting](/reference/api/settings#sortable-attributes).
+
+<Capsule intent="warning">
+If a field has values of different types across documents, Meilisearch will give precedence to numbers over strings. This means documents with numeric field values will be ranked higher than those with string values.
+
+This can lead to unexpected behavior when sorting. For optimal user experience, only sort based on fields containing the same type of value.
+</Capsule>
+
+#### Example
+
+Suppose you have collection of books containing the following fields:
+
+```json
+[
+  {
+    "id": 1,
+    "title": "Solaris",
+    "author": "Stanislaw Lem",
+    "genres": [
+      "science fiction"
+    ],
+    "rating": {
+      "critics": 95,
+      "users": 87
+    },
+    "price": 5.00
+  },
+  …
+]
+```
+
+If you are using this dataset in a webshop, you might want to allow your users to sort on `author` and `price`:
+
+<CodeSamples id="sorting_guide_update_sortable_attributes_1" />
+
+### Customize ranking rule order (optional)
+
+When users sort results at search time, [Meilisearch's ranking rules](/learn/relevancy/relevancy) are set up so the top matches emphasize relevant results over sorting order. You might need to alter this behavior depending on your application's needs.
+
+This is the default configuration of Meilisearch's ranking rules:
+
+```json
+[
+  "words",
+  "typo",
+  "proximity",
+  "attribute",
+  "sort",
+  "exactness"
+]
+```
+
+`"sort"` is in fifth place. This means it acts as a tie-breaker rule: Meilisearch will first place results closely matching search terms at the top of the returned documents list and only then will apply the `"sort"` parameters as requested by the user. In other words, by default Meilisearch provides a very relevant sorting.
+
+Placing `"sort"` ranking rule higher in the list will emphasize exhaustive sorting over relevant sorting: your results will more closely follow the sorting order your user chose, but will not be as relevant.
+
+<Capsule intent="tip" title="Promoting search results and document pinning">
+Sorting applies equally to all documents. Meilisearch does not offer native support for promoting, pinning, and boosting specific documents so they are displayed more prominently than other search results. Consult these Meilisearch blog articles for workarounds on [implementing promoted search results with React InstantSearch](https://blog.meilisearch.com/promoted-search-results-with-react-instantsearch) and [document boosting](https://blog.meilisearch.com/document-boosting).
+</Capsule>
+
+#### Example
+
+If your users care more about finding cheaper books than they care about finding specific matches to their queries, you can place `sort` much higher in the ranking rules:
+
+<CodeSamples id="sorting_guide_update_ranking_rules_1" />
+
+## Sort results at search time
+
+After configuring `sortableAttributes`, you can use the [`sort` search parameter](/reference/api/search#sort) to control the sorting order of your search results.
+
+`sort` expects a list of attributes that have been added to the `sortableAttributes` list.
+
+Attributes must be given as `attribute:sorting_order`. In other words, each attribute must be followed by a colon (`:`) and a sorting order: either ascending (`asc`) or descending (`desc`).
+
+When using the `POST` route, `sort` expects an array of strings:
+
+```json
+"sort": [
+  "price:asc",
+  "author:desc"
+]
+```
+
+When using the `GET` route, `sort` expects a comma-separated string:
+
+```
+sort="price:desc,author:asc"
+```
+
+The order of `sort` values matter: the higher an attribute is in the search parameter value, the more Meilisearch will prioritize it over attributes placed lower. In our example, if multiple documents have the same value for `price`, Meilisearch will decide the order between these similarly-priced documents based on their `author`.
+
+#### Example
+
+Suppose you are searching for books in a webshop and want to see the cheapest science fiction titles. This query searches for `"science fiction"` books sorted from cheapest to most expensive:
+
+<CodeSamples id="sorting_guide_sort_parameter_1" />
+
+With our example dataset, the results look like this:
+
+```json
+[
+  {
+    "id": 1,
+    "title": "Solaris",
+    "author": "Stanislaw Lem",
+    "genres": [
+      "science fiction"
+    ],
+    "rating": {
+      "critics": 95,
+      "users": 87
+    },
+    "price": 5.00
+  },
+  {
+    "id": 2,
+    "title": "The Parable of the Sower",
+    "author": "Octavia E. Butler",
+    "genres": [
+      "science fiction"
+    ],
+    "rating": {
+      "critics": 90,
+      "users": 92
+    },
+    "price": 10.00
+  }
+]
+```
+
+It is common to search books based on an author's name. `sort` can help grouping results from the same author. This query would only return books matching the query term `"butler"` and group results according to their authors:
+
+<CodeSamples id="sorting_guide_sort_parameter_2" />
+
+```json
+[
+  {
+    "id": 2,
+    "title": "The Parable of the Sower",
+    "author": "Octavia E. Butler",
+    "genres": [
+      "science fiction"
+    ],
+    "rating": {
+      "critics": 90,
+      "users": 92
+    },
+    "price": 10.00
+  },
+  {
+    "id": 5,
+    "title": "Wild Seed",
+    "author": "Octavia E. Butler",
+    "genres": [
+      "fantasy"
+    ],
+    "rating": {
+      "critics": 84,
+      "users": 80
+    },
+    "price": 5.00
+  },
+  {
+    "id": 4,
+    "title": "Gender Trouble",
+    "author": "Judith Butler",
+    "genres": [
+      "feminism",
+      "philosophy"
+    ],
+    "rating": {
+      "critics": 86,
+      "users": 73
+    },
+    "price": 10.00
+  }
+]
+```
+
+### Sort by nested fields
+
+Use dot notation to sort results based on a document's nested fields. The following query sorts returned documents by their user review scores:
+
+<CodeSamples id="sorting_guide_sort_nested_1" />
+
+## Sorting and custom ranking rules
+
+There is a lot of overlap between sorting and configuring [custom ranking rules](/learn/relevancy/custom_ranking_rules), as both can greatly influence which results a user will see first.
+
+Sorting is most useful when you want your users to be able to alter the order of returned results at query time. For example, webshop users might want to order results by price depending on what they are searching and to change whether they see the most expensive or the cheapest products first.
+
+Custom ranking rules, instead, establish a default sorting rule that is enforced in every search. This approach can be useful when you want to promote certain results above all others, regardless of a user's preferences. For example, you might want a webshop to always feature discounted products first, no matter what a user is searching for.
+
+## Example application
+
+Take a look at our demos for examples of how to implement sorting:
+- **Ecommerce demo**: [preview](https://ecommerce.meilisearch.com/?utm_campaign=oss&utm_source=docs&utm_medium=sorting) • [GitHub repository](https://github.com/meilisearch/ecommerce-demo/)
+- **CRM SaaS demo**: [preview](https://saas.meilisearch.com/?utm_campaign=oss&utm_source=docs&utm_medium=sorting) • [GitHub repository](https://github.com/meilisearch/saas-demo/)

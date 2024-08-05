@@ -1,0 +1,54 @@
+---
+title: What is Meilisearch? — Meilisearch documentation
+description: Meilisearch is a search engine featuring a blazing fast RESTful search API, typo tolerance, comprehensive language support, and much more.
+---
+
+# What is Meilisearch?
+
+Meilisearch is a **RESTful search API**. It aims to be a **ready-to-go solution** for everyone who wants a **fast and relevant search experience** for their end-users ⚡️🔎
+
+## Meilisearch Cloud
+
+[Meilisearch Cloud](https://www.meilisearch.com/cloud?utm_campaign=oss&utm_source=docs&utm_medium=what-is-meilisearch) is the recommended way of using Meilisearch. Using Meilisearch Cloud greatly simplifies installing, maintaining, and updating Meilisearch. [Get started with a 14-day free trial](https://www.meilisearch.com/cloud?utm_campaign=oss&utm_source=docs&utm_medium=what-is-meilisearch).
+
+## Demo
+
+[![Search bar updating results](/assets/images/movies-demo-dark.gif)](https://where2watch.meilisearch.com/?utm_campaign=oss&utm_source=docs&utm_medium=what-is-meilisearch&utm_content=gif)
+_Meilisearch helps you find where to watch a movie at [where2watch.meilisearch.com](https://where2watch.meilisearch.com/?utm_campaign=oss&utm_source=docs&utm_medium=what-is-meilisearch&utm_content=link)._
+
+## Features
+
+- **Blazing fast**: Answers in less than 50 milliseconds
+- **Search as you type**: Results are updated on each keystroke using [prefix-search](/learn/engine/prefix#prefix-search)
+- [Typo tolerance](/learn/relevancy/typo_tolerance_settings): Get relevant matches even when queries contain typos and misspellings
+- [Comprehensive language support](/learn/resources/language): Optimized support for **Chinese, Japanese, Hebrew, and languages using the Latin alphabet**
+- **Returns the whole document**: The entire document is returned upon search
+- **Highly customizable search and indexing**: Customize search behavior to better meet your needs
+- [Custom ranking](/learn/relevancy/relevancy): Customize the relevancy of the search engine and the ranking of the search results
+- [Filtering](/learn/filtering_and_sorting/filter_search_results) and [faceted search](/learn/filtering_and_sorting/search_with_facet_filters): Enhance user search experience with custom filters and build a faceted search interface in a few lines of code
+- [Highlighting](/reference/api/search#highlight-tags): Highlighted search results in documents
+- [Stop words](/reference/api/settings#stop-words): Ignore common non-relevant words like `of` or `the`
+- [Synonyms](/reference/api/settings#synonyms): Configure synonyms to include more relevant content in your search results
+- **RESTful API**: Integrate Meilisearch in your technical stack with our plugins and SDKs
+- [Search preview](/learn/getting_started/search_preview): Allows you to test your search settings without implementing a front-end
+- [API key management](/learn/security/basic_security): Protect your instance with API keys. Set expiration dates and control access to indexes and endpoints so that your data is always safe
+- [Multitenancy and tenant tokens](/learn/security/multitenancy_tenant_tokens): Manage complex multi-user applications. Tenant tokens help you decide which documents each one of your users can search
+- [Multi-search](/reference/api/multi_search): Perform multiple search queries on multiple indexes with a single HTTP request
+- [Geosearch](/learn/filtering_and_sorting/geosearch): Filter and sort results based on their geographic location
+- [Index swapping](/learn/getting_started/indexes#swapping-indexes): Deploy major database updates with zero search downtime
+
+## Philosophy
+
+Our goal is to provide a simple and intuitive experience for both developers and end-users. Ease of use was the primary focus of Meilisearch from its first release, and it continues to drive its development today.
+
+Meilisearch's ease-of-use goes hand-in-hand with ultra relevant search results. Meilisearch **sorts results according to a set of [ranking rules](/learn/relevancy/ranking_rules)**. Our default ranking rules work for most use cases as we developed them by working directly with our users. You can also **configure the [search parameters](/reference/api/search)** to refine your search even further.
+
+Meilisearch should **not be your main data store**. It is a search engine, not a database. Meilisearch should contain only the data you want your users to search through. If you must add data that is irrelevant to search, be sure to [make those fields non-searchable](/learn/relevancy/displayed_searchable_attributes#searchable-fields) to improve relevancy and response time.
+
+Meilisearch provides an intuitive search-as-you-type experience with response times under 50 milliseconds, no matter whether you are developing a site or an app. This helps end-users find what they are looking for quickly and efficiently. To make that happen, we are fully committed to the philosophy of [prefix search](/learn/engine/prefix).
+
+## Give it a try!
+
+Instead of showing you examples, why not just invite you to test Meilisearch interactively in the **out-of-the-box search preview** we deliver?
+
+There's no need to write a single line of front-end code. All you need to do is follow [this guide](/learn/self_hosted/getting_started_with_self_hosted_meilisearch) to give the search engine a try!

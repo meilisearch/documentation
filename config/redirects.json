@@ -51,7 +51,7 @@
   },
   {
     "source": "/docs/learn/advanced/sorting",
-    "destination": "/docs/learn/filtering_and_sorting/sorting",
+    "destination": "/docs/learn/filtering_and_sorting/sort_search_results",
     "permanent": true
   },
   {
@@ -347,6 +347,156 @@
   {
     "source": "/docs/learn/experimental/puffin_reports",
     "destination": "/docs/learn/experimental/log_customization",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/index_settings/distinct",
+    "destination": "/docs/learn/relevancy/distinct_attribute",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/index_settings/displayed_searchable_attributes",
+    "destination": "/docs/learn/relevancy/displayed_searchable_attributes",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/index_settings/synonyms",
+    "destination": "/docs/learn/relevancy/synonyms",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/index_settings/typo_tolerance",
+    "destination": "/docs/learn/relevancy/typo_tolerance_settings",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/core_concepts/relevancy",
+    "destination": "/docs/learn/relevancy/relevancy",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/configuration/settings",
+    "destination": "/docs/reference/api/settings",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/fine_tuning_results/faceted_search",
+    "destination": "/docs/learn/filtering_and_sorting/search_with_facet_filters",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/fine_tuning_results/filtering",
+    "destination": "/docs/learn/filtering_and_sorting/filter_search_results",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/fine_tuning_results/working_with_dates",
+    "destination": "/docs/learn/filtering_and_sorting/working_with_dates",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/fine_tuning_results/geosearch",
+    "destination": "/docs/learn/filtering_and_sorting/geosearch",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/fine_tuning_results/sorting",
+    "destination": "/docs/learn/filtering_and_sorting/sort_search_results",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/configuration/instance_options",
+    "destination": "/docs/learn/self_hosted/configure_meilisearch_at_launch",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/getting_started/installation",
+    "destination": "/docs/learn/self_hosted/install_meilisearch_locally",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/getting_started/quick_start",
+    "destination": "/docs/learn/self_hosted/getting_started_with_self_hosted_meilisearch",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/getting_started/supported_os",
+    "destination": "/docs/learn/self_hosted/supported_os",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/advanced/indexing",
+    "destination": "/docs/learn/indexing/indexing_best_practices",
+    "permanent": true
+  },
+  {
+    "source": "/docs/guides/performance/indexing_best_practices",
+    "destination": "/docs/learn/indexing/indexing_best_practices",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/advanced/tokenization",
+    "destination": "/docs/learn/indexing/tokenization",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/advanced/known_limitations",
+    "destination": "/docs/learn/resources/known_limitations",
+    "permanent": true
+  },
+  {
+    "source": "/docs/faq",
+    "destination": "/docs/learn/resources/faq",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/what_is_meilisearch/overview",
+    "destination": "/docs/learn/getting_started/what_is_meilisearch",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/core_concepts/documents",
+    "destination": "/docs/learn/getting_started/documents",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/core_concepts/indexes",
+    "destination": "/docs/learn/getting_started/indexes",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/core_concepts/primary_key",
+    "destination": "/docs/learn/getting_started/primary_key",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/what_is_meilisearch/sdks",
+    "destination": "/docs/learn/resources/sdks",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/what_is_meilisearch/comparison_to_alternatives",
+    "destination": "/docs/learn/resources/comparison_to_alternatives",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/what_is_meilisearch/telemetry",
+    "destination": "/docs/learn/resources/telemetry",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/what_is_meilisearch/language",
+    "destination": "/docs/learn/resources/language",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/update_and_migration/versioning",
+    "destination": "/docs/learn/resources/versioning",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/contributing/contributing_docs",
+    "destination": "/docs/learn/resources/contributing_docs",
     "permanent": true
   }
 ]

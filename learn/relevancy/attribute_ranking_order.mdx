@@ -1,0 +1,43 @@
+---
+title: Attribute ranking order — Meilisearch documentation
+description: This article explains how the order of attributes in the `searchableAttributes` array impacts search result relevancy.
+---
+
+# Attribute ranking order
+
+In most datasets, some fields are more relevant to search than others. A `title`, for example, might be more meaningful to a movie search than its `overview` or its `release_date`.
+
+When `searchableAttributes` is using its default value, `[*]`, all fields carry the same weight.
+
+If you manually configure [the searchable attributes list](/learn/relevancy/displayed_searchable_attributes#the-searchableattributes-list), attributes that appear early in the array are more important when claculating search result relevancy.
+
+## Example
+
+```json
+[
+  "title",
+  "overview",
+  "release_date"
+]
+```
+
+With the above attribute ranking order, matching words found in the `title` field would have a higher impact on relevancy than the same words found in `overview` or `release_date`. If you searched for "1984", for example, results like Michael Radford's film "1984" would be ranked higher than movies released in the year 1984.
+
+## Attribute ranking order and nested objects
+
+By default, nested fields share the same weight as their parent attribute. Use dot notation to set different weights for attributes in nested objects:
+
+```json
+[
+  "title", 
+  "review.critic", 
+  "overview", 
+  "review.user"
+]
+```
+
+With the above ranking order, `review.critic` becomes more important than its sibling `review.user` when calculating a document's ranking score.
+
+<Capsule intent="note">
+The `attribute` rule's position in [`rankingRules`](#built-in-rules) determines how the results are sorted. Meaning, **if `attribute` is at the bottom of the ranking rules list, it will have almost no impact on your search results.**
+</Capsule>

@@ -1,0 +1,191 @@
+---
+title: Getting started with self-hosted Meilisearch — Meilisearch documentation
+description: Learn how to install Meilisearch, index a dataset, and perform your first search.
+---
+
+# Getting started with self-hosted Meilisearch
+
+This quick start walks you through installing Meilisearch, adding documents, and performing your first search.
+
+To follow this tutorial you need:
+
+- A [command line terminal](https://www.learnenough.com/command-line-tutorial#sec-running_a_terminal)
+- [cURL](https://curl.se)
+
+<Capsule intent="tip">
+Using Meilisearch Cloud? Check out the dedicated guide, [Getting started with Meilisearch Cloud](/learn/getting_started/cloud_quick_start).
+</Capsule>
+
+## Setup and installation
+
+First, you need to download and install Meilisearch. This command installs the latest Meilisearch version in your local machine:
+
+```bash
+# Install Meilisearch
+curl -L https://install.meilisearch.com | sh
+```
+
+The rest of this guide assumes you are using Meilisearch locally, but you may also use Meilisearch over a cloud service such as [Meilisearch Cloud](https://www.meilisearch.com/cloud?utm_campaign=oss&utm_source=docs&utm_medium=quick-start).
+
+Learn more about other installation options in the [installation guide](/learn/self_hosted/install_meilisearch_locally).
+
+### Running Meilisearch
+
+Next, launch Meilisearch by running the following command in your terminal:
+
+```bash
+# Launch Meilisearch
+./meilisearch --master-key="aSampleMasterKey"
+```
+
+<Capsule intent="note">
+This tutorial uses `aSampleMasterKey` as a master key, but you may change it to any alphanumeric string with 16 or more bytes. In most cases, one character corresponds to one byte.
+</Capsule>
+
+You should see something like this in response:
+
+```
+888b     d888          d8b 888 d8b                                            888
+8888b   d8888          Y8P 888 Y8P                                            888
+88888b.d88888              888                                                888
+888Y88888P888  .d88b.  888 888 888 .d8888b   .d88b.   8888b.  888d888 .d8888b 88888b.
+888 Y888P 888 d8P  Y8b 888 888 888 88K      d8P  Y8b     "88b 888P"  d88P"    888 "88b
+888  Y8P  888 88888888 888 888 888 "Y8888b. 88888888 .d888888 888    888      888  888
+888   "   888 Y8b.     888 888 888      X88 Y8b.     888  888 888    Y88b.    888  888
+888       888  "Y8888  888 888 888  88888P'  "Y8888  "Y888888 888     "Y8888P 888  888
+
+Database path:       "./data.ms"
+Server listening on: "localhost:7700"
+```
+
+You now have a Meilisearch instance running in your terminal window. Keep this window open for the rest of this tutorial.
+
+<Capsule intent="note">
+The above command uses the `--master-key` configuration option to secure Meilisearch. Setting a master key is optional but strongly recommended in development environments. Master keys are mandatory in production environments.
+</Capsule>
+
+To learn more about securing Meilisearch, refer to the [security tutorial](/learn/security/basic_security).
+
+## Add documents
+
+In this quick start, you will search through a collection of movies.
+
+To follow along, first click this link to download the file: <ButtonLink as="a" id="downloadMovie" href="/movies.json" download="movies.json">movies.json</ButtonLink>. Then, move the downloaded file into your working directory.
+
+<Capsule intent="note">
+Meilisearch accepts data in JSON, NDJSON, and CSV formats.
+</Capsule>
+
+Open a new terminal window and run the following command:
+
+<CodeSamples id="getting_started_add_documents_md" />
+
+Meilisearch stores data in the form of discrete records, called [documents](/learn/getting_started/documents). Each document is an object composed of multiple fields, which are pairs of one attribute and one value:
+
+```json
+{
+  "attribute": "value"
+}
+```
+
+Documents are grouped into collections, called [indexes](/learn/getting_started/indexes).
+
+The previous command added documents from `movies.json` to a new index called `movies`. It also set `id` as the primary key.
+
+<Capsule intent="note">
+Every index must have a [primary key](/learn/getting_started/primary_key#primary-field), an attribute shared across all documents in that index. If you try adding documents to an index and even a single one is missing the primary key, none of the documents will be stored.
+
+If you do not explicitly set the primary key, Meilisearch [infers](/learn/getting_started/primary_key#meilisearch-guesses-your-primary-key) it from your dataset.
+</Capsule>
+
+After adding documents, you should receive a response like this:
+
+```json
+{
+    "taskUid": 0,
+    "indexUid": "movies",
+    "status": "enqueued",
+    "type": "documentAdditionOrUpdate",
+    "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+}
+```
+
+Use the returned `taskUid` to [check the status](/reference/api/tasks) of your documents:
+
+<CodeSamples id="getting_started_check_task_status" />
+
+<Capsule intent="note">
+Most database operations in Meilisearch are [asynchronous](/learn/async/asynchronous_operations). Rather than being processed instantly, **API requests are added to a queue and processed one at a time**.
+</Capsule>
+
+If the document addition is successful, the response should look like this:
+
+```json
+{
+   "uid": 0,
+   "indexUid": "movies",
+   "status": "succeeded",
+   "type": "documentAdditionOrUpdate",
+   "canceledBy": null,
+   "details":{
+      "receivedDocuments": 19547,
+      "indexedDocuments": 19547
+   },
+   "error": null,
+   "duration": "PT0.030750S",
+   "enqueuedAt": "2021-12-20T12:39:18.349288Z",
+   "startedAt": "2021-12-20T12:39:18.352490Z",
+   "finishedAt": "2021-12-20T12:39:18.380038Z"
+}
+```
+
+If `status` is `enqueued` or `processing`, all you have to do is wait a short time and check again. Proceed to the next step once the task `status` has changed to `succeeded`.
+
+## Search
+
+Now that you have Meilisearch set up, you can start searching!
+
+<CodeSamples id="getting_started_search_md" />
+
+<Capsule intent="note">
+This tutorial queries Meilisearch with the master key. In production environments, this is a security risk. Prefer using API keys to access Meilisearch's API in any public-facing application.
+</Capsule>
+
+In the above code sample, the parameter `q` represents the search query. This query instructs Meilisearch to search for `botman` in the documents you added in [the previous step](#add-documents):
+
+```json
+{
+  "hits": [
+    {
+      "id": 29751,
+      "title": "Batman Unmasked: The Psychology of the Dark Knight",
+      "poster": "https://image.tmdb.org/t/p/w1280/jjHu128XLARc2k4cJrblAvZe0HE.jpg",
+      "overview": "Delve into the world of Batman and the vigilante justice tha",
+      "release_date": "2008-07-15"
+    },
+    {
+      "id": 471474,
+      "title": "Batman: Gotham by Gaslight",
+      "poster": "https://image.tmdb.org/t/p/w1280/7souLi5zqQCnpZVghaXv0Wowi0y.jpg",
+      "overview": "ve Victorian Age Gotham City, Batman begins his war on crime",
+      "release_date": "2018-01-12"
+    },
+    …
+  ],
+  "estimatedTotalHits": 66,
+  "query": "botman",
+  "limit": 20,
+  "offset": 0,
+  "processingTimeMs": 12
+}
+```
+
+By default, Meilisearch only returns the first 20 results for a search query. You can change this using the [`limit` parameter](/reference/api/search#limit).
+
+## What's next?
+
+You now know how to install Meilisearch, create an index, add documents, check the status of an asynchronous task, and make a search request.
+
+If you'd like to search through the documents you just added using a clean browser interface rather than the terminal, you can do so with [our built-in search preview](/learn/getting_started/search_preview). You can also [learn how to quickly build a front-end interface](/guides/front_end/front_end_integration) of your own.
+
+For a more advanced approach, consult the [API reference](/reference/api/overview).

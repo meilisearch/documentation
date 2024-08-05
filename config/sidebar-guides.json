@@ -14,6 +14,11 @@
         "slug": "react_quick_start"
       },
       {
+        "source": "guides/front_end/vue_quick_start.mdx",
+        "label": "Vue quick start",
+        "slug": "vue_quick_start"
+      },
+      {
         "source": "guides/front_end/search_bar_for_docs.mdx",
         "label": "Add a search bar to your docs",
         "slug": "search_bar_for_docs"
@@ -38,6 +43,11 @@
         "source": "guides/strapi_v4.mdx",
         "label": "Strapi v4 guide",
         "slug": "strapi_v4"
+      },
+      {
+        "source": "guides/ruby_on_rails_quick_start.mdx",
+        "label": "Ruby on Rails quick start",
+        "slug": "rails_quick_start"
       }
     ]
   },
@@ -61,11 +71,6 @@
     "title": "Performance",
     "slug": "performance",
     "routes": [
-      {
-        "source": "guides/indexing_best_practices.mdx",
-        "label": "Indexing best practices",
-        "slug": "indexing_best_practices"
-      },
       {
         "source": "guides/improve_relevancy_large_documents.mdx",
         "label": "Improve relevancy when working with large documents",

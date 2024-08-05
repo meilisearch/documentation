@@ -22,14 +22,14 @@ Search for documents matching a specific query in the given index.
 This is the preferred endpoint to perform search when an API key is required, as it allows for [preflight requests](https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request) to be cached. Caching preflight requests **considerably improves search speed**.
 
 <Capsule intent="note">
-By default, [this endpoint returns a maximum of 1000 results](/learn/advanced/known_limitations#maximum-number-of-results-per-search). If you want to scrape your database, use the [get documents endpoint](/reference/api/documents#get-documents-with-post) instead.
+By default, [this endpoint returns a maximum of 1000 results](/learn/resources/known_limitations#maximum-number-of-results-per-search). If you want to scrape your database, use the [get documents endpoint](/reference/api/documents#get-documents-with-post) instead.
 </Capsule>
 
 ### Path parameters
 
 | Name              | Type   | Description                                                            |
 | :---------------- | :----- | :--------------------------------------------------------------------- |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
 
 ### Body
 
@@ -40,7 +40,7 @@ By default, [this endpoint returns a maximum of 1000 results](/learn/advanced/kn
 | **[`limit`](#limit)**                                   | Integer          | `20`          | Maximum number of documents returned                |
 | **[`hitsPerPage`](#number-of-results-per-page)**        | Integer          | `1`           | Maximum number of documents returned for a page     |
 | **[`page`](#page)**                                     | Integer          | `1`           | Request a specific page of results                  |
-| **[`filter`](/reference/api/search#filter)**            | [String](/learn/fine_tuning_results/filtering#filter-expressions) | `null`        | Filter queries by an attribute's value              |
+| **[`filter`](/reference/api/search#filter)**            | [String](/learn/filtering_and_sorting/filter_expression_reference) | `null`        | Filter queries by an attribute's value              |
 | **[`facets`](#facets)**                                 | Array of strings | `null`        | Display the count of matches per facet              |
 | **[`attributesToRetrieve`](#attributes-to-retrieve)**   | Array of strings | `["*"]`       | Attributes to display in the returned documents     |
 | **[`attributesToCrop`](#attributes-to-crop)**           | Array of strings | `null`        | Attributes whose values have to be cropped          |
@@ -129,20 +129,20 @@ You can [read more about pagination in our dedicated guide](/guides/front_end/pa
 Search for documents matching a specific query in the given index.
 
 <Capsule intent="warning">
-This endpoint only accepts [string filter expressions](/learn/fine_tuning_results/filtering#filter-expressions).
+This endpoint only accepts [string filter expressions](/learn/filtering_and_sorting/filter_expression_reference).
 </Capsule>
 
 This endpoint should only be used when no API key is required. If an API key is required, use the [POST](/reference/api/search#search-in-an-index-with-post) route instead.
 
 <Capsule intent="note">
-By default, [this endpoint returns a maximum of 1000 results](/learn/advanced/known_limitations#maximum-number-of-results-per-search). If you want to scrape your database, use the [get documents endpoint](/reference/api/documents#get-documents-with-post) instead.
+By default, [this endpoint returns a maximum of 1000 results](/learn/resources/known_limitations#maximum-number-of-results-per-search). If you want to scrape your database, use the [get documents endpoint](/reference/api/documents#get-documents-with-post) instead.
 </Capsule>
 
 ### Path parameters
 
 | Name              | Type   | Description                                                            |
 | :---------------- | :----- | :--------------------------------------------------------------------- |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
 
 ### Query parameters
 
@@ -153,7 +153,7 @@ By default, [this endpoint returns a maximum of 1000 results](/learn/advanced/kn
 | **[`limit`](#limit)**                                   | Integer          | `20`          | Maximum number of documents returned                |
 | **[`hitsPerPage`](#number-of-results-per-page)**        | Integer          | `1`           | Maximum number of documents returned for a page     |
 | **[`page`](#page)**                                     | Integer          | `1`           | Request a specific page of results                  |
-| **[`filter`](/reference/api/search#filter)**            | [String](/learn/fine_tuning_results/filtering#filter-expressions) | `null`        | Filter queries by an attribute's value              |
+| **[`filter`](/reference/api/search#filter)**            | [String](/learn/filtering_and_sorting/filter_expression_reference) | `null`        | Filter queries by an attribute's value              |
 | **[`facets`](#facets)**                                 | Array of strings | `null`        | Display the count of matches per facet              |
 | **[`attributesToRetrieve`](#attributes-to-retrieve)**   | Array of strings | `["*"]`       | Attributes to display in the returned documents     |
 | **[`attributesToCrop`](#attributes-to-crop)**           | Array of strings | `null`        | Attributes whose values have to be cropped          |
@@ -232,7 +232,7 @@ Here follows an exhaustive description of each search parameter currently availa
 <Capsule intent="warning">
 If [using the `GET` route to perform a search](/reference/api/search#search-in-an-index-with-get), all parameters must be **URL-encoded**.
 
-This is not necessary when using the `POST` route or one of our [SDKs](/learn/what_is_meilisearch/sdks).
+This is not necessary when using the `POST` route or one of our [SDKs](/learn/resources/sdks).
 </Capsule>
 
 ### Overview
@@ -271,7 +271,7 @@ This is not necessary when using the `POST` route or one of our [SDKs](/learn/wh
 Sets the search terms.
 
 <Capsule intent="warning">
-Meilisearch only considers the first ten words of any given search query. This is necessary in order to deliver a [fast search-as-you-type experience](/learn/advanced/known_limitations#maximum-number-of-query-words).
+Meilisearch only considers the first ten words of any given search query. This is necessary in order to deliver a [fast search-as-you-type experience](/learn/resources/known_limitations#maximum-number-of-query-words).
 </Capsule>
 
 #### Example
@@ -310,12 +310,12 @@ Normalization also converts all letters to lowercase. Searching for `"Video"` re
 
 #### Placeholder search
 
-When `q` isn't specified, Meilisearch performs a **placeholder search**.  A placeholder search returns all searchable documents in an index, modified by any search parameters used and sorted by that index's [custom ranking rules](/learn/core_concepts/relevancy#custom-rules). Since there is no query term, the [built-in ranking rules](/learn/core_concepts/relevancy#ranking-rules) **do not apply.**
+When `q` isn't specified, Meilisearch performs a **placeholder search**.  A placeholder search returns all searchable documents in an index, modified by any search parameters used and sorted by that index's [custom ranking rules](/learn/relevancy/custom_ranking_rules). Since there is no query term, the [built-in ranking rules](/learn/relevancy/ranking_rules) **do not apply.**
 
 If the index has no sort or custom ranking rules, the results are returned in the order of their internal database position.
 
 <Capsule intent="tip">
-Placeholder search is particularly useful when building a [faceted search interfaces](/learn/fine_tuning_results/faceted_search), as it allows users to view the catalog and alter sorting rules without entering a query.
+Placeholder search is particularly useful when building a [faceted search interfaces](/learn/filtering_and_sorting/search_with_facet_filters), as it allows users to view the catalog and alter sorting rules without entering a query.
 </Capsule>
 
 #### Phrase search
@@ -324,7 +324,7 @@ If you enclose search terms in double quotes (`"`), Meilisearch will only return
 
 Phrase searches are case-insensitive and ignore [soft separators such as `-`, `,`, and `:`](/learn/engine/datatypes). Using a hard separator within a phrase search effectively splits it into multiple separate phrase searches: `"Octavia.Butler"` will return the same results as `"Octavia" "Butler"`.
 
-You can combine phrase search and normal queries in a single search request. In this case, Meilisearch will first fetch all documents with exact matches to the given phrase(s), and [then proceed with its default behavior](/learn/core_concepts/relevancy).
+You can combine phrase search and normal queries in a single search request. In this case, Meilisearch will first fetch all documents with exact matches to the given phrase(s), and [then proceed with its default behavior](/learn/relevancy/relevancy).
 
 ##### Example
 
@@ -450,7 +450,7 @@ The following example returns the second page of search results:
 
 Uses filter expressions to refine search results. Attributes used as filter criteria must be added to the [`filterableAttributes` list](/reference/api/settings#filterable-attributes).
 
-For more information, [read our guide on how to use filters and build filter expressions](/learn/fine_tuning_results/filtering).
+For more information, [read our guide on how to use filters and build filter expressions](/learn/filtering_and_sorting/filter_search_results).
 
 #### Example
 
@@ -518,7 +518,9 @@ Returns the number of documents matching the current search query for each given
 - An array of attributes: `facets=["attributeA", "attributeB", …]`
 - An asterisk—this will return a count for all facets present in `filterableAttributes`
 
-When `facets` is set, the search results object contains the [`facetDistribution`](#facetdistribution) and [`facetStats`](#facetstats) fields.
+By default, `facets` returns a maximum of 100 facet values for each faceted field. You can change this value using the `maxValuesPerFacet` property of the [`faceting` index settings](/reference/api/settings#faceting).
+
+When `facets` is set, the search results object includes the [`facetDistribution`](#facetdistribution) and [`facetStats`](#facetstats) fields.
 
 <Capsule intent="note">
 If an attribute used on `facets` has not been added to the `filterableAttributes` list, it will be ignored.
@@ -526,12 +528,48 @@ If an attribute used on `facets` has not been added to the `filterableAttributes
 
 #### `facetDistribution`
 
-`facetDistribution` contains the number of matching documents distributed among the values of a given facet. Each facet is represented as an object.
+`facetDistribution` contains the number of matching documents distributed among the values of a given facet. Each facet is represented as an object:
+
+```json
+{
+  …
+ "facetDistribution": {
+    "FACET_A": {
+      "FACET_VALUE_X": 6,
+      "FACET_VALUE_Y": 1,
+    },
+    "FACET_B": {
+      "FACET_VALUE_Z": 3,
+      "FACET_VALUE_W": 9,
+    },
+  },
+  …
+}
+```
+
+`facetDistribution` contains an object for every attribute passed to the `facets` parameter. Each object contains the returned values for that attribute and the count of matching documents with that value. Meilisearch does not return empty facets.
+
+<Capsule intent="tip">
+</Capsule>
 
 #### `facetStats`
 
-When using the `facets` parameter, any matching documents with facets containing numeric values are displayed in a `facetStats` object. `facetStats` contains the numeric minimum (`min`) and maximum (`max`) values per facet for all documents matching the search query.
-If none of the matching documents have a numeric value for a facet, that facet is not included in the `facetStats` object.
+`facetStats` contains the lowest (`min`) and highest (`max`) numerical values across all documents in each facet. Only numeric values are considered:
+
+```json
+{
+  …
+"facetStats":{
+  "rating":{
+    "min":2.5,
+    "max":4.7
+    }
+  }
+  …
+}
+```
+
+If none of the matching documents have a numeric value for a facet, that facet is not included in the `facetStats` object. `facetStats` ignores string values, even if the string contains a number.
 
 #### Example
 
@@ -568,7 +606,7 @@ The response shows the facet distribution for `genres` and `rating`. Since `rati
 }
 ```
 
-[Learn more about facet distribution in the faceted search guide.](/learn/fine_tuning_results/faceted_search#configuring-and-using-facets)
+[Learn more about facet distribution in the faceted search guide.](/learn/filtering_and_sorting/search_with_facet_filters)
 
 ### Distinct attributes at search time
 
@@ -723,7 +761,7 @@ By default highlighted elements are enclosed in `<em>` and `</em>` tags. You may
 </Capsule>
 
 <Capsule intent="warning">
-`attributesToHighlight` will highlight matches within all attributes added to the `attributesToHighlight` array, even if those attributes are not set as [`searchableAttributes`](/learn/configuration/displayed_searchable_attributes#searchable-fields).
+`attributesToHighlight` will highlight matches within all attributes added to the `attributesToHighlight` array, even if those attributes are not set as [`searchableAttributes`](/learn/relevancy/displayed_searchable_attributes#searchable-fields).
 </Capsule>
 
 #### Example
@@ -801,7 +839,7 @@ Though it is not necessary to use `highlightPreTag` and `highlightPostTag` in co
 Adds a `_matchesPosition` object to the search response that contains the location of each occurrence of queried terms across all fields. This is useful when you need more control than offered by our [built-in highlighting](#attributes-to-highlight). `showMatchesPosition` only works for strings, numbers, and arrays of strings and numbers.
 
 <Capsule intent="warning">
-`showMatchesPosition` returns the location of matched query terms within all attributes, even attributes that are not set as [`searchableAttributes`](/learn/configuration/displayed_searchable_attributes#searchable-fields).
+`showMatchesPosition` returns the location of matched query terms within all attributes, even attributes that are not set as [`searchableAttributes`](/learn/relevancy/displayed_searchable_attributes#searchable-fields).
 </Capsule>
 
 The beginning of a matching term within a field is indicated by `start`, and its length by `length`.
@@ -868,7 +906,7 @@ When using the `POST` route, `sort` expects an array of strings.
 
 When using the `GET` route, `sort` expects the list as a comma-separated string.
 
-[Read more about sorting search results in our dedicated guide.](/learn/fine_tuning_results/sorting)
+[Read more about sorting search results in our dedicated guide.](/learn/filtering_and_sorting/sort_search_results)
 
 #### Example
 
@@ -900,7 +938,7 @@ Queries using `_geoPoint` will always include a `geoDistance` field containing t
 ]
 ```
 
-[You can read more about location-based sorting in our dedicated guide.](/learn/fine_tuning_results/geosearch#sorting-results-with-_geopoint)
+[You can read more about location-based sorting in our dedicated guide.](/learn/filtering_and_sorting/geosearch#sorting-results-with-_geopoint)
 
 ### Matching strategy
 
@@ -1039,7 +1077,7 @@ The `sort` ranking rule does not appear as a single field in the score details o
 
 - `order`: order in which this ranking rule was applied
 - `value`: value of the field used for sorting
-- `distance`: same as [_geoDistance](/learn/fine_tuning_results/geosearch#finding-the-distance-between-a-document-and-a-_geopoint)
+- `distance`: same as [_geoDistance](/learn/filtering_and_sorting/geosearch#finding-the-distance-between-a-document-and-a-_geopoint)
 
 ##### `vectorSort(target_vector)`
 

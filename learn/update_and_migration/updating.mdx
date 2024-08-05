@@ -72,7 +72,7 @@ If your [`pkgVersion`](/reference/api/version#version-object) is 0.21 or above, 
 If your dump was created in Meilisearch v0.21 or above, [skip this step](#create-the-dump).
 </Capsule>
 
-When creating dumps using Meilisearch versions below v0.21, all fields must be [displayed](/learn/configuration/displayed_searchable_attributes#displayed-fields) in order to be saved in the dump.
+When creating dumps using Meilisearch versions below v0.21, all fields must be [displayed](/learn/relevancy/displayed_searchable_attributes#displayed-fields) in order to be saved in the dump.
 
 Start by verifying that all attributes are included in the displayed attributes list:
 
@@ -97,7 +97,7 @@ Once the status is `processed`, you're good to go. Repeat this process for all i
 
 #### Create the dump
 
-Before creating your dump, make sure that your [dump directory](/learn/configuration/instance_options#dump-directory) is somewhere accessible. By default, dumps are created in a folder called `dumps` at the root of your Meilisearch directory.
+Before creating your dump, make sure that your [dump directory](/learn/self_hosted/configure_meilisearch_at_launch#dump-directory) is somewhere accessible. By default, dumps are created in a folder called `dumps` at the root of your Meilisearch directory.
 
 **Cloud platforms** like DigitalOcean, AWS, and GCP are configured to store dumps in the `/var/opt/meilisearch/dumps` directory.
 
@@ -149,7 +149,7 @@ It should return something like this:
 </Tabs.Container>
 
 <Capsule intent="danger" title={<><code>_geo</code> field in v0.27, v0.28, and v0.29</>}>
-Due to an error allowing malformed `_geo` fields in Meilisearch **v0.27, v0.28, and v0.29**, you might not be able to import your dump. Please ensure the `_geo` field follows the [correct format](/learn/fine_tuning_results/geosearch#preparing-documents-for-location-based-search) before creating your dump.
+Due to an error allowing malformed `_geo` fields in Meilisearch **v0.27, v0.28, and v0.29**, you might not be able to import your dump. Please ensure the `_geo` field follows the [correct format](/learn/filtering_and_sorting/geosearch#preparing-documents-for-location-based-search) before creating your dump.
 </Capsule>
 
 You can then create a dump of your database:
@@ -212,7 +212,7 @@ You may need to prefix the above command with `sudo` if you are not connected as
 
 #### Create a backup
 
-Instead of deleting `data.ms`, we suggest creating a backup in case something goes wrong. `data.ms` should be at the root of the Meilisearch binary unless you chose [another location](/learn/configuration/instance_options#database-path).
+Instead of deleting `data.ms`, we suggest creating a backup in case something goes wrong. `data.ms` should be at the root of the Meilisearch binary unless you chose [another location](/learn/self_hosted/configure_meilisearch_at_launch#database-path).
 
 On **cloud platforms**, you will find the `data.ms` folder at `/var/lib/meilisearch/data.ms`.
 

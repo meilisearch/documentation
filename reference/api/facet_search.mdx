@@ -5,7 +5,7 @@ description: The /facet-search route allows you to search for facet values.
 
 # Facet search
 
-The `/facet-search` route allows you to search for facet values. Facet search supports [prefix search](/learn/engine/prefix) and [typo tolerance](/learn/configuration/typo_tolerance). The returned hits are sorted lexicographically in ascending order. You can configure how facets are sorted using the [`sortFacetValuesBy`](/reference/api/settings#faceting-object) property of the `faceting` index settings.
+The `/facet-search` route allows you to search for facet values. Facet search supports [prefix search](/learn/engine/prefix) and [typo tolerance](/learn/relevancy/typo_tolerance_settings). The returned hits are sorted lexicographically in ascending order. You can configure how facets are sorted using the [`sortFacetValuesBy`](/reference/api/settings#faceting-object) property of the `faceting` index settings.
 
 <Capsule intent="note" title="Facet search on numbers">
 Meilisearch does not support facet search on numbers. Convert numeric facets to strings to make them searchable.
@@ -20,7 +20,7 @@ Search for a facet value within a given facet.
 <RouteHighlighter method="POST" route="/indexes/{index_uid}/facet-search"/>
 
 <Capsule intent="warning">
-This endpoint will not work without first explicitly adding attributes to the [`filterableAttributes`](/reference/api/settings#update-filterable-attributes) list. [Learn more about facets in our dedicated guide.](/learn/fine_tuning_results/faceted_search#configuring-and-using-facets)
+This endpoint will not work without first explicitly adding attributes to the [`filterableAttributes`](/reference/api/settings#update-filterable-attributes) list. [Learn more about facets in our dedicated guide.](/learn/filtering_and_sorting/search_with_facet_filters)
 </Capsule>
 
 <Capsule intent="warning">
@@ -36,7 +36,7 @@ For example, searching for `Jane` will return `Jane Austen`, but searching for `
 | **`facetName`** *                                                                                     | String                                                             | `null`        | Facet name to search values on                                                                                                                                                                                                                                                                                  |
 | **`facetQuery`**                                                                                      | String                                                             | `null`        | Search query for a given facet value. If `facetQuery` isn't specified, Meilisearch performs a [placeholder search](/reference/api/search#placeholder-search) which returns all facet values for the searched facet, limited to 100 |
 | [**`q`**](/reference/api/search#query-q)                                                                    | String                                                             | `""`          | Query string                                                                                                                                                                                                                                                                                                    |
-| **[`filter`](/reference/api/search#filter)**                                                          | [String*](/learn/fine_tuning_results/filtering#filter-expressions) | `null`        | Filter queries by an attribute's value                                                                                                                                                                                                                                                                          |
+| **[`filter`](/reference/api/search#filter)**                                                          | [String*](/learn/filtering_and_sorting/filter_expression_reference) | `null`        | Filter queries by an attribute's value                                                                                                                                                                                                                                                                          |
 | **[`matchingStrategy`](/reference/api/search#matching-strategy)**                                     | String                                                             | `last`        | Strategy used to match query terms within documents                                                                                                                                                                                                                                                             |
 | **[`attributesToSearchOn`](/reference/api/search##customize-attributes-to-search-on-at-search-time)** | Array of strings                                                   | `null`        | Restrict search to the specified attributes                                                                                                                                                                                                                                                                     |
 

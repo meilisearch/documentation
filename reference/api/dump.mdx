@@ -17,7 +17,7 @@ Meilisearch Cloud does not support the `/dumps` route.
 
 <RouteHighlighter method="POST" route="/dumps"/>
 
-Triggers a dump creation task. Once the process is complete, a dump is created in the [dump directory](/learn/configuration/instance_options#dump-directory). If the dump directory does not exist yet, it will be created.
+Triggers a dump creation task. Once the process is complete, a dump is created in the [dump directory](/learn/self_hosted/configure_meilisearch_at_launch#dump-directory). If the dump directory does not exist yet, it will be created.
 
 Dump tasks take priority over all other tasks in the queue. This means that a newly created dump task will be processed as soon as the current task is finished.
 
