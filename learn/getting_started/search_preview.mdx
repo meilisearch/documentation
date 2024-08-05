@@ -13,9 +13,9 @@ If your Meilisearch instance does not have any indexes, you should see this scre
 
 ![Meilisearch search preview instructing the user to set an API key and configure an index](/assets/images/search_preview/no_documents.png)
 
-To access the search preview in your browser, navigate to the address and port specified in the command line argument `--http-addr`. If you did not configure `--http-addr` when launching your instance, [Meilisearch's default address for the search preview is localhost:7700](/learn/configuration/instance_options#http-address--port-binding).
+To access the search preview in your browser, navigate to the address and port specified in the command line argument `--http-addr`. If you did not configure `--http-addr` when launching your instance, [Meilisearch's default address for the search preview is localhost:7700](/learn/self_hosted/configure_meilisearch_at_launch#http-address--port-binding).
 
-For security reasons, the search preview is only available in [development mode](/learn/configuration/instance_options#environment). You can disable it by setting the `MEILI_ENV` environment variable or `--env` CLI option to `production`. Note that you must set a [master key](/learn/configuration/instance_options#master-key) in production mode.
+For security reasons, the search preview is only available in [development mode](/learn/self_hosted/configure_meilisearch_at_launch#environment). You can disable it by setting the `MEILI_ENV` environment variable or `--env` CLI option to `production`. Note that you must set a [master key](/learn/self_hosted/configure_meilisearch_at_launch#master-key) in production mode.
 
 ### Example
 

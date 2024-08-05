@@ -8,7 +8,7 @@ sidebarDepth: 3
 
 Use the `/settings` route to customize search settings for a given index. You can either modify all index settings at once using the [update settings endpoint](#update-settings), or use a child route to configure a single setting.
 
-For a conceptual overview of index settings, refer to the [indexes explanation](/learn/core_concepts/indexes#index-settings). To learn more about the basics of index configuration, refer to the [index configuration tutorial](/learn/configuration/configuring_index_settings_api).
+For a conceptual overview of index settings, refer to the [indexes explanation](/learn/getting_started/indexes#index-settings). To learn more about the basics of index configuration, refer to the [index configuration tutorial](/learn/configuration/configuring_index_settings_api).
 
 ## Settings interface
 
@@ -77,7 +77,7 @@ Get the settings of an index.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -146,7 +146,7 @@ If the provided index does not exist, it will be created.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
 
 #### Body
 
@@ -202,7 +202,7 @@ Reset all the settings of an index to their [default value](#settings-object).
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -253,7 +253,7 @@ Get an index's user-defined dictionary.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -275,7 +275,7 @@ Update an index's user-defined dictionary.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
 
 #### Body
 
@@ -311,7 +311,7 @@ Reset an index's dictionary to its default value, `[]`.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -349,7 +349,7 @@ Get the displayed attributes of an index.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -376,7 +376,7 @@ Update the displayed attributes of an index.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
 
 #### Body
 
@@ -420,7 +420,7 @@ Reset the displayed attributes of the index to the default value.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -460,7 +460,7 @@ Get the distinct attribute of an index.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -482,7 +482,7 @@ Update the distinct attribute field of an index.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
 
 #### Body
 
@@ -528,7 +528,7 @@ Reset the distinct attribute of an index to its default value.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -574,7 +574,7 @@ Get the faceting settings of an index.
 
 | Name              | Type   | Description                                                            |
 | :---------------- | :----- | :--------------------------------------------------------------------- |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -601,7 +601,7 @@ Partially update the faceting settings for an index. Any parameters not provided
 
 | Name              | Type   | Description                                                            |
 | :---------------- | :----- | :--------------------------------------------------------------------- |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
 
 #### Body
 
@@ -654,7 +654,7 @@ Reset an index's faceting settings to their [default value](#faceting-object). S
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -694,7 +694,7 @@ Get the filterable attributes for an index.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -720,7 +720,7 @@ Update an index's filterable attributes list.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
 
 #### Body
 
@@ -766,7 +766,7 @@ Reset an index's filterable attributes list back to its default value.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -812,7 +812,7 @@ Get the pagination settings of an index.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -836,7 +836,7 @@ Partially update the pagination settings for an index.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
 
 #### Body
 
@@ -878,7 +878,7 @@ Reset an index's pagination settings to their [default value](#pagination-object
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -917,7 +917,7 @@ Get the proximity precision settings of an index.
 
 | Name              | Type   | Description                                                            |
 | :---------------- | :----- | :--------------------------------------------------------------------- |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -941,7 +941,7 @@ Update the pagination settings for an index.
 
 | Name              | Type   | Description                                                            |
 | :---------------- | :----- | :--------------------------------------------------------------------- |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
 
 #### Body
 
@@ -975,7 +975,7 @@ Reset an index's proximity precision setting to its default value.
 
 | Name              | Type   | Description                                                            |
 | :---------------- | :----- | :--------------------------------------------------------------------- |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -1035,7 +1035,7 @@ Get the ranking rules of an index.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -1065,7 +1065,7 @@ Update the ranking rules of an index.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
 
 #### Body
 
@@ -1120,7 +1120,7 @@ Resetting ranking rules is not the same as removing them. To remove a ranking ru
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -1162,7 +1162,7 @@ Get the searchable attributes of an index.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -1193,7 +1193,7 @@ Due to an implementation bug, manually updating `searchableAttributes` will chan
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
 
 #### Body
 
@@ -1241,7 +1241,7 @@ Reset the searchable attributes of the index to the default value.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -1277,7 +1277,7 @@ Get an index's search cutoff value.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -1299,7 +1299,7 @@ Update an index's search cutoff value.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
 
 #### Body
 
@@ -1337,7 +1337,7 @@ Reset an index's search cutoff value to its default value, `null`. This translat
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -1371,7 +1371,7 @@ Get an index's list of custom separator tokens.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -1393,7 +1393,7 @@ Update an index's list of custom separator tokens.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
 
 #### Body
 
@@ -1431,7 +1431,7 @@ Reset an index's list of custom separator tokens to its default value, `[]`.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -1465,7 +1465,7 @@ Get an index's list of non-separator tokens.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -1487,7 +1487,7 @@ Update an index's list of non-separator tokens.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
 
 #### Body
 
@@ -1525,7 +1525,7 @@ Reset an index's list of non-separator tokens to its default value, `[]`.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -1565,7 +1565,7 @@ Get the sortable attributes of an index.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -1592,7 +1592,7 @@ Update an index's sortable attributes list.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
 
 #### Body
 
@@ -1638,7 +1638,7 @@ Reset an index's sortable attributes list back to its default value.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -1682,7 +1682,7 @@ Get the stop words list of an index.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -1708,7 +1708,7 @@ Update the list of stop words of an index.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
 
 #### Body
 
@@ -1748,7 +1748,7 @@ Reset the list of stop words of an index to its default value.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -1784,7 +1784,7 @@ Get the list of synonyms of an index.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -1818,7 +1818,7 @@ Update the list of synonyms of an index. Synonyms are [normalized](/learn/releva
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
 
 #### Body
 
@@ -1861,7 +1861,7 @@ Reset the list of synonyms of an index to its default value.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -1907,7 +1907,7 @@ Get the typo tolerance settings of an index.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -1937,7 +1937,7 @@ Partially update the typo tolerance settings for an index.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
 
 #### Body
 
@@ -1989,7 +1989,7 @@ Reset an index's typo tolerance settings to their [default value](#typo-toleranc
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -2061,7 +2061,7 @@ Get the embedders configured for an index.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -2091,7 +2091,7 @@ Partially update the embedder settings for an index. When this setting is update
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
 
 #### Body
 
@@ -2321,7 +2321,7 @@ To remove a single embedder, use the [update embedder settings endpoint](#update
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
 
 #### Example
 

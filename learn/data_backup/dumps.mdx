@@ -63,7 +63,7 @@ This should return an object with detailed information about the dump operation:
 
 All indexes of the current instance are exported along with their documents and settings and saved as a single `.dump` file. The dump also includes any tasks registered before Meilisearch start processing the dump creation task.
 
-Once the task `status` changes to `succeeded`, find the dump file in [the dump directory](/learn/configuration/instance_options#dump-directory). By default, this folder is named `dumps` and can be found in the same directory as your Meilisearch binary.
+Once the task `status` changes to `succeeded`, find the dump file in [the dump directory](/learn/self_hosted/configure_meilisearch_at_launch#dump-directory). By default, this folder is named `dumps` and can be found in the same directory as your Meilisearch binary.
 
 If a dump file is visible in the file system, the dump process was successfully completed. **Meilisearch will never create a partial dump file**, even if you interrupt an instance while it is generating a dump.
 
@@ -81,7 +81,7 @@ You can import a dump into Meilisearch when creating a new project, below the pl
 
 ### Importing a dump in self-hosted instances
 
-Import a dump by launching a Meilisearch instance with the [`--import-dump` configuration option](/learn/configuration/instance_options#import-dump):
+Import a dump by launching a Meilisearch instance with the [`--import-dump` configuration option](/learn/self_hosted/configure_meilisearch_at_launch#import-dump):
 
 ```bash
 ./meilisearch --import-dump /dumps/20200813-042312213.dump

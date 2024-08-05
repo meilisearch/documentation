@@ -25,7 +25,7 @@ The requested database has reached its maximum size.
 
 ## `document_fields_limit_reached`
 
-A document exceeds the [maximum limit of 65,535 fields](/learn/advanced/known_limitations#maximum-number-of-attributes-per-document).
+A document exceeds the [maximum limit of 65,535 fields](/learn/resources/known_limitations#maximum-number-of-attributes-per-document).
 
 ## `document_not_found`
 
@@ -73,23 +73,23 @@ The [`updatedAt`](/reference/api/indexes#index-object) field of an index cannot 
 
 ## `index_already_exists`
 
-An index with this [`uid`](/reference/api/indexes#index-object) already exists, check out our guide on [index creation](/learn/core_concepts/indexes).
+An index with this [`uid`](/reference/api/indexes#index-object) already exists, check out our guide on [index creation](/learn/getting_started/indexes).
 
 ## `index_creation_failed`
 
-An error occurred while trying to create an index, check out our guide on [index creation](/learn/core_concepts/indexes).
+An error occurred while trying to create an index, check out our guide on [index creation](/learn/getting_started/indexes).
 
 ## `index_not_found`
 
-An index with this `uid` was not found, check out our guide on [index creation](/learn/core_concepts/indexes).
+An index with this `uid` was not found, check out our guide on [index creation](/learn/getting_started/indexes).
 
 ## `index_primary_key_already_exists`
 
-The requested index already has a primary key that [cannot be changed](/learn/core_concepts/primary_key#changing-your-primary-key-with-the-update-index-endpoint).
+The requested index already has a primary key that [cannot be changed](/learn/getting_started/primary_key#changing-your-primary-key-with-the-update-index-endpoint).
 
 ## `index_primary_key_multiple_candidates_found`
 
-[Primary key inference](/learn/core_concepts/primary_key#meilisearch-guesses-your-primary-key) failed because the received documents contain multiple fields ending with `id`. Use the [update index endpoint](/reference/api/indexes#update-an-index) to manually set a primary key.
+[Primary key inference](/learn/getting_started/primary_key#meilisearch-guesses-your-primary-key) failed because the received documents contain multiple fields ending with `id`. Use the [update index endpoint](/reference/api/indexes#update-an-index) to manually set a primary key.
 
 ## `internal`
 
@@ -145,7 +145,7 @@ The [`csvDelimiter`](/reference/api/documents#add-or-replace-documents) paramete
 
 ## `invalid_document_id`
 
-The provided [document identifier](/learn/core_concepts/primary_key#document-id) does not meet the format requirements. A document identifier must be of type integer or string, composed only of alphanumeric characters (a-z A-Z 0-9), hyphens (-), and underscores (_).
+The provided [document identifier](/learn/getting_started/primary_key#document-id) does not meet the format requirements. A document identifier must be of type integer or string, composed only of alphanumeric characters (a-z A-Z 0-9), hyphens (-), and underscores (_).
 
 ## `invalid_document_fields`
 
@@ -191,7 +191,7 @@ The [`offset`](/reference/api/indexes#query-parameters) parameter is invalid. It
 
 ## `invalid_index_uid`
 
-There is an error in the provided index format, check out our guide on [index creation](/learn/core_concepts/indexes).
+There is an error in the provided index format, check out our guide on [index creation](/learn/getting_started/indexes).
 
 ## `invalid_index_primary_key`
 
@@ -458,7 +458,7 @@ This error generally occurs when the host system has no space left on the device
 
 ## `index_primary_key_no_candidate_found`
 
-[Primary key inference](/learn/core_concepts/primary_key#meilisearch-guesses-your-primary-key) failed as the received documents do not contain any fields ending with `id`. [Manually designate the primary key](/learn/core_concepts/primary_key#setting-the-primary-key), or add some field ending with `id` to your documents.
+[Primary key inference](/learn/getting_started/primary_key#meilisearch-guesses-your-primary-key) failed as the received documents do not contain any fields ending with `id`. [Manually designate the primary key](/learn/getting_started/primary_key#setting-the-primary-key), or add some field ending with `id` to your documents.
 
 ## `malformed_payload`
 
@@ -532,7 +532,7 @@ The requested resources could not be found.
 
 ## `payload_too_large`
 
-The payload sent to the server was too large. Check out this [guide](/learn/configuration/instance_options#payload-limit-size) to customize the maximum payload size accepted by Meilisearch.
+The payload sent to the server was too large. Check out this [guide](/learn/self_hosted/configure_meilisearch_at_launch#payload-limit-size) to customize the maximum payload size accepted by Meilisearch.
 
 ## `task_not_found`
 

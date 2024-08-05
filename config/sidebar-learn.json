@@ -1,63 +1,37 @@
 [
   {
-    "title": "What is Meilisearch",
-    "slug": "what_is_meilisearch",
-    "routes": [
-      {
-        "source": "learn/what_is_meilisearch/overview.mdx",
-        "label": "Overview",
-        "slug": "overview"
-      },
-      {
-        "source": "learn/what_is_meilisearch/sdks.mdx",
-        "label": "Official SDKs/libraries",
-        "slug": "sdks"
-      },
-      {
-        "source": "learn/what_is_meilisearch/comparison_to_alternatives.mdx",
-        "label": "Comparison to alternatives",
-        "slug": "comparison_to_alternatives"
-      },
-      {
-        "source": "learn/what_is_meilisearch/telemetry.mdx",
-        "label": "Telemetry",
-        "slug": "telemetry"
-      },
-      {
-        "source": "learn/what_is_meilisearch/language.mdx",
-        "label": "Language",
-        "slug": "language"
-      }
-    ]
-  },
-  {
     "title": "Getting started",
     "slug": "getting_started",
     "routes": [
-      {
-        "source": "learn/getting_started/installation.mdx",
-        "label": "Installation",
-        "slug": "installation"
-      },
-      {
-        "source": "learn/getting_started/quick_start.mdx",
-        "label": "Quick start",
-        "slug": "quick_start"
-      },
       {
         "source": "learn/getting_started/cloud_quick_start.mdx",
         "label": "Getting started with Meilisearch Cloud",
         "slug": "cloud_quick_start"
       },
       {
+        "source": "learn/getting_started/what_is_meilisearch.mdx",
+        "label": "What is Meilisearch?",
+        "slug": "what_is_meilisearch"
+      },
+      {
+        "source": "learn/getting_started/documents.mdx",
+        "label": "Documents",
+        "slug": "documents"
+      },
+      {
+        "source": "learn/getting_started/indexes.mdx",
+        "label": "Indexes",
+        "slug": "indexes"
+      },
+      {
+        "source": "learn/getting_started/primary_key.mdx",
+        "label": "Primary key",
+        "slug": "primary_key"
+      },
+      {
         "source": "learn/getting_started/search_preview.mdx",
         "label": "Search preview",
         "slug": "search_preview"
-      },
-      {
-        "source": "learn/getting_started/supported_os.mdx",
-        "label": "Supported operating systems",
-        "slug": "supported_os"
       }
     ]
   },
@@ -74,6 +48,32 @@
         "source": "learn/ai_powered_search/difference_full_text_ai_search.mdx",
         "label": "Differences between full-text and AI-powered search",
         "slug": "difference_full_text_ai_search"
+      }
+    ]
+  },
+  {
+    "title": "Self-hosted",
+    "slug": "self_hosted",
+    "routes": [
+      {
+        "source": "learn/self_hosted/configure_meilisearch_at_launch.mdx",
+        "label": "Configure Meilisearch at launch",
+        "slug": "configure_meilisearch_at_launch"
+      },
+      {
+        "source": "learn/self_hosted/install_meilisearch_locally.mdx",
+        "label": "Install Meilisearch locally",
+        "slug": "install_meilisearch_locally"
+      },
+      {
+        "source": "learn/self_hosted/getting_started_with_self_hosted_meilisearch.mdx",
+        "label": "Quick start",
+        "slug": "getting_started_with_self_hosted_meilisearch"
+      },
+      {
+        "source": "learn/self_hosted/supported_os.mdx",
+        "label": "Supported operating systems",
+        "slug": "supported_os"
       }
     ]
   },
@@ -120,27 +120,6 @@
     ]
   },
   {
-    "title": "Core concepts",
-    "slug": "core_concepts",
-    "routes": [
-      {
-        "source": "learn/core_concepts/documents.mdx",
-        "label": "Documents",
-        "slug": "documents"
-      },
-      {
-        "source": "learn/core_concepts/indexes.mdx",
-        "label": "Indexes",
-        "slug": "indexes"
-      },
-      {
-        "source": "learn/core_concepts/primary_key.mdx",
-        "label": "Primary key",
-        "slug": "primary_key"
-      }
-    ]
-  },
-  {
     "title": "Tasks and asynchronous operations",
     "slug": "async",
     "routes": [
@@ -175,11 +154,6 @@
     "title": "Configuration",
     "slug": "configuration",
     "routes": [
-      {
-        "source": "learn/configuration/instance_options.mdx",
-        "label": "Configure Meilisearch at launch",
-        "slug": "instance_options"
-      },
       {
         "source": "learn/configuration/configuring_index_settings.mdx",
         "label": "Configuring index settings",
@@ -302,11 +276,6 @@
         "source": "learn/update_and_migration/previous_docs_version.mdx",
         "label": "Accessing previous docs versions",
         "slug": "previous_docs_version"
-      },
-      {
-        "source": "learn/update_and_migration/versioning.mdx",
-        "label": "Versioning policy",
-        "slug": "versioning"
       }
     ]
   },
@@ -328,6 +297,27 @@
         "source": "learn/data_backup/snapshots_vs_dumps.mdx",
         "label": "Snapshots and dumps",
         "slug": "snapshots_vs_dumps"
+      }
+    ]
+  },
+  {
+    "title": "Indexing",
+    "slug": "indexing",
+    "routes": [
+      {
+        "source": "learn/indexing/indexing_best_practices.mdx",
+        "label": "Indexing best practices",
+        "slug": "indexing_best_practices"
+      },
+      {
+        "source": "learn/indexing/ram_multithreading_performance.mdx",
+        "label": "Impact of RAM and multi-threading on indexing performance",
+        "slug": "ram_multithreading_performance"
+      },
+      {
+        "source": "learn/indexing/tokenization.mdx",
+        "label": "Tokenization",
+        "slug": "tokenization"
       }
     ]
   },
@@ -354,27 +344,6 @@
         "source": "learn/engine/storage.mdx",
         "label": "Storage",
         "slug": "storage"
-      }
-    ]
-  },
-  {
-    "title": "Inner workings",
-    "slug": "advanced",
-    "routes": [
-      {
-        "source": "learn/inner_workings/indexing.mdx",
-        "label": "Indexing and performance",
-        "slug": "indexing"
-      },
-      {
-        "source": "learn/inner_workings/known_limitations.mdx",
-        "label": "Known limitations",
-        "slug": "known_limitations"
-      },
-      {
-        "source": "learn/inner_workings/tokenization.mdx",
-        "label": "Tokenization",
-        "slug": "tokenization"
       }
     ]
   },
@@ -435,6 +404,52 @@
     ]
   },
   {
+    "title": "Resources",
+    "slug": "resources",
+    "routes": [
+      {
+        "source": "learn/resources/known_limitations.mdx",
+        "label": "Known limitations",
+        "slug": "known_limitations"
+      },
+      {
+        "source": "learn/resources/faq.mdx",
+        "label": "FAQ",
+        "slug": "faq"
+      },
+      {
+        "source": "learn/resources/sdks.mdx",
+        "label": "Official SDKs/libraries",
+        "slug": "sdks"
+      },
+      {
+        "source": "learn/resources/comparison_to_alternatives.mdx",
+        "label": "Comparison to alternatives",
+        "slug": "comparison_to_alternatives"
+      },
+      {
+        "source": "learn/resources/telemetry.mdx",
+        "label": "Telemetry",
+        "slug": "telemetry"
+      },
+      {
+        "source": "learn/resources/language.mdx",
+        "label": "Language",
+        "slug": "language"
+      },
+      {
+        "source": "learn/resources/versioning.mdx",
+        "label": "Versioning policy",
+        "slug": "versioning"
+      },
+      {
+        "source": "learn/resources/contributing_docs.mdx",
+        "label": "Contributing to our documentation",
+        "slug": "contributing_docs"
+      }
+    ]
+  },
+  {
     "title": "Experimental",
     "slug": "experimental",
     "routes": [
@@ -477,17 +492,6 @@
         "source": "learn/experimental/search_queue_size.mdx",
         "label": "Search queue size",
         "slug": "search_queue_size"
-      }
-    ]
-  },
-  {
-    "title": "Contributing",
-    "slug": "contributing",
-    "routes": [
-      {
-        "source": "learn/contributing/contributing_docs.mdx",
-        "label": "Contributing to our documentation",
-        "slug": "contributing_docs"
       }
     ]
   }

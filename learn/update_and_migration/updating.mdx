@@ -97,7 +97,7 @@ Once the status is `processed`, you're good to go. Repeat this process for all i
 
 #### Create the dump
 
-Before creating your dump, make sure that your [dump directory](/learn/configuration/instance_options#dump-directory) is somewhere accessible. By default, dumps are created in a folder called `dumps` at the root of your Meilisearch directory.
+Before creating your dump, make sure that your [dump directory](/learn/self_hosted/configure_meilisearch_at_launch#dump-directory) is somewhere accessible. By default, dumps are created in a folder called `dumps` at the root of your Meilisearch directory.
 
 **Cloud platforms** like DigitalOcean, AWS, and GCP are configured to store dumps in the `/var/opt/meilisearch/dumps` directory.
 
@@ -212,7 +212,7 @@ You may need to prefix the above command with `sudo` if you are not connected as
 
 #### Create a backup
 
-Instead of deleting `data.ms`, we suggest creating a backup in case something goes wrong. `data.ms` should be at the root of the Meilisearch binary unless you chose [another location](/learn/configuration/instance_options#database-path).
+Instead of deleting `data.ms`, we suggest creating a backup in case something goes wrong. `data.ms` should be at the root of the Meilisearch binary unless you chose [another location](/learn/self_hosted/configure_meilisearch_at_launch#database-path).
 
 On **cloud platforms**, you will find the `data.ms` folder at `/var/lib/meilisearch/data.ms`.
 

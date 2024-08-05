@@ -1,9 +1,9 @@
 ---
-title: Quick start — Meilisearch documentation
+title: Getting started with self-hosted Meilisearch — Meilisearch documentation
 description: Learn how to install Meilisearch, index a dataset, and perform your first search.
 ---
 
-# Quick start
+# Getting started with self-hosted Meilisearch
 
 This quick start walks you through installing Meilisearch, adding documents, and performing your first search.
 
@@ -27,7 +27,7 @@ curl -L https://install.meilisearch.com | sh
 
 The rest of this guide assumes you are using Meilisearch locally, but you may also use Meilisearch over a cloud service such as [Meilisearch Cloud](https://www.meilisearch.com/cloud?utm_campaign=oss&utm_source=docs&utm_medium=quick-start).
 
-Learn more about other installation options in the [installation guide](/learn/getting_started/installation).
+Learn more about other installation options in the [installation guide](/learn/self_hosted/install_meilisearch_locally).
 
 ### Running Meilisearch
 
@@ -80,7 +80,7 @@ Open a new terminal window and run the following command:
 
 <CodeSamples id="getting_started_add_documents_md" />
 
-Meilisearch stores data in the form of discrete records, called [documents](/learn/core_concepts/documents). Each document is an object composed of multiple fields, which are pairs of one attribute and one value:
+Meilisearch stores data in the form of discrete records, called [documents](/learn/getting_started/documents). Each document is an object composed of multiple fields, which are pairs of one attribute and one value:
 
 ```json
 {
@@ -88,14 +88,14 @@ Meilisearch stores data in the form of discrete records, called [documents](/lea
 }
 ```
 
-Documents are grouped into collections, called [indexes](/learn/core_concepts/indexes).
+Documents are grouped into collections, called [indexes](/learn/getting_started/indexes).
 
 The previous command added documents from `movies.json` to a new index called `movies`. It also set `id` as the primary key.
 
 <Capsule intent="note">
-Every index must have a [primary key](/learn/core_concepts/primary_key#primary-field), an attribute shared across all documents in that index. If you try adding documents to an index and even a single one is missing the primary key, none of the documents will be stored.
+Every index must have a [primary key](/learn/getting_started/primary_key#primary-field), an attribute shared across all documents in that index. If you try adding documents to an index and even a single one is missing the primary key, none of the documents will be stored.
 
-If you do not explicitly set the primary key, Meilisearch [infers](/learn/core_concepts/primary_key#meilisearch-guesses-your-primary-key) it from your dataset.
+If you do not explicitly set the primary key, Meilisearch [infers](/learn/getting_started/primary_key#meilisearch-guesses-your-primary-key) it from your dataset.
 </Capsule>
 
 After adding documents, you should receive a response like this:
