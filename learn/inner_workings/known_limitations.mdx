@@ -72,8 +72,7 @@ If your query is `Hello - World`:
 
 **Limitation:** Primary key values are limited to 512 bytes.
 
-**Explanation:** Meilisearch stores the primary key values as keys in LMDB, a data type whose size is limited to 512 bytes.
-If a primary key value exceeds 512 bytes, the task containing these documents will fail.
+**Explanation:** Meilisearch stores primary key values as LMDB keys, a data type whose size is limited to 512 bytes. If a primary key value exceeds 512 bytes, the task containing these documents will fail.
 
 ## Length of individual `filterableAttributes` values
 
