@@ -56,6 +56,11 @@
     "slug": "self_hosted",
     "routes": [
       {
+        "source": "learn/self_hosted/getting_started_with_self_hosted_meilisearch.mdx",
+        "label": "Getting started with a self-hosted Meilisearch instance",
+        "slug": "getting_started_with_self_hosted_meilisearch"
+      },
+      {
         "source": "learn/self_hosted/configure_meilisearch_at_launch.mdx",
         "label": "Configure Meilisearch at launch",
         "slug": "configure_meilisearch_at_launch"
@@ -64,11 +69,6 @@
         "source": "learn/self_hosted/install_meilisearch_locally.mdx",
         "label": "Install Meilisearch locally",
         "slug": "install_meilisearch_locally"
-      },
-      {
-        "source": "learn/self_hosted/getting_started_with_self_hosted_meilisearch.mdx",
-        "label": "Quick start",
-        "slug": "getting_started_with_self_hosted_meilisearch"
       },
       {
         "source": "learn/self_hosted/supported_os.mdx",
