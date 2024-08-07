@@ -1,0 +1,47 @@
+
+There are two main ways of optimizing disk space usage: changing index settings or directly editing your documents.
+
+## Index settings
+
+searchableAttributes
+filterableAttributes
+sortableAttributes
+rankingRules (Asc/Desc)
+stopWords
+nonSeparatorTokens
+separatorTokens
+dictionary
+distinctAttribute
+typoTolerance.disableOnWords
+typoTolerance.disableOnAttributes
+proximityPrecision
+
+searchableAttributes: this settings is by far the most important to set, it rules all the data related to search and the more there are attributes in the list the more it will impact the size, the most important field to remove from this list is the unique fields (like identifiers), numbers fields (price. stock, date… [filters are way more efficients]), small fields with a lot of repetitions (mail adress, url… [if these fields are necessary, I suggest using stop_words to ignore the repetitive occurences])
+
+proximityPrecision: setting the proximityPrecision to byAttribute  reduce the disk usage greatly, however, it impacts the relevancy of the search.
+
+typoTolerance.disableOnAttributes : same as searchableAttributes but with a more limited impact.
+
+stopWords : setting some stopWords can help in reducing the disk usageof the remaining searchableAttributes , having www , com , gmail , https … can avoid storing irrelevant data contained in every fields, let’s say you have documents containing e-mail addresses you don really care of the ["@", "gmail", "com"] when searching in it.
+
+searchableAttributes / filterableAttributes / sortableAttributes / distinctAttribute / rankingRules (Asc/Desc) are all stored in the same database, so adding a field in one of these settings when this field is already present in one of the other settings doesn’t change anything to the disk usage, only the total number of unique fields listed accross these settings matters in terms of disk usage. (note: the impact of adding a field in these settings is way lower than the impact of adding it in the searchableAttributes)
+ 
+ 
+typoTolerance.disableOnWords: using this setting will use more disk space, it highly depends on the number of words inserted in the list, but it’s far from having the biggest impact.
+
+nonSeparatorTokens / separatorTokens / dictionary barely impact the disk usage.
+
+
+
+## Documents
+
+the documents themselves impact the disk usage, 
+
+nested documents with a lot of small fields will take more space than documents containing few big fields, so if there are some fields that are completely unnecessary, it could be a good idea to filter these fields before sending the documents to Meilisearch. But these kind of optimization comes after changing the settings obviously
+
+
+## Instructions on what to do when an install is already occupying too much space
+
+LMDB does not allocated free space, even if the database decreases in size. None of these recommendations will help users whose dbs are already taking too much space.
+
+The only way to force LMDB to free up space after the db has been reduced in size is to export a snapshot, then restart the instance using that snapshot.
