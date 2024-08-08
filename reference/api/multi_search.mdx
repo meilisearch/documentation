@@ -17,16 +17,56 @@ Bundle multiple search queries in a single API request. Use this endpoint to sea
 
 | Name          | Type             | Description                                                                                                                                          |
 | :------------ | :--------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`federation`** | Object | If present and not `null`, returns a single list merging all search results across all specified queries |
 | **`queries`** | Array of objects | Contains the list of search queries to perform. The [`indexUid`](#search-parameters) search parameter is required, all other parameters are optional |
 
 <Capsule intent="warning">
 If Meilisearch encounters an error when handling any of the queries in a multi-search request, it immediately stops processing the request and returns an error message. The returned message will only address the first error encountered.
 </Capsule>
 
-#### Search parameters
+#### `federation`
+
+Use `federation` to receive a single list with all search results from all specified queries, in descending ranking score order. This is called federated search.
+
+`federation` may optionally contain the following parameters:
+
+| Parameter                                                             | Type             | Default value | Description                                         |
+| :--------------------------------------------------------------------------- | :--------------- | :------------ | :-------------------------------------------------- |
+| **[`offset`](/reference/api/search#offset)**                                 | Integer          | `0`           | Number of documents to skip                         |
+| **[`limit`](/reference/api/search#limit)**                                   | Integer          | `20`          | Maximum number of documents returned                |
+
+If `federation` is missing or `null`, Meilisearch returns a list of multiple search result objects, with each item from the list corresponding to a search query in the request.
+
+##### Merge algorithm for federated searches
+
+Federated search's merged results are returned in decreasing ranking score. To obtain the final list of results, Meilisearch compares with the following procedure:
+
+1. Detailed ranking scores are normalized in the following way for both hits:
+    1. Consecutive relevancy scores (related to the rules `words`, `typo`, `attribute`, `exactness` or `vector`) are grouped in a single score for each hit
+    2. `sort` and `geosort` score details remain unchanged
+2. Normalized detailed ranking scores are compared lexicographically for both hits:
+    1. If both hits have a relevancy score, then the bigger score wins. If it is a tie, move to next step
+    2. If one result has a relevancy score or a (geo)sort score, Meilisearch picks it
+    3. If both results have a sort or geosort score in the same sorting direction, then Meilisearch compares the values according to the common sort direction. The result with the value that must come first according to the common sort direction wins. If it is a tie, go to the next step
+    4. Compare the global ranking scores of both hits to determine which comes first, ignoring any sorting or geosorting
+    5. In the case of a perfect tie, documents from the query with the lowest rank in the `queries` array are preferred.
+
+<Capsule intent="note" title="Distinct documents and federated search">
+Meilisearch considers two documents the same if:
+
+1. They come from the same index
+2. And their primary key is the same
+
+There is no way to specify that two documents should be treated as the same across multiple indexes.
+</Capsule>
+
+#### `queries`
+
+`queries` must be an array of objects. Each object may contain the following search parameters:
 
 | Search parameter                                                             | Type             | Default value | Description                                         |
 | :--------------------------------------------------------------------------- | :--------------- | :------------ | :-------------------------------------------------- |
+| **[`federationOptions`](#federation-options)**            | Object           | `null`        | Configure federation settings for a specific query |
 | **[`indexUid`](/learn/getting_started/indexes#index-uid)**                     | String           | N/A           | `uid` of the requested index                        |
 | **[`q`](/reference/api/search#query-q)**                                     | String           | `""`          | Query string                                        |
 | **[`offset`](/reference/api/search#offset)**                                 | Integer          | `0`           | Number of documents to skip                         |
@@ -48,9 +88,23 @@ If Meilisearch encounters an error when handling any of the queries in a multi-s
 | **[`showRankingScore`](/reference/api/search#ranking-score)**                | Boolean          | `false`       | Display the global ranking score of a document      |
 | **[`attributesToSearchOn`](/reference/api/search#customize-attributes-to-search-on-at-search-time)**            | Array of strings           | `["*"]`        | Restrict search to the specified attributes |
 
-[Learn more about how to use each search parameter](/reference/api/search#search-parameters).
+Unless otherwise noted, search parameters for multi-search queries function exactly like [search parameters for the `/search` endpoint](/reference/api/search#search-parameters).
+
+##### `limit` and `offset`
+
+These options are not compatible with federated searches.
+
+##### `federationOptions`
+
+`federationOptions` must be an object. It accepts the following parameters:
+
+- `weight`: serves as a multiplicate factor to ranking scores of search results in this specific query. If < `1.0`, the hits from this query are less likely to appear in the final results list. If > `1.0`, the hits from this query are more likely to appear in the final results list. Must be a positive floating-point number. Defaults to `1.0`
 
 ### Response
+
+The response to `/multi-search` queries may take two shapes: federated and non-federated.
+
+#### Non-federated multi-search requests
 
 | Name          | Type             | Description                                                            |
 | :------------ | :--------------- | :--------------------------------------------------------------------- |
@@ -74,7 +128,36 @@ Each search result object is composed of the following fields:
 | **`processingTimeMs`**   | Number           | Processing time of the query                                                     |
 | **`query`**              | String           | Query originating the response                                                   |
 
+#### Federated multi-search requests
+
+Federated search requests return a single object and the following fields:
+
+| Name                     | Type             | Description                                                                      |
+| :----------------------- | :--------------- | :------------------------------------------------------------------------------- |
+| **`indexUid`**           | String           | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index           |
+| **`hits`**               | Array of objects | Results of the query                                                             |
+| **`offset`**             | Number           | Number of documents skipped                                                      |
+| **`limit`**              | Number           | Number of documents to take                                                      |
+| **`estimatedTotalHits`** | Number           | Estimated total number of matches                                                |
+| **`totalHits`**          | Number           | Exhaustive total number of matches                                               |
+| **`totalPages`**         | Number           | Exhaustive total number of search result pages                                   |
+| **`hitsPerPage`**        | Number           | Number of results on each page                                                   |
+| **`page`**               | Number           | Current search results page                                                      |
+| **`facetDistribution`**  | Object           | **[Distribution of the given facets](/reference/api/search#facetdistribution)**  |
+| **`facetStats`**         | Object           | [The numeric `min` and `max` values per facet](/reference/api/search#facetstats) |
+| **`processingTimeMs`**   | Number           | Processing time of the query                                                     |
+| **`query`**              | String           | Query originating the response                                                   |
+
+Each result in the `hits` array contains an additional `_federation` field with the following fields:
+
+| Name                     | Type             | Description                                                                      |
+| :----------------------- | :--------------- | :------------------------------------------------------------------------------- |
+| **`indexUid`**           | String           | Index of origin for this document           |
+| **`queriesPosition`**    | Number           | Array index number of the query in the request's `queries` array |
+
 ### Example
+
+#### Non-federated multi-search
 
 <CodeSamples id="multi_search_1" />
 
@@ -131,5 +214,42 @@ Each search result object is composed of the following fields:
       "estimatedTotalHits":1
     }
   ]
+}
+```
+
+#### Federated multi-search
+
+<CodeSamples id="multi_search_federated_1" />
+
+#### Response: `200 Ok`
+
+```json
+{
+  "hits": [
+    {
+      "id": 42,
+      "title": "Batman returns",
+      "overview": …, 
+      "_federation": {
+        "indexUid": "movies",
+        "queriesPosition": 0
+      }
+    },
+    {
+      "comicsId": "batman-killing-joke",
+      "description": "..",
+      "title": "Batman: the killing joke",
+      "_federation": {
+        "indexUid": "comics",
+        "queriesPosition": 1
+      }
+    },
+    …
+  ],
+  "processingTimeMs": 0,
+  "limit": 20,
+  "offset": 0,
+  "estimatedTotalHits": 2,
+  "semanticHitCount": 0
 }
 ```
