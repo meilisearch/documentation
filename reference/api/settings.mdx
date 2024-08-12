@@ -2107,7 +2107,8 @@ Partially update the embedder settings for an index. When this setting is update
       "sigma": <Float>
     },
     "request": { … },
-    "response": { … }
+    "response": { … },
+    "headers": { … }
   }
 }
 ```
@@ -2301,6 +2302,21 @@ Configuring `distribution` requires a certain amount of trial and error, in whic
 - `sigma`: a number between `0` and `1` indicating the average absolute difference in `_rankingScore`s between "very relevant" hits and "somewhat relevant" hits, and "somewhat relevant" hits and "irrelevant hits".
 
 Changing `distribution` does not trigger a reindexing operation.
+
+##### `headers`
+
+`headers` must be a JSON object whose keys represent the name of additional headers to send in requests to embedders, and the values represent the value of these additional headers.
+
+By default, Meilisearch sends the following headers with all requests to `rest` embedders:
+
+- `Authorization: Bearer EMBEDDER_API_KEY` (only if `apiKey` was provided)
+- `Content-Type: application/json`
+
+If `headers` includes either fields, the declared values take precedence over the default.
+
+This field is optional when using the `rest` embedder.
+
+This field is incompatible with all other embedders.
 
 #### Example
 
