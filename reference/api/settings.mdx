@@ -2131,13 +2131,13 @@ This field is mandatory.
 
 ##### `url`
 
-Meilisearch queries `url` to generate vector embeddings for queries and documents. `url` must point to a REST-compatible embedder.
+Meilisearch queries `url` to generate vector embeddings for queries and documents. `url` must point to a REST-compatible embedder. You may also use `url` to work with proxies, such as when targeting `openAi` from behind a proxy.
 
 This field is mandatory when using `rest` embedders.
 
-This field is optional when using `ollama` embedders.
+This field is optional when using `ollama` and `openAi` embedders.
 
-This field is incompatible with `openAi`, `huggingFace`, and `userProvided` embedders.
+This field is incompatible with `huggingFace` and `userProvided` embedders.
 
 ##### `apiKey`
 
