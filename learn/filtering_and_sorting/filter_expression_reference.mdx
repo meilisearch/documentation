@@ -157,6 +157,36 @@ genres NOT IN [horror, comedy]
 NOT genres IN [horror, comedy]
 ```
 
+### `CONTAINS` <NoticeTag type="experimental" label="experimental" />
+
+`CONTAINS` filters results containing partial matches to the specified string pattern, similar to a SQL `LIKE`.
+
+The following expression returns all dairy products whose name start with `"kef"`, such as kefir:
+
+```
+product.name CONTAINS kef
+```
+
+The negated form of the above expression can be written as:
+
+```
+product.name NOT CONTAINS kef
+NOT product.name CONTAINS kef
+```
+
+<Capsule intent="note" title="Activating `CONTAINS`">
+`CONTAINS` is an experimental feature. Use the experimental features endpoint to activate it:
+
+```sh
+curl \
+  -X PATCH 'http://localhost:7700/experimental-features/' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "containsFilter": true
+  }'
+```
+</Capsule>
+
 ### `NOT`
 
 The negation operator (`NOT`) selects all documents that do not satisfy a condition. It has higher precedence than `AND` and `OR`.
