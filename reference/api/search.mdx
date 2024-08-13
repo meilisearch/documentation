@@ -59,6 +59,7 @@ By default, [this endpoint returns a maximum of 1000 results](/learn/resources/k
 | **[`hybrid`](#hybrid-search-experimental)**             | Object           | `null`        | Return results based on query keywords and meaning  |
 | **[`vector`](#vector-experimental)**                    | Array of numbers | `null`        | Search using a custom query vector                  |
 | **[`retrieveVectors`](#display-_vectors-in-response-experimental)** | Boolean          | `false`       | Return document vector data                         |
+| **[`locales`](#query-locales)** | Array of strings          | `null`       | Sets query language                         |
 
 [Learn more about how to use each search parameter](#search-parameters).
 
@@ -172,6 +173,7 @@ By default, [this endpoint returns a maximum of 1000 results](/learn/resources/k
 | **[`hybrid`](#hybrid-search-experimental)**             | Object           | `null`        | Return results based on query keywords and meaning  |
 | **[`vector`](#vector-experimental)**                    | Array of numbers | `null`        | Search using a custom query vector                  |
 | **[`retrieveVectors`](#display-_vectors-in-response-experimental)** | Boolean          | `false`       | Return document vector data                         |
+| **[`locales`](#query-locales)** | Array of strings          | `null`       | Sets query language                         |
 
 [Learn more about how to use each search parameter](#search-parameters).
 
@@ -261,6 +263,7 @@ This is not necessary when using the `POST` route or one of our [SDKs](/learn/re
 | **[`hybrid`](#hybrid-search-experimental)**             | Object           | `null`        | Return results based on query keywords and meaning  |
 | **[`vector`](#vector-experimental)**                    | Array of numbers | `null`        | Search using a custom query vector                  |
 | **[`retrieveVectors`](#display-_vectors-in-response-experimental)** | Boolean          | `false`       | Return document vector data                         |
+| **[`locales`](#query-locales)** | Array of strings          | `null`       | Sets query language                         |
 
 ### Query (q)
 
@@ -1236,6 +1239,45 @@ Return document embedding data with search results. If `true`, Meilisearch will 
       }
       …
     },
+    …
+  ],
+  …
+}
+```
+
+### Query locales
+
+**Parameter**: `locales`<br />
+**Expected value**: array of [supported ISO-639-2B locales](/reference/api/settings#localized-attributes-object)<br />
+**Default value**: `[]`
+
+By default, Meilisearch auto-detects the languages in your dataset. Use this parameter to explicitly state the language of a query.
+
+Setting this parameter takes precedence over locales configured in the [localized attributes index setting](/reference/api/settings#localized-attributes). For example, if `localizedAttributes` declares a field contains text in japanese, setting `locales` to `chi` forces Meilisearch to ignore the original setting and parse text as chinese.
+
+<Capsule intent="note" title="`locales` and `localizedAttributes`">
+`locales` and [`localizedAttributes`](/reference/api/settings#localized-attributes) have the same goal: explicitly state the language used in a search when Meilisearch's language auto-detection is not working as expected.
+
+If you believe Meilisearch is detecting incorrect languages because of the query text, explicitly set the search language with `locales`.
+
+If you believe Meilisearch is detecting incorrect languages because of document, explicitly set the document language at the index level with `localizedAttributes`.
+
+For full control over the way Meilisearch detects languages during indexing and at search time, set both `locales` and `localizedAttributes`.
+</Capsule>
+
+#### Example
+
+<CodeSamples id="search_parameter_reference_locales_1" />
+
+```json
+{
+  "hits": [
+    {
+      "id": 0,
+      "title": "DOCUMENT NAME",
+      "overview_cn": "OVERVIEW TEXT IN CHINESE",
+      "overview_jp": "OVERVIEW TEXT IN JAPANESE"
+    }
     …
   ],
   …

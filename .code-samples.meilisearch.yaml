@@ -1351,3 +1351,27 @@ search_parameter_reference_ranking_score_threshold_1: |-
       "q": "badman",
       "rankingScoreThreshold": 0.2
   }'
+search_parameter_reference_locales_1: |-
+  curl \
+  -X POST 'http://localhost:7700/indexes/INDEX_NAME/search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "q": "進撃の巨人",
+    "locales": ["jpn"]
+  }'
+get_localized_attribute_settings_1: |-
+  curl \
+    -X GET 'http://localhost:7700/indexes/INDEX_NAME/settings/localized-attributes'
+update_distinct_attribute_1: |-
+  curl \
+    -X PUT 'http://localhost:7700/indexes/INDEX_NAME/settings/localized-attributes' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{ 
+   "localizedAttributes": [
+      {"locales": ["jpn"], "attributePatterns": ["*_ja"]}, 
+      {"locales": ["chi"], "attributePatterns": ["*_cn"]}
+   ]
+  }'
+reset_distinct_attribute_1: |-
+  curl \
+    -X DELETE 'http://localhost:7700/indexes/INDEX_NAME/settings/localized-attributes'
