@@ -1031,17 +1031,13 @@ multi_search_federated_1: |-
       "queries": [
         {
           "indexUid": "movies",
-          "q": "pooh",
+          "q": "batman",
           "limit": 5
         },
         {
-          "indexUid": "movies",
-          "q": "nemo",
+          "indexUid": "comics",
+          "q": "batman",
           "limit": 5
-        },
-        {
-          "indexUid": "movie_ratings",
-          "q": "us"
         }
       ]
     }'

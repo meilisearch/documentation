@@ -98,7 +98,7 @@ These options are not compatible with federated searches.
 
 `federationOptions` must be an object. It accepts the following parameters:
 
-- `weight`: serves as a multiplicate factor to ranking scores of search results in this specific query. If < `1.0`, the hits from this query are less likely to appear in the final results list. If > `1.0`, the hits from this query are more likely to appear in the final results list. Must be a positive floating-point number. Defaults to `1.0`
+- `weight`: serves as a multiplicative factor to ranking scores of search results in this specific query. If < `1.0`, the hits from this query are less likely to appear in the final results list. If > `1.0`, the hits from this query are more likely to appear in the final results list. Must be a positive floating-point number. Defaults to `1.0`
 
 ### Response
 
@@ -237,7 +237,7 @@ Each result in the `hits` array contains an additional `_federation` field with 
     },
     {
       "comicsId": "batman-killing-joke",
-      "description": "..",
+      "description": …,
       "title": "Batman: the killing joke",
       "_federation": {
         "indexUid": "comics",
