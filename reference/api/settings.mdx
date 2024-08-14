@@ -2009,7 +2009,7 @@ Reset an index's typo tolerance settings to their [default value](#typo-toleranc
 
 You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
 
-## Embedders (experimental)
+## Embedders <NoticeTag type="experimental" label="experimental" />
 
 Embedders translate documents and queries into vector embeddings. You must configure at least one embedder to use AI-powered search.
 
@@ -2038,7 +2038,7 @@ These embedder objects may contain the following fields:
 | Name                   | Type             | Default Value                                                            | Description                                                                                                                                                    |
 |  :---------------------|  :---------------|  :-----------------------------------------------------------------------|  :-------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **`source`**           | String           | Empty                                                                    | The third-party tool that will generate embeddings from documents. Must be `openAi`, `huggingFace`, `ollama`, `rest`, or `userProvided`                        |
-| **`url`**              | String           | `http://localhost:11434/api/embeddings`                                  | URL Meilisearch contacts when querying the embedder                                                                                                            |
+| **`url`**              | String           | `http://localhost:11434/api/embeddings`                                  | The URL Meilisearch contacts when querying the embedder                                                                                                            |
 | **`apiKey`**           | String           | Empty                                                                    | Authentication token Meilisearch should send with each request to the embedder. If not present, Meilisearch will attempt to read it from environment variables |
 | **`model`**            | String           | Empty                                                                    | The model your embedder uses when generating vectors                                                                                                           |
 | **`documentTemplate`** | String           | `{% for field in fields %}{{field.name}}: {{field.value}}\n{% endfor %}` | Template defining the data Meilisearch sends the embedder                                                                                                      |
@@ -2248,7 +2248,7 @@ The field containing the embedding itself must be replaced with `"{{embedding}}"
 }
 ```
 
-If a single response contains multiple embeddings, field containing the embedding itself must be replaced with two items, `"{{embedding}}"` and `"{{..}}"`:
+If a single response includes multiple embeddings, the field containing the embedding itself must be an array with two items. One must declare the location and structure of a single embedding, while the second item should be `"{{..}}"`:
 
 ```json
 {
@@ -2272,7 +2272,7 @@ This field is incompatible with all other embedders.
 
 ##### `distribution`
 
-  For mathematical reasons, the `_rankingScore` of semantic search results tend to be closely grouped around an average value that depends on the embedder and model used. This may result in relevant semantic hits being underrepresented and irrelevant semantic hits being overrepresented compared with keyword search hits.
+For mathematical reasons, the `_rankingScore` of semantic search results tend to be closely grouped around an average value that depends on the embedder and model used. This may result in relevant semantic hits being underrepresented and irrelevant semantic hits being overrepresented compared with keyword search hits.
 
 Use `distribution` when configuring an embedder to correct the returned `_rankingScore`s of the semantic hits with an affine transformation:
 
@@ -2305,14 +2305,14 @@ Changing `distribution` does not trigger a reindexing operation.
 
 ##### `headers`
 
-`headers` must be a JSON object whose keys represent the name of additional headers to send in requests to embedders, and the values represent the value of these additional headers.
+`headers` must be a JSON object whose keys represent the name of additional headers to send in requests to embedders, and whose values represent the value of these additional headers.
 
 By default, Meilisearch sends the following headers with all requests to `rest` embedders:
 
 - `Authorization: Bearer EMBEDDER_API_KEY` (only if `apiKey` was provided)
 - `Content-Type: application/json`
 
-If `headers` includes either fields, the declared values take precedence over the default.
+If `headers` includes one of these fields, the explicitly declared values take precedence over the defaults.
 
 This field is optional when using the `rest` embedder.
 
