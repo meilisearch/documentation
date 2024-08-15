@@ -788,7 +788,7 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 ## Localized attributes
 
-By default, Meilisearch auto-detects the languages used in your documents. This setting allows you to explicitly define which languages are present in a dataset, and in what fields.
+By default, Meilisearch auto-detects the languages used in your documents. This setting allows you to explicitly define which languages are present in a dataset, and in which fields.
 
 Localized attributes affect `searchableAttributes`, `filterableAttributes`, and `sortableAttributes`.
 
@@ -810,14 +810,20 @@ Locale objects must have the following fields:
 
 | Name               | Type    | Default value | Description                                                 |
 | :----------------- | :------ | :------------ | :---------------------------------------------------------- |
-| **`locales`** | Array of strings | `[]`        | A list of strings indicating one or more ISO-639 locales |
+| **`locales`**      | Array of strings | `[]`        | A list of strings indicating one or more ISO-639 locales |
 | **`attribute_patterns`** | Array of strings | `[]`        | A list of strings indicating which fields correspond to the specified locales |
+
+#### `locales`
 
 Meilisearch supports the following `locales`: `epo`, `eng`, `rus`, `cmn`, `spa`, `por`, `ita`, `ben`, `fra`, `deu`, `ukr`, `kat`, `ara`, `hin`, `jpn`, `heb`, `yid`, `pol`, `amh`, `jav`, `kor`, `nob`, `dan`, `swe`, `fin`, `tur`, `nld`, `hun`, `ces`, `ell`, `bul`, `bel`, `mar`, `kan`, `ron`, `slv`, `hrv`, `srp`, `mkd`, `lit`, `lav`, `est`, `tam`, `vie`, `urd`, `tha`, `guj`, `uzb`, `pan`, `aze`, `ind`, `tel`, `pes`, `mal`, `ori`, `mya`, `nep`, `sin`, `khm`, `tuk`, `aka`, `zul`, `sna`, `afr`, `lat`, `slk`, `cat`, `tgl`, `hye`.
 
 You may also assign an empty array to `locales`. In this case, Meilisearch will auto-detect the language of the associated `attributePatterns`.
 
-Attribute patterns may begin or end with a `*` wildcard to match multiple fields: `en_*`, `*-ar`. You may also set `attributePatterns` to `*`, in which case Meilisearch will treat all fields as if they were in the associated locale.
+#### `attributePatterns`
+
+Attribute patterns may begin or end with a `*` wildcard to match multiple fields: `en_*`, `*-ar`. 
+
+You may also set `attributePatterns` to `*`, in which case Meilisearch will treat all fields as if they were in the associated locale.
 
 ## Get localized attributes settings
 
@@ -850,7 +856,7 @@ Get the localized attributes settings of an index.
 
 <RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/localized-attributes"/>
 
-Partially update the pagination settings for an index.
+Update the localized attributes settings of an index.
 
 #### Path parameters
 
