@@ -159,23 +159,23 @@ NOT genres IN [horror, comedy]
 
 ### `CONTAINS` <NoticeTag type="experimental" label="experimental" />
 
-`CONTAINS` filters results containing partial matches to the specified string pattern, similar to a SQL `LIKE`.
+`CONTAINS` filters results containing partial matches to the specified string pattern, similar to a [SQL `LIKE`](https://dev.mysql.com/doc/refman/8.4/en/string-comparison-functions.html#operator_like).
 
 The following expression returns all dairy products whose name start with `"kef"`, such as kefir:
 
 ```
-product.name CONTAINS kef
+dairy_products.name CONTAINS kef
 ```
 
 The negated form of the above expression can be written as:
 
 ```
-product.name NOT CONTAINS kef
-NOT product.name CONTAINS kef
+dairy_products.name NOT CONTAINS kef
+NOT dairy_product.name CONTAINS kef
 ```
 
 <Capsule intent="note" title="Activating `CONTAINS`">
-`CONTAINS` is an experimental feature. Use the experimental features endpoint to activate it:
+This is an experimental feature. Use the experimental features endpoint to activate it:
 
 ```sh
 curl \
