@@ -432,7 +432,7 @@
 								},
 								{
 									"key": "locales",
-									"value": "[\"chi\"]",
+									"value": "\"chi\",\"eng\"",
 									"disabled": true
 								}
 							]
