@@ -1022,6 +1022,25 @@ multi_search_1: |-
         }
       ]
     }'
+multi_search_federated_1: |-
+  curl \
+    -X POST 'http://localhost:7700/multi-search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "federation": {},
+      "queries": [
+        {
+          "indexUid": "movies",
+          "q": "batman",
+          "limit": 5
+        },
+        {
+          "indexUid": "comics",
+          "q": "batman",
+          "limit": 5
+        }
+      ]
+    }'
 faceted_search_update_settings_1: |-
   curl \
     -X PUT 'http://localhost:7700/indexes/books/settings/filterable-attributes' \
