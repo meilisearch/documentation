@@ -786,6 +786,149 @@ Reset an index's filterable attributes list back to its default value.
 
 You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
 
+## Localized attributes
+
+By default, Meilisearch auto-detects the languages used in your documents. This setting allows you to explicitly define which languages are present in a dataset, and in which fields.
+
+Localized attributes affect `searchableAttributes`, `filterableAttributes`, and `sortableAttributes`.
+
+<Capsule intent="note" title="`locales` and `localizedAttributes`">
+[`locales`](/reference/api/search#query-locales) and `localizedAttributes` have the same goal: explicitly state the language used in a search when Meilisearch's language auto-detection is not working as expected.
+
+If you believe Meilisearch is detecting incorrect languages because of the query text, explicitly set the search language with `locales`.
+
+If you believe Meilisearch is detecting incorrect languages because of document, explicitly set the document language at the index level with `localizedAttributes`.
+
+For full control over the way Meilisearch detects languages during indexing and at search time, set both `locales` and `localizedAttributes`.
+</Capsule>
+
+### Localized attributes object
+
+`localizedAttributes` must be an array of locale objects. Its default value is `[]`.
+
+Locale objects must have the following fields:
+
+| Name               | Type    | Default value | Description                                                 |
+| :----------------- | :------ | :------------ | :---------------------------------------------------------- |
+| **`locales`**      | Array of strings | `[]`        | A list of strings indicating one or more ISO-639 locales |
+| **`attribute_patterns`** | Array of strings | `[]`        | A list of strings indicating which fields correspond to the specified locales |
+
+#### `locales`
+
+Meilisearch supports the following `locales`: `epo`, `eng`, `rus`, `cmn`, `spa`, `por`, `ita`, `ben`, `fra`, `deu`, `ukr`, `kat`, `ara`, `hin`, `jpn`, `heb`, `yid`, `pol`, `amh`, `jav`, `kor`, `nob`, `dan`, `swe`, `fin`, `tur`, `nld`, `hun`, `ces`, `ell`, `bul`, `bel`, `mar`, `kan`, `ron`, `slv`, `hrv`, `srp`, `mkd`, `lit`, `lav`, `est`, `tam`, `vie`, `urd`, `tha`, `guj`, `uzb`, `pan`, `aze`, `ind`, `tel`, `pes`, `mal`, `ori`, `mya`, `nep`, `sin`, `khm`, `tuk`, `aka`, `zul`, `sna`, `afr`, `lat`, `slk`, `cat`, `tgl`, `hye`.
+
+You may also assign an empty array to `locales`. In this case, Meilisearch will auto-detect the language of the associated `attributePatterns`.
+
+#### `attributePatterns`
+
+Attribute patterns may begin or end with a `*` wildcard to match multiple fields: `en_*`, `*-ar`. 
+
+You may also set `attributePatterns` to `*`, in which case Meilisearch will treat all fields as if they were in the associated locale.
+
+## Get localized attributes settings
+
+<RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/localized-attributes"/>
+
+Get the localized attributes settings of an index.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
+
+#### Example
+
+<CodeSamples id="get_localized_attribute_settings_1" />
+
+##### Response: `200 OK`
+
+```json
+{
+  "localizedAttributes": [
+    {"locales": ["jpn"], "attributePatterns": ["*_ja"]},
+    {"locales": ["chi"], "attributePatterns": ["*_cn"]}
+  ]
+}
+```
+
+### Update localized attribute settings
+
+<RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/localized-attributes"/>
+
+Update the localized attributes settings of an index.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
+
+#### Body
+
+```
+{
+  "localizedAttributes": [
+    {
+     "locale": [<String>, …],
+     "attributePatterns": [<String>, …],
+    }
+  ]
+}
+```
+
+| Name               | Type    | Default value | Description                                                 |
+| :----------------- | :------ | :------------ | :---------------------------------------------------------- |
+| **`localizedAttributes`** | Array of objects | `[]`        | Explicitly set specific locales for one or more attributes |
+
+#### Example
+
+<CodeSamples id="update_localized_attributes_settings_1" />
+
+##### Response: `202 Accepted`
+
+```json
+{
+  "taskUid": 1,
+  "indexUid": "INDEX_NAME",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2022-04-14T20:56:44.991039Z"
+}
+```
+
+You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+
+### Reset pagination settings
+
+<RouteHighlighter method="RESET" route="/indexes/{index_uid}/settings/localized-attributes"/>
+
+Reset an index's localized attributes to their [default value](#localized-attributes-object).
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
+
+#### Example
+
+<CodeSamples id="reset_localized_attributes_settings_1" />
+
+##### Response: `202 Accepted`
+
+```json
+{
+  "taskUid": 1,
+  "indexUid": "INDEX_NAME",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2022-04-14T20:53:32.863107Z"
+}
+```
+
+You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+
 ## Pagination
 
 To protect your database from malicious scraping, Meilisearch has a default limit of 1000 results per search. This setting allows you to configure the maximum number of results returned per search.
