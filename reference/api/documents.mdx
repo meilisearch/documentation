@@ -394,7 +394,7 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 <RouteHighlighter method="POST" route="/indexes/{index_uid}/documents/edit"/>
 
-Use a RHAI function to edit one or more documents directly in Meilisearch.
+Use a [RHAI function](https://rhai.rs/book/engine/hello-world.html) to edit one or more documents directly in Meilisearch.
 
 <Capsule intent="note" title="Activating `CONTAINS`">
 This is an experimental feature. Use the experimental features endpoint to activate it:
@@ -425,15 +425,15 @@ curl \
 
 #### `function`
 
-`function` must be a string with a function Meilisearch will apply to all selected documents. By default this function has access to a single variable, `doc`, representing the document you are currently editing. This is a required field.
+`function` must be a string with a RHAI function that Meilisearch will apply to all selected documents. By default this function has access to a single variable, `doc`, representing the document you are currently editing. This is a required field.
 
 #### `filter`
 
-`filter` must be a string containing a filter expression. Use when you want only to apply `function` to a subset of all documents.
+`filter` must be a string containing a filter expression. Use `filter` when you want only to apply `function` to a subset of the documents in your database.
 
 #### `context`
 
-Use `context` to make data available inside the `function` scope. By default a function only has access to the document it is editing.
+Use `context` to pass data to the `function` scope. By default a function only has access to the document it is editing.
 
 ### Example
 
