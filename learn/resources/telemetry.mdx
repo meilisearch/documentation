@@ -216,6 +216,8 @@ This list is liable to change with every new version of Meilisearch. It's not be
 | `indexes.total_single_index`                       | The total number of calls when only one index is queried                                    | 2007
 | `matching_strategy.most_used_strategy`             | Most used word matching strategy                                                            | last
 | `infos.with_configuration_file`                    | `true` if the instance is launched with a configuration file, otherwise `false`             | false
+| `infos.experimental_contains_filter`               | `true` if the `containsFilter` experimental feature is enabled                              | false
+| `infos.experimental_edit_documents_by_function`    | `true` if the `editDocumentsByFunction` experimental feature is enabled                     | false
 | `infos.experimental_enable_metrics`                | `true` if `--experimental-enable-metrics`/`MEILI_EXPERIMENTAL_ENABLE_METRICS` is specified, otherwise `false` | false
 | `infos.experimental_replication_parameters`        | `true` if `--experimental-replication-parameters`/`MEILI_EXPERIMENTAL_REPLICATION_PARAMETERS` is specified at launch, otherwise `false` | `false`
 | `infos.experimental_reduce_indexing_memory_usage`  | `true` if `--experimental-reduce-indexing-memory-usage`/`MEILI_EXPERIMENTAL_REDUCE_INDEXING_MEMORY_USAGE` is specified at launch, otherwise `false` | `false`
@@ -247,3 +249,5 @@ This list is liable to change with every new version of Meilisearch. It's not be
 | `embedders.document_template_used`                 | A boolean indicating if one of the provided embedders has a custom template defined         | true
 | `infos.task_queue_webhook`                         | `true` if the instance is launched with a task queue webhook, otherwise `false`             | `false`
 | `infos.experimental_search_queue_size`             | Size of the search queue                                                                    | 750
+| `locales`                                          | List of locales used with `/search` and `/settings` routes                                  | [”fra”, “eng”]
+| `federation.use_federation`                        | `true` if at least one of the multi-search requests from the last aggregate contained a non-null top-level federation object | `false`
