@@ -24,7 +24,7 @@ to Meilisearch, providing an efficient and unified search solution.
 ## Requirements
 
 - A command-line console, such as macOS's Terminal or Windows' Cygwin
-- A MySQL database populated with data
+- A MySQL, PostgreSQL or MongoDB database populated with data
 - A Meilisearch instance, either managed via [Meilisearch Cloud](https://meilisearch.com/cloud?utm_campaign=oss&utm_source=docs&utm_medium=meilisync) or self-hosted
 
 ## installation
@@ -393,7 +393,7 @@ run `meilibridge` command.
 
 ```shell
 $ meilibridge -h
-Meilibridge is a robust package designed to seamlessly sync data from both SQL and NoSQL databases to Meilisearch,
+Meilibridge is a robust package designed to seamlessly sync data from both SQL and NoSQL databases to Meilisearch, 
 providing an efficient and unified search solution.
 
 Usage:
@@ -401,11 +401,12 @@ Usage:
 
 Available Commands:
   help        Help about any command
-  sync        Bulk or real-time sync
+  index       manage index
+  sync        bulk or realtime sync
   version     Print the version number
 
 Flags:
-  -h, --help   Help for meilibridge
+  -h, --help   help for meilibridge
 
 Use "meilibridge [command] --help" for more information about a command.
 ```
@@ -416,15 +417,16 @@ Bulk sync recreates the index and syncs all data to Meilisearch.
 
 ```shell
 $ meilibridge sync bulk -h
-Start bulk sync operation.
+start bulk sync operation
 
 Usage:
   meilibridge sync bulk [flags]
 
 Flags:
-  -c, --config string   Path to config file (default "/etc/meilibridge/config.yml")
-      --continue        Sync new data on existing index
-  -h, --help            Help for bulk
+      --auto            auto bulk sync on exists index every n seconds
+  -c, --config string   path to config file (default "/etc/meilibridge/config.yml")
+      --continue        sync new data on exists index
+  -h, --help            help for bulk
 ```
 
 Example:
@@ -445,9 +447,10 @@ Usage:
   meilibridge sync bulk [flags]
 
 Flags:
-  -c, --config string   Path to config file (default "/etc/meilibridge/config.yml")
-      --continue        Sync new data on existing index
-  -h, --help            Help for bulk
+      --auto            auto bulk sync on exists index every n seconds
+  -c, --config string   path to config file (default "/etc/meilibridge/config.yml")
+      --continue        sync new data on exists index
+  -h, --help            help for bulk
 ```
 
 Example:
@@ -476,6 +479,26 @@ Example:
 
 ```shell
 $ meilibridge sync start -c ./config.yml
+```
+
+### Manage index on bridge
+
+With `meilibridge` you can create or update your index settings
+
+$ meilibridge index -h
+manage index
+
+Usage:
+  meilibridge index [command]
+
+Available Commands:
+  create      create index with update settings
+  settings    manage settings
+
+Flags:
+  -h, --help   help for index
+
+Use "meilibridge index [command] --help" for more information about a command.
 ```
 
 ## Conclusion
