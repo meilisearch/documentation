@@ -13,12 +13,13 @@ to Meilisearch, providing an efficient and unified search solution.
 - Supports multiple data sources
 - Compatible with various databases such as MongoDB, MySQL, and PostgreSQL
 - Index configuration options
-- Real-time synchronization
+- Real-time synchronization (currently mysql and postgres not supported)
 - Bulk sync support with options to continue or reindex
 - Concurrent data bridging to Meilisearch
 - Customizable fields for indexing
 - Set primary key for index
 - Many meilisearch for specific bridge
+- Scheduled automatic bulk sync on existing index in the background
 
 ## Requirements
 
@@ -177,6 +178,7 @@ Here's an example of a basic configuration for Meilibridge:
 
 ```yaml
 general:
+  auto_bulk_interval: 1800 # auto bulk continue data on exists index, default is 1800 second (30 min)
   pprof:
     enable: false
     listen: 127.0.0.1:9900
