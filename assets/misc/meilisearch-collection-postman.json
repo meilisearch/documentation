@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "ee1479fd-fefa-4893-9d10-395f36f01553",
+		"_postman_id": "719caa45-6643-4393-9b84-e8bc6a70d074",
 		"name": "Meilisearch v1.10",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "25294324"
+		"_exporter_id": "8898306"
 	},
 	"item": [
 		{
@@ -432,7 +432,7 @@
 								},
 								{
 									"key": "locales",
-									"value": "\"chi\",\"eng\"",
+									"value": "\"cmn\",\"eng\"",
 									"disabled": true
 								}
 							]
@@ -596,7 +596,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": " {\"queries\": [\n        {\n          \"indexUid\": \"books\",\n          \"q\": \"Pride and Prejudice\"\n        },\n        {\n          \"indexUid\": \"books\",\n          \"q\": \"Alice In Wonderland\",\n          \"attributesToHighlight\": [\"title\"]\n        }\n ]\n }"
+							"raw": "{\n    \"federation\": {},\n    \"queries\": [\n        {\n            \"indexUid\": \"books\",\n            \"q\": \"Pride and Prejudice\"\n        },\n        {\n            \"indexUid\": \"books\",\n            \"q\": \"Alice In Wonderland\",\n            \"attributesToHighlight\": [\"title\"]\n        }\n    ]\n}"
 						},
 						"url": {
 							"raw": "{{url}}/multi-search",
@@ -950,8 +950,8 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"type": "text",
-								"value": "application/json"
+								"value": "application/json",
+								"type": "text"
 							}
 						],
 						"body": {
@@ -1014,8 +1014,8 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"type": "text",
-								"value": "application/json"
+								"value": "application/json",
+								"type": "text"
 							}
 						],
 						"body": {
@@ -1048,8 +1048,8 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"type": "text",
-								"value": "application/json"
+								"value": "application/json",
+								"type": "text"
 							}
 						],
 						"body": {
@@ -1421,8 +1421,8 @@
 								"header": [
 									{
 										"key": "Content-Type",
-										"type": "text",
-										"value": "application/json"
+										"value": "application/json",
+										"type": "text"
 									}
 								],
 								"body": {
@@ -1451,8 +1451,8 @@
 								"header": [
 									{
 										"key": "Content-Type",
-										"type": "text",
-										"value": "application/json"
+										"value": "application/json",
+										"type": "text"
 									}
 								],
 								"body": {
@@ -1484,8 +1484,8 @@
 								"header": [
 									{
 										"key": "Content-Type",
-										"type": "text",
-										"value": "application/json"
+										"value": "application/json",
+										"type": "text"
 									}
 								],
 								"body": {
@@ -1831,7 +1831,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "[\n  {\"locales\": [\"jpn\"], \"attributePatterns\": [\"*_ja\"]}, \n  {\"locales\": [\"chi\"], \"attributePatterns\": [\"*_cn\"]}\n]"
+									"raw": "[\n  { \"locales\": [\"jpn\"], \"attributePatterns\": [\"*_ja\"] }, \n  { \"locales\": [\"cmn\"], \"attributePatterns\": [\"*_cn\"] }\n]"
 								},
 								"url": {
 									"raw": "{{url}}/indexes/{{indexUID}}/settings/localized-attributes",
@@ -2492,8 +2492,8 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"type": "text",
-								"value": "application/json"
+								"value": "application/json",
+								"type": "text"
 							}
 						],
 						"body": {
