@@ -1381,7 +1381,7 @@ search_parameter_reference_locales_1: |-
 get_localized_attribute_settings_1: |-
   curl \
     -X GET 'http://localhost:7700/indexes/INDEX_NAME/settings/localized-attributes'
-update_distinct_attribute_1: |-
+update_localized_attribute_settings_1: |-
   curl \
     -X PUT 'http://localhost:7700/indexes/INDEX_NAME/settings/localized-attributes' \
     -H 'Content-Type: application/json' \
@@ -1390,6 +1390,6 @@ update_distinct_attribute_1: |-
         {"locales": ["jpn"], "attributePatterns": ["*_ja"]}
       ]
     }'
-reset_distinct_attribute_1: |-
+reset_localized_attribute_settings_1: |-
   curl \
     -X DELETE 'http://localhost:7700/indexes/INDEX_NAME/settings/localized-attributes'
