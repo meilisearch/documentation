@@ -821,7 +821,7 @@ You may also assign an empty array to `locales`. In this case, Meilisearch will 
 
 #### `attributePatterns`
 
-Attribute patterns may begin or end with a `*` wildcard to match multiple fields: `en_*`, `*-ar`. 
+Attribute patterns may begin or end with a `*` wildcard to match multiple fields: `en_*`, `*-ar`.
 
 You may also set `attributePatterns` to `*`, in which case Meilisearch will treat all fields as if they were in the associated locale.
 
@@ -846,8 +846,7 @@ Get the localized attributes settings of an index.
 ```json
 {
   "localizedAttributes": [
-    {"locales": ["jpn"], "attributePatterns": ["*_ja"]},
-    {"locales": ["chi"], "attributePatterns": ["*_cn"]}
+    {"locales": ["jpn"], "attributePatterns": ["*_ja"]}
   ]
 }
 ```
@@ -2243,7 +2242,7 @@ Partially update the embedder settings for an index. When this setting is update
     "apiKey": <String>,
     "model": <String>,
     "documentTemplate": <String>,
-    "dimensions": <Integer>, 
+    "dimensions": <Integer>,
     "revision": <String>,
     "distribution": {
       "mean": <Float>,

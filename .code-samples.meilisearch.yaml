@@ -1240,7 +1240,7 @@ reset_embedders_1: |-
 search_parameter_guide_hybrid_1: |-
   curl -X POST 'localhost:7700/indexes/INDEX_NAME/search' \
     -H 'content-type: application/json' \
-    --data-binary '{ 
+    --data-binary '{
       "q": "kitchen utensils",
       "hybrid": {
         "semanticRatio": 0.9,
@@ -1319,7 +1319,7 @@ analytics_event_bind_event_1: |-
 search_parameter_reference_retrieve_vectors_1: |-
   curl -X POST 'localhost:7700/indexes/INDEX_NAME/search' \
     -H 'content-type: application/json' \
-    --data-binary '{ 
+    --data-binary '{
       "q": "kitchen utensils",
       "retrieveVectors": true,
       "hybrid": {
@@ -1385,12 +1385,11 @@ update_distinct_attribute_1: |-
   curl \
     -X PUT 'http://localhost:7700/indexes/INDEX_NAME/settings/localized-attributes' \
     -H 'Content-Type: application/json' \
-    --data-binary '{ 
-   "localizedAttributes": [
-      {"locales": ["jpn"], "attributePatterns": ["*_ja"]}, 
-      {"locales": ["chi"], "attributePatterns": ["*_cn"]}
-   ]
-  }'
+    --data-binary '{
+      "localizedAttributes": [
+        {"locales": ["jpn"], "attributePatterns": ["*_ja"]}
+      ]
+    }'
 reset_distinct_attribute_1: |-
   curl \
     -X DELETE 'http://localhost:7700/indexes/INDEX_NAME/settings/localized-attributes'
