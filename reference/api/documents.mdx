@@ -390,6 +390,62 @@ The documents are matched because they have the same [primary key](/learn/gettin
 
 You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
 
+## Update documents with function <NoticeTag type="experimental" label="experimental" />
+
+<RouteHighlighter method="POST" route="/indexes/{index_uid}/documents/edit"/>
+
+Use a [RHAI function](https://rhai.rs/book/engine/hello-world.html) to edit one or more documents directly in Meilisearch.
+
+<Capsule intent="note" title="Activating Update documents with function">
+This is an experimental feature. Use the experimental features endpoint to activate it:
+
+```sh
+curl \
+  -X PATCH 'http://localhost:7700/experimental-features/' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "editDocumentsByFunction": true
+  }'
+```
+</Capsule>
+
+### Path parameters
+
+| Name              | Type   | Description                                                            |
+| :---------------- | :----- | :--------------------------------------------------------------------- |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
+
+### Query parameters
+
+| Query Parameter    | Default Value | Description                                                                                                                             |
+| :----------------- | :------------ | :-------------------------------------------------------------------------------------------------------------------------------------- |
+| **`function`**     | `null`        | A string containing a RHAI function                                                         |
+| **`filter`**       | `null`        | A string containing a filter expression |
+| **`context`**      | `null`        | An object with data Meilisearch should make available for the editing function |
+
+#### `function`
+
+`function` must be a string with a RHAI function that Meilisearch will apply to all selected documents. By default this function has access to a single variable, `doc`, representing the document you are currently editing. This is a required field.
+
+#### `filter`
+
+`filter` must be a string containing a filter expression. Use `filter` when you want only to apply `function` to a subset of the documents in your database.
+
+#### `context`
+
+Use `context` to pass data to the `function` scope. By default a function only has access to the document it is editing.
+
+### Example
+
+```sh
+curl \
+-X POST 'http://localhost:7700/indexes/INDEX_NAME/search' \
+-H 'Content-Type: application/json' \
+--data-binary '{
+  "function": "doc.title = `${doc.title.to_upper()}`"
+}'
+```
+
 ## Delete all documents
 
 <RouteHighlighter method="DELETE" route="/indexes/{index_uid}/documents"/>

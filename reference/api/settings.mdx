@@ -786,6 +786,148 @@ Reset an index's filterable attributes list back to its default value.
 
 You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
 
+## Localized attributes
+
+By default, Meilisearch auto-detects the languages used in your documents. This setting allows you to explicitly define which languages are present in a dataset, and in which fields.
+
+Localized attributes affect `searchableAttributes`, `filterableAttributes`, and `sortableAttributes`.
+
+<Capsule intent="note" title="`locales` and `localizedAttributes`">
+[`locales`](/reference/api/search#query-locales) and `localizedAttributes` have the same goal: explicitly state the language used in a search when Meilisearch's language auto-detection is not working as expected.
+
+If you believe Meilisearch is detecting incorrect languages because of the query text, explicitly set the search language with `locales`.
+
+If you believe Meilisearch is detecting incorrect languages because of document, explicitly set the document language at the index level with `localizedAttributes`.
+
+For full control over the way Meilisearch detects languages during indexing and at search time, set both `locales` and `localizedAttributes`.
+</Capsule>
+
+### Localized attributes object
+
+`localizedAttributes` must be an array of locale objects. Its default value is `[]`.
+
+Locale objects must have the following fields:
+
+| Name               | Type    | Default value | Description                                                 |
+| :----------------- | :------ | :------------ | :---------------------------------------------------------- |
+| **`locales`**      | Array of strings | `[]`        | A list of strings indicating one or more ISO-639 locales |
+| **`attribute_patterns`** | Array of strings | `[]`        | A list of strings indicating which fields correspond to the specified locales |
+
+#### `locales`
+
+Meilisearch supports the following `locales`: `epo`, `eng`, `rus`, `cmn`, `spa`, `por`, `ita`, `ben`, `fra`, `deu`, `ukr`, `kat`, `ara`, `hin`, `jpn`, `heb`, `yid`, `pol`, `amh`, `jav`, `kor`, `nob`, `dan`, `swe`, `fin`, `tur`, `nld`, `hun`, `ces`, `ell`, `bul`, `bel`, `mar`, `kan`, `ron`, `slv`, `hrv`, `srp`, `mkd`, `lit`, `lav`, `est`, `tam`, `vie`, `urd`, `tha`, `guj`, `uzb`, `pan`, `aze`, `ind`, `tel`, `pes`, `mal`, `ori`, `mya`, `nep`, `sin`, `khm`, `tuk`, `aka`, `zul`, `sna`, `afr`, `lat`, `slk`, `cat`, `tgl`, `hye`.
+
+You may also assign an empty array to `locales`. In this case, Meilisearch will auto-detect the language of the associated `attributePatterns`.
+
+#### `attributePatterns`
+
+Attribute patterns may begin or end with a `*` wildcard to match multiple fields: `en_*`, `*-ar`.
+
+You may also set `attributePatterns` to `*`, in which case Meilisearch will treat all fields as if they were in the associated locale.
+
+## Get localized attributes settings
+
+<RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/localized-attributes"/>
+
+Get the localized attributes settings of an index.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
+
+#### Example
+
+<CodeSamples id="get_localized_attribute_settings_1" />
+
+##### Response: `200 OK`
+
+```json
+{
+  "localizedAttributes": [
+    {"locales": ["jpn"], "attributePatterns": ["*_ja"]}
+  ]
+}
+```
+
+### Update localized attribute settings
+
+<RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/localized-attributes"/>
+
+Update the localized attributes settings of an index.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
+
+#### Body
+
+```
+{
+  "localizedAttributes": [
+    {
+     "locale": [<String>, …],
+     "attributePatterns": [<String>, …],
+    }
+  ]
+}
+```
+
+| Name               | Type    | Default value | Description                                                 |
+| :----------------- | :------ | :------------ | :---------------------------------------------------------- |
+| **`localizedAttributes`** | Array of objects | `[]`        | Explicitly set specific locales for one or more attributes |
+
+#### Example
+
+<CodeSamples id="update_localized_attributes_settings_1" />
+
+##### Response: `202 Accepted`
+
+```json
+{
+  "taskUid": 1,
+  "indexUid": "INDEX_NAME",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2022-04-14T20:56:44.991039Z"
+}
+```
+
+You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+
+### Reset pagination settings
+
+<RouteHighlighter method="RESET" route="/indexes/{index_uid}/settings/localized-attributes"/>
+
+Reset an index's localized attributes to their [default value](#localized-attributes-object).
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
+
+#### Example
+
+<CodeSamples id="reset_localized_attributes_settings_1" />
+
+##### Response: `202 Accepted`
+
+```json
+{
+  "taskUid": 1,
+  "indexUid": "INDEX_NAME",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2022-04-14T20:53:32.863107Z"
+}
+```
+
+You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+
 ## Pagination
 
 To protect your database from malicious scraping, Meilisearch has a default limit of 1000 results per search. This setting allows you to configure the maximum number of results returned per search.
@@ -2038,18 +2180,15 @@ These embedder objects may contain the following fields:
 | Name                   | Type             | Default Value                                                            | Description                                                                                                                                                    |
 |  :---------------------|  :---------------|  :-----------------------------------------------------------------------|  :-------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **`source`**           | String           | Empty                                                                    | The third-party tool that will generate embeddings from documents. Must be `openAi`, `huggingFace`, `ollama`, `rest`, or `userProvided`                        |
-| **`url`**              | String           | `http://localhost:11434/api/embeddings`                                  | URL Meilisearch contacts when querying the embedder                                                                                                        |
+| **`url`**              | String           | `http://localhost:11434/api/embeddings`                                  | The URL Meilisearch contacts when querying the embedder                                                                                                            |
 | **`apiKey`**           | String           | Empty                                                                    | Authentication token Meilisearch should send with each request to the embedder. If not present, Meilisearch will attempt to read it from environment variables |
 | **`model`**            | String           | Empty                                                                    | The model your embedder uses when generating vectors                                                                                                           |
 | **`documentTemplate`** | String           | `{% for field in fields %}{{field.name}}: {{field.value}}\n{% endfor %}` | Template defining the data Meilisearch sends the embedder                                                                                                      |
 | **`dimensions`**       | Integer          | Empty                                                                    | Number of dimensions in the chosen model. If not supplied, Meilisearch tries to infer this value                                                               |
 | **`revision`**         | String           | Empty                                                                    | Model revision hash                                                                                                                                            |
-| **`inputField`**       | Array of strings | []                                                                       | Path to location of document data in query Meilisearch sends to embedder                                                                                       |
-| **`inputType`**        | String           | `text`                                                                   | Type of data Meilisearch sends to embedder. Must be `text` or `textArray`                                                                                      |
-| **`query`**            | String           | Object                                                                   | Extra fields Meilisearch adds to queries Meilisearch sends to embedder                                                                                         |
-| **`pathToEmbeddings`** | Array            | []                                                                       | Path to vector embedding data in embedder response                                                                                                             |
-| **`embeddingObject`**  | Array           | []                                                                       | Name of the embedding object in embedder response                                                                                                              |
 | **`distribution`**     | Object           | Empty                                                                    | Describes the natural distribution of search results. Must contain two fields, `mean` and `sigma`, each containing a numeric value between `0` and `1`         |
+| **`request`**          | Object           | Empty                                                                    | A JSON value representing the request Meilisearch makes to the remote embedder                                                                                 |
+| **`response`**         | Object           | Empty                                                                    | A JSON value representing the request Meilisearch expects from the remote embedder                                                                             |
 
 ### Get embedder settings
 
@@ -2103,17 +2242,15 @@ Partially update the embedder settings for an index. When this setting is update
     "apiKey": <String>,
     "model": <String>,
     "documentTemplate": <String>,
-    "dimensions": <Integer>, 
+    "dimensions": <Integer>,
     "revision": <String>,
-    "inputField": [<String>, <String>, …],
-    "inputType": "text"|"textArray", 
-    "query": <Object>,
-    "pathToEmbeddings": [<String>, <String>, …],
-    "embeddingObject": [<String>, <String>, …], 
     "distribution": {
       "mean": <Float>,
       "sigma": <Float>
-    }
+    },
+    "request": { … },
+    "response": { … },
+    "headers": { … }
   }
 }
 ```
@@ -2136,13 +2273,13 @@ This field is mandatory.
 
 ##### `url`
 
-Meilisearch queries `url` to generate vector embeddings for queries and documents. `url` must point to a REST-compatible embedder.
+Meilisearch queries `url` to generate vector embeddings for queries and documents. `url` must point to a REST-compatible embedder. You may also use `url` to work with proxies, such as when targeting `openAi` from behind a proxy.
 
 This field is mandatory when using `rest` embedders.
 
-This field is optional when using `ollama` embedders.
+This field is optional when using `ollama` and `openAi` embedders.
 
-This field is incompatible with `openAi`, `huggingFace`, and `userProvided` embedders.
+This field is incompatible with `huggingFace` and `userProvided` embedders.
 
 ##### `apiKey`
 
@@ -2202,59 +2339,76 @@ This field is optional for the `huggingFace` embedder.
 
 This field is incompatible with all other embedders.
 
-##### `inputField`
+##### `request`
 
-Indicates the path to the field containing document data in the query Meilisearch sends to the embedder.
+`request` must be a JSON object with the same structure and data of the request you must send to your `rest` embedder.
 
-This field must be an array of strings. Each string should indicate a field within the request object. For example, if `inputField` is `["A", "B", "C"]`, the document data should be in `request.A.B.C`.
+The field containing the input text Meilisearch should send to the embedder must be replaced with `"{{text}}"`:
 
-This field is optional for the `rest` embedder.
+```json
+{
+  "source": "rest",
+  "request": {
+    "prompt": "{{text}}"
+    …
+  },
+  …
+}
+```
 
-This field is incompatible with all other embedders.
+If sending multiple documents in a single request, replace the input field with `["{{text}}", "{{..}}"]`:
 
-##### `inputType`
+```json
+{
+  "source": "rest",
+  "request": {
+    "prompt": ["{{text}}", "{{..}}"]
+    …
+  },
+  …
+}
+```
 
-Defines how Meilisearch sends the data to the embedder.
-
-`text`: Meilisearch submits a single request per document, and receives a single embedding as a response. When using `text`, you must specify the path to the embedding response in `embeddingObject`.
-
-`textArray`: Meilisearch submits multiple documents in a single request, and receives the same number of embeddings as a response. When using `textArray`, you must specify the path to the array of results in `pathToEmbeddings`, then the path from each item of the array to the embedding in `embeddingObject`.
-
-`textArray` results in fewer requests to the embedder and is the preferred `inputType`. However, not all embedders support sending multiple documents in a single request.
-
-This field is optional for the `rest` embedder.
-
-This field is incompatible with all other embedders.
-
-##### `pathToEmbeddings`
-
-Array indicating the path to the field containing all vector embeddings in the embedder response.
-
-This field must be an array of strings. Each string should indicate a field within the request object. If `inputType` is `text`, the last string in the array should indicate an array of numbers with the same dimensions as the embedding models. If `inputType` is `textArray`, the last string in the array should indicate an array of objects, each of which corresponds to a single document in the original request.
-
-For example, if `pathToEmbeddings` is `["A", "B", "C"]`, the document data should be in `response.A.B.C`.
-
-This field is optional for the `rest` embedder.
+This field is mandatory when using the `rest` embedder.
 
 This field is incompatible with all other embedders.
 
-##### `embeddingObject`
+##### `response`
 
-Array indicating the path to the field containing a single set of vector embedding in a `textArray` embedder response.
+`response` must be a JSON object with the same structure and data of the response you expect to receive from your `rest` embedder.
 
-This field must be an array of strings. Each string should indicate the field containing vector data for a single element when the embedder returns multiple embeddings.
+The field containing the embedding itself must be replaced with `"{{embedding}}"`:
 
-For example, if `pathToEmbeddings` is `["A", "B", "C"]`, the document data should be in `response.A.B.C`, where `C` is an array of objects. For each element in `C`, Meilisearch will look for the path configured in `embeddingObject`. If `embeddingObject` is `["D", "E", "F"]`, vector data should be in `element.D.E.F`.
+```json
+{
+  "source": "rest",
+  "response": {
+    "data": "{{embedding}}"
+    …
+  },
+  …
+}
+```
 
-This field is optional for the `rest` embedder.
+If a single response includes multiple embeddings, the field containing the embedding itself must be an array with two items. One must declare the location and structure of a single embedding, while the second item should be `"{{..}}"`:
 
-This field is incompatible with all other embedders.
+```json
+{
+  "source": "rest",
+  "response": {
+    "data": [
+      {
+        "embedding": "{{embedding}}"
+      },
+      "{{..}}"
+    ]
+    …
+  },
+  …
+}
+```
 
-##### `query`
-
-Extra fields Meilisearch adds to queries Meilisearch sends to embedder. These may include the chosen embeddings model and its dimensions.
-
-This field is optional for the `rest` embedder.
+This field is mandatory when using the `rest` embedder.
 
 This field is incompatible with all other embedders.
 
@@ -2290,6 +2444,21 @@ Configuring `distribution` requires a certain amount of trial and error, in whic
 - `sigma`: a number between `0` and `1` indicating the average absolute difference in `_rankingScore`s between "very relevant" hits and "somewhat relevant" hits, and "somewhat relevant" hits and "irrelevant hits".
 
 Changing `distribution` does not trigger a reindexing operation.
+
+##### `headers`
+
+`headers` must be a JSON object whose keys represent the name of additional headers to send in requests to embedders, and whose values represent the value of these additional headers.
+
+By default, Meilisearch sends the following headers with all requests to `rest` embedders:
+
+- `Authorization: Bearer EMBEDDER_API_KEY` (only if `apiKey` was provided)
+- `Content-Type: application/json`
+
+If `headers` includes one of these fields, the explicitly declared values take precedence over the defaults.
+
+This field is optional when using the `rest` embedder.
+
+This field is incompatible with all other embedders.
 
 #### Example
 
