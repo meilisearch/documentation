@@ -13,7 +13,7 @@ This guide will walk you through the process of setting up Meilisearch with Mist
 
 To follow this guide, you'll need:
 
-- A Meilisearch Cloud project running version 1.6 or above with the Vector store activated.
+- A [Meilisearch Cloud](https://www.meilisearch.com/cloud) project running version 1.10 or above with the Vector store activated.
 - A Mistral account with an API key for embedding generation. You can sign up for a Mistral account at [Mistral](https://mistral.ai/).
 - No backend required.
 
@@ -58,7 +58,7 @@ In this configuration:
 - `source`: Specifies the source of the embedder, which is set to "rest" for using a REST API.
 - `apiKey`: Replace `<Mistral API Key>` with your actual Mistral API key.
 - `dimensions`: Specifies the dimensions of the embeddings, set to 1024 for the `mistral-embed` model.
-- `documentTemplate`: Optionally, you can provide a custom template for generating embeddings from your documents.
+- `documentTemplate`: Optionally, you can provide a [custom template](https://www.meilisearch.com/docs/learn/ai-powered-search/getting_started_with_ai_search#documenttemplate) for generating embeddings from your documents.
 - `url`: Specifies the URL of the Mistral API endpoint.
 - `request`: Defines the request structure for the Mistral API, including the model name and input parameters.
 - `response`: Defines the expected response structure from the Mistral API, including the embedding data.
