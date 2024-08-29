@@ -64,6 +64,11 @@
         "source": "guides/computing_hugging_face_embeddings_gpu.mdx",
         "label": "Computing Hugging Face embeddings with the GPU",
         "slug": "computing_hugging_face_embeddings_gpu"
+      },
+      {
+        "source": "guides/embedders/mistral.mdx",
+        "label": "Semantic Search with Mistral Embedding",
+        "slug": "mistral"
       }
     ]
   },
