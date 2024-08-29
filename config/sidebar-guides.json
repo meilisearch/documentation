@@ -67,7 +67,7 @@
       },
       {
         "source": "guides/embedders/mistral.mdx",
-        "label": "Semantic Search with Mistral Embedding",
+        "label": "Semantic search with Mistral embedding",
         "slug": "mistral"
       }
     ]
