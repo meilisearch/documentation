@@ -82,7 +82,7 @@
       },
       {
         "source": "guides/embedders/openai.mdx",
-        "label": "Semantic search with OpenAI embedding",
+        "label": "Semantic search with OpenAI embeddings",
         "slug": "openai"
       },
       {
