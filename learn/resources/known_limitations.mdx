@@ -160,4 +160,4 @@ user = 1 OR (user = 2 AND user = 3) OR (user = 4 AND user = 5) OR user = 6
 
 **Limitation:** When [searching for facet values](/reference/api/facet_search), Meilisearch returns a maximum of 100 facets.
 
-**Explanation:** the limit to the maximum number of returned facets has been implemented to offer a good balance between usability and comprehensive results. Facet search allows users to filter a large list of facets so they may quickly find categories relevant to their query. This is different from searching through an index of documents. Faceting index settings such as `maxValuesPerFacet` limit do not impact facet search and only affect queries searching through documents.
+**Explanation:** the limit to the maximum number of returned facets has been implemented to offer a good balance between usability and comprehensive results. Facet search allows users to filter a large list of facets so they may quickly find categories relevant to their query. This is different from searching through an index of documents. Faceting index settings such as the `maxValuesPerFacet` limit do not impact facet search and only affect queries searching through documents.
