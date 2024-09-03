@@ -87,7 +87,7 @@
       },
       {
         "source": "guides/embedders/voyage.mdx",
-        "label": "Semantic search with Voyage embedding",
+        "label": "Semantic search with Voyage embeddings",
         "slug": "voyage"
       }
     ]
