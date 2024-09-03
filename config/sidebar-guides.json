@@ -72,7 +72,7 @@
       },
       {
         "source": "guides/embedders/cohere.mdx",
-        "label": "Semantic search with Cohere embedding",
+        "label": "Semantic search with Cohere embeddings",
         "slug": "cohere"
       },
       {
