@@ -67,7 +67,7 @@
       },
       {
         "source": "guides/embedders/cloudflare.mdx",
-        "label": "Semantic search with Cloudflare embedding",
+        "label": "Semantic search with Cloudflare embeddings",
         "slug": "cloudflare"
       },
       {
