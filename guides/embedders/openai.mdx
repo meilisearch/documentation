@@ -1,9 +1,9 @@
 ---
-title: Semantic Search with OpenAI Embedding - Meilisearch documentation
+title: Semantic Search with OpenAI Embeddings - Meilisearch documentation
 description: This guide will walk you through the process of setting up Meilisearch with OpenAI embeddings to enable semantic search capabilities.
 ---
 
-# Semantic search with OpenAI embedding
+# Semantic search with OpenAI embeddings
 
 ## Introduction
 
@@ -13,13 +13,13 @@ This guide will walk you through the process of setting up Meilisearch with Open
 
 To follow this guide, you'll need:
 
-- A [Meilisearch Cloud](https://www.meilisearch.com/cloud) project running version 1.10 or above with the Vector store activated.
+- A [Meilisearch Cloud](https://www.meilisearch.com/cloud?utm_campaign=vector-search&utm_source=docs&utm_medium=openai-embeddings-guide) project running version 1.10 or above with the Vector store activated.
 - An OpenAI account with an API key for embedding generation. You can sign up for an OpenAI account at [OpenAI](https://openai.com/).
 - No backend required.
 
 ## Setting up Meilisearch
 
-To set up an embedder in Meilisearch, you need to configure it to your settings. You can refer to the [Meilisearch documentation](https://www.meilisearch.com/docs/reference/api/settings#update-embedder-settings) for more details on updating the embedder settings.
+To set up an embedder in Meilisearch, you need to configure it to your settings. You can refer to the [Meilisearch documentation](/reference/api/settings?utm_campaign=vector-search&utm_source=docs&utm_medium=openai-embeddings-guide#update-embedder-settings) for more details on updating the embedder settings.
 
 OpenAI offers three main embedding models:
 
@@ -46,14 +46,14 @@ In this configuration:
 - `source`: Specifies the source of the embedder, which is set to "openAi" for using OpenAI's API.
 - `apiKey`: Replace `<OpenAI API Key>` with your actual OpenAI API key.
 - `dimensions`: Specifies the dimensions of the embeddings. Set to 1536 for `text-embedding-3-small` and `text-embedding-ada-002`, or 3072 for `text-embedding-3-large`.
-- `documentTemplate`: Optionally, you can provide a [custom template](https://www.meilisearch.com/docs/learn/ai-powered-search/getting_started_with_ai_search#documenttemplate) for generating embeddings from your documents.
+- `documentTemplate`: Optionally, you can provide a [custom template](/learn/ai-powered-search/getting_started_with_ai_search?utm_campaign=vector-search&utm_source=docs&utm_medium=openai-embeddings-guide#documenttemplate) for generating embeddings from your documents.
 - `model`: Specifies the OpenAI model to use for generating embeddings. Choose from `text-embedding-3-large`, `text-embedding-3-small`, or `text-embedding-ada-002`.
 
 Once you've configured the embedder settings, Meilisearch will automatically generate embeddings for your documents and store them in the vector store.
 
 Please note that OpenAI has rate limiting, which is managed by Meilisearch. If you have a free account, the indexation process may take some time, but Meilisearch will handle it with a retry strategy.
 
-It's recommended to monitor the tasks queue to ensure everything is running smoothly. You can access the tasks queue using the Cloud UI or the Meilisearch API: https://www.meilisearch.com/docs/reference/api/tasks#get-tasks
+It's recommended to monitor the tasks queue to ensure everything is running smoothly. You can access the tasks queue using the Cloud UI or the [Meilisearch API](/reference/api/tasks?utm_campaign=vector-search&utm_source=docs&utm_medium=openai-embeddings-guide#get-tasks)
 
 ## Testing semantic search
 
@@ -83,4 +83,4 @@ You can use the Meilisearch API or client libraries to perform searches and retr
 
 By following this guide, you should now have Meilisearch set up with OpenAI embedding, enabling you to leverage semantic search capabilities in your application. Meilisearch's auto-batching and efficient handling of embeddings make it a powerful choice for integrating semantic search into your project.
 
-To explore further configuration options for embedders, consult the [detailed documentation about the embedder setting possibilities](https://www.meilisearch.com/docs/reference/api/settings#embedders-experimental).
+To explore further configuration options for embedders, consult the [detailed documentation about the embedder setting possibilities](/reference/api/settings?utm_campaign=vector-search&utm_source=docs&utm_medium=openai-embeddings-guide#embedders-experimental).
