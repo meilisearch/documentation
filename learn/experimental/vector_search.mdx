@@ -6,11 +6,11 @@ sidebarDepth: 3
 
 # Vector search
 
-[Vector search](https://meilisearch.com/solutions/vector-search?utm_campaign=vector-search&utm_source=docs) is an experimental technology that uses Large Language Models to retrieve search results based on the meaning and context of a query.
+[Vector search](https://meilisearch.com/solutions/vector-search?utm_campaign=vector-search&utm_source=docs&utm_medium=vector-search-guide) is an experimental technology that uses Large Language Models to retrieve search results based on the meaning and context of a query.
 
 This feature can improve search relevancy for queries that do not to match keywords in your dataset, allow your users to search images and other non-textual media, suggest related products in webshops, and create conversational search interfaces.
 
-Vector search is available to all users. [Meilisearch Cloud](https://www.meilisearch.com/cloud?utm_campaign=vector-search&utm_source=docs) is the recommended way of using vector search.
+Vector search is available to all users. [Meilisearch Cloud](https://www.meilisearch.com/cloud?utm_campaign=vector-search&utm_source=docs&utm_medium=vector-search-guide) is the recommended way of using vector search.
 
 ## Using vector search
 
@@ -52,7 +52,7 @@ It is also possible to [supply custom embeddings](#generate-custom-embeddings-ma
 
 <Tabs.Container labels={["OpenAI", "Hugging Face", "Ollama", "REST"]}>
 <Tabs.Content label="OpenAI">
-Use the `embedders` index setting of the [update `/settings` endpoint](/reference/api/settings) to configure one or more embedders for an index:
+Use the `embedders` index setting of the [update `/settings` endpoint](/reference/api/settings?utm_campaign=vector-search&utm_source=docs&utm_medium=vector-search-guide) to configure one or more embedders for an index:
 
 ```sh
 curl \
@@ -81,9 +81,9 @@ It is mandatory to pass an OpenAI API key through the `OPENAI_API_KEY` environme
 </Tabs.Content>
 
 <Tabs.Content label="Hugging Face">
-The Hugging Face embedder computes embeddings locally. This is a resource-intensive operation and might affect indexing performance. You may be able to significantly improve performance by [compiling a CUDA-compatible Meilisearch binary](/guides/ai/computing_hugging_face_embeddings_gpu).
+The Hugging Face embedder computes embeddings locally. This is a resource-intensive operation and might affect indexing performance. You may be able to significantly improve performance by [compiling a CUDA-compatible Meilisearch binary](/guides/ai/computing_hugging_face_embeddings_gpu?utm_campaign=vector-search&utm_source=docs&utm_medium=vector-search-guide).
 
-Use the `embedders` index setting of the [update `/settings` endpoint](/reference/api/settings) to configure one or more embedders for an index:
+Use the `embedders` index setting of the [update `/settings` endpoint](/reference/api/settings?utm_campaign=vector-search&utm_source=docs&utm_medium=vector-search-guide) to configure one or more embedders for an index:
 
 ```sh
 curl \
@@ -106,7 +106,7 @@ curl \
 </Tabs.Content>
 
 <Tabs.Content label="Ollama">
-Use the `embedders` index setting of the [update `/settings` endpoint](/reference/api/settings) to configure one or more embedders for an index:
+Use the `embedders` index setting of the [update `/settings` endpoint](/reference/api/settings?utm_campaign=vector-search&utm_source=docs&utm_medium=vector-search-guide) to configure one or more embedders for an index:
 
 ```sh
 curl \
@@ -137,7 +137,7 @@ curl \
 <Tabs.Content label="REST">
 The generic REST source is compatible with any embedder with a REST API without a dedicated Meilisearch `source`.
 
-Use the `embedders` index setting of the [update `/settings` endpoint](/reference/api/settings) to configure one or more embedders for an index:
+Use the `embedders` index setting of the [update `/settings` endpoint](/reference/api/settings?utm_campaign=vector-search&utm_source=docs&utm_medium=vector-search-guide) to configure one or more embedders for an index:
 
 ```sh
 curl \
@@ -206,7 +206,7 @@ curl \
   }'
 ```
 
-Then, use [the `/documents` endpoint](/reference/api/documents) to upload vectorized documents. Store vector data in your documents' `_vectors` field:
+Then, use [the `/documents` endpoint](/reference/api/documents?utm_campaign=vector-search&utm_source=docs&utm_medium=vector-search-guide) to upload vectorized documents. Store vector data in your documents' `_vectors` field:
 
 ```sh
 curl -X POST -H 'content-type: application/json' \
@@ -270,7 +270,7 @@ curl -X POST -H 'content-type: application/json' \
 - `semanticRatio`: number between `0` and `1`. `0` indicates full keyword search, `1` indicates full semantic search. Defaults to `0.5`
 - `embedder`: string, indicating one of the embedders configured for the queried index. Defaults to `"default"`
 
-`hybrid` can be used together with [other search parameters](/reference/api/search), including [`filter`](/reference/api/search#filter) and [`sort`](/reference/api/search#sort):
+`hybrid` can be used together with [other search parameters](/reference/api/search?utm_campaign=vector-search&utm_source=docs&utm_medium=vector-search-guide), including [`filter`](/reference/api/search?utm_campaign=vector-search&utm_source=docs&utm_medium=vector-search-guide#filter) and [`sort`](/reference/api/search?utm_campaign=vector-search&utm_source=docs&utm_medium=vector-search-guide#sort):
 
 ```sh
 curl -X POST -H 'content-type: application/json' \
@@ -298,7 +298,7 @@ curl -X POST -H 'content-type: application/json' \
 
 `vector` must be an array of numbers indicating the search vector. You must generate these yourself when using vector search with user-provided embeddings.
 
-`vector` can be used together with [other search parameters](/reference/api/search), including [`filter`](/reference/api/search#filter) and [`sort`](/reference/api/search#sort):
+`vector` can be used together with [other search parameters](/reference/api/search?utm_campaign=vector-search&utm_source=docs&utm_medium=vector-search-guide), including [`filter`](/reference/api/search#filter) and [`sort`](/reference/api/search#sort):
 
 ```sh
 curl -X POST -H 'content-type: application/json' \
@@ -311,7 +311,7 @@ curl -X POST -H 'content-type: application/json' \
 ```
 
 <Capsule intent="tip" title="Other resources">
-Check out the Meilisearch blog post for a [guide on implementing semantic search with LangChain](/learn/cookbooks/langchain).
+Check out the Meilisearch blog post for a [guide on implementing semantic search with LangChain](/learn/cookbooks/langchain?utm_campaign=vector-search&utm_source=docs&utm_medium=vector-search-guide).
 </Capsule>
 
 ## Deactivate vector search
@@ -330,7 +330,7 @@ If you don't remove all embedders, Meilisearch will continue auto-generating emb
 
 If using Meilisearch Cloud, navigate to your project overview and find "Experimental features", then uncheck the "vector store" box.
 
-Alternatively, use [the `/experimental` route](/reference/api/experimental_features):
+Alternatively, use [the `/experimental` route](/reference/api/experimental_features?utm_campaign=vector-search&utm_source=docs&utm_medium=vector-search-guide):
 
 ```sh
 curl \
