@@ -792,6 +792,8 @@ By default, Meilisearch auto-detects the languages used in your documents. This 
 
 Localized attributes affect `searchableAttributes`, `filterableAttributes`, and `sortableAttributes`.
 
+Configuring multiple languages for a single index may negatively impact performance.
+
 <Capsule intent="note" title="`locales` and `localizedAttributes`">
 [`locales`](/reference/api/search#query-locales) and `localizedAttributes` have the same goal: explicitly state the language used in a search when Meilisearch's language auto-detection is not working as expected.
 
