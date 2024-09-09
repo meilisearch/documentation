@@ -76,9 +76,9 @@ If your query is `Hello - World`:
 
 ## Length of individual `filterableAttributes` values
 
-**Limitation:** Individual `filterableAttributes` values are limited to 512 bytes.
+**Limitation:** Individual `filterableAttributes` values are limited to 480 bytes.
 
-**Explanation:** Meilisearch stores `filterableAttributes` values as keys in LMDB, a data type whose size is limited to 512 bytes. Note that this only applies to individual values—for example, a `genres` attribute can contain any number of values such as `horror`, `comedy`, or `cyberpunk` as long as each one of them is smaller than 512 bytes.
+**Explanation:** Meilisearch stores `filterableAttributes` values as keys in LMDB, a data type whose size is limited to 512 bytes, to which Meilisearch adds a margin of 32 bytes. Note that this only applies to individual values—for example, a `genres` attribute can contain any number of values such as `horror`, `comedy`, or `cyberpunk` as long as each one of them is smaller than 480 bytes.
 
 ## Maximum filter depth
 
