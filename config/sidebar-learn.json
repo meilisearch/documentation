@@ -459,16 +459,6 @@
         "slug": "overview"
       },
       {
-        "source": "learn/experimental/max_number_of_batched_tasks.mdx",
-        "label": "Limit number of batched tasks",
-        "slug": "max_number_of_batched_tasks"
-      },
-      {
-        "source": "learn/experimental/reduce-indexing-memory-usage.mdx",
-        "label": "Reduce indexing memory usage",
-        "slug": "reduce-indexing-memory-usage"
-      },
-      {
         "source": "learn/experimental/log_customization.mdx",
         "label": "Log customization",
         "slug": "log_customization"
@@ -477,16 +467,6 @@
         "source": "learn/experimental/vector_search.mdx",
         "label": "Vector search",
         "slug": "vector_search"
-      },
-      {
-        "source": "learn/experimental/replication_parameters.mdx",
-        "label": "Replication parameters",
-        "slug": "replication_parameters"
-      },
-      {
-        "source": "learn/experimental/search_queue_size.mdx",
-        "label": "Search queue size",
-        "slug": "search_queue_size"
       }
     ]
   }
