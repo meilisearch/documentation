@@ -1391,3 +1391,6 @@ update_localized_attribute_settings_1: |-
 reset_localized_attribute_settings_1: |-
   curl \
     -X DELETE 'http://localhost:7700/indexes/INDEX_NAME/settings/localized-attributes'
+get_metrics_1: |-
+  curl \
+    -X GET 'http://localhost:7700/metrics'

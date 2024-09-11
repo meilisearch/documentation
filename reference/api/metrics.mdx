@@ -1,0 +1,117 @@
+---
+title: Metrics — Meilisearch API reference
+description: The /metrics endpoint is an experimental feature. It exposes data compatible with Prometheus and offers insight into Meilisearch's behavior and performance.
+---
+
+# Metrics <NoticeTag type="experimental" label="experimental" />
+
+The `/metrics` route exposes data compatible with [Prometheus](https://prometheus.io/). You will also need to have Grafana installed in your system to make use of this feature.
+
+<Capsule intent="note" title="Activating `/metrics`">
+This is an experimental feature. Use the experimental features endpoint to activate it:
+
+```sh
+curl \
+  -X PATCH 'http://localhost:7700/experimental-features/' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "enableMetrics": true
+  }'
+```
+
+This feature is not available for Meilisearch Cloud users.
+</Capsule>
+
+## Exposed information
+
+`/metrics` exposes the following information:
+
+| Name                                     | Description | Type      |
+|------------------------------------------|-------------|-----------|
+| `meilisearch_http_requests_total`        | Returns the number of times an API resource is accessed. | counter   |
+| `meilisearch_http_response_time_seconds` | Returns a time histogram showing the number of times an API resource call goes into a time bucket (expressed in second). | histogram |
+| `meilisearch_db_size_bytes`              | Returns the “real” size of the database on disk in bytes. It includes all the lmdb memory mapped files plus all the files contained in the `data.ms` directory (mainly the updates files that were not processed yet). | gauge     |
+| `meilisearch_used_db_size_bytes`         | Returns the size of the database actually used by meilisearch in bytes. Include all the same files as `meilisearch_db_size_bytes` except that when it comes to an LMDB database, we only count the pages used by meilisearch. This means if you see a large gap between both metrics, adding documents will probably re-use freed pages instead of growing `meilisearch_db_size_bytes`. | gauge     |
+| `meilisearch_index_docs_count`           | Returns the number of documents for an index. | gauge     |
+| `meilisearch_index_count`                | Returns the total number of index for the Meilisearch instance. | gauge     |
+| `meilisearch_nb_tasks`                   | Returns the total number of tasks for the Meilisearch instance parametrized by the kind of task and its value (see the table below). | counter   |
+| `meilisearch_last_update`                | Returns the timestamp of the last update. | gauge     |
+| `meilisearch_is_indexing`                | Returns `1` if Meilisearch is indexing or `0` if not. | gauge     |
+
+<Capsule intent="danger">
+API keys with access to `/metrics` are able to see all HTTP calls for all the routes in an instance. This may lead to leaking sensitive information such as index names, document's primary keys, and API keys.
+</Capsule>
+
+## Get metrics
+
+<RouteHighlighter method="GET" route="/metrics"/>
+
+Get data for current status of your instance. In most cases, you should only query this endpoint via a Prometheus-compatible tool such as Grafana.
+
+Refer to Meilisearch's sample configuration files for example of a [basic Prometheus scraper](https://github.com/orgs/meilisearch/discussions/assets/prometheus-basic-scraper.yml) and [Grafana dashboard](https://github.com/meilisearch/meilisearch/blob/main/assets/grafana-dashboard.json).
+
+### Example
+
+<CodeSamples id="get_metrics_1" />
+
+#### Response: `200 OK`
+
+```
+# HELP meilisearch_db_size_bytes Meilisearch DB Size In Bytes
+# TYPE meilisearch_db_size_bytes gauge
+meilisearch_db_size_bytes 188416
+# HELP meilisearch_http_response_time_seconds Meilisearch HTTP response times
+# TYPE meilisearch_http_response_time_seconds histogram
+meilisearch_http_response_time_seconds_bucket{method="GET",path="/metrics",le="0.005"} 0
+meilisearch_http_response_time_seconds_bucket{method="GET",path="/metrics",le="0.01"} 0
+meilisearch_http_response_time_seconds_bucket{method="GET",path="/metrics",le="0.025"} 0
+meilisearch_http_response_time_seconds_bucket{method="GET",path="/metrics",le="0.05"} 0
+meilisearch_http_response_time_seconds_bucket{method="GET",path="/metrics",le="0.075"} 0
+meilisearch_http_response_time_seconds_bucket{method="GET",path="/metrics",le="0.1"} 0
+meilisearch_http_response_time_seconds_bucket{method="GET",path="/metrics",le="0.25"} 0
+meilisearch_http_response_time_seconds_bucket{method="GET",path="/metrics",le="0.5"} 0
+meilisearch_http_response_time_seconds_bucket{method="GET",path="/metrics",le="0.75"} 0
+meilisearch_http_response_time_seconds_bucket{method="GET",path="/metrics",le="1"} 0
+meilisearch_http_response_time_seconds_bucket{method="GET",path="/metrics",le="2.5"} 0
+meilisearch_http_response_time_seconds_bucket{method="GET",path="/metrics",le="5"} 0
+meilisearch_http_response_time_seconds_bucket{method="GET",path="/metrics",le="7.5"} 0
+meilisearch_http_response_time_seconds_bucket{method="GET",path="/metrics",le="10"} 0
+meilisearch_http_response_time_seconds_bucket{method="GET",path="/metrics",le="+Inf"} 0
+meilisearch_http_response_time_seconds_sum{method="GET",path="/metrics"} 0
+meilisearch_http_response_time_seconds_count{method="GET",path="/metrics"} 0
+# HELP meilisearch_index_count Meilisearch Index Count
+# TYPE meilisearch_index_count gauge
+meilisearch_index_count 1
+# HELP meilisearch_index_docs_count Meilisearch Index Docs Count
+# TYPE meilisearch_index_docs_count gauge
+meilisearch_index_docs_count{index="books"} 6
+# HELP meilisearch_is_indexing Meilisearch Is Indexing
+# TYPE meilisearch_is_indexing gauge
+meilisearch_is_indexing 0
+# HELP meilisearch_last_update Meilisearch Last Update
+# TYPE meilisearch_last_update gauge
+meilisearch_last_update 1723126669
+# HELP meilisearch_nb_tasks Meilisearch Number of tasks
+# TYPE meilisearch_nb_tasks gauge
+meilisearch_nb_tasks{kind="indexes",value="books"} 1
+meilisearch_nb_tasks{kind="statuses",value="canceled"} 0
+meilisearch_nb_tasks{kind="statuses",value="enqueued"} 0
+meilisearch_nb_tasks{kind="statuses",value="failed"} 0
+meilisearch_nb_tasks{kind="statuses",value="processing"} 0
+meilisearch_nb_tasks{kind="statuses",value="succeeded"} 1
+meilisearch_nb_tasks{kind="types",value="documentAdditionOrUpdate"} 1
+meilisearch_nb_tasks{kind="types",value="documentDeletion"} 0
+meilisearch_nb_tasks{kind="types",value="documentEdition"} 0
+meilisearch_nb_tasks{kind="types",value="dumpCreation"} 0
+meilisearch_nb_tasks{kind="types",value="indexCreation"} 0
+meilisearch_nb_tasks{kind="types",value="indexDeletion"} 0
+meilisearch_nb_tasks{kind="types",value="indexSwap"} 0
+meilisearch_nb_tasks{kind="types",value="indexUpdate"} 0
+meilisearch_nb_tasks{kind="types",value="settingsUpdate"} 0
+meilisearch_nb_tasks{kind="types",value="snapshotCreation"} 0
+meilisearch_nb_tasks{kind="types",value="taskCancelation"} 0
+meilisearch_nb_tasks{kind="types",value="taskDeletion"} 0
+# HELP meilisearch_used_db_size_bytes Meilisearch Used DB Size In Bytes
+# TYPE meilisearch_used_db_size_bytes gauge
+meilisearch_used_db_size_bytes 90112
+```

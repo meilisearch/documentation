@@ -320,6 +320,18 @@ It is possible that Meilisearch goes over the exact RAM limit during indexing. I
 Setting `--max-indexing-memory` to a value bigger than or equal to your machine's total memory is likely to cause your instance to crash.
 </Capsule>
 
+### Reduce indexing memory usage <NoticeTag type="experimental" label="experimental" />
+
+<Capsule intent="warning">
+🚩 This option does not take any values. Assigning a value will throw an error. 🚩
+</Capsule>
+
+**Environment variable**: `MEILI_EXPERIMENTAL_REDUCE_INDEXING_MEMORY_USAGE`<br />
+**CLI option**: `--experimental-reduce-indexing-memory-usage`<br />
+**Default value**: `None`<br />
+
+Enables `MDB_WRITEMAP`, an LMDB option. Activating this option may reduce RAM usage in some UNIX and UNIX-like setups. However, it may also negatively impact write speeds and overall performance.
+
 ### Max indexing threads
 
 **Environment variable**: `MEILI_MAX_INDEXING_THREADS`<br />
@@ -345,6 +357,15 @@ Avoid setting `--max-indexing-threads` to the total of your machine's processor 
 **Expected value**: an integer
 
 Sets the maximum size of [accepted payloads](/learn/getting_started/documents#dataset-format). Value must be given in bytes or explicitly stating a base unit. For example, the default value can be written as `107374182400`, `'107.7Gb'`, or `'107374 Mb'`.
+
+### Search queue size <NoticeTag type="experimental" label="experimental" />
+
+**Environment variable**: `MEILI_EXPERIMENTAL_SEARCH_QUEUE_SIZE`<br />
+**CLI option**: `--experimental-search-queue-size`<br />
+**Default value**: `1000`<br />
+**Expected value**: an integer
+
+Configure the maximum amount of simultaneous search requests. By default, Meilisearch queues up to 1000 search requests at any given moment. This limit exists to prevent Meilisearch from consuming an unbounded amount of RAM.
 
 ### Schedule snapshot creation
 
@@ -435,6 +456,31 @@ The webhook payload contains the list of finished tasks in [ndjson](https://gith
 **Expected value**: an authentication token string
 
 Includes an authentication token in the authorization header when notifying the [webhook URL](#task-webhook-url).
+
+### Maximum number of batched tasks <NoticeTag type="experimental" label="experimental" />
+
+**Environment variable**: `MEILI_EXPERIMENTAL_MAX_NUMBER_OF_BATCHED_TASKS`<br />
+**CLI option**: `--experimental-max-number-of-batched-tasks`<br />
+**Default value**: `None`<br />
+**Expected value**: an integer
+
+Limit the number of tasks Meilisearch performs in a single batch. May improve stability in systems handling a large queue of resource-intensive tasks.
+
+### Replication parameters <NoticeTag type="experimental" label="experimental" />
+
+<Capsule intent="warning">
+🚩 This option does not take any values. Assigning a value will throw an error. 🚩
+</Capsule>
+
+**Environment variable**: `MEILI_EXPERIMENTAL_REPLICATION_PARAMETERS`<br />
+**CLI option**: `--experimental-replication-parameters`<br />
+**Default value**: `None`<br />
+
+Helps running Meilisearch in cluster environments. It does this by modifying task handling in three ways:
+
+- Task auto-deletion is disabled
+- Allows you to manually set task uids by adding a custom `TaskId` header to your API requests
+- Allows you to dry register tasks by specifying a `DryRun: true` header in your request
 
 ### SSL options
 

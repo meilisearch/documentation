@@ -82,6 +82,11 @@
         "source": "reference/api/experimental_features.mdx",
         "label": "Experimental features",
         "slug": "experimental_features"
+      },
+      {
+        "source": "reference/api/metrics.mdx",
+        "label": "Metrics",
+        "slug": "metrics"
       }
     ]
   },
