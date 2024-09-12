@@ -1394,3 +1394,21 @@ reset_localized_attribute_settings_1: |-
 get_metrics_1: |-
   curl \
     -X GET 'http://localhost:7700/metrics'
+post_logs_stderr_1: |-
+  curl \
+    -X POST http://localhost:7700/logs/stderr \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+        "target": "milli=trace,index_scheduler=info,actix_web=off"
+    }'
+post_logs_stream_1: |-
+  curl \
+    -X POST http://localhost:7700/logs/stream \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "mode": "human",
+      "target": "index_scheduler=trace"
+    }'
+delete_logs_stream_1: |-
+  curl \
+    -X DELETE http://localhost:7700/logs/stream

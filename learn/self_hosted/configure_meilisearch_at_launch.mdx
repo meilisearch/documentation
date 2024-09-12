@@ -303,6 +303,15 @@ Meilisearch currently supports five log levels, listed in order of increasing ve
 - `'TRACE'`: log all events and include even more detailed information on Meilisearch's internal processes. We do not advise using this level as it is extremely verbose. Use `'DEBUG'` before considering `'TRACE'`.
 - `'OFF'`: disable logging
 
+## Customize log output <NoticeTag type="experimental" label="experimental" />
+
+**Environment variable**: `MEILI_LOGS_MODE`<br />
+**CLI option**: `--experimental-logs-mode`<br />
+**Default value**: `'human'`<br />
+**Expected value**: one of `human` or `json`
+
+Defines whether logs should output a human-readable text or JSON data.
+
 ### Max indexing memory
 
 **Environment variable**: `MEILI_MAX_INDEXING_MEMORY`<br />

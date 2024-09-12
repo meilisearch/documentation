@@ -459,11 +459,6 @@
         "slug": "overview"
       },
       {
-        "source": "learn/experimental/log_customization.mdx",
-        "label": "Log customization",
-        "slug": "log_customization"
-      },
-      {
         "source": "learn/experimental/vector_search.mdx",
         "label": "Vector search",
         "slug": "vector_search"

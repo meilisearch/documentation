@@ -87,6 +87,11 @@
         "source": "reference/api/metrics.mdx",
         "label": "Metrics",
         "slug": "metrics"
+      },
+      {
+        "source": "reference/api/logs.mdx",
+        "label": "Logs",
+        "slug": "logs"
       }
     ]
   },

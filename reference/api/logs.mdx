@@ -1,0 +1,68 @@
+---
+title: Log customization — Meilisearch documentation
+description: "Customize Meilisearch logs with two experimental features: --experimental-logs-mode and --experimental-enable-logs-route."
+---
+
+# Logs <NoticeTag type="experimental" label="experimental" />
+
+<Capsule intent="note" title="Activating `/logs`">
+This is an experimental feature. Use the experimental features endpoint to activate it:
+
+```sh
+curl \
+  -X PATCH 'http://localhost:7700/experimental-features/' \
+  -H 'Content-Type: application/json'  \
+  --data-binary '{
+    "logsRoute": true
+  }'
+```
+
+This feature is not available for Meilisearch Cloud users.
+</Capsule>
+
+## Customize log levels
+
+<RouteHighlighter method="POST" route="/logs/stderr"/>
+
+Customize logging levels for the default logging system.
+
+### Body
+
+| Name                              | Type   | Default value | Description                                                                                                                                     |
+| :-------------------------------- | :----- | :------------ | :---------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`target`** *       | String  | N/A           | A string specifying one or more log type and its log level                                                                              |
+
+### Example
+
+<CodeSamples id="post_logs_stderr_1" />
+
+## Start log stream
+
+<RouteHighlighter method="POST" route="/logs/stream"/>
+
+Opens a continuous stream of logs for focused debugging sessions. The stream will continue to run indefinitely until you [interrupt](#interrupt-log-stream) it.
+
+### Body
+
+| Name                              | Type   | Default value | Description                                                                                                                                     |
+| :-------------------------------- | :----- | :------------ | :---------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`mode`** *       | String  | N/A           | Specifies either human-readabale or JSON output                                                                              |
+| **`target`** *       | String  | N/A           | A string specifying one or more log type and its log level                                                                              |
+
+## Example
+
+<CodeSamples id="post_logs_stream_1" />
+
+<Capsule intent="warning" title="HTTP client compatibility">
+Certain HTTP clients such as `httpie` and `xh`, will only display data after you have interrupted the stream with the `DELETE` endpoint.
+</Capsule>
+
+## Interrupt log stream
+
+<RouteHighlighter method="DELETE" route="/logs/stream"/>
+
+Interrupt a log stream.
+
+## Example
+
+<CodeSamples id="delete_logs_stream_1" />
