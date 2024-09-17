@@ -45,6 +45,16 @@
         "slug": "getting_started_with_ai_search"
       },
       {
+        "source": "learn/ai_powered_search/search_with_user_provided_embeddings.mdx",
+        "label": "Use AI-powered search with user-provided embeddings",
+        "slug": "search_with_user_provided_embeddings"
+      },
+      {
+        "source": "learn/ai_powered_search/deactivate_ai_powered_search.mdx",
+        "label": "Deactivate AI-powered search",
+        "slug": "deactivate_ai_powered_search"
+      },
+      {
         "source": "learn/ai_powered_search/difference_full_text_ai_search.mdx",
         "label": "Differences between full-text and AI-powered search",
         "slug": "difference_full_text_ai_search"
@@ -413,6 +423,11 @@
         "slug": "known_limitations"
       },
       {
+        "source": "learn/resources/experimental_features_overview.mdx",
+        "label": "Experimental features overview",
+        "slug": "experimental_features_overview"
+      },
+      {
         "source": "learn/resources/faq.mdx",
         "label": "FAQ",
         "slug": "faq"
@@ -453,16 +468,6 @@
     "title": "Experimental",
     "slug": "experimental",
     "routes": [
-      {
-        "source": "learn/experimental/overview.mdx",
-        "label": "Overview",
-        "slug": "overview"
-      },
-      {
-        "source": "learn/experimental/vector_search.mdx",
-        "label": "Vector search",
-        "slug": "vector_search"
-      }
     ]
   }
 ]
