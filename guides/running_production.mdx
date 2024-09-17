@@ -46,7 +46,14 @@ Next, you need to make the binary accessible from anywhere in your system. Move 
 mv ./meilisearch /usr/local/bin/
 ```
 
-Meilisearch is now running, but it is not publicly accessible.
+Finally you need to ensure Meilisearch is executable.
+
+```sh
+chmod +x /usr/local/bin/meilisearch
+```
+
+We're now ready to move onto configuring how Meilisearch will run.
+
 
 ## Step 2: Create system user
 
