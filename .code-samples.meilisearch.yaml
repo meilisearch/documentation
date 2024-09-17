@@ -1215,40 +1215,6 @@ index_settings_tutorial_api_put_setting_1: |-
 index_settings_tutorial_api_task_1: |-
   curl \
     -X GET 'http://localhost:7700/tasks/TASK_UID'
-get_embedders_1: |-
-  curl \
-    -X GET 'http://localhost:7700/indexes/INDEX_NAME/settings/embedders'
-update_embedders_1: |-
-  curl \
-    -X PATCH 'http://localhost:7700/indexes/INDEX_NAME/settings' \
-    -H 'Content-Type: application/json' \
-    --data-binary '{
-      "embedders": {
-        "default": {
-          "source":  "openAi",
-          "apiKey": "anOpenAiApiKey",
-          "model": "text-embedding-3-small",
-          "documentTemplate": "A document titled '{{doc.title}}' whose description starts with {{doc.overview|truncatewords: 20}}"
-        }
-      }
-    }'
-reset_embedders_1: |-
-  curl \
-    -X DELETE 'http://localhost:7700/indexes/INDEX_NAME/settings/embedders'
-search_parameter_guide_hybrid_1: |-
-  curl -X POST 'localhost:7700/indexes/INDEX_NAME/search' \
-    -H 'content-type: application/json' \
-    --data-binary '{
-      "q": "kitchen utensils",
-      "hybrid": {
-        "semanticRatio": 0.9,
-        "embedder": "default"
-      }
-    }'
-search_parameter_guide_vector_1: |-
-  curl -X POST 'localhost:7700/indexes/INDEX_NAME/search' \
-    -H 'content-type: application/json' \
-    --data-binary '{ "vector": [0, 1, 2] }'
 get_search_cutoff_1: |-
   curl \
     -X GET 'http://localhost:7700/indexes/movies/settings/search-cutoff-ms'
@@ -1313,16 +1279,6 @@ analytics_event_bind_event_1: |-
       "indexUid": "products",
       "objectId": "0",
       "position": 0
-    }'
-search_parameter_reference_retrieve_vectors_1: |-
-  curl -X POST 'localhost:7700/indexes/INDEX_NAME/search' \
-    -H 'content-type: application/json' \
-    --data-binary '{
-      "q": "kitchen utensils",
-      "retrieveVectors": true,
-      "hybrid": {
-        "embedder": "default"
-      }
     }'
 search_parameter_reference_distinct_1: |-
   curl \
@@ -1391,17 +1347,17 @@ update_localized_attribute_settings_1: |-
 reset_localized_attribute_settings_1: |-
   curl \
     -X DELETE 'http://localhost:7700/indexes/INDEX_NAME/settings/localized-attributes'
-get_metrics_1: |-
+experimental_get_metrics_1: |-
   curl \
     -X GET 'http://localhost:7700/metrics'
-post_logs_stderr_1: |-
+experimental_post_logs_stderr_1: |-
   curl \
     -X POST http://localhost:7700/logs/stderr \
     -H 'Content-Type: application/json' \
     --data-binary '{
         "target": "milli=trace,index_scheduler=info,actix_web=off"
     }'
-post_logs_stream_1: |-
+experimental_post_logs_stream_1: |-
   curl \
     -X POST http://localhost:7700/logs/stream \
     -H 'Content-Type: application/json' \
@@ -1409,6 +1365,50 @@ post_logs_stream_1: |-
       "mode": "human",
       "target": "index_scheduler=trace"
     }'
-delete_logs_stream_1: |-
+experimental_delete_logs_stream_1: |-
   curl \
     -X DELETE http://localhost:7700/logs/stream
+experimental_get_embedders_1: |-
+  curl \
+    -X GET 'http://localhost:7700/indexes/INDEX_NAME/settings/embedders'
+experimental_update_embedders_1: |-
+  curl \
+    -X PATCH 'http://localhost:7700/indexes/INDEX_NAME/settings' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "embedders": {
+        "default": {
+          "source":  "openAi",
+          "apiKey": "anOpenAiApiKey",
+          "model": "text-embedding-3-small",
+          "documentTemplate": "A document titled '{{doc.title}}' whose description starts with {{doc.overview|truncatewords: 20}}"
+        }
+      }
+    }'
+experimental_reset_embedders_1: |-
+  curl \
+    -X DELETE 'http://localhost:7700/indexes/INDEX_NAME/settings/embedders'
+experimental_search_parameter_guide_hybrid_1: |-
+  curl -X POST 'localhost:7700/indexes/INDEX_NAME/search' \
+    -H 'content-type: application/json' \
+    --data-binary '{
+      "q": "kitchen utensils",
+      "hybrid": {
+        "semanticRatio": 0.9,
+        "embedder": "default"
+      }
+    }'
+experimental_search_parameter_guide_vector_1: |-
+  curl -X POST 'localhost:7700/indexes/INDEX_NAME/search' \
+    -H 'content-type: application/json' \
+    --data-binary '{ "vector": [0, 1, 2] }'
+experimental_search_parameter_reference_retrieve_vectors_1: |-
+  curl -X POST 'localhost:7700/indexes/INDEX_NAME/search' \
+    -H 'content-type: application/json' \
+    --data-binary '{
+      "q": "kitchen utensils",
+      "retrieveVectors": true,
+      "hybrid": {
+        "embedder": "default"
+      }
+    }'

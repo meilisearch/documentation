@@ -3,7 +3,7 @@ title: Deactivate AI-powered search — Meilisearch documentation
 description: This guide shows how to disable Meilisearch's AI-powered search.
 ---
 
-# Deactivate vector search
+# Deactivate vector search <NoticeTag type="experimental" label="experimental" />
 
 This guide shows how to disable Meilisearch's AI-powered search.
 
@@ -11,11 +11,7 @@ This guide shows how to disable Meilisearch's AI-powered search.
 
 Manually remove all embedder configuration from your index:
 
-```sh
-curl \
-  -X DELETE 'http://localhost:7700/indexes/movies/settings/embedders' \
-  -H 'Content-Type: application/json'
-```
+<CodeSamples id="experimental_reset_embedders_1" />
 
 <Capsule intent="danger">
 If you don't remove all configured embedders, Meilisearch will continue auto-generating embeddings for you documents. This will happen even if `vectorStore` has been set to `false` and may lead to unexpected expenses when using OpenAI's paid tiers.
