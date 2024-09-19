@@ -3,11 +3,15 @@ title: Similar documents — Meilisearch API reference
 description: The /similar route accepts one search result and uses AI-powered search to return a number of similar documents.
 ---
 
-# Similar documents
+# Similar documents <NoticeTag type="experimental" label="experimental" />
 
 The `/similar` route uses AI-powered search to return a number of documents similar to a target document.
 
 Meilisearch exposes two routes for retrieving similar documents: `POST` and `GET`. In the majority of cases, `POST` will offer better performance and ease of use.
+
+<Capsule intent="note" title="Activating `/similar`">
+This is an experimental feature. To use it, you must first [enable and configure AI-powered search](/learn/ai_powered_search/getting_started_with_ai_search).
+</Capsule>
 
 ## Get similar documents with `POST`
 
