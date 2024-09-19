@@ -498,5 +498,45 @@
     "source": "/docs/learn/contributing/contributing_docs",
     "destination": "/docs/learn/resources/contributing_docs",
     "permanent": true
+  },
+  {
+    "source": "/docs/learn/experimental/overview",
+    "destination": "/docs/learn/resources/experimental_features_overview",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/experimental/max_number_of_batched_tasks",
+    "destination": "/docs/learn/self_hosted/configure_meilisearch_at_launch",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/experimental/metrics",
+    "destination": "/docs/reference/api/metrics",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/experimental/reduce-indexing-memory-usage",
+    "destination": "/docs/learn/self_hosted/configure_meilisearch_at_launch",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/experimental/log_customization",
+    "destination": "/docs/reference/api/logs",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/experimental/vector_search",
+    "destination": "/docs/learn/ai_powered_search/getting_started_with_ai_search",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/experimental/search_queue_size",
+    "destination": "/docs/learn/self_hosted/configure_meilisearch_at_launch",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/experimental/replication_parameter",
+    "destination": "/docs/learn/self_hosted/configure_meilisearch_at_launch",
+    "permanent": true
   }
 ]
