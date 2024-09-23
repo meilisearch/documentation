@@ -161,16 +161,20 @@ async function prepareDocumentMapEntry(
 
 // Checks if the links point to existing documents
 function validateInternalLink(errors: Errors, href: string): void {
-  // /docs/api/example#heading -> ["api/example", "heading""]
-  const [link, hash] = href.split('#')
+  // Split the href into link and hash
+  // href could be: /reference/api/settings?utm_campaign=...#hash
+  const [linkWithQueryAndHash, hash] = href.split('#')
+
+  // Remove query parameters from the link
+  const linkWithQuery = linkWithQueryAndHash
+  const link = linkWithQuery.split('?')[0]
 
   if (EXCLUDED_PATHS.includes(link)) return
 
-  if(link.startsWith('/assets')) return
+  if (link.startsWith('/assets')) return
 
-  // check if doc page exists
+  // Check if doc page exists
   const foundPage = documentMap.get(link.replace(/^\/+/, ''))
-
 
   if (!foundPage) {
     errors.link.push(href)
