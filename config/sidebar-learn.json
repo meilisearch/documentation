@@ -261,6 +261,11 @@
         "source": "learn/multi_search/federated_search_guide.mdx",
         "label": "Federated search guide",
         "slug": "federated_search_guide"
+      },
+      {
+        "source": "learn/multi_search/multi_search_vs_federated_search.mdx",
+        "label": "Differences between multi-search and federated search",
+        "slug": "multi_search_vs_federated_search"
       }
     ]
   },
