@@ -1,0 +1,141 @@
+---
+title: Federated search guide — Meilisearch API reference
+description: 
+---
+
+# Federated search guide
+
+A federated search is a multi-index search that returns results across multiple indexes in a single list.
+
+In this guide you will see how to create separate indexes containing different types of data from a CRM application. You will then perform a query searching all these indexes at the same time to obtain a single list of results.
+
+## Requirements
+
+- A running Meilisearch project
+- A command-line console
+
+## Create three indexes
+
+Download the following datasets: <a href="/assets/datasets/crm-chats.json">`crm-chats.json`</a>, <a href="/assets/datasets/crm-profiles.json">`crm-profiles.json`</a>, and <a href="/assets/datasets/crm-tickets.json">`crm-tickets.json`</a> containing customer interaction data. Add them to Meilisearch, creating three separate indexes, `profiles`, `chats`, and `tickets`:
+
+```sh
+curl  -X POST 'http://localhost:7700/indexes/profiles'  -H 'Content-Type: application/json'  --data-binary @crm-profiles.json &&
+curl  -X POST 'http://localhost:7700/indexes/chats'  -H 'Content-Type: application/json'  --data-binary @crm-chats.json &&
+curl  -X POST 'http://localhost:7700/indexes/tickets'  -H 'Content-Type: application/json'  --data-binary @crm-tickets.json
+```
+
+Use the tasks endpoint to check the indexing status. Once Meilisearch successfully indexed all three datasets, you are ready to perform a federated search.
+
+## Perform a federated search
+
+When you are looking for Natasha Nguyen's email address in your CRM application, you may not know whether you will find it in a chat log, among the existing customer profiles, or in a recent support ticket. In this situation, you can use federated search to search across all possible sources and receive a single list of results.
+
+Use the `/multi-search` endpoint with the `federation` parameter to query the three indexes simultaneously:
+
+```sh
+curl \
+  -X POST 'http://localhost:7700/multi-search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "federation": {},
+    "queries": [
+      {
+        "indexUid": "chats",
+        "q": "natasha"
+      },
+      {
+        "indexUid": "profiles",
+        "q": "natasha"
+      },
+      {
+        "indexUid": "tickets",
+        "q": "natasha"
+      }
+    ]
+  }'
+```
+
+Meilisearch should respond with a single list of search results:
+
+```json
+{
+  "hits": [
+    {
+      "id": 0,
+      "client_name": "Natasha Nguyen",
+      "message": "My email is natasha.nguyen@example.com",
+      "time": 1727349362,
+      "_federation": {
+        "indexUid": "chats",
+        "queriesPosition": 0
+      }
+    },
+    …
+  ],
+  "processingTimeMs": 0,
+  "limit": 20,
+  "offset": 0,
+  "estimatedTotalHits": 3,
+  "semanticHitCount": 0
+}
+```
+
+## Promote results from an index
+
+Since this is a CRM application, it is likely your users have profiles where they specified their preferred contact information. If you want to search for Riccardo Rotondo's official preferred email, you can boost documents in the `profiles` index.
+
+Use the `weight` property of the `federation` parameter to boost results coming from a specific index:
+
+```sh
+curl \
+  -X POST 'http://localhost:7700/multi-search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "federation": {},
+    "queries": [
+      {
+        "indexUid": "chats",
+        "q": "rotondo"
+      },
+      {
+        "indexUid": "profiles",
+        "q": "rotondo",
+        "federationOptions": {
+          "weight": 1.2 
+        }
+      },
+      {
+        "indexUid": "tickets",
+        "q": "rotondo"
+      }
+    ]
+  }'
+```
+
+This query will result in `profile` results ranking higher than documents in other indexes:
+
+```json
+{
+  "hits": [
+  {
+    "id": 1,
+    "name": "Riccardo Rotondo",
+    "email": "riccardo.rotondo@example.com",
+      "_federation": {
+        "indexUid": "profiles",
+        "queriesPosition": 1
+      }
+    },
+    …
+  ],
+  "processingTimeMs": 0,
+  "limit": 20,
+  "offset": 0,
+  "estimatedTotalHits": 3,
+  "semanticHitCount": 0
+}
+```
+
+## Conclusion
+
+You have created three indexes, then performed a federated multi-index search to receive all results in a single list. You then used `weight` to boost results from the index most likely to contain the information you wanted.

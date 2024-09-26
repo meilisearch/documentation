@@ -254,6 +254,17 @@
     ]
   },
   {
+    "title": "Multi-search",
+    "slug": "multi_search",
+    "routes": [
+      {
+        "source": "learn/multi_search/federated_search_guide.mdx",
+        "label": "Federated search guide",
+        "slug": "federated_search_guide"
+      }
+    ]
+  },
+  {
     "title": "Update and migration",
     "slug": "update_and_migration",
     "routes": [
