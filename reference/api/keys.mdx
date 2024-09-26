@@ -57,14 +57,12 @@ Accessing the `/keys` route without setting a master key will throw a [`missing_
 
 This value is also used as the `{key}` path variable to [update](#update-a-key), [delete](#delete-a-key), or [get](#get-one-key) a specific key.
 
-<Capsule intent="note">
-Since `key` is a hash of the `uid` and master key, `key` values are deterministic between instances sharing the same configuration. You can determine the value of an API key with the following command, replacing `HYPHENATED_UUID` and `MASTER_KEY` with the correct values for your key and instance:
+If the master key changes, all `key` values are automatically changed.
 
-```sh
-echo -n $HYPHENATED_UUID | openssl dgst -sha256 -hmac $MASTER_KEY
-```
+<Capsule intent="note" title="Reusing API keys between instances">
+Custom API keys are deterministic: `key` is a SHA256 hash of the `uid` and master key. To reuse custom API keys when migrating to a new instance, use the same master key and recreate the desired API keys with same `uid`.
 
-This also means that, if the master key changes, all `key` values are automatically changed.
+You cannot reuse default API keys between instances because Meilisearch automatically generates their `uid`s the first time you launch an instance.
 </Capsule>
 
 ### `actions`
