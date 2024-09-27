@@ -78,18 +78,20 @@ async function getAllMdxFilePaths(basePath: string): Promise<RouteFragment[]> {
   const footer: FooterConfigSchema = JSON.parse(await fs.readFile(path.join(basePath, 'config/sidebar-footer.json'), 'utf8'))
 
   const config = [
-    ...sidebarLearn.map(group => ({...group, slug: path.join('learn',  group.slug)})),
-    ...sidebarReference.map(group => ({...group, slug: path.join('reference/', group.slug)})),
-    ...sidebarGuides.map(group => ({...group, slug: path.join('guides/', group.slug)}))
-  ]
-
-  let allRoutes: RouteSchema[] = [{source: path.join(basePath, 'home.mdx'), slug: '', label: 'Homepage'}]
+    ...sidebarLearn.map(group => ({ ...group, slug: path.posix.join('learn', group.slug) })),
+    ...sidebarReference.map(group => ({ ...group, slug: path.posix.join('reference', group.slug) })),
+    ...sidebarGuides.map(group => ({ ...group, slug: path.posix.join('guides', group.slug) })),
+  ];
+  
+  let allRoutes = [{ source: path.join(basePath, 'home.mdx'), slug: '', label: 'Homepage' }];
   for (const group of config) {
-    allRoutes = allRoutes.concat(group.routes.map(route => ({
-      ...route,
-      slug: path.join(group.slug, route.slug),
-      source: path.join(basePath, route.source)
-    })))
+    allRoutes = allRoutes.concat(
+      group.routes.map(route => ({
+        ...route,
+        slug: path.posix.join(group.slug, route.slug),
+        source: path.join(basePath, route.source),
+      }))
+    );
   }
   footer.forEach(item => 'source' in item && allRoutes.push({...item, source: path.join(basePath, item.source)}))
 
