@@ -258,9 +258,9 @@
     "slug": "multi_search",
     "routes": [
       {
-        "source": "learn/multi_search/federated_search_guide.mdx",
-        "label": "Federated search guide",
-        "slug": "federated_search_guide"
+        "source": "learn/multi_search/performing_federated_search.mdx",
+        "label": "Using multi-search to perform a federated search",
+        "slug": "performing_federated_search"
       },
       {
         "source": "learn/multi_search/multi_search_vs_federated_search.mdx",

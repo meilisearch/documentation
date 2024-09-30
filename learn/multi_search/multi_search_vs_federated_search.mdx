@@ -1,26 +1,26 @@
 ---
 title: Differences between multi-search and federated search — Meilisearch API reference
-description: 
+description: This article defines multi-search and federated search and then describes the different uses of each.
 ---
 
 # Differences between multi-search and federated search
 
-This article describes the different uses of federated search and multi-search.
+This article defines multi-search and federated search and then describes the different uses of each.
 
 ## What is multi-search?
 
-Multi-search, also called multi-index search, is a search operation that queries two or more indexes at the same time. Meilisearch returns a separated list results for each index. Use the `/multi-search` route to perform multi-searches.
+Multi-search, also called multi-index search, is a search operation that queries two or more indexes at the same time. Meilisearch then returns a separate list results for each index. Use the `/multi-search` route to perform multi-searches.
 
-Multi-search favors discovery scenarios, where searches might have several valid results.
+Multi-search favors discovery scenarios, where users might not have a clear idea of what they need and searches might have many valid results.
 
 ## What is federated search?
 
-Federated search is a type of multi-index search. This operation also queries multiple indexes, but returns a single list with the most relevant results across all queried indexes. Use the `/multi-search` route and specify a non-null value for `federation` to perform a federated search.
+Federated search is a type of multi-index search. This operation also queries multiple indexes, but returns a single list with the most relevant results from all queried indexes. Use the `/multi-search` route and specify a non-null value for `federation` to perform a federated search.
 
 Federated search favors scenarios where users have a clear idea of what they need and expect a single best top result.
 
 ## Use cases
 
-Because multi-search groups results by index, it is often useful when a document's index contains information relevant to your users. For example, a person searching for `shygirl` in a music streaming application is likely to appreciate seeing separate results for matching artists, albums, and individual tracks.
+Because multi-search groups results by index, it is often useful when the origin and type of document contain information relevant to your users. For example, a person searching for `shygirl` in a music streaming application is likely to appreciate seeing separate results for matching artists, albums, and individual tracks.
 
 Federated search is a better approach when the source of the information is not relevant to your users. For example, a person searching for a client's email in a CRM application is unlikely to care whether this email comes from chat logs, support tickets, or other data sources.
