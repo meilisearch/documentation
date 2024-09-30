@@ -220,13 +220,13 @@ function traverseTreeAndValidateLinks(tree: any, doc: Document, setFailed: Failu
   // Matches all links that use some kind of protocol (e.g. http://, https://, mailto:, etc.)
   const nonInternalLinkRegex = /^(?:[a-z+]+:)?\/\/|^[a-z]+:/i
 
-  function validateNodes(node: any, parse: boolean = false) {
+  function validateNodes(node: any) {
     // Handle links in custom components that were not correctly parsed
     if (node.type === 'text' && linkRegex.test(node.value)) {
       const customComponentTree = markdownProcessor.parse(node.value)
       traverseRecursively(customComponentTree)
     }
-
+  
     if (
       (node.type === 'element' && node.tagName === 'a') ||
       node.type === 'link' ||
@@ -250,7 +250,7 @@ function traverseTreeAndValidateLinks(tree: any, doc: Document, setFailed: Failu
       const href = node.properties.route
 
       if (!href) return
-
+  
       // Check if the link is an internal link and not ending with a file extension
       if (href.startsWith(RELATIVE_PATH)) {
         if(!/^.*\.[^\\]+$/.test(href)){
@@ -260,6 +260,15 @@ function traverseTreeAndValidateLinks(tree: any, doc: Document, setFailed: Failu
         validateHashLink(errors, href, doc)
       } else if (!nonInternalLinkRegex.test(href)) {
         errors.relative.push(href)
+      }
+    }
+
+    // Detect RouteHighlighter component
+    if (node.tagName === 'routehighlighter') {
+      const route = node.properties?.route
+
+      if (route) {
+        validateInternalLink(errors, route)
       }
     }
   }
