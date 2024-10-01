@@ -87612,7 +87612,7 @@ async function getAllMdxFilePaths(basePath) {
     return allRoutes;
 }
 // Returns the slugs of all headings in a tree
-function getHeadingsFromMarkdownTree(tree) {
+function getHeadingsFromMarkdownTree(tree, test) {
     const headings = [];
     slugger.reset();
     lib_visit(tree, "heading", (node) => {
@@ -87624,7 +87624,7 @@ function getHeadingsFromMarkdownTree(tree) {
                 headingText += node.value;
             }
         });
-        headings.push(slugger.slug(headingText));
+        headings.push(slugger.slug(headingText.trim()));
     });
     return headings;
 }
@@ -87654,7 +87654,7 @@ async function prepareDocumentMapEntry(route, setFailed) {
         const mdxContent = await promises_default().readFile(route.source, "utf8");
         const { content, data } = gray_matter_default()(mdxContent);
         const tree = markdownProcessor.parse(content);
-        const headings = getHeadingsFromMarkdownTree(tree);
+        const headings = getHeadingsFromMarkdownTree(tree, route.source.includes("/learn/filtering_and_sorting/filter_expression_reference"));
         return [
             route.slug,
             {
@@ -87689,9 +87689,7 @@ function validateInternalLink(errors, href) {
         errors.link.push(href);
     }
     else if (hash && !EXCLUDED_HASHES.includes(hash)) {
-        // remove all "-" from end of the hash
-        const transformedHash = hash.replace(/-+$/, "");
-        const hashFound = foundPage.headings.includes(transformedHash);
+        const hashFound = foundPage.headings.includes(hash);
         if (!hashFound) {
             errors.hash.push(href);
         }
@@ -87738,9 +87736,6 @@ function traverseTreeAndValidateLinks(tree, doc, setFailed) {
             // Check if the link is an internal link and not ending with a file extension
             if (href.startsWith(RELATIVE_PATH)) {
                 if (!/^.*\.[^\\]+$/.test(href)) {
-                    if (href.includes("contains")) {
-                        console.dir({ node }, { depth: 10 });
-                    }
                     validateInternalLink(errors, href);
                 }
             }
