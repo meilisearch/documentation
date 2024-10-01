@@ -1205,6 +1205,12 @@ Use a custom vector to perform a search query. Must be an array of numbers corre
 
 `vector` dimensions must match the dimensions of the embedder.
 
+<Capsule intent="note">
+If a query does not specify `q`, but contains both `vector` and `hybrid.semanticRatio` bigger than `0`, Meilisearch performs a pure semantic search.
+
+If `q` is missing and `semanticRatio` is explicitly set to `0`, Meilisearch performs a placeholder search without any vector search results.
+</Capsule>
+
 #### Example
 
 <CodeSamples id="search_parameter_guide_vector_1" />
