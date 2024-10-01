@@ -2324,6 +2324,14 @@ For best results, build short templates that only contain highly relevant data. 
 
 This field is optional but strongly encouraged for all embedders.
 
+##### `documentTemplateMaxBytes`
+
+The maximum number of bytes a rendered document template text can have when generating embeddings. Longer texts are truncated to fit.
+
+`documentTemplateMaxBytes` must be an integer. It defaults to `400`.
+
+This field is optional for all embedders.
+
 ##### `dimensions`
 
 Number of dimensions in the chosen model. If not supplied, Meilisearch tries to infer this value.
