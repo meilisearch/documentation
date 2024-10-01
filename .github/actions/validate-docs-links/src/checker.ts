@@ -204,7 +204,6 @@ function validateInternalLink(errors: Errors, href: string): void {
   // Split the href into link and hash
   // href could be: /reference/api/settings?utm_campaign=...#hash
   const [linkWithQueryAndHash, hash] = href.split("#");
-
   // Remove query parameters from the link
   const linkWithQuery = linkWithQueryAndHash;
   const link = linkWithQuery.split("?")[0];
@@ -219,8 +218,10 @@ function validateInternalLink(errors: Errors, href: string): void {
   if (!foundPage) {
     errors.link.push(href);
   } else if (hash && !EXCLUDED_HASHES.includes(hash)) {
-    const hashFound = foundPage.headings.includes(hash);
-
+    // remove all "-" from end of the hash
+    const transformedHash = hash.replace(/-+$/, "");
+    const hashFound = foundPage.headings.includes(transformedHash);
+    
     if (!hashFound) {
       errors.hash.push(href);
     }
@@ -281,6 +282,11 @@ function traverseTreeAndValidateLinks(
       // Check if the link is an internal link and not ending with a file extension
       if (href.startsWith(RELATIVE_PATH)) {
         if (!/^.*\.[^\\]+$/.test(href)) {
+          if(href.includes("contains")) {
+            console.dir({node}, {depth: 10})
+          }
+
+
           validateInternalLink(errors, href);
         }
       } else if (href.startsWith("#")) {
