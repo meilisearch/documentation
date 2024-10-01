@@ -2183,7 +2183,7 @@ These embedder objects may contain the following fields:
 | **`url`**              | String           | `http://localhost:11434/api/embeddings`                                  | The URL Meilisearch contacts when querying the embedder                                                                                                            |
 | **`apiKey`**           | String           | Empty                                                                    | Authentication token Meilisearch should send with each request to the embedder. If not present, Meilisearch will attempt to read it from environment variables |
 | **`model`**            | String           | Empty                                                                    | The model your embedder uses when generating vectors                                                                                                           |
-| **`documentTemplate`** | String           | `{% for field in fields %}{{field.name}}: {{field.value}}\n{% endfor %}` | Template defining the data Meilisearch sends the embedder                                                                                                      |
+| **`documentTemplate`** | String           | `{% for field in fields %} {% if field.is_searchable and not field.value == nil %}{{ field.name }}: {{ field.value }} {% endif %} {% endfor %}` | Template defining the data Meilisearch sends to the embedder                                                                                                      |
 | **`dimensions`**       | Integer          | Empty                                                                    | Number of dimensions in the chosen model. If not supplied, Meilisearch tries to infer this value                                                               |
 | **`revision`**         | String           | Empty                                                                    | Model revision hash                                                                                                                                            |
 | **`distribution`**     | Object           | Empty                                                                    | Describes the natural distribution of search results. Must contain two fields, `mean` and `sigma`, each containing a numeric value between `0` and `1`         |
@@ -2313,9 +2313,14 @@ This field is incompatible with `rest` and `userProvided` embedders.
 You may use the following context values:
 
 - `{{doc.FIELD}}`: `doc` stands for the document itself. `FIELD` must correspond to an attribute present on all documents value will be replaced by the value of that field in the input document
-- `{{fields}}`: a list of all the `field`s appearing in any document in the index. Each `field` object in this list has two properties: `name` and `value`. If a `field` does not exist in a document, `value` is `nil`
+- `{{fields}}`: a list of all the `field`s appearing in any document in the index. Each `field` object in this list has the following properties:
+  - `name`: the field's attribute
+  - `value`: the field's value
+  - `is_searchable`: whether the field is present in the searchable attributes list
 
-For best results, build short templates that only contain highly relevant data. If working with a long field, consider [truncating it](https://shopify.github.io/liquid/filters/truncatewords/). If you do not manually set it, `documentTemplate` will include all document fields. This may lead to suboptimal performance and relevancy.
+If a `field` does not exist in a document, its `value` is `nil`.
+
+For best results, build short templates that only contain highly relevant data. If working with a long field, consider [truncating it](https://shopify.github.io/liquid/filters/truncatewords/). If you do not manually set it, `documentTemplate` will include all searchable and non-null document fields. This may lead to suboptimal performance and relevancy.
 
 This field is optional but strongly encouraged for all embedders.
 
