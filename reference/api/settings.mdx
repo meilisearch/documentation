@@ -2184,11 +2184,13 @@ These embedder objects may contain the following fields:
 | **`apiKey`**           | String           | Empty                                                                    | Authentication token Meilisearch should send with each request to the embedder. If not present, Meilisearch will attempt to read it from environment variables |
 | **`model`**            | String           | Empty                                                                    | The model your embedder uses when generating vectors                                                                                                           |
 | **`documentTemplate`** | String           | `{% for field in fields %} {% if field.is_searchable and not field.value == nil %}{{ field.name }}: {{ field.value }} {% endif %} {% endfor %}` | Template defining the data Meilisearch sends to the embedder                                                                                                      |
+| **`documentTemplateMaxBytes`**       | Integer          | `400`                                                                    | Maximum allowed size of rendered document template                                                               |
 | **`dimensions`**       | Integer          | Empty                                                                    | Number of dimensions in the chosen model. If not supplied, Meilisearch tries to infer this value                                                               |
 | **`revision`**         | String           | Empty                                                                    | Model revision hash                                                                                                                                            |
 | **`distribution`**     | Object           | Empty                                                                    | Describes the natural distribution of search results. Must contain two fields, `mean` and `sigma`, each containing a numeric value between `0` and `1`         |
 | **`request`**          | Object           | Empty                                                                    | A JSON value representing the request Meilisearch makes to the remote embedder                                                                                 |
 | **`response`**         | Object           | Empty                                                                    | A JSON value representing the request Meilisearch expects from the remote embedder                                                                             |
+| **`binaryQuantized`**         | Boolean           | Empty                                                                    | Once set to `true`, irreversibly converts all vector dimensions to 1-bit values                                                                             |
 
 ### Get embedder settings
 
@@ -2328,7 +2330,7 @@ This field is optional but strongly encouraged for all embedders.
 
 ##### `documentTemplateMaxBytes`
 
-The maximum number of bytes a rendered document template text can have when generating embeddings. Longer texts are truncated to fit.
+The maximum size of a rendered document template. Longer texts are truncated to fit the configured limit.
 
 `documentTemplateMaxBytes` must be an integer. It defaults to `400`.
 
@@ -2475,9 +2477,9 @@ This field is optional when using the `rest` embedder.
 
 This field is incompatible with all other embedders.
 
-##### `binaryQuantization`
+##### `binaryQuantized`
 
-When set to `true`, compresses vectors by representing each dimension with 1-bit values. This reduces relevancy of semantic search results, but greatly reduces database size.
+When set to `true`, compresses vectors by representing each of its dimensions with 1-bit values. This reduces relevancy of semantic search results, but greatly reduces database size.
 
 <Capsule intent="danger" title="Binary quantization is an irreversible process">
 **Activating `binaryQuantized` is irreversible.** Once enabled, Meilisearch converts all vectors and discards all vector data that does fit within 1-bit. The only way to recover the vectors' original values is to re-vectorize the whole index in a new embedder.
