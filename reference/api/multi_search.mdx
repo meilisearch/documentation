@@ -34,8 +34,49 @@ Use `federation` to receive a single list with all search results from all speci
 | :--------------------------------------------------------------------------- | :--------------- | :------------ | :-------------------------------------------------- |
 | **[`offset`](/reference/api/search#offset)**                                 | Integer          | `0`           | Number of documents to skip                         |
 | **[`limit`](/reference/api/search#limit)**                                   | Integer          | `20`          | Maximum number of documents returned                |
+| **[`facetsByIndex`](/#facetsbyindex)**                                   | Object of arrays          | `null`          | Display facet information for the specified facets                |
 
 If `federation` is missing or `null`, Meilisearch returns a list of multiple search result objects, with each item from the list corresponding to a search query in the request.
+
+##### `facetsByIndex`
+
+`facetsByIndex` must be an object. Its keys must correspond to indexes in your in Meilisearch project. Each key must be associated with an array of attributes in the filterable attributes list:
+
+```json
+"facetsByIndex": {
+  "INDEX_A": ["ATTRIBUTE_X", "ATTRIBUTE_Y"],
+  "INDEX_B": ["ATTRIBUTE_Z"]
+}
+```
+
+When you specify `facetsByIndex`, multi-search responses include an extra `facetsByIndex` field. The response's `facetsByIndex` is an object with one field for each queried index:
+
+```json
+"facetsByIndex": {
+  "INDEX_A": {
+    "distribution": {
+      "ATTRIBUTE_X": {
+        "KEY": 10,
+        "KEY": 5,
+        …
+      },
+      "ATTRIBUTE_Y": {
+        "KEY": 1,
+        …
+      }
+    },
+    "stats": {
+      "KEY": {
+        "min": 0,
+        "max": 1
+      }
+    }
+  },
+  "INDEX_B": {
+    …
+  }
+}
+```
 
 ##### Merge algorithm for federated searches
 
@@ -99,6 +140,8 @@ These options are not compatible with federated searches.
 `federationOptions` must be an object. It accepts the following parameters:
 
 - `weight`: serves as a multiplicative factor to ranking scores of search results in this specific query. If < `1.0`, the hits from this query are less likely to appear in the final results list. If > `1.0`, the hits from this query are more likely to appear in the final results list. Must be a positive floating-point number. Defaults to `1.0`
+- `mergeFacets`: when `mergeFacets` is present and not null, facet information included in multi-search responses is merged across all queried indexes. Instead of `facetsByIndex`, the response includes two extra fields: `facetDistribution` and `facetStats`. `mergeFacets` must be an object, which may optionally contain the following fields:
+  - `maxValuesPerFacet`: must be an integer. When specified, indicates the maximum number of returned values for a single facet. If not specified, Meilisearch uses the value assigned to the `maxValuesPerFacet` index setting
 
 ### Response
 
