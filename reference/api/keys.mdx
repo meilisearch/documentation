@@ -60,9 +60,9 @@ This value is also used as the `{key}` path variable to [update](#update-a-key),
 If the master key changes, all `key` values are automatically changed.
 
 <Capsule intent="note" title="Reusing API keys between instances">
-Custom API keys are deterministic: `key` is a SHA256 hash of the `uid` and master key. To reuse custom API keys when migrating to a new instance, use the same master key and recreate the desired API keys with same `uid`.
+Custom API keys are deterministic: `key` is a SHA256 hash of the `uid` and master key. To reuse custom API keys, launch the new instance with the same master key and recreate your API keys with the same `uid`.
 
-You cannot reuse default API keys between instances because Meilisearch automatically generates their `uid`s the first time you launch an instance.
+**You cannot reuse default API keys between instances.** Meilisearch automatically generates their `uid`s the first time you launch an instance.
 </Capsule>
 
 ### `actions`
