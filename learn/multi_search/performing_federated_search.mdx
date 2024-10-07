@@ -86,7 +86,7 @@ Meilisearch should respond with a single list of search results:
 
 Since this is a CRM application, users have profiles with their preferred contact information. If you want to search for Riccardo Rotondo's preferred email, you can boost documents in the `profiles` index.
 
-Use the `weight` property of the `federation` parameter to boost results coming from a specific index:
+Use the `weight` property of the `federation` parameter to boost results coming from a specific query:
 
 ```sh
 curl \
@@ -114,7 +114,7 @@ curl \
   }'
 ```
 
-This query will result in `profile` results ranking higher than documents in other indexes:
+This request will lead to results from the query targeting `profile` ranking higher than documents from other queries:
 
 ```json
 {
