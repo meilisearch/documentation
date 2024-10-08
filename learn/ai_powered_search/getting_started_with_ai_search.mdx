@@ -48,7 +48,7 @@ curl \
 
 ## Generate vector embeddings with OpenAI
 
-Next, you must generate vector embeddings for all documents in your dataset. Embeddings are mathematical representations of the meanings of words and sentences in your documents. Meilisearch relies on external providers to generate these embeddings. Use OpenAI for this tutorial.
+Next, you must generate vector embeddings for all documents in your dataset. Embeddings are mathematical representations of the meanings of words and sentences in your documents. Meilisearch relies on external providers to generate these embeddings. This tutorial uses an OpenAI embedder, but Meilisearch also supports embedders from HuggingFace, Ollama, and any embedder accessible via a RESTful API.
 
 Use the `embedders` index setting of the [update `/settings` endpoint](/reference/api/settings?utm_campaign=vector-search&utm_source=docs&utm_medium=vector-search-guide) to configure a default [OpenAI](https://platform.openai.com/) embedder:
 
