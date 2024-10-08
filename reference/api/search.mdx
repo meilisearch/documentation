@@ -1248,7 +1248,7 @@ Return document embedding data with search results. If `true`, Meilisearch will 
 ### Query locales
 
 **Parameter**: `locales`<br />
-**Expected value**: array of [supported ISO-639-2B locales](/reference/api/settings#localized-attributes-object)<br />
+**Expected value**: array of [supported ISO-639 locales](/reference/api/settings#localized-attributes-object)<br />
 **Default value**: `[]`
 
 By default, Meilisearch auto-detects the language of a query. Use this parameter to explicitly state the language of a query.
@@ -1275,7 +1275,6 @@ For full control over the way Meilisearch detects languages during indexing and 
     {
       "id": 0,
       "title": "DOCUMENT NAME",
-      "overview_cn": "OVERVIEW TEXT IN CHINESE",
       "overview_jp": "OVERVIEW TEXT IN JAPANESE"
     }
     …
