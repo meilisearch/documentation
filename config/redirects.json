@@ -538,5 +538,15 @@
     "source": "/docs/learn/experimental/replication_parameter",
     "destination": "/docs/learn/self_hosted/configure_meilisearch_at_launch",
     "permanent": true
+  },
+  {
+    "source": "/docs/guides/database/meilisync_mysql",
+    "destination": "https://github.com/long2ice/meilisync",
+    "permanent": true
+  },
+  {
+    "source": "/docs/guides/database/meilisync_postgresql",
+    "destination": "https://github.com/long2ice/meilisync",
+    "permanent": true
   }
 ]

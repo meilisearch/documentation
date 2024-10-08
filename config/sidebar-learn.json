@@ -264,6 +264,22 @@
     ]
   },
   {
+    "title": "Multi-search",
+    "slug": "multi_search",
+    "routes": [
+      {
+        "source": "learn/multi_search/performing_federated_search.mdx",
+        "label": "Using multi-search to perform a federated search",
+        "slug": "performing_federated_search"
+      },
+      {
+        "source": "learn/multi_search/multi_search_vs_federated_search.mdx",
+        "label": "Differences between multi-search and federated search",
+        "slug": "multi_search_vs_federated_search"
+      }
+    ]
+  },
+  {
     "title": "Update and migration",
     "slug": "update_and_migration",
     "routes": [
