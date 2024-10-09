@@ -186,7 +186,7 @@ curl \
   }'
 ```
 
-This will also enable the [`STARTS_WITH`](#starts_with) operator.
+This will also enable the [`STARTS WITH`](#starts_with) operator.
 </Capsule>
 
 ### `STARTS_WITH` <NoticeTag type="experimental" label="experimental" />
@@ -196,14 +196,14 @@ This will also enable the [`STARTS_WITH`](#starts_with) operator.
 The following expression returns all dairy products whose name start with `"kef"`:
 
 ```
-dairy_products.name STARTS_WITH kef
+dairy_products.name STARTS WITH kef
 ```
 
 The negated form of the above expression can be written as:
 
 ```
-dairy_products.name NOT STARTS_WITH kef
-NOT dairy_product.name STARTS_WITH kef
+dairy_products.name NOT STARTS WITH kef
+NOT dairy_product.name STARTS WITH kef
 ```
 
 <Capsule intent="note" title="Activating `STARTS_WITH`">
