@@ -2183,12 +2183,14 @@ These embedder objects may contain the following fields:
 | **`url`**              | String           | `http://localhost:11434/api/embeddings`                                  | The URL Meilisearch contacts when querying the embedder                                                                                                            |
 | **`apiKey`**           | String           | Empty                                                                    | Authentication token Meilisearch should send with each request to the embedder. If not present, Meilisearch will attempt to read it from environment variables |
 | **`model`**            | String           | Empty                                                                    | The model your embedder uses when generating vectors                                                                                                           |
-| **`documentTemplate`** | String           | `{% for field in fields %}{{field.name}}: {{field.value}}\n{% endfor %}` | Template defining the data Meilisearch sends the embedder                                                                                                      |
+| **`documentTemplate`** | String           | `{% for field in fields %} {% if field.is_searchable and not field.value == nil %}{{ field.name }}: {{ field.value }} {% endif %} {% endfor %}` | Template defining the data Meilisearch sends to the embedder                                                                                                      |
+| **`documentTemplateMaxBytes`**       | Integer          | `400`                                                                    | Maximum allowed size of rendered document template                                                               |
 | **`dimensions`**       | Integer          | Empty                                                                    | Number of dimensions in the chosen model. If not supplied, Meilisearch tries to infer this value                                                               |
 | **`revision`**         | String           | Empty                                                                    | Model revision hash                                                                                                                                            |
 | **`distribution`**     | Object           | Empty                                                                    | Describes the natural distribution of search results. Must contain two fields, `mean` and `sigma`, each containing a numeric value between `0` and `1`         |
 | **`request`**          | Object           | Empty                                                                    | A JSON value representing the request Meilisearch makes to the remote embedder                                                                                 |
 | **`response`**         | Object           | Empty                                                                    | A JSON value representing the request Meilisearch expects from the remote embedder                                                                             |
+| **`binaryQuantized`**         | Boolean           | Empty                                                                    | Once set to `true`, irreversibly converts all vector dimensions to 1-bit values                                                                             |
 
 ### Get embedder settings
 
@@ -2242,6 +2244,7 @@ Partially update the embedder settings for an index. When this setting is update
     "apiKey": <String>,
     "model": <String>,
     "documentTemplate": <String>,
+    "documentTemplateMaxBytes": <Integer>,
     "dimensions": <Integer>,
     "revision": <String>,
     "distribution": {
@@ -2250,7 +2253,8 @@ Partially update the embedder settings for an index. When this setting is update
     },
     "request": { … },
     "response": { … },
-    "headers": { … }
+    "headers": { … },
+    "binaryQuantized": <Boolean>
   }
 }
 ```
@@ -2295,7 +2299,7 @@ This field is incompatible with `huggingFace` and `userProvided` embedders.
 
 The model your embedder uses when generating vectors. These are the officially supported models Meilisearch supports:
 
-- `openAi`: `openai-text-embedding-ada-002`, `text-embedding-3-small`, and `text-embedding-3-large`
+- `openAi`: `text-embedding-3-small`, `text-embedding-3-large`, `openai-text-embedding-ada-002`
 - `huggingFace`: `BAAI/bge-base-en-v1.5`
 
 Other models, such as [HuggingFace's BERT models](https://huggingface.co/models?other=bert) or those provided by Ollama and REST embedders may also be compatible with Meilisearch.
@@ -2313,11 +2317,24 @@ This field is incompatible with `rest` and `userProvided` embedders.
 You may use the following context values:
 
 - `{{doc.FIELD}}`: `doc` stands for the document itself. `FIELD` must correspond to an attribute present on all documents value will be replaced by the value of that field in the input document
-- `{{fields}}`: a list of all the `field`s appearing in any document in the index. Each `field` object in this list has two properties: `name` and `value`. If a `field` does not exist in a document, `value` is `nil`
+- `{{fields}}`: a list of all the `field`s appearing in any document in the index. Each `field` object in this list has the following properties:
+  - `name`: the field's attribute
+  - `value`: the field's value
+  - `is_searchable`: whether the field is present in the searchable attributes list
 
-For best results, build short templates that only contain highly relevant data. If working with a long field, consider [truncating it](https://shopify.github.io/liquid/filters/truncatewords/). If you do not manually set it, `documentTemplate` will include all document fields. This may lead to suboptimal performance and relevancy.
+If a `field` does not exist in a document, its `value` is `nil`.
+
+For best results, build short templates that only contain highly relevant data. If working with a long field, consider [truncating it](https://shopify.github.io/liquid/filters/truncatewords/). If you do not manually set it, `documentTemplate` will include all searchable and non-null document fields. This may lead to suboptimal performance and relevancy.
 
 This field is optional but strongly encouraged for all embedders.
+
+##### `documentTemplateMaxBytes`
+
+The maximum size of a rendered document template. Longer texts are truncated to fit the configured limit.
+
+`documentTemplateMaxBytes` must be an integer. It defaults to `400`.
+
+This field is optional for all embedders.
 
 ##### `dimensions`
 
@@ -2459,6 +2476,14 @@ If `headers` includes one of these fields, the explicitly declared values take p
 This field is optional when using the `rest` embedder.
 
 This field is incompatible with all other embedders.
+
+##### `binaryQuantized`
+
+When set to `true`, compresses vectors by representing each of its dimensions with 1-bit values. This reduces relevancy of semantic search results, but greatly reduces database size.
+
+<Capsule intent="danger" title="Binary quantization is an irreversible process">
+**Activating `binaryQuantized` is irreversible.** Once enabled, Meilisearch converts all vectors and discards all vector data that does fit within 1-bit. The only way to recover the vectors' original values is to re-vectorize the whole index in a new embedder.
+</Capsule>
 
 #### Example
 
