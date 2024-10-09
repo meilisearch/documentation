@@ -213,6 +213,34 @@ A multi-search query contains a negative value for `federated.weight`.
 
 Two or more queries in a multi-search request have incompatible results.
 
+## `invalid_multi_search_facets`
+
+`federation.facetsByIndex.<INDEX_NAME>` contains a value that is not in the filterable attributes list.
+
+## `invalid_multi_search_sort_facet_values_by`
+
+`federation.mergeFacets.sortFacetValuesBy` is not a string or doesn’t have one of the allowed values.
+
+## `invalid_multi_search_query_facets`
+
+A query in the queries array contains `facets` when federation is present and non-`null`.
+
+## `invalid_multi_search_merge_facets`
+
+`federation.mergeFacets`  is not an object or contains unexpected fields.
+
+## `invalid_multi_search_max_values_per_facet`
+
+`federation.mergeFacets.maxValuesPerFacet` is not a positive integer.
+
+## `invalid_multi_search_facet_order`
+
+Two or more indexes have a different `faceting.sortFacetValuesBy` for the same requested facet.
+
+## `invalid_multi_search_facets_by_index`
+
+`facetsByIndex` is not an object or contains unknown fields.
+
 ## `invalid_search_attributes_to_crop`
 
 The [`attributesToCrop`](/reference/api/search#attributes-to-crop) parameter is invalid. It should be an array of strings, a string, or set to `null`.
