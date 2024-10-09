@@ -46,7 +46,7 @@ Next, you need to make the binary accessible from anywhere in your system. Move 
 mv ./meilisearch /usr/local/bin/
 ```
 
-Meilisearch is now running, but it is not publicly accessible.
+Meilisearch is now installed in your system, but it is not publicly accessible.
 
 ## Step 2: Create system user
 
@@ -54,6 +54,12 @@ Running applications as root exposes you to unnecessary security risks. To preve
 
 ```sh
 useradd -d /var/lib/meilisearch -s /bin/false -m -r meilisearch
+```
+
+Then give the new user ownership of the Meilisearch binary:
+
+```sh
+chown meilisearch:meilisearch /usr/local/bin/meilisearch
 ```
 
 ## Step 3: Create a configuration file
