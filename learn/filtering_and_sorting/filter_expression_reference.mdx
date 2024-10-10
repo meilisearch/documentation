@@ -161,7 +161,7 @@ NOT genres IN [horror, comedy]
 
 `CONTAINS` filters results containing partial matches to the specified string pattern, similar to a [SQL `LIKE`](https://dev.mysql.com/doc/refman/8.4/en/string-comparison-functions.html#operator_like).
 
-The following expression returns all dairy products whose name start with `"kef"`, such as kefir:
+The following expression returns all dairy products whose names contain `"kef"`:
 
 ```
 dairy_products.name CONTAINS kef
@@ -185,6 +185,40 @@ curl \
     "containsFilter": true
   }'
 ```
+
+This will also enable the [`STARTS WITH`](#starts_with) operator.
+</Capsule>
+
+### `STARTS WITH` <NoticeTag type="experimental" label="experimental" />
+
+`STARTS WITH` filters results whose values start with the specified string pattern.
+
+The following expression returns all dairy products whose name start with `"kef"`:
+
+```
+dairy_products.name STARTS WITH kef
+```
+
+The negated form of the above expression can be written as:
+
+```
+dairy_products.name NOT STARTS WITH kef
+NOT dairy_product.name STARTS WITH kef
+```
+
+<Capsule intent="note" title="Activating `STARTS WITH`">
+This is an experimental feature. Use the experimental features endpoint to activate it:
+
+```sh
+curl \
+  -X PATCH 'http://localhost:7700/experimental-features/' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "containsFilter": true
+  }'
+```
+
+This will also enable the [`CONTAINS`](#contains) operator.
 </Capsule>
 
 ### `NOT`

@@ -1242,7 +1242,7 @@ search_parameter_guide_hybrid_1: |-
       "q": "kitchen utensils",
       "hybrid": {
         "semanticRatio": 0.9,
-        "embedder": "default"
+        "embedder": "EMBEDDER_NAME"
       }
     }'
 search_parameter_guide_vector_1: |-
@@ -1321,7 +1321,7 @@ search_parameter_reference_retrieve_vectors_1: |-
       "q": "kitchen utensils",
       "retrieveVectors": true,
       "hybrid": {
-        "embedder": "default"
+        "embedder": "EMBEDDER_NAME"
       }
     }'
 search_parameter_reference_distinct_1: |-

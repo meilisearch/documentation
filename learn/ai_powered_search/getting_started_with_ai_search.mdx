@@ -50,7 +50,7 @@ curl \
 
 Next, you must generate vector embeddings for all documents in your dataset. Embeddings are mathematical representations of the meanings of words and sentences in your documents. Meilisearch relies on external providers to generate these embeddings. Use OpenAI for this tutorial.
 
-Use the `embedders` index setting of the [update `/settings` endpoint](/reference/api/settings?utm_campaign=vector-search&utm_source=docs&utm_medium=vector-search-guide) to configure a default [OpenAI](https://platform.openai.com/) embedder:
+Use the `embedders` index setting of the [update `/settings` endpoint](/reference/api/settings?utm_campaign=vector-search&utm_source=docs&utm_medium=vector-search-guide) to configure an [OpenAI](https://platform.openai.com/) embedder:
 
 ```sh
 curl \
@@ -58,7 +58,7 @@ curl \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "embedders": {
-      "default": {
+      "openai": {
         "source":  "openAi",
         "apiKey": "OPEN_AI_API_KEY",
         "model": "text-embedding-3-small",
@@ -91,7 +91,7 @@ curl \
   --data-binary '{
     "q": "kitchen utensils made of wood",
     "hybrid": {
-      "embedder": "default",
+      "embedder": "openai",
       "semanticRatio": 0.7
     }
   }'
