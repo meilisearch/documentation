@@ -2481,6 +2481,8 @@ This field is incompatible with all other embedders.
 
 When set to `true`, compresses vectors by representing each of its dimensions with 1-bit values. This reduces relevancy of semantic search results, but greatly reduces database size.
 
+This option can be useful when working with large Meilisearch projects. Consider activating it if your project contains more than one million documents and uses models with more than 1400 dimensions.
+
 <Capsule intent="danger" title="Binary quantization is an irreversible process">
 **Activating `binaryQuantized` is irreversible.** Once enabled, Meilisearch converts all vectors and discards all vector data that does fit within 1-bit. The only way to recover the vectors' original values is to re-vectorize the whole index in a new embedder.
 </Capsule>
