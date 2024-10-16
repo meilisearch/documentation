@@ -34,8 +34,8 @@ Use `federation` to receive a single list with all search results from all speci
 | :--------------------------------------------------------------------------- | :--------------- | :------------ | :-------------------------------------------------- |
 | **[`offset`](/reference/api/search#offset)**                                 | Integer          | `0`           | Number of documents to skip                         |
 | **[`limit`](/reference/api/search#limit)**                                   | Integer          | `20`          | Maximum number of documents returned                |
-| **[`facetsByIndex`](/#facetsbyindex)**                                   | Object of arrays          | `null`          | Display facet information for the specified indexes                |
-| **[`mergeFacets`](/#mergefacets)**                                   | Object          | `null`          | Display facet information for the specified indexes                |
+| **[`facetsByIndex`](#facetsbyindex)**                                   | Object of arrays          | `null`          | Display facet information for the specified indexes                |
+| **[`mergeFacets`](#mergefacets)**                                   | Object          | `null`          | Display facet information for the specified indexes                |
 
 If `federation` is missing or `null`, Meilisearch returns a list of multiple search result objects, with each item from the list corresponding to a search query in the request.
 
