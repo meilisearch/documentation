@@ -498,5 +498,15 @@
     "source": "/docs/learn/contributing/contributing_docs",
     "destination": "/docs/learn/resources/contributing_docs",
     "permanent": true
+  },
+  {
+    "source": "/docs/guides/database/meilisync_mysql",
+    "destination": "https://github.com/long2ice/meilisync",
+    "permanent": true
+  },
+  {
+    "source": "/docs/guides/database/meilisync_postgresql",
+    "destination": "https://github.com/long2ice/meilisync",
+    "permanent": true
   }
 ]
