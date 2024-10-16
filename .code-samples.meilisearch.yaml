@@ -1373,7 +1373,7 @@ search_parameter_reference_locales_1: |-
   -X POST 'http://localhost:7700/indexes/INDEX_NAME/search' \
   -H 'Content-Type: application/json' \
   --data-binary '{
-    "q": "進撃の巨人",
+    "q": "QUERY TEXT IN JAPANESE",
     "locales": ["jpn"]
   }'
 get_localized_attribute_settings_1: |-
