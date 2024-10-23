@@ -1,4 +1,4 @@
-name: Add PR to Code Samples Changes project
+name: COUCOU Add PR to Code Samples Changes project
 
 on:
   pull_request:
