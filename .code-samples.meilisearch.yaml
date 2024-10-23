@@ -4,7 +4,7 @@
 ---
 get_one_index_1: |-
   curl \
-    -X GET 'http://LOL_SCRUB!/indexes/movies'
+    -X GET 'http://LOL_SCRUB/indexes/movies'
 list_all_indexes_1: |-
   curl \
     -X GET 'http://localhost:7700/indexes?limit=3'
