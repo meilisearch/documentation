@@ -2,7 +2,7 @@
 # Every example written here will be automatically fetched by
 # the documentation on build
 ---
-get_one_index_1: |-
+get_one_indexdjsdkjdk_1: |-
   curl \
     -X GET 'http://localhost:7700/indexes/movies'
 list_all_indexes_1: |-
