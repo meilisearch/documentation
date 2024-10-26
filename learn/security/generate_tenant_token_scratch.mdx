@@ -5,13 +5,14 @@ description: This guide shows you the main steps when creating tenant tokens wit
 
 # Generate a tenant token without a library
 
-Generating tenant tokens without a library is possible, but not recommended. This guide summarizes the necessary steps.
+Generating tenant tokens without a library is possible, but not recommended. This guide summarizes the necessary steps. 
 
 The full process requires you to create a token header, prepare the data payload with at least one set of search rules, and then sign the token with an API key.
 
 ## Prepare token header
 
-The token header must specify a `JWT` type and an encryption algorithm. Supported tenant token encryption algorithms are `HS256`, `HS384`, and `HS512`.
+The token header must specify a `JWT` type and an encryption algorithm. Supported tenant token encryption algorithms are `HS256`, `HS384`, and `HS512`. For more details about JWT [click here](https://jwt.io/).
+
 
 ```json
 {
@@ -64,7 +65,7 @@ Consult the [token payload reference](/learn/security/tenant_token_reference) fo
 
 ## Encode header and payload
 
-You must then encode both the header and the payload into `base64`, concatenate them, and generate the token by signing it using your chosen encryption algorithm. For more details [click here](https://jwt.io/).
+You must then encode both the header and the payload into `base64`, concatenate them, and generate the token by signing it using your chosen encryption algorithm.
 
 ## Make a search request using a tenant token
 
