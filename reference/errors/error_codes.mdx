@@ -197,6 +197,22 @@ There is an error in the provided index format, check out our guide on [index cr
 
 The [`primaryKey`](/reference/api/indexes#body-2) field is invalid. It should either be a string or set to `null`.
 
+## `invalid_multi_search_query_federated`
+
+A multi-search query includes `federationOptions` but the top-level `federation` object is `null` or missing.
+
+## `invalid_multi_search_query_pagination`
+
+A multi-search query contains `page`, `hitsPerPage`, `limit` or `offset`, but the top-level federation object is not `null`.
+
+## `invalid_multi_search_weight`
+
+A multi-search query contains a negative value for `federated.weight`.
+
+## `invalid_multi_search_queries_ranking_rules`
+
+Two or more queries in a multi-search request have incompatible results.
+
 ## `invalid_search_attributes_to_crop`
 
 The [`attributesToCrop`](/reference/api/search#attributes-to-crop) parameter is invalid. It should be an array of strings, a string, or set to `null`.
@@ -247,6 +263,14 @@ The [`hitsPerPage`](/reference/api/search#number-of-results-per-page) parameter 
 ## `invalid_search_limit`
 
 The [`limit`](/reference/api/search#limit) parameter is invalid. It should be an integer.
+
+## `invalid_search_locales`
+
+The [`locales`](/reference/api/search#query-locales) parameter is invalid.
+
+## `invalid_settings_localized_attributes`
+
+The [`localizedAttributes`](/reference/api/settings#localized-attributes) index setting value is invalid.
 
 ## `invalid_search_matching_strategy`
 

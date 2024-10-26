@@ -64,6 +64,31 @@
         "source": "guides/computing_hugging_face_embeddings_gpu.mdx",
         "label": "Computing Hugging Face embeddings with the GPU",
         "slug": "computing_hugging_face_embeddings_gpu"
+      },
+      {
+        "source": "guides/embedders/cloudflare.mdx",
+        "label": "Semantic search with Cloudflare embeddings",
+        "slug": "cloudflare"
+      },
+      {
+        "source": "guides/embedders/cohere.mdx",
+        "label": "Semantic search with Cohere embeddings",
+        "slug": "cohere"
+      },
+      {
+        "source": "guides/embedders/mistral.mdx",
+        "label": "Semantic search with Mistral embeddings",
+        "slug": "mistral"
+      },
+      {
+        "source": "guides/embedders/openai.mdx",
+        "label": "Semantic search with OpenAI embeddings",
+        "slug": "openai"
+      },
+      {
+        "source": "guides/embedders/voyage.mdx",
+        "label": "Semantic search with Voyage embeddings",
+        "slug": "voyage"
       }
     ]
   },
@@ -96,22 +121,6 @@
         "source": "guides/multitenancy_nodejs.mdx",
         "label": "Multitenancy with Node.js",
         "slug": "multitenancy_nodejs"
-      }
-    ]
-  },
-  {
-    "title": "Database",
-    "slug": "database",
-    "routes": [
-      {
-        "source": "guides/database/meilisync_mysql.mdx",
-        "label": "Syncing databases with MySQL and meilisync",
-        "slug": "meilisync_mysql"
-      },
-      {
-        "source": "guides/database/meilisync_postgresql.mdx",
-        "label": "Syncing databases with PostgreSQL and meilisync",
-        "slug": "meilisync_postgresql"
       }
     ]
   },

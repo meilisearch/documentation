@@ -1,0 +1,26 @@
+---
+title: Differences between multi-search and federated search — Meilisearch API reference
+description: This article defines multi-search and federated search and then describes the different uses of each.
+---
+
+# Differences between multi-search and federated search
+
+This article defines multi-search and federated search and then describes the different uses of each.
+
+## What is multi-search?
+
+Multi-search, also called multi-index search, is a search operation that makes multiple queries at the same time. These queries may target different indexes. Meilisearch then returns a separate list results for each query. Use the `/multi-search` route to perform multi-searches.
+
+Multi-search favors discovery scenarios, where users might not have a clear idea of what they need and searches might have many valid results.
+
+## What is federated search?
+
+Federated search is a type of multi-index search. This operation also makes multiple search requests at the same time, but returns a single list with the most relevant results from all queries. Use the `/multi-search` route and specify a non-null value for `federation` to perform a federated search.
+
+Federated search favors scenarios where users have a clear idea of what they need and expect a single best top result.
+
+## Use cases
+
+Because multi-search groups results by query, it is often useful when the origin and type of document contain information relevant to your users. For example, a person searching for `shygirl` in a music streaming application is likely to appreciate seeing separate results for matching artists, albums, and individual tracks.
+
+Federated search is a better approach when the source of the information is not relevant to your users. For example, a person searching for a client's email in a CRM application is unlikely to care whether this email comes from chat logs, support tickets, or other data sources.

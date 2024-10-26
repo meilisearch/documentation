@@ -1,0 +1,97 @@
+---
+title: Semantic Search with Mistral Embeddings - Meilisearch documentation
+description: This guide will walk you through the process of setting up Meilisearch with Mistral embeddings to enable semantic search capabilities.
+---
+
+# Semantic search with Mistral embeddings
+
+## Introduction
+
+This guide will walk you through the process of setting up Meilisearch with Mistral embeddings to enable semantic search capabilities. By leveraging Meilisearch's AI features and Mistral's embedding API, you can enhance your search experience and retrieve more relevant results.
+
+## Requirements
+
+To follow this guide, you'll need:
+
+- A [Meilisearch Cloud](https://www.meilisearch.com/cloud?utm_campaign=vector-search&utm_source=docs&utm_medium=mistral-embeddings-guide) project running version 1.10 or above with the Vector store activated.
+- A Mistral account with an API key for embedding generation. You can sign up for a Mistral account at [Mistral](https://mistral.ai/).
+- No backend required.
+
+## Setting up Meilisearch
+
+To set up an embedder in Meilisearch, you need to configure it to your settings. You can refer to the [Meilisearch documentation](/reference/api/settings?utm_campaign=vector-search&utm_source=docs&utm_medium=mistral-embeddings-guide#update-embedder-settings) for more details on updating the embedder settings.
+
+While using Mistral to generate embeddings, you'll need to use the model `mistral-embed`. Unlike some other services, Mistral currently offers only one embedding model.
+
+Here's an example of embedder settings for Mistral:
+
+```json
+{
+  "mistral": {
+    "source": "rest",
+    "apiKey": "<Mistral API Key>",
+    "dimensions": 1024,
+    "documentTemplate": "<Custom template (Optional, but recommended)>",
+    "url": "https://api.mistral.ai/v1/embeddings",
+    "request": {
+      "model": "mistral-embed",
+      "input": ["{{text}}", "{{..}}"]
+    },
+    "response": {
+      "data": [
+        {
+          "embedding": "{{embedding}}"
+        },
+        "{{..}}"
+      ]
+    }
+  }
+}
+```
+
+In this configuration:
+
+- `source`: Specifies the source of the embedder, which is set to "rest" for using a REST API.
+- `apiKey`: Replace `<Mistral API Key>` with your actual Mistral API key.
+- `dimensions`: Specifies the dimensions of the embeddings, set to 1024 for the `mistral-embed` model.
+- `documentTemplate`: Optionally, you can provide a [custom template](/learn/ai-powered-search/getting_started_with_ai_search?utm_campaign=vector-search&utm_source=docs&utm_medium=mistral-embeddings-guide#documenttemplate) for generating embeddings from your documents.
+- `url`: Specifies the URL of the Mistral API endpoint.
+- `request`: Defines the request structure for the Mistral API, including the model name and input parameters.
+- `response`: Defines the expected response structure from the Mistral API, including the embedding data.
+
+Once you've configured the embedder settings, Meilisearch will automatically generate embeddings for your documents and store them in the vector store.
+
+Please note that most third-party tools have rate limiting, which is managed by Meilisearch. If you have a free account, the indexation process may take some time, but Meilisearch will handle it with a retry strategy.
+
+It's recommended to monitor the tasks queue to ensure everything is running smoothly. You can access the tasks queue using the Cloud UI or the [Meilisearch API](/reference/api/tasks?utm_campaign=vector-search&utm_source=docs&utm_medium=mistral-embeddings-guide#get-tasks)
+
+## Testing semantic search
+
+With the embedder set up, you can now perform semantic searches using Meilisearch. When you send a search query, Meilisearch will generate an embedding for the query using the configured embedder and then use it to find the most semantically similar documents in the vector store.
+To perform a semantic search, you simply need to make a normal search request but include the hybrid parameter:
+
+```json
+{
+  "q": "<Query made by the user>",
+  "hybrid": {
+    "semanticRatio": 1,
+    "embedder": "mistral"
+  }
+}
+```
+
+In this request:
+
+- `q`: Represents the user's search query.
+- `hybrid`: Specifies the configuration for the hybrid search.
+  - `semanticRatio`: Allows you to control the balance between semantic search and traditional search. A value of 1 indicates pure semantic search, while a value of 0 represents full-text search. You can adjust this parameter to achieve a hybrid search experience.
+  - `embedder`: The name of the embedder used for generating embeddings. Make sure to use the same name as specified in the embedder configuration, which in this case is "mistral".
+
+You can use the Meilisearch API or client libraries to perform searches and retrieve the relevant documents based on semantic similarity.
+
+## Conclusion
+
+By following this guide, you should now have Meilisearch set up with Mistral embedding, enabling you to leverage semantic search capabilities in your application. Meilisearch's auto-batching and efficient handling of embeddings make it a powerful choice for integrating semantic search into your project.
+
+To explore further configuration options for embedders, consult the [detailed documentation about the embedder setting possibilities](/reference/api/settings?utm_campaign=vector-search&utm_source=docs&utm_medium=mistral-embeddings-guide#embedders-experimental). 
+

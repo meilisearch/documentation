@@ -5,7 +5,7 @@ description: AI-powered search is an experimental technology that uses LLMs to r
 
 # Getting started with AI-powered search <NoticeTag type="experimental" label="experimental" />
 
-[AI-powered search](https://meilisearch.com/solutions/vector-search?utm_campaign=vector-search&utm_source=aipowered-tutorial), sometimes also called vector search and hybrid search, is an experimental technology that uses [large language models](https://en.wikipedia.org/wiki/Large_language_model) to retrieve search results based on the meaning and context of a query.
+[AI-powered search](https://meilisearch.com/solutions/vector-search?utm_campaign=vector-search&utm_source=docs&utm_content=getting-started-with-ai-search), sometimes also called vector search and hybrid search, is an experimental technology that uses [large language models](https://en.wikipedia.org/wiki/Large_language_model) to retrieve search results based on the meaning and context of a query.
 
 This tutorial will walk you through configuring AI-powered search in your Meilisearch project. You will activate the vector store setting, generate document embeddings with OpenAI, and perform your first search.
 
@@ -35,7 +35,7 @@ To ensure proper scaling of Meilisearch Cloud's latest AI-powered search offerin
 
 ### Self-hosted instances
 
-Use [the `/experimental-features` route](/reference/api/experimental_features) to activate vector search during runtime:
+Use [the `/experimental-features` route](/reference/api/experimental_features?utm_campaign=vector-search&utm_source=docs&utm_medium=vector-search-guide) to activate vector search during runtime:
 
 ```sh
 curl \
@@ -50,7 +50,7 @@ curl \
 
 Next, you must generate vector embeddings for all documents in your dataset. Embeddings are mathematical representations of the meanings of words and sentences in your documents. Meilisearch relies on external providers to generate these embeddings. Use OpenAI for this tutorial.
 
-Use the `embedders` index setting of the [update `/settings` endpoint](/reference/api/settings) to configure a default [OpenAI](https://platform.openai.com/) embedder:
+Use the `embedders` index setting of the [update `/settings` endpoint](/reference/api/settings?utm_campaign=vector-search&utm_source=docs&utm_medium=vector-search-guide) to configure a default [OpenAI](https://platform.openai.com/) embedder:
 
 ```sh
 curl \
@@ -88,7 +88,7 @@ Perform AI-powered searches with `q` and `hybrid` to retrieve search results usi
 curl \
   -X POST 'http://localhost:7700/indexes/kitchenware/search' \
   -H 'content-type: application/json' \
-  --data-binary '{ 
+  --data-binary '{
     "q": "kitchen utensils made of wood",
     "hybrid": {
       "embedder": "default",
