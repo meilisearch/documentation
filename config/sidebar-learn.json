@@ -37,7 +37,7 @@
   },
   {
     "title": "AI-powered search",
-    "slug": "ai-powered-search",
+    "slug": "ai_powered_search",
     "routes": [
       {
         "source": "learn/ai_powered_search/getting_started_with_ai_search.mdx",

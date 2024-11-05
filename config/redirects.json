@@ -548,5 +548,25 @@
     "source": "/docs/guides/database/meilisync_postgresql",
     "destination": "https://github.com/long2ice/meilisync",
     "permanent": true
+  },
+  {
+    "source": "/docs/learn/ai-powered-search/search_with_user_provided_embeddings",
+    "destination": "/docs/learn/ai_powered_search/search_with_user_provided_embeddings",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/ai-powered-search/getting_started_with_ai_search",
+    "destination": "/docs/learn/ai_powered_search/getting_started_with_ai_search",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/ai-powered-search/deactivate_ai_powered_search",
+    "destination": "/docs/learn/ai_powered_search/deactivate_ai_powered_search",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/ai-powered-search/difference_full_text_ai_search",
+    "destination": "/docs/learn/ai_powered_search/difference_full_text_ai_search",
+    "permanent": true
   }
 ]
