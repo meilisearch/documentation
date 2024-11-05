@@ -1,0 +1,16 @@
+name: Add PR to Code Samples Changes project
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize]
+    paths:
+      - .code-samples.meilisearch.yaml
+
+jobs:
+  add-pr-to-project:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/add-to-project@f5473ace9aeee8b97717b281e26980aa5097023f
+        with:
+          project-url: https://github.com/orgs/meilisearch/projects/44
+          github-token: ${{ secrets.GH_TOKEN }}

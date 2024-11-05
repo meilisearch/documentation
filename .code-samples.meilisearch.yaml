@@ -1311,11 +1311,12 @@ get_similar_post_1: |-
     -H 'Content-Type: application/json' \
     -H 'Authorization: Bearer DEFAULT_SEARCH_API_KEY' \
     --data-binary '{
-      "id": TARGET_DOCUMENT_ID
+      "id": TARGET_DOCUMENT_ID,
+      "embedder": "EMBEDDER_NAME"
     }'
 get_similar_get_1: |-
   curl \
-    -X GET 'http://localhost:7700/indexes/INDEX_NAME/similar?id=TARGET_DOCUMENT_ID'
+    -X GET 'http://localhost:7700/indexes/INDEX_NAME/similar?id=TARGET_DOCUMENT_ID&embedder=EMBEDDER_NAME'
 search_parameter_reference_ranking_score_threshold_1: |-
   curl \
   -X POST 'http://localhost:7700/indexes/INDEX_NAME/search' \
@@ -1329,7 +1330,7 @@ search_parameter_reference_locales_1: |-
   -X POST 'http://localhost:7700/indexes/INDEX_NAME/search' \
   -H 'Content-Type: application/json' \
   --data-binary '{
-    "q": "進撃の巨人",
+    "q": "QUERY TEXT IN JAPANESE",
     "locales": ["jpn"]
   }'
 get_localized_attribute_settings_1: |-
@@ -1376,13 +1377,16 @@ search_parameter_guide_hybrid_1: |-
       "q": "kitchen utensils",
       "hybrid": {
         "semanticRatio": 0.9,
-        "embedder": "default"
+        "embedder": "EMBEDDER_NAME"
       }
     }'
 search_parameter_guide_vector_1: |-
   curl -X POST 'localhost:7700/indexes/INDEX_NAME/search' \
     -H 'content-type: application/json' \
-    --data-binary '{ "vector": [0, 1, 2] }'
+    --data-binary '{ 
+      "vector": [0, 1, 2],
+      "embedder": "EMBEDDER_NAME"
+    }'
 search_parameter_reference_retrieve_vectors_1: |-
   curl -X POST 'localhost:7700/indexes/INDEX_NAME/search' \
     -H 'content-type: application/json' \
@@ -1390,7 +1394,7 @@ search_parameter_reference_retrieve_vectors_1: |-
       "q": "kitchen utensils",
       "retrieveVectors": true,
       "hybrid": {
-        "embedder": "default"
+        "embedder": "EMBEDDER_NAME"
       }
     }'
 experimental_get_metrics_1: |-
