@@ -500,6 +500,46 @@
     "permanent": true
   },
   {
+    "source": "/docs/learn/experimental/overview",
+    "destination": "/docs/learn/resources/experimental_features_overview",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/experimental/max_number_of_batched_tasks",
+    "destination": "/docs/learn/self_hosted/configure_meilisearch_at_launch",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/experimental/metrics",
+    "destination": "/docs/reference/api/metrics",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/experimental/reduce-indexing-memory-usage",
+    "destination": "/docs/learn/self_hosted/configure_meilisearch_at_launch",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/experimental/log_customization",
+    "destination": "/docs/reference/api/logs",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/experimental/vector_search",
+    "destination": "/docs/learn/ai_powered_search/getting_started_with_ai_search",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/experimental/search_queue_size",
+    "destination": "/docs/learn/self_hosted/configure_meilisearch_at_launch",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/experimental/replication_parameter",
+    "destination": "/docs/learn/self_hosted/configure_meilisearch_at_launch",
+    "permanent": true
+  },
+  {
     "source": "/docs/guides/database/meilisync_mysql",
     "destination": "https://github.com/long2ice/meilisync",
     "permanent": true
@@ -507,6 +547,26 @@
   {
     "source": "/docs/guides/database/meilisync_postgresql",
     "destination": "https://github.com/long2ice/meilisync",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/ai-powered-search/search_with_user_provided_embeddings",
+    "destination": "/docs/learn/ai_powered_search/search_with_user_provided_embeddings",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/ai-powered-search/getting_started_with_ai_search",
+    "destination": "/docs/learn/ai_powered_search/getting_started_with_ai_search",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/ai-powered-search/deactivate_ai_powered_search",
+    "destination": "/docs/learn/ai_powered_search/deactivate_ai_powered_search",
+    "permanent": true
+  },
+  {
+    "source": "/docs/learn/ai-powered-search/difference_full_text_ai_search",
+    "destination": "/docs/learn/ai_powered_search/difference_full_text_ai_search",
     "permanent": true
   }
 ]

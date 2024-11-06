@@ -37,12 +37,22 @@
   },
   {
     "title": "AI-powered search",
-    "slug": "ai-powered-search",
+    "slug": "ai_powered_search",
     "routes": [
       {
         "source": "learn/ai_powered_search/getting_started_with_ai_search.mdx",
         "label": "Getting started with AI-powered search",
         "slug": "getting_started_with_ai_search"
+      },
+      {
+        "source": "learn/ai_powered_search/search_with_user_provided_embeddings.mdx",
+        "label": "Use AI-powered search with user-provided embeddings",
+        "slug": "search_with_user_provided_embeddings"
+      },
+      {
+        "source": "learn/ai_powered_search/deactivate_ai_powered_search.mdx",
+        "label": "Deactivate AI-powered search",
+        "slug": "deactivate_ai_powered_search"
       },
       {
         "source": "learn/ai_powered_search/difference_full_text_ai_search.mdx",
@@ -429,6 +439,11 @@
         "slug": "known_limitations"
       },
       {
+        "source": "learn/resources/experimental_features_overview.mdx",
+        "label": "Experimental features overview",
+        "slug": "experimental_features_overview"
+      },
+      {
         "source": "learn/resources/faq.mdx",
         "label": "FAQ",
         "slug": "faq"
@@ -469,46 +484,6 @@
     "title": "Experimental",
     "slug": "experimental",
     "routes": [
-      {
-        "source": "learn/experimental/overview.mdx",
-        "label": "Overview",
-        "slug": "overview"
-      },
-      {
-        "source": "learn/experimental/max_number_of_batched_tasks.mdx",
-        "label": "Limit number of batched tasks",
-        "slug": "max_number_of_batched_tasks"
-      },
-      {
-        "source": "learn/experimental/metrics.mdx",
-        "label": "Metrics",
-        "slug": "metrics"
-      },
-      {
-        "source": "learn/experimental/reduce-indexing-memory-usage.mdx",
-        "label": "Reduce indexing memory usage",
-        "slug": "reduce-indexing-memory-usage"
-      },
-      {
-        "source": "learn/experimental/log_customization.mdx",
-        "label": "Log customization",
-        "slug": "log_customization"
-      },
-      {
-        "source": "learn/experimental/vector_search.mdx",
-        "label": "Vector search",
-        "slug": "vector_search"
-      },
-      {
-        "source": "learn/experimental/replication_parameters.mdx",
-        "label": "Replication parameters",
-        "slug": "replication_parameters"
-      },
-      {
-        "source": "learn/experimental/search_queue_size.mdx",
-        "label": "Search queue size",
-        "slug": "search_queue_size"
-      }
     ]
   }
 ]
