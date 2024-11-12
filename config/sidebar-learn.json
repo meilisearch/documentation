@@ -479,11 +479,5 @@
         "slug": "contributing_docs"
       }
     ]
-  },
-  {
-    "title": "Experimental",
-    "slug": "experimental",
-    "routes": [
-    ]
   }
 ]
