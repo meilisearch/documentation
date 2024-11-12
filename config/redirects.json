@@ -611,7 +611,7 @@
   },
   {
     "source": "/docs/learn/getting_started/a",
-    "destination": "/docs/learn/",
+    "destination": "/docs/learn/getting_started/cloud_quick_start",
     "permanent": true
   },
   {
