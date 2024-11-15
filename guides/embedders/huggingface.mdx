@@ -20,7 +20,7 @@ To follow this guide, you'll need:
 
 ## Setting up Meilisearch
 
-To set up an embedder in Meilisearch, you need to configure it to your settings. You can refer to the [Meilisearch documentation](/reference/api/settings?utm_campaign=vector-search&utm_source=docs&utm_medium=cloudflare-embeddings-guide#update-embedder-settings) for more details on updating the embedder settings.
+To set up an embedder in Meilisearch, you need to configure it to your settings. You can refer to the [Meilisearch documentation](/reference/api/settings?utm_campaign=vector-search&utm_source=docs&utm_medium=huggingface-embeddings-guide#update-embedder-settings) for more details on updating the embedder settings.
 
 Hugging Face offers a [wide variety of embedding models](https://ui.endpoints.huggingface.co/catalog?task=sentence-embeddings) you can deploy to embed the content of your documents.
 
@@ -48,13 +48,13 @@ In this configuration:
 - `url`: Replace `<Endpoint URL>` with your actual deployed model endpoint on Hugging Face.
 - `apiKey`: Replace `<API Key>` with your actual Hugging Face API key.
 - `dimensions`: Specifies the dimensions of the embeddings. Set to 384 for `baai/bge-small-en-v1.5` in our example.
-- `documentTemplate`: Optionally, you can provide a [custom template](/learn/ai_powered_search/getting_started_with_ai_search?utm_campaign=vector-search&utm_source=docs&utm_medium=cloudflare-embeddings-guide#documenttemplate) for generating embeddings from your documents.
+- `documentTemplate`: Optionally, you can provide a [custom template](/learn/ai_powered_search/getting_started_with_ai_search?utm_campaign=vector-search&utm_source=docs&utm_medium=huggingface-embeddings-guide#documenttemplate) for generating embeddings from your documents.
 - `request`: Defines the request structure for the deployed model API, including the input parameters.
 - `response`: Defines the expected response structure from the deployed model API, including the embedding data.
 
 Once you've configured the embedder settings, Meilisearch will automatically generate embeddings for your documents and store them in the vector store.
 
-It's recommended to monitor the tasks queue to ensure everything is running smoothly. You can access the tasks queue using the Cloud UI or the [Meilisearch API](/reference/api/tasks?utm_campaign=vector-search&utm_source=docs&utm_medium=cloudflare-embeddings-guide#get-tasks).
+It's recommended to monitor the tasks queue to ensure everything is running smoothly. You can access the tasks queue using the Cloud UI or the [Meilisearch API](/reference/api/tasks?utm_campaign=vector-search&utm_source=docs&utm_medium=huggingface-embeddings-guide#get-tasks).
 
 ## Testing semantic search
 
@@ -84,4 +84,4 @@ You can use the Meilisearch API or client libraries to perform searches and retr
 
 By following this guide, you should now have Meilisearch set up with Hugging Face Inference Endpoints, enabling you to leverage semantic search capabilities in your application. Meilisearch's auto-batching and efficient handling of embeddings make it a powerful choice for integrating semantic search into your project.
 
-To explore further configuration options for embedders, consult the [detailed documentation about the embedder setting possibilities](/reference/api/settings?utm_campaign=vector-search&utm_source=docs&utm_medium=cloudflare-embeddings-guide#embedders-experimental).
+To explore further configuration options for embedders, consult the [detailed documentation about the embedder setting possibilities](/reference/api/settings?utm_campaign=vector-search&utm_source=docs&utm_medium=huggingface-embeddings-guide#embedders-experimental).
