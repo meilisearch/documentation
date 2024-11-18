@@ -13,7 +13,7 @@ If you are self-hosting Meilisearch and need a local search interface, access `h
 
 ## Accessing and using search preview
 
-Log into your Meilisearch Cloud account, navigate to your project, then click on "Search preview":
+Log into your [Meilisearch Cloud](https://cloud.meilisearch.com/login) account, navigate to your project, then click on "Search preview":
 
 ![Meilisearch Cloud's project menu with the last option, "Search preview", selected](/assets/images/search_preview/01-search-preview-menu.png)
 
@@ -25,19 +25,19 @@ Then use the main input to perform plain keyword searches:
 
 ![Meilisearch Cloud's search preview interface, with the search input selected and containing a search string](/assets/images/search_preview/03-basic-search.png)
 
-When debugging relevancy, you may want to activate the "Ranking score" option. This displays the overall ranking score for each result, together with the score for each individual ranking rule:
+When debugging relevancy, you may want to activate the "Ranking score" option. This displays the overall [ranking score](/learn/relevancy/ranking_score) for each result, together with the score for each individual ranking rule:
 
-![The same search preview interface as before, but with the "Ranking score" option turned on. Search results are the same, but include the document's ranking score](/assets/images/search_preview/04-score.png)
+![The same search preview interface as in the previous image, but with the "Ranking score" option turned on. Search results are the same, but include the document's ranking score](/assets/images/search_preview/04-score.png)
 
 ## Configuring search options
 
-Use the menu on the left-hand side to configure sorting and filtering. These require you to edit your index's sortable and filterable attributes. You may also add facets to perform faceted searches. In this example, "Genres" is one of the configured facets:
+Use the menu on the left-hand side to configure [sorting](/learn/filtering_and_sorting/sort_search_results) and [filtering](/learn/filtering_and_sorting/filter_search_results). These require you to first edit your index's sortable and filterable attributes. You may additionally configure any filterable attributes as facets. In this example, "Genres" is one of the configured facets:
 
 ![The sidebar of the search preview interface, with a handful of options, including "Sort by", "AI-powered search", "Filters", and "Genres"](/assets/images/search_preview/05-sidebar-options.png)
 
-You can also perform AI-powered searches if this functionality has been enabled for your project.
+You can also perform [AI-powered searches](/learn/ai_powered_search/getting_started_with_ai_search) if this functionality has been enabled for your project.
 
-Clicking on "Advanced parameters" gives you access to further customization options, including setting which document fields Meilisearch returns and explicitly setting the search locale:
+Clicking on "Advanced parameters" gives you access to further customization options, including setting which document fields Meilisearch returns and explicitly declaring the search language:
 
 ![The same sidebar as before with the "Advanced parameters" option highlighted](/assets/images/search_preview/06-sidebar-options-advanced.png)
 
