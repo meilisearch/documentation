@@ -39,17 +39,19 @@ Set up an embedder using the update settings endpoint:
 
 In this configuration:
 
-- `source`: Specifies the source of the embedder, which is set to "rest" for using a REST API.
-- `url`: Replace `<Endpoint URL>` with your actual deployed model endpoint on Hugging Face.
-- `apiKey`: Replace `<API Key>` with your actual Hugging Face API key.
-- `dimensions`: Specifies the dimensions of the embeddings. Set to 384 for `baai/bge-small-en-v1.5` in our example.
-- `documentTemplate`: Optionally, you can provide a [custom template](/learn/ai_powered_search/getting_started_with_ai_search?utm_campaign=vector-search&utm_source=docs&utm_medium=huggingface-embeddings-guide#documenttemplate) for generating embeddings from your documents.
-- `request`: Defines the request structure for the deployed model API, including the input parameters.
-- `response`: Defines the expected response structure from the deployed model API, including the embedding data.
+- `source`: declares Meilisearch should connect to this embedder via its REST API
+- `url`: replace `ENDPOINT_URL` with the address of your Hugging Face model endpoint
+- `apiKey`: replace `API_KEY` with your Hugging Face API key
+- `dimensions`: specifies the dimensions of the embeddings, which are 384 for `baai/bge-small-en-v1.5`
+- `documentTemplate`: an optional but recommended [template](/learn/ai_powered_search/getting_started_with_ai_search) for the data you will send the embedder
+- `request`: defines the structure and parameters of the request Meilisearch will send to the embedder
+- `response`: defines the structure of the embedder's  response
 
-Once you've configured the embedder settings, Meilisearch will automatically generate embeddings for your documents and store them in the vector store.
+Once you've configured the embedder, Meilisearch will automatically generate embeddings for your documents. You monitor the task using the Cloud UI or the [get task endpoint](/reference/api/tasks).
 
-It's recommended to monitor the tasks queue to ensure everything is running smoothly. You can access the tasks queue using the Cloud UI or the [Meilisearch API](/reference/api/tasks?utm_campaign=vector-search&utm_source=docs&utm_medium=huggingface-embeddings-guide#get-tasks).
+<Capsule intent="note">
+This example uses [BAAI/bge-small-en-v1.5](https://huggingface.co/BAAI/bge-small-en-v1.5) as its model, but Hugging Face offers [other options that my fit your dataset better](https://ui.endpoints.huggingface.co/catalog?task=sentence-embeddings).
+</Capsule>
 
 ## Perform a semantic search
 
@@ -74,6 +76,6 @@ In this request:
 
 ## Conclusion
 
-By following this guide, you should now have Meilisearch set up with Hugging Face Inference Endpoints, enabling you to leverage semantic search capabilities in your application. Meilisearch's auto-batching and efficient handling of embeddings make it a powerful choice for integrating semantic search into your project.
+You have set up with an embedder using Hugging Face Inference Endpoints. This allows you to use pure semantic search capabilities in your application.
 
 Consult the [embedder setting documentation](/reference/api/settings#embedders-experimental) for more information on other embedder configuration options.
