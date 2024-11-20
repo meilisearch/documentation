@@ -32,11 +32,11 @@ The first setting is "Searchable attributes" and lists all attributes in your da
 
 ![The "Searchable attributes" configuration section showing six attributes. One of them, "id" is this index's primary key.](/assets/images/cloud-index-settings/04-searchable-attributes-default.png)
 
-Clicking on other settings will show you similar interfaces that allow visualizing and editing multiple all Meilisearch index settings.
+Clicking on other settings will show you similar interfaces that allow visualizing and editing all Meilisearch index settings.
 
 ## Updating a setting
 
-All documents include a primary key attribute. In most cases, this attribute does not contain information relevant for searches, so you can improve your search experience by explicitly removing it from the searchable attributes list.
+All documents include a primary key attribute. In most cases, this attribute does not contain information relevant for searches, so you can improve your application's search by explicitly removing it from the searchable attributes list.
 
 Find your primary key, then click on the bin icon:
 
@@ -46,13 +46,13 @@ Meilisearch will display a pop-up window asking you to confirm you want to remov
 
 ![A pop-up window over the index settings interface. It reads: "Are you sure you want to remove the attribute id?" Below it are two buttons: "Cancel" and "Yes, remove attribute".](/assets/images/cloud-index-settings/06-searchable-attributes-confirm-deletion.png)
 
-Most updates to an index's settings will cause Meilisearch to re-index all its data. Wait a few moments until this operation is complete. You are not allowed to update any index during this time.
+Most updates to an index's settings will cause Meilisearch to re-index all its data. Wait a few moments until this operation is complete. You are not allowed to update any index settings during this time.
 
 Once Meilisearch finishes indexing, the primary key will no longer appear in the searchable attributes list:
 
 ![The same "Searchable attributes" list as before. It only contains five searchable attributes after removing the primary key.](/assets/images/cloud-index-settings/07-searchable-attributes-attribute-deleted.png)
 
-If you deleted the wrong primary key, click on "Add attributes" to add it back to the list. You may also click on "Reset to default", which will bring back the searchable list to its state when you first added your first document to this index:
+If you deleted the wrong primary key, click on "Add attributes" to add it back to the list. You may also click on "Reset to default", which will bring back the searchable list to its original state when you first added your first document to this index:
 
 ![The same "Searchable attributes" list as before. Two buttons on its top-right corner are highlighted: "Reset to default" and "Add attributes".](/assets/images/cloud-index-settings/08-searchable-attributes-reset.png)
 
