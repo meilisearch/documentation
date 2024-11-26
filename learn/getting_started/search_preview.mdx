@@ -5,24 +5,44 @@ description: Meilisearch comes with a built-in search interface for quick testin
 
 # Search preview
 
-Whether you are using [Meilisearch Cloud](https://www.meilisearch.com/cloud?utm_campaign=oss&utm_source=docs&utm_medium=search-preview) or self-hosting Meilisearch, you can use the search preview for quick manual tests.
+Meilisearch Cloud gives you access to a dedicated search preview interface. This is useful to test search result relevancy when you are tweaking an index's settings.
 
-After adding documents to your Meilisearch instance, you can immediately start searching through your dataset using Meilisearch's search preview. This can be useful when you want to check that documents have been properly indexed and Meilisearch is working as expected.
+<Capsule intent="note" title="Search preview in self-hosted instances">
+If you are self-hosting Meilisearch and need a local search interface, access `http://localhost:7700` in your browser. This local preview only allows you to perform plain searches and offers no customization options.
+</Capsule>
 
-If your Meilisearch instance does not have any indexes, you should see this screen.
+## Accessing and using search preview
 
-![Meilisearch search preview instructing the user to set an API key and configure an index](/assets/images/search_preview/no_documents.png)
+Log into your [Meilisearch Cloud](https://cloud.meilisearch.com/login) account, navigate to your project, then click on "Search preview":
 
-To access the search preview in your browser, navigate to the address and port specified in the command line argument `--http-addr`. If you did not configure `--http-addr` when launching your instance, [Meilisearch's default address for the search preview is localhost:7700](/learn/self_hosted/configure_meilisearch_at_launch#http-address--port-binding).
+![Meilisearch Cloud's project menu with the last option, "Search preview", selected](/assets/images/search_preview/01-search-preview-menu.png)
 
-For security reasons, the search preview is only available in [development mode](/learn/self_hosted/configure_meilisearch_at_launch#environment). You can disable it by setting the `MEILI_ENV` environment variable or `--env` CLI option to `production`. Note that you must set a [master key](/learn/self_hosted/configure_meilisearch_at_launch#master-key) in production mode.
+Select the index you want to search on using the input on the left-hand side:
 
-### Example
+![Meilisearch Cloud's search preview interface, with the index selecting input highlighted](/assets/images/search_preview/02-select-index.png)
 
-You can add a dataset containing many popular movies to an instance:
+Then use the main input to perform plain keyword searches:
 
-<CodeSamples id="add_movies_json_1" />
+![Meilisearch Cloud's search preview interface, with the search input selected and containing a search string](/assets/images/search_preview/03-basic-search.png)
 
-Once indexing finishes, you can access `http://localhost:7700` and confirm everything is working correctly by searching for "The Truman Show":
+When debugging relevancy, you may want to activate the "Ranking score" option. This displays the overall [ranking score](/learn/relevancy/ranking_score) for each result, together with the score for each individual ranking rule:
 
-![Animated gif in which a user types "trumen show" and sees "The Truman Show" as the top result](/assets/images/search_preview/trumen.gif)
+![The same search preview interface as in the previous image, but with the "Ranking score" option turned on. Search results are the same, but include the document's ranking score](/assets/images/search_preview/04-score.png)
+
+## Configuring search options
+
+Use the menu on the left-hand side to configure [sorting](/learn/filtering_and_sorting/sort_search_results) and [filtering](/learn/filtering_and_sorting/filter_search_results). These require you to first edit your index's sortable and filterable attributes. You may additionally configure any filterable attributes as facets. In this example, "Genres" is one of the configured facets:
+
+![The sidebar of the search preview interface, with a handful of options, including "Sort by", "AI-powered search", "Filters", and "Genres"](/assets/images/search_preview/05-sidebar-options.png)
+
+You can also perform [AI-powered searches](/learn/ai_powered_search/getting_started_with_ai_search) if this functionality has been enabled for your project.
+
+Clicking on "Advanced parameters" gives you access to further customization options, including setting which document fields Meilisearch returns and explicitly declaring the search language:
+
+![The same sidebar as before with the "Advanced parameters" option highlighted](/assets/images/search_preview/06-sidebar-options-advanced.png)
+
+## Exporting search options
+
+You can export the full search query for further testing in other tools and environments. Click on the cloud icon next to "Advanced parameters", then choose to download a JSON file or copy the query to your clipboard:
+
+![The search preview sidebar with a highlighted export button](/assets/images/search_preview/07-sidebar-options-export.png)
