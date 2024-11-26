@@ -5,11 +5,11 @@ description: This tutorial shows how to check and change an index setting using 
 
 # Configuring index settings with the Meilisearch Cloud interface
 
-This tutorial will show you how to check and change an index setting using the [Meilisearch Cloud](https://cloud.meilisearch.com/projects/?utm_campaign=oss&utm_source=docs&utm_medium=settings-tutorial) interface.
+This tutorial will show you how to check and change an index setting using the [Meilisearch Cloud](https://cloud.meilisearch.com/projects/) interface.
 
 ## Requirements
 
-- an active [Meilisearch Cloud](https://cloud.meilisearch.com/projects/?utm_campaign=oss&utm_source=docs&utm_medium=settings-tutorial) account
+- an active [Meilisearch Cloud](https://cloud.meilisearch.com/projects/) account
 - a Meilisearch Cloud project with at least one index
 
 ## Accessing a project's index settings
@@ -28,37 +28,39 @@ Using the menu on the left-hand side, click on "Attributes":
 
 ![The index configuration overview together with a menu with links to pages dedicated to various index settings.](/assets/images/cloud-index-settings/03-general-settings.png)
 
-Scroll and look for "Searchable attributes":
+The first setting is "Searchable attributes" and lists all attributes in your dataset's documents:
 
-![The "Searchable attributes" configuration section showing the default setting value.](/assets/images/cloud-index-settings/04-searchable-attributes-default.png)
+![The "Searchable attributes" configuration section showing six attributes. One of them, "id" is this index's primary key.](/assets/images/cloud-index-settings/04-searchable-attributes-default.png)
 
-If this is a new index, you should see the default value, `["*"]`. This indicates Meilisearch looks through all document attributes when searching.
+Clicking on other settings will show you similar interfaces that allow visualizing and editing all Meilisearch index settings.
 
 ## Updating a setting
 
-All documents include a primary key attribute. In most cases, this attribute does not contain any relevant data, so you can improve your application search experience by explicitly removing it from your searchable attributes list.
+All documents include a primary key attribute. In most cases, this attribute does not contain information relevant for searches, so you can improve your application's search by explicitly removing it from the searchable attributes list.
 
-Click on the input box with the current value. Then, replace it with an array of strings containing all attributes in your index except the primary key:
+Find your primary key, then click on the bin icon:
 
-![The "Searchable attributes" configuration section showing the new setting value: \["title","author","genre","price"\].](/assets/images/cloud-index-settings/05-searchable-attributes-filled.png)
+![The same "Searchable attributes" list as before, with the bin-shaped "delete" icon highlighted.](/assets/images/cloud-index-settings/05-searchable-attributes-delete.png)
 
-Two buttons will appear on the bottom of the screen when you start editing a field. Once you're finished editing a setting, click on "Save":
+Meilisearch will display a pop-up window asking you to confirm you want to remove the attribute from the searchable attributes list. Click on "Yes, remove attribute":
 
-![The "Searchable attributes" configuration section showing two buttons at the bottom of the screen: "Cancel changes" and "Save".](/assets/images/cloud-index-settings/06-save.png)
+![A pop-up window over the index settings interface. It reads: "Are you sure you want to remove the attribute id?" Below it are two buttons: "Cancel" and "Yes, remove attribute".](/assets/images/cloud-index-settings/06-searchable-attributes-confirm-deletion.png)
 
-The button icon will change to a spinning wheel to indicate Meilisearch is processing the changes. Depending on the size of your dataset and the setting you have edited, this might take some time:
+Most updates to an index's settings will cause Meilisearch to re-index all its data. Wait a few moments until this operation is complete. You are not allowed to update any index settings during this time.
 
-![The "Searchable attributes" configuration section showing two buttons at the bottom of the screen. The "Save" button now has a spinning loading icon.](/assets/images/cloud-index-settings/07-saving.png)
+Once Meilisearch finishes indexing, the primary key will no longer appear in the searchable attributes list:
 
-Once Meilisearch is ready, the button should change to a green color. You will also see a notification pop-up on the right-hand side of your screen.
+![The same "Searchable attributes" list as before. It only contains five searchable attributes after removing the primary key.](/assets/images/cloud-index-settings/07-searchable-attributes-attribute-deleted.png)
 
-![The "Searchable attributes" configuration section showing two buttons at the bottom of the screen. The "Save" button has changed color and now reads "Saved".](/assets/images/cloud-index-settings/08-saved.png)
+If you deleted the wrong attribute, click on "Add attributes" to add it back to the list. You may also click on "Reset to default", which will bring back the searchable list to its original state when you first added your first document to this index:
+
+![The same "Searchable attributes" list as before. Two buttons on its top-right corner are highlighted: "Reset to default" and "Add attributes".](/assets/images/cloud-index-settings/08-searchable-attributes-reset.png)
 
 ## Conclusion
 
 You have used the Meilisearch Cloud interface to check the value of an index setting. This revealed an opportunity to improve your project's performance, so you updated this index setting to make your application better and more responsive.
 
-This tutorial used the searchable attributes setting, but the procedure is the same no matter which index setting you are editing.
+This tutorial used the "Searchable attributes" setting, but the procedure is the same no matter which index setting you are editing.
 
 ## What's next
 
