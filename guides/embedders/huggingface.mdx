@@ -34,7 +34,8 @@ Set up an embedder using the update settings endpoint:
     "dimensions": 384,
     "documentTemplate": "CUSTOM_LIQUID_TEMPLATE",
     "request": {
-      "inputs": ["{{text}}", "{{..}}"]
+      "inputs": ["{{text}}", "{{..}}"],
+      "model": "baai/bge-small-en-v1.5"
     },
     "response": ["{{embedding}}", "{{..}}"]
   }
