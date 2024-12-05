@@ -1201,6 +1201,28 @@ update_proximity_precision_settings_1: |-
 reset_proximity_precision_settings_1: |-
   curl \
     -X DELETE 'http://localhost:7700/indexes/books/settings/proximity-precision'
+get_facet_search_settings_1: |-
+  curl \
+    -X GET 'http://localhost:7700/indexes/INDEX_NAME/settings/facet-search'
+update_facet_search_settings_1: |-
+  curl \
+    -X PUT 'http://localhost:7700/indexes/INDEX_NAME/settings/facet-search' \
+    -H 'Content-Type: application/json' \
+    --data-binary 'false'
+reset_facet_search_settings_1: |-
+  curl \
+    -X DELETE 'http://localhost:7700/indexes/INDEX_NAME/settings/facet-search'
+get_prefix_search_settings_1: |-
+  curl \
+    -X GET 'http://localhost:7700/indexes/INDEX_NAME/settings/prefix-search'
+update_prefix_search_settings_1: |-
+  curl \
+    -X PUT 'http://localhost:7700/indexes/INDEX_NAME/settings/prefix-search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '"disabled"'
+reset_prefix_search_settings_1: |-
+  curl \
+    -X DELETE 'http://localhost:7700/indexes/INDEX_NAME/settings/prefix-search'
 index_settings_tutorial_api_get_setting_1: |-
   curl \
     -X GET 'http://localhost:7700/indexes/INDEX_NAME/settings/searchable-attributes'
