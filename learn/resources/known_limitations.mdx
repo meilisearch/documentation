@@ -70,15 +70,15 @@ If your query is `Hello - World`:
 
 ## Length of primary key values
 
-**Limitation:** Primary key values are limited to 512 bytes.
+**Limitation:** Primary key values are limited to 511 bytes.
 
-**Explanation:** Meilisearch stores primary key values as LMDB keys, a data type whose size is limited to 512 bytes. If a primary key value exceeds 512 bytes, the task containing these documents will fail.
+**Explanation:** Meilisearch stores primary key values as LMDB keys, a data type whose size is limited to 511 bytes. If a primary key value exceeds 511 bytes, the task containing these documents will fail.
 
 ## Length of individual `filterableAttributes` values
 
 **Limitation:** Individual `filterableAttributes` values are limited to 468 bytes.
 
-**Explanation:** Meilisearch stores `filterableAttributes` values as keys in LMDB, a data type whose size is limited to 512 bytes, to which Meilisearch adds a margin of 44 bytes. Note that this only applies to individual values—for example, a `genres` attribute can contain any number of values such as `horror`, `comedy`, or `cyberpunk` as long as each one of them is smaller than 468 bytes.
+**Explanation:** Meilisearch stores `filterableAttributes` values as keys in LMDB, a data type whose size is limited to 511 bytes, to which Meilisearch adds a margin of 44 bytes. Note that this only applies to individual values—for example, a `genres` attribute can contain any number of values such as `horror`, `comedy`, or `cyberpunk` as long as each one of them is smaller than 468 bytes.
 
 ## Maximum filter depth
 
