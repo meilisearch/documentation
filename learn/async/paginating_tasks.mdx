@@ -7,6 +7,10 @@ description: Meilisearch uses a task queue to handle asynchronous operations. Th
 
 By default, Meilisearch returns a list of 20 tasks for each request when you query the [get tasks endpoint](/reference/api/tasks#get-tasks). This guide shows you how to navigate the task list using query parameters.
 
+<Capsule intent="tip" title="Paginating batches">
+Paginating batches with [the `/batches` route](/reference/api/batches) follows the same rules as paginating tasks.
+</Capsule>
+
 ## Configuring the number of returned tasks
 
 Use the `limit` parameter to change the number of returned tasks:
