@@ -1,0 +1,250 @@
+---
+title: Tasks — Meilisearch API reference
+description: The /tasks route allows you to manage and monitor Meilisearch's asynchronous operations.
+---
+
+# Batches
+
+The `/batches` route gives information about the progress of batches of [asynchronous operations](/learn/async/asynchronous_operations).
+
+## Batch object
+
+```json
+{
+  "uid": 0,
+  "details": {
+    "receivedDocuments": 6,
+    "indexedDocuments": 6
+  },
+  "stats": {
+    "totalNbTasks": 1,
+    "status": {
+      "succeeded": 1
+    },
+    "types": {
+      "documentAdditionOrUpdate": 1
+    },
+    "indexUids": {
+      "INDEX_NAME": 1
+    }
+  },
+  "duration": "PT0.250518S",
+  "startedAt": "2024-12-10T15:20:30.18182Z",
+  "finishedAt": "2024-12-10T15:20:30.432338Z",
+  "progress": {
+    "steps": [
+      { 
+        "name": "extracting words",
+        "finished": 2,
+        "total": 9,
+      },
+      {
+        "name": "document",
+        "finished": 30546,
+        "total": 31944,
+      }
+    ],
+    "percentage": 32.8471
+  }
+}
+```
+
+### `uid`
+
+**Type**: Integer<br />
+**Description**: Unique sequential identifier of the batch. Starts at `0` and increases by one for every new patch.
+
+### `details`
+
+**Type**: Object<br />
+**Description**: Basic information on the types tasks in a batch. Consult the [task object reference](/reference/api/tasks#details) for an exhaustive list of possible values.
+
+### `progress`
+
+**Type**: Object<br />
+**Description**: Object containing two fields: `steps` and `percentage`. Once Meilisearch has fully processed a batch, its `progress` is set to `null`.
+
+#### `currentStep`
+
+Information about the current operations Meilisearch is performing in this batch. Every step consists of multiple operations. A step may also generate substeps.
+
+| Name                    | Description                                                                             |
+| :---------------------- | :-------------------------------------------------------------------------------------- |
+| **`name`** | The internal description of the operation                                                            |
+| **`total`**  | The total number of operations in the step  |
+| **`finished`**  | The number of operations Meilisearch has completed |
+
+#### `percentage`
+
+The progress of the current set of operations, calculated from all operations across all current steps.
+
+### `stats`
+
+**Type**: Object<br />
+**Description**: Detailed information on the payload of all tasks in a batch.
+
+#### `totalNbTasks`
+
+Number of tasks in the batch.
+
+#### `status`
+
+Object listing the status of each task in the batch. Contains five keys whose values correspond to the number of tasks with that status:
+
+- `succeeded`
+- `failed`
+- `canceled`
+- `processing`
+- `enqueued`
+
+#### `types`
+
+List with the `types` of tasks contained in the batch.
+
+#### `indexUids`
+
+List of the number of tasks in the batch separated by the indexes they affect.
+
+### `duration`
+
+**Type**: String<br />
+**Description**: The total elapsed time the batch spent in the `processing` state, in [ISO 8601](https://www.ionos.com/digitalguide/websites/web-development/iso-8601/) format
+
+### `startedAt`
+
+**Type**: String<br />
+**Description**: The date and time when the batch began `processing`, in [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format
+
+### `finishedAt`
+
+**Type**: String<br />
+**Description**: The date and time when the task finished `processing`, whether `failed`, `succeeded`, or `canceled`, in [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format
+
+## Get batches
+
+<RouteHighlighter method="GET" route="/batches"/>
+
+List all batches, regardless of index. The batch objects are contained in the `results` array.
+
+Batches are always returned in descending order of `uid`. This means that by default, **the most recently created batch objects appear first**.
+
+Batch results are [paginated](/learn/async/paginating_tasks) and can be [filtered](/learn/async/filtering_tasks) with query parameters.
+
+<Capsule intent="danger" title="`/batches` parameters and tasks">
+Some query parameters for `/batches`, such as `uids` and `statuses`, filter results based on the tasks, not the batches themselves.
+
+For example, `?uids=0` returns batches containing the task with a `taskUid` equal to `0`, instead of a batch with a `batchUid` equal to `0`.
+</Capsule>
+
+### Query parameters
+
+| Query Parameter        | Default Value                   | Description                                                                                                       |
+| ---------------------- | ------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| **`uids`**             | `*` (all task uids)             | Select batches containing the tasks with the specified `uid`s. Separate multiple task `uids` with a comma (`,`)   |
+| **`batchUids`**        | `*` (all batch uids)            | Filter batches by their `uid`. Separate multiple batch `uids` with a comma (`,`)                                  |
+| **`limit`**            | `20`                            | Number of batches to return                                                                                       |
+| **`from`**             | `uid` of the last created batch | `uid` of the first batch returned                                                                                 |
+| **`statuses`**         | `*` (all statuses)              | Select batches containing tasks with the specified `status`. Separate multiple task `statuses` with a comma (`,`) |
+| **`types`**            | `*` (all types)                 | Select batches containing tasks with the specified `type`. Separate multiple task `types` with a comma (`,`)      |
+| **`indexUids`**        | `*` (all indexes)               | Select batches containing tasks affecting the specified indexes. Separate multiple `indexUids` with a comma (`,`) |
+| **`beforeEnqueuedAt`** | `*` (all tasks)                 | Select batches containing tasks with the specified `enqueuedAt` field                                             |
+| **`beforeStartedAt`**  | `*` (all tasks)                 | Select batches containing tasks with the specified `startedAt` field                                              |
+| **`beforeFinishedAt`** | `*` (all tasks)                 | Select batches containing tasks with the specified `finishedAt` field                                             |
+| **`afterEnqueuedAt`**  | `*` (all tasks)                 | Select batches containing tasks with the specified `enqueuedAt` field                                             |
+| **`afterStartedAt`**   | `*` (all tasks)                 | Select batches containing tasks with the specified `startedAt` field                                              |
+| **`afterFinishedAt`**  | `*` (all tasks)                 | Select batches containing tasks with the specified `finishedAt` field                                             |
+| **`reversed`**         | `false`                         | If `true`, returns results in the reverse order, from oldest to most recent                                       |
+
+### Response
+
+| Name          | Type    | Description                                                                                                                    |
+| :------------ | :------ | :----------------------------------------------------------------------------------------------------------------------------- |
+| **`results`** | Array   | An array of [batch objects](#batch-object)                                                                                     |
+| **`total`**   | Integer | Total number of batches matching the filter or query                                                                           |
+| **`limit`**   | Integer | Number of batches returned                                                                                                     |
+| **`from`**    | Integer | `uid` of the first batch returned                                                                                              |
+| **`next`**    | Integer | Value passed to `from` to view the next "page" of results. When the value of `next` is `null`, there are no more tasks to view |
+
+### Example
+
+<CodeSamples id="get_all_batches_1" />
+
+#### Response: `200 Ok`
+
+```json
+{
+  "results": [
+    {
+      "uid": 2,
+      "details": {
+        "stopWords": [
+          "of",
+          "the"
+        ]
+      },
+      "stats": {
+        "totalNbTasks": 1,
+        "status": {
+          "succeeded": 1
+        },
+        "types": {
+          "settingsUpdate": 1
+        },
+        "indexUids": {
+          "INDEX_NAME": 1
+        }
+      },
+      "duration": "PT0.110083S",
+      "startedAt": "2024-12-10T15:49:04.995321Z",
+      "finishedAt": "2024-12-10T15:49:05.105404Z"
+    }
+  ],
+  "total": 3,
+  "limit": 1,
+  "from": 2,
+  "next": 1
+}
+```
+
+## Get one batch
+
+<RouteHighlighter method="GET" route="/batches/{batch_uid}"/>
+
+Get a single batch.
+
+### Path parameters
+
+| Name              | Type   | Description                          |
+| :---------------- | :----- | :----------------------------------- |
+| **`batch_uid`** * | String | [`uid`](#uid) of the requested batch |
+
+### Example
+
+<CodeSamples id="get_batch_1" />
+
+#### Response: `200 Ok`
+
+```json
+{
+  "uid": 1,
+  "details": {
+    "receivedDocuments": 1,
+    "indexedDocuments": 1
+  },
+  "stats": {
+    "totalNbTasks": 1,
+    "status": {
+      "succeeded": 1
+    },
+    "types": {
+      "documentAdditionOrUpdate": 1
+    },
+    "indexUids": {
+      "INDEX_NAME": 1
+    }
+  },
+  "duration": "PT0.364788S",
+  "startedAt": "2024-12-10T15:48:49.672141Z",
+  "finishedAt": "2024-12-10T15:48:50.036929Z"
+}
+```

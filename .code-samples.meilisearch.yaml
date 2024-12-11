@@ -1348,6 +1348,12 @@ update_localized_attribute_settings_1: |-
 reset_localized_attribute_settings_1: |-
   curl \
     -X DELETE 'http://localhost:7700/indexes/INDEX_NAME/settings/localized-attributes'
+get_all_batches_1: |-
+  curl \
+    -X GET 'http://localhost:7700/batches'
+get_batch_1: |-
+  curl \
+    -X GET 'http://localhost:7700/batches/BATCH_UID'
 
 ### Code samples for experimental features
 get_embedders_1: |-
