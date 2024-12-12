@@ -164,7 +164,7 @@ If the provided index does not exist, it will be created.
 | **[`pagination`](#pagination)**                      | Object           | [Default object](#pagination-object)                                                             | Pagination settings                                                              |
 | **[`proximityPrecision`](#proximity-precision)**     | String           | `"byWord"`                                                                                       |  Precision level when calculating the proximity ranking rule                     |
 | **[`facetSearch`](#facet-search)**     | Boolean           | `true`                                                                                       |  Enable or disable [facet search](/reference/api/facet_search) functionality                     |
-| **[`prefixSearch`](#prefix-search)**     | String           | `"indexingTime"`                                                                                       | When and if Meilisearch should return results only matching the beginning of query                     |
+| **[`prefixSearch`](#prefix-search)**     | String           | `"indexingTime"`                                                                                       | When Meilisearch should return results only matching the beginning of query                     |
 | **[`rankingRules`](#ranking-rules)**                 | Array of strings | `["words",`<br />`"typo",`<br />`"proximity",`<br />`"attribute",`<br />`"sort",`<br />`"exactness"]` | List of ranking rules in order of importance                                |
 | **[`searchableAttributes`](#searchable-attributes)** | Array of strings | All attributes: `["*"]`                                                                          | Fields in which to search for matching query words sorted by order of importance |
 | **[`searchCutoffMs`](#search-cutoff)**              | Integer          | `null`, or 1500ms                                                                                | Maximum duration of a search query                                               |
@@ -1121,9 +1121,9 @@ You can use the returned `taskUid` to get more details on [the status of the tas
 
 ### Reset proximity precision settings
 
-Reset an index's proximity precision setting to its default value.
-
 <RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings/proximity-precision"/>
+
+Reset an index's proximity precision setting to its default value.
 
 #### Path parameters
 
@@ -1213,13 +1213,13 @@ Update the facet search settings for an index.
 }
 ```
 
-You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+Use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
 
 ### Reset facet search settings
 
 <RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings/facet-search"/>
 
-Reset an index's facet search settings to its default value.
+Reset an index's facet search to its default settings.
 
 #### Path parameters
 
@@ -1243,11 +1243,11 @@ Reset an index's facet search settings to its default value.
 }
 ```
 
-You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+Use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
 
 ## Prefix search
 
-Prefix search is the process through which Meilisearch matches documents that begin with a specific query, instead of only exact matches. This is a resource-intensive operation that happens during indexing by default.
+Prefix search is the process through which Meilisearch matches documents that begin with a specific query term, instead of only exact matches. This is a resource-intensive operation that happens during indexing by default.
 
 Use `prefixSearch` to change how prefix search works. It accepts one of the following strings:
 
@@ -1312,13 +1312,13 @@ Update the prefix search settings for an index.
 }
 ```
 
-You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+Use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
 
 ### Reset prefix search settings
 
 <RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings/prefix-search"/>
 
-Reset an index's facet search settings to its default value.
+Reset an index's prefix search to its default settings.
 
 #### Path parameters
 
@@ -1342,7 +1342,7 @@ Reset an index's facet search settings to its default value.
 }
 ```
 
-You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+Use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
 
 ## Ranking rules
 
