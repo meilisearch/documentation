@@ -68,15 +68,19 @@ The `/batches` route gives information about the progress of batches of [asynchr
 
 Information about the current operations Meilisearch is performing in this batch. A step may consist of multiple substeps.
 
-| Name            | Description                                        |
-| :---------------| :------------------------------------------------- |
-| **`currentStep`**      | A string describing the operation                  |
-| **`total`**     | The total number of operations in the step         |
-| **`finished`**  | The number of operations Meilisearch has completed |
+| Name              | Description                                        |
+| :-----------------| :------------------------------------------------- |
+| **`currentStep`** | A string describing the operation                  |
+| **`total`**       | The total number of operations in the step         |
+| **`finished`**    | The number of operations Meilisearch has completed |
+
+<Capsule intent="tip" title="">
+If a batch is taking too long, monitor the `steps` array. If the `finished` field of the last item in the `steps` array does not update, Meilisearch may be stuck.
+</Capsule>
 
 #### `percentage`
 
-The progress of the current set of operations, calculated from all current steps and substeps.
+The percentage of completed operations, calculated from all current steps and substeps. This value is a rough estimate and may not always reflect the current state of the batch due to how different tasks are processed more quickly than others.
 
 ### `stats`
 
