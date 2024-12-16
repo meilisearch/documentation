@@ -75,7 +75,7 @@ Information about the current operations Meilisearch is performing in this batch
 | **`finished`**    | The number of operations Meilisearch has completed |
 
 <Capsule intent="tip" title="">
-If a batch is taking too long, monitor the `steps` array. If the `finished` field of the last item in the `steps` array does not update, Meilisearch may be stuck.
+If Meilisearch is taking longer than expected to process a batch, monitor the `steps` array. If the `finished` field of the last item in the `steps` array does not update, Meilisearch may be stuck.
 </Capsule>
 
 #### `percentage`
