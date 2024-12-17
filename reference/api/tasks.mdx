@@ -219,12 +219,13 @@ Task results are [paginated](/learn/async/paginating_tasks) and can be [filtered
 
 | Query Parameter        | Default Value                  | Description                                                                                                                                                        |
 | :--------------------- | :----------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **`limit`**            | `20`                           | Number of tasks to return                                                                                                                                          |
-| **`from`**             | `uid` of the last created task | `uid` of the first task returned                                                                                                                                   |
 | **`uids`**             | `*` (all uids)                 | [Filter tasks](/learn/async/filtering_tasks) by their `uid`. Separate multiple task `uids` with a comma (`,`)                           |
 | **`statuses`**         | `*` (all statuses)             | [Filter tasks](/learn/async/filtering_tasks) by their `status`. Separate multiple task `statuses` with a comma (`,`)                    |
 | **`types`**            | `*` (all types)                | [Filter tasks](/learn/async/filtering_tasks) by their `type`. Separate multiple task `types` with a comma (`,`)                         |
 | **`indexUids`**        | `*` (all indexes)              | [Filter tasks](/learn/async/filtering_tasks) by their `indexUid`. Separate multiple task `indexUids` with a comma (`,`). Case-sensitive |
+| **`limit`**            | `20`                           | Number of tasks to return                                                                                                                                          |
+| **`from`**             | `uid` of the last created task | `uid` of the first task returned                                                                                                                                   |
+| **`reverse`**  | `false` | If `true`, returns results in the reverse order, from oldest to most recent |
 | **`canceledBy`**       | N/A                            | [Filter tasks](/learn/async/filtering_tasks) by their `canceledBy` field. Separate multiple task `uids` with a comma (`,`)         |
 | **`beforeEnqueuedAt`** | `*` (all tasks)                | [Filter tasks](/learn/async/filtering_tasks) by their `enqueuedAt` field                                                                 |
 | **`beforeStartedAt`**  | `*` (all tasks)                | [Filter tasks](/learn/async/filtering_tasks) by their `startedAt` field                                                                  |
