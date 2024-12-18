@@ -12,7 +12,8 @@ The `/tasks` route gives information about the progress of [asynchronous operati
 ```json
 {
   "uid": 4,
-  "indexUid" :"movie",
+  "batchUids": 0,
+  "indexUid":"movie",
   "status": "failed",
   "type": "indexDeletion",
   "canceledBy": null,
@@ -35,10 +36,19 @@ The `/tasks` route gives information about the progress of [asynchronous operati
 ### `uid`
 
 **Type**: Integer<br />
-**Description**: Unique sequential identifier of the task
+**Description**: Unique sequential identifier of the task.
 
 <Capsule intent="note">
-The task `uid` is incremented **globally.**
+The task `uid` is incremented across all indexes in an instance.
+</Capsule>
+
+### `batchUid`
+
+**Type**: Integer<br />
+**Description**: Unique sequential identifier of the batch this task belongs to.
+
+<Capsule intent="note">
+The batch `uid` is incremented across all indexes in an instance.
 </Capsule>
 
 ### `indexUid`
@@ -220,6 +230,7 @@ Task results are [paginated](/learn/async/paginating_tasks) and can be [filtered
 | Query Parameter        | Default Value                  | Description                                                                                                                                                        |
 | :--------------------- | :----------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **`uids`**             | `*` (all uids)                 | [Filter tasks](/learn/async/filtering_tasks) by their `uid`. Separate multiple task `uids` with a comma (`,`)                           |
+| **`batchUids`**             | `*` (all batch uids)                 | [Filter tasks](/learn/async/filtering_tasks) by their `batchUid`. Separate multiple `batchUids` with a comma (`,`)                           |
 | **`statuses`**         | `*` (all statuses)             | [Filter tasks](/learn/async/filtering_tasks) by their `status`. Separate multiple task `statuses` with a comma (`,`)                    |
 | **`types`**            | `*` (all types)                | [Filter tasks](/learn/async/filtering_tasks) by their `type`. Separate multiple task `types` with a comma (`,`)                         |
 | **`indexUids`**        | `*` (all indexes)              | [Filter tasks](/learn/async/filtering_tasks) by their `indexUid`. Separate multiple task `indexUids` with a comma (`,`). Case-sensitive |

@@ -137,6 +137,10 @@ When you make a [request for an asynchronous operation](#which-operations-are-as
 **Terminating a Meilisearch instance in the middle of an asynchronous operation is completely safe** and will never adversely affect the database.
 </Capsule>
 
+### Task batches
+
+Meilisearch processes tasks in batches, grouping tasks for the best possible performance. In most cases, batching should be transparent and have no impact on the overall task workflow. Use [the `/batches` route](/reference/api/batches) to obtain more information on batches and how they are processing your tasks.
+
 ### Canceling tasks
 
 You can cancel a task while it is `enqueued` or `processing` by using [the cancel tasks endpoint](/reference/api/tasks#cancel-tasks). Doing so changes a task's `status` to `canceled`.
