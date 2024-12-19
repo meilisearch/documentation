@@ -59,7 +59,7 @@ Next, enable the vector store experimental feature:
 
 ```sh
 curl \
-  -X PATCH 'http://localhost:7700/experimental-features/' \
+  -X PATCH 'MEILISEARCH_URL/experimental-features/' \
   -H 'Content-Type: application/json'  \
   --data-binary '{ "vectorStore": true }'
 ```
@@ -68,7 +68,7 @@ Then add the Hugging Face embedder to your index settings:
 
 ```sh
 curl \
-  -X PATCH 'http://localhost:7700/indexes/INDEX_NAME/settings/embedders' \
+  -X PATCH 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/embedders' \
   -H 'Content-Type: application/json' \
   --data-binary '{ "default": { "source": "huggingFace" } }'
 ```

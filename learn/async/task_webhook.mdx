@@ -38,7 +38,7 @@ A common asynchronous operation is adding or updating documents to an index. The
 
 ```sh
 curl \
-  -X POST 'http://localhost:7700/indexes/books/documents' \
+  -X POST 'MEILISEARCH_URL/indexes/books/documents' \
   -H 'Content-Type: application/json' \
   --data-binary '[
     {

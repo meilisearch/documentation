@@ -4,13 +4,13 @@
 ---
 get_one_index_1: |-
   curl \
-    -X GET 'http://localhost:7700/indexes/movies'
+    -X GET 'MEILISEARCH_URL/indexes/movies'
 list_all_indexes_1: |-
   curl \
-    -X GET 'http://localhost:7700/indexes?limit=3'
+    -X GET 'MEILISEARCH_URL/indexes?limit=3'
 create_an_index_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes' \
+    -X POST 'MEILISEARCH_URL/indexes' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "uid": "movies",
@@ -18,21 +18,21 @@ create_an_index_1: |-
     }'
 update_an_index_1: |-
   curl \
-    -X PATCH 'http://localhost:7700/indexes/movies' \
+    -X PATCH 'MEILISEARCH_URL/indexes/movies' \
     -H 'Content-Type: application/json' \
     --data-binary '{ "primaryKey": "id" }'
 delete_an_index_1: |-
   curl \
-    -X DELETE 'http://localhost:7700/indexes/movies'
+    -X DELETE 'MEILISEARCH_URL/indexes/movies'
 get_one_document_1: |-
   curl \
-    -X GET 'http://localhost:7700/indexes/movies/documents/25684?fields=id,title,poster,release_date'
+    -X GET 'MEILISEARCH_URL/indexes/movies/documents/25684?fields=id,title,poster,release_date'
 get_documents_1: |-
   curl \
-    -X GET 'http://localhost:7700/indexes/movies/documents?limit=2&filter=genres=action'
+    -X GET 'MEILISEARCH_URL/indexes/movies/documents?limit=2&filter=genres=action'
 add_or_replace_documents_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/movies/documents' \
+    -X POST 'MEILISEARCH_URL/indexes/movies/documents' \
     -H 'Content-Type: application/json' \
     --data-binary '[
       {
@@ -45,7 +45,7 @@ add_or_replace_documents_1: |-
     ]'
 add_or_update_documents_1: |-
   curl \
-    -X PUT 'http://localhost:7700/indexes/movies/documents' \
+    -X PUT 'MEILISEARCH_URL/indexes/movies/documents' \
     -H 'Content-Type: application/json' \
     --data-binary '[
       {
@@ -56,13 +56,13 @@ add_or_update_documents_1: |-
     ]'
 delete_all_documents_1: |-
   curl \
-    -X DELETE 'http://localhost:7700/indexes/movies/documents'
+    -X DELETE 'MEILISEARCH_URL/indexes/movies/documents'
 delete_one_document_1: |-
   curl \
-    -X DELETE 'http://localhost:7700/indexes/movies/documents/25684'
+    -X DELETE 'MEILISEARCH_URL/indexes/movies/documents/25684'
 delete_documents_by_batch_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/movies/documents/delete-batch' \
+    -X POST 'MEILISEARCH_URL/indexes/movies/documents/delete-batch' \
     -H 'Content-Type: application/json' \
     --data-binary '[
       23488,
@@ -72,35 +72,35 @@ delete_documents_by_batch_1: |-
     ]'
 search_post_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/movies/search' \
+    -X POST 'MEILISEARCH_URL/indexes/movies/search' \
     -H 'Content-Type: application/json' \
     --data-binary '{ "q": "american ninja" }'
 search_get_1: |-
   curl \
-    -X GET 'http://localhost:7700/indexes/movies/search?q=american%20ninja'
+    -X GET 'MEILISEARCH_URL/indexes/movies/search?q=american%20ninja'
 get_all_tasks_1: |-
   curl \
-    -X GET 'http://localhost:7700/tasks'
+    -X GET 'MEILISEARCH_URL/tasks'
 get_task_1: |-
   curl \
-    -X GET 'http://localhost:7700/tasks/1'
+    -X GET 'MEILISEARCH_URL/tasks/1'
 get_all_tasks_paginating_1: |-
   curl \
-    -X GET 'http://localhost:7700/tasks?limit=2&from=10
+    -X GET 'MEILISEARCH_URL/tasks?limit=2&from=10
 get_all_tasks_paginating_2: |-
   curl \
-    -X GET 'http://localhost:7700/tasks?limit=2&from=8
+    -X GET 'MEILISEARCH_URL/tasks?limit=2&from=8
 get_one_key_1: |-
   curl \
-    -X GET 'http://localhost:7700/keys/6062abda-a5aa-4414-ac91-ecd7944c0f8d' \
+    -X GET 'MEILISEARCH_URL/keys/6062abda-a5aa-4414-ac91-ecd7944c0f8d' \
     -H 'Authorization: Bearer MASTER_KEY'
 get_all_keys_1: |-
   curl \
-    -X GET 'http://localhost:7700/keys?limit=3' \
+    -X GET 'MEILISEARCH_URL/keys?limit=3' \
     -H 'Authorization: Bearer MASTER_KEY'
 create_a_key_1: |-
   curl \
-    -X POST 'http://localhost:7700/keys' \
+    -X POST 'MEILISEARCH_URL/keys' \
     -H 'Authorization: Bearer MASTER_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
@@ -111,7 +111,7 @@ create_a_key_1: |-
     }'
 update_a_key_1: |-
   curl \
-    -X PATCH 'http://localhost:7700/keys/6062abda-a5aa-4414-ac91-ecd7944c0f8d' \
+    -X PATCH 'MEILISEARCH_URL/keys/6062abda-a5aa-4414-ac91-ecd7944c0f8d' \
     -H 'Authorization: Bearer MASTER_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
@@ -120,14 +120,14 @@ update_a_key_1: |-
     }'
 delete_a_key_1: |-
   curl \
-    -X DELETE 'http://localhost:7700/keys/6062abda-a5aa-4414-ac91-ecd7944c0f8d' \
+    -X DELETE 'MEILISEARCH_URL/keys/6062abda-a5aa-4414-ac91-ecd7944c0f8d' \
     -H 'Authorization: Bearer MASTER_KEY'
 get_settings_1: |-
   curl \
-    -X GET 'http://localhost:7700/indexes/movies/settings'
+    -X GET 'MEILISEARCH_URL/indexes/movies/settings'
 update_settings_1: |-
   curl \
-    -X PATCH 'http://localhost:7700/indexes/movies/settings' \
+    -X PATCH 'MEILISEARCH_URL/indexes/movies/settings' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "rankingRules": [
@@ -185,13 +185,13 @@ update_settings_1: |-
     }'
 reset_settings_1: |-
   curl \
-    -X DELETE 'http://localhost:7700/indexes/movies/settings'
+    -X DELETE 'MEILISEARCH_URL/indexes/movies/settings'
 get_synonyms_1: |-
   curl \
-    -X GET 'http://localhost:7700/indexes/movies/settings/synonyms'
+    -X GET 'MEILISEARCH_URL/indexes/movies/settings/synonyms'
 update_synonyms_1: |-
   curl \
-    -X PUT 'http://localhost:7700/indexes/movies/settings/synonyms' \
+    -X PUT 'MEILISEARCH_URL/indexes/movies/settings/synonyms' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "wolverine": [
@@ -206,13 +206,13 @@ update_synonyms_1: |-
     }'
 reset_synonyms_1: |-
   curl \
-    -X DELETE 'http://localhost:7700/indexes/movies/settings/synonyms'
+    -X DELETE 'MEILISEARCH_URL/indexes/movies/settings/synonyms'
 get_stop_words_1: |-
   curl \
-    -X GET 'http://localhost:7700/indexes/movies/settings/stop-words'
+    -X GET 'MEILISEARCH_URL/indexes/movies/settings/stop-words'
 update_stop_words_1: |-
   curl \
-    -X PUT 'http://localhost:7700/indexes/movies/settings/stop-words' \
+    -X PUT 'MEILISEARCH_URL/indexes/movies/settings/stop-words' \
     -H 'Content-Type: application/json' \
     --data-binary '[
       "the",
@@ -221,13 +221,13 @@ update_stop_words_1: |-
     ]'
 reset_stop_words_1: |-
   curl \
-    -X DELETE 'http://localhost:7700/indexes/movies/settings/stop-words'
+    -X DELETE 'MEILISEARCH_URL/indexes/movies/settings/stop-words'
 get_ranking_rules_1: |-
   curl \
-    -X GET 'http://localhost:7700/indexes/movies/settings/ranking-rules'
+    -X GET 'MEILISEARCH_URL/indexes/movies/settings/ranking-rules'
 update_ranking_rules_1: |-
   curl \
-    -X PUT 'http://localhost:7700/indexes/movies/settings/ranking-rules' \
+    -X PUT 'MEILISEARCH_URL/indexes/movies/settings/ranking-rules' \
     -H 'Content-Type: application/json' \
     --data-binary '[
       "words",
@@ -241,24 +241,24 @@ update_ranking_rules_1: |-
     ]'
 reset_ranking_rules_1: |-
   curl \
-    -X DELETE 'http://localhost:7700/indexes/movies/settings/ranking-rules'
+    -X DELETE 'MEILISEARCH_URL/indexes/movies/settings/ranking-rules'
 get_distinct_attribute_1: |-
   curl \
-    -X GET 'http://localhost:7700/indexes/shoes/settings/distinct-attribute'
+    -X GET 'MEILISEARCH_URL/indexes/shoes/settings/distinct-attribute'
 update_distinct_attribute_1: |-
   curl \
-    -X PUT 'http://localhost:7700/indexes/shoes/settings/distinct-attribute' \
+    -X PUT 'MEILISEARCH_URL/indexes/shoes/settings/distinct-attribute' \
     -H 'Content-Type: application/json' \
     --data-binary '"skuid"'
 reset_distinct_attribute_1: |-
   curl \
-    -X DELETE 'http://localhost:7700/indexes/shoes/settings/distinct-attribute'
+    -X DELETE 'MEILISEARCH_URL/indexes/shoes/settings/distinct-attribute'
 get_filterable_attributes_1: |-
   curl \
-    -X GET 'http://localhost:7700/indexes/movies/settings/filterable-attributes'
+    -X GET 'MEILISEARCH_URL/indexes/movies/settings/filterable-attributes'
 update_filterable_attributes_1: |-
   curl \
-    -X PUT 'http://localhost:7700/indexes/movies/settings/filterable-attributes' \
+    -X PUT 'MEILISEARCH_URL/indexes/movies/settings/filterable-attributes' \
     -H 'Content-Type: application/json' \
     --data-binary '[
       "genres",
@@ -266,13 +266,13 @@ update_filterable_attributes_1: |-
     ]'
 reset_filterable_attributes_1: |-
   curl \
-    -X DELETE 'http://localhost:7700/indexes/movies/settings/filterable-attributes'
+    -X DELETE 'MEILISEARCH_URL/indexes/movies/settings/filterable-attributes'
 get_searchable_attributes_1: |-
   curl \
-    -X GET 'http://localhost:7700/indexes/movies/settings/searchable-attributes'
+    -X GET 'MEILISEARCH_URL/indexes/movies/settings/searchable-attributes'
 update_searchable_attributes_1: |-
   curl \
-    -X PUT 'http://localhost:7700/indexes/movies/settings/searchable-attributes' \
+    -X PUT 'MEILISEARCH_URL/indexes/movies/settings/searchable-attributes' \
     -H 'Content-Type: application/json' \
     --data-binary '[
       "title",
@@ -281,13 +281,13 @@ update_searchable_attributes_1: |-
     ]'
 reset_searchable_attributes_1: |-
   curl \
-    -X DELETE 'http://localhost:7700/indexes/movies/settings/searchable-attributes'
+    -X DELETE 'MEILISEARCH_URL/indexes/movies/settings/searchable-attributes'
 get_displayed_attributes_1: |-
   curl \
-    -X GET 'http://localhost:7700/indexes/movies/settings/displayed-attributes'
+    -X GET 'MEILISEARCH_URL/indexes/movies/settings/displayed-attributes'
 update_displayed_attributes_1: |-
   curl \
-    -X PUT 'http://localhost:7700/indexes/movies/settings/displayed-attributes' \
+    -X PUT 'MEILISEARCH_URL/indexes/movies/settings/displayed-attributes' \
     -H 'Content-Type: application/json' \
     --data-binary '[
       "title",
@@ -297,27 +297,27 @@ update_displayed_attributes_1: |-
     ]'
 reset_displayed_attributes_1: |-
   curl \
-    -X DELETE 'http://localhost:7700/indexes/movies/settings/displayed-attributes'
+    -X DELETE 'MEILISEARCH_URL/indexes/movies/settings/displayed-attributes'
 get_index_stats_1: |-
   curl \
-    -X GET 'http://localhost:7700/indexes/movies/stats'
+    -X GET 'MEILISEARCH_URL/indexes/movies/stats'
 get_indexes_stats_1: |-
   curl \
-    -X GET 'http://localhost:7700/stats'
+    -X GET 'MEILISEARCH_URL/stats'
 get_health_1: |-
   curl \
-    -X GET 'http://localhost:7700/health'
+    -X GET 'MEILISEARCH_URL/health'
 get_version_1: |-
   curl \
-    -X GET 'http://localhost:7700/version'
+    -X GET 'MEILISEARCH_URL/version'
 distinct_attribute_guide_1: |-
   curl \
-    -X PUT 'http://localhost:7700/indexes/jackets/settings/distinct-attribute' \
+    -X PUT 'MEILISEARCH_URL/indexes/jackets/settings/distinct-attribute' \
     -H 'Content-Type: application/json' \
     --data-binary '"product_id"'
 field_properties_guide_searchable_1: |-
   curl \
-    -X PUT 'http://localhost:7700/indexes/movies/settings/searchable-attributes' \
+    -X PUT 'MEILISEARCH_URL/indexes/movies/settings/searchable-attributes' \
     -H 'Content-Type: application/json' \
     --data-binary '[
         "title",
@@ -326,7 +326,7 @@ field_properties_guide_searchable_1: |-
       ]'
 field_properties_guide_displayed_1: |-
   curl \
-    -X PUT 'http://localhost:7700/indexes/movies/settings/displayed-attributes' \
+    -X PUT 'MEILISEARCH_URL/indexes/movies/settings/displayed-attributes' \
     -H 'Content-Type: application/json' \
     --data-binary '[
         "title",
@@ -336,7 +336,7 @@ field_properties_guide_displayed_1: |-
       ]'
 filtering_guide_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/movie_ratings/search' \
+    -X POST 'MEILISEARCH_URL/indexes/movie_ratings/search' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "Avengers",
@@ -344,7 +344,7 @@ filtering_guide_1: |-
     }'
 filtering_guide_2: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/movie_ratings/search' \
+    -X POST 'MEILISEARCH_URL/indexes/movie_ratings/search' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "Batman",
@@ -352,7 +352,7 @@ filtering_guide_2: |-
     }'
 filtering_guide_3: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/movie_ratings/search' \
+    -X POST 'MEILISEARCH_URL/indexes/movie_ratings/search' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "Planet of the Apes",
@@ -360,7 +360,7 @@ filtering_guide_3: |-
     }' \
 filtering_guide_nested_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/movie_ratings/search' \
+    -X POST 'MEILISEARCH_URL/indexes/movie_ratings/search' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "thriller",
@@ -368,12 +368,12 @@ filtering_guide_nested_1: |-
     }'
 search_parameter_guide_query_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/movies/search' \
+    -X POST 'MEILISEARCH_URL/indexes/movies/search' \
     -H 'Content-Type: application/json' \
     --data-binary '{ "q": "shifu" }'
 search_parameter_guide_offset_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/movies/search' \
+    -X POST 'MEILISEARCH_URL/indexes/movies/search' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "shifu",
@@ -381,7 +381,7 @@ search_parameter_guide_offset_1: |-
     }'
 search_parameter_guide_limit_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/movies/search' \
+    -X POST 'MEILISEARCH_URL/indexes/movies/search' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "shifu",
@@ -389,7 +389,7 @@ search_parameter_guide_limit_1: |-
     }'
 search_parameter_guide_hitsperpage_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/movies/search' \
+    -X POST 'MEILISEARCH_URL/indexes/movies/search' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "",
@@ -397,7 +397,7 @@ search_parameter_guide_hitsperpage_1: |-
     }'
 search_parameter_guide_page_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/movies/search' \
+    -X POST 'MEILISEARCH_URL/indexes/movies/search' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "",
@@ -405,7 +405,7 @@ search_parameter_guide_page_1: |-
     }'
 search_parameter_guide_retrieve_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/movies/search' \
+    -X POST 'MEILISEARCH_URL/indexes/movies/search' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "shifu",
@@ -416,7 +416,7 @@ search_parameter_guide_retrieve_1: |-
     }'
 search_parameter_guide_crop_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/movies/search' \
+    -X POST 'MEILISEARCH_URL/indexes/movies/search' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "shifu",
@@ -425,7 +425,7 @@ search_parameter_guide_crop_1: |-
     }'
 search_parameter_guide_crop_marker_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/movies/search' \
+    -X POST 'MEILISEARCH_URL/indexes/movies/search' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "shifu",
@@ -434,7 +434,7 @@ search_parameter_guide_crop_marker_1: |-
     }'
 search_parameter_guide_highlight_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/movies/search' \
+    -X POST 'MEILISEARCH_URL/indexes/movies/search' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "winter feast",
@@ -442,7 +442,7 @@ search_parameter_guide_highlight_1: |-
     }'
 search_parameter_guide_highlight_tag_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/movies/search' \
+    -X POST 'MEILISEARCH_URL/indexes/movies/search' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "winter feast",
@@ -452,7 +452,7 @@ search_parameter_guide_highlight_tag_1: |-
     }'
 search_parameter_guide_show_matches_position_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/movies/search' \
+    -X POST 'MEILISEARCH_URL/indexes/movies/search' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "winter feast",
@@ -460,37 +460,37 @@ search_parameter_guide_show_matches_position_1: |-
     }'
 add_movies_json_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/movies/documents'\
+    -X POST 'MEILISEARCH_URL/indexes/movies/documents'\
     -H 'Content-Type: application/json' \
     --data-binary @movies.json
 getting_started_add_documents_md: |-
   ```bash
   curl \
-    -X POST 'http://localhost:7700/indexes/movies/documents?primaryKey=id' \
+    -X POST 'MEILISEARCH_URL/indexes/movies/documents?primaryKey=id' \
     -H 'Content-Type: application/json' \
     -H 'Authorization: Bearer aSampleMasterKey' \
     --data-binary @movies.json
   ```
 getting_started_check_task_status: |-
   curl \
-    -X GET 'http://localhost:7700/tasks/0' \
+    -X GET 'MEILISEARCH_URL/tasks/0' \
     -H 'Authorization: Bearer aSampleMasterKey'
 getting_started_search_md: |-
   ```bash
   curl \
-    -X POST 'http://localhost:7700/indexes/movies/search' \
+    -X POST 'MEILISEARCH_URL/indexes/movies/search' \
     -H 'Content-Type: application/json' \
     -H 'Authorization: Bearer aSampleMasterKey' \
     --data-binary '{ "q": "botman" }'
   ```
 getting_started_add_meteorites: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/meteorites/documents' \
+    -X POST 'MEILISEARCH_URL/indexes/meteorites/documents' \
     -H 'Content-Type: application/json' \
     --data-binary @meteorites.json
 getting_started_update_ranking_rules: |-
   curl \
-    -X PUT 'http://localhost:7700/indexes/movies/settings/ranking-rules' \
+    -X PUT 'MEILISEARCH_URL/indexes/movies/settings/ranking-rules' \
     -H 'Content-Type: application/json' \
     --data-binary '[
       "exactness",
@@ -504,7 +504,7 @@ getting_started_update_ranking_rules: |-
     ]'
 getting_started_update_displayed_attributes: |-
   curl \
-    -X PUT 'http://localhost:7700/indexes/movies/settings/displayed-attributes' \
+    -X PUT 'MEILISEARCH_URL/indexes/movies/settings/displayed-attributes' \
     -H 'Content-Type: application/json' \
     --data-binary '[
       "title",
@@ -513,17 +513,17 @@ getting_started_update_displayed_attributes: |-
     ]'
 getting_started_update_searchable_attributes: |-
   curl \
-    -X PUT 'http://localhost:7700/indexes/movies/settings/searchable-attributes' \
+    -X PUT 'MEILISEARCH_URL/indexes/movies/settings/searchable-attributes' \
     -H 'Content-Type: application/json' \
     --data-binary '["title"]'
 getting_started_update_stop_words: |-
   curl \
-    -X PUT 'http://localhost:7700/indexes/movies/settings/stop-words' \
+    -X PUT 'MEILISEARCH_URL/indexes/movies/settings/stop-words' \
     -H 'Content-Type: application/json' \
     --data-binary '["the"]'
 getting_started_synonyms: |-
   curl \
-    -X PUT 'http://localhost:7700/indexes/movies/settings/synonyms' \
+    -X PUT 'MEILISEARCH_URL/indexes/movies/settings/synonyms' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "winnie": ["piglet"],
@@ -531,22 +531,22 @@ getting_started_synonyms: |-
     }'
 getting_started_filtering: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/meteorites/search' \
+    -X POST 'MEILISEARCH_URL/indexes/meteorites/search' \
     -H 'Content-Type: application/json' \
     --data-binary '{ "filter": "mass < 200" }'
 getting_started_geo_radius: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/meteorites/search' \
+    -X POST 'MEILISEARCH_URL/indexes/meteorites/search' \
     -H 'Content-type:application/json' \
     --data-binary '{ "filter": "_geoRadius(46.9480, 7.4474, 210000)" }'
 getting_started_geo_point: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/meteorites/search' \
+    -X POST 'MEILISEARCH_URL/indexes/meteorites/search' \
     -H 'Content-type:application/json' \
     --data-binary '{ "sort": ["_geoPoint(48.8583701,2.2922926):asc"] }'
 getting_started_sorting: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/meteorites/search' \
+    -X POST 'MEILISEARCH_URL/indexes/meteorites/search' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "filter": "mass < 200",
@@ -554,7 +554,7 @@ getting_started_sorting: |-
     }'
 getting_started_configure_settings: |-
   curl \
-    -X PATCH 'http://localhost:7700/indexes/meteorites/settings' \
+    -X PATCH 'MEILISEARCH_URL/indexes/meteorites/settings' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "filterableAttributes": [
@@ -568,7 +568,7 @@ getting_started_configure_settings: |-
     }'
 faceted_search_walkthrough_filter_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/movies/search' \
+    -X POST 'MEILISEARCH_URL/indexes/movies/search' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "thriller",
@@ -582,20 +582,20 @@ faceted_search_walkthrough_filter_1: |-
     }'
 post_dump_1: |-
   curl \
-    -X POST 'http://localhost:7700/dumps'
+    -X POST 'MEILISEARCH_URL/dumps'
 phrase_search_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/movies/search' \
+    -X POST 'MEILISEARCH_URL/indexes/movies/search' \
     -H 'Content-Type: application/json' \
   --data-binary '{ "q": "\"african american\" horror" }'
 authorization_header_1: |-
   # replace the MASTER_KEY placeholder with your master key
   curl \
-    -X GET 'http://localhost:7700/keys' \
+    -X GET 'MEILISEARCH_URL/keys' \
     -H 'Authorization: Bearer MASTER_KEY'
 sorting_guide_update_sortable_attributes_1: |-
   curl \
-    -X PUT 'http://localhost:7700/indexes/books/settings/sortable-attributes' \
+    -X PUT 'MEILISEARCH_URL/indexes/books/settings/sortable-attributes' \
     -H 'Content-Type: application/json' \
     --data-binary '[
       "author",
@@ -603,7 +603,7 @@ sorting_guide_update_sortable_attributes_1: |-
     ]'
 sorting_guide_update_ranking_rules_1: |-
   curl \
-    -X PUT 'http://localhost:7700/indexes/books/settings/ranking-rules' \
+    -X PUT 'MEILISEARCH_URL/indexes/books/settings/ranking-rules' \
     -H 'Content-Type: application/json' \
     --data-binary '[
       "words",
@@ -615,7 +615,7 @@ sorting_guide_update_ranking_rules_1: |-
     ]'
 sorting_guide_sort_nested_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/books/search' \
+    -X POST 'MEILISEARCH_URL/indexes/books/search' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "science fiction",
@@ -623,7 +623,7 @@ sorting_guide_sort_nested_1: |-
     }'
 sorting_guide_sort_parameter_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/books/search' \
+    -X POST 'MEILISEARCH_URL/indexes/books/search' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "science fiction",
@@ -631,7 +631,7 @@ sorting_guide_sort_parameter_1: |-
     }'
 sorting_guide_sort_parameter_2: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/books/search' \
+    -X POST 'MEILISEARCH_URL/indexes/books/search' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "butler",
@@ -639,10 +639,10 @@ sorting_guide_sort_parameter_2: |-
     }'
 get_sortable_attributes_1: |-
   curl \
-    -X GET 'http://localhost:7700/indexes/books/settings/sortable-attributes'
+    -X GET 'MEILISEARCH_URL/indexes/books/settings/sortable-attributes'
 update_sortable_attributes_1: |-
   curl \
-    -X PUT 'http://localhost:7700/indexes/books/settings/sortable-attributes' \
+    -X PUT 'MEILISEARCH_URL/indexes/books/settings/sortable-attributes' \
     -H 'Content-Type: application/json' \
     --data-binary '[
       "price",
@@ -650,10 +650,10 @@ update_sortable_attributes_1: |-
     ]'
 reset_sortable_attributes_1: |-
   curl \
-    -X DELETE 'http://localhost:7700/indexes/books/settings/sortable-attributes'
+    -X DELETE 'MEILISEARCH_URL/indexes/books/settings/sortable-attributes'
 search_parameter_guide_sort_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/books/search' \
+    -X POST 'MEILISEARCH_URL/indexes/books/search' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "science fiction",
@@ -661,37 +661,37 @@ search_parameter_guide_sort_1: |-
     }'
 geosearch_guide_filter_settings_1: |-
   curl \
-    -X PUT 'http://localhost:7700/indexes/restaurants/settings/filterable-attributes' \
+    -X PUT 'MEILISEARCH_URL/indexes/restaurants/settings/filterable-attributes' \
     -H 'Content-type:application/json' \
     --data-binary '["_geo"]'
 geosearch_guide_filter_usage_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/restaurants/search' \
+    -X POST 'MEILISEARCH_URL/indexes/restaurants/search' \
     -H 'Content-type:application/json' \
     --data-binary '{ "filter": "_geoRadius(45.472735, 9.184019, 2000)" }'
 geosearch_guide_filter_usage_2: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/restaurants/search' \
+    -X POST 'MEILISEARCH_URL/indexes/restaurants/search' \
     -H 'Content-type:application/json' \
     --data-binary '{ "filter": "_geoRadius(45.472735, 9.184019, 2000) AND type = pizza" }'
 geosearch_guide_filter_usage_3: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/restaurants/search' \
+    -X POST 'MEILISEARCH_URL/indexes/restaurants/search' \
     -H 'Content-type:application/json' \
     --data-binary '{ "filter": "_geoBoundingBox([45.494181, 9.214024], [45.449484, 9.179175])" }'
 geosearch_guide_sort_settings_1: |-
   curl \
-    -X PUT 'http://localhost:7700/indexes/restaurants/settings/sortable-attributes' \
+    -X PUT 'MEILISEARCH_URL/indexes/restaurants/settings/sortable-attributes' \
     -H 'Content-type:application/json' \
     --data-binary '["_geo"]'
 geosearch_guide_sort_usage_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/restaurants/search' \
+    -X POST 'MEILISEARCH_URL/indexes/restaurants/search' \
     -H 'Content-type:application/json' \
     --data-binary '{ "sort": ["_geoPoint(48.8561446,2.2978204):asc"] }'
 geosearch_guide_sort_usage_2: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/restaurants/search' \
+    -X POST 'MEILISEARCH_URL/indexes/restaurants/search' \
     -H 'Content-type:application/json' \
     --data-binary '{
       "sort": [
@@ -700,11 +700,11 @@ geosearch_guide_sort_usage_2: |-
       ]
     }'
 basic_security_tutorial_listing_1: |-
-  curl -X GET 'http://localhost:7700/keys' \
+  curl -X GET 'MEILISEARCH_URL/keys' \
   -H 'Authorization: Bearer MASTER_KEY'
 basic_security_tutorial_admin_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes' \
+    -X POST 'MEILISEARCH_URL/indexes' \
     -H 'Content-Type: application/json' \
     -H 'Authorization: Bearer DEFAULT_ADMIN_API_KEY' \
     --data-binary '{
@@ -713,23 +713,23 @@ basic_security_tutorial_admin_1: |-
     }'
 basic_security_tutorial_search_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/medical_records/search' \
+    -X POST 'MEILISEARCH_URL/indexes/medical_records/search' \
     -H 'Content-Type: application/json' \
     -H 'Authorization: Bearer DEFAULT_SEARCH_API_KEY' \
     --data-binary '{ "q": "appointments" }'
 security_guide_search_key_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/patient_medical_records/search' \
+    -X POST 'MEILISEARCH_URL/indexes/patient_medical_records/search' \
     -H 'Authorization: Bearer API_KEY'
 security_guide_update_key_1: |-
   curl \
-    -X PATCH 'http://localhost:7700/keys/74c9c733-3368-4738-bbe5-1d18a5fecb37' \
+    -X PATCH 'MEILISEARCH_URL/keys/74c9c733-3368-4738-bbe5-1d18a5fecb37' \
     -H 'Authorization: Bearer MASTER_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{ "description": "Default Search API Key" }'
 security_guide_create_key_1: |-
   curl \
-    -X POST 'http://localhost:7700/keys' \
+    -X POST 'MEILISEARCH_URL/keys' \
     -H 'Content-Type: application/json' \
     -H 'Authorization: Bearer MASTER_KEY' \
     --data-binary '{
@@ -740,15 +740,15 @@ security_guide_create_key_1: |-
     }'
 security_guide_list_keys_1: |-
   curl \
-    -X GET 'http://localhost:7700/keys' \
+    -X GET 'MEILISEARCH_URL/keys' \
     -H 'Authorization: Bearer MASTER_KEY'
 security_guide_delete_key_1: |-
   curl \
-    -X DELETE 'http://localhost:7700/keys/ac5cd97d-5a4b-4226-a868-2d0eb6d197ab' \
+    -X DELETE 'MEILISEARCH_URL/keys/ac5cd97d-5a4b-4226-a868-2d0eb6d197ab' \
     -H 'Authorization: Bearer MASTER_KEY'
 primary_field_guide_create_index_primary_key: |-
   curl \
-    -X POST 'http://localhost:7700/indexes' \
+    -X POST 'MEILISEARCH_URL/indexes' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "uid": "books",
@@ -756,7 +756,7 @@ primary_field_guide_create_index_primary_key: |-
     }'
 primary_field_guide_add_document_primary_key: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/books/documents?primaryKey=reference_number' \
+    -X POST 'MEILISEARCH_URL/indexes/books/documents?primaryKey=reference_number' \
     -H 'Content-Type: application/json' \
     --data-binary '[
       {
@@ -772,19 +772,19 @@ primary_field_guide_add_document_primary_key: |-
     ]'
 primary_field_guide_update_document_primary_key: |-
   curl \
-    -X PATCH 'http://localhost:7700/indexes/books' \
+    -X PATCH 'MEILISEARCH_URL/indexes/books' \
     -H 'Content-Type: application/json' \
     --data-binary '{ "primaryKey": "title" }'
 tenant_token_guide_search_no_sdk_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/patient_medical_records/search' \
+    -X POST 'MEILISEARCH_URL/indexes/patient_medical_records/search' \
     -H 'Authorization: Bearer TENANT_TOKEN'
 get_typo_tolerance_1: |-
   curl \
-    -X GET 'http://localhost:7700/indexes/books/settings/typo-tolerance'
+    -X GET 'MEILISEARCH_URL/indexes/books/settings/typo-tolerance'
 update_typo_tolerance_1: |-
   curl \
-    -X PATCH 'http://localhost:7700/indexes/books/settings/typo-tolerance' \
+    -X PATCH 'MEILISEARCH_URL/indexes/books/settings/typo-tolerance' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "minWordSizeForTypos": {
@@ -795,20 +795,20 @@ update_typo_tolerance_1: |-
     }'
 reset_typo_tolerance_1: |-
   curl \
-    -X DELETE 'http://localhost:7700/indexes/books/settings/typo-tolerance'
+    -X DELETE 'MEILISEARCH_URL/indexes/books/settings/typo-tolerance'
 typo_tolerance_guide_1: |-
   curl \
-    -X PATCH 'http://localhost:7700/indexes/movies/settings/typo-tolerance' \
+    -X PATCH 'MEILISEARCH_URL/indexes/movies/settings/typo-tolerance' \
     -H 'Content-Type: application/json' \
     --data-binary '{ "enabled": false }'
 typo_tolerance_guide_2: |-
   curl \
-    -X PATCH 'http://localhost:7700/indexes/movies/settings/typo-tolerance' \
+    -X PATCH 'MEILISEARCH_URL/indexes/movies/settings/typo-tolerance' \
     -H 'Content-Type: application/json' \
     --data-binary '{ "disableOnAttributes": ["title"] }'
 typo_tolerance_guide_3: |-
   curl \
-    -X PATCH 'http://localhost:7700/indexes/movies/settings/typo-tolerance' \
+    -X PATCH 'MEILISEARCH_URL/indexes/movies/settings/typo-tolerance' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "disableOnWords": [
@@ -817,7 +817,7 @@ typo_tolerance_guide_3: |-
     }'
 typo_tolerance_guide_4: |-
   curl \
-    -X PATCH 'http://localhost:7700/indexes/movies/settings/typo-tolerance' \
+    -X PATCH 'MEILISEARCH_URL/indexes/movies/settings/typo-tolerance' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "minWordSizeForTypos": {
@@ -849,30 +849,30 @@ updating_guide_create_dump: |-
   # -H 'X-Meili-API-Key: API_KEY' for v0.24 or below
 getting_started_typo_tolerance: |-
   curl \
-    -X PATCH 'http://localhost:7700/indexes/movies/settings/typo-tolerance' \
+    -X PATCH 'MEILISEARCH_URL/indexes/movies/settings/typo-tolerance' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "minWordSizeForTypos": { "oneTypo": 4 }
   }'
 get_pagination_settings_1: |-
   curl \
-    -X GET 'http://localhost:7700/indexes/books/settings/pagination'
+    -X GET 'MEILISEARCH_URL/indexes/books/settings/pagination'
 update_pagination_settings_1: |-
   curl \
-    -X PATCH 'http://localhost:7700/indexes/books/settings/pagination' \
+    -X PATCH 'MEILISEARCH_URL/indexes/books/settings/pagination' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "maxTotalHits": 100
     }'
 reset_pagination_settings_1: |-
   curl \
-    -X DELETE 'http://localhost:7700/indexes/books/settings/pagination'
+    -X DELETE 'MEILISEARCH_URL/indexes/books/settings/pagination'
 get_faceting_settings_1: |-
   curl \
-    -X GET 'http://localhost:7700/indexes/books/settings/faceting'
+    -X GET 'MEILISEARCH_URL/indexes/books/settings/faceting'
 update_faceting_settings_1: |-
   curl \
-    -X PATCH 'http://localhost:7700/indexes/books/settings/faceting' \
+    -X PATCH 'MEILISEARCH_URL/indexes/books/settings/faceting' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "maxValuesPerFacet": 2,
@@ -883,17 +883,17 @@ update_faceting_settings_1: |-
     }'
 reset_faceting_settings_1: |-
   curl \
-    -X DELETE 'http://localhost:7700/indexes/books/settings/faceting'
+    -X DELETE 'MEILISEARCH_URL/indexes/books/settings/faceting'
 synonyms_guide_1: |-
   curl \
-    -X PUT 'http://localhost:7700/indexes/movies/settings/synonyms' \
+    -X PUT 'MEILISEARCH_URL/indexes/movies/settings/synonyms' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "great": ["fantastic"], "fantastic": ["great"]
     }'
 getting_started_faceting: |-
   curl \
-    -X PATCH 'http://localhost:7700/indexes/movies/settings/faceting' \
+    -X PATCH 'MEILISEARCH_URL/indexes/movies/settings/faceting' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "maxValuesPerFacet": 2,
@@ -903,14 +903,14 @@ getting_started_faceting: |-
     }'
 getting_started_pagination: |-
   curl \
-    -X PATCH 'http://localhost:7700/indexes/movies/settings/pagination' \
+    -X PATCH 'MEILISEARCH_URL/indexes/movies/settings/pagination' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "maxTotalHits": 500
     }'
 search_parameter_guide_matching_strategy_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/movies/search' \
+    -X POST 'MEILISEARCH_URL/indexes/movies/search' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "big fat liar",
@@ -918,7 +918,7 @@ search_parameter_guide_matching_strategy_1: |-
     }'
 search_parameter_guide_matching_strategy_2: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/movies/search' \
+    -X POST 'MEILISEARCH_URL/indexes/movies/search' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "big fat liar",
@@ -926,7 +926,7 @@ search_parameter_guide_matching_strategy_2: |-
     }'
 search_parameter_guide_matching_strategy_3: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/movies/search' \
+    -X POST 'MEILISEARCH_URL/indexes/movies/search' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "white shirt",
@@ -934,19 +934,19 @@ search_parameter_guide_matching_strategy_3: |-
     }'
 date_guide_index_1: |-
   curl \
-    -x POST 'http://localhost:7700/indexes/games/documents' \
+    -x POST 'MEILISEARCH_URL/indexes/games/documents' \
     -h 'content-type: application/json' \
     --data-binary @games.json
 date_guide_filterable_attributes_1: |-
   curl \
-    -X PUT 'http://localhost:7700/indexes/games/settings/filterable-attributes' \
+    -X PUT 'MEILISEARCH_URL/indexes/games/settings/filterable-attributes' \
     -H 'Content-Type: application/json' \
     --data-binary '[
       "release_timestamp"
     ]'
 date_guide_filter_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/games/search' \
+    -X POST 'MEILISEARCH_URL/indexes/games/search' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "",
@@ -954,14 +954,14 @@ date_guide_filter_1: |-
     }'
 date_guide_sortable_attributes_1: |-
   curl \
-    -X PUT 'http://localhost:7700/indexes/games/settings/sortable-attributes' \
+    -X PUT 'MEILISEARCH_URL/indexes/games/settings/sortable-attributes' \
     -H 'Content-Type: application/json' \
     --data-binary '[
       "release_timestamp"
     ]'
 date_guide_sort_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/games/search' \
+    -X POST 'MEILISEARCH_URL/indexes/games/search' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "",
@@ -969,22 +969,22 @@ date_guide_sort_1: |-
     }'
 async_guide_filter_by_statuses_1: |-
   curl \
-    -X GET 'http://localhost:7700/tasks?statuses=failed'
+    -X GET 'MEILISEARCH_URL/tasks?statuses=failed'
 async_guide_filter_by_statuses_2: |-
   curl \
-    -X GET 'http://localhost:7700/tasks?statuses=failed,canceled'
+    -X GET 'MEILISEARCH_URL/tasks?statuses=failed,canceled'
 async_guide_multiple_filters_1: |-
   curl \
-    -X GET 'http://localhost:7700/tasks?indexUids=movies&types=documentAdditionOrUpdate,documentDeletion&statuses=processing'
+    -X GET 'MEILISEARCH_URL/tasks?indexUids=movies&types=documentAdditionOrUpdate,documentDeletion&statuses=processing'
 delete_tasks_1: |-
   curl \
-    -X DELETE 'http://localhost:7700/tasks?uids=1,2'
+    -X DELETE 'MEILISEARCH_URL/tasks?uids=1,2'
 cancel_tasks_1: |-
   curl \
-    -X POST 'http://localhost:7700/tasks/cancel?uids=1,2'
+    -X POST 'MEILISEARCH_URL/tasks/cancel?uids=1,2'
 swap_indexes_1: |-
   curl \
-    -X POST 'http://localhost:7700/swap-indexes' \
+    -X POST 'MEILISEARCH_URL/swap-indexes' \
     -H 'Content-Type: application/json' \
     --data-binary '[
       {
@@ -1002,7 +1002,7 @@ swap_indexes_1: |-
     ]'
 multi_search_1: |-
   curl \
-    -X POST 'http://localhost:7700/multi-search' \
+    -X POST 'MEILISEARCH_URL/multi-search' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "queries": [
@@ -1024,7 +1024,7 @@ multi_search_1: |-
     }'
 multi_search_federated_1: |-
   curl \
-    -X POST 'http://localhost:7700/multi-search' \
+    -X POST 'MEILISEARCH_URL/multi-search' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "federation": {},
@@ -1041,14 +1041,14 @@ multi_search_federated_1: |-
     }'
 faceted_search_update_settings_1: |-
   curl \
-    -X PUT 'http://localhost:7700/indexes/books/settings/filterable-attributes' \
+    -X PUT 'MEILISEARCH_URL/indexes/books/settings/filterable-attributes' \
     -H 'Content-Type: application/json' \
     --data-binary '[
       "genres", "rating", "language"
     ]'
 faceted_search_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/books/search' \
+    -X POST 'MEILISEARCH_URL/indexes/books/search' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "classic",
@@ -1058,7 +1058,7 @@ faceted_search_1: |-
   }'
 search_parameter_guide_facet_stats_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/movie_ratings/search' \
+    -X POST 'MEILISEARCH_URL/indexes/movie_ratings/search' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "Batman",
@@ -1066,7 +1066,7 @@ search_parameter_guide_facet_stats_1: |-
     }'
 filtering_update_settings_1: |-
   curl \
-    -X PUT 'http://localhost:7700/indexes/movie_ratings/settings/filterable-attributes' \
+    -X PUT 'MEILISEARCH_URL/indexes/movie_ratings/settings/filterable-attributes' \
     -H 'Content-Type: application/json' \
     --data-binary '[
       "genres",
@@ -1076,7 +1076,7 @@ filtering_update_settings_1: |-
     ]'
 get_documents_post_1: |-
   curl \
-    -X POST http://localhost:7700/indexes/books/documents/fetch \
+    -X POST MEILISEARCH_URL/indexes/books/documents/fetch \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "filter": "(rating > 3 AND (genres = Adventure OR genres = Fiction)) AND language = English",
@@ -1085,24 +1085,24 @@ get_documents_post_1: |-
     }'
 delete_documents_by_filter_1: |-
   curl \
-    -X POST http://localhost:7700/indexes/movies/documents/delete \
+    -X POST MEILISEARCH_URL/indexes/movies/documents/delete \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "filter": "genres = action OR genres = adventure"
     }'
 get_experimental_features_1: |-
   curl \
-    -X GET 'http://localhost:7700/experimental-features/'
+    -X GET 'MEILISEARCH_URL/experimental-features/'
 update_experimental_features_1: |-
   curl \
-    -X PATCH 'http://localhost:7700/experimental-features/' \
+    -X PATCH 'MEILISEARCH_URL/experimental-features/' \
     -H 'Content-Type: application/json'  \
     --data-binary '{
       "metrics": true
     }'
 facet_search_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/books/facet-search' \
+    -X POST 'MEILISEARCH_URL/indexes/books/facet-search' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "facetQuery": "fiction",
@@ -1111,7 +1111,7 @@ facet_search_1: |-
     }'
 facet_search_2: |-
   curl \
-    -X PATCH 'http://localhost:7700/indexes/books/settings/faceting' \
+    -X PATCH 'MEILISEARCH_URL/indexes/books/settings/faceting' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "sortFacetValuesBy": {
@@ -1120,7 +1120,7 @@ facet_search_2: |-
   }'
 facet_search_3: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/books/facet-search' \
+    -X POST 'MEILISEARCH_URL/indexes/books/facet-search' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "facetQuery": "c",
@@ -1128,7 +1128,7 @@ facet_search_3: |-
   }'
 search_parameter_guide_show_ranking_score_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/movies/search' \
+    -X POST 'MEILISEARCH_URL/indexes/movies/search' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "dragon",
@@ -1136,7 +1136,7 @@ search_parameter_guide_show_ranking_score_1: |-
     }'
 search_parameter_guide_show_ranking_score_details_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/movies/search' \
+    -X POST 'MEILISEARCH_URL/indexes/movies/search' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "dragon",
@@ -1145,7 +1145,7 @@ search_parameter_guide_show_ranking_score_details_1: |-
 
 search_parameter_guide_attributes_to_search_on_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/movies/search' \
+    -X POST 'MEILISEARCH_URL/indexes/movies/search' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "adventure",
@@ -1153,32 +1153,32 @@ search_parameter_guide_attributes_to_search_on_1: |-
     }'
 get_separator_tokens_1: |-
   curl \
-    -X GET 'http://localhost:7700/indexes/articles/settings/separator-tokens'
+    -X GET 'MEILISEARCH_URL/indexes/articles/settings/separator-tokens'
 update_separator_tokens_1: |-
   curl \
-    -X PUT 'http://localhost:7700/indexes/articles/settings/separator-tokens' \
+    -X PUT 'MEILISEARCH_URL/indexes/articles/settings/separator-tokens' \
     -H 'Content-Type: application/json'  \
     --data-binary '["|", "&hellip;"]'
 reset_separator_tokens_1: |-
   curl \
-    -X DELETE 'http://localhost:7700/indexes/articles/settings/separator-tokens'
+    -X DELETE 'MEILISEARCH_URL/indexes/articles/settings/separator-tokens'
 get_non_separator_tokens_1: |-
   curl \
-    -X GET 'http://localhost:7700/indexes/articles/settings/non-separator-tokens'
+    -X GET 'MEILISEARCH_URL/indexes/articles/settings/non-separator-tokens'
 update_non_separator_tokens_1: |-
   curl \
-    -X PUT 'http://localhost:7700/indexes/articles/settings/non-separator-tokens' \
+    -X PUT 'MEILISEARCH_URL/indexes/articles/settings/non-separator-tokens' \
     -H 'Content-Type: application/json'  \
     --data-binary '["@", "#"]'
 reset_non_separator_tokens_1: |-
   curl \
-    -X DELETE 'http://localhost:7700/indexes/articles/settings/non-separator-tokens'
+    -X DELETE 'MEILISEARCH_URL/indexes/articles/settings/non-separator-tokens'
 get_dictionary_1: |-
   curl \
-    -X GET 'http://localhost:7700/indexes/books/settings/dictionary'
+    -X GET 'MEILISEARCH_URL/indexes/books/settings/dictionary'
 update_dictionary_1: |-
   curl \
-    -X PUT 'http://localhost:7700/indexes/books/settings/dictionary' \
+    -X PUT 'MEILISEARCH_URL/indexes/books/settings/dictionary' \
     -H 'Content-Type: application/json' \
     --data-binary '[
       "J. R. R.",
@@ -1186,27 +1186,27 @@ update_dictionary_1: |-
     ]'
 reset_dictionary_1: |-
   curl \
-    -X DELETE 'http://localhost:7700/indexes/books/settings/dictionary'
+    -X DELETE 'MEILISEARCH_URL/indexes/books/settings/dictionary'
 create_snapshot_1: |-
   curl \
-    -X POST 'http://localhost:7700/snapshots'
+    -X POST 'MEILISEARCH_URL/snapshots'
 get_proximity_precision_settings_1: |-
   curl \
-    -X GET 'http://localhost:7700/indexes/books/settings/proximity-precision'
+    -X GET 'MEILISEARCH_URL/indexes/books/settings/proximity-precision'
 update_proximity_precision_settings_1: |-
   curl \
-    -X PUT 'http://localhost:7700/indexes/books/settings/proximity-precision' \
+    -X PUT 'MEILISEARCH_URL/indexes/books/settings/proximity-precision' \
     -H 'Content-Type: application/json' \
     --data-binary '"byAttribute"'
 reset_proximity_precision_settings_1: |-
   curl \
-    -X DELETE 'http://localhost:7700/indexes/books/settings/proximity-precision'
+    -X DELETE 'MEILISEARCH_URL/indexes/books/settings/proximity-precision'
 index_settings_tutorial_api_get_setting_1: |-
   curl \
-    -X GET 'http://localhost:7700/indexes/INDEX_NAME/settings/searchable-attributes'
+    -X GET 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/searchable-attributes'
 index_settings_tutorial_api_put_setting_1: |-
   curl \
-    -X PUT 'http://localhost:7700/indexes/INDEX_NAME/settings/searchable-attributes' \
+    -X PUT 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/searchable-attributes' \
     -H 'Content-Type: application/json' \
     --data-binary '[
       "title",
@@ -1214,26 +1214,26 @@ index_settings_tutorial_api_put_setting_1: |-
     ]'
 index_settings_tutorial_api_task_1: |-
   curl \
-    -X GET 'http://localhost:7700/tasks/TASK_UID'
+    -X GET 'MEILISEARCH_URL/tasks/TASK_UID'
 get_search_cutoff_1: |-
   curl \
-    -X GET 'http://localhost:7700/indexes/movies/settings/search-cutoff-ms'
+    -X GET 'MEILISEARCH_URL/indexes/movies/settings/search-cutoff-ms'
 update_search_cutoff_1: |-
   curl \
-    -X PUT 'http://localhost:7700/indexes/movies/settings/search-cutoff-ms' \
+    -X PUT 'MEILISEARCH_URL/indexes/movies/settings/search-cutoff-ms' \
     -H 'Content-Type: application/json' \
     --data-binary '150'
 reset_search_cutoff_1: |-
   curl \
-    -X DELETE 'http://localhost:7700/indexes/movies/settings/search-cutoff-ms'
+    -X DELETE 'MEILISEARCH_URL/indexes/movies/settings/search-cutoff-ms'
 negative_search_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/movies/search' \
+    -X POST 'MEILISEARCH_URL/indexes/movies/search' \
     -H 'Content-Type: application/json' \
     --data-binary '{ "q": "-escape" }'
 negative_search_2: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/movies/search' \
+    -X POST 'MEILISEARCH_URL/indexes/movies/search' \
     -H 'Content-Type: application/json' \
     --data-binary '{ "q": "-\"escape room\"" }'
 analytics_event_click_1: |-
@@ -1262,7 +1262,7 @@ analytics_event_conversion_1: |-
     }'
 analytics_event_bind_search_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/INDEX_NAME/search' \
+    -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
     -H 'Content-Type: application/json' \
     -H 'Authorization: Bearer DEFAULT_SEARCH_API_KEY' \
     -H 'X-MS-USER-ID: MEILISEARCH_USER_ID' \
@@ -1282,7 +1282,7 @@ analytics_event_bind_event_1: |-
     }'
 search_parameter_reference_distinct_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/INDEX_NAME/search' \
+    -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "QUERY TERMS",
@@ -1290,7 +1290,7 @@ search_parameter_reference_distinct_1: |-
     }'
 distinct_attribute_guide_filterable_1: |-
   curl \
-    -X PUT 'http://localhost:7700/indexes/products/settings/filterable-attributes' \
+    -X PUT 'MEILISEARCH_URL/indexes/products/settings/filterable-attributes' \
     -H 'Content-Type: application/json' \
     --data-binary '[
       "product_id",
@@ -1299,7 +1299,7 @@ distinct_attribute_guide_filterable_1: |-
     ]'
 distinct_attribute_guide_distinct_parameter_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/products/search' \
+    -X POST 'MEILISEARCH_URL/indexes/products/search' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "white shirt",
@@ -1307,7 +1307,7 @@ distinct_attribute_guide_distinct_parameter_1: |-
     }'
 get_similar_post_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/INDEX_NAME/similar' \
+    -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/similar' \
     -H 'Content-Type: application/json' \
     -H 'Authorization: Bearer DEFAULT_SEARCH_API_KEY' \
     --data-binary '{
@@ -1316,10 +1316,10 @@ get_similar_post_1: |-
     }'
 get_similar_get_1: |-
   curl \
-    -X GET 'http://localhost:7700/indexes/INDEX_NAME/similar?id=TARGET_DOCUMENT_ID&embedder=EMBEDDER_NAME'
+    -X GET 'MEILISEARCH_URL/indexes/INDEX_NAME/similar?id=TARGET_DOCUMENT_ID&embedder=EMBEDDER_NAME'
 search_parameter_reference_ranking_score_threshold_1: |-
   curl \
-  -X POST 'http://localhost:7700/indexes/INDEX_NAME/search' \
+  -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
   -H 'Content-Type: application/json' \
   --data-binary '{
       "q": "badman",
@@ -1327,7 +1327,7 @@ search_parameter_reference_ranking_score_threshold_1: |-
   }'
 search_parameter_reference_locales_1: |-
   curl \
-  -X POST 'http://localhost:7700/indexes/INDEX_NAME/search' \
+  -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "q": "QUERY TEXT IN JAPANESE",
@@ -1335,10 +1335,10 @@ search_parameter_reference_locales_1: |-
   }'
 get_localized_attribute_settings_1: |-
   curl \
-    -X GET 'http://localhost:7700/indexes/INDEX_NAME/settings/localized-attributes'
+    -X GET 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/localized-attributes'
 update_localized_attribute_settings_1: |-
   curl \
-    -X PUT 'http://localhost:7700/indexes/INDEX_NAME/settings/localized-attributes' \
+    -X PUT 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/localized-attributes' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "localizedAttributes": [
@@ -1347,15 +1347,15 @@ update_localized_attribute_settings_1: |-
     }'
 reset_localized_attribute_settings_1: |-
   curl \
-    -X DELETE 'http://localhost:7700/indexes/INDEX_NAME/settings/localized-attributes'
+    -X DELETE 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/localized-attributes'
 
 ### Code samples for experimental features
 get_embedders_1: |-
   curl \
-    -X GET 'http://localhost:7700/indexes/INDEX_NAME/settings/embedders'
+    -X GET 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/embedders'
 update_embedders_1: |-
   curl \
-    -X PATCH 'http://localhost:7700/indexes/INDEX_NAME/settings' \
+    -X PATCH 'MEILISEARCH_URL/indexes/INDEX_NAME/settings' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "embedders": {
@@ -1369,7 +1369,7 @@ update_embedders_1: |-
     }'
 reset_embedders_1: |-
   curl \
-    -X DELETE 'http://localhost:7700/indexes/INDEX_NAME/settings/embedders'
+    -X DELETE 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/embedders'
 search_parameter_guide_hybrid_1: |-
   curl -X POST 'localhost:7700/indexes/INDEX_NAME/search' \
     -H 'content-type: application/json' \
@@ -1399,17 +1399,17 @@ search_parameter_reference_retrieve_vectors_1: |-
     }'
 experimental_get_metrics_1: |-
   curl \
-    -X GET 'http://localhost:7700/metrics'
+    -X GET 'MEILISEARCH_URL/metrics'
 experimental_post_logs_stderr_1: |-
   curl \
-    -X POST http://localhost:7700/logs/stderr \
+    -X POST MEILISEARCH_URL/logs/stderr \
     -H 'Content-Type: application/json' \
     --data-binary '{
         "target": "milli=trace,index_scheduler=info,actix_web=off"
     }'
 experimental_post_logs_stream_1: |-
   curl \
-    -X POST http://localhost:7700/logs/stream \
+    -X POST MEILISEARCH_URL/logs/stream \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "mode": "human",
@@ -1417,4 +1417,4 @@ experimental_post_logs_stream_1: |-
     }'
 experimental_delete_logs_stream_1: |-
   curl \
-    -X DELETE http://localhost:7700/logs/stream
+    -X DELETE MEILISEARCH_URL/logs/stream
