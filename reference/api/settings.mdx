@@ -2439,7 +2439,7 @@ Use `distribution` when configuring an embedder to correct the returned `_rankin
 
 ```sh
 curl \
-  -X PATCH 'MEILISEARCH_URL/indexes/INDEX_NAME/settings' \
+  -X PATCH 'http://MEILISEARCH_URL/indexes/INDEX_NAME/settings' \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "embedders": {

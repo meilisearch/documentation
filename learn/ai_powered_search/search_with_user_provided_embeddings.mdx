@@ -17,7 +17,7 @@ Configure the `embedder` index setting, settings its source to `userProvided`:
 
 ```sh
 curl \
-  -X PATCH 'MEILISEARCH_URL/indexes/movies/settings' \
+  -X PATCH 'http://MEILISEARCH_URL/indexes/movies/settings' \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "embedders": {
