@@ -21,9 +21,9 @@ Download the following datasets: <a href="/assets/datasets/crm-chats.json">`crm-
 Add the datasets to Meilisearch and create three separate indexes, `profiles`, `chats`, and `tickets`:
 
 ```sh
-curl  -X POST 'http://MEILISEARCH_URL/indexes/profiles'  -H 'Content-Type: application/json'  --data-binary @crm-profiles.json &&
-curl  -X POST 'http://MEILISEARCH_URL/indexes/chats'  -H 'Content-Type: application/json'  --data-binary @crm-chats.json &&
-curl  -X POST 'http://MEILISEARCH_URL/indexes/tickets'  -H 'Content-Type: application/json'  --data-binary @crm-tickets.json
+curl  -X POST 'https://MEILISEARCH_URL/indexes/profiles'  -H 'Content-Type: application/json'  --data-binary @crm-profiles.json &&
+curl  -X POST 'https://MEILISEARCH_URL/indexes/chats'  -H 'Content-Type: application/json'  --data-binary @crm-chats.json &&
+curl  -X POST 'https://MEILISEARCH_URL/indexes/tickets'  -H 'Content-Type: application/json'  --data-binary @crm-tickets.json
 ```
 
 [Use the tasks endpoint](/learn/async/working_with_tasks) to check the indexing status. Once Meilisearch successfully indexed all three datasets, you are ready to perform a federated search.
@@ -36,7 +36,7 @@ Use the `/multi-search` endpoint with the `federation` parameter to query the th
 
 ```sh
 curl \
-  -X POST 'http://MEILISEARCH_URL/multi-search' \
+  -X POST 'https://MEILISEARCH_URL/multi-search' \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "federation": {},
@@ -90,7 +90,7 @@ Use the `weight` property of the `federation` parameter to boost results coming 
 
 ```sh
 curl \
-  -X POST 'http://MEILISEARCH_URL/multi-search' \
+  -X POST 'https://MEILISEARCH_URL/multi-search' \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "federation": {},
