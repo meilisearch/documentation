@@ -95,7 +95,7 @@ When both `facetsByIndex` and `mergeFacets` are present and not null, facet info
 {
   "hits": [ … ],
   …
-  "facetFederation": {
+  "facetDistribution": {
     "ATTRIBUTE": {
       "VALUE": <Integer>,
       "VALUE": <Integer>
@@ -207,19 +207,14 @@ Federated search requests return a single object and the following fields:
 
 | Name                     | Type             | Description                                                                      |
 | :----------------------- | :--------------- | :------------------------------------------------------------------------------- |
-| **`indexUid`**           | String           | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index           |
 | **`hits`**               | Array of objects | Results of the query                                                             |
 | **`offset`**             | Number           | Number of documents skipped                                                      |
 | **`limit`**              | Number           | Number of documents to take                                                      |
 | **`estimatedTotalHits`** | Number           | Estimated total number of matches                                                |
-| **`totalHits`**          | Number           | Exhaustive total number of matches                                               |
-| **`totalPages`**         | Number           | Exhaustive total number of search result pages                                   |
-| **`hitsPerPage`**        | Number           | Number of results on each page                                                   |
-| **`page`**               | Number           | Current search results page                                                      |
-| **`facetDistribution`**  | Object           | **[Distribution of the given facets](/reference/api/search#facetdistribution)**  |
-| **`facetStats`**         | Object           | [The numeric `min` and `max` values per facet](/reference/api/search#facetstats) |
 | **`processingTimeMs`**   | Number           | Processing time of the query                                                     |
-| **`query`**              | String           | Query originating the response                                                   |
+| **`facetsByIndex`**      | Object           | See `facetsByIndex` parameter                                                    |
+| **`facetDistribution`**  | Object           | See `mergeFacts` parameter                                                       |
+| **`facetStats`**         | Object           | See `mergeFacts` parameter                                                       |
 
 Each result in the `hits` array contains an additional `_federation` field with the following fields:
 
