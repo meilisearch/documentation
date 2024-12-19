@@ -198,9 +198,13 @@ This list is liable to change with every new version of Meilisearch. It's not be
 | `pagination.max_total_hits`                        | The defined value for the `pagination.maxTotalHits` property                                | 1000
 | `faceting.max_values_per_facet`                    | The defined value for the `faceting.maxValuesPerFacet` property                             | 100
 | `distinct_attribute.set`                           | `true` if a field name is specified, otherwise `false`                                      | false
-| `distinct`  | Boolean indicating whether a distinct was specified in an aggregated list of requests. | true |
-| `proximity_precision.set`                          | `true` if the setting has been manually set, otherwise `false`.                             | `false`
-| `proximity_precision.value`                        | `byWord` or `byAttribute`.                    | `byWord`
+| `distinct`                                         | Boolean indicating whether a distinct was specified in an aggregated list of requests.      | true
+| `proximity_precision.set`                          | `true` if the setting has been manually set, otherwise `false`.                             | fals`
+| `proximity_precision.value`                        | `byWord` or `byAttribute`.                                                                  | "byWord"
+| `facet_search.set`                                 | `facetSearch` has been changed by the user                                                  | true
+| `facet_search.value`                               | `facetSearch` value set by the user                                                         | true
+| `prefix_search.set`                                | `prefixSearch` has been changed by the user                                                 | true
+| `prefix_search.value`                              | `prefixSearch` value set by the user                                                        | "indexingTime"
 | `displayed_attributes.total`                       | Number of displayed attributes                                                              | 3
 | `displayed_attributes.with_wildcard`               | `true` if `*` is specified as a displayed attribute, otherwise `false`                      | false
 | `stop_words.total`                                 | Number of stop words                                                                        | 3

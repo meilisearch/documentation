@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "cc6bb097-033d-4f65-8704-f10e4e4b10d0",
-		"name": "Meilisearch v1.11",
+		"name": "Meilisearch v1.12",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "25294324"
 	},
@@ -653,6 +653,11 @@
 									"disabled": true
 								},
 								{
+									"key": "batchUids",
+									"value": "0",
+									"disabled": true
+								},
+								{
 									"key": "indexUids",
 									"value": "books",
 									"disabled": true
@@ -669,37 +674,37 @@
 								},
 								{
 									"key": "beforeEnqueuedAt",
-									"value": null,
+									"value": "",
 									"disabled": true
 								},
 								{
 									"key": "afterEnqueuedAt",
-									"value": null,
+									"value": "",
 									"disabled": true
 								},
 								{
 									"key": "beforeStartedAt",
-									"value": null,
+									"value": "",
 									"disabled": true
 								},
 								{
 									"key": "afterStartedAt",
-									"value": null,
+									"value": "",
 									"disabled": true
 								},
 								{
 									"key": "beforeFinishedAt",
-									"value": null,
+									"value": "",
 									"disabled": true
 								},
 								{
 									"key": "afterFinishedAt",
-									"value": null,
+									"value": "",
 									"disabled": true
 								},
 								{
 									"key": "canceledBy",
-									"value": null,
+									"value": "",
 									"disabled": true
 								},
 								{
@@ -710,6 +715,11 @@
 								{
 									"key": "from",
 									"value": "10",
+									"disabled": true
+								},
+								{
+									"key": "reverse",
+									"value": "true",
 									"disabled": true
 								}
 							]
@@ -879,6 +889,118 @@
 								{
 									"key": "from",
 									"value": "10",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Batches",
+			"item": [
+				{
+					"name": "Get one batch",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/batches/0",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"batches",
+								"0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all batches",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/batches",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"batches"
+							],
+							"query": [
+								{
+									"key": "uids",
+									"value": "3",
+									"disabled": true
+								},
+								{
+									"key": "batchUids",
+									"value": "0,1",
+									"disabled": true
+								},
+								{
+									"key": "indexUids",
+									"value": "books",
+									"disabled": true
+								},
+								{
+									"key": "types",
+									"value": "documentAdditionOrUpdate",
+									"disabled": true
+								},
+								{
+									"key": "statuses",
+									"value": "failed",
+									"disabled": true
+								},
+								{
+									"key": "beforeEnqueuedAt",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "afterEnqueuedAt",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "beforeStartedAt",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "afterStartedAt",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "beforeFinishedAt",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "afterFinishedAt",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "2",
+									"disabled": true
+								},
+								{
+									"key": "from",
+									"value": "10",
+									"disabled": true
+								},
+								{
+									"key": "reverse",
+									"value": "true",
 									"disabled": true
 								}
 							]
@@ -2379,6 +2501,156 @@
 										"{{indexUID}}",
 										"settings",
 										"proximity-precision"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get facet search",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/facet-search",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"facet-search"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update facet search",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "false"
+								},
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/facet-search",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"facet-search"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Reset facet search",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/facet-search",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"facet-search"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get prefix search",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/prefix-search",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"prefix-search"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update prefix search",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "\"disabled\""
+								},
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/prefix-search",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"prefix-search"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Reset prefix search",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/prefix-search",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"prefix-search"
 									]
 								}
 							},

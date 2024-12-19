@@ -44,6 +44,11 @@
         "slug": "tasks"
       },
       {
+        "source": "reference/api/batches.mdx",
+        "label": "Batches",
+        "slug": "batches"
+      },
+      {
         "source": "reference/api/keys.mdx",
         "label": "Keys",
         "slug": "keys"
