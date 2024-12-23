@@ -35,6 +35,10 @@ The requested document can't be retrieved. Either it doesn't exist, or the datab
 
 An error occurred during the dump creation process. The task was aborted.
 
+## `facet_search_disabled`
+
+The [`/facet-search`](/reference/api/facet_search) route has been queried while [the `facetSearch` index setting](/reference/api/settings#facet-search) is set to `false`.
+
 ## `immutable_api_key_actions`
 
 The [`actions`](/reference/api/keys#actions) field of an API key cannot be modified.
@@ -93,7 +97,7 @@ The requested index already has a primary key that [cannot be changed](/learn/ge
 
 ## `internal`
 
- Meilisearch experienced an internal error. Check the error message, and [open an issue](https://github.com/meilisearch/meilisearch/issues/new?assignees=&labels=&template=bug_report&title=) if necessary.
+Meilisearch experienced an internal error. Check the error message, and [open an issue](https://github.com/meilisearch/meilisearch/issues/new?assignees=&labels=&template=bug_report&title=) if necessary.
 
 ## `invalid_api_key`
 
@@ -296,6 +300,10 @@ The [`limit`](/reference/api/search#limit) parameter is invalid. It should be an
 
 The [`locales`](/reference/api/search#query-locales) parameter is invalid.
 
+## `invalid_settings_facet_search`
+
+The [`facetSearch`](/reference/api/settings#facet-search) index setting value is invalid.
+
 ## `invalid_settings_localized_attributes`
 
 The [`localizedAttributes`](/reference/api/settings#localized-attributes) index setting value is invalid.
@@ -307,6 +315,10 @@ The [`matchingStrategy`](/reference/api/search#matching-strategy) parameter is i
 ## `invalid_search_offset`
 
 The [`offset`](/reference/api/search#offset) parameter is invalid. It should be an integer.
+
+## `invalid_settings_prefix_search`
+
+The [`prefixSearch`](/reference/api/settings#prefix-search) index setting value is invalid.
 
 ## `invalid_search_page`
 
