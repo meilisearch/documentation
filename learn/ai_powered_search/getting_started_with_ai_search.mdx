@@ -17,9 +17,9 @@ This tutorial will walk you through configuring AI-powered search in your Meilis
 
 ## Create a new index
 
-First, create a new Meilisearch project. If you need a refresher or if this is your first time using Meilisearch, follow the [getting started](/learn/getting_started/cloud_quick_start).
+First, create a new Meilisearch project. If this is your first time using Meilisearch, follow the [Meilisearch quick start](/learn/getting_started/cloud_quick_start).
 
-Next, create a `kitchenware` index and add [this kitchenware products dataset](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/datasets/kitchenware.json) to it. It will take Meilisearch a few moments to process the data.
+Next, create a `kitchenware` index and add [this kitchenware products dataset](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/datasets/kitchenware.json) to it. It will take Meilisearch a few moments to process your request, but you can continue to the next step while your data is indexing.
 
 ## Activate AI-powered search
 
@@ -50,11 +50,13 @@ curl \
 
 ## Generate embeddings with OpenAI
 
-To perform AI-powered searches you need to configure an embedder that translates your documents into mathematical representations of their meaning and context. These mathematical representations are called embeddings.
+In this step, you will configure an OpenAI embedder. Meilisearch uses **embedders** to translate documents into **embeddings**, which are mathematical representations of a document's meaning and context.
+
+Open a blank file in your text editor. You will only use this file to build your embedder one step at a time, so there's no need to save it if you plan to finish the tutorial in one sitting.
 
 ### Choose an embedder name
 
-Open a text editor and create your `embedder` object:
+In your blank file, create your `embedder` object:
 
 ```json
 {
@@ -62,7 +64,7 @@ Open a text editor and create your `embedder` object:
 }
 ```
 
-The embedder name should be simple, short, and easy to remember.
+`kitchenware-openai` is the name of your embedder for this tutorial. You can name embedders any way you want, but try to keep it simple, short, and easy to remember.
 
 ### Choose an embedder source
 
@@ -82,7 +84,7 @@ Meilisearch supports several embedder sources. OpenAI is a good option for most 
 
 ### Choose an embedder model
 
-Models supply the information required for embedders to process your documents. Each embedder source offers different models.
+Models supply the information required for embedders to process your documents.
 
 Add a new `model` field to your embedder object:
 
@@ -113,7 +115,7 @@ Add the `apiKey` field to your embedder:
 }
 ```
 
-Replace `OPEN_AI_API_KEY` with your own API key. 
+Replace `OPEN_AI_API_KEY` with your own API key.
 
 <Capsule intent="tip" title="OpenAI key tiers">
 You may use any key tier for this tutorial. Use at least [Tier 2 keys](https://platform.openai.com/docs/guides/rate-limits/usage-tiers?context=tier-two) in production environments.
@@ -121,7 +123,7 @@ You may use any key tier for this tutorial. Use at least [Tier 2 keys](https://p
 
 ### Design a prompt template
 
-Meilisearch embedders only accept textual input, but documents can be complex objects containing different types of data. This means you must convert your documents into a single text field. Meilisearch uses Liquid, an open-source templating language to help you do that.
+Meilisearch embedders only accept textual input, but documents can be complex objects containing different types of data. This means you must convert your documents into a single text field. Meilisearch uses [Liquid](https://shopify.github.io/liquid/basics/introduction/), an open-source templating language to help you do that.
 
 A good template should be short and only include the most important information about a document. Add the following `documentTemplate` to your embedder:
 
@@ -140,20 +142,18 @@ This template starts by giving the general context of the document: `An object u
 
 ### Create the embedder
 
-You are ready to create the embedder. Send the following request to Meilisearch:
+Your embedder object is ready. Send it to Meilisearch by updating your index settings:
 
 ```sh
 curl \
-  -X PATCH 'http://MEILISEARCH_URL/indexes/kitchenware/settings' \
+  -X PATCH 'http://MEILISEARCH_URL/indexes/kitchenware/settings/embedders' \
   -H 'Content-Type: application/json' \
   --data-binary '{
-    "embedders": {
-      "openai": {
-        "source": "openAi",
-        "apiKey": "OPEN_AI_API_KEY",
-        "model": "text-embedding-3-small",
-        "documentTemplate": "An object used in a kitchen named '{{doc.name}}'"
-      }
+    "openai": {
+      "source": "openAi",
+      "apiKey": "OPEN_AI_API_KEY",
+      "model": "text-embedding-3-small",
+      "documentTemplate": "An object used in a kitchen named '{{doc.name}}'"
     }
   }'
 ```
@@ -164,9 +164,7 @@ Meilisearch and OpenAI will start processing your documents and updating your in
 
 ## Perform an AI-powered search
 
-As you may have seen in the getting started, to perform basic text searches in Meilisearch you must send a request to the `/search` endpoint. This request usually specifies a `q` parameter, which contains the words you are looking for.
-
-AI-powered searches are very similar to those basic text searches. You must query the `/search` endpoint with a request containing `q`, but your query must also include the `hybrid` parameter:
+AI-powered searches are very similar to basic text searches. You must query the `/search` endpoint with a request containing both the `q` and the `hybrid` parameters:
 
 ```sh
 curl \
