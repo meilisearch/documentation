@@ -1391,7 +1391,6 @@ update_embedders_1: |-
         "apiKey": "anOpenAiApiKey",
         "model": "text-embedding-3-small",
         "documentTemplate": "A document titled '{{doc.title}}' whose description starts with {{doc.overview|truncatewords: 20}}"
-        }
       }
     }'
 reset_embedders_1: |-
