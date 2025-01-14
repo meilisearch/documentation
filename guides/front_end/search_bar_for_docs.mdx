@@ -84,7 +84,7 @@ You can run the scraper with Docker. With our local Meilisearch instance set up 
 ```bash
 docker run -t --rm \
   --network=host \
-  -e MEILISEARCH_HOST_URL='https://MEILISEARCH_URL' \
+  -e MEILISEARCH_HOST_URL='MEILISEARCH_URL' \
   -e MEILISEARCH_API_KEY='MASTER_KEY' \
   -v <absolute-path-to-your-config-file>:/docs-scraper/config.json \
   getmeili/docs-scraper:latest pipenv run ./docs_scraper config.json
@@ -152,7 +152,7 @@ module.exports = {
 }
 ```
 
-The `hostUrl` and the `apiKey` fields are the credentials of the Meilisearch instance. Following on from this tutorial, they are respectively `https://MEILISEARCH_URL` and `MASTER_KEY`.
+The `hostUrl` and the `apiKey` fields are the credentials of the Meilisearch instance. Following on from this tutorial, they are respectively `MEILISEARCH_URL` and `MASTER_KEY`.
 
 `indexUid` is the index identifier in your Meilisearch instance in which your website content is stored. It has been defined in the [config file](#configuration-file).
 
@@ -195,7 +195,7 @@ _[Docxtemplater](https://docxtemplater.com/) search bar demo_
 </html>
 ```
 
-The `hostUrl` and the `apiKey` fields are the credentials of the Meilisearch instance. Following on from this tutorial, they are respectively `https://MEILISEARCH_URL` and `MASTER_KEY`.
+The `hostUrl` and the `apiKey` fields are the credentials of the Meilisearch instance. Following on from this tutorial, they are respectively `MEILISEARCH_URL` and `MASTER_KEY`.
 
 `indexUid` is the index identifier in your Meilisearch instance in which your website content is stored. It has been defined in the [config file](#configuration-file).
 `inputSelector` is the `id` attribute of the HTML search input tag.

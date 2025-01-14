@@ -123,7 +123,7 @@ To prevent that from happening, configure `story_id` as the index's distinct att
 
 ```sh
 curl \
-  -X PUT 'https://MEILISEARCH_URL/indexes/INDEX_NAME/settings/distinct-attribute' \
+  -X PUT 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/distinct-attribute' \
   -H 'Content-Type: application/json' \
   --data-binary '"story_id"'
 ```

@@ -39,7 +39,7 @@ Use [the `/experimental-features` route](/reference/api/experimental_features?ut
 
 ```sh
 curl \
-  -X PATCH 'https://MEILISEARCH_URL/experimental-features/' \
+  -X PATCH 'MEILISEARCH_URL/experimental-features/' \
   -H 'Content-Type: application/json'  \
   --data-binary '{
     "vectorStore": true
@@ -54,7 +54,7 @@ Use the `embedders` index setting of the [update `/settings` endpoint](/referenc
 
 ```sh
 curl \
-  -X PATCH 'https://MEILISEARCH_URL/indexes/kitchenware/settings' \
+  -X PATCH 'MEILISEARCH_URL/indexes/kitchenware/settings' \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "embedders": {
@@ -86,7 +86,7 @@ Perform AI-powered searches with `q` and `hybrid` to retrieve search results usi
 
 ```sh
 curl \
-  -X POST 'https://MEILISEARCH_URL/indexes/kitchenware/search' \
+  -X POST 'MEILISEARCH_URL/indexes/kitchenware/search' \
   -H 'content-type: application/json' \
   --data-binary '{
     "q": "kitchen utensils made of wood",
