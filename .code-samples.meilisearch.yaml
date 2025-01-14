@@ -1446,3 +1446,6 @@ experimental_post_logs_stream_1: |-
 experimental_delete_logs_stream_1: |-
   curl \
     -X DELETE http://localhost:7700/logs/stream
+fake_code_sample: |-
+  curl \ 
+    -X DELETE http://localhost:7700/logs/stream
