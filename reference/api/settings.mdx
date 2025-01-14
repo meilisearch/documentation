@@ -59,6 +59,8 @@ By default, the settings object looks like this. All fields are modifiable.
     "maxTotalHits": 1000
   },
   "proximityPrecision": "byWord",
+  "facetSearch": true,
+  "prefixSearch": "indexingTime",
   "searchCutoffMs": null
 }
 ```
@@ -126,6 +128,8 @@ Get the settings of an index.
     "maxTotalHits": 1000
   },
   "proximityPrecision": "byWord",
+  "facetSearch": true,
+  "prefixSearch": "indexingTime",
   "searchCutoffMs": null
 }
 ```
@@ -159,6 +163,8 @@ If the provided index does not exist, it will be created.
 | **[`filterableAttributes`](#filterable-attributes)** | Array of strings | Empty                                                                                            | Attributes to use as filters and facets                                          |
 | **[`pagination`](#pagination)**                      | Object           | [Default object](#pagination-object)                                                             | Pagination settings                                                              |
 | **[`proximityPrecision`](#proximity-precision)**     | String           | `"byWord"`                                                                                       |  Precision level when calculating the proximity ranking rule                     |
+| **[`facetSearch`](#facet-search)**     | Boolean           | `true`                                                                                       |  Enable or disable [facet search](/reference/api/facet_search) functionality                     |
+| **[`prefixSearch`](#prefix-search)**     | String           | `"indexingTime"`                                                                                       | When Meilisearch should return results only matching the beginning of query                     |
 | **[`rankingRules`](#ranking-rules)**                 | Array of strings | `["words",`<br />`"typo",`<br />`"proximity",`<br />`"attribute",`<br />`"sort",`<br />`"exactness"]` | List of ranking rules in order of importance                                |
 | **[`searchableAttributes`](#searchable-attributes)** | Array of strings | All attributes: `["*"]`                                                                          | Fields in which to search for matching query words sorted by order of importance |
 | **[`searchCutoffMs`](#search-cutoff)**              | Integer          | `null`, or 1500ms                                                                                | Maximum duration of a search query                                               |
@@ -886,7 +892,7 @@ Update the localized attributes settings of an index.
 
 #### Example
 
-<CodeSamples id="update_localized_attributes_settings_1" />
+<CodeSamples id="update_localized_attribute_settings_1" />
 
 ##### Response: `202 Accepted`
 
@@ -902,7 +908,7 @@ Update the localized attributes settings of an index.
 
 You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
 
-### Reset pagination settings
+### Reset localized attributes settings
 
 <RouteHighlighter method="RESET" route="/indexes/{index_uid}/settings/localized-attributes"/>
 
@@ -916,7 +922,7 @@ Reset an index's localized attributes to their [default value](#localized-attrib
 
 #### Example
 
-<CodeSamples id="reset_localized_attributes_settings_1" />
+<CodeSamples id="reset_localized_attribute_settings_1" />
 
 ##### Response: `202 Accepted`
 
@@ -1113,6 +1119,8 @@ You can use the returned `taskUid` to get more details on [the status of the tas
 
 ### Reset proximity precision settings
 
+<RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings/proximity-precision"/>
+
 Reset an index's proximity precision setting to its default value.
 
 #### Path parameters
@@ -1138,6 +1146,201 @@ Reset an index's proximity precision setting to its default value.
 ```
 
 You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+
+## Facet search
+
+Processing filterable attributes for facet search is a resource-intensive operation. This feature is enabled by default, but disabling it may speed up indexing.
+
+`facetSearch` accepts a single Boolean value. If set to `false`, it disables facet search for the whole index. Meilisearch returns an error if you try to access the `/facet-search` endpoint when facet search is disabled.
+
+### Get facet search settings
+
+<RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/facet-search"/>
+
+Get the facet search settings of an index.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                            |
+| :---------------- | :----- | :--------------------------------------------------------------------- |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
+
+#### Example
+
+<CodeSamples id="get_facet_search_settings_1" />
+
+##### Response: `200 OK`
+
+```json
+{
+  "facetSearch": true
+}
+```
+
+### Update facet search settings
+
+<RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/facet-search"/>
+
+Update the facet search settings for an index.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                            |
+| :---------------- | :----- | :--------------------------------------------------------------------- |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
+
+#### Body
+
+```
+<Boolean>
+```
+
+#### Example
+
+<CodeSamples id="update_facet_search_settings_1" />
+
+##### Response: `202 Accepted`
+
+```json
+{
+  "taskUid": 1,
+  "indexUid": "INDEX_UID",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2024-07-19T22:33:18.523881Z"
+}
+```
+
+Use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+
+### Reset facet search settings
+
+<RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings/facet-search"/>
+
+Reset an index's facet search to its default settings.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                            |
+| :---------------- | :----- | :--------------------------------------------------------------------- |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
+
+#### Example
+
+<CodeSamples id="reset_facet_search_settings_1" />
+
+##### Response: `202 Accepted`
+
+```json
+{
+  "taskUid": 1,
+  "indexUid": "INDEX_UID",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2024-07-19T22:35:33.723983Z"
+}
+```
+
+Use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+
+## Prefix search
+
+Prefix search is the process through which Meilisearch matches documents that begin with a specific query term, instead of only exact matches. This is a resource-intensive operation that happens during indexing by default.
+
+Use `prefixSearch` to change how prefix search works. It accepts one of the following strings:
+
+- `"indexingTime"`: calculate prefix search during indexing. This is the default behavior
+- `"disabled"`: do not calculate prefix search. May speed up indexing, but will severely impact search result relevancy
+
+### Get prefix search settings
+
+<RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/prefix-search"/>
+
+Get the prefix search settings of an index.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                            |
+| :---------------- | :----- | :--------------------------------------------------------------------- |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
+
+#### Example
+
+<CodeSamples id="get_prefix_search_settings_1" />
+
+##### Response: `200 OK`
+
+```json
+{
+  "prefixSearch": "indexingTime"
+}
+```
+
+### Update prefix search settings
+
+<RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/prefix-search"/>
+
+Update the prefix search settings for an index.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                            |
+| :---------------- | :----- | :--------------------------------------------------------------------- |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
+
+#### Body
+
+```
+"indexingTime" | "disabled"
+```
+
+#### Example
+
+<CodeSamples id="update_prefix_search_settings_1" />
+
+##### Response: `202 Accepted`
+
+```json
+{
+  "taskUid": 1,
+  "indexUid": "INDEX_UID",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2024-07-19T22:33:18.523881Z"
+}
+```
+
+Use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+
+### Reset prefix search settings
+
+<RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings/prefix-search"/>
+
+Reset an index's prefix search to its default settings.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                            |
+| :---------------- | :----- | :--------------------------------------------------------------------- |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
+
+#### Example
+
+<CodeSamples id="reset_facet_search_settings_1" />
+
+##### Response: `202 Accepted`
+
+```json
+{
+  "taskUid": 1,
+  "indexUid": "INDEX_UID",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2024-07-19T22:35:33.723983Z"
+}
+```
+
+Use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
 
 ## Ranking rules
 
