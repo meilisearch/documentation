@@ -212,9 +212,9 @@ Federated search requests return a single object and the following fields:
 | **`limit`**              | Number           | Number of documents to take                                                      |
 | **`estimatedTotalHits`** | Number           | Estimated total number of matches                                                |
 | **`processingTimeMs`**   | Number           | Processing time of the query                                                     |
-| **`facetsByIndex`**      | Object           | See `facetsByIndex` parameter                                                    |
-| **`facetDistribution`**  | Object           | See `mergeFacts` parameter                                                       |
-| **`facetStats`**         | Object           | See `mergeFacts` parameter                                                       |
+| **`facetsByIndex`**      | Object           | [Data for facets present in the search results](#facetsbyindex)                                                     |
+| **`facetDistribution`**  | Object           | [Distribution of the given facets](#mergefacets)                                                       |
+| **`facetStats`**         | Object           | [The numeric `min` and `max` values per facet](#mergefacets                                                     |
 
 Each result in the `hits` array contains an additional `_federation` field with the following fields:
 
