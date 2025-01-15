@@ -8,7 +8,7 @@ on:
 
 jobs:
   add-pr-to-project:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/add-to-project@f5473ace9aeee8b97717b281e26980aa5097023f
         with:
