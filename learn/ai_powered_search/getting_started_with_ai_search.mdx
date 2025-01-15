@@ -60,11 +60,11 @@ In your blank file, create your `embedder` object:
 
 ```json
 {
-  "kitchenware-openai": {}
+  "products-openai": {}
 }
 ```
 
-`kitchenware-openai` is the name of your embedder for this tutorial. You can name embedders any way you want, but try to keep it simple, short, and easy to remember.
+`products-openai` is the name of your embedder for this tutorial. You can name embedders any way you want, but try to keep it simple, short, and easy to remember.
 
 ### Choose an embedder source
 
@@ -74,7 +74,7 @@ This tutorial uses OpenAI. Add a new `source` field to your embedder object:
 
 ```json
 {
-  "kitchenware-openai": {
+  "products-openai": {
     "source": "openai"
   }
 }
@@ -90,7 +90,7 @@ Add a new `model` field to your embedder object:
 
 ```json
 {
-  "kitchenware-openai": {
+  "products-openai": {
     "source": "openai",
     "model": "text-embedding-3-small"
   }
@@ -107,7 +107,7 @@ Add the `apiKey` field to your embedder:
 
 ```json
 {
-  "kitchenware-openai": {
+  "products-openai": {
     "source": "openai",
     "model": "text-embedding-3-small",
     "apiKey": "OPEN_AI_API_KEY",
@@ -129,7 +129,7 @@ A good template should be short and only include the most important information 
 
 ```json
 {
-  "kitchenware-openai": {
+  "products-openai": {
     "source": "openai",
     "model": "text-embedding-3-small",
     "apiKey": "OPEN_AI_API_KEY",
@@ -138,7 +138,7 @@ A good template should be short and only include the most important information 
 }
 ```
 
-This template starts by giving the general context of the document: `An object used in a kitchen`. Then you give it the information specific to each document. `doc` is your document, and you can access any of its attributes using dot notation. `name` is an attribute in your document, with values such as `wooden spoon` or `rolling pin`.
+This template starts by giving the general context of the document: `An object used in a kitchen`. Then you add the information that is specific to each document. `doc` represents your document, and you can access any of its attributes using dot notation. `name` is an attribute with values such as `wooden spoon` or `rolling pin`. Since it is present in all documents in this dataset and describes the product in few words, it is a good choice to include in the template.
 
 ### Create the embedder
 
@@ -149,7 +149,7 @@ curl \
   -X PATCH 'http://MEILISEARCH_URL/indexes/kitchenware/settings/embedders' \
   -H 'Content-Type: application/json' \
   --data-binary '{
-    "openai": {
+    "products-openai": {
       "source": "openAi",
       "apiKey": "OPEN_AI_API_KEY",
       "model": "text-embedding-3-small",
@@ -173,7 +173,7 @@ curl \
   --data-binary '{
     "q": "kitchen utensils made of wood",
     "hybrid": {
-      "embedder": "openai"
+      "embedder": "products-openai"
     }
   }'
 ```
