@@ -17,7 +17,7 @@ This tutorial will walk you through configuring AI-powered search in your Meilis
 
 ## Create a new index
 
-First, create a new Meilisearch project. If this is your first time using Meilisearch, follow the [Meilisearch quick start](/learn/getting_started/cloud_quick_start).
+First, create a new Meilisearch project. If this is your first time using Meilisearch, follow the [quick start](/learn/getting_started/cloud_quick_start) then come back to this tutorial.
 
 Next, create a `kitchenware` index and add [this kitchenware products dataset](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/datasets/kitchenware.json) to it. It will take Meilisearch a few moments to process your request, but you can continue to the next step while your data is indexing.
 
@@ -41,12 +41,14 @@ Use [the `/experimental-features` route](/reference/api/experimental_features) t
 
 ```sh
 curl \
-  -X PATCH 'http://MEILISEARCH_URL/experimental-features/' \
+  -X PATCH 'MEILISEARCH_URL/experimental-features/' \
   -H 'Content-Type: application/json'  \
   --data-binary '{
     "vectorStore": true
   }'
 ```
+
+Replace `MEILISEARCH_URL` with your project's URL. In most cases, this should look like `https://ms-000xx00x000-xx.xxx.meilisearch.io` if you're using Meilisearch Cloud, or `http://localhost:7700` if you are running Meilisearch in your local machine.
 
 ## Generate embeddings with OpenAI
 
@@ -70,7 +72,7 @@ In your blank file, create your `embedder` object:
 
 Meilisearch relies on third-party services to generate embeddings. These services are often referred to as the embedder source.
 
-This tutorial uses OpenAI. Add a new `source` field to your embedder object:
+Add a new `source` field to your embedder object:
 
 ```json
 {
@@ -80,7 +82,7 @@ This tutorial uses OpenAI. Add a new `source` field to your embedder object:
 }
 ```
 
-Meilisearch supports several embedder sources. OpenAI is a good option for most use cases.
+Meilisearch supports several embedder sources. This tutorial uses OpenAI because it is a good option that fits most use cases.
 
 ### Choose an embedder model
 
@@ -97,7 +99,7 @@ Add a new `model` field to your embedder object:
 }
 ```
 
-Models are usually created with specific use cases in mind. `text-embedding-3-small` is a cost-effective model for general usage.
+Each embedder service supports different models targeting specific use cases. `text-embedding-3-small` is a cost-effective model for general usage.
 
 ### Create your API key
 
@@ -138,7 +140,7 @@ A good template should be short and only include the most important information 
 }
 ```
 
-This template starts by giving the general context of the document: `An object used in a kitchen`. Then you add the information that is specific to each document. `doc` represents your document, and you can access any of its attributes using dot notation. `name` is an attribute with values such as `wooden spoon` or `rolling pin`. Since it is present in all documents in this dataset and describes the product in few words, it is a good choice to include in the template.
+This template starts by giving the general context of the document: `An object used in a kitchen`. Then it adds the information that is specific to each document: `doc` represents your document, and you can access any of its attributes using dot notation. `name` is an attribute with values such as `wooden spoon` or `rolling pin`. Since it is present in all documents in this dataset and describes the product in few words, it is a good choice to include in the template.
 
 ### Create the embedder
 
@@ -146,7 +148,7 @@ Your embedder object is ready. Send it to Meilisearch by updating your index set
 
 ```sh
 curl \
-  -X PATCH 'http://MEILISEARCH_URL/indexes/kitchenware/settings/embedders' \
+  -X PATCH 'MEILISEARCH_URL/indexes/kitchenware/settings/embedders' \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "products-openai": {
@@ -160,7 +162,7 @@ curl \
 
 Replace `MEILISEARCH_URL` with the address of your Meilisearch project, and `OPEN_AI_API_KEY` with your [OpenAI API key](https://platform.openai.com/api-keys).
 
-Meilisearch and OpenAI will start processing your documents and updating your index. This process may take a few moments, but once it's done you are ready to perform an AI-powered search.
+Meilisearch and OpenAI will start processing your documents and updating your index. This may take a few moments, but once it's done you are ready to perform an AI-powered search.
 
 ## Perform an AI-powered search
 
@@ -178,7 +180,9 @@ curl \
   }'
 ```
 
-For this tutorial, `hybrid` is an object with a single `embedder` field. Meilisearch will return an equal mix of semantic and full-text matches.
+For this tutorial, `hybrid` is an object with a single `embedder` field.
+
+Meilisearch will then return an equal mix of semantic and full-text matches.
 
 ## Conclusion
 
