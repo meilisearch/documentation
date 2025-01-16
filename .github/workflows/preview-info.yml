@@ -5,12 +5,12 @@ on:
     types: [opened]
 
 env:
-  GH_TOKEN: ${{ secrets.MEILI_BOT_GH_PAT }}
+  GH_TOKEN: ${{ secrets.GH_TOKEN }}
   CURRENT_BRANCH: ${{ github.event.pull_request.head.ref }}
 
 jobs:
   preview-info:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
       - name: Prepare comment content
