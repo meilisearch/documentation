@@ -165,12 +165,12 @@ This error occurs when you add documents to an index for the first time and Meil
   "indexUid": "books",
   "status": "failed",
   "type": "documentAdditionOrUpdate",
-  "canceledBy":null,
-  "details":{
-    "receivedDocuments":5,
-    "indexedDocuments":5
+  "canceledBy": null,
+  "details": {
+    "receivedDocuments": 5,
+    "indexedDocuments": 5
   },
-  "error":{
+  "error": {
     "message": "The primary key inference failed as the engine found 2 fields ending with `id` in their names: 'id' and 'author_id'. Please specify the primary key manually using the `primaryKey` query parameter.",
     "code": "index_primary_key_multiple_candidates_found",
     "type": "invalid_request",
@@ -194,11 +194,11 @@ This error occurs when you add documents to an index for the first time and none
   "status": "failed",
   "type": "documentAdditionOrUpdate",
   "canceledBy": null,
-  "details":{
+  "details": {
     "receivedDocuments": 5,
     "indexedDocuments": null
   },
-  "error":{
+  "error": {
     "message": "The primary key inference failed as the engine did not find any field ending with `id` in its name. Please specify the primary key manually using the `primaryKey` query parameter.",
     "code": "index_primary_key_no_candidate_found",
     "type": "invalid_request",
@@ -217,16 +217,16 @@ This happens when your document id does not have the correct [format](#formattin
 
 ```json
 {
-    "uid":1,
+    "uid": 1,
     "indexUid": "books",
     "status": "failed",
     "type": "documentAdditionOrUpdate",
     "canceledBy": null,
-    "details":{
-        "receivedDocuments":5,
-        "indexedDocuments":null
+    "details": {
+        "receivedDocuments": 5,
+        "indexedDocuments": null
         },
-    "error":{
+    "error": {
         "message": "Document identifier `1@` is invalid. A document identifier can be of type integer or string, only composed of alphanumeric characters (a-z A-Z 0-9), hyphens (-) and underscores (_).",
         "code": "invalid_document_id",
         "type": "invalid_request",
@@ -245,16 +245,16 @@ This error occurs when your index already has a primary key, but one of the docu
 
 ```json
 {
-    "uid":1,
+    "uid": 1,
     "indexUid": "books",
     "status": "failed",
     "type": "documentAdditionOrUpdate",
     "canceledBy": null,
-    "details":{
-        "receivedDocuments":1,
-        "indexedDocuments":null
+    "details": {
+        "receivedDocuments": 1,
+        "indexedDocuments": null
         },
-    "error":{
+    "error": {
         "message": "Document doesn't have a `id` attribute: `{\"title\":\"Solaris\",\"author\":\"Stanislaw Lem\",\"genres\":[\"science fiction\"],\"price\":5.0.",
         "code": "missing_document_id",
         "type": "invalid_request",

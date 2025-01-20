@@ -13,7 +13,7 @@ The `/tasks` route gives information about the progress of [asynchronous operati
 {
   "uid": 4,
   "batchUids": 0,
-  "indexUid":"movie",
+  "indexUid": "movie",
   "status": "failed",
   "type": "indexDeletion",
   "canceledBy": null,
@@ -263,44 +263,44 @@ Task results are [paginated](/learn/async/paginating_tasks) and can be [filtered
 
 ```json
 {
-  "results":[
+  "results": [
     {
-      "uid":1,
-      "indexUid":"movies_reviews",
-      "status":"failed",
-      "type":"documentAdditionOrUpdate",
+      "uid": 1,
+      "indexUid": "movies_reviews",
+      "status": "failed",
+      "type": "documentAdditionOrUpdate",
       "canceledBy": null,
-      "details":{
-        "receivedDocuments":100,
-        "indexedDocuments":0
+      "details": {
+        "receivedDocuments": 100,
+        "indexedDocuments": 0
       },
       "error": null,
-      "duration":null,
-      "enqueuedAt":"2021-08-12T10:00:00.000000Z",
-      "startedAt":null,
-      "finishedAt":null
+      "duration": null,
+      "enqueuedAt": "2021-08-12T10:00:00.000000Z",
+      "startedAt": null,
+      "finishedAt": null
     },
     {
-      "uid":0,
-      "indexUid":"movies",
-      "status":"succeeded",
-      "type":"documentAdditionOrUpdate",
+      "uid": 0,
+      "indexUid": "movies",
+      "status": "succeeded",
+      "type": "documentAdditionOrUpdate",
       "canceledBy": null,
-      "details":{
-        "receivedDocuments":100,
-        "indexedDocuments":100
+      "details": {
+        "receivedDocuments": 100,
+        "indexedDocuments": 100
       },
       "error": null,
-      "duration":"PT16S",
-      "enqueuedAt":"2021-08-11T09:25:53.000000Z",
-      "startedAt":"2021-08-11T10:03:00.000000Z",
-      "finishedAt":"2021-08-11T10:03:16.000000Z"
+      "duration": "PT16S",
+      "enqueuedAt": "2021-08-11T09:25:53.000000Z",
+      "startedAt": "2021-08-11T10:03:00.000000Z",
+      "finishedAt": "2021-08-11T10:03:16.000000Z"
     }
   ],
   "total": 50,
   "limit": 20,
   "from": 1,
-  "next":null
+  "next": null
 }
 ```
 
@@ -328,13 +328,13 @@ If you try retrieving a deleted task, Meilisearch will return a [`task_not_found
 
 ```json
 {
-  "uid":1,
-  "indexUid":"movies",
-  "status":"succeeded",
-  "type":"settingsUpdate",
+  "uid": 1,
+  "indexUid": "movies",
+  "status": "succeeded",
+  "type": "settingsUpdate",
   "canceledBy": null,
-  "details":{
-    "rankingRules":[
+  "details": {
+    "rankingRules": [
       "typo",
       "ranking:desc",
       "words",
@@ -344,10 +344,10 @@ If you try retrieving a deleted task, Meilisearch will return a [`task_not_found
     ]
   },
   "error": null,
-  "duration":"PT1S",
-  "enqueuedAt":"2021-08-10T14:29:17.000000Z",
-  "startedAt":"2021-08-10T14:29:18.000000Z",
-  "finishedAt":"2021-08-10T14:29:19.000000Z"
+  "duration": "PT1S",
+  "enqueuedAt": "2021-08-10T14:29:17.000000Z",
+  "startedAt": "2021-08-10T14:29:18.000000Z",
+  "finishedAt": "2021-08-10T14:29:19.000000Z"
 }
 ```
 
