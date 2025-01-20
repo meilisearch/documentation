@@ -154,11 +154,6 @@
         "slug": "digitalocean"
       },
       {
-        "source": "guides/deployment/gcp.mdx",
-        "label": "Deploy on GCP",
-        "slug": "gcp"
-      },
-      {
         "source": "guides/deployment/koyeb.mdx",
         "label": "Deploy on Koyeb",
         "slug": "koyeb"

@@ -8,7 +8,7 @@ sidebarDepth: 3
 
 Currently, Meilisearch databases are only compatible with the version of Meilisearch used to create them. The following guide will walk you through using a [dump](/learn/advanced/dumps) to migrate an existing database from an older version of Meilisearch to the most recent one.
 
-If you're updating your Meilisearch instance on cloud platforms like DigitalOcean, AWS, or GCP, ensure that you can connect to your cloud instance via SSH. Depending on the user you are connecting with (root, admin, etc.), you may need to prefix some commands with `sudo`.
+If you're updating your Meilisearch instance on cloud platforms like DigitalOcean or AWS, ensure that you can connect to your cloud instance via SSH. Depending on the user you are connecting with (root, admin, etc.), you may need to prefix some commands with `sudo`.
 
 If migrating to the latest version of Meilisearch will cause you to skip multiple versions, this may require changes to your codebase. [Refer to our version-specific update warnings for more details](#version-specific-warnings).
 
@@ -99,7 +99,7 @@ Once the status is `processed`, you're good to go. Repeat this process for all i
 
 Before creating your dump, make sure that your [dump directory](/learn/self_hosted/configure_meilisearch_at_launch#dump-directory) is somewhere accessible. By default, dumps are created in a folder called `dumps` at the root of your Meilisearch directory.
 
-**Cloud platforms** like DigitalOcean, AWS, and GCP are configured to store dumps in the `/var/opt/meilisearch/dumps` directory.
+**Cloud platforms** like DigitalOcean and AWS are configured to store dumps in the `/var/opt/meilisearch/dumps` directory.
 
 If you're unsure where your Meilisearch directory is located, try this:
 
