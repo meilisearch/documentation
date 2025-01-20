@@ -1,7 +1,7 @@
 name: Add PR to Code Samples Changes project
 
 on:
-  pull_request_target:
+  pull_request:
     types: [opened, edited, synchronize]
     paths:
       - .code-samples.meilisearch.yaml
