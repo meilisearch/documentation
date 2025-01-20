@@ -1443,4 +1443,4 @@ experimental_post_logs_stream_1: |-
     }'
 experimental_delete_logs_stream_1: |-
   curl \
-    -X DELETE MEILISEARCH_URL/logs/stream
+    -X DELETE MEILISEARCH_URL/logs/stream123
