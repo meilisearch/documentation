@@ -13,29 +13,15 @@ This tutorial will guide you through the steps of building a relevant and powerf
 
 ## Run a Meilisearch instance
 
-First of all, you need your documentation content to be scraped and pushed into a Meilisearch instance.
-
-You can install and run Meilisearch on your machine using `curl`.
-
-```bash
-curl -L https://install.meilisearch.com | sh
-./meilisearch --master-key=MASTER_KEY
-```
-
-We provide a few [other installation methods](/learn/self_hosted/getting_started_with_self_hosted_meilisearch#setup-and-installation).
-
-Meilisearch is open-source and can run either on your server or on any cloud provider.
+First, create a new Meilisearch project on Meilisearch Cloud. You can also [install and run Meilisearch locally or in another cloud service](/learn/self_hosted/getting_started_with_self_hosted_meilisearch#setup-and-installation).
 
 <Capsule intent="note">
-
 The host URL and the API key you will provide in the next steps correspond to the credentials of this Meilisearch instance.
-In the example above, the host URL is `http://localhost:7700` and the API key is `MASTER_KEY`.
-
 </Capsule>
 
 ## Scrape your content
 
-The Meili team provides and maintains a [scraper tool](https://github.com/meilisearch/docs-scraper) to automatically read the content of your website and store it into an index in Meilisearch.
+The Meilisearch team provides and maintains a [scraper tool](https://github.com/meilisearch/docs-scraper) to automatically read the content of your website and store it into an index in Meilisearch.
 
 ### Configuration file
 
@@ -98,7 +84,7 @@ You can run the scraper with Docker. With our local Meilisearch instance set up 
 ```bash
 docker run -t --rm \
   --network=host \
-  -e MEILISEARCH_HOST_URL='http://localhost:7700' \
+  -e MEILISEARCH_HOST_URL='MEILISEARCH_URL' \
   -e MEILISEARCH_API_KEY='MASTER_KEY' \
   -v <absolute-path-to-your-config-file>:/docs-scraper/config.json \
   getmeili/docs-scraper:latest pipenv run ./docs_scraper config.json
@@ -166,7 +152,8 @@ module.exports = {
 }
 ```
 
-The `hostUrl` and the `apiKey` fields are the credentials of the Meilisearch instance. Following on from this tutorial, they are respectively `http://localhost:7700` and `MASTER_KEY`.
+The `hostUrl` and the `apiKey` fields are the credentials of the Meilisearch instance. Following on from this tutorial, they are respectively `MEILISEARCH_URL` and `MASTER_KEY`.
+
 `indexUid` is the index identifier in your Meilisearch instance in which your website content is stored. It has been defined in the [config file](#configuration-file).
 
 These three fields are mandatory, but more [optional fields are available](https://github.com/meilisearch/vuepress-plugin-meilisearch#customization) to customize your search bar.
@@ -208,7 +195,8 @@ _[Docxtemplater](https://docxtemplater.com/) search bar demo_
 </html>
 ```
 
-The `hostUrl` and the `apiKey` fields are the credentials of the Meilisearch instance. Following on from this tutorial, they are respectively `http://localhost:7700` and `MASTER_KEY`.
+The `hostUrl` and the `apiKey` fields are the credentials of the Meilisearch instance. Following on from this tutorial, they are respectively `MEILISEARCH_URL` and `MASTER_KEY`.
+
 `indexUid` is the index identifier in your Meilisearch instance in which your website content is stored. It has been defined in the [config file](#configuration-file).
 `inputSelector` is the `id` attribute of the HTML search input tag.
 
