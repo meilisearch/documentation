@@ -628,5 +628,10 @@
     "source": "/docs/reference",
     "destination": "/docs/reference/api/overview",
     "permanent": true
+  },
+  {
+    "source": "/docs/guides/deployment/gcp",
+    "destination": "/guides/deployment/running_production",
+    "permanent": true
   }
 ]
