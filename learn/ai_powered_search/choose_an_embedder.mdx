@@ -1,11 +1,11 @@
 ---
 title: How to choose an embedder — Meilisearch documentation
-description: This article contains general guidance on how to choose the embedder best suited for projects using AI-powered search.
+description: General guidance on how to choose the embedder best suited for projects using AI-powered search.
 ---
 
 # How to choose an embedder
 
-Meilisearch officially supports many different embedders, such as OpenAI, Hugging Face, and Ollama, as well as the majority of embedding generators with a RESTful API. It can be difficult to understand their differences and how to pick one.
+Meilisearch officially supports many different embedders, such as OpenAI, Hugging Face, and Ollama, as well as the majority of embedding generators with a RESTful API.
 
 This article contains general guidance on how to choose the embedder best suited for your project.
 
@@ -13,7 +13,7 @@ This article contains general guidance on how to choose the embedder best suited
 
 OpenAI returns relevant search results across different subjects and datasets. It is suited for the majority of applications and Meilisearch actively supports and improves OpenAI functionality with every new release.
 
-In the majority of cases, and especially if this is your first time working with LLMS, choose OpenAI.
+In the majority of cases, and especially if this is your first time working with LLMs and AI-powered search, choose OpenAI.
 
 ## If you are already using a specific AI service, choose the REST embedder
 
@@ -21,12 +21,12 @@ If you are already using a specific model from a compatible embedder, choose Mei
 
 ## If dealing with non-textual content, choose the user-provided embedder
 
-Meilisearch does not support searching images, audio, or any other content not presented as text. This limitation applies to both queries and documents—for example, you cannot search using an image instead of text, and you cannot use text to search for images without attached textual metadata.
+Meilisearch does not support searching images, audio, or any other content not presented as text. This limitation applies to both queries and documents. For example, Meilisearch's built-in embedder sources cannot search using an image instead of text. They also cannot use text to search for images without attached textual metadata.
 
-In these cases, you will have to supply your own embedder.
+In these cases, you will have to supply your own embedder. Meilisearch Cloud does not support custom embedders.
 
-## If working with small static datasets, consider choosing Hugging Face
+## Only choose Hugging Face when self-hosting small static datasets
 
 Although it returns very relevant search results, the Hugging Face embedder must run directly in your server. This may lead to lower performance and extra costs when you are hosting Meilisearch in a service like DigitalOcean or AWS.
 
-That said, Hugging Face can be a good embedder for datasets under 10k documents that you don't intend to update often.
+That said, Hugging Face can be a good embedder for datasets under 10k documents that you don't plan to update often. Meilisearch Cloud does not support Hugging Face embedders.
