@@ -13,4 +13,4 @@ jobs:
       - uses: actions/add-to-project@f5473ace9aeee8b97717b281e26980aa5097023f
         with:
           project-url: https://github.com/orgs/meilisearch/projects/44
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.GH_TOKEN }}
