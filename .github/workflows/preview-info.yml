@@ -1,11 +1,11 @@
 name: Show preview on PRs
 
 on:
-  pull_request:
+  pull_request_target:
     types: [opened]
 
 env:
-  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  GH_TOKEN: ${{ secrets.GH_TOKEN }}
   CURRENT_BRANCH: ${{ github.event.pull_request.head.ref }}
 
 jobs:
