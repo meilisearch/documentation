@@ -237,6 +237,23 @@ Meilisearch automatically collects data from all instances that do not opt out u
 
 [Read more about our policy on data collection](/learn/resources/telemetry), or take a look at [the comprehensive list of all data points we collect](/learn/resources/telemetry#exhaustive-list-of-all-collected-data).
 
+### Dumpless upgrade <NoticeTag type="experimental" label="experimental" />
+
+**Environment variable**: `MEILI_EXPERIMENTAL_DUMPLESS_UPGRADE`<br />
+**CLI option**: `--experimental-dumpless-upgrade`<br />
+**Default value**: None<br />
+**Expected value**: None
+
+Migrates the database to a new Meilisearch version after updating the binary.
+
+[Learn more about updating Meilisearch to a new release](/learn/update_and_migration/updating).
+
+<Capsule intent="danger" title="Create a snapshot before a dumpless upgrade">
+Take a snapshot of your instance before performing a dumpless upgrade.
+
+The dumpless upgrade is not currently an atomic operation. It is possible some processes fail during the upgrade, but Meilisearch still finalizes the upgrade. This may result in a corrupted database and data loss.
+</Capsule>
+
 ### Dump directory
 
 **Environment variable**: `MEILI_DUMP_DIR`<br />
@@ -303,7 +320,7 @@ Meilisearch currently supports five log levels, listed in order of increasing ve
 - `'TRACE'`: log all events and include even more detailed information on Meilisearch's internal processes. We do not advise using this level as it is extremely verbose. Use `'DEBUG'` before considering `'TRACE'`.
 - `'OFF'`: disable logging
 
-## Customize log output <NoticeTag type="experimental" label="experimental" />
+### Customize log output <NoticeTag type="experimental" label="experimental" />
 
 **Environment variable**: `MEILI_LOGS_MODE`<br />
 **CLI option**: `--experimental-logs-mode`<br />
