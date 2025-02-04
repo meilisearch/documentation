@@ -29,6 +29,11 @@
         "slug": "multi_search"
       },
       {
+        "source": "reference/api/network.mdx",
+        "label": "Network",
+        "slug": "network"
+      },
+      {
         "source": "reference/api/similar.mdx",
         "label": "Similar documents",
         "slug": "similar"
