@@ -1444,3 +1444,42 @@ experimental_post_logs_stream_1: |-
 experimental_delete_logs_stream_1: |-
   curl \
     -X DELETE MEILISEARCH_URL/logs/stream
+multi_search_remote_federated_1: |-
+  curl \
+    -X POST 'MEILISEARCH_URL/multi-search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "federation": {},
+      "queries": [
+        {
+          "indexUid": "movies",
+          "q": "batman",
+          "remote": "ms-00"
+        },
+        {
+          "indexUid": "movies",
+          "q": "batman",
+          "remote": "ms-01"
+        }
+      ]
+    }'
+get_network_1: |-
+  curl \
+    -X GET 'MEILISEARCH_URL/network'
+update_network_1: |-
+  curl \
+    -X PATCH 'MEILISEARCH_URL/network' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "self": "ms-00",
+      "remotes": {
+        "ms-00": {
+          "url": "http://INSTANCE_URL",
+          "searchApiKey": "INSTANCE_API_KEY"
+        },
+        "ms-01": {
+          "url": "http://ANOTHER_INSTANCE_URL",
+          "searchApiKey": "ANOTHER_INSTANCE_API_KEY"
+        }
+      }
+    }'

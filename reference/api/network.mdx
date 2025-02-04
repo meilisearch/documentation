@@ -52,7 +52,7 @@ This feature is not available for Meilisearch Cloud users.
 **Default value**: `{}`<br />
 **Description**: An object containing `remote` objects. The key of each remote object indicates the name of the remote instance
 
-### The remote object
+#### The remote object
 
 ```json
 "ms-00": {
@@ -61,15 +61,15 @@ This feature is not available for Meilisearch Cloud users.
 }
 ```
 
-### `url`
+##### `url`
 
 **Type**: String<br />
 **Default value**: `null`<br />
 **Description**: URL indicating the address of a Meilisearch instance. This URL does not need to be public, but must be accessible to all instances in the network. Required.
 
-### `searchApiKey`
+##### `searchApiKey`
 
-**Type**: Stringf<br />
+**Type**: String<br />
 **Default value**: `null`<br />
 **Description**: An API key with search permissions
 
@@ -109,7 +109,7 @@ Update the `self` and `remotes` fields of the network object.
 
 Updates to the network object are **partial**. Only provide the fields you intend to update. Fields not present in the payload will remain unchanged.
 
-To reset `self` and `remotes` to their original value, set them to `null`. To remov a single `remote` from your network, set the value of its name to `null`.
+To reset `self` and `remotes` to their original value, set them to `null`. To remove a single `remote` from your network, set the value of its name to `null`.
 
 ### Body
 
@@ -125,6 +125,17 @@ To reset `self` and `remotes` to their original value, set them to `null`. To re
 #### Response: `200 Ok`
 
 ```json
-
+{
+  "self": "ms-00",
+  "remotes": {
+    "ms-00": {
+      "url": "http://INSTANCE_URL",
+      "searchApiKey": "INSTANCE_API_KEY"
+    },
+    "ms-01": {
+      "url": "http://ANOTHER_INSTANCE_URL",
+      "searchApiKey": "ANOTHER_INSTANCE_API_KEY"
+    }
+  }
+}
 ```
-
