@@ -240,8 +240,7 @@ This list is liable to change with every new version of Meilisearch. It's not be
 | `faceting.sort_facet_values_by_total`              | The number of different values that were set                                                | 10
 | `scoring.show_ranking_score`                       | `true` if `showRankingScore` used in the aggregated event, otherwise `false`                | true
 | `scoring.show_ranking_score_details`               | `true` if `showRankingScoreDetails` was used in the aggregated event, otherwise `false`     | true
-| `scoring.ranking_score_threshold` | Boolean indicating whether a rankingScoreThreshold was specified in an aggregated list of requests | true |
-| `vector_store`                                     | `true` if the vector store feature is enabled, otherwise `false`                            | true
+| `scoring.ranking_score_threshold`                  | Boolean indicating whether a rankingScoreThreshold was specified in an aggregated list of requests | true |
 | `attributes_to_search_on.total_number_of_uses`     | `true` if the vector store feature is enabled, otherwise `false`                            | true
 | `vector.max_vector_size`                           | Highest number of dimensions given for the `vector` parameter in this batch                 | 1536
 | `vector.retrieve_vectors`                          | true if the retrieve_vectors parameter has been used in this batch.                         | false
@@ -256,3 +255,9 @@ This list is liable to change with every new version of Meilisearch. It's not be
 | `infos.experimental_search_queue_size`             | Size of the search queue                                                                    | 750
 | `locales`                                          | List of locales used with `/search` and `/settings` routes                                  | [”fra”, “eng”]
 | `federation.use_federation`                        | `true` if at least one of the multi-search requests from the last aggregate contained a non-null top-level federation object | `false`
+| `network_has_self`                                 | `true` if the network object has a non-null self field, otherwise false                     | true
+| `network_size`                                     | Counts the number of declared remotes                                                       | 0
+| `network`                                          | `true` when the network experimental feature is enabled                                     | true
+| `experimental_network`                             | `true` when the network experimental feature is enabled                                     | true
+| `remotes.total_distinct_remote_count`              | Sum of the number of distinct remotes appearing in each search request of the aggregate     | 48
+| `remotes.avg_distinct_remote_count`                | Average number of distinct remotes appearing in a search request of the aggregate           | 2.33
