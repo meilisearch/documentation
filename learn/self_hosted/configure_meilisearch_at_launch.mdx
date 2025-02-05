@@ -244,14 +244,14 @@ Meilisearch automatically collects data from all instances that do not opt out u
 **Default value**: None<br />
 **Expected value**: None
 
-Migrates the database to a new Meilisearch version after updating the binary.
+Migrates the database to a new Meilisearch version after you have manually updated the binary.
 
 [Learn more about updating Meilisearch to a new release](/learn/update_and_migration/updating).
 
 <Capsule intent="danger" title="Create a snapshot before a dumpless upgrade">
 Take a snapshot of your instance before performing a dumpless upgrade.
 
-The dumpless upgrade is not currently an atomic operation. It is possible some processes fail during the upgrade, but Meilisearch still finalizes the upgrade. This may result in a corrupted database and data loss.
+Dumpless upgrade are not currently atomic. It is possible some processes fail and Meilisearch still finalizes the upgrade. This may result in a corrupted database and data loss.
 </Capsule>
 
 ### Dump directory

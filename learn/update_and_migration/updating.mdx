@@ -44,7 +44,7 @@ This guide only works for v0.15 and above. If you are using an older Meilisearch
 
 ### Dumpless upgrade <NoticeTag type="experimental" label="experimental" />
 
-Dumpless upgrades are available when upgrading from Meilisearch >=v1.12 to Meilisearch >=v1.1
+Dumpless upgrades are available when upgrading from Meilisearch >=v1.12 to Meilisearch >=v1.13
 
 #### Step 1: Make a backup
 
@@ -55,7 +55,7 @@ curl \
   -X POST 'MEILISEARCH_URL/snapshots'
 ```
 
-Once the snapshot is available in your snapshots folder, proceed to the next step.
+Once the snapshot is available in your [snapshots folder](/learn/self_hosted/configure_meilisearch_at_launch#snapshot-destination), proceed to the next step.
 
 ### Step 2: Stop the Meilisearch instance
 
@@ -65,7 +65,7 @@ Next, stop your Meilisearch instance.
 
 <Tabs.Content label="Local installation">
 
-If you're running Meilisearch locally, you can stop the program with `Ctrl + c`.
+If you're running Meilisearch locally, stop the program by pressing `Ctrl + c`.
 
 </Tabs.Content>
 
