@@ -1327,18 +1327,6 @@ distinct_attribute_guide_distinct_parameter_1: |-
       "q": "white shirt",
       "distinct": "sku"
     }'
-get_similar_post_1: |-
-  curl \
-    -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/similar' \
-    -H 'Content-Type: application/json' \
-    -H 'Authorization: Bearer DEFAULT_SEARCH_API_KEY' \
-    --data-binary '{
-      "id": TARGET_DOCUMENT_ID,
-      "embedder": "EMBEDDER_NAME"
-    }'
-get_similar_get_1: |-
-  curl \
-    -X GET 'MEILISEARCH_URL/indexes/INDEX_NAME/similar?id=TARGET_DOCUMENT_ID&embedder=EMBEDDER_NAME'
 search_parameter_reference_ranking_score_threshold_1: |-
   curl \
   -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
@@ -1372,12 +1360,22 @@ reset_localized_attribute_settings_1: |-
     -X DELETE 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/localized-attributes'
 get_all_batches_1: |-
   curl \
-    -X GET 'http://localhost:7700/batches'
+    -X GET 'http://MEILISEARCH_URL/batches'
 get_batch_1: |-
   curl \
-    -X GET 'http://localhost:7700/batches/BATCH_UID'
-
-### Code samples for experimental features
+    -X GET 'http://MEILISEARCH_URL/batches/BATCH_UID'
+get_similar_post_1: |-
+  curl \
+    -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/similar' \
+    -H 'Content-Type: application/json' \
+    -H 'Authorization: Bearer DEFAULT_SEARCH_API_KEY' \
+    --data-binary '{
+      "id": TARGET_DOCUMENT_ID,
+      "embedder": "EMBEDDER_NAME"
+    }'
+get_similar_get_1: |-
+  curl \
+    -X GET 'MEILISEARCH_URL/indexes/INDEX_NAME/similar?id=TARGET_DOCUMENT_ID&embedder=EMBEDDER_NAME'
 get_embedders_1: |-
   curl \
     -X GET 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/embedders'
@@ -1388,7 +1386,7 @@ update_embedders_1: |-
     --data-binary '{
       "default": {
         "source":  "openAi",
-        "apiKey": "anOpenAiApiKey",
+        "apiKey": "OPEN_AI_API_KEY",
         "model": "text-embedding-3-small",
         "documentTemplate": "A document titled '{{doc.title}}' whose description starts with {{doc.overview|truncatewords: 20}}"
       }
@@ -1397,7 +1395,7 @@ reset_embedders_1: |-
   curl \
     -X DELETE 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/embedders'
 search_parameter_guide_hybrid_1: |-
-  curl -X POST 'localhost:7700/indexes/INDEX_NAME/search' \
+  curl -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
     -H 'content-type: application/json' \
     --data-binary '{
       "q": "kitchen utensils",
@@ -1407,14 +1405,14 @@ search_parameter_guide_hybrid_1: |-
       }
     }'
 search_parameter_guide_vector_1: |-
-  curl -X POST 'localhost:7700/indexes/INDEX_NAME/search' \
+  curl -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
     -H 'content-type: application/json' \
     --data-binary '{ 
       "vector": [0, 1, 2],
       "embedder": "EMBEDDER_NAME"
     }'
 search_parameter_reference_retrieve_vectors_1: |-
-  curl -X POST 'localhost:7700/indexes/INDEX_NAME/search' \
+  curl -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
     -H 'content-type: application/json' \
     --data-binary '{
       "q": "kitchen utensils",
@@ -1423,6 +1421,8 @@ search_parameter_reference_retrieve_vectors_1: |-
         "embedder": "EMBEDDER_NAME"
       }
     }'
+
+### Code samples for experimental features
 experimental_get_metrics_1: |-
   curl \
     -X GET 'MEILISEARCH_URL/metrics'
