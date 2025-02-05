@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "cc6bb097-033d-4f65-8704-f10e4e4b10d0",
-		"name": "Meilisearch v1.12",
+		"_postman_id": "11c3d322-31f0-4b54-b0c7-138b5efc7f6b",
+		"name": "Meilisearch v1.13",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "25294324"
 	},
@@ -433,6 +433,21 @@
 								{
 									"key": "locales",
 									"value": "\"cmn\",\"eng\"",
+									"disabled": true
+								},
+								{
+									"key": "hybrid",
+									"value": "{}",
+									"disabled": true
+								},
+								{
+									"key": "vector",
+									"value": "[0,1,2]",
+									"disabled": true
+								},
+								{
+									"key": "retrieveVectors",
+									"value": "false",
 									"disabled": true
 								}
 							]
@@ -2726,6 +2741,81 @@
 										"{{indexUID}}",
 										"settings",
 										"search-cutoff-ms"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get embedders",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/embedders",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"embedders"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update embedders",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"EMBEDDER_NAME\": {\n        \"source\": \"openAi\",\n        \"apiKey\": \"API_KEY\",\n        \"model\": \"text-embedding-3-small\"\n    }\n}"
+								},
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/embedders",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"embedders"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Reset embedders",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/embedders",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"embedders"
 									]
 								}
 							},
