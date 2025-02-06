@@ -3,7 +3,7 @@ title: Implement sharding with remote federated search — Meilisearch documenta
 description: This guide walks you through implemnting a sharding strategy by activating the `/network` route, configuring the network object, and performing remote federated searches.
 ---
 
-# Implement sharding with remote federated search
+# Implement sharding with remote federated search <NoticeTag type="experimental" label="experimental" />
 
 Sharding is the process of splitting an index containing many documents into multiple smaller indexes, often called shards. This horizontal scaling technique is useful when handling large databases. In Meilisearch, the best way to implement a sharding strategy is to use remote federated search.
 
@@ -36,14 +36,14 @@ Meilisearch should respond immediately, confirming the route is now accessible.
 
 ## Configuring the network object
 
-The network object consists of the following fields:
+Next, you must configure the network object. It consists of the following fields:
 
-- `remotes`: a list with the required information to access each remote instance
-- `self`: specifies which of configured remotes corresponds to the current instance
+- `remotes`: defines a list with the required information to access each remote instance
+- `self`: specifies which of the configured `remotes` corresponds to the current instance
 
 ### Setting up remote instances
 
-Next, configure the `remotes` field of the network object:
+Use the `/network` route to configure the `remotes` field of the network object. `remotes` should be an object containing one or more objects. Each one of the nested objects should consist of the name of each instance, associated with its URL and an API key with search permission:
 
 ```sh
 curl \
@@ -67,8 +67,6 @@ curl \
     }
   }'
 ```
-
-Each object should consist of the name of each instance, associated with its URL and an API key with search permission.
 
 Configure the entire set of remote instances in your sharded database, making sure to send the same remotes to each instance.
 
@@ -112,7 +110,7 @@ If your disk space allows, you can reduce the downtime by applying the following
 
 Create the same empty indexes with the same settings on all instances. Keeping the settings and indexes in sync is important to avoid errors and unexpected behavior, though not strictly required.
 
-Distribute your documents across all instances. Do not send same document **to multiple instances**, as this may lead to duplicate search results. Similarly, you should ensure all future versions of a document are sent to the same instance. Meilisearch recommends you hash their primary key using [rendezvous hashing](https://en.wikipedia.org/wiki/Rendezvous_hashing).
+Distribute your documents across all instances. Do not send the same document to multiple instances as this may lead to duplicate search results. Similarly, you should ensure all future versions of a document are sent to the same instance. Meilisearch recommends you hash their primary key using [rendezvous hashing](https://en.wikipedia.org/wiki/Rendezvous_hashing).
 
 ### Updating index settings
 

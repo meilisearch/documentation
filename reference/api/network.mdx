@@ -26,7 +26,7 @@ This feature is not available for Meilisearch Cloud users.
 
 ```json
 {
-	"self": "ms-00",
+  "self": "ms-00",
   "remotes": {
     "ms-00": {
       "url": "http://ms-1235.example.meilisearch.io",
@@ -50,7 +50,7 @@ This feature is not available for Meilisearch Cloud users.
 
 **Type**: Object<br />
 **Default value**: `{}`<br />
-**Description**: An object containing `remote` objects. The key of each remote object indicates the name of the remote instance
+**Description**: An object containing [remote objects](#the-remote-object). The key of each remote object indicates the name of the remote instance
 
 #### The remote object
 
@@ -65,7 +65,7 @@ This feature is not available for Meilisearch Cloud users.
 
 **Type**: String<br />
 **Default value**: `null`<br />
-**Description**: URL indicating the address of a Meilisearch instance. This URL does not need to be public, but must be accessible to all instances in the network. Required.
+**Description**: URL indicating the address of a Meilisearch instance. This URL does not need to be public, but must be accessible to all instances in the network. Required
 
 ##### `searchApiKey`
 
@@ -87,7 +87,7 @@ Returns the current value of the instance's network object.
 
 ```json
 {
-	"self": "ms-00",
+  "self": "ms-00",
   "remotes": {
     "ms-00": {
       "url": "http://ms-1235.example.meilisearch.io",
