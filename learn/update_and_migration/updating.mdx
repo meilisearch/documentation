@@ -55,7 +55,7 @@ curl \
   -X POST 'MEILISEARCH_URL/snapshots'
 ```
 
-Once the snapshot is available in your [snapshots folder](/learn/self_hosted/configure_meilisearch_at_launch#snapshot-destination), proceed to the next step.
+Meilisearch will respond with a partial task object. Use its `taskUid` to monitor the snapshot creation status. Once the task is completed, proceed to the next step.
 
 ### Step 2: Stop the Meilisearch instance
 
