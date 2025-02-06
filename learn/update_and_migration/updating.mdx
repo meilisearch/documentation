@@ -141,12 +141,12 @@ meilisearch --experimental-dumpless-upgrade
 </Tabs.Content>
 </Tabs.Container>
 
-Meilisearch should launch normally and immediately create a new `UpgradeDatabase` task. This task is processed immediately and cannot be canceled. You may follow its progress by using the `GET /tasks` endpoint to obtain its `taskUid`, then querying `GET /tasks/TASK_UID`.
+Meilisearch should launch normally and immediately create a new `UpgradeDatabase` task. This task is processed immediately and cannot be canceled. You may follow its progress by using the `GET /tasks?types=UpgradeDatabase` endpoint to obtain its `taskUid`, then querying `GET /tasks/TASK_UID`.
 
 While the task is processing, you may continue making search queries. You may also enqueue new tasks. Meilisearch will only process new tasks once `UpgradeDatabase` is completed.
 
 <Capsule intent="warning">
-If after the upgrade is completed and the task status is set to `failed` or Meilisearch returns internal error messages to your queries, [restart your instance from the snapshot](/learn/data_backup/snapshots#starting-from-a-snapshot) you generated during step 1.
+If after the upgrade is completed the task status is set to `failed` or Meilisearch returns internal error messages to your queries, [restart your instance from the snapshot](/learn/data_backup/snapshots#starting-from-a-snapshot) you generated during step 1. You may then retry the upgrade, or upgrade using a dump. You are also welcome to open an issue on the [Meilisearch repository](https://github.com/meilisearch/meilisearch).
 </Capsule>
 
 ### Using a dump
