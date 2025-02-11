@@ -29,4 +29,10 @@ In these cases, you will have to supply your own embeddings.
 
 Although it returns very relevant search results, the Hugging Face embedder must run directly in your server. This may lead to lower performance and extra costs when you are hosting Meilisearch in a service like DigitalOcean or AWS.
 
-That said, Hugging Face can be a good embedder for datasets under 10k documents that you don't plan to update often. Meilisearch Cloud does not support Hugging Face embedders.
+That said, Hugging Face can be a good embedder for datasets under 10k documents that you don't plan to update often. 
+
+<Capsule intent="note">
+Meilisearch Cloud does not support embedders with `{"source": "huggingFace"}`.
+
+To use  Hugging Face in the Cloud,  use [HuggingFace inference points with the REST embedder](/guides/ai/huggingface).
+ </Capsule>
