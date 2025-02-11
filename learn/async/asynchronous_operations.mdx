@@ -1,5 +1,6 @@
 ---
 title: Tasks and asynchronous operations — Meilisearch documentation
+sidebarTitle: Tasks and asynchronous operations
 description: Meilisearch uses a task queue to handle asynchronous operations. This in-depth guide explains tasks, their uses, and how to manage them using Meilisearch's API.
 sidebarDepth: 3
 ---
@@ -44,7 +45,7 @@ A [task object](/reference/api/tasks#task-object) includes data not present in t
     "status": "enqueued",
     "type": "documentAdditionOrUpdate",
     "canceledBy": null,
-    "details": { 
+    "details": {
         "receivedDocuments": 67493,
         "indexedDocuments": null
     },
@@ -168,7 +169,7 @@ When you query the [get task endpoint](/reference/api/tasks#get-one-task) using 
     "status": "enqueued",
     "type": "documentAdditionOrUpdate",
     "canceledBy": null,
-    "details": { 
+    "details": {
         "receivedDocuments": 67493,
         "indexedDocuments": null
     },
@@ -189,7 +190,7 @@ Later, you check the task's progress one more time. It was successfully processe
     "status": "succeeded",
     "type": "documentAdditionOrUpdate",
     "canceledBy": null,
-    "details": { 
+    "details": {
             "receivedDocuments": 67493,
             "indexedDocuments": 67493
     },
@@ -210,7 +211,7 @@ Had the task failed, the response would have included a detailed `error` object:
     "status": "failed",
     "type": "documentAdditionOrUpdate",
     "canceledBy": null,
-    "details": { 
+    "details": {
             "receivedDocuments": 67493,
             "indexedDocuments": 0
     },

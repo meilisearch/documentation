@@ -1,5 +1,6 @@
 ---
 title: Update to the latest Meilisearch version — Meilisearch documentation
+sidebarTitle: Updating Meilisearch
 description: Learn how to migrate to the latest Meilisearch release.
 sidebarDepth: 3
 ---
@@ -20,13 +21,13 @@ If you are running Meilisearch as a `systemctl` service using v0.22 or above, tr
 
 Log into your Meilisearch Cloud account and navigate to the project you want to update.
 
-Click on the project you want to update. Look for the "General settings" section at the top of the page. 
+Click on the project you want to update. Look for the "General settings" section at the top of the page.
 
 Whenever a new version of Meilisearch is available, you will see an update button next to the "Meilisearch version" field.
 
 ![Button to update Meilisearch version to 1.0.2](/assets/images/updating/update-button.png)
 
-To update to the latest Meilisearch release, click the "Update to v.X.Y.Z" button. 
+To update to the latest Meilisearch release, click the "Update to v.X.Y.Z" button.
 
 This will open a pop-up with more information about the update process. Read it, then click on "Update". The "Status" of your project will change from "running" to "updating".
 
@@ -176,7 +177,7 @@ For v0.27 and below, the response to your request returns a dump `uid`. Use it  
 ```sh
   curl \
     -X GET 'http://<your-domain-name>/dumps/:dump_uid/status'
-    -H 'Authorization: Bearer API_KEY' 
+    -H 'Authorization: Bearer API_KEY'
   # -H 'X-Meili-API-Key: API_KEY' for v0.24 or below
 ```
 </Capsule>

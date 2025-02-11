@@ -1,5 +1,6 @@
 ---
 title: Documents — Meilisearch documentation
+sidebarTitle: Documents
 description: Documents are the individual items that make up a dataset. Each document is an object composed of one or more fields.
 sidebarDepth: 3
 ---
@@ -114,7 +115,7 @@ NDJSON or jsonlines objects consist of individual lines where each individual li
 
 Meilisearch will only accept NDJSON documents when it receives the `application/x-ndjson` content-type header.
 
-Compared to JSON, NDJSON has better writing performance and is less CPU and memory intensive. It is easier to validate and, unlike CSV, can handle nested structures.  
+Compared to JSON, NDJSON has better writing performance and is less CPU and memory intensive. It is easier to validate and, unlike CSV, can handle nested structures.
 
 The above JSON document would look like this in NDJSON:
 
@@ -130,7 +131,7 @@ By default, Meilisearch uses a single comma (`,`) as the delimiter. Use the `csv
 
 Meilisearch will only accept CSV documents when it receives the `text/csv` content-type header.
 
-Compared to JSON, CSV has better writing performance and is less CPU and memory intensive.  
+Compared to JSON, CSV has better writing performance and is less CPU and memory intensive.
 
 The above JSON document would look like this in CSV:
 

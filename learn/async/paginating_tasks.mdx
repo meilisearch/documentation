@@ -1,5 +1,6 @@
 ---
 title: Managing the task database — Meilisearch documentation
+sidebarTitle: Paginating tasks
 description: Meilisearch uses a task queue to handle asynchronous operations. This document describes how to navigate long task queues with filters and pagination.
 ---
 
@@ -17,7 +18,7 @@ Use the `limit` parameter to change the number of returned tasks:
 
 <CodeSamples id="get_all_tasks_paginating_1" />
 
-Meilisearch will return a batch of tasks. Each batch of returned tasks is often called a "page" of tasks, and the size of that page is determined by `limit`:  
+Meilisearch will return a batch of tasks. Each batch of returned tasks is often called a "page" of tasks, and the size of that page is determined by `limit`:
 
 ```json
 {

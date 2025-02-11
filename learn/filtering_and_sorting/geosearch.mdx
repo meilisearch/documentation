@@ -1,5 +1,6 @@
 ---
 title: Geosearch — Meilisearch documentation
+sidebarTitle: Geosearch
 description: Filter and sort search results based on their geographic location.
 sidebarDepth: 3
 ---
@@ -71,7 +72,7 @@ Our restaurant dataset looks like this once we add geopositioning data:
     "type": "pizza",
     "rating": 9,
     "_geo": {
-      "lat": 45.4777599, 
+      "lat": 45.4777599,
       "lng": 9.1967508
     }
   },
@@ -82,7 +83,7 @@ Our restaurant dataset looks like this once we add geopositioning data:
     "type": "french",
     "rating": 8,
     "_geo": {
-      "lat": 48.8826517, 
+      "lat": 48.8826517,
       "lng": 2.3352748
     }
   },
@@ -174,7 +175,7 @@ In both cases, the results should look like this:
     "type": "pizza",
     "rating": 9,
     "_geo": {
-      "lat": 45.4777599, 
+      "lat": 45.4777599,
       "lng": 9.1967508
     }
   },
@@ -205,7 +206,7 @@ It is also possible to combine `_geoRadius` and `_geoBoundingBox` with other fil
     "type": "pizza",
     "rating": 9,
     "_geo": {
-      "lat": 45.4777599, 
+      "lat": 45.4777599,
       "lng": 9.1967508
     }
   }
@@ -267,7 +268,7 @@ With our <a id="downloadRestaurants" href="/assets/datasets/restaurants.json" do
     "type": "french",
     "rating": 8,
     "_geo": {
-      "lat": 48.8826517, 
+      "lat": 48.8826517,
       "lng": 2.3352748
     }
   },
@@ -289,7 +290,7 @@ With our <a id="downloadRestaurants" href="/assets/datasets/restaurants.json" do
     "type": "pizza",
     "rating": 9,
     "_geo": {
-      "lat": 45.4777599, 
+      "lat": 45.4777599,
       "lng": 9.1967508
     }
   }
@@ -311,7 +312,7 @@ The above command will only work if you have previously added `rating` to `sorta
     "type": "french",
     "rating": 8,
     "_geo": {
-      "lat": 48.8826517, 
+      "lat": 48.8826517,
       "lng": 2.3352748
     }
   },
@@ -333,7 +334,7 @@ The above command will only work if you have previously added `rating` to `sorta
     "type": "pizza",
     "rating": 9,
     "_geo": {
-      "lat": 45.4777599, 
+      "lat": 45.4777599,
       "lng": 9.1967508
     }
   }
@@ -361,7 +362,7 @@ When using `_geoPoint`, all returned documents will contain one extra field: `_g
     "type": "pizza",
     "rating": 9,
     "_geo": {
-      "lat": 45.4777599, 
+      "lat": 45.4777599,
       "lng": 9.1967508
     },
     "_geoDistance": 1532
