@@ -8,42 +8,56 @@ description: Meilisearch comes with a built-in search interface for quick testin
 
 Meilisearch Cloud gives you access to a dedicated search preview interface. This is useful to test search result relevancy when you are tweaking an index's settings.
 
-<Capsule intent="note" title="Search preview in self-hosted instances">
+<Info>
 If you are self-hosting Meilisearch and need a local search interface, access `http://localhost:7700` in your browser. This local preview only allows you to perform plain searches and offers no customization options.
-</Capsule>
+</Info>
 
 ## Accessing and using search preview
 
 Log into your [Meilisearch Cloud](https://cloud.meilisearch.com/login) account, navigate to your project, then click on "Search preview":
 
-![Meilisearch Cloud's project menu with the last option, "Search preview", selected](/assets/images/search_preview/01-search-preview-menu.png)
+<Frame caption="Meilisearch Cloud's project menu with the last option, 'Search preview', selected">
+  <img src="/assets/images/search_preview/01-search-preview-menu.png" />
+</Frame>
 
 Select the index you want to search on using the input on the left-hand side:
 
-![Meilisearch Cloud's search preview interface, with the index selecting input highlighted](/assets/images/search_preview/02-select-index.png)
+<Frame caption="Meilisearch Cloud's search preview interface, with the index selecting input highlighted">
+  <img src="/assets/images/search_preview/02-select-index.png" />
+</Frame>
 
 Then use the main input to perform plain keyword searches:
 
-![Meilisearch Cloud's search preview interface, with the search input selected and containing a search string](/assets/images/search_preview/03-basic-search.png)
+<Frame caption="Meilisearch Cloud's search preview interface, with the search input selected and containing a search string">
+  <img src="/assets/images/search_preview/03-basic-search.png" />
+</Frame>
 
 When debugging relevancy, you may want to activate the "Ranking score" option. This displays the overall [ranking score](/learn/relevancy/ranking_score) for each result, together with the score for each individual ranking rule:
 
-![The same search preview interface as in the previous image, but with the "Ranking score" option turned on. Search results are the same, but include the document's ranking score](/assets/images/search_preview/04-score.png)
+<Frame caption="The same search preview interface as in the previous image, but with the 'Ranking score' option turned on. Search results are the same, but include the document's ranking score">
+  <img src="/assets/images/search_preview/04-score.png" />
+</Frame>
 
 ## Configuring search options
 
 Use the menu on the left-hand side to configure [sorting](/learn/filtering_and_sorting/sort_search_results) and [filtering](/learn/filtering_and_sorting/filter_search_results). These require you to first edit your index's sortable and filterable attributes. You may additionally configure any filterable attributes as facets. In this example, "Genres" is one of the configured facets:
 
-![The sidebar of the search preview interface, with a handful of options, including "Sort by", "AI-powered search", "Filters", and "Genres"](/assets/images/search_preview/05-sidebar-options.png)
+<Frame caption="The sidebar of the search preview interface, with a handful of options, including 'Sort by', 'AI-powered search', 'Filters', and 'Genres'">
+  <img src="/assets/images/search_preview/05-sidebar-options.png" />
+</Frame>
 
 You can also perform [AI-powered searches](/learn/ai_powered_search/getting_started_with_ai_search) if this functionality has been enabled for your project.
 
 Clicking on "Advanced parameters" gives you access to further customization options, including setting which document fields Meilisearch returns and explicitly declaring the search language:
 
-![The same sidebar as before with the "Advanced parameters" option highlighted](/assets/images/search_preview/06-sidebar-options-advanced.png)
+<Frame caption="The same sidebar as before with the 'Advanced parameters' option highlighted">
+  <img src="/assets/images/search_preview/06-sidebar-options-advanced.png" />
+</Frame>
 
 ## Exporting search options
 
 You can export the full search query for further testing in other tools and environments. Click on the cloud icon next to "Advanced parameters", then choose to download a JSON file or copy the query to your clipboard:
 
-![The search preview sidebar with a highlighted export button](/assets/images/search_preview/07-sidebar-options-export.png)
+<Frame caption="The same sidebar as before with the 'Export' option highlighted">
+  <img src="/assets/images/search_preview/07-sidebar-options-export.png" />
+</Frame>

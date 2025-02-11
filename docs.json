@@ -32,7 +32,7 @@
 						"group": "AI-POWERED SEARCH",
 						"pages": [
 							"learn/ai_powered_search/getting_started_with_ai_search",
-							"learn/ai_powered_search/search_with_user_provided_embedding",
+							"learn/ai_powered_search/search_with_user_provided_embeddings",
 							"learn/ai_powered_search/deactivate_ai_powered_search",
 							"learn/ai_powered_search/difference_full_text_ai_search"
 						]
@@ -41,7 +41,7 @@
 						"group": "SELF-HOSTED",
 						"pages": [
 							"learn/self_hosted/getting_started_with_self_hosted_meilisearch",
-							"learn/self_hosted/confgure_meilisearch_at_launch",
+							"learn/self_hosted/configure_meilisearch_at_launch",
 							"learn/self_hosted/install_meilisearch_locally",
 							"learn/self_hosted/supported_os"
 						]
@@ -76,7 +76,7 @@
 						"group": "CONFIGURATION",
 						"pages": [
 							"learn/configuration/configuring_index_settings",
-							"learn/configuration/configurting_index_settings_api"
+							"learn/configuration/configuring_index_settings_api"
 						]
 					},
 					{
@@ -155,7 +155,7 @@
 							"learn/relevancy/attribute_ranking_order",
 							"learn/relevancy/typo_tolerance_settings",
 							"learn/relevancy/typo_tolerance_calculations",
-							"learn/relevancy/distint_attibute",
+							"learn/relevancy/distinct_attribute",
 							"learn/relevancy/displayed_searchable_attributes",
 							"learn/relevancy/synonyms"
 						]
@@ -179,9 +179,38 @@
 			{
 				"anchor": "References",
 				"icon": "gear",
-				"pages": [
-					"reference/api/batches",
-					"reference/api/documents"
+				"groups": [
+					{
+						"group": "API REFERENCE",
+						"pages": [
+							"reference/api/overview",
+							"reference/api/indexes",
+							"reference/api/documents",
+							"reference/api/search",
+							"reference/api/multi_search",
+							"reference/api/similar",
+							"reference/api/facet_search",
+							"reference/api/tasks",
+							"reference/api/batches",
+							"reference/api/keys",
+							"reference/api/settings",
+							"reference/api/snapshots",
+							"reference/api/stats",
+							"reference/api/health",
+							"reference/api/version",
+							"reference/api/dump",
+							"reference/api/experimental_features",
+							"reference/api/metrics",
+							"reference/api/logs"
+						]
+					},
+					{
+						"group": "ERRORS",
+						"pages": [
+							"reference/errors/overview",
+							"reference/errors/error_codes"
+						]
+					}
 				]
 			},
 			{

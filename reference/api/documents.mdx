@@ -1,5 +1,6 @@
 ---
 title: Documents — Meilisearch API reference
+sidebarTitle: Documents
 description: The /documents route allows you to create, manage, and delete documents.
 ---
 
@@ -17,9 +18,9 @@ Get a set of documents.
 
 Use `offset` and `limit` to browse through documents.
 
-<Capsule intent="warning">
+<Warning>
 `filter` will not work without first explicitly adding attributes to the [`filterableAttributes` list](/reference/api/settings#update-filterable-attributes). [Learn more about filters in our dedicated guide.](/learn/filtering_and_sorting/filter_search_results)
-</Capsule>
+</Warning>
 
 ### Path parameters
 
@@ -37,9 +38,9 @@ Use `offset` and `limit` to browse through documents.
 | **`filter`** | String/Array of array of strings/`null` | N/A           | Refine results based on attributes in the `filterableAttributes` list |
 | **`retrieveVectors`**    | Boolean                     | `false`       | Return document vector data with search result                        |
 
-<Capsule intent="note">
+<Note>
 Sending an empty payload (`--data-binary '{}'`) will return all documents in the index.
-</Capsule>
+</Note>
 
 ### Response
 
@@ -89,9 +90,9 @@ Sending an empty payload (`--data-binary '{}'`) will return all documents in the
 
 ## Get documents with GET
 
-<Capsule intent="danger">
+<Warning>
 This endpoint will be deprecated in the near future. Consider using POST `/indexes/{index_uid}/documents/fetch` instead.
-</Capsule>
+</Warning>
 
 <RouteHighlighter method="GET" route="/indexes/{index_uid}/documents"/>
 
@@ -99,9 +100,9 @@ Get a set of documents.
 
 Using the query parameters `offset` and `limit`, you can browse through all your documents.`filter` must be a string. To create [filter expressions](/learn/filtering_and_sorting/filter_expression_reference) use `AND` or `OR`.
 
-<Capsule intent="warning">
+<Warning>
 `filter` will not work without first explicitly adding attributes to the [`filterableAttributes` list](/reference/api/settings#update-filterable-attributes). [Learn more about filters in our dedicated guide.](/learn/filtering_and_sorting/filter_search_results)
-</Capsule>
+</Warning>
 
 ### Path parameters
 
@@ -229,9 +230,9 @@ This endpoint accepts the following content types:
 | **`primaryKey`**   | `null`        | [Primary key](/learn/getting_started/primary_key#primary-field) of the index                                                              |
 | **`csvDelimiter`** | `","`         | Configure the character separating CSV fields. Must be a string containing [one ASCII character](https://www.rfc-editor.org/rfc/rfc20). |
 
-<Capsule intent="warning">
+<Warning>
 Configuring `csvDelimiter` and sending data with a content type other than CSV will cause Meilisearch to throw an error.
-</Capsule>
+</Warning>
 
 If you want to [set the primary key of your index on document addition](/learn/getting_started/primary_key#setting-the-primary-key-on-document-addition), it can only be done **the first time you add documents** to the index. After this, the `primaryKey` parameter will be ignored if given.
 
@@ -298,9 +299,9 @@ Vector embeddings added with the shorthand are not replaced when Meilisearch gen
 }
 ```
 
-<Capsule intent="note">
+<Note>
 If the key for an embedder inside `_vectors` is empty or `null`, Meilisearch treats the document as not having any embeddings for that embedder. This document is then returned last during AI-powered searches.
-</Capsule>
+</Note>
 
 ### Example
 
@@ -351,9 +352,9 @@ This endpoint accepts the following content types:
 | **`primaryKey`**   | `null`        | [Primary key](/learn/getting_started/primary_key#primary-field) of the documents                                                          |
 | **`csvDelimiter`** | `","`         | Configure the character separating CSV fields. Must be a string containing [one ASCII character](https://www.rfc-editor.org/rfc/rfc20). |
 
-<Capsule intent="warning">
+<Warning>
 Configuring `csvDelimiter` and sending data with a content type other than CSV will cause Meilisearch to throw an error.
-</Capsule>
+</Warning>
 
 ### Body
 
@@ -390,13 +391,13 @@ The documents are matched because they have the same [primary key](/learn/gettin
 
 You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
 
-## Update documents with function <NoticeTag type="experimental" label="experimental" />
+## Update documents with function (experimental)
 
 <RouteHighlighter method="POST" route="/indexes/{index_uid}/documents/edit"/>
 
 Use a [RHAI function](https://rhai.rs/book/engine/hello-world.html) to edit one or more documents directly in Meilisearch.
 
-<Capsule intent="note" title="Activating Update documents with function">
+<Note>
 This is an experimental feature. Use the experimental features endpoint to activate it:
 
 ```sh
@@ -407,7 +408,7 @@ curl \
     "editDocumentsByFunction": true
   }'
 ```
-</Capsule>
+</Note>
 
 ### Path parameters
 
@@ -523,17 +524,17 @@ Delete a set of documents based on a filter.
 
 A filter expression written as a string or array of array of strings for the documents to be deleted.
 
-<Capsule intent="warning">
+<Warning>
 `filter` will not work without first explicitly adding attributes to the [`filterableAttributes` list](/reference/api/settings#update-filterable-attributes). [Learn more about filters in our dedicated guide.](/learn/filtering_and_sorting/filter_search_results)
-</Capsule>
+</Warning>
 
 ```
  "filter": "rating > 3.5"
 ```
 
-<Capsule intent="warning">
+<Warning>
 Sending an empty payload (`--data-binary '{}'`) will return a `bad_request` error.
-</Capsule>
+</Warning>
 
 ### Example
 
@@ -555,9 +556,9 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 ## Delete documents by batch
 
-<Capsule intent="danger">
+<Warning>
 This endpoint will be deprecated in the near future. Consider using POST `/indexes/{index_uid}/documents/delete` instead .
-</Capsule>
+</Warning>
 
 <RouteHighlighter method="POST" route="/indexes/{index_uid}/documents/delete-batch"/>
 

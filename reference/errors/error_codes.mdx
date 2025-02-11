@@ -1,5 +1,6 @@
 ---
 title: Error codes — Meilisearch API reference
+sidebarTitle: Error codes
 description: Consult this page for an exhaustive list of errors you may encounter when using the Meilisearch API.
 ---
 
@@ -227,7 +228,7 @@ Two or more queries in a multi-search request have incompatible results.
 
 ## `invalid_multi_search_sort_facet_values_by`
 
-`federation.mergeFacets.sortFacetValuesBy` is not a string or doesn’t have one of the allowed values.
+`federation.mergeFacets.sortFacetValuesBy` is not a string or doesn't have one of the allowed values.
 
 ## `invalid_multi_search_query_facets`
 
@@ -411,41 +412,41 @@ This error occurs if:
 - The [`minWordSizeForTypos`](/reference/api/settings#typo-tolerance-object) field is invalid. It should either be an integer or set to `null`
 - The value of either [`oneTypo`](/reference/api/settings#typo-tolerance-object) or [`twoTypos`](/reference/api/settings#typo-tolerance-object) is invalid. It should either be an integer or set to `null`
 
-### `invalid_similar_id`
+## `invalid_similar_id`
 
 The provided target document identifier is invalid. A document identifier can be of type integer or string, only composed of alphanumeric characters (a-z A-Z 0-9), hyphens (-) and underscores (_).
 
-### `not_found_similar_id`
+## `not_found_similar_id`
 
 Meilisearch could not find the target document. Make sure your target document identifier corresponds to a document in your index.
 
-### `invalid_similar_attributes_to_retrieve`
+## `invalid_similar_attributes_to_retrieve`
 
 [`attributesToRetrieve`](/reference/api/search#attributes-to-retrieve) is invalid. It should be an array of strings, a string, or set to null.
 
-### `invalid_similar_filter`
+## `invalid_similar_filter`
 
 [`filter`](/reference/api/search#filter) is invalid or contains a filter expression with a missing or invalid operator. Filter expressions must be a string, array of strings, or array of array of strings for the POST endpoint. It must be a string for the GET endpoint.
 
 Meilisearch also throws this error if the attribute used for filtering is not defined in the `filterableAttributes` list.
 
-### `invalid_similar_limit`
+## `invalid_similar_limit`
 
 [`limit`](/reference/api/search#limit) is invalid. It should be an integer.
 
-### `invalid_similar_offset`
+## `invalid_similar_offset`
 
 [`offset`](/reference/api/search#offset) is invalid. It should be an integer.
 
-### `invalid_similar_show_ranking_score`
+## `invalid_similar_show_ranking_score`
 
 [`ranking_score`](/reference/api/search#ranking-score) is invalid. It should be a boolean.
 
-### `invalid_similar_show_ranking_score_details`
+## `invalid_similar_show_ranking_score_details`
 
 [`ranking_score_details`](/reference/api/search#ranking-score-details) is invalid. It should be a boolean.
 
-### `invalid_embedder`
+## `invalid_embedder`
 
 [`embedder`](/reference/api/search#hybrid-search-experimental) is invalid. It should be a string corresponding to the name of a configured embedder.
 
@@ -618,6 +619,6 @@ You have reached the limit of concurrent search requests. You may configure it b
 
 The document exists in store, but there was an error retrieving it. This probably comes from an inconsistent state in the database.
 
-### `vector_embedding_error`
+## `vector_embedding_error`
 
 Error while generating embeddings.
