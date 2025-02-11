@@ -11,6 +11,131 @@
 	  	"light": "#FF5CB2",
 	  	"dark": "#FF5CB2"
 	},
+	"background": {
+		"decoration": "grid",
+		"color": {
+			"light": "#F7F7F7",
+			"dark": "#1A003B"
+		}
+	},
+	"navbar": {
+		"primary": {
+			"type": "button",
+			"label": "Dashboard",
+			"href": "https://cloud.meilisearch.com"
+		},
+		"links": [
+			{
+				"label": "Github",
+				"href": "https://github.com/meilisearch"
+			},
+			{
+				"label": "Discord",
+				"href": "https://discord.gg/meilisearch"
+			}
+		]
+	},
+	"footer": {
+		"socials": {
+			"x": "https://x.com/meilisearch",
+			"github": "https://github.com/meilisearch",
+			"linkedin": "https://www.linkedin.com/company/meilisearch",
+			"website": "https://www.meilisearch.com"
+		},
+		"links": [
+			{
+				"header": "Product",
+				"items": [
+					{
+						"label": "Meilisearch Cloud",
+						"href": "https://www.meilisearch.com/cloud"
+					},
+					{
+						"label": "AI search",
+						"href": "https://www.meilisearch.com/solutions/hybrid-search"
+					},
+					{
+						"label": "Pricing",
+						"href": "https://www.meilisearch.com/pricing"
+					},
+					{
+						"label": "Documentation",
+						"href": "https://www.meilisearch.com/docs"
+					},
+					{
+						"label": "Roadmap",
+						"href": "https://roadmap.meilisearch.com"
+					},
+					{
+						"label": "Release notes",
+						"href": "https://updates.cloud.meilisearch.com/"
+					},
+					{
+						"label": "Comparisons",
+						"href": "https://www.meilisearch.com/docs/learn/what_is_meilisearch/comparison_to_alternatives"
+					},
+					{
+						"label": "Trust center",
+						"href": "https://trust.meilisearch.com/"
+					}
+				]
+			},
+			{
+				"header": "Contact us",
+				"items": [
+					{
+						"label": "Github",
+						"href": "https://github.com/meilisearch"
+					},
+					{
+						"label": "Discord",
+						"href": "https://discord.gg/meilisearch"
+					},
+					{
+						"label": "Newsletter",
+						"href": "https://share-eu1.hsforms.com/1LN5N0x_GQgq7ss7tXmSykwfg3aq"
+					},
+					{
+						"label": "Helpdesk",
+						"href": "https://help.meilisearch.com/"
+					}
+				]
+			},
+			{
+				"header": "Company",
+				"items": [
+					{
+						"label": "Blog",
+						"href": "https://meilisearch.com/blog"
+					},
+					{
+						"label": "Customers",
+						"href": "https://www.meilisearch.com/customers"
+					},
+					{
+						"label": "Careers",
+						"href": "https://www.meilisearch.com/careers"
+					},
+					{
+						"label": "Code of Conduct",
+						"href": "https://github.com/meilisearch/MeiliSearch/blob/main/CODE_OF_CONDUCT.md"
+					},
+					{
+						"label": "Privacy Policy",
+						"href": "https://www.meilisearch.com/privacy-policy"
+					},
+					{
+						"label": "Terms of Use",
+						"href": "https://www.meilisearch.com/terms-of-use"
+					},
+					{
+						"label": "Swag",
+						"href": "https://swag.meilisearch.com/"
+					}
+				]
+			}
+		]
+	},
 	"navigation": {
 	  	"anchors": [
 			{
