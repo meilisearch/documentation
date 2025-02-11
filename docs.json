@@ -1,0 +1,29 @@
+{
+	"$schema": "https://mintlify.com/docs.json",
+	"theme": "mint",
+	"name": "Meilisearch Documentation",
+	"logo": {
+    	"dark": "/assets/repo/meilisearch-logo-dark.svg",
+    	"light": "/assets/repo/meilisearch-logo-light.svg"
+  	},
+	"colors": {
+	  "primary": "#FF5CB2",
+	  "light": "#FF5CB2",
+	  "dark": "#FF5CB2"
+	},
+	"navigation": {
+	  "tabs": [
+		{
+		  "tab": "Guides",
+		  "groups": [
+			{
+			  "group": "Get Started",
+			  "pages": [
+				"learn/getting_started/cloud_quick_start"
+			  ]
+			}
+		  ]
+		}
+	  ]
+	}
+}
