@@ -216,8 +216,77 @@
 			{
 				"anchor": "Guides",
 				"icon": "file-lines",
-				"pages": [
-					"guides/vercel"
+				"groups": [
+					{
+						"group": "FRONT END",
+						"pages": [
+							"guides/front_end/front_end_integration",
+							"guides/front_end/react_quick_start",
+							"guides/front_end/vue_quick_start",
+							"guides/front_end/search_bar_for_docs",
+							"guides/front_end/pagination"
+						]
+					},
+					{
+						"group": "BACK END",
+						"pages": [
+							"guides/laravel_scout",
+							"guides/strapi_v4",
+							"guides/ruby_on_rails_quick_start"
+						]
+					},
+					{
+						"group": "ARTIFICAL INTELLIGENCE",
+						"pages": [
+							"guides/embedders/openai",
+							"guides/langchain",
+							"guides/embedders/huggingface",
+							"guides/embedders/cloudflare",
+							"guides/embedders/cohere",
+							"guides/embedders/mistral",
+							"guides/embedders/voyage",
+							"guides/computing_hugging_face_embeddings_gpu"
+						]
+					},
+					{
+						"group": "PERFORMANCE",
+						"pages": [
+							"guides/improve_relevancy_large_documents"
+						]
+					},
+					{
+						"group": "SECURITY",
+						"pages": [
+							"guides/http2_ssl",
+							"guides/laravel_multitenancy",
+							"guides/multitenancy_nodejs"
+						]
+					},
+					{
+						"group": "DEPLOYMENT",
+						"pages": [
+							"guides/running_production",
+							"guides/deployment/aws",
+							"guides/deployment/azure",
+							"guides/deployment/digitalocean",
+							"guides/deployment/koyeb",
+							"guides/deployment/qovery",
+							"guides/deployment/railway"
+						]
+					},
+					{
+						"group": "INTEGRATIONS",
+						"pages": [
+							"guides/vercel"
+						]
+					},
+					{
+						"group": "MISCELLANEOUS",
+						"pages": [
+							"guides/postman_collection",
+							"guides/docker"
+						]
+					}
 				]
 			}
 		]
