@@ -145,6 +145,7 @@
 					{
 						"group": "GETTING STARTED",
 						"pages": [
+							"home",
 							"learn/getting_started/cloud_quick_start",
 							"learn/getting_started/what_is_meilisearch",
 							"learn/getting_started/documents",
