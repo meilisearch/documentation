@@ -13,9 +13,6 @@ The `/stats` route gives extended information and metrics about indexes and the 
 {
   "databaseSize": 447819776,
   "usedDatabaseSize": 196608,
-  "rawDocumentDbSize": 5320,
-  "maxDocumentSize": 144,
-  "avgDocumentSize": 92,
   "lastUpdate": "2019-11-15T11:15:22.092896Z",
   "indexes": {
     "movies": {
@@ -52,9 +49,6 @@ The `/stats` route gives extended information and metrics about indexes and the 
 | ------------------------------- | ------- | ------------------------------------------------------------------------------------------------------------ |
 | **`databaseSize`**              | Integer | Storage space claimed by Meilisearch and LMDB in bytes                                                       |
 | **`usedDatabaseSize`**          | Integer | Storage space used by the database in bytes, excluding unused space claimed by LMDB                          |
-| **`rawDocumentDbSize`**         | Integer | Total size of documents in the database, in bytes                                                            |
-| **`maxDocumentSize`**           | Integer | Size of the largest document in the database, in bytes                                                       |
-| **`avgDocumentSize`**           | Integer | Total size of documents in the database divided by the number of documents in the database, in bytes         |
 | **`lastUpdate`**                | String  | When the last update was made to the database in the [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format |
 | **`indexes`**                   | Object  | Object containing the statistics for each index found in the database                                        |
 | **`numberOfDocuments`**         | Integer | Total number of documents in an index                                                                        |
@@ -83,9 +77,6 @@ Get stats of all indexes.
 {
   "databaseSize": 447819776,
   "usedDatabaseSize": 196608,
-  "rawDocumentDbSize": 5320,
-  "maxDocumentSize": 144,
-  "avgDocumentSize": 92,
   "lastUpdate": "2019-11-15T11:15:22.092896Z",
   "indexes": {
     "movies": {
