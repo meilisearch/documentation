@@ -22,6 +22,17 @@ curl \
 This feature is not available for Meilisearch Cloud users.
 </Capsule>
 
+<Capsule intent="danger" title="`displayedAttributes`, `sortableAttributes`, and `/network` requests">
+If an attribute is both:
+
+- not on the `displayedAttributes` list
+- present on the `sortableAttributes`
+
+It is possible its value becomes publicly accessible via the `/network` endpoint.
+
+Do not enable the `network` feature if you rely on the value of attributes not present in `displayedAttributes` to remain hidden at all times.
+</Capsule>
+
 ## The network object
 
 ```json
