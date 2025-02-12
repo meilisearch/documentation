@@ -1,6 +1,6 @@
 ---
 title: Implement sharding with remote federated search — Meilisearch documentation
-description: This guide walks you through implemnting a sharding strategy by activating the `/network` route, configuring the network object, and performing remote federated searches.
+description: This guide walks you through implementing a sharding strategy by activating the `/network` route, configuring the network object, and performing remote federated searches.
 ---
 
 # Implement sharding with remote federated search <NoticeTag type="experimental" label="experimental" />
@@ -80,7 +80,7 @@ curl \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "self": "REMOTE_NAME_1"
-  }
+  }'
 ```
 
 Meilisearch processes searches on the remote that corresponds to `self` locally instead of making a remote request.
