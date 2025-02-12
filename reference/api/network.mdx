@@ -7,8 +7,8 @@ description: Use the `/network` route to create a network of Meilisearch instanc
 
 Use the `/network` route to create a network of Meilisearch instances. This is particularly useful when used together with federated search to implement horizontal database partition strategies such as sharding.
 
-<Capsule intent="note" title="Activating `/metrics`">
-This is an experimental feature. Use the experimental features endpoint to activate it:
+<Capsule intent="note" title="Activating `/network`">
+This is an experimental feature. Use the Meilisearch Cloud UI or the experimental features endpoint to activate it:
 
 ```sh
 curl \
@@ -18,8 +18,6 @@ curl \
     "network": true
   }'
 ```
-
-This feature is not available for Meilisearch Cloud users.
 </Capsule>
 
 <Capsule intent="danger" title="`displayedAttributes`, `sortableAttributes`, and `/network` requests">

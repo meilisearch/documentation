@@ -7,9 +7,9 @@ description: This guide walks you through implementing a sharding strategy by ac
 
 Sharding is the process of splitting an index containing many documents into multiple smaller indexes, often called shards. This horizontal scaling technique is useful when handling large databases. In Meilisearch, the best way to implement a sharding strategy is to use remote federated search.
 
-This guide walks you through activating the `/network` route, configuring the network object, and performing remote federated searches.
+If you are an enterprise Meilisearch Cloud customer, sharding costs and configuration are already included in your plan. Contact support to enable this feature in your projects.
 
-The `/network` route is not currently available on Meilisearch Cloud.
+For other Cloud customers and self-hosted users, this guide walks you through activating the `/network` route, configuring the network object, and performing remote federated searches.
 
 <Capsule intent="tip" title="Configuring multiple instances">
 To minimize issues and limit unexpected behavior, instance, network, and index configuration should be identical for all shards. This guide describes the individual steps you must take on a single instance and assumes you will replicate them across all instances.
@@ -21,7 +21,9 @@ To minimize issues and limit unexpected behavior, instance, network, and index c
 
 ## Activate the `/network` endpoint
 
-First, use the `/experimental-features` route to enable `network`:
+First, activate the endpoint in the Cloud interface by navigating to your project dashboard and ticking the "Remote federated search requests" box.
+
+Alternatively, use the `/experimental-features` route to enable `network`:
 
 ```sh
 curl \
@@ -32,7 +34,7 @@ curl \
   }'
 ```
 
-Meilisearch should respond immediately, confirming the route is now accessible.
+Meilisearch should respond immediately, confirming the route is now accessible. Repeat this process for all instances.
 
 ## Configuring the network object
 
@@ -41,7 +43,7 @@ Next, you must configure the network object. It consists of the following fields
 - `remotes`: defines a list with the required information to access each remote instance
 - `self`: specifies which of the configured `remotes` corresponds to the current instance
 
-### Setting up remote instances
+### Setting up the list of remotes
 
 Use the `/network` route to configure the `remotes` field of the network object. `remotes` should be an object containing one or more objects. Each one of the nested objects should consist of the name of each instance, associated with its URL and an API key with search permission:
 
