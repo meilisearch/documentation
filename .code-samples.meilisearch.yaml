@@ -1454,12 +1454,16 @@ multi_search_remote_federated_1: |-
         {
           "indexUid": "movies",
           "q": "batman",
-          "remote": "ms-00"
+          "federationOptions": {
+            "remote": "ms-00"
+          }
         },
         {
           "indexUid": "movies",
           "q": "batman",
-          "remote": "ms-01"
+          "federationOptions": {
+            "remote": "ms-01"
+          }
         }
       ]
     }'
