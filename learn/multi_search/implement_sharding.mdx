@@ -1,0 +1,129 @@
+---
+title: Implement sharding with remote federated search — Meilisearch documentation
+description: This guide walks you through implementing a sharding strategy by activating the `/network` route, configuring the network object, and performing remote federated searches.
+---
+
+# Implement sharding with remote federated search <NoticeTag type="experimental" label="experimental" />
+
+Sharding is the process of splitting an index containing many documents into multiple smaller indexes, often called shards. This horizontal scaling technique is useful when handling large databases. In Meilisearch, the best way to implement a sharding strategy is to use remote federated search.
+
+This guide walks you through activating the `/network` route, configuring the network object, and performing remote federated searches.
+
+<Capsule intent="tip" title="Configuring multiple instances">
+To minimize issues and limit unexpected behavior, instance, network, and index configuration should be identical for all shards. This guide describes the individual steps you must take on a single instance and assumes you will replicate them across all instances.
+</Capsule>
+
+## Prerequisites
+
+- Multiple Meilisearch projects (instances) running Meilisearch >=v1.13
+
+## Activate the `/network` endpoint
+
+### Meilisearch Cloud
+
+If you are using Meilisearch Cloud, contact support to enable this feature in your projects.
+
+### Self-hosting
+
+Use the `/experimental-features` route to enable `network`:
+
+```sh
+curl \
+  -X PATCH 'MEILISEARCH_URL/experimental-features/' \
+  -H 'Content-Type: application/json'  \
+  --data-binary '{
+    "network": true
+  }'
+```
+
+Meilisearch should respond immediately, confirming the route is now accessible. Repeat this process for all instances.
+
+## Configuring the network object
+
+Next, you must configure the network object. It consists of the following fields:
+
+- `remotes`: defines a list with the required information to access each remote instance
+- `self`: specifies which of the configured `remotes` corresponds to the current instance
+
+### Setting up the list of remotes
+
+Use the `/network` route to configure the `remotes` field of the network object. `remotes` should be an object containing one or more objects. Each one of the nested objects should consist of the name of each instance, associated with its URL and an API key with search permission:
+
+```sh
+curl \
+  -X PATCH 'MEILISEARCH_URL/network' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "remotes": {
+      "REMOTE_NAME_1": {
+        "url": "INSTANCE_URL_1",
+        "searchApiKey": "SEARCH_API_KEY_1"
+      },
+      "REMOTE_NAME_2": {
+        "url": "INSTANCE_URL_2",
+        "searchApiKey": "SEARCH_API_KEY_2"
+      },
+      "REMOTE_NAME_3": {
+        "url": "INSTANCE_URL_3",
+        "searchApiKey": "SEARCH_API_KEY_3"
+      },
+      …
+    }
+  }'
+```
+
+Configure the entire set of remote instances in your sharded database, making sure to send the same remotes to each instance.
+
+### Specify the name of the current instance
+
+Now all instances share the same list of remotes, set the `self` field to specify which of the remotes corresponds to the current instance:
+
+```sh
+curl \
+  -X PATCH 'MEILISEARCH_URL/network' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "self": "REMOTE_NAME_1"
+  }'
+```
+
+Meilisearch processes searches on the remote that corresponds to `self` locally instead of making a remote request.
+
+### Adding or removing an instance
+
+Changing the topology of the network involves moving some documents from an instance to another, depending on your hashing scheme.
+
+As Meilisearch does not provide atomicity across multiple instances, you will need to either:
+
+1. accept search downtime while migrating documents
+2. accept some documents will not appear in search results during the migration
+3. accept some duplicate documents may appear in search results during the migration
+
+#### Reducing downtime
+
+If your disk space allows, you can reduce the downtime by applying the following algorithm:
+
+1. Create a new temporary index in each remote instance
+2. Compute the new instance for each document
+3. Send the documents to the temporary index of their new instance
+4. Once Meilisearch has copied all documents to their instance of destination, swap the new index with the previously used index
+5. Delete the temporary index after the swap
+6. Update network configuration and search queries across all instances
+
+## Create indexes and add documents
+
+Create the same empty indexes with the same settings on all instances. Keeping the settings and indexes in sync is important to avoid errors and unexpected behavior, though not strictly required.
+
+Distribute your documents across all instances. Do not send the same document to multiple instances as this may lead to duplicate search results. Similarly, you should ensure all future versions of a document are sent to the same instance. Meilisearch recommends you hash their primary key using [rendezvous hashing](https://en.wikipedia.org/wiki/Rendezvous_hashing).
+
+### Updating index settings
+
+Changing settings in a sharded database is not fundamentally different from changing settings on a single Meilisearch instance. If the update enables a feature, such as setting filterable attributes, wait until all changes have been processed before using the `filter` search parameter in a query. Likewise, if an update disables a feature, first remove it from your search requests, then update your settings.
+
+## Perform a search
+
+Send your federated search request containing one query per instance:
+
+<CodeSamples id="multi_search_remote_federated_1" />
+
+If all instances share the same network configuration, you can send the search request to any instance. Having `"remote": "ms-00"` appear in the list of queries on the instance of that name will not cause an actual proxy search thanks to `network.self`.

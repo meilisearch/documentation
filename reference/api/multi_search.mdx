@@ -139,14 +139,14 @@ There is no way to specify that two documents should be treated as the same acro
 
 | Search parameter                                                             | Type             | Default value | Description                                         |
 | :--------------------------------------------------------------------------- | :--------------- | :------------ | :-------------------------------------------------- |
-| **[`federationOptions`](#federationoptions)**            | Object           | `null`        | Configure federation settings for a specific query |
-| **[`indexUid`](/learn/getting_started/indexes#index-uid)**                     | String           | N/A           | `uid` of the requested index                        |
+| **[`federationOptions`](#federationoptions)**                                | Object           | `null`        | Configure federation settings for a specific query  |
+| **[`indexUid`](/learn/getting_started/indexes#index-uid)**                   | String           | N/A           | `uid` of the requested index                        |
 | **[`q`](/reference/api/search#query-q)**                                     | String           | `""`          | Query string                                        |
 | **[`offset`](/reference/api/search#offset)**                                 | Integer          | `0`           | Number of documents to skip                         |
 | **[`limit`](/reference/api/search#limit)**                                   | Integer          | `20`          | Maximum number of documents returned                |
 | **[`hitsPerPage`](/reference/api/search#number-of-results-per-page)**        | Integer          | `1`           | Maximum number of documents returned for a page     |
 | **[`page`](/reference/api/search#page)**                                     | Integer          | `1`           | Request a specific page of results                  |
-| **[`filter`](/reference/api/search#filter)**                                 | [String](/learn/filtering_and_sorting/filter_expression_reference) | `null`        | Filter queries by an attribute's value              |
+| **[`filter`](/reference/api/search#filter)**                                 | String           | `null`        | Filter queries by an attribute's value              |
 | **[`facets`](/reference/api/search#facets)**                                 | Array of strings | `null`        | Display the count of matches per facet              |
 | **[`attributesToRetrieve`](/reference/api/search#attributes-to-retrieve)**   | Array of strings | `["*"]`       | Attributes to display in the returned documents     |
 | **[`attributesToCrop`](/reference/api/search#attributes-to-crop)**           | Array of strings | `null`        | Attributes whose values have to be cropped          |
@@ -172,10 +172,11 @@ These options are not compatible with federated searches.
 `federationOptions` must be an object. It accepts the following parameters:
 
 - `weight`: serves as a multiplicative factor to ranking scores of search results in this specific query. If < `1.0`, the hits from this query are less likely to appear in the final results list. If > `1.0`, the hits from this query are more likely to appear in the final results list. Must be a positive floating-point number. Defaults to `1.0`
+- `remote` <NoticeTag type="experimental" label="experimental" />: indicates the remote instance where Meilisearch will perform the query. Must be a string corresponding to a [remote object](/reference/api/network). Defaults to `null`
 
 ### Response
 
-The response to `/multi-search` queries may take two shapes: federated and non-federated.
+The response to `/multi-search` queries may take different shapes depending on the type of query you're making.
 
 #### Non-federated multi-search requests
 
@@ -187,7 +188,7 @@ Each search result object is composed of the following fields:
 
 | Name                     | Type             | Description                                                                      |
 | :----------------------- | :--------------- | :------------------------------------------------------------------------------- |
-| **`indexUid`**           | String           | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index           |
+| **`indexUid`**           | String           | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index         |
 | **`hits`**               | Array of objects | Results of the query                                                             |
 | **`offset`**             | Number           | Number of documents skipped                                                      |
 | **`limit`**              | Number           | Number of documents to take                                                      |
@@ -212,16 +213,19 @@ Federated search requests return a single object and the following fields:
 | **`limit`**              | Number           | Number of documents to take                                                      |
 | **`estimatedTotalHits`** | Number           | Estimated total number of matches                                                |
 | **`processingTimeMs`**   | Number           | Processing time of the query                                                     |
-| **`facetsByIndex`**      | Object           | [Data for facets present in the search results](#facetsbyindex)                                                     |
-| **`facetDistribution`**  | Object           | [Distribution of the given facets](#mergefacets)                                                       |
-| **`facetStats`**         | Object           | [The numeric `min` and `max` values per facet](#mergefacets)                                                     |
+| **`facetsByIndex`**      | Object           | [Data for facets present in the search results](#facetsbyindex)                  |
+| **`facetDistribution`**  | Object           | [Distribution of the given facets](#mergefacets)                                 |
+| **`facetStats`**         | Object           | [The numeric `min` and `max` values per facet](#mergefacets)                     |
+| **`remoteErrors`**       | Object           | Indicates which remote requests failed and why                                   |
 
 Each result in the `hits` array contains an additional `_federation` field with the following fields:
 
-| Name                     | Type             | Description                                                                      |
-| :----------------------- | :--------------- | :------------------------------------------------------------------------------- |
-| **`indexUid`**           | String           | Index of origin for this document           |
-| **`queriesPosition`**    | Number           | Array index number of the query in the request's `queries` array |
+| Name                        | Type             | Description                                                                        |
+| :-------------------------- | :--------------- | :--------------------------------------------------------------------------------- |
+| **`indexUid`**              | String           | Index of origin for this document                                                  |
+| **`queriesPosition`**       | Number           | Array index number of the query in the request's `queries` array                   |
+| **`remote`**                | String           | Remote instance of origin for this document
+| **`weightedRankingScore`**  | Number           | The product of the _rankingScore of the hit and the weight of the query of origin. |
 
 ### Example
 
@@ -229,7 +233,7 @@ Each result in the `hits` array contains an additional `_federation` field with 
 
 <CodeSamples id="multi_search_1" />
 
-#### Response: `200 Ok`
+##### Response: `200 Ok`
 
 ```json
 {
@@ -289,7 +293,7 @@ Each result in the `hits` array contains an additional `_federation` field with 
 
 <CodeSamples id="multi_search_federated_1" />
 
-#### Response: `200 Ok`
+##### Response: `200 Ok`
 
 ```json
 {
@@ -319,5 +323,53 @@ Each result in the `hits` array contains an additional `_federation` field with 
   "offset": 0,
   "estimatedTotalHits": 2,
   "semanticHitCount": 0
+}
+```
+
+#### Remote federated multi-search <NoticeTag type="experimental" label="experimental" />
+
+<CodeSamples id="multi_search_remote_federated_1" />
+
+##### Response: `200 Ok`
+
+```json
+{
+  "hits": [
+    {
+      "id": 42,
+      "title": "Batman returns",
+      "overview": …, 
+      "_federation": {
+        "indexUid": "movies",
+        "queriesPosition": 0,
+        "weightedRankingScore": 1.0,
+        "remote": "ms-01"
+    }
+    },
+    {
+      "id": 87,
+      "description": …,
+      "title": "Batman: the killing joke",
+      "_federation": {
+        "indexUid": "movies",
+        "queriesPosition": 1,
+        "weightedRankingScore": 0.9848484848484849,
+        "remote": "ms-00"
+      }
+    },
+    …
+  ],
+  "processingTimeMs": 35,
+  "limit": 5,
+  "offset": 0,
+  "estimatedTotalHits": 111,
+  "remoteErrors": {
+    "ms-02": {
+      "message": "error sending request",
+      "code": "proxy_could_not_send_request",
+      "type": "system",
+      "link": "https://docs.meilisearch.com/errors#proxy_could_not_make_request"
+    }
+  }
 }
 ```
