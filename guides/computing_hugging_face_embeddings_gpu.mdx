@@ -47,21 +47,12 @@ cargo build --release --features cuda
 
 This might take a few moments. Once the compiler is done, you should have a CUDA-compatible Meilisearch binary.
 
-## Enable vector search
+## Configure the Hugging Face embedder
 
 Run your freshly compiled binary:
 
 ```sh
 ./meilisearch
-```
-
-Next, enable the vector store experimental feature:
-
-```sh
-curl \
-  -X PATCH 'MEILISEARCH_URL/experimental-features/' \
-  -H 'Content-Type: application/json'  \
-  --data-binary '{ "vectorStore": true }'
 ```
 
 Then add the Hugging Face embedder to your index settings:
