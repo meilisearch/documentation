@@ -50,6 +50,11 @@
         "slug": "search_with_user_provided_embeddings"
       },
       {
+        "source": "learn/ai_powered_search/choose_an_embedder.mdx",
+        "label": "Which embedder should I choose?",
+        "slug": "choose_an_embedder"
+      },
+      {
         "source": "learn/ai_powered_search/difference_full_text_ai_search.mdx",
         "label": "Differences between full-text and AI-powered search",
         "slug": "difference_full_text_ai_search"
