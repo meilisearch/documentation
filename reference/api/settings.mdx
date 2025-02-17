@@ -2529,7 +2529,9 @@ If a `field` does not exist in a document, its `value` is `nil`.
 
 For best results, build short templates that only contain highly relevant data. If working with a long field, consider [truncating it](https://shopify.github.io/liquid/filters/truncatewords/). If you do not manually set it, `documentTemplate` will include all searchable and non-null document fields. This may lead to suboptimal performance and relevancy.
 
-This field is optional but strongly encouraged for all embedders.
+This field is incompatible with `userProvided` embedders.
+
+This field is optional but strongly encouraged for all other embedders.
 
 ##### `documentTemplateMaxBytes`
 
@@ -2537,7 +2539,10 @@ The maximum size of a rendered document template. Longer texts are truncated to 
 
 `documentTemplateMaxBytes` must be an integer. It defaults to `400`.
 
-This field is optional for all embedders.
+This field is incompatible with `userProvided` embedders.
+
+This field is optional for all other embedders.
+
 
 ##### `dimensions`
 
