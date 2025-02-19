@@ -5,11 +5,17 @@ description: Create Meilisearch embedders using any provider with a REST API
 
 # Configure a REST embedder
 
-You can integrate any embedding generation service with Meilisearch if your chosen provider offers a public REST API.
+You can integrate any embedding generator with Meilisearch if your chosen provider offers a public REST API.
 
-Integrating a REST embedder with Meilisearch changes depending on the provider and the way it structures its data. This guide shows you where to find the information you need, then walks you through configuring your Meilisearch embedder based on the information you found.
+Integrating a REST embedder with Meilisearch varies depending on the provider and the way it structures its data. This guide shows you where to find the information you need, then walks you through configuring your Meilisearch embedder based on the information you found.
 
-## Requirements
+## Find your embedder provider's documentation
+
+Each provider requires queries to follow a specific structure.
+
+Before beginning to create your embedder, locate your provider's documentation for embedding creation. This should contain the information you need regarding API requests, request headers, and responses.
+
+For example, [Mistral's embeddings documentation](https://docs.mistral.ai/api/#tag/embeddings) is part of their API reference. In the case of [Cloudflare's Workers AI](https://developers.cloudflare.com/workers-ai/models/bge-base-en-v1.5/#Parameters), expected input and response are tied to your chosen model.
 
 ## Set up the REST source and URL
 
@@ -34,54 +40,13 @@ Next, configure the URL Meilisearch should use to contact the embedding provider
 }
 ```
 
-## Find your embedder provider's documentation
-
-Each provider requires your queries to follow a specific structure. Locate your provider's documentation for embedding creation.
-
-For example, [Mistral's embeddings documentation](https://docs.mistral.ai/api/#tag/embeddings) is part of their API reference. In the case of [Cloudflare's Workers AI](https://developers.cloudflare.com/workers-ai/models/bge-base-en-v1.5/#Parameters), expected input and response is tied to your chosen model.
+Setting an embedder name, a `source`, and a `url` is mandatory for all REST embedders.
 
 ## Configure the data Meilisearch sends to the provider
 
-Meilisearch's `request` field defines the structure of the input it will send to the provider.
+Meilisearch's `request` field defines the structure of the input it will send to the provider. The way you must fill this field changes for each provider.
 
 For example, Mistral expects two mandatory parameters: `model` and `input`. It also accepts one optional parameter: `encoding_format`. Cloudflare instead only expects a single field, `text`.
-
-### The embedding prompt
-
-The prompt corresponds to the data that the provider will use to generate your document embeddings. Its specific name changes depending on the provider you chose. In Mistral, this is the `input` field. In Cloudflare, it's called `text`.
-
-Most providers accept either a string or an array of strings. A single string will generate one request per document in your database. An array of strings allows Meilisearch to send up to 10 documents in one request, reducing the number of API calls to the provider.
-
-Update your embedder object specifying your chosen input format. If you were using Mistral, your request would look like this:
-
-```json
-{
-  "EMBEDDER_NAME": {
-    "source": "rest",
-    "url": "PROVIDER_URL",
-    "request": {
-      "model": "MODEL_NAME",
-      "input": ["{{text}}", "{{..}}"]
-    }
-  }
-}
-```
-
-Use `{{text}}` to indicate Meilisearch should replace the contents of a field with your document data. If using an array, like in this example, also specify `{{..}}`. This instructs Meilisearch to include multiple documents in a single request.
-
-When using other tools, `input` might be called something else, like `text`:
-
-```json
-{
-  "EMBEDDER_NAME": {
-    "source": "rest",
-    "url": "PROVIDER_URL",
-    "request": {
-      "text": "{{text}}"
-    }
-  }
-}
-```
 
 ### Choose a model
 
@@ -102,6 +67,59 @@ Update your embedder object adding this field and its value:
 ```
 
 In Cloudflare's case, the model is part of the API route itself and doesn't need to be specified in your `request`.
+
+### The embedding prompt
+
+The prompt corresponds to the data that the provider will use to generate your document embeddings. Its specific name changes depending on the provider you chose. In Mistral, this is the `input` field. In Cloudflare, it's called `text`.
+
+Most providers accept either a string or an array of strings. A single string will generate one request per document in your database:
+
+```json
+{
+  "EMBEDDER_NAME": {
+    "source": "rest",
+    "url": "PROVIDER_URL",
+    "request": {
+      "model": "MODEL_NAME",
+      "input": "{{text}}"
+    }
+  }
+}
+```
+
+`{{text}}` indicates Meilisearch should replace the contents of a field with your document data.
+
+An array of strings allows Meilisearch to send up to 10 documents in one request, reducing the number of API calls to the provider:
+
+```json
+{
+  "EMBEDDER_NAME": {
+    "source": "rest",
+    "url": "PROVIDER_URL",
+    "request": {
+      "model": "MODEL_NAME",
+      "input": ["{{text}}", "{{..}}"]
+    }
+  }
+}
+```
+
+When using array prompts, the first item must be `{{text}}`. If you want to send multiple documents in a single request, the second array item must be `{{..}}`.
+
+When using other tools, `input` might be called something else, like `text` or `prompt`:
+
+```json
+{
+  "EMBEDDER_NAME": {
+    "source": "rest",
+    "url": "PROVIDER_URL",
+    "request": {
+      "model": "MODEL_NAME",
+      "text": "{{text}}"
+    }
+  }
+}
+```
 
 ### Provide other request fields
 
@@ -127,9 +145,9 @@ For example, Mistral allows you to optionally configure an `encoding_format`. Se
 
 Each provider responds to queries using its own specific structure. You must indicate where Meilisearch can find the document embeddings in the provider's response.
 
-Consult your provider's API documentation, paying attention to where it places the embeddings. Then describe the full path to the embedding array in your embedder's `response`.
+Consult your provider's API documentation, paying attention to where it places the embeddings. Mistral, for example, returns an array of objects inside `response.data`. Each array item contains an `embedding` field,
 
-Mistral's embeddings are included in `response.data`:
+Describe the full path to the embedding array in your embedder's `response`. When you reach the field containing the embedding, use `{{embedding}}` as its value:
 
 ```json
 {
@@ -138,8 +156,27 @@ Mistral's embeddings are included in `response.data`:
     "url": "PROVIDER_URL",
     "request": {
       "model": "MODEL_NAME",
-      "input": ["{{text}}", "{{..}}"],
-      "encoding_format": "float"
+      "input": "{{text}}"
+    },
+    "response": {
+      "data": {
+        "text": "{{embedding}}"
+      }
+    }
+  }
+}
+```
+
+Providers might return embeddings in an array:
+
+```json
+{
+  "EMBEDDER_NAME": {
+    "source": "rest",
+    "url": "PROVIDER_URL",
+    "request": {
+      "model": "MODEL_NAME",
+      "input": "{{text}}"
     },
     "response": {
       "data": [
@@ -153,7 +190,7 @@ Mistral's embeddings are included in `response.data`:
 }
 ```
 
-Embeddings are located in the `embedding` field of each item in an array of objects. The first item in `response.data` tells Meilisearch where to find the embedding, while the second item, `"{{..}}"`, indicates there are multiple embeddings in the response.
+The first item in `response.data` tells Meilisearch where to find the embedding. The second item must be `"{{..}}"`, and it indicates there are multiple embeddings in the response.
 
 Cloudflare's embeddings are instead located in `response.result.data`:
 
@@ -174,11 +211,9 @@ Cloudflare's embeddings are instead located in `response.result.data`:
 }
 ```
 
-<Capsule intent="note">
-The prompt data type does not necessarily match the response data type. For example, Cloudflare always returns an array of embeddings, even if the prompt in your request was a string.
-</Capsule>
+The prompt data type does not necessarily match the response data type. For example, Cloudflare always returns an array of embeddings, even if the prompt in your request was a string. If you know the response will always contain a single embedding, you may omit `{{..}}` from the second array item.
 
-Meilisearch silently ignores fields not pointing to an `{{embedding}}` value.
+Meilisearch silently ignores `response` fields not pointing to `{{embedding}}`.
 
 ## The embedding header
 
@@ -199,7 +234,7 @@ Add the `headers` field to your embedder object:
         "data": "[{{embedding}}]"
       }
     },
-    "header": {
+    "headers": {
       "FIELD_NAME": "FIELD_VALUE"
     }
   }
@@ -210,7 +245,7 @@ By default, Meilisearch includes a `Content-Type` header. It may also include an
 
 ## Configure remainder of the embedder
 
-`source`, `request`, `response`, and `header` are the only embedder fields specific to REST embedders.
+`source`, `request`, `response`, and `header` are the only fields specific to REST embedders.
 
 Like other remote embedders, you're likely required to supply an `apiKey`:
 
@@ -278,7 +313,6 @@ curl \
       "request": {
         "model": "MODEL_NAME",
         "input": ["{{text}}", "{{..}}"],
-        "encoding_format": "float"
       },
       "response": {
         "data": [
@@ -289,7 +323,6 @@ curl \
         ]
       },
       "apiKey": "PROVIDER_API_KEY",
-      "dimensions": MODEL_DIMENSIONS,
       "documentTemplate": "SHORT_AND_RELEVANT_DOCUMENT_TEMPLATE"
     }
   }'
