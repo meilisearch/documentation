@@ -11,7 +11,7 @@ Integrating a REST embedder with Meilisearch changes depending on the provider a
 
 ## Requirements
 
-## Set up the REST source
+## Set up the REST source and URL
 
 Open your text editor and create an embedder object. Give it a name and set its source to `"rest"`:
 
@@ -19,6 +19,17 @@ Open your text editor and create an embedder object. Give it a name and set its 
 {
   "EMBEDDER_NAME": {
     "source": "rest"
+  }
+}
+```
+
+Next, configure the URL Meilisearch should use to contact the embedding provider:
+
+```json
+{
+  "EMBEDDER_NAME": {
+    "source": "rest",
+    "url": "PROVIDER_URL"
   }
 }
 ```
@@ -35,23 +46,6 @@ Meilisearch's `request` field defines the structure of the input it will send to
 
 For example, Mistral expects two mandatory parameters: `model` and `input`. It also accepts one optional parameter: `encoding_format`. Cloudflare instead only expects a single field, `text`.
 
-### Choose a model
-
-In Mistral, `model` must be a string specifying a valid Mistral model. Update your embedder object adding this field and its value:
-
-```json
-{
-  "EMBEDDER_NAME": {
-    "source": "rest",
-    "request": {
-      "model": "MODEL_NAME"
-    }
-  }
-}
-```
-
-In Cloudflare's case, the model is part of the API route itself and doesn't need to be specified in your `request`.
-
 ### The embedding prompt
 
 The prompt corresponds to the data that the provider will use to generate your document embeddings. Its specific name changes depending on the provider you chose. In Mistral, this is the `input` field. In Cloudflare, it's called `text`.
@@ -64,6 +58,7 @@ Update your embedder object specifying your chosen input format. If you were usi
 {
   "EMBEDDER_NAME": {
     "source": "rest",
+    "url": "PROVIDER_URL",
     "request": {
       "model": "MODEL_NAME",
       "input": ["{{text}}", "{{..}}"]
@@ -80,6 +75,7 @@ When using other tools, `input` might be called something else, like `text`:
 {
   "EMBEDDER_NAME": {
     "source": "rest",
+    "url": "PROVIDER_URL",
     "request": {
       "text": "{{text}}"
     }
@@ -87,7 +83,27 @@ When using other tools, `input` might be called something else, like `text`:
 }
 ```
 
-## Other request fields
+### Choose a model
+
+In many cases, your provider requires you to explicitly set which model you want to use to create your embeddings. For example, in Mistral, `model` must be a string specifying a valid Mistral model.
+
+Update your embedder object adding this field and its value:
+
+```json
+{
+  "EMBEDDER_NAME": {
+    "source": "rest",
+    "url": "PROVIDER_URL",
+    "request": {
+      "model": "MODEL_NAME"
+    }
+  }
+}
+```
+
+In Cloudflare's case, the model is part of the API route itself and doesn't need to be specified in your `request`.
+
+### Provide other request fields
 
 You may add as many fields to the `request` object as you need. Meilisearch will send them as configured when it queries the embeddings provider.
 
@@ -97,6 +113,7 @@ For example, Mistral allows you to optionally configure an `encoding_format`. Se
 {
   "EMBEDDER_NAME": {
     "source": "rest",
+    "url": "PROVIDER_URL",
     "request": {
       "model": "MODEL_NAME",
       "input": ["{{text}}", "{{..}}"],
@@ -118,6 +135,7 @@ Mistral's embeddings are included in `response.data`:
 {
   "EMBEDDER_NAME": {
     "source": "rest",
+    "url": "PROVIDER_URL",
     "request": {
       "model": "MODEL_NAME",
       "input": ["{{text}}", "{{..}}"],
@@ -143,6 +161,7 @@ Cloudflare's embeddings are instead located in `response.result.data`:
 {
   "EMBEDDER_NAME": {
     "source": "rest",
+    "url": "PROVIDER_URL",
     "request": {
       "text": "{{text}}"
     },
@@ -155,18 +174,51 @@ Cloudflare's embeddings are instead located in `response.result.data`:
 }
 ```
 
+<Capsule intent="note">
+The prompt data type does not necessarily match the response data type. For example, Cloudflare always returns an array of embeddings, even if the prompt in your request was a string.
+</Capsule>
+
 Meilisearch silently ignores fields not pointing to an `{{embedding}}` value.
 
-## Configure remainder of the embedder
+## The embedding header
 
-`source`, `request`, and `response` are the only embedder fields specific to REST embedders.
+Your provider might also request you to add specific headers to your request. For example, Azure's AI services require a `api-key` header containing an API key.
 
-Like other remote embedders, you're likely required to supply an `apiKey` and specify the `dimensions` of your chosen model:
+Add the `headers` field to your embedder object:
 
 ```json
 {
   "EMBEDDER_NAME": {
     "source": "rest",
+    "url": "PROVIDER_URL",
+    "request": {
+      "text": "{{text}}"
+    },
+    "response": {
+      "result": {
+        "data": "[{{embedding}}]"
+      }
+    },
+    "header": {
+      "FIELD_NAME": "FIELD_VALUE"
+    }
+  }
+}
+```
+
+By default, Meilisearch includes a `Content-Type` header. It may also include an authorization bearer token, if you have supplied an API key.
+
+## Configure remainder of the embedder
+
+`source`, `request`, `response`, and `header` are the only embedder fields specific to REST embedders.
+
+Like other remote embedders, you're likely required to supply an `apiKey`:
+
+```json
+{
+  "EMBEDDER_NAME": {
+    "source": "rest",
+    "url": "PROVIDER_URL",
     "request": {
       "model": "MODEL_NAME",
       "input": ["{{text}}", "{{..}}"],
@@ -181,7 +233,6 @@ Like other remote embedders, you're likely required to supply an `apiKey` and sp
       ]
     },
     "apiKey": "PROVIDER_API_KEY",
-    "dimensions": MODEL_DIMENSIONS
   }
 }
 ```
@@ -192,6 +243,7 @@ You should also set a `documentTemplate`. Good templates are short and include o
 {
   "EMBEDDER_NAME": {
     "source": "rest",
+    "url": "PROVIDER_URL",
     "request": {
       "model": "MODEL_NAME",
       "input": ["{{text}}", "{{..}}"],
@@ -206,7 +258,6 @@ You should also set a `documentTemplate`. Good templates are short and include o
       ]
     },
     "apiKey": "PROVIDER_API_KEY",
-    "dimensions": MODEL_DIMENSIONS,
     "documentTemplate": "SHORT_AND_RELEVANT_DOCUMENT_TEMPLATE"
   }
 }
@@ -223,6 +274,7 @@ curl \
   --data-binary '{
     "EMBEDDER_NAME": {
       "source": "rest",
+      "url": "PROVIDER_URL",
       "request": {
         "model": "MODEL_NAME",
         "input": ["{{text}}", "{{..}}"],
@@ -247,8 +299,10 @@ curl \
 
 In this guide you have seen a few examples of how to configure a REST embedder in Meilisearch. Though it used Mistral and Cloudflare, the general steps remain the same for all providers:
 
-1. find the provider's REST API documentation
-2. identify the embedding creation request parameters
-3. include parameters in your embedder's `request`
-4. identify the embedding creation response
-5. reproduce the path to the returned embeddings in your embedder's `response`
+1. Find the provider's REST API documentation
+2. Identify the embedding creation request parameters
+3. Include parameters in your embedder's `request`
+4. Identify the embedding creation response
+5. Reproduce the path to the returned embeddings in your embedder's `response`
+6. Add any required HTTP headers to your embedder's `header`
+7. Update your index settings with the new embedder
