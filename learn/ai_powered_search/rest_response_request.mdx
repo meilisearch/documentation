@@ -56,7 +56,7 @@ In Cloudflare's case, the model is part of the API route itself and doesn't need
 
 The prompt corresponds to the data that the provider will use to generate your document embeddings. Its specific name changes depending on the provider you chose. In Mistral, this is the `input` field. In Cloudflare, it's called `text`.
 
-Most providers accept either a string or an array of strings. A single string will generate one request per document in your database. An array of strings allows Meilisearch to send up to 10 documents in one request.
+Most providers accept either a string or an array of strings. A single string will generate one request per document in your database. An array of strings allows Meilisearch to send up to 10 documents in one request, reducing the number of API calls to the provider.
 
 Update your embedder object specifying your chosen input format. If you were using Mistral, your request would look like this:
 
@@ -148,7 +148,7 @@ Cloudflare's embeddings are instead located in `response.result.data`:
     },
     "response": {
       "result": {
-        "data": "{{embedding}}"
+        "data": "[{{embedding}}]"
       }
     }
   }
@@ -161,7 +161,7 @@ Meilisearch silently ignores fields not pointing to an `{{embedding}}` value.
 
 `source`, `request`, and `response` are the only embedder fields specific to REST embedders.
 
-Like other embedders, you're likely required to supply an `apiKey` and specify the the `dimensions` of your chosen model:
+Like other remote embedders, you're likely required to supply an `apiKey` and specify the `dimensions` of your chosen model:
 
 ```json
 {
