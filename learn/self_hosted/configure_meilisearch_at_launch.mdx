@@ -304,7 +304,9 @@ Meilisearch currently supports five log levels, listed in order of increasing ve
 - `'TRACE'`: log all events and include even more detailed information on Meilisearch's internal processes. We do not advise using this level as it is extremely verbose. Use `'DEBUG'` before considering `'TRACE'`.
 - `'OFF'`: disable logging
 
-## Customize log output <NoticeTag type="experimental" label="experimental" />
+## Customize log output
+
+<Note>Experimental feature</Note>
 
 **Environment variable**: `MEILI_LOGS_MODE`<br />
 **CLI option**: `--experimental-logs-mode`<br />
@@ -330,8 +332,9 @@ It is possible that Meilisearch goes over the exact RAM limit during indexing. I
 Setting `--max-indexing-memory` to a value bigger than or equal to your machine's total memory is likely to cause your instance to crash.
 </Capsule>
 
-### Reduce indexing memory usage <NoticeTag type="experimental" label="experimental" />
+### Reduce indexing memory usage
 
+<Note>Experimental feature</Note>
 <Capsule intent="warning">
 🚩 This option does not take any values. Assigning a value will throw an error. 🚩
 </Capsule>
@@ -368,7 +371,9 @@ Avoid setting `--max-indexing-threads` to the total of your machine's processor 
 
 Sets the maximum size of [accepted payloads](/learn/getting_started/documents#dataset-format). Value must be given in bytes or explicitly stating a base unit. For example, the default value can be written as `107374182400`, `'107.7Gb'`, or `'107374 Mb'`.
 
-### Search queue size <NoticeTag type="experimental" label="experimental" />
+### Search queue size
+
+<Note>Experimental feature</Note>
 
 **Environment variable**: `MEILI_EXPERIMENTAL_SEARCH_QUEUE_SIZE`<br />
 **CLI option**: `--experimental-search-queue-size`<br />
@@ -467,8 +472,9 @@ The webhook payload contains the list of finished tasks in [ndjson](https://gith
 
 Includes an authentication token in the authorization header when notifying the [webhook URL](#task-webhook-url).
 
-### Maximum number of batched tasks <NoticeTag type="experimental" label="experimental" />
+### Maximum number of batched tasks
 
+<Note>Experimental feature</Note>
 **Environment variable**: `MEILI_EXPERIMENTAL_MAX_NUMBER_OF_BATCHED_TASKS`<br />
 **CLI option**: `--experimental-max-number-of-batched-tasks`<br />
 **Default value**: `None`<br />
@@ -476,7 +482,9 @@ Includes an authentication token in the authorization header when notifying the 
 
 Limit the number of tasks Meilisearch performs in a single batch. May improve stability in systems handling a large queue of resource-intensive tasks.
 
-### Replication parameters <NoticeTag type="experimental" label="experimental" />
+### Replication parameters
+
+<Note>Experimental feature</Note>
 
 <Capsule intent="warning">
 🚩 This option does not take any values. Assigning a value will throw an error. 🚩

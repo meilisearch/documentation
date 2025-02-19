@@ -158,8 +158,9 @@ genres NOT IN [horror, comedy]
 NOT genres IN [horror, comedy]
 ```
 
-### `CONTAINS` <NoticeTag type="experimental" label="experimental" />
+### `CONTAINS` 
 
+<Note>Experimental feature</Note>
 `CONTAINS` filters results containing partial matches to the specified string pattern, similar to a [SQL `LIKE`](https://dev.mysql.com/doc/refman/8.4/en/string-comparison-functions.html#operator_like).
 
 The following expression returns all dairy products whose names contain `"kef"`:
@@ -190,7 +191,9 @@ curl \
 This will also enable the [`STARTS WITH`](#starts-with) operator.
 </Capsule>
 
-### `STARTS WITH` <NoticeTag type="experimental" label="experimental" />
+### `STARTS WITH`
+
+<Note>Experimental feature</Note>
 
 `STARTS WITH` filters results whose values start with the specified string pattern.
 
