@@ -1,0 +1,63 @@
+---
+title: Document template best practices — Meilisearch documentation
+description: This guide shows you what to do and what to avoid when writing a `documentTemplate`
+---
+
+# Document template best practices
+
+When using AI-powered search, Meilisearch generates a prompt based on your document data and the template you configured in your embedder's `documentTamplate`. The better your prompt is, the more relevant your search results.
+
+This guide shows you what to do and what to avoid when writing a `documentTemplate`
+
+## Sample document
+
+It's easier to understand the impact of a good `documentTemplate` by seeing it applied to a document. Take a look at this document from a database of movies:
+
+```json
+{
+  "id": 2,
+  "title": "Ariel",
+  "overview": "Taisto Kasurinen is a Finnish coal miner whose father has just committed suicide and who is framed for a crime he did not commit. In jail, he starts to dream about leaving the country and starting a new life. He escapes from prison but things don't go as planned...",
+  "genres": [
+    "Drama",
+    "Crime",
+    "Comedy"
+  ],
+  "poster": "https://image.tmdb.org/t/p/w500/ojDg0PGvs6R9xYFodRct2kdI6wC.jpg",
+  "release_date": 593395200
+}
+```
+
+## Do not use the default `documentTemplate`
+
+Always use a custom `documentTemplate` value in your embedder configuration.
+
+When using the default `documentTemplate`, Meilisearch includes all searchable fields with non-`null` values. In most cases that is too much information for the embedder, a lot of which may not be relevant for the embedder.
+
+## Only include highly relevant information
+
+Take a look at your document and identify the most relevant fields:
+
+```
+"A movie called {{doc.title}} about {{doc.overview}}"
+```
+
+`poster` and `id` contain data that has little semantic importance and can be safely excluded. The data in `genres` and `release_date` is very useful for filters, but say little about this specific film.
+
+This leaves two relevant fields: `title` and `overview`.
+
+## Keep prompts short
+
+For the best results, keep prompts somewhere between 15 and 45 words:
+
+```
+"A movie called {{doc.title}} about {{doc.overview | truncatewords: 20}}"
+```
+
+In the sample document, the `overview` alone is 49 words. Use Liquid's `truncate` or `truncatewords` to shorten it.
+
+Short prompts don't contain enough information for the embedder to properly understand the query context. The same happens with long prompts: too much information makes it hard for the embedder to identify what is relevant about a document.
+
+## Conclusion
+
+In this article you saw the three main steps to generating prompts that lead to relevant AI-powered search results: do not use the default `documentTemplate`, only include relevant data, and truncate long fields.
