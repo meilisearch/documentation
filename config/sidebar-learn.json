@@ -55,11 +55,6 @@
         "slug": "rest_response_request"
       },
       {
-        "source": "learn/ai_powered_search/deactivate_ai_powered_search.mdx",
-        "label": "Deactivate AI-powered search",
-        "slug": "deactivate_ai_powered_search"
-      },
-      {
         "source": "learn/ai_powered_search/choose_an_embedder.mdx",
         "label": "Which embedder should I choose?",
         "slug": "choose_an_embedder"
