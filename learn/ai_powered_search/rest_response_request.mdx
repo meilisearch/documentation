@@ -5,7 +5,7 @@ description: Create Meilisearch embedders using any provider with a REST API
 
 # Configure a REST embedder
 
-You can integrate any embedding generator with Meilisearch if your chosen provider offers a public REST API.
+You can integrate any text embedding generator with Meilisearch if your chosen provider offers a public REST API.
 
 Integrating a REST embedder with Meilisearch varies depending on the provider and the way it structures its data. This guide shows you where to find the information you need, then walks you through configuring your Meilisearch embedder based on the information you found.
 
@@ -87,7 +87,7 @@ Most providers accept either a string or an array of strings. A single string wi
 }
 ```
 
-`{{text}}` indicates Meilisearch should replace the contents of a field with your document data.
+`{{text}}` indicates Meilisearch should replace the contents of a field with your document data, as indicated in the embedder's [`documentTemplate`](/reference/api/settings#documenttemplate).
 
 An array of strings allows Meilisearch to send up to 10 documents in one request, reducing the number of API calls to the provider:
 
@@ -143,11 +143,9 @@ For example, Mistral allows you to optionally configure an `encoding_format`. Se
 
 ## The embedding response
 
-Each provider responds to queries using its own specific structure. You must indicate where Meilisearch can find the document embeddings in the provider's response.
+You must indicate where Meilisearch can find the document embeddings in the provider's response. Consult your provider's API documentation, paying attention to where it places the embeddings.
 
-Consult your provider's API documentation, paying attention to where it places the embeddings. Mistral, for example, returns an array of objects inside `response.data`. Each array item contains an `embedding` field,
-
-Describe the full path to the embedding array in your embedder's `response`. When you reach the field containing the embedding, use `{{embedding}}` as its value:
+Cloudflare's embeddings are located in an array inside `response.result.data`. Describe the full path to the embedding array in your embedder's `response`. The first array item must be `"{{embedding}}"`:
 
 ```json
 {
@@ -155,19 +153,18 @@ Describe the full path to the embedding array in your embedder's `response`. Whe
     "source": "rest",
     "url": "PROVIDER_URL",
     "request": {
-      "model": "MODEL_NAME",
-      "input": "{{text}}"
+      "text": "{{text}}"
     },
     "response": {
-      "data": {
-        "text": "{{embedding}}"
+      "result": {
+        "data": ["{{embedding}}"]
       }
     }
   }
 }
 ```
 
-Providers might return embeddings in an array:
+If the response contains multiple embeddings, use `"{{..}}"` as its second value:
 
 ```json
 {
@@ -190,9 +187,7 @@ Providers might return embeddings in an array:
 }
 ```
 
-The first item in `response.data` tells Meilisearch where to find the embedding. The second item must be `"{{..}}"`, and it indicates there are multiple embeddings in the response.
-
-Cloudflare's embeddings are instead located in `response.result.data`:
+It is possible the response contains a single embedding outside of an array. Use `"{{embedding}}"` as its value:
 
 ```json
 {
@@ -200,20 +195,21 @@ Cloudflare's embeddings are instead located in `response.result.data`:
     "source": "rest",
     "url": "PROVIDER_URL",
     "request": {
-      "text": "{{text}}"
+      "model": "MODEL_NAME",
+      "input": "{{text}}"
     },
     "response": {
-      "result": {
-        "data": "[{{embedding}}]"
+      "data": {
+        "text": "{{embedding}}"
       }
     }
   }
 }
 ```
 
-The prompt data type does not necessarily match the response data type. For example, Cloudflare always returns an array of embeddings, even if the prompt in your request was a string. If you know the response will always contain a single embedding, you may omit `{{..}}` from the second array item.
+The prompt data type does not necessarily match the response data type. For example, Cloudflare always returns an array of embeddings, even if the prompt in your request was a string.
 
-Meilisearch silently ignores `response` fields not pointing to `{{embedding}}`.
+Meilisearch silently ignores `response` fields not pointing to an `"{{embedding}}"` value.
 
 ## The embedding header
 
@@ -231,7 +227,7 @@ Add the `headers` field to your embedder object:
     },
     "response": {
       "result": {
-        "data": "[{{embedding}}]"
+        "data": ["{{embedding}}"]
       }
     },
     "headers": {
