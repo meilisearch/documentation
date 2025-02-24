@@ -283,6 +283,11 @@
         "slug": "performing_federated_search"
       },
       {
+        "source": "learn/multi_search/implement_sharding.mdx",
+        "label": "Implement sharding with remote federated search",
+        "slug": "implement_sharding"
+      },
+      {
         "source": "learn/multi_search/multi_search_vs_federated_search.mdx",
         "label": "Differences between multi-search and federated search",
         "slug": "multi_search_vs_federated_search"

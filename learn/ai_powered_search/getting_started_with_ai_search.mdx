@@ -1,13 +1,13 @@
 ---
 title: Getting started with AI-powered search — Meilisearch documentation
-description: AI-powered search is an experimental technology that uses LLMs to retrieve search results. This tutorial shows you how to configure an OpenAI embedder and perform your first search.
+description: AI-powered search uses LLMs to retrieve search results. This tutorial shows you how to configure an OpenAI embedder and perform your first search.
 ---
 
-# Getting started with AI-powered search <NoticeTag type="experimental" label="experimental" />
+# Getting started with AI-powered search
 
-[AI-powered search](https://meilisearch.com/solutions/vector-search), sometimes also called vector search or hybrid search, is an experimental technology that uses [large language models (LLMs)](https://en.wikipedia.org/wiki/Large_language_model) to retrieve search results based on the meaning and context of a query.
+[AI-powered search](https://meilisearch.com/solutions/vector-search), sometimes also called vector search or hybrid search, uses [large language models (LLMs)](https://en.wikipedia.org/wiki/Large_language_model) to retrieve search results based on the meaning and context of a query.
 
-This tutorial will walk you through configuring AI-powered search in your Meilisearch project. You will see how to activate this feature, generate document embeddings with OpenAI, and perform your first search.
+This tutorial will walk you through configuring AI-powered search in your Meilisearch project. You will see how to set up an embedder with OpenAI, generate document embeddings, and perform your first search.
 
 ## Requirements
 
@@ -20,35 +20,6 @@ This tutorial will walk you through configuring AI-powered search in your Meilis
 First, create a new Meilisearch project. If this is your first time using Meilisearch, follow the [quick start](/learn/getting_started/cloud_quick_start) then come back to this tutorial.
 
 Next, create a `kitchenware` index and add [this kitchenware products dataset](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/datasets/kitchenware.json) to it. It will take Meilisearch a few moments to process your request, but you can continue to the next step while your data is indexing.
-
-## Activate AI-powered search
-
-AI-powered search is an experimental feature and is disabled by default. You must manually activate it either via the Meilisearch Cloud UI, or with the experimental features endpoint.
-
-<Capsule intent="tip" title="Meilisearch Cloud AI-powered search waitlist">
-To use AI-powered search with Meilisearch Cloud, you must first enter the waitlist. You will not be able to activate vector search until your sign-up has been approved.
-</Capsule>
-
-### Meilisearch Cloud UI
-
-Navigate to your project overview and find "Experimental features". Then click on the "AI-powered search" box.
-
-![A section of the project overview interface titled "Experimental features". The image shows a few options, including "Vector store".](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/vector-search/01-cloud-vector-store.png)
-
-### Experimental features endpoint
-
-Use [the `/experimental-features` route](/reference/api/experimental_features) to activate vector search during runtime:
-
-```sh
-curl \
-  -X PATCH 'MEILISEARCH_URL/experimental-features/' \
-  -H 'Content-Type: application/json'  \
-  --data-binary '{
-    "vectorStore": true
-  }'
-```
-
-Replace `MEILISEARCH_URL` with your project's URL. In most cases, this should look like `https://ms-000xx00x000-xx.xxx.meilisearch.io` if you're using Meilisearch Cloud, or `http://localhost:7700` if you are running Meilisearch in your local machine.
 
 ## Generate embeddings with OpenAI
 
@@ -77,7 +48,7 @@ Add a new `source` field to your embedder object:
 ```json
 {
   "products-openai": {
-    "source": "openai"
+    "source": "openAi"
   }
 }
 ```
@@ -93,7 +64,7 @@ Add a new `model` field to your embedder object:
 ```json
 {
   "products-openai": {
-    "source": "openai",
+    "source": "openAi",
     "model": "text-embedding-3-small"
   }
 }
@@ -110,7 +81,7 @@ Add the `apiKey` field to your embedder:
 ```json
 {
   "products-openai": {
-    "source": "openai",
+    "source": "openAi",
     "model": "text-embedding-3-small",
     "apiKey": "OPEN_AI_API_KEY",
   }
@@ -132,7 +103,7 @@ A good template should be short and only include the most important information 
 ```json
 {
   "products-openai": {
-    "source": "openai",
+    "source": "openAi",
     "model": "text-embedding-3-small",
     "apiKey": "OPEN_AI_API_KEY",
     "documentTemplate": "An object used in a kitchen named '{{doc.name}}'"
@@ -194,4 +165,4 @@ Now you have a basic overview of the basic steps required for setting up and per
 
 For practical information on implementing AI-powered search with other services, consult our [guides section](/guides/ai/openai). There you will find specific instructions for embedders such as [LangChain](/guides/ai/langchain) and [Cloudflare](/guides/ai/cloudflare).
 
-For more in-depth information, consult the API reference for [embedder settings](/reference/api/settings#embedders-experimental) and [the `hybrid` search parameter](/reference/api/search#hybrid-search-experimental).
+For more in-depth information, consult the API reference for [embedder settings](/reference/api/settings#embedders) and [the `hybrid` search parameter](/reference/api/search#hybrid-search).
