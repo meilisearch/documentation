@@ -16,7 +16,9 @@ Meilisearch Cloud does not support the `/snapshots` route.
 
 ## Create a snapshot
 
-<RouteHighlighter method="POST" route="/snapshots"/>
+```http
+POST /snapshots
+```
 
 Triggers a snapshot creation task. Once the process is complete, Meilisearch creates a snapshot in the [snapshot directory](/learn/self_hosted/configure_meilisearch_at_launch#snapshot-destination). If the snapshot directory does not exist yet, it will be created.
 

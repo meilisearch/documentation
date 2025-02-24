@@ -23,7 +23,9 @@ This feature is not available for Meilisearch Cloud users.
 
 ## Customize log levels
 
-<RouteHighlighter method="POST" route="/logs/stderr"/>
+```http
+POST /logs/stderr
+```
 
 Customize logging levels for the default logging system.
 
@@ -39,7 +41,9 @@ Customize logging levels for the default logging system.
 
 ## Start log stream
 
-<RouteHighlighter method="POST" route="/logs/stream"/>
+```http
+POST /logs/stream
+```
 
 Opens a continuous stream of logs for focused debugging sessions. The stream will continue to run indefinitely until you [interrupt](#interrupt-log-stream) it.
 
@@ -60,7 +64,9 @@ Certain HTTP clients such as `httpie` and `xh`, will only display data after you
 
 ## Interrupt log stream
 
-<RouteHighlighter method="DELETE" route="/logs/stream"/>
+```http
+DELETE /logs/stream
+```
 
 Interrupt a log stream.
 

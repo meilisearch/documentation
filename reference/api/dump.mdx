@@ -16,7 +16,9 @@ Meilisearch Cloud does not support the `/dumps` route.
 
 ## Create a dump
 
-<RouteHighlighter method="POST" route="/dumps"/>
+```http
+POST /dumps
+```
 
 Triggers a dump creation task. Once the process is complete, a dump is created in the [dump directory](/learn/self_hosted/configure_meilisearch_at_launch#dump-directory). If the dump directory does not exist yet, it will be created.
 

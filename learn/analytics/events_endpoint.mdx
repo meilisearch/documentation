@@ -14,7 +14,9 @@ The `/events` endpoint is only available for Meilisearch Cloud projects with ana
 
 ### Send an event
 
-<RouteHighlighter method="POST" route="https://edge.meilisearch.com/events"/>
+```http
+POST https://edge.meilisearch.com/events
+```
 
 Send an analytics event to Meilisearch Cloud. Accepts [`click`](#the-click-event-object) and [`conversion`](#the-conversion-event-object) events.
 

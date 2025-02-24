@@ -45,7 +45,9 @@ API keys with access to `/metrics` are able to see all HTTP calls for all the ro
 
 ## Get metrics
 
-<RouteHighlighter method="GET" route="/metrics"/>
+```http
+GET /metrics
+```
 
 Get data for current status of your instance. In most cases, you should only query this endpoint via a Prometheus-compatible tool such as Grafana.
 

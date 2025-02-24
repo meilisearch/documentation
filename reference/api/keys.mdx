@@ -135,7 +135,9 @@ Once a key is past its `expiresAt` date, using it for API authorization will ret
 
 ## Get all keys
 
-<RouteHighlighter method="GET" route="/keys"/>
+```http
+GET /keys
+```
 
 Returns the 20 most recently created keys in a `results` array. **Expired keys are included in the response**, but deleted keys are not.
 
@@ -226,7 +228,9 @@ API keys are displayed in descending order based on their `createdAt` date. This
 
 ## Get one key
 
-<RouteHighlighter method="GET" route="/keys/{key_or_uid}"/>
+```http
+GET /keys/{key_or_uid}
+```
 
 Get information on the specified key. Attempting to use this endpoint with a non-existent or deleted key will result in [an error](/reference/errors/error_codes#api_key_not_found).
 
@@ -267,7 +271,9 @@ For an explanation of these fields, see the [key object](#key-object).
 
 ## Create a key
 
-<RouteHighlighter method="POST" route="/keys"/>
+```http
+POST /keys
+```
 
 Create an API key with the provided description, permissions, and expiration date.
 
@@ -308,7 +314,9 @@ Create an API key with the provided description, permissions, and expiration dat
 
 ## Update a key
 
-<RouteHighlighter method="PATCH" route="/keys/{key_or_uid}"/>
+```http
+PATCH /keys/{key_or_uid}
+```
 
 Update the `name` and `description` of an API key.
 
@@ -358,7 +366,9 @@ Updates to keys are **partial**. This means you should provide only the fields y
 
 ## Delete a key
 
-<RouteHighlighter method="DELETE" route="/keys/{key_or_uid}"/>
+```http
+DELETE /keys/{key_or_uid}
+```
 
 Delete the specified API key.
 

@@ -16,7 +16,9 @@ This is an experimental feature. To use it, you must first [enable and configure
 
 ## Get similar documents with `POST`
 
-<RouteHighlighter method="POST" route="/indexes/{index_uid}/similar"/>
+```http
+POST /indexes/{index_uid}/similar
+```
 
 Retrieve documents similar to a specific search result.
 
@@ -73,7 +75,9 @@ Retrieve documents similar to a specific search result.
 
 ## Get similar documents with `GET`
 
-<RouteHighlighter method="GET" route="/indexes/{index_uid}/similar"/>
+```http
+GET /indexes/{index_uid}/similar
+```
 
 Retrieve documents similar to a specific search result.
 
