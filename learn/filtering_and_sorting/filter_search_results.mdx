@@ -39,9 +39,9 @@ If you want to filter results based on an attribute, you must first add it to th
 
 **This step is mandatory and cannot be done at search time**. Updating `filterableAttributes` requires Meilisearch to re-index all your data, which will take an amount of time proportionate to your dataset size and complexity.
 
-<Capsule intent="note">
+<Note>
 By default, `filterableAttributes` is empty. Filters do not work without first explicitly adding attributes to the `filterableAttributes` list.
-</Capsule>
+</Note>
 
 ## Use `filter` when searching
 
@@ -73,6 +73,6 @@ If you only want recent `Planet of the Apes` movies that weren't directed by `Ti
 release_date > 1577884550 AND (NOT director = "Tim Burton" AND director EXISTS)
 ```
 
-<Capsule intent="warning">
+<Warning>
 [Synonyms](/learn/relevancy/synonyms) don't apply to filters. Meaning, if you have `SF` and `San Francisco` set as synonyms, filtering by `SF` and `San Francisco` will show you different results.
-</Capsule>
+</Warning>

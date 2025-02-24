@@ -9,9 +9,9 @@ sidebarDepth: 3
 
 Meilisearch allows you to filter and sort results based on their geographic location. This can be useful when you only want results within a specific area or when sorting results based on their distance from a specific location.
 
-<Capsule intent="danger" title={<><code>_geo</code> field in v0.27, v0.28, and v0.29</>}>
-Due to Meilisearch allowing malformed `_geo` fields in the above-mentioned versions, please ensure the `_geo` field follows the correct format.
-</Capsule>
+<Warning>
+Due to Meilisearch allowing malformed `_geo` fields in the following versions (v0.27, v0.28 and v0.29), please ensure the `_geo` field follows the correct format.
+</Warning>
 
 ## Preparing documents for location-based search
 
@@ -101,9 +101,9 @@ Our restaurant dataset looks like this once we add geopositioning data:
 ]
 ```
 
-<Capsule intent="warning">
+<Warning>
 Trying to index a dataset with one or more documents containing badly formatted `_geo` values will cause Meilisearch to throw an [`invalid_document_geo_field`](/reference/errors/error_codes#invalid_document_geo_field) error. In this case, the update will fail and no documents will be added or modified.
-</Capsule>
+</Warning>
 
 ### Using `_geo` with CSV
 
@@ -215,9 +215,9 @@ It is also possible to combine `_geoRadius` and `_geoBoundingBox` with other fil
 
 The above command will only work if you have previously added `type` to `filterableAttributes`.
 
-<Capsule intent="warning">
+<Warning>
 `_geo`, `_geoDistance`, and `_geoPoint` are not valid filter rules. Trying to use any of them with the `filter` search parameter will result in an [`invalid_search_filter`](/reference/errors/error_codes#invalid_search_filter) error.
-</Capsule>
+</Warning>
 
 ## Sorting results with `_geoPoint`
 
@@ -247,9 +247,9 @@ If either `lat` or `lng` is invalid or missing, Meilisearch will return an [`inv
 
 [You can read more about sorting in our dedicated guide.](/learn/filtering_and_sorting/sort_search_results)
 
-<Capsule intent="warning">
+<Warning>
 `_geo`, `_geoDistance`, and `_geoRadius` are not valid `sort` values. Trying to use any of them with the `sort` search parameter will result in an [`invalid_search_sort`](/reference/errors/error_codes#invalid_search_sort) error.
-</Capsule>
+</Warning>
 
 ### Examples
 
@@ -370,8 +370,8 @@ When using `_geoPoint`, all returned documents will contain one extra field: `_g
 ]
 ```
 
-<Capsule intent="warning">
+<Warning>
 Using `_geoRadius` filter will not cause results to include `_geoDistance`.
 
 `_geoDistance` will only be computed in a returned document if the query uses `_geoPoint` and the `sort` search parameter. Additionally, returned documents will only include `_geoDistance` if `_geo` is present in the [`displayedAttributes` list](/learn/relevancy/displayed_searchable_attributes).
-</Capsule>
+</Warning>

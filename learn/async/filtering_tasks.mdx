@@ -10,9 +10,9 @@ Querying the [get tasks endpoint](/reference/api/tasks#get-tasks) returns all ta
 
 This guide shows you how to use query parameters to filter tasks and obtain a more readable list of asynchronous operations.
 
-<Capsule intent="tip" title="Filtering batches">
+<Tip>
 Filtering batches with [the `/batches` route](/reference/api/batches) follows the same rules as filtering tasks. Keep in mind that many `/batches` parameters such as `uids` target the tasks included in batches, instead of the batches themselves.
-</Capsule>
+</Tip>
 
 ## Requirements
 
@@ -39,6 +39,6 @@ Use the ampersand character (`&`) to combine filters, equivalent to a logical `A
 
 This code sample returns all tasks in the `movies` index that have the type `documentAdditionOrUpdate` or `documentDeletion` and have the `status` of `processing`.
 
-<Capsule intent="warning">
+<Warning>
 **`OR` operations between different filters are not supported.** For example, you cannot view tasks which have a type of `documentAddition` **or** a status of `failed`.
-</Capsule>
+</Warning>

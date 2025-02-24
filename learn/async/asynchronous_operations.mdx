@@ -101,17 +101,17 @@ Meilisearch considers the following task types as global:
 - [`indexSwap`](/reference/api/tasks#indexswap)
 - [`snapshotCreation`](/reference/api/tasks#snapshotcreation)
 
-<Capsule intent="note">
+<Note>
 In a protected instance, your API key must have access to all indexes (`"indexes": [*]`) to view global tasks.
-</Capsule>
+</Note>
 
 ### Task queue
 
 After creating a task, Meilisearch places it in a queue. Enqueued tasks are processed one at a time, following the order in which they were requested.
 
-<Capsule intent="warning" title="Task queue limit">
+<Warning>
 When the task queue reaches its limit (about 10GiB), it will throw a `no_space_left_on_device` error. Users will need to delete tasks using the [delete tasks endpoint](/reference/api/tasks#delete-tasks) to continue write operations.
-</Capsule>
+</Warning>
 
 #### Task queue priority
 
@@ -134,9 +134,9 @@ When you make a [request for an asynchronous operation](#which-operations-are-as
 2. When your task reaches the front of the queue, Meilisearch begins working on it. Task `status` set to `processing`
 3. Meilisearch finishes the task. Status set to `succeeded` if task was successfully processed, or `failed` if there was an error
 
-<Capsule intent="note">
+<Note>
 **Terminating a Meilisearch instance in the middle of an asynchronous operation is completely safe** and will never adversely affect the database.
-</Capsule>
+</Note>
 
 ### Task batches
 
@@ -146,9 +146,9 @@ Meilisearch processes tasks in batches, grouping tasks for the best possible per
 
 You can cancel a task while it is `enqueued` or `processing` by using [the cancel tasks endpoint](/reference/api/tasks#cancel-tasks). Doing so changes a task's `status` to `canceled`.
 
-<Capsule intent="note">
+<Note>
 Tasks are not canceled when you terminate a Meilisearch instance. Meilisearch discards all progress made on `processing` tasks and resets them to `enqueued`. Task handling proceeds as normal once the instance is relaunched.
-</Capsule>
+</Note>
 
 ### Deleting tasks
 

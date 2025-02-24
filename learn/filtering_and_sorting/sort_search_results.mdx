@@ -11,9 +11,9 @@ By default, Meilisearch focuses on ordering results according to their relevancy
 
 This can be useful in many situations, such as when a user wants to see the cheapest products available in a webshop.
 
-<Capsule intent="tip">
+<Tip>
 Sorting at search time can be particularly effective when combined with [placeholder searches](/reference/api/search#placeholder-search).
-</Capsule>
+</Tip>
 
 ## Configure Meilisearch for sorting at search time
 
@@ -23,11 +23,11 @@ To allow your users to sort results at search time you must:
 2. Add those attributes to the `sortableAttributes` index setting
 3. Update Meilisearch's [ranking rules](/learn/relevancy/relevancy) (optional)
 
-<Capsule intent="note">
+<Note>
 Meilisearch sorts strings in lexicographic order based on their byte values. For example, `á`, which has a value of 225, will be sorted after `z`, which has a value of 122.
 
 Uppercase letters are sorted as if they were lowercase. They will still appear uppercase in search results.
-</Capsule>
+</Note>
 
 ### Add attributes to `sortableAttributes`
 
@@ -35,11 +35,11 @@ Meilisearch allows you to sort results based on document fields. Only fields con
 
 After you have decided which fields you will allow your users to sort on, you must add their attributes to the [`sortableAttributes` index setting](/reference/api/settings#sortable-attributes).
 
-<Capsule intent="warning">
+<Warning>
 If a field has values of different types across documents, Meilisearch will give precedence to numbers over strings. This means documents with numeric field values will be ranked higher than those with string values.
 
 This can lead to unexpected behavior when sorting. For optimal user experience, only sort based on fields containing the same type of value.
-</Capsule>
+</Warning>
 
 #### Example
 
@@ -89,9 +89,9 @@ This is the default configuration of Meilisearch's ranking rules:
 
 Placing `"sort"` ranking rule higher in the list will emphasize exhaustive sorting over relevant sorting: your results will more closely follow the sorting order your user chose, but will not be as relevant.
 
-<Capsule intent="tip" title="Promoting search results and document pinning">
+<Tip>
 Sorting applies equally to all documents. Meilisearch does not offer native support for promoting, pinning, and boosting specific documents so they are displayed more prominently than other search results. Consult these Meilisearch blog articles for workarounds on [implementing promoted search results with React InstantSearch](https://blog.meilisearch.com/promoted-search-results-with-react-instantsearch) and [document boosting](https://blog.meilisearch.com/document-boosting).
-</Capsule>
+</Tip>
 
 #### Example
 

@@ -10,11 +10,11 @@ When using the [`showRankingScore` search parameter](/reference/api/search#ranki
 
 Ranking rules sort documents either by relevancy (`words`, `typo`, `proximity`, `exactness`, `attribute`) or by the value of a field (`sort`). Since `sort`  doesn't rank documents by relevancy, it does not influence the `_rankingScore`.
 
-<Capsule intent="note">
+<Note>
 A document's ranking score does not change based on the scores of other documents in the same index.
 
 For example, if a document A has a score of `0.5` for a query term, this value remains constant no matter the score of documents B, C, or D.
-</Capsule>
+</Note>
 
 The table below details all the index settings that can influence the `_rankingScore`. **Unlisted settings do not influence the ranking score.**
 

@@ -6,7 +6,7 @@ description: "Customize Meilisearch logs with two experimental features: --exper
 
 # Logs <NoticeTag type="experimental" label="experimental" />
 
-<Capsule intent="note" title="Activating `/logs`">
+<Note>
 This is an experimental feature. Use the experimental features endpoint to activate it:
 
 ```sh
@@ -19,7 +19,7 @@ curl \
 ```
 
 This feature is not available for Meilisearch Cloud users.
-</Capsule>
+</Note>
 
 ## Customize log levels
 
@@ -54,9 +54,9 @@ Opens a continuous stream of logs for focused debugging sessions. The stream wil
 
 <CodeSamples id="experimental_post_logs_stream_1" />
 
-<Capsule intent="warning" title="HTTP client compatibility">
+<Warning>
 Certain HTTP clients such as `httpie` and `xh`, will only display data after you have interrupted the stream with the `DELETE` endpoint.
-</Capsule>
+</Warning>
 
 ## Interrupt log stream
 

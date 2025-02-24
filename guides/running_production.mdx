@@ -7,18 +7,18 @@ description: Deploy Meilisearch in a Digital Ocean droplet. Covers installation,
 
 This tutorial will guide you through setting up a production-ready Meilisearch instance. These instructions use a DigitalOcean droplet running Debian, but should be compatible with any hosting service running a Linux distro.
 
-<Capsule intent="note">
+<Note>
 [Meilisearch Cloud](https://www.meilisearch.com/cloud?utm_campaign=oss&utm_source=docs&utm_medium=running-production-oss) is the recommended way to run Meilisearch in production environments.
-</Capsule>
+</Note>
 
 ## Requirements
 
 - A DigitalOcean droplet running Debian 12
 - An SSH key pair to connect to that machine
 
-<Capsule intent="tip">
+<Tip>
 DigitalOcean has extensive documentation on [how to use SSH to connect to a droplet](https://www.digitalocean.com/docs/droplets/how-to/connect-with-ssh/).
-</Capsule>
+</Tip>
 
 ## Step 1: Install Meilisearch
 
@@ -157,9 +157,9 @@ At this point, Meilisearch is installed and running. It is also protected from e
 
 The next step is to make your instance publicly accessible. 
 
-<Capsule intent="tip">
+<Tip>
 If all the requests you send to Meilisearch are done by another application living in the same machine, you can safely skip this section.
-</Capsule>
+</Tip>
 
 ### 5.1. Creating a reverse proxy with Nginx
 

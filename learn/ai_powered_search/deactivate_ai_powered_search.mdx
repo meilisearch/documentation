@@ -16,9 +16,9 @@ Manually remove all embedder configuration from your index:
 
 <CodeSamples id="experimental_reset_embedders_1" />
 
-<Capsule intent="danger">
+<Warning>
 If you don't remove all configured embedders, Meilisearch will continue auto-generating embeddings for you documents. This will happen even if `vectorStore` has been set to `false` and may lead to unexpected expenses when using OpenAI's paid tiers.
-</Capsule>
+</Warning>
 
 ## Disable the vector store
 

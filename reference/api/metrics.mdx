@@ -8,7 +8,7 @@ description: The /metrics endpoint is an experimental feature. It exposes data c
 
 The `/metrics` route exposes data compatible with [Prometheus](https://prometheus.io/). You will also need to have Grafana installed in your system to make use of this feature.
 
-<Capsule intent="note" title="Activating `/metrics`">
+<Note>
 This is an experimental feature. Use the experimental features endpoint to activate it:
 
 ```sh
@@ -21,7 +21,7 @@ curl \
 ```
 
 This feature is not available for Meilisearch Cloud users.
-</Capsule>
+</Note>
 
 ## Exposed information
 
@@ -39,9 +39,9 @@ This feature is not available for Meilisearch Cloud users.
 | `meilisearch_last_update`                | Returns the timestamp of the last update. | gauge     |
 | `meilisearch_is_indexing`                | Returns `1` if Meilisearch is indexing or `0` if not. | gauge     |
 
-<Capsule intent="danger">
+<Warning>
 API keys with access to `/metrics` are able to see all HTTP calls for all the routes in an instance. This may lead to leaking sensitive information such as index names, document's primary keys, and API keys.
-</Capsule>
+</Warning>
 
 ## Get metrics
 

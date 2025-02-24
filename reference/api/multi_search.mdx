@@ -21,9 +21,9 @@ Bundle multiple search queries in a single API request. Use this endpoint to sea
 | **`federation`** | Object | If present and not `null`, returns a single list merging all search results across all specified queries |
 | **`queries`** | Array of objects | Contains the list of search queries to perform. The [`indexUid`](/learn/getting_started/indexes#index-uid) search parameter is required, all other parameters are optional |
 
-<Capsule intent="warning">
+<Warning>
 If Meilisearch encounters an error when handling any of the queries in a multi-search request, it immediately stops processing the request and returns an error message. The returned message will only address the first error encountered.
-</Capsule>
+</Warning>
 
 #### `federation`
 
@@ -125,14 +125,14 @@ Federated search's merged results are returned in decreasing ranking score. To o
     4. Compare the global ranking scores of both hits to determine which comes first, ignoring any sorting or geosorting
     5. In the case of a perfect tie, documents from the query with the lowest rank in the `queries` array are preferred.
 
-<Capsule intent="note" title="Distinct documents and federated search">
+<Note>
 Meilisearch considers two documents the same if:
 
 1. They come from the same index
 2. And their primary key is the same
 
 There is no way to specify that two documents should be treated as the same across multiple indexes.
-</Capsule>
+</Note>
 
 #### `queries`
 

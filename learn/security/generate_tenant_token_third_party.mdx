@@ -71,9 +71,9 @@ const token = jwt.sign(tokenPayload, apiKey, {algorithm: 'HS256'});
 
 Your tenant token is now ready to use.
 
-<Capsule intent="note" title="Using other libraries">
+<Note>
 Though this example used `jsonwebtoken`, a Node.js package, you may use any JWT-compatible library in whatever language you feel comfortable.
-</Capsule>
+</Note>
 
 ## Make a search request using a tenant token
 

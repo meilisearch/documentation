@@ -30,17 +30,17 @@ Smaller documents are processed faster, so make sure to trim down any unnecessar
 
 A single large HTTP payload is processed more quickly than multiple smaller payloads. For example, adding the same 100,000 documents in two batches of 50,000 documents will be quicker than adding them in four batches of 25,000 documents. By default, Meilisearch sets the maximum payload size to 100MB, but [you can change this value if necessary](/learn/self_hosted/configure_meilisearch_at_launch#payload-limit-size).
 
-<Capsule intent="warning">
+<Warning>
 Larger payload consume more RAM. An instance may crash if it requires more memory than is currently available in a machine.
-</Capsule>
+</Warning>
 
 ## Keep Meilisearch up-to-date
 
 Make sure to keep your Meilisearch instance up-to-date to benefit from the latest improvements. You can see [a list of all our engine releases on GitHub](https://github.com/meilisearch/meilisearch/releases?q=prerelease%3Afalse).
 
-<Capsule intent="note">
+<Note>
 For more information on how indexing works under the hood, take a look [this blog post about indexing best practices](https://blog.meilisearch.com/best-practices-for-faster-indexing/).
-</Capsule>
+</Note>
 
 ## Do not use Meilisearch as your main database
 
@@ -68,6 +68,6 @@ If you are experiencing performance issues when indexing documents for AI-powere
 
 Binary quantization works best with large datasets containing more than 1M documents and using models with more than 1400 dimensions.
 
-<Capsule intent="danger" title="Binary quantization is an irreversible process">
+<Warning>
 **Activating binary quantization is irreversible.** Once enabled, Meilisearch converts all vectors and discards all vector data that does fit within 1-bit. The only way to recover the vectors' original values is to re-vectorize the whole index in a new embedder.
-</Capsule>
+</Warning>

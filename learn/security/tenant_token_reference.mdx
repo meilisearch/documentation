@@ -54,11 +54,11 @@ Meilisearch applies the filter to all searches made with that tenant token. A to
 
 A token may contain rules for any number of indexes. **Specific rulesets take precedence and overwrite `*` rules.**
 
-<Capsule intent="danger">
+<Warning>
 Because tenant tokens are generated in your application, Meilisearch cannot check if search rule filters are valid. Invalid search rules return throw errors when searching.
 
 Consult the search API reference for [more information on Meilisearch filter syntax](/reference/api/search#filter).
-</Capsule>
+</Warning>
 
 The search rule may also be an empty object. In this case, the tenant token will have access to all documents in an index:
 
@@ -159,9 +159,9 @@ The UID must indicate an API key with access to [the search action](/reference/a
 
 Since a master key is not an API key, **you cannot use a master key to create a tenant token**. Avoid exposing API keys and **always generate tokens on your application's back end**.
 
-<Capsule intent="warning" title="Tenant token and expired API keys">
+<Warning>
 If an API key expires, any tenant tokens created with it will become invalid. The same applies if the API key is deleted or regenerated due to a changed master key.
-</Capsule>
+</Warning>
 
 ## Expiry date
 
@@ -177,8 +177,8 @@ A token's expiration date cannot exceed its parent API key's expiration date.
 
 Setting a token expiry date is optional, but highly recommended. Tokens without an expiry date remain valid indefinitely and may be a security liability.
 
-<Capsule intent="danger" intent="Revoking a token without an expirty date">
+<Warning>
 The only way to revoke a token without an expiry date is to [delete](/reference/api/keys#delete-a-key) its parent API key.
 
 Changing an instance's master key forces Meilisearch to regenerate all API keys and will also render all existing tenant tokens invalid.
-</Capsule>
+</Warning>

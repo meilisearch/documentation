@@ -22,9 +22,9 @@ Search for documents matching a specific query in the given index.
 
 This is the preferred endpoint to perform search when an API key is required, as it allows for [preflight requests](https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request) to be cached. Caching preflight requests **considerably improves search speed**.
 
-<Capsule intent="note">
+<Note>
 By default, [this endpoint returns a maximum of 1000 results](/learn/resources/known_limitations#maximum-number-of-results-per-search). If you want to scrape your database, use the [get documents endpoint](/reference/api/documents#get-documents-with-post) instead.
-</Capsule>
+</Note>
 
 ### Path parameters
 
@@ -130,15 +130,15 @@ You can [read more about pagination in our dedicated guide](/guides/front_end/pa
 
 Search for documents matching a specific query in the given index.
 
-<Capsule intent="warning">
+<Warning>
 This endpoint only accepts [string filter expressions](/learn/filtering_and_sorting/filter_expression_reference).
-</Capsule>
+</Warning>
 
 This endpoint should only be used when no API key is required. If an API key is required, use the [POST](/reference/api/search#search-in-an-index-with-post) route instead.
 
-<Capsule intent="note">
+<Note>
 By default, [this endpoint returns a maximum of 1000 results](/learn/resources/known_limitations#maximum-number-of-results-per-search). If you want to scrape your database, use the [get documents endpoint](/reference/api/documents#get-documents-with-post) instead.
-</Capsule>
+</Note>
 
 ### Path parameters
 
@@ -232,11 +232,11 @@ By default, [this endpoint returns a maximum of 1000 results](/learn/resources/k
 
 Here follows an exhaustive description of each search parameter currently available when using the search endpoint. Unless otherwise noted, all parameters are valid for the `GET /indexes/{index_uid}/search`, `POST /indexes/{index_uid}/search`, and `/multi-search` routes.
 
-<Capsule intent="warning">
+<Warning>
 If [using the `GET` route to perform a search](/reference/api/search#search-in-an-index-with-get), all parameters must be **URL-encoded**.
 
 This is not necessary when using the `POST` route or one of our [SDKs](/learn/resources/sdks).
-</Capsule>
+</Warning>
 
 ### Overview
 
@@ -275,9 +275,9 @@ This is not necessary when using the `POST` route or one of our [SDKs](/learn/re
 
 Sets the search terms.
 
-<Capsule intent="warning">
+<Warning>
 Meilisearch only considers the first ten words of any given search query. This is necessary in order to deliver a [fast search-as-you-type experience](/learn/resources/known_limitations#maximum-number-of-query-words).
-</Capsule>
+</Warning>
 
 #### Example
 
@@ -319,9 +319,9 @@ When `q` isn't specified, Meilisearch performs a **placeholder search**.  A plac
 
 If the index has no sort or custom ranking rules, the results are returned in the order of their internal database position.
 
-<Capsule intent="tip">
+<Tip>
 Placeholder search is particularly useful when building a [faceted search interfaces](/learn/filtering_and_sorting/search_with_facet_filters), as it allows users to view the catalog and alter sorting rules without entering a query.
-</Capsule>
+</Tip>
 
 #### Phrase search
 
@@ -361,9 +361,9 @@ Queries using `offset` and `limit` only return an estimate of the total number o
 
 You can [paginate search results](/guides/front_end/pagination) by making queries combining both `offset` and `limit`.
 
-<Capsule intent="warning">
+<Warning>
 Setting `offset` to a value greater than an [index's `maxTotalHits`](/reference/api/settings#update-pagination-settings) returns an empty array.
-</Capsule>
+</Warning>
 
 #### Example
 
@@ -381,9 +381,9 @@ Sets the maximum number of documents returned by a single query.
 
 You can [paginate search results](/guides/front_end/pagination) by making queries combining both `offset` and `limit`.
 
-<Capsule intent="warning">
+<Warning>
 A search query cannot return more results than configured in [`maxTotalHits`](/reference/api/settings#pagination-object), even if the value of `limit` is greater than the value of `maxTotalHits`.
-</Capsule>
+</Warning>
 
 #### Example
 
@@ -405,13 +405,13 @@ If you set `hitsPerPage` to `0`, Meilisearch processes your request, but does no
 
 You can use `hitsPerPage` and `page` to [paginate search results](/guides/front_end/pagination).
 
-<Capsule intent="note">
+<Note>
 `hitsPerPage` and `page` take precedence over `offset` and `limit`. If a query contains either `hitsPerPage` or `page`, any values passed to `offset` and `limit` are ignored.
-</Capsule>
+</Note>
 
-<Capsule intent="warning">
+<Warning>
 `hitsPerPage` and `page` are resource-intensive options and might negatively impact search performance. This is particularly likely if [`maxTotalHits`](/reference/api/settings#pagination) is set to a value higher than its default.
-</Capsule>
+</Warning>
 
 #### Example
 
@@ -433,13 +433,13 @@ If you set `page` to `0`, Meilisearch processes your request, but does not retur
 
 You can use `hitsPerPage` and `page` to [paginate search results](/guides/front_end/pagination).
 
-<Capsule intent="note">
+<Note>
 `hitsPerPage` and `page` take precedence over `offset` and `limit`. If a query contains either `hitsPerPage` or `page`, any values passed to `offset` and `limit` are ignored.
-</Capsule>
+</Note>
 
-<Capsule intent="warning">
+<Warning>
 `hitsPerPage` and `page` are resource-intensive options and might negatively impact search performance. This is particularly likely if [`maxTotalHits`](/reference/api/settings#pagination) is set to a value higher than its default.
-</Capsule>
+</Warning>
 
 #### Example
 
@@ -527,9 +527,9 @@ By default, `facets` returns a maximum of 100 facet values for each faceted fiel
 
 When `facets` is set, the search results object includes the [`facetDistribution`](#facetdistribution) and [`facetStats`](#facetstats) fields.
 
-<Capsule intent="note">
+<Note>
 If an attribute used on `facets` has not been added to the `filterableAttributes` list, it will be ignored.
-</Capsule>
+</Note>
 
 #### `facetDistribution`
 
@@ -553,9 +553,6 @@ If an attribute used on `facets` has not been added to the `filterableAttributes
 ```
 
 `facetDistribution` contains an object for every attribute passed to the `facets` parameter. Each object contains the returned values for that attribute and the count of matching documents with that value. Meilisearch does not return empty facets.
-
-<Capsule intent="tip">
-</Capsule>
 
 #### `facetStats`
 
@@ -637,9 +634,9 @@ Configures which attributes will be retrieved in the returned documents.
 
 If no value is specified, `attributesToRetrieve` uses the [`displayedAttributes` list](/reference/api/settings#displayed-attributes), which by default contains all attributes found in the documents.
 
-<Capsule intent="note">
+<Note>
 If an attribute has been removed from `displayedAttributes`, `attributesToRetrieve` will silently ignore it and the field will not appear in your returned documents.
-</Capsule>
+</Note>
 
 #### Example
 
@@ -761,13 +758,13 @@ Instead of a list of attributes, you can use `["*"]`: `attributesToHighlight=["*
 
 By default highlighted elements are enclosed in `<em>` and `</em>` tags. You may change this by using the [`highlightPreTag` and `highlightPostTag` search parameters](#highlight-tags).
 
-<Capsule intent="note">
+<Note>
 `attributesToHighlight` also highlights terms configured as [synonyms](/reference/api/settings#synonyms) and [stop words](/reference/api/settings#stop-words).
-</Capsule>
+</Note>
 
-<Capsule intent="warning">
+<Warning>
 `attributesToHighlight` will highlight matches within all attributes added to the `attributesToHighlight` array, even if those attributes are not set as [`searchableAttributes`](/learn/relevancy/displayed_searchable_attributes#searchable-fields).
-</Capsule>
+</Warning>
 
 #### Example
 
@@ -831,9 +828,9 @@ You can find the highlighted query terms inside the `_formatted` property:
 }
 ```
 
-<Capsule intent="danger">
+<Warning>
 Though it is not necessary to use `highlightPreTag` and `highlightPostTag` in conjunction, be careful to ensure tags are correctly matched. In the above example, not setting `highlightPostTag` would result in malformed HTML: `<span>Winter Feast</em>`.
-</Capsule>
+</Warning>
 
 ### Show matches position
 
@@ -843,15 +840,15 @@ Though it is not necessary to use `highlightPreTag` and `highlightPostTag` in co
 
 Adds a `_matchesPosition` object to the search response that contains the location of each occurrence of queried terms across all fields. This is useful when you need more control than offered by our [built-in highlighting](#attributes-to-highlight). `showMatchesPosition` only works for strings, numbers, and arrays of strings and numbers.
 
-<Capsule intent="warning">
+<Warning>
 `showMatchesPosition` returns the location of matched query terms within all attributes, even attributes that are not set as [`searchableAttributes`](/learn/relevancy/displayed_searchable_attributes#searchable-fields).
-</Capsule>
+</Warning>
 
 The beginning of a matching term within a field is indicated by `start`, and its length by `length`.
 
-<Capsule intent="warning">
+<Warning>
 `start` and `length` are measured in bytes and not the number of characters. For example, `ü` represents two bytes but one character.
-</Capsule>
+</Warning>
 
 #### Example
 
@@ -901,11 +898,11 @@ Sorts search results at query time according to the specified attributes and ind
 
 Each attribute in the list must be followed by a colon (`:`) and the preferred sorting order: either ascending (`asc`) or descending (`desc`).
 
-<Capsule intent="note">
+<Note>
 Attribute order is meaningful. The first attributes in a list will be given precedence over those that come later.
 
 For example, `sort="price:asc,author:desc` will prioritize `price` over `author` when sorting results.
-</Capsule>
+</Note>
 
 When using the `POST` route, `sort` expects an array of strings.
 
@@ -987,11 +984,11 @@ Adds a global ranking score field, `_rankingScore`, to each document. The `_rank
 
 The `sort` ranking rule does not influence the `_rankingScore`. Instead, the document order is determined by the value of the field they are sorted on.
 
-<Capsule intent="note">
+<Note>
 A document's ranking score does not change based on the scores of other documents in the same index.
 
 For example, if a document A has a score of `0.5` for a query term, this value remains constant no matter the score of documents B, C, or D.
-</Capsule>
+</Note>
 
 #### Example
 
@@ -1139,9 +1136,9 @@ Excludes results below the specified ranking score.
 
 Excluded results do not count towards `estimatedTotalHits`, `totalHits`, and facet distribution.
 
-<Capsule intent="warning" title="`rankingScoreThreshold` and `limit`">
+<Warning>
 For performance reasons, if the number of documents above `rankingScoreThreshold` is higher than `limit`, Meilisearch does not evaluate the ranking score of the remaining documents. Results ranking below the threshold are not immediately removed from the set of candidates. In this case, Meilisearch may overestimate the count of `estimatedTotalHits`, `totalHits` and facet distribution.
-</Capsule>
+</Warning>
 
 #### Example
 
@@ -1159,9 +1156,9 @@ Configures a query to only look for terms in the specified attributes.
 
 Instead of a list of attributes, you can pass a wildcard value (`["*"]`) and `null` to `attributesToSearchOn`. In both cases, Meilisearch will search for matches in all searchable attributes.
 
-<Capsule intent="warning">
+<Warning>
 Attributes passed to `attributesToSearchOn` must also be present in the `searchableAttributes` list.
-</Capsule>
+</Warning>
 
 The order of attributes in `attributesToSearchOn` does not affect relevancy.
 
@@ -1187,9 +1184,9 @@ Configures Meilisearch to return search results based on a query's meaning and c
 
 `semanticRatio` must be a number between `0.0` and `1.0` indicating the proportion between keyword and semantic search results. `0.0` causes Meilisearch to only return keyword results. `1.0` causes Meilisearch to only return meaning-based results. Defaults to `0.5`.
 
-<Capsule intent="warning">
+<Warning>
 Meilisearch will return an error if you use `hybrid` before activating your instance's `vectorStore` and [configuring an embedder](/reference/api/settings#embedders-experimental).
-</Capsule>
+</Warning>
 
 #### Example
 
@@ -1207,19 +1204,19 @@ Use a custom vector to perform a search query. Must be an array of numbers corre
 
 `vector` dimensions must match the dimensions of the embedder.
 
-<Capsule intent="note">
+<Note>
 If a query does not specify `q`, but contains both `vector` and `hybrid.semanticRatio` bigger than `0`, Meilisearch performs a pure semantic search.
 
 If `q` is missing and `semanticRatio` is explicitly set to `0`, Meilisearch performs a placeholder search without any vector search results.
-</Capsule>
+</Note>
 
 #### Example
 
 <CodeSamples id="search_parameter_guide_vector_1" />
 
-<Capsule intent="warning">
+<Warning>
 Meilisearch will return an error if you use `vector` before activating your instance's `vectorStore` and [configuring a custom embedder](/reference/api/settings#embedders-experimental).
-</Capsule>
+</Warning>
 
 ### Display `_vectors` in response (experimental)
 
@@ -1263,7 +1260,7 @@ By default, Meilisearch auto-detects the language of a query. Use this parameter
 
 In case of a mismatch between `locales` and the [localized attributes index setting](/reference/api/settings#localized-attributes), this parameter takes precedence.
 
-<Capsule intent="note" title="`locales` and `localizedAttributes`">
+<Note>
 `locales` and [`localizedAttributes`](/reference/api/settings#localized-attributes) have the same goal: explicitly state the language used in a search when Meilisearch's language auto-detection is not working as expected.
 
 If you believe Meilisearch is detecting incorrect languages because of the query text, explicitly set the search language with `locales`.
@@ -1271,7 +1268,7 @@ If you believe Meilisearch is detecting incorrect languages because of the query
 If you believe Meilisearch is detecting incorrect languages because of document, explicitly set the document language at the index level with `localizedAttributes`.
 
 For full control over the way Meilisearch detects languages during indexing and at search time, set both `locales` and `localizedAttributes`.
-</Capsule>
+</Note>
 
 #### Example
 
