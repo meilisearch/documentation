@@ -55,6 +55,11 @@
         "slug": "choose_an_embedder"
       },
       {
+        "source": "learn/ai_powered_search/multimodal.mdx",
+        "label": "Image search with user-provided embeddings",
+        "slug": "multimodal_search"
+      },
+      {
         "source": "learn/ai_powered_search/difference_full_text_ai_search.mdx",
         "label": "Differences between full-text and AI-powered search",
         "slug": "difference_full_text_ai_search"
