@@ -50,7 +50,7 @@
         "slug": "search_with_user_provided_embeddings"
       },
       {
-        "source": "learn/ai_powered_search/rest_response_request.mdx",
+        "source": "learn/ai_powered_search/configure_rest_embedder.mdx",
         "label": "Configure a REST embedder",
         "slug": "configure_rest_embedder"
       },
