@@ -5,24 +5,26 @@ description:
 
 # Image search with user-provided embeddings
 
-This articles shows the main steps for performing multimodal searches where users use text to search through a database of images with no associated metadata.
+This articles shows the main steps for performing multimodal searches where you can use text to search through a database of images with no associated metadata.
 
 ## Requirements
 
 - A database of images
 - A Meilisearch project
+- An embedding generation tool you can install locally
 
 ## Configure your local embedding generation pipeline
 
 First, set up a system that sends your images to your chosen embedding generation tool.
 
-The exact procedure for this depend heavily on your specific setup, but should include these main steps:
+The exact procedure depends heavily on your specific setup, but should include these main steps:
 
-1. Choose a provider you can run locally
+1. Choose a tool you can run locally
 2. Choose a model that supports both image and text input
-3. Send your images to the provider
+3. Send your images to the embedding generation tool
 4. Add the returned embeddings to the `_vector` field for each image in your database
-5. Periodically send your vectorized documents to Meilisearch
+
+In most cases your system should run these steps periodically or whenever you update your database.
 
 ## Configure a user-provided embedder
 
@@ -60,7 +62,7 @@ Since you are using a `userProvided` embedder, you must also generate the embedd
 
 ## Vector search with user-provided embeddings
 
-Once you have the query's vector, pass it to the `vector` search parameter to perform a  semantic AI-powered search:
+Once you have the query's vector, pass it to the `vector` search parameter to perform a semantic AI-powered search:
 
 ```sh
 curl -X POST -H 'content-type: application/json' \
