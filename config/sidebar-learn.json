@@ -52,7 +52,7 @@
       {
         "source": "learn/ai_powered_search/rest_response_request.mdx",
         "label": "Configure a REST embedder",
-        "slug": "rest_response_request"
+        "slug": "configure_rest_embedder"
       },
       {
         "source": "learn/ai_powered_search/choose_an_embedder.mdx",
