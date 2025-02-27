@@ -11,7 +11,7 @@ This guide shows you what to do and what to avoid when writing a `documentTempla
 
 ## Sample document
 
-It's easier to understand the impact of a good `documentTemplate` by seeing it applied to a document. Take a look at this document from a database of movies:
+Take a look at this document from a database of movies:
 
 ```json
 {
@@ -30,19 +30,19 @@ It's easier to understand the impact of a good `documentTemplate` by seeing it a
 
 ## Do not use the default `documentTemplate`
 
-Always use a custom `documentTemplate` value in your embedder configuration.
+Use a custom `documentTemplate` value in your embedder configuration.
 
-When using the default `documentTemplate`, Meilisearch includes all searchable fields with non-`null` values. In most cases that is too much information for the embedder.
+The default `documentTemplate` includes all searchable fields with non-`null` values. In most cases, this adds noise and more information than the embedder needs to provide relevant search results.
 
 ## Only include highly relevant information
 
-Take a look at your document and identify the most relevant fields:
+Take a look at your document and identify the most relevant fields. A good `documentTemplate` for the sample document could be:
 
 ```
 "A movie called {{doc.title}} about {{doc.overview}}"
 ```
 
-`poster` and `id` contain data that has little semantic importance and can be safely excluded. The data in `genres` and `release_date` is very useful for filters, but say little about this specific film.
+In the sample document, `poster` and `id` contain data that has little semantic importance and can be safely excluded. The data in `genres` and `release_date` is very useful for filters, but say little about this specific film.
 
 This leaves two relevant fields: `title` and `overview`.
 
@@ -56,12 +56,12 @@ For the best results, keep prompts somewhere between 15 and 45 words:
 
 In the sample document, the `overview` alone is 49 words. Use Liquid's [`truncate`](https://shopify.github.io/liquid/filters/truncate/) or [`truncatewords`](https://shopify.github.io/liquid/filters/truncatewords/) to shorten it.
 
-Short prompts don't contain enough information for the embedder to properly understand the query context. The same happens with long prompts: too much information makes it hard for the embedder to identify what is relevant about a document.
+Short prompts do not have enough information for the embedder to properly understand the query context. Long prompts instead provide too much information and make it hard for the embedder to identify what is truly relevant about a document.
 
 ## Conclusion
 
-In this article you saw the main steps to generating prompts that lead to relevant AI-powered search results: 
+In this article you saw the main steps to generating prompts that lead to relevant AI-powered search results:
 
-- do not use the default `documentTemplate`
-- only include relevant data
-- truncate long fields
+- Do not use the default `documentTemplate`
+- Only include relevant data
+- Truncate long fields
