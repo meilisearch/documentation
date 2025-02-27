@@ -98,13 +98,16 @@ An array of strings allows Meilisearch to send up to 10 documents in one request
     "url": "PROVIDER_URL",
     "request": {
       "model": "MODEL_NAME",
-      "input": ["{{text}}", "{{..}}"]
+      "input": [
+        "{{text}}", 
+        "{{..}}"
+      ]
     }
   }
 }
 ```
 
-When using array prompts, the first item must be `{{text}}`. If you want to send multiple documents in a single request, the second array item must be `{{..}}`.
+When using array prompts, the first item must be `{{text}}`. If you want to send multiple documents in a single request, the second array item must be `{{..}}`. When using `"{{..}}"`, it must be present in both `request` and `response`.
 
 When using other tools, `input` might be called something else, like `text` or `prompt`:
 
@@ -173,7 +176,10 @@ If the response contains multiple embeddings, use `"{{..}}"` as its second value
     "url": "PROVIDER_URL",
     "request": {
       "model": "MODEL_NAME",
-      "input": ["{{text}}", "{{..}}"]
+      "input": [
+        "{{text}}", 
+        "{{..}}"
+      ]
     },
     "response": {
       "data": [
@@ -186,6 +192,8 @@ If the response contains multiple embeddings, use `"{{..}}"` as its second value
   }
 }
 ```
+
+When using `"{{..}}"`, it must be present in both `request` and `response`.
 
 It is possible the response contains a single embedding outside of an array. Use `"{{embedding}}"` as its value:
 
@@ -203,6 +211,28 @@ It is possible the response contains a single embedding outside of an array. Use
         "text": "{{embedding}}"
       }
     }
+  }
+}
+```
+
+It is also possible the response is a single item or array not nested in an object:
+
+```json
+{
+  "EMBEDDER_NAME": {
+    "source": "rest",
+    "url": "PROVIDER_URL",
+    "request": {
+      "model": "MODEL_NAME",
+      "input": [
+        "{{text}}",
+        "{{..}}"
+      ]
+    },
+    "response": [
+      "{{embedding}}",
+      "{{..}}"
+    ]
   }
 }
 ```
