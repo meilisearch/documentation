@@ -173,7 +173,7 @@ If the response contains multiple embeddings, use `"{{..}}"` as its second value
     "url": "PROVIDER_URL",
     "request": {
       "model": "MODEL_NAME",
-      "input": "{{text}}"
+      "input": ["{{text}}", "{{..}}"]
     },
     "response": {
       "data": [
