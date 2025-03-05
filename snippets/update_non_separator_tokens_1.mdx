@@ -1,0 +1,70 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X PUT 'MEILISEARCH_URL/indexes/articles/settings/non-separator-tokens' \
+  -H 'Content-Type: application/json'  \
+  --data-binary '["@", "#"]'
+```
+
+
+```javascript JS
+client.index('books').updateNonSeparatorTokens(['@', '#'])
+```
+
+
+```python Python
+client.index('articles').update_non_separator_tokens(["@", "#"])
+```
+
+
+```php PHP
+$client->index('articles')->updateNonSeparatorTokens(['@', '#']);
+```
+
+
+```java Java
+String[] newSeparatorTokens = { "@", "#" };
+client.index("articles").updateNonSeparatorTokensSettings(newSeparatorTokens);
+```
+
+
+```ruby Ruby
+client.index('articles').update_non_separator_tokens(['@', '#'])
+```
+
+
+```go Go
+client.Index("articles").UpdateNonSeparatorTokens([]string{
+  "@",
+  "#",
+})
+```
+
+
+```csharp C#
+await client.Index("movies").UpdateNonSeparatorTokensAsync(new[] { "@", "#" });
+```
+
+
+```rust Rust
+let task: TaskInfo = client
+  .index('articles')
+  .set_non_separator_tokens(&vec!['@'.to_string(), '#'.to_string()])
+  .await
+  .unwrap();
+```
+
+
+```swift Swift
+client.index("books").updateNonSeparatorTokens(["@", "#"]) { result in
+  // handle result
+}
+```
+
+
+```dart Dart
+await client.index('articles').updateNonSeparatorTokens(["@", "#"]);
+```
+
+</CodeGroup>

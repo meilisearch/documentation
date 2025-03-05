@@ -1,0 +1,59 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X PUT 'MEILISEARCH_URL/indexes/movies/settings/search-cutoff-ms' \
+  -H 'Content-Type: application/json' \
+  --data-binary '150'
+```
+
+
+```javascript JS
+client.index('movies').updateSearchCutoffMs(150)
+```
+
+
+```python Python
+client.index('movies').update_search_cutoff_ms(150)
+```
+
+
+```php PHP
+$client->index('movies')->updateSearchCutoffMs(150);
+```
+
+
+```java Java
+client.index("movies").updateSearchCutoffMsSettings(150);
+```
+
+
+```ruby Ruby
+client.index('movies').update_search_cutoff_ms(150)
+```
+
+
+```go Go
+client.Index("movies").UpdateSearchCutoffMs(150)
+```
+
+
+```csharp C#
+await client.Index("movies").UpdateSearchCutoffMsAsync(150);
+```
+
+
+```rust Rust
+let task: TaskInfo = client
+  .index("movies")
+  .set_search_cutoff_ms(Some(150))
+  .await
+  .unwrap();
+```
+
+
+```swift Swift
+let task = try await self.client.index("books").updateSearchCutoffMs(150)
+```
+
+</CodeGroup>

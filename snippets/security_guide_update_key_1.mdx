@@ -1,0 +1,98 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X PATCH 'MEILISEARCH_URL/keys/74c9c733-3368-4738-bbe5-1d18a5fecb37' \
+  -H 'Authorization: Bearer MASTER_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{ "description": "Default Search API Key" }'
+```
+
+
+```javascript JS
+const client = new MeiliSearch({ host: 'http://localhost:7700', apiKey: 'masterKey' })
+client.updateKey('74c9c733-3368-4738-bbe5-1d18a5fecb37', {
+  description: 'Default Search API Key'
+})
+```
+
+
+```python Python
+client = Client('http://localhost:7700', 'masterKey')
+client.update_key(key_or_uid='74c9c733-3368-4738-bbe5-1d18a5fecb37', options={
+  'description': 'Default Search API Key'
+})
+```
+
+
+```php PHP
+$client = new Client('http://localhost:7700', 'masterKey');
+$client->updateKey('74c9c733-3368-4738-bbe5-1d18a5fecb37',
+  ['description' => 'Default Search API Key']
+);
+```
+
+
+```java Java
+Client client = new Client(new Config("http://localhost:7700", "masterKey"));
+client.updateKey("74c9c733-3368-4738-bbe5-1d18a5fecb37", new KeyUpdate().setDescription("Default Search API Key"));
+```
+
+
+```ruby Ruby
+client = MeiliSearch::Client.new('http://localhost:7700', 'masterKey')
+client.update_key('74c9c733-3368-4738-bbe5-1d18a5fecb37', description: 'Default Search API Key')
+```
+
+
+```go Go
+client := meilisearch.New("http://localhost:7700", meilisearch.WithAPIKey("masterKey"))
+
+client.UpdateKey("74c9c733-3368-4738-bbe5-1d18a5fecb37", &meilisearch.Key{
+  Indexes: []string{"doctors"},
+})
+```
+
+
+```csharp C#
+MeilisearchClient client = new MeilisearchClient("http://localhost:7700", "masterKey");
+await client.UpdateKeyAsync("74c9c733-3368-4738-bbe5-1d18a5fecb37", description: "Default Search API Key");
+```
+
+
+```rust Rust
+let client = Client::new("http://localhost:7700", Some("masterKey"));
+let mut key = client
+  .get_key("74c9c733-3368-4738-bbe5-1d18a5fecb37")
+  .await
+  .unwrap();
+key
+  .with_description("Default Search API key".to_string())
+  .update(&client);
+```
+
+
+```swift Swift
+let client = try MeiliSearch(host: "http://localhost:7700", apiKey: "masterKey")
+let keyParams = KeyUpdateParams(description: "Default Search API Key")
+
+client.updateKey(key: "74c9c733-3368-4738-bbe5-1d18a5fecb37", keyParams: keyParams) { result in
+  switch result {
+  case .success(let key):
+    print(key)
+  case .failure(let error):
+    print(error)
+  }
+}
+```
+
+
+```dart Dart
+var client = MeiliSearchClient('http://localhost:7700', 'masterKey');
+await client.updateKey(
+  '74c9c733-3368-4738-bbe5-1d18a5fecb37',
+  description: 'Default Search API Key',
+);
+```
+
+</CodeGroup>

@@ -1,0 +1,81 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/books/facet-search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "facetQuery": "fiction",
+    "facetName": "genres",
+    "filter": "rating > 3"
+  }'
+```
+
+
+```javascript JS
+client.index('books').searchForFacetValues({
+  facetQuery: 'fiction',
+  facetName: 'genres'
+  filter: 'rating > 3'
+})
+```
+
+
+```python Python
+client.index('books').facet_search('genres', 'fiction', {
+  'filter': 'rating > 3'
+})
+```
+
+
+```php PHP
+$client->index('books')->facetSearch(
+  (new FacetSearchQuery())
+      ->setFacetQuery('fiction')
+      ->setFacetName('genres')
+      ->setFilter(['rating > 3'])
+);
+```
+
+
+```java Java
+FacetSearchRequest fsr = FacetSearchRequest.builder().facetName("genres").facetQuery("fiction").filter(new String[]{"rating > 3"}).build();
+client.index("books").facetSearch(fsr);
+```
+
+
+```ruby Ruby
+client.index('books').facet_search('genres', 'fiction', filter: 'rating > 3')
+```
+
+
+```go Go
+client.Index("books").FacetSearch(&meilisearch.FacetSearchRequest{
+  FacetQuery: "fiction",
+  FacetName: "genres",
+  Filter: "rating > 3",
+})
+```
+
+
+```csharp C#
+var query = new SearchFacetsQuery()
+{
+  FacetQuery = "fiction",
+  Filter = "rating > 3"
+};
+await client.Index("books").FacetSearchAsync("genres", query);
+```
+
+
+```dart Dart
+await client.index('books').facetSearch(
+      FacetSearchQuery(
+        facetQuery: 'fiction',
+        facetName: 'genres',
+        filter: 'rating > 3',
+      ),
+    );
+```
+
+</CodeGroup>

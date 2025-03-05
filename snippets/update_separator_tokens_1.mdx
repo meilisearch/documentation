@@ -1,0 +1,70 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X PUT 'MEILISEARCH_URL/indexes/articles/settings/separator-tokens' \
+  -H 'Content-Type: application/json'  \
+  --data-binary '["|", "&hellip;"]'
+```
+
+
+```javascript JS
+client.index('books').updateSeparatorTokens(['|', '&hellip;'])
+```
+
+
+```python Python
+client.index('articles').update_separator_tokens(["|", "&hellip;"])
+```
+
+
+```php PHP
+$client->index('articles')->updateSeparatorTokens(['|', '&hellip;']);
+```
+
+
+```java Java
+String[] newSeparatorTokens = { "|", "&hellip;" };
+client.index("articles").updateSeparatorTokensSettings(newSeparatorTokens);
+```
+
+
+```ruby Ruby
+client.index('articles').update_separator_tokens(['|', '&hellip;'])
+```
+
+
+```go Go
+client.Index("articles").UpdateSeparatorTokens([]string{
+  "|",
+  "&hellip;",
+})
+```
+
+
+```csharp C#
+await client.Index("movies").UpdateSeparatorTokensAsync(new[] { "|", "&hellip;" });
+```
+
+
+```rust Rust
+let task: TaskInfo = client
+  .index('articles')
+  .set_separator_tokens(&vec!['|'.to_string(), '&hellip;'.to_string()])
+  .await
+  .unwrap();
+```
+
+
+```swift Swift
+client.index("books").updateSeparatorTokens(["|", "&hellip;"]) { result in
+  // handle result
+}
+```
+
+
+```dart Dart
+await client.index('articles').updateSeparatorTokens(["|", "&hellip;"]);
+```
+
+</CodeGroup>

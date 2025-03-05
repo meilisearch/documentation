@@ -1,0 +1,96 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/books/search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "q": "butler",
+    "sort": ["author:desc"]
+  }'
+```
+
+
+```javascript JS
+client.index('books').search('butler', {
+  sort: ['author:desc'],
+})
+```
+
+
+```python Python
+client.index('books').search('butler', {
+  'sort': ['author:desc']
+})
+```
+
+
+```php PHP
+$client->index('books')->search('butler', ['sort' => ['author:desc']]);
+```
+
+
+```java Java
+SearchRequest searchRequest = SearchRequest.builder().q("butler").sort(new String[] {"author:desc"}).build();
+client.index("books").search(searchRequest);
+```
+
+
+```ruby Ruby
+client.index('books').search('butler', { sort: ['author:desc'] })
+```
+
+
+```go Go
+resp, err := client.Index("books").Search("butler", &meilisearch.SearchRequest{
+  Sort: []string{
+    "author:desc",
+  },
+})
+```
+
+
+```csharp C#
+var sq = new SearchQuery
+{
+  Sort = new[] { "author:desc" },
+};
+await client.Index("books").SearchAsync<Book>("butler", sq);
+```
+
+
+```rust Rust
+let results: SearchResults<Books> = client
+  .index("books")
+  .search()
+  .with_query("butler")
+  .with_sort(&["author:desc"])
+  .execute()
+  .await
+  .unwrap();
+```
+
+
+```swift Swift
+let searchParameters = SearchParameters(
+  query: "butler",
+  sort: ["author:desc"]
+)
+client.index("books").search(searchParameters) { (result: Result<Searchable<Book>, Swift.Error>) in
+  switch result {
+  case .success(let searchResult):
+    print(searchResult)
+  case .failure(let error):
+    print(error)
+  }
+}
+```
+
+
+```dart Dart
+await client
+    .index('books')
+    .search('butler', SearchQuery(sort: ['author:desc']));
+```
+
+</CodeGroup>

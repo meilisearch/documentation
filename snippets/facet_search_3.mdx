@@ -1,0 +1,73 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/books/facet-search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "facetQuery": "c",
+    "facetName": "genres"
+}'
+```
+
+
+```javascript JS
+client.index('books').searchForFacetValues({
+  facetQuery: 'c',
+  facetName: 'genres'
+})
+```
+
+
+```python Python
+client.index('books').facet_search('genres', 'c')
+```
+
+
+```php PHP
+$client->index('books')->facetSearch(
+  (new FacetSearchQuery())
+      ->setFacetQuery('c')
+      ->setFacetName('genres')
+);
+```
+
+
+```java Java
+FacetSearchRequest fsr = FacetSearchRequest.builder().facetName("genres").facetQuery("c").build();
+client.index("books").facetSearch(fsr);
+```
+
+
+```ruby Ruby
+client.index('books').facet_search('genres', 'c')
+```
+
+
+```go Go
+client.Index("books").FacetSearch(&meilisearch.FacetSearchRequest{
+  FacetQuery: "c",
+  FacetName: "genres",
+})
+```
+
+
+```csharp C#
+var query = new SearchFacetsQuery()
+{
+  FacetQuery = "c"
+};
+await client.Index("books").FacetSearchAsync("genres", query);
+```
+
+
+```dart Dart
+await client.index('books').facetSearch(
+      FacetSearchQuery(
+        facetQuery: 'c',
+        facetName: 'genres',
+      ),
+    );
+```
+
+</CodeGroup>

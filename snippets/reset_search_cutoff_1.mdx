@@ -1,0 +1,57 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X DELETE 'MEILISEARCH_URL/indexes/movies/settings/search-cutoff-ms'
+```
+
+
+```javascript JS
+client.index('movies').resetSearchCutoffMs()
+```
+
+
+```python Python
+client.index('movies').reset_search_cutoff_ms()
+```
+
+
+```php PHP
+$client->index('movies')->resetSearchCutoffMs();
+```
+
+
+```java Java
+client.index("movies").resetSearchCutoffMsSettings();
+```
+
+
+```ruby Ruby
+client.index('movies').reset_search_cutoff_ms
+```
+
+
+```go Go
+client.Index("books").ResetSearchCutoffMs()
+```
+
+
+```csharp C#
+await client.Index("movies").ResetSearchCutoffMsAsync();
+```
+
+
+```rust Rust
+let task: TaskInfo = client
+  .index("movies")
+  .reset_search_cutoff_ms()
+  .await
+  .unwrap();
+```
+
+
+```swift Swift
+let task = try await self.client.index("books").resetSearchCutoffMs()
+```
+
+</CodeGroup>

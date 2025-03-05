@@ -1,0 +1,94 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/restaurants/search' \
+  -H 'Content-type:application/json' \
+  --data-binary '{ "filter": "_geoRadius(45.472735, 9.184019, 2000)" }'
+```
+
+
+```javascript JS
+client.index('restaurants').search('', {
+  filter: ['_geoRadius(45.472735, 9.184019, 2000)'],
+})
+```
+
+
+```python Python
+client.index('restaurants').search('', {
+  'filter': '_geoRadius(45.472735, 9.184019, 2000)'
+})
+```
+
+
+```php PHP
+$client->index('restaurants')->search('', [
+  'filter' => '_geoRadius(45.472735, 9.184019, 2000)'
+]);
+```
+
+
+```java Java
+SearchRequest searchRequest = SearchRequest.builder().q("").filter(new String[] {"_geoRadius(45.472735, 9.184019, 2000)"}).build();
+client.index("restaurants").search(searchRequest);
+```
+
+
+```ruby Ruby
+client.index('restaurants').search('', { filter: '_geoRadius(45.472735, 9.184019, 2000)' })
+```
+
+
+```go Go
+resp, err := client.Index("restaurants").Search("", &meilisearch.SearchRequest{
+  Filter: "_geoRadius(45.472735, 9.184019, 2000)",
+})
+```
+
+
+```csharp C#
+SearchQuery filters = new SearchQuery() { Filter = "_geoRadius(45.472735, 9.184019, 2000)" };
+var restaurants = await client.Index("restaurants").SearchAsync<Restaurant>("", filters);
+```
+
+
+```rust Rust
+let results: SearchResults<Restaurant> = client
+  .index("restaurants")
+  .search()
+  .with_filter("_geoRadius(45.472735, 9.184019, 2000)")
+  .execute()
+  .await
+  .unwrap();
+```
+
+
+```swift Swift
+let searchParameters = SearchParameters(
+    filter: "_geoRadius(45.472735, 9.184019, 2000)"
+)
+client.index("restaurants").search(searchParameters) { (result: Result<Searchable<Restaurant>, Swift.Error>) in
+    switch result {
+    case .success(let searchResult):
+        print(searchResult)
+    case .failure(let error):
+        print(error)
+    }
+}
+```
+
+
+```dart Dart
+await client.index('restaurants').search(
+      '',
+      SearchQuery(
+        filterExpression: Meili.geoRadius(
+          (lat: 45.472735, lng: 9.184019),
+          2000,
+        ),
+      ),
+    );
+```
+
+</CodeGroup>

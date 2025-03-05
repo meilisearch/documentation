@@ -1,0 +1,69 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X GET 'MEILISEARCH_URL/tasks/0' \
+  -H 'Authorization: Bearer aSampleMasterKey'
+```
+
+
+```javascript JS
+client.getTask(0)
+```
+
+
+```python Python
+client.get_task(0)
+```
+
+
+```php PHP
+$client->getTask(0);
+```
+
+
+```java Java
+client.getTask(0);
+```
+
+
+```ruby Ruby
+client.task(0)
+```
+
+
+```go Go
+client.GetTask(0)
+```
+
+
+```csharp C#
+TaskInfo task = await client.GetTaskAsync(0);
+```
+
+
+```rust Rust
+client
+  .get_task(0)
+  .await
+  .unwrap();
+```
+
+
+```swift Swift
+client.getTask(taskUid: 0) { (result) in
+    switch result {
+    case .success(let task):
+        print(task)
+    case .failure(let error):
+        print(error)
+    }
+}
+```
+
+
+```dart Dart
+await client.getTask(0);
+```
+
+</CodeGroup>

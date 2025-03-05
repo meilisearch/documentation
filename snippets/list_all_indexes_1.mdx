@@ -1,0 +1,72 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X GET 'MEILISEARCH_URL/indexes?limit=3'
+```
+
+
+```javascript JS
+client.getIndexes({ limit: 3 })
+```
+
+
+```python Python
+client.get_indexes({'limit': 3})
+```
+
+
+```php PHP
+$client->getIndexes((new IndexesQuery())->setLimit(3));
+```
+
+
+```java Java
+IndexesQuery query = new IndexesQuery().setLimit(3);
+client.getIndexes(query);
+```
+
+
+```ruby Ruby
+client.indexes(limit: 3)
+```
+
+
+```go Go
+client.GetIndexes(&meilisearch.IndexesQuery{
+  Limit: 3,
+})
+```
+
+
+```csharp C#
+await client.GetAllIndexesAsync(new IndexesQuery { Limit = 3 });
+```
+
+
+```rust Rust
+let mut indexes = IndexesQuery::new(&client)
+  .with_limit(3)
+  .execute()
+  .await
+  .unwrap();
+```
+
+
+```swift Swift
+client.getIndexes { (result) in
+    switch result {
+    case .success(let indexes):
+        print(indexes)
+    case .failure(let error):
+        print(error)
+    }
+}
+```
+
+
+```dart Dart
+await client.getIndexes(params: IndexesQuery(limit: 3));
+```
+
+</CodeGroup>

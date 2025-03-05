@@ -1,0 +1,64 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X DELETE 'MEILISEARCH_URL/indexes/articles/settings/non-separator-tokens'
+```
+
+
+```javascript JS
+client.index('books').resetNonSeparatorTokens()
+```
+
+
+```python Python
+client.index('articles').reset_non_separator_tokens()
+```
+
+
+```php PHP
+$client->index('articles')->resetNonSeparatorTokens();
+```
+
+
+```java Java
+client.index("articles").resetNonSeparatorTokensSettings();
+```
+
+
+```ruby Ruby
+client.index('articles').reset_non_separator_tokens
+```
+
+
+```go Go
+client.Index("articles").ResetNonSeparatorTokens()
+```
+
+
+```csharp C#
+await client.Index("movies").ResetNonSeparatorTokensAsync();
+```
+
+
+```rust Rust
+let task: TaskInfo = client
+  .index('articles')
+  .reset_non_separator_tokens()
+  .await
+  .unwrap();
+```
+
+
+```swift Swift
+client.index("books").resetNonSeparatorTokens { result in
+  // handle result
+}
+```
+
+
+```dart Dart
+await client.index('articles').resetNonSeparatorTokens();
+```
+
+</CodeGroup>

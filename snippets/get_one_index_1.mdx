@@ -1,0 +1,68 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X GET 'MEILISEARCH_URL/indexes/movies'
+```
+
+
+```javascript JS
+client.index('movies').getRawInfo()
+```
+
+
+```python Python
+client.get_index('movies')
+```
+
+
+```php PHP
+$client->index('movies')->fetchRawInfo();
+```
+
+
+```java Java
+client.getIndex("movies");
+```
+
+
+```ruby Ruby
+client.fetch_index('movies')
+```
+
+
+```go Go
+client.GetIndex("movies")
+```
+
+
+```csharp C#
+await client.GetIndexAsync("movies");
+```
+
+
+```rust Rust
+let movies: Index = client
+  .get_index("movies")
+  .await
+  .unwrap();
+```
+
+
+```swift Swift
+client.getIndex("movies") { (result) in
+    switch result {
+    case .success(let index):
+        print(index)
+    case .failure(let error):
+        print(error)
+    }
+}
+```
+
+
+```dart Dart
+await client.getIndex('movies');
+```
+
+</CodeGroup>

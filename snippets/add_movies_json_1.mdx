@@ -1,0 +1,137 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/movies/documents'\
+  -H 'Content-Type: application/json' \
+  --data-binary @movies.json
+```
+
+
+```javascript JS
+const movies = require('./movies.json')
+client.index('movies').addDocuments(movies).then((res) => console.log(res))
+```
+
+
+```python Python
+import json
+
+json_file = open('movies.json', encoding='utf-8')
+movies = json.load(json_file)
+client.index('movies').add_documents(movies)
+```
+
+
+```php PHP
+$moviesJson = file_get_contents('movies.json');
+$movies = json_decode($moviesJson);
+
+$client->index('movies')->addDocuments($movies);
+```
+
+
+```java Java
+import com.meilisearch.sdk;
+import org.json.JSONArray;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
+Path fileName = Path.of("movies.json");
+String moviesJson = Files.readString(fileName);
+Client client = new Client(new Config("http://localhost:7700", "masterKey"));
+Index index = client.index("movies");
+index.addDocuments(moviesJson);
+```
+
+
+```ruby Ruby
+require 'json'
+
+movies_json = File.read('movies.json')
+movies = JSON.parse(movies_json)
+client.index('movies').add_documents(movies)
+```
+
+
+```go Go
+import (
+  "encoding/json"
+  "os"
+)
+
+file, _ := os.ReadFile("movies.json")
+
+var movies interface{}
+json.Unmarshal([]byte(file), &movies)
+
+client.Index("movies").AddDocuments(&movies)
+```
+
+
+```csharp C#
+// Make sure to add this using to your code
+using System.IO;
+
+var jsonDocuments = await File.ReadAllTextAsync("movies.json");
+await client.Index("movies").AddDocumentsJsonAsync(jsonDocuments);
+```
+
+
+```rust Rust
+use meilisearch_sdk::{
+  indexes::*,
+  client::*,
+  search::*,
+  settings::*
+};
+use serde::{Serialize, Deserialize};
+use std::{io::prelude::*, fs::File};
+use futures::executor::block_on;
+
+fn main() { block_on(async move {
+  let client = Client::new("http://localhost:7700", Some("masterKey"));
+
+  // reading and parsing the file
+  let mut file = File::open("movies.json")
+    .unwrap();
+  let mut content = String::new();
+  file
+    .read_to_string(&mut content)
+    .unwrap();
+  let movies_docs: Vec<Movie> = serde_json::from_str(&content)
+    .unwrap();
+
+  // adding documents
+  client
+    .index("movies")
+    .add_documents(&movies_docs, None)
+    .await
+    .unwrap();
+})}
+```
+
+
+```swift Swift
+let path = Bundle.main.url(forResource: "movies", withExtension: "json")!
+let documents: Data = try Data(contentsOf: path)
+
+client.index("movies").addDocuments(documents: documents) { (result) in
+    switch result {
+    case .success(let task):
+        print(task)
+    case .failure(let error):
+        print(error)
+    }
+}
+```
+
+
+```dart Dart
+// import 'dart:io';
+// import 'dart:convert';
+final json = await File('movies.json').readAsString();
+await client.index('movies').addDocumentsJson(json);
+```
+
+</CodeGroup>

@@ -1,0 +1,74 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X PUT 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/localized-attributes' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "localizedAttributes": [
+      {"locales": ["jpn"], "attributePatterns": ["*_ja"]}
+    ]
+  }'
+```
+
+
+```javascript JS
+client.index('INDEX_NAME').updateLocalizedAttributes([
+  { attributePatterns: ['*_ja'], locales: ['jpn'] },
+])
+```
+
+
+```python Python
+client.index('INDEX_NAME').update_localized_attributes([
+  {'attribute_patterns': ['*_ja'], 'locales': ['jpn']}
+])
+```
+
+
+```php PHP
+$client->index('INDEX_NAME')->updateLocalizedAttributes([
+  'locales' => ['jpn'],
+  'attributePatterns' => ['*_ja']
+]);
+```
+
+
+```java Java
+LocalizedAttribute attribute = new LocalizedAttribute();
+attribute.setAttributePatterns(new String[] {"jpn"});
+attribute.setLocales(new String[] {"*_ja"});
+
+client.index("INDEX_NAME").updateLocalizedAttributesSettings(
+  new LocalizedAttributes[] {attribute}
+);
+```
+
+
+```ruby Ruby
+client.index('INDEX_NAME').update_localized_attributes([
+  { attribute_patterns: ['*_ja'], locales: ['jpn'] },
+])
+```
+
+
+```go Go
+client.index("INDEX_NAME").UpdateLocalizedAttributes([]*LocalizedAttributes{
+    { AttributePatterns: ["*_ja"], Locales: ["jpn"] },
+})
+```
+
+
+```rust Rust
+let localized_attributes = vec![LocalizedAttributes {
+    locales: vec!["jpn".to_string()],
+    attribute_patterns: vec!["*_ja".to_string()],
+}];
+let task: TaskInfo = client
+  .index("books")
+  .set_localized_attributes(&localizced_attributes)
+  .await
+  .unwrap();
+```
+
+</CodeGroup>

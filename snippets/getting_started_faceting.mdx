@@ -1,0 +1,112 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X PATCH 'MEILISEARCH_URL/indexes/movies/settings/faceting' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "maxValuesPerFacet": 2,
+     "sortFacetValuesBy": {
+       "*": "count"
+     }
+  }'
+```
+
+
+```javascript JS
+client.index('movies').updateFaceting({
+  maxValuesPerFacet: 2,
+  sortFacetValuesBy: {
+    '*': 'count'
+  }
+})
+```
+
+
+```python Python
+client.index('movies').update_faceting_settings({
+  'maxValuesPerFacet': 2,
+  'sortFacetValuesBy': {
+    '*': 'count'
+  }
+})
+```
+
+
+```php PHP
+$client->index('movies')
+  ->updateFaceting([
+    'maxValuesPerFacet' => 2,
+    'sortFacetValuesBy' => ['*' => 'count']
+  ]);
+```
+
+
+```java Java
+Faceting newFaceting = new Faceting();
+newFaceting.setMaxValuesPerFacet(2);
+HashMap<String, FacetSortValue> facetSortValues = new HashMap<>();
+facetSortValues.put("*", FacetSortValue.COUNT);
+newFaceting.setSortFacetValuesBy(facetSortValues);
+client.index("movies").updateFacetingSettings(newFaceting);
+```
+
+
+```ruby Ruby
+client.index('movies').update_faceting({
+  max_values_per_facet: 2,
+  sort_facet_values_by: {
+    genres: 'count'
+  }
+})
+```
+
+
+```go Go
+client.Index("movies").UpdateFaceting(&meilisearch.Faceting{
+    MaxValuesPerFacet: 2,
+    SortFacetValuesBy: {
+       "*": SortFacetTypeCount,
+    }
+})
+```
+
+
+```csharp C#
+var faceting = new Faceting
+{
+    MaxValuesPerFacet = 2,
+    SortFacetValuesBy = new Dictionary<string, SortFacetValuesByType>
+    {
+        ["*"] = SortFacetValuesByType.Count
+    }
+};
+await client.Index("movies").UpdateFacetingAsync(faceting);
+```
+
+
+```rust Rust
+let mut faceting = FacetingSettings {
+  max_values_per_facet: 2,
+};
+
+let task: TaskInfo = client
+  .index("movies")
+  .set_faceting(&faceting)
+  .await
+  .unwrap();
+```
+
+
+```swift Swift
+client.index("movies").updateFaceting({ maxValuesPerFacet: 2 })
+```
+
+
+```dart Dart
+await client.index('books').updateFaceting(Faceting(
+    maxValuesPerFacet: 2,
+    sortFacetValuesBy: {'*': FacetingSortTypes.count}));
+```
+
+</CodeGroup>

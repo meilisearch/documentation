@@ -1,0 +1,57 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X GET 'MEILISEARCH_URL/indexes/movies/settings/search-cutoff-ms'
+```
+
+
+```javascript JS
+client.index('movies').getSearchCutoffMs()
+```
+
+
+```python Python
+client.index('movies').get_search_cutoff_ms()
+```
+
+
+```php PHP
+$client->index('movies')->getSearchCutoffMs();
+```
+
+
+```java Java
+client.index("movies").getSearchCutoffMsSettings();
+```
+
+
+```ruby Ruby
+client.index('movies').search_cutoff_ms
+```
+
+
+```go Go
+client.Index("movies").GetSearchCutoffMs()
+```
+
+
+```csharp C#
+var searchCutoff = await client.Index("movies").GetSearchCutoffMsAsync();
+```
+
+
+```rust Rust
+let search_cutoff_ms: String = client
+  .index("movies")
+  .get_search_cutoff_ms()
+  .await
+  .unwrap();
+```
+
+
+```swift Swift
+let precisionValue = try await self.client.index("books").getSearchCutoffMs()
+```
+
+</CodeGroup>

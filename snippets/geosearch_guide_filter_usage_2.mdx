@@ -1,0 +1,101 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/restaurants/search' \
+  -H 'Content-type:application/json' \
+  --data-binary '{ "filter": "_geoRadius(45.472735, 9.184019, 2000) AND type = pizza" }'
+```
+
+
+```javascript JS
+client.index('restaurants').search('', {
+  filter: ['_geoRadius(45.472735, 9.184019, 2000) AND type = pizza'],
+})
+```
+
+
+```python Python
+client.index('restaurants').search('', {
+  'filter': '_geoRadius(45.472735, 9.184019, 2000) AND type = pizza'
+})
+```
+
+
+```php PHP
+$client->index('restaurants')->search('', [
+  'filter' => '_geoRadius(45.472735, 9.184019, 2000) AND type = pizza'
+]);
+```
+
+
+```java Java
+SearchRequest searchRequest = SearchRequest.builder().q("").filter(new String[] {"_geoRadius(45.472735, 9.184019, 2000) AND type = pizza"}).build();
+client.index("restaurants").search(searchRequest);
+```
+
+
+```ruby Ruby
+client.index('restaurants').search('', { filter: '_geoRadius(45.472735, 9.184019, 2000) AND type = pizza' })
+```
+
+
+```go Go
+resp, err := client.Index("restaurants").Search("", &meilisearch.SearchRequest{
+  Filter: "_geoRadius(45.472735, 9.184019, 2000) AND type = pizza",
+})
+```
+
+
+```csharp C#
+SearchQuery filters = new SearchQuery()
+{
+    Filter = new string[] { "_geoRadius(45.472735, 9.184019, 2000) AND type = pizza" }
+};
+
+var restaurants = await client.Index("restaurants").SearchAsync<Restaurant>("restaurants", filters);
+```
+
+
+```rust Rust
+let results: SearchResults<Restaurant> = client
+  .index("restaurants")
+  .search()
+  .with_filter("_geoRadius(45.472735, 9.184019, 2000) AND type = pizza")
+  .execute()
+  .await
+  .unwrap();
+```
+
+
+```swift Swift
+let searchParameters = SearchParameters(
+    filter: "_geoRadius(45.472735, 9.184019, 2000) AND type = pizza"
+)
+client.index("restaurants").search(searchParameters) { (result: Result<Searchable<Restaurant>, Swift.Error>) in
+    switch result {
+    case .success(let searchResult):
+        print(searchResult)
+    case .failure(let error):
+        print(error)
+    }
+}
+```
+
+
+```dart Dart
+await client.index('restaurants').search(
+      '',
+      SearchQuery(
+        filterExpression: Meili.and([
+          Meili.geoRadius(
+            (lat: 45.472735, lng: 9.184019),
+            2000,
+          ),
+          Meili.attr('type').eq('pizza'.toMeiliValue())
+        ]),
+      ),
+    );
+```
+
+</CodeGroup>

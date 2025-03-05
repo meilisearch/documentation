@@ -1,0 +1,81 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X GET 'MEILISEARCH_URL/tasks?limit=2&from=8
+```
+
+
+```javascript JS
+client.getTasks({ limit: 2, from: 8 })
+```
+
+
+```python Python
+client.get_tasks({
+  'limit': 2,
+  'from': 8
+})
+```
+
+
+```php PHP
+$taskQuery = (new TasksQuery())->setLimit(2)->setFrom(8));
+$client->getTasks($taskQuery);
+```
+
+
+```java Java
+TasksQuery query = new TasksQuery()
+      .setLimit(2)
+      .setFrom(8);
+
+client.index("movies").getTasks(query);
+```
+
+
+```ruby Ruby
+client.tasks(limit: 2, from: 8)
+```
+
+
+```go Go
+client.GetTasks(&meilisearch.TasksQuery{
+  Limit: 2,
+  From: 8,
+});
+```
+
+
+```csharp C#
+ResourceResults<TaskInfo> taskResult = await client.GetTasksAsync(new TasksQuery { Limit = 2, From = 8 });
+```
+
+
+```rust Rust
+let mut query = TasksSearchQuery::new(&client)
+    .with_limit(2)
+    .from(8)
+    .execute()
+    .await
+    .unwrap();
+```
+
+
+```swift Swift
+client.getTasks(params: TasksQuery(limit: 2, from: 8)) { result in
+  switch result {
+  case .success(let taskResult):
+    print(taskResult)
+  case .failure(let error):
+    print(error)
+  }
+}
+```
+
+
+```dart Dart
+await client.getTasks(params: TasksQuery(limit: 2, from: 8));
+```
+
+</CodeGroup>

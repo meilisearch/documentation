@@ -1,0 +1,80 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X GET 'MEILISEARCH_URL/indexes/movies/documents/25684?fields=id,title,poster,release_date'
+```
+
+
+```javascript JS
+client
+    .index('movies')
+    .getDocument(25684, { fields: ['id', 'title', 'poster', 'release_date'] })
+```
+
+
+```python Python
+client.index('movies').get_document(25684, {
+  'fields': ['id', 'title', 'poster', 'release_date']
+})
+```
+
+
+```php PHP
+$client->index('movies')->getDocument(25684, ['id', 'title', 'poster', 'release_date']);
+```
+
+
+```java Java
+DocumentQuery query = new DocumentQuery().setFields(new String[] {"id", "title", "poster", "release_date"});
+client.index("movies").getDocument("25684", query);
+```
+
+
+```ruby Ruby
+client.index('movies').document(25684, fields: ['id', 'title', 'poster', 'release_date'])
+```
+
+
+```go Go
+var a interface{}
+client.Index("movies").GetDocument("25684",&meilisearch.DocumentQuery{
+  Fields: []string{"id", "title", "poster", "release_date"},
+}, &a)
+```
+
+
+```csharp C#
+await client.Index("movies").GetDocumentAsync<Movie>(25684, new List<string> { "id", "title", "poster", "release_date" });
+```
+
+
+```rust Rust
+let index = client
+  .index("movies");
+let document = DocumentQuery::new(&index)
+  .with_fields(["id", "title", "poster", "release_date"])
+  .execute::<Movie>("25684")
+  .await
+  .unwrap();
+```
+
+
+```swift Swift
+client.index("movies").getDocument(25684) { (result: Result<Movie, Swift.Error>) in
+    switch result {
+    case .success(let movie):
+        print(movie)
+    case .failure(let error):
+        print(error)
+    }
+}
+```
+
+
+```dart Dart
+await client.index('movies').getDocument(25684,
+    fields: ['id', 'title', 'poster', 'release_date']);
+```
+
+</CodeGroup>

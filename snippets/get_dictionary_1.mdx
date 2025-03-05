@@ -1,0 +1,59 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X GET 'MEILISEARCH_URL/indexes/books/settings/dictionary'
+```
+
+
+```javascript JS
+client.index('books').getDictionary()
+```
+
+
+```python Python
+client.index('books').get_dictionary()
+```
+
+
+```php PHP
+$client->index('books')->getDictionary();
+```
+
+
+```java Java
+client.index("books").getDictionarySettings();
+```
+
+
+```ruby Ruby
+client.index('books').dictionary
+```
+
+
+```go Go
+client.Index("books").GetDictionary()
+```
+
+
+```csharp C#
+var indexDictionary = await client.Index("books").GetDictionaryAsync();
+```
+
+
+```rust Rust
+let task: TaskInfo = client
+  .index('books')
+  .get_dictionary()
+  .await
+  .unwrap();
+```
+
+
+```swift Swift
+client.index("books").getDictionary { result in
+  // handle result
+}
+```
+
+</CodeGroup>

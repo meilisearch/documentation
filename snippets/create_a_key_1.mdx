@@ -1,0 +1,134 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/keys' \
+  -H 'Authorization: Bearer MASTER_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "description": "Add documents: Products API key",
+    "actions": ["documents.add"],
+    "indexes": ["products"],
+    "expiresAt": "2042-04-02T00:42:42Z"
+  }'
+```
+
+
+```javascript JS
+client.createKey({
+  description: 'Add documents: Products API key',
+  actions: ['documents.add'],
+  indexes: ['products'],
+  expiresAt: '2021-11-13T00:00:00Z'
+})
+```
+
+
+```python Python
+client.create_key(options={
+  'description': 'Add documents: Products API key',
+  'actions': ['documents.add'],
+  'indexes': ['products'],
+  'expiresAt': '2042-04-02T00:42:42Z'
+})
+```
+
+
+```php PHP
+$client->createKey([
+  'description' => 'Add documents: Products API key',
+  'actions' => ['documents.add'],
+  'indexes' => ['products'],
+  'expiresAt' => '2042-04-02T00:42:42Z',
+]);
+```
+
+
+```java Java
+SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+Date dateParsed = format.parse("2042-04-02T00:42:42Z");
+
+Key keyInfo = new Key();
+
+keyInfo.setDescription("Add documents: Products API key");
+keyInfo.setActions(new String[] {"documents.add"});
+keyInfo.setIndexes(new String[] {"products"});
+keyInfo.setExpiresAt(dateParsed);
+
+client.createKey(keyInfo);
+```
+
+
+```ruby Ruby
+client.create_key(
+  description: 'Add documents: Products API key',
+  actions: ['documents.add'],
+  indexes: ['products'],
+  expires_at: '2042-04-02T00:42:42Z'
+)
+```
+
+
+```go Go
+client.CreateKey(&meilisearch.Key{
+  Description: "Add documents: Products API key",
+  Actions: []string{"documents.add"},
+  Indexes: []string{"products"},
+  ExpiresAt: time.Date(2042, time.April, 02, 0, 42, 42, 0, time.UTC),
+})
+```
+
+
+```csharp C#
+Key keyOptions = new Key
+{
+    Description = "Add documents: Products API key",
+    Actions = new KeyAction[] { KeyAction.DocumentsAdd },
+    Indexes = new string[] { "products" },
+    ExpiresAt = DateTime.Parse("2042-04-02T00:42:42Z")
+};
+Key createdKey = await this.client.CreateKeyAsync(keyOptions);
+```
+
+
+```rust Rust
+let mut key_options = KeyBuilder::new();
+key_options
+  .with_name("Add documents: Products API key")
+  .with_action(Action::DocumentsAdd)
+  .with_expires_at(time::macros::datetime!(2042 - 04 - 02 00:42:42 UTC))
+  .with_index("products");
+let new_key = client
+  .create_key(key_options)
+  .await
+  .unwrap();
+```
+
+
+```swift Swift
+let keyParams = KeyParams(
+  description: "Add documents: Products API key",
+  actions: ["documents.add"],
+  indexes: ["products"],
+  expiresAt: "2042-04-02T00:42:42Z"
+)
+client.createKey(keyParams) { result in
+    switch result {
+    case .success(let key):
+        print(key)
+    case .failure(let error):
+        print(error)
+    }
+}
+```
+
+
+```dart Dart
+await client.createKey(
+    description: 'Add documents: Products API key',
+    actions: ['documents.add'],
+    indexes: ['products'],
+    expiresAt: DateTime(2042, 04, 02));
+```
+
+</CodeGroup>

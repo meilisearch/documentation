@@ -1,0 +1,72 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X DELETE 'MEILISEARCH_URL/indexes/movies'
+```
+
+
+```javascript JS
+client.deleteIndex('movies')
+```
+
+
+```python Python
+client.delete_index('movies')
+// OR
+client.index('movies').delete()
+```
+
+
+```php PHP
+$client->deleteIndex('movies');
+```
+
+
+```java Java
+client.deleteIndex("movies");
+```
+
+
+```ruby Ruby
+client.delete_index('movies')
+```
+
+
+```go Go
+client.DeleteIndex("movies")
+// OR
+client.Index("movies").Delete()
+```
+
+
+```csharp C#
+await client.DeleteIndexAsync("movies");
+```
+
+
+```rust Rust
+client.index("movies")
+  .delete()
+  .await
+  .unwrap();
+```
+
+
+```swift Swift
+client.index("movies").delete { (result) in
+    switch result {
+    case .success:
+        print("Index deleted")
+    case .failure(let error):
+        print(error)
+    }
+}
+```
+
+
+```dart Dart
+await client.index('movies').delete();
+```
+
+</CodeGroup>

@@ -1,0 +1,96 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X PUT 'MEILISEARCH_URL/indexes/movie_ratings/settings/filterable-attributes' \
+  -H 'Content-Type: application/json' \
+  --data-binary '[
+    "genres",
+    "director",
+    "release_date",
+    "ratings"
+  ]'
+```
+
+
+```javascript JS
+client.index('movies')
+  .updateFilterableAttributes([
+    'director',
+    'genres'
+  ])
+```
+
+
+```python Python
+client.index('movies').update_filterable_attributes([
+    'director',
+    'genres',
+])
+```
+
+
+```php PHP
+$client->index('movies')->updateFilterableAttributes(['director', 'genres']);
+```
+
+
+```java Java
+client.index("movies").updateFilterableAttributesSettings(new String[]
+{
+  "genres",
+  "director"
+});
+```
+
+
+```ruby Ruby
+client.index('movies').update_filterable_attributes([
+  'director',
+  'genres'
+])
+```
+
+
+```go Go
+resp, err := client.Index("movies").UpdateFilterableAttributes(&[]string{
+  "director",
+  "genres",
+})
+```
+
+
+```csharp C#
+await client.Index("movies").UpdateFilterableAttributesAsync(new [] { "director", "genres" });
+```
+
+
+```rust Rust
+let task: TaskInfo = client
+  .index("movies")
+  .set_filterable_attributes(["director", "genres"])
+  .await
+  .unwrap();
+```
+
+
+```swift Swift
+client.index("movies").updateFilterableAttributes(["genre", "director"]) { (result) in
+    switch result {
+    case .success(let task):
+        print(task)
+    case .failure(let error):
+        print(error)
+    }
+}
+```
+
+
+```dart Dart
+await client.index('movies').updateFilterableAttributes([
+  'director',
+  'genres',
+]);
+```
+
+</CodeGroup>

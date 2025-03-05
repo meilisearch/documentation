@@ -1,0 +1,103 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/movie_ratings/search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "q": "Planet of the Apes",
+    "filter": "release_date > 1577884550 AND (NOT director = \"Tim Burton\")"
+  }' \
+```
+
+
+```javascript JS
+client.index('movie_ratings').search('Planet of the Apes', {
+  filter: "release_date > 1577884550 AND (NOT director = \"Tim Burton\")"
+})
+```
+
+
+```python Python
+client.index('movie_ratings').search('Planet of the Apes', {
+  'filter': 'release_date > 1577884550 AND (NOT director = "Tim Burton"))'
+})
+```
+
+
+```php PHP
+$client->index('movie_ratings')->search('Planet of the Apes', [
+  'filter' => 'release_date > 1577884550 AND (NOT director = "Tim Burton")'
+]);
+```
+
+
+```java Java
+SearchRequest searchRequest = SearchRequest.builder().q("Planet of the Apes").filter(new String[] {"release_date > 1577884550 AND (NOT director = \"Tim Burton\")"}).build();
+client.index("movie_ratings").search(searchRequest);
+```
+
+
+```ruby Ruby
+client.index('movie_ratings').search('Planet of the Apes', {
+  filter: "release_date > 1577884550 AND (NOT director = \"Tim Burton\")"
+})
+```
+
+
+```go Go
+resp, err := client.Index("movie_ratings").Search("Planet of the Apes", &meilisearch.SearchRequest{
+  Filter: "release_date > 1577884550 AND (NOT director = \"Tim Burton\")",
+})
+```
+
+
+```csharp C#
+SearchQuery filters = new SearchQuery() { Filter = "release_date > 1577884550 AND (NOT director = \"Tim Burton\")" };
+var movies = await client.Index("movie_ratings").SearchAsync<Movie>("Planet of the Apes", filters);
+```
+
+
+```rust Rust
+let results: SearchResults<Movie> = client
+  .index("movie_ratings")
+  .search()
+  .with_query("Planet of the Apes")
+  .with_filter(r#"release_date > 1577884550 AND (NOT director = "Tim Burton")"#)
+  .execute()
+  .await
+  .unwrap();
+```
+
+
+```swift Swift
+let searchParameters = SearchParameters(
+    query: "Planet of the Apes",
+    filter: "release_date > 1577884550 AND (NOT director = \"Tim Burton\"))
+client.index("movie_ratings").search(searchParameters) { (result: Result<Searchable<Movie>, Swift.Error>) in
+    switch result {
+    case .success(let searchResult):
+        print(searchResult)
+    case .failure(let error):
+        print(error)
+    }
+}
+```
+
+
+```dart Dart
+await client.index('movie_ratings').search(
+      'Planet of the Apes',
+      SearchQuery(
+        filterExpression: Meili.and([
+          Meili.attr('release_date')
+              .gt(DateTime.utc(2020, 1, 1, 13, 15, 50).toMeiliValue()),
+          Meili.not(
+            Meili.attr('director').eq("Tim Burton".toMeiliValue()),
+          ),
+        ]),
+      ),
+    );
+```
+
+</CodeGroup>

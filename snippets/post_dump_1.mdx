@@ -1,0 +1,68 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/dumps'
+```
+
+
+```javascript JS
+client.createDump()
+```
+
+
+```python Python
+client.create_dump()
+```
+
+
+```php PHP
+$client->createDump();
+```
+
+
+```java Java
+client.createDump();
+```
+
+
+```ruby Ruby
+client.create_dump
+```
+
+
+```go Go
+resp, err := client.CreateDump()
+```
+
+
+```csharp C#
+await client.CreateDumpAsync();
+```
+
+
+```rust Rust
+client
+  .create_dump()
+  .await
+  .unwrap();
+```
+
+
+```swift Swift
+client.createDump { result in
+    switch result {
+    case .success(let dumpStatus):
+        print(dumpStatus)
+    case .failure(let error):
+        print(error)
+    }
+}
+```
+
+
+```dart Dart
+await client.createDump();
+```
+
+</CodeGroup>

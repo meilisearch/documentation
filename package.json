@@ -3,7 +3,10 @@
   "version": "1.12.0",
   "description": "",
   "main": "index.js",
-  "dependencies": {},
+  "dependencies": {
+    "js-yaml": "^4.1.0",
+    "node-fetch": "^2.7.0"
+  },
   "scripts": {
     "links-check": "cd .github/actions/validate-docs-links && yarn && yarn local:check",
     "marklint:fix": "markdownlint '**/*.mdx' --config .markdownlint.jsonc --fix",

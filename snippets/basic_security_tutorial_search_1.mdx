@@ -1,0 +1,11 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/medical_records/search' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer DEFAULT_SEARCH_API_KEY' \
+  --data-binary '{ "q": "appointments" }'
+```
+
+</CodeGroup>

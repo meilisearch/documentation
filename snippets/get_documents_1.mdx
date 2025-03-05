@@ -1,0 +1,85 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X GET 'MEILISEARCH_URL/indexes/movies/documents?limit=2&filter=genres=action'
+```
+
+
+```javascript JS
+client.index('movies').getDocuments({
+  limit: 2,
+  filter: 'genres = action'
+})
+```
+
+
+```python Python
+client.index('movies').get_documents({'limit':2, 'filter': 'genres=action'})
+```
+
+
+```php PHP
+$client->index('movies')->getDocuments((new DocumentsQuery())->setFilter('genres = action')->setLimit(2));
+```
+
+
+```java Java
+DocumentsQuery query = new DocumentsQuery().setLimit(2).setFilter(new String[] {"genres = action"});
+client.index("movies").getDocuments(query, TargetClassName.class);
+```
+
+
+```ruby Ruby
+client.index('movies').get_documents(limit: 2, filter: 'genres = action')
+```
+
+
+```go Go
+var result meilisearch.DocumentsResult
+
+client.Index("movies").GetDocuments(&meilisearch.DocumentsQuery{
+  Limit: 2,
+  Filter: "genres = action",
+}, &result)
+```
+
+
+```csharp C#
+await client.Index("movies").GetDocumentsAsync<Movie>(new DocumentsQuery() { Limit = 2, Filter = "genres = action" });
+```
+
+
+```rust Rust
+let index = client.index("movies");
+let documents: DocumentsResults = DocumentsQuery::new(&index)
+  .with_filter("genres = action")
+  .with_limit(2)
+  .execute::<Movies>()
+  .await
+  .unwrap();
+```
+
+
+```swift Swift
+client.index("movies").getDocuments(params: DocumentsQuery(limit: 2)) { (result: Result<DocumentsResults<Movie>, Swift.Error>) in
+    switch result {
+    case .success(let movies):
+        print(movies)
+    case .failure(let error):
+        print(error)
+    }
+}
+```
+
+
+```dart Dart
+await client.index('movies').getDocuments(
+      params: DocumentsQuery(
+        limit: 2,
+        filter: Meili.attr('genres').eq('action'.toMeiliValue()),
+      ),
+    );
+```
+
+</CodeGroup>

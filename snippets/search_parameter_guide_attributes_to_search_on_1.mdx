@@ -1,0 +1,98 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/movies/search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "q": "adventure",
+    "attributesToSearchOn": ["overview"]
+  }'
+```
+
+
+```javascript JS
+client.index('movies').search('adventure', {
+  attributesToSearchOn: ['overview']
+})
+```
+
+
+```python Python
+client.index('movies').search('adventure', {
+  'attributesToSearchOn': ['overview']
+})
+```
+
+
+```php PHP
+$client->index('movies')->search('adventure', [
+  'attributesToSearchOn' => ['overview']
+]);
+```
+
+
+```java Java
+SearchRequest searchRequest = SearchRequest.builder().q("adventure").attributesToSearchOn(new String[] {"overview"});
+client.index("movies").searchRequest(searchRequest);
+```
+
+
+```ruby Ruby
+client.index('movies').search('adventure', {
+  attributes_to_search_on: ['overview']
+})
+```
+
+
+```go Go
+resp, err := client.Index("movies").Search("adventure", &meilisearch.SearchRequest{
+  AttributesToSearchOn: []string{"overview"},
+})
+```
+
+
+```csharp C#
+var searchQuery = new SearchQuery
+{
+  AttributesToSearchOn = new[] { "overview" }
+};
+await client.Index("movies").SearchAsync<Movie>("adventure", searchQuery);
+```
+
+
+```rust Rust
+let results: SearchResults<Movie> = client
+  .index("movies")
+  .search()
+  .with_query("adventure")
+  .with_attributes_to_search_on(&["overview"])
+  .execute()
+  .await
+  .unwrap();
+```
+
+
+```swift Swift
+let searchParameters = SearchParameters(query: "adventure", attributesToSearchOn: ["overview"])
+client.index("movies").search(searchParameters) { (result: Result<Searchable<Movie>, Swift.Error>) in
+  switch result {
+  case .success(let searchResult):
+      print(searchResult)
+  case .failure(let error):
+      print(error)
+  }
+}
+```
+
+
+```dart Dart
+await client.index('books').facetSearch(
+      FacetSearchQuery(
+        facetQuery: 'c',
+        facetName: 'genres',
+      ),
+    );
+```
+
+</CodeGroup>

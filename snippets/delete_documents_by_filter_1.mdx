@@ -1,0 +1,72 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X POST MEILISEARCH_URL/indexes/movies/documents/delete \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "filter": "genres = action OR genres = adventure"
+  }'
+```
+
+
+```javascript JS
+client.index('movies').deleteDocuments({
+  filter: 'genres = action OR genres = adventure'
+})
+```
+
+
+```python Python
+client.index('movies').delete_documents(filter='genres=action OR genres=adventure')
+```
+
+
+```php PHP
+$client->index('movies')->deleteDocuments(['filter' => 'genres = action OR genres = adventure']);
+```
+
+
+```java Java
+String filter = "genres = action OR genres = adventure";
+client.index("movies").deleteDocumentsByFilter(filter);
+```
+
+
+```ruby Ruby
+client.index('movies').delete_documents(filter: 'genres = action OR genres = adventure')
+```
+
+
+```go Go
+client.Index("movies").DeleteDocumentsByFilter("genres=action OR genres=adventure")
+```
+
+
+```csharp C#
+await client.Index("movies").DeleteDocumentsAsync(new DeleteDocumentsQuery() { Filter = "genres = action OR genres = adventure" });
+```
+
+
+```rust Rust
+let index = client.index("movies");
+let task = DocumentDeletionQuery::new(&index)
+  .with_filter("genres = action OR genres = adventure")
+  .execute()
+  .await
+  .unwrap();
+```
+
+
+```dart Dart
+await client.index('movies').deleteDocuments(
+      DeleteDocumentsQuery(
+        filterExpression: Meili.or([
+          Meili.attr('genres').eq(Meili.value('action')),
+          Meili.attr('genres').eq(Meili.value('adventure')),
+        ]),
+      ),
+    );
+```
+
+</CodeGroup>

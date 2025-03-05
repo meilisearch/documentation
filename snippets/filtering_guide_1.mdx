@@ -1,0 +1,99 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/movie_ratings/search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "q": "Avengers",
+    "filter": "release_date > 795484800"
+  }'
+```
+
+
+```javascript JS
+client.index('movie_ratings').search('Avengers', {
+  filter: 'release_date > 795484800'
+})
+```
+
+
+```python Python
+client.index('movie_ratings').search('Avengers', {
+  'filter': 'release_date > 795484800'
+})
+```
+
+
+```php PHP
+$client->index('movie_ratings')->search('Avengers', [
+  'filter' => 'release_date > 795484800'
+]);
+```
+
+
+```java Java
+SearchRequest searchRequest = SearchRequest.builder().q("Avengers").filter(new String[] {"release_date > \"795484800\""}).build();
+client.index("movie_ratings").search(searchRequest);
+```
+
+
+```ruby Ruby
+client.index('movie_ratings').search('Avengers', { filter: 'release_date > 795484800' })
+```
+
+
+```go Go
+resp, err := client.Index("movie_ratings").Search("Avengers", &meilisearch.SearchRequest{
+  Filter: "release_date > \"795484800\"",
+})
+```
+
+
+```csharp C#
+SearchQuery filters = new SearchQuery() { Filter = "release_date > \"795484800\"" };
+var movies = await client.Index("movie_ratings").SearchAsync<Movie>("Avengers", filters);
+```
+
+
+```rust Rust
+let results: SearchResults<Movie> = client
+  .index("movie_ratings")
+  .search()
+  .with_query("Avengers")
+  .with_filter("release_date > 795484800")
+  .execute()
+  .await
+  .unwrap();
+```
+
+
+```swift Swift
+let searchParameters = SearchParameters(
+    query: "Avengers",
+    filter: "release_date > 795484800"
+)
+client.index("movie_ratings").search(searchParameters) { (result: Result<Searchable<Movie>, Swift.Error>) in
+    switch result {
+    case .success(let searchResult):
+        print(searchResult)
+    case .failure(let error):
+        print(error)
+    }
+}
+```
+
+
+```dart Dart
+await client.index('movie_ratings').search(
+      'Avengers',
+      SearchQuery(
+        filterExpression: Meili.gt(
+          Meili.attr('release_date'),
+          DateTime.utc(1995, 3, 18).toMeiliValue(),
+        ),
+      ),
+    );
+```
+
+</CodeGroup>

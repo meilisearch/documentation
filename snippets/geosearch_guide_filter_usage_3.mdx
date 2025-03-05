@@ -1,0 +1,97 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/restaurants/search' \
+  -H 'Content-type:application/json' \
+  --data-binary '{ "filter": "_geoBoundingBox([45.494181, 9.214024], [45.449484, 9.179175])" }'
+```
+
+
+```javascript JS
+client.index('restaurants').search('', {
+  filter: ['_geoBoundingBox([45.494181, 9.214024], [45.449484, 9.179175])'],
+})
+```
+
+
+```python Python
+client.index('restaurants').search('Batman', {
+  'filter': '_geoBoundingBox([45.494181, 9.214024], [45.449484, 9.179175])'
+})
+```
+
+
+```php PHP
+$client->index('restaurants')->search('', [
+  'filter' => '_geoBoundingBox([45.494181, 9.214024], [45.449484, 9.179175])'
+]);
+```
+
+
+```java Java
+SearchRequest searchRequest = SearchRequest.builder().q()("").filter(new String[] {
+    "_geoBoundingBox([45.494181, 9.214024], [45.449484, 9.179175])"
+  }).build();
+client.index("restaurants").search(searchRequest);
+```
+
+
+```ruby Ruby
+client.index('restaurants').search('', { filter: ['_geoBoundingBox([45.494181, 9.214024], [45.449484, 9.179175])'] })
+```
+
+
+```go Go
+client.Index("restaurants").Search("", &meilisearch.SearchRequest{
+  Filter: "_geoBoundingBox([45.494181, 9.214024], [45.449484, 9.179175])",
+})
+```
+
+
+```csharp C#
+SearchQuery filters = new SearchQuery()
+{
+    Filter = "_geoBoundingBox([45.494181, 9.214024], [45.449484, 9.179175])"
+};
+var restaurants = await client.Index("restaurants").SearchAsync<Restaurant>("restaurants", filters);
+```
+
+
+```rust Rust
+let results: SearchResults<Restaurant> = client
+  .index("restaurants")
+  .search()
+  .with_filter("_geoBoundingBox([45.494181, 9.214024], [45.449484, 9.179175])")
+  .execute()
+  .await
+  .unwrap();
+```
+
+
+```swift Swift
+let searchParameters = SearchParameters(
+    filter: "_geoBoundingBox([45.494181, 9.214024], [45.449484, 9.179175])"
+)
+client.index("restaurants").search(searchParameters) { (result: Result<Searchable<Restaurant>, Swift.Error>) in
+    switch result {
+    case .success(let searchResult):
+        print(searchResult)
+    case .failure(let error):
+        print(error)
+    }
+}
+```
+
+
+```dart Dart
+await client.index('restaurants').search(
+      '',
+      SearchQuery(
+        filter:
+            '_geoBoundingBox([45.494181, 9.214024], [45.449484, 9.179175])',
+      ),
+    );
+```
+
+</CodeGroup>

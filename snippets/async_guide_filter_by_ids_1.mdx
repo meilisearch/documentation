@@ -1,0 +1,71 @@
+<CodeGroup>
+
+```javascript JS
+client.getTasks({ uids: [5, 10, 13] })
+```
+
+
+```python Python
+client.get_tasks({'uids': ['5', '10', '13']})
+```
+
+
+```php PHP
+$client->getTasks((new TasksQuery())->setUids([5, 10, 13]));
+```
+
+
+```java Java
+TasksQuery query = new TasksQuery().setUids(new int[] {5, 10, 13});
+client.getTasks(query);
+```
+
+
+```ruby Ruby
+client.get_tasks(uids: [5, 10, 13])
+```
+
+
+```go Go
+client.GetTasks(&meilisearch.TasksQuery{
+  UIDS: []int64{5, 10, 13},
+})
+```
+
+
+```csharp C#
+await client.GetTasksAsync(new TasksQuery { Uids = new List<int> { 5, 10, 13 } });
+```
+
+
+```rust Rust
+let mut query = TasksQuery::new(&client);
+let tasks = query
+  .with_uids([5, 10, 13])
+  .execute()
+  .await
+  .unwrap();
+```
+
+
+```swift Swift
+client.getTasks(params: TasksQuery(uids: [5, 10, 13])) { result in
+  switch result {
+  case .success(let taskResult):
+    print(taskResult)
+  case .failure(let error):
+    print(error)
+  }
+}
+```
+
+
+```dart Dart
+await client.getTasks(
+  params: TasksQuery(
+    uids: [5, 10, 13],
+  ),
+);
+```
+
+</CodeGroup>

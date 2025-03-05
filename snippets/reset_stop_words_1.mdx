@@ -1,0 +1,69 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X DELETE 'MEILISEARCH_URL/indexes/movies/settings/stop-words'
+```
+
+
+```javascript JS
+client.index('movies').resetStopWords()
+```
+
+
+```python Python
+client.index('movies').reset_stop_words()
+```
+
+
+```php PHP
+$client->index('movies')->resetStopWords();
+```
+
+
+```java Java
+client.index("movies").resetStopWordsSettings();
+```
+
+
+```ruby Ruby
+client.index('movies').reset_stop_words
+```
+
+
+```go Go
+client.Index("movies").ResetStopWords()
+```
+
+
+```csharp C#
+await client.Index("movies").ResetStopWordsAsync();
+```
+
+
+```rust Rust
+let task: TaskInfo = client
+  .index("movies")
+  .reset_stop_words()
+  .await
+  .unwrap();
+```
+
+
+```swift Swift
+client.index("movies").resetStopWords { (result) in
+    switch result {
+    case .success(let task):
+        print(task)
+    case .failure(let error):
+        print(error)
+    }
+}
+```
+
+
+```dart Dart
+await client.index('movies').resetStopWords();
+```
+
+</CodeGroup>

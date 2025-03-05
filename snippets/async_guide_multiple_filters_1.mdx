@@ -1,0 +1,110 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X GET 'MEILISEARCH_URL/tasks?indexUids=movies&types=documentAdditionOrUpdate,documentDeletion&statuses=processing'
+```
+
+
+```javascript JS
+client.getTasks({
+  indexUids: ['movies'],
+  types: ['documentAdditionOrUpdate','documentDeletion'],
+  statuses: ['processing']
+})
+```
+
+
+```python Python
+client.get_tasks(
+  {
+      'indexUids': 'movies',
+      'types': ['documentAdditionOrUpdate', 'documentDeletion'],
+      'statuses': ['processing'],
+  }
+)
+```
+
+
+```php PHP
+$client->getTasks(
+  (new TasksQuery())
+    ->setStatuses(['processing'])
+    ->setUids(['movies'])
+    ->setTypes(['documentAdditionOrUpdate', 'documentDeletion'])
+);
+```
+
+
+```java Java
+TasksQuery query =
+        new TasksQuery()
+                .setStatuses(new String[] {"processing"})
+                .setTypes(new String[] {"documentAdditionOrUpdate", "documentDeletion"})
+                .setIndexUids(new String[] {"movies"});
+
+client.getTasks(query);
+```
+
+
+```ruby Ruby
+client.get_tasks(index_uids: ['movies'], types: ['documentAdditionOrUpdate', 'documentDeletion'], statuses: ['processing'])
+```
+
+
+```go Go
+client.GetTasks(&meilisearch.TasksQuery{
+  IndexUIDS: []string{"movie"},
+  Types:     []meilisearch.TaskType{
+    meilisearch.TaskTypeDocumentAdditionOrUpdate,
+    meilisearch.TaskTypeDocumentDeletion,
+  },
+  Statuses:  []meilisearch.TaskStatus{
+    meilisearch.TaskStatusProcessing,
+  },
+})
+```
+
+
+```csharp C#
+var query = new TasksQuery { IndexUids = new List<string> { "movies" }, Types = new List<TaskInfo> { TaskInfo.DocumentAdditionOrUpdate, TaskInfo.DocumentDeletion }, Statuses = new List<TaskInfoStatus> { TaskInfoStatus.Processing } };
+
+await client.GetTasksAsync(query);
+```
+
+
+```rust Rust
+let mut query = TasksQuery::new(&client);
+let tasks = query
+  .with_index_uids(["movies"])
+  .with_types(["documentAdditionOrUpdate","documentDeletion"])
+  .with_statuses(["processing"])
+  .execute()
+  .await
+  .unwrap();
+```
+
+
+```swift Swift
+client.getTasks(params: TasksQuery(indexUids: "movies", types: ["documentAdditionOrUpdate", "documentDeletion"], statuses: ["processing"])) { result in
+  switch result {
+  case .success(let taskResult):
+    print(taskResult)
+  case .failure(let error):
+    print(error)
+  }
+}
+```
+
+
+```dart Dart
+await client.getTasks(
+  params: TasksQuery(
+    indexUids: ['movies'],
+    types: ['documentAdditionOrUpdate', 'documentDeletion'],
+    statuses: ['processing'],
+  ),
+);
+```
+
+</CodeGroup>

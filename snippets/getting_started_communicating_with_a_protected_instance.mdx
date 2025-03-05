@@ -1,0 +1,16 @@
+<CodeGroup>
+
+```swift Swift
+let client = try MeiliSearch(host: "http://localhost:7700", apiKey: "apiKey")
+
+client.index("movies").search(SearchParameters(query: "")) { (result: Result<Searchable<Movie>, Swift.Error>) in
+    switch result {
+    case .success(let searchResult):
+        print(searchResult)
+    case .failure(let error):
+        print(error)
+    }
+}
+```
+
+</CodeGroup>

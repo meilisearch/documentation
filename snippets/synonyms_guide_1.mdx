@@ -1,0 +1,110 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X PUT 'MEILISEARCH_URL/indexes/movies/settings/synonyms' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "great": ["fantastic"], "fantastic": ["great"]
+  }'
+```
+
+
+```javascript JS
+client.index('movies').updateSynonyms({
+  'great': ['fantastic'],
+  'fantastic': ['great']
+})
+```
+
+
+```python Python
+client.index('movies').update_synonyms({
+  'great': ['fantastic'],
+  'fantastic': ['great']
+})
+```
+
+
+```php PHP
+$client->index('movies')->updateSynonyms([
+  'great' => ['fantastic'],
+  'fantastic' => ['great'],
+]);
+```
+
+
+```java Java
+HashMap<String, String[]> synonyms = new HashMap<String, String[]>();
+synonyms.put("great", new String[] {"fantastic"});
+synonyms.put("fantastic", new String[] {"great"});
+
+client.index("movies").updateSynonymsSettings(synonyms);
+```
+
+
+```ruby Ruby
+client.index('movies').update_synonyms({
+  great: ['fantastic'],
+  fantastic: ['great']
+})
+```
+
+
+```go Go
+synonyms := map[string][]string{
+  "great":      []string{"fantastic"},
+  "fantastic":  []string{"great"},
+}
+client.Index("movies").UpdateSynonyms(&synonyms)
+```
+
+
+```csharp C#
+var synonyms = new Dictionary<string, IEnumerable<string>>
+{
+    { "great", new string[] { "fantastic" } },
+    { "fantastic", new string[] { "great" } }
+};
+await client.Index("movies").UpdateSynonymsAsync(synonyms);
+```
+
+
+```rust Rust
+let mut synonyms = std::collections::HashMap::new();
+synonyms.insert(String::from("great"), vec![String::from("fantastic")]);
+synonyms.insert(String::from("fantastic"), vec![String::from("great")]);
+
+let task: TaskInfo = client
+  .index("movies")
+  .set_synonyms(&synonyms)
+  .await
+  .unwrap();
+```
+
+
+```swift Swift
+let synonyms: [String: [String]] = [
+  "great": ["fantastic"],
+  "fantastic": ["great"]
+]
+
+client.index("movies").updateSynonyms(synonyms) { (result) in
+  switch result {
+  case .success(let task):
+      print(task)
+  case .failure(let error):
+      print(error)
+  }
+}
+```
+
+
+```dart Dart
+await client.index('movies').updateSynonyms({
+  'great': ['fantastic'],
+  'fantastic': ['great'],
+});
+```
+
+</CodeGroup>

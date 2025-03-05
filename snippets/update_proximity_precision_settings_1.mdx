@@ -1,0 +1,59 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X PUT 'MEILISEARCH_URL/indexes/books/settings/proximity-precision' \
+  -H 'Content-Type: application/json' \
+  --data-binary '"byAttribute"'
+```
+
+
+```javascript JS
+client.index('books').updateProximityPrecision('byAttribute')
+```
+
+
+```python Python
+client.index('books').update_proximity_precision(ProximityPrecision.BY_ATTRIBUTE)
+```
+
+
+```php PHP
+$client->index('books')->updateProximityPrecision('byAttribute');
+```
+
+
+```java Java
+client.index("books").updateProximityPrecisionSettings("byAttribute");
+```
+
+
+```ruby Ruby
+client.index('books').update_proximity_precision('byAttribute')
+```
+
+
+```go Go
+client.Index("books").UpdateProximityPrecision(ByAttribute)
+```
+
+
+```csharp C#
+await client.Index("books").UpdateProximityPrecisionAsync("byAttribute");
+```
+
+
+```rust Rust
+let task: TaskInfo = client
+  .index("books")
+  .set_proximity_precision("byAttribute".to_string())
+  .await
+  .unwrap();
+```
+
+
+```swift Swift
+let task = try await self.client.index("books").updateProximityPrecision(.byWord)
+```
+
+</CodeGroup>

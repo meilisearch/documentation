@@ -1,0 +1,73 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X PUT 'MEILISEARCH_URL/indexes/books/settings/filterable-attributes' \
+  -H 'Content-Type: application/json' \
+  --data-binary '[
+    "genres", "rating", "language"
+  ]'
+```
+
+
+```javascript JS
+client.index('movie_ratings').updateFilterableAttributes(['genres', 'rating', 'language'])
+```
+
+
+```python Python
+client.index('movie_ratings').update_filterable_attributes([
+  'genres',
+  'director',
+  'language'
+])
+```
+
+
+```php PHP
+$client->index('movie_ratings')->updateFilterableAttributes(['genres', 'rating', 'language']);
+```
+
+
+```java Java
+client.index("movie_ratings").updateFilterableAttributesSettings(new String[] { "genres", "director", "language" });
+```
+
+
+```ruby Ruby
+client.index('movie_ratings').update_filterable_attributes(['genres', 'rating', 'language'])
+```
+
+
+```go Go
+filterableAttributes := []string{
+  "genres",
+  "rating",
+  "language",
+}
+client.Index("movie_ratings").UpdateFilterableAttributes(&filterableAttributes)
+```
+
+
+```csharp C#
+List<string> attributes = new() { "genres", "rating", "language" };
+TaskInfo result = await client.Index("movie_ratings").UpdateFilterableAttributesAsync(attributes);
+```
+
+
+```rust Rust
+let task: TaskInfo = client
+  .index("movie_ratings")
+  .set_filterable_attributes(&["genres", "rating", "language"])
+  .await
+  .unwrap();
+```
+
+
+```dart Dart
+await client
+    .index('movie_ratings')
+    .updateFilterableAttributes(['genres', 'rating', 'language']);
+```
+
+</CodeGroup>

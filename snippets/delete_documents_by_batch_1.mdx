@@ -1,0 +1,79 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/movies/documents/delete-batch' \
+  -H 'Content-Type: application/json' \
+  --data-binary '[
+    23488,
+    153738,
+    437035,
+    363869
+  ]'
+```
+
+
+```javascript JS
+client.index('movies').deleteDocuments([23488, 153738, 437035, 363869])
+```
+
+
+```python Python
+client.index('movies').delete_documents([23488, 153738, 437035, 363869])
+```
+
+
+```php PHP
+$client->index('movies')->deleteDocuments([23488, 153738, 437035, 363869]);
+```
+
+
+```java Java
+client.index("movies").deleteDocuments(Arrays.asList(new String[]
+{
+  "23488",
+  "153738",
+  "437035",
+  "363869"
+}));
+```
+
+
+```ruby Ruby
+client.index('movies').delete_documents([23488, 153738, 437035, 363869])
+```
+
+
+```go Go
+client.Index("movies").DeleteDocuments([]string{
+  "23488",
+  "153738",
+  "437035",
+  "363869",
+})
+```
+
+
+```csharp C#
+await client.Index("movies").DeleteDocumentsAsync(new[] { "23488", "153738", "437035", "363869" });
+```
+
+
+```rust Rust
+let task: TaskInfo = client
+  .index("movies")
+  .delete_documents(&[23488, 153738, 437035, 363869])
+  .await
+  .unwrap();
+```
+
+
+```dart Dart
+await client.index('movies').deleteDocuments(
+      DeleteDocumentsQuery(
+        ids: [23488, 153738, 437035, 363869],
+      ),
+    );
+```
+
+</CodeGroup>

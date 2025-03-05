@@ -1,0 +1,68 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X GET 'MEILISEARCH_URL/version'
+```
+
+
+```javascript JS
+client.getVersion()
+```
+
+
+```python Python
+client.get_version()
+```
+
+
+```php PHP
+$client->version();
+```
+
+
+```java Java
+client.getVersion();
+```
+
+
+```ruby Ruby
+client.version
+```
+
+
+```go Go
+client.GetVersion()
+```
+
+
+```csharp C#
+await client.GetVersionAsync();
+```
+
+
+```rust Rust
+let version: Version = client
+  .get_version()
+  .await
+  .unwrap();
+```
+
+
+```swift Swift
+client.version { (result) in
+    switch result {
+    case .success(let version):
+        print(version)
+    case .failure(let error):
+        print(error)
+    }
+}
+```
+
+
+```dart Dart
+await client.getVersion();
+```
+
+</CodeGroup>

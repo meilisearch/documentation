@@ -1,0 +1,84 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X PUT 'MEILISEARCH_URL/indexes/restaurants/settings/filterable-attributes' \
+  -H 'Content-type:application/json' \
+  --data-binary '["_geo"]'
+```
+
+
+```javascript JS
+client.index('restaurants')
+.updateFilterableAttributes([
+  '_geo'
+])
+```
+
+
+```python Python
+client.index('restaurants').update_filterable_attributes([
+  '_geo'
+])
+```
+
+
+```php PHP
+$client->index('restaurants')->updateFilterableAttributes([
+  '_geo'
+]);
+```
+
+
+```java Java
+Settings settings = new Settings();
+settings.setFilterableAttributes(new String[] {"_geo"});
+client.index("restaurants").updateSettings(settings);
+```
+
+
+```ruby Ruby
+client.index('restaurants').update_filterable_attributes(['_geo'])
+```
+
+
+```go Go
+filterableAttributes := []string{
+  "_geo",
+}
+client.Index("restaurants").UpdateFilterableAttributes(&filterableAttributes)
+```
+
+
+```csharp C#
+List<string> attributes = new() { "_geo" };
+TaskInfo result = await client.Index("movies").UpdateFilterableAttributesAsync(attributes);
+```
+
+
+```rust Rust
+let task: TaskInfo = client
+  .index("restaurants")
+  .set_filterable_attributes(&["_geo"])
+  .await
+  .unwrap();
+```
+
+
+```swift Swift
+client.index("restaurants").updateFilterableAttributes(["_geo"]) { (result) in
+    switch result {
+    case .success(let task):
+        print(task)
+    case .failure(let error):
+        print(error)
+    }
+}
+```
+
+
+```dart Dart
+await client.index('restaurants').updateFilterableAttributes(['_geo']);
+```
+
+</CodeGroup>

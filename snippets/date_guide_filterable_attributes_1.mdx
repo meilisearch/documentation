@@ -1,0 +1,79 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X PUT 'MEILISEARCH_URL/indexes/games/settings/filterable-attributes' \
+  -H 'Content-Type: application/json' \
+  --data-binary '[
+    "release_timestamp"
+  ]'
+```
+
+
+```javascript JS
+client.index('games').updateFilterableAttributes(['release_timestamp'])
+```
+
+
+```python Python
+client.index('games').update_filterable_attributes(['release_timestamp'])
+```
+
+
+```php PHP
+$client->index('games')->updateFilterableAttributes(['release_timestamp']);
+```
+
+
+```java Java
+client.index("movies").updateFilterableAttributesSettings(new String[] { "release_timestamp" });
+```
+
+
+```ruby Ruby
+client.index('games').update_filterable_attributes(['release_timestamp'])
+```
+
+
+```go Go
+filterableAttributes := []string{"release_timestamp"}
+client.Index("games").UpdateFilterableAttributes(&filterableAttributes)
+```
+
+
+```csharp C#
+await client.Index("games").UpdateFilterableAttributesAsync(new string[] { "release_timestamp" });
+```
+
+
+```rust Rust
+let settings = Settings::new()
+  .with_filterable_attributes(["release_timestamp"]);
+
+let task: TaskInfo = client
+  .index("games")
+  .set_settings(&settings)
+  .await
+  .unwrap();
+```
+
+
+```swift Swift
+client.index("games").updateFilterableAttributes(["release_timestamp"]) { (result) in
+  switch result {
+  case .success(let task):
+      print(task)
+  case .failure(let error):
+      print(error)
+  }
+}
+```
+
+
+```dart Dart
+await client
+    .index('games')
+    .updateFilterableAttributes(['release_timestamp']);
+```
+
+</CodeGroup>

@@ -1,0 +1,111 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X POST MEILISEARCH_URL/indexes/books/documents/fetch \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "filter": "(rating > 3 AND (genres = Adventure OR genres = Fiction)) AND language = English",
+    "fields": ["title", "genres", "rating", "language"],
+    "limit": 3
+  }'
+```
+
+
+```javascript JS
+client.index('books').getDocuments({
+  filter: '(rating > 3 AND (genres = Adventure OR genres = Fiction)) AND language = English',
+  fields: ['title', 'genres', 'rating', 'language'],
+  limit: 3
+})
+```
+
+
+```python Python
+client.index('books').get_documents({
+  'limit':3,
+  'fields': ['title', 'genres', 'rating', 'language'],
+  'filter': '(rating > 3 AND (genres=Adventure OR genres=Fiction)) AND language=English'
+})
+```
+
+
+```php PHP
+$client->index('books')->getDocuments(
+  (new DocumentsQuery())
+    ->setFilter('(rating > 3 AND (genres = Adventure OR genres = Fiction)) AND language = English')
+    ->setLimit(3)
+    ->setFields(['title', 'genres', 'rating', 'language'])
+);
+```
+
+
+```java Java
+DocumentsQuery query = new DocumentsQuery()
+  .setFilter(new String[] {"(rating > 3 AND (genres = Adventure OR genres = Fiction)) AND language = English"})
+  .setFields(new String[] {"title", "genres", "rating", "language"})
+  .setLimit(3);
+client.index("books").getDocuments(query, TargetClassName.class);
+```
+
+
+```ruby Ruby
+client.index('books').get_documents(
+  filter: '(rating > 3 AND (genres = Adventure OR genres = Fiction)) AND language = English',
+  limit: 3,
+  fields: ['title', 'genres', 'rating', 'language']
+)
+```
+
+
+```go Go
+var result meilisearch.DocumentsResult
+
+client.Index("books").GetDocuments(&meilisearch.DocumentsQuery{
+  Fields: []string{"title", "genres", "rating", "language"},
+  Filter: "(rating > 3 AND (genres = Adventure OR genres = Fiction)) AND language = English",
+}, &result)
+```
+
+
+```csharp C#
+await client.Index("movies").GetDocumentsAsync<Movie>(new DocumentsQuery() {
+    Limit = 3,
+    Fields = new List<string> { "title", "genres", "rating", "language"},
+    Filter = "(rating > 3 AND (genres=Adventure OR genres=Fiction)) AND language=English"
+});
+```
+
+
+```rust Rust
+let index = client.index("books");
+let documents: DocumentsResults = DocumentsQuery::new(&index)
+  .with_filter("(rating > 3 AND (genres = Adventure OR genres = Fiction)) AND language = English")
+  .with_fields(["title", "genres", "rating", "language"])
+  .with_limit(2)
+  .execute::<Movies>()
+  .await
+  .unwrap();
+```
+
+
+```dart Dart
+await client.index('movies').getDocuments(
+      params: DocumentsQuery(
+        filterExpression: Meili.and([
+          'language'.toMeiliAttribute().eq('English'.toMeiliValue()),
+          Meili.and([
+            'rating'.toMeiliAttribute().gt(3.toMeiliValue()),
+            Meili.or([
+              'genres'.toMeiliAttribute().eq('Adventure'.toMeiliValue()),
+              'genres'.toMeiliAttribute().eq('Fiction'.toMeiliValue()),
+            ]),
+          ]),
+        ]),
+        fields: ['title', 'genres', 'rating', 'language'],
+        limit: 3,
+      ),
+    );
+```
+
+</CodeGroup>

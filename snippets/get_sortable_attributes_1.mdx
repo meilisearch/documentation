@@ -1,0 +1,69 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X GET 'MEILISEARCH_URL/indexes/books/settings/sortable-attributes'
+```
+
+
+```javascript JS
+client.index('books').getSortableAttributes()
+```
+
+
+```python Python
+client.index('books').get_sortable_attributes()
+```
+
+
+```php PHP
+$client->index('books')->getSortableAttributes();
+```
+
+
+```java Java
+client.index("books").getSortableAttributesSettings();
+```
+
+
+```ruby Ruby
+client.index('books').sortable_attributes
+```
+
+
+```go Go
+client.Index("books").GetSortableAttributes()
+```
+
+
+```csharp C#
+await client.Index("books").GetSortableAttributesAsync();
+```
+
+
+```rust Rust
+let sortable_attributes: Vec<String> = client
+  .index("books")
+  .get_sortable_attributes()
+  .await
+  .unwrap();
+```
+
+
+```swift Swift
+client.index("books").getSortableAttributes { (result: Result<Searchable<Book>, Swift.Error>) in
+  switch result {
+  case .success(let attributes):
+    print(attributes)
+  case .failure(let error):
+    print(error)
+  }
+}
+```
+
+
+```dart Dart
+await client.index('books').getSortableAttributes();
+```
+
+</CodeGroup>

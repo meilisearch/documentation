@@ -1,0 +1,122 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X PATCH 'MEILISEARCH_URL/indexes/movies/settings/typo-tolerance' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "minWordSizeForTypos": {
+      "oneTypo": 4,
+      "twoTypos": 10
+    }
+  }'
+```
+
+
+```javascript JS
+client.index('movies').updateTypoTolerance({
+  minWordSizeForTypos: {
+    oneTypo: 4,
+    twoTypos: 10
+  }
+})
+```
+
+
+```python Python
+client.index('movies').update_typo_tolerance({
+  'minWordSizeForTypos': {
+    'oneTypo': 4,
+    'twoTypos': 10
+  }
+})
+```
+
+
+```php PHP
+$client->index('movies')->updateTypoTolerance([
+  'minWordSizeForTypos' => [
+    'oneTypo' => 4,
+    'twoTypos' => 10
+  ]
+]);
+```
+
+
+```java Java
+TypoTolerance typoTolerance = new TypoTolerance();
+  HashMap<String, Integer> minWordSizeTypos =
+        new HashMap<String, Integer>() {
+            {
+                put("oneTypo", 4);
+                put("twoTypos", 10);
+            }
+        };
+typoTolerance.setMinWordSizeForTypos(minWordSizeTypos);
+client.index("movies").updateTypoToleranceSettings(typoTolerance);
+```
+
+
+```ruby Ruby
+index('books').update_typo_tolerance({
+  min_word_size_for_typos: {
+    one_typo: 4,
+    two_typos: 10
+  }
+})
+```
+
+
+```go Go
+client.Index("movies").UpdateTypoTolerance(&meilisearch.TypoTolerance{
+  MinWordSizeForTypos: meilisearch.MinWordSizeForTypos{
+    OneTypo: 4,
+    TwoTypos: 10,
+  },
+})
+```
+
+
+```csharp C#
+var typoTolerance = new TypoTolerance {
+  MinWordSizeTypos = new TypoTolerance.TypoSize {
+    OneTypo = 4,
+    TwoTypos = 10
+  }
+};
+
+await client.Index("movies").UpdateTypoToleranceAsync(typoTolerance);
+```
+
+
+```rust Rust
+let min_word_size_for_typos = MinWordSizeForTypos {
+  one_typo: Some(4),
+  two_typos: Some(12)
+};
+let typo_tolerance = TypoToleranceSettings {
+  enabled: Some(true),
+  disable_on_attributes: Some(vec![]),
+  disable_on_words: Some(vec!["title".to_string()]),
+  min_word_size_for_typos: Some(min_word_size_for_typos),
+};
+
+let task: TaskInfo = client
+  .index("movies")
+  .set_typo_tolerance(&typo_tolerance)
+  .await
+  .unwrap();
+```
+
+
+```dart Dart
+final toUpdate = TypoTolerance(
+  minWordSizeForTypos: MinWordSizeForTypos(
+    oneTypo: 4,
+    twoTypos: 10,
+  ),
+);
+await client.index('movies').updateTypoTolerance(toUpdate);
+```
+
+</CodeGroup>

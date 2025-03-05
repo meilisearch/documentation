@@ -1,0 +1,91 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/books/search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "q": "classic",
+    "facets": [
+    "genres", "rating", "language"
+  ]
+}'
+```
+
+
+```javascript JS
+client.index('books').search('classic', { facets: ['genres', 'rating', 'language'] })
+```
+
+
+```python Python
+client.index('books').search('classic', {
+  'facets': ['genres', 'rating', 'language']
+})
+```
+
+
+```php PHP
+$client->index('books')->search('classic', [
+  'facets' => ['genres', 'rating', 'language']
+]);
+```
+
+
+```java Java
+SearchRequest searchRequest = SearchRequest.builder().q("classic").facets(new String[]
+{
+  "genres",
+  "rating",
+  "language"
+}).build();
+client.index("books").search(searchRequest);
+```
+
+
+```ruby Ruby
+client.index('books').search('classic', {
+  facets: ['genres', 'rating', 'language']
+})
+```
+
+
+```go Go
+resp, err := client.Index("books").Search("classic", &meilisearch.SearchRequest{
+  Facets: []string{
+    "genres",
+    "rating",
+    "language",
+  },
+})
+```
+
+
+```csharp C#
+var sq = new SearchQuery
+{
+    Facets = new string[] { "genres", "rating", "language" }
+};
+await client.Index("books").SearchAsync<Book>("classic", sq);
+```
+
+
+```rust Rust
+let books = client.index("books");
+
+let results: SearchResults<Book> = SearchQuery::new(&books)
+  .with_query("classic")
+  .with_facets(Selectors::Some(&["genres", "rating", "language"]))
+  .execute()
+  .await
+  .unwrap();
+```
+
+
+```dart Dart
+await client
+    .index('books')
+    .search('', SearchQuery(facets: ['genres', 'rating', 'language']));
+```
+
+</CodeGroup>

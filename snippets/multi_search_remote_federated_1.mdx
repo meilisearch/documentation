@@ -1,0 +1,28 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/multi-search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "federation": {},
+    "queries": [
+      {
+        "indexUid": "movies",
+        "q": "batman",
+        "federationOptions": {
+          "remote": "ms-00"
+        }
+      },
+      {
+        "indexUid": "movies",
+        "q": "batman",
+        "federationOptions": {
+          "remote": "ms-01"
+        }
+      }
+    ]
+  }'
+```
+
+</CodeGroup>

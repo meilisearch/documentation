@@ -1,0 +1,177 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X PUT 'MEILISEARCH_URL/indexes/movies/settings/ranking-rules' \
+  -H 'Content-Type: application/json' \
+  --data-binary '[
+    "exactness",
+    "words",
+    "typo",
+    "proximity",
+    "attribute",
+    "sort",
+    "release_date:asc",
+    "rank:desc"
+  ]'
+```
+
+
+```javascript JS
+client.index('movies').updateRankingRules([
+  'exactness',
+  'words',
+  'typo',
+  'proximity',
+  'attribute',
+  'sort',
+  'release_date:asc',
+  'rank:desc'
+])
+```
+
+
+```python Python
+client.index('movies').update_ranking_rules([
+    'exactness',
+    'words',
+    'typo',
+    'proximity',
+    'attribute',
+    'sort',
+    'release_date:asc',
+    'rank:desc'
+])
+```
+
+
+```php PHP
+$client->index('movies')->updateRankingRules([
+  'exactness',
+  'words',
+  'typo',
+  'proximity',
+  'attribute',
+  'sort',
+  'release_date:asc',
+  'rank:desc'
+]);
+```
+
+
+```java Java
+Settings settings = new Settings();
+settings.setRankingRules(new String[]
+{
+  "exactness",
+  "words",
+  "typo",
+  "proximity",
+  "attribute",
+  "sort",
+  "release_date:asc",
+  "rank:desc"
+});
+client.index("movies").updateSettings(settings);
+```
+
+
+```ruby Ruby
+client.index('movies').update_ranking_rules([
+  'exactness',
+  'words',
+  'typo',
+  'proximity',
+  'attribute',
+  'sort',
+  'release_date:asc',
+  'rank:desc'
+])
+```
+
+
+```go Go
+rankingRules := []string{
+  "exactness",
+  "words",
+  "typo",
+  "proximity",
+  "attribute",
+  "sort",
+  "release_date:asc",
+  "rank:desc",
+}
+client.Index("movies").UpdateRankingRules(&rankingRules)
+```
+
+
+```csharp C#
+await client.Index("movies").UpdateRankingRulesAsync(new string[] {
+  "exactness",
+  "words",
+  "typo",
+  "proximity",
+  "attribute",
+  "sort",
+  "release_date:asc",
+  "rank:desc"
+});
+```
+
+
+```rust Rust
+let ranking_rules = [
+  "exactness",
+  "words",
+  "typo",
+  "proximity",
+  "attribute",
+  "sort",
+  "release_date:asc",
+  "rank:desc"
+];
+
+client
+  .index("movies")
+  .set_ranking_rules(&ranking_rules)
+  .await
+  .unwrap();
+```
+
+
+```swift Swift
+let rankingRules: [String] = [
+  "exactness",
+  "words",
+  "typo",
+  "proximity",
+  "attribute",
+  "sort",
+  "release_date:asc",
+  "rank:desc"
+]
+client.index("movies").updateRankingRules(rankingRules) { (result) in
+  switch result {
+  case .success(let task):
+    print(task)
+  case .failure(let error):
+    print(error)
+  }
+}
+```
+
+
+```dart Dart
+await client.index('movies').updateRankingRules([
+  'exactness',
+  'words',
+  'typo',
+  'proximity',
+  'attribute',
+  'sort',
+  'release_date:asc',
+  'rank:desc',
+]);
+```
+
+</CodeGroup>

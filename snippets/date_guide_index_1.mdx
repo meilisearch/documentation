@@ -1,0 +1,115 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -x POST 'MEILISEARCH_URL/indexes/games/documents' \
+  -h 'content-type: application/json' \
+  --data-binary @games.json
+```
+
+
+```javascript JS
+const games = require('./games.json')
+client.index('games').addDocuments(games).then((res) => console.log(res))
+```
+
+
+```python Python
+import json
+
+json_file = open('./games.json', encoding='utf-8')
+games = json.load(json_file)
+client.index('games').add_documents(games)
+```
+
+
+```php PHP
+$gamesJson = file_get_contents('games.json');
+$games = json_decode($gamesJson);
+
+$client->index('games')->addDocuments($games);
+```
+
+
+```java Java
+import com.meilisearch.sdk;
+import org.json.JSONArray;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
+Path fileName = Path.of("games.json");
+String gamesJson = Files.readString(fileName);
+Index index = client.index("games");
+index.addDocuments(gamesJson);
+```
+
+
+```ruby Ruby
+require 'json'
+
+games = JSON.parse(File.read('games.json'))
+client.index('games').add_documents(games)
+```
+
+
+```go Go
+jsonFile, _ := os.Open("games.json")
+defer jsonFile.Close()
+
+byteValue, _ := io.ReadAll(jsonFile)
+var games []map[string]interface{}
+json.Unmarshal(byteValue, &games)
+
+client.Index("games").AddDocuments(games)
+```
+
+
+```csharp C#
+string jsonString = await File.ReadAllTextAsync("games.json");
+var games = JsonSerializer.Deserialize<IEnumerable<Movie>>(jsonString, options);
+var index = client.Index("games");
+await index.AddDocumentsAsync<Movie>(games);
+```
+
+
+```rust Rust
+let mut file = File::open("games.json")
+  .unwrap();
+let mut content = String::new();
+file
+  .read_to_string(&mut content)
+  .unwrap();
+let docs: Vec<Game> = serde_json::from_str(&content)
+  .unwrap();
+
+client
+  .index("games")
+  .add_documents(&docs, None)
+  .await
+  .unwrap();
+```
+
+
+```swift Swift
+let path = Bundle.main.url(forResource: "games", withExtension: "json")!
+let documents: Data = try Data(contentsOf: path)
+
+client.index("games").addDocuments(documents: documents) { (result) in
+  switch result {
+  case .success(let task):
+      print(task)
+  case .failure(let error):
+      print(error)
+  }
+}
+```
+
+
+```dart Dart
+//import 'dart:io';
+//import 'dart:convert';
+final json = await File('games.json').readAsString();
+await client.index('games').addDocumentsJson(json);
+```
+
+</CodeGroup>

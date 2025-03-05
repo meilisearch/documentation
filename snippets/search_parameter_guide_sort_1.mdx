@@ -1,0 +1,96 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/books/search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "q": "science fiction",
+    "sort": ["price:asc"]
+  }'
+```
+
+
+```javascript JS
+client.index('books').search('science fiction', {
+  sort: ['price:asc'],
+})
+```
+
+
+```python Python
+client.index('books').search('science fiction', {
+  'sort': ['price:asc']
+})
+```
+
+
+```php PHP
+$client->index('books')->search('science fiction', ['sort' => ['price:asc']]);
+```
+
+
+```java Java
+SearchRequest searchRequest = SearchRequest.builder().q("science fiction").sort(new String[] {"price:asc"}).build();
+client.index("search_parameter_guide_sort_1").search(searchRequest);
+```
+
+
+```ruby Ruby
+client.index('books').search('science fiction', { sort: ['price:asc'] })
+```
+
+
+```go Go
+resp, err := client.Index("books").Search("science fiction", &meilisearch.SearchRequest{
+  Sort: []string{
+    "price:asc",
+  },
+})
+```
+
+
+```csharp C#
+var sq = new SearchQuery
+{
+  Sort = new[] { "price:asc" },
+};
+await client.Index("books").SearchAsync<Book>("science fiction", sq);
+```
+
+
+```rust Rust
+let results: SearchResults<Books> = client
+  .index("books")
+  .search()
+  .with_query("science fiction")
+  .with_sort(&["price:asc"])
+  .execute()
+  .await
+  .unwrap();
+```
+
+
+```swift Swift
+let searchParameters = SearchParameters(
+  query: "science fiction",
+  sort: ["price:asc"]
+)
+client.index("books").search(searchParameters) { (result: Result<Searchable<Book>, Swift.Error>) in
+  switch result {
+  case .success(let searchResult):
+    print(searchResult)
+  case .failure(let error):
+    print(error)
+  }
+}
+```
+
+
+```dart Dart
+await client
+    .index('books')
+    .search('science fiction', SearchQuery(sort: ['price:asc']));
+```
+
+</CodeGroup>

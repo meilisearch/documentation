@@ -1,0 +1,57 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X GET 'MEILISEARCH_URL/indexes/books/settings/proximity-precision'
+```
+
+
+```javascript JS
+client.index('books').getProximityPrecision()
+```
+
+
+```python Python
+client.index('books').get_proximity_precision()
+```
+
+
+```php PHP
+$client->index('books')->getProximityPrecision();
+```
+
+
+```java Java
+client.index("books").getProximityPrecisionSettings();
+```
+
+
+```ruby Ruby
+client.index('books').proximity_precision
+```
+
+
+```go Go
+client.Index("books").GetProximityPrecision()
+```
+
+
+```csharp C#
+await client.Index("books").GetProximityPrecisionAsync();
+```
+
+
+```rust Rust
+let proximity_precision: String = client
+  .index("books")
+  .get_proximity_precision()
+  .await
+  .unwrap();
+```
+
+
+```swift Swift
+let precisionValue = try await self.client.index("books").getProximityPrecision()
+```
+
+</CodeGroup>

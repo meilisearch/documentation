@@ -1,0 +1,69 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X DELETE 'MEILISEARCH_URL/indexes/movies/documents'
+```
+
+
+```javascript JS
+client.index('movies').deleteAllDocuments()
+```
+
+
+```python Python
+client.index('movies').delete_all_documents()
+```
+
+
+```php PHP
+$client->index('movies')->deleteAllDocuments();
+```
+
+
+```java Java
+client.index("movies").deleteAllDocuments();
+```
+
+
+```ruby Ruby
+client.index('movies').delete_all_documents
+```
+
+
+```go Go
+client.Index("movies").DeleteAllDocuments()
+```
+
+
+```csharp C#
+await client.Index("movies").DeleteAllDocumentsAsync();
+```
+
+
+```rust Rust
+let task: TaskInfo = client
+  .index("movies")
+  .delete_all_documents()
+  .await
+  .unwrap();
+```
+
+
+```swift Swift
+client.index("movies").deleteAllDocuments() { (result) in
+    switch result {
+    case .success(let task):
+        print(task)
+    case .failure(let error):
+        print(error)
+    }
+}
+```
+
+
+```dart Dart
+await client.index('movies').deleteAllDocuments();
+```
+
+</CodeGroup>

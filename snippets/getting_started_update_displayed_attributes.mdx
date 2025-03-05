@@ -1,0 +1,116 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X PUT 'MEILISEARCH_URL/indexes/movies/settings/displayed-attributes' \
+  -H 'Content-Type: application/json' \
+  --data-binary '[
+    "title",
+    "overview",
+    "poster"
+  ]'
+```
+
+
+```javascript JS
+client.index('movies').updateDisplayedAttributes([
+  'title',
+  'overview',
+  'poster'
+])
+```
+
+
+```python Python
+client.index('movies').update_displayed_attributes([
+    'title',
+    'overview',
+    'poster'
+])
+```
+
+
+```php PHP
+$client->index('movies')->updateDisplayedAttributes([
+  'title',
+  'overview',
+  'poster'
+]);
+```
+
+
+```java Java
+Settings settings = new Settings();
+settings.setDisplayedAttributes(new String[]
+{
+      "title",
+      "overview",
+      "poster"
+});
+client.index("movies").updateSettings(settings);
+```
+
+
+```ruby Ruby
+client.index('movies').update_displayed_attributes([
+  'title',
+  'overview',
+  'poster'
+])
+```
+
+
+```go Go
+displayedAttributes := []string{
+  "title",
+  "overview",
+  "poster",
+}
+client.Index("movies").UpdateDisplayedAttributes(&displayedAttributes)
+```
+
+
+```csharp C#
+await client.Index("movies").UpdateDisplayedAttributesAsync(new string[] {
+  "title",
+  "overview",
+  "poster"
+});
+```
+
+
+```rust Rust
+let displayed_attributes = [
+  "title",
+  "overview",
+  "poster",
+];
+
+client
+  .index("movies")
+  .set_displayed_attributes(&displayed_attributes)
+  .await
+  .unwrap();
+```
+
+
+```swift Swift
+let displayedAttributes: [String] = ["title", "overview", "poster"]
+client.index("movies").updateDisplayedAttributes(displayedAttributes) { (result) in
+     switch result {
+     case .success(let task):
+         print(task)
+     case .failure(let error):
+         print(error)
+     }
+ }
+```
+
+
+```dart Dart
+await client
+    .index('movies')
+    .updateDisplayedAttributes(['title', 'overview', 'poster']);
+```
+
+</CodeGroup>

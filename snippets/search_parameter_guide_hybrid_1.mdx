@@ -1,0 +1,35 @@
+<CodeGroup>
+
+```bash cURL
+curl -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
+  -H 'content-type: application/json' \
+  --data-binary '{
+    "q": "kitchen utensils",
+    "hybrid": {
+      "semanticRatio": 0.9,
+      "embedder": "EMBEDDER_NAME"
+    }
+  }'
+```
+
+
+```javascript JS
+client.index('INDEX_NAME').search('kitchen utensils', {
+  hybrid: {
+    semanticRatio: 0.9,
+    embedder: 'EMBEDDER_NAME'
+  }
+})
+```
+
+
+```php PHP
+$client->index('INDEX_NAME')->search('kitchen utensils', [
+  'hybrid' => [
+    'semanticRatio' => 0.9,
+    'embedder' => 'EMBEDDER_NAME'
+  ]
+]);
+```
+
+</CodeGroup>

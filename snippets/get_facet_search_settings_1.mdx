@@ -1,0 +1,23 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X GET 'MEILISEARCH_URL/indexes/INDEX_UID/settings/facet-search'
+```
+
+
+```javascript JS
+client.index('INDEX_NAME').getFacetSearch();
+```
+
+
+```php PHP
+$client->index('INDEX_NAME')->getFacetSearch();
+```
+
+
+```ruby Ruby
+client.index('INDEX_UID').facet_search_setting
+```
+
+</CodeGroup>

@@ -1,0 +1,49 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/similar' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer DEFAULT_SEARCH_API_KEY' \
+  --data-binary '{
+    "id": TARGET_DOCUMENT_ID,
+    "embedder": "EMBEDDER_NAME"
+  }'
+```
+
+
+```javascript JS
+client.index('INDEX_NAME').searchSimilarDocuments({ id: 'TARGET_DOCUMENT_ID', embedder: 'default' })
+```
+
+
+```python Python
+client.index("INDEX_NAME").get_similar_documents({"id": "TARGET_DOCUMENT_ID", "embedder": "default"})
+```
+
+
+```php PHP
+$similarQuery = new SimilarDocumentsQuery('TARGET_DOCUMENT_ID', 'default');
+$client->index('INDEX_NAME')->searchSimilarDocuments($similarQuery);
+```
+
+
+```java Java
+SimilarDocumentRequest query = new SimilarDocumentRequest() .setId("143") .setEmbedder("manual"); client.index("movies").searchSimilarDocuments(query)
+```
+
+
+```ruby Ruby
+client.index('INDEX_NAME').search_similar_documents('TARGET_DOCUMENT_ID', embedder: 'default')
+```
+
+
+```go Go
+resp := new(meilisearch.SimilarDocumentResult)
+client.Index("INDEX_NAME").SearchSimilarDocuments(&meilisearch.SimilarDocumentQuery{
+  Id: "TARGET_DOCUMENT_ID",
+  Embedder: "default",
+}, resp)
+```
+
+</CodeGroup>

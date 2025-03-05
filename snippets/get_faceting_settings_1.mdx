@@ -1,0 +1,57 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X GET 'MEILISEARCH_URL/indexes/books/settings/faceting'
+```
+
+
+```javascript JS
+client.index('books').getFaceting()
+```
+
+
+```python Python
+client.index('books').get_faceting_settings()
+```
+
+
+```php PHP
+$client->index('books')->getFaceting();
+```
+
+
+```java Java
+client.index("books").getFacetingSettings();
+```
+
+
+```ruby Ruby
+client.index('books').faceting
+```
+
+
+```go Go
+client.Index("books").GetFaceting()
+```
+
+
+```csharp C#
+await client.Index("movies").GetFacetingAsync();
+```
+
+
+```rust Rust
+let faceting: FacetingSettings = client
+  .index("books")
+  .get_faceting()
+  .await
+  .unwrap();
+```
+
+
+```dart Dart
+await client.index('movies').getFaceting();
+```
+
+</CodeGroup>

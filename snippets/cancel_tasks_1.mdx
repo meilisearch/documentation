@@ -1,0 +1,71 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/tasks/cancel?uids=1,2'
+```
+
+
+```javascript JS
+client.cancelTasks({ uids: [1, 2] })
+```
+
+
+```python Python
+client.cancel_tasks({'uids': ['1', '2']})
+```
+
+
+```php PHP
+$client->cancelTasks((new CancelTasksQuery())->setUids([1, 2]));
+```
+
+
+```java Java
+CancelTasksQuery query = new CancelTasksQuery().setUids(new int[] {1, 2})
+client.cancelTasks(query);
+```
+
+
+```ruby Ruby
+client.cancel_tasks(uids: [1, 2])
+```
+
+
+```go Go
+client.CancelTasks(&meilisearch.CancelTasksQuery{
+  UIDS: []int64{1, 2},
+});
+```
+
+
+```csharp C#
+await client.CancelTasksAsync(new CancelTasksQuery { Uids = new List<int> { 1, 2 } });
+```
+
+
+```rust Rust
+let mut query = tasks::TasksCancelQuery::new(&client);
+query.with_uids([1, 2]);
+
+let res = client.cancel_task_with(&query).await.unwrap();
+```
+
+
+```swift Swift
+client.cancelTasks(filter: CancelTasksQuery(uids: [1, 2])) { (result) in
+    switch result {
+    case .success(let taskInfo):
+        print(taskInfo)
+    case .failure(let error):
+        print(error)
+    }
+}
+```
+
+
+```dart Dart
+await client.cancelTasks(params: CancelTasksQuery(uids: [1, 2]));
+```
+
+</CodeGroup>

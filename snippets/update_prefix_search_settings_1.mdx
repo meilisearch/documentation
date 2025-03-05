@@ -1,0 +1,25 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X PUT 'MEILISEARCH_URL/indexes/INDEX_UID/settings/prefix-search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '"disabled"'
+```
+
+
+```javascript JS
+client.index('INDEX_NAME').updatePrefixSearch('disabled');
+```
+
+
+```php PHP
+$client->index('INDEX_NAME')->updatePrefixSearch('disabled');
+```
+
+
+```ruby Ruby
+client.index('INDEX_UID').update_prefix_search('disabled')
+```
+
+</CodeGroup>
