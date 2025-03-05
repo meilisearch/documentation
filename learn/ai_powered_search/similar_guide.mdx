@@ -7,14 +7,12 @@ In this guide, you will see how to build an AI-powered movie recommendation app.
 
 ## Prerequisites
 
-Before beginning, make sure you have:
-
 - A running Meilisearch project
-- A tier >=2 OpenAI API key  
+- A [tier >=2](https://platform.openai.com/docs/guides/rate-limits#usage-tiers) OpenAI API key  
 
 ## Create a new index
 
-Create an index called `movies` and add this <ButtonLink as="a" id="downloadMovie" href="/movies.json" download="movies.json">`movies.json`</ButtonLink> dataset to it. If necessary, follow the [getting started guide](/learn/getting_started/cloud_quick_start).
+Create an index called `movies` and add this <ButtonLink as="a" id="downloadMovie" href="/movies.json" download="movies.json">`movies.json`</ButtonLink> dataset to it. If necessary, consult the [getting started guide](/learn/getting_started/cloud_quick_start) for more instructions on index creation.
 
 Each document in the dataset represents a single movie and has the following structure:
 
@@ -29,7 +27,7 @@ Each document in the dataset represents a single movie and has the following str
 
 Next, use the Cloud UI to configure an OpenAI embedder:
 
-!()[]
+![Animated image of the Meilisearch Cloud UI showing a user clicking on "add embedder". This opens up a modal window, where the user fills in the name of the embedder, chooses OpenAI as its source. They then select a model, input their API key, and type out a document template.](/assets/images/similar-guide/01-add-embedder-ui.gif)
 
 You may also use the `/settings/embedders` API subroute:
 
@@ -51,32 +49,49 @@ curl -X PATCH 'MEILISEARCH_URL/indexes/movies/settings'
 
 Replace `MEILISEARCH_URL`, `MEILISEARCH_API_KEY`, and `OPENAI_API_KEY` with the corresponding values in your application.
 
-Meilisearch will start generating the embeddings for all movies in your dataset. Use the returned task UID to track the progress of the operation. Once it is finished, you are ready to start searching.
+Meilisearch will start generating the embeddings for all movies in your dataset. Use the returned `taskUid` to [track the progress of this task](/learn/async/asynchronous_operations). Once it is finished, you are ready to start searching.
 
 ## Perform a hybrid search
 
 With your documents added and all embeddings generated, you can perform an AI-powered search:
 
+```sh
+curl -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
+  -H 'content-type: application/json' \
+  -H 'Authorization: Bearer DEFAULT_SEARCH_API_KEY' \
+  --data-binary '{
+    "q": "batman",
+    "hybrid": {
+      "embedder": "EMBEDDER_NAME"
+    }
+  }'
 ```
 
-```
-
-This request returns a list of movies. Pick the top result and take note of its primary key in the `id` field. In this case, it's the movie "MOVIE_NAME".
+This request returns a list of movies. Pick the top result and take note of its primary key in the `id` field. In this case, it's the movie "Batman".
 
 ## Return similar documents
 
-Pass "MOVIE_NAME"'s `id` to your index's `/similar` route, specifying `movies-text` as your embedder:
+Pass "MOVIE_NAME"'s `id` to your index's [`/similar` route](/reference/api/similar), specifying `movies-text` as your embedder:
 
-```
-
+```sh
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/movies/similar' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer DEFAULT_SEARCH_API_KEY' \
+  --data-binary '{
+    "id": 192,
+    "embedder": "EMBEDDER_NAME"
+  }'
 ```
 
 Meilisearch will return a list of the 20 documents most similar to the movie you chose. You may then choose to display some of these similar results to your users, pointing them to other movies that may also interest them.
 
 ## Conclusion
 
-Congratulations! You've successfully built an AI-powered movie search and recommendation system using Meilisearch and React. Let's recap what you've accomplished:
+Congratulations! You've successfully built an AI-powered movie search and recommendation system using Meilisearch by:
 
-- Set up a Meilisearch project and configured it for AI-powered search
-- Implemented hybrid search combining keyword and semantic search capabilities
-- Integrated Meilisearch's similarity search for movie recommendations
+- Setting up a Meilisearch project and configured it for AI-powered search
+- Implementing hybrid search combining keyword and semantic search capabilities
+- Integrating Meilisearch's similarity search for movie recommendations
+
+In a real-life application, you would now start integrating this workflow into a front end, like the one in this [official Meilisearch blog post](https://www.meilisearch.com/blog/add-ai-powered-search-to-react).
