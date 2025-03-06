@@ -3,7 +3,9 @@ title: Retrieve related search results
 description: 
 ---
 
-In this guide, you will see how to build an AI-powered movie recommendation app. Unlike traditional keyword search, AI-powered search uses machine learning to return results based on the context and meaning behind queries.
+This guide shows you how to use the similar documents endpoint to create an AI-powered movie recommendation workflow.
+
+You will create an embedder and add documents to your index. You will then perform a search, and use the top result's primary key to retrieve similar movies in your database.
 
 ## Prerequisites
 
@@ -12,7 +14,7 @@ In this guide, you will see how to build an AI-powered movie recommendation app.
 
 ## Create a new index
 
-Create an index called `movies` and add this <ButtonLink as="a" id="downloadMovie" href="/movies.json" download="movies.json">`movies.json`</ButtonLink> dataset to it. If necessary, consult the [getting started guide](/learn/getting_started/cloud_quick_start) for more instructions on index creation.
+Create an index called `movies` and add this <ButtonLink as="a" id="downloadMovie" href="/movies.json" download="movies.json">`movies.json`</ButtonLink> dataset to it. If necessary, consult the [getting started](/learn/getting_started/cloud_quick_start) for more instructions on index creation.
 
 Each document in the dataset represents a single movie and has the following structure:
 
@@ -29,22 +31,22 @@ Next, use the Cloud UI to configure an OpenAI embedder:
 
 ![Animated image of the Meilisearch Cloud UI showing a user clicking on "add embedder". This opens up a modal window, where the user fills in the name of the embedder, chooses OpenAI as its source. They then select a model, input their API key, and type out a document template.](/assets/images/similar-guide/01-add-embedder-ui.gif)
 
-You may also use the `/settings/embedders` API subroute:
+You may also use the `/settings/embedders` API subroute to configure your embedder:
 
 ```sh
 curl -X PATCH 'MEILISEARCH_URL/indexes/movies/settings' 
--H 'Content-Type: application/json' 
--H 'Authorization: Bearer MEILISEARCH_API_KEY' 
---data-binary '{
-  "embedders": {
-    "movies-text": {
-      "source": "openAi",
-      "apiKey": "OPENAI_API_KEY",
-      "model": "text-embedding-3-small",
-      "documentTemplate": "A movie titled '{{doc.title}}' released in {{ doc.release_date }}. The movie genres are: {{doc.genres}}. The story is about: {{doc.overview|truncatewords: 20}}"
+  -H 'Content-Type: application/json' 
+  -H 'Authorization: Bearer MEILISEARCH_API_KEY' 
+  --data-binary '{
+    "embedders": {
+      "movies-text": {
+        "source": "openAi",
+        "apiKey": "OPENAI_API_KEY",
+        "model": "text-embedding-3-small",
+        "documentTemplate": "A movie titled '{{doc.title}}' released in {{ doc.release_date }}. The movie genres are: {{doc.genres}}. The story is about: {{doc.overview|truncatewords: 20}}"
+      }
     }
-  }
-}'
+  }'
 ```
 
 Replace `MEILISEARCH_URL`, `MEILISEARCH_API_KEY`, and `OPENAI_API_KEY` with the corresponding values in your application.
@@ -53,7 +55,7 @@ Meilisearch will start generating the embeddings for all movies in your dataset.
 
 ## Perform a hybrid search
 
-With your documents added and all embeddings generated, you can perform an AI-powered search:
+With your documents added and all embeddings generated, you can perform a search:
 
 ```sh
 curl -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
@@ -71,7 +73,7 @@ This request returns a list of movies. Pick the top result and take note of its 
 
 ## Return similar documents
 
-Pass "MOVIE_NAME"'s `id` to your index's [`/similar` route](/reference/api/similar), specifying `movies-text` as your embedder:
+Pass "Batman"'s `id` to your index's [`/similar` route](/reference/api/similar), specifying `movies-text` as your embedder:
 
 ```sh
 curl \
@@ -88,7 +90,7 @@ Meilisearch will return a list of the 20 documents most similar to the movie you
 
 ## Conclusion
 
-Congratulations! You've successfully built an AI-powered movie search and recommendation system using Meilisearch by:
+Congratulations! You have successfully built an AI-powered movie search and recommendation system using Meilisearch by:
 
 - Setting up a Meilisearch project and configured it for AI-powered search
 - Implementing hybrid search combining keyword and semantic search capabilities
