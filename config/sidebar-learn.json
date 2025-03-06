@@ -50,6 +50,11 @@
         "slug": "search_with_user_provided_embeddings"
       },
       {
+        "source": "learn/ai_powered_search/configure_rest_embedder.mdx",
+        "label": "Configure a REST embedder",
+        "slug": "configure_rest_embedder"
+      },
+      {
         "source": "learn/ai_powered_search/document_template_best_practices.mdx",
         "label": "Document template best practices",
         "slug": "document_template_best_practices"
