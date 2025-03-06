@@ -60,6 +60,11 @@
         "slug": "retrieve_related_search_results"
       },
       {
+        "source": "learn/ai_powered_search/document_template_best_practices.mdx",
+        "label": "Document template best practices",
+        "slug": "document_template_best_practices"
+      },
+      {
         "source": "learn/ai_powered_search/choose_an_embedder.mdx",
         "label": "Which embedder should I choose?",
         "slug": "choose_an_embedder"

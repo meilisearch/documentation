@@ -638,5 +638,10 @@
     "source": "/docs/learn/ai_powered_search/deactivate_ai_powered_search",
     "destination": "/docs/learn/ai_powered_search/getting_started_with_ai_search",
     "permanent": true
+  },
+  {
+    "source": "/docs/instant-search-react-app",
+    "destination": "/docs/guides/front_end/react_quick_start",
+    "permanent": true
   }
 ]
