@@ -55,6 +55,11 @@
         "slug": "configure_rest_embedder"
       },
       {
+        "source": "learn/ai_powered_search/retrieve_related_search_results.mdx",
+        "label": "Retrieve related search results",
+        "slug": "retrieve_related_search_results"
+      },
+      {
         "source": "learn/ai_powered_search/document_template_best_practices.mdx",
         "label": "Document template best practices",
         "slug": "document_template_best_practices"
