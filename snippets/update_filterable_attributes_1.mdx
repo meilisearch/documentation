@@ -10,7 +10,6 @@ curl \
   ]'
 ```
 
-
 ```javascript JS
 client.index('movies')
   .updateFilterableAttributes([
@@ -19,14 +18,12 @@ client.index('movies')
   ])
 ```
 
-
 ```python Python
 client.index('movies').update_filterable_attributes([
   'genres',
   'director'
 ])
 ```
-
 
 ```php PHP
 $client->index('movies')->updateFilterableAttributes([
@@ -35,13 +32,11 @@ $client->index('movies')->updateFilterableAttributes([
 ]);
 ```
 
-
 ```java Java
 Settings settings = new Settings();
 settings.setFilterableAttributes(new String[] {"genres", "director"});
 client.index("movies").updateSettings(settings);
 ```
-
 
 ```ruby Ruby
 client.index('movies').update_filterable_attributes([
@@ -49,7 +44,6 @@ client.index('movies').update_filterable_attributes([
   'director'
 ])
 ```
-
 
 ```go Go
 filterableAttributes := []string{
@@ -59,12 +53,10 @@ filterableAttributes := []string{
 client.Index("movies").UpdateFilterableAttributes(&filterableAttributes)
 ```
 
-
 ```csharp C#
 List<string> attributes = new() { "genres", "director" };
 TaskInfo result = await client.Index("movies").UpdateFilterableAttributesAsync(attributes);
 ```
-
 
 ```rust Rust
 let filterable_attributes = [
@@ -79,7 +71,6 @@ let task: TaskInfo = client
   .unwrap();
 ```
 
-
 ```swift Swift
 client.index("movies").updateFilterableAttributes(["genre", "director"]) { (result) in
     switch result {
@@ -91,11 +82,9 @@ client.index("movies").updateFilterableAttributes(["genre", "director"]) { (resu
 }
 ```
 
-
 ```dart Dart
 await client
     .index('movies')
     .updateFilterableAttributes(['genres', 'director']);
 ```
-
 </CodeGroup>

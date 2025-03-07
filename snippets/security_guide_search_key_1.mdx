@@ -6,48 +6,40 @@ curl \
   -H 'Authorization: Bearer API_KEY'
 ```
 
-
 ```javascript JS
 const client = new MeiliSearch({ host: 'http://localhost:7700', apiKey: 'apiKey' })
 client.index('patient_medical_records').search()
 ```
-
 
 ```python Python
 client = Client('http://localhost:7700', 'apiKey')
 client.index('patient_medical_records').search()
 ```
 
-
 ```php PHP
 $client = new Client('http://localhost:7700', 'masterKey');
 $client->index('patient_medical_records')->search();
 ```
-
 
 ```java Java
 Client client = new Client(new Config("http://localhost:7700", "apiKey"));
 client.index("patient_medical_records").search();
 ```
 
-
 ```ruby Ruby
 client = MeiliSearch::Client.new('http://localhost:7700', 'apiKey')
 client.index('patient_medical_records').search
 ```
-
 
 ```go Go
 client := meilisearch.New("http://localhost:7700", meilisearch.WithAPIKey("masterKey"))
 client.Index("patient_medical_records").Search();
 ```
 
-
 ```csharp C#
 MeilisearchClient client = new MeilisearchClient("http://localhost:7700", "apiKey");
 var searchResult = await client.Index("patient_medical_records").SearchAsync<Patient>();
 ```
-
 
 ```rust Rust
 let client = Client::new("http://localhost:7700", Some("apiKey"));
@@ -57,7 +49,6 @@ let result = client.index("patient_medical_records")
   .await
   .unwrap();
 ```
-
 
 ```swift Swift
 client = try MeiliSearch(host: "http://localhost:7700", apiKey: "apiKey")
@@ -72,10 +63,8 @@ client.index("patient_medical_records")
 }
 ```
 
-
 ```dart Dart
 var client = MeiliSearchClient('http://localhost:7700', 'apiKey');
 await client.index('patient_medical_records').search('');
 ```
-
 </CodeGroup>

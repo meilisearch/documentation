@@ -7,13 +7,11 @@ curl \
   --data-binary '{ "filter": "_geoRadius(45.472735, 9.184019, 2000) AND type = pizza" }'
 ```
 
-
 ```javascript JS
 client.index('restaurants').search('', {
   filter: ['_geoRadius(45.472735, 9.184019, 2000) AND type = pizza'],
 })
 ```
-
 
 ```python Python
 client.index('restaurants').search('', {
@@ -21,31 +19,26 @@ client.index('restaurants').search('', {
 })
 ```
 
-
 ```php PHP
 $client->index('restaurants')->search('', [
   'filter' => '_geoRadius(45.472735, 9.184019, 2000) AND type = pizza'
 ]);
 ```
 
-
 ```java Java
 SearchRequest searchRequest = SearchRequest.builder().q("").filter(new String[] {"_geoRadius(45.472735, 9.184019, 2000) AND type = pizza"}).build();
 client.index("restaurants").search(searchRequest);
 ```
 
-
 ```ruby Ruby
 client.index('restaurants').search('', { filter: '_geoRadius(45.472735, 9.184019, 2000) AND type = pizza' })
 ```
-
 
 ```go Go
 resp, err := client.Index("restaurants").Search("", &meilisearch.SearchRequest{
   Filter: "_geoRadius(45.472735, 9.184019, 2000) AND type = pizza",
 })
 ```
-
 
 ```csharp C#
 SearchQuery filters = new SearchQuery()
@@ -56,7 +49,6 @@ SearchQuery filters = new SearchQuery()
 var restaurants = await client.Index("restaurants").SearchAsync<Restaurant>("restaurants", filters);
 ```
 
-
 ```rust Rust
 let results: SearchResults<Restaurant> = client
   .index("restaurants")
@@ -66,7 +58,6 @@ let results: SearchResults<Restaurant> = client
   .await
   .unwrap();
 ```
-
 
 ```swift Swift
 let searchParameters = SearchParameters(
@@ -82,7 +73,6 @@ client.index("restaurants").search(searchParameters) { (result: Result<Searchabl
 }
 ```
 
-
 ```dart Dart
 await client.index('restaurants').search(
       '',
@@ -97,5 +87,4 @@ await client.index('restaurants').search(
       ),
     );
 ```
-
 </CodeGroup>

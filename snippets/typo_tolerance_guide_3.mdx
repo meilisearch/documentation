@@ -11,13 +11,11 @@ curl \
   }'
 ```
 
-
 ```javascript JS
 client.index('movies').updateTypoTolerance({
   disableOnWords: ['shrek']
 })
 ```
-
 
 ```python Python
 client.index('movies').update_typo_tolerance({
@@ -25,13 +23,11 @@ client.index('movies').update_typo_tolerance({
 })
 ```
 
-
 ```php PHP
 $client->index('movies')->updateTypoTolerance([
   'disableOnWords' => ['shrek']
 ]);
 ```
-
 
 ```java Java
 TypoTolerance typoTolerance = new TypoTolerance();
@@ -39,11 +35,9 @@ typoTolerance.setDisableOnWords(new String[] {"shrek"});
 client.index("movies").updateTypoToleranceSettings(typoTolerance);
 ```
 
-
 ```ruby Ruby
 index('books').update_typo_tolerance({ disable_on_words: ['shrek'] })
 ```
-
 
 ```go Go
 client.Index("movies").UpdateTypoTolerance(&meilisearch.TypoTolerance{
@@ -51,14 +45,12 @@ client.Index("movies").UpdateTypoTolerance(&meilisearch.TypoTolerance{
 })
 ```
 
-
 ```csharp C#
 var typoTolerance = new TypoTolerance {
   DisableOnWords = new string[] { "shrek" }
 };
 await client.Index("movies").UpdateTypoToleranceAsync(typoTolerance);
 ```
-
 
 ```rust Rust
 let min_word_size_for_typos = MinWordSizeForTypos {
@@ -79,12 +71,10 @@ let task: TaskInfo = client
   .unwrap();
 ```
 
-
 ```dart Dart
 final toUpdate = TypoTolerance(
   disableOnWords: ['shrek'],
 );
 await client.index('movies').updateTypoTolerance(toUpdate);
 ```
-
 </CodeGroup>

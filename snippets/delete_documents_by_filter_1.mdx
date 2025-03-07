@@ -9,44 +9,36 @@ curl \
   }'
 ```
 
-
 ```javascript JS
 client.index('movies').deleteDocuments({
   filter: 'genres = action OR genres = adventure'
 })
 ```
 
-
 ```python Python
 client.index('movies').delete_documents(filter='genres=action OR genres=adventure')
 ```
 
-
 ```php PHP
 $client->index('movies')->deleteDocuments(['filter' => 'genres = action OR genres = adventure']);
 ```
-
 
 ```java Java
 String filter = "genres = action OR genres = adventure";
 client.index("movies").deleteDocumentsByFilter(filter);
 ```
 
-
 ```ruby Ruby
 client.index('movies').delete_documents(filter: 'genres = action OR genres = adventure')
 ```
-
 
 ```go Go
 client.Index("movies").DeleteDocumentsByFilter("genres=action OR genres=adventure")
 ```
 
-
 ```csharp C#
 await client.Index("movies").DeleteDocumentsAsync(new DeleteDocumentsQuery() { Filter = "genres = action OR genres = adventure" });
 ```
-
 
 ```rust Rust
 let index = client.index("movies");
@@ -56,7 +48,6 @@ let task = DocumentDeletionQuery::new(&index)
   .await
   .unwrap();
 ```
-
 
 ```dart Dart
 await client.index('movies').deleteDocuments(
@@ -68,5 +59,4 @@ await client.index('movies').deleteDocuments(
       ),
     );
 ```
-
 </CodeGroup>

@@ -11,14 +11,12 @@ curl \
   }'
 ```
 
-
 ```javascript JS
 client.updateKey('6062abda-a5aa-4414-ac91-ecd7944c0f8d', {
     name: 'Products/Reviews API key',
     description: 'Manage documents: Products/Reviews API key',
 })
 ```
-
 
 ```python Python
 client.update_key(key_or_uid='6062abda-a5aa-4414-ac91-ecd7944c0f8d',
@@ -28,7 +26,6 @@ client.update_key(key_or_uid='6062abda-a5aa-4414-ac91-ecd7944c0f8d',
 })
 ```
 
-
 ```php PHP
 $client->updateKey('6062abda-a5aa-4414-ac91-ecd7944c0f8d',
   [
@@ -37,7 +34,6 @@ $client->updateKey('6062abda-a5aa-4414-ac91-ecd7944c0f8d',
   ]);
 ```
 
-
 ```java Java
 KeyUpdate keyChanges = new KeyUpdate();
 keyChanges.setName("Products/Reviews API key");
@@ -45,7 +41,6 @@ keyChanges.setDescription("Manage documents: Products/Reviews API key");
 
 client.updateKey("6062abda-a5aa-4414-ac91-ecd7944c0f8d", keyChanges);
 ```
-
 
 ```ruby Ruby
 client.update_key(
@@ -57,7 +52,6 @@ client.update_key(
 )
 ```
 
-
 ```go Go
 client.UpdateKey("6062abda-a5aa-4414-ac91-ecd7944c0f8d", &meilisearch.Key{
   Description: "Manage documents: Products/Reviews API key",
@@ -67,7 +61,6 @@ client.UpdateKey("6062abda-a5aa-4414-ac91-ecd7944c0f8d", &meilisearch.Key{
 })
 ```
 
-
 ```csharp C#
 await client.UpdateKeyAsync(
   "6062abda-a5aa-4414-ac91-ecd7944c0f8d",
@@ -75,7 +68,6 @@ await client.UpdateKeyAsync(
   name: "Products/Reviews API key"
 )
 ```
-
 
 ```rust Rust
 let mut key = client
@@ -89,7 +81,6 @@ key
     .await
     .unwrap();
 ```
-
 
 ```swift Swift
 let keyParams = KeyUpdateParams(
@@ -107,7 +98,6 @@ client.updateKey(keyOrUid: "6062abda-a5aa-4414-ac91-ecd7944c0f8d", keyParams: ke
 }
 ```
 
-
 ```dart Dart
 await client.updateKey(
   '6062abda-a5aa-4414-ac91-ecd7944c0f8d',
@@ -115,5 +105,4 @@ await client.updateKey(
   name: 'Products/Reviews API key',
 );
 ```
-
 </CodeGroup>

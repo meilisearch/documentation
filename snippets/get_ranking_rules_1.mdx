@@ -5,41 +5,33 @@ curl \
   -X GET 'MEILISEARCH_URL/indexes/movies/settings/ranking-rules'
 ```
 
-
 ```javascript JS
 client.index('movies').getRankingRules()
 ```
-
 
 ```python Python
 client.index('movies').get_ranking_rules()
 ```
 
-
 ```php PHP
 $client->index('movies')->getRankingRules();
 ```
-
 
 ```java Java
 client.index("movies").getRankingRulesSettings();
 ```
 
-
 ```ruby Ruby
 client.index('movies').ranking_rules
 ```
-
 
 ```go Go
 client.Index("movies").GetRankingRules()
 ```
 
-
 ```csharp C#
 await client.Index("movies").GetRankingRulesAsync();
 ```
-
 
 ```rust Rust
 let ranking_rules: Vec<String> = client
@@ -48,7 +40,6 @@ let ranking_rules: Vec<String> = client
   .await
   .unwrap();
 ```
-
 
 ```swift Swift
 client.index("movies").getRankingRules { (result) in
@@ -61,9 +52,7 @@ client.index("movies").getRankingRules { (result) in
 }
 ```
 
-
 ```dart Dart
 await client.index('movies').getRankingRules();
 ```
-
 </CodeGroup>

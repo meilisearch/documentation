@@ -5,32 +5,26 @@ curl \
   -X GET 'MEILISEARCH_URL/tasks?statuses=failed'
 ```
 
-
 ```javascript JS
 client.getTasks({ statuses: ['failed', 'canceled'] })
 ```
-
 
 ```python Python
 client.get_tasks({'statuses': ['failed', 'canceled']})
 ```
 
-
 ```php PHP
 $client->getTasks((new TasksQuery())->setStatuses(['failed', 'canceled']));
 ```
-
 
 ```java Java
 TasksQuery query = new TasksQuery().setStatuses(new String[] {"failed", "canceled"});
 client.getTasks(query);
 ```
 
-
 ```ruby Ruby
 client.get_tasks(statuses: ['failed', 'canceled'])
 ```
-
 
 ```go Go
 client.GetTasks(&meilisearch.TasksQuery{
@@ -41,11 +35,9 @@ client.GetTasks(&meilisearch.TasksQuery{
 })
 ```
 
-
 ```csharp C#
 await client.GetTasksAsync(new TasksQuery { Statuses = new List<TaskInfoStatus> { TaskInfoStatus.Failed, TaskInfoStatus.Canceled } });
 ```
-
 
 ```rust Rust
 let mut query = TasksQuery::new(&client);
@@ -55,7 +47,6 @@ let tasks = query
   .await
   .unwrap();
 ```
-
 
 ```swift Swift
 client.getTasks(params: TasksQuery(statuses: [.failed, .canceled])) { result in
@@ -68,7 +59,6 @@ client.getTasks(params: TasksQuery(statuses: [.failed, .canceled])) { result in
 }
 ```
 
-
 ```dart Dart
 await client.getTasks(
   params: TasksQuery(
@@ -76,5 +66,4 @@ await client.getTasks(
   ),
 );
 ```
-
 </CodeGroup>

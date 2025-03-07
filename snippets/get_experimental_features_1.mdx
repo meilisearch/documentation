@@ -5,16 +5,13 @@ curl \
   -X GET 'MEILISEARCH_URL/experimental-features/'
 ```
 
-
 ```ruby Ruby
 client.experimental_features
 ```
 
-
 ```go Go
 client.ExperimentalFeatures().Get()
 ```
-
 
 ```rust Rust
 let client = Client::new("http://localhost:7700", Some("apiKey"));
@@ -24,5 +21,4 @@ let res = features
   .await
   .unwrap();
 ```
-
 </CodeGroup>

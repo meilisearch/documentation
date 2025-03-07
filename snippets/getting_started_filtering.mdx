@@ -7,11 +7,9 @@ curl \
   --data-binary '{ "filter": "mass < 200" }'
 ```
 
-
 ```javascript JS
 client.index('meteorites').search('', { filter: 'mass < 200' })
 ```
-
 
 ```python Python
 client.index('meteorites').search('', {
@@ -19,24 +17,20 @@ client.index('meteorites').search('', {
 })
 ```
 
-
 ```php PHP
 $client->index('meteorites')->search('', [
   'filter' => 'mass < 200'
 ]);
 ```
 
-
 ```java Java
 SearchRequest searchRequest = SearchRequest.builder().q("").filter(new String[] {"mass < 200"}).build();
 client.index("meteorites").search(searchRequest);
 ```
 
-
 ```ruby Ruby
 client.index('meteorites').search('', { filter: 'mass < 200' })
 ```
-
 
 ```go Go
 resp, err := client.Index("meteorites").Search("", &meilisearch.SearchRequest{
@@ -44,12 +38,10 @@ resp, err := client.Index("meteorites").Search("", &meilisearch.SearchRequest{
 })
 ```
 
-
 ```csharp C#
 SearchQuery filter = new SearchQuery() { Filter = "mass < 200" };
 await client.Index("meteorites").SearchAsync<Meteorite>("", filter);
 ```
-
 
 ```rust Rust
 let results: SearchResults<Meteorite> = client
@@ -60,7 +52,6 @@ let results: SearchResults<Meteorite> = client
   .await
   .unwrap();
 ```
-
 
 ```swift Swift
 let searchParameters = SearchParameters(
@@ -77,11 +68,9 @@ let searchParameters = SearchParameters(
  }
 ```
 
-
 ```dart Dart
 await client
     .index('meteorites')
     .search('', SearchQuery(filter: 'mass < 200'));
 ```
-
 </CodeGroup>

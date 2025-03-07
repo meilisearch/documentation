@@ -5,41 +5,33 @@ curl \
   -X GET 'MEILISEARCH_URL/health'
 ```
 
-
 ```javascript JS
 client.health()
 ```
-
 
 ```python Python
 client.health()
 ```
 
-
 ```php PHP
 $client->health();
 ```
-
 
 ```java Java
 client.health();
 ```
 
-
 ```ruby Ruby
 client.health
 ```
-
 
 ```go Go
 client.Health()
 ```
 
-
 ```csharp C#
 await client.HealthAsync();
 ```
-
 
 ```rust Rust
 // health() return an Err() if the server is not healthy, so this example would panic due to the unwrap
@@ -48,7 +40,6 @@ client
   .await
   .unwrap();
 ```
-
 
 ```swift Swift
 client.health { (result) in
@@ -61,9 +52,7 @@ client.health { (result) in
 }
 ```
 
-
 ```dart Dart
 await client.health();
 ```
-
 </CodeGroup>

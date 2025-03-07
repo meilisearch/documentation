@@ -7,11 +7,9 @@ curl \
   --data-binary '{ "filter": "_geoRadius(46.9480, 7.4474, 210000)" }'
 ```
 
-
 ```javascript JS
 client.index('meteorites').search('', { filter: '_geoRadius(46.9480, 7.4474, 210000)' })
 ```
-
 
 ```python Python
 client.index('meteorites').search('', {
@@ -19,24 +17,20 @@ client.index('meteorites').search('', {
 })
 ```
 
-
 ```php PHP
 $client->index('meteorites')->search('', [
   'filter' => '_geoRadius(46.9480, 7.4474, 210000)'
 ]);
 ```
 
-
 ```java Java
 SearchRequest searchRequest = SearchRequest.builder().q("").filter(new String[] {"_geoRadius(46.9480, 7.4474, 210000)"}).build();
 client.index("meteorites").search(searchRequest);
 ```
 
-
 ```ruby Ruby
 client.index('meteorites').search('', { filter: '_geoRadius(46.9480, 7.4474, 210000)' })
 ```
-
 
 ```go Go
 resp, err := client.Index("meteorites").Search("", &meilisearch.SearchRequest{
@@ -44,12 +38,10 @@ resp, err := client.Index("meteorites").Search("", &meilisearch.SearchRequest{
 })
 ```
 
-
 ```csharp C#
 SearchQuery filter = new SearchQuery() { Filter = "_geoRadius(46.9480, 7.4474, 210000)" };
 await client.Index("meteorites").SearchAsync<Meteorite>("", filter);
 ```
-
 
 ```rust Rust
 let results: SearchResults<Meteorite> = client
@@ -60,7 +52,6 @@ let results: SearchResults<Meteorite> = client
   .await
   .unwrap();
 ```
-
 
 ```swift Swift
 let searchParameters = SearchParameters(
@@ -77,7 +68,6 @@ client.index("meteorites").search(searchParameters) { (result: Result<Searchable
 }
 ```
 
-
 ```dart Dart
 await client.index('meteorites').search(
       '',
@@ -89,5 +79,4 @@ await client.index('meteorites').search(
       ),
     );
 ```
-
 </CodeGroup>

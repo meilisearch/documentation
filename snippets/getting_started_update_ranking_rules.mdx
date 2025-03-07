@@ -16,7 +16,6 @@ curl \
   ]'
 ```
 
-
 ```javascript JS
 client.index('movies').updateRankingRules([
   'exactness',
@@ -29,7 +28,6 @@ client.index('movies').updateRankingRules([
   'rank:desc'
 ])
 ```
-
 
 ```python Python
 client.index('movies').update_ranking_rules([
@@ -44,7 +42,6 @@ client.index('movies').update_ranking_rules([
 ])
 ```
 
-
 ```php PHP
 $client->index('movies')->updateRankingRules([
   'exactness',
@@ -57,7 +54,6 @@ $client->index('movies')->updateRankingRules([
   'rank:desc'
 ]);
 ```
-
 
 ```java Java
 Settings settings = new Settings();
@@ -75,7 +71,6 @@ settings.setRankingRules(new String[]
 client.index("movies").updateSettings(settings);
 ```
 
-
 ```ruby Ruby
 client.index('movies').update_ranking_rules([
   'exactness',
@@ -88,7 +83,6 @@ client.index('movies').update_ranking_rules([
   'rank:desc'
 ])
 ```
-
 
 ```go Go
 rankingRules := []string{
@@ -104,7 +98,6 @@ rankingRules := []string{
 client.Index("movies").UpdateRankingRules(&rankingRules)
 ```
 
-
 ```csharp C#
 await client.Index("movies").UpdateRankingRulesAsync(new string[] {
   "exactness",
@@ -117,7 +110,6 @@ await client.Index("movies").UpdateRankingRulesAsync(new string[] {
   "rank:desc"
 });
 ```
-
 
 ```rust Rust
 let ranking_rules = [
@@ -137,7 +129,6 @@ client
   .await
   .unwrap();
 ```
-
 
 ```swift Swift
 let rankingRules: [String] = [
@@ -160,7 +151,6 @@ client.index("movies").updateRankingRules(rankingRules) { (result) in
 }
 ```
 
-
 ```dart Dart
 await client.index('movies').updateRankingRules([
   'exactness',
@@ -173,5 +163,4 @@ await client.index('movies').updateRankingRules([
   'rank:desc',
 ]);
 ```
-
 </CodeGroup>

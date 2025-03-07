@@ -13,7 +13,6 @@ curl \
   }'
 ```
 
-
 ```javascript JS
 const client = new MeiliSearch({ host: 'http://localhost:7700', apiKey: 'masterKey' })
 client.createKey({
@@ -23,7 +22,6 @@ client.createKey({
   expiresAt: '2023-01-01T00:00:00Z'
 })
 ```
-
 
 ```python Python
 client = Client('http://localhost:7700', 'masterKey')
@@ -35,7 +33,6 @@ client = Client('http://localhost:7700', 'masterKey')
 })
 ```
 
-
 ```php PHP
 $client = new Client('http://localhost:7700', 'masterKey');
 $client->createKey([
@@ -45,7 +42,6 @@ $client->createKey([
   'expiresAt' => '2023-01-01T00:00:00Z',
 ]);
 ```
-
 
 ```java Java
 Client client = new Client(new Config("http://localhost:7700", "masterKey"));
@@ -63,7 +59,6 @@ keyInfo.setExpiresAt(dateParsed);
 client.createKey(keyInfo);
 ```
 
-
 ```ruby Ruby
 client = MeiliSearch::Client.new('http://localhost:7700', 'masterKey')
 client.create_key(
@@ -73,7 +68,6 @@ client.create_key(
   expires_at: '2023-01-01T00:00:00Z'
 )
 ```
-
 
 ```go Go
 client := meilisearch.New("http://localhost:7700", meilisearch.WithAPIKey("masterKey"))
@@ -86,7 +80,6 @@ client.CreateKey(&meilisearch.Key{
 })
 ```
 
-
 ```csharp C#
 MeilisearchClient client = new MeilisearchClient("http://localhost:7700", "masterKey");
 Key keyOptions = new Key
@@ -98,7 +91,6 @@ Key keyOptions = new Key
 };
 Key createdKey = await this.client.CreateKeyAsync(keyOptions);
 ```
-
 
 ```rust Rust
 let client = Client::new("http://localhost:7700", Some("masterKey"));
@@ -113,7 +105,6 @@ let new_key = client
   .await
   .unwrap();
 ```
-
 
 ```swift Swift
 let client = try MeiliSearch(host: "http://localhost:7700", apiKey: "masterKey")
@@ -134,7 +125,6 @@ client.createKey(keyParams) { result in
 }
 ```
 
-
 ```dart Dart
 var client = MeiliSearchClient('http://localhost:7700', 'masterKey');
 await client.createKey(
@@ -144,5 +134,4 @@ await client.createKey(
   expiresAt: DateTime(2023, 01, 01),
 );
 ```
-
 </CodeGroup>

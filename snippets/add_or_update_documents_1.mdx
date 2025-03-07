@@ -13,7 +13,6 @@ curl \
   ]'
 ```
 
-
 ```javascript JS
 client.index('movies').updateDocuments([{
     id: 287947,
@@ -22,7 +21,6 @@ client.index('movies').updateDocuments([{
 }])
 ```
 
-
 ```python Python
 client.index('movies').update_documents([{
     'id': 287947,
@@ -30,7 +28,6 @@ client.index('movies').update_documents([{
     'genres': 'comedy'
 }])
 ```
-
 
 ```php PHP
 $client->index('movies')->updateDocuments([
@@ -42,7 +39,6 @@ $client->index('movies')->updateDocuments([
 ]);
 ```
 
-
 ```java Java
 client.index("movies").updateDocuments("[{
   + "\"id\": 287947,"
@@ -51,7 +47,6 @@ client.index("movies").updateDocuments("[{
   + "}]"
 );
 ```
-
 
 ```ruby Ruby
 client.index('movies').update_documents([
@@ -62,7 +57,6 @@ client.index('movies').update_documents([
   }
 ])
 ```
-
 
 ```go Go
 documents := []map[string]interface{}{
@@ -75,7 +69,6 @@ documents := []map[string]interface{}{
 client.Index("movies").UpdateDocuments(documents)
 ```
 
-
 ```csharp C#
 var movie = new[]
 {
@@ -83,7 +76,6 @@ var movie = new[]
 };
 await index.UpdateDocumentsAsync(movie);
 ```
-
 
 ```rust Rust
 // Define the type of our documents
@@ -104,7 +96,6 @@ let task: TaskInfo = client
   .await
   .unwrap();
 ```
-
 
 ```swift Swift
 let documentJsonString = """
@@ -128,7 +119,6 @@ client.index("movies").updateDocuments(documents: documents) { (result) in
 }
 ```
 
-
 ```dart Dart
 await client.index('movies').updateDocuments([
   {
@@ -138,5 +128,4 @@ await client.index('movies').updateDocuments([
   }
 ]);
 ```
-
 </CodeGroup>

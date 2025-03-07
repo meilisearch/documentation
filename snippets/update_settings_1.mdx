@@ -60,7 +60,6 @@ curl \
   }'
 ```
 
-
 ```javascript JS
 client.index('movies').updateSettings({
     rankingRules: [
@@ -117,7 +116,6 @@ client.index('movies').updateSettings({
 })
 ```
 
-
 ```python Python
 client.index('movies').update_settings({
   'rankingRules': [
@@ -172,7 +170,6 @@ client.index('movies').update_settings({
 })
 ```
 
-
 ```php PHP
 $client->index('movies')->updateSettings([
   'rankingRules' => [
@@ -226,7 +223,6 @@ $client->index('movies')->updateSettings([
   'searchCutoffMs' => 150
 ]);
 ```
-
 
 ```java Java
 Settings settings = new Settings();
@@ -286,7 +282,6 @@ settings.setSearchCutoffMs(150);
 client.index("movies").updateSettings(settings);
 ```
 
-
 ```ruby Ruby
 client.index('movies').update_settings({
   ranking_rules: [
@@ -333,7 +328,6 @@ client.index('movies').update_settings({
   search_cutoff_ms: 150
 })
 ```
-
 
 ```go Go
 distinctAttribute := "movie_id"
@@ -391,7 +385,6 @@ settings := meilisearch.Settings{
 client.Index("movies").UpdateSettings(&settings)
 ```
 
-
 ```csharp C#
 Settings newSettings = new Settings
 {
@@ -430,7 +423,6 @@ Settings newSettings = new Settings
 };
 TaskInfo task = await client.Index("movies").UpdateSettingsAsync(newFilters);
 ```
-
 
 ```rust Rust
 let mut synonyms = std::collections::HashMap::new();
@@ -491,7 +483,6 @@ let task: TaskInfo = client
   .unwrap();
 ```
 
-
 ```swift Swift
 let settings = Setting(rankingRules: [
     "words",
@@ -533,7 +524,6 @@ client.index("movies").updateSettings(settings) { (result) in
 }
 ```
 
-
 ```dart Dart
 await client.index('movies').updateSettings(
       IndexSettings(
@@ -564,5 +554,4 @@ await client.index('movies').updateSettings(
       ),
     );
 ```
-
 </CodeGroup>

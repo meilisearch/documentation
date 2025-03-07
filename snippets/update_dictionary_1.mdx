@@ -10,31 +10,25 @@ curl \
   ]'
 ```
 
-
 ```javascript JS
 client.index('books').updateDictionary(['J. R. R.', 'W. E. B.'])
 ```
-
 
 ```python Python
 client.index('books').update_dictionary(["J. R. R.", "W. E. B."])
 ```
 
-
 ```php PHP
 $client->index('books')->updateDictionary(['J. R. R.', 'W. E. B.']);
 ```
-
 
 ```java Java
 client.index("books").updateDictionarySettings(new String[] {"J. R. R.", "W. E. B."});
 ```
 
-
 ```ruby Ruby
 client.index('books').update_dictionary(['J. R. R.', 'W. E. B.'])
 ```
-
 
 ```go Go
 client.Index("books").UpdateDictionary([]string{
@@ -43,12 +37,10 @@ client.Index("books").UpdateDictionary([]string{
 })
 ```
 
-
 ```csharp C#
 var newDictionary = new string[] { "J. R. R.", "W. E. B." };
 await client.Index("books").UpdateDictionaryAsync(newDictionary);
 ```
-
 
 ```rust Rust
 let task: TaskInfo = client
@@ -58,11 +50,9 @@ let task: TaskInfo = client
   .unwrap();
 ```
 
-
 ```swift Swift
 client.index("books").updateDictionary(["J. R. R.", "W. E. B."]) { result in
   // handle result
 }
 ```
-
 </CodeGroup>

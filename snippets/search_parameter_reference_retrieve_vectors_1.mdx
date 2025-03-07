@@ -12,7 +12,6 @@ curl -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
   }'
 ```
 
-
 ```javascript JS
 client.index('INDEX_NAME').search('kitchen utensils', {
   retrieveVectors: true,
@@ -22,7 +21,6 @@ client.index('INDEX_NAME').search('kitchen utensils', {
 })
 ```
 
-
 ```php PHP
 $client->index('INDEX_NAME')->search('kitchen utensils', [
   'retrieveVectors' => true,
@@ -31,5 +29,4 @@ $client->index('INDEX_NAME')->search('kitchen utensils', [
   ]
 ]);
 ```
-
 </CodeGroup>

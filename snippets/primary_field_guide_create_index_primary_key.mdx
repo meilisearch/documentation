@@ -10,31 +10,25 @@ curl \
   }'
 ```
 
-
 ```javascript JS
 client.createIndex('books', { primaryKey: 'reference_number' })
 ```
-
 
 ```python Python
 client.create_index('books', {'primaryKey': 'reference_number'})
 ```
 
-
 ```php PHP
 $client->createIndex('books', ['primaryKey' => 'reference_number']);
 ```
-
 
 ```java Java
 client.createIndex("books", "reference_number");
 ```
 
-
 ```ruby Ruby
 client.create_index('books', primary_key: 'reference_number')
 ```
-
 
 ```go Go
 client.CreateIndex(&meilisearch.IndexConfig{
@@ -43,11 +37,9 @@ client.CreateIndex(&meilisearch.IndexConfig{
 })
 ```
 
-
 ```csharp C#
 TaskInfo task = await client.CreateIndexAsync("books", "reference_number");
 ```
-
 
 ```rust Rust
 client
@@ -55,7 +47,6 @@ client
   .await
   .unwrap();
 ```
-
 
 ```swift Swift
 client.createIndex(uid: "books", primaryKey: "reference_number") { (result) in
@@ -68,9 +59,7 @@ client.createIndex(uid: "books", primaryKey: "reference_number") { (result) in
 }
 ```
 
-
 ```dart Dart
 await client.createIndex('books', primaryKey: 'reference_number');
 ```
-
 </CodeGroup>

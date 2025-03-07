@@ -5,19 +5,15 @@ curl \
   -X DELETE 'MEILISEARCH_URL/indexes/INDEX_UID/settings/facet-search'
 ```
 
-
 ```javascript JS
 client.index('INDEX_NAME').resetFacetSearch();
 ```
-
 
 ```php PHP
 $client->index('INDEX_NAME')->resetFacetSearch();
 ```
 
-
 ```ruby Ruby
 client.index('INDEX_UID').reset_facet_search_setting
 ```
-
 </CodeGroup>

@@ -1,60 +1,68 @@
 <CodeGroup>
 
-```bash cURL
-```bash
+```text cURL
+
+
 curl \
   -X POST 'MEILISEARCH_URL/indexes/movies/documents?primaryKey=id' \
   -H 'Content-Type: application/json' \
   -H 'Authorization: Bearer aSampleMasterKey' \
   --data-binary @movies.json
-```
-```
 
 
-```javascript JS
-```bash
+```
+
+```text JS
+
+
 npm install meilisearch
-```
+
+
 
 Or, if you are using `yarn`
-```bash
+
 yarn add meilisearch
-```
+
+
 
 **Import**
 
 `require` syntax:
-```js
+
 const { MeiliSearch } = require('meilisearch')
 const movies = require('./movies.json')
-```
+
+
 
 `import` syntax:
-```js
+
 import { MeiliSearch } from 'meilisearch'
 import movies from './movies.json'
-```
+
+
 
 **Use**
-```js
+
 const client = new MeiliSearch({
   host: 'http://localhost:7700',
   apiKey: 'aSampleMasterKey'
 })
 client.index('movies').addDocuments(movies)
   .then((res) => console.log(res))
-```
+
+
 
 [About this SDK](https://github.com/meilisearch/meilisearch-js/)
 ```
 
+```text Python
 
-```python Python
-```bash
+
 pip3 install meilisearch
-```
 
-```python
+
+
+
 import meilisearch
 import json
 
@@ -63,22 +71,22 @@ client = meilisearch.Client('http://localhost:7700', 'aSampleMasterKey')
 json_file = open('movies.json', encoding='utf-8')
 movies = json.load(json_file)
 client.index('movies').add_documents(movies)
-```
+
+
 
 [About this SDK](https://github.com/meilisearch/meilisearch-python/)
 ```
 
-
-```php PHP
+```text PHP
 Using `meilisearch-php` with the Guzzle HTTP client:
 
-```bash
 composer require meilisearch/meilisearch-php \
     guzzlehttp/guzzle \
     http-interop/http-factory-guzzle:^1.0
-```
 
-```php
+
+
+
 <?php
 
 require_once __DIR__ . '/vendor/autoload.php';
@@ -91,31 +99,33 @@ $movies_json = file_get_contents('movies.json');
 $movies = json_decode($movies_json);
 
 $client->index('movies')->addDocuments($movies);
-```
+
+
 
 [About this SDK](https://github.com/meilisearch/meilisearch-php/)
 ```
 
-
-```java Java
+```text Java
 **Maven**
 Add the following code to the `<dependencies>` section of your project:
-```xml
+
 <dependency>
   <groupId>com.meilisearch.sdk</groupId>
   <artifactId>meilisearch-java</artifactId>
   <version>0.14.2</version>
   <type>pom</type>
 </dependency>
-```
+
+
 
 **Gradle**
 Add the following line to the `dependencies` section of your `build.gradle`:
-```groovy
-implementation 'com.meilisearch.sdk:meilisearch-java:0.14.2'
-```
 
-```java
+implementation 'com.meilisearch.sdk:meilisearch-java:0.14.2'
+
+
+
+
 import com.meilisearch.sdk;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -125,18 +135,20 @@ String moviesJson = Files.readString(fileName);
 Client client = new Client(new Config("http://localhost:7700", "aSampleMasterKey"));
 Index index = client.index("movies");
 index.addDocuments(moviesJson);
-```
+
+
 
 [About this SDK](https://github.com/meilisearch/meilisearch-java)
 ```
 
+```text Ruby
 
-```ruby Ruby
-```bash
+
 $ bundle add meilisearch
-```
 
-```ruby
+
+
+
 require 'json'
 require 'meilisearch'
 
@@ -146,18 +158,20 @@ movies_json = File.read('movies.json')
 movies = JSON.parse(movies_json)
 
 client.index('movies').add_documents(movies)
-```
+
+
 
 [About this SDK](https://www.github.com/meilisearch/meilisearch-ruby)
 ```
 
+```text Go
 
-```go Go
-```bash
+
 go get -u github.com/meilisearch/meilisearch-go
-```
 
-```go
+
+
+
 package main
 
 import (
@@ -184,18 +198,20 @@ func main() {
   }
 }
 
-```
+
+
 
 [About this SDK](https://github.com/meilisearch/meilisearch-go/)
 ```
 
+```text C#
 
-```csharp C#
-```bash
+
 dotnet add package Meilisearch
-```
 
-```csharp
+
+
+
 using System.IO;
 using System.Text.Json;
 using Meilisearch;
@@ -231,14 +247,15 @@ namespace Meilisearch_demo
         }
     }
 }
-```
+
+
 [About this SDK](https://www.github.com/meilisearch/meilisearch-dotnet)
 ```
 
+```text Rust
 
-```rust Rust
-```toml
-  [dependencies]
+
+[dependencies]
   meilisearch-sdk = "0.28.0"
   # futures: because we want to block on futures
   futures = "0.3"
@@ -246,11 +263,12 @@ namespace Meilisearch_demo
   serde = { version="1.0",   features = ["derive"] }
   # serde_json: required in some parts of this guide
   serde_json = "1.0"
-```
+
+
 
 Documents in the Rust library are strongly typed.
 
-```rust
+
 #[derive(Serialize, Deserialize)]
 struct Movie {
   id: i64,
@@ -260,23 +278,25 @@ struct Movie {
   release_date: i64,
   genres: Vec<String>
 }
-```
+
+
 
 You will often need this `Movie` struct in other parts of this documentation. (you will have to change it a bit sometimes)
 You can also use schemaless values, by putting a `serde_json::Value` inside your own struct like this:
 
-```rust
+
 #[derive(Serialize, Deserialize)]
 struct Movie {
   id: i64,
   #[serde(flatten)]
   value: serde_json::Value,
 }
-```
+
+
 
 Then, add documents into the index:
 
-```rust
+
 use meilisearch_sdk::{
   indexes::*,
   client::*,
@@ -307,22 +327,23 @@ fn main() { block_on(async move {
     .await
     .unwrap();
 })}
-```
+
+
 
 [About this SDK](https://github.com/meilisearch/meilisearch-rust/)
 ```
 
-
-```swift Swift
+```text Swift
 Add this to your `Package.swift`:
-```swift
-  dependencies: [
+
+dependencies: [
     .package(url: "https://github.com/meilisearch/meilisearch-swift.git", from: "0.17.0")
   ]
-```
 
-```swift
-  let path = Bundle.main.url(forResource: "movies", withExtension: "json")!
+
+
+
+let path = Bundle.main.url(forResource: "movies", withExtension: "json")!
   let documents: Data = try Data(contentsOf: path)
   let client = try MeiliSearch(host: "http://localhost:7700", apiKey: "aSampleMasterKey")
 
@@ -334,24 +355,26 @@ Add this to your `Package.swift`:
           print(error)
       }
   }
-```
+
+
 [About this SDK](https://www.github.com/meilisearch/meilisearch-swift)
 ```
 
+```text Dart
 
-```dart Dart
-```bash
+
 dart pub add meilisearch
-```
-```dart
+
+
+
 import 'package:meilisearch/meilisearch.dart';
 import 'dart:io';
 import 'dart:convert';
 var client = MeiliSearchClient('http://localhost:7700', 'aSampleMasterKey');
 final json = await File('movies.json').readAsString();
 await client.index('movies').addDocumentsJson(json);
-```
+
+
 [About this SDK](https://github.com/meilisearch/meilisearch-dart/)
 ```
-
 </CodeGroup>

@@ -5,41 +5,33 @@ curl \
   -X DELETE 'MEILISEARCH_URL/indexes/books/settings/faceting'
 ```
 
-
 ```javascript JS
 client.index('books').resetFaceting()
 ```
-
 
 ```python Python
 client.index('books').reset_faceting_settings()
 ```
 
-
 ```php PHP
 $client->index('books')->resetFaceting();
 ```
-
 
 ```java Java
 client.index("books").resetFacetingSettings();
 ```
 
-
 ```ruby Ruby
 index('books').reset_faceting
 ```
-
 
 ```go Go
 client.Index("books").ResetFaceting()
 ```
 
-
 ```csharp C#
 await client.Index("movies").ResetFacetingAsync();
 ```
-
 
 ```rust Rust
 let task: TaskInfo = client
@@ -49,9 +41,7 @@ let task: TaskInfo = client
   .unwrap();
 ```
 
-
 ```dart Dart
 await client.index('movies').resetFaceting();
 ```
-
 </CodeGroup>

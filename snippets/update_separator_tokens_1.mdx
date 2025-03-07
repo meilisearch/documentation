@@ -7,32 +7,26 @@ curl \
   --data-binary '["|", "&hellip;"]'
 ```
 
-
 ```javascript JS
 client.index('books').updateSeparatorTokens(['|', '&hellip;'])
 ```
-
 
 ```python Python
 client.index('articles').update_separator_tokens(["|", "&hellip;"])
 ```
 
-
 ```php PHP
 $client->index('articles')->updateSeparatorTokens(['|', '&hellip;']);
 ```
-
 
 ```java Java
 String[] newSeparatorTokens = { "|", "&hellip;" };
 client.index("articles").updateSeparatorTokensSettings(newSeparatorTokens);
 ```
 
-
 ```ruby Ruby
 client.index('articles').update_separator_tokens(['|', '&hellip;'])
 ```
-
 
 ```go Go
 client.Index("articles").UpdateSeparatorTokens([]string{
@@ -41,11 +35,9 @@ client.Index("articles").UpdateSeparatorTokens([]string{
 })
 ```
 
-
 ```csharp C#
 await client.Index("movies").UpdateSeparatorTokensAsync(new[] { "|", "&hellip;" });
 ```
-
 
 ```rust Rust
 let task: TaskInfo = client
@@ -55,16 +47,13 @@ let task: TaskInfo = client
   .unwrap();
 ```
 
-
 ```swift Swift
 client.index("books").updateSeparatorTokens(["|", "&hellip;"]) { result in
   // handle result
 }
 ```
 
-
 ```dart Dart
 await client.index('articles').updateSeparatorTokens(["|", "&hellip;"]);
 ```
-
 </CodeGroup>

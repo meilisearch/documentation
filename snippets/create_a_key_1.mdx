@@ -13,7 +13,6 @@ curl \
   }'
 ```
 
-
 ```javascript JS
 client.createKey({
   description: 'Add documents: Products API key',
@@ -22,7 +21,6 @@ client.createKey({
   expiresAt: '2021-11-13T00:00:00Z'
 })
 ```
-
 
 ```python Python
 client.create_key(options={
@@ -33,7 +31,6 @@ client.create_key(options={
 })
 ```
 
-
 ```php PHP
 $client->createKey([
   'description' => 'Add documents: Products API key',
@@ -42,7 +39,6 @@ $client->createKey([
   'expiresAt' => '2042-04-02T00:42:42Z',
 ]);
 ```
-
 
 ```java Java
 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
@@ -58,7 +54,6 @@ keyInfo.setExpiresAt(dateParsed);
 client.createKey(keyInfo);
 ```
 
-
 ```ruby Ruby
 client.create_key(
   description: 'Add documents: Products API key',
@@ -68,7 +63,6 @@ client.create_key(
 )
 ```
 
-
 ```go Go
 client.CreateKey(&meilisearch.Key{
   Description: "Add documents: Products API key",
@@ -77,7 +71,6 @@ client.CreateKey(&meilisearch.Key{
   ExpiresAt: time.Date(2042, time.April, 02, 0, 42, 42, 0, time.UTC),
 })
 ```
-
 
 ```csharp C#
 Key keyOptions = new Key
@@ -89,7 +82,6 @@ Key keyOptions = new Key
 };
 Key createdKey = await this.client.CreateKeyAsync(keyOptions);
 ```
-
 
 ```rust Rust
 let mut key_options = KeyBuilder::new();
@@ -103,7 +95,6 @@ let new_key = client
   .await
   .unwrap();
 ```
-
 
 ```swift Swift
 let keyParams = KeyParams(
@@ -122,7 +113,6 @@ client.createKey(keyParams) { result in
 }
 ```
 
-
 ```dart Dart
 await client.createKey(
     description: 'Add documents: Products API key',
@@ -130,5 +120,4 @@ await client.createKey(
     indexes: ['products'],
     expiresAt: DateTime(2042, 04, 02));
 ```
-
 </CodeGroup>

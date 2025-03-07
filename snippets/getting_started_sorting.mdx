@@ -10,14 +10,12 @@ curl \
   }'
 ```
 
-
 ```javascript JS
 client.index('meteorites').search('', {
   sort: ['mass:asc'],
   filter: 'mass < 200'
 })
 ```
-
 
 ```python Python
 client.index('meteorites').search('', {
@@ -26,7 +24,6 @@ client.index('meteorites').search('', {
 })
 ```
 
-
 ```php PHP
 $client->index('meteorites')->search('', [
   'filter' => 'mass < 200',
@@ -34,12 +31,10 @@ $client->index('meteorites')->search('', [
 ]);
 ```
 
-
 ```java Java
 SearchRequest searchRequest = SearchRequest.builder().q("").filter(new String[] {"mass < 200"}).sort(new String[] {"mass:asc"}).build();
 client.index("meteorites").search(searchRequest);
 ```
-
 
 ```ruby Ruby
 client.index('meteorites').search('', {
@@ -47,7 +42,6 @@ client.index('meteorites').search('', {
   filter: 'mass < 200'
 })
 ```
-
 
 ```go Go
 resp, err := client.Index("meteorites").Search("", &meilisearch.SearchRequest{
@@ -58,7 +52,6 @@ resp, err := client.Index("meteorites").Search("", &meilisearch.SearchRequest{
 })
 ```
 
-
 ```csharp C#
 SearchQuery searchQuery = new SearchQuery() {
   Sort = new string[] { "mass:asc" },
@@ -66,7 +59,6 @@ SearchQuery searchQuery = new SearchQuery() {
 };
 await client.Index("meteorites").SearchAsync<Meteorite>("", searchQuery);
 ```
-
 
 ```rust Rust
 let results: SearchResults<Meteorite> = client
@@ -78,7 +70,6 @@ let results: SearchResults<Meteorite> = client
   .await
   .unwrap();
 ```
-
 
 ```swift Swift
 let searchParameters = SearchParameters(
@@ -96,7 +87,6 @@ client.index("meteorites").search(searchParameters) { (result: Result<Searchable
 }
 ```
 
-
 ```dart Dart
 await client.index('meteorites').search(
       '',
@@ -106,5 +96,4 @@ await client.index('meteorites').search(
       ),
     );
 ```
-
 </CodeGroup>

@@ -7,32 +7,26 @@ curl \
   --data-binary '["@", "#"]'
 ```
 
-
 ```javascript JS
 client.index('books').updateNonSeparatorTokens(['@', '#'])
 ```
-
 
 ```python Python
 client.index('articles').update_non_separator_tokens(["@", "#"])
 ```
 
-
 ```php PHP
 $client->index('articles')->updateNonSeparatorTokens(['@', '#']);
 ```
-
 
 ```java Java
 String[] newSeparatorTokens = { "@", "#" };
 client.index("articles").updateNonSeparatorTokensSettings(newSeparatorTokens);
 ```
 
-
 ```ruby Ruby
 client.index('articles').update_non_separator_tokens(['@', '#'])
 ```
-
 
 ```go Go
 client.Index("articles").UpdateNonSeparatorTokens([]string{
@@ -41,11 +35,9 @@ client.Index("articles").UpdateNonSeparatorTokens([]string{
 })
 ```
 
-
 ```csharp C#
 await client.Index("movies").UpdateNonSeparatorTokensAsync(new[] { "@", "#" });
 ```
-
 
 ```rust Rust
 let task: TaskInfo = client
@@ -55,16 +47,13 @@ let task: TaskInfo = client
   .unwrap();
 ```
 
-
 ```swift Swift
 client.index("books").updateNonSeparatorTokens(["@", "#"]) { result in
   // handle result
 }
 ```
 
-
 ```dart Dart
 await client.index('articles').updateNonSeparatorTokens(["@", "#"]);
 ```
-
 </CodeGroup>

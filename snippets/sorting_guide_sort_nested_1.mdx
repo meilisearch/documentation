@@ -10,13 +10,11 @@ curl \
   }'
 ```
 
-
 ```javascript JS
 client.index('books').search('science fiction', {
   'sort': ['rating.users:asc'],
 })
 ```
-
 
 ```python Python
 client.index('books').search('science fiction', {
@@ -24,22 +22,18 @@ client.index('books').search('science fiction', {
 })
 ```
 
-
 ```php PHP
 $client->index('books')->search('science fiction', ['sort' => ['rating.users:asc']]);
 ```
-
 
 ```java Java
 SearchRequest searchRequest = SearchRequest.builder().q("science fiction").sort(new String[] {"rating.users:asc"}).build();
 client.index("books").search(searchRequest);
 ```
 
-
 ```ruby Ruby
 client.index('books').search('science fiction', { sort: ['rating.users:asc'] })
 ```
-
 
 ```go Go
 resp, err := client.Index("books").Search("science fiction", &meilisearch.SearchRequest{
@@ -49,12 +43,10 @@ resp, err := client.Index("books").Search("science fiction", &meilisearch.Search
 })
 ```
 
-
 ```csharp C#
 SearchQuery sort = new SearchQuery() { Sort = new string[] { "rating.users:asc" }};
 await client.Index("books").SearchAsync<Book>("science fiction", sort);
 ```
-
 
 ```rust Rust
 let results: SearchResults<Books> = client
@@ -66,7 +58,6 @@ let results: SearchResults<Books> = client
   .await
   .unwrap();
 ```
-
 
 ```swift Swift
 let searchParameters = SearchParameters(
@@ -83,11 +74,9 @@ client.index("books").search(searchParameters) { (result: Result<Searchable<Mete
 }
 ```
 
-
 ```dart Dart
 await client
     .index('movie_ratings')
     .search('thriller', SearchQuery(sort: ['rating.users:asc']));
 ```
-
 </CodeGroup>

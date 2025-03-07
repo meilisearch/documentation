@@ -5,41 +5,33 @@ curl \
   -X DELETE 'MEILISEARCH_URL/indexes/shoes/settings/distinct-attribute'
 ```
 
-
 ```javascript JS
 client.index('shoes').resetDistinctAttribute()
 ```
-
 
 ```python Python
 client.index('shoes').reset_distinct_attribute()
 ```
 
-
 ```php PHP
 $client->index('shoes')->resetDistinctAttribute();
 ```
-
 
 ```java Java
 client.index("shoes").resetDistinctAttributeSettings();
 ```
 
-
 ```ruby Ruby
 client.index('shoes').reset_distinct_attribute
 ```
-
 
 ```go Go
 client.Index("shoes").ResetDistinctAttribute()
 ```
 
-
 ```csharp C#
 TaskInfo result = await client.Index("shoes").ResetDistinctAttributeAsync();
 ```
-
 
 ```rust Rust
 let task: TaskInfo = client
@@ -48,7 +40,6 @@ let task: TaskInfo = client
   .await
   .unwrap();
 ```
-
 
 ```swift Swift
 client.index("shoes").resetDistinctAttribute { (result) in
@@ -61,9 +52,7 @@ client.index("shoes").resetDistinctAttribute { (result) in
 }
 ```
 
-
 ```dart Dart
 await client.index('shoes').resetDistinctAttribute();
 ```
-
 </CodeGroup>

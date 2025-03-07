@@ -9,21 +9,17 @@ curl \
   }'
 ```
 
-
 ```javascript JS
 client.index('movies').updatePagination({ maxTotalHits: 500 })
 ```
-
 
 ```python Python
 client.index('movies').update_pagination_settings({'maxTotalHits': 500})
 ```
 
-
 ```php PHP
 $client->index('movies')->updatePagination(['maxTotalHits' => 500]);
 ```
-
 
 ```java Java
 Pagination newPagination = new Pagination();
@@ -31,11 +27,9 @@ newPagination.setMaxTotalHits(500);
 client.index("movies").updatePaginationSettings(newPagination);
 ```
 
-
 ```ruby Ruby
 client.index('movies').update_pagination(max_total_hits: 500)
 ```
-
 
 ```go Go
 client.Index("movies").UpdatePagination(&meilisearch.Pagination{
@@ -43,14 +37,12 @@ client.Index("movies").UpdatePagination(&meilisearch.Pagination{
 })
 ```
 
-
 ```csharp C#
 var pagination = new Pagination {
   MaxTotalHits = 500
 };
 await client.Index("movies").UpdatePaginationAsync(pagination);
 ```
-
 
 ```rust Rust
 let pagination = PaginationSetting {max_total_hits:500};
@@ -62,16 +54,13 @@ let task: TaskInfo = client
   .unwrap();
 ```
 
-
 ```swift Swift
 client.index("movies").updatePagination({ maxTotalHits: 500 })
 ```
-
 
 ```dart Dart
 await client
     .index('books')
     .updatePagination(Pagination(maxTotalHits: 500));
 ```
-
 </CodeGroup>

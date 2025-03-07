@@ -7,13 +7,11 @@ curl \
   --data-binary '{ "disableOnAttributes": ["title"] }'
 ```
 
-
 ```javascript JS
 client.index('movies').updateTypoTolerance({
   disableOnAttributes: ['title']
 })
 ```
-
 
 ```python Python
 client.index('movies').update_typo_tolerance({
@@ -21,13 +19,11 @@ client.index('movies').update_typo_tolerance({
 })
 ```
 
-
 ```php PHP
 $client->index('movies')->updateTypoTolerance([
   'disableOnAttributes' => ['title']
 ]);
 ```
-
 
 ```java Java
 TypoTolerance typoTolerance = new TypoTolerance();
@@ -35,11 +31,9 @@ typoTolerance.setDisableOnAttributes(new String[] {"title"});
 client.index("movies").updateTypoToleranceSettings(typoTolerance);
 ```
 
-
 ```ruby Ruby
 index('books').update_typo_tolerance({ disable_on_attributes: ['title'] })
 ```
-
 
 ```go Go
 client.Index("movies").UpdateTypoTolerance(&meilisearch.TypoTolerance{
@@ -47,14 +41,12 @@ client.Index("movies").UpdateTypoTolerance(&meilisearch.TypoTolerance{
 })
 ```
 
-
 ```csharp C#
 var typoTolerance = new TypoTolerance {
   DisableOnAttributes = new string[] { "title" }
 };
 await client.Index("movies").UpdateTypoToleranceAsync(typoTolerance);
 ```
-
 
 ```rust Rust
 let min_word_size_for_typos = MinWordSizeForTypos {
@@ -75,12 +67,10 @@ let task: TaskInfo = client
   .unwrap();
 ```
 
-
 ```dart Dart
 final toUpdate = TypoTolerance(
   disableOnAttributes: ['title'],
 );
 await client.index('movies').updateTypoTolerance(toUpdate);
 ```
-
 </CodeGroup>

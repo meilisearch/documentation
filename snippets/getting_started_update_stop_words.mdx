@@ -7,21 +7,17 @@ curl \
   --data-binary '["the"]'
 ```
 
-
 ```javascript JS
 client.index('movies').updateStopWords(['the'])
 ```
-
 
 ```python Python
 client.index('movies').update_stop_words(['the'])
 ```
 
-
 ```php PHP
 $client->index('movies')->updateStopWords(['the']);
 ```
-
 
 ```java Java
 Settings settings = new Settings();
@@ -32,24 +28,20 @@ settings.setStopWords(new String[]
 client.index("movies").updateSettings(settings);
 ```
 
-
 ```ruby Ruby
 client.index('movies').update_stop_words(['the'])
 ```
-
 
 ```go Go
 stopWords := []string{"the"}
 client.Index("movies").UpdateStopWords(&stopWords)
 ```
 
-
 ```csharp C#
 await client.Index("movies").UpdateStopWordsAsync(new string[] {
   "the"
 });
 ```
-
 
 ```rust Rust
 let stop_words = ["the"];
@@ -59,7 +51,6 @@ client
   .await
   .unwrap();
 ```
-
 
 ```swift Swift
 let stopWords: [String] = ["the"]
@@ -73,9 +64,7 @@ client.index("movies").updateStopWords(stopWords) { (result) in
 }
 ```
 
-
 ```dart Dart
 await client.index('movies').updateStopWords(['the']);
 ```
-
 </CodeGroup>

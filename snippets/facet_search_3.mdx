@@ -10,7 +10,6 @@ curl \
 }'
 ```
 
-
 ```javascript JS
 client.index('books').searchForFacetValues({
   facetQuery: 'c',
@@ -18,11 +17,9 @@ client.index('books').searchForFacetValues({
 })
 ```
 
-
 ```python Python
 client.index('books').facet_search('genres', 'c')
 ```
-
 
 ```php PHP
 $client->index('books')->facetSearch(
@@ -32,17 +29,14 @@ $client->index('books')->facetSearch(
 );
 ```
 
-
 ```java Java
 FacetSearchRequest fsr = FacetSearchRequest.builder().facetName("genres").facetQuery("c").build();
 client.index("books").facetSearch(fsr);
 ```
 
-
 ```ruby Ruby
 client.index('books').facet_search('genres', 'c')
 ```
-
 
 ```go Go
 client.Index("books").FacetSearch(&meilisearch.FacetSearchRequest{
@@ -50,7 +44,6 @@ client.Index("books").FacetSearch(&meilisearch.FacetSearchRequest{
   FacetName: "genres",
 })
 ```
-
 
 ```csharp C#
 var query = new SearchFacetsQuery()
@@ -60,7 +53,6 @@ var query = new SearchFacetsQuery()
 await client.Index("books").FacetSearchAsync("genres", query);
 ```
 
-
 ```dart Dart
 await client.index('books').facetSearch(
       FacetSearchQuery(
@@ -69,5 +61,4 @@ await client.index('books').facetSearch(
       ),
     );
 ```
-
 </CodeGroup>

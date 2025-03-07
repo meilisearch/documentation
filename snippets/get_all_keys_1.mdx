@@ -6,32 +6,26 @@ curl \
   -H 'Authorization: Bearer MASTER_KEY'
 ```
 
-
 ```javascript JS
 client.getKeys({ limit: 3 })
 ```
-
 
 ```python Python
 client.get_keys({'limit': 3})
 ```
 
-
 ```php PHP
 $client->getKeys((new KeysQuery())->setLimit(3));
 ```
-
 
 ```java Java
 KeysQuery query = new KeysQuery().setLimit(3);
 client.getKeys(query);
 ```
 
-
 ```ruby Ruby
 client.keys(limit: 3)
 ```
-
 
 ```go Go
 client.GetKeys(&meilisearch.KeysQuery{
@@ -39,11 +33,9 @@ client.GetKeys(&meilisearch.KeysQuery{
 });
 ```
 
-
 ```csharp C#
 ResourceResults<Key> keyResult = await client.GetKeysAsync(new KeysQuery { Limit = 3 });
 ```
-
 
 ```rust Rust
 let mut query = KeysQuery::new()
@@ -52,7 +44,6 @@ let mut query = KeysQuery::new()
   .await
   .unwrap();
 ```
-
 
 ```swift Swift
 client.getKeys(params: KeysQuery(limit: 3)) { result in
@@ -65,9 +56,7 @@ client.getKeys(params: KeysQuery(limit: 3)) { result in
 }
 ```
 
-
 ```dart Dart
 await client.getKeys(params: KeysQuery(limit: 3));
 ```
-
 </CodeGroup>

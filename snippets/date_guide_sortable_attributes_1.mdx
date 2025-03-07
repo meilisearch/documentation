@@ -9,21 +9,17 @@ curl \
   ]'
 ```
 
-
 ```javascript JS
 client.index('games').updateSortableAttributes(['release_timestamp'])
 ```
-
 
 ```python Python
 client.index('games').update_sortable_attributes(['release_timestamp'])
 ```
 
-
 ```php PHP
 $client->index('games')->updateSortableAttributes(['release_timestamp']);
 ```
-
 
 ```java Java
 Settings settings = new Settings();
@@ -31,22 +27,18 @@ settings.setSortableAttributes(new String[] {"release_timestamp"});
 client.index("games").updateSettings(settings);
 ```
 
-
 ```ruby Ruby
 client.index('games').update_sortable_attributes(['release_timestamp'])
 ```
-
 
 ```go Go
 sortableAttributes := []string{"release_timestamp","author"}
 client.Index("games").UpdateSortableAttributes(&sortableAttributes)
 ```
 
-
 ```csharp C#
 await client.Index("games").UpdateSortableAttributesAsync(new string[] { "release_timestamp" });
 ```
-
 
 ```rust Rust
 let settings = Settings::new()
@@ -59,7 +51,6 @@ let task: TaskInfo = client
   .unwrap();
 ```
 
-
 ```swift Swift
 client.index("games").updateSortableAttributes(["release_timestamp"]) { (result) in
   switch result {
@@ -71,11 +62,9 @@ client.index("games").updateSortableAttributes(["release_timestamp"]) { (result)
 }
 ```
 
-
 ```dart Dart
 await client
     .index('games')
     .updateSortableAttributes(['release_timestamp']);
 ```
-
 </CodeGroup>

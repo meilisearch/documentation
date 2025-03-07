@@ -5,41 +5,33 @@ curl \
   -X GET 'MEILISEARCH_URL/indexes/books/settings/pagination'
 ```
 
-
 ```javascript JS
 client.index('books').getPagination()
 ```
-
 
 ```python Python
 client.index('books').get_pagination_settings()
 ```
 
-
 ```php PHP
 $client->index('books')->getPagination();
 ```
-
 
 ```java Java
 client.index("books").getPaginationSettings();
 ```
 
-
 ```ruby Ruby
 index('books').pagination
 ```
-
 
 ```go Go
 client.Index("books").GetPagination()
 ```
 
-
 ```csharp C#
 await client.Index("movies").GetPaginationAsync();
 ```
-
 
 ```rust Rust
 let pagination: PaginationSetting = client
@@ -49,9 +41,7 @@ let pagination: PaginationSetting = client
   .unwrap();
 ```
 
-
 ```dart Dart
 await client.index('movies').getPagination();
 ```
-
 </CodeGroup>

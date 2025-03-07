@@ -10,16 +10,13 @@ curl \
 }'
 ```
 
-
 ```javascript JS
 client.index('INDEX_NAME').search('badman', { rankingScoreThreshold: 0.2 })
 ```
 
-
 ```python Python
 client.index('INDEX_NAME').search('badman', { 'rankingScoreThreshold': 0.2 })
 ```
-
 
 ```php PHP
 $client->index('INDEX_NAME')->search('badman', [
@@ -27,12 +24,10 @@ $client->index('INDEX_NAME')->search('badman', [
 ]);
 ```
 
-
 ```java Java
 SearchRequest searchRequest = SearchRequest.builder().q("badman").rankingScoreThreshold(0.2).build();
 client.index("INDEX_NAME").search(searchRequest);
 ```
-
 
 ```ruby Ruby
 client.index('INDEX_NAME').search('badman', {
@@ -40,13 +35,11 @@ client.index('INDEX_NAME').search('badman', {
 })
 ```
 
-
 ```go Go
 client.Index("INDEX_NAME").Search("badman", &meilisearch.SearchRequest{
   RankingScoreThreshold: 0.2,
 })
 ```
-
 
 ```rust Rust
 let res = client
@@ -58,5 +51,4 @@ let res = client
   .await
   .unwrap();
 ```
-
 </CodeGroup>

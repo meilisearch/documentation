@@ -10,13 +10,11 @@ curl \
   }'
 ```
 
-
 ```javascript JS
 client.index('books').search('butler', {
   sort: ['author:desc'],
 })
 ```
-
 
 ```python Python
 client.index('books').search('butler', {
@@ -24,22 +22,18 @@ client.index('books').search('butler', {
 })
 ```
 
-
 ```php PHP
 $client->index('books')->search('butler', ['sort' => ['author:desc']]);
 ```
-
 
 ```java Java
 SearchRequest searchRequest = SearchRequest.builder().q("butler").sort(new String[] {"author:desc"}).build();
 client.index("books").search(searchRequest);
 ```
 
-
 ```ruby Ruby
 client.index('books').search('butler', { sort: ['author:desc'] })
 ```
-
 
 ```go Go
 resp, err := client.Index("books").Search("butler", &meilisearch.SearchRequest{
@@ -49,7 +43,6 @@ resp, err := client.Index("books").Search("butler", &meilisearch.SearchRequest{
 })
 ```
 
-
 ```csharp C#
 var sq = new SearchQuery
 {
@@ -57,7 +50,6 @@ var sq = new SearchQuery
 };
 await client.Index("books").SearchAsync<Book>("butler", sq);
 ```
-
 
 ```rust Rust
 let results: SearchResults<Books> = client
@@ -69,7 +61,6 @@ let results: SearchResults<Books> = client
   .await
   .unwrap();
 ```
-
 
 ```swift Swift
 let searchParameters = SearchParameters(
@@ -86,11 +77,9 @@ client.index("books").search(searchParameters) { (result: Result<Searchable<Book
 }
 ```
 
-
 ```dart Dart
 await client
     .index('books')
     .search('butler', SearchQuery(sort: ['author:desc']));
 ```
-
 </CodeGroup>

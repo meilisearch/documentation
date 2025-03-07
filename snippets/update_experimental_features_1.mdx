@@ -9,16 +9,13 @@ curl \
   }'
 ```
 
-
 ```ruby Ruby
 client.update_experimental_features(metrics: true)
 ```
 
-
 ```go Go
 client.ExperimentalFeatures().SetMetrics(true).Update()
 ```
-
 
 ```rust Rust
 let client = Client::new("http://localhost:7700", Some("apiKey"));
@@ -29,5 +26,4 @@ let res = features
   .await
   .unwrap();
 ```
-
 </CodeGroup>

@@ -10,14 +10,12 @@ curl \
   }'
 ```
 
-
 ```javascript JS
 client.index('movies').updateSynonyms({
   winnie: ['piglet'],
   piglet: ['winnie']
 })
 ```
-
 
 ```python Python
 client.index('movies').update_synonyms({
@@ -26,14 +24,12 @@ client.index('movies').update_synonyms({
 })
 ```
 
-
 ```php PHP
 $client->index('movies')->updateSynonyms([
   'winnie' => ['piglet'],
   'piglet' => ['winnie']
 ]);
 ```
-
 
 ```java Java
 Settings settings = new Settings();
@@ -44,14 +40,12 @@ settings.setSynonyms(synonyms);
 client.index("movies").updateSettings(settings);
 ```
 
-
 ```ruby Ruby
 client.index('movies').update_synonyms({
   winnie: ['piglet'],
   piglet: ['winnie']
 })
 ```
-
 
 ```go Go
 synonyms := map[string][]string{
@@ -61,7 +55,6 @@ synonyms := map[string][]string{
 client.Index("movies").UpdateSynonyms(&synonyms)
 ```
 
-
 ```csharp C#
 var newSynonyms = new Dictionary<string, IEnumerable<string>>
 {
@@ -70,7 +63,6 @@ var newSynonyms = new Dictionary<string, IEnumerable<string>>
 };
 await client.Index("movies").UpdateSynonymsAsync(newSynonyms);
 ```
-
 
 ```rust Rust
 let mut synonyms = std::collections::HashMap::new();
@@ -83,7 +75,6 @@ client
   .await
   .unwrap();
 ```
-
 
 ```swift Swift
 let synonyms: [String: [String]] = [
@@ -100,12 +91,10 @@ let synonyms: [String: [String]] = [
  }
 ```
 
-
 ```dart Dart
 await client.index('movies').updateSynonyms({
   'winnie': ['piglet'],
   'piglet': ['winnie'],
 });
 ```
-
 </CodeGroup>

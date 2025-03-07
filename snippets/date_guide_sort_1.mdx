@@ -10,13 +10,11 @@ curl \
   }'
 ```
 
-
 ```javascript JS
 client.index('games').search('', {
   sort: ['release_timestamp:desc'],
 })
 ```
-
 
 ```python Python
 client.index('games').search('', {
@@ -24,22 +22,18 @@ client.index('games').search('', {
 })
 ```
 
-
 ```php PHP
 $client->index('games')->search('', ['sort' => ['release_timestamp:desc']]);
 ```
-
 
 ```java Java
 SearchRequest searchRequest = SearchRequest.builder().q("").sort(new String[] {"release_timestamp:desc"}).build();
 client.index("games").search(searchRequest);
 ```
 
-
 ```ruby Ruby
 client.index('games').search('', sort: ['release_timestamp:desc'])
 ```
-
 
 ```go Go
 client.Index("games").Search("", &meilisearch.SearchRequest{
@@ -49,12 +43,10 @@ client.Index("games").Search("", &meilisearch.SearchRequest{
 })
 ```
 
-
 ```csharp C#
 SearchQuery sort = new SearchQuery() { Sort = new string[] { "release_timestamp:desc" }};
 await client.Index("games").SearchAsync<Game>("", sort);
 ```
-
 
 ```rust Rust
 let results: SearchResults<Game> = client
@@ -65,7 +57,6 @@ let results: SearchResults<Game> = client
   .await
   .unwrap();
 ```
-
 
 ```swift Swift
 let searchParameters = SearchParameters(
@@ -83,11 +74,9 @@ client.index("games").search(searchParameters) { (result: Result<Searchable<Game
 }
 ```
 
-
 ```dart Dart
 await client
     .index('games')
     .search('', SearchQuery(sort: ['release_timestamp:desc']));
 ```
-
 </CodeGroup>

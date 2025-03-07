@@ -5,41 +5,33 @@ curl \
   -X GET 'MEILISEARCH_URL/indexes/movies/settings'
 ```
 
-
 ```javascript JS
 client.index('movies').getSettings()
 ```
-
 
 ```python Python
 client.index('movies').get_settings()
 ```
 
-
 ```php PHP
 $client->index('movies')->getSettings();
 ```
-
 
 ```java Java
 client.index("movies").getSettings();
 ```
 
-
 ```ruby Ruby
 client.index('movies').settings
 ```
-
 
 ```go Go
 client.Index("movies").GetSettings()
 ```
 
-
 ```csharp C#
 await client.Index("movies").GetSettingsAsync();
 ```
-
 
 ```rust Rust
 let settings: Settings = client
@@ -48,7 +40,6 @@ let settings: Settings = client
   .await
   .unwrap();
 ```
-
 
 ```swift Swift
 client.index("movies").getSettings { (result) in
@@ -61,9 +52,7 @@ client.index("movies").getSettings { (result) in
 }
 ```
 
-
 ```dart Dart
 await client.index('movies').getSettings();
 ```
-
 </CodeGroup>

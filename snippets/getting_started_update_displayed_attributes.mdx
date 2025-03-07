@@ -11,7 +11,6 @@ curl \
   ]'
 ```
 
-
 ```javascript JS
 client.index('movies').updateDisplayedAttributes([
   'title',
@@ -19,7 +18,6 @@ client.index('movies').updateDisplayedAttributes([
   'poster'
 ])
 ```
-
 
 ```python Python
 client.index('movies').update_displayed_attributes([
@@ -29,7 +27,6 @@ client.index('movies').update_displayed_attributes([
 ])
 ```
 
-
 ```php PHP
 $client->index('movies')->updateDisplayedAttributes([
   'title',
@@ -37,7 +34,6 @@ $client->index('movies')->updateDisplayedAttributes([
   'poster'
 ]);
 ```
-
 
 ```java Java
 Settings settings = new Settings();
@@ -50,7 +46,6 @@ settings.setDisplayedAttributes(new String[]
 client.index("movies").updateSettings(settings);
 ```
 
-
 ```ruby Ruby
 client.index('movies').update_displayed_attributes([
   'title',
@@ -58,7 +53,6 @@ client.index('movies').update_displayed_attributes([
   'poster'
 ])
 ```
-
 
 ```go Go
 displayedAttributes := []string{
@@ -69,7 +63,6 @@ displayedAttributes := []string{
 client.Index("movies").UpdateDisplayedAttributes(&displayedAttributes)
 ```
 
-
 ```csharp C#
 await client.Index("movies").UpdateDisplayedAttributesAsync(new string[] {
   "title",
@@ -77,7 +70,6 @@ await client.Index("movies").UpdateDisplayedAttributesAsync(new string[] {
   "poster"
 });
 ```
-
 
 ```rust Rust
 let displayed_attributes = [
@@ -93,7 +85,6 @@ client
   .unwrap();
 ```
 
-
 ```swift Swift
 let displayedAttributes: [String] = ["title", "overview", "poster"]
 client.index("movies").updateDisplayedAttributes(displayedAttributes) { (result) in
@@ -106,11 +97,9 @@ client.index("movies").updateDisplayedAttributes(displayedAttributes) { (result)
  }
 ```
 
-
 ```dart Dart
 await client
     .index('movies')
     .updateDisplayedAttributes(['title', 'overview', 'poster']);
 ```
-
 </CodeGroup>

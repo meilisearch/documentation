@@ -10,13 +10,11 @@ curl \
   }'
 ```
 
-
 ```javascript JS
 client.index('movies').search('big fat liar', {
   matchingStrategy: 'all'
 })
 ```
-
 
 ```python Python
 client.index('movies').search('big fat liar', {
@@ -24,17 +22,14 @@ client.index('movies').search('big fat liar', {
 })
 ```
 
-
 ```php PHP
 $client->index('movies')->search('big fat liar', ['matchingStrategy' => 'all']);
 ```
-
 
 ```java Java
 SearchRequest searchRequest = SearchRequest.builder().q("big fat liar").matchingStrategy(MatchingStrategy.ALL).build();
 client.index("movies").search(searchRequest);
 ```
-
 
 ```ruby Ruby
 client.index('movies').search('big fat liar', {
@@ -42,19 +37,16 @@ client.index('movies').search('big fat liar', {
 })
 ```
 
-
 ```go Go
 resp, err := client.Index("movies").Search("big fat liar", &meilisearch.SearchRequest{
   MatchingStrategy:    All,
 })
 ```
 
-
 ```csharp C#
 SearchQuery params = new SearchQuery() { MatchingStrategy = "all" };
 await client.Index("movies").SearchAsync<Game>("big fat liar", params);
 ```
-
 
 ```rust Rust
 let results: SearchResults<Movie> = client
@@ -67,10 +59,8 @@ let results: SearchResults<Movie> = client
 .unwrap();
 ```
 
-
 ```dart Dart
 await client.index('movies').search(
     'big fat liar', SearchQuery(matchingStrategy: MatchingStrategy.all));
 ```
-
 </CodeGroup>

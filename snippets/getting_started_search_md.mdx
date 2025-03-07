@@ -1,72 +1,80 @@
 <CodeGroup>
 
-```bash cURL
-```bash
+```text cURL
+
+
 curl \
   -X POST 'MEILISEARCH_URL/indexes/movies/search' \
   -H 'Content-Type: application/json' \
   -H 'Authorization: Bearer aSampleMasterKey' \
   --data-binary '{ "q": "botman" }'
-```
-```
 
 
-```javascript JS
-```js
+```
+
+```text JS
+
+
 client.index('movies').search('botman').then((res) => console.log(res))
-```
+
+
 
 [About this SDK](https://github.com/meilisearch/meilisearch-js/)
 ```
 
+```text Python
 
-```python Python
-```python
+
 client.index('movies').search('botman')
-```
+
+
 
 [About this SDK](https://github.com/meilisearch/meilisearch-python/)
 ```
 
+```text PHP
 
-```php PHP
-```php
+
 $client->index('movies')->search('botman');
-```
+
+
 
 [About this SDK](https://github.com/meilisearch/meilisearch-php/)
 ```
 
+```text Java
 
-```java Java
-```java
+
 client.index("movies").search("botman");
-```
+
+
 
 [About this SDK](https://github.com/meilisearch/meilisearch-java)
 ```
 
+```text Ruby
 
-```ruby Ruby
-```ruby
+
 client.index('movies').search('botman')
-```
+
+
 
 [About this SDK](https://www.github.com/meilisearch/meilisearch-ruby)
 ```
 
+```text Go
 
-```go Go
-```go
+
 client.Index("movies").Search("botman", &meilisearch.SearchRequest{})
-```
+
+
 
 [About this SDK](https://github.com/meilisearch/meilisearch-go/)
 ```
 
+```text C#
 
-```csharp C#
-```csharp
+
 MeilisearchClient client = new MeilisearchClient("http://localhost:7700", "masterKey");
 var index = client.Index("movies");
 
@@ -75,14 +83,14 @@ foreach (var movie in movies.Hits)
 {
     Console.WriteLine(movie.Title);
 }
-```
+
+
 [About this SDK](https://www.github.com/meilisearch/meilisearch-dotnet)
 ```
 
-
-```rust Rust
+```text Rust
 You can build a `SearchQuery` and execute it later:
-```rust
+
 let query: SearchQuery = SearchQuery::new(&movies)
   .with_query("botman")
   .build();
@@ -92,19 +100,21 @@ let results: SearchResults<Movie> = client
   .execute_query(&query)
   .await
   .unwrap();
-```
+
+
 
 You can build a `SearchQuery` and execute it directly:
-```rust
+
 let results: SearchResults<Movie> = SearchQuery::new(&movies)
   .with_query("botman")
   .execute()
   .await
   .unwrap();
-```
+
+
 
 You can search in an index directly:
-```rust
+
 let results: SearchResults<Movie> = client
   .index("movies")
   .search()
@@ -112,15 +122,16 @@ let results: SearchResults<Movie> = client
   .execute()
   .await
   .unwrap();
-```
+
+
 
 [About this SDK](https://github.com/meilisearch/meilisearch-rust/)
 ```
 
+```text Swift
 
-```swift Swift
-```swift
-  client.index("movies").search(SearchParameters(query: "botman")) { (result) in
+
+client.index("movies").search(SearchParameters(query: "botman")) { (result) in
       switch result {
       case .success(let searchResult):
           print(searchResult)
@@ -128,16 +139,17 @@ let results: SearchResults<Movie> = client
           print(error)
       }
   }
-```
+
+
 [About this SDK](https://www.github.com/meilisearch/meilisearch-swift)
 ```
 
+```text Dart
 
-```dart Dart
-```dart
+
 await client.index('movies').search('botman');
-```
+
+
 [About this SDK](https://github.com/meilisearch/meilisearch-dart/)
 ```
-
 </CodeGroup>

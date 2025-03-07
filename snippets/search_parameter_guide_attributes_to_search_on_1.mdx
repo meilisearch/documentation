@@ -10,13 +10,11 @@ curl \
   }'
 ```
 
-
 ```javascript JS
 client.index('movies').search('adventure', {
   attributesToSearchOn: ['overview']
 })
 ```
-
 
 ```python Python
 client.index('movies').search('adventure', {
@@ -24,19 +22,16 @@ client.index('movies').search('adventure', {
 })
 ```
 
-
 ```php PHP
 $client->index('movies')->search('adventure', [
   'attributesToSearchOn' => ['overview']
 ]);
 ```
 
-
 ```java Java
 SearchRequest searchRequest = SearchRequest.builder().q("adventure").attributesToSearchOn(new String[] {"overview"});
 client.index("movies").searchRequest(searchRequest);
 ```
-
 
 ```ruby Ruby
 client.index('movies').search('adventure', {
@@ -44,13 +39,11 @@ client.index('movies').search('adventure', {
 })
 ```
 
-
 ```go Go
 resp, err := client.Index("movies").Search("adventure", &meilisearch.SearchRequest{
   AttributesToSearchOn: []string{"overview"},
 })
 ```
-
 
 ```csharp C#
 var searchQuery = new SearchQuery
@@ -59,7 +52,6 @@ var searchQuery = new SearchQuery
 };
 await client.Index("movies").SearchAsync<Movie>("adventure", searchQuery);
 ```
-
 
 ```rust Rust
 let results: SearchResults<Movie> = client
@@ -71,7 +63,6 @@ let results: SearchResults<Movie> = client
   .await
   .unwrap();
 ```
-
 
 ```swift Swift
 let searchParameters = SearchParameters(query: "adventure", attributesToSearchOn: ["overview"])
@@ -85,7 +76,6 @@ client.index("movies").search(searchParameters) { (result: Result<Searchable<Mov
 }
 ```
 
-
 ```dart Dart
 await client.index('books').facetSearch(
       FacetSearchQuery(
@@ -94,5 +84,4 @@ await client.index('books').facetSearch(
       ),
     );
 ```
-
 </CodeGroup>

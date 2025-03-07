@@ -5,41 +5,33 @@ curl \
   -X GET 'MEILISEARCH_URL/indexes/movies/settings/filterable-attributes'
 ```
 
-
 ```javascript JS
 client.index('movies').getFilterableAttributes()
 ```
-
 
 ```python Python
 client.index('movies').get_filterable_attributes()
 ```
 
-
 ```php PHP
 $client->index('movies')->getFilterableAttributes();
 ```
-
 
 ```java Java
 client.index("movies").getFilterableAttributesSettings();
 ```
 
-
 ```ruby Ruby
 client.index('movies').filterable_attributes
 ```
-
 
 ```go Go
 client.Index("movies").GetFilterableAttributes()
 ```
 
-
 ```csharp C#
 IEnumerable<string> attributes = await client.Index("movies").GetFilterableAttributesAsync();
 ```
-
 
 ```rust Rust
 let filterable_attributes: Vec<String> = client
@@ -48,7 +40,6 @@ let filterable_attributes: Vec<String> = client
   .await
   .unwrap();
 ```
-
 
 ```swift Swift
 client.index("movies").getFilterableAttributes { (result) in
@@ -61,9 +52,7 @@ client.index("movies").getFilterableAttributes { (result) in
 }
 ```
 
-
 ```dart Dart
 await client.index('movies').getFilterableAttributes();
 ```
-
 </CodeGroup>

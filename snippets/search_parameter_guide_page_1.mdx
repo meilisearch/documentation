@@ -10,41 +10,34 @@ curl \
   }'
 ```
 
-
 ```javascript JS
 client.index('movies').search('', {
   page: 2
 })
 ```
 
-
 ```python Python
 client.index('movies').search('', {'page': 2})
 ```
 
-
 ```php PHP
 $client->index('movies')->search('', ['page' => 2]);
 ```
-
 
 ```java Java
 SearchRequest searchRequest = SearchRequest.builder().q("").page(15).build();
 SearchResultPaginated searchResult = client.index("movies").search(searchRequest);
 ```
 
-
 ```ruby Ruby
 client.index('movies').search('', page: 2)
 ```
-
 
 ```go Go
 client.Index("movies").Search("", &meilisearch.SearchRequest{
   Page: 2,
 })
 ```
-
 
 ```csharp C#
 var result = await client.Index("movies").SearchAsync<Movie>("", new SearchQuery { Page = 2 });
@@ -53,11 +46,9 @@ if(result is PaginatedSearchResult<Movie> pagedResults)
 }
 ```
 
-
 ```rust Rust
 client.index("movies").search().with_page(2).execute().await?;
 ```
-
 
 ```swift Swift
 let searchParameters = SearchParameters(query: "", page: 15)
@@ -71,12 +62,10 @@ client.index("movies").search(searchParameters) { (result: Result<Searchable<Mov
 }
 ```
 
-
 ```dart Dart
 await client
     .index('movies')
     .search('', SearchQuery(page: 2))
     .asPaginatedResult();
 ```
-
 </CodeGroup>

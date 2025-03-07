@@ -5,11 +5,9 @@ curl \
   -X DELETE 'MEILISEARCH_URL/indexes/movies'
 ```
 
-
 ```javascript JS
 client.deleteIndex('movies')
 ```
-
 
 ```python Python
 client.delete_index('movies')
@@ -17,21 +15,17 @@ client.delete_index('movies')
 client.index('movies').delete()
 ```
 
-
 ```php PHP
 $client->deleteIndex('movies');
 ```
-
 
 ```java Java
 client.deleteIndex("movies");
 ```
 
-
 ```ruby Ruby
 client.delete_index('movies')
 ```
-
 
 ```go Go
 client.DeleteIndex("movies")
@@ -39,11 +33,9 @@ client.DeleteIndex("movies")
 client.Index("movies").Delete()
 ```
 
-
 ```csharp C#
 await client.DeleteIndexAsync("movies");
 ```
-
 
 ```rust Rust
 client.index("movies")
@@ -51,7 +43,6 @@ client.index("movies")
   .await
   .unwrap();
 ```
-
 
 ```swift Swift
 client.index("movies").delete { (result) in
@@ -64,9 +55,7 @@ client.index("movies").delete { (result) in
 }
 ```
 
-
 ```dart Dart
 await client.index('movies').delete();
 ```
-
 </CodeGroup>

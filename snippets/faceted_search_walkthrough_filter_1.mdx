@@ -16,7 +16,6 @@ curl \
   }'
 ```
 
-
 ```javascript JS
 client.index('movies')
   .search('thriller', {
@@ -24,20 +23,17 @@ client.index('movies')
   })
 ```
 
-
 ```python Python
 client.index('movies').search('thriller', {
   'filter': [['genres = Horror', 'genres = Mystery'], 'director = "Jordan Peele"']
 })
 ```
 
-
 ```php PHP
 $client->index('movies')->search('thriller', [
   'filter' => [['genres = Horror', 'genres = Mystery'], 'director = "Jordan Peele"']
 ]);
 ```
-
 
 ```java Java
 SearchRequest searchRequest =
@@ -47,13 +43,11 @@ SearchRequest searchRequest =
 client.index("movies").search(searchRequest);
 ```
 
-
 ```ruby Ruby
 client.index('movies').search('thriller', {
   filter: [['genres = Horror', 'genres = Mystery'], 'director = "Jordan Peele"']
 })
 ```
-
 
 ```go Go
 resp, err := client.Index("movies").Search("thriller", &meilisearch.SearchRequest{
@@ -64,7 +58,6 @@ resp, err := client.Index("movies").Search("thriller", &meilisearch.SearchReques
 })
 ```
 
-
 ```csharp C#
 var sq = new SearchQuery
 {
@@ -72,7 +65,6 @@ var sq = new SearchQuery
 };
 await client.Index("movies").SearchAsync<Movie>("thriller", sq);
 ```
-
 
 ```rust Rust
 let results: SearchResults<Movie> = client
@@ -84,7 +76,6 @@ let results: SearchResults<Movie> = client
   .await
   .unwrap();
 ```
-
 
 ```swift Swift
 let searchParameters = SearchParameters(
@@ -106,7 +97,6 @@ client.index("movies").search(searchParameters) { (result: Result<Searchable<Mov
 }
 ```
 
-
 ```dart Dart
 await client.index('movies').search(
     'thriller',
@@ -115,5 +105,4 @@ await client.index('movies').search(
       'director = "Jordan Peele"'
     ]));
 ```
-
 </CodeGroup>

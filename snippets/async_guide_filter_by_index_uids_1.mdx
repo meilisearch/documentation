@@ -4,27 +4,22 @@
 client.getTasks({ indexUids: ['movies'] })
 ```
 
-
 ```python Python
 client.get_tasks({'indexUids': ['movies']})
 ```
 
-
 ```php PHP
 $client->getTasks((new TasksQuery())->setIndexUids(['movies']));
 ```
-
 
 ```java Java
 TasksQuery query = new TasksQuery().setIndexUids(new String[] {"movies"});
 client.getTasks(query);
 ```
 
-
 ```ruby Ruby
 client.get_tasks(index_uids: ['movies'])
 ```
-
 
 ```go Go
 client.GetTasks(&meilisearch.TasksQuery{
@@ -32,11 +27,9 @@ client.GetTasks(&meilisearch.TasksQuery{
 })
 ```
 
-
 ```csharp C#
 await client.GetTasksAsync(new TasksQuery { IndexUids = new List<string> { "movies" } });
 ```
-
 
 ```rust Rust
 let mut query = TasksQuery::new(&client);
@@ -46,7 +39,6 @@ let tasks = query
   .await
   .unwrap();
 ```
-
 
 ```swift Swift
 client.getTasks(params: TasksQuery(indexUids: ["movies"])) { result in
@@ -59,9 +51,7 @@ client.getTasks(params: TasksQuery(indexUids: ["movies"])) { result in
 }
 ```
 
-
 ```dart Dart
 await client.getTasks(params: TasksQuery(indexUids: ['movies']));
 ```
-
 </CodeGroup>

@@ -5,41 +5,33 @@ curl \
   -X GET 'MEILISEARCH_URL/indexes/movies'
 ```
 
-
 ```javascript JS
 client.index('movies').getRawInfo()
 ```
-
 
 ```python Python
 client.get_index('movies')
 ```
 
-
 ```php PHP
 $client->index('movies')->fetchRawInfo();
 ```
-
 
 ```java Java
 client.getIndex("movies");
 ```
 
-
 ```ruby Ruby
 client.fetch_index('movies')
 ```
-
 
 ```go Go
 client.GetIndex("movies")
 ```
 
-
 ```csharp C#
 await client.GetIndexAsync("movies");
 ```
-
 
 ```rust Rust
 let movies: Index = client
@@ -47,7 +39,6 @@ let movies: Index = client
   .await
   .unwrap();
 ```
-
 
 ```swift Swift
 client.getIndex("movies") { (result) in
@@ -60,9 +51,7 @@ client.getIndex("movies") { (result) in
 }
 ```
 
-
 ```dart Dart
 await client.getIndex('movies');
 ```
-
 </CodeGroup>

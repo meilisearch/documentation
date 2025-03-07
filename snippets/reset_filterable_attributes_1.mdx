@@ -5,41 +5,33 @@ curl \
   -X DELETE 'MEILISEARCH_URL/indexes/movies/settings/filterable-attributes'
 ```
 
-
 ```javascript JS
 client.index('movies').resetFilterableAttributes()
 ```
-
 
 ```python Python
 client.index('movies').reset_filterable_attributes()
 ```
 
-
 ```php PHP
 $client->index('movies')->resetFilterableAttributes();
 ```
-
 
 ```java Java
 client.index("movies").resetFilterableAttributesSettings();
 ```
 
-
 ```ruby Ruby
 client.index('movies').reset_filterable_attributes
 ```
-
 
 ```go Go
 client.Index("movies").ResetFilterableAttributes()
 ```
 
-
 ```csharp C#
 TaskInfo result = await client.Index("movies").ResetFilterableAttributesAsync();
 ```
-
 
 ```rust Rust
 let task: TaskInfo = client
@@ -48,7 +40,6 @@ let task: TaskInfo = client
   .await
   .unwrap();
 ```
-
 
 ```swift Swift
 client.index("movies").resetFilterableAttributes { (result) in
@@ -61,9 +52,7 @@ client.index("movies").resetFilterableAttributes { (result) in
 }
 ```
 
-
 ```dart Dart
 await client.index('movies').resetFilterableAttributes();
 ```
-
 </CodeGroup>

@@ -7,12 +7,10 @@ curl \
   --data-binary @movies.json
 ```
 
-
 ```javascript JS
 const movies = require('./movies.json')
 client.index('movies').addDocuments(movies).then((res) => console.log(res))
 ```
-
 
 ```python Python
 import json
@@ -22,14 +20,12 @@ movies = json.load(json_file)
 client.index('movies').add_documents(movies)
 ```
 
-
 ```php PHP
 $moviesJson = file_get_contents('movies.json');
 $movies = json_decode($moviesJson);
 
 $client->index('movies')->addDocuments($movies);
 ```
-
 
 ```java Java
 import com.meilisearch.sdk;
@@ -44,7 +40,6 @@ Index index = client.index("movies");
 index.addDocuments(moviesJson);
 ```
 
-
 ```ruby Ruby
 require 'json'
 
@@ -52,7 +47,6 @@ movies_json = File.read('movies.json')
 movies = JSON.parse(movies_json)
 client.index('movies').add_documents(movies)
 ```
-
 
 ```go Go
 import (
@@ -68,7 +62,6 @@ json.Unmarshal([]byte(file), &movies)
 client.Index("movies").AddDocuments(&movies)
 ```
 
-
 ```csharp C#
 // Make sure to add this using to your code
 using System.IO;
@@ -76,7 +69,6 @@ using System.IO;
 var jsonDocuments = await File.ReadAllTextAsync("movies.json");
 await client.Index("movies").AddDocumentsJsonAsync(jsonDocuments);
 ```
-
 
 ```rust Rust
 use meilisearch_sdk::{
@@ -111,7 +103,6 @@ fn main() { block_on(async move {
 })}
 ```
 
-
 ```swift Swift
 let path = Bundle.main.url(forResource: "movies", withExtension: "json")!
 let documents: Data = try Data(contentsOf: path)
@@ -126,12 +117,10 @@ client.index("movies").addDocuments(documents: documents) { (result) in
 }
 ```
 
-
 ```dart Dart
 // import 'dart:io';
 // import 'dart:convert';
 final json = await File('movies.json').readAsString();
 await client.index('movies').addDocumentsJson(json);
 ```
-
 </CodeGroup>

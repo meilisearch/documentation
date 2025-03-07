@@ -10,16 +10,13 @@ curl \
 }'
 ```
 
-
 ```javascript JS
 client.index('INDEX_NAME').search('QUERY TEXT IN JAPANESE', { locales: ['jpn'] })
 ```
 
-
 ```python Python
 client.index('INDEX_NAME').search('進撃の巨人', { 'locales': ['jpn'] })
 ```
-
 
 ```php PHP
 $client->index('INDEX_NAME')->search('QUERY TEXT IN JAPANESE', [
@@ -27,24 +24,20 @@ $client->index('INDEX_NAME')->search('QUERY TEXT IN JAPANESE', [
 ]);
 ```
 
-
 ```java Java
 SearchRequest searchRequest = SearchRequest.builder().q("QUERY TEXT IN JAPANESE").locales(new String[]{"jpn"}).build();
 client.index("INDEX_NAME").search(searchRequest);
 ```
 
-
 ```ruby Ruby
 client.index('INDEX_NAME').search('進撃の巨人', { locales: ['jpn'] })
 ```
-
 
 ```go Go
 client.index("INDEX_NAME").Search("QUERY TEXT IN JAPANESE", &meilisearch.SearchRequest{
     Locates: []string{"jpn"}
 })
 ```
-
 
 ```rust Rust
 let res = client
@@ -56,5 +49,4 @@ let res = client
   .await
   .unwrap();
 ```
-
 </CodeGroup>

@@ -11,7 +11,6 @@ curl \
     ]'
 ```
 
-
 ```javascript JS
 client.index('movies').updateSearchableAttributes([
     'title',
@@ -21,7 +20,6 @@ client.index('movies').updateSearchableAttributes([
 )
 ```
 
-
 ```python Python
 client.index('movies').update_searchable_attributes([
     'title',
@@ -29,7 +27,6 @@ client.index('movies').update_searchable_attributes([
     'genres'
 ])
 ```
-
 
 ```php PHP
 $client->index('movies')->updateSearchableAttributes([
@@ -39,12 +36,10 @@ $client->index('movies')->updateSearchableAttributes([
 ]);
 ```
 
-
 ```java Java
 String[] attributes = {"title", "overview", "genres"}
 client.index("movies").updateSearchableAttributesSettings(attributes);
 ```
-
 
 ```ruby Ruby
 client.index('movies').update_searchable_attributes([
@@ -53,7 +48,6 @@ client.index('movies').update_searchable_attributes([
   'genres'
 ])
 ```
-
 
 ```go Go
 searchableAttributes := []string{
@@ -64,7 +58,6 @@ searchableAttributes := []string{
 client.Index("movies").UpdateSearchableAttributes(&searchableAttributes)
 ```
 
-
 ```csharp C#
 await client.Index("movies").UpdateSearchableAttributesAsync(new[]
 {
@@ -73,7 +66,6 @@ await client.Index("movies").UpdateSearchableAttributesAsync(new[]
     "genres"
 });
 ```
-
 
 ```rust Rust
 let searchable_attributes = [
@@ -88,7 +80,6 @@ let task: TaskInfo = client
   .await
   .unwrap();
 ```
-
 
 ```swift Swift
 let searchableAttributes: [String] = [
@@ -106,11 +97,9 @@ client.index("movies").updateSearchableAttributes(searchableAttributes) { (resul
 }
 ```
 
-
 ```dart Dart
 await client
     .index('movies')
     .updateSearchableAttributes(['title', 'overview', 'genres']);
 ```
-
 </CodeGroup>

@@ -18,7 +18,6 @@ curl \
   ]'
 ```
 
-
 ```javascript JS
 client.index('books').addDocuments([
   {
@@ -31,7 +30,6 @@ client.index('books').addDocuments([
 ], { primaryKey: 'reference_number' })
 ```
 
-
 ```python Python
 client.index('books').add_documents([{
   'reference_number': 287947,
@@ -41,7 +39,6 @@ client.index('books').add_documents([{
   'price': 5.00
 }], 'reference_number')
 ```
-
 
 ```php PHP
 $client->index('books')->addDocuments([
@@ -55,7 +52,6 @@ $client->index('books')->addDocuments([
 ], 'reference_number');
 ```
 
-
 ```java Java
 client.index("books").addDocuments("[{"
   + "\"reference_number\": 2879,"
@@ -66,7 +62,6 @@ client.index("books").addDocuments("[{"
   + "}]"
 , "reference_number");
 ```
-
 
 ```ruby Ruby
 client.index('books').add_documents([
@@ -79,7 +74,6 @@ client.index('books').add_documents([
   }
 ], 'reference_number')
 ```
-
 
 ```go Go
 documents := []map[string]interface{}{
@@ -94,7 +88,6 @@ documents := []map[string]interface{}{
 client.Index("books").AddDocuments(documents, "reference_number")
 ```
 
-
 ```csharp C#
 await index.AddDocumentsAsync(
   new[] {
@@ -108,7 +101,6 @@ await index.AddDocumentsAsync(
   },
   "reference_number");
 ```
-
 
 ```rust Rust
 #[derive(Serialize, Deserialize)]
@@ -135,7 +127,6 @@ let task: TaskInfo = client
   .unwrap();
 ```
 
-
 ```swift Swift
 let documents: Data = """
 [
@@ -159,7 +150,6 @@ client.index("books").addDocuments(documents: documents, primaryKey: "reference_
 }
 ```
 
-
 ```dart Dart
 await client.index('movies').addDocuments([
   {
@@ -171,5 +161,4 @@ await client.index('movies').addDocuments([
   }
 ], primaryKey: 'reference_number');
 ```
-
 </CodeGroup>

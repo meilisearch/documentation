@@ -10,13 +10,11 @@ curl \
   }'
 ```
 
-
 ```javascript JS
 client.index('movies').search('dragon', {
   showRankingScore: true
 })
 ```
-
 
 ```python Python
 client.index('movies').search('dragon', {
@@ -24,19 +22,16 @@ client.index('movies').search('dragon', {
 })
 ```
 
-
 ```php PHP
 $client->index('movies')->search('dragon', [
   'showRankingScore' => true
 ]);
 ```
 
-
 ```java Java
 SearchRequest searchRequest = SearchRequest.builder().q("dragon").showRankingScore(true).build();
 client.index("movies").search(searchRequest);
 ```
-
 
 ```ruby Ruby
 client.index('movies').search('dragon', {
@@ -44,13 +39,11 @@ client.index('movies').search('dragon', {
 })
 ```
 
-
 ```go Go
 resp, err := client.Index("movies").Search("dragon", &meilisearch.SearchRequest{
   showRankingScore:    true,
 })
 ```
-
 
 ```csharp C#
 var params = new SearchQuery()
@@ -59,7 +52,6 @@ var params = new SearchQuery()
 };
 await client.Index("movies").SearchAsync<MovieWithRankingScore>("dragon", params);
 ```
-
 
 ```rust Rust
 let results: SearchResults<Movie> = client
@@ -71,7 +63,6 @@ let results: SearchResults<Movie> = client
   .await
   .unwrap();
 ```
-
 
 ```swift Swift
 let searchParameters = SearchParameters(query: "dragon", showRankingScore: true)
@@ -85,11 +76,9 @@ client.index("movies").search(searchParameters) { (result: Result<Searchable<Mov
 }
 ```
 
-
 ```dart Dart
 await client
     .index('movies')
     .search('dragon', SearchQuery(showRankingScore: true));
 ```
-
 </CodeGroup>

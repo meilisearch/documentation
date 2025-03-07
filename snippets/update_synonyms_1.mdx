@@ -17,7 +17,6 @@ curl \
   }'
 ```
 
-
 ```javascript JS
 client.index('movies').updateSynonyms({
   wolverine: ['xmen', 'logan'],
@@ -25,7 +24,6 @@ client.index('movies').updateSynonyms({
   wow: ['world of warcraft']
 })
 ```
-
 
 ```python Python
 client.index('movies').update_synonyms({
@@ -35,7 +33,6 @@ client.index('movies').update_synonyms({
 })
 ```
 
-
 ```php PHP
 $client->index('movies')->updateSynonyms([
   'wolverine' => ['xmen', 'logan'],
@@ -44,14 +41,12 @@ $client->index('movies')->updateSynonyms([
 ]);
 ```
 
-
 ```java Java
 HashMap<String, String[]> synonyms = new HashMap<String, String[]>();
 synonyms.put("wolverine", new String[] {"xmen", "logan"});
 synonyms.put("logan", new String[] {"wolverine"});
 client.index("movies").updateSynonymsSettings(synonyms);
 ```
-
 
 ```ruby Ruby
 client.index('movies').update_synonyms({
@@ -60,7 +55,6 @@ client.index('movies').update_synonyms({
   wow: ['world of warcraft']
 })
 ```
-
 
 ```go Go
 synonyms := map[string][]string{
@@ -71,7 +65,6 @@ synonyms := map[string][]string{
 client.Index("movies").UpdateSynonyms(&synonyms)
 ```
 
-
 ```csharp C#
 var synonyms = new Dictionary<string, IEnumerable<string>>
 {
@@ -81,7 +74,6 @@ var synonyms = new Dictionary<string, IEnumerable<string>>
 };
 await client.Index("movies").UpdateSynonymsAsync(synonyms);
 ```
-
 
 ```rust Rust
 let mut synonyms = std::collections::HashMap::new();
@@ -95,7 +87,6 @@ let task: TaskInfo = client
   .await
   .unwrap();
 ```
-
 
 ```swift Swift
 let synonyms: [String: [String]] = [
@@ -113,7 +104,6 @@ client.index("movies").updateSynonyms(synonyms) { (result) in
 }
 ```
 
-
 ```dart Dart
 await client.index('movies').updateSynonyms({
   'wolverine': ['xmen', 'logan'],
@@ -121,5 +111,4 @@ await client.index('movies').updateSynonyms({
   'wow': ['world of warcraft'],
 });
 ```
-
 </CodeGroup>

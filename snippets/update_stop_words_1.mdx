@@ -11,42 +11,34 @@ curl \
   ]'
 ```
 
-
 ```javascript JS
 client.index('movies').updateStopWords(['of', 'the', 'to'])
 ```
-
 
 ```python Python
 client.index('movies').update_stop_words(['of', 'the', 'to'])
 ```
 
-
 ```php PHP
 $client->index('movies')->updateStopWords(['the', 'of', 'to']);
 ```
-
 
 ```java Java
 client.index("movies").updateStopWordsSettings(new String[] {"of", "the", "to"});
 ```
 
-
 ```ruby Ruby
 client.index('movies').update_stop_words(['of', 'the', 'to'])
 ```
-
 
 ```go Go
 stopWords := []string{"of", "the", "to"}
 client.Index("movies").UpdateStopWords(&stopWords)
 ```
 
-
 ```csharp C#
 await client.Index("movies").UpdateStopWordsAsync(new[] {"of", "the", "to"});
 ```
-
 
 ```rust Rust
 let stop_words = ["of", "the", "to"];
@@ -56,7 +48,6 @@ let task: TaskInfo = client
   .await
   .unwrap();
 ```
-
 
 ```swift Swift
 let stopWords: [String] = ["of", "the", "to"]
@@ -70,9 +61,7 @@ client.index("movies").updateStopWords(stopWords) { (result) in
 }
 ```
 
-
 ```dart Dart
 await client.index('movies').updateStopWords(['of', 'the', 'to']);
 ```
-
 </CodeGroup>

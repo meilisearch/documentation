@@ -10,31 +10,25 @@ curl \
   }'
 ```
 
-
 ```javascript JS
 client.createIndex('movies', { primaryKey: 'id' })
 ```
-
 
 ```python Python
 client.create_index('movies', {'primaryKey': 'id'})
 ```
 
-
 ```php PHP
 $client->createIndex('movies', ['primaryKey' => 'id']);
 ```
-
 
 ```java Java
 client.createIndex("movies", "id");
 ```
 
-
 ```ruby Ruby
 client.create_index('movies', primary_key: 'id')
 ```
-
 
 ```go Go
 client.CreateIndex(&meilisearch.IndexConfig{
@@ -43,18 +37,15 @@ client.CreateIndex(&meilisearch.IndexConfig{
 })
 ```
 
-
 ```csharp C#
 TaskInfo task = await client.CreateIndexAsync("movies", "id");
 ```
-
 
 ```rust Rust
 client.create_index("movies", Some("id"))
   .await
   .unwrap();
 ```
-
 
 ```swift Swift
 client.createIndex(uid: "movies", primaryKey: "id") { (result) in
@@ -67,9 +58,7 @@ client.createIndex(uid: "movies", primaryKey: "id") { (result) in
 }
 ```
 
-
 ```dart Dart
 await client.createIndex('movies', primaryKey: 'id');
 ```
-
 </CodeGroup>

@@ -11,13 +11,11 @@ curl \
   }'
 ```
 
-
 ```javascript JS
 client.index('INDEX_NAME').updateLocalizedAttributes([
   { attributePatterns: ['*_ja'], locales: ['jpn'] },
 ])
 ```
-
 
 ```python Python
 client.index('INDEX_NAME').update_localized_attributes([
@@ -25,14 +23,12 @@ client.index('INDEX_NAME').update_localized_attributes([
 ])
 ```
 
-
 ```php PHP
 $client->index('INDEX_NAME')->updateLocalizedAttributes([
   'locales' => ['jpn'],
   'attributePatterns' => ['*_ja']
 ]);
 ```
-
 
 ```java Java
 LocalizedAttribute attribute = new LocalizedAttribute();
@@ -44,20 +40,17 @@ client.index("INDEX_NAME").updateLocalizedAttributesSettings(
 );
 ```
 
-
 ```ruby Ruby
 client.index('INDEX_NAME').update_localized_attributes([
   { attribute_patterns: ['*_ja'], locales: ['jpn'] },
 ])
 ```
 
-
 ```go Go
 client.index("INDEX_NAME").UpdateLocalizedAttributes([]*LocalizedAttributes{
     { AttributePatterns: ["*_ja"], Locales: ["jpn"] },
 })
 ```
-
 
 ```rust Rust
 let localized_attributes = vec![LocalizedAttributes {
@@ -70,5 +63,4 @@ let task: TaskInfo = client
   .await
   .unwrap();
 ```
-
 </CodeGroup>

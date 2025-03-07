@@ -9,42 +9,34 @@ curl \
   ]'
 ```
 
-
 ```javascript JS
 client.index('games').updateFilterableAttributes(['release_timestamp'])
 ```
-
 
 ```python Python
 client.index('games').update_filterable_attributes(['release_timestamp'])
 ```
 
-
 ```php PHP
 $client->index('games')->updateFilterableAttributes(['release_timestamp']);
 ```
-
 
 ```java Java
 client.index("movies").updateFilterableAttributesSettings(new String[] { "release_timestamp" });
 ```
 
-
 ```ruby Ruby
 client.index('games').update_filterable_attributes(['release_timestamp'])
 ```
-
 
 ```go Go
 filterableAttributes := []string{"release_timestamp"}
 client.Index("games").UpdateFilterableAttributes(&filterableAttributes)
 ```
 
-
 ```csharp C#
 await client.Index("games").UpdateFilterableAttributesAsync(new string[] { "release_timestamp" });
 ```
-
 
 ```rust Rust
 let settings = Settings::new()
@@ -57,7 +49,6 @@ let task: TaskInfo = client
   .unwrap();
 ```
 
-
 ```swift Swift
 client.index("games").updateFilterableAttributes(["release_timestamp"]) { (result) in
   switch result {
@@ -69,11 +60,9 @@ client.index("games").updateFilterableAttributes(["release_timestamp"]) { (resul
 }
 ```
 
-
 ```dart Dart
 await client
     .index('games')
     .updateFilterableAttributes(['release_timestamp']);
 ```
-
 </CodeGroup>

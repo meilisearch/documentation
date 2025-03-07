@@ -9,16 +9,13 @@ curl \
   }'
 ```
 
-
 ```javascript JS
 client.index('books').updateSettings({ pagination: { maxTotalHits: 100 }})
 ```
 
-
 ```python Python
 client.index('books').update_pagination_settings({'maxTotalHits': 100})
 ```
-
 
 ```php PHP
 $client->index('books')->updateSettings([
@@ -28,18 +25,15 @@ $client->index('books')->updateSettings([
 ]);
 ```
 
-
 ```java Java
 Pagination newPagination = new Pagination();
 newPagination.setMaxTotalHits(100);
 client.index("books").updatePaginationSettings(newPagination);
 ```
 
-
 ```ruby Ruby
 index('books').update_pagination({ max_total_hits: 100 })
 ```
-
 
 ```go Go
 client.Index("books").UpdatePagination(&meilisearch.Pagination{
@@ -47,14 +41,12 @@ client.Index("books").UpdatePagination(&meilisearch.Pagination{
 })
 ```
 
-
 ```csharp C#
 var pagination = new Pagination {
   MaxTotalHits = 20
 };
 await client.Index("movies").UpdatePaginationAsync(pagination);
 ```
-
 
 ```rust Rust
 let pagination = PaginationSetting {max_total_hits:100};
@@ -66,11 +58,9 @@ let task: TaskInfo = client
   .unwrap();
 ```
 
-
 ```dart Dart
 await client
     .index('books')
     .updatePagination(Pagination(maxTotalHits: 100));
 ```
-
 </CodeGroup>

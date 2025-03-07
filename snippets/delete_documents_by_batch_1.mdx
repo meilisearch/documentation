@@ -12,21 +12,17 @@ curl \
   ]'
 ```
 
-
 ```javascript JS
 client.index('movies').deleteDocuments([23488, 153738, 437035, 363869])
 ```
-
 
 ```python Python
 client.index('movies').delete_documents([23488, 153738, 437035, 363869])
 ```
 
-
 ```php PHP
 $client->index('movies')->deleteDocuments([23488, 153738, 437035, 363869]);
 ```
-
 
 ```java Java
 client.index("movies").deleteDocuments(Arrays.asList(new String[]
@@ -38,11 +34,9 @@ client.index("movies").deleteDocuments(Arrays.asList(new String[]
 }));
 ```
 
-
 ```ruby Ruby
 client.index('movies').delete_documents([23488, 153738, 437035, 363869])
 ```
-
 
 ```go Go
 client.Index("movies").DeleteDocuments([]string{
@@ -53,11 +47,9 @@ client.Index("movies").DeleteDocuments([]string{
 })
 ```
 
-
 ```csharp C#
 await client.Index("movies").DeleteDocumentsAsync(new[] { "23488", "153738", "437035", "363869" });
 ```
-
 
 ```rust Rust
 let task: TaskInfo = client
@@ -67,7 +59,6 @@ let task: TaskInfo = client
   .unwrap();
 ```
 
-
 ```dart Dart
 await client.index('movies').deleteDocuments(
       DeleteDocumentsQuery(
@@ -75,5 +66,4 @@ await client.index('movies').deleteDocuments(
       ),
     );
 ```
-
 </CodeGroup>

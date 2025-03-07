@@ -19,7 +19,6 @@ curl \
   }'
 ```
 
-
 ```javascript JS
 client.multiSearch({
   federation: {},
@@ -36,14 +35,12 @@ client.multiSearch({
 })
 ```
 
-
 ```python Python
 client.multi_search(
   [{"indexUid": "movies", "q": "batman"}, {"indexUid": "comics", "q": "batman"}],
   {}
 )
 ```
-
 
 ```php PHP
 $client->multiSearch([
@@ -58,12 +55,10 @@ $client->multiSearch([
 );
 ```
 
-
 ```ruby Ruby
 client.multi_search(
   queries: [{ index_uid: 'movies', q: 'batman' }, { index_uid: 'comics', q: 'batman' }],
   federation: {}
 )
 ```
-
 </CodeGroup>

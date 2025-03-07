@@ -7,13 +7,11 @@ curl \
   --data-binary '["title"]'
 ```
 
-
 ```javascript JS
 client.index('movies').updateSearchableAttributes([
   'title'
 ])
 ```
-
 
 ```python Python
 client.index('movies').update_searchable_attributes([
@@ -21,11 +19,9 @@ client.index('movies').update_searchable_attributes([
 ])
 ```
 
-
 ```php PHP
 $client->index('movies')->updateSearchableAttributes(['title']);
 ```
-
 
 ```java Java
 Settings settings = new Settings();
@@ -35,13 +31,11 @@ settings.setSearchableAttributes(new String[]
 });
 ```
 
-
 ```ruby Ruby
 client.index('movies').update_searchable_attributes([
   'title'
 ])
 ```
-
 
 ```go Go
 searchableAttributes := []string{
@@ -50,13 +44,11 @@ searchableAttributes := []string{
 client.Index("movies").UpdateSearchableAttributes(&searchableAttributes)
 ```
 
-
 ```csharp C#
 await client.Index("movies").UpdateSearchableAttributesAsync(new string[] {
   "title"
 });
 ```
-
 
 ```rust Rust
 let searchable_attributes = [
@@ -70,7 +62,6 @@ client
   .unwrap();
 ```
 
-
 ```swift Swift
 let searchableAttributes: [String] = ["title"]
 client.index("movies").updateSearchableAttributes(searchableAttributes) { (result) in
@@ -83,9 +74,7 @@ client.index("movies").updateSearchableAttributes(searchableAttributes) { (resul
 }
 ```
 
-
 ```dart Dart
 await client.index('movies').updateSearchableAttributes(['title']);
 ```
-
 </CodeGroup>

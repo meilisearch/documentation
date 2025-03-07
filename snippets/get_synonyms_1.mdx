@@ -5,41 +5,33 @@ curl \
   -X GET 'MEILISEARCH_URL/indexes/movies/settings/synonyms'
 ```
 
-
 ```javascript JS
 client.index('movies').getSynonyms()
 ```
-
 
 ```python Python
 client.index('movies').get_synonyms()
 ```
 
-
 ```php PHP
 $client->index('movies')->getSynonyms();
 ```
-
 
 ```java Java
 client.index("movies").getSynonymsSettings();
 ```
 
-
 ```ruby Ruby
 client.index('movies').synonyms
 ```
-
 
 ```go Go
 client.Index("movies").GetSynonyms()
 ```
 
-
 ```csharp C#
 await client.Index("movies").GetSynonymsAsync();
 ```
-
 
 ```rust Rust
 let synonyms: HashMap<String, Vec<String>> = client
@@ -48,7 +40,6 @@ let synonyms: HashMap<String, Vec<String>> = client
   .await
   .unwrap();
 ```
-
 
 ```swift Swift
 client.index("movies").getSynonyms { (result) in
@@ -61,9 +52,7 @@ client.index("movies").getSynonyms { (result) in
 }
 ```
 
-
 ```dart Dart
 await client.index('movies').getSynonyms();
 ```
-
 </CodeGroup>

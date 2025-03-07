@@ -7,13 +7,11 @@ curl \
   --data-binary '{ "enabled": false }'
 ```
 
-
 ```javascript JS
 client.index('movies').updateTypoTolerance({
   enabled: false
 })
 ```
-
 
 ```python Python
 client.index('movies').update_typo_tolerance({
@@ -21,13 +19,11 @@ client.index('movies').update_typo_tolerance({
 })
 ```
 
-
 ```php PHP
 $client->index('movies')->updateTypoTolerance([
   'enabled' => false
 ]);
 ```
-
 
 ```java Java
 TypoTolerance typoTolerance = new TypoTolerance();
@@ -35,11 +31,9 @@ typoTolerance.setEnabled(false);
 client.index("movies").updateTypoToleranceSettings(typoTolerance);
 ```
 
-
 ```ruby Ruby
 index('books').update_typo_tolerance({ enabled: false })
 ```
-
 
 ```go Go
 client.Index("movies").UpdateTypoTolerance(&meilisearch.TypoTolerance{
@@ -47,14 +41,12 @@ client.Index("movies").UpdateTypoTolerance(&meilisearch.TypoTolerance{
 })
 ```
 
-
 ```csharp C#
 var typoTolerance = new TypoTolerance {
   Enabled = false
 };
 await client.Index("movies").UpdateTypoToleranceAsync(typoTolerance);
 ```
-
 
 ```rust Rust
 let typo_tolerance = TypoToleranceSettings {
@@ -71,10 +63,8 @@ let task: TaskInfo = client
   .unwrap();
 ```
 
-
 ```dart Dart
 final toUpdate = TypoTolerance(enabled: false);
 await client.index('movies').updateTypoTolerance(toUpdate);
 ```
-
 </CodeGroup>

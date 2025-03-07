@@ -7,41 +7,33 @@ curl \
   --data-binary '{ "primaryKey": "id" }'
 ```
 
-
 ```javascript JS
 client.updateIndex('movies', { primaryKey: 'id' })
 ```
-
 
 ```python Python
 client.index('movies').update(primary_key='id')
 ```
 
-
 ```php PHP
 $client->updateIndex('movies', ['primaryKey' => 'id']);
 ```
-
 
 ```java Java
 client.updateIndex("movies", "id");
 ```
 
-
 ```ruby Ruby
 client.index('movies').update(primary_key: 'movie_id')
 ```
-
 
 ```go Go
 client.Index("movies").UpdateIndex("id")
 ```
 
-
 ```csharp C#
 TaskInfo task = await client.UpdateIndexAsync("movies", "id");
 ```
-
 
 ```rust Rust
 let task = IndexUpdater::new("movies", &client)
@@ -50,7 +42,6 @@ let task = IndexUpdater::new("movies", &client)
   .await
   .unwrap();
 ```
-
 
 ```swift Swift
 client.index("movies").update(primaryKey: "id") { (result) in
@@ -63,9 +54,7 @@ client.index("movies").update(primaryKey: "id") { (result) in
 }
 ```
 
-
 ```dart Dart
 await client.index('movies').update(primaryKey: 'id');
 ```
-
 </CodeGroup>

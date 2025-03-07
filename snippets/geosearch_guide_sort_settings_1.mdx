@@ -7,13 +7,11 @@ curl \
   --data-binary '["_geo"]'
 ```
 
-
 ```javascript JS
 client.index('restaurants').updateSortableAttributes([
   '_geo'
 ])
 ```
-
 
 ```python Python
 client.index('restaurants').update_sortable_attributes([
@@ -21,23 +19,19 @@ client.index('restaurants').update_sortable_attributes([
 ])
 ```
 
-
 ```php PHP
 $client->index('restaurants')->updateSortableAttributes([
   '_geo'
 ]);
 ```
 
-
 ```java Java
 client.index("restaurants").updateSortableAttributesSettings(new String[] {"_geo"});
 ```
 
-
 ```ruby Ruby
 client.index('restaurants').update_sortable_attributes(['_geo'])
 ```
-
 
 ```go Go
 sortableAttributes := []string{
@@ -46,12 +40,10 @@ sortableAttributes := []string{
 client.Index("restaurants").UpdateSortableAttributes(&sortableAttributes)
 ```
 
-
 ```csharp C#
 List<string> attributes = new() { "_geo" };
 TaskInfo result = await client.Index("restaurants").UpdateSortableAttributesAsync(attributes);
 ```
-
 
 ```rust Rust
 let task: TaskInfo = client
@@ -60,7 +52,6 @@ let task: TaskInfo = client
   .await
   .unwrap();
 ```
-
 
 ```swift Swift
 client.index("restaurants").updateSortableAttributes(["_geo"]) { (result) in
@@ -73,9 +64,7 @@ client.index("restaurants").updateSortableAttributes(["_geo"]) { (result) in
 }
 ```
 
-
 ```dart Dart
 await client.index('restaurants').updateSortableAttributes(['_geo']);
 ```
-
 </CodeGroup>

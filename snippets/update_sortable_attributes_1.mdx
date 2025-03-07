@@ -10,7 +10,6 @@ curl \
   ]'
 ```
 
-
 ```javascript JS
 client.index('books')
   .updateSortableAttributes([
@@ -19,14 +18,12 @@ client.index('books')
   ])
 ```
 
-
 ```python Python
 client.index('books').update_sortable_attributes([
   'price',
   'author'
 ])
 ```
-
 
 ```php PHP
 $client->index('books')->updateSortableAttributes([
@@ -35,11 +32,9 @@ $client->index('books')->updateSortableAttributes([
 ]);
 ```
 
-
 ```java Java
 client.index("books").updateSortableAttributesSettings(new String[] {"price", "author"});
 ```
-
 
 ```ruby Ruby
 client.index('books').update_sortable_attributes([
@@ -47,7 +42,6 @@ client.index('books').update_sortable_attributes([
   'author'
 ])
 ```
-
 
 ```go Go
 sortableAttributes := []string{
@@ -57,11 +51,9 @@ sortableAttributes := []string{
 client.Index("books").UpdateSortableAttributes(&sortableAttributes)
 ```
 
-
 ```csharp C#
 await client.Index("books").UpdateSortableAttributesAsync(new [] { "price", "author" });
 ```
-
 
 ```rust Rust
 let sortable_attributes = [
@@ -76,7 +68,6 @@ let task: TaskInfo = client
   .unwrap();
 ```
 
-
 ```swift Swift
 client.index("books").updateSortableAttributes(["price", "author"]) { (result) in
   switch result {
@@ -88,9 +79,7 @@ client.index("books").updateSortableAttributes(["price", "author"]) { (result) i
 }
 ```
 
-
 ```dart Dart
 await client.index('books').updateSortableAttributes(['price', 'author']);
 ```
-
 </CodeGroup>

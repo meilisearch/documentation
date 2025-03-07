@@ -7,13 +7,11 @@ curl \
   --data-binary '{ "filter": "_geoBoundingBox([45.494181, 9.214024], [45.449484, 9.179175])" }'
 ```
 
-
 ```javascript JS
 client.index('restaurants').search('', {
   filter: ['_geoBoundingBox([45.494181, 9.214024], [45.449484, 9.179175])'],
 })
 ```
-
 
 ```python Python
 client.index('restaurants').search('Batman', {
@@ -21,13 +19,11 @@ client.index('restaurants').search('Batman', {
 })
 ```
 
-
 ```php PHP
 $client->index('restaurants')->search('', [
   'filter' => '_geoBoundingBox([45.494181, 9.214024], [45.449484, 9.179175])'
 ]);
 ```
-
 
 ```java Java
 SearchRequest searchRequest = SearchRequest.builder().q()("").filter(new String[] {
@@ -36,18 +32,15 @@ SearchRequest searchRequest = SearchRequest.builder().q()("").filter(new String[
 client.index("restaurants").search(searchRequest);
 ```
 
-
 ```ruby Ruby
 client.index('restaurants').search('', { filter: ['_geoBoundingBox([45.494181, 9.214024], [45.449484, 9.179175])'] })
 ```
-
 
 ```go Go
 client.Index("restaurants").Search("", &meilisearch.SearchRequest{
   Filter: "_geoBoundingBox([45.494181, 9.214024], [45.449484, 9.179175])",
 })
 ```
-
 
 ```csharp C#
 SearchQuery filters = new SearchQuery()
@@ -56,7 +49,6 @@ SearchQuery filters = new SearchQuery()
 };
 var restaurants = await client.Index("restaurants").SearchAsync<Restaurant>("restaurants", filters);
 ```
-
 
 ```rust Rust
 let results: SearchResults<Restaurant> = client
@@ -67,7 +59,6 @@ let results: SearchResults<Restaurant> = client
   .await
   .unwrap();
 ```
-
 
 ```swift Swift
 let searchParameters = SearchParameters(
@@ -83,7 +74,6 @@ client.index("restaurants").search(searchParameters) { (result: Result<Searchabl
 }
 ```
 
-
 ```dart Dart
 await client.index('restaurants').search(
       '',
@@ -93,5 +83,4 @@ await client.index('restaurants').search(
       ),
     );
 ```
-
 </CodeGroup>

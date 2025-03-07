@@ -5,41 +5,33 @@ curl \
   -X DELETE 'MEILISEARCH_URL/indexes/books/settings/pagination'
 ```
 
-
 ```javascript JS
 client.index('books').resetPagination()
 ```
-
 
 ```python Python
 client.index('books').reset_pagination_settings()
 ```
 
-
 ```php PHP
 $client->index('books')->resetPagination();
 ```
-
 
 ```java Java
 client.index("books").resetPaginationSettings();
 ```
 
-
 ```ruby Ruby
 index('books').reset_pagination
 ```
-
 
 ```go Go
 client.Index("books").ResetPagination()
 ```
 
-
 ```csharp C#
 await client.Index("movies").ResetPaginationAsync();
 ```
-
 
 ```rust Rust
 let task: TaskInfo = client
@@ -49,9 +41,7 @@ let task: TaskInfo = client
   .unwrap();
 ```
 
-
 ```dart Dart
 await client.index('movies').resetPagination();
 ```
-
 </CodeGroup>

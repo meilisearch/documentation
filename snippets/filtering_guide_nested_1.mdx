@@ -10,13 +10,11 @@ curl \
   }'
 ```
 
-
 ```javascript JS
 client.index('movie_ratings').search('thriller', {
   filter: 'rating.users >= 90'
 })
 ```
-
 
 ```python Python
 client.index('movie_ratings').search('thriller', {
@@ -24,19 +22,16 @@ client.index('movie_ratings').search('thriller', {
 })
 ```
 
-
 ```php PHP
 $client->index('movie_ratings')->search('thriller', [
   'filter' => 'rating.users >= 90'
 ]);
 ```
 
-
 ```java Java
 SearchRequest searchRequest = SearchRequest.builder().q("thriller").filter(new String[] {"rating.users >= 90"}).build();
 client.index("movie_ratings").search(searchRequest);
 ```
-
 
 ```ruby Ruby
 client.index('movies_ratings').search('thriller', {
@@ -44,19 +39,16 @@ client.index('movies_ratings').search('thriller', {
 })
 ```
 
-
 ```go Go
 resp, err := client.Index("movie_ratings").Search("thriller", &meilisearch.SearchRequest{
   Filter: "rating.users >= 90",
 })
 ```
 
-
 ```csharp C#
 var filters = new SearchQuery() { Filter = "rating.users >= 90" };
 var movies = await client.Index("movie_ratings").SearchAsync<MovieRating>("thriller", filters);
 ```
-
 
 ```rust Rust
 let results: SearchResults<MovieRatings> = client
@@ -68,7 +60,6 @@ let results: SearchResults<MovieRatings> = client
   .await
   .unwrap();
 ```
-
 
 ```swift Swift
 let searchParameters = SearchParameters(
@@ -85,7 +76,6 @@ client.index("movie_ratings").search(searchParameters) { (result: Result<Searcha
 }
 ```
 
-
 ```dart Dart
 await client.index('movie_ratings').search(
       'thriller',
@@ -99,5 +89,4 @@ await client.index('movie_ratings').search(
       ),
     );
 ```
-
 </CodeGroup>

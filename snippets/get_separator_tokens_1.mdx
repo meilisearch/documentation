@@ -5,41 +5,33 @@ curl \
   -X GET 'MEILISEARCH_URL/indexes/articles/settings/separator-tokens'
 ```
 
-
 ```javascript JS
 client.index('books').getSeparatorTokens()
 ```
-
 
 ```python Python
 client.index('articles').get_separator_tokens()
 ```
 
-
 ```php PHP
 $client->index('articles')->getSeparatorTokens();
 ```
-
 
 ```java Java
 client.index("articles").getSeparatorTokensSettings();
 ```
 
-
 ```ruby Ruby
 client.index('articles').separator_tokens
 ```
-
 
 ```go Go
 client.Index("articles").GetSeparatorTokens()
 ```
 
-
 ```csharp C#
 await client.Index("movies").GetSeparatorTokensAsync();
 ```
-
 
 ```rust Rust
 let task: TaskInfo = client
@@ -49,16 +41,13 @@ let task: TaskInfo = client
   .unwrap();
 ```
 
-
 ```swift Swift
 client.index("books").getSeparatorTokens { result in
   // handle result
 }
 ```
 
-
 ```dart Dart
 await client.index('articles').getSeparatorTokens();
 ```
-
 </CodeGroup>

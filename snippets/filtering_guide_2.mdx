@@ -10,13 +10,11 @@ curl \
   }'
 ```
 
-
 ```javascript JS
 client.index('movie_ratings').search('Batman', {
   filter: 'release_date > 795484800 AND (director = "Tim Burton" OR director = "Christopher Nolan")'
 })
 ```
-
 
 ```python Python
 client.index('movie_ratings').search('Batman', {
@@ -24,19 +22,16 @@ client.index('movie_ratings').search('Batman', {
 })
 ```
 
-
 ```php PHP
 $client->index('movie_ratings')->search('Batman', [
   'filter' => 'release_date > 795484800 AND (director = "Tim Burton" OR director = "Christopher Nolan")'
 ]);
 ```
 
-
 ```java Java
 SearchRequest searchRequest = SearchRequest.builder().q("Batman").filter(new String[] {"release_date > 795484800 AND (director = \"Tim Burton\" OR director = \"Christopher Nolan\")"}).build();
 client.index("movie_ratings").search(searchRequest);
 ```
-
 
 ```ruby Ruby
 client.index('movie_ratings').search('Batman', {
@@ -44,20 +39,17 @@ client.index('movie_ratings').search('Batman', {
 })
 ```
 
-
 ```go Go
 resp, err := client.Index("movie_ratings").Search("Batman", &meilisearch.SearchRequest{
   Filter: "release_date > 795484800 AND (director = \"Tim Burton\" OR director = \"Christopher Nolan\")",
 })
 ```
 
-
 ```csharp C#
 SearchQuery filters = new SearchQuery() { Filter = "release_date > 795484800 AND (director =
 \"Tim Burton\" OR director = \"Christopher Nolan\")" };
 var movies = await client.Index("movie_ratings").SearchAsync<Movie>("Batman", filters);
 ```
-
 
 ```rust Rust
 let results: SearchResults<Movie> = client
@@ -69,7 +61,6 @@ let results: SearchResults<Movie> = client
   .await
   .unwrap();
 ```
-
 
 ```swift Swift
 let searchParameters = SearchParameters(
@@ -84,7 +75,6 @@ client.index("movie_ratings").search(searchParameters) { (result: Result<Searcha
     }
 }
 ```
-
 
 ```dart Dart
 await client.index('movie_ratings').search(
@@ -103,5 +93,4 @@ await client.index('movie_ratings').search(
       ),
     );
 ```
-
 </CodeGroup>

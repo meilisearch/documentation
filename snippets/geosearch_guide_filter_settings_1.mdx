@@ -7,7 +7,6 @@ curl \
   --data-binary '["_geo"]'
 ```
 
-
 ```javascript JS
 client.index('restaurants')
 .updateFilterableAttributes([
@@ -15,13 +14,11 @@ client.index('restaurants')
 ])
 ```
 
-
 ```python Python
 client.index('restaurants').update_filterable_attributes([
   '_geo'
 ])
 ```
-
 
 ```php PHP
 $client->index('restaurants')->updateFilterableAttributes([
@@ -29,18 +26,15 @@ $client->index('restaurants')->updateFilterableAttributes([
 ]);
 ```
 
-
 ```java Java
 Settings settings = new Settings();
 settings.setFilterableAttributes(new String[] {"_geo"});
 client.index("restaurants").updateSettings(settings);
 ```
 
-
 ```ruby Ruby
 client.index('restaurants').update_filterable_attributes(['_geo'])
 ```
-
 
 ```go Go
 filterableAttributes := []string{
@@ -49,12 +43,10 @@ filterableAttributes := []string{
 client.Index("restaurants").UpdateFilterableAttributes(&filterableAttributes)
 ```
 
-
 ```csharp C#
 List<string> attributes = new() { "_geo" };
 TaskInfo result = await client.Index("movies").UpdateFilterableAttributesAsync(attributes);
 ```
-
 
 ```rust Rust
 let task: TaskInfo = client
@@ -63,7 +55,6 @@ let task: TaskInfo = client
   .await
   .unwrap();
 ```
-
 
 ```swift Swift
 client.index("restaurants").updateFilterableAttributes(["_geo"]) { (result) in
@@ -76,9 +67,7 @@ client.index("restaurants").updateFilterableAttributes(["_geo"]) { (result) in
 }
 ```
 
-
 ```dart Dart
 await client.index('restaurants').updateFilterableAttributes(['_geo']);
 ```
-
 </CodeGroup>

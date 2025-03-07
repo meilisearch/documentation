@@ -5,19 +5,15 @@ curl \
   -X DELETE 'MEILISEARCH_URL/indexes/INDEX_UID/settings/prefix-search'
 ```
 
-
 ```javascript JS
 client.index('INDEX_NAME').resetPrefixSearch();
 ```
-
 
 ```php PHP
 $client->index('INDEX_NAME')->resetPrefixSearch();
 ```
 
-
 ```ruby Ruby
 client.index('INDEX_UID').reset_prefix_search
 ```
-
 </CodeGroup>

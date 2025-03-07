@@ -7,12 +7,10 @@ curl \
   --data-binary @games.json
 ```
 
-
 ```javascript JS
 const games = require('./games.json')
 client.index('games').addDocuments(games).then((res) => console.log(res))
 ```
-
 
 ```python Python
 import json
@@ -22,14 +20,12 @@ games = json.load(json_file)
 client.index('games').add_documents(games)
 ```
 
-
 ```php PHP
 $gamesJson = file_get_contents('games.json');
 $games = json_decode($gamesJson);
 
 $client->index('games')->addDocuments($games);
 ```
-
 
 ```java Java
 import com.meilisearch.sdk;
@@ -43,14 +39,12 @@ Index index = client.index("games");
 index.addDocuments(gamesJson);
 ```
 
-
 ```ruby Ruby
 require 'json'
 
 games = JSON.parse(File.read('games.json'))
 client.index('games').add_documents(games)
 ```
-
 
 ```go Go
 jsonFile, _ := os.Open("games.json")
@@ -63,14 +57,12 @@ json.Unmarshal(byteValue, &games)
 client.Index("games").AddDocuments(games)
 ```
 
-
 ```csharp C#
 string jsonString = await File.ReadAllTextAsync("games.json");
 var games = JsonSerializer.Deserialize<IEnumerable<Movie>>(jsonString, options);
 var index = client.Index("games");
 await index.AddDocumentsAsync<Movie>(games);
 ```
-
 
 ```rust Rust
 let mut file = File::open("games.json")
@@ -89,7 +81,6 @@ client
   .unwrap();
 ```
 
-
 ```swift Swift
 let path = Bundle.main.url(forResource: "games", withExtension: "json")!
 let documents: Data = try Data(contentsOf: path)
@@ -104,12 +95,10 @@ client.index("games").addDocuments(documents: documents) { (result) in
 }
 ```
 
-
 ```dart Dart
 //import 'dart:io';
 //import 'dart:convert';
 final json = await File('games.json').readAsString();
 await client.index('games').addDocumentsJson(json);
 ```
-
 </CodeGroup>

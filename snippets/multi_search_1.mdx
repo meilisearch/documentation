@@ -24,7 +24,6 @@ curl \
   }'
 ```
 
-
 ```javascript JS
 client.multiSearch({ queries: [
   {
@@ -44,7 +43,6 @@ client.multiSearch({ queries: [
 ]})
 ```
 
-
 ```python Python
 client.multi_search(
   [
@@ -54,7 +52,6 @@ client.multi_search(
   ]
 )
 ```
-
 
 ```php PHP
 $client->multiSearch([
@@ -72,7 +69,6 @@ $client->multiSearch([
   ]);
 ```
 
-
 ```java Java
 MultiSearchRequest multiSearchRequest = new MultiSearchRequest();
 multiIndexSearch.addQuery(new IndexSearchRequest("movies").setQuery("pooh").setLimit(5));
@@ -82,7 +78,6 @@ multiIndexSearch.addQuery(new IndexSearchRequest("movie_ratings").setQuery("us")
 client.multiSearch(multiSearchRequest);
 ```
 
-
 ```ruby Ruby
 client.multi_search([
   { index_uid: 'books', q: 'prince' },
@@ -91,7 +86,6 @@ client.multi_search([
   { index_uid: 'movie_ratings', q: 'us' }
 ])
 ```
-
 
 ```go Go
 client.MultiSearch(&MultiSearchRequest{
@@ -113,7 +107,6 @@ client.MultiSearch(&MultiSearchRequest{
   },
 })
 ```
-
 
 ```csharp C#
 await client.MultiSearchAsync(new MultiSearchQuery()
@@ -137,7 +130,6 @@ await client.MultiSearchAsync(new MultiSearchQuery()
     }
 });
 ```
-
 
 ```rust Rust
 let movie = client.index("movie");
@@ -165,7 +157,6 @@ let response = client
     .unwrap();
 ```
 
-
 ```dart Dart
 await client.multiSearch(MultiSearchQuery(queries: [
   IndexSearchQuery(query: 'pooh', indexUid: 'movies', limit: 5),
@@ -173,5 +164,4 @@ await client.multiSearch(MultiSearchQuery(queries: [
   IndexSearchQuery(query: 'us', indexUid: 'movies_ratings'),
 ]));
 ```
-
 </CodeGroup>

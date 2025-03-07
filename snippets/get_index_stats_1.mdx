@@ -5,41 +5,33 @@ curl \
   -X GET 'MEILISEARCH_URL/indexes/movies/stats'
 ```
 
-
 ```javascript JS
 client.index('movies').getStats()
 ```
-
 
 ```python Python
 client.index('movies').get_stats()
 ```
 
-
 ```php PHP
 $client->index('movies')->stats();
 ```
-
 
 ```java Java
 client.index("movies").getStats();
 ```
 
-
 ```ruby Ruby
 client.index('movies').stats
 ```
-
 
 ```go Go
 client.Index("movies").GetStats()
 ```
 
-
 ```csharp C#
 await client.Index("movies").GetStatsAsync();
 ```
-
 
 ```rust Rust
 let stats: IndexStats = client
@@ -48,7 +40,6 @@ let stats: IndexStats = client
   .await
   .unwrap();
 ```
-
 
 ```swift Swift
 client.index("movies").stats { (result) in
@@ -61,9 +52,7 @@ client.index("movies").stats { (result) in
 }
 ```
 
-
 ```dart Dart
 await client.index('movies').getStats();
 ```
-
 </CodeGroup>

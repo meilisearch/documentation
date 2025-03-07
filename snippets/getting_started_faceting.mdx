@@ -12,7 +12,6 @@ curl \
   }'
 ```
 
-
 ```javascript JS
 client.index('movies').updateFaceting({
   maxValuesPerFacet: 2,
@@ -21,7 +20,6 @@ client.index('movies').updateFaceting({
   }
 })
 ```
-
 
 ```python Python
 client.index('movies').update_faceting_settings({
@@ -32,7 +30,6 @@ client.index('movies').update_faceting_settings({
 })
 ```
 
-
 ```php PHP
 $client->index('movies')
   ->updateFaceting([
@@ -40,7 +37,6 @@ $client->index('movies')
     'sortFacetValuesBy' => ['*' => 'count']
   ]);
 ```
-
 
 ```java Java
 Faceting newFaceting = new Faceting();
@@ -51,7 +47,6 @@ newFaceting.setSortFacetValuesBy(facetSortValues);
 client.index("movies").updateFacetingSettings(newFaceting);
 ```
 
-
 ```ruby Ruby
 client.index('movies').update_faceting({
   max_values_per_facet: 2,
@@ -61,7 +56,6 @@ client.index('movies').update_faceting({
 })
 ```
 
-
 ```go Go
 client.Index("movies").UpdateFaceting(&meilisearch.Faceting{
     MaxValuesPerFacet: 2,
@@ -70,7 +64,6 @@ client.Index("movies").UpdateFaceting(&meilisearch.Faceting{
     }
 })
 ```
-
 
 ```csharp C#
 var faceting = new Faceting
@@ -84,7 +77,6 @@ var faceting = new Faceting
 await client.Index("movies").UpdateFacetingAsync(faceting);
 ```
 
-
 ```rust Rust
 let mut faceting = FacetingSettings {
   max_values_per_facet: 2,
@@ -97,16 +89,13 @@ let task: TaskInfo = client
   .unwrap();
 ```
 
-
 ```swift Swift
 client.index("movies").updateFaceting({ maxValuesPerFacet: 2 })
 ```
-
 
 ```dart Dart
 await client.index('books').updateFaceting(Faceting(
     maxValuesPerFacet: 2,
     sortFacetValuesBy: {'*': FacetingSortTypes.count}));
 ```
-
 </CodeGroup>

@@ -5,14 +5,11 @@ curl \
   -X GET 'MEILISEARCH_URL/indexes/movies/search?q=american%20ninja'
 ```
 
-
 ```javascript JS
 client.index('movies').searchGet('American ninja')
 ```
 
-
 ```dart Dart
 await client.index('movies').search('American ninja');
 ```
-
 </CodeGroup>

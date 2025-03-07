@@ -12,7 +12,6 @@ curl \
   }'
 ```
 
-
 ```javascript JS
 client.index('movies').updateTypoTolerance({
   minWordSizeForTypos: {
@@ -21,7 +20,6 @@ client.index('movies').updateTypoTolerance({
   }
 })
 ```
-
 
 ```python Python
 client.index('movies').update_typo_tolerance({
@@ -32,7 +30,6 @@ client.index('movies').update_typo_tolerance({
 })
 ```
 
-
 ```php PHP
 $client->index('movies')->updateTypoTolerance([
   'minWordSizeForTypos' => [
@@ -41,7 +38,6 @@ $client->index('movies')->updateTypoTolerance([
   ]
 ]);
 ```
-
 
 ```java Java
 TypoTolerance typoTolerance = new TypoTolerance();
@@ -56,7 +52,6 @@ typoTolerance.setMinWordSizeForTypos(minWordSizeTypos);
 client.index("movies").updateTypoToleranceSettings(typoTolerance);
 ```
 
-
 ```ruby Ruby
 index('books').update_typo_tolerance({
   min_word_size_for_typos: {
@@ -66,7 +61,6 @@ index('books').update_typo_tolerance({
 })
 ```
 
-
 ```go Go
 client.Index("movies").UpdateTypoTolerance(&meilisearch.TypoTolerance{
   MinWordSizeForTypos: meilisearch.MinWordSizeForTypos{
@@ -75,7 +69,6 @@ client.Index("movies").UpdateTypoTolerance(&meilisearch.TypoTolerance{
   },
 })
 ```
-
 
 ```csharp C#
 var typoTolerance = new TypoTolerance {
@@ -87,7 +80,6 @@ var typoTolerance = new TypoTolerance {
 
 await client.Index("movies").UpdateTypoToleranceAsync(typoTolerance);
 ```
-
 
 ```rust Rust
 let min_word_size_for_typos = MinWordSizeForTypos {
@@ -108,7 +100,6 @@ let task: TaskInfo = client
   .unwrap();
 ```
 
-
 ```dart Dart
 final toUpdate = TypoTolerance(
   minWordSizeForTypos: MinWordSizeForTypos(
@@ -118,5 +109,4 @@ final toUpdate = TypoTolerance(
 );
 await client.index('movies').updateTypoTolerance(toUpdate);
 ```
-
 </CodeGroup>

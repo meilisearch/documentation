@@ -10,13 +10,11 @@ curl \
   }'
 ```
 
-
 ```javascript JS
 client.index('movies').search('winter feast', {
   attributesToHighlight: ['overview']
 })
 ```
-
 
 ```python Python
 client.index('movies').search('winter feast', {
@@ -24,13 +22,11 @@ client.index('movies').search('winter feast', {
 })
 ```
 
-
 ```php PHP
 $client->index('movies')->search('winter feast', [
   'attributesToHighlight' => ['overview']
 ]);
 ```
-
 
 ```java Java
 SearchRequest searchRequest =
@@ -38,20 +34,17 @@ SearchRequest searchRequest =
 client.index("movies").search(searchRequest);
 ```
 
-
 ```ruby Ruby
 client.index('movies').search('winter feast', {
   attributes_to_highlight: ['overview']
 })
 ```
 
-
 ```go Go
 resp, err := client.Index("movies").Search("winter feast", &meilisearch.SearchRequest{
   AttributesToHighlight: []string{"overview"},
 })
 ```
-
 
 ```csharp C#
 var sq = new SearchQuery
@@ -60,7 +53,6 @@ var sq = new SearchQuery
 };
 await client.Index("movies").SearchAsync<Movie>("winter feast", sq);
 ```
-
 
 ```rust Rust
 let results: SearchResults<Movie> = client
@@ -80,7 +72,6 @@ let formatted_results: Vec<&Movie> = results
   .collect();
 ```
 
-
 ```swift Swift
 let searchParameters = SearchParameters(
     query: "winter feast",
@@ -95,10 +86,8 @@ client.index("movies").search(searchParameters) { (result: Result<Searchable<Mov
 }
 ```
 
-
 ```dart Dart
 await client.index('movies').search(
     'winter feast', SearchQuery(attributesToHighlight: ['overview']));
 ```
-
 </CodeGroup>

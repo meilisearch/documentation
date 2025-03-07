@@ -16,14 +16,12 @@ curl \
   }'
 ```
 
-
 ```javascript JS
 client.index('meteorites').updateSettings({
   filterableAttributes: ['mass', '_geo'],
   sortableAttributes: ['mass', '_geo']
 })
 ```
-
 
 ```python Python
 client.index('meteorites').update_settings({
@@ -38,7 +36,6 @@ client.index('meteorites').update_settings({
 })
 ```
 
-
 ```php PHP
 $client->index('meteorites')->updateSettings([
   'filterableAttributes' => [
@@ -52,7 +49,6 @@ $client->index('meteorites')->updateSettings([
 ]);
 ```
 
-
 ```java Java
 Settings settings = new Settings();
 settings.setFilterableAttributes(new String[] {"mass", "_geo"});
@@ -60,14 +56,12 @@ settings.setSortableAttributes(new String[] {"mass", "_geo"});
 client.index("meteorites").updateSettings(settings);
 ```
 
-
 ```ruby Ruby
 client.index('meteorites').update_settings({
   filterable_attributes: ['mass', '_geo'],
   sortable_attributes: ['mass', '_geo']
 })
 ```
-
 
 ```go Go
 settings := meilisearch.Settings{
@@ -83,7 +77,6 @@ settings := meilisearch.Settings{
 client.Index("meteorites").UpdateSettings(&settings)
 ```
 
-
 ```csharp C#
 var newSettings = new Settings
 {
@@ -92,7 +85,6 @@ var newSettings = new Settings
 };
 await client.Index("meteorites").UpdateSettingsAsync(newSettings);
 ```
-
 
 ```rust Rust
 let settings = Settings::new()
@@ -111,7 +103,6 @@ let task: TaskInfo = client
   .unwrap();
 ```
 
-
 ```swift Swift
 let settings = Setting(
   filterableAttributes: ["mass", "_geo"],
@@ -127,11 +118,9 @@ client.index("meteorites").updateSettings(settings) { (result) in
 }
 ```
 
-
 ```dart Dart
 await client.index('meteorites').updateSettings(IndexSettings(
     filterableAttributes: ['mass', '_geo'],
     sortableAttributes: ['mass', '_geo']));
 ```
-
 </CodeGroup>

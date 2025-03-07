@@ -10,41 +10,34 @@ curl \
   }'
 ```
 
-
 ```javascript JS
 client.index('movies').search('', {
   hitsPerPage: 15
 })
 ```
 
-
 ```python Python
 client.index('movies').search('', {'hitsPerPage': 15})
 ```
 
-
 ```php PHP
 $client->index('movies')->search('', ['hitsPerPage' => 15]);
 ```
-
 
 ```java Java
 SearchRequest searchRequest = SearchRequest.builder().q("").hitsPerPage(15).build();
 SearchResultPaginated searchResult = client.index("movies").search(searchRequest);
 ```
 
-
 ```ruby Ruby
 client.index('movies').search('', hits_per_page: 15)
 ```
-
 
 ```go Go
 client.Index("movies").Search("", &meilisearch.SearchRequest{
   HitsPerPage: 15,
 })
 ```
-
 
 ```csharp C#
 var result = await client.Index("movies").SearchAsync<Movie>("", new SearchQuery { HitsPerPage = 15 });
@@ -53,11 +46,9 @@ if(result is PaginatedSearchResult<Movie> pagedResults)
 }
 ```
 
-
 ```rust Rust
 client.index("movies").search().with_hits_per_page(15).execute().await?;
 ```
-
 
 ```swift Swift
 let searchParameters = SearchParameters(query: "", hitsPerPage: 15)
@@ -71,12 +62,10 @@ client.index("movies").search(searchParameters) { (result: Result<Searchable<Mov
 }
 ```
 
-
 ```dart Dart
 await client
     .index('movies')
     .search('', SearchQuery(hitsPerPage: 15))
     .asPaginatedResult();
 ```
-
 </CodeGroup>

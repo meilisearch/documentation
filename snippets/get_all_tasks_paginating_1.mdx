@@ -5,11 +5,9 @@ curl \
   -X GET 'MEILISEARCH_URL/tasks?limit=2&from=10
 ```
 
-
 ```javascript JS
 client.getTasks({ limit: 2, from: 10 })
 ```
-
 
 ```python Python
 client.get_tasks({
@@ -18,12 +16,10 @@ client.get_tasks({
 })
 ```
 
-
 ```php PHP
 $taskQuery = (new TasksQuery())->setLimit(2)->setFrom(10));
 $client->getTasks($taskQuery);
 ```
-
 
 ```java Java
 TasksQuery query = new TasksQuery()
@@ -33,11 +29,9 @@ TasksQuery query = new TasksQuery()
 client.index("movies").getTasks(query);
 ```
 
-
 ```ruby Ruby
 client.tasks(limit: 2, from: 10)
 ```
-
 
 ```go Go
 client.GetTasks(&meilisearch.TasksQuery{
@@ -46,11 +40,9 @@ client.GetTasks(&meilisearch.TasksQuery{
 });
 ```
 
-
 ```csharp C#
 ResourceResults<TaskInfo> taskResult = await client.GetTasksAsync(new TasksQuery { Limit = 2, From = 10 });
 ```
-
 
 ```rust Rust
 let mut query = TasksSearchQuery::new(&client)
@@ -60,7 +52,6 @@ let mut query = TasksSearchQuery::new(&client)
     .await
     .unwrap();
 ```
-
 
 ```swift Swift
 client.getTasks(params: TasksQuery(limit: 2, from: 10)) { result in
@@ -73,9 +64,7 @@ client.getTasks(params: TasksQuery(limit: 2, from: 10)) { result in
 }
 ```
 
-
 ```dart Dart
 await client.getTasks(params: TasksQuery(limit: 2, from: 10));
 ```
-
 </CodeGroup>

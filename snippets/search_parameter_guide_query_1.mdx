@@ -7,41 +7,33 @@ curl \
   --data-binary '{ "q": "shifu" }'
 ```
 
-
 ```javascript JS
 client.index('movies').search('shifu')
 ```
-
 
 ```python Python
 client.index('movies').search('shifu')
 ```
 
-
 ```php PHP
 $client->index('movies')->search('shifu');
 ```
-
 
 ```java Java
 client.index("movies").search("shifu");
 ```
 
-
 ```ruby Ruby
 client.index('movies').search('shifu')
 ```
-
 
 ```go Go
 resp, err := client.Index("movies").Search("shifu", &meilisearch.SearchRequest{})
 ```
 
-
 ```csharp C#
 await client.Index("movies").SearchAsync<Movie>("shifu");
 ```
-
 
 ```rust Rust
 let results: SearchResults<Movie> = client
@@ -52,7 +44,6 @@ let results: SearchResults<Movie> = client
   .await
   .unwrap();
 ```
-
 
 ```swift Swift
 client.index("movies").search(SearchParameters(query: "shifu")) { (result: Result<Searchable<Movie>, Swift.Error>) in
@@ -65,9 +56,7 @@ client.index("movies").search(SearchParameters(query: "shifu")) { (result: Resul
 }
 ```
 
-
 ```dart Dart
 await client.index('movies').search('shifu');
 ```
-
 </CodeGroup>

@@ -10,16 +10,13 @@ curl \
   }'
 ```
 
-
 ```javascript JS
 client.index('products').search('white shirt', { distinct: 'sku' })
 ```
 
-
 ```python Python
 client.index('products').search('white shirt', { distinct: 'sku' })
 ```
-
 
 ```php PHP
 $client->index('products')->search('white shirt', [
@@ -27,12 +24,10 @@ $client->index('products')->search('white shirt', [
 ]);
 ```
 
-
 ```java Java
 SearchRequest searchRequest = SearchRequest.builder().q("white shirt").distinct("sku").build();
 client.index("products").search(searchRequest);
 ```
-
 
 ```ruby Ruby
 client.index('products').search('white shirt', {
@@ -40,13 +35,11 @@ client.index('products').search('white shirt', {
 })
 ```
 
-
 ```go Go
 client.Index("products").Search("white shirt", &meilisearch.SearchRequest{
   Distinct: "sku",
 })
 ```
-
 
 ```csharp C#
 var params = new SearchQuery()
@@ -55,7 +48,6 @@ var params = new SearchQuery()
 };
 await client.Index("products").SearchAsync<Product>("white shirt", params);
 ```
-
 
 ```rust Rust
 let res = client
@@ -67,5 +59,4 @@ let res = client
   .await
   .unwrap();
 ```
-
 </CodeGroup>

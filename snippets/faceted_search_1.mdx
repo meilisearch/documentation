@@ -12,11 +12,9 @@ curl \
 }'
 ```
 
-
 ```javascript JS
 client.index('books').search('classic', { facets: ['genres', 'rating', 'language'] })
 ```
-
 
 ```python Python
 client.index('books').search('classic', {
@@ -24,13 +22,11 @@ client.index('books').search('classic', {
 })
 ```
 
-
 ```php PHP
 $client->index('books')->search('classic', [
   'facets' => ['genres', 'rating', 'language']
 ]);
 ```
-
 
 ```java Java
 SearchRequest searchRequest = SearchRequest.builder().q("classic").facets(new String[]
@@ -42,13 +38,11 @@ SearchRequest searchRequest = SearchRequest.builder().q("classic").facets(new St
 client.index("books").search(searchRequest);
 ```
 
-
 ```ruby Ruby
 client.index('books').search('classic', {
   facets: ['genres', 'rating', 'language']
 })
 ```
-
 
 ```go Go
 resp, err := client.Index("books").Search("classic", &meilisearch.SearchRequest{
@@ -60,7 +54,6 @@ resp, err := client.Index("books").Search("classic", &meilisearch.SearchRequest{
 })
 ```
 
-
 ```csharp C#
 var sq = new SearchQuery
 {
@@ -68,7 +61,6 @@ var sq = new SearchQuery
 };
 await client.Index("books").SearchAsync<Book>("classic", sq);
 ```
-
 
 ```rust Rust
 let books = client.index("books");
@@ -81,11 +73,9 @@ let results: SearchResults<Book> = SearchQuery::new(&books)
   .unwrap();
 ```
 
-
 ```dart Dart
 await client
     .index('books')
     .search('', SearchQuery(facets: ['genres', 'rating', 'language']));
 ```
-
 </CodeGroup>

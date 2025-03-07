@@ -132,11 +132,34 @@ async function processRepos() {
     const filePath = path.join(OUTPUT_DIR, `${operationName}.mdx`);
     const content = `
 <CodeGroup>
-${snippets.map(snippet => `
+${snippets.map(snippet => {
+  // Split content into description and code if it contains a nested code block
+  const parts = snippet.content.split('```');
+  
+  if (parts.length > 1) { // handle samples with nested code blocks
+    // Has description and code blocks
+    const description = parts[0].trim();
+    const codeBlocks = parts.slice(1);
+    
+    // Join all parts back together, keeping the description at the top
+    return `
+\`\`\`text ${snippet.label}
+${description}
+
+${codeBlocks.map(block => {
+  // Remove language identifier and code block markers to ensure Mintlify can parse it
+  const cleanBlock = block.replace(/^[a-z]+\s*/, '').replace(/```$/, '');
+  return cleanBlock;
+}).join('\n')}
+\`\`\``;
+  } else {
+    // Regular standard code block
+    return `
 \`\`\`${snippet.lang} ${snippet.label}
 ${snippet.content}
-\`\`\`
-`).join('\n')}
+\`\`\``;
+  }
+}).join('\n')}
 </CodeGroup>
     `.trim();
 

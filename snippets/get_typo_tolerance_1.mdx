@@ -5,41 +5,33 @@ curl \
   -X GET 'MEILISEARCH_URL/indexes/books/settings/typo-tolerance'
 ```
 
-
 ```javascript JS
 client.index('books').getTypoTolerance()
 ```
-
 
 ```python Python
 client.index('books').get_typo_tolerance()
 ```
 
-
 ```php PHP
 $client->index('books')->getTypoTolerance();
 ```
-
 
 ```java Java
 client.index("books").getTypoToleranceSettings();
 ```
 
-
 ```ruby Ruby
 index('books').typo_tolerance
 ```
-
 
 ```go Go
 client.Index("books").GetTypoTolerance()
 ```
 
-
 ```csharp C#
 await client.Index("books").GetTypoToleranceAsync();
 ```
-
 
 ```rust Rust
 let typo_tolerance: TypoToleranceSettings = client
@@ -49,9 +41,7 @@ let typo_tolerance: TypoToleranceSettings = client
   .unwrap();
 ```
 
-
 ```dart Dart
 await client.index('books').getTypoTolerance();
 ```
-
 </CodeGroup>

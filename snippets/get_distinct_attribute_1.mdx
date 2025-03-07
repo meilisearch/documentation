@@ -5,41 +5,33 @@ curl \
   -X GET 'MEILISEARCH_URL/indexes/shoes/settings/distinct-attribute'
 ```
 
-
 ```javascript JS
 client.index('shoes').getDistinctAttribute()
 ```
-
 
 ```python Python
 client.index('shoes').get_distinct_attribute()
 ```
 
-
 ```php PHP
 $client->index('shoes')->getDistinctAttribute();
 ```
-
 
 ```java Java
 client.index("shoes").getDistinctAttributeSettings();
 ```
 
-
 ```ruby Ruby
 client.index('shoes').distinct_attribute
 ```
-
 
 ```go Go
 client.Index("shoes").GetDistinctAttribute()
 ```
 
-
 ```csharp C#
 string result = await client.Index("shoes").GetDistinctAttributeAsync();
 ```
-
 
 ```rust Rust
 let distinct_attribute: Option<String> = client
@@ -48,7 +40,6 @@ let distinct_attribute: Option<String> = client
   .await
   .unwrap();
 ```
-
 
 ```swift Swift
 client.index("shoes").getDistinctAttribute { (result) in
@@ -61,9 +52,7 @@ client.index("shoes").getDistinctAttribute { (result) in
 }
 ```
 
-
 ```dart Dart
 await client.index('shoes').getDistinctAttribute();
 ```
-
 </CodeGroup>

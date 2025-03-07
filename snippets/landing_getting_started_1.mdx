@@ -17,7 +17,6 @@ const search = await index.search('philodelphia')
 console.log(search)
 ```
 
-
 ```python Python
 client = meilisearch.Client('http://localhost:7700', 'masterKey')
 
@@ -31,7 +30,6 @@ client.index('movies').add_documents([
 ])
 ```
 
-
 ```php PHP
 $client = new Client('http://localhost:7700', 'masterKey');
 
@@ -44,7 +42,6 @@ $client->index('movies')->addDocuments([
   ['id' => 6, 'title' => 'Philadelphia'],
 ]);
 ```
-
 
 ```java Java
 Client client = new Client(new Config("http://localhost:7700", "masterKey"));
@@ -60,7 +57,6 @@ client.index("movies").addDocuments("["
 );
 ```
 
-
 ```ruby Ruby
 client = MeiliSearch::Client.new('http://localhost:7700', 'masterKey')
 
@@ -73,7 +69,6 @@ client.index('movies').add_documents([
   { id: 6, title: 'Philadelphia' }
 ])
 ```
-
 
 ```go Go
 client := meilisearch.New("http://localhost:7700", meilisearch.WithAPIKey("masterKey"))
@@ -89,7 +84,6 @@ documents := []map[string]interface{}{
 client.Index("movies").AddDocuments(documents)
 ```
 
-
 ```csharp C#
 MeilisearchClient client = new MeilisearchClient("http://localhost:7700", "masterKey");
 
@@ -104,7 +98,6 @@ var documents = new Movie[] {
 
 var task = await client.Index("movies").AddDocumentsAsync<Movie>(documents);
 ```
-
 
 ```rust Rust
 let client = Client::new("http://localhost:7700", Some("masterKey"));
@@ -128,7 +121,6 @@ client.index("movies")
   .unwrap();
 ```
 
-
 ```swift Swift
 let client = try MeiliSearch(host: "http://localhost:7700", apiKey: "masterKey")
 let documents = """
@@ -151,7 +143,6 @@ client.index("movies").addDocuments(documents: documents, primaryKey: "reference
   }
 }
 ```
-
 
 ```javascript Vanilla JS
 <body>
@@ -193,7 +184,6 @@ client.index("movies").addDocuments(documents: documents, primaryKey: "reference
 </body>
 ```
 
-
 ```javascript React
 import React from 'react';
 import { InstantSearch, SearchBox, Hits, Highlight } from 'react-instantsearch-dom';
@@ -216,7 +206,6 @@ const App = () => (
 
 const Hit = (props) => (<Highlight attribute="title" hit={props.hit} />);
 ```
-
 
 ```javascript Vue.js
 // In main.js
@@ -259,5 +248,4 @@ export default {
 };
 </script>
 ```
-
 </CodeGroup>

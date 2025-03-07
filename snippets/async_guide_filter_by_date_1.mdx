@@ -4,16 +4,13 @@
 client.getTasks({ afterEnqueuedAt: '2020-10-11T11:49:53.000Z' })
 ```
 
-
 ```python Python
 client.get_tasks({'afterEnqueuedAt': '2020-10-11T11:49:53.000Z'})
 ```
 
-
 ```php PHP
 $client->getTasks((new TasksQuery())->setAfterEnqueuedAt(new \DateTime('2020-10-11T11:49:53.000Z'));
 ```
-
 
 ```java Java
 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
@@ -23,11 +20,9 @@ TasksQuery query = new TasksQuery().setBeforeEnqueuedAt(date);
 client.getTasks(query);
 ```
 
-
 ```ruby Ruby
 client.get_tasks(after_enqueued_at: DateTime.new(2020, 10, 11, 11, 49, 53))
 ```
-
 
 ```go Go
 client.GetTasks(&meilisearch.TasksQuery{
@@ -35,11 +30,9 @@ client.GetTasks(&meilisearch.TasksQuery{
 })
 ```
 
-
 ```csharp C#
 await client.GetTasksAsync(new TasksQuery { AfterEnqueuedAt = DateTime.Parse("2020-10-11T11:49:53.000Z") });
 ```
-
 
 ```rust Rust
 let date = OffsetDateTime::parse(
@@ -55,7 +48,6 @@ let tasks = query
   .unwrap();
 ```
 
-
 ```swift Swift
 client.getTasks(params: TasksQuery(afterEnqueuedAt: dateFormatter.date(from: "2020-10-11T11:49:53.000Z"))) { result in
   switch result {
@@ -67,7 +59,6 @@ client.getTasks(params: TasksQuery(afterEnqueuedAt: dateFormatter.date(from: "20
 }
 ```
 
-
 ```dart Dart
 await client.getTasks(
   params: TasksQuery(
@@ -75,5 +66,4 @@ await client.getTasks(
   ),
 );
 ```
-
 </CodeGroup>

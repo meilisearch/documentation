@@ -5,13 +5,11 @@ curl \
   -X GET 'MEILISEARCH_URL/indexes/movies/documents/25684?fields=id,title,poster,release_date'
 ```
 
-
 ```javascript JS
 client
     .index('movies')
     .getDocument(25684, { fields: ['id', 'title', 'poster', 'release_date'] })
 ```
-
 
 ```python Python
 client.index('movies').get_document(25684, {
@@ -19,22 +17,18 @@ client.index('movies').get_document(25684, {
 })
 ```
 
-
 ```php PHP
 $client->index('movies')->getDocument(25684, ['id', 'title', 'poster', 'release_date']);
 ```
-
 
 ```java Java
 DocumentQuery query = new DocumentQuery().setFields(new String[] {"id", "title", "poster", "release_date"});
 client.index("movies").getDocument("25684", query);
 ```
 
-
 ```ruby Ruby
 client.index('movies').document(25684, fields: ['id', 'title', 'poster', 'release_date'])
 ```
-
 
 ```go Go
 var a interface{}
@@ -43,11 +37,9 @@ client.Index("movies").GetDocument("25684",&meilisearch.DocumentQuery{
 }, &a)
 ```
 
-
 ```csharp C#
 await client.Index("movies").GetDocumentAsync<Movie>(25684, new List<string> { "id", "title", "poster", "release_date" });
 ```
-
 
 ```rust Rust
 let index = client
@@ -58,7 +50,6 @@ let document = DocumentQuery::new(&index)
   .await
   .unwrap();
 ```
-
 
 ```swift Swift
 client.index("movies").getDocument(25684) { (result: Result<Movie, Swift.Error>) in
@@ -71,10 +62,8 @@ client.index("movies").getDocument(25684) { (result: Result<Movie, Swift.Error>)
 }
 ```
 
-
 ```dart Dart
 await client.index('movies').getDocument(25684,
     fields: ['id', 'title', 'poster', 'release_date']);
 ```
-
 </CodeGroup>

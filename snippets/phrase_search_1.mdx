@@ -7,42 +7,34 @@ curl \
 --data-binary '{ "q": "\"african american\" horror" }'
 ```
 
-
 ```javascript JS
 client.index('movies')
   .search('"african american" horror')
 ```
 
-
 ```python Python
 client.index('movies').search('"african american" horror')
 ```
-
 
 ```php PHP
 $client->index('movies')->search('"african american" horror');
 ```
 
-
 ```java Java
 client.index("movies").search("\"african american\" horror");
 ```
-
 
 ```ruby Ruby
 client.index('movies').search('"african american" horror')
 ```
 
-
 ```go Go
 resp, err := client.Index("movies").Search("\"african american\" horror", &meilisearch.SearchRequest{})
 ```
 
-
 ```csharp C#
 await client.Index("movies").SearchAsync<Movie>("\"african american\" horror");
 ```
-
 
 ```rust Rust
 let results: SearchResults<Movie> = client
@@ -53,7 +45,6 @@ let results: SearchResults<Movie> = client
   .await
   .unwrap();
 ```
-
 
 ```swift Swift
 let searchParameters = SearchParameters(
@@ -68,9 +59,7 @@ client.index("movies").search(searchParameters) { (result: Result<Searchable<Mov
 }
 ```
 
-
 ```dart Dart
 await client.index('movies').search('"african american" horror');
 ```
-
 </CodeGroup>

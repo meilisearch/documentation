@@ -5,41 +5,33 @@ curl \
   -X DELETE 'MEILISEARCH_URL/indexes/movies/settings/searchable-attributes'
 ```
 
-
 ```javascript JS
 client.index('movies').resetSearchableAttributes()
 ```
-
 
 ```python Python
 client.index('movies').reset_searchable_attributes()
 ```
 
-
 ```php PHP
 $client->index('movies')->resetSearchableAttributes();
 ```
-
 
 ```java Java
 client.index("movies").resetSearchableAttributesSettings();
 ```
 
-
 ```ruby Ruby
 client.index('movies').reset_searchable_attributes
 ```
-
 
 ```go Go
 client.Index("movies").ResetSearchableAttributes()
 ```
 
-
 ```csharp C#
 await client.Index("movies").ResetSearchableAttributesAsync();
 ```
-
 
 ```rust Rust
 let task: TaskInfo = client
@@ -48,7 +40,6 @@ let task: TaskInfo = client
   .await
   .unwrap();
 ```
-
 
 ```swift Swift
 client.index("movies").resetSearchableAttributes { (result) in
@@ -61,9 +52,7 @@ client.index("movies").resetSearchableAttributes { (result) in
 }
 ```
 
-
 ```dart Dart
 await client.index('movies').resetSearchableAttributes();
 ```
-
 </CodeGroup>

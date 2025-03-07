@@ -5,7 +5,6 @@ curl \
   -X GET 'MEILISEARCH_URL/tasks?indexUids=movies&types=documentAdditionOrUpdate,documentDeletion&statuses=processing'
 ```
 
-
 ```javascript JS
 client.getTasks({
   indexUids: ['movies'],
@@ -13,7 +12,6 @@ client.getTasks({
   statuses: ['processing']
 })
 ```
-
 
 ```python Python
 client.get_tasks(
@@ -25,7 +23,6 @@ client.get_tasks(
 )
 ```
 
-
 ```php PHP
 $client->getTasks(
   (new TasksQuery())
@@ -34,7 +31,6 @@ $client->getTasks(
     ->setTypes(['documentAdditionOrUpdate', 'documentDeletion'])
 );
 ```
-
 
 ```java Java
 TasksQuery query =
@@ -46,11 +42,9 @@ TasksQuery query =
 client.getTasks(query);
 ```
 
-
 ```ruby Ruby
 client.get_tasks(index_uids: ['movies'], types: ['documentAdditionOrUpdate', 'documentDeletion'], statuses: ['processing'])
 ```
-
 
 ```go Go
 client.GetTasks(&meilisearch.TasksQuery{
@@ -65,13 +59,11 @@ client.GetTasks(&meilisearch.TasksQuery{
 })
 ```
 
-
 ```csharp C#
 var query = new TasksQuery { IndexUids = new List<string> { "movies" }, Types = new List<TaskInfo> { TaskInfo.DocumentAdditionOrUpdate, TaskInfo.DocumentDeletion }, Statuses = new List<TaskInfoStatus> { TaskInfoStatus.Processing } };
 
 await client.GetTasksAsync(query);
 ```
-
 
 ```rust Rust
 let mut query = TasksQuery::new(&client);
@@ -84,7 +76,6 @@ let tasks = query
   .unwrap();
 ```
 
-
 ```swift Swift
 client.getTasks(params: TasksQuery(indexUids: "movies", types: ["documentAdditionOrUpdate", "documentDeletion"], statuses: ["processing"])) { result in
   switch result {
@@ -96,7 +87,6 @@ client.getTasks(params: TasksQuery(indexUids: "movies", types: ["documentAdditio
 }
 ```
 
-
 ```dart Dart
 await client.getTasks(
   params: TasksQuery(
@@ -106,5 +96,4 @@ await client.getTasks(
   ),
 );
 ```
-
 </CodeGroup>

@@ -11,7 +11,6 @@ curl \
   }'
 ```
 
-
 ```javascript JS
 client.index('books').getDocuments({
   filter: '(rating > 3 AND (genres = Adventure OR genres = Fiction)) AND language = English',
@@ -20,7 +19,6 @@ client.index('books').getDocuments({
 })
 ```
 
-
 ```python Python
 client.index('books').get_documents({
   'limit':3,
@@ -28,7 +26,6 @@ client.index('books').get_documents({
   'filter': '(rating > 3 AND (genres=Adventure OR genres=Fiction)) AND language=English'
 })
 ```
-
 
 ```php PHP
 $client->index('books')->getDocuments(
@@ -39,7 +36,6 @@ $client->index('books')->getDocuments(
 );
 ```
 
-
 ```java Java
 DocumentsQuery query = new DocumentsQuery()
   .setFilter(new String[] {"(rating > 3 AND (genres = Adventure OR genres = Fiction)) AND language = English"})
@@ -48,7 +44,6 @@ DocumentsQuery query = new DocumentsQuery()
 client.index("books").getDocuments(query, TargetClassName.class);
 ```
 
-
 ```ruby Ruby
 client.index('books').get_documents(
   filter: '(rating > 3 AND (genres = Adventure OR genres = Fiction)) AND language = English',
@@ -56,7 +51,6 @@ client.index('books').get_documents(
   fields: ['title', 'genres', 'rating', 'language']
 )
 ```
-
 
 ```go Go
 var result meilisearch.DocumentsResult
@@ -67,7 +61,6 @@ client.Index("books").GetDocuments(&meilisearch.DocumentsQuery{
 }, &result)
 ```
 
-
 ```csharp C#
 await client.Index("movies").GetDocumentsAsync<Movie>(new DocumentsQuery() {
     Limit = 3,
@@ -75,7 +68,6 @@ await client.Index("movies").GetDocumentsAsync<Movie>(new DocumentsQuery() {
     Filter = "(rating > 3 AND (genres=Adventure OR genres=Fiction)) AND language=English"
 });
 ```
-
 
 ```rust Rust
 let index = client.index("books");
@@ -87,7 +79,6 @@ let documents: DocumentsResults = DocumentsQuery::new(&index)
   .await
   .unwrap();
 ```
-
 
 ```dart Dart
 await client.index('movies').getDocuments(
@@ -107,5 +98,4 @@ await client.index('movies').getDocuments(
       ),
     );
 ```
-
 </CodeGroup>
