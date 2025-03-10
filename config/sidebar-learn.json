@@ -65,6 +65,11 @@
         "slug": "choose_an_embedder"
       },
       {
+        "source": "learn/ai_powered_search/image_search_with_user_provided_embeddings.mdx",
+        "label": "Image search with user-provided embeddings",
+        "slug": "image_search_with_user_provided_embeddings"
+      },
+      {
         "source": "learn/ai_powered_search/difference_full_text_ai_search.mdx",
         "label": "Differences between full-text and AI-powered search",
         "slug": "difference_full_text_ai_search"
