@@ -1,6 +1,6 @@
 ---
 title: Image search with user-provided embeddings — Meilisearch documentation
-description: This article shows you the main steps for searching through images with no associated metadata
+description: This article shows you the main steps for performing multimodal text-to-image searches
 ---
 
 # Image search with user-provided embeddings
@@ -11,17 +11,17 @@ This article shows you the main steps for performing multimodal searches where y
 
 - A database of images
 - A Meilisearch project
-- An embedding generation tool you can install locally
+- An embedding generation provider you can install locally
 
 ## Configure your local embedding generation pipeline
 
-First, set up a system that sends your images to your chosen embedding generation tool.
+First, set up a system that sends your images to your chosen embedding generation provider, then integrates the returned embeddings into your dataset.
 
 The exact procedure depends heavily on your specific setup, but should include these main steps:
 
-1. Choose a tool you can run locally
+1. Choose a provider you can run locally
 2. Choose a model that supports both image and text input
-3. Send your images to the embedding generation tool
+3. Send your images to the embedding generation provider
 4. Add the returned embeddings to the `_vector` field for each image in your database
 
 In most cases your system should run these steps periodically or whenever you update your database.
@@ -57,8 +57,8 @@ In most cases, you should automate this step so Meilisearch is up to date with y
 Since you are using a `userProvided` embedder, you must also generate the embeddings for the search query. This process should be similar to generating embeddings for your images:
 
 1. Receive user query from your front-end
-2. Vectorize query with your local embedding provider
-3. Perform search using the vectorized query
+2. Send query to your local embedding generation provider
+3. Perform search using the returned query embedding
 
 ## Vector search with user-provided embeddings
 
@@ -93,7 +93,7 @@ curl -X POST -H 'content-type: application/json' \
 
 ## Conclusion
 
-You have seen the main steps for implementing multimodal search with Meilisearch:
+You have seen the main steps for implementing image search with Meilisearch:
 
 1. Prepare a pipeline that converts your images into vectors
 2. Index the vectorized images with Meilisearch
