@@ -1409,7 +1409,9 @@ search_parameter_guide_vector_1: |-
     -H 'content-type: application/json' \
     --data-binary '{ 
       "vector": [0, 1, 2],
-      "embedder": "EMBEDDER_NAME"
+      "hybrid": {
+        "embedder": "EMBEDDER_NAME"
+      }
     }'
 search_parameter_reference_retrieve_vectors_1: |-
   curl -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
