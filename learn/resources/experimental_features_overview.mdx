@@ -43,14 +43,15 @@ Activating or deactivating experimental features this way does not require you t
 
 ## Current experimental features
 
-| Name                                                                             | Description                                                | How to configure                                  |
-|----------------------------------------------------------------------------------|------------------------------------------------------------|---------------------------------------------------|
-| [Limit task batch size](/learn/self_hosted/configure_meilisearch_at_launch)         | Limits number of tasks processed in a single batch         | At launch with a CLI flag or environment variable |
-| [Log customization](/reference/api/logs)                       | Customize log output and set up log streams                | At launch with a CLI flag or environment variable, during runtime with the API route |
-| [Metrics API](/reference/api/metrics)                                       | Exposes Prometheus-compatible analytics data               | At launch with a CLI flag or environment variable, during runtime with the API route |
-| [Reduce indexing memory usage](/learn/self_hosted/configure_meilisearch_at_launch) | Optimizes indexing performance                             | At launch with a CLI flag or environment variable |
-| [Replication parameters](/learn/self_hosted/configure_meilisearch_at_launch)             | Alters task processing for clustering compatibility        | At launch with a CLI flag or environment variable |
-| [Search queue size](/learn/self_hosted/configure_meilisearch_at_launch)                       | Configure maximum number of concurrent search requests     | At launch with a CLI flag or environment variable |
-| [Vector store](/learn/ai_powered_search/getting_started_with_ai_search)                               | Allows Meilisearch to function as a vector embedding store | During runtime with the API route                 |
-| [`CONTAINS` filter operator](/learn/filtering_and_sorting/filter_expression_reference#contains)                               | Enables usage of `CONTAINS` with the `filter` search parameter | During runtime with the API route                 |
-| [Edit documents with function](/reference/api/documents#update-documents-with-function)                               | Use a RHAI function to edit documents directly in the Meilisearch database | During runtime with the API route                 |
+| Name                                                                                            | Description                                                                | How to configure                            |
+| ----------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- | ------------------------------------------- |
+| [Limit task batch size](/learn/self_hosted/configure_meilisearch_at_launch)                     | Limits number of tasks processed in a single batch                         | CLI flag or environment variable            |
+| [Log customization](/reference/api/logs)                                                        | Customize log output and set up log streams                                | CLI flag or environment variable, API route |
+| [Metrics API](/reference/api/metrics)                                                           | Exposes Prometheus-compatible analytics data                               | CLI flag or environment variable, API route |
+| [Reduce indexing memory usage](/learn/self_hosted/configure_meilisearch_at_launch)              | Optimizes indexing performance                                             | CLI flag or environment variable            |
+| [Replication parameters](/learn/self_hosted/configure_meilisearch_at_launch)                    | Alters task processing for clustering compatibility                        | CLI flag or environment variable            |
+| [Search queue size](/learn/self_hosted/configure_meilisearch_at_launch)                         | Configure maximum number of concurrent search requests                     | CLI flag or environment variable            |
+| [`CONTAINS` filter operator](/learn/filtering_and_sorting/filter_expression_reference#contains) | Enables usage of `CONTAINS` with the `filter` search parameter             | API route                                   |
+| [Edit documents with function](/reference/api/documents#update-documents-with-function)         | Use a RHAI function to edit documents directly in the Meilisearch database | API route                                   |
+| [`/network` route](/reference/api/network)                                                      | Enable `/network` route                                                    | API route                                   |
+| [Dumpless upgrade](/learn/self_hosted/configure_meilisearch_at_launch#dumpless-upgrade)         | Upgrade Meilisearch without generating a dump                              | API route                                   |

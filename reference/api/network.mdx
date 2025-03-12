@@ -1,0 +1,150 @@
+---
+title: Network — Meilisearch API reference
+description: Use the `/network` route to create a network of Meilisearch instances.
+---
+
+# Network <NoticeTag type="experimental" label="experimental" />
+
+Use the `/network` route to create a network of Meilisearch instances. This is particularly useful when used together with federated search to implement horizontal database partition strategies such as sharding.
+
+<Capsule intent="note" title="Activating `/network`">
+This is an experimental feature. Use the Meilisearch Cloud UI or the experimental features endpoint to activate it:
+
+```sh
+curl \
+  -X PATCH 'MEILISEARCH_URL/experimental-features/' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "network": true
+  }'
+```
+</Capsule>
+
+<Capsule intent="danger" title="`displayedAttributes`, `sortableAttributes`, and `/network` requests">
+If an attribute is both:
+
+- not on the `displayedAttributes` list
+- present on the `sortableAttributes`
+
+It is possible its value becomes publicly accessible via the `/network` endpoint.
+
+Do not enable the `network` feature if you rely on the value of attributes not present in `displayedAttributes` to remain hidden at all times.
+</Capsule>
+
+## The network object
+
+```json
+{
+  "self": "ms-00",
+  "remotes": {
+    "ms-00": {
+      "url": "http://ms-1235.example.meilisearch.io",
+      "searchApiKey": "Ecd1SDDi4pqdJD6qYLxD3y7VZAEb4d9j6LJgt4d6xas"
+    },
+    "ms-01": {
+      "url": "http://ms-4242.example.meilisearch.io",
+      "searchApiKey": "hrVu-OMcjPGElK7692K7bwriBoGyHXTMvB5NmZkMKqQ"
+    }
+  }
+}
+```
+
+### `self`
+
+**Type**: String<br />
+**Default value**: `null`<br />
+**Description**: A string indicating the name of the current instance
+
+### `remotes`
+
+**Type**: Object<br />
+**Default value**: `{}`<br />
+**Description**: An object containing [remote objects](#the-remote-object). The key of each remote object indicates the name of the remote instance
+
+#### The remote object
+
+```json
+"ms-00": {
+  "url": "http://ms-1235.example.meilisearch.io",
+  "searchApiKey": "Ecd1SDDi4pqdJD6qYLxD3y7VZAEb4d9j6LJgt4d6xas"
+}
+```
+
+##### `url`
+
+**Type**: String<br />
+**Default value**: `null`<br />
+**Description**: URL indicating the address of a Meilisearch instance. This URL does not need to be public, but must be accessible to all instances in the network. Required
+
+##### `searchApiKey`
+
+**Type**: String<br />
+**Default value**: `null`<br />
+**Description**: An API key with search permissions
+
+## Get the network object
+
+<RouteHighlighter method="GET" route="/network"/>
+
+Returns the current value of the instance's network object.
+
+### Example
+
+<CodeSamples id="get_network_1" />
+
+#### Response: `200 Ok`
+
+```json
+{
+  "self": "ms-00",
+  "remotes": {
+    "ms-00": {
+      "url": "http://ms-1235.example.meilisearch.io",
+      "searchApiKey": "Ecd1SDDi4pqdJD6qYLxD3y7VZAEb4d9j6LJgt4d6xas"
+    },
+    "ms-01": {
+      "url": "http://ms-4242.example.meilisearch.io",
+      "searchApiKey": "hrVu-OMcjPGElK7692K7bwriBoGyHXTMvB5NmZkMKqQ"
+    }
+  }
+}
+```
+
+## Update the network object
+
+<RouteHighlighter method="PATCH" route="/network"/>
+
+Update the `self` and `remotes` fields of the network object.
+
+Updates to the network object are **partial**. Only provide the fields you intend to update. Fields not present in the payload will remain unchanged.
+
+To reset `self` and `remotes` to their original value, set them to `null`. To remove a single `remote` from your network, set the value of its name to `null`.
+
+### Body
+
+| Name                              | Type   | Default value | Description                         |
+| :-------------------------------- | :----- | :------------ | :---------------------------------- |
+| **[`self`](#self)**               | String | `null`        | The name of the current instance   |
+| **[`remotes`](#remotes)** | String | `null`        | A list of remote objects describing accessible Meilisearch instances |
+
+### Example
+
+<CodeSamples id="update_network_1" />
+
+#### Response: `200 Ok`
+
+```json
+{
+  "self": "ms-00",
+  "remotes": {
+    "ms-00": {
+      "url": "http://INSTANCE_URL",
+      "searchApiKey": "INSTANCE_API_KEY"
+    },
+    "ms-01": {
+      "url": "http://ANOTHER_INSTANCE_URL",
+      "searchApiKey": "ANOTHER_INSTANCE_API_KEY"
+    }
+  }
+}
+```

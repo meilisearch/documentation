@@ -10,10 +10,6 @@ The `/similar` route uses AI-powered search to return a number of documents simi
 
 Meilisearch exposes two routes for retrieving similar documents: `POST` and `GET`. In the majority of cases, `POST` will offer better performance and ease of use.
 
-<Note>
-This is an experimental feature. To use it, you must first [enable and configure AI-powered search](/learn/ai_powered_search/getting_started_with_ai_search).
-</Note>
-
 ## Get similar documents with `POST`
 
 ```http
@@ -33,7 +29,7 @@ Retrieve documents similar to a specific search result.
 | Parameter                                                                    | Type             | Default value | Description                                    |
 | ---------------------------------------------------------------------------- | ---------------- | ------------- | ---------------------------------------------- |
 | **`id`**                                                                     | String or number | `null`        | Identifier of the target document (mandatory)  |
-| **[`embedder`](/reference/api/search#hybrid-search-experimental)**           | String           | `"default"`   | Embedder to use when computing recommendations. Mandatory |
+| **[`embedder`](/reference/api/search#hybrid-search)**           | String           | `"default"`   | Embedder to use when computing recommendations. Mandatory |
 | **[`attributesToRetrieve`](/reference/api/search#attributes-to-retrieve)**   | Array of strings | `["*"]`       | Attributes to display in the returned documents|
 | **[`offset`](/reference/api/search#offset)**                                 | Integer          | `0`           | Number of documents to skip                    |
 | **[`limit`](/reference/api/search#limit)**                                   | Integer          | `20`          | Maximum number of documents returned           |
@@ -41,7 +37,7 @@ Retrieve documents similar to a specific search result.
 | **[`showRankingScore`](/reference/api/search#ranking-score)**                | Boolean          | `false`       | Display the global ranking score of a document |
 | **[`showRankingScoreDetails`](/reference/api/search#ranking-score-details)** | Boolean          | `false`       | Display detailed ranking score information     |
 | **[`rankingScoreThreshold`](/reference/api/search#ranking-score-threshold)** | Number           | `null`        | Exclude results with low ranking scores        |
-| **[`retrieveVectors`](/reference/api/search#display-_vectors-in-response-experimental)**           | Boolean          | `false`       | Return document vector data                    |
+| **[`retrieveVectors`](/reference/api/search#display-_vectors-in-response)**           | Boolean          | `false`       | Return document vector data                    |
 
 ### Example
 
@@ -92,7 +88,7 @@ Retrieve documents similar to a specific search result.
 | Parameter                                                                    | Type             | Default value | Description                                    |
 | ---------------------------------------------------------------------------- | ---------------- | ------------- | ---------------------------------------------- |
 | **`id`**                                                                     | String or number | `null`        | Identifier of the target document (mandatory)  |
-| **[`embedder`](/reference/api/search#hybrid-search-experimental)**           | String           | `"default"`   | Embedder to use when computing recommendations. Mandatory |
+| **[`embedder`](/reference/api/search#hybrid-search)**           | String           | `"default"`   | Embedder to use when computing recommendations. Mandatory |
 | **[`attributesToRetrieve`](/reference/api/search#attributes-to-retrieve)**   | Array of strings | `["*"]`       | Attributes to display in the returned documents|
 | **[`offset`](/reference/api/search#offset)**                                 | Integer          | `0`           | Number of documents to skip                    |
 | **[`limit`](/reference/api/search#limit)**                                   | Integer          | `20`          | Maximum number of documents returned           |
@@ -100,7 +96,7 @@ Retrieve documents similar to a specific search result.
 | **[`showRankingScore`](/reference/api/search#ranking-score)**                | Boolean          | `false`       | Display the global ranking score of a document |
 | **[`showRankingScoreDetails`](/reference/api/search#ranking-score-details)** | Boolean          | `false`       | Display detailed ranking score information     |
 | **[`rankingScoreThreshold`](/reference/api/search#ranking-score-threshold)** | Number           | `null`        | Exclude results with low ranking scores        |
-| **[`retrieveVectors`](/reference/api/search#display-_vectors-in-response-experimental)**           | Boolean          | `false`       | Return document vector data                    |
+| **[`retrieveVectors`](/reference/api/search#display-_vectors-in-response)**           | Boolean          | `false`       | Return document vector data                    |
 
 ### Example
 

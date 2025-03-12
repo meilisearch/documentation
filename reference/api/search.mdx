@@ -59,9 +59,9 @@ By default, [this endpoint returns a maximum of 1000 results](/learn/resources/k
 | **[`showRankingScoreDetails`](#ranking-score-details)** | Boolean          | `false`       | Adds a detailed global ranking score field          |
 | **[`rankingScoreThreshold`](#ranking-score-threshold)**                | Number          | `null`       | Excludes results with low ranking scores      |
 | **[`attributesToSearchOn`](#customize-attributes-to-search-on-at-search-time)**            | Array of strings           | `["*"]`        | Restrict search to the specified attributes |
-| **[`hybrid`](#hybrid-search-experimental)**             | Object           | `null`        | Return results based on query keywords and meaning  |
-| **[`vector`](#vector-experimental)**                    | Array of numbers | `null`        | Search using a custom query vector                  |
-| **[`retrieveVectors`](#display-_vectors-in-response-experimental)** | Boolean          | `false`       | Return document vector data                         |
+| **[`hybrid`](#hybrid-search)**             | Object           | `null`        | Return results based on query keywords and meaning  |
+| **[`vector`](#vector)**                    | Array of numbers | `null`        | Search using a custom query vector                  |
+| **[`retrieveVectors`](#display-_vectors-in-response)** | Boolean          | `false`       | Return document vector data                         |
 | **[`locales`](#query-locales)** | Array of strings          | `null`       | Explicitly specify languages used in a query              |
 
 [Learn more about how to use each search parameter](#search-parameters).
@@ -175,9 +175,9 @@ By default, [this endpoint returns a maximum of 1000 results](/learn/resources/k
 | **[`showRankingScoreDetails`](#ranking-score-details)** | Boolean          | `false`       | Adds a detailed global ranking score field          |
 | **[`rankingScoreThreshold`](#ranking-score-threshold)**                | Number          | `null`       | Excludes results with low ranking scores      |
 | **[`attributesToSearchOn`](#customize-attributes-to-search-on-at-search-time)**            | Array of strings           | `["*"]`        | Restrict search to the specified attributes |
-| **[`hybrid`](#hybrid-search-experimental)**             | Object           | `null`        | Return results based on query keywords and meaning  |
-| **[`vector`](#vector-experimental)**                    | Array of numbers | `null`        | Search using a custom query vector                  |
-| **[`retrieveVectors`](#display-_vectors-in-response-experimental)** | Boolean          | `false`       | Return document vector data                         |
+| **[`hybrid`](#hybrid-search)**             | Object           | `null`        | Return results based on query keywords and meaning  |
+| **[`vector`](#vector)**                    | Array of numbers | `null`        | Search using a custom query vector                  |
+| **[`retrieveVectors`](#display-_vectors-in-response)** | Boolean          | `false`       | Return document vector data                         |
 | **[`locales`](#query-locales)** | Array of strings          | `null`       | Explicitly specify languages used in a query              |
 
 [Learn more about how to use each search parameter](#search-parameters).
@@ -266,9 +266,9 @@ This is not necessary when using the `POST` route or one of our [SDKs](/learn/re
 | **[`matchingStrategy`](#matching-strategy)**            | String           | `last`        | Strategy used to match query terms within documents |
 | **[`showRankingScore`](#ranking-score)**                | Boolean          | `false`       | Display the global ranking score of a document      |
 | **[`attributesToSearchOn`](#customize-attributes-to-search-on-at-search-time)**            | Array of strings           | `["*"]`        | Restrict search to the specified attributes |
-| **[`hybrid`](#hybrid-search-experimental)**             | Object           | `null`        | Return results based on query keywords and meaning  |
-| **[`vector`](#vector-experimental)**                    | Array of numbers | `null`        | Search using a custom query vector                  |
-| **[`retrieveVectors`](#display-_vectors-in-response-experimental)** | Boolean          | `false`       | Return document vector data                         |
+| **[`hybrid`](#hybrid-search)**             | Object           | `null`        | Return results based on query keywords and meaning  |
+| **[`vector`](#vector)**                    | Array of numbers | `null`        | Search using a custom query vector                  |
+| **[`retrieveVectors`](#display-_vectors-in-response)** | Boolean          | `false`       | Return document vector data                         |
 | **[`locales`](#query-locales)** | Array of strings          | `null`       | Explicitly specify languages used in a query              |
 
 ### Query (q)
@@ -1174,7 +1174,7 @@ The following query returns documents whose `overview` includes `"adventure"`:
 
 Results would not include documents containing `"adventure"` in other fields such as `title` or `genre`, even if these fields were present in the `searchableAttributes` list.
 
-### Hybrid search (experimental)
+### Hybrid search
 
 **Parameter**: `hybrid`<br />
 **Expected value**: An object with two fields: `embedder` and `semanticRatio`<br />
@@ -1188,15 +1188,11 @@ Configures Meilisearch to return search results based on a query's meaning and c
 
 `semanticRatio` must be a number between `0.0` and `1.0` indicating the proportion between keyword and semantic search results. `0.0` causes Meilisearch to only return keyword results. `1.0` causes Meilisearch to only return meaning-based results. Defaults to `0.5`.
 
-<Warning>
-Meilisearch will return an error if you use `hybrid` before activating your instance's `vectorStore` and [configuring an embedder](/reference/api/settings#embedders-experimental).
-</Warning>
-
 #### Example
 
 <CodeSamples id="search_parameter_guide_hybrid_1" />
 
-### Vector (experimental)
+### Vector
 
 **Parameter**: `vector`<br />
 **Expected value**: an array of numbers<br />
@@ -1218,11 +1214,7 @@ If `q` is missing and `semanticRatio` is explicitly set to `0`, Meilisearch perf
 
 <CodeSamples id="search_parameter_guide_vector_1" />
 
-<Warning>
-Meilisearch will return an error if you use `vector` before activating your instance's `vectorStore` and [configuring a custom embedder](/reference/api/settings#embedders-experimental).
-</Warning>
-
-### Display `_vectors` in response (experimental)
+### Display `_vectors` in response
 
 **Parameter**: `retrieveVectors`<br />
 **Expected value**: `true` or `false`<br />

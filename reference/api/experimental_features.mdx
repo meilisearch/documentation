@@ -20,17 +20,19 @@ The experimental API route is not compatible with all experimental features. Con
 {
   "metrics": false,
   "logsRoute": true,
-  "vectorStore": false,
+  "containsFilter": false,
+  "editDocumentsByFunction": false,
+  "network": false
 }
 ```
 
-| Name                          | Type    | Description                                                               |
+| Name                          | Type    | Description                                    |
 | :---------------------------- | :------ | :--------------------------------------------- |
 | **`metrics`**                 | Boolean | `true` if feature is active, `false` otherwise |
 | **`logsRoute`**               | Boolean | `true` if feature is active, `false` otherwise |
-| **`vectorStore`**             | Boolean | `true` if feature is active, `false` otherwise |
 | **`containsFilter`**          | Boolean | `true` if feature is active, `false` otherwise |
 | **`editDocumentsByFunction`** | Boolean | `true` if feature is active, `false` otherwise |
+| **`network`**                 | Boolean | `true` if feature is active, `false` otherwise |
 
 ## Get all experimental features
 
@@ -50,7 +52,9 @@ Get a list of all experimental features that can be activated via the `/experime
 {
   "metrics": false,
   "logsRoute": true,
-  "vectorSearch": false,
+  "containsFilter": false,
+  "editDocumentsByFunction": false,
+  "network": false
 }
 ```
 
@@ -78,6 +82,8 @@ Setting a field to `null` leaves its value unchanged.
 {
   "metrics": false,
   "logsRoute": true,
-  "vectorSearch": false,
+  "containsFilter": false,
+  "editDocumentsByFunction": false,
+  "network": false
 }
 ```

@@ -62,7 +62,8 @@ By default, the settings object looks like this. All fields are modifiable.
   "proximityPrecision": "byWord",
   "facetSearch": true,
   "prefixSearch": "indexingTime",
-  "searchCutoffMs": null
+  "searchCutoffMs": null,
+  "embedders": {}
 }
 ```
 
@@ -133,7 +134,8 @@ Get the settings of an index.
   "proximityPrecision": "byWord",
   "facetSearch": true,
   "prefixSearch": "indexingTime",
-  "searchCutoffMs": null
+  "searchCutoffMs": null,
+  "embedders": {}
 }
 ```
 
@@ -179,7 +181,7 @@ If the provided index does not exist, it will be created.
 | **[`stopWords`](#stop-words)**                       | Array of strings | Empty                                                                                            | List of words ignored by Meilisearch when present in search queries              |
 | **[`synonyms`](#synonyms)**                          | Object           | Empty                                                                                            | List of associated words treated similarly                                       |
 | **[`typoTolerance`](#typo-tolerance)**               | Object           | [Default object](#typo-tolerance-object)                                                         | Typo tolerance settings                                                          |
-| **[`embedders`](#embedders-experimental)**               | Object of objects           | [Default object](#embedders-object)                                                         | Embedder required for performing meaning-based search queries                                                          |
+| **[`embedders`](#embedders)**               | Object of objects           | [Default object](#embedders-object)                                                         | Embedder required for performing meaning-based search queries                                                          |
 
 #### Example
 
@@ -2469,7 +2471,7 @@ Reset an index's typo tolerance settings to their [default value](#typo-toleranc
 
 You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
 
-## Embedders (experimental)
+## Embedders
 
 Embedders translate documents and queries into vector embeddings. You must configure at least one embedder to use AI-powered search.
 
@@ -2603,7 +2605,7 @@ Meilisearch queries `url` to generate vector embeddings for queries and document
 
 This field is mandatory when using `rest` embedders.
 
-This field is optional when using `ollama` and `openAi` embedders.
+This field is optional when using `ollama` and `openAi` embedders. `ollama` URLs must end with either `/api/embed` or `/api/embeddings`.
 
 This field is incompatible with `huggingFace` and `userProvided` embedders.
 
@@ -2648,7 +2650,9 @@ If a `field` does not exist in a document, its `value` is `nil`.
 
 For best results, build short templates that only contain highly relevant data. If working with a long field, consider [truncating it](https://shopify.github.io/liquid/filters/truncatewords/). If you do not manually set it, `documentTemplate` will include all searchable and non-null document fields. This may lead to suboptimal performance and relevancy.
 
-This field is optional but strongly encouraged for all embedders.
+This field is incompatible with `userProvided` embedders.
+
+This field is optional but strongly encouraged for all other embedders.
 
 ##### `documentTemplateMaxBytes`
 
@@ -2656,7 +2660,10 @@ The maximum size of a rendered document template. Longer texts are truncated to 
 
 `documentTemplateMaxBytes` must be an integer. It defaults to `400`.
 
-This field is optional for all embedders.
+This field is incompatible with `userProvided` embedders.
+
+This field is optional for all other embedders.
+
 
 ##### `dimensions`
 
