@@ -1,0 +1,70 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X PUT 'MEILISEARCH_URL/indexes/games/settings/sortable-attributes' \
+  -H 'Content-Type: application/json' \
+  --data-binary '[
+    "release_timestamp"
+  ]'
+```
+
+```javascript JS
+client.index('games').updateSortableAttributes(['release_timestamp'])
+```
+
+```python Python
+client.index('games').update_sortable_attributes(['release_timestamp'])
+```
+
+```php PHP
+$client->index('games')->updateSortableAttributes(['release_timestamp']);
+```
+
+```java Java
+Settings settings = new Settings();
+settings.setSortableAttributes(new String[] {"release_timestamp"});
+client.index("games").updateSettings(settings);
+```
+
+```ruby Ruby
+client.index('games').update_sortable_attributes(['release_timestamp'])
+```
+
+```go Go
+sortableAttributes := []string{"release_timestamp","author"}
+client.Index("games").UpdateSortableAttributes(&sortableAttributes)
+```
+
+```csharp C#
+await client.Index("games").UpdateSortableAttributesAsync(new string[] { "release_timestamp" });
+```
+
+```rust Rust
+let settings = Settings::new()
+  .with_sortable_attributes(["release_timestamp"]);
+
+let task: TaskInfo = client
+  .index("games")
+  .set_settings(&settings)
+  .await
+  .unwrap();
+```
+
+```swift Swift
+client.index("games").updateSortableAttributes(["release_timestamp"]) { (result) in
+  switch result {
+  case .success(let task):
+    print(task)
+  case .failure(let error):
+    print(error)
+  }
+}
+```
+
+```dart Dart
+await client
+    .index('games')
+    .updateSortableAttributes(['release_timestamp']);
+```
+</CodeGroup>

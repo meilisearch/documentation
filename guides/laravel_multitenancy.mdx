@@ -15,9 +15,9 @@ This guide requires:
 - A search API key — available in your Meilisearch dashboard
 - A search API key UID — retrieve it using the [keys endpoints](/reference/api/keys)
 
-<Capsule intent="tip">
+<Tip>
 Prefer self-hosting? Read our [installation guide](/learn/self_hosted/install_meilisearch_locally).
-</Capsule>
+</Tip>
 
 ## Models & relationships
 
@@ -212,9 +212,9 @@ Now the `Organization` model is generating tenant tokens, you need to provide th
 
 Use [view composers](https://laravel.com/docs/10.x/views#view-composers) to provide views with your search token. This way, you ensure the token is available in all views, without having to pass it manually.
 
-<Capsule intent="tip">
+<Tip>
 If you prefer, you can pass the token manually to each view using the `with` method.
-</Capsule>
+</Tip>
 
 Create a new `app/View/Composers/AuthComposer.php` file:
 
