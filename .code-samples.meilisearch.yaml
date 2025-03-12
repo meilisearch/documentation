@@ -1421,6 +1421,39 @@ search_parameter_reference_retrieve_vectors_1: |-
         "embedder": "EMBEDDER_NAME"
       }
     }'
+related_results_embedder_1: |-
+  curl -X PATCH 'MEILISEARCH_URL/indexes/movies/settings' 
+    -H 'Content-Type: application/json' 
+    -H 'Authorization: Bearer MEILISEARCH_API_KEY' 
+    --data-binary '{
+      "embedders": {
+        "movies-text": {
+          "source": "openAi",
+          "apiKey": "OPENAI_API_KEY",
+          "model": "text-embedding-3-small",
+          "documentTemplate": "A movie titled '{{doc.title}}' released in {{ doc.release_date }}. The movie genres are: {{doc.genres}}. The story is about: {{doc.overview|truncatewords: 20}}"
+        }
+      }
+    }'
+related_results_search_1: |-
+  curl -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
+    -H 'content-type: application/json' \
+    -H 'Authorization: Bearer DEFAULT_SEARCH_API_KEY' \
+    --data-binary '{
+      "q": "batman",
+      "hybrid": {
+        "embedder": "EMBEDDER_NAME"
+      }
+    }'
+related_results_similar_1: |-
+  curl \
+    -X POST 'MEILISEARCH_URL/indexes/movies/similar' \
+    -H 'Content-Type: application/json' \
+    -H 'Authorization: Bearer DEFAULT_SEARCH_API_KEY' \
+    --data-binary '{
+      "id": 192,
+      "embedder": "EMBEDDER_NAME"
+    }'
 
 ### Code samples for experimental features
 experimental_get_metrics_1: |-

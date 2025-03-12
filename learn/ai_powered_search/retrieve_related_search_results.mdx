@@ -3,9 +3,9 @@ title: Retrieve related search results
 description: This guide shows you how to use the similar documents endpoint to create an AI-powered movie recommendation workflow.
 ---
 
-This guide shows you how to use the similar documents endpoint to create an AI-powered movie recommendation workflow.
+This guide shows you how to use the [similar documents endpoint](/reference/api/similar) to create an AI-powered movie recommendation workflow.
 
-You will create an embedder and add documents to your index. You will then perform a search, and use the top result's primary key to retrieve similar movies in your database.
+First, you will create an embedder and add documents to your index. You will then perform a search, and use the top result's primary key to retrieve similar movies in your database.
 
 ## Prerequisites
 
@@ -33,21 +33,7 @@ Next, use the Cloud UI to configure an OpenAI embedder:
 
 You may also use the `/settings/embedders` API subroute to configure your embedder:
 
-```sh
-curl -X PATCH 'MEILISEARCH_URL/indexes/movies/settings' 
-  -H 'Content-Type: application/json' 
-  -H 'Authorization: Bearer MEILISEARCH_API_KEY' 
-  --data-binary '{
-    "embedders": {
-      "movies-text": {
-        "source": "openAi",
-        "apiKey": "OPENAI_API_KEY",
-        "model": "text-embedding-3-small",
-        "documentTemplate": "A movie titled '{{doc.title}}' released in {{ doc.release_date }}. The movie genres are: {{doc.genres}}. The story is about: {{doc.overview|truncatewords: 20}}"
-      }
-    }
-  }'
-```
+<CodeSamples id="related_results_embedder_1" />
 
 Replace `MEILISEARCH_URL`, `MEILISEARCH_API_KEY`, and `OPENAI_API_KEY` with the corresponding values in your application.
 
@@ -57,17 +43,7 @@ Meilisearch will start generating the embeddings for all movies in your dataset.
 
 With your documents added and all embeddings generated, you can perform a search:
 
-```sh
-curl -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
-  -H 'content-type: application/json' \
-  -H 'Authorization: Bearer DEFAULT_SEARCH_API_KEY' \
-  --data-binary '{
-    "q": "batman",
-    "hybrid": {
-      "embedder": "EMBEDDER_NAME"
-    }
-  }'
-```
+<CodeSamples id="related_results_search_1" />
 
 This request returns a list of movies. Pick the top result and take note of its primary key in the `id` field. In this case, it's the movie "Batman" with `id` 192.
 
@@ -75,16 +51,7 @@ This request returns a list of movies. Pick the top result and take note of its 
 
 Pass "Batman"'s `id` to your index's [`/similar` route](/reference/api/similar), specifying `movies-text` as your embedder:
 
-```sh
-curl \
-  -X POST 'MEILISEARCH_URL/indexes/movies/similar' \
-  -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer DEFAULT_SEARCH_API_KEY' \
-  --data-binary '{
-    "id": 192,
-    "embedder": "EMBEDDER_NAME"
-  }'
-```
+<CodeSamples id="related_results_similar_1" />
 
 Meilisearch will return a list of the 20 documents most similar to the movie you chose. You may then choose to display some of these similar results to your users, pointing them to other movies that may also interest them.
 
