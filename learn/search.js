@@ -1,20 +1,72 @@
-const MEILISEARCH_HOST = 'TO_REPLACE'
-const MEILISEARCH_API_KEY = 'TO_REPLACE'; // Public search-only API key
-const MEILISEARCH_INDEX = 'TO_REPLACE';
+//todo
+// [x] inject search bar
+// [x] create search + results modal
+// [x] handle responsive case
+// [] handle light/dark mode
+
+const MEILISEARCH_HOST = 'https://edge.meilisearch.com/'
+const MEILISEARCH_API_KEY = '776dc6a11c118bd1640c3a9ff9679f920bc384238534fc4861fcde0152e7fd68'; // Public search-only API key
+const MEILISEARCH_INDEX = 'production';
 
 function initializeMeilisearchIntegration() {
+  // Add a check at the start of the function to prevent multiple initializations
+  if (document.getElementById('meilisearch-bar-container')) {
+    console.log('Search bar already exists, skipping initialization');
+    return;
+  }
+  
   console.log('Meilisearch integration initializing');
   
+  // Modify the responsive visibility handler
+  const handleResponsiveVisibility = () => {
+    // Check for both possible IDs
+    const searchBarContainer = document.getElementById('meilisearch-bar-container');
+    const originalSearchButton = document.getElementById('search-bar-entry');
+    const originalMobileSearchButton = document.getElementById('search-bar-entry-mobile');
+    
+    if (!searchBarContainer) return;
+    
+    const isMobileView = window.innerWidth < 1024;
+    
+    if (isMobileView) {
+      console.log('hide search bar container')
+      // Hide our search bar
+      searchBarContainer.style.display = 'none';
+
+      if (originalSearchButton) {
+        originalSearchButton.style.display = 'none';
+      }
+      // Show Mintlify's search buttons
+      if (originalMobileSearchButton) {
+        originalMobileSearchButton.style.display = 'flex';
+      }
+    } else {
+      console.log('display search bar container')
+      // Show our search bar
+      searchBarContainer.style.display = 'block';
+      
+      // Hide Mintlify's search buttons
+      if (originalSearchButton) {
+        originalSearchButton.style.display = 'none';
+      }
+      if (originalMobileSearchButton) {
+        originalMobileSearchButton.style.display = 'none';
+      }
+    }
+  };
+
   // ========= Step 1: Create and inject the visible search bar in the header =========
   const initSearchBar = () => {
     console.log('Initializing search bar');
     
-    // Find the original Mintlify search button to replace
+    // When finding the original search button, also look for mobile version
     const originalSearchButton = document.getElementById('search-bar-entry');
-    if (!originalSearchButton) {
-      console.log('Original search button not found, looking for alternatives');
+    const originalMobileSearchButton = document.getElementById('search-bar-entry-mobile');
+    
+    if (!originalSearchButton && !originalMobileSearchButton) {
+      console.log('Neither desktop nor mobile search buttons found');
     } else {
-      console.log('Found original search button');
+      console.log('Found search button(s)');
     }
     
     // Find the header where we'll add our search input
@@ -68,9 +120,6 @@ function initializeMeilisearchIntegration() {
       if (searchParent) {
         headerContainer = searchParent;
         console.log('Using original search button parent as container');
-        
-        // Hide the original button
-        originalSearchButton.style.display = 'none';
       }
     }
     
@@ -279,9 +328,39 @@ function initializeMeilisearchIntegration() {
       searchInput.value = '';
       resultsContainer.innerHTML = '';
     };
+
+    // Function to handle clicks on Mintlify search buttons
+    const handleMintlifySearchClick = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      openSearchModal();
+    };
     
     // Open modal when clicking the search bar
     searchBar.addEventListener('click', openSearchModal);
+
+    // Add click handlers to Mintlify search buttons
+    if (originalSearchButton) {
+      originalSearchButton.addEventListener('click', handleMintlifySearchClick);
+    }
+    if (originalMobileSearchButton) {
+      originalMobileSearchButton.addEventListener('click', handleMintlifySearchClick);
+    }
+
+    // Add handlers for any search buttons that might be added later
+    const searchButtonObserver = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.addedNodes.length) {
+          mutation.addedNodes.forEach((node) => {
+            if (node.id === 'search-bar-entry' || node.id === 'search-bar-entry-mobile') {
+              node.addEventListener('click', handleMintlifySearchClick);
+            }
+          });
+        }
+      });
+    });
+
+    searchButtonObserver.observe(document.body, { childList: true, subtree: true });
     
     // Close modal when clicking outside the search modal
     modalOverlay.addEventListener('click', (e) => {
@@ -293,17 +372,23 @@ function initializeMeilisearchIntegration() {
     // Keyboard shortcuts
     document.addEventListener('keydown', (e) => {
       // Open with Cmd+K / Ctrl+K
-      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
         e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
         openSearchModal();
+        return false;
       }
       
       // Close with Escape
       if (e.key === 'Escape' && modalOverlay.style.display === 'flex') {
         e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
         closeSearchModal();
+        return false;
       }
-    });
+    }, true);
     
     // ========= Step 4: Set up Meilisearch for searching =========
     // Load Meilisearch client
@@ -322,6 +407,18 @@ function initializeMeilisearchIntegration() {
       console.log('Meilisearch client already loaded');
       setupMeilisearchHandlers(searchInput, resultsContainer);
     }
+
+    // Make sure we call handleResponsiveVisibility immediately after creating the search bar
+    handleResponsiveVisibility();
+
+    // Add a debounced resize listener to prevent too many calls
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+      if (resizeTimeout) {
+        clearTimeout(resizeTimeout);
+      }
+      resizeTimeout = setTimeout(handleResponsiveVisibility, 100);
+    });
   };
   
   // Set up the search functionality
@@ -466,52 +563,50 @@ function initializeMeilisearchIntegration() {
   // Initialize the search bar
   initSearchBar();
   
-  // Set up MutationObserver for SPA navigation
+  // Update the MutationObserver logic
   const observer = new MutationObserver(mutations => {
+    if (observer.processing) return;
+    observer.processing = true;
+
     mutations.forEach(mutation => {
-      if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
-        // Check if our search bar is still in the DOM
-        const searchBar = document.getElementById('meilisearch-search-bar');
-        if (!searchBar) {
-          console.log('Search bar not found, reinitializing');
-          initSearchBar();
+      if (mutation.type === 'childList') {
+        const header = document.querySelector('header');
+        if (mutation.target === header || header?.contains(mutation.target)) {
+          if (window.innerWidth >= 1024) {
+            // Check for both possible IDs
+            const searchBar = document.getElementById('meilisearch-search-bar') || 
+                            document.getElementById('search-bar-entry');
+            const searchBarContainer = document.getElementById('meilisearch-bar-container') || 
+                                     document.getElementById('search-bar-entry');
+            
+            if (!searchBar && !searchBarContainer) {
+              console.log('Search bar missing in desktop view, reinitializing');
+              initSearchBar();
+            }
+          }
         }
       }
     });
+
+    observer.processing = false;
   });
-  
-  observer.observe(document.body, { childList: true, subtree: true });
+
+  // Update observer configuration to be more specific
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true,
+    attributes: false,
+    characterData: false
+  });
 }
 
-// Run the initialization function in multiple ways to ensure it executes
-// 1. Try immediate execution if the DOM is already loaded
+// Initialization
 if (document.readyState === 'complete' || document.readyState === 'interactive') {
-  console.log('Document already ready, initializing immediately');
-  setTimeout(initializeMeilisearchIntegration, 100);
+  console.log('Document ready, initializing');
+  initializeMeilisearchIntegration();
 } else {
-  // 2. Otherwise wait for DOMContentLoaded
   console.log('Waiting for DOMContentLoaded');
   document.addEventListener('DOMContentLoaded', initializeMeilisearchIntegration);
 }
 
-// 3. Also try with window.onload as a fallback
-window.addEventListener('load', function() {
-  console.log('Window loaded');
-  const searchBar = document.getElementById('meilisearch-search-bar');
-  if (!searchBar) {
-    console.log('No search bar found after window load, initializing');
-    initializeMeilisearchIntegration();
-  }
-});
-
-// 4. Final attempt after a slight delay
-setTimeout(function() {
-  console.log('Timeout check');
-  const searchBar = document.getElementById('meilisearch-search-bar');
-  if (!searchBar) {
-    console.log('No search bar found after timeout, initializing');
-    initializeMeilisearchIntegration();
-  }
-}, 1000);
-
-console.log('Meilisearch script loaded');
+console.log('Meilisearch search script loaded');
