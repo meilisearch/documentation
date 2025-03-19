@@ -59,7 +59,7 @@ function initializeMeilisearchIntegration() {
   const initSearchBar = () => {
     console.log('Initializing search bar');
     
-    // When finding the original search button, also look for mobile version
+    // When finding the original search button, also look for mobile version icon
     const originalSearchButton = document.getElementById('search-bar-entry');
     const originalMobileSearchButton = document.getElementById('search-bar-entry-mobile');
     
@@ -159,7 +159,7 @@ function initializeMeilisearchIntegration() {
         <circle cx="11" cy="11" r="8"></circle>
         <path d="m21 21-4.3-4.3"></path>
       </svg>
-      <span style="flex-grow: 1;">Search...</span>
+      <span style="flex-grow: 1;">Search or ask...</span>
       <span style="opacity: 0.7; font-size: 12px;">⌘K</span>
     `;
     
@@ -516,6 +516,12 @@ function initializeMeilisearchIntegration() {
                     title += ' > ' + hit.hierarchy_lvl2;
                     if (hit.hierarchy_lvl3) {
                       title += ' > ' + hit.hierarchy_lvl3;
+                      if (hit.hierarchy_lvl4) {
+                        title += ' > ' + hit.hierarchy_lvl4;
+                        if (hit.hierarchy_lvl5) {
+                          title += ' > ' + hit.hierarchy_lvl5;
+                        }
+                      }
                     }
                   }
                 }
