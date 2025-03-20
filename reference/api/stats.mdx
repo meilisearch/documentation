@@ -1,9 +1,8 @@
 ---
-title: Stats — Meilisearch API reference
+title: Stats
+sidebarTitle: Stats
 description:  The /stats route you gives extended information and metrics about indexes and the Meilisearch database.
 ---
-
-# Stats
 
 The `/stats` route gives extended information and metrics about indexes and the Meilisearch database.
 
@@ -57,13 +56,15 @@ The `/stats` route gives extended information and metrics about indexes and the 
 | **`isIndexing`**                | Boolean | If `true`, the index is still processing documents and attempts to search will result in undefined behavior  |
 | **`fieldDistribution`**         | Object  | Shows every field in the index along with the total number of documents containing that field in said index  |
 
-<Capsule intent="note">
+<Note>
 `fieldDistribution` is not impacted by `searchableAttributes` or `displayedAttributes`. Even if a field is not displayed or searchable, it will still appear in the `fieldDistribution` object.  
-</Capsule>
+</Note>
 
 ## Get stats of all indexes
 
-<RouteHighlighter method="GET" route="/stats"/>
+```http
+GET /stats
+```
 
 Get stats of all indexes.
 
@@ -111,7 +112,9 @@ Get stats of all indexes.
 
 ## Get stats of an index
 
-<RouteHighlighter method="GET" route="/indexes/{index_uid}/stats"/>
+```http
+GET /indexes/{index_uid}/stats
+```
 
 Get stats of an index.
 

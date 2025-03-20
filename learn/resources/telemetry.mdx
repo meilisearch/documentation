@@ -1,10 +1,9 @@
 ---
-title: Telemetry — Meilisearch documentation
+title: Telemetry
+sidebarTitle: Telemetry
 description: Meilisearch collects anonymized data from users in order to improve our product. Consult this page for an exhaustive list of collected data and instructions on how to deactivate telemetry.
 sidebarDepth: 2
 ---
-
-# Telemetry
 
 Meilisearch collects anonymized data from users in order to improve our product. This can be [deactivated at any time](#how-to-disable-data-collection), and any data that has already been collected can be [deleted on request](#how-to-delete-all-collected-data).
 
@@ -98,9 +97,9 @@ To do so, send an email to [privacy@meilisearch.com](mailto:privacy@meilisearch.
 
 Whenever an event is triggered that collects some piece of data, Meilisearch does not send it immediately. Instead, it bundles it with other data in a batch of up to `500kb`. Batches are sent either every hour, or after reaching `500kb`—whichever occurs first. This is done in order to improve performance and reduce network traffic.
 
-<Capsule intent="tip" title="Be advised!">
+<Tip>
 This list is liable to change with every new version of Meilisearch. It's not because we're trying to be sneaky! It's because when we add new features we need to collect additional data points to see how they perform.
-</Capsule>
+</Tip>
 
 | Metric name                                        | Description                                                                                 | Example
 |----------------------------------------------------|---------------------------------------------------------------------------------------------|--------------------

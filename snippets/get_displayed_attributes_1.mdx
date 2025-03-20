@@ -1,0 +1,58 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X GET 'MEILISEARCH_URL/indexes/movies/settings/displayed-attributes'
+```
+
+```javascript JS
+client.index('movies').getDisplayedAttributes()
+```
+
+```python Python
+client.index('movies').get_displayed_attributes()
+```
+
+```php PHP
+$client->index('movies')->getDisplayedAttributes();
+```
+
+```java Java
+client.index("movies").getDisplayedAttributesSettings();
+```
+
+```ruby Ruby
+client.index('movies').get_displayed_attributes
+```
+
+```go Go
+client.Index("movies").GetDisplayedAttributes()
+```
+
+```csharp C#
+await client.Index("movies").GetDisplayedAttributesAsync();
+```
+
+```rust Rust
+let displayed_attributes: Vec<String> = client
+  .index("movies")
+  .get_displayed_attributes()
+  .await
+  .unwrap();
+```
+
+```swift Swift
+client.index("movies").getDisplayedAttributes { (result) in
+    switch result {
+    case .success(let displayedAttributes):
+        print(displayedAttributes)
+    case .failure(let error):
+        print(error)
+    }
+}
+```
+
+```dart Dart
+await client.index('movies').getDisplayedAttributes();
+```
+</CodeGroup>

@@ -1,0 +1,60 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X PUT 'MEILISEARCH_URL/indexes/shoes/settings/distinct-attribute' \
+  -H 'Content-Type: application/json' \
+  --data-binary '"skuid"'
+```
+
+```javascript JS
+client.index('shoes').updateDistinctAttribute('skuid')
+```
+
+```python Python
+client.index('shoes').update_distinct_attribute('skuid')
+```
+
+```php PHP
+$client->index('shoes')->updateDistinctAttribute('skuid');
+```
+
+```java Java
+client.index("shoes").updateDistinctAttributeSettings("skuid");
+```
+
+```ruby Ruby
+client.index('shoes').update_distinct_attribute('skuid')
+```
+
+```go Go
+client.Index("shoes").UpdateDistinctAttribute("skuid")
+```
+
+```csharp C#
+TaskInfo result = await client.Index("shoes").UpdateDistinctAttributeAsync("skuid");
+```
+
+```rust Rust
+let task: TaskInfo = client
+  .index("shoes")
+  .set_distinct_attribute("skuid")
+  .await
+  .unwrap();
+```
+
+```swift Swift
+client.index("shoes").updateDistinctAttribute("skuid") { (result) in
+    switch result {
+    case .success(let task):
+        print(task)
+    case .failure(let error):
+        print(error)
+    }
+}
+```
+
+```dart Dart
+await client.index('shoes').updateDistinctAttribute('skuid');
+```
+</CodeGroup>

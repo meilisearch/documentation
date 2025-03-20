@@ -1,0 +1,119 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X PUT 'MEILISEARCH_URL/indexes/movies/settings/displayed-attributes' \
+  -H 'Content-Type: application/json' \
+  --data-binary '[
+      "title",
+      "overview",
+      "genres",
+      "release_date"
+    ]'
+```
+
+```javascript JS
+client.index('movies').updateDisplayedAttributes([
+    'title',
+    'overview',
+    'genres',
+    'release_date',
+  ]
+)
+```
+
+```python Python
+client.index('movies').update_displayed_attributes([
+    'title',
+    'overview',
+    'genres',
+    'release_date'
+])
+```
+
+```php PHP
+$client->index('movies')->updateDisplayedAttributes([
+  'title',
+  'overview',
+  'genres',
+  'release_date'
+]);
+```
+
+```java Java
+String[] attributes = {"title", "overview", "genres", "release_date"}
+client.index("movies").updateDisplayedAttributesSettings(attributes);
+```
+
+```ruby Ruby
+client.index('movies').update_settings({
+  displayed_attributes: [
+    'title',
+    'overview',
+    'genres',
+    'release_date'
+  ]
+})
+```
+
+```go Go
+displayedAttributes := []string{
+  "title",
+  "overview",
+  "genres",
+  "release_date",
+}
+client.Index("movies").UpdateDisplayedAttributes(&displayedAttributes)
+```
+
+```csharp C#
+await client.Index("movies").UpdateDisplayedAttributesAsync(new[]
+{
+    "title",
+    "overview",
+    "genres",
+    "release_date"
+});
+```
+
+```rust Rust
+let displayed_attributes = [
+  "title",
+  "overvieww",
+  "genres",
+  "release_date"
+];
+
+let task: TaskInfo = client
+  .index("movies")
+  .set_displayed_attributes(&displayed_attributes)
+  .await
+  .unwrap();
+```
+
+```swift Swift
+let displayedAttributes: [String] = [
+    "title",
+    "overview",
+    "genres",
+    "release_date"
+]
+client.index("movies").updateDisplayedAttributes(displayedAttributes) { (result) in
+    switch result {
+    case .success(let task):
+        print(task)
+    case .failure(let error):
+        print(error)
+    }
+}
+```
+
+```dart Dart
+await client.index('movies').updateDisplayedAttributes([
+  'title',
+  'overview',
+  'genres',
+  'release_date',
+]);
+```
+</CodeGroup>

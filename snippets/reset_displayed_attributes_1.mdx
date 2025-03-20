@@ -1,0 +1,58 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X DELETE 'MEILISEARCH_URL/indexes/movies/settings/displayed-attributes'
+```
+
+```javascript JS
+client.index('movies').resetDisplayedAttributes()
+```
+
+```python Python
+client.index('movies').reset_displayed_attributes()
+```
+
+```php PHP
+$client->index('movies')->resetDisplayedAttributes();
+```
+
+```java Java
+client.index("movies").resetDisplayedAttributesSettings();
+```
+
+```ruby Ruby
+client.index('movies').reset_displayed_attributes
+```
+
+```go Go
+client.Index("movies").ResetDisplayedAttributes()
+```
+
+```csharp C#
+await client.Index("movies").ResetDisplayedAttributesAsync();
+```
+
+```rust Rust
+let task: TaskInfo = client
+  .index("movies")
+  .reset_displayed_attributes()
+  .await
+  .unwrap();
+```
+
+```swift Swift
+client.index("movies").resetDisplayedAttributes { (result) in
+    switch result {
+    case .success(let task):
+        print(task)
+    case .failure(let error):
+        print(error)
+    }
+}
+```
+
+```dart Dart
+await client.index('movies').resetDisplayedAttributes();
+```
+</CodeGroup>

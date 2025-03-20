@@ -1,0 +1,106 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/movies/search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "q": "shifu",
+    "attributesToCrop": ["overview"],
+    "cropLength": 5
+  }'
+```
+
+```javascript JS
+client.index('movies').search('shifu', {
+  attributesToCrop: ['overview'],
+  cropLength: 5
+})
+```
+
+```python Python
+client.index('movies').search('shifu', {
+  'attributesToCrop': ['overview'],
+  'cropLength': 5
+})
+```
+
+```php PHP
+$client->index('movies')->search('shifu', [
+  'attributesToCrop' => ['overview'],
+  'cropLength' => 5
+]);
+```
+
+```java Java
+SearchRequest searchRequest =
+        SearchRequest.builder()
+                .q("shifu")
+                .attributesToCrop(new String[] {"overview"})
+                .cropLength(5)
+                .build();
+client.index("movies").search(searchRequest);
+```
+
+```ruby Ruby
+client.index('movies').search('shifu', {
+  attributes_to_crop: ['overview'],
+  crop_length: 5
+})
+```
+
+```go Go
+resp, err := client.Index("movies").Search("shifu", &meilisearch.SearchRequest{
+  AttributesToCrop: []string{"overview"},
+  CropLength:       5,
+})
+```
+
+```csharp C#
+var sq = new SearchQuery
+{
+    AttributesToCrop = new[] {"overview"},
+    CropLength = 5
+};
+await client.Index("movies").SearchAsync<Movie>("shifu", sq);
+```
+
+```rust Rust
+let results: SearchResults<Movie> = client
+  .index("movies")
+  .search()
+  .with_query("shifu")
+  .with_attributes_to_crop(Selectors::Some(&[("overview", None)]))
+  .with_crop_length(5)
+  .execute()
+  .await
+  .unwrap();
+
+// Get the formatted results
+let formatted_results: Vec<&Movie> = results
+  .hits
+  .iter()
+  .map(|r| r.formatted_result.as_ref().unwrap())
+  .collect();
+```
+
+```swift Swift
+let searchParameters = SearchParameters(
+    query: "shifu",
+    attributesToCrop: ["overview"],
+    cropLength: 5)
+client.index("movies").search(searchParameters) { (result: Result<Searchable<Movie>, Swift.Error>) in
+    switch result {
+    case .success(let searchResult):
+        print(searchResult)
+    case .failure(let error):
+        print(error)
+    }
+}
+```
+
+```dart Dart
+await client.index('movies').search(
+    'shifu', SearchQuery(attributesToCrop: ['overview'], cropLength: 5));
+```
+</CodeGroup>

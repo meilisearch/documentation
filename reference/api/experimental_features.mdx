@@ -1,17 +1,16 @@
 ---
-title: Experimental — Meilisearch API reference
+title: Experimental
+sidebarTitle: Experimental features
 description: The /experimental-features route allows you to manage some of Meilisearch's experimental features.
 ---
-
-# Experimental
 
 The `/experimental-features` route allows you to activate or deactivate some of Meilisearch's [experimental features](/learn/resources/experimental_features_overview).
 
 This route is **synchronous**. This means that no task object will be returned, and any activated or deactivated features will be made available or unavailable immediately.
 
-<Capsule intent="danger">
+<Warning>
 The experimental API route is not compatible with all experimental features. Consult the [experimental feature overview](/learn/resources/experimental_features_overview) for a compatibility list.
-</Capsule>
+</Warning>
 
 ## Experimental features object
 
@@ -35,7 +34,9 @@ The experimental API route is not compatible with all experimental features. Con
 
 ## Get all experimental features
 
-<RouteHighlighter method="GET" route="/experimental-features"/>
+```http
+GET /experimental-features
+```
 
 Get a list of all experimental features that can be activated via the `/experimental-features` route and whether or not they are currently activated.
 
@@ -57,7 +58,9 @@ Get a list of all experimental features that can be activated via the `/experime
 
 ## Configure experimental features
 
-<RouteHighlighter method="PATCH" route="/experimental-features"/>
+```http
+PATCH /experimental-features
+```
 
 Activate or deactivate experimental features.
 

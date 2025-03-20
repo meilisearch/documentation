@@ -1,0 +1,76 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/meteorites/search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{ "filter": "mass < 200" }'
+```
+
+```javascript JS
+client.index('meteorites').search('', { filter: 'mass < 200' })
+```
+
+```python Python
+client.index('meteorites').search('', {
+  'filter': 'mass < 200'
+})
+```
+
+```php PHP
+$client->index('meteorites')->search('', [
+  'filter' => 'mass < 200'
+]);
+```
+
+```java Java
+SearchRequest searchRequest = SearchRequest.builder().q("").filter(new String[] {"mass < 200"}).build();
+client.index("meteorites").search(searchRequest);
+```
+
+```ruby Ruby
+client.index('meteorites').search('', { filter: 'mass < 200' })
+```
+
+```go Go
+resp, err := client.Index("meteorites").Search("", &meilisearch.SearchRequest{
+  Filter: "mass < 200",
+})
+```
+
+```csharp C#
+SearchQuery filter = new SearchQuery() { Filter = "mass < 200" };
+await client.Index("meteorites").SearchAsync<Meteorite>("", filter);
+```
+
+```rust Rust
+let results: SearchResults<Meteorite> = client
+  .index("meteorites")
+  .search()
+  .with_filter("mass < 200")
+  .execute()
+  .await
+  .unwrap();
+```
+
+```swift Swift
+let searchParameters = SearchParameters(
+   query: "",
+   filter: "mass < 200"
+ )
+ client.index("meteorites").search(searchParameters) { (result: Result<Searchable<Meteorite>, Swift.Error>) in
+     switch result {
+     case .success(let searchResult):
+         print(searchResult)
+     case .failure(let error):
+         print(error)
+     }
+ }
+```
+
+```dart Dart
+await client
+    .index('meteorites')
+    .search('', SearchQuery(filter: 'mass < 200'));
+```
+</CodeGroup>

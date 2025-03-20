@@ -1,9 +1,8 @@
 ---
-title: Using multi-search to perform a federated search — Meilisearch API reference
+title: Using multi-search to perform a federated search
+sidebarTitle: Using multi-search to perform a federated search
 description: In this tutorial you will see how to perform a query searching multiple indexes at the same time to obtain a single list of results.
 ---
-
-# Using multi-search to perform a federated search
 
 Meilisearch allows you to make multiple search requests at the same time with the `/multi-search` endpoint. A federated search is a multi-search that returns results from multiple queries in a single list.
 
@@ -103,7 +102,7 @@ curl \
         "indexUid": "profiles",
         "q": "rotondo",
         "federationOptions": {
-          "weight": 1.2 
+          "weight": 1.2
         }
       },
       {

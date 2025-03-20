@@ -1,9 +1,8 @@
 ---
-title: Indexes — Meilisearch API reference
+title: Indexes
+sidebarTitle: Indexes
 description: The /indexes route allows you to create, manage, and delete your indexes.
 ---
-
-# Indexes
 
 The `/indexes` route allows you to create, manage, and delete your indexes.
 
@@ -29,7 +28,9 @@ The `/indexes` route allows you to create, manage, and delete your indexes.
 
 ## List all indexes
 
-<RouteHighlighter method="GET" route="/indexes"/>
+```http
+GET /indexes
+```
 
 List all indexes. Results can be paginated by using the `offset` and `limit` query parameters.
 
@@ -85,7 +86,9 @@ List all indexes. Results can be paginated by using the `offset` and `limit` que
 
 ## Get one index
 
-<RouteHighlighter method="GET" route="/indexes/{index_uid}"/>
+```http
+GET /indexes/{index_uid}
+```
 
 Get information about an index.
 
@@ -112,7 +115,9 @@ Get information about an index.
 
 ## Create an index
 
-<RouteHighlighter method="POST" route="/indexes"/>
+```http
+POST /indexes
+```
 
 Create an index.
 
@@ -150,15 +155,17 @@ You can use the response's `taskUid` to [track the status of your request](/refe
 
 ## Update an index
 
-<RouteHighlighter method="PATCH" route="/indexes/{index_uid}"/>
+```http
+PATCH /indexes/{index_uid}
+```
 
 Update an index's [primary key](/learn/getting_started/primary_key#primary-key). You can freely update the primary key of an index as long as it contains no documents.
 
 To change the primary key of an index that already contains documents, you must first delete all documents in that index. You may then change the primary key and index your dataset again.
 
-<Capsule intent="note">
+<Note>
 It is not possible to change an index's `uid`.
-</Capsule>
+</Note>
 
 ### Path parameters
 
@@ -192,7 +199,9 @@ You can use the response's `taskUid` to [track the status of your request](/refe
 
 ## Delete an index
 
-<RouteHighlighter method="DELETE" route="/indexes/{index_uid}"/>
+```http
+DELETE /indexes/{index_uid}
+```
 
 Delete an index.
 
@@ -222,7 +231,9 @@ You can use the response's `taskUid` to [track the status of your request](/refe
 
 ## Swap indexes
 
-<RouteHighlighter method="POST" route="/swap-indexes"/>
+```http
+POST /swap-indexes
+```
 
 Swap the documents, settings, and task history of two or more indexes. **You can only swap indexes in pairs.** However, a single request can swap as many index pairs as you wish.
 
@@ -242,9 +253,9 @@ An array of objects. Each object has only one key: `indexes`.
 
 Each `indexes` array must contain only two elements: the `indexUid`s of the two indexes to be swapped. Sending an empty array (`[]`) is valid, but no swap operation will be performed.
 
-<Capsule intent="note">
+<Note>
 You can swap multiple pairs of indexes with a single request. To do so, there must be one object for each pair of indexes to be swapped.
-</Capsule>
+</Note>
 
 ### Example
 
@@ -262,8 +273,8 @@ You can swap multiple pairs of indexes with a single request. To do so, there mu
 }
 ```
 
-<Capsule intent="note">
+<Note>
 Since `indexSwap` is a [global task](/learn/async/asynchronous_operations#global-tasks), the `indexUid` is always `null`.
-</Capsule>
+</Note>
 
 You can use the response's `taskUid` to [track the status of your request](/reference/api/tasks#get-one-task).

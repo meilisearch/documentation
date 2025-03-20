@@ -1,9 +1,7 @@
 ---
-title: Deploy a Meilisearch instance on Railway — Meilisearch documentation
+title: Deploy a Meilisearch instance on Railway
 description: This article covers how to deploy Meilisearch on Railway with a single click and how to secure your newly-created instance.
 ---
-
-# Deploy a Meilisearch instance on Railway
 
 ## Introduction
 
@@ -47,9 +45,9 @@ openssl rand -base64 48 | head -c32
 
 which in this case will generate a 32-character long string.
 
-<Capsule intent="warning">
+<Warning>
 Setting a master key is optional, but without it, your server will accept unidentified requests, which can affect your usage quota on the server. If you need some protection in production, we strongly recommend setting a master key.
-</Capsule>
+</Warning>
 
 ### Test Meilisearch
 
@@ -57,7 +55,9 @@ If you have set the `MEILI_ENV` environment variable to `development` in the Rai
 
 Copy the public URL (for example, `meilisearch-production-up.railway.app`) of your project from your [Railway account dashboard](https://railway.app/dashboard) and paste it into your browser.
 
-![Railway dashboard](/assets/images/railway/public-url.png)
+<Frame>
+  <img src="/assets/images/railway/public-url.png" alt="Railway dashboard" />
+</Frame>
 
 You should land on the Meilisearch [search preview](/learn/getting_started/search_preview), where you will be asked to enter your master key.
 

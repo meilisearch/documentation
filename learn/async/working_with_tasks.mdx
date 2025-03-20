@@ -1,9 +1,10 @@
 ---
-title: Working with tasks — Meilisearch documentation
+title: Working with tasks
+sidebarTitle: Working with tasks
 description: In this tutorial, you'll use the Meilisearch API to add documents to an index, and then monitor its status.
 ---
+import AddMoviesJson1 from '/snippets/add_movies_json_1.mdx';
 
-# Working with tasks
 
 [Many Meilisearch operations are processed asynchronously](/learn/async/asynchronous_operations) in a task. Asynchronous tasks allow you to make resource-intensive changes to your Meilisearch project without any downtime for users.
 
@@ -20,7 +21,7 @@ Operations that require indexing, such as adding and updating documents or chang
 
 Start by creating an index, then add a large number of documents to this index:
 
-<CodeSamples id="add_movies_json_1" />
+<AddMoviesJson1 />
 
 Instead of processing your request immediately, Meilisearch will add it to a queue and return a summarized task object:
 
@@ -36,9 +37,9 @@ Instead of processing your request immediately, Meilisearch will add it to a que
 
 The summarized task object is confirmation your request has been accepted. It also gives you information you can use to monitor the status of your request, such as the `taskUid`.
 
-<Capsule intent="note">
+<Note>
 You can add documents to a new Meilisearch Cloud index using the Cloud interface. To get the `taskUid` of this task, visit the "Task" overview and look for a "Document addition or update" task associated with your newly created index.
-</Capsule>
+</Note>
 
 ## Monitoring task status
 
@@ -48,11 +49,11 @@ Meilisearch processes tasks in the order they were added to the queue. You can c
 
 Log into your [Meilisearch Cloud](https://meilisearch.com/cloud?utm_campaign=oss&utm_source=docs&utm_medium=tasks-tutorial) account and navigate to your project. Click the "Tasks" link in the project menu:
 
-![](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/cloud-tasks-tutorial/01-tasks-menu.png)
+![](/assets/images/cloud-tasks-tutorial/01-tasks-menu.png)
 
 This will lead you to the task overview. Look for your request's `taskUid` in the "Uid" column:
 
-![](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/cloud-tasks-tutorial/01-tasks-table.png)
+![](/assets/images/cloud-tasks-tutorial/01-tasks-table.png)
 
 When the task `status` changes to `succeeded`, Meilisearch has finished processing your request.
 

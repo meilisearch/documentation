@@ -1,17 +1,16 @@
 ---
-title: Exporting and using Snapshots — Meilisearch documentation
+title: Exporting and using Snapshots
+sidebarTitle: Exporting and using Snapshots
 description: Snapshots are exact copies of Meilisearch databases. They are often useful for periodical backups.
 ---
-
-# Exporting and using snapshots
 
 A [snapshot](/learn/advanced/snapshots_vs_dumps#snapshots) is an exact copy of the Meilisearch database. Snapshots are useful as quick backups, but cannot be used to migrate to a new Meilisearch release.
 
 This tutorial shows you how to schedule snapshot creation to ensure you always have a recent backup of your instance ready to use. You will also see how to start Meilisearch from this snapshot.
 
-<Capsule intent="warning" title="Meilisearch Cloud and snapshots">
+<Warning>
 Meilisearch Cloud does not support snapshots.
-</Capsule>
+</Warning>
 
 ## Scheduling periodic snapshots
 
@@ -35,9 +34,9 @@ meilisearch --schedule-snapshot=3600
 
 This instructs Meilisearch to create a new snapshot once every hour.
 
-<Capsule intent="tip">
+<Tip>
 If you need to generate a single snapshot without relaunching your instance, use [the `/snapshots` route](/reference/api/snapshots).
-</Capsule>
+</Tip>
 
 ## Starting from a snapshot
 
@@ -49,8 +48,8 @@ meilisearch --import-snapshot mySnapShots/data.ms.snapshot
 
 Because snapshots are exact copies of your database, starting a Meilisearch instance from a snapshot is much faster than adding documents manually or starting from a dump.
 
-<Capsule intent="warning">
+<Warning>
 For security reasons, Meilisearch will never overwrite an existing database. By default, Meilisearch will throw an error when importing a snapshot if there is any data in your instance.
 
 You can change this behavior by specifying [`--ignore-snapshot-if-db-exists=true`](/learn/self_hosted/configure_meilisearch_at_launch#ignore-dump-if-db-exists). This will cause Meilisearch to launch with the existing database and ignore the dump without throwing an error.
-</Capsule>
+</Warning>
