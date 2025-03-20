@@ -45,19 +45,9 @@
         "slug": "getting_started_with_ai_search"
       },
       {
-        "source": "learn/ai_powered_search/search_with_user_provided_embeddings.mdx",
-        "label": "Use AI-powered search with user-provided embeddings",
-        "slug": "search_with_user_provided_embeddings"
-      },
-      {
         "source": "learn/ai_powered_search/configure_rest_embedder.mdx",
         "label": "Configure a REST embedder",
         "slug": "configure_rest_embedder"
-      },
-      {
-        "source": "learn/ai_powered_search/retrieve_related_search_results.mdx",
-        "label": "Retrieve related search results",
-        "slug": "retrieve_related_search_results"
       },
       {
         "source": "learn/ai_powered_search/document_template_best_practices.mdx",
@@ -65,14 +55,24 @@
         "slug": "document_template_best_practices"
       },
       {
-        "source": "learn/ai_powered_search/choose_an_embedder.mdx",
-        "label": "Which embedder should I choose?",
-        "slug": "choose_an_embedder"
-      },
-      {
         "source": "learn/ai_powered_search/image_search_with_user_provided_embeddings.mdx",
         "label": "Image search with user-provided embeddings",
         "slug": "image_search_with_user_provided_embeddings"
+      },
+      {
+        "source": "learn/ai_powered_search/search_with_user_provided_embeddings.mdx",
+        "label": "Use AI-powered search with user-provided embeddings",
+        "slug": "search_with_user_provided_embeddings"
+      },
+      {
+        "source": "learn/ai_powered_search/retrieve_related_search_results.mdx",
+        "label": "Retrieve related search results",
+        "slug": "retrieve_related_search_results"
+      },
+      {
+        "source": "learn/ai_powered_search/choose_an_embedder.mdx",
+        "label": "Which embedder should I choose?",
+        "slug": "choose_an_embedder"
       },
       {
         "source": "learn/ai_powered_search/difference_full_text_ai_search.mdx",
