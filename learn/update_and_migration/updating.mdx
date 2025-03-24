@@ -5,6 +5,12 @@ description: Learn how to migrate to the latest Meilisearch release.
 sidebarDepth: 3
 ---
 
+import CodeSamplesUpdatingGuideCheckVersionNewAuthorizationHeader from '/snippets/samples/code_samples_updating_guide_check_version_new_authorization_header.mdx';
+import CodeSamplesUpdatingGuideCheckVersionOldAuthorizationHeader from '/snippets/samples/code_samples_updating_guide_check_version_old_authorization_header.mdx';
+import CodeSamplesUpdatingGuideCreateDump from '/snippets/samples/code_samples_updating_guide_create_dump.mdx';
+import CodeSamplesUpdatingGuideGetDisplayedAttributesOldAuthorizationHeader from '/snippets/samples/code_samples_updating_guide_get_displayed_attributes_old_authorization_header.mdx';
+import CodeSamplesUpdatingGuideResetDisplayedAttributesOldAuthorizationHeader from '/snippets/samples/code_samples_updating_guide_reset_displayed_attributes_old_authorization_header.mdx';
+
 Currently, Meilisearch databases are only compatible with the version of Meilisearch used to create them. The following guide will walk you through using a [dump](/learn/advanced/dumps) to migrate an existing database from an older version of Meilisearch to the most recent one.
 
 If you're updating your Meilisearch instance on cloud platforms like DigitalOcean or AWS, ensure that you can connect to your cloud instance via SSH. Depending on the user you are connecting with (root, admin, etc.), you may need to prefix some commands with `sudo`.
@@ -160,7 +166,7 @@ If after the upgrade is completed the task status is set to `failed` or Meilisea
 
 First, verify the version of Meilisearch that's compatible with your database using the get version endpoint:
 
-<CodeSamples id="updating_guide_check_version_new_authorization_header" />
+<CodeSamplesUpdatingGuideCheckVersionNewAuthorizationHeader />
 
 The response should look something like this:
 
@@ -175,7 +181,7 @@ The response should look something like this:
 <Tip>
 If you get the `missing_authorization_header` error, you might be using **v0.24 or below**. For each command, replace the `Authorization: Bearer` header with the `X-Meili-API-Key: API_KEY` header:
 
-<CodeSamples id="updating_guide_check_version_old_authorization_header" />
+<CodeSamplesUpdatingGuideCheckVersionOldAuthorizationHeader />
 </Tip>
 
 If your [`pkgVersion`](/reference/api/version#version-object) is 0.21 or above, you can jump to [creating the dump](#create-the-dump). If not, proceed to the next step.
@@ -190,13 +196,13 @@ When creating dumps using Meilisearch versions below v0.21, all fields must be [
 
 Start by verifying that all attributes are included in the displayed attributes list:
 
-<CodeSamples id="updating_guide_get_displayed_attributes_old_authorization_header" />
+<CodeSamplesUpdatingGuideGetDisplayedAttributesOldAuthorizationHeader />
 
 If the response for all indexes is `{'displayedAttributes': '["*"]'}`, you can move on to the [next step](#create-the-dump).
 
 If the response is anything else, save the current list of displayed attributes in a text file and then reset the displayed attributes list to its default value `(["*"])`:
 
-<CodeSamples id="updating_guide_reset_displayed_attributes_old_authorization_header" />
+<CodeSamplesUpdatingGuideResetDisplayedAttributesOldAuthorizationHeader />
 
 This command returns an `updateId`. Use the get update endpoint to track the status of the operation:
 
@@ -268,7 +274,7 @@ Due to an error allowing malformed `_geo` fields in Meilisearch **v0.27, v0.28, 
 
 You can then create a dump of your database:
 
-<CodeSamples id="updating_guide_create_dump" />
+<CodeSamplesUpdatingGuideCreateDump />
 
 The server should return a response that looks like this:
 

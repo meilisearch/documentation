@@ -4,6 +4,11 @@ sidebarTitle: Search with facets
 description: Faceted search interfaces provide users with a quick way to narrow down search results by selecting categories relevant to their query.
 ---
 
+import CodeSamplesFacetedSearchUpdateSettings1 from '/snippets/samples/code_samples_faceted_search_update_settings_1.mdx';
+import CodeSamplesFacetedSearch1 from '/snippets/samples/code_samples_faceted_search_1.mdx';
+import CodeSamplesFacetSearch2 from '/snippets/samples/code_samples_facet_search_2.mdx';
+import CodeSamplesFacetSearch3 from '/snippets/samples/code_samples_facet_search_3.mdx';
+
 In Meilisearch, facets are a specialized type of filter. This guide shows you how to configure facets and use them when searching a database of books. It also gives you instruction on how to get
 
 ## Requirements
@@ -31,7 +36,7 @@ First, create a new index using this <a id="downloadBooks" href="/assets/dataset
 
 Next, add `genres`, `language`, and `rating` to the list of `filterableAttributes`:
 
-<CodeSamples id="faceted_search_update_settings_1" />
+<CodeSamplesFacetedSearchUpdateSettings1 />
 
 You have now configured your index to use these attributes as filters.
 
@@ -39,7 +44,7 @@ You have now configured your index to use these attributes as filters.
 
 Make a search query setting the `facets` search parameter:
 
-<CodeSamples id="faceted_search_1" />
+<CodeSamplesFacetedSearch1 />
 
 The response returns all books matching the query. It also returns two fields you can use to create a faceted search interface, `facetDistribution` and `facetStats`:
 
@@ -81,7 +86,7 @@ The response returns all books matching the query. It also returns two fields yo
 
 By default, all facet values are sorted in ascending alphanumeric order. You can change this using the `sortFacetValuesBy` property of the [`faceting` index settings](/reference/api/settings#faceting):
 
-<CodeSamples id="facet_search_2" />
+<CodeSamplesFacetSearch2 />
 
 The above code sample sorts the `genres` facet by descending value count.
 
@@ -116,7 +121,7 @@ Repeating the previous query using the new settings will result in a different o
 
 You can also search for facet values with the [facet search endpoint](/reference/api/facet_search):
 
-<CodeSamples id="facet_search_3" />
+<CodeSamplesFacetSearch3 />
 
 The following code sample searches the `genres` facet for values starting with `c`:
 

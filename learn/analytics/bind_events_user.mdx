@@ -4,6 +4,9 @@ sidebarTitle: Bind search analytics events to a user
 description: This guide shows you how to manually differentiate users across search analytics using the X-MS-USER-ID HTTP header.
 ---
 
+import CodeSamplesAnalyticsEventBindSearch1 from '/snippets/samples/code_samples_analytics_event_bind_search_1.mdx';
+import CodeSamplesAnalyticsEventBindEvent1 from '/snippets/samples/code_samples_analytics_event_bind_event_1.mdx';
+
 By default, Meilisearch uses IP addresses to identify users and calculate the total user metrics. This guide shows you how to use the `X-MS-USER-ID` HTTP header to manually link analytics events to specific users.
 
 This is useful if you're searching from your back end, as all searches would otherwise appear to come from your server's IP address, making it difficult to accurately track the number of individual users.
@@ -17,7 +20,7 @@ This is useful if you're searching from your back end, as all searches would oth
 
 Include the `X-MS-USER-ID` header in your search requests:
 
-<CodeSamples id="analytics_event_bind_search_1" />
+<CodeSamplesAnalyticsEventBindSearch1 />
 
 Replace `MEILISEARCH_USER_ID` with any value that uniquely identifies that user. This may be an authenticated user's ID when running searches from your own back end, or a hash of the user's IP address.
 
@@ -25,7 +28,7 @@ Replace `MEILISEARCH_USER_ID` with any value that uniquely identifies that user.
 
 Next, submit your analytics event to the analytics endpoint. Send the same header and value in your API call:
 
-<CodeSamples id="analytics_event_bind_event_1" />
+<CodeSamplesAnalyticsEventBindEvent1 />
 
 ## Conclusion
 

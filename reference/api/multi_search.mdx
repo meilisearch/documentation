@@ -4,6 +4,10 @@ sidebarTitle: Multi-search
 description: The /multi-search route allows you to perform multiple search queries on one or more indexes.
 ---
 
+import CodeSamplesMultiSearch1 from '/snippets/samples/code_samples_multi_search_1.mdx';
+import CodeSamplesMultiSearchFederated1 from '/snippets/samples/code_samples_multi_search_federated_1.mdx';
+import CodeSamplesMultiSearchRemoteFederated1 from '/snippets/samples/code_samples_multi_search_remote_federated_1.mdx';
+
 The `/multi-search` route allows you to perform multiple search queries on one or more indexes by bundling them into a single HTTP request. Multi-search is also known as federated search.
 
 ## Perform a multi-search
@@ -232,7 +236,7 @@ Each result in the `hits` array contains an additional `_federation` field with 
 
 #### Non-federated multi-search
 
-<CodeSamples id="multi_search_1" />
+<CodeSamplesMultiSearch1 />
 
 ##### Response: `200 Ok`
 
@@ -292,7 +296,7 @@ Each result in the `hits` array contains an additional `_federation` field with 
 
 #### Federated multi-search
 
-<CodeSamples id="multi_search_federated_1" />
+<CodeSamplesMultiSearchFederated1 />
 
 ##### Response: `200 Ok`
 
@@ -329,7 +333,7 @@ Each result in the `hits` array contains an additional `_federation` field with 
 
 #### Remote federated multi-search <NoticeTag type="experimental" label="experimental" />
 
-<CodeSamples id="multi_search_remote_federated_1" />
+<CodeSamplesMultiSearchRemoteFederated1 />
 
 ##### Response: `200 Ok`
 

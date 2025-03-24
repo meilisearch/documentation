@@ -4,6 +4,9 @@ sidebarTitle: Configure search analytics
 description: Meilisearch Cloud offers in-depth search analytics to help you understand how users search in your application.
 ---
 
+import CodeSamplesAnalyticsEventConversion1 from '/snippets/samples/code_samples_analytics_event_conversion_1.mdx';
+import CodeSamplesAnalyticsEventClick1 from '/snippets/samples/code_samples_analytics_event_click_1.mdx';
+
 Enable Meilisearch Cloud analytics to help you understand how users search in your application.
 
 This guide walks you through activating analytics, updating your project URL, and configuring all data points.
@@ -47,7 +50,7 @@ To track metrics like click-through rate and average click position, Meilisearch
 
 Every time a user clicks on a search result, your application must send a `click` event to the `POST` endpoint of Meilisearch Cloud analytics route:
 
-<CodeSamples id="analytics_event_click_1" />
+<CodeSamplesAnalyticsEventClick1 />
 
 By default, Meilisearch associates analytics events with the most recent search of the user who triggered them.
 
@@ -59,7 +62,7 @@ To track conversion rate, first identify what should count as a conversion for y
 
 Once you have established what counts as a conversion in your application, configure it to send a `conversion` event to the `POST` endpoint of Meilisearch Cloud analytics route:
 
-<CodeSamples id="analytics_event_conversion_1" />
+<CodeSamplesAnalyticsEventConversion1 />
 
 By default, Meilisearch associates analytics events with the most recent search of the user who triggered them.
 

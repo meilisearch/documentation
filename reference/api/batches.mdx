@@ -4,6 +4,9 @@ sidebarTitle: Batches
 description: The /batches route allows you to monitor how Meilisearch is grouping and processing asynchronous operations.
 ---
 
+import CodeSamplesGetAllBatches1 from '/snippets/samples/code_samples_get_all_batches_1.mdx';
+import CodeSamplesGetBatch1 from '/snippets/samples/code_samples_get_batch_1.mdx';
+
 The `/batches` route gives information about the progress of batches of [asynchronous operations](/learn/async/asynchronous_operations).
 
 ## Batch object
@@ -166,7 +169,7 @@ For example, `?uids=0` returns a batch containing the task with a `taskUid` equa
 
 ### Example
 
-<CodeSamples id="get_all_batches_1" />
+<CodeSamplesGetAllBatches1 />
 
 #### Response: `200 Ok`
 
@@ -222,7 +225,7 @@ Get a single batch.
 
 ### Example
 
-<CodeSamples id="get_batch_1" />
+<CodeSamplesGetBatch1 />
 
 #### Response: `200 Ok`
 

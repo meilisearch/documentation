@@ -4,6 +4,9 @@ sidebarTitle: Displayed and searchable attributes
 description: Displayed and searchable attributes define what data Meilisearch returns after a successful query and which fields Meilisearch takes in account when searching. Knowing how to configure them can help improve your application's performance.
 ---
 
+import CodeSamplesFieldPropertiesGuideDisplayed1 from '/snippets/samples/code_samples_field_properties_guide_displayed_1.mdx';
+import CodeSamplesFieldPropertiesGuideSearchable1 from '/snippets/samples/code_samples_field_properties_guide_searchable_1.mdx';
+
 By default, whenever a document is added to Meilisearch, all new attributes found in it are automatically added to two lists:
 
 - [`displayedAttributes`](/learn/relevancy/displayed_searchable_attributes#displayed-fields): Attributes whose fields are displayed in documents
@@ -23,7 +26,7 @@ Documents returned upon search contain only displayed fields. If a field attribu
 
 Suppose you manage a database that contains information about movies. By adding the following settings, documents returned upon search will contain the fields `title`, `overview`, `release_date` and `genres`.
 
-<CodeSamples id="field_properties_guide_displayed_1" />
+<CodeSamplesFieldPropertiesGuideDisplayed1 />
 
 ## Searchable fields
 
@@ -43,7 +46,7 @@ Meilisearch uses an ordered list to determine which attributes are searchable. T
 
 In other words, the `searchableAttributes` list serves two purposes:
 
-1. It designates the fields that are searchable
+1. It designates the fields that are searchable  
 2. It dictates the [attribute ranking order](/learn/relevancy/attribute_ranking_order)
 
 There are two possible modes for the `searchableAttributes` list.
@@ -70,7 +73,7 @@ Due to an implementation bug, manually updating `searchableAttributes` will chan
 
 Suppose that you manage a database of movies with the following fields: `id`, `overview`, `genres`, `title`, `release_date`. These fields all contain useful information. However, **some are more useful to search than others**. To make the `id` and `release_date` fields non-searchable and re-order the remaining fields by importance, you might update the searchable attributes list in the following way.
 
-<CodeSamples id="field_properties_guide_searchable_1" />
+<CodeSamplesFieldPropertiesGuideSearchable1 />
 
 ### Customizing attributes to search on at search time
 
@@ -81,3 +84,4 @@ By default, all queries search through all attributes in the `searchableAttribut
 All fields are stored in the database. **This behavior cannot be changed**.
 
 Thus, even if a field is missing from both the `displayedAttributes` list and the `searchableAttributes` list, **it is still stored in the database** and can be added to either or both lists at any time.
+

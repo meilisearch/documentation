@@ -4,6 +4,10 @@ sidebarTitle: Distinct attribute
 description: Distinct attribute is a field that prevents Meilisearch from returning a set of several similar documents. Often used in ecommerce datasets where many documents are variations of the same item.
 ---
 
+import CodeSamplesDistinctAttributeGuide1 from '/snippets/samples/code_samples_distinct_attribute_guide_1.mdx';
+import CodeSamplesDistinctAttributeGuideFilterable1 from '/snippets/samples/code_samples_distinct_attribute_guide_filterable_1.mdx';
+import CodeSamplesDistinctAttributeGuideDistinctParameter1 from '/snippets/samples/code_samples_distinct_attribute_guide_distinct_parameter_1.mdx';
+
 The distinct attribute is a special, user-designated field. It is most commonly used to prevent Meilisearch from returning a set of several similar documents, instead forcing it to return only one.
 
 You may set a distinct attribute in two ways: using the `distinctAttribute` index setting during configuration, or the `distinct` search parameter at search time.
@@ -56,7 +60,7 @@ By default, a search for `lee leather jacket` would return all three documents. 
 
 In this case, you may want to return only one document with the `product_id` corresponding to this Lee jeans leather jacket. To do so, you could set `product_id` as the `distinctAttribute`.
 
-<CodeSamples id="distinct_attribute_guide_1" />
+<CodeSamplesDistinctAttributeGuide1 />
 
 By setting `distinctAttribute` to `product_id`, search requests **will never return more than one document with the same `product_id`**.
 
@@ -89,8 +93,8 @@ For more in-depth information on distinct attribute, consult the [API reference]
 
 To use an attribute with `distinct`, first add it to the `filterableAttributes` list:
 
-<CodeSamples id="distinct_attribute_guide_filterable_1" />
+<CodeSamplesDistinctAttributeGuideFilterable1 />
 
 Then use `distinct` in a search query, specifying one of the configured attributes:
 
-<CodeSamples id="distinct_attribute_guide_distinct_parameter_1" />
+<CodeSamplesDistinctAttributeGuideDistinctParameter1 />

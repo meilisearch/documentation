@@ -4,6 +4,8 @@ sidebarTitle: Generate tenant tokens without a Meilisearch SDK
 description: This guide shows you the main steps when creating tenant tokens without using Meilisearch's official SDKs.
 ---
 
+import CodeSamplesTenantTokenGuideSearchNoSdk1 from '/snippets/samples/code_samples_tenant_token_guide_search_no_sdk_1.mdx';
+
 This guide shows you the main steps when creating tenant tokens using [`node-jsonwebtoken`](https://www.npmjs.com/package/jsonwebtoken), a third-party library.
 
 ## Requirements
@@ -77,4 +79,4 @@ Though this example used `jsonwebtoken`, a Node.js package, you may use any JWT-
 
 After signing the token, you can use it to make search queries in the same way you would use an API key.
 
-<CodeSamples id="tenant_token_guide_search_no_sdk_1" />
+<CodeSamplesTenantTokenGuideSearchNoSdk1 />

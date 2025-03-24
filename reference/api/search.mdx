@@ -5,6 +5,41 @@ description: The /search route allows you to search your indexed documents. This
 sidebarDepth: 3
 ---
 
+import CodeSamplesFacetedSearchWalkthroughFilter1 from '/snippets/samples/code_samples_faceted_search_walkthrough_filter_1.mdx';
+import CodeSamplesGeosearchGuideFilterUsage1 from '/snippets/samples/code_samples_geosearch_guide_filter_usage_1.mdx';
+import CodeSamplesGeosearchGuideFilterUsage3 from '/snippets/samples/code_samples_geosearch_guide_filter_usage_3.mdx';
+import CodeSamplesGeosearchGuideSortUsage1 from '/snippets/samples/code_samples_geosearch_guide_sort_usage_1.mdx';
+import CodeSamplesNegativeSearch1 from '/snippets/samples/code_samples_negative_search_1.mdx';
+import CodeSamplesNegativeSearch2 from '/snippets/samples/code_samples_negative_search_2.mdx';
+import CodeSamplesPhraseSearch1 from '/snippets/samples/code_samples_phrase_search_1.mdx';
+import CodeSamplesSearchGet1 from '/snippets/samples/code_samples_search_get_1.mdx';
+import CodeSamplesSearchParameterGuideAttributesToSearchOn1 from '/snippets/samples/code_samples_search_parameter_guide_attributes_to_search_on_1.mdx';
+import CodeSamplesSearchParameterGuideCrop1 from '/snippets/samples/code_samples_search_parameter_guide_crop_1.mdx';
+import CodeSamplesSearchParameterGuideCropMarker1 from '/snippets/samples/code_samples_search_parameter_guide_crop_marker_1.mdx';
+import CodeSamplesSearchParameterGuideFacetStats1 from '/snippets/samples/code_samples_search_parameter_guide_facet_stats_1.mdx';
+import CodeSamplesSearchParameterGuideHighlight1 from '/snippets/samples/code_samples_search_parameter_guide_highlight_1.mdx';
+import CodeSamplesSearchParameterGuideHighlightTag1 from '/snippets/samples/code_samples_search_parameter_guide_highlight_tag_1.mdx';
+import CodeSamplesSearchParameterGuideHitsperpage1 from '/snippets/samples/code_samples_search_parameter_guide_hitsperpage_1.mdx';
+import CodeSamplesSearchParameterGuideHybrid1 from '/snippets/samples/code_samples_search_parameter_guide_hybrid_1.mdx';
+import CodeSamplesSearchParameterGuideLimit1 from '/snippets/samples/code_samples_search_parameter_guide_limit_1.mdx';
+import CodeSamplesSearchParameterGuideMatchingStrategy1 from '/snippets/samples/code_samples_search_parameter_guide_matching_strategy_1.mdx';
+import CodeSamplesSearchParameterGuideMatchingStrategy2 from '/snippets/samples/code_samples_search_parameter_guide_matching_strategy_2.mdx';
+import CodeSamplesSearchParameterGuideMatchingStrategy3 from '/snippets/samples/code_samples_search_parameter_guide_matching_strategy_3.mdx';
+import CodeSamplesSearchParameterGuideOffset1 from '/snippets/samples/code_samples_search_parameter_guide_offset_1.mdx';
+import CodeSamplesSearchParameterGuidePage1 from '/snippets/samples/code_samples_search_parameter_guide_page_1.mdx';
+import CodeSamplesSearchParameterGuideQuery1 from '/snippets/samples/code_samples_search_parameter_guide_query_1.mdx';
+import CodeSamplesSearchParameterGuideRetrieve1 from '/snippets/samples/code_samples_search_parameter_guide_retrieve_1.mdx';
+import CodeSamplesSearchParameterGuideShowMatchesPosition1 from '/snippets/samples/code_samples_search_parameter_guide_show_matches_position_1.mdx';
+import CodeSamplesSearchParameterGuideShowRankingScore1 from '/snippets/samples/code_samples_search_parameter_guide_show_ranking_score_1.mdx';
+import CodeSamplesSearchParameterGuideShowRankingScoreDetails1 from '/snippets/samples/code_samples_search_parameter_guide_show_ranking_score_details_1.mdx';
+import CodeSamplesSearchParameterGuideSort1 from '/snippets/samples/code_samples_search_parameter_guide_sort_1.mdx';
+import CodeSamplesSearchParameterGuideVector1 from '/snippets/samples/code_samples_search_parameter_guide_vector_1.mdx';
+import CodeSamplesSearchParameterReferenceDistinct1 from '/snippets/samples/code_samples_search_parameter_reference_distinct_1.mdx';
+import CodeSamplesSearchParameterReferenceLocales1 from '/snippets/samples/code_samples_search_parameter_reference_locales_1.mdx';
+import CodeSamplesSearchParameterReferenceRankingScoreThreshold1 from '/snippets/samples/code_samples_search_parameter_reference_ranking_score_threshold_1.mdx';
+import CodeSamplesSearchParameterReferenceRetrieveVectors1 from '/snippets/samples/code_samples_search_parameter_reference_retrieve_vectors_1.mdx';
+import CodeSamplesSearchPost1 from '/snippets/samples/code_samples_search_post_1.mdx';
+
 Meilisearch exposes two routes to perform searches:
 
 - A POST route: this is the preferred route when using API authentication, as it allows [preflight request](https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request) caching and better performance
@@ -93,7 +128,7 @@ You can [read more about pagination in our dedicated guide](/guides/front_end/pa
 
 ### Example
 
-<CodeSamples id="search_post_1" />
+<CodeSamplesSearchPost1 />
 
 #### Response: `200 Ok`
 
@@ -199,7 +234,7 @@ By default, [this endpoint returns a maximum of 1000 results](/learn/resources/k
 
 ### Example
 
-<CodeSamples id="search_get_1" />
+<CodeSamplesSearchGet1 />
 
 #### Response: `200 Ok`
 
@@ -285,7 +320,7 @@ Meilisearch only considers the first ten words of any given search query. This i
 
 You can search for films mentioning `shifu` by setting the `q` parameter:
 
-<CodeSamples id="search_parameter_guide_query_1" />
+<CodeSamplesSearchParameterGuideQuery1 />
 
 This will give you a list of documents that contain your query terms in at least one attribute.
 
@@ -335,7 +370,7 @@ You can combine phrase search and normal queries in a single search request. In 
 
 ##### Example
 
-<CodeSamples id="phrase_search_1" />
+<CodeSamplesPhraseSearch1 />
 
 #### Negative search
 
@@ -345,11 +380,11 @@ Use the minus (`-`) operator in front of a word or phrase to exclude it from sea
 
 The following query returns all documents that do not include the word "escape":
 
-<CodeSamples id="negative_search_1" />
+<CodeSamplesNegativeSearch1 />
 
 Negative search can be used together with phrase search:
 
-<CodeSamples id="negative_search_2" />
+<CodeSamplesNegativeSearch2 />
 
 ### Offset
 
@@ -371,7 +406,7 @@ Setting `offset` to a value greater than an [index's `maxTotalHits`](/reference/
 
 If you want to skip the **first** result in a query, set `offset` to `1`:
 
-<CodeSamples id="search_parameter_guide_offset_1" />
+<CodeSamplesSearchParameterGuideOffset1 />
 
 ### Limit
 
@@ -391,7 +426,7 @@ A search query cannot return more results than configured in [`maxTotalHits`](/r
 
 If you want your query to return only **two** documents, set `limit` to `2`:
 
-<CodeSamples id="search_parameter_guide_limit_1" />
+<CodeSamplesSearchParameterGuideLimit1 />
 
 ### Number of results per page
 
@@ -419,7 +454,7 @@ You can use `hitsPerPage` and `page` to [paginate search results](/guides/front_
 
 The following example returns the first 15 results for a query:
 
-<CodeSamples id="search_parameter_guide_hitsperpage_1" />
+<CodeSamplesSearchParameterGuideHitsperpage1 />
 
 ### Page
 
@@ -447,7 +482,7 @@ You can use `hitsPerPage` and `page` to [paginate search results](/guides/front_
 
 The following example returns the second page of search results:
 
-<CodeSamples id="search_parameter_guide_page_1" />
+<CodeSamplesSearchParameterGuidePage1 />
 
 ### Filter
 
@@ -475,7 +510,7 @@ You can write the same filter as an array:
 
 You can then use the filter in a search query:
 
-<CodeSamples id="faceted_search_walkthrough_filter_1" />
+<CodeSamplesFacetedSearchWalkthroughFilter1 />
 
 #### Filtering results with `_geoRadius` and `_geoBoundingBox`
 
@@ -492,7 +527,7 @@ _geoRadius(lat, lng, distance_in_meters)
 
 `lat` and `lng` should be geographic coordinates expressed as floating point numbers. `distance_in_meters` indicates the radius of the area within which you want your results and should be an integer.
 
-<CodeSamples id="geosearch_guide_filter_usage_1" />
+<CodeSamplesGeosearchGuideFilterUsage1 />
 
 </Tabs.Content>
 
@@ -505,7 +540,7 @@ _geoBoundingBox([{lat}, {lng}], [{lat}, {lng}])
 
 `lat` and `lng` should be geographic coordinates expressed as floating point numbers. The first array indicates the top right corner and the second array indicates the bottom left corner of the bounding box.
 
-<CodeSamples id="geosearch_guide_filter_usage_3" />
+<CodeSamplesGeosearchGuideFilterUsage3 />
 
 Meilisearch will throw an error if the top right corner is under the bottom left corner.
 
@@ -579,7 +614,7 @@ If none of the matching documents have a numeric value for a facet, that facet i
 
 Given a movie ratings database, the following code sample returns the number of `Batman` movies per genre along with the minimum and maximum ratings:
 
-<CodeSamples id="search_parameter_guide_facet_stats_1" />
+<CodeSamplesSearchParameterGuideFacetStats1 />
 
 The response shows the facet distribution for `genres` and `rating`. Since `rating` is a numeric field, you get its minimum and maximum values in `facetStats`.
 
@@ -624,7 +659,7 @@ This behavior is similar to the [`distinctAttribute` index setting](/reference/a
 
 #### Examples
 
-<CodeSamples id="search_parameter_reference_distinct_1" />
+<CodeSamplesSearchParameterReferenceDistinct1 />
 
 ### Attributes to retrieve
 
@@ -644,7 +679,7 @@ If an attribute has been removed from `displayedAttributes`, `attributesToRetrie
 
 To get only the `overview` and `title` fields, set `attributesToRetrieve` to `["overview", "title"]`.
 
-<CodeSamples id="search_parameter_guide_retrieve_1" />
+<CodeSamplesSearchParameterGuideRetrieve1 />
 
 ### Attributes to crop
 
@@ -676,7 +711,7 @@ If Meilisearch does not find any query terms in a field, cropping begins at the 
 
 If you use `shifu` as a search query and set the value of the `cropLength` parameter to `5`:
 
-<CodeSamples id="search_parameter_guide_crop_1" />
+<CodeSamplesSearchParameterGuideCrop1 />
 
 You will get the following response with the **cropped text in the `_formatted` object**:
 
@@ -727,7 +762,7 @@ Crop markers are only added where content has been removed. For example, if the 
 
 When searching for `shifu`, you can use `cropMarker` to change the default `…`:
 
-<CodeSamples id="search_parameter_guide_crop_marker_1" />
+<CodeSamplesSearchParameterGuideCropMarker1 />
 
 ```json
 {
@@ -772,7 +807,7 @@ By default highlighted elements are enclosed in `<em>` and `</em>` tags. You may
 
 The following query highlights matches present in the `overview` attribute:
 
-<CodeSamples id="search_parameter_guide_highlight_1" />
+<CodeSamplesSearchParameterGuideHighlight1 />
 
 The highlighted version of the text would then be found in the `_formatted` object included in each returned document:
 
@@ -809,7 +844,7 @@ If `highlightPreTag` or `highlightPostTag` are set to `null` or an empty string,
 
 The following query encloses highlighted matches in `<span>` tags with a `class` attribute:
 
-<CodeSamples id="search_parameter_guide_highlight_tag_1" />
+<CodeSamplesSearchParameterGuideHighlightTag1 />
 
 You can find the highlighted query terms inside the `_formatted` property:
 
@@ -856,7 +891,7 @@ The beginning of a matching term within a field is indicated by `start`, and its
 
 If you set `showMatchesPosition` to `true` and search for `winter feast`:
 
-<CodeSamples id="search_parameter_guide_show_matches_position_1" />
+<CodeSamplesSearchParameterGuideShowMatchesPosition1 />
 
 You would get the following response with **information about the matches in the `_matchesPosition` object**. Note how Meilisearch searches for `winter` and `feast` separately because of the whitespace:
 
@@ -916,7 +951,7 @@ When using the `GET` route, `sort` expects the list as a comma-separated string.
 
 You can search for science fiction books ordered from cheapest to most expensive:
 
-<CodeSamples id="search_parameter_guide_sort_1" />
+<CodeSamplesSearchParameterGuideSort1 />
 
 #### Sorting results with `_geoPoint`
 
@@ -924,7 +959,7 @@ When dealing with documents containing geolocation data, you can use `_geoPoint`
 
 `_geoPoint` is a sorting function that requires two floating point numbers indicating a location's latitude and longitude. You must also specify whether the sort should be ascending (`asc`) or descending (`desc`):
 
-<CodeSamples id="geosearch_guide_sort_usage_1" />
+<CodeSamplesGeosearchGuideSortUsage1 />
 
 Queries using `_geoPoint` will always include a `geoDistance` field containing the distance in meters between the document location and the `_geoPoint`:
 
@@ -956,7 +991,7 @@ Defines the strategy used to match query terms in documents.
 
 `last` returns documents containing all the query terms first. If there are not enough results containing all query terms to meet the requested `limit`, Meilisearch will remove one query term at a time, starting from the end of the query.
 
-<CodeSamples id="search_parameter_guide_matching_strategy_1" />
+<CodeSamplesSearchParameterGuideMatchingStrategy1 />
 
 With the above code sample, Meilisearch will first return documents that contain all three words. If the results don't meet the requested `limit`, it will also return documents containing only the first two terms, `big fat`, followed by documents containing only `big`.
 
@@ -964,7 +999,7 @@ With the above code sample, Meilisearch will first return documents that contain
 
 `all` only returns documents that contain all query terms. Meilisearch will not match any more documents even if there aren't enough to meet the requested `limit`.
 
-<CodeSamples id="search_parameter_guide_matching_strategy_2" />
+<CodeSamplesSearchParameterGuideMatchingStrategy2 />
 
 The above code sample would only return documents containing all three words.
 
@@ -972,7 +1007,7 @@ The above code sample would only return documents containing all three words.
 
 `frequency` returns documents containing all the query terms first. If there are not enough results containing all query terms to meet the requested limit, Meilisearch will remove one query term at a time, starting with the word that is the most frequent in the dataset. `frequency` effectively gives more weight to terms that appear less frequently in a set of results.
 
-<CodeSamples id="search_parameter_guide_matching_strategy_3" />
+<CodeSamplesSearchParameterGuideMatchingStrategy3 />
 
 In a dataset where many documents contain the term `"shirt"`, the above code sample would prioritize documents containing `"white"`.
 
@@ -996,7 +1031,7 @@ For example, if a document A has a score of `0.5` for a query term, this value r
 
 The code sample below returns the `_rankingScore` when searching for `dragon` in `movies`:
 
-<CodeSamples id="search_parameter_guide_show_ranking_score_1" />
+<CodeSamplesSearchParameterGuideShowRankingScore1 />
 
 ```json
 {
@@ -1093,7 +1128,7 @@ The `sort` ranking rule does not appear as a single field in the score details o
 
 The code sample below returns the `_rankingScoreDetail` when searching for `dragon` in `movies`:
 
-<CodeSamples id="search_parameter_guide_show_ranking_score_details_1" />
+<CodeSamplesSearchParameterGuideShowRankingScoreDetails1 />
 
 ```json
 {
@@ -1146,7 +1181,7 @@ For performance reasons, if the number of documents above `rankingScoreThreshold
 
 The following query only returns results with a ranking score bigger than `0.2`:
 
-<CodeSamples id="search_parameter_reference_ranking_score_threshold_1" />
+<CodeSamplesSearchParameterReferenceRankingScoreThreshold1 />
 
 ### Customize attributes to search on at search time
 
@@ -1168,7 +1203,7 @@ The order of attributes in `attributesToSearchOn` does not affect relevancy.
 
 The following query returns documents whose `overview` includes `"adventure"`:
 
-<CodeSamples id="search_parameter_guide_attributes_to_search_on_1" />
+<CodeSamplesSearchParameterGuideAttributesToSearchOn1 />
 
 Results would not include documents containing `"adventure"` in other fields such as `title` or `genre`, even if these fields were present in the `searchableAttributes` list.
 
@@ -1188,7 +1223,7 @@ Configures Meilisearch to return search results based on a query's meaning and c
 
 #### Example
 
-<CodeSamples id="search_parameter_guide_hybrid_1" />
+<CodeSamplesSearchParameterGuideHybrid1 />
 
 ### Vector
 
@@ -1210,7 +1245,7 @@ If `q` is missing and `semanticRatio` is explicitly set to `0`, Meilisearch perf
 
 #### Example
 
-<CodeSamples id="search_parameter_guide_vector_1" />
+<CodeSamplesSearchParameterGuideVector1 />
 
 ### Display `_vectors` in response
 
@@ -1222,7 +1257,7 @@ Return document embedding data with search results. If `true`, Meilisearch will 
 
 #### Example
 
-<CodeSamples id="search_parameter_reference_retrieve_vectors_1" />
+<CodeSamplesSearchParameterReferenceRetrieveVectors1 />
 
 ```json
 {
@@ -1266,7 +1301,7 @@ For full control over the way Meilisearch detects languages during indexing and 
 
 #### Example
 
-<CodeSamples id="search_parameter_reference_locales_1" />
+<CodeSamplesSearchParameterReferenceLocales1 />
 
 ```json
 {
@@ -1281,3 +1316,5 @@ For full control over the way Meilisearch detects languages during indexing and 
   …
 }
 ```
+
+

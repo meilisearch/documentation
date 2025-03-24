@@ -4,6 +4,13 @@ sidebarTitle: Indexes
 description: The /indexes route allows you to create, manage, and delete your indexes.
 ---
 
+import CodeSamplesCreateAnIndex1 from '/snippets/samples/create_an_index_1.mdx';
+import CodeSamplesDeleteAnIndex1 from '/snippets/samples/delete_an_index_1.mdx';
+import CodeSamplesGetOneIndex1 from '/snippets/samples/get_one_index_1.mdx';
+import CodeSamplesListAllIndexes1 from '/snippets/samples/list_all_indexes_1.mdx';
+import CodeSamplesSwapIndexes1 from '/snippets/samples/swap_indexes_1.mdx';
+import CodeSamplesUpdateAnIndex1 from '/snippets/samples/update_an_index_1.mdx';
+
 The `/indexes` route allows you to create, manage, and delete your indexes.
 
 [Learn more about indexes](/learn/getting_started/indexes).
@@ -52,7 +59,7 @@ List all indexes. Results can be paginated by using the `offset` and `limit` que
 
 ### Example
 
-<CodeSamples id='list_all_indexes_1' />
+<CodeSamplesListAllIndexes1 />
 
 #### Response: `200 Ok`
 
@@ -100,7 +107,7 @@ Get information about an index.
 
 ### Example
 
-<CodeSamples id='get_one_index_1' />
+<CodeSamplesGetOneIndex1 />
 
 #### Response: `200 Ok`
 
@@ -137,7 +144,7 @@ Create an index.
 
 ### Example
 
-<CodeSamples id='create_an_index_1' />
+<CodeSamplesCreateAnIndex1 />
 
 #### Response: `202 Accepted`
 
@@ -181,7 +188,7 @@ It is not possible to change an index's `uid`.
 
 ### Example
 
-<CodeSamples id='update_an_index_1' />
+<CodeSamplesUpdateAnIndex1 />
 
 #### Response: `202 Accepted`
 
@@ -213,7 +220,7 @@ Delete an index.
 
 ### Example
 
-<CodeSamples id='delete_an_index_1' />
+<CodeSamplesDeleteAnIndex1 />
 
 #### Response: `202 Accepted`
 
@@ -259,7 +266,7 @@ You can swap multiple pairs of indexes with a single request. To do so, there mu
 
 ### Example
 
-<CodeSamples id='swap_indexes_1' />
+<CodeSamplesSwapIndexes1 />
 
 #### Response
 

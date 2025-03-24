@@ -4,6 +4,12 @@ sidebarTitle: Keys
 description: The /keys route allows you to create, manage, and delete API keys.
 ---
 
+import CodeSamplesCreateAKey1 from '/snippets/samples/code_samples_create_a_key_1.mdx';
+import CodeSamplesDeleteAKey1 from '/snippets/samples/code_samples_delete_a_key_1.mdx';
+import CodeSamplesGetAllKeys1 from '/snippets/samples/code_samples_get_all_keys_1.mdx';
+import CodeSamplesGetOneKey1 from '/snippets/samples/code_samples_get_one_key_1.mdx';
+import CodeSamplesUpdateAKey1 from '/snippets/samples/code_samples_update_a_key_1.mdx';
+
 The `/keys` route allows you to create, manage, and delete API keys. To use these endpoints, you must first [set the master key](/learn/security/basic_security). Once a master key is set, you can access these endpoints by supplying it in the header of the request, or using API keys that have access to the `keys.get`, `keys.create`, `keys.update`, or `keys.delete` actions.
 
 <Warning>
@@ -161,7 +167,7 @@ Results can be paginated using the `offset` and `limit` query parameters.
 
 ### Example
 
-<CodeSamples id="get_all_keys_1" />
+<CodeSamplesGetAllKeys1 />
 
 #### Response: `200 Ok`
 
@@ -245,7 +251,7 @@ Get information on the specified key. Attempting to use this endpoint with a non
 
 ### Example
 
-<CodeSamples id="get_one_key_1" />
+<CodeSamplesGetOneKey1 />
 
 #### Response: `200 Ok`
 
@@ -290,7 +296,7 @@ Create an API key with the provided description, permissions, and expiration dat
 
 ### Example
 
-<CodeSamples id="create_a_key_1" />
+<CodeSamplesCreateAKey1 />
 
 #### Response: `201 Created`
 
@@ -340,7 +346,7 @@ Updates to keys are **partial**. This means you should provide only the fields y
 
 ### Example
 
-<CodeSamples id="update_a_key_1" />
+<CodeSamplesUpdateAKey1 />
 
 #### Response: `200 Ok`
 
@@ -383,6 +389,6 @@ Delete the specified API key.
 
 ### Example
 
-<CodeSamples id="delete_a_key_1" />
+<CodeSamplesDeleteAKey1 />
 
 #### Response: `204 No Content`

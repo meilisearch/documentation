@@ -4,13 +4,17 @@ sidebarTitle: Configuring index settings with the Meilisearch API
 description: This tutorial shows how to check and change an index setting using the Meilisearch API.
 ---
 
+import CodeSamplesIndexSettingsTutorialApiGetSetting1 from '/snippets/samples/code_samples_index_settings_tutorial_api_get_setting_1.mdx';
+import CodeSamplesIndexSettingsTutorialApiPutSetting1 from '/snippets/samples/code_samples_index_settings_tutorial_api_put_setting_1.mdx';
+import CodeSamplesIndexSettingsTutorialApiTask1 from '/snippets/samples/code_samples_index_settings_tutorial_api_task_1.mdx';
+
 This tutorial shows how to check and change an index setting using one of the setting subroutes of the Meilisearch API.
 
 If you are Meilisearch Cloud user, you may also [configure index settings using the Meilisearch Cloud interface](/learn/configuration/configuring_index_settings).
 
 ## Requirements
 
-- a new [Meilisearch Cloud](https://cloud.meilisearch.com/projects/?utm_campaign=oss&utm_source=docs&utm_medium=settings-api-tutorial) project or a self-hosted Meilisearch instance with at least one index
+- a new [Meilisearch Cloud](https://cloud.meilisearch.com/projects/) project or a self-hosted Meilisearch instance with at least one index
 - a command-line terminal with `curl` installed
 
 ## Getting the value of a single index setting
@@ -19,7 +23,7 @@ Start by checking the value of the searchable attributes index setting.
 
 Use the `GET` endpoint of the `/settings/searchable-attributes` subroute, replacing `INDEX_NAME` with your index:
 
-<CodeSamples id="index_settings_tutorial_api_get_setting_1" />
+<CodeSamplesIndexSettingsTutorialApiGetSetting1 />
 
 Depending on your setup, you might also need to replace `localhost:7700` with the appropriate address and port.
 
@@ -31,7 +35,7 @@ You should receive a response immediately:
 ]
 ```
 
-If this is a new index, you should see the default value, `["*"]`. This indicates Meilisearch looks through all document attributes when searching.
+If this is a new index, you should see the default value, \["*"\]. This indicates Meilisearch looks through all document attributes when searching.
 
 ## Updating an index setting
 
@@ -39,7 +43,7 @@ All documents include a primary key attribute. In most cases, this attribute doe
 
 Use the `PUT` endpoint of the `/settings/searchable-attributes` subroute, replacing `INDEX_NAME` with your index and the sample attributes `"title"` and `"overview"` with attributes present in your dataset:
 
-<CodeSamples id="index_settings_tutorial_api_put_setting_1" />
+<CodeSamplesIndexSettingsTutorialApiPutSetting1 />
 
 This time, Meilisearch will not process your request immediately. Instead, you will receive a summarized task object while the search engine works on updating your index setting as soon as it has enough resources:
 
@@ -55,7 +59,7 @@ This time, Meilisearch will not process your request immediately. Instead, you w
 
 Processing the index setting change might take some time, depending on how many documents you have in your index. Wait a few seconds and use the task object's `taskUid` to monitor the status of your request:
 
-<CodeSamples id="index_settings_tutorial_api_task_1" />
+<CodeSamplesIndexSettingsTutorialApiTask1 />
 
 Meilisearch will respond with a task object:
 
@@ -73,7 +77,7 @@ If `status` is `enqueued` or `processed`, wait a few more moments and check the 
 
 If task `status` is `succeeded`, you successfully updated your index's searchable attributes. Use the subroute to check the new setting's value:
 
-<CodeSamples id="index_settings_tutorial_api_get_setting_1" />
+<CodeSamplesIndexSettingsTutorialApiGetSetting1 />
 
 Meilisearch should return an array with the new values:
 

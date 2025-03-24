@@ -4,6 +4,11 @@ sidebarTitle: Tasks
 description: The /tasks route allows you to manage and monitor Meilisearch's asynchronous operations.
 ---
 
+import CodeSamplesCancelTasks1 from '/snippets/samples/code_samples_cancel_tasks_1.mdx';
+import CodeSamplesDeleteTasks1 from '/snippets/samples/code_samples_delete_tasks_1.mdx';
+import CodeSamplesGetAllTasks1 from '/snippets/samples/code_samples_get_all_tasks_1.mdx';
+import CodeSamplesGetTask1 from '/snippets/samples/code_samples_get_task_1.mdx';
+
 The `/tasks` route gives information about the progress of [asynchronous operations](/learn/async/asynchronous_operations).
 
 ## Task object
@@ -258,7 +263,7 @@ Task results are [paginated](/learn/async/paginating_tasks) and can be [filtered
 
 ### Example
 
-<CodeSamples id="get_all_tasks_1" />
+<CodeSamplesGetAllTasks1 />
 
 #### Response: `200 Ok`
 
@@ -325,7 +330,7 @@ If you try retrieving a deleted task, Meilisearch will return a [`task_not_found
 
 ### Example
 
-<CodeSamples id="get_task_1" />
+<CodeSamplesGetTask1 />
 
 #### Response: `200 Ok`
 
@@ -395,7 +400,7 @@ Date filters are equivalent to `<` or `>` operations. At this time, there is no 
 
 ### Example
 
-<CodeSamples id="cancel_tasks_1" />
+<CodeSamplesCancelTasks1 />
 
 #### Response: `200 Ok`
 
@@ -463,7 +468,7 @@ Date filters are equivalent to `<` or `>` operations. At this time, there is no 
 
 ### Example
 
-<CodeSamples id="delete_tasks_1" />
+<CodeSamplesDeleteTasks1 />
 
 #### Response: `200 Ok`
 

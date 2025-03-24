@@ -4,6 +4,9 @@ sidebarTitle: Overview
 description: Consult this page for an overview of how to query Meilisearch's API, which types of parameters it supports, and how it structures its responses.
 ---
 
+import CodeSamplesAuthorizationHeader1 from '/snippets/samples/code_samples_authorization_header_1.mdx';
+import CodeSamplesUpdatingGuideCheckVersionOldAuthorizationHeader from '/snippets/samples/code_samples_updating_guide_check_version_old_authorization_header.mdx';
+
 This reference describes the general behavior of Meilisearch's RESTful API.
 
 If you are new to Meilisearch, check out the [getting started](/learn/self_hosted/getting_started_with_self_hosted_meilisearch).
@@ -24,14 +27,14 @@ This API documentation uses the following conventions:
 
 By [providing Meilisearch with a master key at launch](/learn/security/basic_security), you protect your instance from unauthorized requests. The provided master key must be at least 16 bytes. From then on, you must include the `Authorization` header along with a valid API key to access protected routes (all routes except [`/health`](/reference/api/health).
 
-<CodeSamples id="authorization_header_1" />
+<CodeSamplesAuthorizationHeader1 />
 
 The [`/keys`](/reference/api/keys) route can only be accessed using the master key. For security reasons, we recommend using regular API keys for all other routes.
 
 <Tip>
 v0.24 and below use the `X-MEILI-API-KEY: apiKey` authorization header:
 
-<CodeSamples id="updating_guide_check_version_old_authorization_header" />
+<CodeSamplesUpdatingGuideCheckVersionOldAuthorizationHeader />
 </Tip>
 
 [To learn more about keys and security, refer to our security tutorial.](/learn/security/basic_security)

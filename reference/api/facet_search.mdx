@@ -4,6 +4,8 @@ sidebarTitle: Facet search
 description: The /facet-search route allows you to search for facet values.
 ---
 
+import CodeSamplesFacetSearch1 from '/snippets/samples/code_samples_facet_search_1.mdx';
+
 The `/facet-search` route allows you to search for facet values. Facet search supports [prefix search](/learn/engine/prefix) and [typo tolerance](/learn/relevancy/typo_tolerance_settings). The returned hits are sorted lexicographically in ascending order. You can configure how facets are sorted using the [`sortFacetValuesBy`](/reference/api/settings#faceting-object) property of the `faceting` index settings.
 
 <Note>
@@ -52,7 +54,7 @@ For example, searching for `Jane` will return `Jane Austen`, but searching for `
 
 ### Example
 
-<CodeSamples id="facet_search_1" />
+<CodeSamplesFacetSearch1 />
 
 #### Response: `200 Ok`
 
