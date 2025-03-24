@@ -159,7 +159,6 @@
 						"pages": [
 							"learn/ai_powered_search/getting_started_with_ai_search",
 							"learn/ai_powered_search/search_with_user_provided_embeddings",
-							"learn/ai_powered_search/deactivate_ai_powered_search",
 							"learn/ai_powered_search/difference_full_text_ai_search"
 						]
 					},
