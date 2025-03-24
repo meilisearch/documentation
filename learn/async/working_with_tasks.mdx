@@ -3,8 +3,9 @@ title: Working with tasks
 sidebarTitle: Working with tasks
 description: In this tutorial, you'll use the Meilisearch API to add documents to an index, and then monitor its status.
 ---
-import AddMoviesJson1 from '/snippets/add_movies_json_1.mdx';
 
+import CodeSamplesAddMoviesJson1 from '/snippets/samples/code_samples_add_movies_json_1.mdx';
+import CodeSamplesGetTask1 from '/snippets/samples/code_samples_get_task_1.mdx';
 
 [Many Meilisearch operations are processed asynchronously](/learn/async/asynchronous_operations) in a task. Asynchronous tasks allow you to make resource-intensive changes to your Meilisearch project without any downtime for users.
 
@@ -21,7 +22,7 @@ Operations that require indexing, such as adding and updating documents or chang
 
 Start by creating an index, then add a large number of documents to this index:
 
-<AddMoviesJson1 />
+<CodeSamplesAddMoviesJson1 />
 
 Instead of processing your request immediately, Meilisearch will add it to a queue and return a summarized task object:
 
@@ -53,7 +54,7 @@ Log into your [Meilisearch Cloud](https://meilisearch.com/cloud?utm_campaign=oss
 
 This will lead you to the task overview. Look for your request's `taskUid` in the "Uid" column:
 
-![](/assets/images/cloud-tasks-tutorial/01-tasks-table.png)
+![](/assets/images/cloud-tasks-tutorial/02-tasks-table.png)
 
 When the task `status` changes to `succeeded`, Meilisearch has finished processing your request.
 
@@ -63,7 +64,7 @@ If the task `status` changes to `failed`, Meilisearch was not able to fulfill yo
 
 Use the `taskUid` from your request's response to check the status of a task:
 
-<CodeSamples id="get_task_1" />
+<CodeSamplesGetTask1 />
 
 This will return the full task object:
 

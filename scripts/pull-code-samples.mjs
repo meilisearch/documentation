@@ -86,7 +86,7 @@ const REPOS = SDK.map(sdk =>
   `https://raw.githubusercontent.com/meilisearch/${sdk.project}/main/${sdk.source || '.code-samples.meilisearch.yaml'}`
 );
 
-const OUTPUT_DIR = path.join(process.cwd(), 'snippets');
+const OUTPUT_DIR = path.join(process.cwd(), 'snippets/samples');
 if (!fs.existsSync(OUTPUT_DIR)) fs.mkdirSync(OUTPUT_DIR, { recursive: true });
 
 
@@ -129,7 +129,7 @@ async function processRepos() {
 
   // Write each sample name content to a file in the snippets folder
   for (const [operationName, snippets] of Object.entries(operationSnippets)) {
-    const filePath = path.join(OUTPUT_DIR, `${operationName}.mdx`);
+    const filePath = path.join(OUTPUT_DIR, `code_samples_${operationName}.mdx`);
     const content = `
 <CodeGroup>
 ${snippets.map(snippet => {
