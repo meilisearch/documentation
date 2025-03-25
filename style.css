@@ -1,0 +1,9 @@
+.noticeTag {
+  color: rgb(var(--primary-light));
+  border: 1px solid rgb(var(--primary-light));
+  padding: 0 0.5em;
+  margin-left: 0.25em;
+  display: inline-block;
+  border-radius: 5px;
+  font-size: 0.8em;
+}
