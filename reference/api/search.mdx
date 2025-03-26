@@ -5,6 +5,9 @@ description: The /search route allows you to search your indexed documents. This
 sidebarDepth: 3
 ---
 
+import { RouteHighlighter } from '/snippets/route_highlighter.mdx'
+
+
 import CodeSamplesFacetedSearchWalkthroughFilter1 from '/snippets/samples/code_samples_faceted_search_walkthrough_filter_1.mdx';
 import CodeSamplesGeosearchGuideFilterUsage1 from '/snippets/samples/code_samples_geosearch_guide_filter_usage_1.mdx';
 import CodeSamplesGeosearchGuideFilterUsage3 from '/snippets/samples/code_samples_geosearch_guide_filter_usage_3.mdx';
@@ -49,9 +52,8 @@ You may find exhaustive descriptions of the parameters accepted by the two route
 
 ## Search in an index with POST
 
-```http
-POST /indexes/{index_uid}/search
-```
+<RouteHighlighter method="POST" path="/indexes/{index_uid}/search
+" />
 
 Search for documents matching a specific query in the given index.
 
@@ -161,9 +163,8 @@ You can [read more about pagination in our dedicated guide](/guides/front_end/pa
 
 ## Search in an index with GET
 
-```http
-GET /indexes/{index_uid}/search
-```
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/search
+" />
 
 Search for documents matching a specific query in the given index.
 

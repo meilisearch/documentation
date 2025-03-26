@@ -4,6 +4,9 @@ sidebarTitle: Snapshots
 description: The /snapshots route creates database snapshots. Use snapshots to backup your Meilisearch data.
 ---
 
+import { RouteHighlighter } from '/snippets/route_highlighter.mdx'
+
+
 import CodeSamplesCreateSnapshot1 from '/snippets/samples/code_samples_create_snapshot_1.mdx';
 
 The `/snapshot` route allows you to create database snapshots. Snapshots are `.snapshot` files that can be used to make quick backups of Meilisearch data.
@@ -16,9 +19,8 @@ Meilisearch Cloud does not support the `/snapshots` route.
 
 ## Create a snapshot
 
-```http
-POST /snapshots
-```
+<RouteHighlighter method="POST" path="/snapshots
+" />
 
 Triggers a snapshot creation task. Once the process is complete, Meilisearch creates a snapshot in the [snapshot directory](/learn/self_hosted/configure_meilisearch_at_launch#snapshot-destination). If the snapshot directory does not exist yet, it will be created.
 

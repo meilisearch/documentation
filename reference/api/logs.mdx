@@ -4,6 +4,9 @@ sidebarTitle: Logs
 description: "Customize Meilisearch logs with two experimental features: --experimental-logs-mode and --experimental-enable-logs-route."
 ---
 
+import { RouteHighlighter } from '/snippets/route_highlighter.mdx'
+
+
 import CodeSamplesExperimentalDeleteLogsStream1 from '/snippets/samples/code_samples_experimental_delete_logs_stream_1.mdx';
 import CodeSamplesExperimentalPostLogsStderr1 from '/snippets/samples/code_samples_experimental_post_logs_stderr_1.mdx';
 import CodeSamplesExperimentalPostLogsStream1 from '/snippets/samples/code_samples_experimental_post_logs_stream_1.mdx';
@@ -25,9 +28,8 @@ This feature is not available for Meilisearch Cloud users.
 
 ## Customize log levels
 
-```http
-POST /logs/stderr
-```
+<RouteHighlighter method="POST" path="/logs/stderr
+" />
 
 Customize logging levels for the default logging system.
 
@@ -43,9 +45,8 @@ Customize logging levels for the default logging system.
 
 ## Start log stream
 
-```http
-POST /logs/stream
-```
+<RouteHighlighter method="POST" path="/logs/stream
+" />
 
 Opens a continuous stream of logs for focused debugging sessions. The stream will continue to run indefinitely until you [interrupt](#interrupt-log-stream) it.
 
@@ -66,9 +67,8 @@ Certain HTTP clients such as `httpie` and `xh`, will only display data after you
 
 ## Interrupt log stream
 
-```http
-DELETE /logs/stream
-```
+<RouteHighlighter method="DELETE" path="/logs/stream
+" />
 
 Interrupt a log stream.
 

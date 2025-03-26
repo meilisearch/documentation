@@ -4,6 +4,9 @@ sidebarTitle: Multi-search
 description: The /multi-search route allows you to perform multiple search queries on one or more indexes.
 ---
 
+import { RouteHighlighter } from '/snippets/route_highlighter.mdx'
+
+
 import { NoticeTag } from '/snippets/notice_tag.mdx';
 
 import CodeSamplesMultiSearch1 from '/snippets/samples/code_samples_multi_search_1.mdx';
@@ -16,9 +19,8 @@ The `/multi-search` route allows you to perform multiple search queries on one o
 
 Bundle multiple search queries in a single API request. Use this endpoint to search through multiple indexes at once.
 
-```http
-POST /multi-search
-```
+<RouteHighlighter method="POST" path="/multi-search
+" />
 
 ### Body
 

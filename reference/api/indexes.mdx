@@ -4,6 +4,8 @@ sidebarTitle: Indexes
 description: The /indexes route allows you to create, manage, and delete your indexes.
 ---
 
+import { RouteHighlighter } from '/snippets/route_highlighter.mdx';
+
 import CodeSamplesCreateAnIndex1 from '/snippets/samples/code_samples_create_an_index_1.mdx';
 import CodeSamplesDeleteAnIndex1 from '/snippets/samples/code_samples_delete_an_index_1.mdx';
 import CodeSamplesGetOneIndex1 from '/snippets/samples/code_samples_get_one_index_1.mdx';
@@ -35,9 +37,7 @@ The `/indexes` route allows you to create, manage, and delete your indexes.
 
 ## List all indexes
 
-```http
-GET /indexes
-```
+<RouteHighlighter method="GET" path="/indexes" />
 
 List all indexes. Results can be paginated by using the `offset` and `limit` query parameters.
 
@@ -93,9 +93,7 @@ List all indexes. Results can be paginated by using the `offset` and `limit` que
 
 ## Get one index
 
-```http
-GET /indexes/{index_uid}
-```
+<RouteHighlighter method="GET" path="/indexes/{index_uid}" />
 
 Get information about an index.
 
@@ -122,9 +120,7 @@ Get information about an index.
 
 ## Create an index
 
-```http
-POST /indexes
-```
+<RouteHighlighter method="POST" path="/indexes" />
 
 Create an index.
 
@@ -162,9 +158,7 @@ You can use the response's `taskUid` to [track the status of your request](/refe
 
 ## Update an index
 
-```http
-PATCH /indexes/{index_uid}
-```
+<RouteHighlighter method="PATCH" path="/indexes/{index_uid}" />
 
 Update an index's [primary key](/learn/getting_started/primary_key#primary-key). You can freely update the primary key of an index as long as it contains no documents.
 
@@ -206,9 +200,7 @@ You can use the response's `taskUid` to [track the status of your request](/refe
 
 ## Delete an index
 
-```http
-DELETE /indexes/{index_uid}
-```
+<RouteHighlighter method="DELETE" path="/indexes/{index_uid}" />
 
 Delete an index.
 
@@ -241,6 +233,8 @@ You can use the response's `taskUid` to [track the status of your request](/refe
 ```http
 POST /swap-indexes
 ```
+
+<RouteHighlighter method="POST" path="/swap-indexes" />
 
 Swap the documents, settings, and task history of two or more indexes. **You can only swap indexes in pairs.** However, a single request can swap as many index pairs as you wish.
 

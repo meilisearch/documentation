@@ -4,6 +4,9 @@ sidebarTitle: Experimental features
 description: The /experimental-features route allows you to manage some of Meilisearch's experimental features.
 ---
 
+import { RouteHighlighter } from '/snippets/route_highlighter.mdx'
+
+
 import CodeSamplesGetExperimentalFeatures1 from '/snippets/samples/code_samples_get_experimental_features_1.mdx';
 import CodeSamplesUpdateExperimentalFeatures1 from '/snippets/samples/code_samples_update_experimental_features_1.mdx';
 
@@ -37,9 +40,8 @@ The experimental API route is not compatible with all experimental features. Con
 
 ## Get all experimental features
 
-```http
-GET /experimental-features
-```
+<RouteHighlighter method="GET" path="/experimental-features
+" />
 
 Get a list of all experimental features that can be activated via the `/experimental-features` route and whether or not they are currently activated.
 
@@ -61,9 +63,8 @@ Get a list of all experimental features that can be activated via the `/experime
 
 ## Configure experimental features
 
-```http
-PATCH /experimental-features
-```
+<RouteHighlighter method="PATCH" path="/experimental-features
+" />
 
 Activate or deactivate experimental features.
 

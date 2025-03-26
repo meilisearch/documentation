@@ -4,6 +4,9 @@ sidebarTitle: Batches
 description: The /batches route allows you to monitor how Meilisearch is grouping and processing asynchronous operations.
 ---
 
+import { RouteHighlighter } from '/snippets/route_highlighter.mdx'
+
+
 import CodeSamplesGetAllBatches1 from '/snippets/samples/code_samples_get_all_batches_1.mdx';
 import CodeSamplesGetBatch1 from '/snippets/samples/code_samples_get_batch_1.mdx';
 
@@ -122,9 +125,8 @@ List of the number of tasks in the batch separated by the indexes they affect.
 
 ## Get batches
 
-```http
-GET /batches
-```
+<RouteHighlighter method="GET" path="/batches
+" />
 
 List all batches, regardless of index. The batch objects are contained in the `results` array.
 
@@ -211,9 +213,8 @@ For example, `?uids=0` returns a batch containing the task with a `taskUid` equa
 
 ## Get one batch
 
-```http
-GET /batches/{batch_uid}
-```
+<RouteHighlighter method="GET" path="/batches/{batch_uid}
+" />
 
 Get a single batch.
 

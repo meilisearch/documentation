@@ -4,6 +4,9 @@ sidebarTitle: Similar documents
 description: The /similar route accepts one search result and uses AI-powered search to return a number of similar documents.
 ---
 
+import { RouteHighlighter } from '/snippets/route_highlighter.mdx'
+
+
 import CodeSamplesGetSimilarGet1 from '/snippets/samples/code_samples_get_similar_get_1.mdx';
 import CodeSamplesGetSimilarPost1 from '/snippets/samples/code_samples_get_similar_post_1.mdx';
 
@@ -13,9 +16,8 @@ Meilisearch exposes two routes for retrieving similar documents: `POST` and `GET
 
 ## Get similar documents with `POST`
 
-```http
-POST /indexes/{index_uid}/similar
-```
+<RouteHighlighter method="POST" path="/indexes/{index_uid}/similar
+" />
 
 Retrieve documents similar to a specific search result.
 
@@ -72,9 +74,8 @@ Retrieve documents similar to a specific search result.
 
 ## Get similar documents with `GET`
 
-```http
-GET /indexes/{index_uid}/similar
-```
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/similar
+" />
 
 Retrieve documents similar to a specific search result.
 

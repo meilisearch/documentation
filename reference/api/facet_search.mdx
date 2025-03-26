@@ -4,6 +4,9 @@ sidebarTitle: Facet search
 description: The /facet-search route allows you to search for facet values.
 ---
 
+import { RouteHighlighter } from '/snippets/route_highlighter.mdx'
+
+
 import CodeSamplesFacetSearch1 from '/snippets/samples/code_samples_facet_search_1.mdx';
 
 The `/facet-search` route allows you to search for facet values. Facet search supports [prefix search](/learn/engine/prefix) and [typo tolerance](/learn/relevancy/typo_tolerance_settings). The returned hits are sorted lexicographically in ascending order. You can configure how facets are sorted using the [`sortFacetValuesBy`](/reference/api/settings#faceting-object) property of the `faceting` index settings.
@@ -18,9 +21,8 @@ Internally, Meilisearch represents numbers as [`float64`](https://en.wikipedia.o
 
 Search for a facet value within a given facet.
 
-```http
-POST /indexes/{index_uid}/facet-search
-```
+<RouteHighlighter method="POST" path="/indexes/{index_uid}/facet-search
+" />
 
 <Warning>
 This endpoint will not work without first explicitly adding attributes to the [`filterableAttributes`](/reference/api/settings#update-filterable-attributes) list. [Learn more about facets in our dedicated guide.](/learn/filtering_and_sorting/search_with_facet_filters)

@@ -5,6 +5,9 @@ description: The /settings route allows you to customize search settings for the
 sidebarDepth: 3
 ---
 
+import { RouteHighlighter } from '/snippets/route_highlighter.mdx'
+
+
 import CodeSamplesGetDictionary1 from '/snippets/samples/code_samples_get_dictionary_1.mdx';
 import CodeSamplesGetDisplayedAttributes1 from '/snippets/samples/code_samples_get_displayed_attributes_1.mdx';
 import CodeSamplesGetDistinctAttribute1 from '/snippets/samples/code_samples_get_distinct_attribute_1.mdx';
@@ -133,9 +136,8 @@ This route allows you to retrieve, configure, or reset all of an index's setting
 
 ### Get settings
 
-```http
-GET /indexes/{index_uid}/settings
-```
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/settings
+" />
 
 Get the settings of an index.
 
@@ -201,9 +203,8 @@ Get the settings of an index.
 
 ### Update settings
 
-```http
-PATCH /indexes/{index_uid}/settings
-```
+<RouteHighlighter method="PATCH" path="/indexes/{index_uid}/settings
+" />
 
 Update the settings of an index.
 
@@ -267,9 +268,8 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 ### Reset settings
 
-```http
-DELETE /indexes/{index_uid}/settings
-```
+<RouteHighlighter method="DELETE" path="/indexes/{index_uid}/settings
+" />
 
 Reset all the settings of an index to their [default value](#settings-object).
 
@@ -320,9 +320,8 @@ User-defined dictionaries can be used together with synonyms. It can be useful t
 
 ### Get dictionary
 
-```http
-GET /indexes/{index_uid}/settings/dictionary
-```
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/settings/dictionary
+" />
 
 Get an index's user-defined dictionary.
 
@@ -344,9 +343,8 @@ Get an index's user-defined dictionary.
 
 ### Update dictionary
 
-```http
-PUT /indexes/{index_uid}/settings/dictionary
-```
+<RouteHighlighter method="PUT" path="/indexes/{index_uid}/settings/dictionary
+" />
 
 Update an index's user-defined dictionary.
 
@@ -382,9 +380,8 @@ Use the returned `taskUid` to get more details on [the status of the task](/refe
 
 ### Reset dictionary
 
-```http
-DELETE /indexes/{index_uid}/settings/dictionary
-```
+<RouteHighlighter method="DELETE" path="/indexes/{index_uid}/settings/dictionary
+" />
 
 Reset an index's dictionary to its default value, `[]`.
 
@@ -422,9 +419,8 @@ By default, the `displayedAttributes` array is equal to all fields in your datas
 
 ### Get displayed attributes
 
-```http
-GET /indexes/{index_uid}/settings/displayed-attributes
-```
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/settings/displayed-attributes
+" />
 
 Get the displayed attributes of an index.
 
@@ -451,9 +447,8 @@ Get the displayed attributes of an index.
 
 ### Update displayed attributes
 
-```http
-PUT /indexes/{index_uid}/settings/displayed-attributes
-```
+<RouteHighlighter method="PUT" path="/indexes/{index_uid}/settings/displayed-attributes
+" />
 
 Update the displayed attributes of an index.
 
@@ -497,9 +492,8 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 ### Reset displayed attributes
 
-```http
-DELETE /indexes/{index_uid}/settings/displayed-attributes
-```
+<RouteHighlighter method="DELETE" path="/indexes/{index_uid}/settings/displayed-attributes
+" />
 
 Reset the displayed attributes of the index to the default value.
 
@@ -539,9 +533,8 @@ Updating distinct attributes will re-index all documents in the index, which can
 
 ### Get distinct attribute
 
-```http
-GET /indexes/{index_uid}/settings/distinct-attribute
-```
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/settings/distinct-attribute
+" />
 
 Get the distinct attribute of an index.
 
@@ -563,9 +556,8 @@ Get the distinct attribute of an index.
 
 ### Update distinct attribute
 
-```http
-PUT /indexes/{index_uid}/settings/distinct-attribute
-```
+<RouteHighlighter method="PUT" path="/indexes/{index_uid}/settings/distinct-attribute
+" />
 
 Update the distinct attribute field of an index.
 
@@ -611,9 +603,8 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 ### Reset distinct attribute
 
-```http
-DELETE /indexes/{index_uid}/settings/distinct-attribute
-```
+<RouteHighlighter method="DELETE" path="/indexes/{index_uid}/settings/distinct-attribute
+" />
 
 Reset the distinct attribute of an index to its default value.
 
@@ -659,9 +650,8 @@ With Meilisearch, you can create [faceted search interfaces](/learn/filtering_an
 
 ### Get faceting settings
 
-```http
-GET /indexes/{index_uid}/settings/faceting
-```
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/settings/faceting
+" />
 
 Get the faceting settings of an index.
 
@@ -688,9 +678,8 @@ Get the faceting settings of an index.
 
 ### Update faceting settings
 
-```http
-PATCH /indexes/{index_uid}/settings/faceting
-```
+<RouteHighlighter method="PATCH" path="/indexes/{index_uid}/settings/faceting
+" />
 
 Partially update the faceting settings for an index. Any parameters not provided in the body will be left unchanged.
 
@@ -783,9 +772,8 @@ Updating filterable attributes will re-index all documents in the index, which c
 
 ### Get filterable attributes
 
-```http
-GET /indexes/{index_uid}/settings/filterable-attributes
-```
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/settings/filterable-attributes
+" />
 
 Get the filterable attributes for an index.
 
@@ -811,9 +799,8 @@ Get the filterable attributes for an index.
 
 ### Update filterable attributes
 
-```http
-PUT /indexes/{index_uid}/settings/filterable-attributes
-```
+<RouteHighlighter method="PUT" path="/indexes/{index_uid}/settings/filterable-attributes
+" />
 
 Update an index's filterable attributes list.
 
@@ -859,9 +846,8 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 ### Reset filterable attributes
 
-```http
-DELETE /indexes/{index_uid}/settings/filterable-attributes
-```
+<RouteHighlighter method="DELETE" path="/indexes/{index_uid}/settings/filterable-attributes
+" />
 
 Reset an index's filterable attributes list back to its default value.
 
@@ -934,9 +920,8 @@ You may also set `attributePatterns` to `*`, in which case Meilisearch will trea
 
 ### Get localized attributes settings
 
-```http
-GET /indexes/{index_uid}/settings/localized-attributes
-```
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/settings/localized-attributes
+" />
 
 Get the localized attributes settings of an index.
 
@@ -962,9 +947,8 @@ Get the localized attributes settings of an index.
 
 ### Update localized attribute settings
 
-```http
-PUT /indexes/{index_uid}/settings/localized-attributes
-```
+<RouteHighlighter method="PUT" path="/indexes/{index_uid}/settings/localized-attributes
+" />
 
 Update the localized attributes settings of an index.
 
@@ -1011,9 +995,7 @@ You can use the returned `taskUid` to get more details on [the status of the tas
 
 ### Reset localized attributes settings
 
-```http
-DELETE /indexes/{index_uid}/settings/localized-attributes"
-```
+<RouteHighlighter method="DELETE" path="/indexes/{index_uid}/settings/localized-attributes" />
 
 Reset an index's localized attributes to their [default value](#localized-attributes-object).
 
@@ -1059,9 +1041,8 @@ For example, if you set `maxTotalHits` to 100, you will not be able to access se
 
 ### Get pagination settings
 
-```http
-GET /indexes/{index_uid}/settings/pagination
-```
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/settings/pagination
+" />
 
 Get the pagination settings of an index.
 
@@ -1085,9 +1066,8 @@ Get the pagination settings of an index.
 
 ### Update pagination settings
 
-```http
-PATCH /indexes/{index_uid}/settings/pagination
-```
+<RouteHighlighter method="PATCH" path="/indexes/{index_uid}/settings/pagination
+" />
 
 Partially update the pagination settings for an index.
 
@@ -1168,9 +1148,8 @@ Calculating the distance between words is a resource-intensive operation. Loweri
 
 ### Get proximity precision settings
 
-```http
-GET /indexes/{index_uid}/settings/proximity-precision
-```
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/settings/proximity-precision
+" />
 
 Get the proximity precision settings of an index.
 
@@ -1192,9 +1171,8 @@ Get the proximity precision settings of an index.
 
 ### Update proximity precision settings
 
-```http
-PUT /indexes/{index_uid}/settings/proximity-precision
-```
+<RouteHighlighter method="PUT" path="/indexes/{index_uid}/settings/proximity-precision
+" />
 
 Update the pagination settings for an index.
 
@@ -1230,9 +1208,8 @@ You can use the returned `taskUid` to get more details on [the status of the tas
 
 ### Reset proximity precision settings
 
-```http
-DELETE /indexes/{index_uid}/settings/proximity-precision
-```
+<RouteHighlighter method="DELETE" path="/indexes/{index_uid}/settings/proximity-precision
+" />
 
 Reset an index's proximity precision setting to its default value.
 
@@ -1268,9 +1245,8 @@ Processing filterable attributes for facet search is a resource-intensive operat
 
 ### Get facet search settings
 
-```http
-GET /indexes/{index_uid}/settings/facet-search
-```
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/settings/facet-search
+" />
 
 Get the facet search settings of an index.
 
@@ -1292,9 +1268,8 @@ true
 
 ### Update facet search settings
 
-```http
-PUT /indexes/{index_uid}/settings/facet-search
-```
+<RouteHighlighter method="PUT" path="/indexes/{index_uid}/settings/facet-search
+" />
 
 Update the facet search settings for an index.
 
@@ -1330,9 +1305,8 @@ Use the returned `taskUid` to get more details on [the status of the task](/refe
 
 ### Reset facet search settings
 
-```http
-DELETE /indexes/{index_uid}/settings/facet-search
-```
+<RouteHighlighter method="DELETE" path="/indexes/{index_uid}/settings/facet-search
+" />
 
 Reset an index's facet search to its default settings.
 
@@ -1371,9 +1345,8 @@ Use `prefixSearch` to change how prefix search works. It accepts one of the foll
 
 ### Get prefix search settings
 
-```http
-GET /indexes/{index_uid}/settings/prefix-search
-```
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/settings/prefix-search
+" />
 
 Get the prefix search settings of an index.
 
@@ -1395,9 +1368,8 @@ Get the prefix search settings of an index.
 
 ### Update prefix search settings
 
-```http
-PUT /indexes/{index_uid}/settings/prefix-search
-```
+<RouteHighlighter method="PUT" path="/indexes/{index_uid}/settings/prefix-search
+" />
 
 Update the prefix search settings for an index.
 
@@ -1433,9 +1405,8 @@ Use the returned `taskUid` to get more details on [the status of the task](/refe
 
 ### Reset prefix search settings
 
-```http
-DELETE /indexes/{index_uid}/settings/prefix-search
-```
+<RouteHighlighter method="DELETE" path="/indexes/{index_uid}/settings/prefix-search
+" />
 
 Reset an index's prefix search to its default settings.
 
@@ -1495,9 +1466,8 @@ Ranking rules are built-in rules that rank search results according to certain c
 
 ### Get ranking rules
 
-```http
-GET /indexes/{index_uid}/settings/ranking-rules
-```
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/settings/ranking-rules
+" />
 
 Get the ranking rules of an index.
 
@@ -1527,9 +1497,8 @@ Get the ranking rules of an index.
 
 ### Update ranking rules
 
-```http
-PUT /indexes/{index_uid}/settings/ranking-rules
-```
+<RouteHighlighter method="PUT" path="/indexes/{index_uid}/settings/ranking-rules
+" />
 
 Update the ranking rules of an index.
 
@@ -1580,9 +1549,8 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 ### Reset ranking rules
 
-```http
-DELETE /indexes/{index_uid}/settings/ranking-rules
-```
+<RouteHighlighter method="DELETE" path="/indexes/{index_uid}/settings/ranking-rules
+" />
 
 Reset the ranking rules of an index to their [default value](#default-order).
 
@@ -1628,9 +1596,8 @@ Updating searchable attributes will re-index all documents in the index, which c
 
 ### Get searchable attributes
 
-```http
-GET /indexes/{index_uid}/settings/searchable-attributes
-```
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/settings/searchable-attributes
+" />
 
 Get the searchable attributes of an index.
 
@@ -1657,9 +1624,8 @@ Get the searchable attributes of an index.
 
 ### Update searchable attributes
 
-```http
-PUT /indexes/{index_uid}/settings/searchable-attributes
-```
+<RouteHighlighter method="PUT" path="/indexes/{index_uid}/settings/searchable-attributes
+" />
 
 Update the searchable attributes of an index.
 
@@ -1711,9 +1677,8 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 ### Reset searchable attributes
 
-```http
-DELETE /indexes/{index_uid}/settings/searchable-attributes
-```
+<RouteHighlighter method="DELETE" path="/indexes/{index_uid}/settings/searchable-attributes
+" />
 
 Reset the searchable attributes of the index to the default value.
 
@@ -1749,9 +1714,8 @@ By default, Meilisearch interrupts searches after 1500 milliseconds.
 
 ### Get search cutoff
 
-```http
-GET /indexes/{index_uid}/settings/search-cutoff-ms
-```
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/settings/search-cutoff-ms
+" />
 
 Get an index's search cutoff value.
 
@@ -1773,9 +1737,8 @@ null
 
 ### Update search cutoff
 
-```http
-PUT /indexes/{index_uid}/settings/search-cutoff-ms
-```
+<RouteHighlighter method="PUT" path="/indexes/{index_uid}/settings/search-cutoff-ms
+" />
 
 Update an index's search cutoff value.
 
@@ -1813,9 +1776,8 @@ Use this `taskUid` to get more details on [the status of the task](/reference/ap
 
 ### Reset search cutoff
 
-```http
-DELETE /indexes/{index_uid}/settings/search-cutoff-ms
-```
+<RouteHighlighter method="DELETE" path="/indexes/{index_uid}/settings/search-cutoff-ms
+" />
 
 Reset an index's search cutoff value to its default value, `null`. This translates to a cutoff of 1500ms.
 
@@ -1849,9 +1811,8 @@ Tokens in the `separatorTokens` list are added on top of [Meilisearch's default 
 
 ### Get separator tokens
 
-```http
-GET /indexes/{index_uid}/settings/separator-tokens
-```
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/settings/separator-tokens
+" />
 
 Get an index's list of custom separator tokens.
 
@@ -1873,9 +1834,8 @@ Get an index's list of custom separator tokens.
 
 ### Update separator tokens
 
-```http
-PUT /indexes/{index_uid}/settings/separator-tokens
-```
+<RouteHighlighter method="PUT" path="/indexes/{index_uid}/settings/separator-tokens
+" />
 
 Update an index's list of custom separator tokens.
 
@@ -1913,9 +1873,8 @@ Use this `taskUid` to get more details on [the status of the task](/reference/ap
 
 ### Reset separator tokens
 
-```http
-DELETE /indexes/{index_uid}/settings/separator-tokens
-```
+<RouteHighlighter method="DELETE" path="/indexes/{index_uid}/settings/separator-tokens
+" />
 
 Reset an index's list of custom separator tokens to its default value, `[]`.
 
@@ -1949,9 +1908,8 @@ Remove tokens from Meilisearch's default [list of word separators](/learn/engine
 
 ### Get non-separator tokens
 
-```http
-GET /indexes/{index_uid}/settings/non-separator-tokens
-```
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/settings/non-separator-tokens
+" />
 
 Get an index's list of non-separator tokens.
 
@@ -1973,9 +1931,8 @@ Get an index's list of non-separator tokens.
 
 ### Update non-separator tokens
 
-```http
-PUT /indexes/{index_uid}/settings/non-separator-tokens
-```
+<RouteHighlighter method="PUT" path="/indexes/{index_uid}/settings/non-separator-tokens
+" />
 
 Update an index's list of non-separator tokens.
 
@@ -2013,9 +1970,8 @@ Use this `taskUid` to get more details on [the status of the task](/reference/ap
 
 ### Reset non-separator tokens
 
-```http
-DELETE /indexes/{index_uid}/settings/non-separator-tokens
-```
+<RouteHighlighter method="DELETE" path="/indexes/{index_uid}/settings/non-separator-tokens
+" />
 
 Reset an index's list of non-separator tokens to its default value, `[]`.
 
@@ -2055,9 +2011,8 @@ Updating sortable attributes will re-index all documents in the index, which can
 
 ### Get sortable attributes
 
-```http
-GET /indexes/{index_uid}/settings/sortable-attributes
-```
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/settings/sortable-attributes
+" />
 
 Get the sortable attributes of an index.
 
@@ -2082,9 +2037,8 @@ Get the sortable attributes of an index.
 
 ### Update sortable attributes
 
-```http
-PUT /indexes/{index_uid}/settings/sortable-attributes
-```
+<RouteHighlighter method="PUT" path="/indexes/{index_uid}/settings/sortable-attributes
+" />
 
 Update an index's sortable attributes list.
 
@@ -2132,9 +2086,8 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 ### Reset sortable attributes
 
-```http
-DELETE /indexes/{index_uid}/settings/sortable-attributes
-```
+<RouteHighlighter method="DELETE" path="/indexes/{index_uid}/settings/sortable-attributes
+" />
 
 Reset an index's sortable attributes list back to its default value.
 
@@ -2178,9 +2131,8 @@ Stop words are strongly related to the language used in your dataset. For exampl
 
 ### Get stop words
 
-```http
-GET /indexes/{index_uid}/settings/stop-words
-```
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/settings/stop-words
+" />
 
 Get the stop words list of an index.
 
@@ -2206,9 +2158,8 @@ Get the stop words list of an index.
 
 ### Update stop words
 
-```http
-PUT /indexes/{index_uid}/settings/stop-words
-```
+<RouteHighlighter method="PUT" path="/indexes/{index_uid}/settings/stop-words
+" />
 
 Update the list of stop words of an index.
 
@@ -2248,9 +2199,8 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 ### Reset stop words
 
-```http
-DELETE /indexes/{index_uid}/settings/stop-words
-```
+<RouteHighlighter method="DELETE" path="/indexes/{index_uid}/settings/stop-words
+" />
 
 Reset the list of stop words of an index to its default value.
 
@@ -2286,9 +2236,8 @@ The `synonyms` object contains words and their respective synonyms. A synonym in
 
 ### Get synonyms
 
-```http
-GET /indexes/{index_uid}/settings/synonyms
-```
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/settings/synonyms
+" />
 
 Get the list of synonyms of an index.
 
@@ -2322,9 +2271,8 @@ Get the list of synonyms of an index.
 
 ### Update synonyms
 
-```http
-PUT /indexes/{index_uid}/settings/synonyms
-```
+<RouteHighlighter method="PUT" path="/indexes/{index_uid}/settings/synonyms
+" />
 
 Update the list of synonyms of an index. Synonyms are [normalized](/learn/relevancy/synonyms#normalization).
 
@@ -2367,9 +2315,8 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 ### Reset synonyms
 
-```http
-DELETE /indexes/{index_uid}/settings/synonyms
-```
+<RouteHighlighter method="DELETE" path="/indexes/{index_uid}/settings/synonyms
+" />
 
 Reset the list of synonyms of an index to its default value.
 
@@ -2415,9 +2362,8 @@ Typo tolerance helps users find relevant results even when their search queries 
 
 ### Get typo tolerance settings
 
-```http
-GET /indexes/{index_uid}/settings/typo-tolerance
-```
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/settings/typo-tolerance
+" />
 
 Get the typo tolerance settings of an index.
 
@@ -2447,9 +2393,8 @@ Get the typo tolerance settings of an index.
 
 ### Update typo tolerance settings
 
-```http
-PATCH /indexes/{index_uid}/settings/typo-tolerance
-```
+<RouteHighlighter method="PATCH" path="/indexes/{index_uid}/settings/typo-tolerance
+" />
 
 Partially update the typo tolerance settings for an index.
 
@@ -2501,9 +2446,8 @@ You can use the returned `taskUid` to get more details on [the status of the tas
 
 ### Reset typo tolerance settings
 
-```http
-DELETE /indexes/{index_uid}/settings/typo-tolerance
-```
+<RouteHighlighter method="DELETE" path="/indexes/{index_uid}/settings/typo-tolerance
+" />
 
 Reset an index's typo tolerance settings to their [default value](#typo-tolerance-object).
 
@@ -2574,9 +2518,8 @@ These embedder objects may contain the following fields:
 
 ### Get embedder settings
 
-```http
-GET /indexes/{index_uid}/settings/embedders
-```
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/settings/embedders
+" />
 
 Get the embedders configured for an index.
 
@@ -2606,9 +2549,8 @@ Get the embedders configured for an index.
 
 ### Update embedder settings
 
-```http
-PATCH /indexes/{index_uid}/settings/embedders
-```
+<RouteHighlighter method="PATCH" path="/indexes/{index_uid}/settings/embedders
+" />
 
 Partially update the embedder settings for an index. When this setting is updated Meilisearch may reindex all documents and regenerate their embeddings.
 
@@ -2896,9 +2838,8 @@ You can use the returned `taskUid` to get more details on [the status of the tas
 
 ### Reset embedder settings
 
-```http
-DELETE /indexes/{index_uid}/settings/embedders
-```
+<RouteHighlighter method="DELETE" path="/indexes/{index_uid}/settings/embedders
+" />
 
 Removes all embedders from your index.
 

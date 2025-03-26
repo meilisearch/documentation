@@ -7,3 +7,38 @@
   border-radius: 5px;
   font-size: 0.8em;
 }
+
+.routeHighlighter {
+  --route-highlighter-color: rgba(100, 100, 100, 0.35);
+  display: flex;
+  border-radius: 5px;
+  border: 1px var(--route-highlighter-color) solid;
+  padding: 1em;
+  gap: 2em;
+}
+
+.routeHighlighter--GET {
+  --route-highlighter-color: rgb(74 222 128);
+}
+
+.routeHighlighter--POST {
+  --route-highlighter-color: rgb(96 165 250);
+}
+
+.routeHighlighter--DELETE {
+  --route-highlighter-color: rgb(248 73 73);
+}
+
+.routeHighlighter--PUT, 
+.routeHighlighter--PATCH {
+  --route-highlighter-color: rgb(251 146 60);
+}
+
+.routeHighlighter__method {
+  font-weight: 700;
+  color: var(--route-highlighter-color);
+}
+
+.routeHighlighter__path {
+  font-family: var(--font-jetbrains-mono),ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace
+}
