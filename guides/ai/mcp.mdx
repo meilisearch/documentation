@@ -161,26 +161,34 @@ Claude can only perform actions that are exposed through the Meilisearch API and
 
 ## Troubleshooting
 
-If you encounter issues with the Meilisearch MCP integration:
+If you encounter issues with the Meilisearch MCP integration, try these steps
 
-1. **Verify your connection settings** by asking Claude:
-   ```
-   What are the current Meilisearch connection settings?
-   ```
+### 1. Ask Claude to verify your connection settings
 
-2. **Check your Meilisearch instance health**:
-   ```
-   Run a health check on my Meilisearch instance
-   ```
+```
+What are the current Meilisearch connection settings?
+```
 
-3. **Review Claude Desktop logs** for MCP-related issues:
-   - On macOS: `~/Library/Logs/Claude/mcp*.log`
-   - On Windows: `%APPDATA%\Claude\logs\mcp*.log`
+### 2. Ask Claude to check your Meilisearch instance health
 
-4. **Test the MCP server independently** using the MCP Inspector:
-   ```bash
-   npx @modelcontextprotocol/inspector uvx -n meilisearch-mcp
-   ```
+```
+Run a health check on my Meilisearch instance
+```
+
+### 3. Review Claude's logs
+
+Open the logs file in your text editor or log viewer:
+
+- On macOS: `~/Library/Logs/Claude/mcp*.log`
+- On Windows: `%APPDATA%\Claude\logs\mcp*.log`
+
+### 4. Test the MCP server independently
+
+Open your terminal and query the MCP Inspector with `npx`:
+
+```bash
+npx @modelcontextprotocol/inspector uvx -n meilisearch-mcp
+```
 
 ## Conclusion
 
