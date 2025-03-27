@@ -77,19 +77,24 @@ Can you check the connection to my Meilisearch instance and tell me what version
 Claude will use the `get-version` and `health-check` tools to verify the connection and provide information about your instance.
 
 
-### Managing Indexes
+## Create an e-commerce index
 
-**Create an index optimized for e-commerce:**
-```
-Create a new index called "products" for our e-commerce site with the primary key "product_id"
-```
+Now you have configured the MCP to work with Meilisearch, you can use it to manage your indexes.
 
-**List all indexes:**
+First, verify what indexes you have in your project:
+
 ```
 What indexes do I have in my Meilisearch instance?
 ```
 
-**Get index metrics:**
+Next, ask Claude to create an index optimized for e-commerce:
+
+```
+Create a new index called "products" for our e-commerce site with the primary key "product_id"
+```
+
+Finally, check the index has been created successfully and is completely empty:
+
 ```
 How many documents are in my "products" index and what's its size?
 ```
