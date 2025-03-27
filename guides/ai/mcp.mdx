@@ -99,9 +99,10 @@ Finally, check the index has been created successfully and is completely empty:
 How many documents are in my "products" index and what's its size?
 ```
 
-### Document Operations
+## Add documents to your new index
 
-**Add documents to an index:**
+Ask Calude to add a couple of test documents to your "products" index:
+
 ```
 Add these products to my "products" index:
 [
@@ -109,12 +110,15 @@ Add these products to my "products" index:
   {"product_id": 2, "name": "Standing Desk", "description": "Adjustable height desk", "price": 499.99, "category": "Furniture"}
 ]
 ```
-You can also add fake data for testing purposes
+
+Since you are only using "products" for testing, you can also ask Claude to automatically populate it with placeholder data:
+
 ```
-Add 10 documents in the index 'movies' with a title and description of your choice
+Add 10 documents in the index "products" with a name, category, price, and description of your choice
 ```
 
-**Retrieve documents:**
+To verify data insertion worked as expected, retrieve the first few documents in your index:
+
 ```
 Show me the first 5 products in my "products" index
 ```
