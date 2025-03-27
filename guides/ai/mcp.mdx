@@ -58,23 +58,23 @@ Save the file and restart Claude.
 
 Once Claude Desktop is set up with the Meilisearch MCP server, you can connect to your Meilisearch instance by asking Claude to update the connection settings.
 
-1. **Open Claude Desktop** and start a new conversation.
+Open Claude Desktop and start a new conversation.
 
-2. **Connect to your Meilisearch instance** by asking Claude to update the connection settings:
+Next, connect to your Meilisearch instance by asking Claude to update the connection settings, replacing `MEILISEARCH_URL` with your project URL and `API_KEY` with your project's API key:
 
-   ```
-   Please connect to my Meilisearch instance at https://ms-xxx.meilisearch.io using the API key XXXXXX
-   ```
+```
+Please connect to my Meilisearch instance at MEILISEARCH_URL using the API key API_KEY
+```
 
-   Claude will use the MCP server's `update-connection-settings` tool to establish a connection to your Meilisearch instance.
+Claude will use the MCP server's `update-connection-settings` tool to establish a connection to your Meilisearch instance.
 
-3. **Verify the connection** by asking:
+Finally, verify the connection by asking:
 
-   ```
-   Can you check the connection to my Meilisearch instance and tell me what version it's running?
-   ```
+```
+Can you check the connection to my Meilisearch instance and tell me what version it's running?
+```
 
-   Claude will use the `get-version` and `health-check` tools to verify the connection and provide information about your instance.
+Claude will use the `get-version` and `health-check` tools to verify the connection and provide information about your instance.
 
 ## Example Queries and Tasks
 
