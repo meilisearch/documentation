@@ -123,14 +123,18 @@ To verify data insertion worked as expected, retrieve the first few documents in
 Show me the first 5 products in my "products" index
 ```
 
-### Search Configuration
+## Configure your index
 
-**Update ranking rules:**
+Before performing your first search, set a few index settings to ensure relevant results.
+
+Ask Claude to prioritize exact word matches over multiple partial matches:
+
 ```
 Update the ranking rules for the "products" index to prioritize word matches and handle typos, but make exact matches more important than proximity
 ```
 
-**Configure search settings:**
+It's also a good practice to limit searchable attributes only to highly-relevant fields, and only return attributes you are going to display in your search interface:
+
 ```
 Configure my "products" index to make the "name" and "description" fields searchable, but only "name", "price", and "category" should be displayed in results
 ```
