@@ -38,22 +38,21 @@ pip install meilisearch-mcp
 
 3. **Configure Claude Desktop**
 
-   Open Claude Desktop, click on the Claude menu in the top bar, and select "Settings...". In the Settings window, click on "Developer" in the left sidebar, then click "Edit Config". This will open your `claude_desktop_config.json` file.
+Open Claude Desktop, click on the Claude menu in the top bar, and select "Settings". In the Settings window, click on "Developer" in the left sidebar, then click "Edit Config". This will open your `claude_desktop_config.json` file.
 
-   Add the Meilisearch MCP server to your configuration:
+Add the Meilisearch MCP server to your configuration:
 
-   ```json
-   {
-     "mcpServers": {
-       "meilisearch": {
-         "command": "uvx",
-         "args": ["-n", "meilisearch-mcp"]
-       }
-     }
-   }
-   ```
+```json
+{
+  "mcpServers": {
+    "meilisearch": {
+      "command": "uvx",
+      "args": ["-n", "meilisearch-mcp"]
+    }
+  }
+```
 
-   Save the file and restart Claude Desktop.
+Save the file and restart Claude.
 
 ## Connecting to Your Meilisearch Instance
 
