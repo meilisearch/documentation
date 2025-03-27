@@ -139,14 +139,16 @@ It's also a good practice to limit searchable attributes only to highly-relevant
 Configure my "products" index to make the "name" and "description" fields searchable, but only "name", "price", and "category" should be displayed in results
 ```
 
-### Performing Searches
+## Perform searches with MCP
 
-**Basic search:**
+Perform your first search with the following prompt:
+
 ```
 Search the "products" index for "desk" and return the top 3 results
 ```
 
-**Advanced search with filters:**
+You can also request your search uses other Meilisearch features such as filters and sorting:
+
 ```
 Search the "products" index for "chair" where the price is less than 200 and the category is "Furniture". Sort results by price in ascending order.
 ```
