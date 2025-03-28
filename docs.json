@@ -21,7 +21,7 @@
 	"navbar": {
 		"primary": {
 			"type": "button",
-			"label": "Dashboard",
+			"label": "Get Started",
 			"href": "https://cloud.meilisearch.com"
 		},
 		"links": [
@@ -306,7 +306,7 @@
 					},
 					{
 						"anchor": "References",
-						"icon": "gear",
+						"icon": "code",
 						"groups": [
 							{
 								"group": "API REFERENCE",

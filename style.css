@@ -11,27 +11,29 @@
 .routeHighlighter {
   --route-highlighter-color: rgba(100, 100, 100, 0.35);
   display: flex;
-  border-radius: 5px;
+  border-radius: 0.375rem;
   border: 1px var(--route-highlighter-color) solid;
-  padding: 1em;
-  gap: 2em;
+  padding: 1rem;
+  gap: 2rem;
+  align-items: center;
 }
 
+/* https://tailwindcss.com/docs/colors */
 .routeHighlighter--GET {
-  --route-highlighter-color: rgb(74 222 128);
+  --route-highlighter-color: oklch(0.792 0.209 151.711)
 }
 
 .routeHighlighter--POST {
-  --route-highlighter-color: rgb(96 165 250);
+  --route-highlighter-color: oklch(0.623 0.214 259.815)
 }
 
 .routeHighlighter--DELETE {
-  --route-highlighter-color: rgb(248 73 73);
+  --route-highlighter-color: oklch(0.577 0.245 27.325)
 }
 
 .routeHighlighter--PUT, 
 .routeHighlighter--PATCH {
-  --route-highlighter-color: rgb(251 146 60);
+  --route-highlighter-color: oklch(0.828 0.189 84.429)
 }
 
 .routeHighlighter__method {
