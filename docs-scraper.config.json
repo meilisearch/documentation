@@ -13,14 +13,14 @@
           "default_value": "Documentation"
       },
       "lvl1": {
-          "selector": ".content-area h1",
+          "selector": "#content-area h1",
           "global": true
       },
-      "lvl2": ".content-area h2",
-      "lvl3": ".content-area h3",
-      "lvl4": ".content-area h4",
-      "lvl5": ".content-area h5",
-      "text": ".content-area p, .content-area li, .content-area td"
+      "lvl2": "#content-area h2",
+      "lvl3": "#content-area h3",
+      "lvl4": "#content-area h4",
+      "lvl5": "#content-area h5",
+      "text": "#content-area p, #content-area li, #content-area td"
   },
   "strip_chars": " .,;:#",
   "scrap_start_urls": true,
