@@ -6,7 +6,7 @@
 
 const MEILISEARCH_HOST = 'https://edge.meilisearch.com/'
 const MEILISEARCH_API_KEY = '776dc6a11c118bd1640c3a9ff9679f920bc384238534fc4861fcde0152e7fd68'; // Public search-only API key
-const MEILISEARCH_INDEX = 'production';
+const MEILISEARCH_INDEX = 'mintlify-docs-staging';
 
 function initializeMeilisearchIntegration() {
   // Add a check at the start of the function to prevent multiple initializations
