@@ -453,10 +453,14 @@ function initializeMeilisearchIntegration() {
           
           // Perform search
           index.search(query, {
-            limit: 10,
+            limit: 25,
             attributesToHighlight: ['title', 'content'],
             attributesToCrop: ['content'],
-            cropLength: 100
+            cropLength: 100,
+            hybrid: {
+              semanticRatio: 0.5,
+              embedder: "default"
+            }
           })
           .then(response => {
             console.log('Search results:', response.hits.length);
