@@ -1,9 +1,17 @@
 ---
-title: Indexes — Meilisearch API reference
+title: Indexes
+sidebarTitle: Indexes
 description: The /indexes route allows you to create, manage, and delete your indexes.
 ---
 
-# Indexes
+import { RouteHighlighter } from '/snippets/route_highlighter.mdx';
+
+import CodeSamplesCreateAnIndex1 from '/snippets/samples/code_samples_create_an_index_1.mdx';
+import CodeSamplesDeleteAnIndex1 from '/snippets/samples/code_samples_delete_an_index_1.mdx';
+import CodeSamplesGetOneIndex1 from '/snippets/samples/code_samples_get_one_index_1.mdx';
+import CodeSamplesListAllIndexes1 from '/snippets/samples/code_samples_list_all_indexes_1.mdx';
+import CodeSamplesSwapIndexes1 from '/snippets/samples/code_samples_swap_indexes_1.mdx';
+import CodeSamplesUpdateAnIndex1 from '/snippets/samples/code_samples_update_an_index_1.mdx';
 
 The `/indexes` route allows you to create, manage, and delete your indexes.
 
@@ -29,7 +37,7 @@ The `/indexes` route allows you to create, manage, and delete your indexes.
 
 ## List all indexes
 
-<RouteHighlighter method="GET" route="/indexes"/>
+<RouteHighlighter method="GET" path="/indexes" />
 
 List all indexes. Results can be paginated by using the `offset` and `limit` query parameters.
 
@@ -51,7 +59,7 @@ List all indexes. Results can be paginated by using the `offset` and `limit` que
 
 ### Example
 
-<CodeSamples id='list_all_indexes_1' />
+<CodeSamplesListAllIndexes1 />
 
 #### Response: `200 Ok`
 
@@ -85,7 +93,7 @@ List all indexes. Results can be paginated by using the `offset` and `limit` que
 
 ## Get one index
 
-<RouteHighlighter method="GET" route="/indexes/{index_uid}"/>
+<RouteHighlighter method="GET" path="/indexes/{index_uid}" />
 
 Get information about an index.
 
@@ -97,7 +105,7 @@ Get information about an index.
 
 ### Example
 
-<CodeSamples id='get_one_index_1' />
+<CodeSamplesGetOneIndex1 />
 
 #### Response: `200 Ok`
 
@@ -112,7 +120,7 @@ Get information about an index.
 
 ## Create an index
 
-<RouteHighlighter method="POST" route="/indexes"/>
+<RouteHighlighter method="POST" path="/indexes" />
 
 Create an index.
 
@@ -132,7 +140,7 @@ Create an index.
 
 ### Example
 
-<CodeSamples id='create_an_index_1' />
+<CodeSamplesCreateAnIndex1 />
 
 #### Response: `202 Accepted`
 
@@ -150,15 +158,15 @@ You can use the response's `taskUid` to [track the status of your request](/refe
 
 ## Update an index
 
-<RouteHighlighter method="PATCH" route="/indexes/{index_uid}"/>
+<RouteHighlighter method="PATCH" path="/indexes/{index_uid}" />
 
 Update an index's [primary key](/learn/getting_started/primary_key#primary-key). You can freely update the primary key of an index as long as it contains no documents.
 
 To change the primary key of an index that already contains documents, you must first delete all documents in that index. You may then change the primary key and index your dataset again.
 
-<Capsule intent="note">
+<Note>
 It is not possible to change an index's `uid`.
-</Capsule>
+</Note>
 
 ### Path parameters
 
@@ -174,7 +182,7 @@ It is not possible to change an index's `uid`.
 
 ### Example
 
-<CodeSamples id='update_an_index_1' />
+<CodeSamplesUpdateAnIndex1 />
 
 #### Response: `202 Accepted`
 
@@ -192,7 +200,7 @@ You can use the response's `taskUid` to [track the status of your request](/refe
 
 ## Delete an index
 
-<RouteHighlighter method="DELETE" route="/indexes/{index_uid}"/>
+<RouteHighlighter method="DELETE" path="/indexes/{index_uid}" />
 
 Delete an index.
 
@@ -204,7 +212,7 @@ Delete an index.
 
 ### Example
 
-<CodeSamples id='delete_an_index_1' />
+<CodeSamplesDeleteAnIndex1 />
 
 #### Response: `202 Accepted`
 
@@ -222,7 +230,11 @@ You can use the response's `taskUid` to [track the status of your request](/refe
 
 ## Swap indexes
 
-<RouteHighlighter method="POST" route="/swap-indexes"/>
+```http
+POST /swap-indexes
+```
+
+<RouteHighlighter method="POST" path="/swap-indexes" />
 
 Swap the documents, settings, and task history of two or more indexes. **You can only swap indexes in pairs.** However, a single request can swap as many index pairs as you wish.
 
@@ -242,13 +254,13 @@ An array of objects. Each object has only one key: `indexes`.
 
 Each `indexes` array must contain only two elements: the `indexUid`s of the two indexes to be swapped. Sending an empty array (`[]`) is valid, but no swap operation will be performed.
 
-<Capsule intent="note">
+<Note>
 You can swap multiple pairs of indexes with a single request. To do so, there must be one object for each pair of indexes to be swapped.
-</Capsule>
+</Note>
 
 ### Example
 
-<CodeSamples id='swap_indexes_1' />
+<CodeSamplesSwapIndexes1 />
 
 #### Response
 
@@ -262,8 +274,8 @@ You can swap multiple pairs of indexes with a single request. To do so, there mu
 }
 ```
 
-<Capsule intent="note">
+<Note>
 Since `indexSwap` is a [global task](/learn/async/asynchronous_operations#global-tasks), the `indexUid` is always `null`.
-</Capsule>
+</Note>
 
 You can use the response's `taskUid` to [track the status of your request](/reference/api/tasks#get-one-task).

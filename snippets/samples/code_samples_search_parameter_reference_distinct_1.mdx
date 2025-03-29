@@ -1,0 +1,62 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "q": "QUERY TERMS",
+    "distinct": "ATTRIBUTE_A"
+  }'
+```
+
+```javascript JS
+client.index('INDEX_NAME').search('QUERY TERMS', { distinct: 'ATTRIBUTE_A' })
+```
+
+```python Python
+client.index('INDEX_NAME').search('QUERY_TERMS', { distinct: 'ATTRIBUTE_A' })
+```
+
+```php PHP
+$client->index('INDEX_NAME')->search('QUERY TERMS', [
+  'distinct' => 'ATTRIBUTE_A'
+]);
+```
+
+```java Java
+SearchRequest searchRequest = SearchRequest.builder().q("QUERY TERMS").distinct("ATTRIBUTE_A").build();
+client.index("INDEX_NAME").search(searchRequest);
+```
+
+```ruby Ruby
+client.index('INDEX_NAME').search('QUERY TERMS', {
+  distinct: 'ATTRIBUTE_A'
+})
+```
+
+```go Go
+client.Index("INDEX_NAME").Search("QUERY TERMS", &meilisearch.SearchRequest{
+  Distinct: "ATTRIBUTE_A",
+})
+```
+
+```csharp C#
+var params = new SearchQuery()
+{
+  Distinct = "ATTRIBUTE_A"
+};
+await client.Index("INDEX_NAME").SearchAsync<T>("QUERY TERMS", params);
+```
+
+```rust Rust
+let res = client
+  .index("INDEX_NAME")
+  .search()
+  .with_query("QUERY TERMS")
+  .with_distinct("ATTRIBUTE_A")
+  .execute()
+  .await
+  .unwrap();
+```
+</CodeGroup>

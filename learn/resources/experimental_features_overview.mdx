@@ -1,9 +1,10 @@
 ---
-title: Experimental features overview — Meilisearch documentation
+title: Experimental features overview
+sidebarTitle: Experimental features overview
 description: This article covers how to activate activate and configure Meilisearch experimental features.
 ---
 
-# Experimental features
+import CodeSamplesUpdateExperimentalFeatures1 from '/snippets/samples/code_samples_update_experimental_features_1.mdx';
 
 Meilisearch periodically introduces new experimental features. Experimental features are not always ready for production, but offer functionality that might benefit some users.
 
@@ -36,7 +37,7 @@ Activating or deactivating experimental features this way requires you to relaun
 
 Some experimental features can be activated via an HTTP call using the [`/experimental-features` API route](/reference/api/experimental_features):
 
-<CodeSamples id="update_experimental_features_1" />
+<CodeSamplesUpdateExperimentalFeatures1 />
 
 Activating or deactivating experimental features this way does not require you to relaunch Meilisearch.
 

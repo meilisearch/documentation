@@ -1,0 +1,81 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X PUT 'MEILISEARCH_URL/indexes/books/settings/sortable-attributes' \
+  -H 'Content-Type: application/json' \
+  --data-binary '[
+    "author",
+    "price"
+  ]'
+```
+
+```javascript JS
+client.index('books').updateSortableAttributes([
+    'author',
+    'price'
+  ])
+```
+
+```python Python
+client.index('books').update_sortable_attributes([
+  'author',
+  'price'
+])
+```
+
+```php PHP
+$client->index('books')->updateSortableAttributes([
+  'author',
+  'price'
+]);
+```
+
+```java Java
+client.index("books").updateSortableAttributesSettings(new String[] {"price", "author"});
+```
+
+```ruby Ruby
+client.index('books').update_sortable_attributes(['author', 'price'])
+```
+
+```go Go
+sortableAttributes := []string{
+  "author",
+  "price",
+}
+client.Index("books").UpdateSortableAttributes(&sortableAttributes)
+```
+
+```csharp C#
+await client.Index("books").UpdateSortableAttributesAsync(new [] { "price", "author" });
+```
+
+```rust Rust
+let sortable_attributes = [
+  "author",
+  "price"
+];
+
+let task: TaskInfo = client
+  .index("books")
+  .set_sortable_attributes(&sortable_attributes)
+  .await
+  .unwrap();
+```
+
+```swift Swift
+client.index("books").updateSortableAttributes(["price", "author"]) { (result: Result<TaskInfo, Swift.Error>) in
+  switch result {
+  case .success(let task):
+    print(task)
+  case .failure(let error):
+    print(error)
+  }
+}
+```
+
+```dart Dart
+await client.index('books').updateSortableAttributes(['author', 'price']);
+```
+</CodeGroup>

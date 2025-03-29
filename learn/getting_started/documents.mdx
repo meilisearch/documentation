@@ -1,10 +1,9 @@
 ---
-title: Documents — Meilisearch documentation
+title: Documents
+sidebarTitle: Documents
 description: Documents are the individual items that make up a dataset. Each document is an object composed of one or more fields.
 sidebarDepth: 3
 ---
-
-# Documents
 
 A document is an object composed of one or more fields. Each field consists of an **attribute** and its associated **value**. Documents function as containers for organizing data and are the basic building blocks of a Meilisearch database. To search for a document, you must first add it to an [index](/learn/getting_started/indexes).
 
@@ -12,7 +11,9 @@ Nothing will be shared between two indexes if they contain the exact same docume
 
 ## Structure
 
-![Diagram illustration Meilisearch's document structure](/assets/images/document_structure.svg)
+<Frame>
+  <img src="/assets/images/document_structure.svg" alt="Diagram illustration Meilisearch's document structure" />
+</Frame>
 
 ### Important terms
 
@@ -36,11 +37,11 @@ If a field contains an object, Meilisearch flattens it during indexing using dot
 
 With [ranking rules](/learn/relevancy/ranking_rules), you can decide which fields are more relevant than others. For example, you may decide recent movies should be more relevant than older ones. You can also designate certain fields as displayed or searchable.
 
-<Capsule intent="note" title="Reserved attributes">
+<Note>
 Some features require Meilisearch to reserve attributes. For example, to use [geosearch functionality](/learn/filtering_and_sorting/geosearch) your documents must include a `_geo` field.
 
 Reserved attributes are always prefixed with an underscore (`_`).
-</Capsule>
+</Note>
 
 ### Displayed and searchable fields
 
@@ -114,7 +115,7 @@ NDJSON or jsonlines objects consist of individual lines where each individual li
 
 Meilisearch will only accept NDJSON documents when it receives the `application/x-ndjson` content-type header.
 
-Compared to JSON, NDJSON has better writing performance and is less CPU and memory intensive. It is easier to validate and, unlike CSV, can handle nested structures.  
+Compared to JSON, NDJSON has better writing performance and is less CPU and memory intensive. It is easier to validate and, unlike CSV, can handle nested structures.
 
 The above JSON document would look like this in NDJSON:
 
@@ -130,7 +131,7 @@ By default, Meilisearch uses a single comma (`,`) as the delimiter. Use the `csv
 
 Meilisearch will only accept CSV documents when it receives the `text/csv` content-type header.
 
-Compared to JSON, CSV has better writing performance and is less CPU and memory intensive.  
+Compared to JSON, CSV has better writing performance and is less CPU and memory intensive.
 
 The above JSON document would look like this in CSV:
 
@@ -156,4 +157,4 @@ If a task fails due to an invalid document, it will be removed from the batch. T
 
 #### Auto-batching and task cancellation
 
-If the task you’re canceling is part of a batch, Meilisearch interrupts the whole process, discards all progress, and cancels that task. Then, it automatically creates a new batch without the canceled task and immediately starts processing it.
+If the task you're canceling is part of a batch, Meilisearch interrupts the whole process, discards all progress, and cancels that task. Then, it automatically creates a new batch without the canceled task and immediately starts processing it.

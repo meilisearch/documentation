@@ -1,17 +1,20 @@
 ---
-title: Filtering tasks — Meilisearch documentation
+title: Filtering tasks
+sidebarTitle: Filtering tasks
 description: This guide shows you how to use query parameters to filter tasks and obtain a more readable list of asynchronous operations.
 ---
 
-# Filtering tasks
+import CodeSamplesAsyncGuideFilterByStatuses1 from '/snippets/samples/code_samples_async_guide_filter_by_statuses_1.mdx';
+import CodeSamplesAsyncGuideFilterByStatuses2 from '/snippets/samples/code_samples_async_guide_filter_by_statuses_2.mdx';
+import CodeSamplesAsyncGuideMultipleFilters1 from '/snippets/samples/code_samples_async_guide_multiple_filters_1.mdx';
 
 Querying the [get tasks endpoint](/reference/api/tasks#get-tasks) returns all tasks that have not been deleted. This unfiltered list may be difficult to parse in large projects.
 
 This guide shows you how to use query parameters to filter tasks and obtain a more readable list of asynchronous operations.
 
-<Capsule intent="tip" title="Filtering batches">
+<Tip>
 Filtering batches with [the `/batches` route](/reference/api/batches) follows the same rules as filtering tasks. Keep in mind that many `/batches` parameters such as `uids` target the tasks included in batches, instead of the batches themselves.
-</Capsule>
+</Tip>
 
 ## Requirements
 
@@ -22,11 +25,11 @@ Filtering batches with [the `/batches` route](/reference/api/batches) follows th
 
 Use the get tasks endpoint to fetch all `canceled` tasks:
 
-<CodeSamples id="async_guide_filter_by_statuses_1" />
+<CodeSamplesAsyncGuideFilterByStatuses1 />
 
 Use a comma to separate multiple values and fetch both `canceled` and `failed` tasks:
 
-<CodeSamples id="async_guide_filter_by_statuses_2" />
+<CodeSamplesAsyncGuideFilterByStatuses2 />
 
 You may filter tasks based on `uid`, `status`, `type`, `indexUid`, `canceledBy`, or date. Consult the API reference for a full list of task filtering parameters.
 
@@ -34,10 +37,10 @@ You may filter tasks based on `uid`, `status`, `type`, `indexUid`, `canceledBy`,
 
 Use the ampersand character (`&`) to combine filters, equivalent to a logical `AND`:
 
-<CodeSamples id="async_guide_multiple_filters_1" />
+<CodeSamplesAsyncGuideMultipleFilters1 />
 
 This code sample returns all tasks in the `movies` index that have the type `documentAdditionOrUpdate` or `documentDeletion` and have the `status` of `processing`.
 
-<Capsule intent="warning">
+<Warning>
 **`OR` operations between different filters are not supported.** For example, you cannot view tasks which have a type of `documentAddition` **or** a status of `failed`.
-</Capsule>
+</Warning>

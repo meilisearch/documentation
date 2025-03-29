@@ -1,0 +1,76 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X PATCH 'MEILISEARCH_URL/indexes/movies/settings/typo-tolerance' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{ "disableOnAttributes": ["title"] }'
+```
+
+```javascript JS
+client.index('movies').updateTypoTolerance({
+  disableOnAttributes: ['title']
+})
+```
+
+```python Python
+client.index('movies').update_typo_tolerance({
+  'disableOnAttributes': ['title']
+})
+```
+
+```php PHP
+$client->index('movies')->updateTypoTolerance([
+  'disableOnAttributes' => ['title']
+]);
+```
+
+```java Java
+TypoTolerance typoTolerance = new TypoTolerance();
+typoTolerance.setDisableOnAttributes(new String[] {"title"});
+client.index("movies").updateTypoToleranceSettings(typoTolerance);
+```
+
+```ruby Ruby
+index('books').update_typo_tolerance({ disable_on_attributes: ['title'] })
+```
+
+```go Go
+client.Index("movies").UpdateTypoTolerance(&meilisearch.TypoTolerance{
+  DisableOnAttributes: []string{"title"},
+})
+```
+
+```csharp C#
+var typoTolerance = new TypoTolerance {
+  DisableOnAttributes = new string[] { "title" }
+};
+await client.Index("movies").UpdateTypoToleranceAsync(typoTolerance);
+```
+
+```rust Rust
+let min_word_size_for_typos = MinWordSizeForTypos {
+  one_typo: Some(5),
+  two_typos: Some(12)
+}
+let typo_tolerance = TypoToleranceSettings {
+  enabled: Some(true),
+  disable_on_attributes: Some(vec!["title".to_string()]),
+  disable_on_words: None,
+  min_word_size_for_typos: None,
+};
+
+let task: TaskInfo = client
+  .index("movies")
+  .set_typo_tolerance(&typo_tolerance)
+  .await
+  .unwrap();
+```
+
+```dart Dart
+final toUpdate = TypoTolerance(
+  disableOnAttributes: ['title'],
+);
+await client.index('movies').updateTypoTolerance(toUpdate);
+```
+</CodeGroup>
