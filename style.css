@@ -16,6 +16,7 @@
   padding: 1rem;
   gap: 2rem;
   align-items: center;
+  overflow: scroll;
 }
 
 /* https://tailwindcss.com/docs/colors */
