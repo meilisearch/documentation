@@ -18,6 +18,10 @@
 			"dark": "#1A003B"
 		}
 	},
+	"appearance": {
+        "default": "dark",
+		"strict": true
+	},
 	"navbar": {
 		"primary": {
 			"type": "button",
