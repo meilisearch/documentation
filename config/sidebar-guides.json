@@ -56,6 +56,11 @@
     "slug": "ai",
     "routes": [
       {
+        "source": "guides/ai/mcp.mdx",
+        "label": "Model Context Protocol - Talk to Meilisearch with Claude desktop",
+        "slug": "mcp"
+      },
+      {
         "source": "guides/embedders/openai.mdx",
         "label": "Semantic search with OpenAI embeddings",
         "slug": "openai"
