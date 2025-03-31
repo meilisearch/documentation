@@ -2380,20 +2380,22 @@ The embedders object may contain up to 256 embedder objects. Each embedder objec
 
 These embedder objects may contain the following fields:
 
-| Name                   | Type             | Default Value                                                            | Description                                                                                                                                                    |
-|  :---------------------|  :---------------|  :-----------------------------------------------------------------------|  :-------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **`source`**           | String           | Empty                                                                    | The third-party tool that will generate embeddings from documents. Must be `openAi`, `huggingFace`, `ollama`, `rest`, or `userProvided`                        |
-| **`url`**              | String           | `http://localhost:11434/api/embeddings`                                  | The URL Meilisearch contacts when querying the embedder                                                                                                            |
-| **`apiKey`**           | String           | Empty                                                                    | Authentication token Meilisearch should send with each request to the embedder. If not present, Meilisearch will attempt to read it from environment variables |
-| **`model`**            | String           | Empty                                                                    | The model your embedder uses when generating vectors                                                                                                           |
-| **`documentTemplate`** | String           | `{% for field in fields %} {% if field.is_searchable and not field.value == nil %}{{ field.name }}: {{ field.value }} {% endif %} {% endfor %}` | Template defining the data Meilisearch sends to the embedder                                                                                                      |
-| **`documentTemplateMaxBytes`**       | Integer          | `400`                                                                    | Maximum allowed size of rendered document template                                                               |
-| **`dimensions`**       | Integer          | Empty                                                                    | Number of dimensions in the chosen model. If not supplied, Meilisearch tries to infer this value                                                               |
-| **`revision`**         | String           | Empty                                                                    | Model revision hash                                                                                                                                            |
-| **`distribution`**     | Object           | Empty                                                                    | Describes the natural distribution of search results. Must contain two fields, `mean` and `sigma`, each containing a numeric value between `0` and `1`         |
-| **`request`**          | Object           | Empty                                                                    | A JSON value representing the request Meilisearch makes to the remote embedder                                                                                 |
-| **`response`**         | Object           | Empty                                                                    | A JSON value representing the request Meilisearch expects from the remote embedder                                                                             |
-| **`binaryQuantized`**         | Boolean           | Empty                                                                    | Once set to `true`, irreversibly converts all vector dimensions to 1-bit values                                                                             |
+| Name                           | Type    | Default Value                                                                                                                                   | Description                                                                                                                                                    |
+| ------------------------------ | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`source`**                   | String  | Empty                                                                                                                                           | The third-party tool that will generate embeddings from documents. Must be `openAi`, `huggingFace`, `ollama`, `rest`, or `userProvided`                        |
+| **`url`**                      | String  | `http://localhost:11434/api/embeddings`                                                                                                         | The URL Meilisearch contacts when querying the embedder                                                                                                        |
+| **`apiKey`**                   | String  | Empty                                                                                                                                           | Authentication token Meilisearch should send with each request to the embedder. If not present, Meilisearch will attempt to read it from environment variables |
+| **`model`**                    | String  | Empty                                                                                                                                           | The model your embedder uses when generating vectors                                                                                                           |
+| **`documentTemplate`**         | String  | `{% for field in fields %} {% if field.is_searchable and not field.value == nil %}{{ field.name }}: {{ field.value }} {% endif %} {% endfor %}` | Template defining the data Meilisearch sends to the embedder                                                                                                   |
+| **`documentTemplateMaxBytes`** | Integer | `400`                                                                                                                                           | Maximum allowed size of rendered document template                                                                                                             |
+| **`dimensions`**               | Integer | Empty                                                                                                                                           | Number of dimensions in the chosen model. If not supplied, Meilisearch tries to infer this value                                                               |
+| **`revision`**                 | String  | Empty                                                                                                                                           | Model revision hash                                                                                                                                            |
+| **`distribution`**             | Object  | Empty                                                                                                                                           | Describes the natural distribution of search results. Must contain two fields, `mean` and `sigma`, each containing a numeric value between `0` and `1`         |
+| **`request`**                  | Object  | Empty                                                                                                                                           | A JSON value representing the request Meilisearch makes to the remote embedder                                                                                 |
+| **`response`**                 | Object  | Empty                                                                                                                                           | A JSON value representing the request Meilisearch expects from the remote embedder                                                                             |
+| **`binaryQuantized`**          | Boolean | Empty                                                                                                                                           | Once set to `true`, irreversibly converts all vector dimensions to 1-bit values                                                                                |
+| **`indexingEmbedder`**         | Object  | Empty                                                                                                                                           | Configures embedder to vectorize documents during indexing                                                                                                     |
+| **`searchEmbedder`**           | Object  | Empty                                                                                                                                           | Configures embedder to vectorize search queries                                                                                                                |
 
 ### Get embedder settings
 
@@ -2466,17 +2468,40 @@ Set an embedder to `null` to remove it from the embedders list.
 
 ##### `source`
 
-Use `source` to configure an embedder's source. The following embedders can auto-generate vectors for documents and queries:
+Use `source` to configure an embedder's source. The source corresponds to a service that generates embeddings from your documents.
 
+Meilisearch supports the following sources:
 - `openAi`
 - `huggingFace`
 - `ollama`
+- `rest`
+- `userProvided`
+- `composite` <NoticeTag type="experimental" label="experimental" />
 
-Additionally, use `rest` to auto-generate embeddings with any embedder offering a REST API.
+`rest` is a generic source compatible with any embeddings provider offering a REST API.
 
-You may also configure a `userProvided` embedder. In this case, you must manually include vector data in your documents' `_vectors` field. You must also manually generate vectors for search queries.
+Use `userProvided` when you want to generate embeddings manually. In this case, you must include vector data in your documents' `_vectors` field. You must also generate vectors for search queries.
 
 This field is mandatory.
+
+###### Composite embedders <NoticeTag type="experimental" label="experimental" />
+
+Choose `composite` to use one embedder during indexing time, and another embedder at search time. Must be used together with [`indexingEmbedder` and `searchEmbedder`](#indexingembedder-and-searchembedder).
+
+<Capsule intent="note" title="Activating composite embedders">
+This is an experimental feature. Use the experimental features endpoint to activate it:
+
+```sh
+curl \
+  -X PATCH 'MEILISEARCH_URL/experimental-features/' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "compositeEmbedders": true
+  }'
+```
+
+This will also enable the [`STARTS WITH`](#starts-with) operator.
+</Capsule>
 
 ##### `url`
 
@@ -2542,7 +2567,6 @@ The maximum size of a rendered document template. Longer texts are truncated to 
 This field is incompatible with `userProvided` embedders.
 
 This field is optional for all other embedders.
-
 
 ##### `dimensions`
 
@@ -2694,6 +2718,26 @@ This option can be useful when working with large Meilisearch projects. Consider
 <Capsule intent="danger" title="Binary quantization is an irreversible process">
 **Activating `binaryQuantized` is irreversible.** Once enabled, Meilisearch converts all vectors and discards all vector data that does fit within 1-bit. The only way to recover the vectors' original values is to re-vectorize the whole index in a new embedder.
 </Capsule>
+
+##### `indexingEmbedder` and `searchEmbedder` <NoticeTag type="experimental" label="experimental" />
+
+When using a [composite embedder](#composite-embedders), configure separate embedders Meilisearch should use when vectorizing documents and search queries.
+
+`indexingEmbedder` often benefits from the higher bandwidth and speed of remote providers so it can vectorize large batches of documents quickly. `searchEmbedder` may often benefits from the lower latency of processing queries locally.
+
+Both fields must be an object and accept the same fields as a regular embedder, with the following exceptions:
+
+- `indexingEmbedder` and `searchEmbedder` must use the same `model`
+- `indexingEmbedder` and `searchEmbedder` must use the same `dimension` values
+- `source` is mandatory for both `indexingEmbedder` and `searchEmbedder`
+- Neither sub-embedder can set `source` to `composite` or `userProvided`
+- Neither `binaryQuantized` and `distribution` are valid sub-embedder fields and must always be declared in the main embedder
+- `documentTemplate` and `documentTemplateMaxBytes` are invalid fields for `searchEmbedder`
+- `documentTemplate` and `documentTemplateMaxBytes` are mandatory for `indexingEmbedder`, if applicable to its source
+
+`indexingEmbedder` and `searchEmbedder` are mandatory when using the `composite` source.
+
+`indexingEmbedder` and `searchEmbedder` are incompatible with all other embedder sources.
 
 #### Example
 
