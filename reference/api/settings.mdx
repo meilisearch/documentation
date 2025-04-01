@@ -2394,6 +2394,7 @@ These embedder objects may contain the following fields:
 | **`request`**          | Object           | Empty                                                                    | A JSON value representing the request Meilisearch makes to the remote embedder                                                                                 |
 | **`response`**         | Object           | Empty                                                                    | A JSON value representing the request Meilisearch expects from the remote embedder                                                                             |
 | **`binaryQuantized`**         | Boolean           | Empty                                                                    | Once set to `true`, irreversibly converts all vector dimensions to 1-bit values                                                                             |
+| **`pooling`**         | String           | `"useModel"`                                                                    | Pooling method for Hugging Face embedders                                                                                                                                            |
 
 ### Get embedder settings
 
@@ -2457,7 +2458,8 @@ Partially update the embedder settings for an index. When this setting is update
     "request": { … },
     "response": { … },
     "headers": { … },
-    "binaryQuantized": <Boolean>
+    "binaryQuantized": <Boolean>,
+    "pooling": <String>
   }
 }
 ```
@@ -2542,7 +2544,6 @@ The maximum size of a rendered document template. Longer texts are truncated to 
 This field is incompatible with `userProvided` embedders.
 
 This field is optional for all other embedders.
-
 
 ##### `dimensions`
 
@@ -2694,6 +2695,20 @@ This option can be useful when working with large Meilisearch projects. Consider
 <Capsule intent="danger" title="Binary quantization is an irreversible process">
 **Activating `binaryQuantized` is irreversible.** Once enabled, Meilisearch converts all vectors and discards all vector data that does fit within 1-bit. The only way to recover the vectors' original values is to re-vectorize the whole index in a new embedder.
 </Capsule>
+
+##### `pooling`
+
+Pooling refers to one of the last steps in embedding generation. During this phase, the multiple embeddings for individual tokens are merged into a single embedding. Most models indicate which pooling method they expect.
+
+`pooling` must be one of the following strings:
+
+- `"useModel"`: Meilisearch will fetch the pooling method from the model configuration, default value for new embedders
+- `"forceMean"`: always use mean pooling, default value for embedders created in Meilisearch <=v1.13
+- `"forceCls"`: always use CLS pooling
+
+`pooling` is optional for embedders with the `huggingFace` source.
+
+`pooling` is invalid for all other embedder sources.
 
 #### Example
 
