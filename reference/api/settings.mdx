@@ -2459,7 +2459,9 @@ Partially update the embedder settings for an index. When this setting is update
     "request": { … },
     "response": { … },
     "headers": { … },
-    "binaryQuantized": <Boolean>
+    "binaryQuantized": <Boolean>,
+    "indexingEmbedder": { … },
+    "searchEmbedder": { … }
   }
 }
 ```
@@ -2499,8 +2501,6 @@ curl \
     "compositeEmbedders": true
   }'
 ```
-
-This will also enable the [`STARTS WITH`](#starts-with) operator.
 </Capsule>
 
 ##### `url`
