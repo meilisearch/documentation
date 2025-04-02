@@ -4,6 +4,8 @@ sidebarTitle: Filter expression reference
 description: The `filter` search parameter expects a filter expression. Filter expressions are made of attributes, values, and several operators.
 ---
 
+import { NoticeTag } from '/snippets/notice_tag.mdx';
+
 The `filter` search parameter expects a filter expression. Filter expressions are made of attributes, values, and several operators.
 
 `filter` expects a **filter expression** containing one or more **conditions**. A filter expression can be written as a string, array, or mix of both.
@@ -158,7 +160,7 @@ NOT genres IN [horror, comedy]
 
 ### `CONTAINS` 
 
-<Note>Experimental feature</Note>
+<NoticeTag type="experimental" label="experimental" />
 `CONTAINS` filters results containing partial matches to the specified string pattern, similar to a [SQL `LIKE`](https://dev.mysql.com/doc/refman/8.4/en/string-comparison-functions.html#operator_like).
 
 The following expression returns all dairy products whose names contain `"kef"`:
@@ -191,7 +193,7 @@ This will also enable the [`STARTS WITH`](#starts-with) operator.
 
 ### `STARTS WITH`
 
-<Note>Experimental feature</Note>
+<NoticeTag type="experimental" label="experimental" />
 
 `STARTS WITH` filters results whose values start with the specified string pattern.
 
