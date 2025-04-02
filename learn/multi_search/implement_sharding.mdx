@@ -3,15 +3,18 @@ title: Implement sharding with remote federated search
 description: This guide walks you through implementing a sharding strategy by activating the `/network` route, configuring the network object, and performing remote federated searches.
 ---
 
+import { NoticeTag } from '/snippets/notice_tag.mdx';
+
 import CodeSamplesMultiSearchRemoteFederated1 from '/snippets/samples/code_samples_multi_search_remote_federated_1.mdx';
 
 Sharding is the process of splitting an index containing many documents into multiple smaller indexes, often called shards. This horizontal scaling technique is useful when handling large databases. In Meilisearch, the best way to implement a sharding strategy is to use remote federated search.
 
 This guide walks you through activating the `/network` route, configuring the network object, and performing remote federated searches.
 
-<Capsule intent="tip" title="Configuring multiple instances">
+<Tip>
+## Configuring multiple instances
 To minimize issues and limit unexpected behavior, instance, network, and index configuration should be identical for all shards. This guide describes the individual steps you must take on a single instance and assumes you will replicate them across all instances.
-</Capsule>
+</Tip>
 
 ## Prerequisites
 

@@ -249,11 +249,13 @@ Migrates the database to a new Meilisearch version after you have manually updat
 
 [Learn more about updating Meilisearch to a new release](/learn/update_and_migration/updating).
 
-<Capsule intent="danger" title="Create a snapshot before a dumpless upgrade">
+<Warning>
+#### Create a snapshot before a dumpless upgrade
+
 Take a snapshot of your instance before performing a dumpless upgrade.
 
 Dumpless upgrade are not currently atomic. It is possible some processes fail and Meilisearch still finalizes the upgrade. This may result in a corrupted database and data loss.
-</Capsule>
+</Warning>
 
 ### Dump directory
 

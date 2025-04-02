@@ -156,9 +156,9 @@ Meilisearch should launch normally and immediately create a new `UpgradeDatabase
 
 While the task is processing, you may continue making search queries. You may also enqueue new tasks. Meilisearch will only process new tasks once `UpgradeDatabase` is completed.
 
-<Capsule intent="warning">
+<Warning>
 If after the upgrade is completed the task status is set to `failed` or Meilisearch returns internal error messages to your queries, [restart your instance from the snapshot](/learn/advanced/snapshots#starting-from-a-snapshot) you generated during step 1. You may then retry the upgrade, or upgrade using a dump. You are also welcome to open an issue on the [Meilisearch repository](https://github.com/meilisearch/meilisearch).
-</Capsule>
+</Warning>
 
 ### Using a dump
 

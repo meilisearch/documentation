@@ -224,8 +224,7 @@ You can use this `taskUid` to get more details on [the status of the task](#get-
 
 ## Get tasks
 
-<RouteHighlighter method="GET" path="/tasks
-" />
+<RouteHighlighter method="GET" path="/tasks" />
 
 List all tasks globally, regardless of index. The `task` objects are contained in the `results` array.
 
@@ -314,8 +313,7 @@ Task results are [paginated](/learn/async/paginating_tasks) and can be [filtered
 
 ## Get one task
 
-<RouteHighlighter method="GET" path="/tasks/{task_uid}
-" />
+<RouteHighlighter method="GET" path="/tasks/{task_uid}" />
 
 Get a single task.
 
@@ -362,8 +360,7 @@ If you try retrieving a deleted task, Meilisearch will return a [`task_not_found
 
 ## Cancel tasks
 
-<RouteHighlighter method="POST" path="/tasks/cancel?{query_parameter}
-" />
+<RouteHighlighter method="POST" path="/tasks/cancel?{query_parameter}" />
 
 Cancel any number of `enqueued` or `processing` tasks based on their `uid`, `status`, `type`, `indexUid`, or the date at which they were enqueued (`enqueuedAt`) or processed (`startedAt`).
 
@@ -424,15 +421,13 @@ You can use this `taskUid` to get more details on the [status of the task](#get-
 
 You can cancel all `processing` and `enqueued` tasks using the following filter:
 
-<RouteHighlighter method="POST" path="/tasks/cancel?statuses=processing,enqueued
-" />
+<RouteHighlighter method="POST" path="/tasks/cancel?statuses=processing,enqueued" />
 
 The API key used must have access to all indexes (`"indexes": [*]`) and the [`task.cancel`](/reference/api/keys#actions) action.
 
 ## Delete tasks
 
-<RouteHighlighter method="DELETE" path="/tasks?{query_parameter}
-" />
+<RouteHighlighter method="DELETE" path="/tasks?{query_parameter}" />
 
 Delete a finished (`succeeded`, `failed`, or `canceled`) task based on `uid`, `status`, `type`, `indexUid`, `canceledBy`, or date. Task deletion is an atomic transaction: **either all tasks are successfully deleted, or none are**.
 
@@ -490,7 +485,6 @@ You can use this `taskUid` to get more details on the [status of the task](#get-
 
 You can delete all finished tasks by using the following filter:
 
-<RouteHighlighter method="DELETE" path="/tasks?statuses=failed,canceled,succeeded
-" />
+<RouteHighlighter method="DELETE" path="/tasks?statuses=failed,canceled,succeeded" />
 
 The API key used must have access to all indexes (`"indexes": [*]`) and the [`task.delete`](/reference/api/keys#actions) action.

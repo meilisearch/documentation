@@ -5,7 +5,7 @@ description: The /documents route allows you to create, manage, and delete docum
 ---
 
 import { RouteHighlighter } from '/snippets/route_highlighter.mdx'
-
+import { NoticeTag } from '/snippets/notice_tag.mdx';
 
 import CodeSamplesAddOrReplaceDocuments1 from '/snippets/samples/code_samples_add_or_replace_documents_1.mdx';
 import CodeSamplesAddOrUpdateDocuments1 from '/snippets/samples/code_samples_add_or_update_documents_1.mdx';
@@ -23,8 +23,7 @@ The `/documents` route allows you to create, manage, and delete documents.
 
 ## Get documents with POST
 
-<RouteHighlighter method="POST" path="/indexes/{index_uid}/documents/fetch
-" />
+<RouteHighlighter method="POST" path="/indexes/{index_uid}/documents/fetch" />
 
 Get a set of documents.
 
@@ -106,8 +105,7 @@ Sending an empty payload (`--data-binary '{}'`) will return all documents in the
 This endpoint will be deprecated in the near future. Consider using POST `/indexes/{index_uid}/documents/fetch` instead.
 </Warning>
 
-<RouteHighlighter method="GET" path="/indexes/{index_uid}/documents
-" />
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/documents" />
 
 Get a set of documents.
 
@@ -182,8 +180,7 @@ Using the query parameters `offset` and `limit`, you can browse through all your
 ```
 
 ## Get one document
-<RouteHighlighter method="GET" path="/indexes/{index_uid}/documents/{document_id}
-" />
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/documents/{document_id}" />
 
 Get one document using its unique id.
 
@@ -218,8 +215,7 @@ Get one document using its unique id.
 
 ## Add or replace documents
 
-<RouteHighlighter method="POST" path="/indexes/{index_uid}/documents
-" />
+<RouteHighlighter method="POST" path="/indexes/{index_uid}/documents" />
 
 Add an array of documents or replace them if they already exist. If the provided index does not exist, it will be created.
 
@@ -337,8 +333,7 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 ## Add or update documents
 
-<RouteHighlighter method="PUT" path="/indexes/{index_uid}/documents
-" />
+<RouteHighlighter method="PUT" path="/indexes/{index_uid}/documents" />
 
 Add a list of documents or update them if they already exist. If the provided index does not exist, it will be created.
 
@@ -406,10 +401,9 @@ The documents are matched because they have the same [primary key](/learn/gettin
 
 You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
 
-## Update documents with function (experimental)
+## Update documents with function <NoticeTag type="experimental" label="experimental">
 
-<RouteHighlighter method="POST" path="/indexes/{index_uid}/documents/edit
-" />
+<RouteHighlighter method="POST" path="/indexes/{index_uid}/documents/edit" />
 
 Use a [RHAI function](https://rhai.rs/book/engine/hello-world.html) to edit one or more documents directly in Meilisearch.
 
@@ -465,8 +459,7 @@ curl \
 
 ## Delete all documents
 
-<RouteHighlighter method="DELETE" path="/indexes/{index_uid}/documents
-" />
+<RouteHighlighter method="DELETE" path="/indexes/{index_uid}/documents" />
 
 Delete all documents in the specified index.
 
@@ -496,8 +489,7 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 ## Delete one document
 
-<RouteHighlighter method="DELETE" path="/indexes/{index_uid}/documents/{document_id}
-" />
+<RouteHighlighter method="DELETE" path="/indexes/{index_uid}/documents/{document_id}" />
 
 Delete one document based on its unique id.
 
@@ -528,8 +520,7 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 ## Delete documents by filter
 
-<RouteHighlighter method="POST" path="/indexes/{index_uid}/documents/delete
-" />
+<RouteHighlighter method="POST" path="/indexes/{index_uid}/documents/delete" />
 
 Delete a set of documents based on a filter.
 
@@ -579,8 +570,7 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 This endpoint will be deprecated in the near future. Consider using POST `/indexes/{index_uid}/documents/delete` instead .
 </Warning>
 
-<RouteHighlighter method="POST" path="/indexes/{index_uid}/documents/delete-batch
-" />
+<RouteHighlighter method="POST" path="/indexes/{index_uid}/documents/delete-batch" />
 
 Delete a set of documents based on an array of document ids.
 

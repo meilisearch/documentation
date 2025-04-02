@@ -6,7 +6,6 @@ description: The /metrics endpoint is an experimental feature. It exposes data c
 
 import { RouteHighlighter } from '/snippets/route_highlighter.mdx'
 
-
 import CodeSamplesExperimentalGetMetrics1 from '/snippets/samples/code_samples_experimental_get_metrics_1.mdx';
 
 The `/metrics` route exposes data compatible with [Prometheus](https://prometheus.io/). You will also need to have Grafana installed in your system to make use of this feature.
@@ -48,8 +47,7 @@ API keys with access to `/metrics` are able to see all HTTP calls for all the ro
 
 ## Get metrics
 
-<RouteHighlighter method="GET" path="/metrics
-" />
+<RouteHighlighter method="GET" path="/metrics" />
 
 Get data for current status of your instance. In most cases, you should only query this endpoint via a Prometheus-compatible tool such as Grafana.
 
