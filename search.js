@@ -1,9 +1,3 @@
-//todo
-// [x] inject search bar
-// [x] create search + results modal
-// [x] handle responsive case
-// [] handle light/dark mode
-
 const MEILISEARCH_HOST = 'https://edge.meilisearch.com/'
 const MEILISEARCH_API_KEY = '776dc6a11c118bd1640c3a9ff9679f920bc384238534fc4861fcde0152e7fd68'; // Public search-only API key
 const MEILISEARCH_INDEX = 'mintlify-staging';
@@ -11,11 +5,8 @@ const MEILISEARCH_INDEX = 'mintlify-staging';
 function initializeMeilisearchIntegration() {
   // Add a check at the start of the function to prevent multiple initializations
   if (document.getElementById('meilisearch-bar-container')) {
-    console.log('Search bar already exists, skipping initialization');
     return;
   }
-  
-  console.log('Meilisearch integration initializing');
   
   // Modify the responsive visibility handler
   const handleResponsiveVisibility = () => {
@@ -29,7 +20,6 @@ function initializeMeilisearchIntegration() {
     const isMobileView = window.innerWidth < 1024;
     
     if (isMobileView) {
-      console.log('hide search bar container')
       // Hide our search bar
       searchBarContainer.style.display = 'none';
 
@@ -41,7 +31,6 @@ function initializeMeilisearchIntegration() {
         originalMobileSearchButton.style.display = 'flex';
       }
     } else {
-      console.log('display search bar container')
       // Show our search bar
       searchBarContainer.style.display = 'block';
       
@@ -57,31 +46,23 @@ function initializeMeilisearchIntegration() {
 
   // ========= Step 1: Create and inject the visible search bar in the header =========
   const initSearchBar = () => {
-    console.log('Initializing search bar');
     
     // When finding the original search button, also look for mobile version icon
     const originalSearchButton = document.getElementById('search-bar-entry');
     const originalMobileSearchButton = document.getElementById('search-bar-entry-mobile');
     
-    if (!originalSearchButton && !originalMobileSearchButton) {
-      console.log('Neither desktop nor mobile search buttons found');
-    } else {
-      console.log('Found search button(s)');
-    }
-    
     // Find the header where we'll add our search input
     const header = document.querySelector('header');
-    if (!header) {
-      console.log('Header not found, cannot add search bar');
+    if (!header) { //header not found, cannot add search bar
       return;
     }
     
     // Log header properties to help with debugging
-    console.log('Header found, dimensions:', {
-      width: header.offsetWidth,
-      height: header.offsetHeight,
-      position: window.getComputedStyle(header).position
-    });
+    // console.log('Header found, dimensions:', {
+    //   width: header.offsetWidth,
+    //   height: header.offsetHeight,
+    //   position: window.getComputedStyle(header).position
+    // });
     
     // Try to find a proper container within the header for the search
     let headerContainer = null;
@@ -90,7 +71,6 @@ function initializeMeilisearchIntegration() {
     const navElement = header.querySelector('nav');
     if (navElement) {
       headerContainer = navElement;
-      console.log('Found nav element in header');
     } 
     // Option 2: Look for a flex container in the header
     else {
@@ -104,11 +84,9 @@ function initializeMeilisearchIntegration() {
         headerContainer = potentialContainers.reduce((prev, current) => {
           return (prev.offsetWidth > current.offsetWidth) ? prev : current;
         });
-        console.log('Found flex container in header');
       } else {
         // Use the header itself as a last resort
         headerContainer = header;
-        console.log('Using header itself as container');
       }
     }
     
@@ -119,7 +97,6 @@ function initializeMeilisearchIntegration() {
       
       if (searchParent) {
         headerContainer = searchParent;
-        console.log('Using original search button parent as container');
       }
     }
     
@@ -172,7 +149,6 @@ function initializeMeilisearchIntegration() {
     
     // If the header isn't a flex container, we need to make it one for proper centering
     if (!isFlexContainer) {
-      console.log('Container is not flex, creating flex wrapper');
       // Create a wrapper to center the search bar
       const flexWrapper = document.createElement('div');
       flexWrapper.style.cssText = `
@@ -184,7 +160,6 @@ function initializeMeilisearchIntegration() {
       flexWrapper.appendChild(searchBarContainer);
       headerContainer.appendChild(flexWrapper);
     } else {
-      console.log('Container is already flex, adding directly');
       // Insert the search container into the flex container
       // Find the right position - ideally in the middle
       const childCount = headerContainer.children.length;
@@ -393,18 +368,15 @@ function initializeMeilisearchIntegration() {
     // ========= Step 4: Set up Meilisearch for searching =========
     // Load Meilisearch client
     if (!window.meilisearch) {
-      console.log('Loading Meilisearch client');
       const meilisearchScript = document.createElement('script');
       meilisearchScript.src = 'https://cdn.jsdelivr.net/npm/meilisearch@latest/dist/bundles/meilisearch.umd.js';
       meilisearchScript.onload = () => {
-        console.log('Meilisearch client loaded');
         // The UMD bundle exposes MeiliSearch directly, no need to access .default
         window.meilisearch = window.MeiliSearch;
         setupMeilisearchHandlers(searchInput, resultsContainer);
       };
       document.head.appendChild(meilisearchScript);
     } else {
-      console.log('Meilisearch client already loaded');
       setupMeilisearchHandlers(searchInput, resultsContainer);
     }
 
@@ -424,13 +396,10 @@ function initializeMeilisearchIntegration() {
   // Set up the search functionality
   const setupMeilisearchHandlers = (searchInput, resultsContainer) => {
     try {
-      console.log('Setting up Meilisearch handlers');
       const client = new window.meilisearch({
         host: MEILISEARCH_HOST,
         apiKey: MEILISEARCH_API_KEY
       });
-      
-      console.log(client);
 
       const index = client.index(MEILISEARCH_INDEX);
       
@@ -447,7 +416,6 @@ function initializeMeilisearchIntegration() {
         }
         
         debounceTimer = setTimeout(() => {
-          console.log('Searching for:', query);
           // Show loading indicator
           resultsContainer.innerHTML = '<div style="padding: 20px; text-align: center; color: rgba(255, 255, 255, 0.7);">Searching...</div>';
           
@@ -463,7 +431,6 @@ function initializeMeilisearchIntegration() {
             }
           })
           .then(response => {
-            console.log('Search results:', response.hits.length);
             resultsContainer.innerHTML = '';
             
             if (response.hits.length === 0) {
@@ -589,8 +556,7 @@ function initializeMeilisearchIntegration() {
             const searchBarContainer = document.getElementById('meilisearch-bar-container') || 
                                      document.getElementById('search-bar-entry');
             
-            if (!searchBar && !searchBarContainer) {
-              console.log('Search bar missing in desktop view, reinitializing');
+            if (!searchBar && !searchBarContainer) { //searchbar missing in desktop view, reinitialize
               initSearchBar();
             }
           }
@@ -611,12 +577,8 @@ function initializeMeilisearchIntegration() {
 }
 
 // Initialization
-if (document.readyState === 'complete' || document.readyState === 'interactive') {
-  console.log('Document ready, initializing');
+if (document.readyState === 'complete' || document.readyState === 'interactive') { //document ready, initialize
   initializeMeilisearchIntegration();
-} else {
-  console.log('Waiting for DOMContentLoaded');
+} else { //waiting for DOMContentLoaded, initialize
   document.addEventListener('DOMContentLoaded', initializeMeilisearchIntegration);
 }
-
-console.log('Meilisearch search script loaded');
