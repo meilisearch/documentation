@@ -2727,8 +2727,8 @@ When using a [composite embedder](#composite-embedders), configure separate embe
 
 Both fields must be an object and accept the same fields as a regular embedder, with the following exceptions:
 
-- `indexingEmbedder` and `searchEmbedder` must use the same `model`
-- `indexingEmbedder` and `searchEmbedder` must use the same `dimension` values
+- `indexingEmbedder` and `searchEmbedder` must use the same model for generating embeddings
+- `indexingEmbedder` and `searchEmbedder` must have identical `dimension`s
 - `source` is mandatory for both `indexingEmbedder` and `searchEmbedder`
 - Neither sub-embedder can set `source` to `composite` or `userProvided`
 - Neither `binaryQuantized` and `distribution` are valid sub-embedder fields and must always be declared in the main embedder
