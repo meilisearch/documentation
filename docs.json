@@ -19,7 +19,7 @@
 		}
 	},
 	"appearance": {
-        "default": "dark",
+    "default": "dark",
 		"strict": true
 	},
 	"navbar": {
@@ -152,158 +152,158 @@
 							{
 								"group": "GETTING STARTED",
 								"pages": [
-									"home",
-									"learn/getting_started/cloud_quick_start",
-									"learn/getting_started/what_is_meilisearch",
-									"learn/getting_started/documents",
-									"learn/getting_started/indexes",
-									"learn/getting_started/primary_key",
-									"learn/getting_started/search_preview"
+									"docs/home",
+									"docs/learn/getting_started/cloud_quick_start",
+									"docs/learn/getting_started/what_is_meilisearch",
+									"docs/learn/getting_started/documents",
+									"docs/learn/getting_started/indexes",
+									"docs/learn/getting_started/primary_key",
+									"docs/learn/getting_started/search_preview"
 								]
 							},
 							{
 								"group": "AI-POWERED SEARCH",
 								"pages": [
-									"learn/ai_powered_search/getting_started_with_ai_search",
-									"learn/ai_powered_search/search_with_user_provided_embeddings",
-									"learn/ai_powered_search/difference_full_text_ai_search"
+									"docs/learn/ai_powered_search/getting_started_with_ai_search",
+									"docs/learn/ai_powered_search/search_with_user_provided_embeddings",
+									"docs/learn/ai_powered_search/difference_full_text_ai_search"
 								]
 							},
 							{
 								"group": "SELF-HOSTED",
 								"pages": [
-									"learn/self_hosted/getting_started_with_self_hosted_meilisearch",
-									"learn/self_hosted/configure_meilisearch_at_launch",
-									"learn/self_hosted/install_meilisearch_locally",
-									"learn/self_hosted/supported_os"
+									"docs/learn/self_hosted/getting_started_with_self_hosted_meilisearch",
+									"docs/learn/self_hosted/configure_meilisearch_at_launch",
+									"docs/learn/self_hosted/install_meilisearch_locally",
+									"docs/learn/self_hosted/supported_os"
 								]
 							},
 							{
 								"group": "ANALYTICS",
 								"pages": [
-									"learn/analytics/configure_analytics",
-									"learn/analytics/configure_monitoring",
-									"learn/analytics/bind_events_user",
-									"learn/analytics/deactivate_analytics_monitoring",
-									"learn/analytics/events_endpoint"
+									"docs/learn/analytics/configure_analytics",
+									"docs/learn/analytics/configure_monitoring",
+									"docs/learn/analytics/bind_events_user",
+									"docs/learn/analytics/deactivate_analytics_monitoring",
+									"docs/learn/analytics/events_endpoint"
 								]
 							},
 							{
 								"group": "TEAMS",
 								"pages": [
-									"learn/teams/teams"
+									"docs/learn/teams/teams"
 								]
 							},
 							{
 								"group": "TASKS AND ASYNCHRONOUS OPERATIONS",
 								"pages": [
-									"learn/async/working_with_tasks",
-									"learn/async/filtering_tasks",
-									"learn/async/paginating_tasks",
-									"learn/async/task_webhook",
-									"learn/async/asynchronous_operations"
+									"docs/learn/async/working_with_tasks",
+									"docs/learn/async/filtering_tasks",
+									"docs/learn/async/paginating_tasks",
+									"docs/learn/async/task_webhook",
+									"docs/learn/async/asynchronous_operations"
 								]
 							},
 							{
 								"group": "CONFIGURATION",
 								"pages": [
-									"learn/configuration/configuring_index_settings",
-									"learn/configuration/configuring_index_settings_api"
+									"docs/learn/configuration/configuring_index_settings",
+									"docs/learn/configuration/configuring_index_settings_api"
 								]
 							},
 							{
 								"group": "FILTERING AND SORTING",
 								"pages": [
-									"learn/filtering_and_sorting/filter_search_results",
-									"learn/filtering_and_sorting/search_with_facet_filters",
-									"learn/filtering_and_sorting/working_with_dates",
-									"learn/filtering_and_sorting/sort_search_results",
-									"learn/filtering_and_sorting/geosearch",
-									"learn/filtering_and_sorting/filter_expression_reference"
+									"docs/learn/filtering_and_sorting/filter_search_results",
+									"docs/learn/filtering_and_sorting/search_with_facet_filters",
+									"docs/learn/filtering_and_sorting/working_with_dates",
+									"docs/learn/filtering_and_sorting/sort_search_results",
+									"docs/learn/filtering_and_sorting/geosearch",
+									"docs/learn/filtering_and_sorting/filter_expression_reference"
 								]
 							},
 							{
 								"group": "SECURITY AND PERMISSIONS",
 								"pages": [
-									"learn/security/basic_security",
-									"learn/security/generate_tenant_token_sdk",
-									"learn/security/generate_tenant_token_third_party",
-									"learn/security/generate_tenant_token_scratch",
-									"learn/security/resetting_master_key",
-									"learn/security/tenant_token_reference",
-									"learn/security/differences_master_api_keys",
-									"learn/security/protected_unprotected",
-									"learn/security/multitenancy_tenant_tokens"
+									"docs/learn/security/basic_security",
+									"docs/learn/security/generate_tenant_token_sdk",
+									"docs/learn/security/generate_tenant_token_third_party",
+									"docs/learn/security/generate_tenant_token_scratch",
+									"docs/learn/security/resetting_master_key",
+									"docs/learn/security/tenant_token_reference",
+									"docs/learn/security/differences_master_api_keys",
+									"docs/learn/security/protected_unprotected",
+									"docs/learn/security/multitenancy_tenant_tokens"
 								]
 							},
 							{
 								"group": "MULTI-SEARCH",
 								"pages": [
-									"learn/multi_search/performing_federated_search",
-									"learn/multi_search/multi_search_vs_federated_search"
+									"docs/learn/multi_search/performing_federated_search",
+									"docs/learn/multi_search/multi_search_vs_federated_search"
 								]
 							},
 							{
 								"group": "UPDATE AND MIGRATION",
 								"pages": [
-									"learn/update_and_migration/migrating_cloud",
-									"learn/update_and_migration/updating",
-									"learn/update_and_migration/algolia_migration",
-									"learn/update_and_migration/previous_docs_version"
+									"docs/learn/update_and_migration/migrating_cloud",
+									"docs/learn/update_and_migration/updating",
+									"docs/learn/update_and_migration/algolia_migration",
+									"docs/learn/update_and_migration/previous_docs_version"
 								]
 							},
 							{
 								"group": "DATA BACKUP",
 								"pages": [
-									"learn/data_backup/dumps",
-									"learn/data_backup/snapshots",
-									"learn/data_backup/snapshots_vs_dumps"
+									"docs/learn/data_backup/dumps",
+									"docs/learn/data_backup/snapshots",
+									"docs/learn/data_backup/snapshots_vs_dumps"
 								]
 							},
 							{
 								"group": "INDEXING",
 								"pages": [
-									"learn/indexing/indexing_best_practices",
-									"learn/indexing/ram_multithreading_performance",
-									"learn/indexing/tokenization"
+									"docs/learn/indexing/indexing_best_practices",
+									"docs/learn/indexing/ram_multithreading_performance",
+									"docs/learn/indexing/tokenization"
 								]
 							},
 							{
 								"group": "ENGINE",
 								"pages": [
-									"learn/engine/concat",
-									"learn/engine/datatypes",
-									"learn/engine/prefix",
-									"learn/engine/storage"
+									"docs/learn/engine/concat",
+									"docs/learn/engine/datatypes",
+									"docs/learn/engine/prefix",
+									"docs/learn/engine/storage"
 								]
 							},
 							{
 								"group": "RELEVANCY",
 								"pages": [
-									"learn/relevancy/relevancy",
-									"learn/relevancy/ranking_rules",
-									"learn/relevancy/custom_ranking_rules",
-									"learn/relevancy/ranking_score",
-									"learn/relevancy/attribute_ranking_order",
-									"learn/relevancy/typo_tolerance_settings",
-									"learn/relevancy/typo_tolerance_calculations",
-									"learn/relevancy/distinct_attribute",
-									"learn/relevancy/displayed_searchable_attributes",
-									"learn/relevancy/synonyms"
+									"docs/learn/relevancy/relevancy",
+									"docs/learn/relevancy/ranking_rules",
+									"docs/learn/relevancy/custom_ranking_rules",
+									"docs/learn/relevancy/ranking_score",
+									"docs/learn/relevancy/attribute_ranking_order",
+									"docs/learn/relevancy/typo_tolerance_settings",
+									"docs/learn/relevancy/typo_tolerance_calculations",
+									"docs/learn/relevancy/distinct_attribute",
+									"docs/learn/relevancy/displayed_searchable_attributes",
+									"docs/learn/relevancy/synonyms"
 								]
 							},
 							{
 								"group": "RESOURCES",
 								"pages": [
-									"learn/resources/known_limitations",
-									"learn/resources/experimental_features_overview",
-									"learn/resources/faq",
-									"learn/resources/sdks",
-									"learn/resources/comparison_to_alternatives",
-									"learn/resources/telemetry",
-									"learn/resources/language",
-									"learn/resources/versioning",
-									"learn/resources/contributing_docs"
+									"docs/learn/resources/known_limitations",
+									"docs/learn/resources/experimental_features_overview",
+									"docs/learn/resources/faq",
+									"docs/learn/resources/sdks",
+									"docs/learn/resources/comparison_to_alternatives",
+									"docs/learn/resources/telemetry",
+									"docs/learn/resources/language",
+									"docs/learn/resources/versioning",
+									"docs/learn/resources/contributing_docs"
 								]
 							}
 						]
@@ -315,32 +315,32 @@
 							{
 								"group": "API REFERENCE",
 								"pages": [
-									"reference/api/overview",
-									"reference/api/indexes",
-									"reference/api/documents",
-									"reference/api/search",
-									"reference/api/multi_search",
-									"reference/api/similar",
-									"reference/api/facet_search",
-									"reference/api/tasks",
-									"reference/api/batches",
-									"reference/api/keys",
-									"reference/api/settings",
-									"reference/api/snapshots",
-									"reference/api/stats",
-									"reference/api/health",
-									"reference/api/version",
-									"reference/api/dump",
-									"reference/api/experimental_features",
-									"reference/api/metrics",
-									"reference/api/logs"
+									"docs/reference/api/overview",
+									"docs/reference/api/indexes",
+									"docs/reference/api/documents",
+									"docs/reference/api/search",
+									"docs/reference/api/multi_search",
+									"docs/reference/api/similar",
+									"docs/reference/api/facet_search",
+									"docs/reference/api/tasks",
+									"docs/reference/api/batches",
+									"docs/reference/api/keys",
+									"docs/reference/api/settings",
+									"docs/reference/api/snapshots",
+									"docs/reference/api/stats",
+									"docs/reference/api/health",
+									"docs/reference/api/version",
+									"docs/reference/api/dump",
+									"docs/reference/api/experimental_features",
+									"docs/reference/api/metrics",
+									"docs/reference/api/logs"
 								]
 							},
 							{
 								"group": "ERRORS",
 								"pages": [
-									"reference/errors/overview",
-									"reference/errors/error_codes"
+									"docs/reference/errors/overview",
+									"docs/reference/errors/error_codes"
 								]
 							}
 						]
@@ -352,71 +352,71 @@
 							{
 								"group": "FRONT END",
 								"pages": [
-									"guides/front_end/front_end_integration",
-									"guides/front_end/react_quick_start",
-									"guides/front_end/vue_quick_start",
-									"guides/front_end/search_bar_for_docs",
-									"guides/front_end/pagination"
+									"docs/guides/front_end/front_end_integration",
+									"docs/guides/front_end/react_quick_start",
+									"docs/guides/front_end/vue_quick_start",
+									"docs/guides/front_end/search_bar_for_docs",
+									"docs/guides/front_end/pagination"
 								]
 							},
 							{
 								"group": "BACK END",
 								"pages": [
-									"guides/laravel_scout",
-									"guides/strapi_v4",
-									"guides/ruby_on_rails_quick_start"
+									"docs/guides/laravel_scout",
+									"docs/guides/strapi_v4",
+									"docs/guides/ruby_on_rails_quick_start"
 								]
 							},
 							{
 								"group": "ARTIFICAL INTELLIGENCE",
 								"pages": [
-									"guides/embedders/openai",
-									"guides/langchain",
-									"guides/embedders/huggingface",
-									"guides/embedders/cloudflare",
-									"guides/embedders/cohere",
-									"guides/embedders/mistral",
-									"guides/embedders/voyage",
-									"guides/computing_hugging_face_embeddings_gpu"
+									"docs/guides/embedders/openai",
+									"docs/guides/langchain",
+									"docs/guides/embedders/huggingface",
+									"docs/guides/embedders/cloudflare",
+									"docs/guides/embedders/cohere",
+									"docs/guides/embedders/mistral",
+									"docs/guides/embedders/voyage",
+									"docs/guides/computing_hugging_face_embeddings_gpu"
 								]
 							},
 							{
 								"group": "PERFORMANCE",
 								"pages": [
-									"guides/improve_relevancy_large_documents"
+									"docs/guides/improve_relevancy_large_documents"
 								]
 							},
 							{
 								"group": "SECURITY",
 								"pages": [
-									"guides/http2_ssl",
-									"guides/laravel_multitenancy",
-									"guides/multitenancy_nodejs"
+									"docs/guides/http2_ssl",
+									"docs/guides/laravel_multitenancy",
+									"docs/guides/multitenancy_nodejs"
 								]
 							},
 							{
 								"group": "DEPLOYMENT",
 								"pages": [
-									"guides/running_production",
-									"guides/deployment/aws",
-									"guides/deployment/azure",
-									"guides/deployment/digitalocean",
-									"guides/deployment/koyeb",
-									"guides/deployment/qovery",
-									"guides/deployment/railway"
+									"docs/guides/running_production",
+									"docs/guides/deployment/aws",
+									"docs/guides/deployment/azure",
+									"docs/guides/deployment/digitalocean",
+									"docs/guides/deployment/koyeb",
+									"docs/guides/deployment/qovery",
+									"docs/guides/deployment/railway"
 								]
 							},
 							{
 								"group": "INTEGRATIONS",
 								"pages": [
-									"guides/vercel"
+									"docs/guides/vercel"
 								]
 							},
 							{
 								"group": "MISCELLANEOUS",
 								"pages": [
-									"guides/postman_collection",
-									"guides/docker"
+									"docs/guides/postman_collection",
+									"docs/guides/docker"
 								]
 							}
 						]
