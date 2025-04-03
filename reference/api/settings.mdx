@@ -2702,9 +2702,11 @@ Configure how Meilisearch should merge individual tokens into a single embedding
 
 `pooling` must be one of the following strings:
 
-- `"useModel"`: Meilisearch will fetch the pooling method from the model configuration, default value for new embedders
-- `"forceMean"`: always use mean pooling, default value for embedders created in Meilisearch \<=v1.13
+- `"useModel"`: Meilisearch will fetch the pooling method from the model configuration. Default value for new embedders
+- `"forceMean"`: always use mean pooling. Default value for embedders created in Meilisearch \<=v1.13
 - `"forceCls"`: always use CLS pooling
+
+If in doubt, use `"useModel"`. `"forceMean"` and `"forceCls"` are compatibility options that might be necessary for certain embedders and models.
 
 `pooling` is optional for embedders with the `huggingFace` source.
 
