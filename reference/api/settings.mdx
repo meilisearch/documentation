@@ -713,8 +713,8 @@ You may also set attributePatterns to *. In this case Meilisearch will treat all
 
 - `facetSearch`: Whether facet search should be enabled for the specified attributes. Boolean, defaults to `false` 
 - `filter`: A list outlining the filter types for the specified attributes. Must be an object and accepts the following fields:
-  - `equality`: Enables `=`, `!=`, `IN`, `EXISTS`, `NOT`, `AND`, and `OR`. Boolean, defaults to `true`
-  - `comparison`: Enables `>`, `>=`, `<`, `<=`, `TO`, `EXISTS`, `NOT`, `AND`, and `OR`. Boolean, defaults to `false`
+  - `equality`: Enables `=`, `!=`, `IN`, `EXISTS`, `IS NULL`, `IS EMPTY`, `NOT`, `AND`, and `OR`. Boolean, defaults to `true`
+  - `comparison`: Enables `>`, `>=`, `<`, `<=`, `TO`, `EXISTS`, `IS NULL`, `IS EMPTY`, `NOT`, `AND`, and `OR`. Boolean, defaults to `false`
 
 Calculating `comparison` filters is a resource-intensive operation. Disabling them may lead to better search and indexing performance. `equality` filters use fewer resources and have limited impact on performance.
 
