@@ -1,10 +1,8 @@
 ---
-title: Deploy a Meilisearch instance on Qovery — Meilisearch documentation
+title: Deploy a Meilisearch instance on Qovery
 description: Deploy Meilisearch on Qovery in six steps.
 sidebarDepth: 3
 ---
-
-# Deploy a Meilisearch instance on Qovery
 
 [Qovery](https://www.qovery.com) is a fully-managed cloud platform that runs on your AWS, DigitalOcean, or Scaleway account where you can host static sites, backend APIs, databases, cron jobs, and all your other apps in one place.
 
@@ -27,13 +25,17 @@ Visit the [Qovery dashboard](https://start.qovery.com) to create an account if y
 * Click on **Create project** and give a name to your project
 * Click on **Next**
 
-!["Create Project" button](https://hub.qovery.com/img/heroku/heroku-2.png)
+<Frame>
+  <img src="https://hub.qovery.com/img/heroku/heroku-2.png" alt="'Create Project' button" />
+</Frame>
 
 ### 3. Create a new environment
 
 * Click on **Create environment** and give it a name (for example, staging, production).
 
-!["Create environment" button](https://hub.qovery.com/img/heroku/heroku-3.png)
+<Frame>
+  <img src="https://hub.qovery.com/img/heroku/heroku-3.png" alt="'Create environment' button" />
+</Frame>
 
 ### 4. Add your Meilisearch app
 
@@ -41,7 +43,9 @@ Visit the [Qovery dashboard](https://start.qovery.com) to create an account if y
 * Define the main branch name and the root application path
 * Click on **Create**
 
-![Choose your repository in the "Create Application" pop-up](https://hub.qovery.com/img/rust/rust.png)
+<Frame>
+  <img src="https://hub.qovery.com/img/rust/rust.png" alt="Choose your repository in the 'Create Application' pop-up" />
+</Frame>
 
 After the application has been created:
 
@@ -53,13 +57,17 @@ After the application has been created:
 
 To add storage, go to your application **Settings**:
 
-![Set storage to 10GB SSD](https://hub.qovery.com/img/add-storage.png)
+<Frame>
+  <img src="https://hub.qovery.com/img/add-storage.png" alt="Set storage to 10GB SSD" />
+</Frame>
 
 ### 6. Deploy the app on Qovery
 
 All you have to do now is to navigate to your application and click on **Deploy**.
 
-![Choose "Deploy" from the "Actions" dropdown](https://hub.qovery.com/img/heroku/heroku-1.png)
+<Frame>
+  <img src="https://hub.qovery.com/img/heroku/heroku-1.png" alt="Choose 'Deploy' from the 'Actions' dropdown" />
+</Frame>
 
 That's it! Watch the status and wait until the app is deployed.
 

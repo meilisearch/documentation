@@ -1,0 +1,49 @@
+<CodeGroup>
+
+```javascript JS
+const frontEndClient = new MeiliSearch({ host: 'http://localhost:7700', apiKey: token })
+frontEndClient.index('patient_medical_records').search('blood test')
+```
+
+```python Python
+front_end_client = Client('http://localhost:7700', token)
+front_end_client.index('patient_medical_records').search('blood test')
+```
+
+```php PHP
+$frontEndClient = new Client('http://localhost:7700', $token);
+$frontEndClient->index('patient_medical_records')->search('blood test');
+```
+
+```java Java
+Client frontEndClient = new Client(new Config("http://localhost:7700", token));
+frontEndClient.index("patient_medical_records").search("blood test");
+```
+
+```ruby Ruby
+front_end_client = MeiliSearch::Client.new('http://localhost:7700', token)
+
+front_end_client.index('patient_medical_records').search('blood test')
+```
+
+```go Go
+client := meilisearch.New("http://localhost:7700", meilisearch.WithAPIKey("masterKey"))
+client.Index("patient_medical_records").Search("blood test", &meilisearch.SearchRequest{});
+```
+
+```csharp C#
+frontEndClient = new MeilisearchClient("http://localhost:7700", token);
+var searchResult = await frontEndClient.Index("patient_medical_records").SearchAsync<Patient>("blood test");
+```
+
+```rust Rust
+let front_end_client = Client::new("http://localhost:7700", Some(token));
+let results: SearchResults<Patient> = front_end_client
+  .index("patient_medical_records")
+  .search()
+  .with_query("blood test")
+  .execute()
+  .await
+  .unwrap();
+```
+</CodeGroup>

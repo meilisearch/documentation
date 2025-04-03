@@ -1,21 +1,24 @@
 ---
-title: Dumps — Meilisearch API reference
+title: Dumps
+sidebarTitle: Dumps
 description: The /dumps route allows the creation of database dumps. Use dumps to migrate Meilisearch to a new version.
 ---
 
-# Dumps
+import { RouteHighlighter } from '/snippets/route_highlighter.mdx'
+
+import CodeSamplesPostDump1 from '/snippets/samples/code_samples_post_dump_1.mdx';
 
 The `/dumps` route allows the creation of database dumps. Dumps are `.dump` files that can be used to restore Meilisearch data or migrate between different versions.
 
-<Capsule intent="warning" title="Meilisearch Cloud and dumps">
+<Warning>
 Meilisearch Cloud does not support the `/dumps` route.
-</Capsule>
+</Warning>
 
 [Learn more about dumps](/learn/advanced/dumps).
 
 ## Create a dump
 
-<RouteHighlighter method="POST" route="/dumps"/>
+<RouteHighlighter method="POST" path="/dumps" />
 
 Triggers a dump creation task. Once the process is complete, a dump is created in the [dump directory](/learn/self_hosted/configure_meilisearch_at_launch#dump-directory). If the dump directory does not exist yet, it will be created.
 
@@ -25,7 +28,7 @@ Dump tasks take priority over all other tasks in the queue. This means that a ne
 
 ### Example
 
-<CodeSamples id="post_dump_1" />
+<CodeSamplesPostDump1 />
 
 #### Response: `202 Accepted`
 

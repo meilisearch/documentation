@@ -1,0 +1,10 @@
+export const RouteHighlighter = ({ method, path }) => (
+  <div className={`routeHighlighter routeHighlighter--${method}`}>
+    <div className="routeHighlighter__method">
+      { method }
+    </div>
+    <div className="routeHighlighter__path">
+      { path }
+    </div>
+  </div>
+);

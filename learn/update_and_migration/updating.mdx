@@ -1,10 +1,17 @@
 ---
-title: Update to the latest Meilisearch version — Meilisearch documentation
+title: Update to the latest Meilisearch version
+sidebarTitle: Updating Meilisearch
 description: Learn how to migrate to the latest Meilisearch release.
 sidebarDepth: 3
 ---
 
-# Update to the latest Meilisearch version
+import { NoticeTag } from '/snippets/notice_tag.mdx';
+
+import CodeSamplesUpdatingGuideCheckVersionNewAuthorizationHeader from '/snippets/samples/code_samples_updating_guide_check_version_new_authorization_header.mdx';
+import CodeSamplesUpdatingGuideCheckVersionOldAuthorizationHeader from '/snippets/samples/code_samples_updating_guide_check_version_old_authorization_header.mdx';
+import CodeSamplesUpdatingGuideCreateDump from '/snippets/samples/code_samples_updating_guide_create_dump.mdx';
+import CodeSamplesUpdatingGuideGetDisplayedAttributesOldAuthorizationHeader from '/snippets/samples/code_samples_updating_guide_get_displayed_attributes_old_authorization_header.mdx';
+import CodeSamplesUpdatingGuideResetDisplayedAttributesOldAuthorizationHeader from '/snippets/samples/code_samples_updating_guide_reset_displayed_attributes_old_authorization_header.mdx';
 
 Currently, Meilisearch databases are only compatible with the version of Meilisearch used to create them. The following guide will walk you through using a [dump](/learn/advanced/dumps) to migrate an existing database from an older version of Meilisearch to the most recent one.
 
@@ -12,35 +19,39 @@ If you're updating your Meilisearch instance on cloud platforms like DigitalOcea
 
 If migrating to the latest version of Meilisearch will cause you to skip multiple versions, this may require changes to your codebase. [Refer to our version-specific update warnings for more details](#version-specific-warnings).
 
-<Capsule intent="tip">
+<Tip>
 If you are running Meilisearch as a `systemctl` service using v0.22 or above, try our [migration script](https://github.com/meilisearch/meilisearch-migration).
-</Capsule>
+</Tip>
 
 ## Updating Meilisearch Cloud
 
 Log into your Meilisearch Cloud account and navigate to the project you want to update.
 
-Click on the project you want to update. Look for the "General settings" section at the top of the page. 
+Click on the project you want to update. Look for the "General settings" section at the top of the page.
 
 Whenever a new version of Meilisearch is available, you will see an update button next to the "Meilisearch version" field.
 
-![Button to update Meilisearch version to 1.0.2](/assets/images/updating/update-button.png)
+<Frame>
+  <img src="/assets/images/updating/update-button.png" alt="Button to update Meilisearch version to 1.0.2" />
+</Frame>
 
-To update to the latest Meilisearch release, click the "Update to v.X.Y.Z" button. 
+To update to the latest Meilisearch release, click the "Update to v.X.Y.Z" button.
 
 This will open a pop-up with more information about the update process. Read it, then click on "Update". The "Status" of your project will change from "running" to "updating".
 
-![Project update in progress](/assets/images/updating/update-in-progress.png)
+<Frame>
+  <img src="/assets/images/updating/update-in-progress.png" alt="Project update in progress" />
+</Frame>
 
 Once the project has been successfully updated, you will receive an email confirming the update and "Status" will change back to "running".
 
 ## Updating a self-hosted Meilisearch instance
 
+<Warning>
 You may update a self-hosted instance in one of two ways: with or without a dump.
 
-<Capsule intent="warning">
 This guide only works for v0.15 and above. If you are using an older Meilisearch release, please [contact support](https://discord.meilisearch.com) for more information.
-</Capsule>
+</Warning>
 
 ### Dumpless upgrade <NoticeTag type="experimental" label="experimental" />
 
@@ -145,9 +156,9 @@ Meilisearch should launch normally and immediately create a new `UpgradeDatabase
 
 While the task is processing, you may continue making search queries. You may also enqueue new tasks. Meilisearch will only process new tasks once `UpgradeDatabase` is completed.
 
-<Capsule intent="warning">
+<Warning>
 If after the upgrade is completed the task status is set to `failed` or Meilisearch returns internal error messages to your queries, [restart your instance from the snapshot](/learn/advanced/snapshots#starting-from-a-snapshot) you generated during step 1. You may then retry the upgrade, or upgrade using a dump. You are also welcome to open an issue on the [Meilisearch repository](https://github.com/meilisearch/meilisearch).
-</Capsule>
+</Warning>
 
 ### Using a dump
 
@@ -157,7 +168,7 @@ If after the upgrade is completed the task status is set to `failed` or Meilisea
 
 First, verify the version of Meilisearch that's compatible with your database using the get version endpoint:
 
-<CodeSamples id="updating_guide_check_version_new_authorization_header" />
+<CodeSamplesUpdatingGuideCheckVersionNewAuthorizationHeader />
 
 The response should look something like this:
 
@@ -169,31 +180,31 @@ The response should look something like this:
 }
 ```
 
-<Capsule intent="tip">
+<Tip>
 If you get the `missing_authorization_header` error, you might be using **v0.24 or below**. For each command, replace the `Authorization: Bearer` header with the `X-Meili-API-Key: API_KEY` header:
 
-<CodeSamples id="updating_guide_check_version_old_authorization_header" />
-</Capsule>
+<CodeSamplesUpdatingGuideCheckVersionOldAuthorizationHeader />
+</Tip>
 
 If your [`pkgVersion`](/reference/api/version#version-object) is 0.21 or above, you can jump to [creating the dump](#create-the-dump). If not, proceed to the next step.
 
 ##### Set all fields as displayed attributes
 
-<Capsule intent="note">
+<Note>
 If your dump was created in Meilisearch v0.21 or above, [skip this step](#create-the-dump).
-</Capsule>
+</Note>
 
 When creating dumps using Meilisearch versions below v0.21, all fields must be [displayed](/learn/relevancy/displayed_searchable_attributes#displayed-fields) in order to be saved in the dump.
 
 Start by verifying that all attributes are included in the displayed attributes list:
 
-<CodeSamples id="updating_guide_get_displayed_attributes_old_authorization_header" />
+<CodeSamplesUpdatingGuideGetDisplayedAttributesOldAuthorizationHeader />
 
 If the response for all indexes is `{'displayedAttributes': '["*"]'}`, you can move on to the [next step](#create-the-dump).
 
 If the response is anything else, save the current list of displayed attributes in a text file and then reset the displayed attributes list to its default value `(["*"])`:
 
-<CodeSamples id="updating_guide_reset_displayed_attributes_old_authorization_header" />
+<CodeSamplesUpdatingGuideResetDisplayedAttributesOldAuthorizationHeader />
 
 This command returns an `updateId`. Use the get update endpoint to track the status of the operation:
 
@@ -259,13 +270,13 @@ It should return something like this:
 </Tabs.Content>
 </Tabs.Container>
 
-<Capsule intent="danger" title={<><code>_geo</code> field in v0.27, v0.28, and v0.29</>}>
+<Warning>
 Due to an error allowing malformed `_geo` fields in Meilisearch **v0.27, v0.28, and v0.29**, you might not be able to import your dump. Please ensure the `_geo` field follows the [correct format](/learn/filtering_and_sorting/geosearch#preparing-documents-for-location-based-search) before creating your dump.
-</Capsule>
+</Warning>
 
 You can then create a dump of your database:
 
-<CodeSamples id="updating_guide_create_dump" />
+<CodeSamplesUpdatingGuideCreateDump />
 
 The server should return a response that looks like this:
 
@@ -281,16 +292,16 @@ The server should return a response that looks like this:
 
 Use the `taskUid` to [track the status](/reference/api/tasks#get-one-task) of your dump. Keep in mind that the process can take some time to complete.
 
-<Capsule intent="note" title="Meilisearch v0.27 and below">
+<Note>
 For v0.27 and below, the response to your request returns a dump `uid`. Use it  with the `/dumps/:dump_uid/status` route to track the request status:
 
 ```sh
   curl \
     -X GET 'http://<your-domain-name>/dumps/:dump_uid/status'
-    -H 'Authorization: Bearer API_KEY' 
+    -H 'Authorization: Bearer API_KEY'
   # -H 'X-Meili-API-Key: API_KEY' for v0.24 or below
 ```
-</Capsule>
+</Note>
 
 Once the `dumpCreation` task shows `"status": "succeeded"`, you're ready to move on.
 

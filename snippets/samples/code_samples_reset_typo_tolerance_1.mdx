@@ -1,0 +1,47 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X DELETE 'MEILISEARCH_URL/indexes/books/settings/typo-tolerance'
+```
+
+```javascript JS
+client.index('books').resetTypoTolerance()
+```
+
+```python Python
+client.index('books').reset_typo_tolerance()
+```
+
+```php PHP
+$client->index('books')->resetTypoTolerance();
+```
+
+```java Java
+client.index("books").resetTypoToleranceSettings();
+```
+
+```ruby Ruby
+index('books').reset_typo_tolerance
+```
+
+```go Go
+client.Index("books").ResetTypoTolerance()
+```
+
+```csharp C#
+await client.Index("books").ResetTypoToleranceAsync();
+```
+
+```rust Rust
+let task: TaskInfo = client
+  .index("books")
+  .reset_typo_tolerance()
+  .await
+  .unwrap();
+```
+
+```dart Dart
+await client.index('books').resetTypoTolerance();
+```
+</CodeGroup>

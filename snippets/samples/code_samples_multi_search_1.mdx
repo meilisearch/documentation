@@ -1,0 +1,167 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/multi-search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "queries": [
+      {
+        "indexUid": "movies",
+        "q": "pooh",
+        "limit": 5
+      },
+      {
+        "indexUid": "movies",
+        "q": "nemo",
+        "limit": 5
+      },
+      {
+        "indexUid": "movie_ratings",
+        "q": "us"
+      }
+    ]
+  }'
+```
+
+```javascript JS
+client.multiSearch({ queries: [
+  {
+    indexUid: 'movies',
+    q: 'pooh',
+    limit: 5,
+  },
+  {
+    indexUid: 'movies',
+    q: 'nemo',
+    limit: 5,
+  },
+  {
+    indexUid: 'movie_ratings',
+    q: 'us',
+  },
+]})
+```
+
+```python Python
+client.multi_search(
+  [
+    {'indexUid': 'movies', 'q': 'pooh', 'limit': 5},
+    {'indexUid': 'movies', 'q': 'nemo', 'limit': 5},
+    {'indexUid': 'movie_ratings', 'q': 'us'}
+  ]
+)
+```
+
+```php PHP
+$client->multiSearch([
+    (new SearchQuery())
+        ->setIndexUid('movies')
+        ->setQuery('pooh')
+        ->setLimit(5),
+    (new SearchQuery())
+        ->setIndexUid('movies')
+        ->setQuery('nemo')
+        ->setLimit(5),
+    (new SearchQuery())
+        ->setIndexUid('movie_ratings')
+        ->setQuery('us')
+  ]);
+```
+
+```java Java
+MultiSearchRequest multiSearchRequest = new MultiSearchRequest();
+multiIndexSearch.addQuery(new IndexSearchRequest("movies").setQuery("pooh").setLimit(5));
+multiIndexSearch.addQuery(new IndexSearchRequest("movies").setQuery("nemo").setLimit(5));
+multiIndexSearch.addQuery(new IndexSearchRequest("movie_ratings").setQuery("us"));
+
+client.multiSearch(multiSearchRequest);
+```
+
+```ruby Ruby
+client.multi_search([
+  { index_uid: 'books', q: 'prince' },
+  { index_uid: 'movies', q: 'pooh', limit: 5 }
+  { index_uid: 'movies', q: 'nemo', limit: 5 }
+  { index_uid: 'movie_ratings', q: 'us' }
+])
+```
+
+```go Go
+client.MultiSearch(&MultiSearchRequest{
+  Queries: []SearchRequest{
+    {
+      IndexUID: "movies",
+      Query:    "pooh",
+      Limit:    5,
+    },
+    {
+      IndexUID: "movies",
+      Query:    "nemo",
+      Limit:    5,
+    },
+    {
+      IndexUID: "movie_ratings",
+      Query:    "us",
+    },
+  },
+})
+```
+
+```csharp C#
+await client.MultiSearchAsync(new MultiSearchQuery()
+{
+    Queries = new System.Collections.Generic.List<SearchQuery>()
+    {
+        new SearchQuery() {
+          IndexUid = "movies",
+          Q = "booh",
+          Limit = 5
+        },
+        new SearchQuery() {
+          IndexUid = "movies",
+          Q = "nemo",
+          Limit = 5
+        },
+        new SearchQuery() {
+          IndexUid = "movie_ratings",
+          Q = "us",
+        },
+    }
+});
+```
+
+```rust Rust
+let movie = client.index("movie");
+let movie_ratings = client.index("movie_ratings");
+
+let search_query_1 = SearchQuery::new(&movie)
+    .with_query("pooh")
+    .with_limit(5)
+    .build();
+let search_query_2 = SearchQuery::new(&movie)
+    .with_query("nemo")
+    .with_limit(5)
+    .build();
+let search_query_3 = SearchQuery::new(&movie_ratings)
+    .with_query("us")
+    .build();
+
+let response = client
+    .multi_search()
+    .with_search_query(search_query_1)
+    .with_search_query(search_query_2)
+    .with_search_query(search_query_3)
+    .execute::<Document>()
+    .await
+    .unwrap();
+```
+
+```dart Dart
+await client.multiSearch(MultiSearchQuery(queries: [
+  IndexSearchQuery(query: 'pooh', indexUid: 'movies', limit: 5),
+  IndexSearchQuery(query: 'nemo', indexUid: 'movies', limit: 5),
+  IndexSearchQuery(query: 'us', indexUid: 'movies_ratings'),
+]));
+```
+</CodeGroup>

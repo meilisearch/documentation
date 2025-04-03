@@ -1,0 +1,62 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/products/search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "q": "white shirt",
+    "distinct": "sku"
+  }'
+```
+
+```javascript JS
+client.index('products').search('white shirt', { distinct: 'sku' })
+```
+
+```python Python
+client.index('products').search('white shirt', { distinct: 'sku' })
+```
+
+```php PHP
+$client->index('products')->search('white shirt', [
+  'distinct' => 'sku'
+]);
+```
+
+```java Java
+SearchRequest searchRequest = SearchRequest.builder().q("white shirt").distinct("sku").build();
+client.index("products").search(searchRequest);
+```
+
+```ruby Ruby
+client.index('products').search('white shirt', {
+  distinct: 'sku'
+})
+```
+
+```go Go
+client.Index("products").Search("white shirt", &meilisearch.SearchRequest{
+  Distinct: "sku",
+})
+```
+
+```csharp C#
+var params = new SearchQuery()
+{
+  Distinct = "sku"
+};
+await client.Index("products").SearchAsync<Product>("white shirt", params);
+```
+
+```rust Rust
+let res = client
+  .index("products")
+  .search()
+  .with_query("white shirt")
+  .with_distinct("sku")
+  .execute()
+  .await
+  .unwrap();
+```
+</CodeGroup>

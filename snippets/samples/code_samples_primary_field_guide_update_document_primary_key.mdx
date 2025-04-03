@@ -1,0 +1,62 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X PATCH 'MEILISEARCH_URL/indexes/books' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{ "primaryKey": "title" }'
+```
+
+```javascript JS
+client.updateIndex('books', {
+  primaryKey: 'title'
+})
+```
+
+```python Python
+client.index('books').update(primary_key='title')
+```
+
+```php PHP
+$client->updateIndex('books', ['primaryKey' => 'title']);
+```
+
+```java Java
+client.updateIndex("books", "title");
+```
+
+```ruby Ruby
+client.index('books').update(primary_key: 'title')
+```
+
+```go Go
+client.Index("books").UpdateIndex("title")
+```
+
+```csharp C#
+TaskInfo task = await client.UpdateIndexAsync("books", "title");
+```
+
+```rust Rust
+let task = IndexUpdater::new("books", &client)
+  .with_primary_key("title")
+  .execute()
+  .await
+  .unwrap();
+```
+
+```swift Swift
+client.updateIndex(uid: "movies", primaryKey: "title") { (result) in
+  switch result {
+    case .success(let task):
+        print(task)
+    case .failure(let error):
+        print(error)
+    }
+}
+```
+
+```dart Dart
+await client.updateIndex('books', 'title');
+```
+</CodeGroup>

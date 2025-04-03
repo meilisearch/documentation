@@ -1,10 +1,13 @@
 ---
-title: Primary key — Meilisearch documentation
+title: Primary key
+sidebarTitle: Primary key
 description: The primary key is a special field that must be present in all documents indexed by Meilisearch.
 sidebarDepth: 3
 ---
 
-# Primary key
+import CodeSamplesPrimaryFieldGuideCreateIndexPrimaryKey from '/snippets/samples/code_samples_primary_field_guide_create_index_primary_key.mdx';
+import CodeSamplesPrimaryFieldGuideAddDocumentPrimaryKey from '/snippets/samples/code_samples_primary_field_guide_add_document_primary_key.mdx';
+import CodeSamplesPrimaryFieldGuideUpdateDocumentPrimaryKey from '/snippets/samples/code_samples_primary_field_guide_update_document_primary_key.mdx';
 
 ## Primary field
 
@@ -93,7 +96,7 @@ When creating an index manually, you can explicitly indicate the primary key you
 
 The code below creates an index called `books` and sets `reference_number` as its primary key:
 
-<CodeSamples id="primary_field_guide_create_index_primary_key" />
+<CodeSamplesPrimaryFieldGuideCreateIndexPrimaryKey />
 
 ```json
 {
@@ -111,7 +114,7 @@ When adding documents to an empty index, you can explicitly set the index's prim
 
 The code below adds a document to the `books` index and sets `reference_number` as that index's primary key:
 
-<CodeSamples id="primary_field_guide_add_document_primary_key" />
+<CodeSamplesPrimaryFieldGuideAddDocumentPrimaryKey />
 
 **Response:**
 
@@ -131,7 +134,7 @@ The primary key cannot be changed while documents are present in the index. To c
 
 The code below updates the primary key to `title`:
 
-<CodeSamples id="primary_field_guide_update_document_primary_key" />
+<CodeSamplesPrimaryFieldGuideUpdateDocumentPrimaryKey />
 
 **Response:**
 
@@ -208,7 +211,7 @@ This error occurs when you add documents to an index for the first time and none
   "enqueuedAt": "2023-01-17T10:19:14.464858Z",
   "startedAt": "2023-01-17T10:19:14.465369Z",
   "finishedAt": "2023-01-17T10:19:14.471948Z"
-  }
+}
 ```
 
 ### `invalid_document_id`

@@ -1,0 +1,47 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X DELETE 'MEILISEARCH_URL/indexes/books/settings/proximity-precision'
+```
+
+```javascript JS
+client.index('books').resetProximityPrecision()
+```
+
+```python Python
+client.index('books').reset_proximity_precision()
+```
+
+```php PHP
+$client->index('books')->resetProximityPrecision();
+```
+
+```java Java
+client.index("books").resetProximityPrecisionSettings();
+```
+
+```ruby Ruby
+client.index('books').reset_proximity_precision
+```
+
+```go Go
+client.Index("books").ResetProximityPrecision()
+```
+
+```csharp C#
+await client.Index("books").ResetProximityPrecisionAsync();
+```
+
+```rust Rust
+let task: TaskInfo = client
+  .index("books")
+  .reset_proximity_precision()
+  .await
+  .unwrap();
+```
+
+```swift Swift
+let task = try await self.client.index("books").resetProximityPrecision()
+```
+</CodeGroup>
