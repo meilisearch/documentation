@@ -400,7 +400,7 @@ Configure the maximum amount of simultaneous search requests. By default, Meilis
 **Default value**: `0`<br />
 **Expected value**: an integer
 
-Sets the size of the search query embedding cache size. By default, Meilisearch generates an embedding for every new search query. When this option is set to an integer bigger than 0, Meilisearch returns a previously generated embedding if it recently performed the same query.
+Sets the size of the search query embedding cache. By default, Meilisearch generates an embedding for every new search query. When this option is set to an integer bigger than 0, Meilisearch returns a previously generated embedding if it recently performed the same query.
 
 The least recently used entries are evicted first. Embedders with the same configuration share the same cache, even if they were declared in distinct indexes.
 
