@@ -162,7 +162,7 @@ If the provided index does not exist, it will be created.
 | **[`displayedAttributes`](#displayed-attributes)**   | Array of strings | All attributes: `["*"]`                                                                          | Fields displayed in the returned documents                                       |
 | **[`distinctAttribute`](#distinct-attribute)**       | String           | `null`                                                                                           | Search returns documents with distinct (different) values of the given field     |
 | **[`faceting`](#faceting)**                          | Object           | [Default object](#faceting-object)                                                               | Faceting settings                                                                |
-| **[`filterableAttributes`](#filterable-attributes)** | Array of strings or array of objects | Empty                                                                                            | Attributes to use as filters and facets                                          |
+| **[`filterableAttributes`](#filterable-attributes)** | Array of strings or objects | Empty                                                                                            | Attributes to use as filters and facets                                          |
 | **[`pagination`](#pagination)**                      | Object           | [Default object](#pagination-object)                                                             | Pagination settings                                                              |
 | **[`proximityPrecision`](#proximity-precision)**     | String           | `"byWord"`                                                                                       |  Precision level when calculating the proximity ranking rule                     |
 | **[`facetSearch`](#facet-search)**     | Boolean           | `true`                                                                                       |  Enable or disable [facet search](/reference/api/facet_search) functionality                     |
@@ -692,7 +692,7 @@ Updating filterable attributes will re-index all documents in the index, which c
 
 ### Filterable attribute object
 
-`filterableAttributes` may be either an array of strings or an array of filterable attribute objects.
+`filterableAttributes` may be an array of either strings filterable attribute objects.
 
 Filterable attribute objects must contain the following fields:
 
@@ -785,7 +785,7 @@ You may also use an array of objects:
 ]
 ```
 
-If the specified field does not exist, Meilisearch will silently ignore it. 
+If the specified field does not exist, Meilisearch will silently ignore it.
 
 If an attribute contains an object, you can use dot notation to set one or more of its keys as a value for this setting: `"filterableAttributes": ["release_date.year"]` or `"attributePatterns": ["release_date.year"]`.
 
