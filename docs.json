@@ -150,7 +150,7 @@
 						"icon": "book",
 						"groups": [
 							{
-								"group": "GETTING STARTED",
+								"group": "Getting started",
 								"pages": [
 									"home",
 									"learn/getting_started/cloud_quick_start",
@@ -162,15 +162,20 @@
 								]
 							},
 							{
-								"group": "AI-POWERED SEARCH",
+								"group": "AI-powered search",
 								"pages": [
 									"learn/ai_powered_search/getting_started_with_ai_search",
+                  "learn/ai_powered_search/configure_rest_embedder",
+                  "learn/ai_powered_search/document_template_best_practices",
+                  "learn/ai_powered_search/image_search_with_user_provided_embeddings",
 									"learn/ai_powered_search/search_with_user_provided_embeddings",
+                  "learn/ai_powered_search/retrieve_related_search_results",
+                  "learn/ai_powered_search/choose_an_embedder",
 									"learn/ai_powered_search/difference_full_text_ai_search"
 								]
 							},
 							{
-								"group": "SELF-HOSTED",
+								"group": "Self-hosted",
 								"pages": [
 									"learn/self_hosted/getting_started_with_self_hosted_meilisearch",
 									"learn/self_hosted/configure_meilisearch_at_launch",
@@ -179,7 +184,7 @@
 								]
 							},
 							{
-								"group": "ANALYTICS",
+								"group": "Analytics",
 								"pages": [
 									"learn/analytics/configure_analytics",
 									"learn/analytics/configure_monitoring",
@@ -189,13 +194,13 @@
 								]
 							},
 							{
-								"group": "TEAMS",
+								"group": "Teams",
 								"pages": [
 									"learn/teams/teams"
 								]
 							},
 							{
-								"group": "TASKS AND ASYNCHRONOUS OPERATIONS",
+								"group": "Tasks and asynchronous operations",
 								"pages": [
 									"learn/async/working_with_tasks",
 									"learn/async/filtering_tasks",
@@ -205,14 +210,14 @@
 								]
 							},
 							{
-								"group": "CONFIGURATION",
+								"group": "Configuration",
 								"pages": [
 									"learn/configuration/configuring_index_settings",
 									"learn/configuration/configuring_index_settings_api"
 								]
 							},
 							{
-								"group": "FILTERING AND SORTING",
+								"group": "Filtering and sorting",
 								"pages": [
 									"learn/filtering_and_sorting/filter_search_results",
 									"learn/filtering_and_sorting/search_with_facet_filters",
@@ -223,7 +228,7 @@
 								]
 							},
 							{
-								"group": "SECURITY AND PERMISSIONS",
+								"group": "Security and permissions",
 								"pages": [
 									"learn/security/basic_security",
 									"learn/security/generate_tenant_token_sdk",
@@ -237,14 +242,15 @@
 								]
 							},
 							{
-								"group": "MULTI-SEARCH",
+								"group": "Multi-search",
 								"pages": [
 									"learn/multi_search/performing_federated_search",
+									"learn/multi_search/implement_sharding",
 									"learn/multi_search/multi_search_vs_federated_search"
 								]
 							},
 							{
-								"group": "UPDATE AND MIGRATION",
+								"group": "Update and migration",
 								"pages": [
 									"learn/update_and_migration/migrating_cloud",
 									"learn/update_and_migration/updating",
@@ -253,7 +259,7 @@
 								]
 							},
 							{
-								"group": "DATA BACKUP",
+								"group": "Data backup",
 								"pages": [
 									"learn/data_backup/dumps",
 									"learn/data_backup/snapshots",
@@ -261,7 +267,7 @@
 								]
 							},
 							{
-								"group": "INDEXING",
+								"group": "Indexing",
 								"pages": [
 									"learn/indexing/indexing_best_practices",
 									"learn/indexing/ram_multithreading_performance",
@@ -269,7 +275,7 @@
 								]
 							},
 							{
-								"group": "ENGINE",
+								"group": "Engine",
 								"pages": [
 									"learn/engine/concat",
 									"learn/engine/datatypes",
@@ -278,7 +284,7 @@
 								]
 							},
 							{
-								"group": "RELEVANCY",
+								"group": "Relevancy",
 								"pages": [
 									"learn/relevancy/relevancy",
 									"learn/relevancy/ranking_rules",
@@ -293,7 +299,7 @@
 								]
 							},
 							{
-								"group": "RESOURCES",
+								"group": "Resources",
 								"pages": [
 									"learn/resources/known_limitations",
 									"learn/resources/experimental_features_overview",
@@ -313,13 +319,14 @@
 						"icon": "code",
 						"groups": [
 							{
-								"group": "API REFERENCE",
+								"group": "API reference",
 								"pages": [
 									"reference/api/overview",
 									"reference/api/indexes",
 									"reference/api/documents",
 									"reference/api/search",
 									"reference/api/multi_search",
+									"reference/api/network",
 									"reference/api/similar",
 									"reference/api/facet_search",
 									"reference/api/tasks",
@@ -337,7 +344,7 @@
 								]
 							},
 							{
-								"group": "ERRORS",
+								"group": "Errors",
 								"pages": [
 									"reference/errors/overview",
 									"reference/errors/error_codes"
@@ -350,7 +357,7 @@
 						"icon": "file-lines",
 						"groups": [
 							{
-								"group": "FRONT END",
+								"group": "Front end",
 								"pages": [
 									"guides/front_end/front_end_integration",
 									"guides/front_end/react_quick_start",
@@ -360,7 +367,7 @@
 								]
 							},
 							{
-								"group": "BACK END",
+								"group": "Back end",
 								"pages": [
 									"guides/laravel_scout",
 									"guides/strapi_v4",
@@ -368,8 +375,9 @@
 								]
 							},
 							{
-								"group": "ARTIFICAL INTELLIGENCE",
+								"group": "Artificial intelligence",
 								"pages": [
+									"guides/ai/mcp",
 									"guides/embedders/openai",
 									"guides/langchain",
 									"guides/embedders/huggingface",
@@ -381,13 +389,13 @@
 								]
 							},
 							{
-								"group": "PERFORMANCE",
+								"group": "Performance",
 								"pages": [
 									"guides/improve_relevancy_large_documents"
 								]
 							},
 							{
-								"group": "SECURITY",
+								"group": "Security",
 								"pages": [
 									"guides/http2_ssl",
 									"guides/laravel_multitenancy",
@@ -395,7 +403,7 @@
 								]
 							},
 							{
-								"group": "DEPLOYMENT",
+								"group": "Deployment",
 								"pages": [
 									"guides/running_production",
 									"guides/deployment/aws",
@@ -407,13 +415,13 @@
 								]
 							},
 							{
-								"group": "INTEGRATIONS",
+								"group": "Integrations",
 								"pages": [
 									"guides/vercel"
 								]
 							},
 							{
-								"group": "MISCELLANEOUS",
+								"group": "Miscellaneous",
 								"pages": [
 									"guides/postman_collection",
 									"guides/docker"
