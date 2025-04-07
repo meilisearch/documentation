@@ -1,3 +1,7 @@
+#navigation-items h5 {
+  text-transform: uppercase;
+}
+
 .noticeTag {
   color: rgb(var(--primary-light));
   border: 1px solid rgb(var(--primary-light));
