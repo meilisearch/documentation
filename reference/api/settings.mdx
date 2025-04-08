@@ -699,7 +699,7 @@ Filterable attribute objects must contain the following fields:
 | Name                    | Type             | Default value | Description                                              |
 | ----------------------- | ---------------- | ------------- | -------------------------------------------------------- |
 | **`attributePatterns`** | Array of strings | `[]`          | A list of strings indicating filterable fields                      |
-| **`features`**          | Object           | `{}`          | A list outlining filter types enabled for the specified attributes                      |
+| **`features`**          | Object           | `{"facetSearch": false, "filters": {"equality": true, "comparison": false}`          | A list outlining filter types enabled for the specified attributes                      |
 
 #### `attributePatterns`
 
@@ -716,10 +716,10 @@ Attribute patterns may begin or end with a * wildcard to match multiple fields: 
 
 Calculating `comparison` filters is a resource-intensive operation. Disabling them may lead to better search and indexing performance. `equality` filters use fewer resources and have limited impact on performance.
 
-<Capsule intent="warning" title="_geo field">
-Use the simple string syntax to match the reserved attribute `_geo`.
+<Capsule intent="warning" title="Filterable attributes and reserved attributes">
+Use the simple string syntax to match reserved attributes. Reserved Meilisearch fields are always prefixed with an underscore (`_`), such as `_geo` and `_vector`.
 
-If set as a filterable attribute, `_geo` ignores the `features` field and automatically activates all search features. `_geo` also will not be matched by wildcard `attributePatterns` such as `_*`.
+If set as a filterable attribute, reserved attributes ignore the `features` field and automatically activate all search features. Reserved fields will not be matched by wildcard `attributePatterns` such as `_*`.
 </Capsule>
 
 ### Get filterable attributes
