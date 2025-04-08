@@ -1,0 +1,22 @@
+---
+title: Front-end integration
+description: Create a simple front-end interface to search through your dataset after following Meilisearch's quick start.
+---
+
+import GettingStartedFrontEndIntegrationMd from '/snippets/samples/code_samples_getting_started_front_end_integration_md.mdx';
+
+
+In the [quick start tutorial](/learn/self_hosted/getting_started_with_self_hosted_meilisearch), you learned how to launch Meilisearch and make a search request. This article will teach you how to create a simple front-end interface to search through your dataset.
+
+Using [`instant-meilisearch`](https://github.com/meilisearch/instant-meilisearch) is the easiest way to build a front-end interface for search. `instant-meilisearch` is a plugin that establishes communication between a Meilisearch instance and [InstantSearch](https://github.com/algolia/instantsearch.js). InstantSearch, an open-source project developed by Algolia, renders all the components needed to start searching.
+
+## Let's try it!
+
+1. Create an empty file and name it `index.html`
+2. Open it in a text editor like Notepad, Sublime Text, or Visual Studio Code
+3. Copy-paste one of the code samples below—either vanilla JavaScript, Vue, or React— and save the file
+4. Open `index.html` in your browser by double-clicking it in your folder
+
+<GettingStartedFrontEndIntegrationMd />
+
+You should now have a working front-end search interface. [Consult `instant-meilisearch`'s documentation for more information on how to further customize your search interface.](https://github.com/meilisearch/instant-meilisearch)

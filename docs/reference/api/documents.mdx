@@ -1,0 +1,607 @@
+---
+title: Documents
+sidebarTitle: Documents
+description: The /documents route allows you to create, manage, and delete documents.
+---
+
+import { RouteHighlighter } from '/snippets/route_highlighter.mdx'
+import { NoticeTag } from '/snippets/notice_tag.mdx';
+
+import CodeSamplesAddOrReplaceDocuments1 from '/snippets/samples/code_samples_add_or_replace_documents_1.mdx';
+import CodeSamplesAddOrUpdateDocuments1 from '/snippets/samples/code_samples_add_or_update_documents_1.mdx';
+import CodeSamplesDeleteAllDocuments1 from '/snippets/samples/code_samples_delete_all_documents_1.mdx';
+import CodeSamplesDeleteDocumentsByBatch1 from '/snippets/samples/code_samples_delete_documents_by_batch_1.mdx';
+import CodeSamplesDeleteDocumentsByFilter1 from '/snippets/samples/code_samples_delete_documents_by_filter_1.mdx';
+import CodeSamplesDeleteOneDocument1 from '/snippets/samples/code_samples_delete_one_document_1.mdx';
+import CodeSamplesGetDocuments1 from '/snippets/samples/code_samples_get_documents_1.mdx';
+import CodeSamplesGetDocumentsPost1 from '/snippets/samples/code_samples_get_documents_post_1.mdx';
+import CodeSamplesGetOneDocument1 from '/snippets/samples/code_samples_get_one_document_1.mdx';
+
+The `/documents` route allows you to create, manage, and delete documents.
+
+[Learn more about documents.](/learn/getting_started/documents)
+
+## Get documents with POST
+
+<RouteHighlighter method="POST" path="/indexes/{index_uid}/documents/fetch" />
+
+Get a set of documents.
+
+Use `offset` and `limit` to browse through documents.
+
+<Warning>
+`filter` will not work without first explicitly adding attributes to the [`filterableAttributes` list](/reference/api/settings#update-filterable-attributes). [Learn more about filters in our dedicated guide.](/learn/filtering_and_sorting/filter_search_results)
+</Warning>
+
+### Path parameters
+
+| Name              | Type   | Description                                                            |
+| :---------------- | :----- | :--------------------------------------------------------------------- |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
+
+### Body
+
+| Name         | Type                                    | Default Value | Description                                                           |
+| :----------- | :-------------------------------------- | :------------ | :-------------------------------------------------------------------- |
+| **`offset`** | Integer                                 | `0`           | Number of documents to skip                                           |
+| **`limit`**  | Integer                                 | `20`          | Number of documents to return                                         |
+| **`fields`** | Array of strings/`null`                 | `*`           | Document attributes to show (case-sensitive, comma-separated)         |
+| **`filter`** | String/Array of array of strings/`null` | N/A           | Refine results based on attributes in the `filterableAttributes` list |
+| **`retrieveVectors`**    | Boolean                     | `false`       | Return document vector data with search result                        |
+
+<Note>
+Sending an empty payload (`--data-binary '{}'`) will return all documents in the index.
+</Note>
+
+### Response
+
+| Name          | Type    | Description                            |
+| :------------ | :------ | :------------------------------------- |
+| **`results`** | Array   | An array of documents                  |
+| **`offset`**  | Integer | Number of documents skipped            |
+| **`limit`**   | Integer | Number of documents returned           |
+| **`total`**   | Integer | Total number of documents in the index |
+
+### Example
+
+<CodeSamplesGetDocumentsPost1 />
+
+#### Response: `200 Ok`
+
+```json
+{
+  "results": [
+    {
+      "title": "The Travels of Ibn Battuta",
+      "genres": [
+        "Travel",
+        "Adventure"
+      ],
+      "language": "English",
+      "rating": 4.5
+    },
+    {
+      "title": "Pride and Prejudice",
+      "genres": [
+        "Classics",
+        "Fiction",
+        "Romance",
+        "Literature"
+      ],
+      "language": "English",
+      "rating": 4
+    },
+    …
+  ],
+  "offset": 0,
+  "limit": 3,
+  "total": 5
+}
+```
+
+## Get documents with GET
+
+<Warning>
+This endpoint will be deprecated in the near future. Consider using POST `/indexes/{index_uid}/documents/fetch` instead.
+</Warning>
+
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/documents" />
+
+Get a set of documents.
+
+Using the query parameters `offset` and `limit`, you can browse through all your documents.`filter` must be a string. To create [filter expressions](/learn/filtering_and_sorting/filter_expression_reference) use `AND` or `OR`.
+
+<Warning>
+`filter` will not work without first explicitly adding attributes to the [`filterableAttributes` list](/reference/api/settings#update-filterable-attributes). [Learn more about filters in our dedicated guide.](/learn/filtering_and_sorting/filter_search_results)
+</Warning>
+
+### Path parameters
+
+| Name              | Type   | Description                                                            |
+| :---------------- | :----- | :--------------------------------------------------------------------- |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
+
+### Query parameters
+
+| Query Parameter | Default Value | Description                                                           |
+| :-------------- | :------------ | :-------------------------------------------------------------------- |
+| **`offset`**    | `0`           | Number of documents to skip                                           |
+| **`limit`**     | `20`          | Number of documents to return                                         |
+| **`fields`**    | `*`           | Document attributes to show (case-sensitive, comma-separated)         |
+| **`filter`**    | N/A           | Refine results based on attributes in the `filterableAttributes` list |
+| **`retrieveVectors`**    | `false`  | Return document vector data with search result                    |
+
+### Response
+
+| Name          | Type    | Description                            |
+| :------------ | :------ | :------------------------------------- |
+| **`results`** | Array   | An array of documents                  |
+| **`offset`**  | Integer | Number of documents skipped            |
+| **`limit`**   | Integer | Number of documents returned           |
+| **`total`**   | Integer | Total number of documents in the index |
+
+### Example
+
+<CodeSamplesGetDocuments1 />
+
+#### Response: `200 Ok`
+
+```json
+{
+  "results": [
+    {
+      "id": 364,
+      "title": "Batman Returns",
+      "overview": "While Batman deals with a deformed man calling himself the Penguin, an employee of a corrupt businessman transforms into the Catwoman.",
+      "genres": [
+        "Action",
+        "Fantasy"
+      ],
+      "poster": "https://image.tmdb.org/t/p/w500/jKBjeXM7iBBV9UkUcOXx3m7FSHY.jpg",
+      "release_date": 708912000
+    },
+    {
+      "id": 13851,
+      "title": " Batman: Gotham Knight",
+      "overview": "A collection of key events mark Bruce Wayne's life as he journeys from beginner to Dark Knight.",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "poster": "https://image.tmdb.org/t/p/w500/f3xUrqo7yEiU0guk2Ua3Znqiw6S.jpg",
+      "release_date": 1215475200
+    }
+  ],
+  "offset": 0,
+  "limit": 2,
+  "total": 5403
+}
+```
+
+## Get one document
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/documents/{document_id}" />
+
+Get one document using its unique id.
+
+### Path parameters
+
+| Name                | Type           | Description                                                                           |
+| :------------------ | :------------- | :------------------------------------------------------------------------------------ |
+| **`index_uid`** *   | String         | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index                |
+| **`document_id`** * | String/Integer | [Document id](/learn/getting_started/primary_key#document-id) of the requested document |
+
+### Query parameters
+
+| Query Parameter | Default Value | Description                                                   |
+| :-------------- | :------------ | :------------------------------------------------------------ |
+| **`fields`**    | `*`           | Document attributes to show (case-sensitive, comma-separated) |
+| **`retrieveVectors`**    | `false`  | Return document vector data with search result            |
+
+### Example
+
+<CodeSamplesGetOneDocument1 />
+
+#### Response: `200 Ok`
+
+```json
+{
+  "id": 25684,
+  "title": "American Ninja 5",
+  "poster": "https://image.tmdb.org/t/p/w1280/iuAQVI4mvjI83wnirpD8GVNRVuY.jpg",
+  "release_date": "1993-01-01"
+}
+```
+
+## Add or replace documents
+
+<RouteHighlighter method="POST" path="/indexes/{index_uid}/documents" />
+
+Add an array of documents or replace them if they already exist. If the provided index does not exist, it will be created.
+
+If you send an already existing document (same [document id](/learn/getting_started/primary_key#document-id)) the **whole existing document** will be overwritten by the new document. Fields that are no longer present in the new document are removed. For a partial update of the document see the [add or update documents](/reference/api/documents#add-or-update-documents) endpoint.
+
+This endpoint accepts the following content types:
+
+- `application/json`
+- `application/x-ndjson`
+- `text/csv`
+
+### Path parameters
+
+| Name              | Type   | Description                                                            |
+| :---------------- | :----- | :--------------------------------------------------------------------- |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
+
+### Query parameters
+
+| Query Parameter    | Default Value | Description                                                                                                                             |
+| :----------------- | :------------ | :-------------------------------------------------------------------------------------------------------------------------------------- |
+| **`primaryKey`**   | `null`        | [Primary key](/learn/getting_started/primary_key#primary-field) of the index                                                              |
+| **`csvDelimiter`** | `","`         | Configure the character separating CSV fields. Must be a string containing [one ASCII character](https://www.rfc-editor.org/rfc/rfc20). |
+
+<Warning>
+Configuring `csvDelimiter` and sending data with a content type other than CSV will cause Meilisearch to throw an error.
+</Warning>
+
+If you want to [set the primary key of your index on document addition](/learn/getting_started/primary_key#setting-the-primary-key-on-document-addition), it can only be done **the first time you add documents** to the index. After this, the `primaryKey` parameter will be ignored if given.
+
+### Body
+
+An array of documents. Each document is represented as a JSON object.
+
+```json
+[
+  {
+    "id": 287947,
+    "title": "Shazam",
+    "poster": "https://image.tmdb.org/t/p/w1280/xnopI5Xtky18MPhK40cZAGAOVeV.jpg",
+    "overview": "A boy is given the ability to become an adult superhero in times of need with a single magic word.",
+    "release_date": "2019-03-23"
+  }
+]
+```
+
+#### `_vectors`
+
+`_vectors` is a special document attribute containing an object with vector embeddings for AI-powered search.
+
+Each key of the `_vectors` object must be the name of a configured embedder and correspond to a nested object with two fields, `embeddings` and `regenerate`:
+
+```json
+[
+  {
+    "id": 452,
+    "title": "Female Trouble",
+    "overview": "Delinquent high school student Dawn Davenport runs away from home and embarks upon a life of crime.",
+    "_vectors": {
+      "default": {
+        "embeddings": [0.1, 0.2, 0.3],
+        "regenerate": false
+      },
+      "ollama": {
+        "embeddings": [0.4, 0.12, 0.6],
+        "regenerate": true
+      }
+    }
+  }
+]
+```
+
+`embeddings` is an optional field. It must be an array of numbers representing a single embedding for that document. It may also be an array of arrays of numbers representing multiple embeddings for that document. `embeddings` defaults to `null`.
+
+`regenerate` is a mandatory field. It must be a Boolean value. If `regenerate` is `true`, Meilisearch automatically generates embeddings for that document immediately and every time the document is updated. If `regenerate` is `false`, Meilisearch keeps the last value of the embeddings on document updates.
+
+You may also use an array shorthand to add embeddings to a document:
+
+```json
+"_vectors": {
+  "default": [0.003, 0.1, 0.75]
+}
+```
+
+Vector embeddings added with the shorthand are not replaced when Meilisearch generates new embeddings. The above example is equivalent to:
+
+```json
+"default": {
+  "embeddings": [0.003, 0.1, 0.75],
+  "regenerate": false
+}
+```
+
+<Note>
+If the key for an embedder inside `_vectors` is empty or `null`, Meilisearch treats the document as not having any embeddings for that embedder. This document is then returned last during AI-powered searches.
+</Note>
+
+### Example
+
+<CodeSamplesAddOrReplaceDocuments1 />
+
+#### Response: `202 Accepted`
+
+```json
+{
+    "taskUid": 1,
+    "indexUid": "movies",
+    "status": "enqueued",
+    "type": "documentAdditionOrUpdate",
+    "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+}
+```
+
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+
+## Add or update documents
+
+<RouteHighlighter method="PUT" path="/indexes/{index_uid}/documents" />
+
+Add a list of documents or update them if they already exist. If the provided index does not exist, it will be created.
+
+If you send an already existing document (same [document id](/learn/getting_started/primary_key#document-id)) the old document will be only partially updated according to the fields of the new document. Thus, any fields not present in the new document are kept and remain unchanged.
+
+To completely overwrite a document, check out the [add or replace documents route](/reference/api/documents#add-or-replace-documents).
+
+If you want to set the [**primary key** of your index](/learn/getting_started/primary_key#setting-the-primary-key-on-document-addition) through this route, you may only do so **the first time you add documents** to the index. If you try to set the primary key after having added documents to the index, the task will return an error.
+
+This endpoint accepts the following content types:
+
+- `application/json`
+- `application/x-ndjson`
+- `text/csv`
+
+### Path parameters
+
+| Name              | Type   | Description                                                            |
+| :---------------- | :----- | :--------------------------------------------------------------------- |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
+
+### Query parameters
+
+| Query Parameter    | Default Value | Description                                                                                                                             |
+| :----------------- | :------------ | :-------------------------------------------------------------------------------------------------------------------------------------- |
+| **`primaryKey`**   | `null`        | [Primary key](/learn/getting_started/primary_key#primary-field) of the documents                                                          |
+| **`csvDelimiter`** | `","`         | Configure the character separating CSV fields. Must be a string containing [one ASCII character](https://www.rfc-editor.org/rfc/rfc20). |
+
+<Warning>
+Configuring `csvDelimiter` and sending data with a content type other than CSV will cause Meilisearch to throw an error.
+</Warning>
+
+### Body
+
+An array of documents. Each document is represented as a JSON object.
+
+```json
+[
+  {
+    "id": 287947,
+    "title": "Shazam ⚡️"
+  }
+]
+```
+
+### Example
+
+<CodeSamplesAddOrUpdateDocuments1 />
+
+This document is an update of the document found in [add or replace document](/reference/api/documents#add-or-replace-documents).
+
+The documents are matched because they have the same [primary key](/learn/getting_started/documents#primary-field) value `id: 287947`. This route will update the `title` field as it changed from `Shazam` to `Shazam ⚡️` and add the new `genres` field to that document. The rest of the document will remain unchanged.
+
+#### Response: `202 Accepted`
+
+```json
+{
+    "taskUid": 1,
+    "indexUid": "movies",
+    "status": "enqueued",
+    "type": "documentAdditionOrUpdate",
+    "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+}
+```
+
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+
+## Update documents with function <NoticeTag type="experimental" label="experimental" />
+
+<RouteHighlighter method="POST" path="/indexes/{index_uid}/documents/edit" />
+
+Use a [RHAI function](https://rhai.rs/book/engine/hello-world.html) to edit one or more documents directly in Meilisearch.
+
+<Note>
+This is an experimental feature. Use the experimental features endpoint to activate it:
+
+```sh
+curl \
+  -X PATCH 'MEILISEARCH_URL/experimental-features/' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "editDocumentsByFunction": true
+  }'
+```
+</Note>
+
+### Path parameters
+
+| Name              | Type   | Description                                                            |
+| :---------------- | :----- | :--------------------------------------------------------------------- |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
+
+### Query parameters
+
+| Query Parameter    | Default Value | Description                                                                                                                             |
+| :----------------- | :------------ | :-------------------------------------------------------------------------------------------------------------------------------------- |
+| **`function`**     | `null`        | A string containing a RHAI function                                                         |
+| **`filter`**       | `null`        | A string containing a filter expression |
+| **`context`**      | `null`        | An object with data Meilisearch should make available for the editing function |
+
+#### `function`
+
+`function` must be a string with a RHAI function that Meilisearch will apply to all selected documents. By default this function has access to a single variable, `doc`, representing the document you are currently editing. This is a required field.
+
+#### `filter`
+
+`filter` must be a string containing a filter expression. Use `filter` when you want only to apply `function` to a subset of the documents in your database.
+
+#### `context`
+
+Use `context` to pass data to the `function` scope. By default a function only has access to the document it is editing.
+
+### Example
+
+```sh
+curl \
+-X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/documents/edit' \
+-H 'Content-Type: application/json' \
+--data-binary '{
+  "function": "doc.title = `${doc.title.to_upper()}`"
+}'
+```
+
+## Delete all documents
+
+<RouteHighlighter method="DELETE" path="/indexes/{index_uid}/documents" />
+
+Delete all documents in the specified index.
+
+### Path parameters
+
+| Name              | Type   | Description                                                            |
+| :---------------- | :----- | :--------------------------------------------------------------------- |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
+
+### Example
+
+<CodeSamplesDeleteAllDocuments1 />
+
+#### Response: `202 Accepted`
+
+```json
+{
+    "taskUid": 1,
+    "indexUid": "movies",
+    "status": "enqueued",
+    "type": "documentDeletion",
+    "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+}
+```
+
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+
+## Delete one document
+
+<RouteHighlighter method="DELETE" path="/indexes/{index_uid}/documents/{document_id}" />
+
+Delete one document based on its unique id.
+
+### Path parameters
+
+| Name                | Type           | Description                                                                           |
+| :------------------ | :------------- | :------------------------------------------------------------------------------------ |
+| **`index_uid`** *   | String         | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index                |
+| **`document_id`** * | String/Integer | [Document id](/learn/getting_started/primary_key#document-id) of the requested document |
+
+### Example
+
+<CodeSamplesDeleteOneDocument1 />
+
+#### Response: `202 Accepted`
+
+```json
+{
+    "taskUid": 1,
+    "indexUid": "movies",
+    "status": "enqueued",
+    "type": "documentDeletion",
+    "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+}
+```
+
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+
+## Delete documents by filter
+
+<RouteHighlighter method="POST" path="/indexes/{index_uid}/documents/delete" />
+
+Delete a set of documents based on a filter.
+
+### Path parameters
+
+| Name              | Type   | Description                                                            |
+| :---------------- | :----- | :--------------------------------------------------------------------- |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
+
+### Body
+
+A filter expression written as a string or array of array of strings for the documents to be deleted.
+
+<Warning>
+`filter` will not work without first explicitly adding attributes to the [`filterableAttributes` list](/reference/api/settings#update-filterable-attributes). [Learn more about filters in our dedicated guide.](/learn/filtering_and_sorting/filter_search_results)
+</Warning>
+
+```
+ "filter": "rating > 3.5"
+```
+
+<Warning>
+Sending an empty payload (`--data-binary '{}'`) will return a `bad_request` error.
+</Warning>
+
+### Example
+
+<CodeSamplesDeleteDocumentsByFilter1 />
+
+#### Response: `202 Accepted`
+
+```json
+{
+    "taskUid": 1,
+    "indexUid": "movies",
+    "status": "enqueued",
+    "type": "documentDeletion",
+    "enqueuedAt": "2023-05-15T08:38:48.024551Z"
+}
+```
+
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+
+## Delete documents by batch
+
+<Warning>
+This endpoint will be deprecated in the near future. Consider using POST `/indexes/{index_uid}/documents/delete` instead .
+</Warning>
+
+<RouteHighlighter method="POST" path="/indexes/{index_uid}/documents/delete-batch" />
+
+Delete a set of documents based on an array of document ids.
+
+### Path parameters
+
+| Name              | Type   | Description                                                            |
+| :---------------- | :----- | :--------------------------------------------------------------------- |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
+
+### Body
+
+An array of numbers containing the unique ids of the documents to be deleted.
+
+```json
+[23488, 153738, 437035, 363869]
+```
+
+### Example
+
+<CodeSamplesDeleteDocumentsByBatch1 />
+
+#### Response: `202 Accepted`
+
+```json
+{
+    "taskUid": 1,
+    "indexUid": "movies",
+    "status": "enqueued",
+    "type": "documentDeletion",
+    "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+}
+```
+
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
