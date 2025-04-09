@@ -1,0 +1,49 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X DELETE 'MEILISEARCH_URL/indexes/books/settings/dictionary'
+```
+
+```javascript JS
+client.index('books').resetDictionary()
+```
+
+```python Python
+client.index('books').reset_dictionary()
+```
+
+```php PHP
+$client->index('books')->resetDictionary();
+```
+
+```java Java
+client.index("books").resetDictionarySettings();
+```
+
+```ruby Ruby
+client.index('books').reset_dictionary
+```
+
+```go Go
+client.Index("books").ResetDictionary()
+```
+
+```csharp C#
+await client.Index("books").ResetDictionaryAsync();
+```
+
+```rust Rust
+let task: TaskInfo = client
+  .index('books')
+  .reset_dictionary()
+  .await
+  .unwrap();
+```
+
+```swift Swift
+client.index("books").resetDictionary { result in
+  // handle result
+}
+```
+</CodeGroup>

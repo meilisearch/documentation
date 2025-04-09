@@ -1,0 +1,16 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X POST 'https://edge.meilisearch.com/events' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer DEFAULT_SEARCH_API_KEY' \
+  --data-binary '{
+    "eventType": "click",
+    "eventName": "Search Result Clicked",
+    "indexUid": "products",
+    "objectId": "0",
+    "position": 0
+  }'
+```
+</CodeGroup>

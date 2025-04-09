@@ -1,0 +1,14 @@
+<CodeGroup>
+
+```bash cURL
+curl -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
+  -H 'content-type: application/json' \
+  -H 'Authorization: Bearer DEFAULT_SEARCH_API_KEY' \
+  --data-binary '{
+    "q": "batman",
+    "hybrid": {
+      "embedder": "EMBEDDER_NAME"
+    }
+  }'
+```
+</CodeGroup>

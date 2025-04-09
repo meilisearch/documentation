@@ -1,0 +1,24 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X GET 'MEILISEARCH_URL/experimental-features/'
+```
+
+```ruby Ruby
+client.experimental_features
+```
+
+```go Go
+client.ExperimentalFeatures().Get()
+```
+
+```rust Rust
+let client = Client::new("http://localhost:7700", Some("apiKey"));
+let features = ExperimentalFeatures::new(&client);
+let res = features
+  .get()
+  .await
+  .unwrap();
+```
+</CodeGroup>

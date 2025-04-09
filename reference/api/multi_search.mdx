@@ -1,9 +1,16 @@
 ---
-title: Multi-search — Meilisearch API reference
+title: Multi-search
+sidebarTitle: Multi-search
 description: The /multi-search route allows you to perform multiple search queries on one or more indexes.
 ---
 
-# Multi-search
+import { RouteHighlighter } from '/snippets/route_highlighter.mdx'
+
+import { NoticeTag } from '/snippets/notice_tag.mdx';
+
+import CodeSamplesMultiSearch1 from '/snippets/samples/code_samples_multi_search_1.mdx';
+import CodeSamplesMultiSearchFederated1 from '/snippets/samples/code_samples_multi_search_federated_1.mdx';
+import CodeSamplesMultiSearchRemoteFederated1 from '/snippets/samples/code_samples_multi_search_remote_federated_1.mdx';
 
 The `/multi-search` route allows you to perform multiple search queries on one or more indexes by bundling them into a single HTTP request. Multi-search is also known as federated search.
 
@@ -11,7 +18,7 @@ The `/multi-search` route allows you to perform multiple search queries on one o
 
 Bundle multiple search queries in a single API request. Use this endpoint to search through multiple indexes at once.
 
-<RouteHighlighter method="POST" route="/multi-search"/>
+<RouteHighlighter method="POST" path="/multi-search" />
 
 ### Body
 
@@ -20,9 +27,9 @@ Bundle multiple search queries in a single API request. Use this endpoint to sea
 | **`federation`** | Object | If present and not `null`, returns a single list merging all search results across all specified queries |
 | **`queries`** | Array of objects | Contains the list of search queries to perform. The [`indexUid`](/learn/getting_started/indexes#index-uid) search parameter is required, all other parameters are optional |
 
-<Capsule intent="warning">
+<Warning>
 If Meilisearch encounters an error when handling any of the queries in a multi-search request, it immediately stops processing the request and returns an error message. The returned message will only address the first error encountered.
-</Capsule>
+</Warning>
 
 #### `federation`
 
@@ -124,14 +131,14 @@ Federated search's merged results are returned in decreasing ranking score. To o
     4. Compare the global ranking scores of both hits to determine which comes first, ignoring any sorting or geosorting
     5. In the case of a perfect tie, documents from the query with the lowest rank in the `queries` array are preferred.
 
-<Capsule intent="note" title="Distinct documents and federated search">
+<Note>
 Meilisearch considers two documents the same if:
 
 1. They come from the same index
 2. And their primary key is the same
 
 There is no way to specify that two documents should be treated as the same across multiple indexes.
-</Capsule>
+</Note>
 
 #### `queries`
 
@@ -238,7 +245,7 @@ Each result in the `hits` array contains an additional `_federation` field with 
 
 #### Non-federated multi-search
 
-<CodeSamples id="multi_search_1" />
+<CodeSamplesMultiSearch1 />
 
 ##### Response: `200 Ok`
 
@@ -298,7 +305,7 @@ Each result in the `hits` array contains an additional `_federation` field with 
 
 #### Federated multi-search
 
-<CodeSamples id="multi_search_federated_1" />
+<CodeSamplesMultiSearchFederated1 />
 
 ##### Response: `200 Ok`
 
@@ -335,7 +342,7 @@ Each result in the `hits` array contains an additional `_federation` field with 
 
 #### Remote federated multi-search <NoticeTag type="experimental" label="experimental" />
 
-<CodeSamples id="multi_search_remote_federated_1" />
+<CodeSamplesMultiSearchRemoteFederated1 />
 
 ##### Response: `200 Ok`
 

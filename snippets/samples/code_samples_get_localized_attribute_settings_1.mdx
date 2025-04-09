@@ -1,0 +1,39 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X GET 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/localized-attributes'
+```
+
+```javascript JS
+client.index('INDEX_NAME').getLocalizedAttributes()
+```
+
+```python Python
+client.index('INDEX_NAME').get_localized_attributes()
+```
+
+```php PHP
+$client->index('INDEX_NAME')->getLocalizedAttributes();
+```
+
+```java Java
+client.index("INDEX_NAME").getLocalizedAttributesSettings();
+```
+
+```ruby Ruby
+client.index('INDEX_NAME').localized_attributes
+```
+
+```go Go
+client.index("INDEX_NAME").GetLocalizedAttributes()
+```
+
+```rust Rust
+let localized_attributes: Option<Vec<LocalizedAttributes>> = client
+  .index("books")
+  .get_localized_attributes()
+  .await
+  .unwrap();
+```
+</CodeGroup>

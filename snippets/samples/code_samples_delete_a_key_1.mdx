@@ -1,0 +1,61 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X DELETE 'MEILISEARCH_URL/keys/6062abda-a5aa-4414-ac91-ecd7944c0f8d' \
+  -H 'Authorization: Bearer MASTER_KEY'
+```
+
+```javascript JS
+client.deleteKey('6062abda-a5aa-4414-ac91-ecd7944c0f8d')
+```
+
+```python Python
+client.delete_key('6062abda-a5aa-4414-ac91-ecd7944c0f8d')
+```
+
+```php PHP
+$client->deleteKey('6062abda-a5aa-4414-ac91-ecd7944c0f8d');
+```
+
+```java Java
+client.deleteKey("6062abda-a5aa-4414-ac91-ecd7944c0f8d")
+```
+
+```ruby Ruby
+client.delete_key('6062abda-a5aa-4414-ac91-ecd7944c0f8d')
+```
+
+```go Go
+client.DeleteKey("6062abda-a5aa-4414-ac91-ecd7944c0f8d")
+```
+
+```csharp C#
+client.DeleteKeyAsync("6062abda-a5aa-4414-ac91-ecd7944c0f8d")
+```
+
+```rust Rust
+let key = client
+  .get_key("6062abda-a5aa-4414-ac91-ecd7944c0f8d")
+  .await
+  .unwrap();
+client
+  .delete_key(&key)
+  .await?;
+```
+
+```swift Swift
+client.deleteKey(keyOrUid: "6062abda-a5aa-4414-ac91-ecd7944c0f8d") { result in
+    switch result {
+    case .success:
+        print("success")
+    case .failure(let error):
+        print(error)
+    }
+}
+```
+
+```dart Dart
+await client.deleteKey('6062abda-a5aa-4414-ac91-ecd7944c0f8d');
+```
+</CodeGroup>
