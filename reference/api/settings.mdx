@@ -2435,10 +2435,11 @@ These embedder objects may contain the following fields:
 | **`revision`**                 | String  | Empty                                                                                                                                           | Model revision hash                                                                                                                                            |
 | **`distribution`**             | Object  | Empty                                                                                                                                           | Describes the natural distribution of search results. Must contain two fields, `mean` and `sigma`, each containing a numeric value between `0` and `1`         |
 | **`request`**                  | Object  | Empty                                                                                                                                           | A JSON value representing the request Meilisearch makes to the remote embedder                                                                                 |
-| **`response`**                 | Object  | Empty                                                                                                                                           | A JSON value representing the request Meilisearch expects from the remote embedder                                                                             |
+| **`response`**                 | Object  | Empty                                                                                                                                           | A JSON value representing the response Meilisearch expects from the remote embedder                                                                            |
 | **`binaryQuantized`**          | Boolean | Empty                                                                                                                                           | Once set to `true`, irreversibly converts all vector dimensions to 1-bit values                                                                                |
 | **`indexingEmbedder`**         | Object  | Empty                                                                                                                                           | Configures embedder to vectorize documents during indexing                                                                                                     |
 | **`searchEmbedder`**           | Object  | Empty                                                                                                                                           | Configures embedder to vectorize search queries                                                                                                                |
+| **`pooling`**                  | String  | `"useModel"`                                                                                                                                    | Pooling method for Hugging Face embedders                                                                                                                      |
 
 ### Get embedder settings
 
@@ -2450,7 +2451,7 @@ Get the embedders configured for an index.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index  |
 
 #### Example
 
@@ -2503,6 +2504,7 @@ Partially update the embedder settings for an index. When this setting is update
     "response": { … },
     "headers": { … },
     "binaryQuantized": <Boolean>,
+    "pooling": <String>,
     "indexingEmbedder": { … },
     "searchEmbedder": { … }
   }
@@ -2761,6 +2763,22 @@ This option can be useful when working with large Meilisearch projects. Consider
 <Capsule intent="danger" title="Binary quantization is an irreversible process">
 **Activating `binaryQuantized` is irreversible.** Once enabled, Meilisearch converts all vectors and discards all vector data that does fit within 1-bit. The only way to recover the vectors' original values is to re-vectorize the whole index in a new embedder.
 </Capsule>
+
+##### `pooling`
+
+Configure how Meilisearch should merge individual tokens into a single embedding.
+
+`pooling` must be one of the following strings:
+
+- `"useModel"`: Meilisearch will fetch the pooling method from the model configuration. Default value for new embedders
+- `"forceMean"`: always use mean pooling. Default value for embedders created in Meilisearch \<=v1.13
+- `"forceCls"`: always use CLS pooling
+
+If in doubt, use `"useModel"`. `"forceMean"` and `"forceCls"` are compatibility options that might be necessary for certain embedders and models.
+
+`pooling` is optional for embedders with the `huggingFace` source.
+
+`pooling` is invalid for all other embedder sources.
 
 ##### `indexingEmbedder` and `searchEmbedder` <NoticeTag type="experimental" label="experimental" />
 
