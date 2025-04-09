@@ -262,7 +262,17 @@ update_filterable_attributes_1: |-
     -H 'Content-Type: application/json' \
     --data-binary '[
       "genres",
-      "director"
+      "director",
+      {
+        "attributePatterns": ["*_ratings"],
+        "features": {
+          "facetSearch": false,
+          "filters": {
+            "equality": true,
+            "comparison": false
+          }
+        }
+      }
     ]'
 reset_filterable_attributes_1: |-
   curl \
