@@ -162,7 +162,7 @@ If the provided index does not exist, it will be created.
 | **[`displayedAttributes`](#displayed-attributes)**   | Array of strings | All attributes: `["*"]`                                                                          | Fields displayed in the returned documents                                       |
 | **[`distinctAttribute`](#distinct-attribute)**       | String           | `null`                                                                                           | Search returns documents with distinct (different) values of the given field     |
 | **[`faceting`](#faceting)**                          | Object           | [Default object](#faceting-object)                                                               | Faceting settings                                                                |
-| **[`filterableAttributes`](#filterable-attributes)** | Array of strings | Empty                                                                                            | Attributes to use as filters and facets                                          |
+| **[`filterableAttributes`](#filterable-attributes)** | Array of strings or objects | Empty                                                                                            | Attributes to use as filters and facets                                          |
 | **[`pagination`](#pagination)**                      | Object           | [Default object](#pagination-object)                                                             | Pagination settings                                                              |
 | **[`proximityPrecision`](#proximity-precision)**     | String           | `"byWord"`                                                                                       |  Precision level when calculating the proximity ranking rule                     |
 | **[`facetSearch`](#facet-search)**     | Boolean           | `true`                                                                                       |  Enable or disable [facet search](/reference/api/facet_search) functionality                     |
@@ -684,13 +684,43 @@ You can use the returned `taskUid` to get more details on [the status of the tas
 
 ## Filterable attributes
 
-Attributes in the `filterableAttributes` list can be used as filters or facets.
+Attributes in the `filterableAttributes` list can be used as [filters](/learn/filtering_and_sorting/filter_search_results) or [facets](/learn/filtering_and_sorting/search_with_facet_filters).
 
 <Capsule intent="warning">
-Updating filterable attributes will re-index all documents in the index, which can take some time. We recommend updating your index settings first and then adding documents as this reduces RAM consumption.
+Updating filterable attributes will re-index all documents in the index, which can take some time. To reduce RAM consumption, first update your index settings and then add documents.
 </Capsule>
 
-[To learn more about filterable attributes, refer to our dedicated guide.](/learn/filtering_and_sorting/filter_search_results)
+### Filterable attribute object
+
+`filterableAttributes` may be an array of either strings filterable attribute objects.
+
+Filterable attribute objects must contain the following fields:
+
+| Name                    | Type             | Default value | Description                                              |
+| ----------------------- | ---------------- | ------------- | -------------------------------------------------------- |
+| **`attributePatterns`** | Array of strings | `[]`          | A list of strings indicating filterable fields                      |
+| **`features`**          | Object           | `{"facetSearch": false, "filters": {"equality": true, "comparison": false}`          | A list outlining filter types enabled for the specified attributes                      |
+
+#### `attributePatterns`
+
+Attribute patterns may begin or end with a * wildcard to match multiple fields: `customer_*`, `attribute*`.
+
+#### `features`
+
+`features` allows you to decide which filter features are allowed for the specified attributes. It accepts the following fields:
+
+- `facetSearch`: Whether facet search should be enabled for the specified attributes. Boolean, defaults to `false` 
+- `filter`: A list outlining the filter types for the specified attributes. Must be an object and accepts the following fields:
+  - `equality`: Enables `=`, `!=`, `IN`, `EXISTS`, `IS NULL`, `IS EMPTY`, `NOT`, `AND`, and `OR`. Boolean, defaults to `true`
+  - `comparison`: Enables `>`, `>=`, `<`, `<=`, `TO`, `EXISTS`, `IS NULL`, `IS EMPTY`, `NOT`, `AND`, and `OR`. Boolean, defaults to `false`
+
+Calculating `comparison` filters is a resource-intensive operation. Disabling them may lead to better search and indexing performance. `equality` filters use fewer resources and have limited impact on performance.
+
+<Capsule intent="warning" title="Filterable attributes and reserved attributes">
+Use the simple string syntax to match reserved attributes. Reserved Meilisearch fields are always prefixed with an underscore (`_`), such as `_geo` and `_vector`.
+
+If set as a filterable attribute, reserved attributes ignore the `features` field and automatically activate all search features. Reserved fields will not be matched by wildcard `attributePatterns` such as `_*`.
+</Capsule>
 
 ### Get filterable attributes
 
@@ -736,15 +766,28 @@ Update an index's filterable attributes list.
 [<String>, <String>, …]
 ```
 
-An array of strings containing the attributes that can be used as filters at query time.
+An array of strings containing the attributes that can be used as filters at query time. All filter types are enabled for the specified attributes when using the array of strings format.
 
-If an attribute contains an object, you can use dot notation to set one or more of its keys as a value for this setting: `"filterableAttributes": ["release_date.year"]`.
+You may also use an array of objects:
 
-<Capsule intent="warning">
-If the field does not exist, no error will be thrown.
-</Capsule>
+```
+[
+  {
+    "attributePatterns": [<String>, <String>, …],
+    "features": {
+      "facetSearch": <Boolean>,
+      "filter": {
+        "equality": <Boolean>,
+        "comparison": <Boolean>
+      }
+    }
+  }
+]
+```
 
-[To learn more about filterable attributes, refer to our dedicated guide.](/learn/filtering_and_sorting/filter_search_results)
+If the specified field does not exist, Meilisearch will silently ignore it.
+
+If an attribute contains an object, you can use dot notation to set one or more of its keys as a value for this setting: `"filterableAttributes": ["release_date.year"]` or `"attributePatterns": ["release_date.year"]`.
 
 #### Example
 
@@ -821,7 +864,7 @@ Locale objects must have the following fields:
 | Name               | Type    | Default value | Description                                                 |
 | :----------------- | :------ | :------------ | :---------------------------------------------------------- |
 | **`locales`**      | Array of strings | `[]`        | A list of strings indicating one or more ISO-639 locales |
-| **`attribute_patterns`** | Array of strings | `[]`        | A list of strings indicating which fields correspond to the specified locales |
+| **`attributePatterns`** | Array of strings | `[]`        | A list of strings indicating which fields correspond to the specified locales |
 
 #### `locales`
 
