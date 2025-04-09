@@ -393,6 +393,17 @@ Sets the maximum size of [accepted payloads](/learn/getting_started/documents#da
 
 Configure the maximum amount of simultaneous search requests. By default, Meilisearch queues up to 1000 search requests at any given moment. This limit exists to prevent Meilisearch from consuming an unbounded amount of RAM.
 
+### Search query embedding cache <NoticeTag type="experimental" label="experimental" />
+
+**Environment variable**: `MEILI_EXPERIMENTAL_EMBEDDING_CACHE_ENTRIES`<br />
+**CLI option**: `--experimental-embedding-cache-entries`<br />
+**Default value**: `0`<br />
+**Expected value**: an integer
+
+Sets the size of the search query embedding cache. By default, Meilisearch generates an embedding for every new search query. When this option is set to an integer bigger than 0, Meilisearch returns a previously generated embedding if it recently performed the same query.
+
+The least recently used entries are evicted first. Embedders with the same configuration share the same cache, even if they were declared in distinct indexes.
+
 ### Schedule snapshot creation
 
 **Environment variable**: `MEILI_SCHEDULE_SNAPSHOT`<br />

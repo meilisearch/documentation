@@ -176,6 +176,7 @@ This list is liable to change with every new version of Meilisearch. It's not be
 | `sortable_attributes.has_geo`                      | `true` if `_geo` is set as a sortable attribute                                             | true
 | `filterable_attributes.total`                      | Number of filterable attributes                                                             | 3
 | `filterable_attributes.has_geo`                    | `true` if `_geo` is set as a filterable attribute                                           | false
+| `filterable_attributes.has_patterns`               | `true` if `filterableAttributes` uses `attributePatterns`                                   | true
 | `searchable_attributes.total`                      | Number of searchable attributes                                                             | 4
 | `searchable_attributes.with_wildcard`              | `true` if `*` is specified as a searchable attribute                                        | false
 | `per_task_uid`                                     | `true` if a `uids` is used to fetch a particular task resource                              | true
@@ -220,9 +221,11 @@ This list is liable to change with every new version of Meilisearch. It's not be
 | `indexes.total_single_index`                       | The total number of calls when only one index is queried                                    | 2007
 | `matching_strategy.most_used_strategy`             | Most used word matching strategy                                                            | last
 | `infos.with_configuration_file`                    | `true` if the instance is launched with a configuration file                                | false
+| `infos.experimental_composite_embedders`           | `true` if the `compositeEmbedders` feature is set to `true` for this instance               | false
 | `infos.experimental_contains_filter`               | `true` if the `containsFilter` experimental feature is enabled                              | false
 | `infos.experimental_edit_documents_by_function`    | `true` if the `editDocumentsByFunction` experimental feature is enabled                     | false
 | `infos.experimental_enable_metrics`                | `true` if `--experimental-enable-metrics` is specified at launch                            | false
+| `infos.experimental_embedding_cache_entries`       | Size of configured embedding cache                                                          | 100
 | `infos.experimental_replication_parameters`        | `true` if `--experimental-replication-parameters` is specified at launch                    | false
 | `infos.experimental_reduce_indexing_memory_usage`  | `true` if `--experimental-reduce-indexing-memory-usage` is specified at launch              | false
 | `infos.experimental_logs_mode`                     | `human` or `json` depending on the value specified                                          | human
@@ -243,7 +246,7 @@ This list is liable to change with every new version of Meilisearch. It's not be
 | `scoring.ranking_score_threshold`                  | `true` if rankingScoreThreshold was specified in an aggregated list of requests             | true
 | `attributes_to_search_on.total_number_of_uses`     | Total number of queries where `attributesToSearchOn` is set                                 | 5
 | `vector.max_vector_size`                           | Highest number of dimensions given for the `vector` parameter in this batch                 | 1536
-| `vector.retrieve_vectors`                          | `true` if the retrieve_vectors parameter has been used in this batch.                         | false
+| `vector.retrieve_vectors`                          | `true` if the retrieve_vectors parameter has been used in this batch.                       | false
 | `hybrid.enabled`                                   | `true` if hybrid search been used in the aggregated event                                   | true
 | `hybrid.semantic_ratio`                            | `true` if semanticRatio was used in this batch, otherwise false                             | false
 | `embedders.total`                                  | Numbers of defined embedders                                                                | 2
