@@ -1,0 +1,65 @@
+---
+title: Deploy a Meilisearch instance on Disco — Meilisearch documentation
+description: Deploy and configure Meilisearch on Disco in just a few steps.
+sidebarDepth: 3
+---
+
+# Deploy a Meilisearch instance on Disco
+
+## Introduction
+
+[Disco](https://disco.cloud/) is an Open Source deployment platform that allows you to host multiple applications on a single server. Disco provides a Heroku-like experience with fast deployments, built-in Postgres databases, and team management features, while giving you complete control over your infrastructure. You can run Disco on most servers - from cloud VMs to Raspberry Pis to on-premise hardware.
+
+With Disco, you can deploy Meilisearch alongside your other applications on the same server. Disco handles SSL certificates, automatic deployments from GitHub, environment variables, and more without complex configuration.
+
+## Deploy Meilisearch
+
+Start by forking the [Meilisearch Disco Sample repo](https://github.com/letsdiscodev/sample-meilisearch) on GitHub.
+
+Login to the [Disco web interface](https://dashboard.disco.cloud/) to see your list of instances. If you don't have an instance yet, follow the instructions to create one.
+
+![List of Disco instances](/assets/images/disco/01.instances.png)
+
+Click your instance. Then, click "New project" in the upper-right corner.
+
+![New project button](/assets/images/disco/02.new-project-button.png)
+
+Next, fill out the form:
+- Give this project a name such as `meilisearch`
+- Set the domain name for your Meilisearch instance. This domain should be pointing to your Disco instance (e.g. `meilisearch.example.com`)
+- Select the GitHub repository you forked earlier. If you need to give Disco access to this repository, click the "Manage your GitHub repositories" link.
+- Finally, click "Add New Variable". The name of the variable should be `MEILI_MASTER_KEY` and the value should be a strong key to secure your Meilisearch instance.
+
+![New project form](/assets/images/disco/03.new-project-form-fields.png)
+
+Click "Add Project" to create the project.
+
+![New project form](/assets/images/disco/04.new-project-form-submit.png)
+
+Your Meilisearch instance will then be deployed.
+
+![Deployment](/assets/images/disco/05.deployment.png)
+
+Navigate to your domain name in your browser. You should see the Meilisearch welcome page.
+
+![Meilisearch UI](/assets/images/disco/06.meilisearch-ui.png)
+
+## Next Steps
+
+Fetch the API keys for your Meilisearch instance by making a `curl` call to your instance:
+
+```bash
+curl \
+  -X GET 'https://MEILISEARCH_DOMAIN/keys' \
+  -H 'Authorization: Bearer MASTER_KEY'
+```
+
+Replace `MEILISEARCH_DOMAIN` with your domain name and `MASTER_KEY` with the key you set when creating the project.
+
+You should get back a list of your Meilisearch instance API keys. Using these, you can create and manage your indexes, documents, and settings.
+
+![API Keys](/assets/images/disco/07.api-keys.png)
+
+## Support
+
+Reach out to the Disco developers on [Discord](https://discord.gg/7J4vb5uUwU) if you have any questions.
