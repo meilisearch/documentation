@@ -160,6 +160,7 @@ There is no way to specify that two documents should be treated as the same acro
 | **[`matchingStrategy`](/reference/api/search#matching-strategy)**            | String           | `last`        | Strategy used to match query terms within documents |
 | **[`showRankingScore`](/reference/api/search#ranking-score)**                | Boolean          | `false`       | Display the global ranking score of a document      |
 | **[`showRankingScoreDetails`](/reference/api/search#ranking-score-details)** | Boolean          | `false`       | Adds a detailed global ranking score field          |
+| **[`rankingScoreThreshold`](/reference/api/search#ranking-score-threshold)** | Number           | `null`        | Excludes results with low ranking scores            |
 | **[`attributesToSearchOn`](/reference/api/search#customize-attributes-to-search-on-at-search-time)** | Array of strings | `["*"]` | Restrict search to the specified attributes |
 | **[`hybrid`](/reference/api/search#hybrid-search)**                          | Object           | `null`        | Return results based on query keywords and meaning  |
 | **[`vector`](/reference/api/search#vector)**                                 | Array of numbers | `null`        | Search using a custom query vector                  |
