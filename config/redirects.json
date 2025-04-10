@@ -643,5 +643,10 @@
     "source": "/docs/instant-search-react-app",
     "destination": "/docs/guides/front_end/react_quick_start",
     "permanent": true
+  },
+  {
+    "source": "/docs/guides/deployment/azure",
+    "destination": "/docs/learn/self_hosted/install_meilisearch_locally",
+    "permanent": true
   }
 ]
