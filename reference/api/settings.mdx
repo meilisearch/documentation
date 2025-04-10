@@ -856,11 +856,9 @@ Get the localized attributes settings of an index.
 ##### Response: `200 OK`
 
 ```json
-{
-  "localizedAttributes": [
-    {"locales": ["jpn"], "attributePatterns": ["*_ja"]}
-  ]
-}
+[
+  {"locales": ["jpn"], "attributePatterns": ["*_ja"]}
+]
 ```
 
 ### Update localized attribute settings
@@ -878,14 +876,12 @@ Update the localized attributes settings of an index.
 #### Body
 
 ```
-{
-  "localizedAttributes": [
-    {
-     "locales": [<String>, …],
-     "attributePatterns": [<String>, …],
-    }
-  ]
-}
+[
+  {
+   "locales": [<String>, …],
+   "attributePatterns": [<String>, …],
+  }
+]
 ```
 
 | Name               | Type    | Default value | Description                                                 |
