@@ -6,15 +6,31 @@ curl \
   -H 'Content-Type: application/json' \
   --data-binary '[
     "genres",
-    "director"
+    "director",
+    {
+      "attributePatterns": ["*_ratings"],
+      "features": {
+        "facetSearch": false,
+        "filters": {
+          "equality": true,
+          "comparison": false
+        }
+      }
+    }
   ]'
 ```
 
 ```javascript JS
 client.index('movies')
   .updateFilterableAttributes([
-    'genres',
-    'director'
+    "genres",
+    {
+      attributePatterns: ["genre"],
+      features: {
+        facetSearch: true,
+        filter: { equality: true, comparison: false },
+      },
+    }
   ])
 ```
 
@@ -27,8 +43,17 @@ client.index('movies').update_filterable_attributes([
 
 ```php PHP
 $client->index('movies')->updateFilterableAttributes([
-  'genres',
-  'director'
+  'author',
+  [
+      'attributePatterns' => ['genres'],
+      'features' => [
+          'facetSearch' => true,
+          'filter' => [
+              'equality' => true,
+              'comparison' => false,
+          ],
+      ],
+  ],
 ]);
 ```
 
