@@ -149,11 +149,6 @@
         "slug": "aws"
       },
       {
-        "source": "guides/deployment/azure.mdx",
-        "label": "Deploy on Azure",
-        "slug": "azure"
-      },
-      {
         "source": "guides/deployment/digitalocean.mdx",
         "label": "Deploy on DigitalOcean",
         "slug": "digitalocean"

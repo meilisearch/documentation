@@ -31,7 +31,10 @@ The `/batches` route gives information about the progress of batches of [asynchr
     },
     "indexUids": {
       "INDEX_NAME": 1
-    }
+    }, 
+    "progressTrace": { … },
+    "writeChannelCongestion": { … },
+    "internalDatabaseSizes": { … }
   },
   "duration": "PT0.250518S",
   "startedAt": "2024-12-10T15:20:30.18182Z",
@@ -107,6 +110,18 @@ List with the `types` of tasks contained in the batch.
 #### `indexUids`
 
 List of the number of tasks in the batch separated by the indexes they affect.
+
+#### `progressTrace`
+
+List with full paths for each operation performed in the batch, together with the processing time in human-readable format.
+
+#### `writeChannelCongestion`
+
+Object containing information on write operations computed during indexing. Can be useful when diagnosing performance issues associated with write speeds.
+
+#### `internalDatabaseSizes`
+
+Size of each internal database, including by how much it changed after a batch was processed.
 
 ### `duration`
 
@@ -196,7 +211,10 @@ For example, `?uids=0` returns a batch containing the task with a `taskUid` equa
         },
         "indexUids": {
           "INDEX_NAME": 1
-        }
+        },
+        "progressTrace": { … },
+        "writeChannelCongestion": { … },
+        "internalDatabaseSizes": { … }
       },
       "duration": "PT0.110083S",
       "startedAt": "2024-12-10T15:49:04.995321Z",

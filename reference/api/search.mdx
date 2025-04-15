@@ -77,8 +77,9 @@ By default, [this endpoint returns a maximum of 1000 results](/learn/resources/k
 | **[`limit`](#limit)**                                   | Integer          | `20`          | Maximum number of documents returned                |
 | **[`hitsPerPage`](#number-of-results-per-page)**        | Integer          | `1`           | Maximum number of documents returned for a page     |
 | **[`page`](#page)**                                     | Integer          | `1`           | Request a specific page of results                  |
-| **[`filter`](/reference/api/search#filter)**            | [String](/learn/filtering_and_sorting/filter_expression_reference) | `null`        | Filter queries by an attribute's value              |
+| **[`filter`](#filter)**                                 | String or array of strings | `null`        | Filter queries by an attribute's value    |
 | **[`facets`](#facets)**                                 | Array of strings | `null`        | Display the count of matches per facet              |
+| **[`distinct`](#distinct-attributes-at-search-time)**   | String           | `null`        | Restrict search to documents with unique values of specified attribute |
 | **[`attributesToRetrieve`](#attributes-to-retrieve)**   | Array of strings | `["*"]`       | Attributes to display in the returned documents     |
 | **[`attributesToCrop`](#attributes-to-crop)**           | Array of strings | `null`        | Attributes whose values have to be cropped          |
 | **[`cropLength`](#crop-length)**                        | Integer          | `10`          | Maximum length of cropped value in words            |
@@ -91,14 +92,12 @@ By default, [this endpoint returns a maximum of 1000 results](/learn/resources/k
 | **[`matchingStrategy`](#matching-strategy)**            | String           | `last`        | Strategy used to match query terms within documents |
 | **[`showRankingScore`](#ranking-score)**                | Boolean          | `false`       | Display the global ranking score of a document      |
 | **[`showRankingScoreDetails`](#ranking-score-details)** | Boolean          | `false`       | Adds a detailed global ranking score field          |
-| **[`rankingScoreThreshold`](#ranking-score-threshold)**                | Number          | `null`       | Excludes results with low ranking scores      |
-| **[`attributesToSearchOn`](#customize-attributes-to-search-on-at-search-time)**            | Array of strings           | `["*"]`        | Restrict search to the specified attributes |
-| **[`hybrid`](#hybrid-search)**             | Object           | `null`        | Return results based on query keywords and meaning  |
-| **[`vector`](#vector)**                    | Array of numbers | `null`        | Search using a custom query vector                  |
-| **[`retrieveVectors`](#display-_vectors-in-response)** | Boolean          | `false`       | Return document vector data                         |
-| **[`locales`](#query-locales)** | Array of strings          | `null`       | Explicitly specify languages used in a query              |
-
-[Learn more about how to use each search parameter](#search-parameters).
+| **[`rankingScoreThreshold`](#ranking-score-threshold)** | Number           | `null`        | Excludes results with low ranking scores            |
+| **[`attributesToSearchOn`](#customize-attributes-to-search-on-at-search-time)** | Array of strings | `["*"]` | Restrict search to the specified attributes |
+| **[`hybrid`](#hybrid-search)**                          | Object           | `null`        | Return results based on query keywords and meaning  |
+| **[`vector`](#vector)**                                 | Array of numbers | `null`        | Search using a custom query vector                  |
+| **[`retrieveVectors`](#display-_vectors-in-response)**  | Boolean          | `false`       | Return document vector data                         |
+| **[`locales`](#query-locales)**                         | Array of strings | `null`        | Explicitly specify languages used in a query        |
 
 ### Response
 
@@ -186,13 +185,16 @@ By default, [this endpoint returns a maximum of 1000 results](/learn/resources/k
 
 | Search Parameter                                        | Type             | Default value | Description                                         |
 | :------------------------------------------------------ | :--------------- | :------------ | :-------------------------------------------------- |
+| Search Parameter                                        | Type             | Default value | Description                                         |
+| :------------------------------------------------------ | :--------------- | :------------ | :-------------------------------------------------- |
 | **[`q`](#query-q)**                                     | String           | `""`          | Query string                                        |
 | **[`offset`](#offset)**                                 | Integer          | `0`           | Number of documents to skip                         |
 | **[`limit`](#limit)**                                   | Integer          | `20`          | Maximum number of documents returned                |
 | **[`hitsPerPage`](#number-of-results-per-page)**        | Integer          | `1`           | Maximum number of documents returned for a page     |
 | **[`page`](#page)**                                     | Integer          | `1`           | Request a specific page of results                  |
-| **[`filter`](/reference/api/search#filter)**            | [String](/learn/filtering_and_sorting/filter_expression_reference) | `null`        | Filter queries by an attribute's value              |
+| **[`filter`](#filter)**                                 | String or array of strings | `null`        | Filter queries by an attribute's value    |
 | **[`facets`](#facets)**                                 | Array of strings | `null`        | Display the count of matches per facet              |
+| **[`distinct`](#distinct-attributes-at-search-time)**   | String           | `null`        | Restrict search to documents with unique values of specified attribute |
 | **[`attributesToRetrieve`](#attributes-to-retrieve)**   | Array of strings | `["*"]`       | Attributes to display in the returned documents     |
 | **[`attributesToCrop`](#attributes-to-crop)**           | Array of strings | `null`        | Attributes whose values have to be cropped          |
 | **[`cropLength`](#crop-length)**                        | Integer          | `10`          | Maximum length of cropped value in words            |
@@ -205,14 +207,12 @@ By default, [this endpoint returns a maximum of 1000 results](/learn/resources/k
 | **[`matchingStrategy`](#matching-strategy)**            | String           | `last`        | Strategy used to match query terms within documents |
 | **[`showRankingScore`](#ranking-score)**                | Boolean          | `false`       | Display the global ranking score of a document      |
 | **[`showRankingScoreDetails`](#ranking-score-details)** | Boolean          | `false`       | Adds a detailed global ranking score field          |
-| **[`rankingScoreThreshold`](#ranking-score-threshold)**                | Number          | `null`       | Excludes results with low ranking scores      |
-| **[`attributesToSearchOn`](#customize-attributes-to-search-on-at-search-time)**            | Array of strings           | `["*"]`        | Restrict search to the specified attributes |
-| **[`hybrid`](#hybrid-search)**             | Object           | `null`        | Return results based on query keywords and meaning  |
-| **[`vector`](#vector)**                    | Array of numbers | `null`        | Search using a custom query vector                  |
-| **[`retrieveVectors`](#display-_vectors-in-response)** | Boolean          | `false`       | Return document vector data                         |
-| **[`locales`](#query-locales)** | Array of strings          | `null`       | Explicitly specify languages used in a query              |
-
-[Learn more about how to use each search parameter](#search-parameters).
+| **[`rankingScoreThreshold`](#ranking-score-threshold)** | Number           | `null`        | Excludes results with low ranking scores            |
+| **[`attributesToSearchOn`](#customize-attributes-to-search-on-at-search-time)** | Array of strings | `["*"]` | Restrict search to the specified attributes |
+| **[`hybrid`](#hybrid-search)**                          | Object           | `null`        | Return results based on query keywords and meaning  |
+| **[`vector`](#vector)**                                 | Array of numbers | `null`        | Search using a custom query vector                  |
+| **[`retrieveVectors`](#display-_vectors-in-response)**  | Boolean          | `false`       | Return document vector data                         |
+| **[`locales`](#query-locales)**                         | Array of strings | `null`        | Explicitly specify languages used in a query        |
 
 ### Response
 
@@ -273,35 +273,6 @@ If [using the `GET` route to perform a search](/reference/api/search#search-in-a
 
 This is not necessary when using the `POST` route or one of our [SDKs](/learn/resources/sdks).
 </Warning>
-
-### Overview
-
-| Search Parameter                                        | Type             | Default value | Description                                         |
-| :------------------------------------------------------ | :--------------- | :------------ | :-------------------------------------------------- |
-| **[`q`](#query-q)**                                     | String           | `""`          | Query string                                        |
-| **[`offset`](#offset)**                                 | Integer          | `0`           | Number of documents to skip                         |
-| **[`limit`](#limit)**                                   | Integer          | `20`          | Maximum number of documents returned                |
-| **[`hitsPerPage`](#number-of-results-per-page)**        | Integer          | `1`           | Maximum number of documents returned for a page     |
-| **[`page`](#page)**                                     | Integer          | `1`           | Request a specific page of results                  |
-| **[`filter`](#filter)**                                 | Array of strings | `null`        | Filter queries by an attribute's value              |
-| **[`facets`](#facets)**                                 | Array of strings | `null`        | Display the count of matches per facet              |
-| **[`distinct`](#distinct-attributes-at-search-time)**   | String           | `null`        | Restrict search to documents with unique values of the attribute defined as distinct. |
-| **[`attributesToRetrieve`](#attributes-to-retrieve)**   | Array of strings | `["*"]`       | Attributes to display in the returned documents     |
-| **[`attributesToCrop`](#attributes-to-crop)**           | Array of strings | `null`        | Attributes whose values have to be cropped          |
-| **[`cropLength`](#crop-length)**                        | Integer          | `10`          | Maximum length of cropped value in words            |
-| **[`cropMarker`](#crop-marker)**                        | String           | `"…"`         | String marking crop boundaries                      |
-| **[`attributesToHighlight`](#attributes-to-highlight)** | Array of strings | `null`        | Highlight matching terms contained in an attribute  |
-| **[`highlightPreTag`](#highlight-tags)**                | String           | `"<em>"`      | String inserted at the start of a highlighted term  |
-| **[`highlightPostTag`](#highlight-tags)**               | String           | `"</em>"`     | String inserted at the end of a highlighted term    |
-| **[`showMatchesPosition`](#show-matches-position)**     | Boolean          | `false`       | Return matching terms location                      |
-| **[`sort`](#sort)**                                     | Array of strings | `null`        | Sort search results by an attribute's value         |
-| **[`matchingStrategy`](#matching-strategy)**            | String           | `last`        | Strategy used to match query terms within documents |
-| **[`showRankingScore`](#ranking-score)**                | Boolean          | `false`       | Display the global ranking score of a document      |
-| **[`attributesToSearchOn`](#customize-attributes-to-search-on-at-search-time)**            | Array of strings           | `["*"]`        | Restrict search to the specified attributes |
-| **[`hybrid`](#hybrid-search)**             | Object           | `null`        | Return results based on query keywords and meaning  |
-| **[`vector`](#vector)**                    | Array of numbers | `null`        | Search using a custom query vector                  |
-| **[`retrieveVectors`](#display-_vectors-in-response)** | Boolean          | `false`       | Return document vector data                         |
-| **[`locales`](#query-locales)** | Array of strings          | `null`       | Explicitly specify languages used in a query              |
 
 ### Query (q)
 

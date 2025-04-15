@@ -48,6 +48,7 @@ Use `offset` and `limit` to browse through documents.
 | **`fields`** | Array of strings/`null`                 | `*`           | Document attributes to show (case-sensitive, comma-separated)         |
 | **`filter`** | String/Array of array of strings/`null` | N/A           | Refine results based on attributes in the `filterableAttributes` list |
 | **`retrieveVectors`**    | Boolean                     | `false`       | Return document vector data with search result                        |
+| **`ids`**    | Array of primary keys                   | `null`        | Return documents based on their primary keys                        |
 
 <Note>
 Sending an empty payload (`--data-binary '{}'`) will return all documents in the index.
@@ -61,6 +62,10 @@ Sending an empty payload (`--data-binary '{}'`) will return all documents in the
 | **`offset`**  | Integer | Number of documents skipped            |
 | **`limit`**   | Integer | Number of documents returned           |
 | **`total`**   | Integer | Total number of documents in the index |
+
+<Capsule intent="note" title="Returned document order">
+`/indexes/{index_uid}/documents/fetch` and `/indexes/{index_uid}/documents` responses do not return documents following the order of their primary keys.
+</Capsule>
 
 ### Example
 
@@ -130,6 +135,7 @@ Using the query parameters `offset` and `limit`, you can browse through all your
 | **`fields`**    | `*`           | Document attributes to show (case-sensitive, comma-separated)         |
 | **`filter`**    | N/A           | Refine results based on attributes in the `filterableAttributes` list |
 | **`retrieveVectors`**    | `false`  | Return document vector data with search result                    |
+| **`ids`**       | `null`        | Return documents based on their primary keys                          |
 
 ### Response
 
@@ -139,6 +145,10 @@ Using the query parameters `offset` and `limit`, you can browse through all your
 | **`offset`**  | Integer | Number of documents skipped            |
 | **`limit`**   | Integer | Number of documents returned           |
 | **`total`**   | Integer | Total number of documents in the index |
+
+<Capsule intent="note" title="Returned document order">
+`/indexes/{index_uid}/documents/fetch` and `/indexes/{index_uid}/documents` responses do not return documents following the order of their primary keys.
+</Capsule>
 
 ### Example
 
