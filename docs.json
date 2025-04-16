@@ -408,7 +408,6 @@
 								"pages": [
 									"guides/running_production",
 									"guides/deployment/aws",
-									"guides/deployment/azure",
 									"guides/deployment/digitalocean",
 									"guides/deployment/koyeb",
 									"guides/deployment/qovery",
