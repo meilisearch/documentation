@@ -63,9 +63,11 @@ Sending an empty payload (`--data-binary '{}'`) will return all documents in the
 | **`limit`**   | Integer | Number of documents returned           |
 | **`total`**   | Integer | Total number of documents in the index |
 
-<Capsule intent="note" title="Returned document order">
+<Note >
+#### Returned document order
+
 `/indexes/{index_uid}/documents/fetch` and `/indexes/{index_uid}/documents` responses do not return documents following the order of their primary keys.
-</Capsule>
+</Note>
 
 ### Example
 
@@ -146,9 +148,11 @@ Using the query parameters `offset` and `limit`, you can browse through all your
 | **`limit`**   | Integer | Number of documents returned           |
 | **`total`**   | Integer | Total number of documents in the index |
 
-<Capsule intent="note" title="Returned document order">
+<Note >
+#### Returned document order
+
 `/indexes/{index_uid}/documents/fetch` and `/indexes/{index_uid}/documents` responses do not return documents following the order of their primary keys.
-</Capsule>
+</Note>
 
 ### Example
 

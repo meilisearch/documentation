@@ -6,7 +6,7 @@ sidebarDepth: 3
 ---
 
 import { RouteHighlighter } from '/snippets/route_highlighter.mdx'
-
+import { NoticeTag } from '/snippets/notice_tag.mdx'
 
 import CodeSamplesGetDictionary1 from '/snippets/samples/code_samples_get_dictionary_1.mdx';
 import CodeSamplesGetDisplayedAttributes1 from '/snippets/samples/code_samples_get_displayed_attributes_1.mdx';
@@ -780,11 +780,13 @@ Attribute patterns may begin or end with a * wildcard to match multiple fields: 
 
 Calculating `comparison` filters is a resource-intensive operation. Disabling them may lead to better search and indexing performance. `equality` filters use fewer resources and have limited impact on performance.
 
-<Capsule intent="warning" title="Filterable attributes and reserved attributes">
+<Warning>
+#### Filterable attributes and reserved attributes
+
 Use the simple string syntax to match reserved attributes. Reserved Meilisearch fields are always prefixed with an underscore (`_`), such as `_geo` and `_vector`.
 
 If set as a filterable attribute, reserved attributes ignore the `features` field and automatically activate all search features. Reserved fields will not be matched by wildcard `attributePatterns` such as `_*`.
-</Capsule>
+</Warning>
 
 ### Get filterable attributes
 
@@ -2599,7 +2601,7 @@ This field is mandatory.
 
 Choose `composite` to use one embedder during indexing time, and another embedder at search time. Must be used together with [`indexingEmbedder` and `searchEmbedder`](#indexingembedder-and-searchembedder).
 
-<Capsule intent="note" title="Activating composite embedders">
+<Note>
 This is an experimental feature. Use the experimental features endpoint to activate it:
 
 ```sh
@@ -2610,7 +2612,7 @@ curl \
     "compositeEmbedders": true
   }'
 ```
-</Capsule>
+</Note>
 
 ##### `url`
 
