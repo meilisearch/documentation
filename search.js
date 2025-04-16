@@ -136,7 +136,7 @@ function initializeMeilisearchIntegration() {
         <circle cx="11" cy="11" r="8"></circle>
         <path d="m21 21-4.3-4.3"></path>
       </svg>
-      <span style="flex-grow: 1;">Search or ask...</span>
+      <span style="flex-grow: 1;">Search...</span>
       <span style="opacity: 0.7; font-size: 12px;">⌘K</span>
     `;
     
