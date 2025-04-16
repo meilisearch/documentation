@@ -1,10 +1,10 @@
 {
   "index_uid": "mintlify-staging",
   "start_urls": [
-      "https://meilisearch-6b28dec2.mintlify.app"
+      "https://meilisearch.dev/docs"
   ],
   "sitemap_urls": [
-      "https://meilisearch-6b28dec2.mintlify.app/sitemap.xml"
+      "https://meilisearch.dev/sitemap.xml"
   ],
   "selectors": {
       "lvl0": {
