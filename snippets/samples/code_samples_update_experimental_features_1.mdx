@@ -20,7 +20,7 @@ client.ExperimentalFeatures().SetMetrics(true).Update()
 ```rust Rust
 let client = Client::new("http://localhost:7700", Some("apiKey"));
 let features = ExperimentalFeatures::new(&client);
-// update the feature you want here
+features.set_metrics(true)
 let res = features
   .update()
   .await
