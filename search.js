@@ -422,7 +422,7 @@ function initializeMeilisearchIntegration() {
           // Perform search
           index.search(query, {
             limit: 25,
-            attributesToHighlight: ['title', 'content'],
+            attributesToHighlight: ['hierarchy_lvl1', 'hierarchy_lvl2', 'hierarchy_lvl3', 'hierarchy_lvl4', 'hierarchy_lvl5', 'content'],
             attributesToCrop: ['content'],
             cropLength: 100,
             hybrid: {
@@ -480,26 +480,41 @@ function initializeMeilisearchIntegration() {
                 
                 // Format content nicely
                 // Build title from hierarchy levels
+                const hierarchy_lvl1 = hit._formatted?.hierarchy_lvl1 
+                  ? hit._formatted.hierarchy_lvl1.replace(/<em>/g, '<em style="font-style: normal; color: #f472b6; font-weight: bold;">')
+                  : '';
+                const hierarchy_lvl2 = hit._formatted?.hierarchy_lvl2 
+                  ? hit._formatted.hierarchy_lvl2.replace(/<em>/g, '<em style="font-style: normal; color: #f472b6; font-weight: bold;">')
+                  : '';
+                const hierarchy_lvl3 = hit._formatted?.hierarchy_lvl3 
+                  ? hit._formatted.hierarchy_lvl3.replace(/<em>/g, '<em style="font-style: normal; color: #f472b6; font-weight: bold;">')
+                  : '';
+                const hierarchy_lvl4 = hit._formatted?.hierarchy_lvl4 
+                  ? hit._formatted.hierarchy_lvl4.replace(/<em>/g, '<em style="font-style: normal; color: #f472b6; font-weight: bold;">')
+                  : '';
+                const hierarchy_lvl5 = hit._formatted?.hierarchy_lvl5 
+                  ? hit._formatted.hierarchy_lvl5.replace(/<em>/g, '<em style="font-style: normal; color: #f472b6; font-weight: bold;">')
+                  : '';
+                const content = hit._formatted?.content 
+                  ? hit._formatted.content.replace(/<em>/g, '<em style="font-style: normal; color: #f472b6; font-weight: bold;">')
+                  : '';
+
                 let title = '';
-                if (hit.hierarchy_lvl1) {
-                  title = hit.hierarchy_lvl1;
-                  if (hit.hierarchy_lvl2) {
-                    title += ' > ' + hit.hierarchy_lvl2;
-                    if (hit.hierarchy_lvl3) {
-                      title += ' > ' + hit.hierarchy_lvl3;
-                      if (hit.hierarchy_lvl4) {
-                        title += ' > ' + hit.hierarchy_lvl4;
-                        if (hit.hierarchy_lvl5) {
-                          title += ' > ' + hit.hierarchy_lvl5;
+                if (hierarchy_lvl1) {
+                  title = hierarchy_lvl1;
+                  if (hierarchy_lvl2) {
+                    title += ' > ' + hierarchy_lvl2;
+                    if (hierarchy_lvl3) {
+                      title += ' > ' + hierarchy_lvl3;
+                      if (hierarchy_lvl4) {
+                        title += ' > ' + hierarchy_lvl4;
+                        if (hierarchy_lvl5) {
+                          title += ' > ' + hierarchy_lvl5;
                         }
                       }
                     }
                   }
                 }
-
-                const content = hit._formatted?.content 
-                  ? hit._formatted.content.replace(/<em>/g, '<em style="font-style: normal; color: #f472b6; font-weight: bold;">')
-                  : '';
                 
                 resultItem.innerHTML = `
                   <div style="font-weight: 500; margin-bottom: 4px;">${title}</div>
