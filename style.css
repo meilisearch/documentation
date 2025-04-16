@@ -1,7 +1,18 @@
+/* Turn section titles on left-hand sidebar uppercase */
 #navigation-items h5 {
   text-transform: uppercase;
 }
 
+/* Force callout headings to inherit parent component colour */
+.callout h2,
+.callout h3,
+.callout h4,
+.callout h5,
+.callout h6 {
+  color: inherit;
+}
+
+/* Custom component: <NoticeTag> */
 .noticeTag {
   color: rgb(var(--primary-light));
   border: 1px solid rgb(var(--primary-light));
@@ -12,6 +23,7 @@
   font-size: 0.8em;
 }
 
+/* Custom component: <RouteHighlighter> */
 .routeHighlighter {
   --route-highlighter-color: rgba(100, 100, 100, 0.35);
   display: flex;
@@ -25,20 +37,20 @@
 
 /* https://tailwindcss.com/docs/colors */
 .routeHighlighter--GET {
-  --route-highlighter-color: oklch(0.792 0.209 151.711)
+  --route-highlighter-color: oklch(0.792 0.209 151.711);
 }
 
 .routeHighlighter--POST {
-  --route-highlighter-color: oklch(0.623 0.214 259.815)
+  --route-highlighter-color: oklch(0.623 0.214 259.815);
 }
 
 .routeHighlighter--DELETE {
-  --route-highlighter-color: oklch(0.577 0.245 27.325)
+  --route-highlighter-color: oklch(63.7% 0.237 25.331);
 }
 
 .routeHighlighter--PUT, 
 .routeHighlighter--PATCH {
-  --route-highlighter-color: oklch(0.828 0.189 84.429)
+  --route-highlighter-color: oklch(0.828 0.189 84.429);
 }
 
 .routeHighlighter__method {
