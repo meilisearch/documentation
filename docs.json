@@ -6,6 +6,7 @@
     	"dark": "/assets/repo/meilisearch-logo-dark.svg",
     	"light": "/assets/repo/meilisearch-logo-light.svg"
   	},
+	"favicon": "/assets/repo/favicon.svg",
 	"colors": {
 	  	"primary": "#FF5CB2",
 	  	"light": "#FF5CB2",
