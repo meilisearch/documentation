@@ -72,7 +72,7 @@ chown -R meilisearch:meilisearch /var/lib/meilisearch
 chmod 750 /var/lib/meilisearch
 ```
 
-In this tutorial, you're creating the directories in your droplet's local disk. If you are using additional block storage, create these directories there. 
+In this tutorial, you're creating the directories in your droplet's local disk. If you are using additional block storage, create these directories there.
 
 Next, download the default configuration to `/etc`:
 
@@ -100,7 +100,7 @@ In Linux environments, a service is a process that can be launched when the oper
 
 ### 4.1. Create a service file
 
-Service files are text files that tell your operating system how to run your program. 
+Service files are text files that tell your operating system how to run your program.
 
 Run this command to create a service file in `/etc/systemd/system`:
 
@@ -140,7 +140,7 @@ Ensure everything is working by checking the service status:
 systemctl status meilisearch
 ```
 
-You should see a message confirming your service is running: 
+You should see a message confirming your service is running:
 
 ```sh
 ● meilisearch.service - Meilisearch
@@ -153,7 +153,7 @@ You should see a message confirming your service is running:
 
 At this point, Meilisearch is installed and running. It is also protected from eventual crashes and system restarts.
 
-The next step is to make your instance publicly accessible. 
+The next step is to make your instance publicly accessible.
 
 <Tip>
 If all the requests you send to Meilisearch are done by another application living in the same machine, you can safely skip this section.
@@ -161,7 +161,7 @@ If all the requests you send to Meilisearch are done by another application livi
 
 ### 5.1. Creating a reverse proxy with Nginx
 
-A [reverse proxy](https://www.keycdn.com/support/nginx-reverse-proxy) is an application that will handle every communication between the outside world and your application. In this tutorial, you will use [Nginx](https://www.nginx.com/) as your reverse proxy to receive external HTTP requests and redirect them to Meilisearch. 
+A [reverse proxy](https://www.keycdn.com/support/nginx-reverse-proxy) is an application that will handle every communication between the outside world and your application. In this tutorial, you will use [Nginx](https://www.nginx.com/) as your reverse proxy to receive external HTTP requests and redirect them to Meilisearch.
 
 First, install Nginx on your machine:
 

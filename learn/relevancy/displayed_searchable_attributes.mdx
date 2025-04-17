@@ -22,7 +22,7 @@ Documents returned upon search contain only displayed fields. If a field attribu
 
 **By default, all field attributes are set as displayed**.
 
-#### Example
+### Example
 
 Suppose you manage a database that contains information about movies. By adding the following settings, documents returned upon search will contain the fields `title`, `overview`, `release_date` and `genres`.
 
@@ -84,4 +84,3 @@ By default, all queries search through all attributes in the `searchableAttribut
 All fields are stored in the database. **This behavior cannot be changed**.
 
 Thus, even if a field is missing from both the `displayedAttributes` list and the `searchableAttributes` list, **it is still stored in the database** and can be added to either or both lists at any time.
-

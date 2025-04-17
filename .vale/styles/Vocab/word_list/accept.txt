@@ -112,3 +112,4 @@ GCP
 Boolean
 GET
 POST
+Mintlify

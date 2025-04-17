@@ -22,7 +22,7 @@ The number of search results may vary depending on changes to the `movies` datas
 
 All synonyms are **lowercased** and **de-unicoded** during the indexing process.
 
-#### Example
+### Example
 
 Consider a situation where `Résumé` and `CV` are set as synonyms.
 
@@ -51,7 +51,7 @@ A search for `phone` will return documents containing `iphone` as if they contai
 
 However, if you search for `iphone`, documents containing `phone` will be ranked lower in the results due to [the typo rule](/learn/relevancy/ranking_rules).
 
-#### Example
+### Example
 
 To create a one-way synonym list, this is the JSON syntax that should be [added to the settings](/reference/api/settings#update-synonyms).
 
@@ -94,7 +94,7 @@ shoe <=> boot <=> slipper <=> sneakers
 
 When a search is done with one of these words, all synonyms will be considered as the same word and will appear in the search results.
 
-#### Example
+### Example
 
 To create a mutual association between four words, this is the JSON syntax that should be [added to the settings](/reference/api/settings#update-synonyms).
 
@@ -127,7 +127,7 @@ To create a mutual association between four words, this is the JSON syntax that 
 
 Meilisearch treats multi-word synonyms as [phrases](/reference/api/search#phrase-search).
 
-#### Example
+### Example
 
 Suppose you set `San Francisco` and `SF` as synonyms with a [mutual association](#mutual-association)
 

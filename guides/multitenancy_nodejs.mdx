@@ -67,8 +67,8 @@ const apiKeyUid = 'YOUR_SEARCH_API_KEY_UID'
 const indexName = 'appointments'
 
 const client = new Meilisearch({
-	host: 'https://edge.meilisearch.com', // Your Meilisearch host
-	apiKey: apiKey
+  host: 'https://edge.meilisearch.com', // Your Meilisearch host
+  apiKey: apiKey
 })
 
 export function createTenantToken(patientName) {
@@ -95,6 +95,7 @@ When Meilisearch gets a search query with a tenant token, it decodes it and appl
 ## Using the tenant token
 
 Now that you have a tenant token, use it to perform searches. To achieve this, you will need to:
+
 - On the server: create an endpoint to send the token to your front-end
 - On the client: retrieve the token and use it to perform searches
 

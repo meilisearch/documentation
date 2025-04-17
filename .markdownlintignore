@@ -1,4 +1,5 @@
 node_modules
-.vuepress
-public
+scripts
+snippets
+assets
 README.md

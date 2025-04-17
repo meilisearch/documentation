@@ -9,6 +9,7 @@ In this guide, you will see how to setup [Laravel Scout](https://laravel.com/doc
 ## Prerequisites
 
 Before you start, make sure you have the following installed on your machine:
+
 - PHP
 - [Composer](https://getcomposer.org/)
 
@@ -87,7 +88,7 @@ use Laravel\Scout\Searchable;
 
 class Contact extends Model
 {
-	use Searchable;
+ use Searchable;
 }
 ```
 
@@ -116,10 +117,10 @@ class Contact extends Model
 
     public function toSearchableArray(): array
     {
-	      // All model attributes are made searchable
+       // All model attributes are made searchable
         $array = $this->toArray();
 
-		    // Then we add some additional fields
+      // Then we add some additional fields
         $array['organization_id'] = $this->company->organization->id;
         $array['company_name'] = $this->company->name;
         $array['company_url'] = $this->company->url;
@@ -141,7 +142,7 @@ In Laravel, you can configure your index settings via the `config/scout.php` fil
 use App\Models\Contact;
 
 return [
-	  // Other Scout configuration...
+   // Other Scout configuration...
 
     'meilisearch' => [
         'host' => env('MEILISEARCH_HOST', 'https://edge.meilisearch.com'),
@@ -182,6 +183,7 @@ You built an example application to demonstrate how to use Meilisearch with Lara
 </Frame>
 
 This demo application uses the following features:
+
 - [Multi-search](/reference/api/multi_search) (search across multiple indexes)
 - [Multi-tenancy](/learn/security/multitenancy_tenant_tokens)
 - [Filtering](/learn/filtering_and_sorting/filter_search_results)

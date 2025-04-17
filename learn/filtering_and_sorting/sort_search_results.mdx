@@ -128,7 +128,7 @@ sort="price:desc,author:asc"
 
 The order of `sort` values matter: the higher an attribute is in the search parameter value, the more Meilisearch will prioritize it over attributes placed lower. In our example, if multiple documents have the same value for `price`, Meilisearch will decide the order between these similarly-priced documents based on their `author`.
 
-#### Example
+### Example
 
 Suppose you are searching for books in a webshop and want to see the cheapest science fiction titles. This query searches for `"science fiction"` books sorted from cheapest to most expensive:
 
@@ -233,6 +233,6 @@ Custom ranking rules, instead, establish a default sorting rule that is enforced
 ## Example application
 
 Take a look at our demos for examples of how to implement sorting:
+
 - **Ecommerce demo**: [preview](https://ecommerce.meilisearch.com/) • [GitHub repository](https://github.com/meilisearch/ecommerce-demo/)
 - **CRM SaaS demo**: [preview](https://saas.meilisearch.com/) • [GitHub repository](https://github.com/meilisearch/saas-demo/)
-
