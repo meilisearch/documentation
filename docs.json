@@ -20,13 +20,13 @@
 		}
 	},
 	"appearance": {
-        "default": "dark",
+    "default": "dark",
 		"strict": true
 	},
 	"navbar": {
 		"primary": {
 			"type": "button",
-			"label": "Get Started",
+			"label": "Start a trial",
 			"href": "https://cloud.meilisearch.com"
 		},
 		"links": [
