@@ -1360,11 +1360,9 @@ update_localized_attribute_settings_1: |-
   curl \
     -X PUT 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/localized-attributes' \
     -H 'Content-Type: application/json' \
-    --data-binary '{
-      "localizedAttributes": [
-        {"locales": ["jpn"], "attributePatterns": ["*_ja"]}
-      ]
-    }'
+    --data-binary '[
+      {"locales": ["jpn"], "attributePatterns": ["*_ja"]}
+    ]'
 reset_localized_attribute_settings_1: |-
   curl \
     -X DELETE 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/localized-attributes'
