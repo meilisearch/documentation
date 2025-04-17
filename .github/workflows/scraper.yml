@@ -1,4 +1,4 @@
-name: Deploy to main & run scraper
+name: Run scraper and update docs search
 on:
   push:
     branches:
