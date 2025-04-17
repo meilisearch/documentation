@@ -4,9 +4,9 @@ sidebarTitle: Getting started with self-hosted Meilisearch
 description: Learn how to install Meilisearch, index a dataset, and perform your first search.
 ---
 
-import CodeSamplesGettingStartedAddDocumentsMd from '/snippets/samples/code_samples_getting_started_add_documents_md.mdx';
+import CodeSamplesGettingStartedAddDocuments from '/snippets/samples/code_samples_getting_started_add_documents.mdx';
 import CodeSamplesGettingStartedCheckTaskStatus from '/snippets/samples/code_samples_getting_started_check_task_status.mdx';
-import CodeSamplesGettingStartedSearchMd from '/snippets/samples/code_samples_getting_started_search_md.mdx';
+import CodeSamplesGettingStartedSearch from '/snippets/samples/code_samples_getting_started_search.mdx';
 
 This quick start walks you through installing Meilisearch, adding documents, and performing your first search.
 
@@ -81,7 +81,7 @@ Meilisearch accepts data in JSON, NDJSON, and CSV formats.
 
 Open a new terminal window and run the following command:
 
-<CodeSamplesGettingStartedAddDocumentsMd />
+<CodeSamplesGettingStartedAddDocuments />
 
 Meilisearch stores data in the form of discrete records, called [documents](/learn/getting_started/documents). Each document is an object composed of multiple fields, which are pairs of one attribute and one value:
 
@@ -148,7 +148,7 @@ If `status` is `enqueued` or `processing`, all you have to do is wait a short ti
 
 Now that you have Meilisearch set up, you can start searching!
 
-<CodeSamplesGettingStartedSearchMd />
+<CodeSamplesGettingStartedSearch />
 
 <Note>
 This tutorial queries Meilisearch with the master key. In production environments, this is a security risk. Prefer using API keys to access Meilisearch's API in any public-facing application.
