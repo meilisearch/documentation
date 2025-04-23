@@ -4,11 +4,9 @@
 curl \
   -X PUT 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/localized-attributes' \
   -H 'Content-Type: application/json' \
-  --data-binary '{
-    "localizedAttributes": [
-      {"locales": ["jpn"], "attributePatterns": ["*_ja"]}
-    ]
-  }'
+  --data-binary '[
+    {"locales": ["jpn"], "attributePatterns": ["*_ja"]}
+  ]'
 ```
 
 ```javascript JS
