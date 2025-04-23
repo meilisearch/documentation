@@ -1,3 +1,8 @@
+/* Use lighter shade of grey in dark theme for improved contrast */
+.dark\:text-gray-400:is(.dark *) {
+  color:rgb(var(--gray-300))
+}
+
 /* Turn section titles on left-hand sidebar uppercase */
 #navigation-items h5 {
   text-transform: uppercase;
