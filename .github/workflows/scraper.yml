@@ -2,7 +2,7 @@ name: Run scraper and update docs search
 on:
   push:
     branches:
-      - mintlify-iso
+      - main
 
 jobs:
   await-mintlify-deploy:
