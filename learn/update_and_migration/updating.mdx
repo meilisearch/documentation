@@ -13,7 +13,7 @@ import CodeSamplesUpdatingGuideCreateDump from '/snippets/samples/code_samples_u
 import CodeSamplesUpdatingGuideGetDisplayedAttributesOldAuthorizationHeader from '/snippets/samples/code_samples_updating_guide_get_displayed_attributes_old_authorization_header.mdx';
 import CodeSamplesUpdatingGuideResetDisplayedAttributesOldAuthorizationHeader from '/snippets/samples/code_samples_updating_guide_reset_displayed_attributes_old_authorization_header.mdx';
 
-Currently, Meilisearch databases are only compatible with the version of Meilisearch used to create them. The following guide will walk you through using a [dump](/learn/advanced/dumps) to migrate an existing database from an older version of Meilisearch to the most recent one.
+Currently, Meilisearch databases are only compatible with the version of Meilisearch used to create them. The following guide will walk you through using a [dump](/learn/data_backup/dumps) to migrate an existing database from an older version of Meilisearch to the most recent one.
 
 If you're updating your Meilisearch instance on cloud platforms like DigitalOcean or AWS, ensure that you can connect to your cloud instance via SSH. Depending on the user you are connecting with (root, admin, etc.), you may need to prefix some commands with `sudo`.
 
@@ -157,7 +157,7 @@ Meilisearch should launch normally and immediately create a new `UpgradeDatabase
 While the task is processing, you may continue making search queries. You may also enqueue new tasks. Meilisearch will only process new tasks once `UpgradeDatabase` is completed.
 
 <Warning>
-If after the upgrade is completed the task status is set to `failed` or Meilisearch returns internal error messages to your queries, [restart your instance from the snapshot](/learn/advanced/snapshots#starting-from-a-snapshot) you generated during step 1. You may then retry the upgrade, or upgrade using a dump. You are also welcome to open an issue on the [Meilisearch repository](https://github.com/meilisearch/meilisearch).
+If after the upgrade is completed the task status is set to `failed` or Meilisearch returns internal error messages to your queries, [restart your instance from the snapshot](/learn/data_backup/snapshots#starting-from-a-snapshot) you generated during step 1. You may then retry the upgrade, or upgrade using a dump. You are also welcome to open an issue on the [Meilisearch repository](https://github.com/meilisearch/meilisearch).
 </Warning>
 
 ### Using a dump
