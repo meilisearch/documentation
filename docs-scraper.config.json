@@ -1,10 +1,10 @@
 {
-  "index_uid": "mintlify-staging",
+  "index_uid": "mintlify-production",
   "start_urls": [
-      "https://meilisearch.dev/docs"
+      "https://meilisearch.com/docs"
   ],
   "sitemap_urls": [
-      "https://meilisearch.dev/sitemap.xml"
+      "https://meilisearch.com/sitemap.xml"
   ],
   "selectors": {
       "lvl0": {
