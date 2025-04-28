@@ -1,0 +1,63 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/movies/search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{ "q": "american ninja" }'
+```
+
+```javascript JS
+client.index('movies').search('American ninja')
+```
+
+```python Python
+client.index('movies').search('American ninja')
+```
+
+```php PHP
+$client->index('movies')->search('american ninja');
+```
+
+```java Java
+client.index("movies").search("American ninja");
+```
+
+```ruby Ruby
+client.index('movies').search('american ninja')
+```
+
+```go Go
+client.Index("movies").Search("american ninja", &meilisearch.SearchRequest{})
+```
+
+```csharp C#
+await client.Index("movies").SearchAsync<Movie>("American ninja");
+```
+
+```rust Rust
+let results: SearchResults<Movie> = client
+  .index("movies")
+  .search()
+  .with_query("American ninja")
+  .execute()
+  .await
+  .unwrap();
+```
+
+```swift Swift
+let searchParameters = SearchParameters(query: "American ninja")
+client.index("movies").search(searchParameters) { (result: Result<Searchable<Movie>, Swift.Error>) in
+    switch result {
+    case .success(let searchResult):
+        print(searchResult)
+    case .failure(let error):
+        print(error)
+    }
+}
+```
+
+```dart Dart
+await client.index('movies').search('American ninja');
+```
+</CodeGroup>

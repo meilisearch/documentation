@@ -1,13 +1,17 @@
 ---
-title: Network — Meilisearch API reference
+title: Network
 description: Use the `/network` route to create a network of Meilisearch instances.
 ---
 
-# Network <NoticeTag type="experimental" label="experimental" />
+import { RouteHighlighter } from '/snippets/route_highlighter.mdx'
+import { NoticeTag } from '/snippets/notice_tag.mdx';
+
+import CodeSamplesGetNetwork1 from '/snippets/samples/code_samples_get_network_1.mdx';
+import CodeSamplesUpdateNetwork1 from '/snippets/samples/code_samples_update_network_1.mdx';
 
 Use the `/network` route to create a network of Meilisearch instances. This is particularly useful when used together with federated search to implement horizontal database partition strategies such as sharding.
 
-<Capsule intent="note" title="Activating `/network`">
+<Note>
 This is an experimental feature. Use the Meilisearch Cloud UI or the experimental features endpoint to activate it:
 
 ```sh
@@ -18,9 +22,9 @@ curl \
     "network": true
   }'
 ```
-</Capsule>
+</Note>
 
-<Capsule intent="danger" title="`displayedAttributes`, `sortableAttributes`, and `/network` requests">
+<Warning>
 If an attribute is both:
 
 - not on the `displayedAttributes` list
@@ -29,7 +33,7 @@ If an attribute is both:
 It is possible its value becomes publicly accessible via the `/network` endpoint.
 
 Do not enable the `network` feature if you rely on the value of attributes not present in `displayedAttributes` to remain hidden at all times.
-</Capsule>
+</Warning>
 
 ## The network object
 
@@ -90,7 +94,7 @@ Returns the current value of the instance's network object.
 
 ### Example
 
-<CodeSamples id="get_network_1" />
+<CodeSamplesGetNetwork1 />
 
 #### Response: `200 Ok`
 
@@ -129,7 +133,7 @@ To reset `self` and `remotes` to their original value, set them to `null`. To re
 
 ### Example
 
-<CodeSamples id="update_network_1" />
+<CodeSamplesUpdateNetwork1 />
 
 #### Response: `200 Ok`
 

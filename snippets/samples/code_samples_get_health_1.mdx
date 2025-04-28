@@ -1,0 +1,58 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X GET 'MEILISEARCH_URL/health'
+```
+
+```javascript JS
+client.health()
+```
+
+```python Python
+client.health()
+```
+
+```php PHP
+$client->health();
+```
+
+```java Java
+client.health();
+```
+
+```ruby Ruby
+client.health
+```
+
+```go Go
+client.Health()
+```
+
+```csharp C#
+await client.HealthAsync();
+```
+
+```rust Rust
+// health() return an Err() if the server is not healthy, so this example would panic due to the unwrap
+client
+  .health()
+  .await
+  .unwrap();
+```
+
+```swift Swift
+client.health { (result) in
+    switch result {
+    case .success:
+        print("Healthy!")
+    case .failure(let error):
+        print(error)
+    }
+}
+```
+
+```dart Dart
+await client.health();
+```
+</CodeGroup>

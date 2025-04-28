@@ -1,0 +1,948 @@
+{
+	"$schema": "https://mintlify.com/docs.json",
+	"theme": "mint",
+	"name": "Meilisearch Documentation",
+	"logo": {
+    	"dark": "/assets/repo/meilisearch-logo-dark.svg",
+    	"light": "/assets/repo/meilisearch-logo-light.svg"
+  	},
+	"favicon": "/assets/repo/favicon.svg",
+	"colors": {
+	  	"primary": "#FF5CB2",
+	  	"light": "#FF5CB2",
+	  	"dark": "#FF5CB2"
+	},
+	"background": {
+		"decoration": "grid",
+		"color": {
+			"light": "#F7F7F7",
+			"dark": "#1A003B"
+		}
+	},
+	"appearance": {
+    "default": "dark",
+		"strict": true
+	},
+	"navbar": {
+		"primary": {
+			"type": "button",
+			"label": "Start a trial",
+			"href": "https://cloud.meilisearch.com"
+		},
+		"links": [
+			{
+				"label": "Github",
+				"href": "https://github.com/meilisearch/meilisearch"
+			},
+			{
+				"label": "Discord",
+				"href": "https://discord.gg/meilisearch"
+			}
+		]
+	},
+	"footer": {
+		"socials": {
+			"x": "https://x.com/meilisearch",
+			"github": "https://github.com/meilisearch",
+			"linkedin": "https://www.linkedin.com/company/meilisearch",
+			"website": "https://www.meilisearch.com"
+		},
+		"links": [
+			{
+				"header": "Product",
+				"items": [
+					{
+						"label": "Meilisearch Cloud",
+						"href": "https://www.meilisearch.com/cloud"
+					},
+					{
+						"label": "AI search",
+						"href": "https://www.meilisearch.com/solutions/hybrid-search"
+					},
+					{
+						"label": "Pricing",
+						"href": "https://www.meilisearch.com/pricing"
+					},
+					{
+						"label": "Documentation",
+						"href": "https://www.meilisearch.com/docs"
+					},
+					{
+						"label": "Roadmap",
+						"href": "https://roadmap.meilisearch.com"
+					},
+					{
+						"label": "Release notes",
+						"href": "https://updates.cloud.meilisearch.com/"
+					},
+					{
+						"label": "Comparisons",
+						"href": "https://www.meilisearch.com/docs/learn/what_is_meilisearch/comparison_to_alternatives"
+					},
+					{
+						"label": "Trust center",
+						"href": "https://trust.meilisearch.com/"
+					}
+				]
+			},
+			{
+				"header": "Contact us",
+				"items": [
+					{
+						"label": "Github",
+						"href": "https://github.com/meilisearch"
+					},
+					{
+						"label": "Discord",
+						"href": "https://discord.gg/meilisearch"
+					},
+					{
+						"label": "Newsletter",
+						"href": "https://share-eu1.hsforms.com/1LN5N0x_GQgq7ss7tXmSykwfg3aq"
+					},
+					{
+						"label": "Helpdesk",
+						"href": "https://help.meilisearch.com/"
+					}
+				]
+			},
+			{
+				"header": "Company",
+				"items": [
+					{
+						"label": "Blog",
+						"href": "https://meilisearch.com/blog"
+					},
+					{
+						"label": "Customers",
+						"href": "https://www.meilisearch.com/customers"
+					},
+					{
+						"label": "Careers",
+						"href": "https://www.meilisearch.com/careers"
+					},
+					{
+						"label": "Code of Conduct",
+						"href": "https://github.com/meilisearch/MeiliSearch/blob/main/CODE_OF_CONDUCT.md"
+					},
+					{
+						"label": "Privacy Policy",
+						"href": "https://www.meilisearch.com/privacy-policy"
+					},
+					{
+						"label": "Terms of Use",
+						"href": "https://www.meilisearch.com/terms-of-use"
+					},
+					{
+						"label": "Swag",
+						"href": "https://swag.meilisearch.com/"
+					}
+				]
+			}
+		]
+	},
+	"navigation": {
+		"versions": [
+      {
+				"version": "v1.14",
+				"anchors": [
+					{
+						"anchor": "Learn",
+						"icon": "book",
+						"groups": [
+							{
+								"group": "Getting started",
+								"pages": [
+									"home",
+									"learn/getting_started/cloud_quick_start",
+									"learn/getting_started/what_is_meilisearch",
+									"learn/getting_started/documents",
+									"learn/getting_started/indexes",
+									"learn/getting_started/primary_key",
+									"learn/getting_started/search_preview"
+								]
+							},
+							{
+								"group": "AI-powered search",
+								"pages": [
+									"learn/ai_powered_search/getting_started_with_ai_search",
+                  "learn/ai_powered_search/configure_rest_embedder",
+                  "learn/ai_powered_search/document_template_best_practices",
+                  "learn/ai_powered_search/image_search_with_user_provided_embeddings",
+									"learn/ai_powered_search/search_with_user_provided_embeddings",
+                  "learn/ai_powered_search/retrieve_related_search_results",
+                  "learn/ai_powered_search/choose_an_embedder",
+									"learn/ai_powered_search/difference_full_text_ai_search"
+								]
+							},
+							{
+								"group": "Self-hosted",
+								"pages": [
+									"learn/self_hosted/getting_started_with_self_hosted_meilisearch",
+									"learn/self_hosted/configure_meilisearch_at_launch",
+									"learn/self_hosted/install_meilisearch_locally",
+									"learn/self_hosted/supported_os"
+								]
+							},
+							{
+								"group": "Analytics",
+								"pages": [
+									"learn/analytics/configure_analytics",
+									"learn/analytics/configure_monitoring",
+									"learn/analytics/bind_events_user",
+									"learn/analytics/deactivate_analytics_monitoring",
+									"learn/analytics/events_endpoint"
+								]
+							},
+							{
+								"group": "Teams",
+								"pages": [
+									"learn/teams/teams"
+								]
+							},
+							{
+								"group": "Tasks and asynchronous operations",
+								"pages": [
+									"learn/async/working_with_tasks",
+									"learn/async/filtering_tasks",
+									"learn/async/paginating_tasks",
+									"learn/async/task_webhook",
+									"learn/async/asynchronous_operations"
+								]
+							},
+							{
+								"group": "Configuration",
+								"pages": [
+									"learn/configuration/configuring_index_settings",
+									"learn/configuration/configuring_index_settings_api"
+								]
+							},
+							{
+								"group": "Filtering and sorting",
+								"pages": [
+									"learn/filtering_and_sorting/filter_search_results",
+									"learn/filtering_and_sorting/search_with_facet_filters",
+									"learn/filtering_and_sorting/working_with_dates",
+									"learn/filtering_and_sorting/sort_search_results",
+									"learn/filtering_and_sorting/geosearch",
+									"learn/filtering_and_sorting/filter_expression_reference"
+								]
+							},
+							{
+								"group": "Security and permissions",
+								"pages": [
+									"learn/security/basic_security",
+									"learn/security/generate_tenant_token_sdk",
+									"learn/security/generate_tenant_token_third_party",
+									"learn/security/generate_tenant_token_scratch",
+									"learn/security/resetting_master_key",
+									"learn/security/tenant_token_reference",
+									"learn/security/differences_master_api_keys",
+									"learn/security/protected_unprotected",
+									"learn/security/multitenancy_tenant_tokens"
+								]
+							},
+							{
+								"group": "Multi-search",
+								"pages": [
+									"learn/multi_search/performing_federated_search",
+									"learn/multi_search/implement_sharding",
+									"learn/multi_search/multi_search_vs_federated_search"
+								]
+							},
+							{
+								"group": "Update and migration",
+								"pages": [
+									"learn/update_and_migration/migrating_cloud",
+									"learn/update_and_migration/updating",
+									"learn/update_and_migration/algolia_migration",
+									"learn/update_and_migration/previous_docs_version"
+								]
+							},
+							{
+								"group": "Data backup",
+								"pages": [
+									"learn/data_backup/dumps",
+									"learn/data_backup/snapshots",
+									"learn/data_backup/snapshots_vs_dumps"
+								]
+							},
+							{
+								"group": "Indexing",
+								"pages": [
+									"learn/indexing/indexing_best_practices",
+									"learn/indexing/ram_multithreading_performance",
+									"learn/indexing/tokenization"
+								]
+							},
+							{
+								"group": "Engine",
+								"pages": [
+									"learn/engine/concat",
+									"learn/engine/datatypes",
+									"learn/engine/prefix",
+									"learn/engine/storage"
+								]
+							},
+							{
+								"group": "Relevancy",
+								"pages": [
+									"learn/relevancy/relevancy",
+									"learn/relevancy/ranking_rules",
+									"learn/relevancy/custom_ranking_rules",
+									"learn/relevancy/ranking_score",
+									"learn/relevancy/attribute_ranking_order",
+									"learn/relevancy/typo_tolerance_settings",
+									"learn/relevancy/typo_tolerance_calculations",
+									"learn/relevancy/distinct_attribute",
+									"learn/relevancy/displayed_searchable_attributes",
+									"learn/relevancy/synonyms"
+								]
+							},
+							{
+								"group": "Resources",
+								"pages": [
+									"learn/resources/known_limitations",
+									"learn/resources/experimental_features_overview",
+									"learn/resources/faq",
+									"learn/resources/sdks",
+									"learn/resources/comparison_to_alternatives",
+									"learn/resources/telemetry",
+									"learn/resources/language",
+									"learn/resources/versioning",
+									"learn/resources/contributing_docs"
+								]
+							}
+						]
+					},
+					{
+						"anchor": "References",
+						"icon": "code",
+						"groups": [
+							{
+								"group": "API reference",
+								"pages": [
+									"reference/api/overview",
+									"reference/api/indexes",
+									"reference/api/documents",
+									"reference/api/search",
+									"reference/api/multi_search",
+									"reference/api/network",
+									"reference/api/similar",
+									"reference/api/facet_search",
+									"reference/api/tasks",
+									"reference/api/batches",
+									"reference/api/keys",
+									"reference/api/settings",
+									"reference/api/snapshots",
+									"reference/api/stats",
+									"reference/api/health",
+									"reference/api/version",
+									"reference/api/dump",
+									"reference/api/experimental_features",
+									"reference/api/metrics",
+									"reference/api/logs"
+								]
+							},
+							{
+								"group": "Errors",
+								"pages": [
+									"reference/errors/overview",
+									"reference/errors/error_codes"
+								]
+							}
+						]
+					},
+					{
+						"anchor": "Guides",
+						"icon": "file-lines",
+						"groups": [
+							{
+								"group": "Front end",
+								"pages": [
+									"guides/front_end/front_end_integration",
+									"guides/front_end/react_quick_start",
+									"guides/front_end/vue_quick_start",
+									"guides/front_end/search_bar_for_docs",
+									"guides/front_end/pagination"
+								]
+							},
+							{
+								"group": "Back end",
+								"pages": [
+									"guides/laravel_scout",
+									"guides/strapi_v4",
+									"guides/ruby_on_rails_quick_start"
+								]
+							},
+							{
+								"group": "Artificial intelligence",
+								"pages": [
+									"guides/ai/mcp",
+									"guides/embedders/openai",
+									"guides/langchain",
+									"guides/embedders/huggingface",
+									"guides/embedders/cloudflare",
+									"guides/embedders/cohere",
+									"guides/embedders/mistral",
+									"guides/embedders/voyage",
+									"guides/computing_hugging_face_embeddings_gpu"
+								]
+							},
+							{
+								"group": "Performance",
+								"pages": [
+									"guides/improve_relevancy_large_documents"
+								]
+							},
+							{
+								"group": "Security",
+								"pages": [
+									"guides/http2_ssl",
+									"guides/laravel_multitenancy",
+									"guides/multitenancy_nodejs"
+								]
+							},
+							{
+								"group": "Deployment",
+								"pages": [
+									"guides/running_production",
+									"guides/deployment/aws",
+									"guides/deployment/digitalocean",
+									"guides/deployment/koyeb",
+									"guides/deployment/qovery",
+									"guides/deployment/railway"
+								]
+							},
+							{
+								"group": "Integrations",
+								"pages": [
+									"guides/vercel"
+								]
+							},
+							{
+								"group": "Miscellaneous",
+								"pages": [
+									"guides/postman_collection",
+									"guides/docker"
+								]
+							}
+						]
+					}
+				]
+			}
+		]	
+	},
+  "integrations": {
+    "fathom": {
+      "siteId": "QNBPJXIV"
+    },
+    "segment": {
+        "key": "KIC0Lcb5C9ssRY79dUKPOK8Wq6wLHiUP"
+    },
+    "ga4": {
+        "measurementId": "G-S0LFS24LR2"
+    },
+    "gtm": {
+      "tagId": "GT-MBH92THN"
+    }
+  },
+	"redirects": [
+		{
+			"source": "/docs/reference/features/authentication",
+			"destination": "/docs/learn/security/master_api_keys"
+		},
+		{
+			"source": "/docs/errors",
+			"destination": "/docs/reference/errors/error_codes"
+		},
+		{
+			"source": "/docs/learn/what_is_meilisearch/features",
+			"destination": "/docs/learn/what_is_meilisearch/overview#features"
+		},
+		{
+			"source": "/docs/learn/contributing/overview",
+			"destination": "/docs/learn/contributing/contributing_docs#contributing-to-meilisearch"
+		},
+		{
+			"source": "/docs/learn/what_is_meilisearch/search_preview",
+			"destination": "/docs/learn/getting_started/search_preview"
+		},
+		{
+			"source": "/docs/learn/advanced/pagination",
+			"destination": "/docs/learn/front_end/pagination"
+		},
+		{
+			"source": "/docs/learn/advanced/asynchronous_operations",
+			"destination": "/docs/learn/async/asynchronous_operations"
+		},
+		{
+			"source": "/docs/learn/advanced/faceted_search",
+			"destination": "/docs/learn/fine_tuning_results/faceted_search"
+		},
+		{
+			"source": "/docs/learn/advanced/geosearch",
+			"destination": "/docs/learn/filtering_and_sorting/geosearch"
+		},
+		{
+			"source": "/docs/learn/advanced/sorting",
+			"destination": "/docs/learn/filtering_and_sorting/sort_search_results"
+		},
+		{
+			"source": "/docs/learn/advanced/working_with_dates",
+			"destination": "/docs/learn/filtering_and_sorting/working_with_dates"
+		},
+		{
+			"source": "/docs/learn/what_is_meilisearch/philosophy",
+			"destination": "/docs/learn/what_is_meilisearch/overview#philosophy"
+		},
+		{
+			"source": "/docs/learn/getting_started/quick_start#front-end-integration",
+			"destination": "/docs/learn/front_end/front_end_integration"
+		},
+		{
+			"source": "/docs/reference/api/search#search-in-an-index-with-post-route",
+			"destination": "/docs/reference/api/search#search-in-an-index-with-post"
+		},
+		{
+			"source": "/docs/reference/api/search#search-in-an-index-with-get-route",
+			"destination": "/docs/reference/api/search#search-in-an-index-with-get"
+		},
+		{
+			"source": "/docs/reference/api/documents#get-documents",
+			"destination": "/docs/reference/api/documents#get-documents-with-get"
+		},
+		{
+			"source": "/docs/reference/api/multi_search#post-route",
+			"destination": "/docs/reference/api/multi_search#perform-a-multi-search"
+		},
+		{
+			"source": "/docs/learn/what_is_meilisearch/overview#sdks-and-integrations",
+			"destination": "/docs/learn/what_is_meilisearch/sdks"
+		},
+		{
+			"source": "/docs/learn/what_is_meilisearch/overview#alternatives",
+			"destination": "/docs/learn/what_is_meilisearch/comparison_to_alternatives"
+		},
+		{
+			"source": "/docs/learn/advanced/asynchronous_operations#filtering-tasks",
+			"destination": "/docs/learn/async/managing_tasks#filtering-tasks"
+		},
+		{
+			"source": "/docs/learn/advanced/asynchronous_operations#paginating-tasks",
+			"destination": "/docs/learn/async/managing_tasks#paginating-tasks"
+		},
+		{
+			"source": "/docs/learn/advanced/asynchronous_operations#filter-by-uid",
+			"destination": "/docs/learn/async/managing_tasks#filter-by-uid"
+		},
+		{
+			"source": "/docs/learn/advanced/asynchronous_operations#filter-by-status",
+			"destination": "/docs/learn/async/managing_tasks#filter-by-status"
+		},
+		{
+			"source": "/docs/learn/advanced/asynchronous_operations#filter-by-type",
+			"destination": "/docs/learn/async/managing_tasks#filter-by-type"
+		},
+		{
+			"source": "/docs/learn/advanced/asynchronous_operations#filter-by-indexuid",
+			"destination": "/docs/learn/async/managing_tasks#filter-by-indexuid"
+		},
+		{
+			"source": "/docs/learn/advanced/asynchronous_operations#filter-by-canceledby",
+			"destination": "/docs/learn/async/managing_tasks#filter-by-canceledby"
+		},
+		{
+			"source": "/docs/learn/advanced/asynchronous_operations#filter-by-date",
+			"destination": "/docs/learn/async/managing_tasks#filter-by-date"
+		},
+		{
+			"source": "/docs/learn/advanced/asynchronous_operations#combine-filters",
+			"destination": "/docs/learn/async/managing_tasks#combine-filters"
+		},
+		{
+			"source": "/docs/learn/getting_started/filtering_and_sorting",
+			"destination": "/docs/learn/fine_tuning_results/filtering"
+		},
+		{
+			"source": "/docs/learn/getting_started/customizing_relevancy",
+			"destination": "/docs/learn/configuration/settings"
+		},
+		{
+			"source": "/docs/learn/getting_started/getting_ready_for_production",
+			"destination": "/docs/learn/getting_started/cloud_quick_start"
+		},
+		{
+			"source": "/docs/learn/security/master_api_keys",
+			"destination": "/docs/learn/security/basic_security"
+		},
+		{
+			"source": "/docs/learn/experimental/ranking_rule_score_details",
+			"destination": "/docs/reference/api/search#ranking_score_details"
+		},
+		{
+			"source": "/docs/learn/async/managing_tasks",
+			"destination": "/docs/learn/async/working_with_tasks"
+		},
+		{
+			"source": "/docs/learn/cookbooks/aws",
+			"destination": "/docs/guides/deployment/aws"
+		},
+		{
+			"source": "/docs/learn/cookbooks/azure",
+			"destination": "/docs/guides/deployment/azure"
+		},
+		{
+			"source": "/docs/learn/cookbooks/gcp",
+			"destination": "/docs/guides/deployment/gcp"
+		},
+		{
+			"source": "/docs/learn/cookbooks/koyeb",
+			"destination": "/docs/guides/deployment/koyeb"
+		},
+		{
+			"source": "/docs/learn/cookbooks/qovery",
+			"destination": "/docs/guides/deployment/qovery"
+		},
+		{
+			"source": "/docs/learn/cookbooks/railway",
+			"destination": "/docs/guides/deployment/railway"
+		},
+		{
+			"source": "/docs/learn/front_end/front_end_integration",
+			"destination": "/docs/guides/front_end/front_end_integration"
+		},
+		{
+			"source": "/docs/learn/front_end/react_instantsearch",
+			"destination": "/docs/guides/front_end/react_quick_start"
+		},
+		{
+			"source": "/docs/guides/front_end/react_instantsearch",
+			"destination": "/docs/guides/front_end/react_quick_start"
+		},
+		{
+			"source": "/docs/learn/front_end/pagination",
+			"destination": "/docs/guides/front_end/pagination"
+		},
+		{
+			"source": "/docs/learn/cookbooks/running_production",
+			"destination": "/docs/guides/deployment/running_production"
+		},
+		{
+			"source": "/docs/learn/cookbooks/postman_collection",
+			"destination": "/docs/guides/misc/postman_collection"
+		},
+		{
+			"source": "/docs/learn/cookbooks/docker",
+			"destination": "/docs/guides/misc/docker"
+		},
+		{
+			"source": "/docs/learn/cookbooks/search_bar_for_docs",
+			"destination": "/docs/guides/front_end/search_bar_for_docs"
+		},
+		{
+			"source": "/docs/learn/cookbooks/http2_ssl",
+			"destination": "/docs/guides/security/http2_ssl"
+		},
+		{
+			"source": "/docs/learn/cookbooks/vercel",
+			"destination": "/docs/guides/integrations/vercel"
+		},
+		{
+			"source": "/docs/learn/cookbooks/meilisync_mysql",
+			"destination": "/docs/guides/database/meilisync_mysql"
+		},
+		{
+			"source": "/docs/learn/cookbooks/meilisync_postgresql",
+			"destination": "/docs/guides/database/meilisync_postgresql"
+		},
+		{
+			"source": "/docs/learn/cookbooks/laravel_scout",
+			"destination": "/docs/guides/back_end/laravel_scout"
+		},
+		{
+			"source": "/docs/learn/cookbooks/laravel_multitenancy",
+			"destination": "/docs/guides/security/laravel_multitenancy"
+		},
+		{
+			"source": "/docs/learn/cookbooks/multitenancy_nodejs",
+			"destination": "/docs/guides/security/multitenancy_nodejs"
+		},
+		{
+			"source": "/docs/learn/cookbooks/indexing_best_practices",
+			"destination": "/docs/guides/performance/indexing_best_practices"
+		},
+		{
+			"source": "/docs/learn/cookbooks/computing_hugging_face_embeddings_gpu",
+			"destination": "/docs/guides/ai/computing_hugging_face_embeddings_gpu"
+		},
+		{
+			"source": "/docs/learn/cookbooks/strapi_v4",
+			"destination": "/docs/guides/back_end/strapi_v4"
+		},
+		{
+			"source": "/docs/learn/cookbooks/large_documents",
+			"destination": "/docs/guides/performance/large_documents"
+		},
+		{
+			"source": "/docs/learn/cookbooks/langchain",
+			"destination": "/docs/guides/ai/langchain"
+		},
+		{
+			"source": "/docs/learn/advanced/concat",
+			"destination": "/docs/learn/engine/concat"
+		},
+		{
+			"source": "/docs/learn/advanced/datatypes",
+			"destination": "/docs/learn/engine/datatypes"
+		},
+		{
+			"source": "/docs/learn/advanced/prefix",
+			"destination": "/docs/learn/engine/prefix"
+		},
+		{
+			"source": "/docs/learn/advanced/storage",
+			"destination": "/docs/learn/engine/storage"
+		},
+		{
+			"source": "/docs/learn/cloud/analytics",
+			"destination": "/docs/learn/analytics/configure_analytics"
+		},
+		{
+			"source": "/docs/learn/cloud/teams",
+			"destination": "/docs/learn/teams/teams"
+		},
+		{
+			"source": "/docs/learn/security/managing_api_keys",
+			"destination": "/docs/reference/api/keys"
+		},
+		{
+			"source": "/docs/learn/experimental/puffin_reports",
+			"destination": "/docs/learn/experimental/log_customization"
+		},
+		{
+			"source": "/docs/learn/index_settings/distinct",
+			"destination": "/docs/learn/relevancy/distinct_attribute"
+		},
+		{
+			"source": "/docs/learn/index_settings/displayed_searchable_attributes",
+			"destination": "/docs/learn/relevancy/displayed_searchable_attributes"
+		},
+		{
+			"source": "/docs/learn/index_settings/synonyms",
+			"destination": "/docs/learn/relevancy/synonyms"
+		},
+		{
+			"source": "/docs/learn/index_settings/typo_tolerance",
+			"destination": "/docs/learn/relevancy/typo_tolerance_settings"
+		},
+		{
+			"source": "/docs/learn/core_concepts/relevancy",
+			"destination": "/docs/learn/relevancy/relevancy"
+		},
+		{
+			"source": "/docs/learn/configuration/settings",
+			"destination": "/docs/reference/api/settings"
+		},
+		{
+			"source": "/docs/learn/fine_tuning_results/faceted_search",
+			"destination": "/docs/learn/filtering_and_sorting/search_with_facet_filters"
+		},
+		{
+			"source": "/docs/learn/fine_tuning_results/filtering",
+			"destination": "/docs/learn/filtering_and_sorting/filter_search_results"
+		},
+		{
+			"source": "/docs/learn/fine_tuning_results/working_with_dates",
+			"destination": "/docs/learn/filtering_and_sorting/working_with_dates"
+		},
+		{
+			"source": "/docs/learn/fine_tuning_results/geosearch",
+			"destination": "/docs/learn/filtering_and_sorting/geosearch"
+		},
+		{
+			"source": "/docs/learn/fine_tuning_results/sorting",
+			"destination": "/docs/learn/filtering_and_sorting/sort_search_results"
+		},
+		{
+			"source": "/docs/learn/configuration/instance_options",
+			"destination": "/docs/learn/self_hosted/configure_meilisearch_at_launch"
+		},
+		{
+			"source": "/docs/learn/getting_started/installation",
+			"destination": "/docs/learn/self_hosted/install_meilisearch_locally"
+		},
+		{
+			"source": "/docs/learn/getting_started/quick_start",
+			"destination": "/docs/learn/self_hosted/getting_started_with_self_hosted_meilisearch"
+		},
+		{
+			"source": "/docs/learn/getting_started/supported_os",
+			"destination": "/docs/learn/self_hosted/supported_os"
+		},
+		{
+			"source": "/docs/learn/advanced/indexing",
+			"destination": "/docs/learn/indexing/indexing_best_practices"
+		},
+		{
+			"source": "/docs/guides/performance/indexing_best_practices",
+			"destination": "/docs/learn/indexing/indexing_best_practices"
+		},
+		{
+			"source": "/docs/learn/advanced/tokenization",
+			"destination": "/docs/learn/indexing/tokenization"
+		},
+		{
+			"source": "/docs/learn/advanced/known_limitations",
+			"destination": "/docs/learn/resources/known_limitations"
+		},
+		{
+			"source": "/docs/faq",
+			"destination": "/docs/learn/resources/faq"
+		},
+		{
+			"source": "/docs/learn/what_is_meilisearch/overview",
+			"destination": "/docs/learn/getting_started/what_is_meilisearch"
+		},
+		{
+			"source": "/docs/learn/core_concepts/documents",
+			"destination": "/docs/learn/getting_started/documents"
+		},
+		{
+			"source": "/docs/learn/core_concepts/indexes",
+			"destination": "/docs/learn/getting_started/indexes"
+		},
+		{
+			"source": "/docs/learn/core_concepts/primary_key",
+			"destination": "/docs/learn/getting_started/primary_key"
+		},
+		{
+			"source": "/docs/learn/what_is_meilisearch/comparison_to_alternatives",
+			"destination": "/docs/learn/resources/comparison_to_alternatives"
+		},
+		{
+			"source": "/docs/learn/what_is_meilisearch/telemetry",
+			"destination": "/docs/learn/resources/telemetry"
+		},
+		{
+			"source": "/docs/learn/what_is_meilisearch/language",
+			"destination": "/docs/learn/resources/language"
+		},
+		{
+			"source": "/docs/learn/update_and_migration/versioning",
+			"destination": "/docs/learn/resources/versioning"
+		},
+		{
+			"source": "/docs/learn/contributing/contributing_docs",
+			"destination": "/docs/learn/resources/contributing_docs"
+		},
+		{
+			"source": "/docs/learn/experimental/overview",
+			"destination": "/docs/learn/resources/experimental_features_overview"
+		},
+		{
+			"source": "/docs/learn/experimental/max_number_of_batched_tasks",
+			"destination": "/docs/learn/self_hosted/configure_meilisearch_at_launch"
+		},
+		{
+			"source": "/docs/learn/experimental/metrics",
+			"destination": "/docs/reference/api/metrics"
+		},
+		{
+			"source": "/docs/learn/experimental/reduce-indexing-memory-usage",
+			"destination": "/docs/learn/self_hosted/configure_meilisearch_at_launch"
+		},
+		{
+			"source": "/docs/learn/experimental/log_customization",
+			"destination": "/docs/reference/api/logs"
+		},
+		{
+			"source": "/docs/learn/experimental/vector_search",
+			"destination": "/docs/learn/ai_powered_search/getting_started_with_ai_search"
+		},
+		{
+			"source": "/docs/learn/experimental/search_queue_size",
+			"destination": "/docs/learn/self_hosted/configure_meilisearch_at_launch"
+		},
+		{
+			"source": "/docs/learn/experimental/replication_parameter",
+			"destination": "/docs/learn/self_hosted/configure_meilisearch_at_launch"
+		},
+		{
+			"source": "/docs/guides/database/meilisync_mysql",
+			"destination": "https://github.com/long2ice/meilisync"
+		},
+		{
+			"source": "/docs/guides/database/meilisync_postgresql",
+			"destination": "https://github.com/long2ice/meilisync"
+		},
+		{
+			"source": "/docs/learn/ai-powered-search/search_with_user_provided_embeddings",
+			"destination": "/docs/learn/ai_powered_search/search_with_user_provided_embeddings"
+		},
+		{
+			"source": "/docs/learn/ai-powered-search/getting_started_with_ai_search",
+			"destination": "/docs/learn/ai_powered_search/getting_started_with_ai_search"
+		},
+		{
+			"source": "/docs/learn/ai-powered-search/deactivate_ai_powered_search",
+			"destination": "/docs/learn/ai_powered_search/deactivate_ai_powered_search"
+		},
+		{
+			"source": "/docs/learn/ai-powered-search/difference_full_text_ai_search",
+			"destination": "/docs/learn/ai_powered_search/difference_full_text_ai_search"
+		},
+		{
+			"source": "/docs/reference/features/installation#download-and-launch",
+			"destination": "docs/learn/self_hosted/install_meilisearch_locally"
+		},
+		{
+			"source": "/docs/reference/features/installation.html#download-and-launch",
+			"destination": "docs/learn/self_hosted/install_meilisearch_locally"
+		},
+		{
+			"source": "/docs/learn/advanced/filtering",
+			"destination": "docs/learn/filtering_and_sorting/filter_search_results"
+		},
+		{
+			"source": "/docs/learn/what_is_meilisearch/contact.html",
+			"destination": "https://www.meilisearch.com/#homepage-community"
+		},
+		{
+			"source": "/docs/learn/what_is_meilisearch/contact",
+			"destination": "https://www.meilisearch.com/#homepage-community"
+		},
+		{
+			"source": "/docs/learn/security/tenant_tokens",
+			"destination": "/docs/learn/security/generate_tenant_token_sdk"
+		},
+		{
+			"source": "/docs/learn/what_is_meilisearch/sdks.html",
+			"destination": "/docs/learn/resources/sdks"
+		},
+		{
+			"source": "/docs/learn/what_is_meilisearch/sdks",
+			"destination": "/docs/learn/resources/sdks"
+		},
+		{
+			"source": "/docs/learn/getting_started/a",
+			"destination": "/docs/learn/getting_started/cloud_quick_start"
+		},
+		{
+			"source": "/docs/reference/api/tasks.html#delete-task",
+			"destination": "/docs/reference/api/tasks#delete-tasks"
+		},
+		{
+			"source": "/docs/reference/api/tasks#delete-task",
+			"destination": "/docs/reference/api/tasks#delete-tasks"
+		},
+		{
+			"source": "/docs/reference",
+			"destination": "/docs/reference/api/overview"
+		},
+		{
+			"source": "/docs/guides/deployment/gcp",
+			"destination": "/guides/deployment/running_production"
+		}
+  	]
+}

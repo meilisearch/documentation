@@ -1,13 +1,16 @@
 ---
-title: Metrics — Meilisearch API reference
+title: Metrics
+sidebarTitle: Metrics
 description: The /metrics endpoint is an experimental feature. It exposes data compatible with Prometheus and offers insight into Meilisearch's behavior and performance.
 ---
 
-# Metrics <NoticeTag type="experimental" label="experimental" />
+import { RouteHighlighter } from '/snippets/route_highlighter.mdx'
+
+import CodeSamplesExperimentalGetMetrics1 from '/snippets/samples/code_samples_experimental_get_metrics_1.mdx';
 
 The `/metrics` route exposes data compatible with [Prometheus](https://prometheus.io/). You will also need to have Grafana installed in your system to make use of this feature.
 
-<Capsule intent="note" title="Activating `/metrics`">
+<Note>
 This is an experimental feature. Use the experimental features endpoint to activate it:
 
 ```sh
@@ -20,7 +23,7 @@ curl \
 ```
 
 This feature is not available for Meilisearch Cloud users.
-</Capsule>
+</Note>
 
 ## Exposed information
 
@@ -38,13 +41,13 @@ This feature is not available for Meilisearch Cloud users.
 | `meilisearch_last_update`                | Returns the timestamp of the last update. | gauge     |
 | `meilisearch_is_indexing`                | Returns `1` if Meilisearch is indexing or `0` if not. | gauge     |
 
-<Capsule intent="danger">
+<Warning>
 API keys with access to `/metrics` are able to see all HTTP calls for all the routes in an instance. This may lead to leaking sensitive information such as index names, document's primary keys, and API keys.
-</Capsule>
+</Warning>
 
 ## Get metrics
 
-<RouteHighlighter method="GET" route="/metrics"/>
+<RouteHighlighter method="GET" path="/metrics" />
 
 Get data for current status of your instance. In most cases, you should only query this endpoint via a Prometheus-compatible tool such as Grafana.
 
@@ -52,7 +55,7 @@ Refer to Meilisearch's sample configuration files for example of a [basic Promet
 
 ### Example
 
-<CodeSamples id="experimental_get_metrics_1" />
+<CodeSamplesExperimentalGetMetrics1 />
 
 #### Response: `200 OK`
 

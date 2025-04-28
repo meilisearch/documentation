@@ -1,0 +1,95 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/games/search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "q": "",
+    "filter": "release_timestamp >= 1514761200 AND release_timestamp < 1672527600"
+  }'
+```
+
+```javascript JS
+client.index('games').search('', {
+  filter: 'release_timestamp >= 1514761200 AND release_timestamp < 1672527600'
+})
+```
+
+```python Python
+client.index('games').search('', {
+  'filter': 'release_timestamp >= 1514761200 AND release_timestamp < 1672527600'
+})
+```
+
+```php PHP
+$client->index('games')->search('', [
+  'filter' => ['release_timestamp >= 1514761200 AND release_timestamp < 1672527600']
+]);
+```
+
+```java Java
+SearchRequest searchRequest = SearchRequest.builder().q("").filter(new String[] {"release_timestamp >= 1514761200 AND release_timestamp < 1672527600"}).build();
+client.index("games").search(searchRequest);
+```
+
+```ruby Ruby
+client.index('games').search('', {
+  filter: 'release_timestamp >= 1514761200 AND release_timestamp < 1672527600'
+})
+```
+
+```go Go
+client.Index("games").Search("", &meilisearch.SearchRequest{
+  Filter: "release_timestamp >= 1514761200 AND release_timestamp < 1672527600",
+})
+```
+
+```csharp C#
+var filters = new SearchQuery() { Filter = "release_timestamp >= 1514761200 AND release_timestamp < 1672527600" };
+var games = await client.Index("games").SearchAsync<Game>("", filters);
+```
+
+```rust Rust
+let results: SearchResults<Game> = client
+  .index("games")
+  .search()
+  .with_filter("release_timestamp >= 1514761200 AND release_timestamp < 1672527600")
+  .execute()
+  .await
+  .unwrap();
+```
+
+```swift Swift
+let searchParameters = SearchParameters(
+  query: "",
+  filter: "release_timestamp >= 1514761200 AND release_timestamp < 1672527600"
+)
+client.index("games").search(searchParameters) { (result: Result<Searchable<Game>, Swift.Error>) in
+  switch result {
+  case .success(let searchResult):
+      print(searchResult)
+  case .failure(let error):
+      print(error)
+  }
+}
+```
+
+```dart Dart
+await client.index('games').search(
+      '',
+      SearchQuery(
+        filterExpression: Meili.and([
+          Meili.gte(
+            'release_timestamp'.toMeiliAttribute(),
+            Meili.value(DateTime(2017, 12, 31, 23, 0)),
+          ),
+          Meili.lt(
+            'release_timestamp'.toMeiliAttribute(),
+            Meili.value(DateTime(2022, 12, 31, 23, 0)),
+          ),
+        ]),
+      ),
+    );
+```
+</CodeGroup>

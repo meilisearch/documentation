@@ -1,9 +1,8 @@
 ---
 title: Migrating to Meilisearch Cloud — Meilisearch Documentation
+sidebarTitle: Migrating to Meilisearch Cloud
 description: Meilisearch Cloud is the recommended way of using Meilisearch. This guide walks you through migrating Meilisearch from a self-hosted installation to Meilisearch Cloud.
 ---
-
-# Migrating to Meilisearch Cloud
 
 Meilisearch Cloud is the recommended way of using Meilisearch. This guide walks you through migrating Meilisearch from a self-hosted installation to Meilisearch Cloud.
 
@@ -29,11 +28,11 @@ Meilisearch will return a summarized task object and begin creating the dump. [U
 
 Once the task has been completed, you can find the dump in your project's dump directory. By default, this is `/dumps`.
 
-<Capsule intent="note" title="Command-line options and environment variables">
+<Note>
 Instance configuration options and experimental features that can only be activated at launch are not included in dumps.
 
 Once you have successfully migrated your data to Meilisearch Cloud, use the project overview interface to reactivate available options. Not all instance options are supported in the Cloud.
-</Capsule>
+</Note>
 
 ## Create a Meilisearch Cloud project and import dump
 
@@ -41,17 +40,21 @@ Navigate to Meilisearch Cloud in your browser and log in. If you don't have a Me
 
 You can only import dumps into new Meilisearch Cloud projects. If this is your first time using Meilisearch Cloud, create a new project by clicking on the "Create a project" button. Otherwise, click on the "New project" button:
 
-![The Meilisearch Cloud menu, featuring the "New Project" button](/assets/images/cloud-migration/1-new-project.png)
+<Frame>
+  <img src="/assets/images/cloud-migration/1-new-project.png" alt="The Meilisearch Cloud menu, featuring the 'New Project' button" />
+</Frame>
 
 Fill in your project name, choose a server location, and select your plan. Then, click on the "Import .dump" button and select the dump file you generated in the previous step:
 
-![A modal window with three mandatory fields: "Project name", "Select a region", and "Select a plan". Further down, an optional field: "Import .dump"](/assets/images/cloud-migration/2-import-dump.png)
+<Frame>
+  <img src="/assets/images/cloud-migration/2-import-dump.png" alt="A modal window with three mandatory fields: 'Project name', 'Select a region', and 'Select a plan'. Further down, an optional field: 'Import .dump'" />
+</Frame>
 
 Meilisearch will start creating a new project and importing your data. This might take a few moments depending on the size of your dataset. Monitor the project creation status in the project overview page.
 
-<Capsule intent="danger" title="Master key and API keys">
+<Warning>
 Meilisearch Cloud automatically generates a new master key during project creation. If you are using [security keys](/learn/security/basic_security), update your application so it uses the newly created Meilisearch Cloud API keys.
-</Capsule>
+</Warning>
 
 ## Search preview
 

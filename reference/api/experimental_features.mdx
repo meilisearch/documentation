@@ -1,17 +1,21 @@
 ---
-title: Experimental — Meilisearch API reference
+title: Experimental
+sidebarTitle: Experimental features
 description: The /experimental-features route allows you to manage some of Meilisearch's experimental features.
 ---
 
-# Experimental
+import { RouteHighlighter } from '/snippets/route_highlighter.mdx'
+
+import CodeSamplesGetExperimentalFeatures1 from '/snippets/samples/code_samples_get_experimental_features_1.mdx';
+import CodeSamplesUpdateExperimentalFeatures1 from '/snippets/samples/code_samples_update_experimental_features_1.mdx';
 
 The `/experimental-features` route allows you to activate or deactivate some of Meilisearch's [experimental features](/learn/resources/experimental_features_overview).
 
 This route is **synchronous**. This means that no task object will be returned, and any activated or deactivated features will be made available or unavailable immediately.
 
-<Capsule intent="danger">
+<Warning>
 The experimental API route is not compatible with all experimental features. Consult the [experimental feature overview](/learn/resources/experimental_features_overview) for a compatibility list.
-</Capsule>
+</Warning>
 
 ## Experimental features object
 
@@ -35,13 +39,13 @@ The experimental API route is not compatible with all experimental features. Con
 
 ## Get all experimental features
 
-<RouteHighlighter method="GET" route="/experimental-features"/>
+<RouteHighlighter method="GET" path="/experimental-features" />
 
 Get a list of all experimental features that can be activated via the `/experimental-features` route and whether or not they are currently activated.
 
 ### Example
 
-<CodeSamples id="get_experimental_features_1" />
+<CodeSamplesGetExperimentalFeatures1 />
 
 #### Response: `200 Ok`
 
@@ -57,21 +61,21 @@ Get a list of all experimental features that can be activated via the `/experime
 
 ## Configure experimental features
 
-<RouteHighlighter method="PATCH" route="/experimental-features"/>
+<RouteHighlighter method="PATCH" path="/experimental-features" />
 
 Activate or deactivate experimental features.
 
-<CodeSamples id="update_experimental_features_1" />
+<CodeSamplesUpdateExperimentalFeatures1 />
 
 Setting a field to `null` leaves its value unchanged.
 
-#### Body
+### Body
 
 ```
 {<featureName>: <Boolean>}
 ```
 
-#### Response: `200 Ok`
+### Response: `200 Ok`
 
 ```json
 {

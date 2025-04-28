@@ -1,0 +1,58 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X PUT 'MEILISEARCH_URL/indexes/books/settings/dictionary' \
+  -H 'Content-Type: application/json' \
+  --data-binary '[
+    "J. R. R.",
+    "W. E. B."
+  ]'
+```
+
+```javascript JS
+client.index('books').updateDictionary(['J. R. R.', 'W. E. B.'])
+```
+
+```python Python
+client.index('books').update_dictionary(["J. R. R.", "W. E. B."])
+```
+
+```php PHP
+$client->index('books')->updateDictionary(['J. R. R.', 'W. E. B.']);
+```
+
+```java Java
+client.index("books").updateDictionarySettings(new String[] {"J. R. R.", "W. E. B."});
+```
+
+```ruby Ruby
+client.index('books').update_dictionary(['J. R. R.', 'W. E. B.'])
+```
+
+```go Go
+client.Index("books").UpdateDictionary([]string{
+  "J. R. R.",
+  "W. E. B.",
+})
+```
+
+```csharp C#
+var newDictionary = new string[] { "J. R. R.", "W. E. B." };
+await client.Index("books").UpdateDictionaryAsync(newDictionary);
+```
+
+```rust Rust
+let task: TaskInfo = client
+  .index('books')
+  .set_dictionary(['J. R. R.', 'W. E. B.'])
+  .await
+  .unwrap();
+```
+
+```swift Swift
+client.index("books").updateDictionary(["J. R. R.", "W. E. B."]) { result in
+  // handle result
+}
+```
+</CodeGroup>

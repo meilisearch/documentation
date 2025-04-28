@@ -1,9 +1,13 @@
 ---
-title: Batches — Meilisearch API reference
+title: Batches
+sidebarTitle: Batches
 description: The /batches route allows you to monitor how Meilisearch is grouping and processing asynchronous operations.
 ---
 
-# Batches
+import { RouteHighlighter } from '/snippets/route_highlighter.mdx'
+
+import CodeSamplesGetAllBatches1 from '/snippets/samples/code_samples_get_all_batches_1.mdx';
+import CodeSamplesGetBatch1 from '/snippets/samples/code_samples_get_batch_1.mdx';
 
 The `/batches` route gives information about the progress of batches of [asynchronous operations](/learn/async/asynchronous_operations).
 
@@ -77,9 +81,9 @@ Information about the current operations Meilisearch is performing in this batch
 | **`total`**       | The total number of operations in the step         |
 | **`finished`**    | The number of operations Meilisearch has completed |
 
-<Capsule intent="tip" title="">
+<Tip>
 If Meilisearch is taking longer than expected to process a batch, monitor the `steps` array. If the `finished` field of the last item in the `steps` array does not update, Meilisearch may be stuck.
-</Capsule>
+</Tip>
 
 #### `percentage`
 
@@ -135,7 +139,7 @@ Size of each internal database, including by how much it changed after a batch w
 
 ## Get batches
 
-<RouteHighlighter method="GET" route="/batches"/>
+<RouteHighlighter method="GET" path="/batches" />
 
 List all batches, regardless of index. The batch objects are contained in the `results` array.
 
@@ -143,11 +147,11 @@ Batches are always returned in descending order of `uid`. This means that by def
 
 Batch results are [paginated](/learn/async/paginating_tasks) and can be [filtered](/learn/async/filtering_tasks) with query parameters.
 
-<Capsule intent="danger" title="`/batches` parameters and tasks">
+<Warning>
 Some query parameters for `/batches`, such as `uids` and `statuses`, target tasks instead of batches.
 
 For example, `?uids=0` returns a batch containing the task with a `taskUid` equal to `0`, instead of a batch with a `batchUid` equal to `0`.
-</Capsule>
+</Warning>
 
 ### Query parameters
 
@@ -180,7 +184,7 @@ For example, `?uids=0` returns a batch containing the task with a `taskUid` equa
 
 ### Example
 
-<CodeSamples id="get_all_batches_1" />
+<CodeSamplesGetAllBatches1 />
 
 #### Response: `200 Ok`
 
@@ -225,7 +229,7 @@ For example, `?uids=0` returns a batch containing the task with a `taskUid` equa
 
 ## Get one batch
 
-<RouteHighlighter method="GET" route="/batches/{batch_uid}"/>
+<RouteHighlighter method="GET" path="/batches/{batch_uid}" />
 
 Get a single batch.
 
@@ -237,7 +241,7 @@ Get a single batch.
 
 ### Example
 
-<CodeSamples id="get_batch_1" />
+<CodeSamplesGetBatch1 />
 
 #### Response: `200 Ok`
 

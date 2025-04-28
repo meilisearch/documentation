@@ -1,0 +1,164 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/books/documents?primaryKey=reference_number' \
+  -H 'Content-Type: application/json' \
+  --data-binary '[
+    {
+      "reference_number": 287947,
+      "title": "Diary of a Wimpy Kid",
+      "author": "Jeff Kinney",
+      "genres": [
+        "comedy",
+        "humor"
+      ],
+      "price": 5.00
+    }
+  ]'
+```
+
+```javascript JS
+client.index('books').addDocuments([
+  {
+    reference_number: 287947,
+    title: 'Diary of a Wimpy Kid',
+    author: 'Jeff Kinney',
+    genres: ['comedy','humor'],
+    price: 5.00
+  }
+], { primaryKey: 'reference_number' })
+```
+
+```python Python
+client.index('books').add_documents([{
+  'reference_number': 287947,
+  'title': 'Diary of a Wimpy Kid',
+  'author': 'Jeff Kinney',
+  'genres': ['comedy', 'humor'],
+  'price': 5.00
+}], 'reference_number')
+```
+
+```php PHP
+$client->index('books')->addDocuments([
+  [
+    'reference_number' => 287947,
+    'title' => 'Diary of a Wimpy Kid',
+    'author' => 'Jeff Kinney',
+    'genres' => ['comedy', 'humor'],
+    'price' => 5.00
+  ]
+], 'reference_number');
+```
+
+```java Java
+client.index("books").addDocuments("[{"
+  + "\"reference_number\": 2879,"
+  + "\"title\": \"Diary of a Wimpy Kid\","
+  + "\"author\": \"Jeff Kinney\","
+  + "\"genres\": [\"comedy\", \"humor\"],"
+  + "\"price\": 5.00"
+  + "}]"
+, "reference_number");
+```
+
+```ruby Ruby
+client.index('books').add_documents([
+  {
+    reference_number: 287947,
+    title: 'Diary of a Wimpy Kid',
+    author: 'Jeff Kinney',
+    genres: ['comedy', 'humor'],
+    price: 5.00
+  }
+], 'reference_number')
+```
+
+```go Go
+documents := []map[string]interface{}{
+  {
+    "reference_number": 287947,
+    "title":            "Diary of a Wimpy Kid",
+    "author":           "Jeff Kinney",
+    "genres":           []string{"comedy", "humor"},
+    "price":            5.00,
+  },
+}
+client.Index("books").AddDocuments(documents, "reference_number")
+```
+
+```csharp C#
+await index.AddDocumentsAsync(
+  new[] {
+      new Book {
+          ReferenceNumber = 287947,
+          Title = "Diary of a Wimpy Kid",
+          Author = "Jeff Kinney",
+          Genres = new string[] { "comedy", "humor" },
+          Price = 5.00
+      }
+  },
+  "reference_number");
+```
+
+```rust Rust
+#[derive(Serialize, Deserialize)]
+struct Book {
+  reference_number: String,
+  title: String,
+  author: String,
+  genres: Vec<String>,
+  price: f64
+}
+
+let task: TaskInfo = client
+  .index("books")
+  .add_documents(&[
+    Book {
+      reference_number: "287947".to_string(),
+      title: "Diary of a Wimpy Kid".to_string(),
+      author: "Jeff Kinney".to_string(),
+      genres: vec!["comedy".to_string(),"humor".to_string()],
+      price: 5.00
+    }
+  ], Some("reference_number"))
+  .await
+  .unwrap();
+```
+
+```swift Swift
+let documents: Data = """
+[
+  {
+    "reference_number": 287947,
+    "title": "Diary of a Wimpy Kid",
+    "author": "Jeff Kinney",
+    "genres": ["comedy", "humor"],
+    "price": 5
+  }
+]
+""".data(using: .utf8)!
+
+client.index("books").addDocuments(documents: documents, primaryKey: "reference_number") { (result) in
+    switch result {
+    case .success(let task):
+        print(task)
+    case .failure(let error):
+        print(error)
+    }
+}
+```
+
+```dart Dart
+await client.index('movies').addDocuments([
+  {
+    'reference_number': 287947,
+    'title': 'Diary of a Wimpy Kid',
+    'author': 'Jeff Kinney',
+    'genres': ['comedy', 'humor'],
+    'price': 5.00
+  }
+], primaryKey: 'reference_number');
+```
+</CodeGroup>

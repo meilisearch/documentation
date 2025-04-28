@@ -1,9 +1,7 @@
 ---
-title: Improve relevancy when working with large documents — Meilisearch documentation
+title: Improve relevancy when working with large documents
 description: Use JavaScript with Node.js to split a single large document and configure Meilisearch with a distinct attribute to prevent duplicated results.
 ---
-
-# Improve relevancy when working with large documents
 
 Meilisearch is optimized for handling paragraph-sized chunks of text. Datasets with many documents containing large amounts of text may lead to reduced search result relevancy.
 
@@ -36,9 +34,9 @@ In this guide, you will see how to use JavaScript with Node.js to split a single
 ]
 ```
 
-<Capsule intent="note" title="What is a large document for Meilisearch?">
+<Note>
 Meilisearch works best with documents under 1kb in size. This roughly translates to a maximum of two or three paragraphs of text.
-</Capsule>
+</Note>
 
 ## Splitting documents
 
@@ -132,6 +130,6 @@ Users searching this dataset will now be able to find more relevant results acro
 
 ## Conclusion
 
-You have seen how to split large documents to improve search relevancy. You also saw how to configure a distinct attribute to prevent Meilisearch from returning duplicate results. 
+You have seen how to split large documents to improve search relevancy. You also saw how to configure a distinct attribute to prevent Meilisearch from returning duplicate results.
 
 Though this guide used JavaScript, you can replicate the process with any programming language you are comfortable using.

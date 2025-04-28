@@ -1,17 +1,15 @@
 ---
-title: Semantic Search with Hugging Face Inference Endpoints - Meilisearch documentation
+title: Semantic Search with Hugging Face Inference Endpoints
 description: This guide will walk you through the process of setting up Meilisearch with Hugging Face Inference Endpoints.
 ---
-
-# Semantic search with Hugging Face Inference Endpoints
 
 ## Introduction
 
 This guide will walk you through the process of setting up a Meilisearch REST embedder with [Hugging Face Inference Endpoints](https://ui.endpoints.huggingface.co/) to enable semantic search capabilities.
 
-<Capsule intent="note" title="`rest` or `huggingface`?">
+<Note>
 You can use Hugging Face and Meilisearch in two ways: running the model locally by setting the embedder source to `huggingface`, or remotely in Hugging Face's servers by setting the embeder source to `rest`.
-</Capsule>
+</Note>
 
 ## Requirements
 
@@ -54,9 +52,9 @@ In this configuration:
 
 Once you've configured the embedder, Meilisearch will automatically generate embeddings for your documents. Monitor the task using the Cloud UI or the [get task endpoint](/reference/api/tasks).
 
-<Capsule intent="note">
+<Note>
 This example uses [BAAI/bge-small-en-v1.5](https://huggingface.co/BAAI/bge-small-en-v1.5) as its model, but Hugging Face offers [other options that may fit your dataset better](https://ui.endpoints.huggingface.co/catalog?task=sentence-embeddings).
-</Capsule>
+</Note>
 
 ## Perform a semantic search
 

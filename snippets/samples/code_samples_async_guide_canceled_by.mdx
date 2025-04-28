@@ -1,0 +1,13 @@
+<CodeGroup>
+
+```swift Swift
+client.getTasks(params: TasksQuery(canceledBy: [9, 15])) { result in
+  switch result {
+  case .success(let taskResult):
+    print(taskResult)
+  case .failure(let error):
+    print(error)
+  }
+}
+```
+</CodeGroup>

@@ -1,0 +1,139 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X PUT 'MEILISEARCH_URL/indexes/books/settings/ranking-rules' \
+  -H 'Content-Type: application/json' \
+  --data-binary '[
+    "words",
+    "sort",
+    "typo",
+    "proximity",
+    "attribute",
+    "exactness"
+  ]'
+```
+
+```javascript JS
+client.index('books').updateRankingRules([
+  'words',
+  'sort',
+  'typo',
+  'proximity',
+  'attribute',
+  'exactness'
+])
+```
+
+```python Python
+client.index('books').update_ranking_rules([
+    'words',
+    'sort',
+    'typo',
+    'proximity',
+    'attribute',
+    'exactness'
+])
+```
+
+```php PHP
+$client->index('books')->updateRankingRules([
+  'words',
+  'sort',
+  'typo',
+  'proximity',
+  'attribute',
+  'exactness'
+]);
+```
+
+```java Java
+Settings settings = new Settings();
+settings.setRankingRules(new String[]
+{
+  "words",
+  "sort",
+  "typo",
+  "proximity",
+  "attribute",
+  "exactness"
+});
+client.index("books").updateSettings(settings);
+```
+
+```ruby Ruby
+client.index('books').update_ranking_rules([
+  'words',
+  'sort',
+  'typo',
+  'proximity',
+  'attribute',
+  'exactness'
+])
+```
+
+```go Go
+rankingRules := []string{
+  "words",
+  "sort",
+  "typo",
+  "proximity",
+  "attribute",
+  "exactness",
+}
+client.Index("books").UpdateRankingRules(&rankingRules)
+```
+
+```csharp C#
+await client.Index("books").UpdateRankingRulesAsync(new[]
+{
+    "words",
+    "sort",
+    "typo",
+    "proximity",
+    "attribute",
+    "exactness"
+});
+```
+
+```rust Rust
+let ranking_rules = [
+  "words",
+  "sort",
+  "typo",
+  "proximity",
+  "attribute",
+  "exactness"
+];
+
+let task: TaskInfo = client
+  .index("books")
+  .set_ranking_rules(&ranking_rules)
+  .await
+  .unwrap();
+```
+
+```swift Swift
+let rankingRules: [String] = [
+  "words",
+  "sort",
+  "typo",
+  "proximity",
+  "attribute",
+  "exactness"
+]
+client.index("books").updateRankingRules(rankingRules) { (result) in
+  switch result {
+  case .success(let task):
+    print(task)
+  case .failure(let error):
+    print(error)
+  }
+}
+```
+
+```dart Dart
+await client.index('books').updateRankingRules(
+    ['words', 'sort', 'typo', 'proximity', 'attribute', 'exactness']);
+```
+</CodeGroup>

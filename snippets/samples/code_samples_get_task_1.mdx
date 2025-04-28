@@ -1,0 +1,58 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X GET 'MEILISEARCH_URL/tasks/1'
+```
+
+```javascript JS
+client.getTask(1)
+```
+
+```python Python
+client.get_task(1)
+```
+
+```php PHP
+$client->getTask(1);
+```
+
+```java Java
+client.getTask(1);
+```
+
+```ruby Ruby
+client.task(1)
+```
+
+```go Go
+client.GetTask(1);
+```
+
+```csharp C#
+TaskInfo task = await client.GetTaskAsync(1);
+
+```
+
+```rust Rust
+let task: Task = client
+  .get_task(1)
+  .await
+  .unwrap();
+```
+
+```swift Swift
+client.getTask(taskUid: 1) { (result) in
+      switch result {
+      case .success(let task):
+          print(task)
+      case .failure(let error):
+          print(error)
+      }
+  }
+```
+
+```dart Dart
+await client.getTask(1);
+```
+</CodeGroup>

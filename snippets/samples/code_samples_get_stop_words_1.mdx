@@ -1,0 +1,58 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X GET 'MEILISEARCH_URL/indexes/movies/settings/stop-words'
+```
+
+```javascript JS
+client.index('movies').getStopWords()
+```
+
+```python Python
+client.index('movies').get_stop_words()
+```
+
+```php PHP
+$client->index('movies')->getStopWords();
+```
+
+```java Java
+client.index("movies").getStopWordsSettings();
+```
+
+```ruby Ruby
+client.index('movies').stop_words
+```
+
+```go Go
+client.Index("movies").GetStopWords()
+```
+
+```csharp C#
+await client.Index("movies").GetStopWordsAsync();
+```
+
+```rust Rust
+let stop_words: Vec<String> = client
+  .index("movies")
+  .get_stop_words()
+  .await
+  .unwrap();
+```
+
+```swift Swift
+client.index("movies").getStopWords { (result) in
+    switch result {
+    case .success(let stopWords):
+        print(stopWords)
+    case .failure(let error):
+        print(error)
+    }
+}
+```
+
+```dart Dart
+await client.index('movies').getStopWords();
+```
+</CodeGroup>

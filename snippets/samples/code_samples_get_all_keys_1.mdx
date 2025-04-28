@@ -1,0 +1,62 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X GET 'MEILISEARCH_URL/keys?limit=3' \
+  -H 'Authorization: Bearer MASTER_KEY'
+```
+
+```javascript JS
+client.getKeys({ limit: 3 })
+```
+
+```python Python
+client.get_keys({'limit': 3})
+```
+
+```php PHP
+$client->getKeys((new KeysQuery())->setLimit(3));
+```
+
+```java Java
+KeysQuery query = new KeysQuery().setLimit(3);
+client.getKeys(query);
+```
+
+```ruby Ruby
+client.keys(limit: 3)
+```
+
+```go Go
+client.GetKeys(&meilisearch.KeysQuery{
+  Limit: 3
+});
+```
+
+```csharp C#
+ResourceResults<Key> keyResult = await client.GetKeysAsync(new KeysQuery { Limit = 3 });
+```
+
+```rust Rust
+let mut query = KeysQuery::new()
+  .with_limit(3)
+  .execute(&client)
+  .await
+  .unwrap();
+```
+
+```swift Swift
+client.getKeys(params: KeysQuery(limit: 3)) { result in
+    switch result {
+    case .success(let keys):
+        print(keys)
+    case .failure(let error):
+        print(error)
+    }
+}
+```
+
+```dart Dart
+await client.getKeys(params: KeysQuery(limit: 3));
+```
+</CodeGroup>

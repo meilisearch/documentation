@@ -1,0 +1,131 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X PUT 'MEILISEARCH_URL/indexes/movies/documents' \
+  -H 'Content-Type: application/json' \
+  --data-binary '[
+    {
+      "id": 287947,
+      "title": "Shazam ⚡️",
+      "genres": "comedy"
+    }
+  ]'
+```
+
+```javascript JS
+client.index('movies').updateDocuments([{
+    id: 287947,
+    title: 'Shazam ⚡️',
+    genres: 'comedy'
+}])
+```
+
+```python Python
+client.index('movies').update_documents([{
+    'id': 287947,
+    'title': 'Shazam ⚡️',
+    'genres': 'comedy'
+}])
+```
+
+```php PHP
+$client->index('movies')->updateDocuments([
+  [
+    'id' => 287947,
+    'title' => 'Shazam ⚡️',
+    'genres' => 'comedy'
+  ]
+]);
+```
+
+```java Java
+client.index("movies").updateDocuments("[{
+  + "\"id\": 287947,"
+  + "\"title\": \"Shazam ⚡️\","
+  + "\"genres\": \"comedy\""
+  + "}]"
+);
+```
+
+```ruby Ruby
+client.index('movies').update_documents([
+  {
+    id: 287947,
+    title: 'Shazam ⚡️',
+    genres: 'comedy'
+  }
+])
+```
+
+```go Go
+documents := []map[string]interface{}{
+  {
+    "id":     287947,
+    "title":  "Shazam ⚡️",
+    "genres": "comedy",
+  },
+}
+client.Index("movies").UpdateDocuments(documents)
+```
+
+```csharp C#
+var movie = new[]
+{
+    new Movie { Id = "287947", Title = "Shazam ⚡️", Genres = "comedy" }
+};
+await index.UpdateDocumentsAsync(movie);
+```
+
+```rust Rust
+// Define the type of our documents
+#[derive(Serialize, Deserialize)]
+struct IncompleteMovie {
+  id: usize,
+  title: String
+}
+
+let task: TaskInfo = client
+  .index("movies")
+  .add_or_update(&[
+    IncompleteMovie {
+      id: 287947,
+      title: "Shazam ⚡️".to_string()
+    }
+  ], None)
+  .await
+  .unwrap();
+```
+
+```swift Swift
+let documentJsonString = """
+[
+  {
+    "reference_number": 287947,
+    "title": "Shazam ⚡️",
+    "genres": "comedy"
+  }
+]
+"""
+let documents: Data = documentJsonString.data(using: .utf8)!
+
+client.index("movies").updateDocuments(documents: documents) { (result) in
+    switch result {
+    case .success(let task):
+        print(task)
+    case .failure(let error):
+        print(error)
+    }
+}
+```
+
+```dart Dart
+await client.index('movies').updateDocuments([
+  {
+    'id': 287947,
+    'title': 'Shazam ⚡️',
+    'genres': 'comedy',
+  }
+]);
+```
+</CodeGroup>

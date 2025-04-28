@@ -1,23 +1,25 @@
 ---
-title: Managing the task database — Meilisearch documentation
+title: Managing the task database
+sidebarTitle: Paginating tasks
 description: Meilisearch uses a task queue to handle asynchronous operations. This document describes how to navigate long task queues with filters and pagination.
 ---
 
-# Paginating tasks
+import CodeSamplesGetAllTasksPaginating1 from '/snippets/samples/code_samples_get_all_tasks_paginating_1.mdx';
+import CodeSamplesGetAllTasksPaginating2 from '/snippets/samples/code_samples_get_all_tasks_paginating_2.mdx';
 
 By default, Meilisearch returns a list of 20 tasks for each request when you query the [get tasks endpoint](/reference/api/tasks#get-tasks). This guide shows you how to navigate the task list using query parameters.
 
-<Capsule intent="tip" title="Paginating batches">
+<Tip>
 Paginating batches with [the `/batches` route](/reference/api/batches) follows the same rules as paginating tasks.
-</Capsule>
+</Tip>
 
 ## Configuring the number of returned tasks
 
 Use the `limit` parameter to change the number of returned tasks:
 
-<CodeSamples id="get_all_tasks_paginating_1" />
+<CodeSamplesGetAllTasksPaginating1 />
 
-Meilisearch will return a batch of tasks. Each batch of returned tasks is often called a "page" of tasks, and the size of that page is determined by `limit`:  
+Meilisearch will return a batch of tasks. Each batch of returned tasks is often called a "page" of tasks, and the size of that page is determined by `limit`:
 
 ```json
 {
@@ -37,7 +39,7 @@ It is possible none of the returned tasks are the ones you are looking for. In t
 
 Use the `next` value included in the response to your previous query together with `from` to fetch the next set of results:
 
-<CodeSamples id="get_all_tasks_paginating_2" />
+<CodeSamplesGetAllTasksPaginating2 />
 
 This will return a new batch of tasks:
 
@@ -55,6 +57,6 @@ This will return a new batch of tasks:
 
 When the value of `next` is `null`, you have reached the final set of results.
 
-<Capsule intent="tip">
+<Tip>
 Use `from` and `limit` together with task filtering parameters to navigate filtered task lists.
-</Capsule>
+</Tip>

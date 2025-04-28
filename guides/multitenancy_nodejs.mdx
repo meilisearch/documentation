@@ -1,10 +1,8 @@
 ---
-title: Node.js multitenancy guide — Meilisearch documentation
+title: Node.js multitenancy guide
 description: Learn how to implement secure, multitenant search in your Node.js applications.
 sidebarDepth: 3
 ---
-
-# Node.js multitenancy guide
 
 This guide will walk you through implementing search in a multitenant Node.js application handling sensitive medical data.
 
@@ -20,9 +18,9 @@ In Meilisearch, you might have one index containing data belonging to many disti
 - A search API key — available in your Meilisearch dashboard
 - A search API key UID — retrieve it using the [keys endpoints](/reference/api/keys)
 
-<Capsule intent="tip">
+<Tip>
 Prefer self-hosting? Read our [installation guide](/learn/self_hosted/install_meilisearch_locally).
-</Capsule>
+</Tip>
 
 ## Data models
 
@@ -69,8 +67,8 @@ const apiKeyUid = 'YOUR_SEARCH_API_KEY_UID'
 const indexName = 'appointments'
 
 const client = new Meilisearch({
-	host: 'https://edge.meilisearch.com', // Your Meilisearch host
-	apiKey: apiKey
+  host: 'https://edge.meilisearch.com', // Your Meilisearch host
+  apiKey: apiKey
 })
 
 export function createTenantToken(patientName) {
@@ -97,6 +95,7 @@ When Meilisearch gets a search query with a tenant token, it decodes it and appl
 ## Using the tenant token
 
 Now that you have a tenant token, use it to perform searches. To achieve this, you will need to:
+
 - On the server: create an endpoint to send the token to your front-end
 - On the client: retrieve the token and use it to perform searches
 

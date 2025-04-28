@@ -1,0 +1,54 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+-X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
+-H 'Content-Type: application/json' \
+--data-binary '{
+    "q": "badman",
+    "rankingScoreThreshold": 0.2
+}'
+```
+
+```javascript JS
+client.index('INDEX_NAME').search('badman', { rankingScoreThreshold: 0.2 })
+```
+
+```python Python
+client.index('INDEX_NAME').search('badman', { 'rankingScoreThreshold': 0.2 })
+```
+
+```php PHP
+$client->index('INDEX_NAME')->search('badman', [
+  'rankingScoreThreshold' => 0.2
+]);
+```
+
+```java Java
+SearchRequest searchRequest = SearchRequest.builder().q("badman").rankingScoreThreshold(0.2).build();
+client.index("INDEX_NAME").search(searchRequest);
+```
+
+```ruby Ruby
+client.index('INDEX_NAME').search('badman', {
+  rankingScoreThreshold: 0.2
+})
+```
+
+```go Go
+client.Index("INDEX_NAME").Search("badman", &meilisearch.SearchRequest{
+  RankingScoreThreshold: 0.2,
+})
+```
+
+```rust Rust
+let res = client
+  .index("INDEX_NAME")
+  .search()
+  .with_query("badman")
+  .with_ranking_score_threshold(0.2)
+  .execute()
+  .await
+  .unwrap();
+```
+</CodeGroup>

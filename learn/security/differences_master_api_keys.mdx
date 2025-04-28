@@ -1,9 +1,8 @@
 ---
-title: Differences between the master key and API keys — Meilisearch documentation
+title: Differences between the master key and API keys
+sidebarTitle: Differences between the master key and API keys
 description: "This article explains the main usage differences between the two types of security keys in Meilisearch: master key and API keys."
 ---
-
-# Differences between the master key and API keys
 
 This article explains the main usage differences between the two types of security keys in Meilisearch: master key and API keys.
 
@@ -15,13 +14,13 @@ The master key grants full control over an instance and is the only key with acc
 
 Consult the [basic security tutorial](/learn/security/basic_security) to learn more about correctly handling your master key.
 
-<Capsule intent="danger">
+<Warning>
 Exposing the master key can give malicious users complete control over your Meilisearch project. To minimize risks, **only use the master key when managing API keys**.
-</Capsule>
+</Warning>
 
 ## API keys
 
-API keys grant access to a specific set of indexes, routes, and endpoints. You can also configure them to expire after a certain date. Use the [`/keys` route](/reference/api/keys) to create, configure, and delete API keys. 
+API keys grant access to a specific set of indexes, routes, and endpoints. You can also configure them to expire after a certain date. Use the [`/keys` route](/reference/api/keys) to create, configure, and delete API keys.
 
 **Use API keys for all API operations except API key management.** This includes search, configuring index settings, managing indexes, and adding and updating documents.
 

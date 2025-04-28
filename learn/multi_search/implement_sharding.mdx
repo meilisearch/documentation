@@ -1,17 +1,21 @@
 ---
-title: Implement sharding with remote federated search — Meilisearch documentation
+title: Implement sharding with remote federated search
 description: This guide walks you through implementing a sharding strategy by activating the `/network` route, configuring the network object, and performing remote federated searches.
 ---
 
-# Implement sharding with remote federated search <NoticeTag type="experimental" label="experimental" />
+import { NoticeTag } from '/snippets/notice_tag.mdx';
+
+import CodeSamplesMultiSearchRemoteFederated1 from '/snippets/samples/code_samples_multi_search_remote_federated_1.mdx';
 
 Sharding is the process of splitting an index containing many documents into multiple smaller indexes, often called shards. This horizontal scaling technique is useful when handling large databases. In Meilisearch, the best way to implement a sharding strategy is to use remote federated search.
 
 This guide walks you through activating the `/network` route, configuring the network object, and performing remote federated searches.
 
-<Capsule intent="tip" title="Configuring multiple instances">
+<Tip>
+## Configuring multiple instances
+
 To minimize issues and limit unexpected behavior, instance, network, and index configuration should be identical for all shards. This guide describes the individual steps you must take on a single instance and assumes you will replicate them across all instances.
-</Capsule>
+</Tip>
 
 ## Prerequisites
 
@@ -95,20 +99,20 @@ Changing the topology of the network involves moving some documents from an inst
 
 As Meilisearch does not provide atomicity across multiple instances, you will need to either:
 
-1. accept search downtime while migrating documents
-2. accept some documents will not appear in search results during the migration
+1. accept search downtime while migrating documents  
+2. accept some documents will not appear in search results during the migration  
 3. accept some duplicate documents may appear in search results during the migration
 
 #### Reducing downtime
 
 If your disk space allows, you can reduce the downtime by applying the following algorithm:
 
-1. Create a new temporary index in each remote instance
-2. Compute the new instance for each document
-3. Send the documents to the temporary index of their new instance
-4. Once Meilisearch has copied all documents to their instance of destination, swap the new index with the previously used index
-5. Delete the temporary index after the swap
-6. Update network configuration and search queries across all instances
+1. Create a new temporary index in each remote instance  
+2. Compute the new instance for each document  
+3. Send the documents to the temporary index of their new instance  
+4. Once Meilisearch has copied all documents to their instance of destination, swap the new index with the previously used index  
+5. Delete the temporary index after the swap  
+6. Update network configuration and search queries across all instances  
 
 ## Create indexes and add documents
 
@@ -124,6 +128,6 @@ Changing settings in a sharded database is not fundamentally different from chan
 
 Send your federated search request containing one query per instance:
 
-<CodeSamples id="multi_search_remote_federated_1" />
+<CodeSamplesMultiSearchRemoteFederated1 />
 
 If all instances share the same network configuration, you can send the search request to any instance. Having `"remote": "ms-00"` appear in the list of queries on the instance of that name will not cause an actual proxy search thanks to `network.self`.

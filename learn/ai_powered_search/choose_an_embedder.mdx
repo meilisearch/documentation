@@ -1,9 +1,7 @@
 ---
-title: Which embedder should I choose? — Meilisearch documentation
+title: Which embedder should I choose?
 description: General guidance on how to choose the embedder best suited for projects using AI-powered search.
 ---
-
-# Which embedder should I choose?
 
 Meilisearch officially supports many different embedders, such as OpenAI, Hugging Face, and Ollama, as well as the majority of embedding generators with a RESTful API.
 
@@ -29,10 +27,10 @@ In these cases, you will have to supply your own embeddings.
 
 Although it returns very relevant search results, the Hugging Face embedder must run directly in your server. This may lead to lower performance and extra costs when you are hosting Meilisearch in a service like DigitalOcean or AWS.
 
-That said, Hugging Face can be a good embedder for datasets under 10k documents that you don't plan to update often. 
+That said, Hugging Face can be a good embedder for datasets under 10k documents that you don't plan to update often.
 
-<Capsule intent="note">
+<Note>
 Meilisearch Cloud does not support embedders with `{"source": "huggingFace"}`.
 
-To use  Hugging Face in the Cloud,  use [HuggingFace inference points with the REST embedder](/guides/ai/huggingface).
- </Capsule>
+To implement Hugging Face embedders in the Cloud, use [HuggingFace inference points with the REST embedder](/guides/ai/huggingface).
+</Note>

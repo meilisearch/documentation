@@ -1,0 +1,39 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X DELETE 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/localized-attributes'
+```
+
+```javascript JS
+client.index('INDEX_NAME').resetLocalizedAttributes()
+```
+
+```python Python
+client.index('INDEX_NAME').reset_localized_attributes()
+```
+
+```php PHP
+$client->index('INDEX_NAME')->resetLocalizedAttributes();
+```
+
+```java Java
+client.index("INDEX_NAME").resetLocalizedAttributesSettings();
+```
+
+```ruby Ruby
+client.index('INDEX_NAME').reset_localized_attributes
+```
+
+```go Go
+client.index("INDEX_NAME").ResetLocalizedAttributes()
+```
+
+```rust Rust
+let task: TaskInfo = client
+  .index("books")
+  .reset_localized_attributes()
+  .await
+  .unwrap();
+```
+</CodeGroup>

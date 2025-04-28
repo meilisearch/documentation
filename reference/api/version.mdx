@@ -1,9 +1,12 @@
 ---
-title: Version — Meilisearch API reference
+title: Version
+sidebarTitle: Version
 description: The /version route allows you to check the version of a running Meilisearch instance.
 ---
 
-# Version
+import { RouteHighlighter } from '/snippets/route_highlighter.mdx'
+
+import CodeSamplesGetVersion1 from '/snippets/samples/code_samples_get_version_1.mdx';
 
 The `/version` route allows you to check the version of a running Meilisearch instance.
 
@@ -17,13 +20,13 @@ The `/version` route allows you to check the version of a running Meilisearch in
 
 ## Get version of Meilisearch
 
-<RouteHighlighter method="GET" route="/version"/>
+<RouteHighlighter method="GET" path="/version" />
 
 Get version of Meilisearch.
 
 ### Example
 
-<CodeSamples id="get_version_1" />
+<CodeSamplesGetVersion1 />
 
 #### Response: `200 Ok`
 

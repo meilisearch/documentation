@@ -1,0 +1,65 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/indexes' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "uid": "books",
+    "primaryKey": "reference_number"
+  }'
+```
+
+```javascript JS
+client.createIndex('books', { primaryKey: 'reference_number' })
+```
+
+```python Python
+client.create_index('books', {'primaryKey': 'reference_number'})
+```
+
+```php PHP
+$client->createIndex('books', ['primaryKey' => 'reference_number']);
+```
+
+```java Java
+client.createIndex("books", "reference_number");
+```
+
+```ruby Ruby
+client.create_index('books', primary_key: 'reference_number')
+```
+
+```go Go
+client.CreateIndex(&meilisearch.IndexConfig{
+  Uid: "books",
+  PrimaryKey: "reference_number",
+})
+```
+
+```csharp C#
+TaskInfo task = await client.CreateIndexAsync("books", "reference_number");
+```
+
+```rust Rust
+client
+  .create_index("books", Some("reference_number"))
+  .await
+  .unwrap();
+```
+
+```swift Swift
+client.createIndex(uid: "books", primaryKey: "reference_number") { (result) in
+  switch result {
+    case .success(let task):
+        print(task)
+    case .failure(let error):
+        print(error)
+    }
+}
+```
+
+```dart Dart
+await client.createIndex('books', primaryKey: 'reference_number');
+```
+</CodeGroup>

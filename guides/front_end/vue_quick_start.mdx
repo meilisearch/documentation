@@ -1,9 +1,7 @@
 ---
-title: Vue3 quick start — Meilisearch documentation
+title: Vue3 quick start
 description: Integrate a search-as-you-type experience into your Vue app.
 ---
-
-# Vue3 quick start
 
 ## 1. Create a Vue application
 
@@ -71,7 +69,7 @@ The `ais-instant-search` widget is the mandatory wrapper that allows you to conf
 
 ## 5. Add a search bar and list search results
 
-Add the `ais-search-box` and `ais-hits` widgets inside the `ais-instant-search` wrapper widget. 
+Add the `ais-search-box` and `ais-hits` widgets inside the `ais-instant-search` wrapper widget.
 
 Import the CSS library to style the search components.
 
@@ -81,11 +79,11 @@ Import the CSS library to style the search components.
   <ais-search-box />
     <ais-hits>
       <template v-slot:item="{ item }">
-	  <div>
-	    <img :src="item.image" align="left" :alt="item.name"/>
+   <div>
+     <img :src="item.image" align="left" :alt="item.name"/>
           <h2>{{ item.name }}</h2>
-	    <p> {{ item.description }}</p>
-	  </div>
+     <p> {{ item.description }}</p>
+   </div>
       </template>
     </ais-hits>
   </ais-instant-search>
@@ -94,7 +92,6 @@ Import the CSS library to style the search components.
 <script>
 import { instantMeiliSearch } from "@meilisearch/instant-meilisearch";
 import "instantsearch.css/themes/satellite-min.css";
-
 
 export default {
 data() {
@@ -111,10 +108,10 @@ data() {
 
 Use the slot directive to customize how each search result is rendered.
 
-<Capsule intent="tip">
+<Tip>
 Use the following CSS classes to add custom styles to your components:
 `.ais-InstantSearch`, `.ais-SearchBox`, `.ais-InfiniteHits-list`, `.ais-InfiniteHits-item`
-</Capsule>
+</Tip>
 
 ## 6.Start the app and search as you type
 
@@ -126,7 +123,9 @@ npm run dev
 
 Now open your browser, navigate to your Vue app URL (e.g., `localhost:5173`), and start searching.
 
-![Vue app search UI with a search bar at the top and search results for a few video games](/assets/images/react_quick_start/react-qs-search-ui.png)
+<Frame>
+  <img src="/assets/images/react_quick_start/react-qs-search-ui.png" alt="Vue app search UI with a search bar at the top and search results for a few video games" />
+</Frame>
 
 Encountering issues? Check out the code in action in our [live demo](https://codesandbox.io/p/sandbox/ms-vue3-is-forked-wsrkl8)!
 

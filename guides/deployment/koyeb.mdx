@@ -1,9 +1,7 @@
 ---
-title: Deploy Meilisearch on Koyeb — Meilisearch documentation
+title: Deploy Meilisearch on Koyeb
 description: Deploy Meilisearch on Koyeb using a simplified one-click deploy with default settings compatible with most use-cases.
 ---
-
-# Deploy Meilisearch on Koyeb
 
 ## Introduction
 
@@ -29,9 +27,9 @@ You can for instance run the following command from the terminal to generate a s
 python -c 'import os,base64; print(base64.urlsafe_b64encode(os.urandom(32)).decode())'
 ```
 
-<Capsule intent="warning">
+<Warning>
 Using a master key is optional but strongly recommended when running in production. If you launch without a master key, your Meilisearch instance will be unprotected and publicly accessible.
-</Capsule>
+</Warning>
 
 ### Test Meilisearch
 

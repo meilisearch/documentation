@@ -1,29 +1,29 @@
 ---
-title: Laravel multitenancy guide — Meilisearch documentation
+title: Laravel multitenancy guide
 description: Learn how to implement secure, multitenant search in your Laravel applications.
 ---
-
-# Laravel multitenancy guide
 
 This guide will walk you through implementing search in a multitenant Laravel application. We'll use the example of a customer relationship manager (CRM) application that allows users to store contacts.
 
 ## Requirements
 
 This guide requires:
+
 - A Laravel 10 application with [Laravel Scout](https://laravel.com/docs/10.x/scout) configured to use the `meilisearch` driver
 - A Meilisearch server running — see our [quick start](/learn/getting_started/cloud_quick_start)
 - A search API key — available in your Meilisearch dashboard
 - A search API key UID — retrieve it using the [keys endpoints](/reference/api/keys)
 
-<Capsule intent="tip">
+<Tip>
 Prefer self-hosting? Read our [installation guide](/learn/self_hosted/install_meilisearch_locally).
-</Capsule>
+</Tip>
 
 ## Models & relationships
 
 Our example CRM is a multitenant application, where each user can only access data belonging to their organization.
 
 On a technical level, this means:
+
 - A `User` model that belongs to an `Organization`
 - A `Contact` model that belongs to an `Organization` (can only be accessed by users from the same organization)
 - An `Organization` model that has many `User`s and many `Contact`s
@@ -212,9 +212,9 @@ Now the `Organization` model is generating tenant tokens, you need to provide th
 
 Use [view composers](https://laravel.com/docs/10.x/views#view-composers) to provide views with your search token. This way, you ensure the token is available in all views, without having to pass it manually.
 
-<Capsule intent="tip">
+<Tip>
 If you prefer, you can pass the token manually to each view using the `with` method.
-</Capsule>
+</Tip>
 
 Create a new `app/View/Composers/AuthComposer.php` file:
 

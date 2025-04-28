@@ -1,26 +1,26 @@
 {
-  "index_uid": "production",
+  "index_uid": "mintlify-production",
   "start_urls": [
-      "https://www.meilisearch.com/docs"
+      "https://meilisearch.com/docs"
   ],
   "sitemap_urls": [
-      "https://www.meilisearch.com/sitemap.xml"
+      "https://meilisearch.com/sitemap.xml"
   ],
   "selectors": {
       "lvl0": {
-          "selector": "#sidebar-list .sidebar-link[data-active=true] ~ .sidebar-category",
+          "selector": "#header > div > div:first-child",
           "global": true,
           "default_value": "Documentation"
       },
       "lvl1": {
-          "selector": ".docs-main h1",
+          "selector": "#content-area h1",
           "global": true
       },
-      "lvl2": ".docs-main h2",
-      "lvl3": ".docs-main h3",
-      "lvl4": ".docs-main h4",
-      "lvl5": ".docs-main h5",
-      "text": ".docs-main p, .docs-main li, .docs-main td"
+      "lvl2": "#content-area h2",
+      "lvl3": "#content-area h3",
+      "lvl4": "#content-area h4",
+      "lvl5": "#content-area h5",
+      "text": "#content-area p, #content-area li, #content-area td"
   },
   "strip_chars": " .,;:#",
   "scrap_start_urls": true,
@@ -65,7 +65,7 @@
   },
   "min_indexed_level": 2,
   "selectors_exclude": [
-      "#page-navigation",
-      "#feedback"
+      "#pagination",
+      ".leading-6 mt-14"
   ]
 }

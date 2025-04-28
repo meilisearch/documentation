@@ -1,0 +1,53 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X GET 'MEILISEARCH_URL/indexes/articles/settings/non-separator-tokens'
+```
+
+```javascript JS
+client.index('books').getNonSeparatorTokens()
+```
+
+```python Python
+client.index('articles').get_non_separator_tokens()
+```
+
+```php PHP
+$client->index('articles')->getNonSeparatorTokens();
+```
+
+```java Java
+client.index("articles").getNonSeparatorTokensSettings();
+```
+
+```ruby Ruby
+client.index('articles').non_separator_tokens
+```
+
+```go Go
+client.Index("articles").GetNonSeparatorTokens()
+```
+
+```csharp C#
+await client.Index("movies").GetNonSeparatorTokensAsync();
+```
+
+```rust Rust
+let task: TaskInfo = client
+  .index('articles')
+  .get_non_separator_tokens()
+  .await
+  .unwrap();
+```
+
+```swift Swift
+client.index("books").getNonSeparatorTokens { result in
+  // handle result
+}
+```
+
+```dart Dart
+await client.index('articles').getNonSeparatorTokens();
+```
+</CodeGroup>

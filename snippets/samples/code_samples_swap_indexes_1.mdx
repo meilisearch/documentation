@@ -1,0 +1,90 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/swap-indexes' \
+  -H 'Content-Type: application/json' \
+  --data-binary '[
+    {
+      "indexes": [
+        "indexA",
+        "indexB"
+      ]
+    },
+    {
+      "indexes": [
+        "indexX",
+        "indexY"
+      ]
+    }
+  ]'
+```
+
+```javascript JS
+client.swapIndexes([
+  { 'indexes': ['indexA', 'indexB'] },
+  { 'indexes': ['indexX', 'indexY'] }
+])
+```
+
+```python Python
+client.swap_indexes([{'indexes': ['indexA', 'indexB']}, {'indexes': ['indexX', 'indexY']}])
+```
+
+```php PHP
+$client->swapIndexes([['indexA', 'indexB'], ['indexX', 'indexY']]);
+```
+
+```java Java
+SwapIndexesParams[] params =
+        new SwapIndexesParams[] {
+            new SwapIndexesParams().setIndexes(new String[] {"indexA", "indexB"}),
+            new SwapIndexesParams().setIndexes(new String[] {"indexX", "indexY"})
+        };
+TaskInfo task = client.swapIndexes(params);
+```
+
+```ruby Ruby
+client.swap_indexes(['indexA', 'indexB'], ['indexX', 'indexY'])
+```
+
+```go Go
+client.SwapIndexes([]SwapIndexesParams{
+  {Indexes: []string{"indexA", "indexB"}},
+  {Indexes: []string{"indexX", "indexY"}},
+})
+```
+
+```csharp C#
+await client.SwapIndexesAsync(new List<IndexSwap> { new IndexSwap("indexA", "indexB"), new IndexSwap("indexX", "indexY") } });
+```
+
+```rust Rust
+client.swap_indexes([
+  &SwapIndexes {
+    indexes: (
+        "indexA".to_string(),
+        "indexB".to_string(),
+    ),
+  }, &SwapIndexes {
+    indexes: (
+        "indexX".to_string(),
+        "indexY".to_string(),
+    ),
+}])
+```
+
+```swift Swift
+let task = try await self.client.swapIndexes([
+  ("indexA", "indexB"),
+  ("indexX", "indexY")
+])
+```
+
+```dart Dart
+await client.swapIndexes([
+  SwapIndex(['indexA', 'indexB']),
+  SwapIndex(['indexX', 'indexY']),
+]);
+```
+</CodeGroup>

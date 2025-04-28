@@ -1,0 +1,68 @@
+/* Use lighter shade of grey in dark theme for improved contrast */
+.dark\:text-gray-400:is(.dark *) {
+  color:rgb(var(--gray-300))
+}
+
+/* Turn section titles on left-hand sidebar uppercase */
+#navigation-items h5 {
+  text-transform: uppercase;
+}
+
+/* Force callout headings to inherit parent component colour */
+.callout h2,
+.callout h3,
+.callout h4,
+.callout h5,
+.callout h6 {
+  color: inherit;
+}
+
+/* Custom component: <NoticeTag> */
+.noticeTag {
+  color: rgb(var(--primary-light));
+  border: 1px solid rgb(var(--primary-light));
+  padding: 0 0.5em;
+  margin-left: 0.25em;
+  display: inline-block;
+  border-radius: 5px;
+  font-size: 0.8em;
+}
+
+/* Custom component: <RouteHighlighter> */
+.routeHighlighter {
+  --route-highlighter-color: rgba(100, 100, 100, 0.35);
+  display: flex;
+  border-radius: 0.375rem;
+  border: 1px var(--route-highlighter-color) solid;
+  padding: 1rem;
+  gap: 2rem;
+  align-items: center;
+  overflow: scroll;
+}
+
+/* https://tailwindcss.com/docs/colors */
+.routeHighlighter--GET {
+  --route-highlighter-color: oklch(0.792 0.209 151.711);
+}
+
+.routeHighlighter--POST {
+  --route-highlighter-color: oklch(0.623 0.214 259.815);
+}
+
+.routeHighlighter--DELETE {
+  --route-highlighter-color: oklch(63.7% 0.237 25.331);
+}
+
+.routeHighlighter--PUT, 
+.routeHighlighter--PATCH {
+  --route-highlighter-color: oklch(0.828 0.189 84.429);
+}
+
+.routeHighlighter__method {
+  font-weight: 700;
+  color: var(--route-highlighter-color);
+}
+
+.routeHighlighter__path {
+  font-family: var(--font-jetbrains-mono),ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace
+}

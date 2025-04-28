@@ -1,9 +1,15 @@
 ---
-title: Tasks — Meilisearch API reference
+title: Tasks
+sidebarTitle: Tasks
 description: The /tasks route allows you to manage and monitor Meilisearch's asynchronous operations.
 ---
 
-# Tasks
+import { RouteHighlighter } from '/snippets/route_highlighter.mdx'
+
+import CodeSamplesCancelTasks1 from '/snippets/samples/code_samples_cancel_tasks_1.mdx';
+import CodeSamplesDeleteTasks1 from '/snippets/samples/code_samples_delete_tasks_1.mdx';
+import CodeSamplesGetAllTasks1 from '/snippets/samples/code_samples_get_all_tasks_1.mdx';
+import CodeSamplesGetTask1 from '/snippets/samples/code_samples_get_task_1.mdx';
 
 The `/tasks` route gives information about the progress of [asynchronous operations](/learn/async/asynchronous_operations).
 
@@ -38,27 +44,27 @@ The `/tasks` route gives information about the progress of [asynchronous operati
 **Type**: Integer<br />
 **Description**: Unique sequential identifier of the task.
 
-<Capsule intent="note">
+<Note>
 The task `uid` is incremented across all indexes in an instance.
-</Capsule>
+</Note>
 
 ### `batchUid`
 
 **Type**: Integer<br />
 **Description**: Unique sequential identifier of the batch this task belongs to.
 
-<Capsule intent="note">
+<Note>
 The batch `uid` is incremented across all indexes in an instance.
-</Capsule>
+</Note>
 
 ### `indexUid`
 
 **Type**: String<br />
 **Description**:  Unique identifier of the targeted index
 
-<Capsule intent="note">
+<Note>
 This value is always `null` for [global tasks](/learn/async/asynchronous_operations#global-tasks).
-</Capsule>
+</Note>
 
 ### `status`
 
@@ -149,9 +155,9 @@ This value is always `null` for [global tasks](/learn/async/asynchronous_operati
 | **`canceledTasks`**  | The number of tasks successfully canceled. If the task cancellation fails, this will be `0`. `null` when the task status is `enqueued` or `processing`                 |
 | **`originalFilter`** | The filter used in the [cancel task](#cancel-tasks) request                                                                                                           |
 
-<Capsule intent="note">
+<Note>
 Task cancellation can be successful and still have `canceledTasks: 0`. This happens when `matchedTasks` matches finished tasks (`succeeded`, `failed`, or `canceled`).
-</Capsule>
+</Note>
 
 #### `taskDeletion`
 
@@ -161,9 +167,9 @@ Task cancellation can be successful and still have `canceledTasks: 0`. This happ
 | **`deletedTasks`**   | The number of tasks successfully deleted. If the task deletion fails, this will be `0`. `null` when the task status is `enqueued` or `processing`                     |
 | **`originalFilter`** | The filter used in the [delete task](#delete-tasks) request                                                                                                           |
 
-<Capsule intent="note">
+<Note>
 Task deletion can be successful and still have `deletedTasks: 0`. This happens when `matchedTasks` matches `enqueued` or `processing` tasks.
-</Capsule>
+</Note>
 
 #### `snapshotCreation`
 
@@ -217,7 +223,7 @@ You can use this `taskUid` to get more details on [the status of the task](#get-
 
 ## Get tasks
 
-<RouteHighlighter method="GET" route="/tasks"/>
+<RouteHighlighter method="GET" path="/tasks" />
 
 List all tasks globally, regardless of index. The `task` objects are contained in the `results` array.
 
@@ -257,7 +263,7 @@ Task results are [paginated](/learn/async/paginating_tasks) and can be [filtered
 
 ### Example
 
-<CodeSamples id="get_all_tasks_1" />
+<CodeSamplesGetAllTasks1 />
 
 #### Response: `200 Ok`
 
@@ -306,13 +312,13 @@ Task results are [paginated](/learn/async/paginating_tasks) and can be [filtered
 
 ## Get one task
 
-<RouteHighlighter method="GET" route="/tasks/{task_uid}"/>
+<RouteHighlighter method="GET" path="/tasks/{task_uid}" />
 
 Get a single task.
 
-<Capsule intent="note">
+<Note>
 If you try retrieving a deleted task, Meilisearch will return a [`task_not_found`](/reference/errors/error_codes#task_not_found) error.
-</Capsule>
+</Note>
 
 ### Path parameters
 
@@ -322,7 +328,7 @@ If you try retrieving a deleted task, Meilisearch will return a [`task_not_found
 
 ### Example
 
-<CodeSamples id="get_task_1" />
+<CodeSamplesGetTask1 />
 
 #### Response: `200 Ok`
 
@@ -353,19 +359,19 @@ If you try retrieving a deleted task, Meilisearch will return a [`task_not_found
 
 ## Cancel tasks
 
-<RouteHighlighter method="POST" route="/tasks/cancel?{query_parameter}"/>
+<RouteHighlighter method="POST" path="/tasks/cancel?{query_parameter}" />
 
 Cancel any number of `enqueued` or `processing` tasks based on their `uid`, `status`, `type`, `indexUid`, or the date at which they were enqueued (`enqueuedAt`) or processed (`startedAt`).
 
 Task cancellation is an atomic transaction: **either all tasks are successfully canceled or none are**.
 
-<Capsule intent="warning">
+<Warning>
 To prevent users from accidentally canceling all enqueued and processing tasks, Meilisearch throws the [`missing_task_filters`](/reference/errors/error_codes#missing_task_filters) error if this route is used without any filters (`POST /tasks/cancel`).
-</Capsule>
+</Warning>
 
-<Capsule intent="tip" title="Did you know?">
+<Tip>
 You can also cancel `taskCancelation` type tasks as long as they are in the `enqueued` or `processing` state. This is possible because `taskCancelation` type tasks are processed in reverse order, such that the last one you enqueue will be processed first.
-</Capsule>
+</Tip>
 
 ### Query parameters
 
@@ -382,15 +388,15 @@ A valid `uids`, `statuses`, `types`, `indexUids`, or date(`beforeXAt` or `afterX
 | **`afterEnqueuedAt`**  | Cancel tasks **after** a specified `enqueuedAt` date. Use `afterEnqueuedAt=*` to cancel all tasks                                    |
 | **`afterStartedAt`**   | Cancel tasks **after** a specified `startedAt` date. Use `afterStartedAt=*` to cancel all tasks                                      |
 
-<Capsule intent="note">
+<Note>
 Date filters are equivalent to `<` or `>` operations. At this time, there is no way to perform a `≤` or `≥` operations with a date filter.
-</Capsule>
+</Note>
 
 [To learn more about filtering tasks, refer to our dedicated guide.](/learn/async/filtering_tasks)
 
 ### Example
 
-<CodeSamples id="cancel_tasks_1" />
+<CodeSamplesCancelTasks1 />
 
 #### Response: `200 Ok`
 
@@ -404,9 +410,9 @@ Date filters are equivalent to `<` or `>` operations. At this time, there is no 
 }
 ```
 
-<Capsule intent="note">
+<Note>
 Since `taskCancelation` is a [global task](/learn/async/asynchronous_operations#global-tasks), its `indexUid` is always `null`.
-</Capsule>
+</Note>
 
 You can use this `taskUid` to get more details on the [status of the task](#get-one-task).
 
@@ -414,19 +420,19 @@ You can use this `taskUid` to get more details on the [status of the task](#get-
 
 You can cancel all `processing` and `enqueued` tasks using the following filter:
 
-<RouteHighlighter method="POST" route="/tasks/cancel?statuses=processing,enqueued" />
+<RouteHighlighter method="POST" path="/tasks/cancel?statuses=processing,enqueued" />
 
 The API key used must have access to all indexes (`"indexes": [*]`) and the [`task.cancel`](/reference/api/keys#actions) action.
 
 ## Delete tasks
 
-<RouteHighlighter method="DELETE" route="/tasks?{query_parameter}"/>
+<RouteHighlighter method="DELETE" path="/tasks?{query_parameter}" />
 
 Delete a finished (`succeeded`, `failed`, or `canceled`) task based on `uid`, `status`, `type`, `indexUid`, `canceledBy`, or date. Task deletion is an atomic transaction: **either all tasks are successfully deleted, or none are**.
 
-<Capsule intent="warning">
+<Warning>
 To prevent users from accidentally deleting the entire task history, Meilisearch throws the [`missing_task_filters`](/reference/errors/error_codes#missing_task_filters) error if this route is used without any filters (DELETE `/tasks`).
-</Capsule>
+</Warning>
 
 ### Query parameters
 
@@ -446,15 +452,15 @@ A valid `uids`, `statuses`, `types`, `indexUids`, `canceledBy`, or date(`beforeX
 | **`afterStartedAt`**   | Delete tasks **after** a specified `startedAt` date. Use `afterStartedAt=*` to delete all tasks                                      |
 | **`afterFinishedAt`**  | Delete tasks **after** a specified `finishedAt` date. Use `afterFinishedAt=*` to delete all tasks                                    |
 
-<Capsule intent="note">
+<Note>
 Date filters are equivalent to `<` or `>` operations. At this time, there is no way to perform a `≤` or `≥` operations with a date filter.
-</Capsule>
+</Note>
 
 [To learn more about filtering tasks, refer to our dedicated guide.](/learn/async/filtering_tasks)
 
 ### Example
 
-<CodeSamples id="delete_tasks_1" />
+<CodeSamplesDeleteTasks1 />
 
 #### Response: `200 Ok`
 
@@ -468,9 +474,9 @@ Date filters are equivalent to `<` or `>` operations. At this time, there is no 
 }
 ```
 
-<Capsule intent="note">
+<Note>
 Since `taskDeletion` is a [global task](/learn/async/asynchronous_operations#global-tasks), its `indexUid` is always `null`.
-</Capsule>
+</Note>
 
 You can use this `taskUid` to get more details on the [status of the task](#get-one-task).
 
@@ -478,6 +484,6 @@ You can use this `taskUid` to get more details on the [status of the task](#get-
 
 You can delete all finished tasks by using the following filter:
 
-<RouteHighlighter method="DELETE" route="/tasks?statuses=failed,canceled,succeeded" />
+<RouteHighlighter method="DELETE" path="/tasks?statuses=failed,canceled,succeeded" />
 
 The API key used must have access to all indexes (`"indexes": [*]`) and the [`task.delete`](/reference/api/keys#actions) action.

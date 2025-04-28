@@ -1,0 +1,21 @@
+<CodeGroup>
+
+```swift Swift
+let documentJsonString = """
+[{
+    "movie_id": 123sq178,
+    "title": "Amélie Poulain"
+}]
+"""
+let documents: Data = documentJsonString.data(using: .utf8)!
+
+client.index("movies").addDocuments(documents: documents) { (result) in
+    switch result {
+    case .success(let task):
+        print(task)
+    case .failure(let error):
+        print(error)
+    }
+}
+```
+</CodeGroup>

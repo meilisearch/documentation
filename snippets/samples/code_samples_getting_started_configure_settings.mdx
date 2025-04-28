@@ -1,0 +1,126 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X PATCH 'MEILISEARCH_URL/indexes/meteorites/settings' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "filterableAttributes": [
+      "mass",
+      "_geo"
+    ],
+    "sortableAttributes": [
+      "mass",
+      "_geo"
+    ]
+  }'
+```
+
+```javascript JS
+client.index('meteorites').updateSettings({
+  filterableAttributes: ['mass', '_geo'],
+  sortableAttributes: ['mass', '_geo']
+})
+```
+
+```python Python
+client.index('meteorites').update_settings({
+  'filterableAttributes': [
+      'mass',
+      '_geo'
+  ],
+  'sortableAttributes': [
+      'mass',
+      '_geo'
+  ]
+})
+```
+
+```php PHP
+$client->index('meteorites')->updateSettings([
+  'filterableAttributes' => [
+    'mass',
+    '_geo'
+  ],
+  'sortableAttributes' => [
+    'mass',
+    '_geo'
+  ]
+]);
+```
+
+```java Java
+Settings settings = new Settings();
+settings.setFilterableAttributes(new String[] {"mass", "_geo"});
+settings.setSortableAttributes(new String[] {"mass", "_geo"});
+client.index("meteorites").updateSettings(settings);
+```
+
+```ruby Ruby
+client.index('meteorites').update_settings({
+  filterable_attributes: ['mass', '_geo'],
+  sortable_attributes: ['mass', '_geo']
+})
+```
+
+```go Go
+settings := meilisearch.Settings{
+  FilterableAttributes: []string{
+    "mass",
+    "_geo",
+  },
+  SortableAttributes: []string{
+    "mass",
+    "_geo",
+  },
+}
+client.Index("meteorites").UpdateSettings(&settings)
+```
+
+```csharp C#
+var newSettings = new Settings
+{
+    FilterableAttributes = new string[] { "mass", "_geo" },
+    SortableAttributes = new string[] { "mass", "_geo" },
+};
+await client.Index("meteorites").UpdateSettingsAsync(newSettings);
+```
+
+```rust Rust
+let settings = Settings::new()
+  .with_filterable_attributes([
+    "mass",
+    "_geo"
+  ])
+  .with_sortable_attributes([
+    "mass",
+    "_geo"
+  ])
+let task: TaskInfo = client
+  .index("meteorites")
+  .set_settings(&settings)
+  .await
+  .unwrap();
+```
+
+```swift Swift
+let settings = Setting(
+  filterableAttributes: ["mass", "_geo"],
+  sortableAttributes: ["mass", "_geo"]
+)
+client.index("meteorites").updateSettings(settings) { (result) in
+    switch result {
+    case .success(let task):
+        print(task)
+    case .failure(let error):
+        print(error)
+    }
+}
+```
+
+```dart Dart
+await client.index('meteorites').updateSettings(IndexSettings(
+    filterableAttributes: ['mass', '_geo'],
+    sortableAttributes: ['mass', '_geo']));
+```
+</CodeGroup>

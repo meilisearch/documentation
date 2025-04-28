@@ -1,10 +1,74 @@
 ---
-title: Settings — Meilisearch API reference
+title: Settings
+sidebarTitle: Settings
 description: The /settings route allows you to customize search settings for the given index.
 sidebarDepth: 3
 ---
 
-# Settings
+import { RouteHighlighter } from '/snippets/route_highlighter.mdx'
+import { NoticeTag } from '/snippets/notice_tag.mdx'
+
+import CodeSamplesGetDictionary1 from '/snippets/samples/code_samples_get_dictionary_1.mdx';
+import CodeSamplesGetDisplayedAttributes1 from '/snippets/samples/code_samples_get_displayed_attributes_1.mdx';
+import CodeSamplesGetDistinctAttribute1 from '/snippets/samples/code_samples_get_distinct_attribute_1.mdx';
+import CodeSamplesGetEmbedders1 from '/snippets/samples/code_samples_get_embedders_1.mdx';
+import CodeSamplesGetFacetSearchSettings1 from '/snippets/samples/code_samples_get_facet_search_settings_1.mdx';
+import CodeSamplesGetFacetingSettings1 from '/snippets/samples/code_samples_get_faceting_settings_1.mdx';
+import CodeSamplesGetFilterableAttributes1 from '/snippets/samples/code_samples_get_filterable_attributes_1.mdx';
+import CodeSamplesGetLocalizedAttributeSettings1 from '/snippets/samples/code_samples_get_localized_attribute_settings_1.mdx';
+import CodeSamplesGetNonSeparatorTokens1 from '/snippets/samples/code_samples_get_non_separator_tokens_1.mdx';
+import CodeSamplesGetPaginationSettings1 from '/snippets/samples/code_samples_get_pagination_settings_1.mdx';
+import CodeSamplesGetPrefixSearchSettings1 from '/snippets/samples/code_samples_get_prefix_search_settings_1.mdx';
+import CodeSamplesGetProximityPrecisionSettings1 from '/snippets/samples/code_samples_get_proximity_precision_settings_1.mdx';
+import CodeSamplesGetRankingRules1 from '/snippets/samples/code_samples_get_ranking_rules_1.mdx';
+import CodeSamplesGetSearchCutoff1 from '/snippets/samples/code_samples_get_search_cutoff_1.mdx';
+import CodeSamplesGetSearchableAttributes1 from '/snippets/samples/code_samples_get_searchable_attributes_1.mdx';
+import CodeSamplesGetSeparatorTokens1 from '/snippets/samples/code_samples_get_separator_tokens_1.mdx';
+import CodeSamplesGetSettings1 from '/snippets/samples/code_samples_get_settings_1.mdx';
+import CodeSamplesGetSortableAttributes1 from '/snippets/samples/code_samples_get_sortable_attributes_1.mdx';
+import CodeSamplesGetStopWords1 from '/snippets/samples/code_samples_get_stop_words_1.mdx';
+import CodeSamplesGetSynonyms1 from '/snippets/samples/code_samples_get_synonyms_1.mdx';
+import CodeSamplesGetTypoTolerance1 from '/snippets/samples/code_samples_get_typo_tolerance_1.mdx';
+import CodeSamplesResetDictionary1 from '/snippets/samples/code_samples_reset_dictionary_1.mdx';
+import CodeSamplesResetDisplayedAttributes1 from '/snippets/samples/code_samples_reset_displayed_attributes_1.mdx';
+import CodeSamplesResetDistinctAttribute1 from '/snippets/samples/code_samples_reset_distinct_attribute_1.mdx';
+import CodeSamplesResetEmbedders1 from '/snippets/samples/code_samples_reset_embedders_1.mdx';
+import CodeSamplesResetFacetSearchSettings1 from '/snippets/samples/code_samples_reset_facet_search_settings_1.mdx';
+import CodeSamplesResetFacetingSettings1 from '/snippets/samples/code_samples_reset_faceting_settings_1.mdx';
+import CodeSamplesResetFilterableAttributes1 from '/snippets/samples/code_samples_reset_filterable_attributes_1.mdx';
+import CodeSamplesResetLocalizedAttributeSettings1 from '/snippets/samples/code_samples_reset_localized_attribute_settings_1.mdx';
+import CodeSamplesResetPaginationSettings1 from '/snippets/samples/code_samples_reset_pagination_settings_1.mdx';
+import CodeSamplesResetProximityPrecisionSettings1 from '/snippets/samples/code_samples_reset_proximity_precision_settings_1.mdx';
+import CodeSamplesResetRankingRules1 from '/snippets/samples/code_samples_reset_ranking_rules_1.mdx';
+import CodeSamplesResetSearchCutoff1 from '/snippets/samples/code_samples_reset_search_cutoff_1.mdx';
+import CodeSamplesResetSearchableAttributes1 from '/snippets/samples/code_samples_reset_searchable_attributes_1.mdx';
+import CodeSamplesResetSeparatorTokens1 from '/snippets/samples/code_samples_reset_separator_tokens_1.mdx';
+import CodeSamplesResetSettings1 from '/snippets/samples/code_samples_reset_settings_1.mdx';
+import CodeSamplesResetSortableAttributes1 from '/snippets/samples/code_samples_reset_sortable_attributes_1.mdx';
+import CodeSamplesResetStopWords1 from '/snippets/samples/code_samples_reset_stop_words_1.mdx';
+import CodeSamplesResetSynonyms1 from '/snippets/samples/code_samples_reset_synonyms_1.mdx';
+import CodeSamplesResetTypoTolerance1 from '/snippets/samples/code_samples_reset_typo_tolerance_1.mdx';
+import CodeSamplesUpdateDictionary1 from '/snippets/samples/code_samples_update_dictionary_1.mdx';
+import CodeSamplesUpdateDisplayedAttributes1 from '/snippets/samples/code_samples_update_displayed_attributes_1.mdx';
+import CodeSamplesUpdateDistinctAttribute1 from '/snippets/samples/code_samples_update_distinct_attribute_1.mdx';
+import CodeSamplesUpdateEmbedders1 from '/snippets/samples/code_samples_update_embedders_1.mdx';
+import CodeSamplesUpdateFacetSearchSettings1 from '/snippets/samples/code_samples_update_facet_search_settings_1.mdx';
+import CodeSamplesUpdateFacetingSettings1 from '/snippets/samples/code_samples_update_faceting_settings_1.mdx';
+import CodeSamplesUpdateFilterableAttributes1 from '/snippets/samples/code_samples_update_filterable_attributes_1.mdx';
+import CodeSamplesUpdateLocalizedAttributeSettings1 from '/snippets/samples/code_samples_update_localized_attribute_settings_1.mdx';
+import CodeSamplesUpdateNonSeparatorTokens1 from '/snippets/samples/code_samples_update_non_separator_tokens_1.mdx';
+import CodeSamplesUpdatePaginationSettings1 from '/snippets/samples/code_samples_update_pagination_settings_1.mdx';
+import CodeSamplesUpdatePrefixSearchSettings1 from '/snippets/samples/code_samples_update_prefix_search_settings_1.mdx';
+import CodeSamplesUpdateProximityPrecisionSettings1 from '/snippets/samples/code_samples_update_proximity_precision_settings_1.mdx';
+import CodeSamplesUpdateRankingRules1 from '/snippets/samples/code_samples_update_ranking_rules_1.mdx';
+import CodeSamplesUpdateSearchCutoff1 from '/snippets/samples/code_samples_update_search_cutoff_1.mdx';
+import CodeSamplesUpdateSearchableAttributes1 from '/snippets/samples/code_samples_update_searchable_attributes_1.mdx';
+import CodeSamplesUpdateSeparatorTokens1 from '/snippets/samples/code_samples_update_separator_tokens_1.mdx';
+import CodeSamplesUpdateSettings1 from '/snippets/samples/code_samples_update_settings_1.mdx';
+import CodeSamplesUpdateSortableAttributes1 from '/snippets/samples/code_samples_update_sortable_attributes_1.mdx';
+import CodeSamplesUpdateStopWords1 from '/snippets/samples/code_samples_update_stop_words_1.mdx';
+import CodeSamplesUpdateSynonyms1 from '/snippets/samples/code_samples_update_synonyms_1.mdx';
+import CodeSamplesUpdateTypoTolerance1 from '/snippets/samples/code_samples_update_typo_tolerance_1.mdx';
 
 Use the `/settings` route to customize search settings for a given index. You can either modify all index settings at once using the [update settings endpoint](#update-settings), or use a child route to configure a single setting.
 
@@ -72,7 +136,7 @@ This route allows you to retrieve, configure, or reset all of an index's setting
 
 ### Get settings
 
-<RouteHighlighter method="GET" route="/indexes/{index_uid}/settings" />
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/settings" />
 
 Get the settings of an index.
 
@@ -84,7 +148,7 @@ Get the settings of an index.
 
 #### Example
 
-<CodeSamples id="get_settings_1" />
+<CodeSamplesGetSettings1 />
 
 ##### Response: `200 Ok`
 
@@ -138,7 +202,7 @@ Get the settings of an index.
 
 ### Update settings
 
-<RouteHighlighter method="PATCH" route="/indexes/{index_uid}/settings" />
+<RouteHighlighter method="PATCH" path="/indexes/{index_uid}/settings" />
 
 Update the settings of an index.
 
@@ -180,11 +244,11 @@ If the provided index does not exist, it will be created.
 
 #### Example
 
-<CodeSamples id="update_settings_1" />
+<CodeSamplesUpdateSettings1 />
 
-<Capsule intent="warning">
+<Warning>
 If Meilisearch encounters an error when updating any of the settings in a request, it immediately stops processing the request and returns an error message. In this case, the database settings remain unchanged. The returned error message will only address the first error encountered.
-</Capsule>
+</Warning>
 
 ##### Response: `202 Accepted`
 
@@ -202,7 +266,7 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 ### Reset settings
 
-<RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings"/>
+<RouteHighlighter method="DELETE" path="/indexes/{index_uid}/settings" />
 
 Reset all the settings of an index to their [default value](#settings-object).
 
@@ -214,7 +278,7 @@ Reset all the settings of an index to their [default value](#settings-object).
 
 #### Example
 
-<CodeSamples id="reset_settings_1" />
+<CodeSamplesResetSettings1 />
 
 ##### Response: `202 Accepted`
 
@@ -238,7 +302,7 @@ This is particularly useful when working with datasets containing many domain-sp
 
 Custom dictionaries are also useful in a few use-cases for space-separated languages, such as datasets with names such as `"J. R. R. Tolkien"` and `"W. E. B. Du Bois"`.
 
-<Capsule intent="tip">
+<Tip>
 User-defined dictionaries can be used together with synonyms. It can be useful to configure Meilisearch so different spellings of an author's initials return the same results:
 
 ```json
@@ -249,11 +313,11 @@ User-defined dictionaries can be used together with synonyms. It can be useful t
 }
 ```
 
-</Capsule>
+</Tip>
 
 ### Get dictionary
 
-<RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/dictionary"/>
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/settings/dictionary" />
 
 Get an index's user-defined dictionary.
 
@@ -265,7 +329,7 @@ Get an index's user-defined dictionary.
 
 #### Example
 
-<CodeSamples id="get_dictionary_1" />
+<CodeSamplesGetDictionary1 />
 
 ##### Response: `200 OK`
 
@@ -275,7 +339,7 @@ Get an index's user-defined dictionary.
 
 ### Update dictionary
 
-<RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/dictionary"/>
+<RouteHighlighter method="PUT" path="/indexes/{index_uid}/settings/dictionary" />
 
 Update an index's user-defined dictionary.
 
@@ -293,7 +357,7 @@ Update an index's user-defined dictionary.
 
 #### Example
 
-<CodeSamples id="update_dictionary_1" />
+<CodeSamplesUpdateDictionary1 />
 
 ##### Response: `202 Accepted`
 
@@ -311,7 +375,7 @@ Use the returned `taskUid` to get more details on [the status of the task](/refe
 
 ### Reset dictionary
 
-<RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings/dictionary"/>
+<RouteHighlighter method="DELETE" path="/indexes/{index_uid}/settings/dictionary" />
 
 Reset an index's dictionary to its default value, `[]`.
 
@@ -323,7 +387,7 @@ Reset an index's dictionary to its default value, `[]`.
 
 #### Example
 
-<CodeSamples id="reset_dictionary_1" />
+<CodeSamplesResetDictionary1 />
 
 ##### Response: `202 Accepted`
 
@@ -349,7 +413,7 @@ By default, the `displayedAttributes` array is equal to all fields in your datas
 
 ### Get displayed attributes
 
-<RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/displayed-attributes" />
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/settings/displayed-attributes" />
 
 Get the displayed attributes of an index.
 
@@ -361,7 +425,7 @@ Get the displayed attributes of an index.
 
 #### Example
 
-<CodeSamples id="get_displayed_attributes_1"/>
+<CodeSamplesGetDisplayedAttributes1 />
 
 ##### Response: `200 Ok`
 
@@ -376,7 +440,7 @@ Get the displayed attributes of an index.
 
 ### Update displayed attributes
 
-<RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/displayed-attributes" />
+<RouteHighlighter method="PUT" path="/indexes/{index_uid}/settings/displayed-attributes" />
 
 Update the displayed attributes of an index.
 
@@ -396,13 +460,13 @@ An array of strings. Each string should be an attribute that exists in the selec
 
 If an attribute contains an object, you can use dot notation to specify one or more of its keys, for example, `"displayedAttributes": ["release_date.year"]`.
 
-<Capsule intent="warning">
+<Warning>
 If the field does not exist, no error will be thrown.
-</Capsule>
+</Warning>
 
 #### Example
 
-<CodeSamples id="update_displayed_attributes_1"/>
+<CodeSamplesUpdateDisplayedAttributes1 />
 
 ##### Response: `202 Accepted`
 
@@ -420,7 +484,7 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 ### Reset displayed attributes
 
-<RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings/displayed-attributes"/>
+<RouteHighlighter method="DELETE" path="/indexes/{index_uid}/settings/displayed-attributes" />
 
 Reset the displayed attributes of the index to the default value.
 
@@ -432,7 +496,7 @@ Reset the displayed attributes of the index to the default value.
 
 #### Example
 
-<CodeSamples id="reset_displayed_attributes_1"/>
+<CodeSamplesResetDisplayedAttributes1 />
 
 ##### Response: `202 Accepted`
 
@@ -452,15 +516,15 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 The distinct attribute is a field whose value will always be unique in the returned documents.
 
-<Capsule intent="warning">
+<Warning>
 Updating distinct attributes will re-index all documents in the index, which can take some time. We recommend updating your index settings first and then adding documents as this reduces RAM consumption.
-</Capsule>
+</Warning>
 
 [To learn more about the distinct attribute, refer to our dedicated guide.](/learn/relevancy/distinct_attribute)
 
 ### Get distinct attribute
 
-<RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/distinct-attribute" />
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/settings/distinct-attribute" />
 
 Get the distinct attribute of an index.
 
@@ -472,7 +536,7 @@ Get the distinct attribute of an index.
 
 #### Example
 
-<CodeSamples id="get_distinct_attribute_1" />
+<CodeSamplesGetDistinctAttribute1 />
 
 ##### Response: `200 Ok`
 
@@ -482,7 +546,7 @@ Get the distinct attribute of an index.
 
 ### Update distinct attribute
 
-<RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/distinct-attribute" />
+<RouteHighlighter method="PUT" path="/indexes/{index_uid}/settings/distinct-attribute" />
 
 Update the distinct attribute field of an index.
 
@@ -502,15 +566,15 @@ A string. The string should be an attribute that exists in the selected index.
 
 If an attribute contains an object, you can use dot notation to set one or more of its keys as a value for this setting, for example, `"distinctAttribute": "product.skuid"`.
 
-<Capsule intent="warning">
+<Warning>
 If the field does not exist, no error will be thrown.
-</Capsule>
+</Warning>
 
 [To learn more about the distinct attribute, refer to our dedicated guide.](/learn/relevancy/distinct_attribute)
 
 #### Example
 
-<CodeSamples id="update_distinct_attribute_1" />
+<CodeSamplesUpdateDistinctAttribute1 />
 
 ##### Response: `202 Accepted`
 
@@ -528,7 +592,7 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 ### Reset distinct attribute
 
-<RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings/distinct-attribute"/>
+<RouteHighlighter method="DELETE" path="/indexes/{index_uid}/settings/distinct-attribute" />
 
 Reset the distinct attribute of an index to its default value.
 
@@ -540,7 +604,7 @@ Reset the distinct attribute of an index to its default value.
 
 #### Example
 
-<CodeSamples id="reset_distinct_attribute_1" />
+<CodeSamplesResetDistinctAttribute1 />
 
 ##### Response: `202 Accepted`
 
@@ -574,7 +638,7 @@ With Meilisearch, you can create [faceted search interfaces](/learn/filtering_an
 
 ### Get faceting settings
 
-<RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/faceting"/>
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/settings/faceting" />
 
 Get the faceting settings of an index.
 
@@ -586,7 +650,7 @@ Get the faceting settings of an index.
 
 #### Example
 
-<CodeSamples id="get_faceting_settings_1" />
+<CodeSamplesGetFacetingSettings1 />
 
 ##### Response: `200 OK`
 
@@ -601,7 +665,7 @@ Get the faceting settings of an index.
 
 ### Update faceting settings
 
-<RouteHighlighter method="PATCH" route="/indexes/{index_uid}/settings/faceting"/>
+<RouteHighlighter method="PATCH" path="/indexes/{index_uid}/settings/faceting" />
 
 Partially update the faceting settings for an index. Any parameters not provided in the body will be left unchanged.
 
@@ -630,15 +694,15 @@ Partially update the faceting settings for an index. Any parameters not provided
 
 Suppose a query's search results contain a total of three values for a `colors` facet: `blue`, `green`, and `red`. If you set `maxValuesPerFacet` to `2`, Meilisearch will only return `blue` and `green` in the response body's `facetDistribution` object.
 
-<Capsule intent="note">
+<Note>
 Setting `maxValuesPerFacet` to a high value might negatively impact performance.
-</Capsule>
+</Note>
 
 #### Example
 
 The following code sample sets `maxValuesPerFacet` to `2`, sorts the `genres` facet by descending count, and all other facets in ascending alphanumeric order:
 
-<CodeSamples id="update_faceting_settings_1" />
+<CodeSamplesUpdateFacetingSettings1 />
 
 ##### Response: `202 Accepted`
 
@@ -666,7 +730,7 @@ Reset an index's faceting settings to their [default value](#faceting-object). S
 
 #### Example
 
-<CodeSamples id="reset_faceting_settings_1" />
+<CodeSamplesResetFacetingSettings1 />
 
 ##### Response: `200 OK`
 
@@ -686,13 +750,13 @@ You can use the returned `taskUid` to get more details on [the status of the tas
 
 Attributes in the `filterableAttributes` list can be used as [filters](/learn/filtering_and_sorting/filter_search_results) or [facets](/learn/filtering_and_sorting/search_with_facet_filters).
 
-<Capsule intent="warning">
+<Warning>
 Updating filterable attributes will re-index all documents in the index, which can take some time. To reduce RAM consumption, first update your index settings and then add documents.
-</Capsule>
+</Warning>
 
 ### Filterable attribute object
 
-`filterableAttributes` may be an array of either strings filterable attribute objects.
+`filterableAttributes` may be an array of either strings or filterable attribute objects.
 
 Filterable attribute objects must contain the following fields:
 
@@ -709,22 +773,25 @@ Attribute patterns may begin or end with a * wildcard to match multiple fields: 
 
 `features` allows you to decide which filter features are allowed for the specified attributes. It accepts the following fields:
 
-- `facetSearch`: Whether facet search should be enabled for the specified attributes. Boolean, defaults to `false` 
+- `facetSearch`: Whether facet search should be enabled for the specified attributes. Boolean, defaults to `false`
 - `filter`: A list outlining the filter types for the specified attributes. Must be an object and accepts the following fields:
   - `equality`: Enables `=`, `!=`, `IN`, `EXISTS`, `IS NULL`, `IS EMPTY`, `NOT`, `AND`, and `OR`. Boolean, defaults to `true`
   - `comparison`: Enables `>`, `>=`, `<`, `<=`, `TO`, `EXISTS`, `IS NULL`, `IS EMPTY`, `NOT`, `AND`, and `OR`. Boolean, defaults to `false`
 
 Calculating `comparison` filters is a resource-intensive operation. Disabling them may lead to better search and indexing performance. `equality` filters use fewer resources and have limited impact on performance.
 
-<Capsule intent="warning" title="Filterable attributes and reserved attributes">
+<Warning>
+
+#### Filterable attributes and reserved attributes
+
 Use the simple string syntax to match reserved attributes. Reserved Meilisearch fields are always prefixed with an underscore (`_`), such as `_geo` and `_vector`.
 
 If set as a filterable attribute, reserved attributes ignore the `features` field and automatically activate all search features. Reserved fields will not be matched by wildcard `attributePatterns` such as `_*`.
-</Capsule>
+</Warning>
 
 ### Get filterable attributes
 
-<RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/filterable-attributes" />
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/settings/filterable-attributes" />
 
 Get the filterable attributes for an index.
 
@@ -736,7 +803,7 @@ Get the filterable attributes for an index.
 
 #### Example
 
-<CodeSamples id="get_filterable_attributes_1" />
+<CodeSamplesGetFilterableAttributes1 />
 
 ##### Response: `200 Ok`
 
@@ -750,7 +817,7 @@ Get the filterable attributes for an index.
 
 ### Update filterable attributes
 
-<RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/filterable-attributes" />
+<RouteHighlighter method="PUT" path="/indexes/{index_uid}/settings/filterable-attributes" />
 
 Update an index's filterable attributes list.
 
@@ -791,7 +858,7 @@ If an attribute contains an object, you can use dot notation to set one or more 
 
 #### Example
 
-<CodeSamples id="update_filterable_attributes_1" />
+<CodeSamplesUpdateFilterableAttributes1 />
 
 ##### Response: `202 Accepted`
 
@@ -809,7 +876,7 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 ### Reset filterable attributes
 
-<RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings/filterable-attributes"/>
+<RouteHighlighter method="DELETE" path="/indexes/{index_uid}/settings/filterable-attributes" />
 
 Reset an index's filterable attributes list back to its default value.
 
@@ -821,7 +888,7 @@ Reset an index's filterable attributes list back to its default value.
 
 #### Example
 
-<CodeSamples id="reset_filterable_attributes_1" />
+<CodeSamplesResetFilterableAttributes1 />
 
 ##### Response: `202 Accepted`
 
@@ -845,7 +912,7 @@ Localized attributes affect `searchableAttributes`, `filterableAttributes`, and 
 
 Configuring multiple languages for a single index may negatively impact performance.
 
-<Capsule intent="note" title="`locales` and `localizedAttributes`">
+<Note>
 [`locales`](/reference/api/search#query-locales) and `localizedAttributes` have the same goal: explicitly state the language used in a search when Meilisearch's language auto-detection is not working as expected.
 
 If you believe Meilisearch is detecting incorrect languages because of the query text, explicitly set the search language with `locales`.
@@ -853,7 +920,7 @@ If you believe Meilisearch is detecting incorrect languages because of the query
 If you believe Meilisearch is detecting incorrect languages because of document, explicitly set the document language at the index level with `localizedAttributes`.
 
 For full control over the way Meilisearch detects languages during indexing and at search time, set both `locales` and `localizedAttributes`.
-</Capsule>
+</Note>
 
 ### Localized attributes object
 
@@ -882,7 +949,7 @@ You may also set `attributePatterns` to `*`, in which case Meilisearch will trea
 
 ### Get localized attributes settings
 
-<RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/localized-attributes"/>
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/settings/localized-attributes" />
 
 Get the localized attributes settings of an index.
 
@@ -894,7 +961,7 @@ Get the localized attributes settings of an index.
 
 #### Example
 
-<CodeSamples id="get_localized_attribute_settings_1" />
+<CodeSamplesGetLocalizedAttributeSettings1 />
 
 ##### Response: `200 OK`
 
@@ -906,7 +973,7 @@ Get the localized attributes settings of an index.
 
 ### Update localized attribute settings
 
-<RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/localized-attributes"/>
+<RouteHighlighter method="PUT" path="/indexes/{index_uid}/settings/localized-attributes" />
 
 Update the localized attributes settings of an index.
 
@@ -933,7 +1000,7 @@ Update the localized attributes settings of an index.
 
 #### Example
 
-<CodeSamples id="update_localized_attribute_settings_1" />
+<CodeSamplesUpdateLocalizedAttributeSettings1 />
 
 ##### Response: `202 Accepted`
 
@@ -951,7 +1018,7 @@ You can use the returned `taskUid` to get more details on [the status of the tas
 
 ### Reset localized attributes settings
 
-<RouteHighlighter method="RESET" route="/indexes/{index_uid}/settings/localized-attributes"/>
+<RouteHighlighter method="DELETE" path="/indexes/{index_uid}/settings/localized-attributes" />
 
 Reset an index's localized attributes to their [default value](#localized-attributes-object).
 
@@ -963,7 +1030,7 @@ Reset an index's localized attributes to their [default value](#localized-attrib
 
 #### Example
 
-<CodeSamples id="reset_localized_attribute_settings_1" />
+<CodeSamplesResetLocalizedAttributeSettings1 />
 
 ##### Response: `202 Accepted`
 
@@ -997,7 +1064,7 @@ For example, if you set `maxTotalHits` to 100, you will not be able to access se
 
 ### Get pagination settings
 
-<RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/pagination"/>
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/settings/pagination" />
 
 Get the pagination settings of an index.
 
@@ -1009,7 +1076,7 @@ Get the pagination settings of an index.
 
 #### Example
 
-<CodeSamples id="get_pagination_settings_1" />
+<CodeSamplesGetPaginationSettings1 />
 
 ##### Response: `200 OK`
 
@@ -1021,7 +1088,7 @@ Get the pagination settings of an index.
 
 ### Update pagination settings
 
-<RouteHighlighter method="PATCH" route="/indexes/{index_uid}/settings/pagination"/>
+<RouteHighlighter method="PATCH" path="/indexes/{index_uid}/settings/pagination" />
 
 Partially update the pagination settings for an index.
 
@@ -1041,13 +1108,13 @@ Partially update the pagination settings for an index.
 | :----------------- | :------ | :------------ | :---------------------------------------------------------- |
 | **`maxTotalHits`** | Integer | `1000`        | The maximum number of search results Meilisearch can return |
 
-<Capsule intent="warning">
+<Warning>
 Setting `maxTotalHits` to a value higher than the default will negatively impact search performance. Setting `maxTotalHits` to values over `20000` may result in queries taking seconds to complete.
-</Capsule>
+</Warning>
 
 #### Example
 
-<CodeSamples id="update_pagination_settings_1" />
+<CodeSamplesUpdatePaginationSettings1 />
 
 ##### Response: `202 Accepted`
 
@@ -1075,7 +1142,7 @@ Reset an index's pagination settings to their [default value](#pagination-object
 
 #### Example
 
-<CodeSamples id="reset_pagination_settings_1" />
+<CodeSamplesResetPaginationSettings1 />
 
 ##### Response: `202 Accepted`
 
@@ -1102,7 +1169,7 @@ Calculating the distance between words is a resource-intensive operation. Loweri
 
 ### Get proximity precision settings
 
-<RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/proximity-precision"/>
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/settings/proximity-precision" />
 
 Get the proximity precision settings of an index.
 
@@ -1114,7 +1181,7 @@ Get the proximity precision settings of an index.
 
 #### Example
 
-<CodeSamples id="get_proximity_precision_settings_1" />
+<CodeSamplesGetProximityPrecisionSettings1 />
 
 ##### Response: `200 OK`
 
@@ -1124,7 +1191,7 @@ Get the proximity precision settings of an index.
 
 ### Update proximity precision settings
 
-<RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/proximity-precision"/>
+<RouteHighlighter method="PUT" path="/indexes/{index_uid}/settings/proximity-precision" />
 
 Update the pagination settings for an index.
 
@@ -1142,7 +1209,7 @@ Update the pagination settings for an index.
 
 #### Example
 
-<CodeSamples id="update_proximity_precision_settings_1" />
+<CodeSamplesUpdateProximityPrecisionSettings1 />
 
 ##### Response: `202 Accepted`
 
@@ -1160,7 +1227,7 @@ You can use the returned `taskUid` to get more details on [the status of the tas
 
 ### Reset proximity precision settings
 
-<RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings/proximity-precision"/>
+<RouteHighlighter method="DELETE" path="/indexes/{index_uid}/settings/proximity-precision" />
 
 Reset an index's proximity precision setting to its default value.
 
@@ -1172,7 +1239,7 @@ Reset an index's proximity precision setting to its default value.
 
 #### Example
 
-<CodeSamples id="reset_proximity_precision_settings_1" />
+<CodeSamplesResetProximityPrecisionSettings1 />
 
 ##### Response: `202 Accepted`
 
@@ -1196,7 +1263,7 @@ Processing filterable attributes for facet search is a resource-intensive operat
 
 ### Get facet search settings
 
-<RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/facet-search"/>
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/settings/facet-search" />
 
 Get the facet search settings of an index.
 
@@ -1208,7 +1275,7 @@ Get the facet search settings of an index.
 
 #### Example
 
-<CodeSamples id="get_facet_search_settings_1" />
+<CodeSamplesGetFacetSearchSettings1 />
 
 ##### Response: `200 OK`
 
@@ -1218,7 +1285,7 @@ true
 
 ### Update facet search settings
 
-<RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/facet-search"/>
+<RouteHighlighter method="PUT" path="/indexes/{index_uid}/settings/facet-search" />
 
 Update the facet search settings for an index.
 
@@ -1236,7 +1303,7 @@ Update the facet search settings for an index.
 
 #### Example
 
-<CodeSamples id="update_facet_search_settings_1" />
+<CodeSamplesUpdateFacetSearchSettings1 />
 
 ##### Response: `202 Accepted`
 
@@ -1254,7 +1321,7 @@ Use the returned `taskUid` to get more details on [the status of the task](/refe
 
 ### Reset facet search settings
 
-<RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings/facet-search"/>
+<RouteHighlighter method="DELETE" path="/indexes/{index_uid}/settings/facet-search" />
 
 Reset an index's facet search to its default settings.
 
@@ -1266,7 +1333,7 @@ Reset an index's facet search to its default settings.
 
 #### Example
 
-<CodeSamples id="reset_facet_search_settings_1" />
+<CodeSamplesResetFacetSearchSettings1 />
 
 ##### Response: `202 Accepted`
 
@@ -1293,7 +1360,7 @@ Use `prefixSearch` to change how prefix search works. It accepts one of the foll
 
 ### Get prefix search settings
 
-<RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/prefix-search"/>
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/settings/prefix-search" />
 
 Get the prefix search settings of an index.
 
@@ -1305,7 +1372,7 @@ Get the prefix search settings of an index.
 
 #### Example
 
-<CodeSamples id="get_prefix_search_settings_1" />
+<CodeSamplesGetPrefixSearchSettings1 />
 
 ##### Response: `200 OK`
 
@@ -1315,7 +1382,7 @@ Get the prefix search settings of an index.
 
 ### Update prefix search settings
 
-<RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/prefix-search"/>
+<RouteHighlighter method="PUT" path="/indexes/{index_uid}/settings/prefix-search" />
 
 Update the prefix search settings for an index.
 
@@ -1333,7 +1400,7 @@ Update the prefix search settings for an index.
 
 #### Example
 
-<CodeSamples id="update_prefix_search_settings_1" />
+<CodeSamplesUpdatePrefixSearchSettings1 />
 
 ##### Response: `202 Accepted`
 
@@ -1351,7 +1418,7 @@ Use the returned `taskUid` to get more details on [the status of the task](/refe
 
 ### Reset prefix search settings
 
-<RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings/prefix-search"/>
+<RouteHighlighter method="DELETE" path="/indexes/{index_uid}/settings/prefix-search" />
 
 Reset an index's prefix search to its default settings.
 
@@ -1363,7 +1430,7 @@ Reset an index's prefix search to its default settings.
 
 #### Example
 
-<CodeSamples id="reset_facet_search_settings_1" />
+<CodeSamplesResetFacetSearchSettings1 />
 
 ##### Response: `202 Accepted`
 
@@ -1411,7 +1478,7 @@ Ranking rules are built-in rules that rank search results according to certain c
 
 ### Get ranking rules
 
-<RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/ranking-rules" />
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/settings/ranking-rules" />
 
 Get the ranking rules of an index.
 
@@ -1423,7 +1490,7 @@ Get the ranking rules of an index.
 
 #### Example
 
-<CodeSamples id="get_ranking_rules_1" />
+<CodeSamplesGetRankingRules1 />
 
 ##### Response: `200 Ok`
 
@@ -1441,7 +1508,7 @@ Get the ranking rules of an index.
 
 ### Update ranking rules
 
-<RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/ranking-rules" />
+<RouteHighlighter method="PUT" path="/indexes/{index_uid}/settings/ranking-rules" />
 
 Update the ranking rules of an index.
 
@@ -1464,17 +1531,17 @@ To create a custom ranking rule, give an attribute followed by a colon (`:`) and
 - To apply an **ascending sort** (results sorted by increasing value): `attribute_name:asc`
 - To apply a **descending sort** (results sorted by decreasing value): `attribute_name:desc`
 
-<Capsule intent="warning">
+<Warning>
 If some documents do not contain the attribute defined in a custom ranking rule, the application of the ranking rule is undefined and the search results might not be sorted as you expected.
 
 Make sure that any attribute used in a custom ranking rule is present in all of your documents. For example, if you set the custom ranking rule `desc(year)`, make sure that all your documents contain the attribute `year`.
-</Capsule>
+</Warning>
 
 [To learn more about ranking rules, refer to our dedicated guide.](/learn/relevancy/ranking_rules)
 
 #### Example
 
-<CodeSamples id="update_ranking_rules_1" />
+<CodeSamplesUpdateRankingRules1 />
 
 ##### Response: `202 Accepted`
 
@@ -1492,13 +1559,13 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 ### Reset ranking rules
 
-<RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings/ranking-rules" />
+<RouteHighlighter method="DELETE" path="/indexes/{index_uid}/settings/ranking-rules" />
 
 Reset the ranking rules of an index to their [default value](#default-order).
 
-<Capsule intent="tip">
+<Tip>
 Resetting ranking rules is not the same as removing them. To remove a ranking rule, use the [update ranking rules endpoint](#update-ranking-rules).
-</Capsule>
+</Tip>
 
 #### Path parameters
 
@@ -1508,7 +1575,7 @@ Resetting ranking rules is not the same as removing them. To remove a ranking ru
 
 #### Example
 
-<CodeSamples id="reset_ranking_rules_1" />
+<CodeSamplesResetRankingRules1 />
 
 ##### Response: `202 Accepted`
 
@@ -1530,15 +1597,15 @@ The values associated with attributes in the `searchableAttributes` list are sea
 
 By default, the `searchableAttributes` array is equal to all fields in your dataset. This behavior is represented by the value `["*"]`.
 
-<Capsule intent="warning">
+<Warning>
 Updating searchable attributes will re-index all documents in the index, which can take some time. We recommend updating your index settings first and then adding documents as this reduces RAM consumption.
-</Capsule>
+</Warning>
 
 [To learn more about searchable attributes, refer to our dedicated guide.](/learn/relevancy/displayed_searchable_attributes#searchable-fields)
 
 ### Get searchable attributes
 
-<RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/searchable-attributes" />
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/settings/searchable-attributes" />
 
 Get the searchable attributes of an index.
 
@@ -1550,7 +1617,7 @@ Get the searchable attributes of an index.
 
 #### Example
 
-<CodeSamples id="get_searchable_attributes_1" />
+<CodeSamplesGetSearchableAttributes1 />
 
 ##### Response: `200 Ok`
 
@@ -1565,13 +1632,13 @@ Get the searchable attributes of an index.
 
 ### Update searchable attributes
 
-<RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/searchable-attributes" />
+<RouteHighlighter method="PUT" path="/indexes/{index_uid}/settings/searchable-attributes" />
 
 Update the searchable attributes of an index.
 
-<Capsule intent="warning">
+<Warning>
 Due to an implementation bug, manually updating `searchableAttributes` will change the displayed order of document fields in the JSON response. This behavior is inconsistent and will be fixed in a future release.
-</Capsule>
+</Warning>
 
 #### Path parameters
 
@@ -1589,15 +1656,15 @@ An array of strings. Each string should be an attribute that exists in the selec
 
 If an attribute contains an object, you can use dot notation to set one or more of its keys as a value for this setting: `"searchableAttributes": ["release_date.year"]`.
 
-<Capsule intent="warning">
+<Warning>
 If the field does not exist, no error will be thrown.
-</Capsule>
+</Warning>
 
 [To learn more about searchable attributes, refer to our dedicated guide.](/learn/relevancy/displayed_searchable_attributes#searchable-fields)
 
 #### Example
 
-<CodeSamples id="update_searchable_attributes_1" />
+<CodeSamplesUpdateSearchableAttributes1 />
 
 In this example, a document with a match in `title` will be more relevant than another document with a match in `overview`.
 
@@ -1617,7 +1684,7 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 ### Reset searchable attributes
 
-<RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings/searchable-attributes"/>
+<RouteHighlighter method="DELETE" path="/indexes/{index_uid}/settings/searchable-attributes" />
 
 Reset the searchable attributes of the index to the default value.
 
@@ -1629,7 +1696,7 @@ Reset the searchable attributes of the index to the default value.
 
 #### Example
 
-<CodeSamples id="reset_searchable_attributes_1" />
+<CodeSamplesResetSearchableAttributes1 />
 
 ##### Response: `202 Accepted`
 
@@ -1653,7 +1720,7 @@ By default, Meilisearch interrupts searches after 1500 milliseconds.
 
 ### Get search cutoff
 
-<RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/search-cutoff-ms" />
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/settings/search-cutoff-ms" />
 
 Get an index's search cutoff value.
 
@@ -1665,7 +1732,7 @@ Get an index's search cutoff value.
 
 #### Example
 
-<CodeSamples id="get_search_cutoff_1"/>
+<CodeSamplesGetSearchCutoff1 />
 
 ##### Response: `200 Ok`
 
@@ -1675,7 +1742,7 @@ null
 
 ### Update search cutoff
 
-<RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/search-cutoff-ms" />
+<RouteHighlighter method="PUT" path="/indexes/{index_uid}/settings/search-cutoff-ms" />
 
 Update an index's search cutoff value.
 
@@ -1695,7 +1762,7 @@ A single integer indicating the cutoff value in milliseconds.
 
 #### Example
 
-<CodeSamples id="update_search_cutoff_1"/>
+<CodeSamplesUpdateSearchCutoff1 />
 
 ##### Response: `202 Accepted`
 
@@ -1713,7 +1780,7 @@ Use this `taskUid` to get more details on [the status of the task](/reference/ap
 
 ### Reset search cutoff
 
-<RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings/search-cutoff-ms"/>
+<RouteHighlighter method="DELETE" path="/indexes/{index_uid}/settings/search-cutoff-ms" />
 
 Reset an index's search cutoff value to its default value, `null`. This translates to a cutoff of 1500ms.
 
@@ -1725,7 +1792,7 @@ Reset an index's search cutoff value to its default value, `null`. This translat
 
 #### Example
 
-<CodeSamples id="reset_search_cutoff_1"/>
+<CodeSamplesResetSearchCutoff1 />
 
 ##### Response: `202 Accepted`
 
@@ -1747,7 +1814,7 @@ Tokens in the `separatorTokens` list are added on top of [Meilisearch's default 
 
 ### Get separator tokens
 
-<RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/separator-tokens" />
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/settings/separator-tokens" />
 
 Get an index's list of custom separator tokens.
 
@@ -1759,7 +1826,7 @@ Get an index's list of custom separator tokens.
 
 #### Example
 
-<CodeSamples id="get_separator_tokens_1"/>
+<CodeSamplesGetSeparatorTokens1 />
 
 ##### Response: `200 Ok`
 
@@ -1769,7 +1836,7 @@ Get an index's list of custom separator tokens.
 
 ### Update separator tokens
 
-<RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/separator-tokens" />
+<RouteHighlighter method="PUT" path="/indexes/{index_uid}/settings/separator-tokens" />
 
 Update an index's list of custom separator tokens.
 
@@ -1789,7 +1856,7 @@ An array of strings, with each string indicating a word separator.
 
 #### Example
 
-<CodeSamples id="update_separator_tokens_1"/>
+<CodeSamplesUpdateSeparatorTokens1 />
 
 ##### Response: `202 Accepted`
 
@@ -1807,7 +1874,7 @@ Use this `taskUid` to get more details on [the status of the task](/reference/ap
 
 ### Reset separator tokens
 
-<RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings/separator-tokens"/>
+<RouteHighlighter method="DELETE" path="/indexes/{index_uid}/settings/separator-tokens" />
 
 Reset an index's list of custom separator tokens to its default value, `[]`.
 
@@ -1819,7 +1886,7 @@ Reset an index's list of custom separator tokens to its default value, `[]`.
 
 #### Example
 
-<CodeSamples id="reset_separator_tokens_1"/>
+<CodeSamplesResetSeparatorTokens1 />
 
 ##### Response: `202 Accepted`
 
@@ -1841,7 +1908,7 @@ Remove tokens from Meilisearch's default [list of word separators](/learn/engine
 
 ### Get non-separator tokens
 
-<RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/non-separator-tokens" />
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/settings/non-separator-tokens" />
 
 Get an index's list of non-separator tokens.
 
@@ -1853,7 +1920,7 @@ Get an index's list of non-separator tokens.
 
 #### Example
 
-<CodeSamples id="get_non_separator_tokens_1"/>
+<CodeSamplesGetNonSeparatorTokens1 />
 
 ##### Response: `200 Ok`
 
@@ -1863,7 +1930,7 @@ Get an index's list of non-separator tokens.
 
 ### Update non-separator tokens
 
-<RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/non-separator-tokens" />
+<RouteHighlighter method="PUT" path="/indexes/{index_uid}/settings/non-separator-tokens" />
 
 Update an index's list of non-separator tokens.
 
@@ -1883,7 +1950,7 @@ An array of strings, with each string indicating a token present in [list of wor
 
 #### Example
 
-<CodeSamples id="update_non_separator_tokens_1"/>
+<CodeSamplesUpdateNonSeparatorTokens1 />
 
 ##### Response: `202 Accepted`
 
@@ -1901,7 +1968,7 @@ Use this `taskUid` to get more details on [the status of the task](/reference/ap
 
 ### Reset non-separator tokens
 
-<RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings/non-separator-tokens"/>
+<RouteHighlighter method="DELETE" path="/indexes/{index_uid}/settings/non-separator-tokens" />
 
 Reset an index's list of non-separator tokens to its default value, `[]`.
 
@@ -1913,7 +1980,7 @@ Reset an index's list of non-separator tokens to its default value, `[]`.
 
 #### Example
 
-<CodeSamples id="reset_separator_tokens_1"/>
+<CodeSamplesResetSeparatorTokens1 />
 
 ##### Response: `202 Accepted`
 
@@ -1933,15 +2000,15 @@ Use this `taskUid` to get more details on [the status of the task](/reference/ap
 
 Attributes that can be used when sorting search results using the [`sort` search parameter](/reference/api/search#sort).
 
-<Capsule intent="warning">
+<Warning>
 Updating sortable attributes will re-index all documents in the index, which can take some time. We recommend updating your index settings first and then adding documents as this reduces RAM consumption.
-</Capsule>
+</Warning>
 
 [To learn more about sortable attributes, refer to our dedicated guide.](/learn/filtering_and_sorting/sort_search_results)
 
 ### Get sortable attributes
 
-<RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/sortable-attributes" />
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/settings/sortable-attributes" />
 
 Get the sortable attributes of an index.
 
@@ -1953,7 +2020,7 @@ Get the sortable attributes of an index.
 
 #### Example
 
-<CodeSamples id="get_sortable_attributes_1" />
+<CodeSamplesGetSortableAttributes1 />
 
 ##### Response: `200 Ok`
 
@@ -1966,7 +2033,7 @@ Get the sortable attributes of an index.
 
 ### Update sortable attributes
 
-<RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/sortable-attributes" />
+<RouteHighlighter method="PUT" path="/indexes/{index_uid}/settings/sortable-attributes" />
 
 Update an index's sortable attributes list.
 
@@ -1988,15 +2055,15 @@ An array of strings. Each string should be an attribute that exists in the selec
 
 If an attribute contains an object, you can use dot notation to set one or more of its keys as a value for this setting: `"sortableAttributes": ["author.surname"]`.
 
-<Capsule intent="warning">
+<Warning>
 If the field does not exist, no error will be thrown.
-</Capsule>
+</Warning>
 
 [To learn more about sortable attributes, refer to our dedicated guide.](/learn/filtering_and_sorting/sort_search_results)
 
 #### Example
 
-<CodeSamples id="update_sortable_attributes_1" />
+<CodeSamplesUpdateSortableAttributes1 />
 
 ##### Response: `202 Accepted`
 
@@ -2014,7 +2081,7 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 ### Reset sortable attributes
 
-<RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings/sortable-attributes"/>
+<RouteHighlighter method="DELETE" path="/indexes/{index_uid}/settings/sortable-attributes" />
 
 Reset an index's sortable attributes list back to its default value.
 
@@ -2026,7 +2093,7 @@ Reset an index's sortable attributes list back to its default value.
 
 #### Example
 
-<CodeSamples id="reset_sortable_attributes_1" />
+<CodeSamplesResetSortableAttributes1 />
 
 ##### Response: `202 Accepted`
 
@@ -2046,19 +2113,19 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 Words added to the `stopWords` list are ignored in future search queries.
 
-<Capsule intent="warning">
+<Warning>
 Updating stop words will re-index all documents in the index, which can take some time. We recommend updating your index settings first and then adding documents as this reduces RAM consumption.
-</Capsule>
+</Warning>
 
-<Capsule intent="tip">
+<Tip>
 Stop words are strongly related to the language used in your dataset. For example, most datasets containing English documents will have countless occurrences of `the` and `of`. Italian datasets, instead, will benefit from ignoring words like `a`, `la`, or `il`.
 
 [This website maintained by a French developer](https://sites.google.com/site/kevinbouge/stopwords-lists) offers lists of possible stop words in different languages. Note that, depending on your dataset and use case, you will need to tweak these lists for optimal results.
-</Capsule>
+</Tip>
 
 ### Get stop words
 
-<RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/stop-words" />
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/settings/stop-words" />
 
 Get the stop words list of an index.
 
@@ -2070,7 +2137,7 @@ Get the stop words list of an index.
 
 #### Example
 
-<CodeSamples id="get_stop_words_1" />
+<CodeSamplesGetStopWords1 />
 
 ##### Response: `200 Ok`
 
@@ -2084,7 +2151,7 @@ Get the stop words list of an index.
 
 ### Update stop words
 
-<RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/stop-words" />
+<RouteHighlighter method="PUT" path="/indexes/{index_uid}/settings/stop-words" />
 
 Update the list of stop words of an index.
 
@@ -2106,7 +2173,7 @@ If a list of stop words already exists, it will be overwritten (_replaced_).
 
 #### Example
 
-<CodeSamples id="update_stop_words_1" />
+<CodeSamplesUpdateStopWords1 />
 
 ##### Response: `202 Accepted`
 
@@ -2124,7 +2191,7 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 ### Reset stop words
 
-<RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings/stop-words" />
+<RouteHighlighter method="DELETE" path="/indexes/{index_uid}/settings/stop-words" />
 
 Reset the list of stop words of an index to its default value.
 
@@ -2136,7 +2203,7 @@ Reset the list of stop words of an index to its default value.
 
 #### Example
 
-<CodeSamples id="reset_stop_words_1" />
+<CodeSamplesResetStopWords1 />
 
 ##### Response: `202 Accepted`
 
@@ -2160,7 +2227,7 @@ The `synonyms` object contains words and their respective synonyms. A synonym in
 
 ### Get synonyms
 
-<RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/synonyms"/>
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/settings/synonyms" />
 
 Get the list of synonyms of an index.
 
@@ -2172,7 +2239,7 @@ Get the list of synonyms of an index.
 
 #### Example
 
-<CodeSamples id="get_synonyms_1" />
+<CodeSamplesGetSynonyms1 />
 
 ##### Response: `200 OK`
 
@@ -2194,7 +2261,7 @@ Get the list of synonyms of an index.
 
 ### Update synonyms
 
-<RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/synonyms"/>
+<RouteHighlighter method="PUT" path="/indexes/{index_uid}/settings/synonyms" />
 
 Update the list of synonyms of an index. Synonyms are [normalized](/learn/relevancy/synonyms#normalization).
 
@@ -2219,7 +2286,7 @@ An object that contains all synonyms and their associated words. Add the associa
 
 #### Example
 
-<CodeSamples id="update_synonyms_1" />
+<CodeSamplesUpdateSynonyms1 />
 
 ##### Response: `202 Accepted`
 
@@ -2237,7 +2304,7 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 ### Reset synonyms
 
-<RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings/synonyms"/>
+<RouteHighlighter method="DELETE" path="/indexes/{index_uid}/settings/synonyms" />
 
 Reset the list of synonyms of an index to its default value.
 
@@ -2249,7 +2316,7 @@ Reset the list of synonyms of an index to its default value.
 
 #### Example
 
-<CodeSamples id="reset_synonyms_1" />
+<CodeSamplesResetSynonyms1 />
 
 ##### Response: `202 Accepted`
 
@@ -2283,7 +2350,7 @@ Typo tolerance helps users find relevant results even when their search queries 
 
 ### Get typo tolerance settings
 
-<RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/typo-tolerance"/>
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/settings/typo-tolerance" />
 
 Get the typo tolerance settings of an index.
 
@@ -2295,7 +2362,7 @@ Get the typo tolerance settings of an index.
 
 #### Example
 
-<CodeSamples id="get_typo_tolerance_1" />
+<CodeSamplesGetTypoTolerance1 />
 
 ##### Response: `200 OK`
 
@@ -2313,7 +2380,7 @@ Get the typo tolerance settings of an index.
 
 ### Update typo tolerance settings
 
-<RouteHighlighter method="PATCH" route="/indexes/{index_uid}/settings/typo-tolerance"/>
+<RouteHighlighter method="PATCH" path="/indexes/{index_uid}/settings/typo-tolerance" />
 
 Partially update the typo tolerance settings for an index.
 
@@ -2347,7 +2414,7 @@ Partially update the typo tolerance settings for an index.
 
 #### Example
 
-<CodeSamples id="update_typo_tolerance_1" />
+<CodeSamplesUpdateTypoTolerance1 />
 
 ##### Response: `202 Accepted`
 
@@ -2365,7 +2432,7 @@ You can use the returned `taskUid` to get more details on [the status of the tas
 
 ### Reset typo tolerance settings
 
-<RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings/typo-tolerance"/>
+<RouteHighlighter method="DELETE" path="/indexes/{index_uid}/settings/typo-tolerance" />
 
 Reset an index's typo tolerance settings to their [default value](#typo-tolerance-object).
 
@@ -2377,7 +2444,7 @@ Reset an index's typo tolerance settings to their [default value](#typo-toleranc
 
 #### Example
 
-<CodeSamples id="reset_typo_tolerance_1" />
+<CodeSamplesResetTypoTolerance1 />
 
 ##### Response: `202 Accepted`
 
@@ -2439,7 +2506,7 @@ These embedder objects may contain the following fields:
 
 ### Get embedder settings
 
-<RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/embedders"/>
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/settings/embedders" />
 
 Get the embedders configured for an index.
 
@@ -2451,7 +2518,7 @@ Get the embedders configured for an index.
 
 #### Example
 
-<CodeSamples id="get_embedders_1" />
+<CodeSamplesGetEmbedders1 />
 
 ##### Response: `200 OK`
 
@@ -2469,7 +2536,7 @@ Get the embedders configured for an index.
 
 ### Update embedder settings
 
-<RouteHighlighter method="PATCH" route="/indexes/{index_uid}/settings/embedders"/>
+<RouteHighlighter method="PATCH" path="/indexes/{index_uid}/settings/embedders" />
 
 Partially update the embedder settings for an index. When this setting is updated Meilisearch may reindex all documents and regenerate their embeddings.
 
@@ -2514,6 +2581,7 @@ Set an embedder to `null` to remove it from the embedders list.
 Use `source` to configure an embedder's source. The source corresponds to a service that generates embeddings from your documents.
 
 Meilisearch supports the following sources:
+
 - `openAi`
 - `huggingFace`
 - `ollama`
@@ -2531,7 +2599,7 @@ This field is mandatory.
 
 Choose `composite` to use one embedder during indexing time, and another embedder at search time. Must be used together with [`indexingEmbedder` and `searchEmbedder`](#indexingembedder-and-searchembedder).
 
-<Capsule intent="note" title="Activating composite embedders">
+<Note>
 This is an experimental feature. Use the experimental features endpoint to activate it:
 
 ```sh
@@ -2542,7 +2610,8 @@ curl \
     "compositeEmbedders": true
   }'
 ```
-</Capsule>
+
+</Note>
 
 ##### `url`
 
@@ -2756,9 +2825,9 @@ When set to `true`, compresses vectors by representing each dimension with 1-bit
 
 This option can be useful when working with large Meilisearch projects. Consider activating it if your project contains more than one million documents and uses models with more than 1400 dimensions.
 
-<Capsule intent="danger" title="Binary quantization is an irreversible process">
+<Warning>
 **Activating `binaryQuantized` is irreversible.** Once enabled, Meilisearch converts all vectors and discards all vector data that does fit within 1-bit. The only way to recover the vectors' original values is to re-vectorize the whole index in a new embedder.
-</Capsule>
+</Warning>
 
 ##### `pooling`
 
@@ -2798,7 +2867,7 @@ Both fields must be an object and accept the same fields as a regular embedder, 
 
 #### Example
 
-<CodeSamples id="update_embedders_1" />
+<CodeSamplesUpdateEmbedders1 />
 
 ##### Response: `202 Accepted`
 
@@ -2816,7 +2885,7 @@ You can use the returned `taskUid` to get more details on [the status of the tas
 
 ### Reset embedder settings
 
-<RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings/embedders"/>
+<RouteHighlighter method="DELETE" path="/indexes/{index_uid}/settings/embedders" />
 
 Removes all embedders from your index.
 
@@ -2830,7 +2899,7 @@ To remove a single embedder, use the [update embedder settings endpoint](#update
 
 #### Example
 
-<CodeSamples id="reset_embedders_1" />
+<CodeSamplesResetEmbedders1 />
 
 ##### Response: `202 Accepted`
 

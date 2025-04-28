@@ -1,0 +1,114 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X PUT 'MEILISEARCH_URL/indexes/movies/settings/synonyms' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "wolverine": [
+      "xmen",
+      "logan"
+    ],
+    "logan": [
+      "wolverine",
+      "xmen"
+    ],
+    "wow": ["world of warcraft"]
+  }'
+```
+
+```javascript JS
+client.index('movies').updateSynonyms({
+  wolverine: ['xmen', 'logan'],
+  logan: ['wolverine', 'xmen'],
+  wow: ['world of warcraft']
+})
+```
+
+```python Python
+client.index('movies').update_synonyms({
+  'wolverine': ['xmen', 'logan'],
+  'logan': ['wolverine', 'xmen'],
+  'wow': ['world of warcraft']
+})
+```
+
+```php PHP
+$client->index('movies')->updateSynonyms([
+  'wolverine' => ['xmen', 'logan'],
+  'logan' => ['wolverine', 'xmen'],
+  'wow' => ['world of warcraft']
+]);
+```
+
+```java Java
+HashMap<String, String[]> synonyms = new HashMap<String, String[]>();
+synonyms.put("wolverine", new String[] {"xmen", "logan"});
+synonyms.put("logan", new String[] {"wolverine"});
+client.index("movies").updateSynonymsSettings(synonyms);
+```
+
+```ruby Ruby
+client.index('movies').update_synonyms({
+  wolverine: ['xmen', 'logan'],
+  logan: ['wolverine', 'xmen'],
+  wow: ['world of warcraft']
+})
+```
+
+```go Go
+synonyms := map[string][]string{
+  "wolverine": []string{"xmen", "logan"},
+  "logan":     []string{"wolverine", "xmen"},
+  "wow":       []string{"world of warcraft"},
+}
+client.Index("movies").UpdateSynonyms(&synonyms)
+```
+
+```csharp C#
+var synonyms = new Dictionary<string, IEnumerable<string>>
+{
+    { "wolverine", new string[] { "xmen", "logan" } },
+    { "logan", new string[] { "wolverine", "xmen" } },
+    { "wow", new string[] { "world of warcraft" } }
+};
+await client.Index("movies").UpdateSynonymsAsync(synonyms);
+```
+
+```rust Rust
+let mut synonyms = std::collections::HashMap::new();
+synonyms.insert(String::from("wolverine"), vec![String::from("xmen"), String::from("logan")]);
+synonyms.insert(String::from("logan"), vec![String::from("xmen"), String::from("wolverine")]);
+synonyms.insert(String::from("wow"), vec![String::from("world of warcraft")]);
+
+let task: TaskInfo = client
+  .index("movies")
+  .set_synonyms(&synonyms)
+  .await
+  .unwrap();
+```
+
+```swift Swift
+let synonyms: [String: [String]] = [
+    "wolverine": ["xmen", "logan"],
+    "logan": ["wolverine", "xmen"],
+    "wow": ["world of warcraft"]
+]
+client.index("movies").updateSynonyms(synonyms) { (result) in
+    switch result {
+    case .success(let task):
+        print(task)
+    case .failure(let error):
+        print(error)
+    }
+}
+```
+
+```dart Dart
+await client.index('movies').updateSynonyms({
+  'wolverine': ['xmen', 'logan'],
+  'logan': ['wolverine', 'xmen'],
+  'wow': ['world of warcraft'],
+});
+```
+</CodeGroup>

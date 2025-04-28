@@ -1,0 +1,108 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X PATCH 'MEILISEARCH_URL/keys/6062abda-a5aa-4414-ac91-ecd7944c0f8d' \
+  -H 'Authorization: Bearer MASTER_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "name": "Products/Reviews API key",
+    "description": "Manage documents: Products/Reviews API key"
+  }'
+```
+
+```javascript JS
+client.updateKey('6062abda-a5aa-4414-ac91-ecd7944c0f8d', {
+    name: 'Products/Reviews API key',
+    description: 'Manage documents: Products/Reviews API key',
+})
+```
+
+```python Python
+client.update_key(key_or_uid='6062abda-a5aa-4414-ac91-ecd7944c0f8d',
+  options={
+    'name': 'Products/Reviews API key',
+    'description': 'Manage documents: Products/Reviews API key'
+})
+```
+
+```php PHP
+$client->updateKey('6062abda-a5aa-4414-ac91-ecd7944c0f8d',
+  [
+    'name' => 'Products/Reviews API key',
+    'description' => 'Manage documents: Products/Reviews API key'
+  ]);
+```
+
+```java Java
+KeyUpdate keyChanges = new KeyUpdate();
+keyChanges.setName("Products/Reviews API key");
+keyChanges.setDescription("Manage documents: Products/Reviews API key");
+
+client.updateKey("6062abda-a5aa-4414-ac91-ecd7944c0f8d", keyChanges);
+```
+
+```ruby Ruby
+client.update_key(
+  '6062abda-a5aa-4414-ac91-ecd7944c0f8d',
+  {
+    description: 'Manage documents: Products/Reviews API key',
+    name: 'Products/Reviews API key'
+  }
+)
+```
+
+```go Go
+client.UpdateKey("6062abda-a5aa-4414-ac91-ecd7944c0f8d", &meilisearch.Key{
+  Description: "Manage documents: Products/Reviews API key",
+  Actions: []string{"documents.add", "document.delete"},
+  Indexes: []string{"products", "reviews"},
+  ExpiresAt: time.Date(2042, time.April, 02, 0, 42, 42, 0, time.UTC),
+})
+```
+
+```csharp C#
+await client.UpdateKeyAsync(
+  "6062abda-a5aa-4414-ac91-ecd7944c0f8d",
+  description: "Manage documents: Products/Reviews API key",
+  name: "Products/Reviews API key"
+)
+```
+
+```rust Rust
+let mut key = client
+  .get_key("6062abda-a5aa-4414-ac91-ecd7944c0f8d")
+  .await
+  .unwrap();
+key
+    .with_description("Manage documents: Products/Reviews API key".to_string())
+    .with_name("Products/Reviews API key".to_string())
+    .update(&client)
+    .await
+    .unwrap();
+```
+
+```swift Swift
+let keyParams = KeyUpdateParams(
+  description: "Manage documents: Products/Reviews API key",
+  name: "Products/Reviews API key"
+)
+
+client.updateKey(keyOrUid: "6062abda-a5aa-4414-ac91-ecd7944c0f8d", keyParams: keyParams) { result in
+  switch result {
+  case .success(let key):
+      print(key)
+  case .failure(let error):
+      print(error)
+  }
+}
+```
+
+```dart Dart
+await client.updateKey(
+  '6062abda-a5aa-4414-ac91-ecd7944c0f8d',
+  description: 'Manage documents: Products/Reviews API key',
+  name: 'Products/Reviews API key',
+);
+```
+</CodeGroup>

@@ -1,9 +1,11 @@
 ---
-title: Displayed and searchable attributes — Meilisearch documentation
+title: Displayed and searchable attributes
+sidebarTitle: Displayed and searchable attributes
 description: Displayed and searchable attributes define what data Meilisearch returns after a successful query and which fields Meilisearch takes in account when searching. Knowing how to configure them can help improve your application's performance.
 ---
 
-# Displayed and searchable attributes
+import CodeSamplesFieldPropertiesGuideDisplayed1 from '/snippets/samples/code_samples_field_properties_guide_displayed_1.mdx';
+import CodeSamplesFieldPropertiesGuideSearchable1 from '/snippets/samples/code_samples_field_properties_guide_searchable_1.mdx';
 
 By default, whenever a document is added to Meilisearch, all new attributes found in it are automatically added to two lists:
 
@@ -20,11 +22,11 @@ Documents returned upon search contain only displayed fields. If a field attribu
 
 **By default, all field attributes are set as displayed**.
 
-#### Example
+### Example
 
 Suppose you manage a database that contains information about movies. By adding the following settings, documents returned upon search will contain the fields `title`, `overview`, `release_date` and `genres`.
 
-<CodeSamples id="field_properties_guide_displayed_1" />
+<CodeSamplesFieldPropertiesGuideDisplayed1 />
 
 ## Searchable fields
 
@@ -34,9 +36,9 @@ When you perform a search, all searchable fields are checked for matching query 
 
 Non-searchable fields are most useful for internal information that's not relevant to the search experience, such as URLs, sales numbers, or ratings used exclusively for sorting results.
 
-<Capsule intent="tip">
+<Tip>
 Even if you make a field non-searchable, it will remain [stored in the database](#data-storing) and can be made searchable again at a later time.
-</Capsule>
+</Tip>
 
 ### The `searchableAttributes` list
 
@@ -44,7 +46,7 @@ Meilisearch uses an ordered list to determine which attributes are searchable. T
 
 In other words, the `searchableAttributes` list serves two purposes:
 
-1. It designates the fields that are searchable
+1. It designates the fields that are searchable  
 2. It dictates the [attribute ranking order](/learn/relevancy/attribute_ranking_order)
 
 There are two possible modes for the `searchableAttributes` list.
@@ -63,15 +65,15 @@ You may want to make some attributes non-searchable, or change the [attribute ra
 
 After manually updating the `searchableAttributes` list, **subsequent new attributes will no longer be automatically added** unless the settings are [reset](/reference/api/settings#reset-searchable-attributes).
 
-<Capsule intent="warning">
+<Warning>
 Due to an implementation bug, manually updating `searchableAttributes` will change the displayed order of document fields in the JSON response. This behavior is inconsistent and will be fixed in a future release.
-</Capsule>
+</Warning>
 
 #### Example
 
 Suppose that you manage a database of movies with the following fields: `id`, `overview`, `genres`, `title`, `release_date`. These fields all contain useful information. However, **some are more useful to search than others**. To make the `id` and `release_date` fields non-searchable and re-order the remaining fields by importance, you might update the searchable attributes list in the following way.
 
-<CodeSamples id="field_properties_guide_searchable_1" />
+<CodeSamplesFieldPropertiesGuideSearchable1 />
 
 ### Customizing attributes to search on at search time
 

@@ -1,0 +1,69 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/movies/search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "q": "dragon",
+    "showRankingScoreDetails": true
+  }'
+```
+
+```javascript JS
+client.index('movies').search('dragon', { showRankingScoreDetails: true })
+```
+
+```python Python
+client.index('movies').search('dragon', {
+  'showRankingScoreDetails': True
+})
+```
+
+```php PHP
+$client->index('movies')->search('dragon', [
+  'showRankingScoreDetails' => true
+]);
+```
+
+```java Java
+SearchRequest searchRequest = SearchRequest.builder().q("dragon").showRankingScoreDetails(true).build();
+client.index("movies").search(searchRequest);
+```
+
+```ruby Ruby
+client.index('movies').search('dragon', {
+  show_ranking_score_details: true
+})
+```
+
+```go Go
+resp, err := client.Index("movies").Search("dragon", &meilisearch.SearchRequest{
+  showRankingScoreDetails:    true,
+})
+```
+
+```csharp C#
+var params = new SearchQuery()
+{
+  ShowRankingScoreDetails = true
+};
+await client.Index("movies").SearchAsync<MovieWithRankingScoreDetails>("dragon", params);
+```
+
+```rust Rust
+let results: SearchResults<Movie> = client
+  .index("movies")
+  .search()
+  .with_query("dragon")
+  .with_show_ranking_score_details(true)
+  .execute()
+  .await
+  .unwrap();
+```
+
+```swift Swift
+let searchParameters = SearchParameters(query: "dragon", showRankingScoreDetails: true)
+let movies: Searchable<Movie> = try await client.index("movies").search(searchParameters)
+```
+</CodeGroup>

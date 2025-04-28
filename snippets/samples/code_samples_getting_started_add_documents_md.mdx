@@ -1,0 +1,380 @@
+<CodeGroup>
+
+```text cURL
+
+
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/movies/documents?primaryKey=id' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer aSampleMasterKey' \
+  --data-binary @movies.json
+
+
+```
+
+```text JS
+
+
+npm install meilisearch
+
+
+
+Or, if you are using `yarn`
+
+yarn add meilisearch
+
+
+
+**Import**
+
+`require` syntax:
+
+const { MeiliSearch } = require('meilisearch')
+const movies = require('./movies.json')
+
+
+
+`import` syntax:
+
+import { MeiliSearch } from 'meilisearch'
+import movies from './movies.json'
+
+
+
+**Use**
+
+const client = new MeiliSearch({
+  host: 'http://localhost:7700',
+  apiKey: 'aSampleMasterKey'
+})
+client.index('movies').addDocuments(movies)
+  .then((res) => console.log(res))
+
+
+
+[About this SDK](https://github.com/meilisearch/meilisearch-js/)
+```
+
+```text Python
+
+
+pip3 install meilisearch
+
+
+
+
+import meilisearch
+import json
+
+client = meilisearch.Client('http://localhost:7700', 'aSampleMasterKey')
+
+json_file = open('movies.json', encoding='utf-8')
+movies = json.load(json_file)
+client.index('movies').add_documents(movies)
+
+
+
+[About this SDK](https://github.com/meilisearch/meilisearch-python/)
+```
+
+```text PHP
+Using `meilisearch-php` with the Guzzle HTTP client:
+
+composer require meilisearch/meilisearch-php \
+    guzzlehttp/guzzle \
+    http-interop/http-factory-guzzle:^1.0
+
+
+
+
+<?php
+
+require_once __DIR__ . '/vendor/autoload.php';
+
+use Meilisearch\Client;
+
+$client = new Client('http://localhost:7700', 'aSampleMasterKey');
+
+$movies_json = file_get_contents('movies.json');
+$movies = json_decode($movies_json);
+
+$client->index('movies')->addDocuments($movies);
+
+
+
+[About this SDK](https://github.com/meilisearch/meilisearch-php/)
+```
+
+```text Java
+**Maven**
+Add the following code to the `<dependencies>` section of your project:
+
+<dependency>
+  <groupId>com.meilisearch.sdk</groupId>
+  <artifactId>meilisearch-java</artifactId>
+  <version>0.14.4</version>
+  <type>pom</type>
+</dependency>
+
+
+
+**Gradle**
+Add the following line to the `dependencies` section of your `build.gradle`:
+
+implementation 'com.meilisearch.sdk:meilisearch-java:0.14.4'
+
+
+
+
+import com.meilisearch.sdk;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
+Path fileName = Path.of("movies.json");
+String moviesJson = Files.readString(fileName);
+Client client = new Client(new Config("http://localhost:7700", "aSampleMasterKey"));
+Index index = client.index("movies");
+index.addDocuments(moviesJson);
+
+
+
+[About this SDK](https://github.com/meilisearch/meilisearch-java)
+```
+
+```text Ruby
+
+
+$ bundle add meilisearch
+
+
+
+
+require 'json'
+require 'meilisearch'
+
+client = MeiliSearch::Client.new('http://localhost:7700', 'aSampleMasterKey')
+
+movies_json = File.read('movies.json')
+movies = JSON.parse(movies_json)
+
+client.index('movies').add_documents(movies)
+
+
+
+[About this SDK](https://www.github.com/meilisearch/meilisearch-ruby)
+```
+
+```text Go
+
+
+go get -u github.com/meilisearch/meilisearch-go
+
+
+
+
+package main
+
+import (
+  "os"
+  "encoding/json"
+  "io"
+
+  "github.com/meilisearch/meilisearch-go"
+)
+
+func main() {
+  client := meilisearch.New("http://localhost:7700", meilisearch.WithAPIKey("masterKey"))
+
+  jsonFile, _ := os.Open("movies.json")
+  defer jsonFile.Close()
+
+  byteValue, _ := io.ReadAll(jsonFile)
+  var movies []map[string]interface{}
+  json.Unmarshal(byteValue, &movies)
+
+  _, err := client.Index("movies").AddDocuments(movies)
+  if err != nil {
+      panic(err)
+  }
+}
+
+
+
+
+[About this SDK](https://github.com/meilisearch/meilisearch-go/)
+```
+
+```text C#
+
+
+dotnet add package Meilisearch
+
+
+
+
+using System.IO;
+using System.Text.Json;
+using Meilisearch;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+
+namespace Meilisearch_demo
+{
+    public class Movie
+    {
+        public string Id { get; set; }
+        public string Title { get; set; }
+        public string Poster { get; set; }
+        public string Overview { get; set; }
+        public IEnumerable<string> Genres { get; set; }
+    }
+
+    internal class Program
+    {
+        static async Task Main(string[] args)
+        {
+            MeilisearchClient client = new MeilisearchClient("http://localhost:7700", "aSampleMasterKey");
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+
+            string jsonString = await File.ReadAllTextAsync("movies.json");
+            var movies = JsonSerializer.Deserialize<IEnumerable<Movie>>(jsonString, options);
+
+            var index = client.Index("movies");
+            await index.AddDocumentsAsync<Movie>(movies);
+        }
+    }
+}
+
+
+[About this SDK](https://www.github.com/meilisearch/meilisearch-dotnet)
+```
+
+```text Rust
+
+
+[dependencies]
+  meilisearch-sdk = "0.28.0"
+  # futures: because we want to block on futures
+  futures = "0.3"
+  # serde: required if you are going to use documents
+  serde = { version="1.0",   features = ["derive"] }
+  # serde_json: required in some parts of this guide
+  serde_json = "1.0"
+
+
+
+Documents in the Rust library are strongly typed.
+
+
+#[derive(Serialize, Deserialize)]
+struct Movie {
+  id: i64,
+  title: String,
+  poster: String,
+  overview: String,
+  release_date: i64,
+  genres: Vec<String>
+}
+
+
+
+You will often need this `Movie` struct in other parts of this documentation. (you will have to change it a bit sometimes)
+You can also use schemaless values, by putting a `serde_json::Value` inside your own struct like this:
+
+
+#[derive(Serialize, Deserialize)]
+struct Movie {
+  id: i64,
+  #[serde(flatten)]
+  value: serde_json::Value,
+}
+
+
+
+Then, add documents into the index:
+
+
+use meilisearch_sdk::{
+  indexes::*,
+  client::*,
+  search::*,
+  settings::*
+};
+use serde::{Serialize, Deserialize};
+use std::{io::prelude::*, fs::File};
+use futures::executor::block_on;
+
+fn main() { block_on(async move {
+  let client = Client::new("http://localhost:7700", Some("aSampleMasterKey"));
+
+  // reading and parsing the file
+  let mut file = File::open("movies.json")
+    .unwrap();
+  let mut content = String::new();
+  file
+    .read_to_string(&mut content)
+    .unwrap();
+  let movies_docs: Vec<Movie> = serde_json::from_str(&content)
+    .unwrap();
+
+  // adding documents
+  client
+    .index("movies")
+    .add_documents(&movies_docs, None)
+    .await
+    .unwrap();
+})}
+
+
+
+[About this SDK](https://github.com/meilisearch/meilisearch-rust/)
+```
+
+```text Swift
+Add this to your `Package.swift`:
+
+dependencies: [
+    .package(url: "https://github.com/meilisearch/meilisearch-swift.git", from: "0.17.0")
+  ]
+
+
+
+
+let path = Bundle.main.url(forResource: "movies", withExtension: "json")!
+  let documents: Data = try Data(contentsOf: path)
+  let client = try MeiliSearch(host: "http://localhost:7700", apiKey: "aSampleMasterKey")
+
+  client.index("movies").addDocuments(documents: documents) { (result) in
+      switch result {
+      case .success(let task):
+          print(task)
+      case .failure(let error):
+          print(error)
+      }
+  }
+
+
+[About this SDK](https://www.github.com/meilisearch/meilisearch-swift)
+```
+
+```text Dart
+
+
+dart pub add meilisearch
+
+
+
+import 'package:meilisearch/meilisearch.dart';
+import 'dart:io';
+import 'dart:convert';
+var client = MeiliSearchClient('http://localhost:7700', 'aSampleMasterKey');
+final json = await File('movies.json').readAsString();
+await client.index('movies').addDocumentsJson(json);
+
+
+[About this SDK](https://github.com/meilisearch/meilisearch-dart/)
+```
+</CodeGroup>

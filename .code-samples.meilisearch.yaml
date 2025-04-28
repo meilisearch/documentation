@@ -473,26 +473,22 @@ add_movies_json_1: |-
     -X POST 'MEILISEARCH_URL/indexes/movies/documents'\
     -H 'Content-Type: application/json' \
     --data-binary @movies.json
-getting_started_add_documents_md: |-
-  ```bash
+getting_started_add_documents: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/movies/documents?primaryKey=id' \
     -H 'Content-Type: application/json' \
     -H 'Authorization: Bearer aSampleMasterKey' \
     --data-binary @movies.json
-  ```
 getting_started_check_task_status: |-
   curl \
     -X GET 'MEILISEARCH_URL/tasks/0' \
     -H 'Authorization: Bearer aSampleMasterKey'
-getting_started_search_md: |-
-  ```bash
+getting_started_search: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/movies/search' \
     -H 'Content-Type: application/json' \
     -H 'Authorization: Bearer aSampleMasterKey' \
     --data-binary '{ "q": "botman" }'
-  ```
 getting_started_add_meteorites: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/meteorites/documents' \

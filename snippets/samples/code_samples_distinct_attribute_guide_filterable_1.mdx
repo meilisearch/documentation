@@ -1,0 +1,63 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X PUT 'MEILISEARCH_URL/indexes/products/settings/filterable-attributes' \
+  -H 'Content-Type: application/json' \
+  --data-binary '[
+    "product_id",
+    "sku",
+    "url"
+  ]'
+```
+
+```javascript JS
+client.index('products').updateFilterableAttributes(['product_id', 'sku', 'url'])
+```
+
+```python Python
+client.index('products').update_filterable_attributes(['product_id', 'sku', 'url'])
+```
+
+```php PHP
+$client->index('products')->updateFilterableAttributes(['product_id', 'sku', 'url']);
+```
+
+```java Java
+Settings settings = new Settings();
+settings.setFilterableAttributes(new String[] {"product_id", "SKU", "url"});
+client.index("products").updateSettings(settings);
+```
+
+```ruby Ruby
+client.index('products').update_filterable_attributes([
+  'product_id',
+  'sku',
+  'url'
+])
+```
+
+```go Go
+filterableAttributes := []string{
+  "product_id",
+  "sku",
+  "url",
+}
+client.Index("products").UpdateFilterableAttributes(&filterableAttributes)
+```
+
+```csharp C#
+List<string> attributes = new() { "product_id", "sku", "url" };
+TaskInfo result = await client.Index("products").UpdateFilterableAttributesAsync(attributes);
+```
+
+```rust Rust
+let task: TaskInfo = client
+  .index("products")
+  .settings()
+  .set_filterable_attributes(["product_id", "sku", "url"])
+  .execute()
+  .await
+  .unwrap();
+```
+</CodeGroup>

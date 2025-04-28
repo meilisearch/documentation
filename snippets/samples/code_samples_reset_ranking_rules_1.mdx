@@ -1,0 +1,58 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X DELETE 'MEILISEARCH_URL/indexes/movies/settings/ranking-rules'
+```
+
+```javascript JS
+client.index('movies').resetRankingRules()
+```
+
+```python Python
+client.index('movies').reset_ranking_rules()
+```
+
+```php PHP
+$client->index('movies')->resetRankingRules();
+```
+
+```java Java
+client.index("movies").resetRankingRulesSettings();
+```
+
+```ruby Ruby
+client.index('movies').reset_ranking_rules
+```
+
+```go Go
+client.Index("movies").ResetRankingRules()
+```
+
+```csharp C#
+await client.Index("movies").ResetRankingRulesAsync();
+```
+
+```rust Rust
+let task: TaskInfo = client
+  .index("movies")
+  .reset_ranking_rules()
+  .await
+  .unwrap();
+```
+
+```swift Swift
+client.index("movies").resetRankingRules { (result) in
+    switch result {
+    case .success(let task):
+        print(task)
+    case .failure(let error):
+        print(error)
+    }
+}
+```
+
+```dart Dart
+await client.index('movies').resetRankingRules();
+```
+</CodeGroup>

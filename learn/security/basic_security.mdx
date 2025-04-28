@@ -1,9 +1,12 @@
 ---
-title: Securing your project — Meilisearch documentation
+title: Securing your project
+sidebarTitle: Securing your project
 description: This tutorial will show you how to secure your Meilisearch project.
 ---
 
-# Securing your project
+import CodeSamplesBasicSecurityTutorialAdmin1 from '/snippets/samples/code_samples_basic_security_tutorial_admin_1.mdx';
+import CodeSamplesBasicSecurityTutorialListing1 from '/snippets/samples/code_samples_basic_security_tutorial_listing_1.mdx';
+import CodeSamplesBasicSecurityTutorialSearch1 from '/snippets/samples/code_samples_basic_security_tutorial_search_1.mdx';
 
 This tutorial will show you how to secure your Meilisearch project. You will see how to manage your master key and how to safely send requests to the Meilisearch API using an API key.
 
@@ -11,13 +14,15 @@ This tutorial will show you how to secure your Meilisearch project. You will see
 
 The master key is the first and most important step to secure your Meilisearch project.
 
-### Creating the master key in Meilisearch Cloud 
+### Creating the master key in Meilisearch Cloud
 
 Meilisearch Cloud automatically generates a master key for each project. This means Meilisearch Cloud projects are secure by default.
 
 You can view your master key by visiting your project overview:
 
-![An interface element named "API keys" showing three obscured keys: "Master key", "Default Search API Key", and "Default Admin API Key"](https://raw.githubusercontent.com/meilisearch/documentation/cloud-master-api-keys/assets/images/security/01-master-api-keys.png)
+<Frame>
+  <img src="/assets/images/security/01-master-api-keys.png" alt="An interface element named 'API keys' showing three obscured keys: 'Master key', 'Default Search API Key', and 'Default Admin API Key'" />
+</Frame>
 
 ### Creating the master key in a self-hosted instance
 
@@ -51,14 +56,14 @@ set MEILI_MASTER_KEY="MASTER_KEY"
 </Tabs.Content>
 </Tabs.Container>
 
-<Capsule intent="tip" title="Tools for generating a master key">
+<Tip>
 The master key must be at least 16-bytes-long and composed of valid UTF-8 characters. Use one of the following tools to generate a secure master key:
 
 - [`uuidgen`](https://www.digitalocean.com/community/tutorials/workflow-command-line-basics-generating-uuids)
 - [`openssl rand`](https://www.openssl.org/docs/man1.0.2/man1/rand.html)
 - [`shasum`](https://www.commandlinux.com/man-page/man1/shasum.1.html)
 - [randomkeygen.com](https://randomkeygen.com/)
-</Capsule>
+</Tip>
 
 Meilisearch will launch as usual. The start up log should include a message informing you the instance is protected:
 
@@ -78,23 +83,25 @@ Restart Meilisearch with the argument above to use this new and secure master ke
 
 ## Obtaining API keys
 
-When your project is protected, Meilisearch automatically generates two API keys: `Default Search API Key` and `Default Admin API Key`. API keys are authorization tokens designed to safely communicate with the Meilisearch API. 
+When your project is protected, Meilisearch automatically generates two API keys: `Default Search API Key` and `Default Admin API Key`. API keys are authorization tokens designed to safely communicate with the Meilisearch API.
 
-### Obtaining API keys in Meilisearch Cloud 
+### Obtaining API keys in Meilisearch Cloud
 
 Find your API keys in the same section where you previously located the master key:
 
-![An interface element named "API keys" showing three obscured keys: "Master key", "Default Search API Key", and "Default Admin API Key"](https://raw.githubusercontent.com/meilisearch/documentation/cloud-master-api-keys/assets/images/security/01-master-api-keys.png)
+<Frame>
+  <img src="/assets/images/security/01-master-api-keys.png" alt="An interface element named 'API keys' showing three obscured keys: 'Master key', 'Default Search API Key', and 'Default Admin API Key'" />
+</Frame>
 
 ### Obtaining API keys in a self-hosted instance
 
 Use your master key to query the `/keys` endpoint to view all API keys in your instance:
 
-<CodeSamples id="basic_security_tutorial_listing_1" />
+<CodeSamplesBasicSecurityTutorialListing1 />
 
-<Capsule intent="danger" title="Do not use the master key for API requests">
+<Warning>
 Only use the master key to manage API keys. Never use the master key to perform searches or other common operations.
-</Capsule>
+</Warning>
 
 Meilisearch's response will include at least the two default API keys:
 
@@ -138,15 +145,15 @@ Meilisearch's response will include at least the two default API keys:
 
 ## Sending secure API requests to Meilisearch
 
-Now you have your API keys, you can safely query the Meilisearch API. Add API keys to requests using an `Authorization` bearer token header. 
+Now you have your API keys, you can safely query the Meilisearch API. Add API keys to requests using an `Authorization` bearer token header.
 
 Use the `Default Admin API Key` to perform sensitive operations, such as creating a new index:
 
-<CodeSamples id="basic_security_tutorial_admin_1" />
+<CodeSamplesBasicSecurityTutorialAdmin1 />
 
 Then use the `Default Search API Key` to perform search operations in the index you just created:
 
-<CodeSamples id="basic_security_tutorial_search_1" />
+<CodeSamplesBasicSecurityTutorialSearch1 />
 
 ## Conclusion
 

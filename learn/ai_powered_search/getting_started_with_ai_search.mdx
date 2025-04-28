@@ -1,9 +1,8 @@
 ---
-title: Getting started with AI-powered search — Meilisearch documentation
+title: Getting started with AI-powered search
+sidebarTitle: Getting started with AI-powered search
 description: AI-powered search uses LLMs to retrieve search results. This tutorial shows you how to configure an OpenAI embedder and perform your first search.
 ---
-
-# Getting started with AI-powered search
 
 [AI-powered search](https://meilisearch.com/solutions/vector-search), sometimes also called vector search or hybrid search, uses [large language models (LLMs)](https://en.wikipedia.org/wiki/Large_language_model) to retrieve search results based on the meaning and context of a query.
 
@@ -19,7 +18,7 @@ This tutorial will walk you through configuring AI-powered search in your Meilis
 
 First, create a new Meilisearch project. If this is your first time using Meilisearch, follow the [quick start](/learn/getting_started/cloud_quick_start) then come back to this tutorial.
 
-Next, create a `kitchenware` index and add [this kitchenware products dataset](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/datasets/kitchenware.json) to it. It will take Meilisearch a few moments to process your request, but you can continue to the next step while your data is indexing.
+Next, create a `kitchenware` index and add [this kitchenware products dataset](/assets/datasets/kitchenware.json) to it. It will take Meilisearch a few moments to process your request, but you can continue to the next step while your data is indexing.
 
 ## Generate embeddings with OpenAI
 
@@ -90,9 +89,9 @@ Add the `apiKey` field to your embedder:
 
 Replace `OPEN_AI_API_KEY` with your own API key.
 
-<Capsule intent="tip" title="OpenAI key tiers">
+<Tip>
 You may use any key tier for this tutorial. Use at least [Tier 2 keys](https://platform.openai.com/docs/guides/rate-limits/usage-tiers?context=tier-two) in production environments.
-</Capsule>
+</Tip>
 
 ### Design a prompt template
 
