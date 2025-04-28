@@ -1,0 +1,10 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/movies/documents?primaryKey=id' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer aSampleMasterKey' \
+  --data-binary @movies.json
+```
+</CodeGroup>
