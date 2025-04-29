@@ -52,19 +52,6 @@ client
   .await?;
 ```
 
-```swift Swift
-let client = try MeiliSearch(host: "http://localhost:7700", apiKey: "masterKey")
-
-client.deleteKey(keyOrUid: "ac5cd97d-5a4b-4226-a868-2d0eb6d197ab") { result in
-    switch result {
-    case .success:
-        print("success")
-    case .failure(let error):
-        print(error)
-    }
-}
-```
-
 ```dart Dart
 var client = MeiliSearchClient('http://localhost:7700', 'masterKey');
 await client.deleteKey('ac5cd97d-5a4b-4226-a868-2d0eb6d197ab');

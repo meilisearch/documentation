@@ -55,21 +55,6 @@ let results: SearchResults<Meteorite> = client
   .unwrap();
 ```
 
-```swift Swift
-let searchParameters = SearchParameters(
-    query: "",
-    sort: ["_geoPoint(48.8583701, 2.2922926):asc"]
-)
-client.index("meteorites").search(searchParameters) { (result: Result<Searchable<Meteorite>, Swift.Error>) in
-    switch result {
-    case .success(let searchResult):
-        print(searchResult)
-    case .failure(let error):
-        print(error)
-    }
-}
-```
-
 ```dart Dart
 await client.index('meteorites').search(
     '', SearchQuery(sort: ['_geoPoint(48.8583701, 2.2922926):asc']));

@@ -41,17 +41,6 @@ let sortable_attributes: Vec<String> = client
   .unwrap();
 ```
 
-```swift Swift
-client.index("books").getSortableAttributes { (result: Result<Searchable<Book>, Swift.Error>) in
-  switch result {
-  case .success(let attributes):
-    print(attributes)
-  case .failure(let error):
-    print(error)
-  }
-}
-```
-
 ```dart Dart
 await client.index('books').getSortableAttributes();
 ```

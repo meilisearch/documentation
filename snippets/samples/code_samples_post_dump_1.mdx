@@ -40,17 +40,6 @@ client
   .unwrap();
 ```
 
-```swift Swift
-client.createDump { result in
-    switch result {
-    case .success(let dumpStatus):
-        print(dumpStatus)
-    case .failure(let error):
-        print(error)
-    }
-}
-```
-
 ```dart Dart
 await client.createDump();
 ```

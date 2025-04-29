@@ -52,17 +52,6 @@ let documents: DocumentsResults = DocumentsQuery::new(&index)
   .unwrap();
 ```
 
-```swift Swift
-client.index("movies").getDocuments(params: DocumentsQuery(limit: 2)) { (result: Result<DocumentsResults<Movie>, Swift.Error>) in
-    switch result {
-    case .success(let movies):
-        print(movies)
-    case .failure(let error):
-        print(error)
-    }
-}
-```
-
 ```dart Dart
 await client.index('movies').getDocuments(
       params: DocumentsQuery(

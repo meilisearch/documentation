@@ -63,20 +63,6 @@ key
   .update(&client);
 ```
 
-```swift Swift
-let client = try MeiliSearch(host: "http://localhost:7700", apiKey: "masterKey")
-let keyParams = KeyUpdateParams(description: "Default Search API Key")
-
-client.updateKey(key: "74c9c733-3368-4738-bbe5-1d18a5fecb37", keyParams: keyParams) { result in
-  switch result {
-  case .success(let key):
-    print(key)
-  case .failure(let error):
-    print(error)
-  }
-}
-```
-
 ```dart Dart
 var client = MeiliSearchClient('http://localhost:7700', 'masterKey');
 await client.updateKey(

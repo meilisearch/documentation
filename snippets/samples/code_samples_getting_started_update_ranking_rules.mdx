@@ -130,27 +130,6 @@ client
   .unwrap();
 ```
 
-```swift Swift
-let rankingRules: [String] = [
-  "exactness",
-  "words",
-  "typo",
-  "proximity",
-  "attribute",
-  "sort",
-  "release_date:asc",
-  "rank:desc"
-]
-client.index("movies").updateRankingRules(rankingRules) { (result) in
-  switch result {
-  case .success(let task):
-    print(task)
-  case .failure(let error):
-    print(error)
-  }
-}
-```
-
 ```dart Dart
 await client.index('movies').updateRankingRules([
   'exactness',
