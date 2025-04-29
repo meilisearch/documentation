@@ -5,7 +5,7 @@ function createBanner() {
   const el = document.createElement("script");
   el.src = cookieyesSrc;
   el.id = bannerId;
-  el.type = "text/javascript"
+  el.type = "text/javascript";
 
   document.head.appendChild(el);
 }
