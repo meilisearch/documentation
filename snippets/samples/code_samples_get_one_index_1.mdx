@@ -40,6 +40,17 @@ let movies: Index = client
   .unwrap();
 ```
 
+```swift Swift
+client.getIndex("movies") { (result) in
+    switch result {
+    case .success(let index):
+        print(index)
+    case .failure(let error):
+        print(error)
+    }
+}
+```
+
 ```dart Dart
 await client.getIndex('movies');
 ```

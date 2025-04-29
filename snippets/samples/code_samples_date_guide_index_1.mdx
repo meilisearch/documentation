@@ -81,6 +81,20 @@ client
   .unwrap();
 ```
 
+```swift Swift
+let path = Bundle.main.url(forResource: "games", withExtension: "json")!
+let documents: Data = try Data(contentsOf: path)
+
+client.index("games").addDocuments(documents: documents) { (result) in
+  switch result {
+  case .success(let task):
+      print(task)
+  case .failure(let error):
+      print(error)
+  }
+}
+```
+
 ```dart Dart
 //import 'dart:io';
 //import 'dart:convert';

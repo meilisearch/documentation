@@ -256,6 +256,27 @@ fn main() { block_on(async move {
 })}
 ```
 
+```swift Swift
+// Add this to your `Package.swift`
+dependencies: [
+  .package(url: "https://github.com/meilisearch/meilisearch-swift.git", from: "0.17.0")
+]
+
+// In your .swift file:
+let path = Bundle.main.url(forResource: "movies", withExtension: "json")!
+let documents: Data = try Data(contentsOf: path)
+let client = try MeiliSearch(host: "http://localhost:7700", apiKey: "aSampleMasterKey")
+
+client.index("movies").addDocuments(documents: documents) { (result) in
+    switch result {
+    case .success(let task):
+        print(task)
+    case .failure(let error):
+        print(error)
+    }
+}
+```
+
 ```dart Dart
 // In the command line:
 // dart pub add meilisearch

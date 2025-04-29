@@ -41,6 +41,12 @@ let task: TaskInfo = client
   .unwrap();
 ```
 
+```swift Swift
+client.index("books").getSeparatorTokens { result in
+  // handle result
+}
+```
+
 ```dart Dart
 await client.index('articles').getSeparatorTokens();
 ```

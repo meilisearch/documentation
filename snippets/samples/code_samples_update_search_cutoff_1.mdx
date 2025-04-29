@@ -42,4 +42,8 @@ let task: TaskInfo = client
   .await
   .unwrap();
 ```
+
+```swift Swift
+let task = try await self.client.index("books").updateSearchCutoffMs(150)
+```
 </CodeGroup>

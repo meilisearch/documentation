@@ -41,6 +41,17 @@ let key = client
   .unwrap();
 ```
 
+```swift Swift
+client.getKey(keyOrUid: "6062abda-a5aa-4414-ac91-ecd7944c0f8d") { result in
+    switch result {
+    case .success(let key):
+        print(key)
+    case .failure(let error):
+        print(error)
+    }
+}
+```
+
 ```dart Dart
 await client.getKey('6062abda-a5aa-4414-ac91-ecd7944c0f8d');
 ```

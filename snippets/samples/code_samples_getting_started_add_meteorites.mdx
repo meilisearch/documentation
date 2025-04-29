@@ -106,6 +106,21 @@ client
   .await?;
 ```
 
+```swift Swift
+let file = "meteorites.json"
+let path = URL(fileURLWithPath: file)
+let documents: Data = try Data(contentsOf: path)
+
+client.index("meteorites").addDocuments(documents: documents) { (result) in
+    switch result {
+    case .success(let task):
+        print(task)
+    case .failure(let error):
+        print(error)
+    }
+}
+```
+
 ```dart Dart
 final json = await File('meteorites.json').readAsString();
 await client.index('meteorites').addDocumentsJson(json);

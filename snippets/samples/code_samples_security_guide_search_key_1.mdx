@@ -50,6 +50,19 @@ let result = client.index("patient_medical_records")
   .unwrap();
 ```
 
+```swift Swift
+client = try MeiliSearch(host: "http://localhost:7700", apiKey: "apiKey")
+client.index("patient_medical_records")
+  .search(SearchParameters(query: "")) { (result: Result<Searchable<Patient>, Swift.Error>) in
+    switch result {
+    case .success(let searchResult):
+        print(searchResult)
+    case .failure(let error):
+        print(error)
+    }
+}
+```
+
 ```dart Dart
 var client = MeiliSearchClient('http://localhost:7700', 'apiKey');
 await client.index('patient_medical_records').search('');

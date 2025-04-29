@@ -74,6 +74,13 @@ client.swap_indexes([
 }])
 ```
 
+```swift Swift
+let task = try await self.client.swapIndexes([
+  ("indexA", "indexB"),
+  ("indexX", "indexY")
+])
+```
+
 ```dart Dart
 await client.swapIndexes([
   SwapIndex(['indexA', 'indexB']),

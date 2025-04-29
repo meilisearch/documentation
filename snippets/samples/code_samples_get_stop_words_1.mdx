@@ -41,6 +41,17 @@ let stop_words: Vec<String> = client
   .unwrap();
 ```
 
+```swift Swift
+client.index("movies").getStopWords { (result) in
+    switch result {
+    case .success(let stopWords):
+        print(stopWords)
+    case .failure(let error):
+        print(error)
+    }
+}
+```
+
 ```dart Dart
 await client.index('movies').getStopWords();
 ```

@@ -41,6 +41,17 @@ let stats: IndexStats = client
   .unwrap();
 ```
 
+```swift Swift
+client.index("movies").stats { (result) in
+    switch result {
+    case .success(let stats):
+        print(stats)
+    case .failure(let error):
+        print(error)
+    }
+}
+```
+
 ```dart Dart
 await client.index('movies').getStats();
 ```

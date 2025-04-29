@@ -60,6 +60,21 @@ let results: SearchResults<Game> = client
   .unwrap();
 ```
 
+```swift Swift
+let searchParameters = SearchParameters(
+  query: "",
+  filter: "release_timestamp >= 1514761200 AND release_timestamp < 1672527600"
+)
+client.index("games").search(searchParameters) { (result: Result<Searchable<Game>, Swift.Error>) in
+  switch result {
+  case .success(let searchResult):
+      print(searchResult)
+  case .failure(let error):
+      print(error)
+  }
+}
+```
+
 ```dart Dart
 await client.index('games').search(
       '',

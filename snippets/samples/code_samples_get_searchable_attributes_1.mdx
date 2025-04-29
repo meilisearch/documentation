@@ -41,6 +41,17 @@ let searchable_attributes: Vec<String> = client
   .unwrap();
 ```
 
+```swift Swift
+client.index("movies").getSearchableAttributes { (result) in
+    switch result {
+    case .success(let searchableAttributes):
+        print(searchableAttributes)
+    case .failure(let error):
+        print(error)
+    }
+}
+```
+
 ```dart Dart
 await client.index('movies').getSearchableAttributes();
 ```

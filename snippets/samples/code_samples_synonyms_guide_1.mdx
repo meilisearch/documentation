@@ -74,6 +74,22 @@ let task: TaskInfo = client
   .unwrap();
 ```
 
+```swift Swift
+let synonyms: [String: [String]] = [
+  "great": ["fantastic"],
+  "fantastic": ["great"]
+]
+
+client.index("movies").updateSynonyms(synonyms) { (result) in
+  switch result {
+  case .success(let task):
+      print(task)
+  case .failure(let error):
+      print(error)
+  }
+}
+```
+
 ```dart Dart
 await client.index('movies').updateSynonyms({
   'great': ['fantastic'],

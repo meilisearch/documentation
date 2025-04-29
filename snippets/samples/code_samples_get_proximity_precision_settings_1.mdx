@@ -40,4 +40,8 @@ let proximity_precision: String = client
   .await
   .unwrap();
 ```
+
+```swift Swift
+let precisionValue = try await self.client.index("books").getProximityPrecision()
+```
 </CodeGroup>

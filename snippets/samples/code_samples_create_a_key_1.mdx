@@ -96,6 +96,23 @@ let new_key = client
   .unwrap();
 ```
 
+```swift Swift
+let keyParams = KeyParams(
+  description: "Add documents: Products API key",
+  actions: ["documents.add"],
+  indexes: ["products"],
+  expiresAt: "2042-04-02T00:42:42Z"
+)
+client.createKey(keyParams) { result in
+    switch result {
+    case .success(let key):
+        print(key)
+    case .failure(let error):
+        print(error)
+    }
+}
+```
+
 ```dart Dart
 await client.createKey(
     description: 'Add documents: Products API key',

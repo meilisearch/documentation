@@ -64,6 +64,17 @@ let task: TaskInfo = client
   .unwrap();
 ```
 
+```swift Swift
+client.index("books").updateSortableAttributes(["price", "author"]) { (result: Result<TaskInfo, Swift.Error>) in
+  switch result {
+  case .success(let task):
+    print(task)
+  case .failure(let error):
+    print(error)
+  }
+}
+```
+
 ```dart Dart
 await client.index('books').updateSortableAttributes(['author', 'price']);
 ```

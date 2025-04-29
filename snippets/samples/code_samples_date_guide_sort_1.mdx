@@ -58,6 +58,22 @@ let results: SearchResults<Game> = client
   .unwrap();
 ```
 
+```swift Swift
+let searchParameters = SearchParameters(
+  query: "",
+  sort: ["release_timestamp:desc"],
+)
+
+client.index("games").search(searchParameters) { (result: Result<Searchable<Game>, Swift.Error>) in
+  switch result {
+  case .success(let searchResult):
+      print(searchResult)
+  case .failure(let error):
+      print(error)
+  }
+}
+```
+
 ```dart Dart
 await client
     .index('games')

@@ -53,6 +53,17 @@ let task: TaskInfo = client
   .unwrap();
 ```
 
+```swift Swift
+client.index("restaurants").updateSortableAttributes(["_geo"]) { (result) in
+  switch result {
+  case .success(let task):
+    print(task)
+  case .failure(let error):
+    print(error)
+  }
+}
+```
+
 ```dart Dart
 await client.index('restaurants').updateSortableAttributes(['_geo']);
 ```

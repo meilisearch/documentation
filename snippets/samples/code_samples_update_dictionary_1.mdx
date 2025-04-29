@@ -49,4 +49,10 @@ let task: TaskInfo = client
   .await
   .unwrap();
 ```
+
+```swift Swift
+client.index("books").updateDictionary(["J. R. R.", "W. E. B."]) { result in
+  // handle result
+}
+```
 </CodeGroup>
