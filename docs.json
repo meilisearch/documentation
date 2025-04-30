@@ -449,500 +449,500 @@
   },
 	"redirects": [
 		{
-			"source": "/docs/reference/features/authentication",
-			"destination": "/docs/learn/security/master_api_keys"
+			"source": "/reference/features/authentication",
+			"destination": "/learn/security/master_api_keys"
 		},
 		{
-			"source": "/docs/errors",
-			"destination": "/docs/reference/errors/error_codes"
+			"source": "/errors",
+			"destination": "/reference/errors/error_codes"
 		},
 		{
-			"source": "/docs/learn/what_is_meilisearch/features",
-			"destination": "/docs/learn/what_is_meilisearch/overview#features"
+			"source": "/learn/what_is_meilisearch/features",
+			"destination": "/learn/what_is_meilisearch/overview#features"
 		},
 		{
-			"source": "/docs/learn/contributing/overview",
-			"destination": "/docs/learn/contributing/contributing_docs#contributing-to-meilisearch"
+			"source": "/learn/contributing/overview",
+			"destination": "/learn/contributing/contributing_docs#contributing-to-meilisearch"
 		},
 		{
-			"source": "/docs/learn/what_is_meilisearch/search_preview",
-			"destination": "/docs/learn/getting_started/search_preview"
+			"source": "/learn/what_is_meilisearch/search_preview",
+			"destination": "/learn/getting_started/search_preview"
 		},
 		{
-			"source": "/docs/learn/advanced/pagination",
-			"destination": "/docs/learn/front_end/pagination"
+			"source": "/learn/advanced/pagination",
+			"destination": "/learn/front_end/pagination"
 		},
 		{
-			"source": "/docs/learn/advanced/asynchronous_operations",
-			"destination": "/docs/learn/async/asynchronous_operations"
+			"source": "/learn/advanced/asynchronous_operations",
+			"destination": "/learn/async/asynchronous_operations"
 		},
 		{
-			"source": "/docs/learn/advanced/faceted_search",
-			"destination": "/docs/learn/fine_tuning_results/faceted_search"
+			"source": "/learn/advanced/faceted_search",
+			"destination": "/learn/fine_tuning_results/faceted_search"
 		},
 		{
-			"source": "/docs/learn/advanced/geosearch",
-			"destination": "/docs/learn/filtering_and_sorting/geosearch"
+			"source": "/learn/advanced/geosearch",
+			"destination": "/learn/filtering_and_sorting/geosearch"
 		},
 		{
-			"source": "/docs/learn/advanced/sorting",
-			"destination": "/docs/learn/filtering_and_sorting/sort_search_results"
+			"source": "/learn/advanced/sorting",
+			"destination": "/learn/filtering_and_sorting/sort_search_results"
 		},
 		{
-			"source": "/docs/learn/advanced/working_with_dates",
-			"destination": "/docs/learn/filtering_and_sorting/working_with_dates"
+			"source": "/learn/advanced/working_with_dates",
+			"destination": "/learn/filtering_and_sorting/working_with_dates"
 		},
 		{
-			"source": "/docs/learn/what_is_meilisearch/philosophy",
-			"destination": "/docs/learn/what_is_meilisearch/overview#philosophy"
+			"source": "/learn/what_is_meilisearch/philosophy",
+			"destination": "/learn/what_is_meilisearch/overview#philosophy"
 		},
 		{
-			"source": "/docs/learn/getting_started/quick_start#front-end-integration",
-			"destination": "/docs/learn/front_end/front_end_integration"
+			"source": "/learn/getting_started/quick_start#front-end-integration",
+			"destination": "/learn/front_end/front_end_integration"
 		},
 		{
-			"source": "/docs/reference/api/search#search-in-an-index-with-post-route",
-			"destination": "/docs/reference/api/search#search-in-an-index-with-post"
+			"source": "/reference/api/search#search-in-an-index-with-post-route",
+			"destination": "/reference/api/search#search-in-an-index-with-post"
 		},
 		{
-			"source": "/docs/reference/api/search#search-in-an-index-with-get-route",
-			"destination": "/docs/reference/api/search#search-in-an-index-with-get"
+			"source": "/reference/api/search#search-in-an-index-with-get-route",
+			"destination": "/reference/api/search#search-in-an-index-with-get"
 		},
 		{
-			"source": "/docs/reference/api/documents#get-documents",
-			"destination": "/docs/reference/api/documents#get-documents-with-get"
+			"source": "/reference/api/documents#get-documents",
+			"destination": "/reference/api/documents#get-documents-with-get"
 		},
 		{
-			"source": "/docs/reference/api/multi_search#post-route",
-			"destination": "/docs/reference/api/multi_search#perform-a-multi-search"
+			"source": "/reference/api/multi_search#post-route",
+			"destination": "/reference/api/multi_search#perform-a-multi-search"
 		},
 		{
-			"source": "/docs/learn/what_is_meilisearch/overview#sdks-and-integrations",
-			"destination": "/docs/learn/what_is_meilisearch/sdks"
+			"source": "/learn/what_is_meilisearch/overview#sdks-and-integrations",
+			"destination": "/learn/what_is_meilisearch/sdks"
 		},
 		{
-			"source": "/docs/learn/what_is_meilisearch/overview#alternatives",
-			"destination": "/docs/learn/what_is_meilisearch/comparison_to_alternatives"
+			"source": "/learn/what_is_meilisearch/overview#alternatives",
+			"destination": "/learn/what_is_meilisearch/comparison_to_alternatives"
 		},
 		{
-			"source": "/docs/learn/advanced/asynchronous_operations#filtering-tasks",
-			"destination": "/docs/learn/async/managing_tasks#filtering-tasks"
+			"source": "/learn/advanced/asynchronous_operations#filtering-tasks",
+			"destination": "/learn/async/managing_tasks#filtering-tasks"
 		},
 		{
-			"source": "/docs/learn/advanced/asynchronous_operations#paginating-tasks",
-			"destination": "/docs/learn/async/managing_tasks#paginating-tasks"
+			"source": "/learn/advanced/asynchronous_operations#paginating-tasks",
+			"destination": "/learn/async/managing_tasks#paginating-tasks"
 		},
 		{
-			"source": "/docs/learn/advanced/asynchronous_operations#filter-by-uid",
-			"destination": "/docs/learn/async/managing_tasks#filter-by-uid"
+			"source": "/learn/advanced/asynchronous_operations#filter-by-uid",
+			"destination": "/learn/async/managing_tasks#filter-by-uid"
 		},
 		{
-			"source": "/docs/learn/advanced/asynchronous_operations#filter-by-status",
-			"destination": "/docs/learn/async/managing_tasks#filter-by-status"
+			"source": "/learn/advanced/asynchronous_operations#filter-by-status",
+			"destination": "/learn/async/managing_tasks#filter-by-status"
 		},
 		{
-			"source": "/docs/learn/advanced/asynchronous_operations#filter-by-type",
-			"destination": "/docs/learn/async/managing_tasks#filter-by-type"
+			"source": "/learn/advanced/asynchronous_operations#filter-by-type",
+			"destination": "/learn/async/managing_tasks#filter-by-type"
 		},
 		{
-			"source": "/docs/learn/advanced/asynchronous_operations#filter-by-indexuid",
-			"destination": "/docs/learn/async/managing_tasks#filter-by-indexuid"
+			"source": "/learn/advanced/asynchronous_operations#filter-by-indexuid",
+			"destination": "/learn/async/managing_tasks#filter-by-indexuid"
 		},
 		{
-			"source": "/docs/learn/advanced/asynchronous_operations#filter-by-canceledby",
-			"destination": "/docs/learn/async/managing_tasks#filter-by-canceledby"
+			"source": "/learn/advanced/asynchronous_operations#filter-by-canceledby",
+			"destination": "/learn/async/managing_tasks#filter-by-canceledby"
 		},
 		{
-			"source": "/docs/learn/advanced/asynchronous_operations#filter-by-date",
-			"destination": "/docs/learn/async/managing_tasks#filter-by-date"
+			"source": "/learn/advanced/asynchronous_operations#filter-by-date",
+			"destination": "/learn/async/managing_tasks#filter-by-date"
 		},
 		{
-			"source": "/docs/learn/advanced/asynchronous_operations#combine-filters",
-			"destination": "/docs/learn/async/managing_tasks#combine-filters"
+			"source": "/learn/advanced/asynchronous_operations#combine-filters",
+			"destination": "/learn/async/managing_tasks#combine-filters"
 		},
 		{
-			"source": "/docs/learn/getting_started/filtering_and_sorting",
-			"destination": "/docs/learn/fine_tuning_results/filtering"
+			"source": "/learn/getting_started/filtering_and_sorting",
+			"destination": "/learn/fine_tuning_results/filtering"
 		},
 		{
-			"source": "/docs/learn/getting_started/customizing_relevancy",
-			"destination": "/docs/learn/configuration/settings"
+			"source": "/learn/getting_started/customizing_relevancy",
+			"destination": "/learn/configuration/settings"
 		},
 		{
-			"source": "/docs/learn/getting_started/getting_ready_for_production",
-			"destination": "/docs/learn/getting_started/cloud_quick_start"
+			"source": "/learn/getting_started/getting_ready_for_production",
+			"destination": "/learn/getting_started/cloud_quick_start"
 		},
 		{
-			"source": "/docs/learn/security/master_api_keys",
-			"destination": "/docs/learn/security/basic_security"
+			"source": "/learn/security/master_api_keys",
+			"destination": "/learn/security/basic_security"
 		},
 		{
-			"source": "/docs/learn/experimental/ranking_rule_score_details",
-			"destination": "/docs/reference/api/search#ranking_score_details"
+			"source": "/learn/experimental/ranking_rule_score_details",
+			"destination": "/reference/api/search#ranking_score_details"
 		},
 		{
-			"source": "/docs/learn/async/managing_tasks",
-			"destination": "/docs/learn/async/working_with_tasks"
+			"source": "/learn/async/managing_tasks",
+			"destination": "/learn/async/working_with_tasks"
 		},
 		{
-			"source": "/docs/learn/cookbooks/aws",
-			"destination": "/docs/guides/deployment/aws"
+			"source": "/learn/cookbooks/aws",
+			"destination": "/guides/deployment/aws"
 		},
 		{
-			"source": "/docs/learn/cookbooks/azure",
-			"destination": "/docs/guides/deployment/azure"
+			"source": "/learn/cookbooks/azure",
+			"destination": "/guides/deployment/azure"
 		},
 		{
-			"source": "/docs/learn/cookbooks/gcp",
-			"destination": "/docs/guides/deployment/gcp"
+			"source": "/learn/cookbooks/gcp",
+			"destination": "/guides/deployment/gcp"
 		},
 		{
-			"source": "/docs/learn/cookbooks/koyeb",
-			"destination": "/docs/guides/deployment/koyeb"
+			"source": "/learn/cookbooks/koyeb",
+			"destination": "/guides/deployment/koyeb"
 		},
 		{
-			"source": "/docs/learn/cookbooks/qovery",
-			"destination": "/docs/guides/deployment/qovery"
+			"source": "/learn/cookbooks/qovery",
+			"destination": "/guides/deployment/qovery"
 		},
 		{
-			"source": "/docs/learn/cookbooks/railway",
-			"destination": "/docs/guides/deployment/railway"
+			"source": "/learn/cookbooks/railway",
+			"destination": "/guides/deployment/railway"
 		},
 		{
-			"source": "/docs/learn/front_end/front_end_integration",
-			"destination": "/docs/guides/front_end/front_end_integration"
+			"source": "/learn/front_end/front_end_integration",
+			"destination": "/guides/front_end/front_end_integration"
 		},
 		{
-			"source": "/docs/learn/front_end/react_instantsearch",
-			"destination": "/docs/guides/front_end/react_quick_start"
+			"source": "/learn/front_end/react_instantsearch",
+			"destination": "/guides/front_end/react_quick_start"
 		},
 		{
-			"source": "/docs/guides/front_end/react_instantsearch",
-			"destination": "/docs/guides/front_end/react_quick_start"
+			"source": "/guides/front_end/react_instantsearch",
+			"destination": "/guides/front_end/react_quick_start"
 		},
 		{
-			"source": "/docs/learn/front_end/pagination",
-			"destination": "/docs/guides/front_end/pagination"
+			"source": "/learn/front_end/pagination",
+			"destination": "/guides/front_end/pagination"
 		},
 		{
-			"source": "/docs/learn/cookbooks/running_production",
-			"destination": "/docs/guides/deployment/running_production"
+			"source": "/learn/cookbooks/running_production",
+			"destination": "/guides/deployment/running_production"
 		},
 		{
-			"source": "/docs/learn/cookbooks/postman_collection",
-			"destination": "/docs/guides/misc/postman_collection"
+			"source": "/learn/cookbooks/postman_collection",
+			"destination": "/guides/misc/postman_collection"
 		},
 		{
-			"source": "/docs/learn/cookbooks/docker",
-			"destination": "/docs/guides/misc/docker"
+			"source": "/learn/cookbooks/docker",
+			"destination": "/guides/misc/docker"
 		},
 		{
-			"source": "/docs/learn/cookbooks/search_bar_for_docs",
-			"destination": "/docs/guides/front_end/search_bar_for_docs"
+			"source": "/learn/cookbooks/search_bar_for_docs",
+			"destination": "/guides/front_end/search_bar_for_docs"
 		},
 		{
-			"source": "/docs/learn/cookbooks/http2_ssl",
-			"destination": "/docs/guides/security/http2_ssl"
+			"source": "/learn/cookbooks/http2_ssl",
+			"destination": "/guides/security/http2_ssl"
 		},
 		{
-			"source": "/docs/learn/cookbooks/vercel",
-			"destination": "/docs/guides/integrations/vercel"
+			"source": "/learn/cookbooks/vercel",
+			"destination": "/guides/integrations/vercel"
 		},
 		{
-			"source": "/docs/learn/cookbooks/meilisync_mysql",
-			"destination": "/docs/guides/database/meilisync_mysql"
+			"source": "/learn/cookbooks/meilisync_mysql",
+			"destination": "/guides/database/meilisync_mysql"
 		},
 		{
-			"source": "/docs/learn/cookbooks/meilisync_postgresql",
-			"destination": "/docs/guides/database/meilisync_postgresql"
+			"source": "/learn/cookbooks/meilisync_postgresql",
+			"destination": "/guides/database/meilisync_postgresql"
 		},
 		{
-			"source": "/docs/learn/cookbooks/laravel_scout",
-			"destination": "/docs/guides/back_end/laravel_scout"
+			"source": "/learn/cookbooks/laravel_scout",
+			"destination": "/guides/back_end/laravel_scout"
 		},
 		{
-			"source": "/docs/learn/cookbooks/laravel_multitenancy",
-			"destination": "/docs/guides/security/laravel_multitenancy"
+			"source": "/learn/cookbooks/laravel_multitenancy",
+			"destination": "/guides/security/laravel_multitenancy"
 		},
 		{
-			"source": "/docs/learn/cookbooks/multitenancy_nodejs",
-			"destination": "/docs/guides/security/multitenancy_nodejs"
+			"source": "/learn/cookbooks/multitenancy_nodejs",
+			"destination": "/guides/security/multitenancy_nodejs"
 		},
 		{
-			"source": "/docs/learn/cookbooks/indexing_best_practices",
-			"destination": "/docs/guides/performance/indexing_best_practices"
+			"source": "/learn/cookbooks/indexing_best_practices",
+			"destination": "/guides/performance/indexing_best_practices"
 		},
 		{
-			"source": "/docs/learn/cookbooks/computing_hugging_face_embeddings_gpu",
-			"destination": "/docs/guides/ai/computing_hugging_face_embeddings_gpu"
+			"source": "/learn/cookbooks/computing_hugging_face_embeddings_gpu",
+			"destination": "/guides/ai/computing_hugging_face_embeddings_gpu"
 		},
 		{
-			"source": "/docs/learn/cookbooks/strapi_v4",
-			"destination": "/docs/guides/back_end/strapi_v4"
+			"source": "/learn/cookbooks/strapi_v4",
+			"destination": "/guides/back_end/strapi_v4"
 		},
 		{
-			"source": "/docs/learn/cookbooks/large_documents",
-			"destination": "/docs/guides/performance/large_documents"
+			"source": "/learn/cookbooks/large_documents",
+			"destination": "/guides/performance/large_documents"
 		},
 		{
-			"source": "/docs/learn/cookbooks/langchain",
-			"destination": "/docs/guides/ai/langchain"
+			"source": "/learn/cookbooks/langchain",
+			"destination": "/guides/ai/langchain"
 		},
 		{
-			"source": "/docs/learn/advanced/concat",
-			"destination": "/docs/learn/engine/concat"
+			"source": "/learn/advanced/concat",
+			"destination": "/learn/engine/concat"
 		},
 		{
-			"source": "/docs/learn/advanced/datatypes",
-			"destination": "/docs/learn/engine/datatypes"
+			"source": "/learn/advanced/datatypes",
+			"destination": "/learn/engine/datatypes"
 		},
 		{
-			"source": "/docs/learn/advanced/prefix",
-			"destination": "/docs/learn/engine/prefix"
+			"source": "/learn/advanced/prefix",
+			"destination": "/learn/engine/prefix"
 		},
 		{
-			"source": "/docs/learn/advanced/storage",
-			"destination": "/docs/learn/engine/storage"
+			"source": "/learn/advanced/storage",
+			"destination": "/learn/engine/storage"
 		},
 		{
-			"source": "/docs/learn/cloud/analytics",
-			"destination": "/docs/learn/analytics/configure_analytics"
+			"source": "/learn/cloud/analytics",
+			"destination": "/learn/analytics/configure_analytics"
 		},
 		{
-			"source": "/docs/learn/cloud/teams",
-			"destination": "/docs/learn/teams/teams"
+			"source": "/learn/cloud/teams",
+			"destination": "/learn/teams/teams"
 		},
 		{
-			"source": "/docs/learn/security/managing_api_keys",
-			"destination": "/docs/reference/api/keys"
+			"source": "/learn/security/managing_api_keys",
+			"destination": "/reference/api/keys"
 		},
 		{
-			"source": "/docs/learn/experimental/puffin_reports",
-			"destination": "/docs/learn/experimental/log_customization"
+			"source": "/learn/experimental/puffin_reports",
+			"destination": "/learn/experimental/log_customization"
 		},
 		{
-			"source": "/docs/learn/index_settings/distinct",
-			"destination": "/docs/learn/relevancy/distinct_attribute"
+			"source": "/learn/index_settings/distinct",
+			"destination": "/learn/relevancy/distinct_attribute"
 		},
 		{
-			"source": "/docs/learn/index_settings/displayed_searchable_attributes",
-			"destination": "/docs/learn/relevancy/displayed_searchable_attributes"
+			"source": "/learn/index_settings/displayed_searchable_attributes",
+			"destination": "/learn/relevancy/displayed_searchable_attributes"
 		},
 		{
-			"source": "/docs/learn/index_settings/synonyms",
-			"destination": "/docs/learn/relevancy/synonyms"
+			"source": "/learn/index_settings/synonyms",
+			"destination": "/learn/relevancy/synonyms"
 		},
 		{
-			"source": "/docs/learn/index_settings/typo_tolerance",
-			"destination": "/docs/learn/relevancy/typo_tolerance_settings"
+			"source": "/learn/index_settings/typo_tolerance",
+			"destination": "/learn/relevancy/typo_tolerance_settings"
 		},
 		{
-			"source": "/docs/learn/core_concepts/relevancy",
-			"destination": "/docs/learn/relevancy/relevancy"
+			"source": "/learn/core_concepts/relevancy",
+			"destination": "/learn/relevancy/relevancy"
 		},
 		{
-			"source": "/docs/learn/configuration/settings",
-			"destination": "/docs/reference/api/settings"
+			"source": "/learn/configuration/settings",
+			"destination": "/reference/api/settings"
 		},
 		{
-			"source": "/docs/learn/fine_tuning_results/faceted_search",
-			"destination": "/docs/learn/filtering_and_sorting/search_with_facet_filters"
+			"source": "/learn/fine_tuning_results/faceted_search",
+			"destination": "/learn/filtering_and_sorting/search_with_facet_filters"
 		},
 		{
-			"source": "/docs/learn/fine_tuning_results/filtering",
-			"destination": "/docs/learn/filtering_and_sorting/filter_search_results"
+			"source": "/learn/fine_tuning_results/filtering",
+			"destination": "/learn/filtering_and_sorting/filter_search_results"
 		},
 		{
-			"source": "/docs/learn/fine_tuning_results/working_with_dates",
-			"destination": "/docs/learn/filtering_and_sorting/working_with_dates"
+			"source": "/learn/fine_tuning_results/working_with_dates",
+			"destination": "/learn/filtering_and_sorting/working_with_dates"
 		},
 		{
-			"source": "/docs/learn/fine_tuning_results/geosearch",
-			"destination": "/docs/learn/filtering_and_sorting/geosearch"
+			"source": "/learn/fine_tuning_results/geosearch",
+			"destination": "/learn/filtering_and_sorting/geosearch"
 		},
 		{
-			"source": "/docs/learn/fine_tuning_results/sorting",
-			"destination": "/docs/learn/filtering_and_sorting/sort_search_results"
+			"source": "/learn/fine_tuning_results/sorting",
+			"destination": "/learn/filtering_and_sorting/sort_search_results"
 		},
 		{
-			"source": "/docs/learn/configuration/instance_options",
-			"destination": "/docs/learn/self_hosted/configure_meilisearch_at_launch"
+			"source": "/learn/configuration/instance_options",
+			"destination": "/learn/self_hosted/configure_meilisearch_at_launch"
 		},
 		{
-			"source": "/docs/learn/getting_started/installation",
-			"destination": "/docs/learn/self_hosted/install_meilisearch_locally"
+			"source": "/learn/getting_started/installation",
+			"destination": "/learn/self_hosted/install_meilisearch_locally"
 		},
 		{
-			"source": "/docs/learn/getting_started/quick_start",
-			"destination": "/docs/learn/self_hosted/getting_started_with_self_hosted_meilisearch"
+			"source": "/learn/getting_started/quick_start",
+			"destination": "/learn/self_hosted/getting_started_with_self_hosted_meilisearch"
 		},
 		{
-			"source": "/docs/learn/getting_started/supported_os",
-			"destination": "/docs/learn/self_hosted/supported_os"
+			"source": "/learn/getting_started/supported_os",
+			"destination": "/learn/self_hosted/supported_os"
 		},
 		{
-			"source": "/docs/learn/advanced/indexing",
-			"destination": "/docs/learn/indexing/indexing_best_practices"
+			"source": "/learn/advanced/indexing",
+			"destination": "/learn/indexing/indexing_best_practices"
 		},
 		{
-			"source": "/docs/guides/performance/indexing_best_practices",
-			"destination": "/docs/learn/indexing/indexing_best_practices"
+			"source": "/guides/performance/indexing_best_practices",
+			"destination": "/learn/indexing/indexing_best_practices"
 		},
 		{
-			"source": "/docs/learn/advanced/tokenization",
-			"destination": "/docs/learn/indexing/tokenization"
+			"source": "/learn/advanced/tokenization",
+			"destination": "/learn/indexing/tokenization"
 		},
 		{
-			"source": "/docs/learn/advanced/known_limitations",
-			"destination": "/docs/learn/resources/known_limitations"
+			"source": "/learn/advanced/known_limitations",
+			"destination": "/learn/resources/known_limitations"
 		},
 		{
-			"source": "/docs/faq",
-			"destination": "/docs/learn/resources/faq"
+			"source": "/faq",
+			"destination": "/learn/resources/faq"
 		},
 		{
-			"source": "/docs/learn/what_is_meilisearch/overview",
-			"destination": "/docs/learn/getting_started/what_is_meilisearch"
+			"source": "/learn/what_is_meilisearch/overview",
+			"destination": "/learn/getting_started/what_is_meilisearch"
 		},
 		{
-			"source": "/docs/learn/core_concepts/documents",
-			"destination": "/docs/learn/getting_started/documents"
+			"source": "/learn/core_concepts/documents",
+			"destination": "/learn/getting_started/documents"
 		},
 		{
-			"source": "/docs/learn/core_concepts/indexes",
-			"destination": "/docs/learn/getting_started/indexes"
+			"source": "/learn/core_concepts/indexes",
+			"destination": "/learn/getting_started/indexes"
 		},
 		{
-			"source": "/docs/learn/core_concepts/primary_key",
-			"destination": "/docs/learn/getting_started/primary_key"
+			"source": "/learn/core_concepts/primary_key",
+			"destination": "/learn/getting_started/primary_key"
 		},
 		{
-			"source": "/docs/learn/what_is_meilisearch/comparison_to_alternatives",
-			"destination": "/docs/learn/resources/comparison_to_alternatives"
+			"source": "/learn/what_is_meilisearch/comparison_to_alternatives",
+			"destination": "/learn/resources/comparison_to_alternatives"
 		},
 		{
-			"source": "/docs/learn/what_is_meilisearch/telemetry",
-			"destination": "/docs/learn/resources/telemetry"
+			"source": "/learn/what_is_meilisearch/telemetry",
+			"destination": "/learn/resources/telemetry"
 		},
 		{
-			"source": "/docs/learn/what_is_meilisearch/language",
-			"destination": "/docs/learn/resources/language"
+			"source": "/learn/what_is_meilisearch/language",
+			"destination": "/learn/resources/language"
 		},
 		{
-			"source": "/docs/learn/update_and_migration/versioning",
-			"destination": "/docs/learn/resources/versioning"
+			"source": "/learn/update_and_migration/versioning",
+			"destination": "/learn/resources/versioning"
 		},
 		{
-			"source": "/docs/learn/contributing/contributing_docs",
-			"destination": "/docs/learn/resources/contributing_docs"
+			"source": "/learn/contributing/contributing_docs",
+			"destination": "/learn/resources/contributing_docs"
 		},
 		{
-			"source": "/docs/learn/experimental/overview",
-			"destination": "/docs/learn/resources/experimental_features_overview"
+			"source": "/learn/experimental/overview",
+			"destination": "/learn/resources/experimental_features_overview"
 		},
 		{
-			"source": "/docs/learn/experimental/max_number_of_batched_tasks",
-			"destination": "/docs/learn/self_hosted/configure_meilisearch_at_launch"
+			"source": "/learn/experimental/max_number_of_batched_tasks",
+			"destination": "/learn/self_hosted/configure_meilisearch_at_launch"
 		},
 		{
-			"source": "/docs/learn/experimental/metrics",
-			"destination": "/docs/reference/api/metrics"
+			"source": "/learn/experimental/metrics",
+			"destination": "/reference/api/metrics"
 		},
 		{
-			"source": "/docs/learn/experimental/reduce-indexing-memory-usage",
-			"destination": "/docs/learn/self_hosted/configure_meilisearch_at_launch"
+			"source": "/learn/experimental/reduce-indexing-memory-usage",
+			"destination": "/learn/self_hosted/configure_meilisearch_at_launch"
 		},
 		{
-			"source": "/docs/learn/experimental/log_customization",
-			"destination": "/docs/reference/api/logs"
+			"source": "/learn/experimental/log_customization",
+			"destination": "/reference/api/logs"
 		},
 		{
-			"source": "/docs/learn/experimental/vector_search",
-			"destination": "/docs/learn/ai_powered_search/getting_started_with_ai_search"
+			"source": "/learn/experimental/vector_search",
+			"destination": "/learn/ai_powered_search/getting_started_with_ai_search"
 		},
 		{
-			"source": "/docs/learn/experimental/search_queue_size",
-			"destination": "/docs/learn/self_hosted/configure_meilisearch_at_launch"
+			"source": "/learn/experimental/search_queue_size",
+			"destination": "/learn/self_hosted/configure_meilisearch_at_launch"
 		},
 		{
-			"source": "/docs/learn/experimental/replication_parameter",
-			"destination": "/docs/learn/self_hosted/configure_meilisearch_at_launch"
+			"source": "/learn/experimental/replication_parameter",
+			"destination": "/learn/self_hosted/configure_meilisearch_at_launch"
 		},
 		{
-			"source": "/docs/guides/database/meilisync_mysql",
+			"source": "/guides/database/meilisync_mysql",
 			"destination": "https://github.com/long2ice/meilisync"
 		},
 		{
-			"source": "/docs/guides/database/meilisync_postgresql",
+			"source": "/guides/database/meilisync_postgresql",
 			"destination": "https://github.com/long2ice/meilisync"
 		},
 		{
-			"source": "/docs/learn/ai-powered-search/search_with_user_provided_embeddings",
-			"destination": "/docs/learn/ai_powered_search/search_with_user_provided_embeddings"
+			"source": "/learn/ai-powered-search/search_with_user_provided_embeddings",
+			"destination": "/learn/ai_powered_search/search_with_user_provided_embeddings"
 		},
 		{
-			"source": "/docs/learn/ai-powered-search/getting_started_with_ai_search",
-			"destination": "/docs/learn/ai_powered_search/getting_started_with_ai_search"
+			"source": "/learn/ai-powered-search/getting_started_with_ai_search",
+			"destination": "/learn/ai_powered_search/getting_started_with_ai_search"
 		},
 		{
-			"source": "/docs/learn/ai-powered-search/deactivate_ai_powered_search",
-			"destination": "/docs/learn/ai_powered_search/deactivate_ai_powered_search"
+			"source": "/learn/ai-powered-search/deactivate_ai_powered_search",
+			"destination": "/learn/ai_powered_search/deactivate_ai_powered_search"
 		},
 		{
-			"source": "/docs/learn/ai-powered-search/difference_full_text_ai_search",
-			"destination": "/docs/learn/ai_powered_search/difference_full_text_ai_search"
+			"source": "/learn/ai-powered-search/difference_full_text_ai_search",
+			"destination": "/learn/ai_powered_search/difference_full_text_ai_search"
 		},
 		{
-			"source": "/docs/reference/features/installation#download-and-launch",
+			"source": "/reference/features/installation#download-and-launch",
 			"destination": "docs/learn/self_hosted/install_meilisearch_locally"
 		},
 		{
-			"source": "/docs/reference/features/installation.html#download-and-launch",
+			"source": "/reference/features/installation.html#download-and-launch",
 			"destination": "docs/learn/self_hosted/install_meilisearch_locally"
 		},
 		{
-			"source": "/docs/learn/advanced/filtering",
+			"source": "/learn/advanced/filtering",
 			"destination": "docs/learn/filtering_and_sorting/filter_search_results"
 		},
 		{
-			"source": "/docs/learn/what_is_meilisearch/contact.html",
+			"source": "/learn/what_is_meilisearch/contact.html",
 			"destination": "https://www.meilisearch.com/#homepage-community"
 		},
 		{
-			"source": "/docs/learn/what_is_meilisearch/contact",
+			"source": "/learn/what_is_meilisearch/contact",
 			"destination": "https://www.meilisearch.com/#homepage-community"
 		},
 		{
-			"source": "/docs/learn/security/tenant_tokens",
-			"destination": "/docs/learn/security/generate_tenant_token_sdk"
+			"source": "/learn/security/tenant_tokens",
+			"destination": "/learn/security/generate_tenant_token_sdk"
 		},
 		{
-			"source": "/docs/learn/what_is_meilisearch/sdks.html",
-			"destination": "/docs/learn/resources/sdks"
+			"source": "/learn/what_is_meilisearch/sdks.html",
+			"destination": "/learn/resources/sdks"
 		},
 		{
-			"source": "/docs/learn/what_is_meilisearch/sdks",
-			"destination": "/docs/learn/resources/sdks"
+			"source": "/learn/what_is_meilisearch/sdks",
+			"destination": "/learn/resources/sdks"
 		},
 		{
-			"source": "/docs/learn/getting_started/a",
-			"destination": "/docs/learn/getting_started/cloud_quick_start"
+			"source": "/learn/getting_started/a",
+			"destination": "/learn/getting_started/cloud_quick_start"
 		},
 		{
-			"source": "/docs/reference/api/tasks.html#delete-task",
-			"destination": "/docs/reference/api/tasks#delete-tasks"
+			"source": "/reference/api/tasks.html#delete-task",
+			"destination": "/reference/api/tasks#delete-tasks"
 		},
 		{
-			"source": "/docs/reference/api/tasks#delete-task",
-			"destination": "/docs/reference/api/tasks#delete-tasks"
+			"source": "/reference/api/tasks#delete-task",
+			"destination": "/reference/api/tasks#delete-tasks"
 		},
 		{
-			"source": "/docs/reference",
-			"destination": "/docs/reference/api/overview"
+			"source": "/reference",
+			"destination": "/reference/api/overview"
 		},
 		{
-			"source": "/docs/guides/deployment/gcp",
-			"destination": "/guides/deployment/running_production"
+			"source": "/guides/deployment/gcp",
+			"destination": "/guides/running_production"
 		}
-  	]
+  ]
 }
