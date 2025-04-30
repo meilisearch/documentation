@@ -28,11 +28,6 @@ $client->index('movie_ratings')->search('Batman', [
 ]);
 ```
 
-```java Java
-SearchRequest searchRequest = SearchRequest.builder().q("Batman").filter(new String[] {"release_date > 795484800 AND (director = \"Tim Burton\" OR director = \"Christopher Nolan\")"}).build();
-client.index("movie_ratings").search(searchRequest);
-```
-
 ```ruby Ruby
 client.index('movie_ratings').search('Batman', {
   filter: 'release_date > 795484800 AND (director = "Tim Burton" OR director = "Christopher Nolan")'

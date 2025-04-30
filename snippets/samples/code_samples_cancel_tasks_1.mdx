@@ -17,11 +17,6 @@ client.cancel_tasks({'uids': ['1', '2']})
 $client->cancelTasks((new CancelTasksQuery())->setUids([1, 2]));
 ```
 
-```java Java
-CancelTasksQuery query = new CancelTasksQuery().setUids(new int[] {1, 2})
-client.cancelTasks(query);
-```
-
 ```ruby Ruby
 client.cancel_tasks(uids: [1, 2])
 ```

@@ -24,10 +24,6 @@ $similarQuery = new SimilarDocumentsQuery('TARGET_DOCUMENT_ID', 'default');
 $client->index('INDEX_NAME')->searchSimilarDocuments($similarQuery);
 ```
 
-```java Java
-SimilarDocumentRequest query = new SimilarDocumentRequest() .setId("143") .setEmbedder("manual"); client.index("movies").searchSimilarDocuments(query)
-```
-
 ```ruby Ruby
 client.index('INDEX_NAME').search_similar_documents('TARGET_DOCUMENT_ID', embedder: 'default')
 ```

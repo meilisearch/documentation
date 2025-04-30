@@ -25,12 +25,6 @@ $client->index('movies')->updateTypoTolerance([
 ]);
 ```
 
-```java Java
-TypoTolerance typoTolerance = new TypoTolerance();
-typoTolerance.setEnabled(false);
-client.index("movies").updateTypoToleranceSettings(typoTolerance);
-```
-
 ```ruby Ruby
 index('books').update_typo_tolerance({ enabled: false })
 ```

@@ -21,12 +21,6 @@ client.index('games').update_sortable_attributes(['release_timestamp'])
 $client->index('games')->updateSortableAttributes(['release_timestamp']);
 ```
 
-```java Java
-Settings settings = new Settings();
-settings.setSortableAttributes(new String[] {"release_timestamp"});
-client.index("games").updateSettings(settings);
-```
-
 ```ruby Ruby
 client.index('games').update_sortable_attributes(['release_timestamp'])
 ```

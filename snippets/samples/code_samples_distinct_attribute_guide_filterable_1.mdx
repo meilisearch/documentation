@@ -23,12 +23,6 @@ client.index('products').update_filterable_attributes(['product_id', 'sku', 'url
 $client->index('products')->updateFilterableAttributes(['product_id', 'sku', 'url']);
 ```
 
-```java Java
-Settings settings = new Settings();
-settings.setFilterableAttributes(new String[] {"product_id", "SKU", "url"});
-client.index("products").updateSettings(settings);
-```
-
 ```ruby Ruby
 client.index('products').update_filterable_attributes([
   'product_id',

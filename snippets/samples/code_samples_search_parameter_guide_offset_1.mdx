@@ -26,11 +26,6 @@ client.index('movies').search('shifu', {
 $client->index('movies')->search('shifu', ['offset' => 1]);
 ```
 
-```java Java
-SearchRequest searchRequest = SearchRequest.builder().q("shifu").offset(1).build();
-client.index("movies").search(searchRequest);
-```
-
 ```ruby Ruby
 client.index('movies').search('shifu', {
   offset: 1

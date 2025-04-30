@@ -26,15 +26,6 @@ $client->index('movie_ratings')->search('Batman', [
 ]);
 ```
 
-```java Java
-SearchRequest searchRequest = SearchRequest.builder().q("Batman").facets(new String[]
-{
-  "genres",
-  "rating"
-}).build();
-client.index("movies").search(searchRequest);
-```
-
 ```ruby Ruby
 client.index('movie_ratings').search('Batman', {
   facets: ['genres', 'rating']

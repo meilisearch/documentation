@@ -23,11 +23,6 @@ client.index('movies').delete_documents(filter='genres=action OR genres=adventur
 $client->index('movies')->deleteDocuments(['filter' => 'genres = action OR genres = adventure']);
 ```
 
-```java Java
-String filter = "genres = action OR genres = adventure";
-client.index("movies").deleteDocumentsByFilter(filter);
-```
-
 ```ruby Ruby
 client.index('movies').delete_documents(filter: 'genres = action OR genres = adventure')
 ```

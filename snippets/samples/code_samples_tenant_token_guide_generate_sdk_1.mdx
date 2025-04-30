@@ -42,21 +42,6 @@ $options = [
 $token = $client->generateTenantToken($apiKeyUid, $searchRules, $options);
 ```
 
-```java Java
-Map<String, Object> filters = new HashMap<String, Object>();
-filters.put("filter", "user_id = 1");
-Map<String, Object> searchRules = new HashMap<String, Object>();
-searchRules.put("patient_medical_records", filters);
-
-Date expiresAt = new SimpleDateFormat("yyyy-MM-dd").parse("2025-12-20");
-TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
-TenantTokenOptions options = new TenantTokenOptions();
-options.setApiKey("B5KdX2MY2jV6EXfUs6scSfmC...");
-options.setExpiresAt(expiresAt);
-
-String token = client.generateTenantToken("85c3c2f9-bdd6-41f1-abd8-11fcf80e0f76", searchRules, options);
-```
-
 ```ruby Ruby
 uid = '85c3c2f9-bdd6-41f1-abd8-11fcf80e0f76'
 api_key = 'B5KdX2MY2jV6EXfUs6scSfmC...'

@@ -28,11 +28,6 @@ $client->index('movies')->search('adventure', [
 ]);
 ```
 
-```java Java
-SearchRequest searchRequest = SearchRequest.builder().q("adventure").attributesToSearchOn(new String[] {"overview"});
-client.index("movies").searchRequest(searchRequest);
-```
-
 ```ruby Ruby
 client.index('movies').search('adventure', {
   attributes_to_search_on: ['overview']

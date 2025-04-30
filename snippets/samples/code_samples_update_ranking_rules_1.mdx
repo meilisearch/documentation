@@ -55,22 +55,6 @@ $client->index('movies')->updateRankingRules([
 ]);
 ```
 
-```java Java
-Settings settings = new Settings();
-settings.setRankingRules(new String[]
-{
-  "words",
-  "typo",
-  "proximity",
-  "attribute",
-  "sort",
-  "exactness",
-  "release_date:asc",
-  "rank:desc"
-});
-client.index("movies").updateSettings(settings);
-```
-
 ```ruby Ruby
 client.index('movies').update_ranking_rules([
   'words',

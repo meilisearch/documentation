@@ -28,11 +28,6 @@ $client->index('games')->search('', [
 ]);
 ```
 
-```java Java
-SearchRequest searchRequest = SearchRequest.builder().q("").filter(new String[] {"release_timestamp >= 1514761200 AND release_timestamp < 1672527600"}).build();
-client.index("games").search(searchRequest);
-```
-
 ```ruby Ruby
 client.index('games').search('', {
   filter: 'release_timestamp >= 1514761200 AND release_timestamp < 1672527600'

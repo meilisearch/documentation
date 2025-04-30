@@ -35,14 +35,6 @@ $client->index('movies')->search('thriller', [
 ]);
 ```
 
-```java Java
-SearchRequest searchRequest =
-  SearchRequest.builder().q("thriller").filterArray(new String[][] {
-    new String[] {"genres = Horror", "genres = Mystery"},
-    new String[] {"director = \"Jordan Peele\""}}).build();
-client.index("movies").search(searchRequest);
-```
-
 ```ruby Ruby
 client.index('movies').search('thriller', {
   filter: [['genres = Horror', 'genres = Mystery'], 'director = "Jordan Peele"']

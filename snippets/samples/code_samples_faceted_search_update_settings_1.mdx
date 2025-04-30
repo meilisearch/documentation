@@ -25,10 +25,6 @@ client.index('movie_ratings').update_filterable_attributes([
 $client->index('movie_ratings')->updateFilterableAttributes(['genres', 'rating', 'language']);
 ```
 
-```java Java
-client.index("movie_ratings").updateFilterableAttributesSettings(new String[] { "genres", "director", "language" });
-```
-
 ```ruby Ruby
 client.index('movie_ratings').update_filterable_attributes(['genres', 'rating', 'language'])
 ```

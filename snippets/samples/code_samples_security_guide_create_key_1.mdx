@@ -43,22 +43,6 @@ $client->createKey([
 ]);
 ```
 
-```java Java
-Client client = new Client(new Config("http://localhost:7700", "masterKey"));
-
-SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-Date dateParsed = format.parse("2023-01-01T00:00:00Z");
-
-Key keyInfo = new Key();
-
-keyInfo.setDescription("Search patient records key");
-keyInfo.setActions(new String[] {"search"});
-keyInfo.setIndexes(new String[] {"patient_medical_records"});
-keyInfo.setExpiresAt(dateParsed);
-
-client.createKey(keyInfo);
-```
-
 ```ruby Ruby
 client = MeiliSearch::Client.new('http://localhost:7700', 'masterKey')
 client.create_key(
