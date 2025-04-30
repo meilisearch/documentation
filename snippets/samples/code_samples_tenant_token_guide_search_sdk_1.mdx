@@ -15,6 +15,11 @@ $frontEndClient = new Client('http://localhost:7700', $token);
 $frontEndClient->index('patient_medical_records')->search('blood test');
 ```
 
+```java Java
+Client frontEndClient = new Client(new Config("http://localhost:7700", token));
+frontEndClient.index("patient_medical_records").search("blood test");
+```
+
 ```ruby Ruby
 front_end_client = MeiliSearch::Client.new('http://localhost:7700', token)
 

@@ -33,6 +33,20 @@ $client->index('books')->updateTypoTolerance([
 ]);
 ```
 
+```java Java
+HashMap<String, Integer> minWordSizeTypos =
+new HashMap<String, Integer>() {
+  {
+    put("oneTypo", 4);
+  }
+};
+
+TypoTolerance typoTolerance = new TypoTolerance();
+typoTolerance.setMinWordSizeForTypos(minWordSizeTypos);
+
+client.index("movies").updateTypoToleranceSettings(typoTolerance);
+```
+
 ```ruby Ruby
 client.index('movies').update_typo_tolerance({ min_word_size_for_typos: { one_typo: 4 } })
 ```

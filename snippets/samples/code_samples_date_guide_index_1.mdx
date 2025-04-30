@@ -27,6 +27,18 @@ $games = json_decode($gamesJson);
 $client->index('games')->addDocuments($games);
 ```
 
+```java Java
+import com.meilisearch.sdk;
+import org.json.JSONArray;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
+Path fileName = Path.of("games.json");
+String gamesJson = Files.readString(fileName);
+Index index = client.index("games");
+index.addDocuments(gamesJson);
+```
+
 ```ruby Ruby
 require 'json'
 

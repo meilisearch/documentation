@@ -23,6 +23,14 @@ client.index('movies').update_searchable_attributes([
 $client->index('movies')->updateSearchableAttributes(['title']);
 ```
 
+```java Java
+Settings settings = new Settings();
+settings.setSearchableAttributes(new String[]
+{
+  "title"
+});
+```
+
 ```ruby Ruby
 client.index('movies').update_searchable_attributes([
   'title'

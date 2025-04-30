@@ -26,6 +26,11 @@ client.index('movies').search('shifu', {
 $client->index('movies')->search('shifu', ['limit' => 2]);
 ```
 
+```java Java
+SearchRequest searchRequest = SearchRequest.builder().q("shifu").limit(2).build();
+client.index("movies").search(searchRequest);
+```
+
 ```ruby Ruby
 client.index('movies').search('shifu', {
   limit: 2

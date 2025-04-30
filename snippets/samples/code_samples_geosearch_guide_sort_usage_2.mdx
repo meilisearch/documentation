@@ -30,6 +30,14 @@ $client->index('restaurants')->search('', [
 ]);
 ```
 
+```java Java
+SearchRequest searchRequest = SearchRequest.builder().q()("").sort(new String[] {
+    "_geoPoint(48.8561446,2.2978204):asc",
+    "rating:desc",
+  }).build();
+client.index("restaurants").search(searchRequest);
+```
+
 ```ruby Ruby
 client.index('restaurants').search('', { sort: ['_geoPoint(48.8561446, 2.2978204):asc', 'rating:desc'] })
 ```

@@ -39,6 +39,16 @@ $client->index('movies')->updateDisplayedAttributes([
 ]);
 ```
 
+```java Java
+client.index("movies").updateDisplayedAttributesSettings(new String[]
+{
+  "title",
+  "overview",
+  "genres",
+  "release_date"
+});
+```
+
 ```ruby Ruby
 client.index('movies').update_displayed_attributes([
   'title',

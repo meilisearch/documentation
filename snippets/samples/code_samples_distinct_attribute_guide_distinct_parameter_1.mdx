@@ -24,6 +24,11 @@ $client->index('products')->search('white shirt', [
 ]);
 ```
 
+```java Java
+SearchRequest searchRequest = SearchRequest.builder().q("white shirt").distinct("sku").build();
+client.index("products").search(searchRequest);
+```
+
 ```ruby Ruby
 client.index('products').search('white shirt', {
   distinct: 'sku'

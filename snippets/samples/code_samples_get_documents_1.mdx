@@ -20,6 +20,11 @@ client.index('movies').get_documents({'limit':2, 'filter': 'genres=action'})
 $client->index('movies')->getDocuments((new DocumentsQuery())->setFilter('genres = action')->setLimit(2));
 ```
 
+```java Java
+DocumentsQuery query = new DocumentsQuery().setLimit(2).setFilter(new String[] {"genres = action"});
+client.index("movies").getDocuments(query, TargetClassName.class);
+```
+
 ```ruby Ruby
 client.index('movies').get_documents(limit: 2, filter: 'genres = action')
 ```

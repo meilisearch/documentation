@@ -52,6 +52,17 @@ $client->index('books')->addDocuments([
 ], 'reference_number');
 ```
 
+```java Java
+client.index("books").addDocuments("[{"
+  + "\"reference_number\": 2879,"
+  + "\"title\": \"Diary of a Wimpy Kid\","
+  + "\"author\": \"Jeff Kinney\","
+  + "\"genres\": [\"comedy\", \"humor\"],"
+  + "\"price\": 5.00"
+  + "}]"
+, "reference_number");
+```
+
 ```ruby Ruby
 client.index('books').add_documents([
   {

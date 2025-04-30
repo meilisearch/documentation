@@ -40,6 +40,20 @@ $client->createKey([
 ]);
 ```
 
+```java Java
+SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+Date dateParsed = format.parse("2042-04-02T00:42:42Z");
+
+Key keyInfo = new Key();
+
+keyInfo.setDescription("Add documents: Products API key");
+keyInfo.setActions(new String[] {"documents.add"});
+keyInfo.setIndexes(new String[] {"products"});
+keyInfo.setExpiresAt(dateParsed);
+
+client.createKey(keyInfo);
+```
+
 ```ruby Ruby
 client.create_key(
   description: 'Add documents: Products API key',

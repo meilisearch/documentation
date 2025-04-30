@@ -21,6 +21,11 @@ $client = new Client('http://localhost:7700', 'masterKey');
 $client->getKeys();
 ```
 
+```java Java
+Client client = new Client(new Config("http://localhost:7700", "masterKey"));
+client.getKeys();
+```
+
 ```ruby Ruby
 client = MeiliSearch::Client.new('http://localhost:7700', 'masterKey')
 client.keys

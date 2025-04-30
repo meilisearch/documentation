@@ -26,6 +26,11 @@ $client->index('movies')->search('dragon', [
 ]);
 ```
 
+```java Java
+SearchRequest searchRequest = SearchRequest.builder().q("dragon").showRankingScoreDetails(true).build();
+client.index("movies").search(searchRequest);
+```
+
 ```ruby Ruby
 client.index('movies').search('dragon', {
   show_ranking_score_details: true

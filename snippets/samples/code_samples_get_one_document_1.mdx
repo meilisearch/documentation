@@ -21,6 +21,11 @@ client.index('movies').get_document(25684, {
 $client->index('movies')->getDocument(25684, ['id', 'title', 'poster', 'release_date']);
 ```
 
+```java Java
+DocumentQuery query = new DocumentQuery().setFields(new String[] {"id", "title", "poster", "release_date"});
+client.index("movies").getDocument("25684", query);
+```
+
 ```ruby Ruby
 client.index('movies').document(25684, fields: ['id', 'title', 'poster', 'release_date'])
 ```

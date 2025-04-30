@@ -35,6 +35,15 @@ $client->index('movies')->updateSearchableAttributes([
 ]);
 ```
 
+```java Java
+client.index("movies").updateSearchableAttributesSettings(new String[]
+{
+  "title",
+  "overview",
+  "genres"
+});
+```
+
 ```ruby Ruby
 client.index('movies').update_searchable_attributes([
   'title',

@@ -24,6 +24,11 @@ $client->index('INDEX_NAME')->search('badman', [
 ]);
 ```
 
+```java Java
+SearchRequest searchRequest = SearchRequest.builder().q("badman").rankingScoreThreshold(0.2).build();
+client.index("INDEX_NAME").search(searchRequest);
+```
+
 ```ruby Ruby
 client.index('INDEX_NAME').search('badman', {
   rankingScoreThreshold: 0.2

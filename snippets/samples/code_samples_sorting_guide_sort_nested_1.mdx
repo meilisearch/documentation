@@ -26,6 +26,11 @@ client.index('books').search('science fiction', {
 $client->index('books')->search('science fiction', ['sort' => ['rating.users:asc']]);
 ```
 
+```java Java
+SearchRequest searchRequest = SearchRequest.builder().q("science fiction").sort(new String[] {"rating.users:asc"}).build();
+client.index("books").search(searchRequest);
+```
+
 ```ruby Ruby
 client.index('books').search('science fiction', { sort: ['rating.users:asc'] })
 ```

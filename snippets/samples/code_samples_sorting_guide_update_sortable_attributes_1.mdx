@@ -31,6 +31,10 @@ $client->index('books')->updateSortableAttributes([
 ]);
 ```
 
+```java Java
+client.index("books").updateSortableAttributesSettings(new String[] {"price", "author"});
+```
+
 ```ruby Ruby
 client.index('books').update_sortable_attributes(['author', 'price'])
 ```

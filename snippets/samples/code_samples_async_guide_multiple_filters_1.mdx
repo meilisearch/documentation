@@ -32,6 +32,16 @@ $client->getTasks(
 );
 ```
 
+```java Java
+TasksQuery query =
+        new TasksQuery()
+                .setStatuses(new String[] {"processing"})
+                .setTypes(new String[] {"documentAdditionOrUpdate", "documentDeletion"})
+                .setIndexUids(new String[] {"movies"});
+
+client.getTasks(query);
+```
+
 ```ruby Ruby
 client.get_tasks(index_uids: ['movies'], types: ['documentAdditionOrUpdate', 'documentDeletion'], statuses: ['processing'])
 ```

@@ -25,6 +25,10 @@ $client->index('restaurants')->updateSortableAttributes([
 ]);
 ```
 
+```java Java
+client.index("restaurants").updateSortableAttributesSettings(new String[] {"_geo"});
+```
+
 ```ruby Ruby
 client.index('restaurants').update_sortable_attributes(['_geo'])
 ```

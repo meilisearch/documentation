@@ -19,6 +19,15 @@ client.index('movies').update_stop_words(['the'])
 $client->index('movies')->updateStopWords(['the']);
 ```
 
+```java Java
+Settings settings = new Settings();
+settings.setStopWords(new String[]
+{
+  "the"
+});
+client.index("movies").updateSettings(settings);
+```
+
 ```ruby Ruby
 client.index('movies').update_stop_words(['the'])
 ```

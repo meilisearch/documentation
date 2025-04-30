@@ -12,6 +12,11 @@ client.get_tasks({'uids': ['5', '10', '13']})
 $client->getTasks((new TasksQuery())->setUids([5, 10, 13]));
 ```
 
+```java Java
+TasksQuery query = new TasksQuery().setUids(new int[] {5, 10, 13});
+client.getTasks(query);
+```
+
 ```ruby Ruby
 client.get_tasks(uids: [5, 10, 13])
 ```
