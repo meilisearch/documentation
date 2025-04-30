@@ -133,12 +133,7 @@ function initializeMeilisearchIntegration() {
     if (!isFlexContainer) {
       // Create a wrapper to center the search bar
       const flexWrapper = document.createElement('div');
-      flexWrapper.style.cssText = `
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-      `;
+      flexWrapper.className = 'meilisearch-flexwrapper';
       flexWrapper.appendChild(searchBarContainer);
       headerContainer.appendChild(flexWrapper);
     } else {
@@ -352,7 +347,10 @@ function initializeMeilisearchIntegration() {
         
         debounceTimer = setTimeout(() => {
           // Show loading indicator
-          resultsContainer.innerHTML = '<div style="padding: 20px; text-align: center; color: rgba(255, 255, 255, 0.7);">Searching...</div>';
+          const indicatorEl = document.createElement('div');
+          indicatorEl.className = 'meilisearch-modal__indicator';
+          indicatorEl.innerHTML = 'Searching…';
+          resultsContainer.appendChild(indicatorEl);
           
           // Perform search
           index.search(query, {
@@ -369,7 +367,11 @@ function initializeMeilisearchIntegration() {
             resultsContainer.innerHTML = '';
             
             if (response.hits.length === 0) {
-              resultsContainer.innerHTML = '<div style="padding: 20px; text-align: center; color: rgba(255, 255, 255, 0.5);">No results found</div>';
+              const noResultsEl = document.createElement('div');
+              noResultsEl.className = 'meilisearch-modal__indicator';
+              noResultsEl.innerHTML = 'No results found';
+              resultsContainer.appendChild(noResultsEl);
+
               return;
             }
             
@@ -398,27 +400,27 @@ function initializeMeilisearchIntegration() {
               results.forEach(hit => {
                 const resultItem = document.createElement('a');
                 resultItem.href = hit.url || `/${hit.path}`;
-                resultItem.className = 'meilisearch-modal__category-link';
+                resultItem.className = 'meilisearch-modal__result';
                 
                 // Format content nicely
                 // Build title from hierarchy levels
                 const hierarchy_lvl1 = hit._formatted?.hierarchy_lvl1 
-                  ? hit._formatted.hierarchy_lvl1.replace(/<em>/g, '<em style="font-style: normal; color: #f472b6; font-weight: bold;">')
+                  ? hit._formatted.hierarchy_lvl1.replace(/<em>/g, '<em class="meilisearch-modal__category-em">')
                   : '';
                 const hierarchy_lvl2 = hit._formatted?.hierarchy_lvl2 
-                  ? hit._formatted.hierarchy_lvl2.replace(/<em>/g, '<em style="font-style: normal; color: #f472b6; font-weight: bold;">')
+                  ? hit._formatted.hierarchy_lvl2.replace(/<em>/g, '<em class="meilisearch-modal__category-em">')
                   : '';
                 const hierarchy_lvl3 = hit._formatted?.hierarchy_lvl3 
-                  ? hit._formatted.hierarchy_lvl3.replace(/<em>/g, '<em style="font-style: normal; color: #f472b6; font-weight: bold;">')
+                  ? hit._formatted.hierarchy_lvl3.replace(/<em>/g, '<em class="meilisearch-modal__category-em">')
                   : '';
                 const hierarchy_lvl4 = hit._formatted?.hierarchy_lvl4 
-                  ? hit._formatted.hierarchy_lvl4.replace(/<em>/g, '<em style="font-style: normal; color: #f472b6; font-weight: bold;">')
+                  ? hit._formatted.hierarchy_lvl4.replace(/<em>/g, '<em class="meilisearch-modal__category-em">')
                   : '';
                 const hierarchy_lvl5 = hit._formatted?.hierarchy_lvl5 
-                  ? hit._formatted.hierarchy_lvl5.replace(/<em>/g, '<em style="font-style: normal; color: #f472b6; font-weight: bold;">')
+                  ? hit._formatted.hierarchy_lvl5.replace(/<em>/g, '<em class="meilisearch-modal__category-em">')
                   : '';
                 const content = hit._formatted?.content 
-                  ? hit._formatted.content.replace(/<em>/g, '<em style="font-style: normal; color: #f472b6; font-weight: bold;">')
+                  ? hit._formatted.content.replace(/<em>/g, '<em class="meilisearch-modal__category-em">')
                   : '';
 
                 let title = '';
@@ -439,19 +441,9 @@ function initializeMeilisearchIntegration() {
                 }
                 
                 resultItem.innerHTML = `
-                  <div style="font-weight: 500; margin-bottom: 4px;">${title}</div>
-                  ${content ? `<div style="font-size: 13px; color: rgba(255, 255, 255, 0.6);">${content}</div>` : ''}
+                  <div class="meilisearch-modal__result-heading">${title}</div>
+                  ${content ? `<div class="meilisearch-modal__result-content">${content}</div>` : ''}
                 `;
-                
-                resultItem.addEventListener('mouseover', () => {
-                  resultItem.style.backgroundColor = 'rgba(255, 255, 255, 0.05)';
-                  resultItem.style.borderLeftColor = '#f472b6';
-                });
-                
-                resultItem.addEventListener('mouseout', () => {
-                  resultItem.style.backgroundColor = 'transparent';
-                  resultItem.style.borderLeftColor = 'transparent';
-                });
                 
                 // Make clicking the result close the modal
                 resultItem.addEventListener('click', () => {
@@ -465,7 +457,11 @@ function initializeMeilisearchIntegration() {
           })
           .catch(error => {
             console.error('Meilisearch error:', error);
-            resultsContainer.innerHTML = '<div style="padding: 20px; text-align: center; color: #f87171;">Search error. Please try again.</div>';
+            const errorEl = document.createElement('div');
+            errorEl.className = 'meilisearch-modal__error';
+            errorEl.innerHTML = 'Search error. Please try again.';
+
+            resultsContainer.appendChild(errorEl);
           });
         }, 300);
       });

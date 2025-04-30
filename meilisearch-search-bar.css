@@ -35,6 +35,13 @@
   font-size: 12px;
 }
 
+.meilisearch-flexwrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
 .meilisearch-modal-overlay {
   position: fixed;
   top: 0;
@@ -52,17 +59,21 @@
 }
 
 .meilisearch-modal {
+  background-color: #fff;
   width: 600px;
   max-width: 90%;
   max-height: 80vh; 
   margin-top: 70px; /* Fixed distance from top */
   border-radius: 12px;
-  background-color: #1a1033;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   display: flex;
   flex-direction: column;
   border: 1px solid rgba(255, 255, 255, 0.1);
   overflow: hidden;
+}
+
+.dark .meilisearch-modal {
+  background-color: #1a1033;
 }
 
 .meilisearch-modal__input-container {
@@ -72,23 +83,32 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+
 .meilisearch-modal__input {
   background: transparent;
   border: none;
-  color: white;
   font-size: 16px;
   outline: none;
   width: 100%;
   margin-right: 10px;
+  color: rgb(var(--gray-700));
+}
+
+.dark .meilisearch-modal__input {
+  color: rgb(var(--gray-100));
 }
 
 .meilisearch-modal__escape {
-  color: rgba(255, 255, 255, 0.5);
   font-size: 12px;
   padding: 4px 8px;
   border-radius: 4px;
-  background-color: rgba(255, 255, 255, 0.1);
   margin-left: auto;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.dark .meilisearch-modal__escape {
+  color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .meilisearch-modal__results {
@@ -97,19 +117,64 @@
   padding: 0;
 }
 
+.meilisearch-modal__indicator {
+  padding: 20px; 
+  text-align: center; 
+}
+
+.dark .meilisearch-modal__indicator {
+  color: rgba(255, 255, 255, 0.7);
+}
+
 .meilisearch-modal__category-header {
   padding: 12px 20px 8px;
   font-size: 14px;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.5);
   text-transform: uppercase;
 }
 
-.meilisearch-modal__category-link {
+.dark .meilisearch-modal__category-header {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.meilisearch-modal__result {
   display: block;
   padding: 12px 20px;
   text-decoration: none;
-  color: white;
   border-left: 3px solid transparent;
   transition: background-color 0.2s, border-color 0.2s;
+}
+
+.dark .meilisearch-modal__result {
+  color: white;
+}
+
+.meilisearch-modal__result:hover {
+  background-color:  rgba(255, 255, 255, 0.05);
+  border-left-color:  #f472b6;
+}
+
+.meilisearch-modal__result-heading {
+  font-weight: 500; 
+  margin-bottom: 4px;
+}
+
+.meilisearch-modal__result-content {
+  font-size: 13px; 
+}
+
+.dark .meilisearch-modal__result-content {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.meilisearch-modal__category-em {
+  font-style: normal; 
+  color: #f472b6; 
+  font-weight: bold;
+}
+
+.meilisearch-modal__error {
+  padding: 20px; 
+  text-align: center; 
+  color: #f87171;
 }
