@@ -19,6 +19,10 @@ client.index('movies').update(primary_key='id')
 $client->updateIndex('movies', ['primaryKey' => 'id']);
 ```
 
+```java Java
+client.updateIndex("movies", "id");
+```
+
 ```ruby Ruby
 client.index('movies').update(primary_key: 'movie_id')
 ```

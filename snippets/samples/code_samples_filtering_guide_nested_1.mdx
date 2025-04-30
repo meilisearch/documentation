@@ -28,6 +28,11 @@ $client->index('movie_ratings')->search('thriller', [
 ]);
 ```
 
+```java Java
+SearchRequest searchRequest = SearchRequest.builder().q("thriller").filter(new String[] {"rating.users >= 90"}).build();
+client.index("movie_ratings").search(searchRequest);
+```
+
 ```ruby Ruby
 client.index('movies_ratings').search('thriller', {
   filter: 'rating.users >= 90'

@@ -28,6 +28,16 @@ $client->index('books')->search('classic', [
 ]);
 ```
 
+```java Java
+SearchRequest searchRequest = SearchRequest.builder().q("classic").facets(new String[]
+{
+  "genres",
+  "rating",
+  "language"
+}).build();
+client.index("books").search(searchRequest);
+```
+
 ```ruby Ruby
 client.index('books').search('classic', {
   facets: ['genres', 'rating', 'language']

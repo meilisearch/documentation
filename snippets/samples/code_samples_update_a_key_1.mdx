@@ -34,6 +34,14 @@ $client->updateKey('6062abda-a5aa-4414-ac91-ecd7944c0f8d',
   ]);
 ```
 
+```java Java
+KeyUpdate keyChanges = new KeyUpdate();
+keyChanges.setName("Products/Reviews API key");
+keyChanges.setDescription("Manage documents: Products/Reviews API key");
+
+client.updateKey("6062abda-a5aa-4414-ac91-ecd7944c0f8d", keyChanges);
+```
+
 ```ruby Ruby
 client.update_key(
   '6062abda-a5aa-4414-ac91-ecd7944c0f8d',

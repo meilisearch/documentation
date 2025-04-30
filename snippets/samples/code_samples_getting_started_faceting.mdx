@@ -38,6 +38,15 @@ $client->index('movies')
   ]);
 ```
 
+```java Java
+Faceting newFaceting = new Faceting();
+newFaceting.setMaxValuesPerFacet(2);
+HashMap<String, FacetSortValue> facetSortValues = new HashMap<>();
+facetSortValues.put("*", FacetSortValue.COUNT);
+newFaceting.setSortFacetValuesBy(facetSortValues);
+client.index("movies").updateFacetingSettings(newFaceting);
+```
+
 ```ruby Ruby
 client.index('movies').update_faceting({
   max_values_per_facet: 2,

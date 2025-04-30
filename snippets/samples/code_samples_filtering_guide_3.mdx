@@ -28,6 +28,11 @@ $client->index('movie_ratings')->search('Planet of the Apes', [
 ]);
 ```
 
+```java Java
+SearchRequest searchRequest = SearchRequest.builder().q("Planet of the Apes").filter(new String[] {"release_date > 1577884550 AND (NOT director = \"Tim Burton\")"}).build();
+client.index("movie_ratings").search(searchRequest);
+```
+
 ```ruby Ruby
 client.index('movie_ratings').search('Planet of the Apes', {
   filter: "release_date > 1577884550 AND (NOT director = \"Tim Burton\")"

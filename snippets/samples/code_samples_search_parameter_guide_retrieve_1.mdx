@@ -31,6 +31,11 @@ $client->index('movies')->search('shifu', [
 ]);
 ```
 
+```java Java
+SearchRequest searchRequest = SearchRequest.builder().q("a").attributesToRetrieve(new String[] {"overview", "title"}).build();
+client.index("movies").search(searchRequest);
+```
+
 ```ruby Ruby
 client.index('movies').search('shifu', {
   attributes_to_retrieve: ['overview', 'title']

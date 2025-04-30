@@ -23,6 +23,11 @@ $client->index('meteorites')->search('', [
 ]);
 ```
 
+```java Java
+SearchRequest searchRequest = SearchRequest.builder().q("").filter(new String[] {"mass < 200"}).build();
+client.index("meteorites").search(searchRequest);
+```
+
 ```ruby Ruby
 client.index('meteorites').search('', { filter: 'mass < 200' })
 ```

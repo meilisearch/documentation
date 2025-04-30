@@ -26,6 +26,12 @@ $client->index('restaurants')->updateFilterableAttributes([
 ]);
 ```
 
+```java Java
+Settings settings = new Settings();
+settings.setFilterableAttributes(new String[] {"_geo"});
+client.index("restaurants").updateSettings(settings);
+```
+
 ```ruby Ruby
 client.index('restaurants').update_filterable_attributes(['_geo'])
 ```

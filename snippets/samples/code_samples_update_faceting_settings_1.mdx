@@ -41,6 +41,16 @@ $client->index('books')->updateFaceting([
 ]);
 ```
 
+```java Java
+Faceting newFaceting = new Faceting();
+newFaceting.setMaxValuesPerFacet(2);
+HashMap<String, FacetSortValue> facetSortValues = new HashMap<>();
+facetSortValues.put("*", FacetSortValue.ALPHA);
+facetSortValues.put("genres", FacetSortValue.COUNT);
+newFaceting.setSortFacetValuesBy(facetSortValues);
+client.index("books").updateFacetingSettings(newFaceting);
+```
+
 ```ruby Ruby
 client.index('books').update_faceting({
   max_values_per_facet: 2,

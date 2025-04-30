@@ -41,6 +41,13 @@ $client->index('movies')->updateSynonyms([
 ]);
 ```
 
+```java Java
+HashMap<String, String[]> synonyms = new HashMap<String, String[]>();
+synonyms.put("wolverine", new String[] {"xmen", "logan"});
+synonyms.put("logan", new String[] {"wolverine"});
+client.index("movies").updateSynonymsSettings(synonyms);
+```
+
 ```ruby Ruby
 client.index('movies').update_synonyms({
   wolverine: ['xmen', 'logan'],

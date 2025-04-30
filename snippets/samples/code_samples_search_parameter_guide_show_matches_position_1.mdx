@@ -29,6 +29,11 @@ $client->index('movies')->search('winter feast', [
 ]);
 ```
 
+```java Java
+SearchRequest searchRequest = SearchRequest.builder().q("winter feast").showMatchesPosition(true).build();
+SearchResultPaginated searchResult = client.index("movies").search(searchRequest);
+```
+
 ```ruby Ruby
 client.index('movies').search('winter feast', {
   show_matches_position: true

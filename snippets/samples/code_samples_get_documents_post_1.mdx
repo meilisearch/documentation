@@ -36,6 +36,14 @@ $client->index('books')->getDocuments(
 );
 ```
 
+```java Java
+DocumentsQuery query = new DocumentsQuery()
+  .setFilter(new String[] {"(rating > 3 AND (genres = Adventure OR genres = Fiction)) AND language = English"})
+  .setFields(new String[] {"title", "genres", "rating", "language"})
+  .setLimit(3);
+client.index("books").getDocuments(query, TargetClassName.class);
+```
+
 ```ruby Ruby
 client.index('books').get_documents(
   filter: '(rating > 3 AND (genres = Adventure OR genres = Fiction)) AND language = English',

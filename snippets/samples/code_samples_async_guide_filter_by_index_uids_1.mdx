@@ -12,6 +12,11 @@ client.get_tasks({'indexUids': ['movies']})
 $client->getTasks((new TasksQuery())->setIndexUids(['movies']));
 ```
 
+```java Java
+TasksQuery query = new TasksQuery().setIndexUids(new String[] {"movies"});
+client.getTasks(query);
+```
+
 ```ruby Ruby
 client.get_tasks(index_uids: ['movies'])
 ```

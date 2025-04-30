@@ -23,6 +23,11 @@ $client->index('meteorites')->search('', [
 ]);
 ```
 
+```java Java
+SearchRequest searchRequest = SearchRequest.builder().q("").filter(new String[] {"_geoRadius(46.9480, 7.4474, 210000)"}).build();
+client.index("meteorites").search(searchRequest);
+```
+
 ```ruby Ruby
 client.index('meteorites').search('', { filter: '_geoRadius(46.9480, 7.4474, 210000)' })
 ```

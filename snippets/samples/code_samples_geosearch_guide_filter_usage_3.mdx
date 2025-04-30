@@ -25,6 +25,13 @@ $client->index('restaurants')->search('', [
 ]);
 ```
 
+```java Java
+SearchRequest searchRequest = SearchRequest.builder().q()("").filter(new String[] {
+    "_geoBoundingBox([45.494181, 9.214024], [45.449484, 9.179175])"
+  }).build();
+client.index("restaurants").search(searchRequest);
+```
+
 ```ruby Ruby
 client.index('restaurants').search('', { filter: ['_geoBoundingBox([45.494181, 9.214024], [45.449484, 9.179175])'] })
 ```
