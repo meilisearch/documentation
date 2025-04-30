@@ -26,11 +26,6 @@ client.index('books').search('butler', {
 $client->index('books')->search('butler', ['sort' => ['author:desc']]);
 ```
 
-```java Java
-SearchRequest searchRequest = SearchRequest.builder().q("butler").sort(new String[] {"author:desc"}).build();
-client.index("books").search(searchRequest);
-```
-
 ```ruby Ruby
 client.index('books').search('butler', { sort: ['author:desc'] })
 ```

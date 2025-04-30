@@ -32,16 +32,6 @@ $client->index('movies')->search('shifu', [
 ]);
 ```
 
-```java Java
-SearchRequest searchRequest =
-        SearchRequest.builder()
-                .q("shifu")
-                .attributesToCrop(new String[] {"overview"})
-                .cropMarker("[…]")
-                .build();
-client.index("movies").search(searchRequest);
-```
-
 ```ruby Ruby
 client.index('movies').search('shifu', {
   attributes_to_crop: ['overview'],

@@ -29,11 +29,6 @@ $client->index('books')->facetSearch(
 );
 ```
 
-```java Java
-FacetSearchRequest fsr = FacetSearchRequest.builder().facetName("genres").facetQuery("c").build();
-client.index("books").facetSearch(fsr);
-```
-
 ```ruby Ruby
 client.index('books').facet_search('genres', 'c')
 ```

@@ -26,11 +26,6 @@ client.index('games').search('', {
 $client->index('games')->search('', ['sort' => ['release_timestamp:desc']]);
 ```
 
-```java Java
-SearchRequest searchRequest = SearchRequest.builder().q("").sort(new String[] {"release_timestamp:desc"}).build();
-client.index("games").search(searchRequest);
-```
-
 ```ruby Ruby
 client.index('games').search('', sort: ['release_timestamp:desc'])
 ```

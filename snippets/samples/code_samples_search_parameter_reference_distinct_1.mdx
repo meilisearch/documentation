@@ -24,11 +24,6 @@ $client->index('INDEX_NAME')->search('QUERY TERMS', [
 ]);
 ```
 
-```java Java
-SearchRequest searchRequest = SearchRequest.builder().q("QUERY TERMS").distinct("ATTRIBUTE_A").build();
-client.index("INDEX_NAME").search(searchRequest);
-```
-
 ```ruby Ruby
 client.index('INDEX_NAME').search('QUERY TERMS', {
   distinct: 'ATTRIBUTE_A'

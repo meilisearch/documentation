@@ -17,11 +17,6 @@ client.get_tasks({'statuses': ['failed', 'canceled']})
 $client->getTasks((new TasksQuery())->setStatuses(['failed', 'canceled']));
 ```
 
-```java Java
-TasksQuery query = new TasksQuery().setStatuses(new String[] {"failed", "canceled"});
-client.getTasks(query);
-```
-
 ```ruby Ruby
 client.get_tasks(statuses: ['failed', 'canceled'])
 ```

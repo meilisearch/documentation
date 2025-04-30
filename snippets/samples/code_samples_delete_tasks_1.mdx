@@ -17,11 +17,6 @@ client.delete_tasks({'uids': ['1', '2']})
 $client->deleteTasks((new DeleteTasksQuery())->setUids([1, 2]));
 ```
 
-```java Java
-DeleteTasksQuery query = new DeleteTasksQuery().setUids(new int[] {1, 2})
-client.deleteTasks(query);
-```
-
 ```ruby Ruby
 client.delete_tasks(uids: [1, 2])
 ```

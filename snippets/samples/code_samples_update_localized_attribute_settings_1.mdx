@@ -28,16 +28,6 @@ $client->index('INDEX_NAME')->updateLocalizedAttributes([
 ]);
 ```
 
-```java Java
-LocalizedAttribute attribute = new LocalizedAttribute();
-attribute.setAttributePatterns(new String[] {"jpn"});
-attribute.setLocales(new String[] {"*_ja"});
-
-client.index("INDEX_NAME").updateLocalizedAttributesSettings(
-  new LocalizedAttributes[] {attribute}
-);
-```
-
 ```ruby Ruby
 client.index('INDEX_NAME').update_localized_attributes([
   { attribute_patterns: ['*_ja'], locales: ['jpn'] },

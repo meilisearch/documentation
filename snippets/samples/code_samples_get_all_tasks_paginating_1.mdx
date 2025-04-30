@@ -21,14 +21,6 @@ $taskQuery = (new TasksQuery())->setLimit(2)->setFrom(10));
 $client->getTasks($taskQuery);
 ```
 
-```java Java
-TasksQuery query = new TasksQuery()
-      .setLimit(2)
-      .setFrom(10);
-
-client.index("movies").getTasks(query);
-```
-
 ```ruby Ruby
 client.tasks(limit: 2, from: 10)
 ```

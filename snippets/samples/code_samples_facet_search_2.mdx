@@ -27,14 +27,6 @@ client.index('books').update_faceting_settings({ 'sortFacetValuesBy': { 'genres'
 $client->index('books')->updateFaceting(['sortFacetValuesBy' => ['genres' => 'count']]);
 ```
 
-```java Java
-Faceting newFaceting = new Faceting();
-HashMap<String, FacetSortValue> facetSortValues = new HashMap<>();
-facetSortValues.put("genres", FacetSortValue.COUNT);
-newFaceting.setSortFacetValuesBy(facetSortValues);
-client.index("books").updateFacetingSettings(newFaceting);
-```
-
 ```ruby Ruby
 client.index('books').update_faceting(
   sort_facet_values_by: {

@@ -19,11 +19,6 @@ client.index('articles').update_non_separator_tokens(["@", "#"])
 $client->index('articles')->updateNonSeparatorTokens(['@', '#']);
 ```
 
-```java Java
-String[] newSeparatorTokens = { "@", "#" };
-client.index("articles").updateNonSeparatorTokensSettings(newSeparatorTokens);
-```
-
 ```ruby Ruby
 client.index('articles').update_non_separator_tokens(['@', '#'])
 ```

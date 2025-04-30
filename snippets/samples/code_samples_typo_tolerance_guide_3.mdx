@@ -29,12 +29,6 @@ $client->index('movies')->updateTypoTolerance([
 ]);
 ```
 
-```java Java
-TypoTolerance typoTolerance = new TypoTolerance();
-typoTolerance.setDisableOnWords(new String[] {"shrek"});
-client.index("movies").updateTypoToleranceSettings(typoTolerance);
-```
-
 ```ruby Ruby
 index('books').update_typo_tolerance({ disable_on_words: ['shrek'] })
 ```

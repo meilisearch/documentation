@@ -69,15 +69,6 @@ $client->multiSearch([
   ]);
 ```
 
-```java Java
-MultiSearchRequest multiSearchRequest = new MultiSearchRequest();
-multiIndexSearch.addQuery(new IndexSearchRequest("movies").setQuery("pooh").setLimit(5));
-multiIndexSearch.addQuery(new IndexSearchRequest("movies").setQuery("nemo").setLimit(5));
-multiIndexSearch.addQuery(new IndexSearchRequest("movie_ratings").setQuery("us"));
-
-client.multiSearch(multiSearchRequest);
-```
-
 ```ruby Ruby
 client.multi_search([
   { index_uid: 'books', q: 'prince' },

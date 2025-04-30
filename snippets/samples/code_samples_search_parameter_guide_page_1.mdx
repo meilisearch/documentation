@@ -24,11 +24,6 @@ client.index('movies').search('', {'page': 2})
 $client->index('movies')->search('', ['page' => 2]);
 ```
 
-```java Java
-SearchRequest searchRequest = SearchRequest.builder().q("").page(15).build();
-SearchResultPaginated searchResult = client.index("movies").search(searchRequest);
-```
-
 ```ruby Ruby
 client.index('movies').search('', page: 2)
 ```

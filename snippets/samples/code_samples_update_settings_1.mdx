@@ -224,64 +224,6 @@ $client->index('movies')->updateSettings([
 ]);
 ```
 
-```java Java
-Settings settings = new Settings();
-settings.setRankingRules(
-  new String[] {
-      "words",
-      "typo",
-      "proximity",
-      "attribute",
-      "sort",
-      "exactness",
-      "release_date:desc",
-      "rank:desc"
-  });
-settings.setDistinctAttribute("movie_id");
-settings.setSearchableAttributes(
-  new String[] {
-    "title",
-    "overview",
-    "genres"
-  });
-settings.setDisplayedAttributes(
-  new String[] {
-    "title",
-    "overview",
-    "genres",
-    "release_date"
-  });
-settings.setStopWords(
-  new String[] {
-    "the",
-    "a",
-    "an"
-  });
-settings.setSortableAttributes(
-  new String[] {
-    "title",
-    "release_date"
-  });
-
-HashMap<String, String[]> synonyms = new HashMap<String, String[]>();
-synonyms.put("wolverine", new String[] {"xmen", "logan"});
-synonyms.put("logan", new String[] {"wolverine"});
-settings.setSynonyms(synonyms);
-
-HashMap<String, Integer> minWordSizeTypos =
-  new HashMap<String, Integer>() {
-    {
-      put("oneTypo", 8);
-      put("twoTypos", 10);
-    }
-  };
-TypoTolerance typoTolerance = new TypoTolerance();
-typoTolerance.setMinWordSizeForTypos(minWordSizeTypos);
-settings.setTypoTolerance(typoTolerance);
-settings.setSearchCutoffMs(150);
-client.index("movies").updateSettings(settings);
-```
-
 ```ruby Ruby
 client.index('movies').update_settings({
   ranking_rules: [

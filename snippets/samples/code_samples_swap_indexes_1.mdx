@@ -35,15 +35,6 @@ client.swap_indexes([{'indexes': ['indexA', 'indexB']}, {'indexes': ['indexX', '
 $client->swapIndexes([['indexA', 'indexB'], ['indexX', 'indexY']]);
 ```
 
-```java Java
-SwapIndexesParams[] params =
-        new SwapIndexesParams[] {
-            new SwapIndexesParams().setIndexes(new String[] {"indexA", "indexB"}),
-            new SwapIndexesParams().setIndexes(new String[] {"indexX", "indexY"})
-        };
-TaskInfo task = client.swapIndexes(params);
-```
-
 ```ruby Ruby
 client.swap_indexes(['indexA', 'indexB'], ['indexX', 'indexY'])
 ```
