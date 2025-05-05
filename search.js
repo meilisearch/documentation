@@ -103,32 +103,14 @@ function initializeMeilisearchIntegration() {
     // Create our search input container
     const searchBarContainer = document.createElement('div');
     searchBarContainer.id = 'meilisearch-bar-container';
-    searchBarContainer.style.cssText = `
-      max-width: 480px;
-      width: 100%;
-      margin: 0 auto;
-      padding: 0 10px;
-    `;
+    searchBarContainer.className = 'meilisearch-bar-container';
     
     // Create the search input that looks like Meilisearch's
     const searchBar = document.createElement('div');
     searchBar.id = 'meilisearch-search-bar';
+    searchBar.className = 'meilisearch-search-bar';
     searchBar.role = 'button';
     searchBar.tabIndex = 0;
-    searchBar.style.cssText = `
-      display: flex;
-      align-items: center;
-      background-color: rgba(25, 17, 53, 0.5);
-      border-radius: 12px;
-      padding: 8px 16px;
-      color: rgba(255, 255, 255, 0.7);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      cursor: pointer;
-      width: 100%;
-      transition: all 0.2s ease;
-      backdrop-filter: blur(8px);
-      font-size: 14px;
-    `;
     
     // Add the search icon and placeholder text
     searchBar.innerHTML = `
@@ -136,8 +118,8 @@ function initializeMeilisearchIntegration() {
         <circle cx="11" cy="11" r="8"></circle>
         <path d="m21 21-4.3-4.3"></path>
       </svg>
-      <span style="flex-grow: 1;">Search...</span>
-      <span style="opacity: 0.7; font-size: 12px;">⌘K</span>
+      <span class="meilisearch-search-bar__text">Search…</span>
+      <span class="meilisearch-search-bar__shortcut">⌘K</span>
     `;
     
     // Append the search bar to the container
@@ -151,12 +133,7 @@ function initializeMeilisearchIntegration() {
     if (!isFlexContainer) {
       // Create a wrapper to center the search bar
       const flexWrapper = document.createElement('div');
-      flexWrapper.style.cssText = `
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-      `;
+      flexWrapper.className = 'meilisearch-flexwrapper';
       flexWrapper.appendChild(searchBarContainer);
       headerContainer.appendChild(flexWrapper);
     } else {
@@ -182,77 +159,32 @@ function initializeMeilisearchIntegration() {
     // ========= Step 2: Create the modal search overlay =========
     const modalOverlay = document.createElement('div');
     modalOverlay.id = 'meilisearch-modal-overlay';
-    modalOverlay.style.cssText = `
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      backdrop-filter: blur(8px);
-      background-color: rgba(0, 0, 0, 0.4);
-      z-index: 9999;
-      display: none;
-      align-items: flex-start; /* Align to top */
-      justify-content: center;
-      padding-top: 0;
-      box-sizing: border-box;
-    `;
+    modalOverlay.className = 'meilisearch-modal-overlay';
     
     // Create the search modal container
     const searchModal = document.createElement('div');
     searchModal.id = 'meilisearch-modal';
-    searchModal.style.cssText = `
-      width: 600px;
-      max-width: 90%;
-      max-height: 80vh; 
-      margin-top: 70px; /* Fixed distance from top */
-      border-radius: 12px;
-      background-color: #1a1033;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-      display: flex;
-      flex-direction: column;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      overflow: hidden;
-    `;
+    searchModal.className = 'meilisearch-modal';
     
     // Create the search input container
     const searchInputContainer = document.createElement('div');
-    searchInputContainer.style.cssText = `
-      display: flex;
-      align-items: center;
-      padding: 16px 20px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    `;
+    searchInputContainer.className = 'meilisearch-modal__input-container'
     
     // Create the search input
     const searchInput = document.createElement('input');
     searchInput.id = 'meilisearch-search-input';
+    searchInput.className = 'meilisearch-modal__input';
     searchInput.type = 'text';
-    searchInput.placeholder = 'Search...';
-    searchInput.style.cssText = `
-      background: transparent;
-      border: none;
-      color: white;
-      font-size: 16px;
-      outline: none;
-      width: 100%;
-      margin-right: 10px;
-    `;
+    searchInput.placeholder = 'Search…';
     
     // Create the ESC key indicator
     const escIndicator = document.createElement('span');
     escIndicator.textContent = 'ESC';
-    escIndicator.style.cssText = `
-      color: rgba(255, 255, 255, 0.5);
-      font-size: 12px;
-      padding: 4px 8px;
-      border-radius: 4px;
-      background-color: rgba(255, 255, 255, 0.1);
-      margin-left: auto;
-    `;
+    escIndicator.className = 'meilisearch-modal__escape';
     
     // Create the search icon
     const searchIcon = document.createElement('div');
+    searchIcon.className = 'meilisearch-modal__icon';
     searchIcon.innerHTML = `
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 10px;">
         <circle cx="11" cy="11" r="8"></circle>
@@ -268,10 +200,8 @@ function initializeMeilisearchIntegration() {
     // Create the results container
     const resultsContainer = document.createElement('div');
     resultsContainer.id = 'meilisearch-results';
+    resultsContainer.className = 'meilisearch-modal__results';
     resultsContainer.style.cssText = `
-      flex-grow: 1;
-      overflow-y: auto;
-      padding: 0;
     `;
     
     // Append everything to the modal
@@ -417,7 +347,10 @@ function initializeMeilisearchIntegration() {
         
         debounceTimer = setTimeout(() => {
           // Show loading indicator
-          resultsContainer.innerHTML = '<div style="padding: 20px; text-align: center; color: rgba(255, 255, 255, 0.7);">Searching...</div>';
+          const indicatorEl = document.createElement('div');
+          indicatorEl.className = 'meilisearch-modal__indicator';
+          indicatorEl.innerHTML = 'Searching…';
+          resultsContainer.appendChild(indicatorEl);
           
           // Perform search
           index.search(query, {
@@ -434,7 +367,11 @@ function initializeMeilisearchIntegration() {
             resultsContainer.innerHTML = '';
             
             if (response.hits.length === 0) {
-              resultsContainer.innerHTML = '<div style="padding: 20px; text-align: center; color: rgba(255, 255, 255, 0.5);">No results found</div>';
+              const noResultsEl = document.createElement('div');
+              noResultsEl.className = 'meilisearch-modal__indicator';
+              noResultsEl.innerHTML = 'No results found';
+              resultsContainer.appendChild(noResultsEl);
+
               return;
             }
             
@@ -455,13 +392,7 @@ function initializeMeilisearchIntegration() {
               // Only add category header if there are multiple categories
               if (Object.keys(grouped).length > 1) {
                 const categoryHeader = document.createElement('div');
-                categoryHeader.style.cssText = `
-                  padding: 12px 20px 8px;
-                  font-size: 14px;
-                  font-weight: 600;
-                  color: rgba(255, 255, 255, 0.5);
-                  text-transform: uppercase;
-                `;
+                categoryHeader.className = 'meilisearch-modal__category-header';
                 categoryHeader.textContent = category;
                 resultsContainer.appendChild(categoryHeader);
               }
@@ -469,34 +400,27 @@ function initializeMeilisearchIntegration() {
               results.forEach(hit => {
                 const resultItem = document.createElement('a');
                 resultItem.href = hit.url || `/${hit.path}`;
-                resultItem.style.cssText = `
-                  display: block;
-                  padding: 12px 20px;
-                  text-decoration: none;
-                  color: white;
-                  border-left: 3px solid transparent;
-                  transition: background-color 0.2s, border-color 0.2s;
-                `;
+                resultItem.className = 'meilisearch-modal__result';
                 
                 // Format content nicely
                 // Build title from hierarchy levels
                 const hierarchy_lvl1 = hit._formatted?.hierarchy_lvl1 
-                  ? hit._formatted.hierarchy_lvl1.replace(/<em>/g, '<em style="font-style: normal; color: #f472b6; font-weight: bold;">')
+                  ? hit._formatted.hierarchy_lvl1.replace(/<em>/g, '<em class="meilisearch-modal__category-em">')
                   : '';
                 const hierarchy_lvl2 = hit._formatted?.hierarchy_lvl2 
-                  ? hit._formatted.hierarchy_lvl2.replace(/<em>/g, '<em style="font-style: normal; color: #f472b6; font-weight: bold;">')
+                  ? hit._formatted.hierarchy_lvl2.replace(/<em>/g, '<em class="meilisearch-modal__category-em">')
                   : '';
                 const hierarchy_lvl3 = hit._formatted?.hierarchy_lvl3 
-                  ? hit._formatted.hierarchy_lvl3.replace(/<em>/g, '<em style="font-style: normal; color: #f472b6; font-weight: bold;">')
+                  ? hit._formatted.hierarchy_lvl3.replace(/<em>/g, '<em class="meilisearch-modal__category-em">')
                   : '';
                 const hierarchy_lvl4 = hit._formatted?.hierarchy_lvl4 
-                  ? hit._formatted.hierarchy_lvl4.replace(/<em>/g, '<em style="font-style: normal; color: #f472b6; font-weight: bold;">')
+                  ? hit._formatted.hierarchy_lvl4.replace(/<em>/g, '<em class="meilisearch-modal__category-em">')
                   : '';
                 const hierarchy_lvl5 = hit._formatted?.hierarchy_lvl5 
-                  ? hit._formatted.hierarchy_lvl5.replace(/<em>/g, '<em style="font-style: normal; color: #f472b6; font-weight: bold;">')
+                  ? hit._formatted.hierarchy_lvl5.replace(/<em>/g, '<em class="meilisearch-modal__category-em">')
                   : '';
                 const content = hit._formatted?.content 
-                  ? hit._formatted.content.replace(/<em>/g, '<em style="font-style: normal; color: #f472b6; font-weight: bold;">')
+                  ? hit._formatted.content.replace(/<em>/g, '<em class="meilisearch-modal__category-em">')
                   : '';
 
                 let title = '';
@@ -517,19 +441,9 @@ function initializeMeilisearchIntegration() {
                 }
                 
                 resultItem.innerHTML = `
-                  <div style="font-weight: 500; margin-bottom: 4px;">${title}</div>
-                  ${content ? `<div style="font-size: 13px; color: rgba(255, 255, 255, 0.6);">${content}</div>` : ''}
+                  <div class="meilisearch-modal__result-heading">${title}</div>
+                  ${content ? `<div class="meilisearch-modal__result-content">${content}</div>` : ''}
                 `;
-                
-                resultItem.addEventListener('mouseover', () => {
-                  resultItem.style.backgroundColor = 'rgba(255, 255, 255, 0.05)';
-                  resultItem.style.borderLeftColor = '#f472b6';
-                });
-                
-                resultItem.addEventListener('mouseout', () => {
-                  resultItem.style.backgroundColor = 'transparent';
-                  resultItem.style.borderLeftColor = 'transparent';
-                });
                 
                 // Make clicking the result close the modal
                 resultItem.addEventListener('click', () => {
@@ -543,7 +457,11 @@ function initializeMeilisearchIntegration() {
           })
           .catch(error => {
             console.error('Meilisearch error:', error);
-            resultsContainer.innerHTML = '<div style="padding: 20px; text-align: center; color: #f87171;">Search error. Please try again.</div>';
+            const errorEl = document.createElement('div');
+            errorEl.className = 'meilisearch-modal__error';
+            errorEl.innerHTML = 'Search error. Please try again.';
+
+            resultsContainer.appendChild(errorEl);
           });
         }, 300);
       });
