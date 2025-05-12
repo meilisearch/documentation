@@ -20,7 +20,7 @@
 		}
 	},
 	"appearance": {
-    "default": "light"
+      "default": "dark"
 	},
 	"navbar": {
 		"primary": {
