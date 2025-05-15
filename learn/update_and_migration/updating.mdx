@@ -47,9 +47,9 @@ Once the project has been successfully updated, you will receive an email confir
 
 ## Updating a self-hosted Meilisearch instance
 
-<Warning>
 You may update a self-hosted instance in one of two ways: with or without a dump.
 
+<Warning>
 This guide only works for v0.15 and above. If you are using an older Meilisearch release, please [contact support](https://discord.meilisearch.com) for more information.
 </Warning>
 
@@ -156,9 +156,21 @@ Meilisearch should launch normally and immediately create a new `UpgradeDatabase
 
 While the task is processing, you may continue making search queries. You may also enqueue new tasks. Meilisearch will only process new tasks once `UpgradeDatabase` is completed.
 
-<Warning>
-If after the upgrade is completed the task status is set to `failed` or Meilisearch returns internal error messages to your queries, [restart your instance from the snapshot](/learn/data_backup/snapshots#starting-from-a-snapshot) you generated during step 1. You may then retry the upgrade, or upgrade using a dump. You are also welcome to open an issue on the [Meilisearch repository](https://github.com/meilisearch/meilisearch).
-</Warning>
+#### Rolling back an update
+
+If the upgrade is taking too long, or if after the upgrade is completed its task status is set to `failed`, you can cancel the upgrade task.
+
+Cancelling the update task to automatically rolls back your database to its state before the upgrade began.
+
+After launching Meilisearch with `--experimental-dumpless-upgrade` flag:
+
+1. Cancel the `databaseUpgrade` task
+2. If you cancelled the update before it failed, skip to the next step. If the update failed, relaunch Meilisearch using the binary of the version you were upgrading to
+3. Wait for the cancel request to be processed
+4. Replace the new binary with the binary of the previous version
+5. Relaunch Meilisearch
+
+If you are upgrading Meilisearch to <= v1.14, you must instead [restart your instance from the snapshot](/learn/data_backup/snapshots#starting-from-a-snapshot) you generated during step 1. You may then retry the upgrade, or upgrade using a dump. You are also welcome to open an issue on the [Meilisearch repository](https://github.com/meilisearch/meilisearch).
 
 ### Using a dump
 
@@ -504,6 +516,10 @@ rm /var/opt/meilisearch/dumps/{dump_uid.dump}
 
 </Tabs.Content>
 </Tabs.Container>
+
+## Cancel an update
+
+If a Meilisearch update fails or takes too long, depending on your version you can either cancel the update task and automatically roll back to an earlier version of your database, or import a backup snapshot.
 
 ## Version-specific warnings
 
