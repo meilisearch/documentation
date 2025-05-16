@@ -65,3 +65,13 @@ You can disable typo tolerance for a specific [document attribute](/learn/gettin
 <CodeSamplesTypoToleranceGuide2 />
 
 With the above settings, matches in the `title` attribute will not tolerate any typos. For example, a search for `beautiful` (9 characters) will not match the movie "Biutiful" starring Javier Bardem. With the default settings, this would be a match.
+
+## `disableOnNumbers`
+
+By default, typo tolerance on numerical values is turned on. This may lead to false positives: a search for `2024` is likely to match terms such as `2025` and `2004`.
+
+You can disable typo tolerance for all numeric values across all indexes and search requests:
+
+<CodeSamplesTypoToleranceGuide5 />
+
+When `disableOnNumbers` is set to `true`, queries with numbers only return exact matches. Besides reducing the number of false positives, disabling typo tolerance on numbers may also improve indexing performance.
