@@ -2347,6 +2347,7 @@ Typo tolerance helps users find relevant results even when their search queries 
 | **`minWordSizeForTypos.twoTypos`** | Integer          | `9`           | The minimum word size for accepting 2 typos; must be between `oneTypo` and `255` |
 | **`disableOnWords`**               | Array of strings | Empty         | An array of words for which the typo tolerance feature is disabled               |
 | **`disableOnAttributes`**          | Array of strings | Empty         | An array of attributes for which the typo tolerance feature is disabled          |
+| **`disableOnNumbers`**             | Boolean          | `false`       | Whether typo tolerance for numbers is disabled or enabled                        |
 
 ### Get typo tolerance settings
 
@@ -2401,6 +2402,7 @@ Partially update the typo tolerance settings for an index.
   },
   "disableOnWords": [<String>, <String>, …],
   "disableOnAttributes": [<String>, <String>, …]
+  "disableOnNumbers": <Boolean>,
 }
 ```
 
@@ -2411,6 +2413,7 @@ Partially update the typo tolerance settings for an index.
 | **`minWordSizeForTypos.twoTypos`** | Integer          | `9`           | The minimum word size for accepting 2 typos; must be between `oneTypo` and `255` |
 | **`disableOnWords`**               | Array of strings | Empty         | An array of words for which the typo tolerance feature is disabled               |
 | **`disableOnAttributes`**          | Array of strings | Empty         | An array of attributes for which the typo tolerance feature is disabled          |
+| **`disableOnNumbers`**             | Boolean          | `false`       | Whether typo tolerance for numbers is disabled or enabled                        |
 
 #### Example
 

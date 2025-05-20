@@ -831,6 +831,13 @@ typo_tolerance_guide_4: |-
         "twoTypos": 10
       }
     }'
+typo_tolerance_guide_5: |-
+  curl \
+    -X PATCH 'MEILISEARCH_URL/indexes/movies/settings/typo-tolerance' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "disableOnNumbers": true
+    }'
 updating_guide_check_version_new_authorization_header: |-
   curl \
     -X GET 'http://<your-domain-name>/version' \
