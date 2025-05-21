@@ -63,7 +63,7 @@ The `/stats` route gives extended information and metrics about indexes and the 
 | **`numberOfEmbeddedDocuments`** | Integer | Total number of documents with at least one embedding                                                        |
 | **`numberOfEmbeddings`**        | Integer | Total number of embeddings in an index                                                                       |
 | **`rawDocumentDbSize`**         | Integer | Storage space claimed by all documents in the index in bytes                                                 |
-| **`avgDocumentDbSize`**         | Integer | Total size of the documents stored in an index divided by the number of documents                            |
+| **`avgDocumentDbSize`**         | Integer | Total size of the documents stored in an index divided by the number of documents in that same index         |
 | **`isIndexing`**                | Boolean | If `true`, the index is still processing documents and attempts to search will result in undefined behavior  |
 | **`fieldDistribution`**         | Object  | Shows every field in the index along with the total number of documents containing that field in said index  |
 
