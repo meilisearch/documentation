@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "b321d331-d809-4909-8e49-e29c8d749d32",
-		"name": "Meilisearch v1.14",
+		"name": "Meilisearch v1.15",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "25294324"
 	},
@@ -1898,7 +1898,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"minWordSizeForTypos\": {\n        \"oneTypo\": 2,\n        \"twoTypos\": 11\n    },\n    \"disableOnWords\": [\"Prince\"],\n    \"disableOnAttributes\": [\"genre\"]\n}"
+									"raw": "{\n    \"minWordSizeForTypos\": {\n        \"oneTypo\": 2,\n        \"twoTypos\": 11\n    },\n    \"disableOnWords\": [\"Prince\"],\n    \"disableOnAttributes\": [\"genre\"],\n    \"disableOnNumbers\": true\n}"
 								},
 								"url": {
 									"raw": "{{url}}/indexes/{{indexUID}}/settings/typo-tolerance",
