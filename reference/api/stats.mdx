@@ -23,6 +23,8 @@ The `/stats` route gives extended information and metrics about indexes and the 
       "numberOfDocuments": 19654,
       "numberOfEmbeddedDocuments": 1,
       "numberOfEmbeddings": 1,
+      "rawDocumentDbSize": 5320,
+      "avgDocumentSize": 92,
       "isIndexing": false,
       "fieldDistribution": {
         "poster": 19654,
@@ -36,6 +38,8 @@ The `/stats` route gives extended information and metrics about indexes and the 
       "numberOfDocuments": 5,
       "numberOfEmbeddedDocuments": 5,
       "numberOfEmbeddings": 10,
+      "rawDocumentDbSize": 8780,
+      "avgDocumentSize": 422,
       "isIndexing": false,
       "fieldDistribution": {
         "id": 5,
@@ -58,6 +62,8 @@ The `/stats` route gives extended information and metrics about indexes and the 
 | **`numberOfDocuments`**         | Integer | Total number of documents in an index                                                                        |
 | **`numberOfEmbeddedDocuments`** | Integer | Total number of documents with at least one embedding                                                        |
 | **`numberOfEmbeddings`**        | Integer | Total number of embeddings in an index                                                                       |
+| **`rawDocumentDbSize`**         | Integer | Storage space claimed by all documents in the index in bytes                                                 |
+| **`avgDocumentDbSize`**         | Integer | Total size of the documents stored in an index divided by the number of documents                            |
 | **`isIndexing`**                | Boolean | If `true`, the index is still processing documents and attempts to search will result in undefined behavior  |
 | **`fieldDistribution`**         | Object  | Shows every field in the index along with the total number of documents containing that field in said index  |
 
@@ -87,6 +93,8 @@ Get stats of all indexes.
       "numberOfDocuments": 19654,
       "numberOfEmbeddedDocuments": 1,
       "numberOfEmbeddings": 1,
+      "rawDocumentDbSize": 2087,
+      "avgDocumentSize": 41,
       "isIndexing": false,
       "fieldDistribution": {
         "poster": 19654,
@@ -136,6 +144,8 @@ Get stats of an index.
   "numberOfDocuments": 19654,
   "numberOfEmbeddedDocuments": 1,
   "numberOfEmbeddings": 1,
+  "rawDocumentDbSize": 3618,
+  "avgDocumentSize": 104,
   "isIndexing": false,
   "fieldDistribution": {
     "poster": 19654,
