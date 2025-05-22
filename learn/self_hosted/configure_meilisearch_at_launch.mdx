@@ -435,6 +435,13 @@ When using the configuration file, it is also possible to explicitly pass a bool
 
 Sets the directory where Meilisearch will store snapshots.
 
+### Uncompressed snapshots <NoticeTag type="experimental" label="experimental" />
+
+**Environment variable**: `MEILI_EXPERIMENTAL_NO_SNAPSHOT_COMPACTION`<br />
+**CLI option**: `--experimental-no-snapshot-compaction`<br />
+
+Disables snapshot compression. This may significantly speed up snapshot creation at the cost of bigger snapshot files.
+
 ### Import snapshot
 
 **Environment variable**: `MEILI_IMPORT_SNAPSHOT`<br />
