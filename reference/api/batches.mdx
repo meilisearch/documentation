@@ -16,6 +16,21 @@ The `/batches` route gives information about the progress of batches of [asynchr
 ```json
 {
   "uid": 0,
+  "progress": {
+    "steps": [
+      { 
+        "currentStep": "extracting words",
+        "finished": 2,
+        "total": 9,
+      },
+      {
+        "currentStep": "document",
+        "finished": 30546,
+        "total": 31944,
+      }
+    ],
+    "percentage": 32.8471
+  },
   "details": {
     "receivedDocuments": 6,
     "indexedDocuments": 6
@@ -38,21 +53,7 @@ The `/batches` route gives information about the progress of batches of [asynchr
   "duration": "PT0.250518S",
   "startedAt": "2024-12-10T15:20:30.18182Z",
   "finishedAt": "2024-12-10T15:20:30.432338Z",
-  "progress": {
-    "steps": [
-      { 
-        "currentStep": "extracting words",
-        "finished": 2,
-        "total": 9,
-      },
-      {
-        "currentStep": "document",
-        "finished": 30546,
-        "total": 31944,
-      }
-    ],
-    "percentage": 32.8471
-  }
+  "batchStrategy": "batched all enqueued tasks"
 }
 ```
 
@@ -137,6 +138,11 @@ Size of each internal database, including by how much it changed after a batch w
 **Type**: String<br />
 **Description**: The date and time when the tasks finished `processing`, whether `failed`, `succeeded`, or `canceled`, in [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format
 
+### `batchStrategy`
+
+**Type**: String<br />
+**Description**: A string describing the logic behind the creation of the batch. Can contain useful information when diagnosing indexing performance issues.
+
 ## Get batches
 
 <RouteHighlighter method="GET" path="/batches" />
@@ -193,13 +199,13 @@ For example, `?uids=0` returns a batch containing the task with a `taskUid` equa
   "results": [
     {
       "uid": 2,
+      "progress": null,
       "details": {
         "stopWords": [
           "of",
           "the"
         ]
       },
-      "progress": null,
       "stats": {
         "totalNbTasks": 1,
         "status": {
@@ -217,7 +223,8 @@ For example, `?uids=0` returns a batch containing the task with a `taskUid` equa
       },
       "duration": "PT0.110083S",
       "startedAt": "2024-12-10T15:49:04.995321Z",
-      "finishedAt": "2024-12-10T15:49:05.105404Z"
+      "finishedAt": "2024-12-10T15:49:05.105404Z",
+      "batchStrategy": "batched all enqueued tasks"
     }
   ],
   "total": 3,
@@ -267,6 +274,7 @@ Get a single batch.
   },
   "duration": "PT0.364788S",
   "startedAt": "2024-12-10T15:48:49.672141Z",
-  "finishedAt": "2024-12-10T15:48:50.036929Z"
+  "finishedAt": "2024-12-10T15:48:50.036929Z",
+  "batchStrategy": "batched all enqueued tasks"
 }
 ```
