@@ -513,6 +513,15 @@ Includes an authentication token in the authorization header when notifying the 
 
 Limit the number of tasks Meilisearch performs in a single batch. May improve stability in systems handling a large queue of resource-intensive tasks.
 
+### Maximum batch payload size <NoticeTag type="experimental" label="experimental" />
+
+**Environment variable**: `MEILI_EXPERIMENTAL_LIMIT_BATCHED_TASKS_TOTAL_SIZE`<br />
+**CLI option**: `--experimental-limit-batched-tasks-total-size`<br />
+**Default value**: `None`<br />
+**Expected value**: an integer
+
+Sets a maximum payload size for batches in bytes. Smaller batches are less efficient, but consume less RAM and reduce immediate latency.
+
 ### Replication parameters <NoticeTag type="experimental" label="experimental" />
 
 <Warning>
