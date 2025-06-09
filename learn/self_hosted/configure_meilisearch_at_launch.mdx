@@ -435,6 +435,13 @@ When using the configuration file, it is also possible to explicitly pass a bool
 
 Sets the directory where Meilisearch will store snapshots.
 
+### Uncompressed snapshots <NoticeTag type="experimental" label="experimental" />
+
+**Environment variable**: `MEILI_EXPERIMENTAL_NO_SNAPSHOT_COMPACTION`<br />
+**CLI option**: `--experimental-no-snapshot-compaction`<br />
+
+Disables snapshot compression. This may significantly speed up snapshot creation at the cost of bigger snapshot files.
+
 ### Import snapshot
 
 **Environment variable**: `MEILI_IMPORT_SNAPSHOT`<br />
@@ -505,6 +512,15 @@ Includes an authentication token in the authorization header when notifying the 
 **Expected value**: an integer
 
 Limit the number of tasks Meilisearch performs in a single batch. May improve stability in systems handling a large queue of resource-intensive tasks.
+
+### Maximum batch payload size <NoticeTag type="experimental" label="experimental" />
+
+**Environment variable**: `MEILI_EXPERIMENTAL_LIMIT_BATCHED_TASKS_TOTAL_SIZE`<br />
+**CLI option**: `--experimental-limit-batched-tasks-total-size`<br />
+**Default value**: `None`<br />
+**Expected value**: an integer
+
+Sets a maximum payload size for batches in bytes. Smaller batches are less efficient, but consume less RAM and reduce immediate latency.
 
 ### Replication parameters <NoticeTag type="experimental" label="experimental" />
 

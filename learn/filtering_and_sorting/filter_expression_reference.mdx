@@ -69,12 +69,18 @@ genres != action
 
 ### Comparison (`>`, `<`, `>=`, `<=`)
 
-The comparison operators (`>`, `<`, `>=`, `<=`) select documents satisfying a comparison. Comparison operators only apply only to numerical values.
+The comparison operators (`>`, `<`, `>=`, `<=`) select documents satisfying a comparison. Comparison operators apply to both numerical and string values.
 
 The expression below returns all documents with a user rating above 85:
 
 ```
 rating.users > 85
+```
+
+String comparisons resolve in lexicographic order: symbols followed by numbers followed by letters in alphabetic order. The expression below returns all documents released after the first day of 2004:
+
+```
+release_date > 2004-01-01
 ```
 
 ### `TO`
