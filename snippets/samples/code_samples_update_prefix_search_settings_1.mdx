@@ -11,6 +11,10 @@ curl \
 client.index('INDEX_NAME').updatePrefixSearch('disabled');
 ```
 
+```python Python
+client.index('books').update_prefix_search(PrefixSearch.DISABLED)
+```
+
 ```php PHP
 $client->index('INDEX_NAME')->updatePrefixSearch('disabled');
 ```
