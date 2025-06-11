@@ -1,0 +1,619 @@
+---
+title: Chats
+sidebarTitle: Chats
+description: The /chats route allows you to create conversational search experiences using LLM technology
+---
+
+import { RouteHighlighter } from '/snippets/route_highlighter.mdx';
+import { Warning } from '/snippets/notice_tag.mdx'
+
+The `/chats` route enables AI-powered conversational search by integrating Large Language Models (LLMs) with your Meilisearch data. This feature allows users to ask questions in natural language and receive contextual answers based on your indexed content.
+
+<Note>
+This is an experimental feature. Use the Meilisearch Cloud UI or the experimental features endpoint to activate it:
+
+```sh
+curl \
+  -X PATCH 'MEILISEARCH_URL/experimental-features/' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "chatCompletions": true
+  }'
+```
+</Note>
+
+## Chat completions workspace object
+
+```json
+{
+  "uid": "customer-support"
+}
+```
+
+| Name        | Type   | Description                                         |
+| :---------- | :----- | :-------------------------------------------------- |
+| **`uid`**   | String | Unique identifier for the chat completions workspace |
+
+## Update the chat workspace settings
+
+<RouteHighlighter method="PATCH" path="/chats/{workspace}/settings" />
+
+Configure the LLM provider and settings for a chat workspace.
+
+```json
+{
+  "source": "openAi",
+  "orgId": null,
+  "projectId": null,
+  "apiVersion": null,
+  "deploymentId": null,
+  "baseUrl": null,
+  "apiKey": "sk-abc...",
+  "prompts": {
+    "system": "You are a helpful assistant that answers questions based on the provided context."
+  }
+}
+```
+
+### Path parameters
+
+| Name            | Type   | Description                          |
+| :-------------- | :----- | :----------------------------------- |
+| **`workspace`** | String | The workspace identifier             |
+
+### Settings parameters
+
+| Name              | Type   | Description                                                                   |
+| :---------------- | :----- | :---------------------------------------------------------------------------- |
+| **`source`**      | String | LLM source: `"openAi"`, `"azureOpenAi"`, `"mistral"`, `"gemini"`, or `"vLlm"` |
+| **`orgId`**       | String | Organization ID for the LLM provider (required for azureOpenAi)               |
+| **`projectId`**   | String | Project ID for the LLM provider                                               |
+| **`apiVersion`**  | String | API version for the LLM provider (required for azureOpenAi)                   |
+| **`deploymentId`**| String | Deployment ID for the LLM provider (required for azureOpenAi)                 |
+| **`baseUrl`**     | String | Base URL for the provider (required for azureOpenAi and vLlm)                 |
+| **`apiKey`**      | String | API key for the LLM provider (optional for vLlm)                              |
+| **`prompts`**     | Object | Prompts object containing system prompts and other configuration              |
+
+### The prompts object
+
+| Name                      | Type   | Description                                                       |
+| :------------------------ | :----- | :---------------------------------------------------------------- |
+| **`system`**              | String | A prompt added to the start of the conversation to guide the LLM  |
+| **`searchDescription`**   | String | A prompt to explain what the internal search function does        |
+| **`searchQParam`**        | String | A prompt to explain what the `q` parameter of the search function does and how to use it |
+| **`searchIndexUidParam`** | String | A prompt to explain what the `indexUid` parameter of the search function does and how to use it |
+
+
+### Request body
+
+```json
+{
+  "source": "openAi",
+  "apiKey": "sk-...",
+  "prompts": {
+    "system": "You are a helpful assistant."
+  }
+}
+```
+
+All fields are optional. Only provided fields will be updated.
+
+### Response: `200 OK`
+
+Returns the updated settings object. Note that `apiKey` is write-only and will not be returned in the response.
+
+### Examples
+
+<CodeGroup>
+
+```bash openAi
+curl \
+  -X PATCH 'http://localhost:7700/chats/customer-support/settings' \
+  -H 'Authorization: Bearer MASTER_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "source": "openAi",
+    "apiKey": "sk-abc...",
+    "prompts": {
+      "system": "You are a helpful customer support assistant."
+    }
+  }'
+```
+
+```bash azureOpenAi
+curl \
+  -X PATCH 'http://localhost:7700/chats/customer-support/settings' \
+  -H 'Authorization: Bearer MASTER_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "source": "azureOpenAi",
+    "orgId": "your-azure-org-id",
+    "apiVersion": "your-api-version",
+    "deploymentId": "your-deployment-id",
+    "apiKey": "your-azure-api-key",
+    "baseUrl": "https://your-resource.openai.azure.com",
+    "prompts": {
+      "system": "You are a helpful customer support assistant."
+    }
+  }'
+```
+
+```bash mistral
+curl \
+  -X PATCH 'http://localhost:7700/chats/customer-support/settings' \
+  -H 'Authorization: Bearer MASTER_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "source": "mistral",
+    "apiKey": "your-mistral-api-key",
+    "prompts": {
+      "system": "You are a helpful customer support assistant."
+    }
+  }'
+```
+
+```bash gemini
+curl \
+  -X PATCH 'http://localhost:7700/chats/customer-support/settings' \
+  -H 'Authorization: Bearer MASTER_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "source": "gemini",
+    "apiKey": "your-gemini-api-key",
+    "prompts": {
+      "system": "You are a helpful customer support assistant."
+    }
+  }'
+```
+
+```bash vLlm
+curl \
+  -X PATCH 'http://localhost:7700/chats/customer-support/settings' \
+  -H 'Authorization: Bearer MASTER_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "source": "vLlm",
+    "baseUrl": "http://your-vllm-server:8000",
+    "prompts": {
+      "system": "You are a helpful customer support assistant."
+    }
+  }'
+```
+
+</CodeGroup>
+
+## Chat completions
+
+<RouteHighlighter method="POST" path="/chats/{workspace}/chat/completions" />
+
+Create a chat completion using the OpenAI-compatible interface. The endpoint searches relevant indexes and generates responses based on the retrieved content.
+
+### Path parameters
+
+| Name            | Type   | Description                                           |
+| :-------------- | :----- | :---------------------------------------------------- |
+| **`workspace`** | String | The chat completion workspace unique identifier (uid) |
+
+### Request body
+
+```json
+{
+  "model": "gpt-3.5-turbo",
+  "messages": [
+    {
+      "role": "user",
+      "content": "What are the main features of Meilisearch?"
+    }
+  ],
+  "stream": true
+}
+```
+
+| Name           | Type    | Required | Description                                                                  |
+| :------------- | :------ | :------- | :--------------------------------------------------------------------------- |
+| **`model`**    | String  | Yes      | Model to use and will be related to the source LLM in the workspace settings |
+| **`messages`** | Array   | Yes      | Array of message objects with `role` and `content`                           |
+| **`stream`**   | Boolean | No       | Enable streaming responses (default: `true`)                                 |
+
+<Warning>
+Currently, only streaming responses (`stream: true`) are supported. Non-streaming responses will be available in a future release.
+</Warning>
+
+### Message object
+
+| Name          | Type   | Description                                                |
+| :------------ | :----- | :--------------------------------------------------------- |
+| **`role`**    | String | Message role: `"system"`, `"user"`, or `"assistant"`       |
+| **`content`** | String | Message content                                            |
+
+### Response
+
+The response follows the OpenAI chat completions format. For streaming responses, the endpoint returns Server-Sent Events (SSE).
+
+#### Streaming response example
+
+```
+data: {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1677652288,"model":"gpt-3.5-turbo","choices":[{"index":0,"delta":{"content":"Meilisearch"},"finish_reason":null}]}
+
+data: {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1677652288,"model":"gpt-3.5-turbo","choices":[{"index":0,"delta":{"content":" is"},"finish_reason":null}]}
+
+data: {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1677652288,"model":"gpt-3.5-turbo","choices":[{"index":0,"delta":{},"finish_reason":"stop"}]}
+
+data: [DONE]
+```
+
+### Example
+
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X POST 'http://localhost:7700/chats/customer-support/chat/completions' \
+  -H 'Authorization: Bearer DEFAULT_CHAT_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "model": "gpt-3.5-turbo",
+    "messages": [
+      {
+        "role": "user",
+        "content": "What is Meilisearch?"
+      }
+    ],
+    "stream": true
+  }'
+```
+
+```javascript Javascript OpenAI SDK
+import OpenAI from 'openai';
+
+const client = new OpenAI({
+  baseURL: 'http://localhost:7700/chats/customer-support',
+  apiKey: 'DEFAULT_CHAT_KEY',
+});
+
+const stream = await client.chat.completions.create({
+  model: 'gpt-3.5-turbo',
+  messages: [{ role: 'user', content: 'What is Meilisearch?' }],
+  stream: true,
+});
+
+for await (const chunk of stream) {
+  console.log(chunk.choices[0]?.delta?.content || '');
+}
+```
+
+```python Python OpenAI SDK
+from openai import OpenAI
+
+client = OpenAI(
+    base_url="http://localhost:7700/chats/customer-support",
+    api_key="DEFAULT_CHAT_KEY"
+)
+
+stream = client.chat.completions.create(
+    model="gpt-3.5-turbo",
+    messages=[{"role": "user", "content": "What is Meilisearch?"}],
+    stream=True,
+)
+
+for chunk in stream:
+    if chunk.choices[0].delta.content is not None:
+        print(chunk.choices[0].delta.content, end="")
+```
+
+</CodeGroup>
+
+## Get chat settings
+
+<RouteHighlighter method="GET" path="/chats/{workspace}/settings" />
+
+Retrieve the current settings for a chat workspace.
+
+### Path parameters
+
+| Name            | Type   | Description                          |
+| :-------------- | :----- | :----------------------------------- |
+| **`workspace`** | String | The workspace identifier             |
+
+### Response: `200 OK`
+
+Returns the settings object without the `apiKey` field.
+
+```json
+{
+  "source": "openAi",
+  "prompts": {
+    "system": "You are a helpful assistant."
+  }
+}
+```
+
+### Example
+
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X GET 'http://localhost:7700/chats/customer-support/settings' \
+  -H 'Authorization: Bearer MASTER_KEY'
+```
+
+</CodeGroup>
+
+## List chat workspaces
+
+<RouteHighlighter method="GET" path="/chats" />
+
+List all available chat workspaces. Results can be paginated using query parameters.
+
+### Query parameters
+
+| Query parameter | Description                    | Default value |
+| :-------------- | :----------------------------- | :------------ |
+| **`offset`**    | Number of workspaces to skip   | `0`           |
+| **`limit`**     | Number of workspaces to return | `20`          |
+
+### Response
+
+| Name          | Type    | Description                               |
+| :------------ | :------ | :---------------------------------------- |
+| **`results`** | Array   | An array of chat workspace objects        |
+| **`offset`**  | Integer | Number of workspaces skipped              |
+| **`limit`**   | Integer | Number of workspaces returned             |
+| **`total`**   | Integer | Total number of workspaces                |
+
+### Example
+
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X GET 'http://localhost:7700/chats?limit=10' \
+  -H 'Authorization: Bearer MASTER_KEY'
+```
+
+</CodeGroup>
+
+#### Response: `200 OK`
+
+```json
+{
+  "results": [
+    {
+      "uid": "customer-support"
+    },
+    {
+      "uid": "internal-docs"
+    }
+  ],
+  "offset": 0,
+  "limit": 10,
+  "total": 2
+}
+```
+
+## Authentication
+
+The chat feature integrates with Meilisearch's authentication system:
+
+- **Default Chat API Key**: A new default key is created when chat is enabled, with permissions to access chat endpoints
+- **Tenant tokens**: Fully supported for multi-tenant applications
+- **Index visibility**: Chat searches only indexes accessible with the provided API key
+
+## Tool calling
+
+The chat feature uses internal tool calling to search your indexes and provide enhanced user experience. For optimal performance and user experience, you should declare three special tools in your chat completion requests. These tools are handled internally by Meilisearch and provide real-time feedback about search operations, conversation context, and source documents.
+
+### Overview of Special Tools
+
+- **`_meiliSearchProgress`**: Reports real-time search progress and operations
+- **`_meiliAppendConversationMessage`**: Maintains conversation context for better responses
+- **`_meiliSearchSources`**: Provides source documents used in generating responses
+
+### Tool Declaration
+
+Include these tools in your request's `tools` array to enable enhanced functionality:
+
+<CodeGroup>
+
+```json Complete Tool Declaration
+{
+  "model": "gpt-3.5-turbo",
+  "stream": true,
+  "messages": [
+    {
+      "role": "user",
+      "content": "What is Meilisearch?"
+    }
+  ],
+  "tools": [
+    {
+      "type": "function",
+      "function": {
+        "name": "_meiliSearchProgress",
+        "description": "Provides information about the current Meilisearch search operation",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "call_id": {
+              "type": "string",
+              "description": "The call ID to track the sources of the search"
+            },
+            "function_name": {
+              "type": "string",
+              "description": "The name of the function we are executing"
+            },
+            "function_parameters": {
+              "type": "string",
+              "description": "The parameters of the function we are executing, encoded in JSON"
+            }
+          },
+          "required": ["call_id", "function_name", "function_parameters"],
+          "additionalProperties": false
+        },
+        "strict": true
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "_meiliAppendConversationMessage",
+        "description": "Append a new message to the conversation based on what happened internally",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "role": {
+              "type": "string",
+              "description": "The role of the messages author, either `role` or `assistant`"
+            },
+            "content": {
+              "type": "string",
+              "description": "The contents of the `assistant` or `tool` message. Required unless `tool_calls` is specified."
+            },
+            "tool_calls": {
+              "type": ["array", "null"],
+              "description": "The tool calls generated by the model, such as function calls",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "function": {
+                    "type": "object",
+                    "description": "The function that the model called",
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "description": "The name of the function to call"
+                      },
+                      "arguments": {
+                        "type": "string",
+                        "description": "The arguments to call the function with, as generated by the model in JSON format. Note that the model does not always generate valid JSON, and may hallucinate parameters not defined by your function schema. Validate the arguments in your code before calling your function."
+                      }
+                    }
+                  },
+                  "id": {
+                    "type": "string",
+                    "description": "The ID of the tool call"
+                  },
+                  "type": {
+                    "type": "string",
+                    "description": "The type of the tool. Currently, only function is supported"
+                  }
+                }
+              }
+            },
+            "tool_call_id": {
+              "type": ["string", "null"],
+              "description": "Tool call that this message is responding to"
+            }
+          },
+          "required": ["role", "content", "tool_calls", "tool_call_id"],
+          "additionalProperties": false
+        },
+        "strict": true
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "_meiliSearchSources",
+        "description": "Provides sources of the search",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "call_id": {
+              "type": "string",
+              "description": "The call ID to track the original search associated to those sources"
+            },
+            "documents": {
+              "type": "object",
+              "description": "The documents associated with the search (call_id). Only the displayed attributes of the documents are returned"
+            }
+          },
+          "required": ["call_id", "documents"],
+          "additionalProperties": false
+        },
+        "strict": true
+      }
+    }
+  ]
+}
+```
+
+</CodeGroup>
+
+### Tool Functions Explained
+
+#### `_meiliSearchProgress`
+
+This tool reports real-time progress of internal search operations. When declared, Meilisearch will call this function whenever search operations are performed in the background.
+
+**Purpose**: Provides transparency about search operations and reduces perceived latency by showing users what's happening behind the scenes.
+
+**Arguments**:
+- `call_id`: Unique identifier to track the search operation
+- `function_name`: Name of the internal function being executed (e.g., "_meiliSearchInIndex")
+- `function_parameters`: JSON-encoded string containing search parameters like `q` (query) and `index_uid`
+
+**Example Response**:
+```json
+{
+  "function": {
+    "name": "_meiliSearchProgress",
+    "arguments": "{\"call_id\":\"89939d1f-6857-477c-8ae2-838c7a504e6a\",\"function_name\":\"_meiliSearchInIndex\",\"function_parameters\":\"{\\\"index_uid\\\":\\\"movies\\\",\\\"q\\\":\\\"search engine\\\"}\"}"
+  }
+}
+```
+
+#### `_meiliAppendConversationMessage`
+
+Since the `/chats/{workspace}/chat/completions` endpoint is stateless, this tool helps maintain conversation context by requesting the client to append internal messages to the conversation history.
+
+**Purpose**: Maintains conversation context for better response quality in subsequent requests by preserving tool calls and results.
+
+**Arguments**:
+- `role`: Message author role ("user" or "assistant")
+- `content`: Message content (for tool results)
+- `tool_calls`: Array of tool calls made by the assistant
+- `tool_call_id`: ID of the tool call this message responds to
+
+**Example Response**:
+```json
+{
+  "function": {
+    "name": "_meiliAppendConversationMessage",
+    "arguments": "{\"role\":\"assistant\",\"tool_calls\":[{\"id\":\"call_ijAdM42bixq9lAF4SiPwkq2b\",\"type\":\"function\",\"function\":{\"name\":\"_meiliSearchInIndex\",\"arguments\":\"{\\\"index_uid\\\":\\\"movies\\\",\\\"q\\\":\\\"search engine\\\"}\"}}]}"
+  }
+}
+```
+
+#### `_meiliSearchSources`
+
+This tool provides the source documents that were used by the LLM to generate responses, enabling transparency and allowing users to verify information sources.
+
+**Purpose**: Shows users which documents were used to generate responses, improving trust and enabling source verification.
+
+**Arguments**:
+- `call_id`: Matches the `call_id` from `_meiliSearchProgress` to associate queries with results
+- `documents`: JSON object containing the source documents with only displayed attributes
+
+**Example Response**:
+```json
+{
+  "function": {
+    "name": "_meiliSearchSources",
+    "arguments": "{\"call_id\":\"abc123\",\"documents\":[{\"id\":197302,\"title\":\"The Sacred Science\",\"overview\":\"Diabetes. Prostate cancer...\",\"genres\":[\"Documentary\",\"Adventure\",\"Drama\"]}]}"
+  }
+}
+```
+
+### Implementation Best Practices
+
+1. **Always declare all three tools** for the best user experience
+2. **Handle progress updates** by displaying search status to users during streaming
+3. **Append conversation messages** as requested to maintain context for future requests
+4. **Display source documents** to users for transparency and verification
+5. **Use the `call_id`** to associate progress updates with their corresponding source results
+
+<Note>
+These special tools are handled internally by Meilisearch and are not forwarded to the LLM provider. They serve as a communication mechanism between Meilisearch and your application to provide enhanced user experience features.
+</Note>

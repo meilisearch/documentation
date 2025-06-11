@@ -165,6 +165,7 @@
                 "group": "AI-powered search",
                 "pages": [
                   "learn/ai_powered_search/getting_started_with_ai_search",
+                  "learn/ai_powered_search/conversational_search_with_chat",
                   "learn/ai_powered_search/configure_rest_embedder",
                   "learn/ai_powered_search/document_template_best_practices",
                   "learn/ai_powered_search/image_search_with_user_provided_embeddings",
@@ -329,6 +330,7 @@
                   "reference/api/network",
                   "reference/api/similar",
                   "reference/api/facet_search",
+                  "reference/api/chats",
                   "reference/api/tasks",
                   "reference/api/batches",
                   "reference/api/keys",
@@ -377,6 +379,7 @@
               {
                 "group": "Artificial intelligence",
                 "pages": [
+                  "guides/ai/getting_started_with_chat",
                   "guides/ai/mcp",
                   "guides/embedders/openai",
                   "guides/langchain",
