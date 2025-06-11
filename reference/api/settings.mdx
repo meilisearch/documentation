@@ -126,7 +126,8 @@ By default, the settings object looks like this. All fields are modifiable.
   "facetSearch": true,
   "prefixSearch": "indexingTime",
   "searchCutoffMs": null,
-  "embedders": {}
+  "embedders": {},
+  "chat": {}
 }
 ```
 
@@ -196,7 +197,8 @@ Get the settings of an index.
   "facetSearch": true,
   "prefixSearch": "indexingTime",
   "searchCutoffMs": null,
-  "embedders": {}
+  "embedders": {},
+  "chat": {}
 }
 ```
 
@@ -240,7 +242,8 @@ If the provided index does not exist, it will be created.
 | **[`stopWords`](#stop-words)**                       | Array of strings | Empty                                                                                            | List of words ignored by Meilisearch when present in search queries              |
 | **[`synonyms`](#synonyms)**                          | Object           | Empty                                                                                            | List of associated words treated similarly                                       |
 | **[`typoTolerance`](#typo-tolerance)**               | Object           | [Default object](#typo-tolerance-object)                                                         | Typo tolerance settings                                                          |
-| **[`embedders`](#embedders)**               | Object of objects           | [Default object](#embedders-object)                                                         | Embedder required for performing meaning-based search queries                                                          |
+| **[`embedders`](#embedders)**                        | Object of objects | [Default object](#embedders-object)                                                         | Embedder required for performing meaning-based search queries                                                          |
+| **[`chat`](#chat)**                                  | Object           | [Default object](#chat-object)                                                         | Chat settings for performing conversation-based queries                                                          |
 
 #### Example
 
@@ -2917,3 +2920,102 @@ To remove a single embedder, use the [update embedder settings endpoint](#update
 ```
 
 You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+
+## Conversation
+
+Conversational querying allows a more human-like interaction with your search engine. It enables you to ask questions and receive relevant answers based on the content of your documents.
+
+### Chat object
+
+The chat object in the index settings contains multiple settings to configure the conversational querying.
+
+```json
+{
+  "description": "Contains a bunch of movies from the IMdb database. Each movie has a title, overview, and rating.",
+  "documentTemplate": "A movie titled '{{doc.title}}' whose description starts with {{doc.overview|truncatewords: 20}}",
+  "documentTemplateMaxBytes": 400,
+  "searchParameters": {
+    "hybrid": { "embedder": "my-embedder" },
+    "limit": 20,
+  }
+}
+```
+
+These embedder objects may contain the following fields:
+
+| Name                           | Type    | Default Value                           | Description                                                                                          |
+| ------------------------------ | ------- | --------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| **`description`**              | String  | Empty                                   | The description of the index. Used to help the LLM decide which index to use when generating answers |
+| **`documentTemplate`**         | String  | `{% for field in fields %} {% if field.is_searchable and not field.value == nil %}{{ field.name }}: {{ field.value }} {% endif %} {% endfor %}` | Template defining the data Meilisearch sends to the LLM |
+| **`documentTemplateMaxBytes`** | Integer | 400                                     | Maximum allowed size of rendered document template |
+| **`searchParameters`**         | Object  | Empty                                   | The search parameters to use when LLM is performing search requests |
+
+### Search parameters object
+
+Corresponds to a subset of the [search parameters object](/reference/api/search#search-parameters-object):
+ - **`hybrid`**
+ - **`limit`**
+ - **`sort`**
+ - **`distinct`**
+ - **`matchingStrategy`**
+ - **`attributesToSearchOn`**
+ - **`rankingScoreThreshold`**
+
+### Get index chat settings
+
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/settings/chat" />
+
+Get the index chat settings configured for an index.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index  |
+
+#### Example
+
+<CodeSamplesGetEmbedders1 />
+
+##### Response: `200 OK`
+
+```json
+{
+  "description": "",
+  "documentTemplate": "{% for field in fields %} {% if field.is_searchable and not field.value == nil %}{{ field.name }}: {{ field.value }} {% endif %} {% endfor %}",
+  "documentTemplateMaxBytes": 400,
+  "searchParameters": {}
+}
+```
+
+### Update index chat settings
+
+<RouteHighlighter method="PATCH" path="/indexes/{index_uid}/settings/chat" />
+
+Partially update the index chat settings for an index.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
+
+#### Body
+
+```json
+{
+  "description": <String>,
+  "documentTemplate": <String>,
+  "documentTemplateMaxBytes": <Integer>,
+  "searchParameters": {
+    "hybrid": <Object>,
+    "limit": <Integer>,
+    "sort": <String>,
+    "distinct": <String>,
+    "matchingStrategy": <String>,
+    "attributesToSearchOn": <String>,
+    "rankingScoreThreshold": <Float>,
+    "limit": <Integer>,
+  }
+}
+```
