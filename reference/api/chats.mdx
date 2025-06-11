@@ -9,9 +9,18 @@ import { Warning } from '/snippets/notice_tag.mdx'
 
 The `/chats` route enables AI-powered conversational search by integrating Large Language Models (LLMs) with your Meilisearch data. This feature allows users to ask questions in natural language and receive contextual answers based on your indexed content.
 
-<Warning>
-The chat completions feature is experimental and must be enabled through [experimental features](/reference/api/experimental_features). To enable it, set `"chatCompletions": true` in your experimental features configuration.
-</Warning>
+<Note>
+This is an experimental feature. Use the Meilisearch Cloud UI or the experimental features endpoint to activate it:
+
+```sh
+curl \
+  -X PATCH 'MEILISEARCH_URL/experimental-features/' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "chatCompletions": true
+  }'
+```
+</Note>
 
 ## Chat completions workspace object
 
@@ -25,158 +34,55 @@ The chat completions feature is experimental and must be enabled through [experi
 | :---------- | :----- | :-------------------------------------------------- |
 | **`uid`**   | String | Unique identifier for the chat completions workspace |
 
-## Chat completions settings object
+## Update the chat workspace settings
+
+<RouteHighlighter method="PATCH" path="/chats/{workspace}/settings" />
+
+Configure the LLM provider and settings for a chat workspace.
 
 ```json
 {
   "source": "openAi",
-  "apiKey": "sk-...",
-  "baseUrl": "https://api.openai.com/v1",
+  "orgId": null,
+  "projectId": null,
+  "apiVersion": null,
+  "deploymentId": null,
+  "baseUrl": null,
+  "apiKey": "sk-abc...",
   "prompts": {
     "system": "You are a helpful assistant that answers questions based on the provided context."
   }
 }
 ```
 
-| Name           | Type   | Description                                                                           |
-| :------------- | :----- | :------------------------------------------------------------------------------------ |
-| **`source`**   | String | LLM source: `"openAi"`, `"azureOpenAi"`, `"mistral"`, `"gemini"`, or `"vLlm"`       |
-| **`apiKey`**   | String | API key for the LLM provider (write-only, optional for vLlm)                        |
-| **`baseUrl`**  | String | Base URL for the provider (required for azureOpenAi and vLlm)                       |
-| **`prompts`**  | Object | Prompts object containing system prompts and other configuration                     |
-
-## Chat completions
-
-<RouteHighlighter method="POST" path="/chats/{workspace}/chat/completions" />
-
-Create a chat completion using the OpenAI-compatible interface. The endpoint searches relevant indexes and generates responses based on the retrieved content.
-
 ### Path parameters
 
 | Name            | Type   | Description                          |
 | :-------------- | :----- | :----------------------------------- |
 | **`workspace`** | String | The workspace identifier             |
 
-### Request body
+### Settings parameters
 
-```json
-{
-  "model": "gpt-3.5-turbo",
-  "messages": [
-    {
-      "role": "user",
-      "content": "What are the main features of Meilisearch?"
-    }
-  ],
-  "stream": true
-}
-```
+| Name              | Type   | Description                                                                   |
+| :---------------- | :----- | :---------------------------------------------------------------------------- |
+| **`source`**      | String | LLM source: `"openAi"`, `"azureOpenAi"`, `"mistral"`, `"gemini"`, or `"vLlm"` |
+| **`orgId`**       | String | Organization ID for the LLM provider (required for azureOpenAi)               |
+| **`projectId`**   | String | Project ID for the LLM provider                                               |
+| **`apiVersion`**  | String | API version for the LLM provider (required for azureOpenAi)                   |
+| **`deploymentId`**| String | Deployment ID for the LLM provider (required for azureOpenAi)                 |
+| **`baseUrl`**     | String | Base URL for the provider (required for azureOpenAi and vLlm)                 |
+| **`apiKey`**      | String | API key for the LLM provider (optional for vLlm)                              |
+| **`prompts`**     | Object | Prompts object containing system prompts and other configuration              |
 
-| Name           | Type    | Required | Description                                                    |
-| :------------- | :------ | :------- | :------------------------------------------------------------- |
-| **`model`**    | String  | Yes      | Model to use (must match workspace configuration)             |
-| **`messages`** | Array   | Yes      | Array of message objects with `role` and `content`           |
-| **`stream`**   | Boolean | No       | Enable streaming responses (default: `true`)                   |
+### The prompts object
 
-<Warning>
-Currently, only streaming responses (`stream: true`) are supported. Non-streaming responses will be available in a future release.
-</Warning>
+| Name                      | Type   | Description                                                       |
+| :------------------------ | :----- | :---------------------------------------------------------------- |
+| **`system`**              | String | A prompt added to the start of the conversation to guide the LLM  |
+| **`searchDescription`**   | String | A prompt to explain what the internal search function does        |
+| **`searchQParam`**        | String | A prompt to explain what the `q` parameter of the search function does and how to use it |
+| **`searchIndexUidParam`** | String | A prompt to explain what the `indexUid` parameter of the search function does and how to use it |
 
-### Message object
-
-| Name          | Type   | Description                                                |
-| :------------ | :----- | :--------------------------------------------------------- |
-| **`role`**    | String | Message role: `"system"`, `"user"`, or `"assistant"`     |
-| **`content`** | String | Message content                                            |
-
-### Response
-
-The response follows the OpenAI chat completions format. For streaming responses, the endpoint returns Server-Sent Events (SSE).
-
-#### Streaming response example
-
-```
-data: {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1677652288,"model":"gpt-3.5-turbo","choices":[{"index":0,"delta":{"content":"Meilisearch"},"finish_reason":null}]}
-
-data: {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1677652288,"model":"gpt-3.5-turbo","choices":[{"index":0,"delta":{"content":" is"},"finish_reason":null}]}
-
-data: {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1677652288,"model":"gpt-3.5-turbo","choices":[{"index":0,"delta":{},"finish_reason":"stop"}]}
-
-data: [DONE]
-```
-
-### Example
-
-<CodeGroup>
-
-```bash cURL
-curl \
-  -X POST 'http://localhost:7700/chats/customer-support/chat/completions' \
-  -H 'Authorization: Bearer DEFAULT_CHAT_KEY' \
-  -H 'Content-Type: application/json' \
-  --data-binary '{
-    "model": "gpt-3.5-turbo",
-    "messages": [
-      {
-        "role": "user",
-        "content": "What is Meilisearch?"
-      }
-    ],
-    "stream": true
-  }'
-```
-
-```javascript "OpenAI SDK"
-import OpenAI from 'openai';
-
-const client = new OpenAI({
-  baseURL: 'http://localhost:7700/chats/customer-support',
-  apiKey: 'DEFAULT_CHAT_KEY',
-});
-
-const stream = await client.chat.completions.create({
-  model: 'gpt-3.5-turbo',
-  messages: [{ role: 'user', content: 'What is Meilisearch?' }],
-  stream: true,
-});
-
-for await (const chunk of stream) {
-  console.log(chunk.choices[0]?.delta?.content || '');
-}
-```
-
-```python "OpenAI SDK"
-from openai import OpenAI
-
-client = OpenAI(
-    base_url="http://localhost:7700/chats/customer-support",
-    api_key="DEFAULT_CHAT_KEY"
-)
-
-stream = client.chat.completions.create(
-    model="gpt-3.5-turbo",
-    messages=[{"role": "user", "content": "What is Meilisearch?"}],
-    stream=True,
-)
-
-for chunk in stream:
-    if chunk.choices[0].delta.content is not None:
-        print(chunk.choices[0].delta.content, end="")
-```
-
-</CodeGroup>
-
-## Update chat settings
-
-<RouteHighlighter method="PATCH" path="/chats/{workspace}/settings" />
-
-Configure the LLM provider and settings for a chat workspace.
-
-### Path parameters
-
-| Name            | Type   | Description                          |
-| :-------------- | :----- | :----------------------------------- |
-| **`workspace`** | String | The workspace identifier             |
 
 ### Request body
 
@@ -207,7 +113,7 @@ curl \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "source": "openAi",
-    "apiKey": "sk-...",
+    "apiKey": "sk-abc...",
     "prompts": {
       "system": "You are a helpful customer support assistant."
     }
@@ -221,6 +127,9 @@ curl \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "source": "azureOpenAi",
+    "orgId": "your-azure-org-id",
+    "apiVersion": "your-api-version",
+    "deploymentId": "your-deployment-id",
     "apiKey": "your-azure-api-key",
     "baseUrl": "https://your-resource.openai.azure.com",
     "prompts": {
@@ -269,6 +178,127 @@ curl \
       "system": "You are a helpful customer support assistant."
     }
   }'
+```
+
+</CodeGroup>
+
+## Chat completions
+
+<RouteHighlighter method="POST" path="/chats/{workspace}/chat/completions" />
+
+Create a chat completion using the OpenAI-compatible interface. The endpoint searches relevant indexes and generates responses based on the retrieved content.
+
+### Path parameters
+
+| Name            | Type   | Description                                           |
+| :-------------- | :----- | :---------------------------------------------------- |
+| **`workspace`** | String | The chat completion workspace unique identifier (uid) |
+
+### Request body
+
+```json
+{
+  "model": "gpt-3.5-turbo",
+  "messages": [
+    {
+      "role": "user",
+      "content": "What are the main features of Meilisearch?"
+    }
+  ],
+  "stream": true
+}
+```
+
+| Name           | Type    | Required | Description                                                                  |
+| :------------- | :------ | :------- | :--------------------------------------------------------------------------- |
+| **`model`**    | String  | Yes      | Model to use and will be related to the source LLM in the workspace settings |
+| **`messages`** | Array   | Yes      | Array of message objects with `role` and `content`                           |
+| **`stream`**   | Boolean | No       | Enable streaming responses (default: `true`)                                 |
+
+<Warning>
+Currently, only streaming responses (`stream: true`) are supported. Non-streaming responses will be available in a future release.
+</Warning>
+
+### Message object
+
+| Name          | Type   | Description                                                |
+| :------------ | :----- | :--------------------------------------------------------- |
+| **`role`**    | String | Message role: `"system"`, `"user"`, or `"assistant"`       |
+| **`content`** | String | Message content                                            |
+
+### Response
+
+The response follows the OpenAI chat completions format. For streaming responses, the endpoint returns Server-Sent Events (SSE).
+
+#### Streaming response example
+
+```
+data: {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1677652288,"model":"gpt-3.5-turbo","choices":[{"index":0,"delta":{"content":"Meilisearch"},"finish_reason":null}]}
+
+data: {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1677652288,"model":"gpt-3.5-turbo","choices":[{"index":0,"delta":{"content":" is"},"finish_reason":null}]}
+
+data: {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1677652288,"model":"gpt-3.5-turbo","choices":[{"index":0,"delta":{},"finish_reason":"stop"}]}
+
+data: [DONE]
+```
+
+### Example
+
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X POST 'http://localhost:7700/chats/customer-support/chat/completions' \
+  -H 'Authorization: Bearer DEFAULT_CHAT_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "model": "gpt-3.5-turbo",
+    "messages": [
+      {
+        "role": "user",
+        "content": "What is Meilisearch?"
+      }
+    ],
+    "stream": true
+  }'
+```
+
+```javascript Javascript OpenAI SDK
+import OpenAI from 'openai';
+
+const client = new OpenAI({
+  baseURL: 'http://localhost:7700/chats/customer-support',
+  apiKey: 'DEFAULT_CHAT_KEY',
+});
+
+const stream = await client.chat.completions.create({
+  model: 'gpt-3.5-turbo',
+  messages: [{ role: 'user', content: 'What is Meilisearch?' }],
+  stream: true,
+});
+
+for await (const chunk of stream) {
+  console.log(chunk.choices[0]?.delta?.content || '');
+}
+```
+
+```python Python OpenAI SDK
+from openai import OpenAI
+
+client = OpenAI(
+    base_url="http://localhost:7700/chats/customer-support",
+    api_key="DEFAULT_CHAT_KEY"
+)
+
+stream = client.chat.completions.create(
+    model="gpt-3.5-turbo",
+    messages=[{"role": "user", "content": "What is Meilisearch?"}],
+    stream=True,
+)
+
+for chunk in stream:
+    if chunk.choices[0].delta.content is not None:
+        print(chunk.choices[0].delta.content, end="")
 ```
 
 </CodeGroup>
@@ -372,17 +402,11 @@ The chat feature integrates with Meilisearch's authentication system:
 
 ## Tool calling
 
-The chat feature uses internal tool calling to search your indexes. These tools are automatically invoked based on the user's questions:
+The chat feature uses internal tool calling to search your indexes.
+But there are a bunch of tools that are automatically invoked based on the user's questions:
 
 - `_meiliSearchProgress`: Reports search progress
 - `_meiliAppendConversationMessage`: Maintains conversation context
 - `_meiliSearchSources`: Displays source documents used in responses
 
-These tools are handled internally and are not directly accessible through the API.
-
-## Limitations
-
-- Only streaming responses are currently supported
-- Conversation history must be managed client-side
-- Token limits depend on the chosen LLM provider
-- No built-in conversation persistence
+You must declare those tools when using the chat completion API to have the best experience.

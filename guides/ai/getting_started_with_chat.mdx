@@ -22,7 +22,7 @@ Before starting, ensure you have:
 
 ## Quick start
 
-### 1. Enable the chat completions feature
+### Enable the chat completions feature
 
 First, enable the chat completions experimental feature:
 
@@ -36,7 +36,7 @@ curl \
   }'
 ```
 
-### 2. Configure a chat completions workspace
+### Configure a chat completions workspace
 
 Create a workspace with your LLM provider settings. Here are examples for different providers:
 
@@ -49,7 +49,7 @@ curl \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "source": "openAi",
-    "apiKey": "sk-...",
+    "apiKey": "sk-abc...",
     "prompts": {
       "system": "You are a helpful assistant. Answer questions based only on the provided context."
     }
@@ -105,7 +105,7 @@ curl \
   -H 'Authorization: Bearer MASTER_KEY' \
   -H 'Content-Type: application/json' \
   --data-binary '{
-    "source": "vllm",
+    "source": "vLlm",
     "baseUrl": "http://localhost:8000",
     "prompts": {
       "system": "You are a helpful assistant. Answer questions based only on the provided context."
@@ -115,7 +115,7 @@ curl \
 
 </CodeGroup>
 
-### 3. Send your first chat completions request
+### Send your first chat completions request
 
 Now you can start a conversation:
 
@@ -147,7 +147,6 @@ Workspaces allow you to create isolated chat configurations for different use ca
 Each workspace maintains its own:
 - LLM provider configuration
 - System prompt
-- Access permissions
 
 ## Building a chat interface with OpenAI SDK
 
