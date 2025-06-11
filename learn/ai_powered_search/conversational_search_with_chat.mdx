@@ -6,10 +6,10 @@ description: Learn how to implement AI-powered conversational search using Meili
 
 import { Warning } from '/snippets/notice_tag.mdx'
 
-Meilisearch's chatCompletions feature enables AI-powered conversational search, allowing users to ask questions in natural language and receive direct answers based on your indexed content. This feature transforms the traditional search experience into an interactive dialogue.
+Meilisearch's chat completions feature enables AI-powered conversational search, allowing users to ask questions in natural language and receive direct answers based on your indexed content. This feature transforms the traditional search experience into an interactive dialogue.
 
 <Warning>
-The chatCompletions feature is experimental and must be enabled through [experimental features](/reference/api/experimental_features). API specifications may change in future releases.
+The chat completions feature is experimental and must be enabled through [experimental features](/reference/api/experimental_features). API specifications may change in future releases.
 </Warning>
 
 ## What is conversational search?
@@ -22,7 +22,7 @@ Conversational search allows users to:
 
 This approach bridges the gap between traditional search and modern AI experiences, making information more accessible and intuitive to find.
 
-## How chatCompletions differs from traditional search
+## How chat completions differs from traditional search
 
 ### Traditional search workflow
 1. User enters keywords
@@ -37,21 +37,21 @@ This approach bridges the gap between traditional search and modern AI experienc
 
 ## RAG implementation simplified
 
-The chatCompletions feature implements a complete Retrieval Augmented Generation (RAG) pipeline in a single API endpoint. Traditional RAG implementations require:
+The chat completions feature implements a complete Retrieval Augmented Generation (RAG) pipeline in a single API endpoint. Traditional RAG implementations require:
 
 - Multiple LLM calls for query optimization
 - Separate vector database for semantic search
 - Custom reranking solutions
 - Complex pipeline management
 
-Meilisearch's chatCompletions consolidates these into one streamlined process:
+Meilisearch's chat completions consolidates these into one streamlined process:
 
 1. **Query understanding**: Automatically transforms questions into optimal search parameters
 2. **Hybrid retrieval**: Combines keyword and semantic search for superior relevance
 3. **Answer generation**: Uses your chosen LLM to generate responses
 4. **Context management**: Maintains conversation history automatically
 
-## When to use chatCompletions vs traditional search
+## When to use chat completions vs traditional search
 
 ### Use conversational search when:
 - Users need direct answers to specific questions
@@ -67,7 +67,7 @@ Meilisearch's chatCompletions consolidates these into one streamlined process:
 
 ## Architecture overview
 
-The chatCompletions feature operates through workspaces, which are isolated configurations for different use cases or tenants. Each workspace can:
+The chat completions feature operates through workspaces, which are isolated configurations for different use cases or tenants. Each workspace can:
 
 - Use different LLM sources (openAi, azureOpenAi, mistral, gemini, vLlm)
 - Apply custom prompts
@@ -93,7 +93,7 @@ The chatCompletions feature operates through workspaces, which are isolated conf
 
 ## Security considerations
 
-The chatCompletions feature integrates with Meilisearch's existing security model:
+The chat completions feature integrates with Meilisearch's existing security model:
 
 - **API key permissions**: Chat only accesses indexes visible to the provided API key
 - **Tenant tokens**: Support for multi-tenant applications
@@ -102,6 +102,6 @@ The chatCompletions feature integrates with Meilisearch's existing security mode
 
 ## Next steps
 
-- [Get started with chatCompletions implementation](/guides/ai/getting_started_with_chat)
-- [Explore the chatCompletions API reference](/reference/api/chats)
+- [Get started with chat completions implementation](/guides/ai/getting_started_with_chat)
+- [Explore the chat completions API reference](/reference/api/chats)
 - [Learn about experimental features](/reference/api/experimental_features)

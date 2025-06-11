@@ -6,10 +6,10 @@ description: Learn how to implement AI-powered conversational search in your app
 
 import { Warning, Note } from '/snippets/notice_tag.mdx'
 
-This guide walks you through implementing Meilisearch's chatCompletions feature to create conversational search experiences in your application.
+This guide walks you through implementing Meilisearch's chat completions feature to create conversational search experiences in your application.
 
 <Warning>
-The chatCompletions feature is experimental and must be enabled before use. See [experimental features](/reference/api/experimental_features) for activation instructions.
+The chat completions feature is experimental and must be enabled before use. See [experimental features](/reference/api/experimental_features) for activation instructions.
 </Warning>
 
 ## Prerequisites
@@ -18,13 +18,13 @@ Before starting, ensure you have:
 - Meilisearch instance running (v1.15.1 or later)
 - An API key from an LLM provider (OpenAI, Azure OpenAI, Mistral, Gemini, or access to a vLLM server)
 - At least one index with searchable content
-- The chatCompletions experimental feature enabled
+- The chat completions experimental feature enabled
 
 ## Quick start
 
-### 1. Enable the chatCompletions feature
+### 1. Enable the chat completions feature
 
-First, enable the chatCompletions experimental feature:
+First, enable the chat completions experimental feature:
 
 ```bash
 curl \
@@ -36,7 +36,7 @@ curl \
   }'
 ```
 
-### 2. Configure a chatCompletions workspace
+### 2. Configure a chat completions workspace
 
 Create a workspace with your LLM provider settings. Here are examples for different providers:
 
@@ -115,7 +115,7 @@ curl \
 
 </CodeGroup>
 
-### 3. Send your first chatCompletions request
+### 3. Send your first chat completions request
 
 Now you can start a conversation:
 
