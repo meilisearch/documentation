@@ -483,9 +483,9 @@ You can then use the filter in a search query:
 
 If your documents contain `_geo` data, you can use the `_geoRadius` and `_geoBoundingBox` built-in filter rules to filter results according to their geographic position.
 
-<Tabs.Container labels={["_geoRadius", "_geoBoundingBox"]}>
+<Tabs>
 
-<Tabs.Content label="_geoRadius">
+<Tab title="_geoRadius">
 `_geoRadius` establishes a circular area based on a central point and a radius. This filter rule requires three parameters: `lat`, `lng` and `distance_in_meters`.
 
 ```json
@@ -496,9 +496,9 @@ _geoRadius(lat, lng, distance_in_meters)
 
 <CodeSamplesGeosearchGuideFilterUsage1 />
 
-</Tabs.Content>
+</Tab>
 
-<Tabs.Content label="_geoBoundingBox">
+<Tab title="_geoBoundingBox">
 `_geoBoundingBox` establishes a rectangular area based on the coordinates for its top right and bottom left corners. This filter rule requires two arrays of geographic coordinates:
 
 ```
@@ -511,9 +511,9 @@ _geoBoundingBox([{lat}, {lng}], [{lat}, {lng}])
 
 Meilisearch will throw an error if the top right corner is under the bottom left corner.
 
-</Tabs.Content>
+</Tab>
 
-</Tabs.Container>
+</Tabs>
 
 If any parameters are invalid or missing, Meilisearch returns an [`invalid_search_filter`](/reference/errors/error_codes#invalid_search_filter) error.
 

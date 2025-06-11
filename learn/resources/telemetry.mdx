@@ -45,26 +45,26 @@ No company is perfect. If you ever feel that we are being anything less than 100
 
 Data collection can be disabled at any time by setting a command-line option or environment variable, then restarting the Meilisearch instance.
 
-<Tabs.Container labels={['Command-line option', 'Environment variable', 'Cloud service']}>
+<Tabs>
 
-<Tabs.Content label="Command-line option">
+<Tab title="Command-line option">
 
 ```bash
 meilisearch --no-analytics
 ```
 
-</Tabs.Content>
+</Tab>
 
-<Tabs.Content label="Environment variable">
+<Tab title="Environment variable">
 
 ```bash
 export MEILI_NO_ANALYTICS=true
 meilisearch
 ```
 
-</Tabs.Content>
+</Tab>
 
-<Tabs.Content label="Cloud service">
+<Tab title="Cloud service">
 
 ```bash
 # The following procedure should work for all cloud providers,
@@ -81,9 +81,9 @@ systemctl daemon-reload
 systemctl restart meilisearch
 ```
 
-</Tabs.Content>
+</Tab>
 
-</Tabs.Container>
+</Tabs>
 
 For more information about configuring Meilisearch, read our [configuration reference](/learn/self_hosted/configure_meilisearch_at_launch).
 
