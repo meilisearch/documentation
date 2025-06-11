@@ -214,6 +214,61 @@ for await (const chunk of stream) {
 
 </CodeGroup>
 
+## Error handling
+
+When using the OpenAI SDK with Meilisearch's chat completions endpoint, errors from the streamed responses are natively handled by the official OpenAI SDK. This means you can use the SDK's built-in error handling mechanisms without additional configuration:
+
+<CodeGroup>
+
+```javascript JavaScript
+import OpenAI from 'openai';
+
+const client = new OpenAI({
+  baseURL: 'http://localhost:7700/chats/my-assistant',
+  apiKey: 'YOUR_MEILISEARCH_API_KEY',
+});
+
+try {
+  const stream = await client.chat.completions.create({
+    model: 'gpt-3.5-turbo',
+    messages: [{ role: 'user', content: 'What is Meilisearch?' }],
+    stream: true,
+  });
+
+  for await (const chunk of stream) {
+    console.log(chunk.choices[0]?.delta?.content || '');
+  }
+} catch (error) {
+  // OpenAI SDK automatically handles streaming errors
+  console.error('Chat completion error:', error);
+}
+```
+
+```python Python
+from openai import OpenAI
+
+client = OpenAI(
+    base_url="http://localhost:7700/chats/my-assistant",
+    api_key="YOUR_MEILISEARCH_API_KEY"
+)
+
+try:
+    stream = client.chat.completions.create(
+        model="gpt-3.5-turbo",
+        messages=[{"role": "user", "content": "What is Meilisearch?"}],
+        stream=True,
+    )
+
+    for chunk in stream:
+        if chunk.choices[0].delta.content is not None:
+            print(chunk.choices[0].delta.content, end="")
+except Exception as error:
+    # OpenAI SDK automatically handles streaming errors
+    print(f"Chat completion error: {error}")
+```
+
+</CodeGroup>
+
 ## Next steps
 
 - Explore [advanced chat API features](/reference/api/chats)
