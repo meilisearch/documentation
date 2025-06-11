@@ -243,7 +243,7 @@ If the provided index does not exist, it will be created.
 | **[`synonyms`](#synonyms)**                          | Object           | Empty                                                                                            | List of associated words treated similarly                                       |
 | **[`typoTolerance`](#typo-tolerance)**               | Object           | [Default object](#typo-tolerance-object)                                                         | Typo tolerance settings                                                          |
 | **[`embedders`](#embedders)**                        | Object of objects | [Default object](#embedders-object)                                                         | Embedder required for performing meaning-based search queries                                                          |
-| **[`chat`](#chat)**                                  | Object           | [Default object](#chat-object)                                                         | Chat settings for performing conversation-based queries                                                          |
+| **[`chat`](#conversation)** <NoticeTag type="experimental" label="experimental" /> | Object           | [Default object](#chat-object)                                                         | Chat settings for performing conversation-based queries                                                          |
 
 #### Example
 
@@ -2921,7 +2921,7 @@ To remove a single embedder, use the [update embedder settings endpoint](#update
 
 You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
 
-## Conversation
+## Conversation <NoticeTag type="experimental" label="experimental" />
 
 Conversational querying allows a more human-like interaction with your search engine. It enables you to ask questions and receive relevant answers based on the content of your documents.
 
