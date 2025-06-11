@@ -2923,6 +2923,19 @@ You can use the returned `taskUid` to get more details on [the status of the tas
 
 ## Conversation <NoticeTag type="experimental" label="experimental" />
 
+<Note>
+This is an experimental feature. Use the Meilisearch Cloud UI or the experimental features endpoint to activate it:
+
+```sh
+curl \
+  -X PATCH 'MEILISEARCH_URL/experimental-features/' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "chatCompletions": true
+  }'
+```
+</Note>
+
 Conversational querying allows a more human-like interaction with your search engine. It enables you to ask questions and receive relevant answers based on the content of your documents.
 
 ### Chat object
