@@ -1,0 +1,388 @@
+---
+title: Chats
+sidebarTitle: Chats
+description: The /chats route allows you to create conversational search experiences using LLM technology
+---
+
+import { RouteHighlighter } from '/snippets/route_highlighter.mdx';
+import { Warning } from '/snippets/notice_tag.mdx'
+
+The `/chats` route enables AI-powered conversational search by integrating Large Language Models (LLMs) with your Meilisearch data. This feature allows users to ask questions in natural language and receive contextual answers based on your indexed content.
+
+<Warning>
+The chatCompletions feature is experimental and must be enabled through [experimental features](/reference/api/experimental_features). To enable it, set `"chatCompletions": true` in your experimental features configuration.
+</Warning>
+
+## ChatCompletions workspace object
+
+```json
+{
+  "uid": "customer-support"
+}
+```
+
+| Name        | Type   | Description                                         |
+| :---------- | :----- | :-------------------------------------------------- |
+| **`uid`**   | String | Unique identifier for the chatCompletions workspace |
+
+## ChatCompletions settings object
+
+```json
+{
+  "source": "openAi",
+  "apiKey": "sk-...",
+  "baseUrl": "https://api.openai.com/v1",
+  "prompts": {
+    "system": "You are a helpful assistant that answers questions based on the provided context."
+  }
+}
+```
+
+| Name           | Type   | Description                                                                           |
+| :------------- | :----- | :------------------------------------------------------------------------------------ |
+| **`source`**   | String | LLM source: `"openAi"`, `"azureOpenAi"`, `"mistral"`, `"gemini"`, or `"vLlm"`       |
+| **`apiKey`**   | String | API key for the LLM provider (write-only, optional for vLlm)                        |
+| **`baseUrl`**  | String | Base URL for the provider (required for azureOpenAi and vLlm)                       |
+| **`prompts`**  | Object | Prompts object containing system prompts and other configuration                     |
+
+## Chat completions
+
+<RouteHighlighter method="POST" path="/chats/{workspace}/chat/completions" />
+
+Create a chat completion using the OpenAI-compatible interface. The endpoint searches relevant indexes and generates responses based on the retrieved content.
+
+### Path parameters
+
+| Name            | Type   | Description                          |
+| :-------------- | :----- | :----------------------------------- |
+| **`workspace`** | String | The workspace identifier             |
+
+### Request body
+
+```json
+{
+  "model": "gpt-3.5-turbo",
+  "messages": [
+    {
+      "role": "user",
+      "content": "What are the main features of Meilisearch?"
+    }
+  ],
+  "stream": true
+}
+```
+
+| Name           | Type    | Required | Description                                                    |
+| :------------- | :------ | :------- | :------------------------------------------------------------- |
+| **`model`**    | String  | Yes      | Model to use (must match workspace configuration)             |
+| **`messages`** | Array   | Yes      | Array of message objects with `role` and `content`           |
+| **`stream`**   | Boolean | No       | Enable streaming responses (default: `true`)                   |
+
+<Warning>
+Currently, only streaming responses (`stream: true`) are supported. Non-streaming responses will be available in a future release.
+</Warning>
+
+### Message object
+
+| Name          | Type   | Description                                                |
+| :------------ | :----- | :--------------------------------------------------------- |
+| **`role`**    | String | Message role: `"system"`, `"user"`, or `"assistant"`     |
+| **`content`** | String | Message content                                            |
+
+### Response
+
+The response follows the OpenAI chat completions format. For streaming responses, the endpoint returns Server-Sent Events (SSE).
+
+#### Streaming response example
+
+```
+data: {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1677652288,"model":"gpt-3.5-turbo","choices":[{"index":0,"delta":{"content":"Meilisearch"},"finish_reason":null}]}
+
+data: {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1677652288,"model":"gpt-3.5-turbo","choices":[{"index":0,"delta":{"content":" is"},"finish_reason":null}]}
+
+data: {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1677652288,"model":"gpt-3.5-turbo","choices":[{"index":0,"delta":{},"finish_reason":"stop"}]}
+
+data: [DONE]
+```
+
+### Example
+
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X POST 'http://localhost:7700/chats/customer-support/chat/completions' \
+  -H 'Authorization: Bearer DEFAULT_CHAT_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "model": "gpt-3.5-turbo",
+    "messages": [
+      {
+        "role": "user",
+        "content": "What is Meilisearch?"
+      }
+    ],
+    "stream": true
+  }'
+```
+
+```javascript "OpenAI SDK"
+import OpenAI from 'openai';
+
+const client = new OpenAI({
+  baseURL: 'http://localhost:7700/chats/customer-support',
+  apiKey: 'DEFAULT_CHAT_KEY',
+});
+
+const stream = await client.chat.completions.create({
+  model: 'gpt-3.5-turbo',
+  messages: [{ role: 'user', content: 'What is Meilisearch?' }],
+  stream: true,
+});
+
+for await (const chunk of stream) {
+  console.log(chunk.choices[0]?.delta?.content || '');
+}
+```
+
+```python "OpenAI SDK"
+from openai import OpenAI
+
+client = OpenAI(
+    base_url="http://localhost:7700/chats/customer-support",
+    api_key="DEFAULT_CHAT_KEY"
+)
+
+stream = client.chat.completions.create(
+    model="gpt-3.5-turbo",
+    messages=[{"role": "user", "content": "What is Meilisearch?"}],
+    stream=True,
+)
+
+for chunk in stream:
+    if chunk.choices[0].delta.content is not None:
+        print(chunk.choices[0].delta.content, end="")
+```
+
+</CodeGroup>
+
+## Update chat settings
+
+<RouteHighlighter method="PATCH" path="/chats/{workspace}/settings" />
+
+Configure the LLM provider and settings for a chat workspace.
+
+### Path parameters
+
+| Name            | Type   | Description                          |
+| :-------------- | :----- | :----------------------------------- |
+| **`workspace`** | String | The workspace identifier             |
+
+### Request body
+
+```json
+{
+  "source": "openAi",
+  "apiKey": "sk-...",
+  "prompts": {
+    "system": "You are a helpful assistant."
+  }
+}
+```
+
+All fields are optional. Only provided fields will be updated.
+
+### Response: `200 OK`
+
+Returns the updated settings object. Note that `apiKey` is write-only and will not be returned in the response.
+
+### Examples
+
+<CodeGroup>
+
+```bash openAi
+curl \
+  -X PATCH 'http://localhost:7700/chats/customer-support/settings' \
+  -H 'Authorization: Bearer MASTER_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "source": "openAi",
+    "apiKey": "sk-...",
+    "prompts": {
+      "system": "You are a helpful customer support assistant."
+    }
+  }'
+```
+
+```bash azureOpenAi
+curl \
+  -X PATCH 'http://localhost:7700/chats/customer-support/settings' \
+  -H 'Authorization: Bearer MASTER_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "source": "azureOpenAi",
+    "apiKey": "your-azure-api-key",
+    "baseUrl": "https://your-resource.openai.azure.com",
+    "prompts": {
+      "system": "You are a helpful customer support assistant."
+    }
+  }'
+```
+
+```bash mistral
+curl \
+  -X PATCH 'http://localhost:7700/chats/customer-support/settings' \
+  -H 'Authorization: Bearer MASTER_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "source": "mistral",
+    "apiKey": "your-mistral-api-key",
+    "prompts": {
+      "system": "You are a helpful customer support assistant."
+    }
+  }'
+```
+
+```bash gemini
+curl \
+  -X PATCH 'http://localhost:7700/chats/customer-support/settings' \
+  -H 'Authorization: Bearer MASTER_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "source": "gemini",
+    "apiKey": "your-gemini-api-key",
+    "prompts": {
+      "system": "You are a helpful customer support assistant."
+    }
+  }'
+```
+
+```bash vLlm
+curl \
+  -X PATCH 'http://localhost:7700/chats/customer-support/settings' \
+  -H 'Authorization: Bearer MASTER_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "source": "vLlm",
+    "baseUrl": "http://your-vllm-server:8000",
+    "prompts": {
+      "system": "You are a helpful customer support assistant."
+    }
+  }'
+```
+
+</CodeGroup>
+
+## Get chat settings
+
+<RouteHighlighter method="GET" path="/chats/{workspace}/settings" />
+
+Retrieve the current settings for a chat workspace.
+
+### Path parameters
+
+| Name            | Type   | Description                          |
+| :-------------- | :----- | :----------------------------------- |
+| **`workspace`** | String | The workspace identifier             |
+
+### Response: `200 OK`
+
+Returns the settings object without the `apiKey` field.
+
+```json
+{
+  "source": "openAi",
+  "prompts": {
+    "system": "You are a helpful assistant."
+  }
+}
+```
+
+### Example
+
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X GET 'http://localhost:7700/chats/customer-support/settings' \
+  -H 'Authorization: Bearer MASTER_KEY'
+```
+
+</CodeGroup>
+
+## List chat workspaces
+
+<RouteHighlighter method="GET" path="/chats" />
+
+List all available chat workspaces. Results can be paginated using query parameters.
+
+### Query parameters
+
+| Query parameter | Description                    | Default value |
+| :-------------- | :----------------------------- | :------------ |
+| **`offset`**    | Number of workspaces to skip   | `0`           |
+| **`limit`**     | Number of workspaces to return | `20`          |
+
+### Response
+
+| Name          | Type    | Description                               |
+| :------------ | :------ | :---------------------------------------- |
+| **`results`** | Array   | An array of chat workspace objects        |
+| **`offset`**  | Integer | Number of workspaces skipped              |
+| **`limit`**   | Integer | Number of workspaces returned             |
+| **`total`**   | Integer | Total number of workspaces                |
+
+### Example
+
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X GET 'http://localhost:7700/chats?limit=10' \
+  -H 'Authorization: Bearer MASTER_KEY'
+```
+
+</CodeGroup>
+
+#### Response: `200 OK`
+
+```json
+{
+  "results": [
+    {
+      "uid": "customer-support"
+    },
+    {
+      "uid": "internal-docs"
+    }
+  ],
+  "offset": 0,
+  "limit": 10,
+  "total": 2
+}
+```
+
+## Authentication
+
+The chat feature integrates with Meilisearch's authentication system:
+
+- **Default Chat API Key**: A new default key is created when chat is enabled, with permissions to access chat endpoints
+- **Tenant tokens**: Fully supported for multi-tenant applications
+- **Index visibility**: Chat searches only indexes accessible with the provided API key
+
+## Tool calling
+
+The chat feature uses internal tool calling to search your indexes. These tools are automatically invoked based on the user's questions:
+
+- `_meiliSearchProgress`: Reports search progress
+- `_meiliAppendConversationMessage`: Maintains conversation context
+- `_meiliSearchSources`: Displays source documents used in responses
+
+These tools are handled internally and are not directly accessible through the API.
+
+## Limitations
+
+- Only streaming responses are currently supported
+- Conversation history must be managed client-side
+- Token limits depend on the chosen LLM provider
+- No built-in conversation persistence

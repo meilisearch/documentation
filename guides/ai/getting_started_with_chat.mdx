@@ -1,0 +1,222 @@
+---
+title: Getting started with conversational search
+sidebarTitle: Getting started with chat
+description: Learn how to implement AI-powered conversational search in your application
+---
+
+import { Warning, Note } from '/snippets/notice_tag.mdx'
+
+This guide walks you through implementing Meilisearch's chatCompletions feature to create conversational search experiences in your application.
+
+<Warning>
+The chatCompletions feature is experimental and must be enabled before use. See [experimental features](/reference/api/experimental_features) for activation instructions.
+</Warning>
+
+## Prerequisites
+
+Before starting, ensure you have:
+- Meilisearch instance running (v1.15.1 or later)
+- An API key from an LLM provider (OpenAI, Azure OpenAI, Mistral, Gemini, or access to a vLLM server)
+- At least one index with searchable content
+- The chatCompletions experimental feature enabled
+
+## Quick start
+
+### 1. Enable the chatCompletions feature
+
+First, enable the chatCompletions experimental feature:
+
+```bash
+curl \
+  -X PATCH 'http://localhost:7700/experimental-features' \
+  -H 'Authorization: Bearer MASTER_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "chatCompletions": true
+  }'
+```
+
+### 2. Configure a chatCompletions workspace
+
+Create a workspace with your LLM provider settings. Here are examples for different providers:
+
+<CodeGroup>
+
+```bash openAi
+curl \
+  -X PATCH 'http://localhost:7700/chats/my-assistant/settings' \
+  -H 'Authorization: Bearer MASTER_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "source": "openAi",
+    "apiKey": "sk-...",
+    "prompts": {
+      "system": "You are a helpful assistant. Answer questions based only on the provided context."
+    }
+  }'
+```
+
+```bash azureOpenAi
+curl \
+  -X PATCH 'http://localhost:7700/chats/my-assistant/settings' \
+  -H 'Authorization: Bearer MASTER_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "source": "azureOpenAi",
+    "apiKey": "your-azure-key",
+    "baseUrl": "https://your-resource.openai.azure.com",
+    "prompts": {
+      "system": "You are a helpful assistant. Answer questions based only on the provided context."
+    }
+  }'
+```
+
+```bash mistral
+curl \
+  -X PATCH 'http://localhost:7700/chats/my-assistant/settings' \
+  -H 'Authorization: Bearer MASTER_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "source": "mistral",
+    "apiKey": "your-mistral-key",
+    "prompts": {
+      "system": "You are a helpful assistant. Answer questions based only on the provided context."
+    }
+  }'
+```
+
+```bash gemini
+curl \
+  -X PATCH 'http://localhost:7700/chats/my-assistant/settings' \
+  -H 'Authorization: Bearer MASTER_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "source": "gemini",
+    "apiKey": "your-gemini-key",
+    "prompts": {
+      "system": "You are a helpful assistant. Answer questions based only on the provided context."
+    }
+  }'
+```
+
+```bash vLlm
+curl \
+  -X PATCH 'http://localhost:7700/chats/my-assistant/settings' \
+  -H 'Authorization: Bearer MASTER_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "source": "vllm",
+    "baseUrl": "http://localhost:8000",
+    "prompts": {
+      "system": "You are a helpful assistant. Answer questions based only on the provided context."
+    }
+  }'
+```
+
+</CodeGroup>
+
+### 3. Send your first chatCompletions request
+
+Now you can start a conversation:
+
+```bash
+curl \
+  -X POST 'http://localhost:7700/chats/my-assistant/chat/completions' \
+  -H 'Authorization: Bearer DEFAULT_CHAT_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "model": "gpt-3.5-turbo",
+    "messages": [
+      {
+        "role": "user",
+        "content": "What is Meilisearch?"
+      }
+    ],
+    "stream": true
+  }'
+```
+
+## Understanding workspaces
+
+Workspaces allow you to create isolated chat configurations for different use cases:
+
+- **Customer support**: Configure with support-focused prompts
+- **Product search**: Optimize for e-commerce queries
+- **Documentation**: Tune for technical Q&A
+
+Each workspace maintains its own:
+- LLM provider configuration
+- System prompt
+- Access permissions
+
+## Building a chat interface with OpenAI SDK
+
+Since Meilisearch's chat endpoint is OpenAI-compatible, you can use the official OpenAI SDK:
+
+<CodeGroup>
+
+```javascript JavaScript
+import OpenAI from 'openai';
+
+const client = new OpenAI({
+  baseURL: 'http://localhost:7700/chats/my-assistant',
+  apiKey: 'YOUR_MEILISEARCH_API_KEY',
+});
+
+const completion = await client.chat.completions.create({
+  model: 'gpt-3.5-turbo',
+  messages: [{ role: 'user', content: 'What is Meilisearch?' }],
+  stream: true,
+});
+
+for await (const chunk of completion) {
+  console.log(chunk.choices[0]?.delta?.content || '');
+}
+```
+
+```python Python
+from openai import OpenAI
+
+client = OpenAI(
+    base_url="http://localhost:7700/chats/my-assistant",
+    api_key="YOUR_MEILISEARCH_API_KEY"
+)
+
+stream = client.chat.completions.create(
+    model="gpt-3.5-turbo",
+    messages=[{"role": "user", "content": "What is Meilisearch?"}],
+    stream=True,
+)
+
+for chunk in stream:
+    if chunk.choices[0].delta.content is not None:
+        print(chunk.choices[0].delta.content, end="")
+```
+
+```typescript TypeScript
+import OpenAI from 'openai';
+
+const client = new OpenAI({
+  baseURL: 'http://localhost:7700/chats/my-assistant',
+  apiKey: 'YOUR_MEILISEARCH_API_KEY',
+});
+
+const stream = await client.chat.completions.create({
+  model: 'gpt-3.5-turbo',
+  messages: [{ role: 'user', content: 'What is Meilisearch?' }],
+  stream: true,
+});
+
+for await (const chunk of stream) {
+  const content = chunk.choices[0]?.delta?.content || '';
+  process.stdout.write(content);
+}
+```
+
+</CodeGroup>
+
+## Next steps
+
+- Explore [advanced chat API features](/reference/api/chats)
+- Learn about [conversational search concepts](/learn/ai_powered_search/conversational_search_with_chat)
+- Review [security best practices](/learn/security/basic_security)

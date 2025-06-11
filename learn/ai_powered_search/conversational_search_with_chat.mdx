@@ -1,0 +1,107 @@
+---
+title: Conversational search with chat
+sidebarTitle: Conversational search
+description: Learn how to implement AI-powered conversational search using Meilisearch's chat feature
+---
+
+import { Warning } from '/snippets/notice_tag.mdx'
+
+Meilisearch's chatCompletions feature enables AI-powered conversational search, allowing users to ask questions in natural language and receive direct answers based on your indexed content. This feature transforms the traditional search experience into an interactive dialogue.
+
+<Warning>
+The chatCompletions feature is experimental and must be enabled through [experimental features](/reference/api/experimental_features). API specifications may change in future releases.
+</Warning>
+
+## What is conversational search?
+
+Conversational search allows users to:
+- Ask questions in natural language instead of using keywords
+- Receive direct answers rather than just document links
+- Maintain context across multiple questions
+- Get responses grounded in your actual content
+
+This approach bridges the gap between traditional search and modern AI experiences, making information more accessible and intuitive to find.
+
+## How chatCompletions differs from traditional search
+
+### Traditional search workflow
+1. User enters keywords
+2. Meilisearch returns matching documents
+3. User reviews results to find answers
+
+### Conversational search workflow
+1. User asks a question in natural language
+2. Meilisearch retrieves relevant documents
+3. AI generates a direct answer based on those documents
+4. User can ask follow-up questions
+
+## RAG implementation simplified
+
+The chatCompletions feature implements a complete Retrieval Augmented Generation (RAG) pipeline in a single API endpoint. Traditional RAG implementations require:
+
+- Multiple LLM calls for query optimization
+- Separate vector database for semantic search
+- Custom reranking solutions
+- Complex pipeline management
+
+Meilisearch's chatCompletions consolidates these into one streamlined process:
+
+1. **Query understanding**: Automatically transforms questions into optimal search parameters
+2. **Hybrid retrieval**: Combines keyword and semantic search for superior relevance
+3. **Answer generation**: Uses your chosen LLM to generate responses
+4. **Context management**: Maintains conversation history automatically
+
+## When to use chatCompletions vs traditional search
+
+### Use conversational search when:
+- Users need direct answers to specific questions
+- Content is informational (documentation, knowledge bases, FAQs)
+- Users benefit from follow-up questions
+- Natural language interaction improves user experience
+
+### Use traditional search when:
+- Users need to browse multiple options
+- Results require comparison (e-commerce products, listings)
+- Exact matching is critical
+- Response time is paramount
+
+## Architecture overview
+
+The chatCompletions feature operates through workspaces, which are isolated configurations for different use cases or tenants. Each workspace can:
+
+- Use different LLM sources (openAi, azureOpenAi, mistral, gemini, vLlm)
+- Apply custom prompts
+- Access specific indexes based on API keys
+- Maintain separate conversation contexts
+
+### Key components
+
+1. **Chat endpoint**: `/chats/{workspace}/chat/completions`
+   - OpenAI-compatible interface
+   - Supports streaming responses
+   - Handles tool calling for index searches
+
+2. **Workspace settings**: `/chats/{workspace}/settings`
+   - Configure LLM provider and model
+   - Set system prompts
+   - Manage API credentials
+
+3. **Index integration**:
+   - Automatically searches relevant indexes
+   - Uses existing Meilisearch search capabilities
+   - Respects API key permissions
+
+## Security considerations
+
+The chatCompletions feature integrates with Meilisearch's existing security model:
+
+- **API key permissions**: Chat only accesses indexes visible to the provided API key
+- **Tenant tokens**: Support for multi-tenant applications
+- **LLM credentials**: Stored securely in workspace settings
+- **Content isolation**: Responses based only on indexed content
+
+## Next steps
+
+- [Get started with chatCompletions implementation](/guides/ai/getting_started_with_chat)
+- [Explore the chatCompletions API reference](/reference/api/chats)
+- [Learn about experimental features](/reference/api/experimental_features)
