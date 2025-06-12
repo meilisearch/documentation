@@ -72,15 +72,15 @@ Meilisearch will respond with a partial task object. Use its `taskUid` to monito
 
 Next, stop your Meilisearch instance.
 
-<Tabs.Container labels={['Local installation', 'Cloud platforms']}>
+<Tabs>
 
-<Tabs.Content label="Local installation">
+<Tab title="Local installation">
 
 If you're running Meilisearch locally, stop the program by pressing `Ctrl + c`.
 
-</Tabs.Content>
+</Tab>
 
-<Tabs.Content label="Cloud platforms">
+<Tab title="Cloud platforms">
 
 If you're running Meilisearch as a `systemctl` service, connect via SSH to your cloud instance and execute the following command to stop Meilisearch:
 
@@ -90,32 +90,32 @@ systemctl stop meilisearch
 
 You may need to prefix the above command with `sudo` if you are not connected as root.
 
-</Tabs.Content>
-</Tabs.Container>
+</Tab>
+</Tabs>
 
 #### Step 3: Install the new Meilisearch binary
 
 Install the latest version of Meilisearch using:
 
-<Tabs.Container labels={['Local installation', 'Cloud platforms']}>
+<Tabs>
 
-<Tabs.Content label="Local installation">
+<Tab title="Local installation">
 
 ```bash
 curl -L https://install.meilisearch.com | sh
 ```
 
-</Tabs.Content>
+</Tab>
 
-<Tabs.Content label="Cloud platforms">
+<Tab title="Cloud platforms">
 
 ```sh
 # replace MEILISEARCH_VERSION with the version of your choice. Use the format: `vX.X.X`
 curl "https://github.com/meilisearch/meilisearch/releases/download/MEILISEARCH_VERSION/meilisearch-linux-amd64" --output meilisearch --location --show-error
 ```
 
-</Tabs.Content>
-</Tabs.Container>
+</Tab>
+</Tabs>
 
 Give execute permission to the Meilisearch binary:
 
@@ -133,24 +133,24 @@ mv meilisearch /usr/bin/meilisearch
 
 Execute the command below to import the dump at launch:
 
-<Tabs.Container labels={['Local installation', 'Cloud platforms']}>
+<Tabs>
 
-<Tabs.Content label="Local installation">
+<Tab title="Local installation">
 
 ```bash
 ./meilisearch --experimental-dumpless-upgrade 
 ```
 
-</Tabs.Content>
+</Tab>
 
-<Tabs.Content label="Cloud platforms">
+<Tab title="Cloud platforms">
 
 ```sh
 meilisearch --experimental-dumpless-upgrade 
 ```
 
-</Tabs.Content>
-</Tabs.Container>
+</Tab>
+</Tabs>
 
 Meilisearch should launch normally and immediately create a new `UpgradeDatabase` task. This task is processed immediately and cannot be canceled. You may follow its progress by using the `GET /tasks?types=UpgradeDatabase` endpoint to obtain its `taskUid`, then querying `GET /tasks/TASK_UID`.
 
@@ -237,9 +237,9 @@ Before creating your dump, make sure that your [dump directory](/learn/self_host
 
 If you're unsure where your Meilisearch directory is located, try this:
 
-<Tabs.Container labels={['UNIX', 'Windows CMD']}>
+<Tabs>
 
-<Tabs.Content label="UNIX">
+<Tab title="UNIX">
 
 ```bash
 which meilisearch
@@ -251,9 +251,9 @@ It should return something like this:
 /absolute/path/to/your/meilisearch/directory
 ```
 
-</Tabs.Content>
+</Tab>
 
-<Tabs.Content label="Windows CMD">
+<Tab title="Windows CMD">
 
 ```bash
 where meilisearch
@@ -265,9 +265,9 @@ It should return something like this:
 /absolute/path/to/your/meilisearch/directory
 ```
 
-</Tabs.Content>
+</Tab>
 
-<Tabs.Content label="Windows PowerShell">
+<Tab title="Windows PowerShell">
 
 ```bash
 (Get-Command meilisearch).Path
@@ -279,8 +279,8 @@ It should return something like this:
 /absolute/path/to/your/meilisearch/directory
 ```
 
-</Tabs.Content>
-</Tabs.Container>
+</Tab>
+</Tabs>
 
 <Warning>
 Due to an error allowing malformed `_geo` fields in Meilisearch **v0.27, v0.28, and v0.29**, you might not be able to import your dump. Please ensure the `_geo` field follows the [correct format](/learn/filtering_and_sorting/geosearch#preparing-documents-for-location-based-search) before creating your dump.
@@ -323,15 +323,15 @@ Once the `dumpCreation` task shows `"status": "succeeded"`, you're ready to move
 
 Stop your Meilisearch instance.
 
-<Tabs.Container labels={['Local installation', 'Cloud platforms']}>
+<Tabs>
 
-<Tabs.Content label="Local installation">
+<Tab title="Local installation">
 
 If you're running Meilisearch locally, you can stop the program with `Ctrl + c`.
 
-</Tabs.Content>
+</Tab>
 
-<Tabs.Content label="Cloud platforms">
+<Tab title="Cloud platforms">
 
 If you're running Meilisearch as a `systemctl` service, connect via SSH to your cloud instance and execute the following command to stop Meilisearch:
 
@@ -341,8 +341,8 @@ systemctl stop meilisearch
 
 You may need to prefix the above command with `sudo` if you are not connected as root.
 
-</Tabs.Content>
-</Tabs.Container>
+</Tab>
+</Tabs>
 
 ##### Create a backup
 
@@ -352,50 +352,50 @@ On **cloud platforms**, you will find the `data.ms` folder at `/var/lib/meilisea
 
 Move the binary of the current Meilisearch installation and database to the `/tmp` folder:
 
-<Tabs.Container labels={['Local installation', 'Cloud platforms']}>
+<Tabs>
 
-<Tabs.Content label="Local installation">
+<Tab title="Local installation">
 
 ```
 mv /path/to/your/meilisearch/directory/meilisearch/data.ms /tmp/
 mv /path/to/your/meilisearch/directory/meilisearch /tmp/
 ```
 
-</Tabs.Content>
+</Tab>
 
-<Tabs.Content label="Cloud platforms">
+<Tab title="Cloud platforms">
 
 ```
 mv /usr/bin/meilisearch /tmp/
 mv /var/lib/meilisearch/data.ms /tmp/
 ```
 
-</Tabs.Content>
-</Tabs.Container>
+</Tab>
+</Tabs>
 
 ##### Install the desired version of Meilisearch
 
 Install the latest version of Meilisearch using:
 
-<Tabs.Container labels={['Local installation', 'Cloud platforms']}>
+<Tabs>
 
-<Tabs.Content label="Local installation">
+<Tab title="Local installation">
 
 ```bash
 curl -L https://install.meilisearch.com | sh
 ```
 
-</Tabs.Content>
+</Tab>
 
-<Tabs.Content label="Cloud platforms">
+<Tab title="Cloud platforms">
 
 ```sh
 # replace {meilisearch_version} with the version of your choice. Use the format: `vX.X.X`
 curl "https://github.com/meilisearch/meilisearch/releases/download/{meilisearch_version}/meilisearch-linux-amd64" --output meilisearch --location --show-error
 ```
 
-</Tabs.Content>
-</Tabs.Container>
+</Tab>
+</Tabs>
 
 Give execute permission to the Meilisearch binary:
 
@@ -415,9 +415,9 @@ mv meilisearch /usr/bin/meilisearch
 
 Execute the command below to import the dump at launch:
 
-<Tabs.Container labels={['Local installation', 'Cloud platforms']}>
+<Tabs>
 
-<Tabs.Content label="Local installation">
+<Tab title="Local installation">
 
 ```bash
 # replace {dump_uid.dump} with the name of your dump file
@@ -426,17 +426,17 @@ Execute the command below to import the dump at launch:
 ./meilisearch --import-dump dumps/{dump_uid.dump} --master-key="MASTER_KEY" --db-path PATH_TO_DB_DIR/data.ms --dump-dir PATH_TO_DUMP_DIR/dumps
 ```
 
-</Tabs.Content>
+</Tab>
 
-<Tabs.Content label="Cloud platforms">
+<Tab title="Cloud platforms">
 
 ```sh
 # replace {dump_uid.dump} with the name of your dump file
 meilisearch --db-path /var/lib/meilisearch/data.ms --import-dump "/var/opt/meilisearch/dumps/{dump_uid.dump}"
 ```
 
-</Tabs.Content>
-</Tabs.Container>
+</Tab>
+</Tabs>
 
 Importing a dump requires indexing all the documents it contains. Depending on the size of your dataset, this process can take a long time and cause a spike in memory usage.
 
@@ -462,26 +462,26 @@ If something went wrong, you can always roll back to the previous version. Feel 
 
 Delete the Meilisearch binary and `data.ms` folder created by the previous steps. Next, move the backup files back to their previous location using:
 
-<Tabs.Container labels={['Local installation', 'Cloud platforms']}>
+<Tabs>
 
-<Tabs.Content label="Local installation">
+<Tab title="Local installation">
 
 ```
 mv /tmp/meilisearch /path/to/your/meilisearch/directory/meilisearch
 mv /tmp/data.ms /path/to/your/meilisearch/directory/meilisearch/data.ms
 ```
 
-</Tabs.Content>
+</Tab>
 
-<Tabs.Content label="Cloud platforms">
+<Tab title="Cloud platforms">
 
 ```
 mv /tmp/meilisearch /usr/bin/meilisearch
 mv /tmp/data.ms /var/lib/meilisearch/data.ms
 ```
 
-</Tabs.Content>
-</Tabs.Container>
+</Tab>
+</Tabs>
 
 For **cloud platforms** run the configuration script at the root of your Meilisearch directory:
 
@@ -498,24 +498,24 @@ rm -r /tmp/data.ms
 
 You can also delete the dump file if desired:
 
-<Tabs.Container labels={['Local installation', 'Cloud platforms']}>
+<Tabs>
 
-<Tabs.Content label="Local installation">
+<Tab title="Local installation">
 
 ```
 rm /path/to/your/meilisearch/directory/meilisearch/dumps/{dump_uid.dump}
 ```
 
-</Tabs.Content>
+</Tab>
 
-<Tabs.Content label="Cloud platforms">
+<Tab title="Cloud platforms">
 
 ```
 rm /var/opt/meilisearch/dumps/{dump_uid.dump}
 ```
 
-</Tabs.Content>
-</Tabs.Container>
+</Tab>
+</Tabs>
 
 ## Version-specific warnings
 

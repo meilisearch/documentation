@@ -28,16 +28,16 @@ You can view your master key by visiting your project overview:
 
 To protect your self-hosted instance, relaunch it using the `--master-key` command-line option or the `MEILI_MASTER_KEY` environment variable:
 
-<Tabs.Container labels={['CLI', 'Environment variable']}>
-<Tabs.Content label="CLI">
+<Tabs>
+<Tab title="CLI">
 
 ```sh
 ./meilisearch --master-key="MASTER_KEY"
 ```
 
-</Tabs.Content>
+</Tab>
 
-<Tabs.Content label="Environment variable">
+<Tab title="Environment variable">
 
 UNIX:
 
@@ -53,8 +53,8 @@ set MEILI_MASTER_KEY="MASTER_KEY"
 ./meilisearch
 ```
 
-</Tabs.Content>
-</Tabs.Container>
+</Tab>
+</Tabs>
 
 <Tip>
 The master key must be at least 16-bytes-long and composed of valid UTF-8 characters. Use one of the following tools to generate a secure master key:

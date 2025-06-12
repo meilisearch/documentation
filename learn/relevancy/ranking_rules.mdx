@@ -65,9 +65,9 @@ Results are sorted by **the similarity of the matched words with the query words
 
 ## Examples
 
-<Tabs.Container labels={["Typo", "Proximity", "Attribute", "Exactness"]}>
+<Tabs>
 
-<Tabs.Content label="Typo">
+<Tab title="Typo">
 <Frame>
   <img src="/assets/images/ranking-rules/vogli3.png" alt="Demonstrating the typo ranking rule by searching for 'vogli'" />
 </Frame>
@@ -79,9 +79,9 @@ Results are sorted by **the similarity of the matched words with the query words
 
 The `typo` rule sorts the results by increasing number of typos on matched query words.
 
-</Tabs.Content>
+</Tab>
 
-<Tabs.Content label="Proximity">
+<Tab title="Proximity">
 <Frame>
   <img src="/assets/images/ranking-rules/new_road.png" alt="Demonstrating the proximity ranking rule by searching for 'new road'" />
 </Frame>
@@ -91,9 +91,9 @@ The `typo` rule sorts the results by increasing number of typos on matched query
 The reason why `Creature` is listed before `Mississippi Grind` is because of the `proximity` rule. The smallest **distance** between the matching words in `creature` is smaller than the smallest **distance** between the matching words in `Mississippi Grind`.
 
 The `proximity` rule sorts the results by increasing distance between matched query terms.
-</Tabs.Content>
+</Tab>
 
-<Tabs.Content label="Attribute">
+<Tab title="Attribute">
 <Frame>
   <img src="/assets/images/ranking-rules/belgium.png" alt="Demonstrating the attribute ranking rule by searching for 'belgium'" />
 </Frame>
@@ -104,9 +104,9 @@ The `proximity` rule sorts the results by increasing distance between matched qu
 
 The `attribute` rule sorts the results by [attribute importance](/learn/relevancy/attribute_ranking_order).
 
-</Tabs.Content>
+</Tab>
 
-<Tabs.Content label="Exactness">
+<Tab title="Exactness">
 <Frame>
   <img src="/assets/images/ranking-rules/knight.png?raw=true" alt="Demonstrating the exactness ranking rule by searching for 'Knight'" />
 </Frame>
@@ -115,6 +115,6 @@ The `attribute` rule sorts the results by [attribute importance](/learn/relevanc
 
 `Knight Moves` is displayed before `Knights of Badassdom`. `Knight` is exactly the same as the search query `Knight` whereas there is a letter of difference between `Knights` and the search query `Knight`.
 
-</Tabs.Content>
+</Tab>
 
-</Tabs.Container>
+</Tabs>
