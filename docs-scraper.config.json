@@ -44,7 +44,9 @@
       ],
       "filterableAttributes": [
         "url",
-        "section"
+        "section",
+        "hierarchy_lvl0",
+        "hierarchy_lvl1"
       ],
       "synonyms": {
           "large language model": [

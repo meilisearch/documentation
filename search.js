@@ -398,9 +398,8 @@ function initializeMeilisearchIntegration() {
         indicatorEl.innerHTML = 'Searching…';
         resultsContainer.appendChild(indicatorEl);
         
-        // Build search options
-        const searchOptions = {
-          limit: 25,
+        // Build base search options
+        const baseSearchOptions = {
           attributesToHighlight: ['hierarchy_lvl1', 'hierarchy_lvl2', 'hierarchy_lvl3', 'hierarchy_lvl4', 'hierarchy_lvl5', 'content'],
           attributesToCrop: ['content'],
           cropLength: 100,
@@ -410,19 +409,52 @@ function initializeMeilisearchIntegration() {
           }
         };
         
-        // Add filter if sections are selected
-        if (activeFilters.length > 0) {
-          searchOptions.filter = activeFilters.map(section => `section = "${section}"`).join(' OR ');
-        }
+        // Create federated multi-search queries
+        const multiSearchQueries = [
+          {
+            indexUid: MEILISEARCH_INDEX,
+            q: query,
+            // Lower  weight for error code results
+            filter: activeFilters.length > 0 
+              ? `(${activeFilters.map(section => `section = "${section}"`).join(' OR ')}) AND (hierarchy_lvl0 = "Errors" OR hierarchy_lvl1 = "Error codes")`
+              : `hierarchy_lvl0 = "Errors" OR hierarchy_lvl1 = "Error codes"`,
+            federationOptions: {
+              weight: 0.7
+            },
+            ...baseSearchOptions
+          },
+          {
+            indexUid: MEILISEARCH_INDEX,
+            q: query,
+            // Higher weight for non-error code results
+            filter: activeFilters.length > 0 
+              ? `(${activeFilters.map(section => `section = "${section}"`).join(' OR ')}) AND NOT (hierarchy_lvl0 = "Errors" OR hierarchy_lvl1 = "Error codes")`
+              : `NOT (hierarchy_lvl0 = "Errors" OR hierarchy_lvl1 = "Error codes")`,
+            federationOptions: {
+              weight: 1.0
+            },
+            ...baseSearchOptions
+          }
+        ];
         
-        // Perform search
-        index.search(query, searchOptions)
+        // Perform federated multi-search
+        const multiSearchRequest = {
+          federation: {
+            limit: 25
+          },
+          queries: multiSearchQueries
+        };
+        
+        client.multiSearch(multiSearchRequest)
         .then(response => {
           resultsContainer.innerHTML = '';
           
           const filterContainer = document.getElementById('meilisearch-filter-container');
           
-          if (response.hits.length === 0) {
+          // Handle federated multi-search response
+          const allHits = response.hits || [];
+          
+          if (allHits.length === 0) {
             if (filterContainer) filterContainer.style.display = 'none';
             const noResultsEl = document.createElement('div');
             noResultsEl.className = 'meilisearch-modal__indicator';
@@ -436,7 +468,7 @@ function initializeMeilisearchIntegration() {
           
           // Group results by category if available
           const grouped = {};
-          response.hits.forEach(hit => {
+          allHits.forEach(hit => {
             const category = hit.hierarchy_lvl0 || 'General';
             if (!grouped[category]) {
               grouped[category] = [];
