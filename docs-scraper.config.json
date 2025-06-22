@@ -42,6 +42,10 @@
           "content",
           "hierarchy_lvl0"
       ],
+      "filterableAttributes": [
+        "url",
+        "section"
+      ],
       "synonyms": {
           "large language model": [
             "llm"
