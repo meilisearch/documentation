@@ -380,6 +380,7 @@
                 "group": "Artificial intelligence",
                 "pages": [
                   "guides/ai/getting_started_with_chat",
+                  "guides/ai/understanding_chat_workspaces",
                   "guides/ai/mcp",
                   "guides/embedders/openai",
                   "guides/langchain",

@@ -1,0 +1,128 @@
+---
+title: Understanding chat workspaces
+sidebarTitle: Chat workspaces explained
+description: Learn how chat workspaces work and how to use them effectively
+---
+
+Chat workspaces are at the heart of Meilisearch's conversational search feature. This guide explains what they are, how they work, and best practices for using them.
+
+## What are chat workspaces?
+
+Chat workspaces are isolated configurations that define how your conversational search behaves. Think of them as different "personalities" or "assistants" that can answer questions about your data in specific ways.
+
+### Key characteristics
+
+- **Automatically created**: No need to explicitly create workspaces – they're created when you configure them
+- **Isolated configurations**: Each workspace has its own LLM settings and prompts
+- **Stateless**: No conversation history is stored between requests
+- **Multi-tenant ready**: Perfect for SaaS applications with different customers
+
+## Creating your first workspace
+
+The beauty of workspaces is their simplicity. Just configure one and it exists:
+
+```bash
+curl \
+  -X PATCH 'http://localhost:7700/chats/my-first-assistant/settings' \
+  -H 'Authorization: Bearer MASTER_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "source": "openAi",
+    "apiKey": "sk-...",
+    "prompts": {
+      "system": "You are a friendly assistant who loves to help!"
+    }
+  }'
+```
+
+That's it! The workspace `my-first-assistant` now exists and is ready to use.
+
+## Workspace isolation and privacy
+
+Each workspace is completely isolated:
+
+- **Configuration isolation**: Settings don't affect other workspaces
+- **No shared context**: Conversations in one workspace don't affect others
+- **No data storage**: Meilisearch doesn't store any conversation data
+
+This means:
+
+- Complete privacy for your users
+- No cross-contamination between different use cases
+- Full compliance with data protection regulations
+
+## Best practices
+
+### 1. Use descriptive workspace names
+
+```bash
+# Good examples:
+/chats/customer-support/settings
+/chats/product-recommendations/settings
+/chats/technical-docs/settings
+
+# Less clear:
+/chats/ws1/settings
+/chats/test/settings
+```
+
+### 2. Optimize prompts for each use case
+
+```json
+{
+  "prompts": {
+    "system": "You are a helpful customer support agent. Be empathetic, professional, and always try to solve the customer's problem based on our documentation."
+  }
+}
+```
+
+### 3. Configure relevant indexes
+
+Use the [conversation settings](/reference/api/settings#conversation) to optimize how each index presents data:
+
+```json
+{
+  "description": "Product catalog with electronics and accessories",
+  "documentTemplate": "Product: {{doc.name}} - {{doc.description}} (Price: ${{doc.price}})",
+  "searchParameters": {
+    "limit": 5,
+    "sort": ["popularity:desc"]
+  }
+}
+```
+
+## Common use cases
+
+### Multi-tenant SaaS
+
+Create workspaces per customer:
+
+```
+/chats/customer-123/settings
+/chats/customer-456/settings
+```
+
+### Multiple departments
+
+Different assistants for different teams:
+
+```
+/chats/sales-team/settings
+/chats/support-team/settings
+/chats/engineering-docs/settings
+```
+
+### A/B testing
+
+Test different prompts or models:
+
+```
+/chats/assistant-v1/settings
+/chats/assistant-v2-friendly/settings
+```
+
+## Next steps
+
+- Learn about [configuring index conversation settings](/reference/api/settings#conversation)
+- Explore [advanced prompt engineering](/guides/ai/prompt_engineering)
+- Implement [conversation history management](/guides/ai/conversation_history)
