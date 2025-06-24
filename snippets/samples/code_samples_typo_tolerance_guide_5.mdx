@@ -15,6 +15,12 @@ client.index('movies').updateTypoTolerance({
 })
 ```
 
+```python Python
+client.index('movies').update_typo_tolerance({
+  'disableOnNumbers': True
+})
+```
+
 ```php PHP
 $client->index('movies')->updateTypoTolerance([
   'disableOnNumbers' => true
