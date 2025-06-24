@@ -188,3 +188,72 @@
   text-align: center; 
   color: #f87171;
 }
+
+/* Filter Container Styles */
+.meilisearch-filter-container {
+  padding: 16px 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+.dark .meilisearch-filter-container {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+.meilisearch-filter-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.7);
+  margin-bottom: 12px;
+}
+
+.dark .meilisearch-filter-title {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.meilisearch-filter-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.meilisearch-filter-tag {
+  background-color: rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.7);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-transform: capitalize;
+}
+
+.dark .meilisearch-filter-tag {
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.meilisearch-filter-tag:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+.dark .meilisearch-filter-tag:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.meilisearch-filter-tag.active {
+  background-color: #f472b6;
+  border-color: #f472b6;
+  color: white;
+}
+
+.meilisearch-filter-tag.active:hover {
+  background-color: #cb4d86;
+  border-color: #cb4d86;
+}
