@@ -13,12 +13,23 @@ The chat completions feature is experimental and must be enabled before use. See
 ## Prerequisites
 
 Before starting, ensure you have:
+
 - Meilisearch instance running (v1.15.1 or later)
 - An API key from an LLM provider (OpenAI, Azure OpenAI, Mistral, Gemini, or access to a vLLM server)
 - At least one index with searchable content
 - The chat completions experimental feature enabled
 
 ## Quick start
+
+### Understanding workspaces
+
+Think of workspaces as different "assistants" you can create for various purposes. Each workspace can have its own personality (system prompt) and capabilities. The best part? **Workspaces are created automatically** when you configure them – no separate creation step needed!
+
+For example:
+
+- `customer-support` - A helpful assistant for customer queries
+- `product-search` - An expert at finding the perfect product
+- `docs-helper` - A technical assistant for documentation
 
 ### Enable the chat completions feature
 
@@ -143,6 +154,7 @@ Workspaces allow you to create isolated chat configurations for different use ca
 - **Documentation**: Tune for technical Q&A
 
 Each workspace maintains its own:
+
 - LLM provider configuration
 - System prompt
 
@@ -266,6 +278,70 @@ except Exception as error:
 ```
 
 </CodeGroup>
+
+## Managing conversations
+
+Since Meilisearch keeps your data private and doesn't store conversations, you'll need to manage conversation history in your application. Here's a simple approach:
+
+<CodeGroup>
+
+```javascript JavaScript
+// Store conversation history in your app
+const conversation = [];
+
+// Add user message
+conversation.push({ role: 'user', content: 'What is Meilisearch?' });
+
+// Get response and add to history
+const response = await client.chat.completions.create({
+  model: 'gpt-3.5-turbo',
+  messages: conversation,
+  stream: true,
+});
+
+// Add assistant response to history
+let assistantMessage = '';
+for await (const chunk of response) {
+  assistantMessage += chunk.choices[0]?.delta?.content || '';
+}
+conversation.push({ role: 'assistant', content: assistantMessage });
+
+// Use the full conversation for follow-up questions
+conversation.push({ role: 'user', content: 'Can it handle typos?' });
+// ... continue the conversation
+```
+
+```python Python
+# Store conversation history in your app
+conversation = []
+
+# Add user message
+conversation.append({"role": "user", "content": "What is Meilisearch?"})
+
+# Get response and add to history
+response = client.chat.completions.create(
+    model="gpt-3.5-turbo",
+    messages=conversation,
+    stream=True,
+)
+
+# Add assistant response to history
+assistant_message = ""
+for chunk in response:
+    if chunk.choices[0].delta.content is not None:
+        assistant_message += chunk.choices[0].delta.content
+conversation.append({"role": "assistant", "content": assistant_message})
+
+# Use the full conversation for follow-up questions
+conversation.append({"role": "user", "content": "Can it handle typos?"})
+# ... continue the conversation
+```
+
+</CodeGroup>
+
+<Tip>
+Remember: Each request is independent, so always send the full conversation history if you want the AI to remember previous exchanges.
+</Tip>
 
 ## Next steps
 
