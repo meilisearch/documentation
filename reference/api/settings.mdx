@@ -1065,6 +1065,10 @@ For example, if you set `maxTotalHits` to 100, you will not be able to access se
 | :----------------- | :------ | :------------ | :---------------------------------------------------------- |
 | **`maxTotalHits`** | Integer | `1000`        | The maximum number of search results Meilisearch can return |
 
+<Danger>
+Setting `maxTotalHits` to a value higher than the default will negatively impact search performance. Setting `maxTotalHits` to values over `20000` may result in queries taking seconds to complete.
+</Danger>
+
 ### Get pagination settings
 
 <RouteHighlighter method="GET" path="/indexes/{index_uid}/settings/pagination" />
@@ -1111,9 +1115,9 @@ Partially update the pagination settings for an index.
 | :----------------- | :------ | :------------ | :---------------------------------------------------------- |
 | **`maxTotalHits`** | Integer | `1000`        | The maximum number of search results Meilisearch can return |
 
-<Warning>
+<Danger>
 Setting `maxTotalHits` to a value higher than the default will negatively impact search performance. Setting `maxTotalHits` to values over `20000` may result in queries taking seconds to complete.
-</Warning>
+</Danger>
 
 #### Example
 

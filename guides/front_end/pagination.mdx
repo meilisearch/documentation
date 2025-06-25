@@ -15,6 +15,10 @@ Other solutions, such as [creating a page selector](/guides/front_end/pagination
 
 Whatever UI pattern you choose, there is a limited maximum number of search results Meilisearch will return for any given query. You can use [the `maxTotalHits` index setting](/reference/api/settings#pagination) to configure this, but be aware that higher limits will negatively impact search performance.
 
+<Danger>
+Setting `maxTotalHits` to a value higher than the default will negatively impact search performance. Setting `maxTotalHits` to values over `20000` may result in queries taking seconds to complete.
+</Danger>
+
 ## "Previous" and "Next" buttons
 
 Using "Previous" and "Next" buttons for pagination means that users can easily navigate through results, but don't have the ability to jump to an arbitrary results page. This is Meilisearch's recommended solution when creating paginated interfaces.
