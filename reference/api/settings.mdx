@@ -2635,7 +2635,7 @@ Authentication token Meilisearch should send with each request to the embedder.
 
 This field is mandatory if using a protected `rest` embedder.
 
-This field is optional for `openAI` and `ollama` embedders. If you don't specify `apiKey`, Meilisearch will attempt to read it from environment variables `OPENAI_API_KEY` and `MEILI_OLLAMA_URL`, respectively.
+This field is optional for `openAI` and `ollama` embedders. If you don't specify `apiKey` when using `openAI`, Meilisearch attempts to read it from the `OPENAI_API_KEY` environment variable.
 
 This field is incompatible with `huggingFace` and `userProvided` embedders.
 
