@@ -267,7 +267,7 @@ update_filterable_attributes_1: |-
         "attributePatterns": ["*_ratings"],
         "features": {
           "facetSearch": false,
-          "filters": {
+          "filter": {
             "equality": true,
             "comparison": false
           }
