@@ -37,6 +37,10 @@ curl \
 
 <RouteHighlighter method="PATCH" path="/chats/{workspace}/settings" />
 
+<Note>
+The first call to `PATCH /chats/{workspace}/settings` will create the workspace UID if it doesn’t already exist.
+</Note>
+
 Configure the LLM provider and settings for a chat workspace.
 
 ```json
