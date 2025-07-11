@@ -19,6 +19,7 @@ curl \
     "chatCompletions": true
   }'
 ```
+
 </Note>
 
 ## Chat completions workspace object
@@ -35,10 +36,10 @@ curl \
 
 ## Update the chat workspace settings
 
-<RouteHighlighter method="PATCH" path="/chats/{workspace}/settings" />
+<RouteHighlighter method="PUT,PATCH" path="/chats/{workspace}/settings" />
 
 <Note>
-The first call to `PATCH /chats/{workspace}/settings` will create the workspace UID if it doesn’t already exist.
+Both `PUT` and `PATCH` methods are supported. The first call to either method will create the workspace UID if it doesn't already exist. `PUT` replaces the entire configuration, while `PATCH` updates only the provided fields.
 </Note>
 
 Configure the LLM provider and settings for a chat workspace.
@@ -85,7 +86,6 @@ Configure the LLM provider and settings for a chat workspace.
 | **`searchDescription`**   | String | A prompt to explain what the internal search function does        |
 | **`searchQParam`**        | String | A prompt to explain what the `q` parameter of the search function does and how to use it |
 | **`searchIndexUidParam`** | String | A prompt to explain what the `indexUid` parameter of the search function does and how to use it |
-
 
 ### Request body
 
@@ -250,7 +250,7 @@ data: [DONE]
 <CodeGroup>
 
 ```bash cURL
-curl \
+curl -N \
   -X POST 'http://localhost:7700/chats/customer-support/chat/completions' \
   -H 'Authorization: Bearer DEFAULT_CHAT_KEY' \
   -H 'Content-Type: application/json' \
@@ -553,11 +553,13 @@ This tool reports real-time progress of internal search operations. When declare
 **Purpose**: Provides transparency about search operations and reduces perceived latency by showing users what's happening behind the scenes.
 
 **Arguments**:
+
 - `call_id`: Unique identifier to track the search operation
 - `function_name`: Name of the internal function being executed (e.g., "_meiliSearchInIndex")
 - `function_parameters`: JSON-encoded string containing search parameters like `q` (query) and `index_uid`
 
 **Example Response**:
+
 ```json
 {
   "function": {
@@ -574,12 +576,14 @@ Since the `/chats/{workspace}/chat/completions` endpoint is stateless, this tool
 **Purpose**: Maintains conversation context for better response quality in subsequent requests by preserving tool calls and results.
 
 **Arguments**:
+
 - `role`: Message author role ("user" or "assistant")
 - `content`: Message content (for tool results)
 - `tool_calls`: Array of tool calls made by the assistant
 - `tool_call_id`: ID of the tool call this message responds to
 
 **Example Response**:
+
 ```json
 {
   "function": {
@@ -596,10 +600,12 @@ This tool provides the source documents that were used by the LLM to generate re
 **Purpose**: Shows users which documents were used to generate responses, improving trust and enabling source verification.
 
 **Arguments**:
+
 - `call_id`: Matches the `call_id` from `_meiliSearchProgress` to associate queries with results
 - `documents`: JSON object containing the source documents with only displayed attributes
 
 **Example Response**:
+
 ```json
 {
   "function": {
