@@ -2512,7 +2512,9 @@ These embedder objects may contain the following fields:
 | **`binaryQuantized`**          | Boolean | Empty                                                                                                                                           | Once set to `true`, irreversibly converts all vector dimensions to 1-bit values                                                                                |
 | **`indexingEmbedder`**         | Object  | Empty                                                                                                                                           | Configures embedder to vectorize documents during indexing                                                                                                     |
 | **`searchEmbedder`**           | Object  | Empty                                                                                                                                           | Configures embedder to vectorize search queries                                                                                                                |
-| **`pooling`**                  | String  | `"useModel"`                                                                                                                                    | Pooling method for Hugging Face embedders                                                                                                                      |
+| **`pooling`**                  | String  | `"useModel"`                                                                                                                                    | Pooling method for Hugging Face embedders                                                                                                                     |
+| **`indexingFragments`**        | Object  | Empty                                                                                                                                    | Configures a set of fields for multimodal embedding generation                                                                                                                      |
+| **`searchFragments`**        | Object  | Empty                                                                                                                                    | Configures a set of fields for use in multimodal search                                                                                                                       |
 
 ### Get embedder settings
 
@@ -2874,6 +2876,120 @@ Both fields must be an object and accept the same fields as a regular embedder, 
 `indexingEmbedder` and `searchEmbedder` are mandatory when using the `composite` source.
 
 `indexingEmbedder` and `searchEmbedder` are incompatible with all other embedder sources.
+
+##### `indexingFragments` <NoticeTag type="experimental" label="experimental" />
+
+<Note>
+This is an experimental feature. Use the Meilisearch Cloud UI or the experimental features endpoint to activate it:
+
+```sh
+curl \
+  -X PATCH 'MEILISEARCH_URL/experimental-features/' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "multimodal": true
+  }'
+```
+</Note>
+
+Use `indexingFragments` and `searchFragments` to set up Meilisearch to perform multimodal searches.
+
+`indexingFragments` specifies which fields in your documents should be used during multimodal embedding generation. It must be an object with the following structure:
+
+```json
+  "FRAGMENT_NAME": {
+    "value": {
+      …
+    }
+  }
+```
+
+`FRAGMENT_NAME` can be any valid string. It must contain a single field, `value`. `value` must then follow your chosen model's specifications.
+
+For example, for Voyage AI's text and image embedder, `value` must be an array containing a single object with a `type` field. Depending on `type`'s value, you must include either `text`, `image_url`, or `image_base64`:
+
+```json
+{
+  "FRAGMENT_NAME_A": {
+    "value": {
+      "content": [
+        {
+          "type": "text",
+          "text": "A document called {{doc.title}} that can be described as {{doc.description}}"
+        }
+      ]
+    }
+  },
+  "FRAGMENT_NAME_B": {
+    "value": {
+      "content": [
+        {
+          "type": "image_url",
+          "image_url": "{{doc.image_url}}"
+        }
+      ]
+    }
+  },
+}
+```
+
+Use Liquid templates to interpolate document data into the fragment fields, where `doc` gives you access to all fields within a document.
+
+`indexingFragments` is optional when using the `rest` source.
+
+`indexingFragments` is incompatible with all other embedder sources.
+
+Specifying a `documentTemplate` in an embedder using `indexingFragments` will result in an error.
+
+You must specify at least one valid fragment in `searchFragments` when using `indexingFragments`.
+
+##### `searchFragments` <NoticeTag type="experimental" label="experimental" />
+
+<Note>
+This is an experimental feature. Use the Meilisearch Cloud UI or the experimental features endpoint to activate it:
+
+```sh
+curl \
+  -X PATCH 'MEILISEARCH_URL/experimental-features/' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "multimodal": true
+  }'
+```
+</Note>
+
+`searchFragments` instructs Meilisearch how to parse fields present in a query's `media` search parameter. It must be an object following the same structure as the `indexerFragments` object:
+
+```json
+  "FRAGMENT_NAME": {
+    "value": {
+      …
+    }
+  }
+```
+
+As with `indexingFragments`, the content of `value` should follow your model's specification.
+
+Use Liquid templates to interpolate search query data into the fragment fields, where `media` gives you access to all fields specified in the query's `media` field:
+
+```json
+"SEARCH_FRAGMENT_A": {
+  "value": {
+    "content": [
+      {
+        "type": "image_base64",
+        "image_base64": "data:{{media.image.mime}};base64,{{media.image.data}}"
+      }
+    ]
+  }
+},
+```
+
+`searchFragments` is optional when using the `rest` source.
+
+`searchFragments` is incompatible with all other embedder sources.
+
+You must specify at least one valid fragment in `indexingFragments` when using `searchFragments`.
 
 #### Example
 
