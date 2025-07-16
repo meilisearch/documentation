@@ -1308,7 +1308,7 @@ Specifies data to populate search fragments when performing multimodal searches.
 
 `media` must be an object whose fields must correspond to the data required by one [search fragment](/reference/api/settings#searchfragments). `media` must match a single search fragment. If `media` matches more than one fragment or no search fragments at all, Meilisearch will return an error.
 
-It is mandatory to specify an embedder when using `media`.
+It is mandatory to specify an embedder when using `media`. `media` is incompatible with `vector`.
 
 #### Example
 
