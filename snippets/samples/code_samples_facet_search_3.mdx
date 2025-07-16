@@ -53,6 +53,15 @@ var query = new SearchFacetsQuery()
 await client.Index("books").FacetSearchAsync("genres", query);
 ```
 
+```rust Rust
+let res = client.index("books")
+  .facet_search("genres")
+  .with_facet_query("c")
+  .execute()
+  .await
+  .unwrap();
+```
+
 ```dart Dart
 await client.index('books').facetSearch(
       FacetSearchQuery(

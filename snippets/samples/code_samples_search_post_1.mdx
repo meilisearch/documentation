@@ -39,7 +39,7 @@ await client.Index("movies").SearchAsync<Movie>("American ninja");
 let results: SearchResults<Movie> = client
   .index("movies")
   .search()
-  .with_query("American ninja")
+  .with_query("american ninja")
   .execute()
   .await
   .unwrap();

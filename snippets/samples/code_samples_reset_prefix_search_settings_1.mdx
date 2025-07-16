@@ -24,4 +24,12 @@ client.index('INDEX_UID').reset_prefix_search
 ```go Go
 client.Index("books").ResetPrefixSearch()
 ```
+
+```rust Rust
+let task: TaskInfo = client
+  .index(INDEX_UID)
+  .reset_prefix_search()
+  .await
+  .unwrap();
+```
 </CodeGroup>

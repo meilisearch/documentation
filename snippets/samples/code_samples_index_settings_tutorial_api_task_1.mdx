@@ -4,4 +4,8 @@
 curl \
   -X GET 'MEILISEARCH_URL/tasks/TASK_UID'
 ```
+
+```rust Rust
+let task_status = index.get_task(&task).await.unwrap();
+```
 </CodeGroup>

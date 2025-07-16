@@ -29,4 +29,14 @@ $client->index('INDEX_NAME')->search('kitchen utensils', [
   ]
 ]);
 ```
+
+```rust Rust
+let results = index
+  .search()
+  .with_query("kitchen utensils")
+  .with_hybrid("EMBEDDER_NAME", 0.9)
+  .execute()
+  .await
+  .unwrap();
+```
 </CodeGroup>
