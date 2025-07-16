@@ -14,4 +14,12 @@ client.index('movies').search('-escape')
 ```php PHP
 $client->index('movies')->search('-escape');
 ```
+
+```rust Rust
+let results = index.search()
+  .with_query("-escape")
+  .execute()
+  .await
+  .unwrap();
+```
 </CodeGroup>
