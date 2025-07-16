@@ -2892,8 +2892,6 @@ curl \
 ```
 </Note>
 
-Use `indexingFragments` and `searchFragments` to set up Meilisearch to perform multimodal searches.
-
 `indexingFragments` specifies which fields in your documents should be used during multimodal embedding generation. It must be an object with the following structure:
 
 ```json
@@ -2958,7 +2956,7 @@ curl \
 ```
 </Note>
 
-`searchFragments` instructs Meilisearch how to parse fields present in a query's `media` search parameter. It must be an object following the same structure as the `indexerFragments` object:
+`searchFragments` instructs Meilisearch how to parse fields present in a query's [`media` search parameter](/reference/api/search#media). It must be an object following the same structure as the [`indexingFragments`](/reference/api/settings#indexingfragments) object:
 
 ```json
   "FRAGMENT_NAME": {
@@ -2970,7 +2968,7 @@ curl \
 
 As with `indexingFragments`, the content of `value` should follow your model's specification.
 
-Use Liquid templates to interpolate search query data into the fragment fields, where `media` gives you access to all fields specified in the query's `media` field:
+Use Liquid templates to interpolate search query data into the fragment fields, where `media` gives you access to all that parameter's fields:
 
 ```json
 "SEARCH_FRAGMENT_A": {
