@@ -48,7 +48,12 @@ The `/batches` route gives information about the progress of batches of [asynchr
     }, 
     "progressTrace": { … },
     "writeChannelCongestion": { … },
-    "internalDatabaseSizes": { … }
+    "internalDatabaseSizes": { … },
+    "embedderRequests": {
+      "total": 12,
+      "failed": 5,
+      "lastError": "runtime error: received internal error HTTP 500 from embedding server\n  - server replied with `{\"error\":\"Service Unavailable\",\"text\":\"will_error\"}`"
+    }
   },
   "duration": "PT0.250518S",
   "startedAt": "2024-12-10T15:20:30.18182Z",
@@ -122,6 +127,12 @@ Object containing information on write operations computed during indexing. Can 
 #### `internalDatabaseSizes`
 
 Size of each internal database, including by how much it changed after a batch was processed.
+
+#### `embedderRequests`
+
+Object containing the total number of requests made to the embedder. Also displays the number of failed tasks, if any, along with the error message for the most recent failure.
+
+Only present in batches with at least one task querying an embedder. This field continuously updates until Meilisearch finishes processing the batch.
 
 ### `duration`
 
@@ -219,7 +230,12 @@ For example, `?uids=0` returns a batch containing the task with a `taskUid` equa
         },
         "progressTrace": { … },
         "writeChannelCongestion": { … },
-        "internalDatabaseSizes": { … }
+        "internalDatabaseSizes": { … },
+        "embedderRequests": {
+          "total": 12,
+          "failed": 5,
+          "lastError": "runtime error: received internal error HTTP 500 from embedding server\n  - server replied with `{\"error\":\"Service Unavailable\",\"text\":\"will_error\"}`"
+        }
       },
       "duration": "PT0.110083S",
       "startedAt": "2024-12-10T15:49:04.995321Z",
@@ -270,6 +286,14 @@ Get a single batch.
     },
     "indexUids": {
       "INDEX_NAME": 1
+    },
+    "progressTrace": { … },
+    "writeChannelCongestion": { … },
+    "internalDatabaseSizes": { … },
+    "embedderRequests": {
+      "total": 12,
+      "failed": 5,
+      "lastError": "runtime error: received internal error HTTP 500 from embedding server\n  - server replied with `{\"error\":\"Service Unavailable\",\"text\":\"will_error\"}`"
     }
   },
   "duration": "PT0.364788S",
