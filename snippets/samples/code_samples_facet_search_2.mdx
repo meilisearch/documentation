@@ -62,6 +62,20 @@ var newFaceting = new Faceting
 await client.Index("books").UpdateFacetingAsync(newFaceting);
 ```
 
+```rust Rust
+let mut facet_sort_setting = BTreeMap::new();
+facet_sort_setting.insert("genres".to_string(), FacetSortValue::Count);
+let faceting = FacetingSettings {
+  max_values_per_facet: 100,
+  sort_facet_values_by: Some(facet_sort_setting),
+};
+
+let res = client.index("books")
+  .set_faceting(&faceting)
+  .await
+  .unwrap();
+```
+
 ```dart Dart
 await client.index('books').updateFaceting(
       Faceting(

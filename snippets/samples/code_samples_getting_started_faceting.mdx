@@ -78,8 +78,11 @@ await client.Index("movies").UpdateFacetingAsync(faceting);
 ```
 
 ```rust Rust
+let mut facet_sort_setting = BTreeMap::new();
+facet_sort_setting.insert("*".to_string(), FacetSortValue::Count);
 let mut faceting = FacetingSettings {
   max_values_per_facet: 2,
+  sort_facet_values_by: Some(facet_sort_setting),
 };
 
 let task: TaskInfo = client

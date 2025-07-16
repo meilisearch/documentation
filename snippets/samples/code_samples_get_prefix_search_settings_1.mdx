@@ -24,4 +24,12 @@ client.index('INDEX_UID').prefix_search
 ```go Go
 client.Index("books").GetPrefixSearch()
 ```
+
+```rust Rust
+let prefix_search: PrefixSearchSettings = client
+  .index(INDEX_UID)
+  .get_prefix_search()
+  .await
+  .unwrap();
+```
 </CodeGroup>
