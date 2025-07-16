@@ -4,4 +4,11 @@
 curl \
   -X GET 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/searchable-attributes'
 ```
+
+```rust Rust
+let searchable_attributes: Vec<String> = index
+  .get_searchable_attributes()
+  .await
+  .unwrap();
+```
 </CodeGroup>

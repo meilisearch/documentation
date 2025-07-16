@@ -42,7 +42,7 @@ await client.GetTasksAsync(new TasksQuery { Statuses = new List<TaskInfoStatus> 
 ```rust Rust
 let mut query = TasksQuery::new(&client);
 let tasks = query
-  .with_statuses(["failed", "canceled"])
+  .with_statuses(["failed"])
   .execute()
   .await
   .unwrap();

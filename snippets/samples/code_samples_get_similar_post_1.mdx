@@ -39,4 +39,12 @@ client.Index("INDEX_NAME").SearchSimilarDocuments(&meilisearch.SimilarDocumentQu
   Embedder: "default",
 }, resp)
 ```
+
+```rust Rust
+let results = index
+  .similar_search("TARGET_DOCUMENT_ID", "EMBEDDER_NAME")
+  .execute()
+  .await
+  .unwrap();
+```
 </CodeGroup>

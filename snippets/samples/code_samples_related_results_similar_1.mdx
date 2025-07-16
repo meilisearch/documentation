@@ -10,4 +10,11 @@ curl \
     "embedder": "EMBEDDER_NAME"
   }'
 ```
+
+```rust Rust
+let results = movies.similar_search("192", "EMBEDDER_NAME")
+  .execute()
+  .await
+  .unwrap();
+```
 </CodeGroup>

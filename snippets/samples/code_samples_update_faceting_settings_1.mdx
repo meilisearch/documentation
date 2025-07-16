@@ -85,8 +85,12 @@ await client.Index("books").UpdateFacetingAsync(faceting);
 ```
 
 ```rust Rust
+let mut facet_sort_setting = BTreeMap::new();
+facet_sort_setting.insert(String::from("*"), FacetSortValue::Alpha);
+facet_sort_setting.insert(String::from("genres"), FacetSortValue::Count);
 let mut faceting = FacetingSettings {
   max_values_per_facet: 2,
+  sort_facet_values_by: Some(facet_sort_setting),
 };
 
 let task: TaskInfo = client
