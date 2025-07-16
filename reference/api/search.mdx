@@ -1312,24 +1312,7 @@ It is mandatory to specify an embedder when using `media`.
 
 #### Example
 
-<CodeSamplesSearchParameterReferenceLocales1 />
-
-```sh
-curl -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
-  -H 'content-type: application/json' \
-  --data-binary '{
-    "hybrid": {
-      "embedder": "EMBEDDER_NAME"
-    },
-    "media": {
-      "FIELD_A": "VALUE_A",
-      "FIELD_B" : {
-        "FIELD_C": "VALUE_B"
-        "FIELD_D": "VALUE_C"
-      }
-    }
-  }'
-```
+<CodeSamplesSearchParameterReferenceMedia1 />
 
 ```json
 {
