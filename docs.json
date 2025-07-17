@@ -342,7 +342,8 @@
                   "reference/api/dump",
                   "reference/api/experimental_features",
                   "reference/api/metrics",
-                  "reference/api/logs"
+                  "reference/api/logs",
+                  "reference/api/export"
                 ]
               },
               {
