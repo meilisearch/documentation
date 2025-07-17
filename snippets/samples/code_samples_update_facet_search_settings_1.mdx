@@ -26,4 +26,12 @@ client.index('INDEX_UID').update_facet_search_setting(false)
 ```go Go
 client.Index("books").UpdateFacetSearch(false)
 ```
+
+```rust Rust
+let task: TaskInfo = client
+  .index(INDEX_UID)
+  .set_facet_search(false)
+  .await
+  .unwrap();
+```
 </CodeGroup>

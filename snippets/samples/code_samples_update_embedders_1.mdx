@@ -46,4 +46,21 @@ client.index('INDEX_NAME').update_embedders(
   }
 )
 ```
+
+```rust Rust
+let embedders = HashMap::from([(
+  String::from("default"),
+  Embedder {
+    source: EmbedderSource::OpenAi,
+    api_key: Some(String::from("OPEN_AI_API_KEY")),
+    model: Some(String::from("text-embedding-3-small")),
+    document_template: Some(String::from("A document titled '{{doc.title}}' whose description starts with {{doc.overview|truncatewords: 20}}")),
+    ..Embedder::default()
+  }
+)]);
+let task = index
+  .set_embedders(&embedders)
+  .await
+  .unwrap();
+```
 </CodeGroup>
