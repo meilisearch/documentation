@@ -171,6 +171,7 @@
                   "learn/ai_powered_search/image_search_with_user_provided_embeddings",
                   "learn/ai_powered_search/search_with_user_provided_embeddings",
                   "learn/ai_powered_search/retrieve_related_search_results",
+                  "learn/ai_powered_search/chat_tooling_reference",
                   "learn/ai_powered_search/choose_an_embedder",
                   "learn/ai_powered_search/difference_full_text_ai_search"
                 ]
