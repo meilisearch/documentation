@@ -20,9 +20,16 @@ curl \
   }'
 ```
 
+When you enable the chat route for the first time, Meilisearch creates a new API key named "Default Chat API Key".
 </Note>
 
-## Chat completions workspace object
+## Authorization
+
+When working with a secure Meilisearch instance, Use an API key with access to both the `search` and `chatCompletions` actions, such as the default chat API key.
+
+Chat queries only search indexes its API key can access. The default chat API key has access to all indexes.
+
+## Chat workspace object
 
 ```json
 {
@@ -34,18 +41,80 @@ curl \
 | :---------- | :----- | :--------------------------------------------------- |
 | **`uid`**   | String | Unique identifier for the chat completions workspace |
 
-## Update chat workspace settings
+## List chat workspaces
 
-<RouteHighlighter method="PUT" path="/chats/{workspace}/settings" />
+<RouteHighlighter method="GET" path="/chats" />
 
-<RouteHighlighter method="PATCH" path="/chats/{workspace}/settings" />
+List all chat workspaces. Results can be paginated by using the `offset` and `limit` query parameters.
 
-Configure the LLM provider and settings for a chat workspace.
+### Query parameters
 
-Both `PUT` and `PATCH` methods are supported. `PUT` replaces the entire configuration, while `PATCH` updates only the provided fields.
+| Query parameter | Description                    | Default value |
+| :-------------- | :----------------------------- | :------------ |
+| **`offset`**    | Number of workspaces to skip   | `0`           |
+| **`limit`**     | Number of workspaces to return | `20`          |
 
-The first call to either method will create the workspace UID if it doesn't already exist.
+### Response
 
+| Name          | Type    | Description                          |
+| :------------ | :------ | :----------------------------------- |
+| **`results`** | Array   | An array of [workspaces](#chat-workspace-object) |
+| **`offset`**  | Integer | Number of workspaces skipped            |
+| **`limit`**   | Integer | Number of workspaces returned           |
+| **`total`**   | Integer | Total number of workspaces              |
+
+### Example
+
+```sh
+  curl \
+    -X GET 'MEILISEARCH_URL/chats?limit=3'
+```
+
+#### Response: `200 Ok`
+
+```json
+{
+  "results": [
+    { "uid": "WORKSPACE_1" },
+    { "uid": "WORKSPACE_2" },
+    { "uid": "WORKSPACE_3" }
+  ],
+  "offset": 0,
+  "limit": 20,
+  "total": 3
+}
+```
+
+## Get one chat workspace
+
+<RouteHighlighter method="GET" path="/chats/{workspace_uid}" />
+
+Get information about a workshop.
+
+### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`workspace_uid`** * | String | `uid` of the requested index |
+
+### Example
+
+```sh
+  curl \
+    -X GET 'MEILISEARCH_URL/chats/WORKSPACE_UID'
+```
+
+#### Response: `200 Ok`
+
+```json
+{
+  "uid": "WORKSPACE_UID"
+}
+```
+
+## Chat workspace settings
+
+### Chat workspace settings object
 
 ```json
 {
@@ -62,13 +131,67 @@ The first call to either method will create the workspace UID if it doesn't alre
 }
 ```
 
-### Path parameters
+#### The prompts object
+
+| Name                      | Type   | Description                                                       |
+| :------------------------ | :----- | :---------------------------------------------------------------- |
+| **`system`**              | String | A prompt added to the start of the conversation to guide the LLM  |
+| **`searchDescription`**   | String | A prompt to explain what the internal search function does        |
+| **`searchQParam`**        | String | A prompt to explain what the `q` parameter of the search function does and how to use it |
+| **`searchIndexUidParam`** | String | A prompt to explain what the `indexUid` parameter of the search function does and how to use it |
+
+### Get chat settings
+
+<RouteHighlighter method="GET" path="/chats/{workspace_uid}/settings" />
+
+Retrieve the current settings for a chat workspace.
+
+#### Path parameters
 
 | Name            | Type   | Description                          |
 | :-------------- | :----- | :----------------------------------- |
-| **`workspace`** | String | The workspace identifier             |
+| **`workspace_uid`** | String | The workspace identifier             |
 
-### Settings parameters
+#### Response: `200 OK`
+
+Returns the settings object without the `apiKey` field.
+
+```json
+{
+  "source": "openAi",
+  "prompts": {
+    "system": "You are a helpful assistant."
+  }
+}
+```
+
+#### Example
+
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X GET 'http://localhost:7700/chats/WORKSPACE_UID/settings' \
+  -H 'Authorization: Bearer MASTER_KEY'
+```
+
+</CodeGroup>
+
+### Update chat workspace settings
+
+<RouteHighlighter method="PATCH" path="/chats/{workspace_uid}/settings" />
+
+Configure the LLM provider and settings for a chat workspace.
+
+If the workspace does not exist, querying this endpoint will create it.
+
+#### Path parameters
+
+| Name            | Type   | Description                          |
+| :-------------- | :----- | :----------------------------------- |
+| **`workspace_uid`** | String | The workspace identifier             |
+
+#### Settings parameters
 
 | Name              | Type   | Description                                                                   |
 | :---------------- | :----- | :---------------------------------------------------------------------------- |
@@ -81,34 +204,25 @@ The first call to either method will create the workspace UID if it doesn't alre
 | **`apiKey`**      | String | API key for the LLM provider (optional for vLlm)                              |
 | **`prompts`**     | Object | Prompts object containing system prompts and other configuration              |
 
-### The prompts object
-
-| Name                      | Type   | Description                                                       |
-| :------------------------ | :----- | :---------------------------------------------------------------- |
-| **`system`**              | String | A prompt added to the start of the conversation to guide the LLM  |
-| **`searchDescription`**   | String | A prompt to explain what the internal search function does        |
-| **`searchQParam`**        | String | A prompt to explain what the `q` parameter of the search function does and how to use it |
-| **`searchIndexUidParam`** | String | A prompt to explain what the `indexUid` parameter of the search function does and how to use it |
-
-### Request body
+#### Request body
 
 ```json
 {
   "source": "openAi",
-  "apiKey": "sk-...",
+  "apiKey": "OPEN_AI_SECURITY_KEY",
   "prompts": {
-    "system": "You are a helpful assistant."
+    "system": "DEFAULT CHAT INSTRUCTIONS"
   }
 }
 ```
 
 All fields are optional. Only provided fields will be updated.
 
-### Response: `200 OK`
+#### Response: `200 OK`
 
-Returns the updated settings object. Note that `apiKey` is write-only and will not be returned in the response.
+Returns the updated settings object. `apiKey` is write-only and will not be returned in the response.
 
-### Examples
+#### Examples
 
 <CodeGroup>
 
@@ -188,11 +302,48 @@ curl \
 
 </CodeGroup>
 
+### Reset chat workspace settings
+
+<RouteHighlighter method="DELETE" path="/chats/{workspace_uid}/settings" />
+
+Reset a chat workspace's settings to its default values.
+
+#### Path parameters
+
+| Name            | Type   | Description                          |
+| :-------------- | :----- | :----------------------------------- |
+| **`workspace_uid`** | String | The workspace identifier             |
+
+#### Response: `200 OK`
+
+Returns the settings object without the `apiKey` field.
+
+```json
+{
+  "source": "openAi",
+  "prompts": {
+    "system": "You are a helpful assistant."
+  }
+}
+```
+
+#### Example
+
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X DELETE 'http://localhost:7700/chats/customer-support/settings' \
+  -H 'Authorization: Bearer MASTER_KEY'
+```
+
+</CodeGroup>
+
 ## Chat completions
 
-<RouteHighlighter method="POST" path="/chats/{workspace}/chat/completions" />
+<RouteHighlighter method="POST" path="/chats/{workspace_uid}/chat/completions" />
 
-Create a chat completion using the OpenAI-compatible interface. The endpoint searches relevant indexes and generates responses based on the retrieved content.
+Create a chat completion using Meilisearch's OpenAI-compatible interface. The endpoint searches relevant indexes and generates responses based on the retrieved content.
 
 ### Path parameters
 
@@ -222,7 +373,7 @@ Create a chat completion using the OpenAI-compatible interface. The endpoint sea
 | **`stream`**   | Boolean | No       | Enable streaming responses (default: `true`)                                 |
 
 <Warning>
-Currently, only streaming responses (`stream: true`) are supported. Non-streaming responses will be available in a future release.
+Currently, only streaming responses (`stream: true`) are supported.
 </Warning>
 
 ### Message object
@@ -308,100 +459,3 @@ for chunk in stream:
 ```
 
 </CodeGroup>
-
-## Get chat settings
-
-<RouteHighlighter method="GET" path="/chats/{workspace}/settings" />
-
-Retrieve the current settings for a chat workspace.
-
-### Path parameters
-
-| Name            | Type   | Description                          |
-| :-------------- | :----- | :----------------------------------- |
-| **`workspace`** | String | The workspace identifier             |
-
-### Response: `200 OK`
-
-Returns the settings object without the `apiKey` field.
-
-```json
-{
-  "source": "openAi",
-  "prompts": {
-    "system": "You are a helpful assistant."
-  }
-}
-```
-
-### Example
-
-<CodeGroup>
-
-```bash cURL
-curl \
-  -X GET 'http://localhost:7700/chats/customer-support/settings' \
-  -H 'Authorization: Bearer MASTER_KEY'
-```
-
-</CodeGroup>
-
-## List chat workspaces
-
-<RouteHighlighter method="GET" path="/chats" />
-
-List all available chat workspaces. Results can be paginated using query parameters.
-
-### Query parameters
-
-| Query parameter | Description                    | Default value |
-| :-------------- | :----------------------------- | :------------ |
-| **`offset`**    | Number of workspaces to skip   | `0`           |
-| **`limit`**     | Number of workspaces to return | `20`          |
-
-### Response
-
-| Name          | Type    | Description                               |
-| :------------ | :------ | :---------------------------------------- |
-| **`results`** | Array   | An array of chat workspace objects        |
-| **`offset`**  | Integer | Number of workspaces skipped              |
-| **`limit`**   | Integer | Number of workspaces returned             |
-| **`total`**   | Integer | Total number of workspaces                |
-
-### Example
-
-<CodeGroup>
-
-```bash cURL
-curl \
-  -X GET 'http://localhost:7700/chats?limit=10' \
-  -H 'Authorization: Bearer MASTER_KEY'
-```
-
-</CodeGroup>
-
-#### Response: `200 OK`
-
-```json
-{
-  "results": [
-    {
-      "uid": "customer-support"
-    },
-    {
-      "uid": "internal-docs"
-    }
-  ],
-  "offset": 0,
-  "limit": 10,
-  "total": 2
-}
-```
-
-## Authentication
-
-The chat feature integrates with Meilisearch's authentication system:
-
-- **Default Chat API Key**: A new default key is created when chat is enabled, with permissions to access chat endpoints
-- **Tenant tokens**: Fully supported for multi-tenant applications
-- **Index visibility**: Chat searches only indexes accessible with the provided API key
