@@ -6,13 +6,25 @@ description: Learn how to implement AI-powered conversational search using Meili
 
 Meilisearch's chat completions feature enables AI-powered conversational search, allowing users to ask questions in natural language and receive direct answers based on your indexed content. This feature transforms the traditional search experience into an interactive dialogue.
 
-<Warning>
-The chat completions feature is experimental and must be enabled through [experimental features](/reference/api/experimental_features). API specifications may change in future releases.
-</Warning>
+<Note>
+This is an experimental feature. Use the Meilisearch Cloud UI or the experimental features endpoint to activate it:
+
+```sh
+curl \
+  -X PATCH 'MEILISEARCH_URL/experimental-features/' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "chatCompletions": true
+  }'
+```
+
+When you enable the chat route for the first time, Meilisearch creates a new API key named "Default Chat API Key".
+</Note>
 
 ## What is conversational search?
 
-Conversational search allows users to:
+Conversational search interfaces allow users to:
+
 - Ask questions in natural language instead of using keywords
 - Receive direct answers rather than just document links
 - Maintain context across multiple questions
@@ -23,31 +35,17 @@ This approach bridges the gap between traditional search and modern AI experienc
 ## How chat completions differs from traditional search
 
 ### Traditional search workflow
+
 1. User enters keywords
 2. Meilisearch returns matching documents
 3. User reviews results to find answers
 
 ### Conversational search workflow
+
 1. User asks a question in natural language
 2. Meilisearch retrieves relevant documents
 3. AI generates a direct answer based on those documents
 4. User can ask follow-up questions
-
-## RAG implementation simplified
-
-The chat completions feature implements a complete Retrieval Augmented Generation (RAG) pipeline in a single API endpoint. Traditional RAG implementations require:
-
-- Multiple LLM calls for query optimization
-- Separate vector database for semantic search
-- Custom reranking solutions
-- Complex pipeline management
-
-Meilisearch's chat completions consolidates these into one streamlined process:
-
-1. **Query understanding**: Automatically transforms questions into optimal search parameters
-2. **Hybrid retrieval**: Combines keyword and semantic search for superior relevance
-3. **Answer generation**: Uses your chosen LLM to generate responses
-4. **Context management**: Maintains conversation history automatically
 
 ## When to use chat completions vs traditional search
 
@@ -63,13 +61,22 @@ Meilisearch's chat completions consolidates these into one streamlined process:
 - Exact matching is critical
 - Response time is paramount
 
-## Alternative: Model Context Protocol integration
+## Use chat completions to implement RAG pipelines
+
+The chat completions feature implements a complete Retrieval Augmented Generation (RAG) pipeline in a single API endpoint. Meilisearch's chat completions consolidates RAG creation into one streamlined process:
+
+1. **Query understanding**: automatically transforms questions into search parameters
+2. **Hybrid retrieval**: combines keyword and semantic search for better relevancy
+3. **Answer generation**: uses your chosen LLM to generate responses
+4. **Context management**: maintains conversation history automatically
+
+### Alternative: MCP integration
 
 When integrating Meilisearch with AI assistants and automation tools, consider using [Meilisearch's Model Context Protocol (MCP) server](/guides/ai/mcp). MCP enables standardized tool integration across various AI platforms and applications.
 
 ## Architecture overview
 
-The chat completions feature operates through workspaces, which are isolated configurations for different use cases or tenants. Each workspace can:
+Chat completions operate through workspaces, which are isolated configurations for different use cases. Each workspace can:
 
 - Use different LLM sources (openAi, azureOpenAi, mistral, gemini, vLlm)
 - Apply custom prompts
@@ -97,13 +104,12 @@ The chat completions feature operates through workspaces, which are isolated con
 
 The chat completions feature integrates with Meilisearch's existing security model:
 
-- **API key permissions**: Chat only accesses indexes visible to the provided API key
-- **Tenant tokens**: Support for multi-tenant applications
-- **LLM credentials**: Stored securely in workspace settings
-- **Content isolation**: Responses based only on indexed content
+- **API key permissions**: chat only accesses indexes visible to the provided API key
+- **Tenant tokens**: support for multi-tenant applications
+- **LLM credentials**: stored securely in workspace settings
+- **Content isolation**: responses based only on indexed content
 
 ## Next steps
 
 - [Get started with chat completions implementation](/guides/ai/getting_started_with_chat)
 - [Explore the chat completions API reference](/reference/api/chats)
-- [Learn about experimental features](/reference/api/experimental_features)
