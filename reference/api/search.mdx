@@ -1141,7 +1141,9 @@ Excludes results below the specified ranking score.
 Excluded results do not count towards `estimatedTotalHits`, `totalHits`, and facet distribution.
 
 <Warning>
-For performance reasons, if the number of documents above `rankingScoreThreshold` is higher than `limit`, Meilisearch does not evaluate the ranking score of the remaining documents. Results ranking below the threshold are not immediately removed from the set of candidates. In this case, Meilisearch may overestimate the count of `estimatedTotalHits`, `totalHits` and facet distribution.
+When using `rankingScoreThreshold`, queries paginating results with  `limit` and `offset` may exaggerate the count of `estimatedTotalHits`. For performance reasons, if the number of documents above `rankingScoreThreshold` is higher than `limit`, Meilisearch does not evaluate the ranking score of the remaining documents. Results ranking below the threshold are not immediately removed from the set of candidates.
+
+Queries using `page` and `hitsPerPage` are unnaffected by this issue and `totalHits` should always display the correct total number of search results.
 </Warning>
 
 #### Example
