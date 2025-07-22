@@ -3012,7 +3012,7 @@ curl \
 
 ### Update index chat settings
 
-<RouteHighlighter method="PATCH" path="/indexes/{index_uid}/settings/chat" />
+<RouteHighlighter method="PUT" path="/indexes/{index_uid}/settings/chat" />
 
 Partially update the index chat settings for an index.
 
@@ -3032,10 +3032,10 @@ Partially update the index chat settings for an index.
   "searchParameters": {
     "hybrid": <Object>,
     "limit": <Integer>,
-    "sort": <String>,
+    "sort": [<String>, <String>, … ],
     "distinct": <String>,
     "matchingStrategy": <String>,
-    "attributesToSearchOn": <String>,
+    "attributesToSearchOn": [<String>, <String>, … ],
     "rankingScoreThreshold": <Float>,
   }
 }
