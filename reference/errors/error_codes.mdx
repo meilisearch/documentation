@@ -180,6 +180,14 @@ The [`limit`](/reference/api/documents#query-parameters) parameter is invalid. I
 
 The [`offset`](/reference/api/documents#query-parameters) parameter is invalid. It should be an integer.
 
+## `invalid_document_sort`
+
+This error occurs if:
+
+- The syntax for the [`sort`](/reference/api/documents#body) parameter is invalid
+- The attribute used for sorting is not defined in the [`sortableAttributes`](/reference/api/settings#sortable-attributes) list or the `sort` ranking rule is missing from the settings
+- A reserved keyword like `_geo`, `_geoDistance`, `_geoRadius`, or `_geoBoundingBox` is used as a filter
+
 ## `invalid_document_geo_field`
 
 The provided `_geo` field of one or more documents is invalid. Meilisearch expects `_geo` to be an object with two fields, `lat` and `lng`, each containing geographic coordinates expressed as a string or floating point number. Read more about `_geo` and how to troubleshoot it in [our dedicated guide](/learn/filtering_and_sorting/geosearch).

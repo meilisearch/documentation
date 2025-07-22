@@ -37,7 +37,7 @@ client.index('restaurants').update_filterable_attributes(['_geo'])
 ```
 
 ```go Go
-filterableAttributes := []string{
+filterableAttributes := []interface{}{
   "_geo",
 }
 client.Index("restaurants").UpdateFilterableAttributes(&filterableAttributes)
