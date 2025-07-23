@@ -71,9 +71,29 @@ client.index('movies').update_filterable_attributes([
 ```
 
 ```go Go
-filterableAttributes := []string{
+filterableAttributes := []interface{}{
   "genres",
   "director",
+  AttributeRule{
+    AttributePatterns: []string{"tag"}
+    Features: AttributeFeatures{
+      FacetSearch: false,
+      Filter: FilterFeatures{
+        Equality:   true,
+        Comparison: false,
+      }
+    }
+  },
+  map[string]interface{}{
+    "attributePatterns": []interface{}{"year"}
+    "features": map[string]interface{}{
+      "facetSearch": false,
+      "filter": map[string]interface{}{
+        "equality":   true,
+        "comparison": true,
+      }
+    }
+  }
 }
 client.Index("movies").UpdateFilterableAttributes(&filterableAttributes)
 ```

@@ -59,7 +59,7 @@ file, _ := os.ReadFile("movies.json")
 var movies interface{}
 json.Unmarshal([]byte(file), &movies)
 
-client.Index("movies").AddDocuments(&movies)
+client.Index("movies").AddDocuments(&movies, nil)
 ```
 
 ```csharp C#
