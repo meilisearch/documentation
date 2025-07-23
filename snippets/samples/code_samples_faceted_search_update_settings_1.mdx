@@ -34,7 +34,7 @@ client.index('movie_ratings').update_filterable_attributes(['genres', 'rating', 
 ```
 
 ```go Go
-filterableAttributes := []string{
+filterableAttributes := []interface{}{
   "genres",
   "rating",
   "language",
