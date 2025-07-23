@@ -140,7 +140,7 @@ func main() {
   var movies []map[string]interface{}
   json.Unmarshal(byteValue, &movies)
 
-  _, err := client.Index("movies").AddDocuments(movies)
+  _, err := client.Index("movies").AddDocuments(movies, nil)
   if err != nil {
       panic(err)
   }
