@@ -2513,8 +2513,8 @@ These embedder objects may contain the following fields:
 | **`indexingEmbedder`**         | Object  | Empty                                                                                                                                           | Configures embedder to vectorize documents during indexing                                                                                                     |
 | **`searchEmbedder`**           | Object  | Empty                                                                                                                                           | Configures embedder to vectorize search queries                                                                                                                |
 | **`pooling`**                  | String  | `"useModel"`                                                                                                                                    | Pooling method for Hugging Face embedders                                                                                                                     |
-| **`indexingFragments`**        | Object  | Empty                                                                                                                                    | Configures a set of fields for multimodal embedding generation                                                                                                                      |
-| **`searchFragments`**        | Object  | Empty                                                                                                                                    | Configures a set of fields for use in multimodal search                                                                                                                       |
+| **`indexingFragments`**        | Object  | Empty                                                                                                                                    | Configures multimodal embedding generation at indexing time                                                                                                                      |
+| **`searchFragments`**        | Object  | Empty                                                                                                                                    | Configures data handling during multimodal search                                                                                                                       |
 
 ### Get embedder settings
 
@@ -2892,7 +2892,7 @@ curl \
 ```
 </Note>
 
-`indexingFragments` specifies which fields in your documents should be used during multimodal embedding generation. It must be an object with the following structure:
+`indexingFragments` specifies which fields in your documents should be used to generate multimodal embeddings. It must be an object with the following structure:
 
 ```json
   "FRAGMENT_NAME": {
@@ -2908,7 +2908,7 @@ For example, for Voyage AI's text and image embedder, `value` must be an array c
 
 ```json
 {
-  "FRAGMENT_NAME_A": {
+  "VOYAGE_FRAGMENT_NAME_A": {
     "value": {
       "content": [
         {
@@ -2918,7 +2918,7 @@ For example, for Voyage AI's text and image embedder, `value` must be an array c
       ]
     }
   },
-  "FRAGMENT_NAME_B": {
+  "VOYAGE_FRAGMENT_NAME_B": {
     "value": {
       "content": [
         {
@@ -2968,7 +2968,7 @@ curl \
 
 As with `indexingFragments`, the content of `value` should follow your model's specification.
 
-Use Liquid templates to interpolate search query data into the fragment fields, where `media` gives you access to all that parameter's fields:
+Use Liquid templates to interpolate search query data into the fragment fields, where `media` gives you access to all multimodal data received with a query:
 
 ```json
 "SEARCH_FRAGMENT_A": {
