@@ -85,7 +85,8 @@ documents := []map[string]interface{}{
     "price":            5.00,
   },
 }
-client.Index("books").AddDocuments(documents, "reference_number")
+refrenceNumber := "reference_number"
+client.Index("books").AddDocuments(documents, &refrenceNumber)
 ```
 
 ```csharp C#

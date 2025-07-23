@@ -146,6 +146,14 @@ The given [`uid`](/reference/api/keys#uid) is invalid. The `uid` must follow the
 
 The value passed to [`attributesToSearchOn`](/reference/api/search#customize-attributes-to-search-on-at-search-time) is invalid. `attributesToSearchOn` accepts an array of strings indicating document attributes. Attributes given to `attributesToSearchOn` must be present in the [`searchableAttributes` list](/learn/relevancy/displayed_searchable_attributes#the-searchableattributes-list).
 
+## `invalid_search_media`
+
+The value passed to [`media`](/reference/api/search#media) is not a valid JSON object.
+
+## `invalid_search_media_and_vector`
+
+The search query contains non-`null` values for both [`media`](/reference/api/search#media) and [`vector`](/reference/api/search#media). These two parameters are mutually exclusive, since `media` generates vector embeddings via the embedder configured in `hybrid`.
+
 ## `invalid_content_type`
 
 The [Content-Type header](/reference/api/overview#content-type) is not supported by Meilisearch. Currently, Meilisearch only supports JSON, CSV, and NDJSON.

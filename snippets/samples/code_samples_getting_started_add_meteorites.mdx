@@ -60,7 +60,7 @@ byteValue, _ := io.ReadAll(jsonFile)
 var meteorites []map[string]interface{}
 json.Unmarshal(byteValue, &meteorites)
 
-client.Index("meteorites").AddDocuments(meteorites)
+client.Index("meteorites").AddDocuments(meteorites, nil)
 ```
 
 ```csharp C#
