@@ -38,7 +38,7 @@ client.index('products').update_filterable_attributes([
 ```
 
 ```go Go
-filterableAttributes := []string{
+filterableAttributes := []interface{}{
   "product_id",
   "sku",
   "url",

@@ -47,7 +47,7 @@ client.index('movies').update_filterable_attributes([
 ```
 
 ```go Go
-resp, err := client.Index("movies").UpdateFilterableAttributes(&[]string{
+resp, err := client.Index("movies").UpdateFilterableAttributes(&[]interface{}{
   "director",
   "genres",
 })
