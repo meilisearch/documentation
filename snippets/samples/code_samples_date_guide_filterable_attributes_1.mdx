@@ -30,7 +30,7 @@ client.index('games').update_filterable_attributes(['release_timestamp'])
 ```
 
 ```go Go
-filterableAttributes := []string{"release_timestamp"}
+filterableAttributes := []interface{}{"release_timestamp"}
 client.Index("games").UpdateFilterableAttributes(&filterableAttributes)
 ```
 

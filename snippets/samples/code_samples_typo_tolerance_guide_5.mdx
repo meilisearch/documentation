@@ -26,4 +26,10 @@ $client->index('movies')->updateTypoTolerance([
   'disableOnNumbers' => true
 ]);
 ```
+
+```go Go
+client.Index("movies").UpdateTypoTolerance(&meilisearch.TypoTolerance{
+  DisableOnNumbers: true
+})
+```
 </CodeGroup>
