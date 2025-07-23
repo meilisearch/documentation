@@ -225,6 +225,8 @@ This list is liable to change with every new version of Meilisearch. It's not be
 | `infos.experimental_edit_documents_by_function`    | `true` if the `editDocumentsByFunction` experimental feature is enabled                     | false
 | `infos.experimental_enable_metrics`                | `true` if `--experimental-enable-metrics` is specified at launch                            | false
 | `infos.experimental_embedding_cache_entries`       | Size of configured embedding cache                                                          | 100
+| `infos.experimental_multimodal` | `true` when multimodal search feature is enabled | true |
+| `infos.experimental_no_edition_2024_for_settings` | `true` if instance disabled new indexer | false
 | `infos.experimental_replication_parameters`        | `true` if `--experimental-replication-parameters` is specified at launch                    | false
 | `infos.experimental_reduce_indexing_memory_usage`  | `true` if `--experimental-reduce-indexing-memory-usage` is specified at launch              | false
 | `infos.experimental_logs_mode`                     | `human` or `json` depending on the value specified                                          | human
@@ -248,6 +250,7 @@ This list is liable to change with every new version of Meilisearch. It's not be
 | `vector.retrieve_vectors`                          | `true` if the retrieve_vectors parameter has been used in this batch.                       | false
 | `hybrid.enabled`                                   | `true` if hybrid search been used in the aggregated event                                   | true
 | `hybrid.semantic_ratio`                            | `true` if semanticRatio was used in this batch, otherwise false                             | false
+| `hybrid.total_media` | Aggregated number of search request where `media` is not `null` | 42
 | `embedders.total`                                  | Numbers of defined embedders                                                                | 2
 | `embedders.sources`                                | An array representing the different provided sources                                        | ["huggingFace", "userProvided"]
 | `embedders.document_template_used`                 | A boolean indicating if one of the provided embedders has a custom template defined         | true
@@ -264,3 +267,9 @@ This list is liable to change with every new version of Meilisearch. It's not be
 | `experimental_network`                             | `true` when the network experimental feature is enabled                                     | true
 | `remotes.total_distinct_remote_count`              | Sum of the number of distinct remotes appearing in each search request of the aggregate     | 48
 | `remotes.avg_distinct_remote_count`                | Average number of distinct remotes appearing in a search request of the aggregate           | 2.33
+| `multimodal` | `true` when multimodal search is enabled via the `/experimental-features` route | true
+| `export.total_received`               | Number of exports received in this batch                         | `152`
+| `export.has_api_key`                 | Number of exports with an API Key set                            | `89`
+| `export.avg_index_patterns`          | Average number of index patterns set per export                  | `3.2`
+| `export.avg_patterns_with_filter`    | Average number of index patterns with filters per export         | `1.7`
+| `export.avg_payload_size`            | Average payload size per export                                  | `512`

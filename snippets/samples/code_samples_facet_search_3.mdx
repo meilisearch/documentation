@@ -42,6 +42,7 @@ client.index('books').facet_search('genres', 'c')
 client.Index("books").FacetSearch(&meilisearch.FacetSearchRequest{
   FacetQuery: "c",
   FacetName: "genres",
+  ExhaustiveFacetCount: true
 })
 ```
 
