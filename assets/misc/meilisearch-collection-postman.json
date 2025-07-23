@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "b321d331-d809-4909-8e49-e29c8d749d32",
-		"name": "Meilisearch v1.15",
+		"_postman_id": "f4b62ec3-0403-44ba-b6f4-640badbbd1b2",
+		"name": "Meilisearch v1.16",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "25294324"
 	},
@@ -105,6 +105,11 @@
 								{
 									"key": "ids",
 									"value": "1,2",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "\"price\"",
 									"disabled": true
 								}
 							]
@@ -3132,6 +3137,60 @@
 							],
 							"path": [
 								"dumps"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Export",
+			"item": [
+				{
+					"name": "Migrate data to a remote instance",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"url\": \"TARGET_INSTANCE_URL\",\n    \"indexes\": {\n        \"*\": {\n          \"overrideSettings\": true\n        }\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/export",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"export"
 							]
 						}
 					},
