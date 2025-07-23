@@ -26,4 +26,12 @@ client.index('INDEX_UID').update_prefix_search('disabled')
 ```go Go
 client.Index("books").UpdatePrefixSearch("disabled")
 ```
+
+```rust Rust
+let task: TaskInfo = client
+  .index(INDEX_UID)
+  .set_prefix_search(PrefixSearchSettings::Disabled)
+  .await
+  .unwrap();
+```
 </CodeGroup>

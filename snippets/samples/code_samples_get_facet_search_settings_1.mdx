@@ -24,4 +24,12 @@ client.index('INDEX_UID').facet_search_setting
 ```go Go
 client.Index("books").GetFacetSearch()
 ```
+
+```rust Rust
+let facet_search: bool = client
+  .index(INDEX_UID)
+  .get_facet_search()
+  .await
+  .unwrap();
+```
 </CodeGroup>
