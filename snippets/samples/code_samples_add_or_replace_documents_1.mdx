@@ -80,7 +80,7 @@ documents := []map[string]interface{}{
     "release_date": "2019-03-23",
   },
 }
-client.Index("movies").AddDocuments(documents)
+client.Index("movies").AddDocuments(documents, nil)
 ```
 
 ```csharp C#
