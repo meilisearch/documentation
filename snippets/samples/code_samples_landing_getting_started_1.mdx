@@ -81,7 +81,7 @@ documents := []map[string]interface{}{
   { "id": 5, "title": "Moana" },
   { "id": 6, "title": "Philadelphia" },
 }
-client.Index("movies").AddDocuments(documents)
+client.Index("movies").AddDocuments(documents, nil)
 ```
 
 ```csharp C#
