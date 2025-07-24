@@ -10,4 +10,14 @@ curl -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
     }
   }'
 ```
+
+```rust Rust
+let results = index
+  .search()
+  .with_vector(&[0.0, 1.0, 2.0])
+  .with_hybrid("EMBEDDER_NAME", 1.0)
+  .execute()
+  .await
+  .unwrap();
+```
 </CodeGroup>

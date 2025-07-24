@@ -54,7 +54,7 @@ byteValue, _ := io.ReadAll(jsonFile)
 var games []map[string]interface{}
 json.Unmarshal(byteValue, &games)
 
-client.Index("games").AddDocuments(games)
+client.Index("games").AddDocuments(games, nil)
 ```
 
 ```csharp C#
