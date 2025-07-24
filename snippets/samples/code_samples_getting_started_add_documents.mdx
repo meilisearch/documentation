@@ -140,7 +140,7 @@ func main() {
   var movies []map[string]interface{}
   json.Unmarshal(byteValue, &movies)
 
-  _, err := client.Index("movies").AddDocuments(movies)
+  _, err := client.Index("movies").AddDocuments(movies, nil)
   if err != nil {
       panic(err)
   }
@@ -192,7 +192,7 @@ namespace Meilisearch_demo
 ```text Rust
 // In your .toml file:
   [dependencies]
-  meilisearch-sdk = "0.28.0"
+  meilisearch-sdk = "0.29.1"
   # futures: because we want to block on futures
   futures = "0.3"
   # serde: required if you are going to use documents

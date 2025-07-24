@@ -42,6 +42,7 @@ client.index('books').facet_search('genres', 'c')
 client.Index("books").FacetSearch(&meilisearch.FacetSearchRequest{
   FacetQuery: "c",
   FacetName: "genres",
+  ExhaustiveFacetCount: true
 })
 ```
 
@@ -51,6 +52,15 @@ var query = new SearchFacetsQuery()
   FacetQuery = "c"
 };
 await client.Index("books").FacetSearchAsync("genres", query);
+```
+
+```rust Rust
+let res = client.index("books")
+  .facet_search("genres")
+  .with_facet_query("c")
+  .execute()
+  .await
+  .unwrap();
 ```
 
 ```dart Dart
