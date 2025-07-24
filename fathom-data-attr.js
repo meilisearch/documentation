@@ -1,4 +1,7 @@
 (function(){
+  // disable this temporarily as requested by yannis, the data analytics consultant
+  return false;
+
   let attempts = 0;
 
   function addDataAttr() {
