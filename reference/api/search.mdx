@@ -1138,6 +1138,8 @@ The code sample below returns the `_rankingScoreDetail` when searching for `drag
 
 Excludes results below the specified ranking score.
 
+The threshold applies to all search types including full-text search, semantic search, and hybrid search. This allows you to filter out low-quality matches regardless of the search method being used.
+
 Excluded results do not count towards `estimatedTotalHits`, `totalHits`, and facet distribution.
 
 <Warning>
