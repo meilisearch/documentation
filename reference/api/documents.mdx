@@ -48,6 +48,8 @@ Use `offset` and `limit` to browse through documents.
 | **`fields`** | Array of strings/`null`                 | `*`           | Document attributes to show (case-sensitive, comma-separated)         |
 | **`filter`** | String/Array of array of strings/`null` | N/A           | Refine results based on attributes in the `filterableAttributes` list |
 | **`retrieveVectors`**    | Boolean                     | `false`       | Return document vector data with search result                        |
+| **`sort`**    | `null`  | A list of attributes written as an array or as a comma-separated string                     |
+
 | **`ids`**    | Array of primary keys                   | `null`        | Return documents based on their primary keys                        |
 
 <Note>
@@ -137,6 +139,7 @@ Using the query parameters `offset` and `limit`, you can browse through all your
 | **`fields`**    | `*`           | Document attributes to show (case-sensitive, comma-separated)         |
 | **`filter`**    | N/A           | Refine results based on attributes in the `filterableAttributes` list |
 | **`retrieveVectors`**    | `false`  | Return document vector data with search result                    |
+| **`sort`**    | `null`  | A list of comma-separated attributes                     |
 | **`ids`**       | `null`        | Return documents based on their primary keys                          |
 
 ### Response
