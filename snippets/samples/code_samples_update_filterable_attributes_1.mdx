@@ -116,17 +116,6 @@ let task: TaskInfo = client
   .unwrap();
 ```
 
-```swift Swift
-client.index("movies").updateFilterableAttributes(["genre", "director"]) { (result) in
-    switch result {
-    case .success(let task):
-        print(task)
-    case .failure(let error):
-        print(error)
-    }
-}
-```
-
 ```dart Dart
 await client
     .index('movies')

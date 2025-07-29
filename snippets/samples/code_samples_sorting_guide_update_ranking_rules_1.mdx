@@ -113,25 +113,6 @@ let task: TaskInfo = client
   .unwrap();
 ```
 
-```swift Swift
-let rankingRules: [String] = [
-  "words",
-  "sort",
-  "typo",
-  "proximity",
-  "attribute",
-  "exactness"
-]
-client.index("books").updateRankingRules(rankingRules) { (result) in
-  switch result {
-  case .success(let task):
-    print(task)
-  case .failure(let error):
-    print(error)
-  }
-}
-```
-
 ```dart Dart
 await client.index('books').updateRankingRules(
     ['words', 'sort', 'typo', 'proximity', 'attribute', 'exactness']);

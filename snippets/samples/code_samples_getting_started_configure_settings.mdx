@@ -103,21 +103,6 @@ let task: TaskInfo = client
   .unwrap();
 ```
 
-```swift Swift
-let settings = Setting(
-  filterableAttributes: ["mass", "_geo"],
-  sortableAttributes: ["mass", "_geo"]
-)
-client.index("meteorites").updateSettings(settings) { (result) in
-    switch result {
-    case .success(let task):
-        print(task)
-    case .failure(let error):
-        print(error)
-    }
-}
-```
-
 ```dart Dart
 await client.index('meteorites').updateSettings(IndexSettings(
     filterableAttributes: ['mass', '_geo'],

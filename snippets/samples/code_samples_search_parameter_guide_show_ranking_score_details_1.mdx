@@ -61,9 +61,4 @@ let results: SearchResults<Movie> = client
   .await
   .unwrap();
 ```
-
-```swift Swift
-let searchParameters = SearchParameters(query: "dragon", showRankingScoreDetails: true)
-let movies: Searchable<Movie> = try await client.index("movies").search(searchParameters)
-```
 </CodeGroup>

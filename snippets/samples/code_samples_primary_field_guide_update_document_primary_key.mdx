@@ -45,17 +45,6 @@ let task = IndexUpdater::new("books", &client)
   .unwrap();
 ```
 
-```swift Swift
-client.updateIndex(uid: "movies", primaryKey: "title") { (result) in
-  switch result {
-    case .success(let task):
-        print(task)
-    case .failure(let error):
-        print(error)
-    }
-}
-```
-
 ```dart Dart
 await client.updateIndex('books', 'title');
 ```

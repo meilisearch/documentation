@@ -46,18 +46,6 @@ var keys = await client.GetKeysAsync();
 let client = Client::new("http://localhost:7700", Some("masterKey")); let keys = client .get_keys() .await .unwrap();
 ```
 
-```swift Swift
-client = try MeiliSearch(host: "http://localhost:7700", apiKey: "masterKey")
-client.getKeys { result in
-    switch result {
-    case .success(let keys):
-        print(keys)
-    case .failure(let error):
-        print(error)
-    }
-}
-```
-
 ```dart Dart
 var client = MeiliSearchClient('http://localhost:7700', 'masterKey');
 await client.getKeys();

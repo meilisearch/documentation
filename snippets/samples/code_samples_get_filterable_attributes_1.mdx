@@ -41,17 +41,6 @@ let filterable_attributes: Vec<String> = client
   .unwrap();
 ```
 
-```swift Swift
-client.index("movies").getFilterableAttributes { (result) in
-    switch result {
-    case .success(let attributes):
-        print(attributes)
-    case .failure(let error):
-        print(error)
-    }
-}
-```
-
 ```dart Dart
 await client.index('movies').getFilterableAttributes();
 ```

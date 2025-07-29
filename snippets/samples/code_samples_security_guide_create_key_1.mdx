@@ -106,25 +106,6 @@ let new_key = client
   .unwrap();
 ```
 
-```swift Swift
-let client = try MeiliSearch(host: "http://localhost:7700", apiKey: "masterKey")
-
-let keyParams = KeyParams(
-  description: "Search patient records key",
-  actions: ["search"],
-  indexes: ["patient_medical_records"],
-  expiresAt: "2023-01-01T00:00:00Z"
-)
-client.createKey(keyParams) { result in
-  switch result {
-  case .success(let key):
-    print(key)
-  case .failure(let error):
-    print(error)
-  }
-}
-```
-
 ```dart Dart
 var client = MeiliSearchClient('http://localhost:7700', 'masterKey');
 await client.createKey(

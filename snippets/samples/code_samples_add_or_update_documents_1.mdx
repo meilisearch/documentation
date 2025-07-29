@@ -97,28 +97,6 @@ let task: TaskInfo = client
   .unwrap();
 ```
 
-```swift Swift
-let documentJsonString = """
-[
-  {
-    "reference_number": 287947,
-    "title": "Shazam ⚡️",
-    "genres": "comedy"
-  }
-]
-"""
-let documents: Data = documentJsonString.data(using: .utf8)!
-
-client.index("movies").updateDocuments(documents: documents) { (result) in
-    switch result {
-    case .success(let task):
-        print(task)
-    case .failure(let error):
-        print(error)
-    }
-}
-```
-
 ```dart Dart
 await client.index('movies').updateDocuments([
   {

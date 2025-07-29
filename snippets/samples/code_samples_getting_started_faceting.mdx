@@ -92,10 +92,6 @@ let task: TaskInfo = client
   .unwrap();
 ```
 
-```swift Swift
-client.index("movies").updateFaceting({ maxValuesPerFacet: 2 })
-```
-
 ```dart Dart
 await client.index('books').updateFaceting(Faceting(
     maxValuesPerFacet: 2,

@@ -121,29 +121,6 @@ client.index("movies")
   .unwrap();
 ```
 
-```swift Swift
-let client = try MeiliSearch(host: "http://localhost:7700", apiKey: "masterKey")
-let documents = """
-[
-  { "id": 1, "title": "Carol" },
-  { "id": 2, "title": "Wonder Woman" },
-  { "id": 3, "title": "Life of Pi" },
-  { "id": 4, "title": "Mad Max: Fury Road" },
-  { "id": 5, "title": "Moana" },
-  { "id": 6, "title": "Philadelphia"}
-]
-""".data(using: .utf8)!
-
-client.index("movies").addDocuments(documents: documents, primaryKey: "reference_number") { (result) in
-  switch result {
-  case .success(let task):
-      print(task)
-  case .failure(let error):
-      print(error)
-  }
-}
-```
-
 ```javascript Vanilla JS
 <body>
   <div>

@@ -44,17 +44,6 @@ let mut indexes = IndexesQuery::new(&client)
   .unwrap();
 ```
 
-```swift Swift
-client.getIndexes { (result) in
-    switch result {
-    case .success(let indexes):
-        print(indexes)
-    case .failure(let error):
-        print(error)
-    }
-}
-```
-
 ```dart Dart
 await client.getIndexes(params: IndexesQuery(limit: 3));
 ```

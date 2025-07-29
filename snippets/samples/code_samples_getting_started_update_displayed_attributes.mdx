@@ -85,18 +85,6 @@ client
   .unwrap();
 ```
 
-```swift Swift
-let displayedAttributes: [String] = ["title", "overview", "poster"]
-client.index("movies").updateDisplayedAttributes(displayedAttributes) { (result) in
-     switch result {
-     case .success(let task):
-         print(task)
-     case .failure(let error):
-         print(error)
-     }
- }
-```
-
 ```dart Dart
 await client
     .index('movies')

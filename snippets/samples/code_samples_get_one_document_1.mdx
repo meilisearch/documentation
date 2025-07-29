@@ -51,17 +51,6 @@ let document = DocumentQuery::new(&index)
   .unwrap();
 ```
 
-```swift Swift
-client.index("movies").getDocument(25684) { (result: Result<Movie, Swift.Error>) in
-    switch result {
-    case .success(let movie):
-        print(movie)
-    case .failure(let error):
-        print(error)
-    }
-}
-```
-
 ```dart Dart
 await client.index('movies').getDocument(25684,
     fields: ['id', 'title', 'poster', 'release_date']);

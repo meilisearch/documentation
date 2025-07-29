@@ -41,17 +41,6 @@ let displayed_attributes: Vec<String> = client
   .unwrap();
 ```
 
-```swift Swift
-client.index("movies").getDisplayedAttributes { (result) in
-    switch result {
-    case .success(let displayedAttributes):
-        print(displayedAttributes)
-    case .failure(let error):
-        print(error)
-    }
-}
-```
-
 ```dart Dart
 await client.index('movies').getDisplayedAttributes();
 ```
