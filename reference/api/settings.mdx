@@ -3039,22 +3039,24 @@ To remove a single embedder, use the [update embedder settings endpoint](#update
 
 You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
 
-## Conversation <NoticeTag type="experimental" label="experimental" />
+## Chat <NoticeTag type="experimental" label="experimental" />
 
 <Note>
 This is an experimental feature. Use the Meilisearch Cloud UI or the experimental features endpoint to activate it:
 
 ```sh
 curl \
-  -X PATCH 'MEILISEARCH_URL/experimental-features/' \
+  -X PATCH 'http://localhost:7700/experimental-features/' \
+  -H 'Authorization: Bearer <master-key>' \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "chatCompletions": true
   }'
 ```
+
 </Note>
 
-Conversational querying allows a more human-like interaction with your search engine. It enables you to ask questions and receive relevant answers based on the content of your documents.
+The chat settings allow you to configure how your index integrates with Meilisearch's conversational search feature. This enables the chat completions endpoint to search your index and generate responses based on your documents.
 
 ### Chat object
 
@@ -3062,17 +3064,17 @@ The chat object in the index settings contains multiple settings to configure th
 
 ```json
 {
-  "description": "Contains a bunch of movies from the IMdb database. Each movie has a title, overview, and rating.",
-  "documentTemplate": "A movie titled '{{doc.title}}' whose description starts with {{doc.overview|truncatewords: 20}}",
+  "description": "A comprehensive movie database containing titles, overviews, genres, and release dates to help users find movies",
+  "documentTemplate": "{% for field in fields %}{% if field.is_searchable and field.value != nil %}{{ field.name }}: {{ field.value }}\n{% endif %}{% endfor %}",
   "documentTemplateMaxBytes": 400,
   "searchParameters": {
     "hybrid": { "embedder": "my-embedder" },
-    "limit": 20,
+    "limit": 20
   }
 }
 ```
 
-These embedder objects may contain the following fields:
+The chat object may contain the following fields:
 
 | Name                           | Type    | Default Value                           | Description                                                                                          |
 | ------------------------------ | ------- | --------------------------------------- | ---------------------------------------------------------------------------------------------------- |
@@ -3084,13 +3086,14 @@ These embedder objects may contain the following fields:
 ### Search parameters object
 
 Corresponds to a subset of the [search parameters object](/reference/api/search#search-parameters-object):
- - **`hybrid`**
- - **`limit`**
- - **`sort`**
- - **`distinct`**
- - **`matchingStrategy`**
- - **`attributesToSearchOn`**
- - **`rankingScoreThreshold`**
+
+- **`hybrid`**
+- **`limit`**
+- **`sort`**
+- **`distinct`**
+- **`matchingStrategy`**
+- **`attributesToSearchOn`**
+- **`rankingScoreThreshold`**
 
 ### Get index chat settings
 
@@ -3106,7 +3109,11 @@ Get the index chat settings configured for an index.
 
 #### Example
 
-<CodeSamplesGetEmbedders1 />
+```bash
+curl \
+  -X GET 'http://localhost:7700/indexes/movies/settings/chat' \
+  -H 'Authorization: Bearer <master-key>'
+```
 
 ##### Response: `200 OK`
 
@@ -3149,3 +3156,34 @@ Partially update the index chat settings for an index.
   }
 }
 ```
+
+#### Example
+
+```bash
+curl \
+  -X PATCH 'http://localhost:7700/indexes/movies/settings/chat' \
+  -H 'Authorization: Bearer <master-key>' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "description": "A comprehensive movie database containing titles, descriptions, genres, and release dates to help users find movies",
+    "documentTemplate": "Title: {{ title }}\nDescription: {{ overview }}\nGenres: {{ genres }}\n",
+    "documentTemplateMaxBytes": 400,
+    "searchParameters": {
+      "limit": 20
+    }
+  }'
+```
+
+##### Response: `202 Accepted`
+
+```json
+{
+  "taskUid": 1,
+  "indexUid": "movies",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2024-05-11T09:33:12.691402Z"
+}
+```
+
+You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
