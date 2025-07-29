@@ -52,7 +52,7 @@ The `/batches` route gives information about the progress of batches of [asynchr
     "embedderRequests": {
       "total": 12,
       "failed": 5,
-      "lastError": "runtime error: received internal error HTTP 500 from embedding server\n  - server replied with `{\"error\":\"Service Unavailable\",\"text\":\"will_error\"}`"
+      "lastError": "runtime error: received internal error HTTP 500 from embedding server\n  - server replied with `{\"error\":\"Service Unavailable\"}`"
     }
   },
   "duration": "PT0.250518S",
@@ -130,7 +130,7 @@ Size of each internal database, including by how much it changed after a batch w
 
 #### `embedderRequests`
 
-Object containing the total number of requests made to the embedder. Also displays the number of failed tasks, if any, along with the error message for the most recent failure.
+Object containing the total number of requests made to the embedder. Also displays the number of failed requests, if any, along with the error message for the most recent failure.
 
 Only present in batches with at least one task querying an embedder. This field continuously updates until Meilisearch finishes processing the batch.
 
@@ -234,7 +234,7 @@ For example, `?uids=0` returns a batch containing the task with a `taskUid` equa
         "embedderRequests": {
           "total": 12,
           "failed": 5,
-          "lastError": "runtime error: received internal error HTTP 500 from embedding server\n  - server replied with `{\"error\":\"Service Unavailable\",\"text\":\"will_error\"}`"
+          "lastError": "runtime error: received internal error HTTP 500 from embedding server\n  - server replied with `{\"error\":\"Service Unavailable\"}`"
         }
       },
       "duration": "PT0.110083S",
@@ -293,7 +293,7 @@ Get a single batch.
     "embedderRequests": {
       "total": 12,
       "failed": 5,
-      "lastError": "runtime error: received internal error HTTP 500 from embedding server\n  - server replied with `{\"error\":\"Service Unavailable\",\"text\":\"will_error\"}`"
+      "lastError": "runtime error: received internal error HTTP 500 from embedding server\n  - server replied with `{\"error\":\"Service Unavailable\"}`"
     }
   },
   "duration": "PT0.364788S",
