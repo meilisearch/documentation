@@ -1,10 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X GET 'MEILISEARCH_URL/indexes?limit=3'
-```
-
 ```javascript JS
 client.getIndexes({ limit: 3 })
 ```
@@ -42,6 +37,17 @@ let mut indexes = IndexesQuery::new(&client)
   .execute()
   .await
   .unwrap();
+```
+
+```swift Swift
+client.getIndexes { (result) in
+    switch result {
+    case .success(let indexes):
+        print(indexes)
+    case .failure(let error):
+        print(error)
+    }
+}
 ```
 
 ```dart Dart

@@ -1,10 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X GET 'MEILISEARCH_URL/indexes/movies/settings/displayed-attributes'
-```
-
 ```javascript JS
 client.index('movies').getDisplayedAttributes()
 ```
@@ -39,6 +34,17 @@ let displayed_attributes: Vec<String> = client
   .get_displayed_attributes()
   .await
   .unwrap();
+```
+
+```swift Swift
+client.index("movies").getDisplayedAttributes { (result) in
+    switch result {
+    case .success(let displayedAttributes):
+        print(displayedAttributes)
+    case .failure(let error):
+        print(error)
+    }
+}
 ```
 
 ```dart Dart

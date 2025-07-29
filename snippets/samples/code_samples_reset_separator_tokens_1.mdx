@@ -1,10 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X DELETE 'MEILISEARCH_URL/indexes/articles/settings/separator-tokens'
-```
-
 ```javascript JS
 client.index('books').resetSeparatorTokens()
 ```
@@ -39,6 +34,12 @@ let task: TaskInfo = client
   .reset_separator_tokens()
   .await
   .unwrap();
+```
+
+```swift Swift
+client.index("books").resetSeparatorTokens { result in
+  // handle result
+}
 ```
 
 ```dart Dart

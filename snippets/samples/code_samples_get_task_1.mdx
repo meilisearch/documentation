@@ -1,10 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X GET 'MEILISEARCH_URL/tasks/1'
-```
-
 ```javascript JS
 client.tasks.getTask(1)
 ```
@@ -39,6 +34,17 @@ let task: Task = client
   .get_task(1)
   .await
   .unwrap();
+```
+
+```swift Swift
+client.getTask(taskUid: 1) { (result) in
+      switch result {
+      case .success(let task):
+          print(task)
+      case .failure(let error):
+          print(error)
+      }
+  }
 ```
 
 ```dart Dart

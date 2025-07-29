@@ -1,16 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X POST 'MEILISEARCH_URL/indexes' \
-  -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer DEFAULT_ADMIN_API_KEY' \
-  --data-binary '{
-    "uid": "medical_records",
-    "primaryKey": "id"
-  }'
-```
-
 ```rust Rust
 let client = Client::new("http://localhost:7700", Some("DEFAULT_ADMIN_API_KEY"));
 let task = client

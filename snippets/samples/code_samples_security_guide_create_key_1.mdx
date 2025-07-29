@@ -1,18 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X POST 'MEILISEARCH_URL/keys' \
-  -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer MASTER_KEY' \
-  --data-binary '{
-    "description": "Search patient records key",
-    "actions": ["search"],
-    "indexes": ["patient_medical_records"],
-    "expiresAt": "2023-01-01T00:00:00Z"
-  }'
-```
-
 ```javascript JS
 const client = new MeiliSearch({ host: 'http://localhost:7700', apiKey: 'masterKey' })
 client.createKey({
@@ -104,6 +91,25 @@ let new_key = client
   .create_key(key_options)
   .await
   .unwrap();
+```
+
+```swift Swift
+let client = try MeiliSearch(host: "http://localhost:7700", apiKey: "masterKey")
+
+let keyParams = KeyParams(
+  description: "Search patient records key",
+  actions: ["search"],
+  indexes: ["patient_medical_records"],
+  expiresAt: "2023-01-01T00:00:00Z"
+)
+client.createKey(keyParams) { result in
+  switch result {
+  case .success(let key):
+    print(key)
+  case .failure(let error):
+    print(error)
+  }
+}
 ```
 
 ```dart Dart

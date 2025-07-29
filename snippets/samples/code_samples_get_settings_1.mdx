@@ -1,10 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X GET 'MEILISEARCH_URL/indexes/movies/settings'
-```
-
 ```javascript JS
 client.index('movies').getSettings()
 ```
@@ -39,6 +34,17 @@ let settings: Settings = client
   .get_settings()
   .await
   .unwrap();
+```
+
+```swift Swift
+client.index("movies").getSettings { (result) in
+    switch result {
+    case .success(let setting):
+        print(setting)
+    case .failure(let error):
+        print(error)
+    }
+}
 ```
 
 ```dart Dart

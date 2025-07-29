@@ -1,10 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X GET 'MEILISEARCH_URL/health'
-```
-
 ```javascript JS
 client.health()
 ```
@@ -39,6 +34,17 @@ client
   .health()
   .await
   .unwrap();
+```
+
+```swift Swift
+client.health { (result) in
+    switch result {
+    case .success:
+        print("Healthy!")
+    case .failure(let error):
+        print(error)
+    }
+}
 ```
 
 ```dart Dart

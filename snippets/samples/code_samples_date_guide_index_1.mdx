@@ -1,12 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -x POST 'MEILISEARCH_URL/indexes/games/documents' \
-  -h 'content-type: application/json' \
-  --data-binary @games.json
-```
-
 ```javascript JS
 const games = require('./games.json')
 client.index('games').addDocuments(games).then((res) => console.log(res))
@@ -79,6 +72,20 @@ client
   .add_documents(&docs, None)
   .await
   .unwrap();
+```
+
+```swift Swift
+let path = Bundle.main.url(forResource: "games", withExtension: "json")!
+let documents: Data = try Data(contentsOf: path)
+
+client.index("games").addDocuments(documents: documents) { (result) in
+  switch result {
+  case .success(let task):
+      print(task)
+  case .failure(let error):
+      print(error)
+  }
+}
 ```
 
 ```dart Dart

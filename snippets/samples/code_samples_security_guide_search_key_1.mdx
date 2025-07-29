@@ -1,11 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X POST 'MEILISEARCH_URL/indexes/patient_medical_records/search' \
-  -H 'Authorization: Bearer API_KEY'
-```
-
 ```javascript JS
 const client = new MeiliSearch({ host: 'http://localhost:7700', apiKey: 'apiKey' })
 client.index('patient_medical_records').search()
@@ -48,6 +42,19 @@ let result = client.index("patient_medical_records")
   .execute()
   .await
   .unwrap();
+```
+
+```swift Swift
+client = try MeiliSearch(host: "http://localhost:7700", apiKey: "apiKey")
+client.index("patient_medical_records")
+  .search(SearchParameters(query: "")) { (result: Result<Searchable<Patient>, Swift.Error>) in
+    switch result {
+    case .success(let searchResult):
+        print(searchResult)
+    case .failure(let error):
+        print(error)
+    }
+}
 ```
 
 ```dart Dart

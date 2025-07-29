@@ -1,10 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X DELETE 'MEILISEARCH_URL/indexes/movies/settings/search-cutoff-ms'
-```
-
 ```javascript JS
 client.index('movies').resetSearchCutoffMs()
 ```
@@ -39,5 +34,9 @@ let task: TaskInfo = client
   .reset_search_cutoff_ms()
   .await
   .unwrap();
+```
+
+```swift Swift
+let task = try await self.client.index("books").resetSearchCutoffMs()
 ```
 </CodeGroup>

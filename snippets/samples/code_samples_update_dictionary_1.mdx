@@ -1,15 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X PUT 'MEILISEARCH_URL/indexes/books/settings/dictionary' \
-  -H 'Content-Type: application/json' \
-  --data-binary '[
-    "J. R. R.",
-    "W. E. B."
-  ]'
-```
-
 ```javascript JS
 client.index('books').updateDictionary(['J. R. R.', 'W. E. B.'])
 ```
@@ -48,5 +38,11 @@ let task: TaskInfo = client
   .set_dictionary(['J. R. R.', 'W. E. B.'])
   .await
   .unwrap();
+```
+
+```swift Swift
+client.index("books").updateDictionary(["J. R. R.", "W. E. B."]) { result in
+  // handle result
+}
 ```
 </CodeGroup>

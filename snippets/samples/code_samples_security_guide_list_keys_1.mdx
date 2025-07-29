@@ -1,11 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X GET 'MEILISEARCH_URL/keys' \
-  -H 'Authorization: Bearer MASTER_KEY'
-```
-
 ```javascript JS
 const client = new MeiliSearch({ host: 'http://localhost:7700', apiKey: 'masterKey' })
 client.getKeys()
@@ -48,6 +42,19 @@ let keys = client
   .get_keys()
   .await
   .unwrap();
+```
+
+```swift Swift
+let client = try MeiliSearch(host: "http://localhost:7700", apiKey: "masterKey")
+
+client.getKeys() { result in
+    switch result {
+    case .success(let keys):
+        print(keys)
+    case .failure(let error):
+        print(error)
+    }
+}
 ```
 
 ```dart Dart

@@ -1,12 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X POST 'MEILISEARCH_URL/indexes/meteorites/documents' \
-  -H 'Content-Type: application/json' \
-  --data-binary @meteorites.json
-```
-
 ```javascript JS
 const meteorites = require('./meteorites.json')
 
@@ -104,6 +97,21 @@ client
   .index("meteorites")
   .add_documents(&meteorites, None)
   .await?;
+```
+
+```swift Swift
+let file = "meteorites.json"
+let path = URL(fileURLWithPath: file)
+let documents: Data = try Data(contentsOf: path)
+
+client.index("meteorites").addDocuments(documents: documents) { (result) in
+    switch result {
+    case .success(let task):
+        print(task)
+    case .failure(let error):
+        print(error)
+    }
+}
 ```
 
 ```dart Dart

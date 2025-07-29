@@ -1,18 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X POST 'MEILISEARCH_URL/keys' \
-  -H 'Authorization: Bearer MASTER_KEY' \
-  -H 'Content-Type: application/json' \
-  --data-binary '{
-    "description": "Add documents: Products API key",
-    "actions": ["documents.add"],
-    "indexes": ["products"],
-    "expiresAt": "2042-04-02T00:42:42Z"
-  }'
-```
-
 ```javascript JS
 client.createKey({
   description: 'Add documents: Products API key',
@@ -94,6 +81,23 @@ let new_key = client
   .create_key(key_options)
   .await
   .unwrap();
+```
+
+```swift Swift
+let keyParams = KeyParams(
+  description: "Add documents: Products API key",
+  actions: ["documents.add"],
+  indexes: ["products"],
+  expiresAt: "2042-04-02T00:42:42Z"
+)
+client.createKey(keyParams) { result in
+    switch result {
+    case .success(let key):
+        print(key)
+    case .failure(let error):
+        print(error)
+    }
+}
 ```
 
 ```dart Dart

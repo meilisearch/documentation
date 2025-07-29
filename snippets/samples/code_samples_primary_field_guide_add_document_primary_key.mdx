@@ -1,23 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X POST 'MEILISEARCH_URL/indexes/books/documents?primaryKey=reference_number' \
-  -H 'Content-Type: application/json' \
-  --data-binary '[
-    {
-      "reference_number": 287947,
-      "title": "Diary of a Wimpy Kid",
-      "author": "Jeff Kinney",
-      "genres": [
-        "comedy",
-        "humor"
-      ],
-      "price": 5.00
-    }
-  ]'
-```
-
 ```javascript JS
 client.index('books').addDocuments([
   {
@@ -126,6 +108,29 @@ let task: TaskInfo = client
   ], Some("reference_number"))
   .await
   .unwrap();
+```
+
+```swift Swift
+let documents: Data = """
+[
+  {
+    "reference_number": 287947,
+    "title": "Diary of a Wimpy Kid",
+    "author": "Jeff Kinney",
+    "genres": ["comedy", "humor"],
+    "price": 5
+  }
+]
+""".data(using: .utf8)!
+
+client.index("books").addDocuments(documents: documents, primaryKey: "reference_number") { (result) in
+    switch result {
+    case .success(let task):
+        print(task)
+    case .failure(let error):
+        print(error)
+    }
+}
 ```
 
 ```dart Dart

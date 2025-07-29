@@ -1,16 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X PATCH 'MEILISEARCH_URL/indexes/books/settings/faceting' \
-  -H 'Content-Type: application/json' \
-  --data-binary '{
-    "sortFacetValuesBy": {
-      "genres": "count"
-  }
-}'
-```
-
 ```javascript JS
 client.index('books').updateFaceting({
   sortFacetValuesBy: {

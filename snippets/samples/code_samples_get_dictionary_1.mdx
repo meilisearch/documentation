@@ -1,10 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X GET 'MEILISEARCH_URL/indexes/books/settings/dictionary'
-```
-
 ```javascript JS
 client.index('books').getDictionary()
 ```
@@ -39,5 +34,11 @@ let task: TaskInfo = client
   .get_dictionary()
   .await
   .unwrap();
+```
+
+```swift Swift
+client.index("books").getDictionary { result in
+  // handle result
+}
 ```
 </CodeGroup>

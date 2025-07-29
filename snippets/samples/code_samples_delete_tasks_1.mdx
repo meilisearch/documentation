@@ -1,10 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X DELETE 'MEILISEARCH_URL/tasks?uids=1,2'
-```
-
 ```javascript JS
 client.tasks.deleteTasks({ uids: [1, 2] })
 ```
@@ -41,6 +36,17 @@ let mut query = tasks::TasksDeleteQuery::new(&client);
 query.with_uids([1, 2]);
 
 let res = client.delete_tasks_with(&query).await.unwrap();
+```
+
+```swift Swift
+client.deleteTasks(filter: DeleteTasksQuery(uids: [1, 2])) { (result) in
+    switch result {
+    case .success(let taskInfo):
+        print(taskInfo)
+    case .failure(let error):
+        print(error)
+    }
+}
 ```
 
 ```dart Dart

@@ -1,10 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X DELETE 'MEILISEARCH_URL/indexes/books/settings/sortable-attributes'
-```
-
 ```javascript JS
 client.index('books').resetSortableAttributes()
 ```
@@ -39,6 +34,17 @@ let task: TaskInfo = client
   .reset_sortable_attributes()
   .await
   .unwrap();
+```
+
+```swift Swift
+client.index("books").resetSortableAttributes() { (result) in
+  switch result {
+  case .success(let attributes):
+    print(attributes)
+  case .failure(let error):
+    print(error)
+  }
+}
 ```
 
 ```dart Dart

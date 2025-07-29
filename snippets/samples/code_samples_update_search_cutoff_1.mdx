@@ -1,12 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X PUT 'MEILISEARCH_URL/indexes/movies/settings/search-cutoff-ms' \
-  -H 'Content-Type: application/json' \
-  --data-binary '150'
-```
-
 ```javascript JS
 client.index('movies').updateSearchCutoffMs(150)
 ```
@@ -41,5 +34,9 @@ let task: TaskInfo = client
   .set_search_cutoff_ms(Some(150))
   .await
   .unwrap();
+```
+
+```swift Swift
+let task = try await self.client.index("books").updateSearchCutoffMs(150)
 ```
 </CodeGroup>

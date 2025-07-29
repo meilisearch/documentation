@@ -1,15 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X POST 'MEILISEARCH_URL/indexes/movie_ratings/search' \
-  -H 'Content-Type: application/json' \
-  --data-binary '{
-    "q": "Batman",
-    "facets": ["genres", "rating"]
-  }'
-```
-
 ```javascript JS
 client.index('movie_ratings').search('Batman', { facets: ['genres', 'rating'] })
 ```

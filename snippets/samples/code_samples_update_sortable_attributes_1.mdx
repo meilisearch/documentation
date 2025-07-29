@@ -1,15 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X PUT 'MEILISEARCH_URL/indexes/books/settings/sortable-attributes' \
-  -H 'Content-Type: application/json' \
-  --data-binary '[
-    "price",
-    "author"
-  ]'
-```
-
 ```javascript JS
 client.index('books')
   .updateSortableAttributes([
@@ -66,6 +56,17 @@ let task: TaskInfo = client
   .set_sortable_attributes(&sortable_attributes)
   .await
   .unwrap();
+```
+
+```swift Swift
+client.index("books").updateSortableAttributes(["price", "author"]) { (result) in
+  switch result {
+  case .success(let task):
+    print(task)
+  case .failure(let error):
+    print(error)
+  }
+}
 ```
 
 ```dart Dart

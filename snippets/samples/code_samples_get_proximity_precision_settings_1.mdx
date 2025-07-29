@@ -1,10 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X GET 'MEILISEARCH_URL/indexes/books/settings/proximity-precision'
-```
-
 ```javascript JS
 client.index('books').getProximityPrecision()
 ```
@@ -39,5 +34,9 @@ let proximity_precision: String = client
   .get_proximity_precision()
   .await
   .unwrap();
+```
+
+```swift Swift
+let precisionValue = try await self.client.index("books").getProximityPrecision()
 ```
 </CodeGroup>

@@ -1,12 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X PUT 'MEILISEARCH_URL/indexes/books/settings/proximity-precision' \
-  -H 'Content-Type: application/json' \
-  --data-binary '"byAttribute"'
-```
-
 ```javascript JS
 client.index('books').updateProximityPrecision('byAttribute')
 ```
@@ -41,5 +34,9 @@ let task: TaskInfo = client
   .set_proximity_precision("byAttribute".to_string())
   .await
   .unwrap();
+```
+
+```swift Swift
+let task = try await self.client.index("books").updateProximityPrecision(.byWord)
 ```
 </CodeGroup>

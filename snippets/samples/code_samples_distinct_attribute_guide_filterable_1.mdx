@@ -1,16 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X PUT 'MEILISEARCH_URL/indexes/products/settings/filterable-attributes' \
-  -H 'Content-Type: application/json' \
-  --data-binary '[
-    "product_id",
-    "sku",
-    "url"
-  ]'
-```
-
 ```javascript JS
 client.index('products').updateFilterableAttributes(['product_id', 'sku', 'url'])
 ```

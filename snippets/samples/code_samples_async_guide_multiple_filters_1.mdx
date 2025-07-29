@@ -1,10 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X GET 'MEILISEARCH_URL/tasks?indexUids=movies&types=documentAdditionOrUpdate,documentDeletion&statuses=processing'
-```
-
 ```javascript JS
 client.tasks.getTasks({
   indexUids: ['movies'],
@@ -74,6 +69,17 @@ let tasks = query
   .execute()
   .await
   .unwrap();
+```
+
+```swift Swift
+client.getTasks(params: TasksQuery(indexUids: "movies", types: ["documentAdditionOrUpdate", "documentDeletion"], statuses: ["processing"])) { result in
+  switch result {
+  case .success(let taskResult):
+    print(taskResult)
+  case .failure(let error):
+    print(error)
+  }
+}
 ```
 
 ```dart Dart

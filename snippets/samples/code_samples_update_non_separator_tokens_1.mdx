@@ -1,12 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X PUT 'MEILISEARCH_URL/indexes/articles/settings/non-separator-tokens' \
-  -H 'Content-Type: application/json'  \
-  --data-binary '["@", "#"]'
-```
-
 ```javascript JS
 client.index('books').updateNonSeparatorTokens(['@', '#'])
 ```
@@ -45,6 +38,12 @@ let task: TaskInfo = client
   .set_non_separator_tokens(&vec!['@'.to_string(), '#'.to_string()])
   .await
   .unwrap();
+```
+
+```swift Swift
+client.index("books").updateNonSeparatorTokens(["@", "#"]) { result in
+  // handle result
+}
 ```
 
 ```dart Dart

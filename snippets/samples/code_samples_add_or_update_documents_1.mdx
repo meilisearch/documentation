@@ -1,18 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X PUT 'MEILISEARCH_URL/indexes/movies/documents' \
-  -H 'Content-Type: application/json' \
-  --data-binary '[
-    {
-      "id": 287947,
-      "title": "Shazam ⚡️",
-      "genres": "comedy"
-    }
-  ]'
-```
-
 ```javascript JS
 client.index('movies').updateDocuments([{
     id: 287947,
@@ -95,6 +82,28 @@ let task: TaskInfo = client
   ], None)
   .await
   .unwrap();
+```
+
+```swift Swift
+let documentJsonString = """
+[
+  {
+    "reference_number": 287947,
+    "title": "Shazam ⚡️",
+    "genres": "comedy"
+  }
+]
+"""
+let documents: Data = documentJsonString.data(using: .utf8)!
+
+client.index("movies").updateDocuments(documents: documents) { (result) in
+    switch result {
+    case .success(let task):
+        print(task)
+    case .failure(let error):
+        print(error)
+    }
+}
 ```
 
 ```dart Dart

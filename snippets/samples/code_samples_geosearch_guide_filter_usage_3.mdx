@@ -1,12 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X POST 'MEILISEARCH_URL/indexes/restaurants/search' \
-  -H 'Content-type:application/json' \
-  --data-binary '{ "filter": "_geoBoundingBox([45.494181, 9.214024], [45.449484, 9.179175])" }'
-```
-
 ```javascript JS
 client.index('restaurants').search('', {
   filter: ['_geoBoundingBox([45.494181, 9.214024], [45.449484, 9.179175])'],
@@ -58,6 +51,20 @@ let results: SearchResults<Restaurant> = client
   .execute()
   .await
   .unwrap();
+```
+
+```swift Swift
+let searchParameters = SearchParameters(
+    filter: "_geoBoundingBox([45.494181, 9.214024], [45.449484, 9.179175])"
+)
+client.index("restaurants").search(searchParameters) { (result: Result<Searchable<Restaurant>, Swift.Error>) in
+    switch result {
+    case .success(let searchResult):
+        print(searchResult)
+    case .failure(let error):
+        print(error)
+    }
+}
 ```
 
 ```dart Dart

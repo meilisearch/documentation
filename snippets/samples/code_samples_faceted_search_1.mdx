@@ -1,17 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X POST 'MEILISEARCH_URL/indexes/books/search' \
-  -H 'Content-Type: application/json' \
-  --data-binary '{
-    "q": "classic",
-    "facets": [
-    "genres", "rating", "language"
-  ]
-}'
-```
-
 ```javascript JS
 client.index('books').search('classic', { facets: ['genres', 'rating', 'language'] })
 ```

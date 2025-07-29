@@ -1,10 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X DELETE 'MEILISEARCH_URL/indexes/articles/settings/non-separator-tokens'
-```
-
 ```javascript JS
 client.index('books').resetNonSeparatorTokens()
 ```
@@ -39,6 +34,12 @@ let task: TaskInfo = client
   .reset_non_separator_tokens()
   .await
   .unwrap();
+```
+
+```swift Swift
+client.index("books").resetNonSeparatorTokens { result in
+  // handle result
+}
 ```
 
 ```dart Dart

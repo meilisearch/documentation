@@ -1,25 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X POST 'MEILISEARCH_URL/swap-indexes' \
-  -H 'Content-Type: application/json' \
-  --data-binary '[
-    {
-      "indexes": [
-        "indexA",
-        "indexB"
-      ]
-    },
-    {
-      "indexes": [
-        "indexX",
-        "indexY"
-      ]
-    }
-  ]'
-```
-
 ```javascript JS
 client.swapIndexes([
   { 'indexes': ['indexA', 'indexB'] },
@@ -72,6 +52,13 @@ client.swap_indexes([
         "indexY".to_string(),
     ),
 }])
+```
+
+```swift Swift
+let task = try await self.client.swapIndexes([
+  ("indexA", "indexB"),
+  ("indexX", "indexY")
+])
 ```
 
 ```dart Dart

@@ -1,10 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X DELETE 'MEILISEARCH_URL/indexes/shoes/settings/distinct-attribute'
-```
-
 ```javascript JS
 client.index('shoes').resetDistinctAttribute()
 ```
@@ -39,6 +34,17 @@ let task: TaskInfo = client
   .reset_distinct_attribute()
   .await
   .unwrap();
+```
+
+```swift Swift
+client.index("shoes").resetDistinctAttribute { (result) in
+    switch result {
+    case .success(let task):
+        print(task)
+    case .failure(let error):
+        print(error)
+    }
+}
 ```
 
 ```dart Dart

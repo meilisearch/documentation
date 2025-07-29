@@ -1,10 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X DELETE 'MEILISEARCH_URL/indexes/books/settings/dictionary'
-```
-
 ```javascript JS
 client.index('books').resetDictionary()
 ```
@@ -39,5 +34,11 @@ let task: TaskInfo = client
   .reset_dictionary()
   .await
   .unwrap();
+```
+
+```swift Swift
+client.index("books").resetDictionary { result in
+  // handle result
+}
 ```
 </CodeGroup>

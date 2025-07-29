@@ -1,15 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X POST 'MEILISEARCH_URL/indexes/movies/search' \
-  -H 'Content-Type: application/json' \
-  --data-binary '{
-    "q": "dragon",
-    "showRankingScoreDetails": true
-  }'
-```
-
 ```javascript JS
 client.index('movies').search('dragon', { showRankingScoreDetails: true })
 ```
@@ -60,5 +50,10 @@ let results: SearchResults<Movie> = client
   .execute()
   .await
   .unwrap();
+```
+
+```swift Swift
+let searchParameters = SearchParameters(query: "dragon", showRankingScoreDetails: true)
+let movies: Searchable<Movie> = try await client.index("movies").search(searchParameters)
 ```
 </CodeGroup>

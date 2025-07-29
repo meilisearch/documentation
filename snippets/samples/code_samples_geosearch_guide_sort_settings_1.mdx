@@ -1,12 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X PUT 'MEILISEARCH_URL/indexes/restaurants/settings/sortable-attributes' \
-  -H 'Content-type:application/json' \
-  --data-binary '["_geo"]'
-```
-
 ```javascript JS
 client.index('restaurants').updateSortableAttributes([
   '_geo'
@@ -51,6 +44,17 @@ let task: TaskInfo = client
   .set_sortable_attributes(&["_geo"])
   .await
   .unwrap();
+```
+
+```swift Swift
+client.index("restaurants").updateSortableAttributes(["_geo"]) { (result) in
+  switch result {
+  case .success(let task):
+    print(task)
+  case .failure(let error):
+    print(error)
+  }
+}
 ```
 
 ```dart Dart

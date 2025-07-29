@@ -1,12 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X PUT 'MEILISEARCH_URL/indexes/shoes/settings/distinct-attribute' \
-  -H 'Content-Type: application/json' \
-  --data-binary '"skuid"'
-```
-
 ```javascript JS
 client.index('shoes').updateDistinctAttribute('skuid')
 ```
@@ -41,6 +34,17 @@ let task: TaskInfo = client
   .set_distinct_attribute("skuid")
   .await
   .unwrap();
+```
+
+```swift Swift
+client.index("shoes").updateDistinctAttribute("skuid") { (result) in
+    switch result {
+    case .success(let task):
+        print(task)
+    case .failure(let error):
+        print(error)
+    }
+}
 ```
 
 ```dart Dart

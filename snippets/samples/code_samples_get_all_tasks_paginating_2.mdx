@@ -1,10 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X GET 'MEILISEARCH_URL/tasks?limit=2&from=8
-```
-
 ```javascript JS
 client.tasks.getTasks({ limit: 2, from: 8 })
 ```
@@ -51,6 +46,17 @@ let mut query = TasksSearchQuery::new(&client)
     .execute()
     .await
     .unwrap();
+```
+
+```swift Swift
+client.getTasks(params: TasksQuery(limit: 2, from: 8)) { result in
+  switch result {
+  case .success(let taskResult):
+    print(taskResult)
+  case .failure(let error):
+    print(error)
+  }
+}
 ```
 
 ```dart Dart

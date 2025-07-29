@@ -1,16 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
-  -H 'content-type: application/json' \
-  --data-binary '{ 
-    "vector": [0, 1, 2],
-    "hybrid": {
-      "embedder": "EMBEDDER_NAME"
-    }
-  }'
-```
-
 ```rust Rust
 let results = index
   .search()

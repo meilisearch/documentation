@@ -1,13 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X POST 'MEILISEARCH_URL/indexes/movies/search' \
-  -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer aSampleMasterKey' \
-  --data-binary '{ "q": "botman" }'
-```
-
 ```javascript JS
 client.index('movies').search('botman').then((res) => console.log(res))
 ```
@@ -70,6 +62,17 @@ let results: SearchResults<Movie> = client
   .execute()
   .await
   .unwrap();
+```
+
+```swift Swift
+client.index("movies").search(SearchParameters(query: "botman")) { (result) in
+    switch result {
+    case .success(let searchResult):
+        print(searchResult)
+    case .failure(let error):
+        print(error)
+    }
+}
 ```
 
 ```dart Dart

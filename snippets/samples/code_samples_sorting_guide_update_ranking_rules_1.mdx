@@ -1,19 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X PUT 'MEILISEARCH_URL/indexes/books/settings/ranking-rules' \
-  -H 'Content-Type: application/json' \
-  --data-binary '[
-    "words",
-    "sort",
-    "typo",
-    "proximity",
-    "attribute",
-    "exactness"
-  ]'
-```
-
 ```javascript JS
 client.index('books').updateRankingRules([
   'words',
@@ -111,6 +97,25 @@ let task: TaskInfo = client
   .set_ranking_rules(&ranking_rules)
   .await
   .unwrap();
+```
+
+```swift Swift
+let rankingRules: [String] = [
+  "words",
+  "sort",
+  "typo",
+  "proximity",
+  "attribute",
+  "exactness"
+]
+client.index("books").updateRankingRules(rankingRules) { (result) in
+  switch result {
+  case .success(let task):
+    print(task)
+  case .failure(let error):
+    print(error)
+  }
+}
 ```
 
 ```dart Dart

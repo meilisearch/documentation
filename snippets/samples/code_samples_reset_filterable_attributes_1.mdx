@@ -1,10 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X DELETE 'MEILISEARCH_URL/indexes/movies/settings/filterable-attributes'
-```
-
 ```javascript JS
 client.index('movies').resetFilterableAttributes()
 ```
@@ -39,6 +34,17 @@ let task: TaskInfo = client
   .reset_filterable_attributes()
   .await
   .unwrap();
+```
+
+```swift Swift
+client.index("movies").resetFilterableAttributes { (result) in
+    switch result {
+    case .success(let attributes):
+        print(attributes)
+    case .failure(let error):
+        print(error)
+    }
+}
 ```
 
 ```dart Dart

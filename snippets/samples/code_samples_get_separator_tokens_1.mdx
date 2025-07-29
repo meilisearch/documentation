@@ -1,10 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X GET 'MEILISEARCH_URL/indexes/articles/settings/separator-tokens'
-```
-
 ```javascript JS
 client.index('books').getSeparatorTokens()
 ```
@@ -39,6 +34,12 @@ let task: TaskInfo = client
   .get_separator_tokens()
   .await
   .unwrap();
+```
+
+```swift Swift
+client.index("books").getSeparatorTokens { result in
+  // handle result
+}
 ```
 
 ```dart Dart

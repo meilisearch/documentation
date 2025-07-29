@@ -1,22 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X PUT 'MEILISEARCH_URL/indexes/movies/settings/synonyms' \
-  -H 'Content-Type: application/json' \
-  --data-binary '{
-    "wolverine": [
-      "xmen",
-      "logan"
-    ],
-    "logan": [
-      "wolverine",
-      "xmen"
-    ],
-    "wow": ["world of warcraft"]
-  }'
-```
-
 ```javascript JS
 client.index('movies').updateSynonyms({
   wolverine: ['xmen', 'logan'],
@@ -86,6 +69,22 @@ let task: TaskInfo = client
   .set_synonyms(&synonyms)
   .await
   .unwrap();
+```
+
+```swift Swift
+let synonyms: [String: [String]] = [
+    "wolverine": ["xmen", "logan"],
+    "logan": ["wolverine", "xmen"],
+    "wow": ["world of warcraft"]
+]
+client.index("movies").updateSynonyms(synonyms) { (result) in
+    switch result {
+    case .success(let task):
+        print(task)
+    case .failure(let error):
+        print(error)
+    }
+}
 ```
 
 ```dart Dart

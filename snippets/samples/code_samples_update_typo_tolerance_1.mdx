@@ -1,18 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X PATCH 'MEILISEARCH_URL/indexes/books/settings/typo-tolerance' \
-  -H 'Content-Type: application/json' \
-  --data-binary '{
-    "minWordSizeForTypos": {
-      "oneTypo": 4,
-      "twoTypos": 10
-    },
-    "disableOnAttributes": ["title"]
-  }'
-```
-
 ```javascript JS
 client.index('books').updateTypoTolerance({
   minWordSizeForTypos: {

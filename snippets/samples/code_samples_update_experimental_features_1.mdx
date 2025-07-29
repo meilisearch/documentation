@@ -1,14 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X PATCH 'MEILISEARCH_URL/experimental-features/' \
-  -H 'Content-Type: application/json'  \
-  --data-binary '{
-    "metrics": true
-  }'
-```
-
 ```ruby Ruby
 client.update_experimental_features(metrics: true)
 ```

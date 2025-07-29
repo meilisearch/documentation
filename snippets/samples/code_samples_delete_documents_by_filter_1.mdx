@@ -1,14 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X POST MEILISEARCH_URL/indexes/movies/documents/delete \
-  -H 'Content-Type: application/json' \
-  --data-binary '{
-    "filter": "genres = action OR genres = adventure"
-  }'
-```
-
 ```javascript JS
 client.index('movies').deleteDocuments({
   filter: 'genres = action OR genres = adventure'

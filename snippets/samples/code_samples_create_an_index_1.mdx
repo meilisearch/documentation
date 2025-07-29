@@ -1,15 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X POST 'MEILISEARCH_URL/indexes' \
-  -H 'Content-Type: application/json' \
-  --data-binary '{
-    "uid": "movies",
-    "primaryKey": "id"
-  }'
-```
-
 ```javascript JS
 client.createIndex('movies', { primaryKey: 'id' })
 ```
@@ -45,6 +35,17 @@ TaskInfo task = await client.CreateIndexAsync("movies", "id");
 client.create_index("movies", Some("id"))
   .await
   .unwrap();
+```
+
+```swift Swift
+client.createIndex(uid: "movies", primaryKey: "id") { (result) in
+    switch result {
+    case .success(let task):
+        print(task)
+    case .failure(let error):
+        print(error)
+    }
+}
 ```
 
 ```dart Dart

@@ -1,16 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X POST 'MEILISEARCH_URL/indexes/movies/search' \
-  -H 'Content-Type: application/json' \
-  --data-binary '{
-    "q": "shifu",
-    "attributesToCrop": ["overview"],
-    "cropLength": 5
-  }'
-```
-
 ```javascript JS
 client.index('movies').search('shifu', {
   attributesToCrop: ['overview'],
@@ -82,6 +71,21 @@ let formatted_results: Vec<&Movie> = results
   .iter()
   .map(|r| r.formatted_result.as_ref().unwrap())
   .collect();
+```
+
+```swift Swift
+let searchParameters = SearchParameters(
+    query: "shifu",
+    attributesToCrop: ["overview"],
+    cropLength: 5)
+client.index("movies").search(searchParameters) { (result: Result<Searchable<Movie>, Swift.Error>) in
+    switch result {
+    case .success(let searchResult):
+        print(searchResult)
+    case .failure(let error):
+        print(error)
+    }
+}
 ```
 
 ```dart Dart

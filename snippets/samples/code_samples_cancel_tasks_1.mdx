@@ -1,10 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X POST 'MEILISEARCH_URL/tasks/cancel?uids=1,2'
-```
-
 ```javascript JS
 client.tasks.cancelTasks({ uids: [1, 2] })
 ```
@@ -41,6 +36,17 @@ let mut query = tasks::TasksCancelQuery::new(&client);
 query.with_uids([1, 2]);
 
 let res = client.cancel_task_with(&query).await.unwrap();
+```
+
+```swift Swift
+client.cancelTasks(filter: CancelTasksQuery(uids: [1, 2])) { (result) in
+    switch result {
+    case .success(let taskInfo):
+        print(taskInfo)
+    case .failure(let error):
+        print(error)
+    }
+}
 ```
 
 ```dart Dart

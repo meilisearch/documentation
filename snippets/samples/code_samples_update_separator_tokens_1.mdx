@@ -1,12 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X PUT 'MEILISEARCH_URL/indexes/articles/settings/separator-tokens' \
-  -H 'Content-Type: application/json'  \
-  --data-binary '["|", "&hellip;"]'
-```
-
 ```javascript JS
 client.index('books').updateSeparatorTokens(['|', '&hellip;'])
 ```
@@ -45,6 +38,12 @@ let task: TaskInfo = client
   .set_separator_tokens(&vec!['|'.to_string(), '&hellip;'.to_string()])
   .await
   .unwrap();
+```
+
+```swift Swift
+client.index("books").updateSeparatorTokens(["|", "&hellip;"]) { result in
+  // handle result
+}
 ```
 
 ```dart Dart

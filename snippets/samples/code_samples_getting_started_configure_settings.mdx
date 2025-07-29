@@ -1,21 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X PATCH 'MEILISEARCH_URL/indexes/meteorites/settings' \
-  -H 'Content-Type: application/json' \
-  --data-binary '{
-    "filterableAttributes": [
-      "mass",
-      "_geo"
-    ],
-    "sortableAttributes": [
-      "mass",
-      "_geo"
-    ]
-  }'
-```
-
 ```javascript JS
 client.index('meteorites').updateSettings({
   filterableAttributes: ['mass', '_geo'],
@@ -101,6 +85,21 @@ let task: TaskInfo = client
   .set_settings(&settings)
   .await
   .unwrap();
+```
+
+```swift Swift
+let settings = Setting(
+  filterableAttributes: ["mass", "_geo"],
+  sortableAttributes: ["mass", "_geo"]
+)
+client.index("meteorites").updateSettings(settings) { (result) in
+    switch result {
+    case .success(let task):
+        print(task)
+    case .failure(let error):
+        print(error)
+    }
+}
 ```
 
 ```dart Dart
