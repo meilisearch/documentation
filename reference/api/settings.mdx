@@ -2904,7 +2904,7 @@ curl \
 
 `FRAGMENT_NAME` can be any valid string. It must contain a single field, `value`. `value` must then follow your chosen model's specifications.
 
-For example, for Voyage AI's text and image embedder, `value` must be an array containing a single object with a `type` field. Depending on `type`'s value, you must include either `text`, `image_url`, or `image_base64`:
+For example, for [VoyageAI's multimodal embedding route](https://docs.voyageai.com/reference/multimodal-embeddings-api), `value` must be an object containing a `content` field. `content` itself must contain an array of objects with a `type` field. Depending on `type`'s value, you must include either `text`, `image_url`, or `image_base64`:
 
 ```json
 {
