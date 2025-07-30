@@ -179,12 +179,10 @@ curl -N \
   }'
 ```
 
-Take particular note of the `tools` array. These settings ensure Meilisearch includes the relevant information in its database in the chat queries:
+Take particular note of the `tools` array. These settings are optional, but greatly improve user experience:
 
-- **`_meiliSearchProgress`**: Shows users what searches are being performed
-- **`_meiliSearchSources`**: Provides the actual documents used to generate responses
-
-If you do not include any tools in your request, the chat will only use the LLM's general knowledge and will not search your actual Meilisearch indexes.
+- **`_meiliSearchProgress`**: shows users what searches are being performed
+- **`_meiliSearchSources`**: displays the actual documents used to generate responses
 
 ## Build a chat interface using the OpenAI SDK
 
@@ -263,7 +261,7 @@ import OpenAI from 'openai';
 
 const client = new OpenAI({
   baseURL: 'http://localhost:7700/chats/my-assistant',
-  apiKey: 'OPENAI_API_KEY',
+  apiKey: 'MEILISEARCH_KEY',
 });
 
 try {
@@ -287,7 +285,7 @@ from openai import OpenAI
 
 client = OpenAI(
     base_url="http://localhost:7700/chats/my-assistant",
-    api_key="OPENAI_API_KEY"
+    api_key="MEILISEARCH_KEY"
 )
 
 try:

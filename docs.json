@@ -165,15 +165,21 @@
                 "group": "AI-powered search",
                 "pages": [
                   "learn/ai_powered_search/getting_started_with_ai_search",
-                  "learn/ai_powered_search/conversational_search_with_chat",
                   "learn/ai_powered_search/configure_rest_embedder",
                   "learn/ai_powered_search/document_template_best_practices",
                   "learn/ai_powered_search/image_search_with_user_provided_embeddings",
                   "learn/ai_powered_search/search_with_user_provided_embeddings",
                   "learn/ai_powered_search/retrieve_related_search_results",
-                  "learn/ai_powered_search/chat_tooling_reference",
                   "learn/ai_powered_search/choose_an_embedder",
                   "learn/ai_powered_search/difference_full_text_ai_search"
+                ]
+              },
+              {
+                "group": "Conversational search",
+                "pages": [
+                  "learn/ai_powered_search/getting_started_with_chat",
+                  "learn/ai_powered_search/chat_tooling_reference",
+                  "learn/ai_powered_search/conversational_search"
                 ]
               },
               {

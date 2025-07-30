@@ -19,15 +19,13 @@ curl \
     "chatCompletions": true
   }'
 ```
-
-When you enable the chat route for the first time, Meilisearch creates a new API key named "Default Chat API Key".
 </Note>
 
 ## Authorization
 
 When working with a secure Meilisearch instance, Use an API key with access to both the `search` and `chatCompletions` actions, such as the default chat API key.
 
-Chat queries only search indexes its API key can access. The default chat API key has access to all indexes.
+Chat queries only search indexes its API key can access. The default chat API key has access to all indexes. To limit chat access to specific indexes, you must either create a new key, or [generate a tenant token](/learn/security/generate_tenant_token_sdk) from the default chat API key.
 
 ## Chat workspace object
 
@@ -154,7 +152,7 @@ Retrieve the current settings for a chat workspace.
 
 #### Response: `200 OK`
 
-Returns the settings object without the `apiKey` field.
+Returns the settings object. For security reasons, the `apiKey` field is obfuscated.
 
 ```json
 {
@@ -172,7 +170,7 @@ Returns the settings object without the `apiKey` field.
 ```bash cURL
 curl \
   -X GET 'http://localhost:7700/chats/WORKSPACE_UID/settings' \
-  -H 'Authorization: Bearer MASTER_KEY'
+  -H 'Authorization: Bearer MEILISEARCH_KEY'
 ```
 
 </CodeGroup>
@@ -209,7 +207,7 @@ If the workspace does not exist, querying this endpoint will create it.
 ```json
 {
   "source": "openAi",
-  "apiKey": "OPEN_AI_SECURITY_KEY",
+  "apiKey": "OPEN_AI_API_KEY",
   "prompts": {
     "system": "DEFAULT CHAT INSTRUCTIONS"
   }
@@ -229,7 +227,7 @@ Returns the updated settings object. `apiKey` is write-only and will not be retu
 ```bash openAi
 curl \
   -X PATCH 'http://localhost:7700/chats/customer-support/settings' \
-  -H 'Authorization: Bearer MASTER_KEY' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "source": "openAi",
@@ -243,7 +241,7 @@ curl \
 ```bash azureOpenAi
 curl \
   -X PATCH 'http://localhost:7700/chats/customer-support/settings' \
-  -H 'Authorization: Bearer MASTER_KEY' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "source": "azureOpenAi",
@@ -261,7 +259,7 @@ curl \
 ```bash mistral
 curl \
   -X PATCH 'http://localhost:7700/chats/customer-support/settings' \
-  -H 'Authorization: Bearer MASTER_KEY' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "source": "mistral",
@@ -275,7 +273,7 @@ curl \
 ```bash gemini
 curl \
   -X PATCH 'http://localhost:7700/chats/customer-support/settings' \
-  -H 'Authorization: Bearer MASTER_KEY' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "source": "gemini",
@@ -289,7 +287,7 @@ curl \
 ```bash vLlm
 curl \
   -X PATCH 'http://localhost:7700/chats/customer-support/settings' \
-  -H 'Authorization: Bearer MASTER_KEY' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "source": "vLlm",
@@ -334,7 +332,7 @@ Returns the settings object without the `apiKey` field.
 ```bash cURL
 curl \
   -X DELETE 'http://localhost:7700/chats/customer-support/settings' \
-  -H 'Authorization: Bearer MASTER_KEY'
+  -H 'Authorization: Bearer MEILISEARCH_KEY'
 ```
 
 </CodeGroup>

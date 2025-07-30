@@ -6,17 +6,30 @@ description: An exhaustive reference of special chat tools supported by Meilisea
 When creating your conversational search agent, you may be able to extend the model's capabilities with a number of tools. This page lists Meilisearch-specific tools that may improve user experience.
 
 <Note>
-These special tools are handled internally by Meilisearch and are not forwarded to the LLM provider. They serve as a communication mechanism between Meilisearch and your application to provide enhanced user experience features.
+This is an experimental feature. Use the Meilisearch Cloud UI or the experimental features endpoint to activate it:
+
+```sh
+curl \
+  -X PATCH 'MEILISEARCH_URL/experimental-features/' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "chatCompletions": true
+  }'
+```
 </Note>
 
 ## Meilisearch chat tools
 
 For the best user experience, configure all following tools.
 
-2. **Handle progress updates** by displaying search status to users during streaming
-3. **Append conversation messages** as requested to maintain context for future requests
-4. **Display source documents** to users for transparency and verification
-5. **Use the `call_id`** to associate progress updates with their corresponding source results
+1. **Handle progress updates** by displaying search status to users during streaming
+2. **Append conversation messages** as requested to maintain context for future requests
+3. **Display source documents** to users for transparency and verification
+4. **Use `call_id`** to associate progress updates with their corresponding source results
+
+<Note>
+These special tools are handled internally by Meilisearch and are not forwarded to the LLM provider. They serve as a communication mechanism between Meilisearch and your application to provide enhanced user experience features.
+</Note>
 
 ### `_meiliSearchProgress`
 

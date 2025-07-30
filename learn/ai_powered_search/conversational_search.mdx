@@ -1,5 +1,5 @@
 ---
-title: Conversational search with chat
+title: Conversational search
 sidebarTitle: Conversational search
 description: Learn how to implement AI-powered conversational search using Meilisearch's chat feature
 ---
@@ -17,8 +17,6 @@ curl \
     "chatCompletions": true
   }'
 ```
-
-When you enable the chat route for the first time, Meilisearch creates a new API key named "Default Chat API Key".
 </Note>
 
 ## What is conversational search?
@@ -50,12 +48,14 @@ This approach bridges the gap between traditional search and modern AI experienc
 ## When to use chat completions vs traditional search
 
 ### Use conversational search when:
+
 - Users need direct answers to specific questions
 - Content is informational (documentation, knowledge bases, FAQs)
 - Users benefit from follow-up questions
 - Natural language interaction improves user experience
 
 ### Use traditional search when:
+
 - Users need to browse multiple options
 - Results require comparison (e-commerce products, listings)
 - Exact matching is critical
@@ -68,7 +68,7 @@ The chat completions feature implements a complete Retrieval Augmented Generatio
 1. **Query understanding**: automatically transforms questions into search parameters
 2. **Hybrid retrieval**: combines keyword and semantic search for better relevancy
 3. **Answer generation**: uses your chosen LLM to generate responses
-4. **Context management**: maintains conversation history automatically
+4. **Context management**: maintains conversation history by constantly pushing the full conversation to the dedicated tool
 
 ### Alternative: MCP integration
 
