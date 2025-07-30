@@ -177,9 +177,9 @@
               {
                 "group": "Conversational search",
                 "pages": [
-                  "learn/ai_powered_search/getting_started_with_chat",
-                  "learn/ai_powered_search/chat_tooling_reference",
-                  "learn/ai_powered_search/conversational_search"
+                  "learn/chat/getting_started_with_chat",
+                  "learn/chat/chat_tooling_reference",
+                  "learn/chat/conversational_search"
                 ]
               },
               {
@@ -952,6 +952,14 @@
     {
       "source": "/guides/deployment/gcp",
       "destination": "/guides/running_production"
+    },
+    {
+      "source": "/guides/ai/getting_started_with_chat",
+      "destination": "/learn/chat/getting_started_with_chat"
+    },
+    {
+      "source": "learn/ai_powered_search/conversational_search_with_chat",
+      "destination": "learn/chat/conversational_search"
     }
   ]
 }
