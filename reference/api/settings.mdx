@@ -2933,7 +2933,7 @@ This is an experimental feature. Use the Meilisearch Cloud UI or the experimenta
 ```sh
 curl \
   -X PATCH 'http://localhost:7700/experimental-features/' \
-  -H 'Authorization: Bearer <master-key>' \
+  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "chatCompletions": true
@@ -2942,11 +2942,9 @@ curl \
 
 </Note>
 
-The chat settings allow you to configure how your index integrates with Meilisearch's conversational search feature. This enables the chat completions endpoint to search your index and generate responses based on your documents.
+The chat settings allow you to configure how your index integrates with Meilisearch's conversational search feature.
 
 ### Chat object
-
-The chat object in the index settings contains multiple settings to configure the conversational querying.
 
 ```json
 {
@@ -2964,14 +2962,14 @@ The chat object may contain the following fields:
 
 | Name                           | Type    | Default Value                           | Description                                                                                          |
 | ------------------------------ | ------- | --------------------------------------- | ---------------------------------------------------------------------------------------------------- |
-| **`description`**              | String  | Empty                                   | The description of the index. Used to help the LLM decide which index to use when generating answers |
+| **`description`**              | String  | Empty                                   | The description of the index. Helps the LLM decide which index to use when generating answers |
 | **`documentTemplate`**         | String  | `{% for field in fields %} {% if field.is_searchable and not field.value == nil %}{{ field.name }}: {{ field.value }} {% endif %} {% endfor %}` | Template defining the data Meilisearch sends to the LLM |
 | **`documentTemplateMaxBytes`** | Integer | 400                                     | Maximum allowed size of rendered document template |
 | **`searchParameters`**         | Object  | Empty                                   | The search parameters to use when LLM is performing search requests |
 
 ### Search parameters object
 
-Corresponds to a subset of the [search parameters object](/reference/api/search#search-parameters-object):
+Must be one of the following [search parameters](/reference/api/search#search-parameters-object):
 
 - **`hybrid`**
 - **`limit`**
@@ -2998,7 +2996,7 @@ Get the index chat settings configured for an index.
 ```bash
 curl \
   -X GET 'http://localhost:7700/indexes/movies/settings/chat' \
-  -H 'Authorization: Bearer <master-key>'
+  -H 'Authorization: Bearer MEILISEARCH_KEY'
 ```
 
 ##### Response: `200 OK`
@@ -3014,7 +3012,7 @@ curl \
 
 ### Update index chat settings
 
-<RouteHighlighter method="PATCH" path="/indexes/{index_uid}/settings/chat" />
+<RouteHighlighter method="PUT" path="/indexes/{index_uid}/settings/chat" />
 
 Partially update the index chat settings for an index.
 
@@ -3034,10 +3032,10 @@ Partially update the index chat settings for an index.
   "searchParameters": {
     "hybrid": <Object>,
     "limit": <Integer>,
-    "sort": <String>,
+    "sort": [<String>, <String>, … ],
     "distinct": <String>,
     "matchingStrategy": <String>,
-    "attributesToSearchOn": <String>,
+    "attributesToSearchOn": [<String>, <String>, … ],
     "rankingScoreThreshold": <Float>,
   }
 }
@@ -3048,7 +3046,7 @@ Partially update the index chat settings for an index.
 ```bash
 curl \
   -X PATCH 'http://localhost:7700/indexes/movies/settings/chat' \
-  -H 'Authorization: Bearer <master-key>' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "description": "A comprehensive movie database containing titles, descriptions, genres, and release dates to help users find movies",
