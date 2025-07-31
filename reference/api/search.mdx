@@ -97,6 +97,7 @@ By default, [this endpoint returns a maximum of 1000 results](/learn/resources/k
 | **[`vector`](#vector)**                                 | Array of numbers | `null`        | Search using a custom query vector                  |
 | **[`retrieveVectors`](#display-_vectors-in-response)**  | Boolean          | `false`       | Return document vector data                         |
 | **[`locales`](#query-locales)**                         | Array of strings | `null`        | Explicitly specify languages used in a query        |
+| **[`media`](#media)**                                   | Object           | `null`        | Perform AI-powered search queries with multimodal content         |
 
 ### Response
 
@@ -1279,6 +1280,49 @@ For full control over the way Meilisearch detects languages during indexing and 
       "id": 0,
       "title": "DOCUMENT NAME",
       "overview_jp": "OVERVIEW TEXT IN JAPANESE"
+    }
+    …
+  ],
+  …
+}
+```
+
+### Media <NoticeTag type="experimental" label="experimental" />
+
+**Parameter**: `media`<br />
+**Expected value**: Object<br />
+**Default value**: `null`
+
+<Note>
+This is an experimental feature. Use the Meilisearch Cloud UI or the experimental features endpoint to activate it:
+
+```sh
+curl \
+  -X PATCH 'MEILISEARCH_URL/experimental-features/' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "multimodal": true
+  }'
+```
+</Note>
+
+Specifies data to populate search fragments when performing multimodal searches.
+
+`media` must be an object whose fields must correspond to the data required by one [search fragment](/reference/api/settings#searchfragments). `media` must match a single search fragment. If `media` matches more than one fragment or no search fragments at all, Meilisearch will return an error.
+
+It is mandatory to specify an embedder when using `media`. `media` is incompatible with `vector`.
+
+#### Example
+
+<CodeSamplesSearchParameterReferenceMedia1 />
+
+```json
+{
+  "hits": [
+    {
+      "id": 0,
+      "title": "DOCUMENT NAME",
+      …
     }
     …
   ],
