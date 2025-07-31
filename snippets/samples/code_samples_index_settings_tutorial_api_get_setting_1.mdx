@@ -6,4 +6,11 @@ let searchable_attributes: Vec<String> = index
   .await
   .unwrap();
 ```
+
+```rust Rust
+let searchable_attributes: Vec<String> = index
+  .get_searchable_attributes()
+  .await
+  .unwrap();
+```
 </CodeGroup>

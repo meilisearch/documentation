@@ -6,4 +6,11 @@ let task = index
   .await
   .unwrap();
 ```
+
+```rust Rust
+let task = index
+  .set_searchable_attributes(["title", "overview"])
+  .await
+  .unwrap();
+```
 </CodeGroup>

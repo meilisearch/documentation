@@ -8,4 +8,13 @@ let results = movies.search()
   .await
   .unwrap();
 ```
+
+```rust Rust
+let results = movies.search()
+  .with_query("batman")
+  .with_hybrid("EMBEDDER_NAME", 0.5)
+  .execute()
+  .await
+  .unwrap();
+```
 </CodeGroup>

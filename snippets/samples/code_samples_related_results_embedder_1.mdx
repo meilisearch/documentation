@@ -15,4 +15,20 @@ movies.set_embedders(&embedders)
   .await
   .unwrap();
 ```
+
+```rust Rust
+let embedders = HashMap::from([(
+  String::from("movies-text"),
+  Embedder {
+    source: EmbedderSource::OpenAi,
+    api_key: Some(String::from("OPENAI_API_KEY")),
+    model: Some(String::from("text-embedding-3-small")),
+    document_template: Some(String::from("A movie titled '{{doc.title}}' released in {{ doc.release_date }}. The movie genres are: {{doc.genres}}. The story is about: {{doc.overview|truncatewords: 20}}")),
+    ..Embedder::default()
+  }
+)]);
+movies.set_embedders(&embedders)
+  .await
+  .unwrap();
+```
 </CodeGroup>

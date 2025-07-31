@@ -1,0 +1,68 @@
+---
+title: Export
+description: "Migrate between instances with the `/export` route"
+---
+
+import { RouteHighlighter } from '/snippets/route_highlighter.mdx'
+
+import CodeSamplesExperimentalDeleteLogsStream1 from '/snippets/samples/code_samples_experimental_delete_logs_stream_1.mdx';
+
+Use the `/export` route to transfer data from your origin instance to a remote target instance. This is particularly useful when migrating from your local development environment to a Meilisearch Cloud instance.
+
+## Migrate database between instances
+
+<RouteHighlighter method="POST" path="/export" />
+
+Migrate data from the origin instance to a target instance.
+
+Migration is an additive operation. If the exported indexes already exist in the target instance, Meilisearch keeps the existing documents intact and adds the new data to the index. If the same document is present in both the target and origin, Meilisearch replaces the target documents with the new data.
+
+### Body
+
+| Name                | Type   | Default value | Description                                                                                               |
+| ------------------- | ------ | ------------- | --------------------------------------------------------------------------------------------------------- |
+| **`url`** *         | String | `null`        | The target instance's URL address. Required                                                               |
+| **`apiKey`** *      | String | `null`        | An API key with full admin access to the target instance                                                  |
+| **`payloadSize`** * | String | "50 MiB"      | A string specifying the payload size in a human-readable format                                           |
+| **`indexes`** *     | Object | `null`        | A set of patterns matching the indexes you want to export. Defaults to all indexes in the origin instance |
+
+#### `url`
+
+A string pointing to a remote Meilisearch instance, including its port if necessary.
+
+This field is required.
+
+#### `apiKey`
+
+A security key with `index.create`, `settings.update`, and `documents.add` permissions to a secured Meilisearch instance.
+
+#### `payloadSize`
+
+The maximum size of each single data payload in a human-readable format such as `"100MiB"`. Larger payloads are generally more efficient, but require significantly more powerful machines.
+
+#### `indexes`
+
+A set of objects whose keys correspond to patterns matching the indexes you want to export. By default, Meilisearch exports all documents across all indexes.
+
+Meilisearch does not override any index settings by default. If the target instance contains an index with the same name as an index you're exporting, Meilisearch uses the settings in the target instance. If the index does not already exist in the target instance, Meilisearch uses the settings in the origin instance.
+
+Each index object accepts the following fields:
+
+- `filter`: a [filter expression](/learn/filtering_and_sorting/filter_expression_reference) defining the subset of documents to export. Optional, defaults to `null`
+- `overrideSettings`: if `true`, configures indexes in the target instance with the origin instance settings. Optional, defaults to `false`
+
+### Example
+
+<CodeSamplesExportPost1 />
+
+#### Response
+
+```json
+{
+  "taskUid": 2,
+  "indexUid": null,
+  "status": "enqueued",
+  "type": "export",
+  "enqueuedAt": "2025-06-26T12:54:10.785864Z"
+}
+```

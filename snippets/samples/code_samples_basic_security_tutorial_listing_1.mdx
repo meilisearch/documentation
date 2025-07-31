@@ -7,4 +7,12 @@ client
   .await
   .unwrap();
 ```
+
+```rust Rust
+let client = Client::new("http://localhost:7700", Some("MASTER_KEY"));
+client
+  .get_keys()
+  .await
+  .unwrap();
+```
 </CodeGroup>

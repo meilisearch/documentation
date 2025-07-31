@@ -6,4 +6,11 @@ let results = movies.similar_search("192", "EMBEDDER_NAME")
   .await
   .unwrap();
 ```
+
+```rust Rust
+let results = movies.similar_search("192", "EMBEDDER_NAME")
+  .execute()
+  .await
+  .unwrap();
+```
 </CodeGroup>
