@@ -1,14 +1,11 @@
 <CodeGroup>
 
-```rust Rust
-let client = Client::new("http://localhost:7700", Some("DEFAULT_SEARCH_API_KEY"));
-let index = client.index("medical_records");
-index
-  .search()
-  .with_query("appointments")
-  .execute::<MedicalRecord>()
-  .await
-  .unwrap();
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/medical_records/search' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer DEFAULT_SEARCH_API_KEY' \
+  --data-binary '{ "q": "appointments" }'
 ```
 
 ```rust Rust

@@ -1,5 +1,12 @@
 <CodeGroup>
 
+```bash cURL
+curl \
+  -X PUT 'MEILISEARCH_URL/indexes/articles/settings/separator-tokens' \
+  -H 'Content-Type: application/json'  \
+  --data-binary '["|", "&hellip;"]'
+```
+
 ```javascript JS
 client.index('books').updateSeparatorTokens(['|', '&hellip;'])
 ```

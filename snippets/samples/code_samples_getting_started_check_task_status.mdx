@@ -1,5 +1,11 @@
 <CodeGroup>
 
+```bash cURL
+curl \
+  -X GET 'MEILISEARCH_URL/tasks/0' \
+  -H 'Authorization: Bearer aSampleMasterKey'
+```
+
 ```javascript JS
 client.tasks.getTask(0)
 ```

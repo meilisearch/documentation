@@ -1,5 +1,19 @@
 <CodeGroup>
 
+```bash cURL
+curl \
+  -X PUT 'MEILISEARCH_URL/indexes/books/settings/ranking-rules' \
+  -H 'Content-Type: application/json' \
+  --data-binary '[
+    "words",
+    "sort",
+    "typo",
+    "proximity",
+    "attribute",
+    "exactness"
+  ]'
+```
+
 ```javascript JS
 client.index('books').updateRankingRules([
   'words',

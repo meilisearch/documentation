@@ -1,5 +1,13 @@
 <CodeGroup>
 
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/movies/search' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer aSampleMasterKey' \
+  --data-binary '{ "q": "botman" }'
+```
+
 ```javascript JS
 client.index('movies').search('botman').then((res) => console.log(res))
 ```

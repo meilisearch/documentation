@@ -1,5 +1,18 @@
 <CodeGroup>
 
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/keys' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MASTER_KEY' \
+  --data-binary '{
+    "description": "Search patient records key",
+    "actions": ["search"],
+    "indexes": ["patient_medical_records"],
+    "expiresAt": "2023-01-01T00:00:00Z"
+  }'
+```
+
 ```javascript JS
 const client = new MeiliSearch({ host: 'http://localhost:7700', apiKey: 'masterKey' })
 client.createKey({

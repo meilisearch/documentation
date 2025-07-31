@@ -1,5 +1,15 @@
 <CodeGroup>
 
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/meteorites/search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "filter": "mass < 200",
+    "sort": ["mass:asc"]
+  }'
+```
+
 ```javascript JS
 client.index('meteorites').search('', {
   sort: ['mass:asc'],

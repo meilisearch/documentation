@@ -1,10 +1,13 @@
 <CodeGroup>
 
-```rust Rust
-let task = index
-  .set_searchable_attributes(["title", "overview"])
-  .await
-  .unwrap();
+```bash cURL
+curl \
+  -X PUT 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/searchable-attributes' \
+  -H 'Content-Type: application/json' \
+  --data-binary '[
+    "title",
+    "overview"
+  ]'
 ```
 
 ```rust Rust

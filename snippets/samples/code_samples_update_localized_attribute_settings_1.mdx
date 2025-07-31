@@ -1,5 +1,14 @@
 <CodeGroup>
 
+```bash cURL
+curl \
+  -X PUT 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/localized-attributes' \
+  -H 'Content-Type: application/json' \
+  --data-binary '[
+    {"locales": ["jpn"], "attributePatterns": ["*_ja"]}
+  ]'
+```
+
 ```javascript JS
 client.index('INDEX_NAME').updateLocalizedAttributes([
   { attributePatterns: ['*_ja'], locales: ['jpn'] },

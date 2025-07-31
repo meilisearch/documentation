@@ -1,5 +1,15 @@
 <CodeGroup>
 
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/indexes' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "uid": "movies",
+    "primaryKey": "id"
+  }'
+```
+
 ```javascript JS
 client.createIndex('movies', { primaryKey: 'id' })
 ```

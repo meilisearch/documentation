@@ -1,5 +1,24 @@
 <CodeGroup>
 
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/multi-search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "federation": {},
+    "queries": [
+      {
+        "indexUid": "movies",
+        "q": "batman"
+      },
+      {
+        "indexUid": "comics",
+        "q": "batman"
+      }
+    ]
+  }'
+```
+
 ```javascript JS
 client.multiSearch({
   federation: {},

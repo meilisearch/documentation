@@ -1,5 +1,12 @@
 <CodeGroup>
 
+```bash cURL
+# replace the MASTER_KEY placeholder with your master key
+curl \
+  -X GET 'MEILISEARCH_URL/keys' \
+  -H 'Authorization: Bearer MASTER_KEY'
+```
+
 ```javascript JS
 const client = new MeiliSearch({ host: 'http://localhost:7700', apiKey: 'masterKey' })
 client.getKeys()

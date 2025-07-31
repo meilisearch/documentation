@@ -1,5 +1,10 @@
 <CodeGroup>
 
+```bash cURL
+curl \
+  -X DELETE 'MEILISEARCH_URL/indexes/movies/settings/ranking-rules'
+```
+
 ```javascript JS
 client.index('movies').resetRankingRules()
 ```

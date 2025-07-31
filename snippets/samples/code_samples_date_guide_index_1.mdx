@@ -1,5 +1,12 @@
 <CodeGroup>
 
+```bash cURL
+curl \
+  -x POST 'MEILISEARCH_URL/indexes/games/documents' \
+  -h 'content-type: application/json' \
+  --data-binary @games.json
+```
+
 ```javascript JS
 const games = require('./games.json')
 client.index('games').addDocuments(games).then((res) => console.log(res))

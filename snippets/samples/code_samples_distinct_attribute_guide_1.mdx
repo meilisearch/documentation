@@ -1,5 +1,12 @@
 <CodeGroup>
 
+```bash cURL
+curl \
+  -X PUT 'MEILISEARCH_URL/indexes/jackets/settings/distinct-attribute' \
+  -H 'Content-Type: application/json' \
+  --data-binary '"product_id"'
+```
+
 ```javascript JS
 client.index('jackets').updateDistinctAttribute('product_id')
 ```

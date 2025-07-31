@@ -1,5 +1,10 @@
 <CodeGroup>
 
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/tasks/cancel?uids=1,2'
+```
+
 ```javascript JS
 client.tasks.cancelTasks({ uids: [1, 2] })
 ```

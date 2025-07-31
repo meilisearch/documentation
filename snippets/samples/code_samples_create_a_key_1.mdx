@@ -1,5 +1,18 @@
 <CodeGroup>
 
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/keys' \
+  -H 'Authorization: Bearer MASTER_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "description": "Add documents: Products API key",
+    "actions": ["documents.add"],
+    "indexes": ["products"],
+    "expiresAt": "2042-04-02T00:42:42Z"
+  }'
+```
+
 ```javascript JS
 client.createKey({
   description: 'Add documents: Products API key',

@@ -1,12 +1,15 @@
 <CodeGroup>
 
-```rust Rust
-let results = movies.search()
-  .with_query("batman")
-  .with_hybrid("EMBEDDER_NAME", 0.5)
-  .execute()
-  .await
-  .unwrap();
+```bash cURL
+curl -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
+  -H 'content-type: application/json' \
+  -H 'Authorization: Bearer DEFAULT_SEARCH_API_KEY' \
+  --data-binary '{
+    "q": "batman",
+    "hybrid": {
+      "embedder": "EMBEDDER_NAME"
+    }
+  }'
 ```
 
 ```rust Rust

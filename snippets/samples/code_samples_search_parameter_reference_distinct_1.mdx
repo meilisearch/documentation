@@ -1,5 +1,15 @@
 <CodeGroup>
 
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "q": "QUERY TERMS",
+    "distinct": "ATTRIBUTE_A"
+  }'
+```
+
 ```javascript JS
 client.index('INDEX_NAME').search('QUERY TERMS', { distinct: 'ATTRIBUTE_A' })
 ```

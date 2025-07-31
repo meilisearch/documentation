@@ -1,5 +1,15 @@
 <CodeGroup>
 
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/games/search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "q": "",
+    "filter": "release_timestamp >= 1514761200 AND release_timestamp < 1672527600"
+  }'
+```
+
 ```javascript JS
 client.index('games').search('', {
   filter: 'release_timestamp >= 1514761200 AND release_timestamp < 1672527600'

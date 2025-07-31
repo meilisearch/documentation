@@ -1,5 +1,12 @@
 <CodeGroup>
 
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/meteorites/search' \
+  -H 'Content-type:application/json' \
+  --data-binary '{ "filter": "_geoRadius(46.9480, 7.4474, 210000)" }'
+```
+
 ```javascript JS
 client.index('meteorites').search('', { filter: '_geoRadius(46.9480, 7.4474, 210000)' })
 ```

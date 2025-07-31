@@ -1,5 +1,14 @@
 <CodeGroup>
 
+```bash cURL
+curl \
+  -X PUT 'MEILISEARCH_URL/indexes/games/settings/filterable-attributes' \
+  -H 'Content-Type: application/json' \
+  --data-binary '[
+    "release_timestamp"
+  ]'
+```
+
 ```javascript JS
 client.index('games').updateFilterableAttributes(['release_timestamp'])
 ```

@@ -1,5 +1,18 @@
 <CodeGroup>
 
+```bash cURL
+curl \
+  -X PUT 'MEILISEARCH_URL/indexes/movies/documents' \
+  -H 'Content-Type: application/json' \
+  --data-binary '[
+    {
+      "id": 287947,
+      "title": "Shazam ⚡️",
+      "genres": "comedy"
+    }
+  ]'
+```
+
 ```javascript JS
 client.index('movies').updateDocuments([{
     id: 287947,

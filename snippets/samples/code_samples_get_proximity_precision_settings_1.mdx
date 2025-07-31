@@ -1,5 +1,10 @@
 <CodeGroup>
 
+```bash cURL
+curl \
+  -X GET 'MEILISEARCH_URL/indexes/books/settings/proximity-precision'
+```
+
 ```javascript JS
 client.index('books').getProximityPrecision()
 ```

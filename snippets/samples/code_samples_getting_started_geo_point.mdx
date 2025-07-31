@@ -1,5 +1,12 @@
 <CodeGroup>
 
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/meteorites/search' \
+  -H 'Content-type:application/json' \
+  --data-binary '{ "sort": ["_geoPoint(48.8583701,2.2922926):asc"] }'
+```
+
 ```javascript JS
 client.index('meteorites').search('', { sort: ['_geoPoint(48.8583701, 2.2922926):asc'] })
 ```

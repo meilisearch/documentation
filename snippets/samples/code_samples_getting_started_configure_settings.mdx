@@ -1,5 +1,21 @@
 <CodeGroup>
 
+```bash cURL
+curl \
+  -X PATCH 'MEILISEARCH_URL/indexes/meteorites/settings' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "filterableAttributes": [
+      "mass",
+      "_geo"
+    ],
+    "sortableAttributes": [
+      "mass",
+      "_geo"
+    ]
+  }'
+```
+
 ```javascript JS
 client.index('meteorites').updateSettings({
   filterableAttributes: ['mass', '_geo'],

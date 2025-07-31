@@ -1,5 +1,11 @@
 <CodeGroup>
 
+```bash cURL
+curl \
+  -X GET 'MEILISEARCH_URL/keys?limit=3' \
+  -H 'Authorization: Bearer MASTER_KEY'
+```
+
 ```javascript JS
 client.getKeys({ limit: 3 })
 ```

@@ -1,5 +1,17 @@
 <CodeGroup>
 
+```bash cURL
+curl -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
+  -H 'content-type: application/json' \
+  --data-binary '{
+    "q": "kitchen utensils",
+    "retrieveVectors": true,
+    "hybrid": {
+      "embedder": "EMBEDDER_NAME"
+    }
+  }'
+```
+
 ```javascript JS
 client.index('INDEX_NAME').search('kitchen utensils', {
   retrieveVectors: true,

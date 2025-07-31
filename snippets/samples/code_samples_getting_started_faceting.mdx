@@ -1,5 +1,17 @@
 <CodeGroup>
 
+```bash cURL
+curl \
+  -X PATCH 'MEILISEARCH_URL/indexes/movies/settings/faceting' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "maxValuesPerFacet": 2,
+     "sortFacetValuesBy": {
+       "*": "count"
+     }
+  }'
+```
+
 ```javascript JS
 client.index('movies').updateFaceting({
   maxValuesPerFacet: 2,

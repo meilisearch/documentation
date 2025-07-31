@@ -1,5 +1,14 @@
 <CodeGroup>
 
+```bash cURL
+curl \
+  -X PATCH 'MEILISEARCH_URL/indexes/movies/settings/typo-tolerance' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "minWordSizeForTypos": { "oneTypo": 4 }
+}'
+```
+
 ```javascript JS
 client.index('movies').updateTypoTolerance({
   minWordSizeForTypos: {

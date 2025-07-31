@@ -1,5 +1,12 @@
 <CodeGroup>
 
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/movies/documents'\
+  -H 'Content-Type: application/json' \
+  --data-binary @movies.json
+```
+
 ```javascript JS
 const movies = require('./movies.json')
 client.index('movies').addDocuments(movies).then((res) => console.log(res))

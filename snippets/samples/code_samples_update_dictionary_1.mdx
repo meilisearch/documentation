@@ -1,5 +1,15 @@
 <CodeGroup>
 
+```bash cURL
+curl \
+  -X PUT 'MEILISEARCH_URL/indexes/books/settings/dictionary' \
+  -H 'Content-Type: application/json' \
+  --data-binary '[
+    "J. R. R.",
+    "W. E. B."
+  ]'
+```
+
 ```javascript JS
 client.index('books').updateDictionary(['J. R. R.', 'W. E. B.'])
 ```

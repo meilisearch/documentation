@@ -1,5 +1,10 @@
 <CodeGroup>
 
+```bash cURL
+curl \
+  -X DELETE 'MEILISEARCH_URL/indexes/shoes/settings/distinct-attribute'
+```
+
 ```javascript JS
 client.index('shoes').resetDistinctAttribute()
 ```
