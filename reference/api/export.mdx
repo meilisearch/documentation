@@ -15,7 +15,7 @@ Use the `/export` route to transfer data from your origin instance to a remote t
 
 Migrate data from the origin instance to a target instance.
 
-Migration is an additive operation. If the exported indexes already exist in the target instance, Meilisearch keeps the existing documents intact and adds the new data to the index.
+Migration is an additive operation. If the exported indexes already exist in the target instance, Meilisearch keeps the existing documents intact and adds the new data to the index. If the same document is present in both the target and origin, Meilisearch replaces the target documents with the new data.
 
 ### Body
 
