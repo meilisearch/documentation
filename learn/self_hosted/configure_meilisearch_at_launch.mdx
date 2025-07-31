@@ -538,6 +538,18 @@ Helps running Meilisearch in cluster environments. It does this by modifying tas
 - Allows you to manually set task uids by adding a custom `TaskId` header to your API requests
 - Allows you to dry register tasks by specifying a `DryRun: true` header in your request
 
+### Disable new indexer <NoticeTag type="experimental" label="experimental" />
+
+<Warning>
+🚩 This option does not take any values. Assigning a value will throw an error. 🚩
+</Warning>
+
+**Environment variable**: `MEILI_EXPERIMENTAL_NO_EDITION_2024_FOR_SETTINGS`<br />
+**CLI option**: `--experimental-no-edition-2024-for-settings`<br />
+**Default value**: `None`<br />
+
+Falls back to previous settings indexer.
+
 ### SSL options
 
 #### SSL authentication path

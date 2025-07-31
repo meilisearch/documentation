@@ -1467,6 +1467,18 @@ related_results_similar_1: |-
       "id": 192,
       "embedder": "EMBEDDER_NAME"
     }'
+export_post_1: |-
+  curl \
+    -X POST 'MEILISEARCH_URL/export' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "url": "TARGET_INSTANCE_URL",
+      "indexes": {
+        "*": {
+          "overrideSettings": true
+        }
+      }
+    }'
 
 ### Code samples for experimental features
 experimental_get_metrics_1: |-
@@ -1533,3 +1545,19 @@ update_network_1: |-
         }
       }
     }'
+search_parameter_reference_media_1: |-
+  curl \
+  -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "hybrid": {
+      "embedder": "EMBEDDER_NAME"
+    },
+    "media": {
+      "FIELD_A": "VALUE_A",
+      "FIELD_B" : {
+        "FIELD_C": "VALUE_B"
+        "FIELD_D": "VALUE_C"
+      }
+    }
+  }'

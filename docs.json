@@ -143,7 +143,7 @@
   "navigation": {
     "versions": [
       {
-        "version": "v1.15",
+        "version": "v1.16",
         "anchors": [
           {
             "anchor": "Learn",
@@ -165,7 +165,6 @@
                 "group": "AI-powered search",
                 "pages": [
                   "learn/ai_powered_search/getting_started_with_ai_search",
-                  "learn/ai_powered_search/conversational_search_with_chat",
                   "learn/ai_powered_search/configure_rest_embedder",
                   "learn/ai_powered_search/document_template_best_practices",
                   "learn/ai_powered_search/image_search_with_user_provided_embeddings",
@@ -173,6 +172,14 @@
                   "learn/ai_powered_search/retrieve_related_search_results",
                   "learn/ai_powered_search/choose_an_embedder",
                   "learn/ai_powered_search/difference_full_text_ai_search"
+                ]
+              },
+              {
+                "group": "Conversational search",
+                "pages": [
+                  "learn/chat/getting_started_with_chat",
+                  "learn/chat/chat_tooling_reference",
+                  "learn/chat/conversational_search"
                 ]
               },
               {
@@ -342,7 +349,8 @@
                   "reference/api/dump",
                   "reference/api/experimental_features",
                   "reference/api/metrics",
-                  "reference/api/logs"
+                  "reference/api/logs",
+                  "reference/api/export"
                 ]
               },
               {
@@ -945,6 +953,14 @@
     {
       "source": "/guides/deployment/gcp",
       "destination": "/guides/running_production"
+    },
+    {
+      "source": "/guides/ai/getting_started_with_chat",
+      "destination": "/learn/chat/getting_started_with_chat"
+    },
+    {
+      "source": "learn/ai_powered_search/conversational_search_with_chat",
+      "destination": "learn/chat/conversational_search"
     }
   ]
 }

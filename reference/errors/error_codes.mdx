@@ -146,6 +146,14 @@ The given [`uid`](/reference/api/keys#uid) is invalid. The `uid` must follow the
 
 The value passed to [`attributesToSearchOn`](/reference/api/search#customize-attributes-to-search-on-at-search-time) is invalid. `attributesToSearchOn` accepts an array of strings indicating document attributes. Attributes given to `attributesToSearchOn` must be present in the [`searchableAttributes` list](/learn/relevancy/displayed_searchable_attributes#the-searchableattributes-list).
 
+## `invalid_search_media`
+
+The value passed to [`media`](/reference/api/search#media) is not a valid JSON object.
+
+## `invalid_search_media_and_vector`
+
+The search query contains non-`null` values for both [`media`](/reference/api/search#media) and [`vector`](/reference/api/search#media). These two parameters are mutually exclusive, since `media` generates vector embeddings via the embedder configured in `hybrid`.
+
 ## `invalid_content_type`
 
 The [Content-Type header](/reference/api/overview#content-type) is not supported by Meilisearch. Currently, Meilisearch only supports JSON, CSV, and NDJSON.
@@ -180,9 +188,37 @@ The [`limit`](/reference/api/documents#query-parameters) parameter is invalid. I
 
 The [`offset`](/reference/api/documents#query-parameters) parameter is invalid. It should be an integer.
 
+## `invalid_document_sort`
+
+This error occurs if:
+
+- The syntax for the [`sort`](/reference/api/documents#body) parameter is invalid
+- The attribute used for sorting is not defined in the [`sortableAttributes`](/reference/api/settings#sortable-attributes) list or the `sort` ranking rule is missing from the settings
+- A reserved keyword like `_geo`, `_geoDistance`, `_geoRadius`, or `_geoBoundingBox` is used as a filter
+
 ## `invalid_document_geo_field`
 
 The provided `_geo` field of one or more documents is invalid. Meilisearch expects `_geo` to be an object with two fields, `lat` and `lng`, each containing geographic coordinates expressed as a string or floating point number. Read more about `_geo` and how to troubleshoot it in [our dedicated guide](/learn/filtering_and_sorting/geosearch).
+
+## `invalid_export_url`
+
+The export target instance URL is invalid or could not be reached.
+
+## `invalid_export_api_key`
+
+The supplied security key does not have the required permissions to access the target instance.
+
+## `invalid_export_payload_size`
+
+The provided payload size is invalid. The payload size must be a string indicating the maximum payload size in a human-readable format.
+
+## `invalid_export_indexes_patterns`
+
+The provided index pattern is invalid. The index pattern must be an alphanumeric string, optionally including a wildcard.
+
+## `invalid_export_index_filter`
+
+The provided index export filter is not a valid [filter expression](/learn/filtering_and_sorting/filter_expression_reference).
 
 ## `invalid_facet_search_facet_name`
 
