@@ -2512,7 +2512,9 @@ These embedder objects may contain the following fields:
 | **`binaryQuantized`**          | Boolean | Empty                                                                                                                                           | Once set to `true`, irreversibly converts all vector dimensions to 1-bit values                                                                                |
 | **`indexingEmbedder`**         | Object  | Empty                                                                                                                                           | Configures embedder to vectorize documents during indexing                                                                                                     |
 | **`searchEmbedder`**           | Object  | Empty                                                                                                                                           | Configures embedder to vectorize search queries                                                                                                                |
-| **`pooling`**                  | String  | `"useModel"`                                                                                                                                    | Pooling method for Hugging Face embedders                                                                                                                      |
+| **`pooling`**                  | String  | `"useModel"`                                                                                                                                    | Pooling method for Hugging Face embedders                                                                                                                     |
+| **`indexingFragments`**        | Object  | Empty                                                                                                                                    | Configures multimodal embedding generation at indexing time                                                                                                                      |
+| **`searchFragments`**        | Object  | Empty                                                                                                                                    | Configures data handling during multimodal search                                                                                                                       |
 
 ### Get embedder settings
 
@@ -2875,6 +2877,118 @@ Both fields must be an object and accept the same fields as a regular embedder, 
 
 `indexingEmbedder` and `searchEmbedder` are incompatible with all other embedder sources.
 
+##### `indexingFragments` <NoticeTag type="experimental" label="experimental" />
+
+<Note>
+This is an experimental feature. Use the Meilisearch Cloud UI or the experimental features endpoint to activate it:
+
+```sh
+curl \
+  -X PATCH 'MEILISEARCH_URL/experimental-features/' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "multimodal": true
+  }'
+```
+</Note>
+
+`indexingFragments` specifies which fields in your documents should be used to generate multimodal embeddings. It must be an object with the following structure:
+
+```json
+  "FRAGMENT_NAME": {
+    "value": {
+      …
+    }
+  }
+```
+
+`FRAGMENT_NAME` can be any valid string. It must contain a single field, `value`. `value` must then follow your chosen model's specifications.
+
+For example, for [VoyageAI's multimodal embedding route](https://docs.voyageai.com/reference/multimodal-embeddings-api), `value` must be an object containing a `content` field. `content` itself must contain an array of objects with a `type` field. Depending on `type`'s value, you must include either `text`, `image_url`, or `image_base64`:
+
+```json
+{
+  "VOYAGE_FRAGMENT_NAME_A": {
+    "value": {
+      "content": [
+        {
+          "type": "text",
+          "text": "A document called {{doc.title}} that can be described as {{doc.description}}"
+        }
+      ]
+    }
+  },
+  "VOYAGE_FRAGMENT_NAME_B": {
+    "value": {
+      "content": [
+        {
+          "type": "image_url",
+          "image_url": "{{doc.image_url}}"
+        }
+      ]
+    }
+  },
+}
+```
+
+Use Liquid templates to interpolate document data into the fragment fields, where `doc` gives you access to all fields within a document.
+
+`indexingFragments` is optional when using the `rest` source.
+
+`indexingFragments` is incompatible with all other embedder sources.
+
+Specifying a `documentTemplate` in an embedder using `indexingFragments` will result in an error.
+
+You must specify at least one valid fragment in `searchFragments` when using `indexingFragments`.
+
+##### `searchFragments` <NoticeTag type="experimental" label="experimental" />
+
+<Note>
+This is an experimental feature. Use the Meilisearch Cloud UI or the experimental features endpoint to activate it:
+
+```sh
+curl \
+  -X PATCH 'MEILISEARCH_URL/experimental-features/' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "multimodal": true
+  }'
+```
+</Note>
+
+`searchFragments` instructs Meilisearch how to parse fields present in a query's [`media` search parameter](/reference/api/search#media). It must be an object following the same structure as the [`indexingFragments`](/reference/api/settings#indexingfragments) object:
+
+```json
+  "FRAGMENT_NAME": {
+    "value": {
+      …
+    }
+  }
+```
+
+As with `indexingFragments`, the content of `value` should follow your model's specification.
+
+Use Liquid templates to interpolate search query data into the fragment fields, where `media` gives you access to all multimodal data received with a query:
+
+```json
+"SEARCH_FRAGMENT_A": {
+  "value": {
+    "content": [
+      {
+        "type": "image_base64",
+        "image_base64": "data:{{media.image.mime}};base64,{{media.image.data}}"
+      }
+    ]
+  }
+},
+```
+
+`searchFragments` is optional when using the `rest` source.
+
+`searchFragments` is incompatible with all other embedder sources.
+
+You must specify at least one valid fragment in `indexingFragments` when using `searchFragments`.
+
 #### Example
 
 <CodeSamplesUpdateEmbedders1 />
@@ -2933,7 +3047,7 @@ This is an experimental feature. Use the Meilisearch Cloud UI or the experimenta
 ```sh
 curl \
   -X PATCH 'http://localhost:7700/experimental-features/' \
-  -H 'Authorization: Bearer <master-key>' \
+  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "chatCompletions": true
@@ -2942,11 +3056,9 @@ curl \
 
 </Note>
 
-The chat settings allow you to configure how your index integrates with Meilisearch's conversational search feature. This enables the chat completions endpoint to search your index and generate responses based on your documents.
+The chat settings allow you to configure how your index integrates with Meilisearch's conversational search feature.
 
 ### Chat object
-
-The chat object in the index settings contains multiple settings to configure the conversational querying.
 
 ```json
 {
@@ -2964,14 +3076,14 @@ The chat object may contain the following fields:
 
 | Name                           | Type    | Default Value                           | Description                                                                                          |
 | ------------------------------ | ------- | --------------------------------------- | ---------------------------------------------------------------------------------------------------- |
-| **`description`**              | String  | Empty                                   | The description of the index. Used to help the LLM decide which index to use when generating answers |
+| **`description`**              | String  | Empty                                   | The description of the index. Helps the LLM decide which index to use when generating answers |
 | **`documentTemplate`**         | String  | `{% for field in fields %} {% if field.is_searchable and not field.value == nil %}{{ field.name }}: {{ field.value }} {% endif %} {% endfor %}` | Template defining the data Meilisearch sends to the LLM |
 | **`documentTemplateMaxBytes`** | Integer | 400                                     | Maximum allowed size of rendered document template |
 | **`searchParameters`**         | Object  | Empty                                   | The search parameters to use when LLM is performing search requests |
 
 ### Search parameters object
 
-Corresponds to a subset of the [search parameters object](/reference/api/search#search-parameters-object):
+Must be one of the following [search parameters](/reference/api/search#search-parameters-object):
 
 - **`hybrid`**
 - **`limit`**
@@ -2998,7 +3110,7 @@ Get the index chat settings configured for an index.
 ```bash
 curl \
   -X GET 'http://localhost:7700/indexes/movies/settings/chat' \
-  -H 'Authorization: Bearer <master-key>'
+  -H 'Authorization: Bearer MEILISEARCH_KEY'
 ```
 
 ##### Response: `200 OK`
@@ -3014,7 +3126,7 @@ curl \
 
 ### Update index chat settings
 
-<RouteHighlighter method="PATCH" path="/indexes/{index_uid}/settings/chat" />
+<RouteHighlighter method="PUT" path="/indexes/{index_uid}/settings/chat" />
 
 Partially update the index chat settings for an index.
 
@@ -3034,10 +3146,10 @@ Partially update the index chat settings for an index.
   "searchParameters": {
     "hybrid": <Object>,
     "limit": <Integer>,
-    "sort": <String>,
+    "sort": [<String>, <String>, … ],
     "distinct": <String>,
     "matchingStrategy": <String>,
-    "attributesToSearchOn": <String>,
+    "attributesToSearchOn": [<String>, <String>, … ],
     "rankingScoreThreshold": <Float>,
   }
 }
@@ -3048,7 +3160,7 @@ Partially update the index chat settings for an index.
 ```bash
 curl \
   -X PATCH 'http://localhost:7700/indexes/movies/settings/chat' \
-  -H 'Authorization: Bearer <master-key>' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "description": "A comprehensive movie database containing titles, descriptions, genres, and release dates to help users find movies",
