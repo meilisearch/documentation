@@ -144,12 +144,7 @@ Since CSV does not support arrays or nested objects, `cast` cannot be converted 
 
 ### Auto-batching
 
-Auto-batching combines similar consecutive operations into a single batch and processes them together. This significantly speeds up the indexing process.
-
-Meilisearch batches operations such as document addition and deletion when they:
-
-- Target the same index
-- Are immediately consecutive
+Auto-batching combines similar operations in the same index into a single batch and processes them together. This significantly speeds up the indexing process.
 
 Tasks within the same batch share the same values for `startedAt`, `finishedAt`, and `duration`.
 
