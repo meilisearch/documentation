@@ -144,7 +144,7 @@ Since CSV does not support arrays or nested objects, `cast` cannot be converted 
 
 ### Auto-batching
 
-Auto-batching combines similar operations in the same index into a single batch and processes them together. This significantly speeds up the indexing process.
+Auto-batching combines similar operations in the same index into a single batch, then processes them together. This significantly speeds up the indexing process.
 
 Tasks within the same batch share the same values for `startedAt`, `finishedAt`, and `duration`.
 
