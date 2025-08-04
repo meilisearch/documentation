@@ -35,7 +35,7 @@ client.index('INDEX_NAME').search('進撃の巨人', { locales: ['jpn'] })
 
 ```go Go
 client.index("INDEX_NAME").Search("QUERY TEXT IN JAPANESE", &meilisearch.SearchRequest{
-    Locates: []string{"jpn"}
+    Locales: []string{"jpn"}
 })
 ```
 
