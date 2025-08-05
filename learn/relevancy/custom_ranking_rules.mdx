@@ -4,23 +4,26 @@ sidebarTitle: Custom ranking rules
 description: Custom ranking rules promote certain documents over other search results that are otherwise equally relevant.
 ---
 
-There are two types of ranking rules in Meilisearch: [built-in ranking rules](/learn/relevancy/ranking_rules) and custom ranking rules. This article describes the main aspects of using and configuring custom ranking rules.
+There are two types of ranking rules in Meilisearch: [built-in ranking rules](/learn/relevancy/ranking_rules) and custom ranking rules.
 
 Custom ranking rules promote certain documents over other search results that are otherwise equally relevant.
 
+
 ## Ascending and descending sorting rules
 
-Meilisearch supports two types of custom rules: one for ascending sort and one for descending sort.
+Meilisearch supports two types of custom rules: ascending and descending sorting. **The attribute must have either a numeric or a string value** in all of the documents contained in that index. Sorting is done lexicographically.
 
-To add a custom ranking rule, you have to communicate the attribute name followed by a colon (`:`) and either `asc` for ascending order or `desc` for descending order.
+Add custom ranking rules to the existing list of ranking rules using the [update settings endpoint](/reference/api/settings#update-settings) or [update ranking rules endpoint](/reference/api/settings#update-ranking-rules). Specify the attribute name followed by a colon (`:`) and either `asc` for ascending order or `desc` for descending order:
 
-- To apply an **ascending sort** (results sorted by increasing value of the attribute): `attribute_name:asc`
+- Sort results with lowest value on top: `attribute_name:asc`
 
-- To apply a **descending sort** (results sorted by decreasing value of the attribute): `attribute_name:desc`
+- Sort results with highest value on top: `attribute_name:desc`
 
-**The attribute must have either a numeric or a string value** in all of the documents contained in that index.
+<Tip>
+Custom ranking rules are simple lexicographical sorts and do not order results based on relevancy. In most cases, custom ranking rules should be at the bottom of your ranking rules list.
 
-You can add this rule to the existing list of ranking rules using the [update settings endpoint](/reference/api/settings#update-settings) or [update ranking rules endpoint](/reference/api/settings#update-ranking-rules).
+To ensure Meilisearch gives more weight to a specific attribute when calculating relevancy, edit the order of [the searchable attributes list](/reference/api/settings#searchable-attributes).
+</Tip>
 
 ## Example
 
@@ -57,9 +60,9 @@ The following array includes all built-in ranking rules and places the custom ru
 
 Meilisearch allows users to define [sorting order at query time](/learn/filtering_and_sorting/sort_search_results) by using the [`sort` search parameter](/reference/api/search#sort). There is some overlap between sorting and custom ranking rules, but the two do have different uses.
 
-In general, `sort` will be most useful when you want to allow users to define what type of results they want to see first. A good use-case for `sort` is creating a webshop interface where customers can sort products by descending or ascending product price.
+Custom ranking rules are always active once configured. They are useful when you want to promote certain types of results across all searches. A good use-case for custom ranking rules is ensuring discounted products in a webshop always feature among the top results.
 
-Custom ranking rules, instead, are always active once configured and are useful when you want to promote certain types of results. A good use-case for custom ranking rules is ensuring discounted products in a webshop always feature among the top results.
+The `sort` search parameter is useful when you want to allow users to define what type of results they want to see first. A good use-case for `sort` is creating a webshop interface where customers can sort products by descending or ascending product price.
 
 <Tip>
 Meilisearch does not offer native support for promoting, pinning, and boosting specific documents so they are displayed more prominently than other search results. Consult these Meilisearch blog articles for workarounds on [implementing promoted search results with React InstantSearch](https://blog.meilisearch.com/promoted-search-results-with-react-instantsearch) and [document boosting](https://blog.meilisearch.com/document-boosting).
