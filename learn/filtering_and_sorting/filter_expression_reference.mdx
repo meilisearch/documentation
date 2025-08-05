@@ -193,13 +193,9 @@ curl \
     "containsFilter": true
   }'
 ```
-
-This will also enable the [`STARTS WITH`](#starts-with) operator.
 </Note>
 
 ### `STARTS WITH`
-
-<NoticeTag type="experimental" label="experimental" />
 
 `STARTS WITH` filters results whose values start with the specified string pattern.
 
@@ -215,21 +211,6 @@ The negated form of the above expression can be written as:
 dairy_products.name NOT STARTS WITH kef
 NOT dairy_product.name STARTS WITH kef
 ```
-
-<Note>
-This is an experimental feature. Use the experimental features endpoint to activate it:
-
-```sh
-curl \
-  -X PATCH 'MEILISEARCH_URL/experimental-features/' \
-  -H 'Content-Type: application/json' \
-  --data-binary '{
-    "containsFilter": true
-  }'
-```
-
-This will also enable the [`CONTAINS`](#contains) operator.
-</Note>
 
 ### `NOT`
 
