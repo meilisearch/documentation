@@ -88,7 +88,7 @@ Create a workspace with your LLM provider settings. Here are examples for differ
 
 ```bash openAi
 curl \
-  -X PUT 'http://localhost:7700/chats/my-assistant/settings' \
+  -X PATCH 'http://localhost:7700/chats/my-assistant/settings' \
   -H 'Authorization: Bearer MEILISEARCH_KEY' \
   -H 'Content-Type: application/json' \
   --data-binary '{
@@ -103,7 +103,7 @@ curl \
 
 ```bash azureOpenAi
 curl \
-  -X PUT 'http://localhost:7700/chats/my-assistant/settings' \
+  -X PATCH 'http://localhost:7700/chats/my-assistant/settings' \
   -H 'Authorization: Bearer MEILISEARCH_KEY' \
   -H 'Content-Type: application/json' \
   --data-binary '{
@@ -118,7 +118,7 @@ curl \
 
 ```bash mistral
 curl \
-  -X PUT 'http://localhost:7700/chats/my-assistant/settings' \
+  -X PATCH 'http://localhost:7700/chats/my-assistant/settings' \
   -H 'Authorization: Bearer MEILISEARCH_KEY' \
   -H 'Content-Type: application/json' \
   --data-binary '{
@@ -132,7 +132,7 @@ curl \
 
 ```bash gemini
 curl \
-  -X PUT 'http://localhost:7700/chats/my-assistant/settings' \
+  -X PATCH 'http://localhost:7700/chats/my-assistant/settings' \
   -H 'Authorization: Bearer MEILISEARCH_KEY' \
   -H 'Content-Type: application/json' \
   --data-binary '{
@@ -146,7 +146,7 @@ curl \
 
 ```bash vLlm
 curl \
-  -X PUT 'http://localhost:7700/chats/my-assistant/settings' \
+  -X PATCH 'http://localhost:7700/chats/my-assistant/settings' \
   -H 'Authorization: Bearer MEILISEARCH_KEY' \
   -H 'Content-Type: application/json' \
   --data-binary '{
@@ -367,7 +367,7 @@ except Exception as error:
 2. Update with valid API key:
 
    ```bash
-   curl -X PUT http://localhost:7700/chats/my-assistant/settings \
+   curl -X PATCH http://localhost:7700/chats/my-assistant/settings \
      -H "Authorization: Bearer MEILISEARCH_KEY" \
      -H "Content-Type: application/json" \
      -d '{"apiKey": "your-valid-api-key"}'
