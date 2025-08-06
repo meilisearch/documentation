@@ -57,13 +57,13 @@ curl \
   --data-binary '{
     "name": "Chat API Key",
     "description": "API key for chat completions",
-    "actions": ["search", "chatCompletions"],
+    "actions": ["search", "chatCompletions", "documents.get"],
     "indexes": ["*"],
     "expiresAt": null
   }'
 ```
 
-This creates an API key with both `search` and `chatCompletions` permissions, which are required for the chat feature.
+This creates an API key with `search`, `chatCompletions`, and `documents.get` permissions, which are required for the chat feature to search and retrieve document content.
 
 ## Configure your indexes for chat
 
