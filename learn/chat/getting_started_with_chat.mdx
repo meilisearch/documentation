@@ -30,13 +30,7 @@ curl \
 
 ## Find your chat API key
 
-When Meilisearch runs with a master key on a **fresh instance**, it automatically creates a "Default Chat API Key" with `chatCompletions` permission.
-
-<Note>
-The Default Chat API Key is only created automatically for new Meilisearch instances. If you have an existing instance, you'll need to create your own API key with `chatCompletions` permission.
-</Note>
-
-Find existing keys using:
+When Meilisearch runs with a master key on an instance created after v1.15.1, it automatically generates a "Default Chat API Key" with `chatCompletions` and `search` permissions on all indexes. Check if you have the key using:
 
 ```bash
 curl http://localhost:7700/keys \
