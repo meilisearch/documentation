@@ -82,6 +82,18 @@ The [`uid`](/reference/api/indexes#index-object) field of an index cannot be mod
 
 The [`updatedAt`](/reference/api/indexes#index-object) field of an index cannot be modified.
 
+### `immutable_webhook`
+
+You tried to modify a reserved [webhook](/reference/api/webhooks). Reserved webhooks are configured by Meilisearch Cloud and have `isEditable` set to `true`. Webhooks created with an instance option are also ummutable.
+
+### `immutable_webhook_uuid`
+
+You tried to manually set a webhook `uuid`. Meilisearch automatically generates `uuid` for webhooks.
+
+### `immutable_webhook_is_editable`
+
+You tried to manually set a webhook's `isEditable` field. Meilisearch automatically sets `isEditable` for all webhooks. Only reserved webhooks have `isEditable` set to `false`.
+
 ## `index_already_exists`
 
 An index with this [`uid`](/reference/api/indexes#index-object) already exists, check out our guide on [index creation](/learn/getting_started/indexes).
@@ -595,6 +607,22 @@ The requested task type is invalid. Please use one of the [possible values](/ref
 
 The [`uids`](/reference/api/tasks#query-parameters) query parameter is invalid.
 
+### `invalid_webhooks`
+
+The create webhook request did not contain a valid JSON payload. Meilisearch also returns this error when you try to create more than 20 webhooks.
+
+### `invalid_webhook_url`
+
+The provided webhook URL isn’t a valid JSON value, `null`, or missing.
+
+### `invalid_webhook_headers`
+
+The provided webhook `headers` field is not a JSON object or not a valid HTTP header. Meilisearch also returns this error if you set more than 200 header fields for a single webhook.
+
+### `invalid_webhook_uuid`
+
+The provided webhook `uuid` is not a valid uuid v4 value.
+
 ## `io_error`
 
 This error generally occurs when the host system has no space left on the device or when the database doesn't have read or write access.
@@ -726,3 +754,7 @@ The remote instance answered with `500 INTERNAL ERROR`.
 ### `remote_timeout`
 
 The proxy did not answer in the allocated time.
+
+### `webhook_not_found`
+
+The provided webhook `uuid` does not correspond to any configured webhooks in the instance.
