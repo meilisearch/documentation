@@ -1479,6 +1479,32 @@ export_post_1: |-
         }
       }
     }'
+webhooks_get_1: |-
+  curl \
+    -X GET 'MEILISEARCH_URL/webhooks'
+webhooks_post_1: |-
+  curl \
+    -X POST 'MEILISEARCH_URL/webhooks' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "url": "WEBHOOK_TARGET_URL",
+      "headers": {
+        "authorization": "SECURITY_KEY",
+        "referer": "https://example.com"
+      }
+    }'
+webhooks_patch_1: |-
+  curl \
+    -X PATCH 'MEILISEARCH_URL/webhooks/WEBHOOK_UUID' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "header": {
+        "referer": null
+      }
+    }'
+webhooks_delete_1: |-
+  curl \
+    -X DELETE 'MEILISEARCH_URL/webhooks'
 
 ### Code samples for experimental features
 experimental_get_metrics_1: |-

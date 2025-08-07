@@ -350,7 +350,8 @@
                   "reference/api/experimental_features",
                   "reference/api/metrics",
                   "reference/api/logs",
-                  "reference/api/export"
+                  "reference/api/export",
+                  "reference/api/webhooks"
                 ]
               },
               {
