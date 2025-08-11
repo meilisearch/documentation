@@ -36,7 +36,7 @@ When Meilisearch finishes processing a task, it sends the relevant [task object]
 
 ## Get all webhooks
 
-<RouteHighlighter method="GET" path="/healths" />
+<RouteHighlighter method="GET" path="/webhooks" />
 
 Get a list of all webhooks configured in the current Meilisearch instance.
 
@@ -67,7 +67,30 @@ Get a list of all webhooks configured in the current Meilisearch instance.
 }
 ```
 
-## Create new webhook
+## Get a single webhook
+
+<RouteHighlighter method="GET" path="/webhooks/{uuid}" />
+
+Get a single webhook configured in the current Meilisearch instance.
+
+### Example
+
+<CodeSamplesWebhooksGetSingle1 />
+
+#### Response: `200 OK`
+
+```json
+{
+  "uuid": "UUID_V4",
+  "url": "WEBHOOK_TARGET_URL",
+  "headers": {
+    "HEADER": "VALUE",
+  },
+  "isEditable": false
+}
+```
+
+## Create a webhook
 
 <RouteHighlighter method="POST" path="/webhooks" />
 
@@ -91,7 +114,7 @@ Create a new webhook. When Meilisearch finishes processing a task, it sends the 
 }
 ```
 
-## Update webhook
+## Update a webhook
 
 <RouteHighlighter method="PATCH" path="/webhooks/{uuid}" />
 
@@ -120,7 +143,7 @@ Meilisearch Cloud may create internal webhooks to support features such as Analy
 }
 ```
 
-## Delete webhook
+## Delete a webhook
 
 <RouteHighlighter method="DELETE" path="/webhooks/{uuid}" />
 

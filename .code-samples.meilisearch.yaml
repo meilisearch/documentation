@@ -1482,6 +1482,9 @@ export_post_1: |-
 webhooks_get_1: |-
   curl \
     -X GET 'MEILISEARCH_URL/webhooks'
+webhooks_get_single_1: |-
+  curl \
+    -X GET 'MEILISEARCH_URL/webhooks/WEBHOOK_UUID'
 webhooks_post_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/webhooks' \
