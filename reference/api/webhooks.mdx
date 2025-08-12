@@ -28,7 +28,7 @@ Use the `/webhooks` to trigger automatic workflows when Meilisearch finishes pro
 - `uuid`: a v4 uuid Meilisearch automatically generates when you create a new webhook
 - `url`: a string indication the URL Meilisearch should notify whenever it completes a task, required
 - `headers`: an object with HTTP headers and their values, optional, often used for authentication
-- `isEditable`: read-only Boolean field indicating whether you can edit the webhook. Meilisearch automatically sets this to false for its internal webhooks
+- `isEditable`: read-only Boolean field indicating whether you can edit the webhook. Meilisearch automatically sets this to `true` for all webhooks created via the API and to `false` for reserved webhooks
 
 ## The webhook payload
 
@@ -95,6 +95,8 @@ Get a single webhook configured in the current Meilisearch instance.
 <RouteHighlighter method="POST" path="/webhooks" />
 
 Create a new webhook. When Meilisearch finishes processing a task, it sends the relevant [task object](/reference/api/tasks#task-object) to all configured webhooks.
+
+You can create up to 20 webhooks. Having multiple webhooks active at the same time may negatively impact performance.
 
 ### Example
 

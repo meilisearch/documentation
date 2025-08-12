@@ -3107,7 +3107,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"docs-key\",\n    \"description\": \"Key to add and delete documents, in `books` index.\",\n    \"actions\": [\n        \"documents.add\",\n        \"documents.delete\" \n    ],\n    \"indexes\": [\n        \"books\"\n    ],\n    \"expiresAt\": null\n}"
+							"raw": "{\n    \"url\": \"WEBHOOK_TARGET_URL\",\n    \"headers\": {\n        \"authorization\": \"SECURITY_KEY\",\n        \"referer\": \"https://example.com\"\n    }\n}"
 						},
 						"url": {
 							"raw": "{{url}}/webhooks",
@@ -3134,7 +3134,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"description\": \"Key to add and delete documents, but also to create indexes, in `book` index.\"\n}"
+							"raw": "{\n    \"header\": {\n        \"referer\": null\n    }\n}"
 						},
 						"url": {
 							"raw": "{{url}}/webhooks/WEBHOOK_UUID",

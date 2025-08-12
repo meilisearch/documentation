@@ -78,7 +78,7 @@ Custom API keys are deterministic: `key` is a SHA256 hash of the `uid` and maste
 **Default value**: N/A<br />
 **Description**: An array of API actions permitted for the key, represented as strings. API actions are only possible on authorized [`indexes`](#indexes). `["*"]` for all actions.
 
-You can use `*` as a wildcard to access all endpoints for the `documents`, `indexes`, `tasks`, `settings`, `stats` and `dumps` actions. For example, `documents.*` gives access to all document actions.
+You can use `*` as a wildcard to access all endpoints for the `documents`, `indexes`, `tasks`, `settings`, `stats`, `webhooks`, and `dumps` actions. For example, `documents.*` gives access to all document actions.
 
 <Warning>
 For security reasons, we do not recommend creating keys that can perform all actions.
