@@ -495,6 +495,8 @@ Notifies the configured URL whenever Meilisearch [finishes processing a task](/l
 
 The webhook payload contains the list of finished tasks in [ndjson](https://github.com/ndjson/ndjson-spec). For more information, [consult the dedicated task webhook guide](/learn/async/task_webhook).
 
+The task webhook option requires having access to a command-line interface. If you are using Meilisearch Cloud, use the [`/webhooks` API route](/reference/api/webhooks) instead.
+
 ### Task webhook authorization header
 
 **Environment variable**: `MEILI_TASK_WEBHOOK_AUTHORIZATION_HEADER`<br />

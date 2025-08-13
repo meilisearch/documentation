@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "f4b62ec3-0403-44ba-b6f4-640badbbd1b2",
-		"name": "Meilisearch v1.16",
+		"_postman_id": "a0638dc7-4c40-4c37-822d-bf342771238d",
+		"name": "Meilisearch latest",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "25294324"
 	},
@@ -3037,6 +3037,125 @@
 							"path": [
 								"keys",
 								"kN2aK9EO8a7b627e425717d9196c8081552ca004e513545ed178f8a56981dbd3080d4a5b"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Webhooks",
+			"item": [
+				{
+					"name": "Get all webhooks",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/webhooks",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"webhooks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get one webhook",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/webhooks/WEBHOOK_UUID",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"webhooks",
+								"WEBHOOK_UUID"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a webhook",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"url\": \"WEBHOOK_TARGET_URL\",\n    \"headers\": {\n        \"authorization\": \"SECURITY_KEY\",\n        \"referer\": \"https://example.com\"\n    }\n}"
+						},
+						"url": {
+							"raw": "{{url}}/webhooks",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"webhooks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a webhook",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"header\": {\n        \"referer\": null\n    }\n}"
+						},
+						"url": {
+							"raw": "{{url}}/webhooks/WEBHOOK_UUID",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"webhooks",
+								"WEBHOOK_UUID"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a webhook",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/webhooks/WEBHOOK_UUID",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"webhooks",
+								"WEBHOOK_UUID"
 							]
 						}
 					},
