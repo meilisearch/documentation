@@ -96,7 +96,7 @@ By default, [this endpoint returns a maximum of 1000 results](/learn/resources/k
 | **[`attributesToSearchOn`](#customize-attributes-to-search-on-at-search-time)** | Array of strings | `["*"]` | Restrict search to the specified attributes |
 | **[`hybrid`](#hybrid-search)**                          | Object           | `null`        | Return results based on query keywords and meaning  |
 | **[`vector`](#vector)**                                 | Array of numbers | `null`        | Search using a custom query vector                  |
-| **[`retrieveVectors`](#display-_vectors-in-response)**  | Boolean          | `false`       | Return document vector data                         |
+| **[`retrieveVectors`](#display-_vectors-in-response)**  | Boolean          | `false`       | Return document and query vector data                         |
 | **[`locales`](#query-locales)**                         | Array of strings | `null`        | Explicitly specify languages used in a query        |
 | **[`media`](#media)**                                   | Object           | `null`        | Perform AI-powered search queries with multimodal content         |
 
@@ -210,7 +210,7 @@ By default, [this endpoint returns a maximum of 1000 results](/learn/resources/k
 | **[`attributesToSearchOn`](#customize-attributes-to-search-on-at-search-time)** | Array of strings | `["*"]` | Restrict search to the specified attributes |
 | **[`hybrid`](#hybrid-search)**                          | Object           | `null`        | Return results based on query keywords and meaning  |
 | **[`vector`](#vector)**                                 | Array of numbers | `null`        | Search using a custom query vector                  |
-| **[`retrieveVectors`](#display-_vectors-in-response)**  | Boolean          | `false`       | Return document vector data                         |
+| **[`retrieveVectors`](#display-_vectors-in-response)**  | Boolean          | `false`       | Return document and query vector data                         |
 | **[`locales`](#query-locales)**                         | Array of strings | `null`        | Explicitly specify languages used in a query        |
 
 ### Response
@@ -1224,7 +1224,7 @@ If `q` is missing and `semanticRatio` is explicitly set to `0`, Meilisearch perf
 **Expected value**: `true` or `false`<br />
 **Default value**: `false`
 
-Return document embedding data with search results. If `true`, Meilisearch will display vector data in each [document's `_vectors` field](/reference/api/documents#_vectors).
+Return document and query embeddings with search results. If `true`, Meilisearch will display vector data in each [document's `_vectors` field](/reference/api/documents#_vectors).
 
 #### Example
 
