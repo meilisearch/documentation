@@ -1,5 +1,16 @@
 <CodeGroup>
 
+```bash cURL
+curl \
+  -X PATCH 'MEILISEARCH_URL/webhooks/WEBHOOK_UUID' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "header": {
+      "referer": null
+    }
+  }'
+```
+
 ```javascript JS
 client.updateWebhook(WEBHOOK_UUID, {
   headers: {
