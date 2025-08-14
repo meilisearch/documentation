@@ -727,7 +727,9 @@ The document exists in store, but there was an error retrieving it. This probabl
 
 ## `vector_embedding_error`
 
-Error while generating embeddings.
+Error while generating embeddings. You may often see this error when the embedding provider service is currently unavailable. Most providers offer status pages to monitor the state of their services, such as OpenAI's https://status.openai.com/.
+
+Inaccessible embedding provider errors usually include a message stating Meilisearch "could not reach embedding server".
 
 ## Remote federated search errors
 
