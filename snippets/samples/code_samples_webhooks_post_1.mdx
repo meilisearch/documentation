@@ -22,4 +22,14 @@ client.createWebhook({
   }
 })
 ```
+
+```go Go
+client.AddWebhook(&meilisearch.AddWebhookRequest{
+  URL: "WEBHOOK_TARGET_URL",
+  Headers: map[string]string{
+    "authorization": "SECURITY_KEY",
+    "referer": "https://example.com"
+  },
+});
+```
 </CodeGroup>

@@ -18,4 +18,12 @@ client.updateWebhook(WEBHOOK_UUID, {
   }
 })
 ```
+
+```go Go
+client.UpdateWebhook("WEBHOOK_UUID", &meilisearch.UpdateWebhookRequest{
+  Header: map[string]string{
+    "referer": ""
+  },
+});
+```
 </CodeGroup>
