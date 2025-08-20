@@ -417,12 +417,7 @@
               {
                 "group": "Deployment",
                 "pages": [
-                  "guides/running_production",
-                  "guides/deployment/aws",
-                  "guides/deployment/digitalocean",
-                  "guides/deployment/koyeb",
-                  "guides/deployment/qovery",
-                  "guides/deployment/railway"
+                  "guides/running_production"
                 ]
               },
               {
