@@ -187,6 +187,49 @@ The `details` object is set to `null` for `snapshotCreation` tasks.
 | **`type`**    | The [error type](/reference/errors/overview#errors) |
 | **`link`**    | A link to the relevant section of the documentation |
 
+### `network`
+
+<NoticeTag type="experimental" label="experimental" />
+
+**Type**: Object<br />
+**Description**: If the task was replicated from another remote or to other remotes, `network` will contain information about the remote task uids corresponding to this task. Otherwise, missing in task object.
+
+`network` either has a single key that is either `origin` or `remotes`.
+
+| Name          | Description                                                            |
+| :-------------| :----------------------------------------------------------------------|
+| **`origin`**  | The task and remote from which this task was replicated **from**       |
+| **`remotes`** | This task was replicated **to** these tasks and remotes                |
+
+`origin` is itself an object with keys:
+
+| Name          | Description                                     |
+| :--------------- | :--------------------------------------------|
+| **`remoteName`** | The name of the [remote](/reference/api/network) |
+| **`taskUid`**    | The uid of the task of origin                |
+
+`remotes` is itself an object whose keys are the [remotes](/reference/api/network) and values an object with a single key that is either `task_uid` or `error`:
+
+| Name           | Description                                                                                   |
+| :------------- | :---------------------------------------------------------------------------------------------|
+| **`task_uid`** | The uid of the replicated task                                                                |
+| **`error`**    | A human-readable error message indicating why the task could not be replicated to that remote |
+
+<Note>
+This is an experimental feature. Use the Meilisearch Cloud UI or the experimental features endpoint to activate it:
+
+```sh
+curl \
+  -X PATCH 'MEILISEARCH_URL/experimental-features/' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "network": true
+  }'
+```
+</Note>
+
+
+
 ### `duration`
 
 **Type**: String<br />
