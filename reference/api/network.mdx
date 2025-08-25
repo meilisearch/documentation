@@ -40,14 +40,17 @@ Do not enable the `network` feature if you rely on the value of attributes not p
 ```json
 {
   "self": "ms-00",
+  "sharding": false,
   "remotes": {
     "ms-00": {
       "url": "http://ms-1235.example.meilisearch.io",
-      "searchApiKey": "Ecd1SDDi4pqdJD6qYLxD3y7VZAEb4d9j6LJgt4d6xas"
+      "searchApiKey": "Ecd1SDDi4pqdJD6qYLxD3y7VZAEb4d9j6LJgt4d6xas",
+      "writeApiKey": "O2OaIHgwGuHNx9duH6kSe1YJ55Bh0dXvLhbr8FQVvr3vRVViBO"
     },
     "ms-01": {
       "url": "http://ms-4242.example.meilisearch.io",
-      "searchApiKey": "hrVu-OMcjPGElK7692K7bwriBoGyHXTMvB5NmZkMKqQ"
+      "searchApiKey": "hrVu-OMcjPGElK7692K7bwriBoGyHXTMvB5NmZkMKqQ",
+      "writeApiKey": "bd1ldDoFlfyeoFDe8f3GVNiE8AHX86chmFuzOW7nWYUbPa7ww3"
     }
   }
 }
@@ -58,6 +61,12 @@ Do not enable the `network` feature if you rely on the value of attributes not p
 **Type**: String<br />
 **Default value**: `null`<br />
 **Description**: A string indicating the name of the current instance
+
+### `sharding`
+
+**Type**: Boolean<br />
+**Default value**: `false`<br />
+**Description**: A boolean indicating whether sharding should be enabled on the network
 
 ### `remotes`
 
@@ -70,7 +79,8 @@ Do not enable the `network` feature if you rely on the value of attributes not p
 ```json
 "ms-00": {
   "url": "http://ms-1235.example.meilisearch.io",
-  "searchApiKey": "Ecd1SDDi4pqdJD6qYLxD3y7VZAEb4d9j6LJgt4d6xas"
+  "searchApiKey": "Ecd1SDDi4pqdJD6qYLxD3y7VZAEb4d9j6LJgt4d6xas",
+  "writeApiKey": "O2OaIHgwGuHNx9duH6kSe1YJ55Bh0dXvLhbr8FQVvr3vRVViBO"
 }
 ```
 
@@ -85,6 +95,12 @@ Do not enable the `network` feature if you rely on the value of attributes not p
 **Type**: String<br />
 **Default value**: `null`<br />
 **Description**: An API key with search permissions
+
+##### `writeApiKey`
+
+**Type**: String<br />
+**Default value**: `null`<br />
+**Description**: An API key with `documents.*` permissions
 
 ## Get the network object
 
@@ -101,14 +117,17 @@ Returns the current value of the instance's network object.
 ```json
 {
   "self": "ms-00",
+  "sharding": false,
   "remotes": {
     "ms-00": {
       "url": "http://ms-1235.example.meilisearch.io",
-      "searchApiKey": "Ecd1SDDi4pqdJD6qYLxD3y7VZAEb4d9j6LJgt4d6xas"
+      "searchApiKey": "Ecd1SDDi4pqdJD6qYLxD3y7VZAEb4d9j6LJgt4d6xas",
+      "writeApiKey": "O2OaIHgwGuHNx9duH6kSe1YJ55Bh0dXvLhbr8FQVvr3vRVViBO"
     },
     "ms-01": {
       "url": "http://ms-4242.example.meilisearch.io",
-      "searchApiKey": "hrVu-OMcjPGElK7692K7bwriBoGyHXTMvB5NmZkMKqQ"
+      "searchApiKey": "hrVu-OMcjPGElK7692K7bwriBoGyHXTMvB5NmZkMKqQ",
+      "writeApiKey": "bd1ldDoFlfyeoFDe8f3GVNiE8AHX86chmFuzOW7nWYUbPa7ww3"
     }
   }
 }
@@ -122,13 +141,14 @@ Update the `self` and `remotes` fields of the network object.
 
 Updates to the network object are **partial**. Only provide the fields you intend to update. Fields not present in the payload will remain unchanged.
 
-To reset `self` and `remotes` to their original value, set them to `null`. To remove a single `remote` from your network, set the value of its name to `null`.
+To reset `self`, `sharding` and `remotes` to their original value, set them to `null`. To remove a single `remote` from your network, set the value of its name to `null`.
 
 ### Body
 
 | Name                              | Type   | Default value | Description                         |
 | :-------------------------------- | :----- | :------------ | :---------------------------------- |
 | **[`self`](#self)**               | String | `null`        | The name of the current instance   |
+| **[`sharding`](#sharding)**       | Boolean| `false`       | Whether sharding should be enabled on the network |
 | **[`remotes`](#remotes)** | String | `null`        | A list of remote objects describing accessible Meilisearch instances |
 
 ### Example
@@ -140,14 +160,17 @@ To reset `self` and `remotes` to their original value, set them to `null`. To re
 ```json
 {
   "self": "ms-00",
+  "sharding": true,
   "remotes": {
     "ms-00": {
       "url": "http://INSTANCE_URL",
-      "searchApiKey": "INSTANCE_API_KEY"
+      "searchApiKey": "INSTANCE_API_KEY",
+      "writeApiKey": "INSTANCE_WRITE_API_KEY"
     },
     "ms-01": {
       "url": "http://ANOTHER_INSTANCE_URL",
-      "searchApiKey": "ANOTHER_INSTANCE_API_KEY"
+      "searchApiKey": "ANOTHER_INSTANCE_API_KEY",
+      "writeApiKey": "ANOTHER_INSTANCE_WRITE_API_KEY"
     }
   }
 }
