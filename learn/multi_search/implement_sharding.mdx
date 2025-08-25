@@ -138,13 +138,13 @@ Keeping the settings and indexes in sync is important to avoid errors and unexpe
 
 ## Add documents
 
-Send documents to any instance to have them replicated to the other instances.
+Pick a single instance to send all your documents to. Documents will be replicated to the other instances.
 
-Each instance will index the documents they are responsible of and ignore the others.
+Each instance will index the documents they are responsible for and ignore the others.
 
 You *may* send send the same document to multiple instances, the task will be replicated to all instances, and only the instance responsible for the document will index it.
 
-Similarly, you may send any future versions of any document to any instance and only the correct instance will process that document.
+Similarly, you may send any future versions of any document to the instance you picked, and only the correct instance will process that document.
 
 ### Updating index settings
 
