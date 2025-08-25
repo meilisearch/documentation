@@ -56,6 +56,20 @@ In the sample document, the `overview` alone is 49 words. Use Liquid's [`truncat
 
 Short prompts do not have enough information for the embedder to properly understand the query context. Long prompts instead provide too much information and make it hard for the embedder to identify what is truly relevant about a document.
 
+## Add guards for missing fields
+
+When building your `documentTemplate`, some documents might not contain all the fields you expect. For example, a movie record could be missing the `title` or `overview`. If your template directly references a missing field, it may raise an error.
+
+To prevent this, use Liquid’s `if` statements to add guards around fields. This ensures the template only includes data when it exists:
+
+```
+{% if doc.title %}
+A movie called {{ doc.title }}
+{% endif %}
+```
+
+This way, the prompt adapts to each document. If a field is missing, the embedder still receives a valid and useful prompt without errors.
+
 ## Conclusion
 
 In this article you saw the main steps to generating prompts that lead to relevant AI-powered search results:
