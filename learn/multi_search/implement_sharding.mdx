@@ -11,6 +11,9 @@ Sharding is the process of splitting an index containing many documents into mul
 
 This guide walks you through activating the `/network` route, configuring the network object, and performing remote federated searches.
 
+<NoticeTag label="Enterprise Edition" />
+Sharding is an Enterprise Edition feature. You are free to use it for evaluation purposes. Please [reach out to us](mailto:sales@meilisearch.com) before using it in production.
+
 <Tip>
 ## Configuring multiple instances
 
@@ -19,7 +22,7 @@ To minimize issues and limit unexpected behavior, instance, network, and index c
 
 ## Prerequisites
 
-- Multiple Meilisearch projects (instances) running Meilisearch >=v1.13
+- Multiple Meilisearch projects (instances) running Meilisearch >=v1.19
 
 ## Activate the `/network` endpoint
 
@@ -48,6 +51,7 @@ Next, you must configure the network object. It consists of the following fields
 
 - `remotes`: defines a list with the required information to access each remote instance
 - `self`: specifies which of the configured `remotes` corresponds to the current instance
+- `sharding`: whether to use sharding.
 
 ### Setting up the list of remotes
 
@@ -93,32 +97,54 @@ curl \
 
 Meilisearch processes searches on the remote that corresponds to `self` locally instead of making a remote request.
 
+### Enabling sharding
+
+Finally enable the automatic sharding of documents by Meilisearch on all instances:
+
+```sh
+curl \
+  -X PATCH 'MEILISEARCH_URL/network' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "sharding": true
+  }'
+```
+
 ### Adding or removing an instance
 
 Changing the topology of the network involves moving some documents from an instance to another, depending on your hashing scheme.
 
 As Meilisearch does not provide atomicity across multiple instances, you will need to either:
 
-1. accept search downtime while migrating documents  
-2. accept some documents will not appear in search results during the migration  
+1. accept search downtime while migrating documents
+2. accept some documents will not appear in search results during the migration
 3. accept some duplicate documents may appear in search results during the migration
 
 #### Reducing downtime
 
 If your disk space allows, you can reduce the downtime by applying the following algorithm:
 
-1. Create a new temporary index in each remote instance  
-2. Compute the new instance for each document  
-3. Send the documents to the temporary index of their new instance  
-4. Once Meilisearch has copied all documents to their instance of destination, swap the new index with the previously used index  
-5. Delete the temporary index after the swap  
-6. Update network configuration and search queries across all instances  
+1. Create a new temporary index in each remote instance
+2. Compute the new instance for each document
+3. Send the documents to the temporary index of their new instance
+4. Once Meilisearch has copied all documents to their instance of destination, swap the new index with the previously used index
+5. Delete the temporary index after the swap
+6. Update network configuration and search queries across all instances
 
-## Create indexes and add documents
+## Create indexes
 
-Create the same empty indexes with the same settings on all instances. Keeping the settings and indexes in sync is important to avoid errors and unexpected behavior, though not strictly required.
+Create the same empty indexes with the same settings on all instances.
+Keeping the settings and indexes in sync is important to avoid errors and unexpected behavior, though not strictly required.
 
-Distribute your documents across all instances. Do not send the same document to multiple instances as this may lead to duplicate search results. Similarly, you should ensure all future versions of a document are sent to the same instance. Meilisearch recommends you hash their primary key using [rendezvous hashing](https://en.wikipedia.org/wiki/Rendezvous_hashing).
+## Add documents
+
+Pick a single instance to send all your documents to. Documents will be replicated to the other instances.
+
+Each instance will index the documents they are responsible for and ignore the others.
+
+You *may* send send the same document to multiple instances, the task will be replicated to all instances, and only the instance responsible for the document will index it.
+
+Similarly, you may send any future versions of any document to the instance you picked, and only the correct instance will process that document.
 
 ### Updating index settings
 
