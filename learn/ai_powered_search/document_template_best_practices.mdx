@@ -58,9 +58,9 @@ Short prompts do not have enough information for the embedder to properly unders
 
 ## Add guards for missing fields
 
-When building your `documentTemplate`, some documents might not contain all the fields you expect. For example, a movie record could be missing the `title` or `overview`. If your template directly references a missing field, it may raise an error.
+Some documents might not contain all the fields you expect. If your template directly references a missing field, Meilisearch will throw an error when indexing documents.
 
-To prevent this, use Liquid’s `if` statements to add guards around fields. This ensures the template only includes data when it exists:
+To prevent this, use Liquid’s `if` statements to add guards around fields:
 
 ```
 {% if doc.title %}
@@ -68,7 +68,7 @@ A movie called {{ doc.title }}
 {% endif %}
 ```
 
-This way, the prompt adapts to each document. If a field is missing, the embedder still receives a valid and useful prompt without errors.
+This ensures the template only tries to include data that already exists in a document. If a field is missing, the embedder still receives a valid and useful prompt without errors.
 
 ## Conclusion
 
