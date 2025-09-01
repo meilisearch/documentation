@@ -108,6 +108,19 @@ release_date NOT EXISTS
 NOT release_date EXISTS
 ```
 
+#### Vector filters
+
+When using AI-powered search, you may also use `EXISTS` to filter documents containing vector data:
+
+- `_vectors EXISTS`: matches all documents with an embedding
+- `_vectors.{embedder_name} EXISTS`: matches all documents with an embedding for the given embedder
+- `_vectors.{embedder_name}.userProvided EXISTS`: matches all documents with a user-provided embedding on the given embedder
+- `_vectors.{embedder_name}.documentTemplate EXISTS`: matches all documents with an embedding generated from a document template. Excludes user-provided embeddings
+- `_vectors.{embedder_name}.regenerate EXISTS`: matches all documents with an embedding scheduled for regeneration
+- `_vectors.{embedder_name}.fragments.{fragment_name} EXISTS`: matches all documents with an embedding generated from the given multimodal fragment. Excludes user-provided embeddings
+
+`_vectors` is only compatible with the `EXISTS` operator.
+
 ### `IS EMPTY`
 
 The `IS EMPTY` operator selects documents in which the specified attribute exists but contains empty values. The following expression only returns documents with an empty `overview` field:
