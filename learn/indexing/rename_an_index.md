@@ -3,6 +3,8 @@ title: Rename an index
 description: Use the PATCH endpoint of the /indexes route to rename an index
 ---
 
+import CodeSamplesRenameAnIndex1 from '/snippets/samples/code_samples_rename_an_index_1.mdx';
+
 This guide shows you how to change the name of an index.
 
 ## Requirements
@@ -20,11 +22,6 @@ Also choose the new name you wish to assign the index. This guide uses `INDEX_B`
 
 Send a `PATCH` request targeting the index you want to rename:
 
-```sh
-curl \
-  -X PATCH 'MEILISEARCH_URL/indexes/INDEX_A' \
-  -H 'Content-Type: application/json' \
-  --data-binary '{ "uid": "INDEX_B" }'
-```
+<CodeSamplesRenameAnIndex1 />
 
 Replace `INDEX_A` with the current name of your index, and `INDEX_B` with its new name.
