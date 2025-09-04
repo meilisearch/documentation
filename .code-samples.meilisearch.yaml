@@ -1508,6 +1508,12 @@ webhooks_patch_1: |-
 webhooks_delete_1: |-
   curl \
     -X DELETE 'MEILISEARCH_URL/webhooks/WEBHOOK_UUID'
+rename_an_index_1: |-
+  curl \
+    -X PATCH 'MEILISEARCH_URL/indexes/INDEX_A' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{ "uid": "INDEX_B" }'
+
 
 ### Code samples for experimental features
 experimental_get_metrics_1: |-

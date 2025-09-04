@@ -37,8 +37,6 @@ While implicit index creation is more convenient, requiring only a single API re
 
 The `uid` is the **unique identifier** of an index. It is set when creating the index and must be an integer or string containing only alphanumeric characters `a-z A-Z 0-9`, hyphens `-` and underscores `_`.
 
-**Once defined, the `uid` cannot be changed**, and you cannot create another index with the same `uid`.
-
 ```json
 {
   "uid": "movies",
@@ -46,6 +44,8 @@ The `uid` is the **unique identifier** of an index. It is set when creating the 
   "updatedAt": "2019-11-20T10:16:42.761858Z"
 }
 ```
+
+You can change an index's `uid` using the [`/indexes` API route](/reference/api/indexes#update-an-index).
 
 ## Primary key
 
@@ -60,19 +60,6 @@ You can set the primary key for an index or let it be inferred by Meilisearch. R
 ## Index settings
 
 Index settings can be thought of as a JSON object containing many different options for customizing search behavior.
-
-You can customize the following index settings:
-
-- [Displayed and searchable attributes](#displayed-and-searchable-attributes)
-- [Distinct attribute](#distinct-attribute)
-- [Faceting](#faceting)
-- [Filterable attributes](#filterable-attributes)
-- [Pagination](#pagination)
-- [Ranking rules](#ranking-rules)
-- [Sortable attributes](#sortable-attributes)
-- [Stop words](#stop-words)
-- [Synonyms](#synonyms)
-- [Typo tolerance](#typo-tolerance)
 
 To change index settings, use the [update settings endpoint](/reference/api/settings#update-settings) or any of the child routes.
 

@@ -164,10 +164,6 @@ Update an index's [primary key](/learn/getting_started/primary_key#primary-key).
 
 To change the primary key of an index that already contains documents, you must first delete all documents in that index. You may then change the primary key and index your dataset again.
 
-<Note>
-It is not possible to change an index's `uid`.
-</Note>
-
 ### Path parameters
 
 | Name              | Type   | Description                                                               |
@@ -179,6 +175,7 @@ It is not possible to change an index's `uid`.
 | Name               | Type            | Default value | Description                                                                               |
 | :----------------- | :-------------- | :------------ | :---------------------------------------------------------------------------------------- |
 | **`primaryKey`** * | String / `null` | N/A           | [`Primary key`](/learn/getting_started/primary_key#primary-field) of the requested index |
+| **`uid`** * | String / `null` | N/A           | New `uid` of the requested index |
 
 ### Example
 
@@ -230,15 +227,11 @@ You can use the response's `taskUid` to [track the status of your request](/refe
 
 ## Swap indexes
 
-```http
-POST /swap-indexes
-```
-
 <RouteHighlighter method="POST" path="/swap-indexes" />
 
-Swap the documents, settings, and task history of two or more indexes. **You can only swap indexes in pairs.** However, a single request can swap as many index pairs as you wish.
+Swap the documents, settings, and task history of two or more indexes. **You can only swap indexes in pairs.** A single request can swap as many index pairs as you wish.
 
-Swapping indexes is an atomic transaction: **either all indexes are successfully swapped, or none are.**
+Swapping indexes is an atomic transaction: **either all indexes in a request are successfully swapped, or none are.** You can swap multiple pairs of indexes with a single request. To do so, there must be one object for each pair of indexes to be swapped.
 
 Swapping `indexA` and `indexB` will also replace every mention of `indexA` by `indexB` and vice-versa in the task history. `enqueued` tasks are left unmodified.
 
@@ -246,17 +239,16 @@ Swapping `indexA` and `indexB` will also replace every mention of `indexA` by `i
 
 ### Body
 
-An array of objects. Each object has only one key: `indexes`.
+An array of objects with the following fields:
 
-| Name           | Type             | Default value | Description                                |
-| :------------- | :--------------- | :------------ | :----------------------------------------- |
-| **`indexes`*** | Array of strings | N/A           | Array of the two `indexUid`s to be swapped |
+| Name           | Type             | Default value | Description                                        |
+| :------------- | :--------------- | :------------ | :------------------------------------------------- |
+| **`indexes`**  | Array of strings | N/A           | Array of the two `indexUid`s to be swapped         |
+| **`rename`**   | Boolean          | `false`       | If `true`, renames an index instead of swapping it |
 
 Each `indexes` array must contain only two elements: the `indexUid`s of the two indexes to be swapped. Sending an empty array (`[]`) is valid, but no swap operation will be performed.
 
-<Note>
-You can swap multiple pairs of indexes with a single request. To do so, there must be one object for each pair of indexes to be swapped.
-</Note>
+Use `rename: false` if you are swapping two existing indexes. Use `rename: true` if the second index in your array does not exist.
 
 ### Example
 
