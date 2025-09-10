@@ -23,9 +23,11 @@ curl \
 
 ## Authorization
 
-When working with a secure Meilisearch instance, Use an API key with access to both the `search` and `chatCompletions` actions, such as the default chat API key.
+When working with a secure Meilisearch instance, Use an API key with access to both the `search` and `chatCompletions` actions, such as the default chat API key. You may also use tenant tokens instead of an API key, provided you generate the tokens with access to the required actions.
 
 Chat queries only search indexes its API key can access. The default chat API key has access to all indexes. To limit chat access to specific indexes, you must either create a new key, or [generate a tenant token](/learn/security/generate_tenant_token_sdk) from the default chat API key.
+
+LLM credentials used to querying your AI provider are stored securely in the chat workspace settings.
 
 ## Chat workspace object
 
@@ -175,13 +177,13 @@ curl \
 
 </CodeGroup>
 
-### Update chat workspace settings
+### Create a chat workspace and update chat workspace settings
 
 <RouteHighlighter method="PATCH" path="/chats/{workspace_uid}/settings" />
 
 Configure the LLM provider and settings for a chat workspace.
 
-If the workspace does not exist, querying this endpoint will create it.
+If a workspace does not exist, querying this endpoint will create it.
 
 #### Path parameters
 
@@ -368,10 +370,10 @@ Create a chat completion using Meilisearch's OpenAI-compatible interface. The en
 | :------------- | :------ | :------- | :--------------------------------------------------------------------------- |
 | **`model`**    | String  | Yes      | Model to use and will be related to the source LLM in the workspace settings |
 | **`messages`** | Array   | Yes      | Array of message objects with `role` and `content`                           |
-| **`stream`**   | Boolean | No       | Enable streaming responses (default: `true`)                                 |
+| **`stream`**   | Boolean | No       | Enable streaming responses. Must be `true` if specified                                 |
 
 <Warning>
-Currently, only streaming responses (`stream: true`) are supported.
+Meilisearch chat completions only supports streaming responses (`stream: true`).
 </Warning>
 
 ### Message object
