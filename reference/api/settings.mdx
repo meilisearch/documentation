@@ -130,7 +130,8 @@ By default, the settings object looks like this. All fields are modifiable.
   "prefixSearch": "indexingTime",
   "searchCutoffMs": null,
   "embedders": {},
-  "chat": {}
+  "chat": {},
+  "vectorStore": "stable"
 }
 ```
 
@@ -201,7 +202,8 @@ Get the settings of an index.
   "prefixSearch": "indexingTime",
   "searchCutoffMs": null,
   "embedders": {},
-  "chat": {}
+  "chat": {},
+  "vectorStore": "stable"
 }
 ```
 
@@ -247,6 +249,7 @@ If the provided index does not exist, it will be created.
 | **[`typoTolerance`](#typo-tolerance)**               | Object           | [Default object](#typo-tolerance-object)                                                         | Typo tolerance settings                                                          |
 | **[`embedders`](#embedders)**                        | Object of objects | [Default object](#embedders-object)                                                         | Embedder required for performing meaning-based search queries                                                          |
 | **[`chat`](#conversation)** <NoticeTag type="experimental" label="experimental" /> | Object           | [Default object](#chat-object)                                                         | Chat settings for performing conversation-based queries                                                          |
+| **[`vector-store`](#vector-store)** <NoticeTag type="experimental" label="experimental" /> | String           | `"stable"`                                                         | Vector store used for AI-powered search                                                          |
 
 #### Example
 
