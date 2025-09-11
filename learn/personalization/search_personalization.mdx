@@ -1,31 +1,25 @@
 ---
-title: Search personalization
-description: Search personalization lets you boost search results based on user profiles, making results more tailored to individual behavior.
+title: What is search personalization?
+description: Search personalization lets you boost search results based on user profiles, making results tailored to their behavior.
 ---
 
-## What is search personalization?
-
-Search personalization lets you boost search results based on user profiles, making results more tailored to individual behavior.
+Search personalization uses AI technology to re-rank search results at query time based on the user context you provide.
 
 ## Why use search personalization?
 
-Not all users search the same way. Personalizing search results allows you to adapt relevance to each user’s context — their preferences, behavior, or intent — instead of showing the same ranked results to everyone. This leads to faster discovery, improved satisfaction, and better business outcomes.
+Not everyone search the same way. Personalizing search results allows you to adapt relevance to each user’s preferences, behavior, or intent.
 
-For example, in an e-commerce site, someone who often shops for sportswear might see sneakers and activewear ranked higher when searching for “shoes,” while another user interested in luxury fashion might see designer heels or leather boots first.
+For example, in an e-commerce site, someone who often shops for sportswear might see sneakers and activewear ranked higher when searching for “shoes”. A user interested in luxury fashion might see designer heels or leather boots first instead.
 
-## How search personalization works?
+## How does search personalization work?
 
-Search personalization works by re-ranking search results at query time based on the user context you provide.
-You send Meilisearch the user’s query along with a short description of their preferences, habits, or goals. Behind the scenes, this context is passed to a re-ranking model, which adjusts the order of results to better match that user’s profile.
+1. First generate a plain-text description of the user: `"The user prefers genres like Documentary, Music, Drama"`
+2. When the user performs a search, you submit their description together their search request
+3. Meilisearch retrieves documents based on the user's query as usual
+4. Finally, the re-ranking model reorders results based on the user context you provided in the first step
 
-In other words:
+## How can I enable search personalization in Meilisearch?
 
-- You generate a compact, plain-text description of the user at search time representing the user context. e.g "The user prefers genres like Documentary, Music, Drama. User engaged with content related to Rap or Hip-Hop."
-- Meilisearch retrieves documents based on the user's query.
-- The re-ranking model then reorders results based on the user context so they feel more relevant to that user.
+Search personalization is still in early development and not publicly available.
 
-## How do I get access to search personalization?
-
-We’re currently in a prototyping stage of search personalization and iterating quickly based on feedback. The feature is not yet publicly available and requires manual enablement.
-
-If you’d like to try it out, please [contact us](https://meetings-eu1.hubspot.com/guillaume-mourier/search-personalization).
+If you are a Cloud customer and would like to try it out, [get in touch](https://meetings-eu1.hubspot.com/guillaume-mourier/search-personalization)!
