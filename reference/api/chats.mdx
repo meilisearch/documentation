@@ -118,27 +118,29 @@ Get information about a workshop.
 
 ```json
 {
-  "source": "openAi",
+  "source": "PROVIDER",
   "orgId": null,
   "projectId": null,
   "apiVersion": null,
   "deploymentId": null,
   "baseUrl": null,
-  "apiKey": "sk-abc...",
+  "apiKey": "PROVIDER_API_KEY",
   "prompts": {
-    "system": "You are a helpful assistant that answers questions based on the provided context."
+    "system": "Description of the general search context"
   }
 }
 ```
 
 #### The prompts object
 
-| Name                      | Type   | Description                                                       |
-| :------------------------ | :----- | :---------------------------------------------------------------- |
-| **`system`**              | String | A prompt added to the start of the conversation to guide the LLM  |
-| **`searchDescription`**   | String | A prompt to explain what the internal search function does        |
-| **`searchQParam`**        | String | A prompt to explain what the `q` parameter of the search function does and how to use it |
-| **`searchIndexUidParam`** | String | A prompt to explain what the `indexUid` parameter of the search function does and how to use it |
+```json
+{
+  "system": "Description of the general search context",
+  "searchDescription": "Description of internal search processes",
+  "searchQParam": "Description of expected input inside `q`",
+  "searchIndexUidParam": "Description of content inside each accessible index"
+}
+```
 
 ### Get chat workspace settings
 
@@ -203,6 +205,15 @@ If a workspace does not exist, querying this endpoint will create it.
 | **`baseUrl`**     | String | Base URL for the provider (required for azureOpenAi and vLlm)                 |
 | **`apiKey`**      | String | API key for the LLM provider (optional for vLlm)                              |
 | **`prompts`**     | Object | Prompts object containing system prompts and other configuration              |
+
+##### Prompt parameters
+
+| Name                      | Type   | Description                                                       |
+| :------------------------ | :----- | :---------------------------------------------------------------- |
+| **`system`**              | String | A prompt added to the start of the conversation to guide the LLM  |
+| **`searchDescription`**   | String | A prompt to explain what the internal search function does        |
+| **`searchQParam`**        | String | A prompt to explain what the `q` parameter of the search function does and how to use it |
+| **`searchIndexUidParam`** | String | A prompt to explain what the `indexUid` parameter of the search function does and how to use it |
 
 #### Request body
 
