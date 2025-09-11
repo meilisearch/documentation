@@ -69,6 +69,9 @@ import CodeSamplesUpdateSortableAttributes1 from '/snippets/samples/code_samples
 import CodeSamplesUpdateStopWords1 from '/snippets/samples/code_samples_update_stop_words_1.mdx';
 import CodeSamplesUpdateSynonyms1 from '/snippets/samples/code_samples_update_synonyms_1.mdx';
 import CodeSamplesUpdateTypoTolerance1 from '/snippets/samples/code_samples_update_typo_tolerance_1.mdx';
+import CodeSamplesGetVectorStore1 from '/snippets/samples/code_samples_get_vector_store_1.mdx';
+import CodeSamplesUpdateVectorStore1 from '/snippets/samples/code_samples_update_vector_store_1.mdx';
+import CodeSamplesResetVectorStore1 from '/snippets/samples/code_samples_reset_vector_store_1.mdx';
 
 Use the `/settings` route to customize search settings for a given index. You can either modify all index settings at once using the [update settings endpoint](#update-settings), or use a child route to configure a single setting.
 
@@ -3053,7 +3056,6 @@ curl \
     "chatCompletions": true
   }'
 ```
-
 </Note>
 
 The chat settings allow you to configure how your index integrates with Meilisearch's conversational search feature.
@@ -3185,3 +3187,115 @@ curl \
 ```
 
 You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+
+## Vector store <NoticeTag type="experimental" label="experimental" />
+
+<Note>
+This is an experimental feature. Use the Meilisearch Cloud UI or the experimental features endpoint to activate it:
+
+```sh
+curl \
+  -X PATCH 'http://localhost:7700/experimental-features/' \
+  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "vectorStoreSetting": true
+  }'
+```
+</Note>
+
+Use `vectorStore` to switch between the `stable` and `experimental` vector store.
+
+The experimental vector store may improve performance in large Meilisearch databases that make heavy use of AI-powered search features.
+
+### Get vector store settings
+
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/settings/vector-store" />
+
+Get the vector store of an index.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                            |
+| :---------------- | :----- | :--------------------------------------------------------------------- |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
+
+#### Example
+
+<CodeSamplesGetVectorStoreSettings1 />
+
+##### Response: `200 OK`
+
+```json
+"stable"
+```
+
+### Update vector store settings
+
+<RouteHighlighter method="PUT" path="/indexes/{index_uid}/settings/vector-store" />
+
+Update the vector store of an index.
+
+When switching between vector stores, Meilisearch must convert all vector data for use with the new backend. This operation may take a significant amount of time in existing indexes. If a conversion is taking too long, create a new empty index, set its store to `experimental`, and add your documents.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                            |
+| :---------------- | :----- | :--------------------------------------------------------------------- |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
+
+#### Body
+
+```
+"stable" | "experimental"
+```
+
+#### Example
+
+<CodeSamplesUpdateVectorStoreSettings1 />
+
+##### Response: `202 Accepted`
+
+```json
+{
+  "taskUid": 1,
+  "indexUid": "INDEX_UID",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2024-07-19T22:33:18.523881Z"
+}
+```
+
+Use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+
+### Reset vector store settings
+
+<RouteHighlighter method="DELETE" path="/indexes/{index_uid}/settings/vector-store" />
+
+Reset an index's vector store to its default settings.
+
+If you had set `vectorStore` to anything other than the default value, resetting triggers a convertion operation. This operation may take a significant amount of time depending on the size of the index.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                            |
+| :---------------- | :----- | :--------------------------------------------------------------------- |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
+
+#### Example
+
+<CodeSamplesResetFacetSearchSettings1 />
+
+##### Response: `202 Accepted`
+
+```json
+{
+  "taskUid": 1,
+  "indexUid": "INDEX_UID",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2024-07-19T22:35:33.723983Z"
+}
+```
+
+Use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
