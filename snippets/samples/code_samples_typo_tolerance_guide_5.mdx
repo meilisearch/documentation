@@ -27,6 +27,10 @@ $client->index('movies')->updateTypoTolerance([
 ]);
 ```
 
+```ruby Ruby
+index('books').update_typo_tolerance({ disable_on_numbers: true })
+```
+
 ```go Go
 client.Index("movies").UpdateTypoTolerance(&meilisearch.TypoTolerance{
   DisableOnNumbers: true
