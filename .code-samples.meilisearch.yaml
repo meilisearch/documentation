@@ -685,6 +685,11 @@ geosearch_guide_filter_usage_3: |-
     -X POST 'MEILISEARCH_URL/indexes/restaurants/search' \
     -H 'Content-type:application/json' \
     --data-binary '{ "filter": "_geoBoundingBox([45.494181, 9.214024], [45.449484, 9.179175])" }'
+geosearch_guide_filter_usage_4: |-
+  curl \
+    -X POST 'MEILISEARCH_URL/indexes/restaurants/search' \
+    -H 'Content-type:application/json' \
+    --data-binary '{ "filter": "_geoPolygon([45.494181, 9.214024], [45.449484, 9.179175], [45.449486, 9.179177])" }'
 geosearch_guide_sort_settings_1: |-
   curl \
     -X PUT 'MEILISEARCH_URL/indexes/restaurants/settings/sortable-attributes' \
