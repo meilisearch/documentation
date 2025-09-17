@@ -5,31 +5,6 @@ description: This guide covers indexing strategies, language-specific tokenizers
 
 When working with datasets that include content in multiple languages, it’s important to ensure that both documents and queries are processed correctly. This guide explains how to index and search multilingual datasets in Meilisearch, highlighting best practices, useful features, and what to avoid.
 
-## Tokenizers and language differences
-
-Search quality in Meilisearch depends heavily on how text is broken down into tokens. Since each language has its own writing system and rules, they require different tokenization strategies:
-
-- **Space-separated languages** (English, French, Spanish):
-
-Words are clearly separated by spaces, making them straightforward to tokenize.
-
-- **Non-space-separated languages** (Chinese, Japanese):
-
-Words are written continuously without spaces. These languages require specialized tokenizers to correctly split text into searchable units.
-
-- **Languages with compound words** (German, Swedish):
-
-Words can be combined to form long terms, such as _Donaudampfschifffahrtsgesellschaft_ (German for Danube Steamship Company). Meilisearch provides specialized tokenizers to process them correctly.
-
-### Normalization differences
-
-Normalization ensures that different spellings or character variations (like accents or case differences) are treated consistently during search.
-
-- **Accents and diacritics**:
-
-In many languages, accents can often be ignored without losing meaning (e.g., éléphant vs elephant).
-
-In other languages like Swedish, diacritics may represent entirely different letters, so they must be preserved.
 
 ## Recommended indexing strategy
 
@@ -65,7 +40,7 @@ In some cases, you may prefer to keep multiple languages in a **single index**. 
 
 #### Limitations
 
-- Languages with compound words (like German) or diacritics that change meaning (like Swedish), as well as non-space-separated writing systems (like Chinese, or Japanese), work better in their own index since they require specialized tokenizers.
+- Languages with compound words (like German) or diacritics that change meaning (like Swedish), as well as non-space-separated writing systems (like Chinese, or Japanese), work better in their own index since they require specialized [tokenizers](/learn/indexing/tokenization).
 
 - Chinese and Japanese documents should not be mixed in the same field, since distinguishing between them automatically is very difficult. Each of these languages works best in its own dedicated index. However, if fields are strictly separated by language (e.g., title_zh always Chinese, title_ja always Japanese), it is possible to store them in the same index.
 
