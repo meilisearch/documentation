@@ -5,7 +5,6 @@ description: This guide covers indexing strategies, language-specific tokenizers
 
 When working with datasets that include content in multiple languages, it’s important to ensure that both documents and queries are processed correctly. This guide explains how to index and search multilingual datasets in Meilisearch, highlighting best practices, useful features, and what to avoid.
 
-
 ## Recommended indexing strategy
 
 ### Create a separate index for each language (recommended)
@@ -119,4 +118,3 @@ This ensures queries are interpreted with the correct tokenizer and normalizatio
 
 Handling multilingual datasets in Meilisearch requires careful planning of both indexing and querying.  
 By choosing the right indexing strategy, and explicitly configuring languages with `localizedAttributes` and `locales`, you ensure that documents and queries are processed consistently.  
-
