@@ -280,7 +280,8 @@
                   "learn/indexing/rename_an_index",
                   "learn/indexing/indexing_best_practices",
                   "learn/indexing/ram_multithreading_performance",
-                  "learn/indexing/tokenization"
+                  "learn/indexing/tokenization",
+                  "learn/indexing/multilingual-datasets"
                 ]
               },
               {
