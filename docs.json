@@ -179,7 +179,8 @@
                 "pages": [
                   "learn/chat/getting_started_with_chat",
                   "learn/chat/chat_tooling_reference",
-                  "learn/chat/conversational_search"
+                  "learn/chat/conversational_search",
+                  "learn/chat/chat_ui_component"
                 ]
               },
               {
