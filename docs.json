@@ -183,6 +183,12 @@
                 ]
               },
               {
+                "group": "Personalization",
+                "pages": [
+                  "learn/personalization/search_personalization"
+                ]
+              },
+              {
                 "group": "Self-hosted",
                 "pages": [
                   "learn/self_hosted/getting_started_with_self_hosted_meilisearch",

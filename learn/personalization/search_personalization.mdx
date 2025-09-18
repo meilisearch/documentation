@@ -1,0 +1,25 @@
+---
+title: What is search personalization?
+description: Search personalization lets you boost search results based on user profiles, making results tailored to their behavior.
+---
+
+Search personalization uses AI technology to re-rank search results at query time based on the user context you provide.
+
+## Why use search personalization?
+
+Not everyone search the same way. Personalizing search results allows you to adapt relevance to each user’s preferences, behavior, or intent.
+
+For example, in an e-commerce site, someone who often shops for sportswear might see sneakers and activewear ranked higher when searching for “shoes”. A user interested in luxury fashion might see designer heels or leather boots first instead.
+
+## How does search personalization work?
+
+1. First generate a plain-text description of the user: `"The user prefers genres like Documentary, Music, Drama"`
+2. When the user performs a search, you submit their description together their search request
+3. Meilisearch retrieves documents based on the user's query as usual
+4. Finally, the re-ranking model reorders results based on the user context you provided in the first step
+
+## How can I enable search personalization in Meilisearch?
+
+Search personalization is still in early development and not publicly available.
+
+If you are a Cloud customer and would like to try it out, [get in touch](https://meetings-eu1.hubspot.com/guillaume-mourier/search-personalization)!
