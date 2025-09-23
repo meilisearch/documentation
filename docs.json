@@ -167,6 +167,7 @@
                   "learn/ai_powered_search/getting_started_with_ai_search",
                   "learn/ai_powered_search/configure_rest_embedder",
                   "learn/ai_powered_search/document_template_best_practices",
+                  "learn/ai_powered_search/image_search_with_multimodal_embeddings",
                   "learn/ai_powered_search/image_search_with_user_provided_embeddings",
                   "learn/ai_powered_search/search_with_user_provided_embeddings",
                   "learn/ai_powered_search/retrieve_related_search_results",

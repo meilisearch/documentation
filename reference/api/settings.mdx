@@ -2974,19 +2974,31 @@ curl \
 
 As with `indexingFragments`, the content of `value` should follow your model's specification.
 
-Use Liquid templates to interpolate search query data into the fragment fields, where `media` gives you access to all multimodal data received with a query:
+Use Liquid templates to interpolate search query data into the fragment fields, where `{{media.*}}` gives you access to all [multimodal data received with a query](/reference/api/search#media) and `{{q}}` gives you access to the regular textual query:
 
 ```json
-"SEARCH_FRAGMENT_A": {
-  "value": {
-    "content": [
-      {
-        "type": "image_base64",
-        "image_base64": "data:{{media.image.mime}};base64,{{media.image.data}}"
-      }
-    ]
+{
+  "SEARCH_FRAGMENT_A": {
+    "value": {
+      "content": [
+        {
+          "type": "image_base64",
+          "image_base64": "data:{{media.image.mime}};base64,{{media.image.data}}"
+        }
+      ]
+    }
+  },
+  "SEARCH_FRAGMENT_B": {
+    "value": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{{q}}"
+        }
+      ]
+    }
   }
-},
+}
 ```
 
 `searchFragments` is optional when using the `rest` source.
