@@ -30,7 +30,9 @@ client.index('books').update(primary_key: 'title')
 ```
 
 ```go Go
-client.Index("books").UpdateIndex("title")
+client.Index("books").UpdateIndex(&meilisearch.UpdateIndexRequestParams{
+  PrimaryKey: "title",
+})
 ```
 
 ```csharp C#
