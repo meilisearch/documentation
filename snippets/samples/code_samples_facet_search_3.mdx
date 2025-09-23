@@ -49,7 +49,8 @@ client.Index("books").FacetSearch(&meilisearch.FacetSearchRequest{
 ```csharp C#
 var query = new SearchFacetsQuery()
 {
-  FacetQuery = "c"
+  FacetQuery = "c",
+  ExhaustiveFacetCount: true
 };
 await client.Index("books").FacetSearchAsync("genres", query);
 ```
