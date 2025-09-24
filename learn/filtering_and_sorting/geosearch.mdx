@@ -21,7 +21,7 @@ Due to Meilisearch allowing malformed `_geo` fields in the following versions (v
 
 ## Preparing documents for location-based search
 
-In order to start filtering and sorting documents based on their geographic location, you must make sure they contain a valid `_geo` or `_geojson` field.
+To start filtering documents based on their geographic location, you must make sure they contain a valid `_geo` or `_geojson` field. If you also want to sort documents geogeraphically, they must have a valid `_geo` field.
 
 `_geo` and `_geojson` are reserved fields. If you include one of them in your documents, Meilisearch expects its value to conform to a specific format.
 
@@ -52,9 +52,9 @@ When using JSON and NDJSON, `_geo` must contain an object with two keys: `lat` a
 }
 ```
 
-Meilisearch does not support transmeridian shapes. If your document includes a transmeridian shape, split it into two separate shapes grouped as a `MultiPolygon` or `MultiLine`. Transmeridian shapes are polygons that cross the 180th or antimeridian.
+Meilisearch does not support transmeridian shapes. If your document includes a transmeridian shape, split it into two separate shapes grouped as a `MultiPolygon` or `MultiLine`. Transmeridian shapes are polygons or lines that cross the 180th meridian.
 
-Meilisearch does not support polygons with holes. If your polygon consists of an external ring and an inner empty space, Meilisearch ignores the hole and treats the polygon as a solid shape.
+**Meilisearch does not support polygons with holes**. If your polygon consists of an external ring and an inner empty space, Meilisearch ignores the hole and treats the polygon as a solid shape.
 
 <Note>
 ### Using `_geo` and `_geojson` together
