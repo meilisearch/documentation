@@ -488,13 +488,16 @@ If your documents contain `_geo` or `_geojson` data, you can use the following b
 <Tabs>
 
 <Tab title="_geoRadius">
-`_geoRadius` establishes a circular area based on a central point and a radius. This filter rule requires three parameters: `lat`, `lng` and `distance_in_meters`.
+`_geoRadius` establishes a circular area based on a central point and a radius. This filter rule accepts the following parameters: `lat`, `lng`, `distance_in_meters`, `resolution`.
 
 ```json
-_geoRadius(lat, lng, distance_in_meters)
+_geoRadius(lat, lng, distance_in_meters, resolution)
 ```
 
-`lat` and `lng` should be geographic coordinates expressed as floating point numbers. `distance_in_meters` indicates the radius of the area within which you want your results and should be an integer.
+- `lat` and `lng` should be geographic coordinates expressed as floating point numbers. 
+- `distance_in_meters` indicates the radius of the area within which you want your results and should be an integer.
+- `resolution` must be an integer between `3` and `1000` inclusive, and is an optional parameter. When using `_geojson` coordinates, `resolution` sets how many points Meilisearch will use to create a polygon that approximates the shape of a circle. Documents using `_geo` data ignore this parameter. Defaults to `125`. Increasing `resolution` may result in performance issues and is only necessary when dealing with large country-sized circles.
+
 
 <CodeSamplesGeosearchGuideFilterUsage1 />
 
