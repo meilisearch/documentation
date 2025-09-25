@@ -48,17 +48,17 @@ Meilisearch processes tasks in the order they were added to the queue. You can c
 
 ### Monitoring task status in the Meilisearch Cloud interface
 
-Log into your [Meilisearch Cloud](https://meilisearch.com/cloud?utm_campaign=oss&utm_source=docs&utm_medium=tasks-tutorial) account and navigate to your project. Click the "Tasks" link in the project menu:
+Log into your [Meilisearch Cloud](https://meilisearch.com/cloud) account and navigate to your project. Click the "Tasks" link in the project menu:
 
 ![Meilisearch Cloud menu with "Tasks" highlighted](/assets/images/cloud-tasks-tutorial/01-tasks-menu.png)
 
-This will lead you to the task overview. Look for your request's `taskUid` in the "Uid" column:
+This will lead you to the task overview, which shows a list of all batches enqueued, processing, and completed in your project:
 
 ![A table listing multiple Meilisearch Cloud tasks](/assets/images/cloud-tasks-tutorial/02-tasks-table.png)
 
-When the task `status` changes to `succeeded`, Meilisearch has finished processing your request.
+All Meilisearch tasks are processed in batches. When the batch containing your task changes its `status` to `succeeded`, Meilisearch has finished processing your request.
 
-If the task `status` changes to `failed`, Meilisearch was not able to fulfill your request. Check the task object's `error` field for more information.
+If the `status` changes to `failed`, Meilisearch was not able to fulfill your request. Check the object's `error` field for more information.
 
 ### Monitoring task status with the Meilisearch API
 
