@@ -1,49 +1,31 @@
 ---
-title: Chat UI Component
-sidebarTitle: Chat UI Component
+title: Chat Interface
+sidebarTitle: Chat Interface
 description: Interactive chat interface component for conversational search
 ---
 
-This page provides an interactive chat interface component that demonstrates Meilisearch's conversational search capabilities.
-
-## Interactive Demo
+## Conversational AI Demo
 
 <iframe 
-  src="https://chat-frontend-iframe-fk5ekooet-meili.vercel.app/" 
+  src="https://chat-frontend-iframe.vercel.app/" 
   title="Embedded content"
-  className="w-full h-96 rounded-xl"
+  className="w-full h-[500px] rounded-xl"
   sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
   allow="clipboard-write"
+  loading="lazy"
+  style={{ minHeight: '500px' }}
   onLoad="console.log('Iframe loaded successfully')"
   onError="console.log('Iframe failed to load')"
 ></iframe>
 
 <div className="mt-4 text-center">
-  <p className="text-sm text-gray-600 mb-2">If the chat interface doesn't load above, you can:</p>
   <a 
-    href="https://chat-frontend-iframe-605rmlkao-meili.vercel.app/" 
+    href="https://chat-frontend-iframe.vercel.app/" 
     target="_blank" 
     rel="noopener noreferrer"
-    className="inline-block px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+    className="inline-block px-4 py-2 text-sm bg-black-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
   >
-    Open Chat Interface in New Tab
+    Go directly to chatbot
   </a>
 </div>
 
-## Features
-
-This interactive component showcases:
-
-- Real-time conversational search
-- Streaming responses
-- Source citations
-- Context-aware follow-up questions
-- Multiple LLM provider support
-
-## Integration
-
-The chat UI component can be integrated into your application using the provided iframe or by implementing the underlying API calls directly.
-
-<Note>
-This is a demonstration component. For production use, implement proper authentication and security measures.
-</Note>
