@@ -212,6 +212,10 @@ This error occurs if:
 
 The provided `_geo` field of one or more documents is invalid. Meilisearch expects `_geo` to be an object with two fields, `lat` and `lng`, each containing geographic coordinates expressed as a string or floating point number. Read more about `_geo` and how to troubleshoot it in [our dedicated guide](/learn/filtering_and_sorting/geosearch).
 
+## `invalid_document_geojson_field`
+
+The `geojson` field in one or more documents is invalid or doesn't match the [GeoJSON specification](https://datatracker.ietf.org/doc/html/rfc7946).
+
 ## `invalid_export_url`
 
 The export target instance URL is invalid or could not be reached.
