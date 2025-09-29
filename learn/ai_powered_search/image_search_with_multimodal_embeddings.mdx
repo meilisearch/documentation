@@ -105,6 +105,8 @@ In this example, two modes of search are configured:
 
 Search fragments have access to data present in the query parameters `media` and `q`.
 
+Each semantic search query for this embedder should match exactly one search fragment of this embedder, so the fragments should each have at least one disambiguating field
+
 ### Complete embedder configuration
 
 Your embedder should look similar to this example with all fragments and embedding provider data:
