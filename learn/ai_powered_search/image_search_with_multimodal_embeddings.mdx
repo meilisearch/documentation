@@ -28,7 +28,7 @@ You may also enable multimodal in your Meilisearch Cloud project's general setti
 
 ## Configure a multimodal embedder
 
-Much like other embedders, multimodal embedders must set their `source` to `rest`. Depending on your chosen provider, you may also have to specify `url`, `model`, `apiKey`.
+Much like other embedders, multimodal embedders must set their `source` to `rest` and explicitly declare their `url`. Depending on your chosen provider, you may also have to specify `apiKey`.
 
 All multimodal embedders must contain an `indexingFragments` field and a `searchFragments` field. Fragments are sets of embeddings built out of specific parts of document data.
 
