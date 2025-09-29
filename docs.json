@@ -960,44 +960,44 @@
       "destination": "/learn/chat/getting_started_with_chat"
     },
     {
-      "source": "learn/ai_powered_search/conversational_search_with_chat",
-      "destination": "learn/chat/conversational_search"
+      "source": "/learn/ai_powered_search/conversational_search_with_chat",
+      "destination": "/learn/chat/conversational_search"
     },
     {
-      "source": "guides/ai/openai",
-      "destination": "guides/embedders/openai"
+      "source": "/guides/ai/openai",
+      "destination": "/guides/embedders/openai"
     },
     {
-      "source": "guides/ai/langchain",
-      "destination": "guides/langchain"
+      "source": "/guides/ai/langchain",
+      "destination": "/guides/langchain"
     },
     {
-      "source": "guides/ai/huggingface",
-      "destination": "guides/embedders/huggingface"
+      "source": "/guides/ai/huggingface",
+      "destination": "/guides/embedders/huggingface"
     },
     {
-      "source": "guides/ai/cloudflare",
-      "destination": "guides/embedders/cloudflare"
+      "source": "/guides/ai/cloudflare",
+      "destination": "/guides/embedders/cloudflare"
     },
     {
-      "source": "guides/ai/cohere",
-      "destination": "guides/embedders/cohere"
+      "source": "/guides/ai/cohere",
+      "destination": "/guides/embedders/cohere"
     },
     {
-      "source": "guides/ai/mistral",
-      "destination": "guides/embedders/mistral"
+      "source": "/guides/ai/mistral",
+      "destination": "/guides/embedders/mistral"
     },
     {
-      "source": "guides/ai/voyage",
-      "destination": "guides/embedders/voyage"
+      "source": "/guides/ai/voyage",
+      "destination": "/guides/embedders/voyage"
     },
     {
-      "source": "learn/cookbooks/vercel",
-      "destination": "guides/vercel"
+      "source": "/learn/cookbooks/vercel",
+      "destination": "/guides/vercel"
     },
     {
-      "source": "guides/back_end/laravel_scout",
-      "destination": "guides/laravel_scout"
+      "source": "/guides/back_end/laravel_scout",
+      "destination": "/guides/laravel_scout"
     }
   ]
 }
