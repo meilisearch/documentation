@@ -962,6 +962,43 @@
     {
       "source": "learn/ai_powered_search/conversational_search_with_chat",
       "destination": "learn/chat/conversational_search"
+    },
+    {
+      "source": "guides/embedders/openai",
+      "destination": "guides/ai/openai"
+    },
+    {
+      "source": "guides/langchain",
+      "destination": "guides/ai/langchain"
+    },
+    {
+      "source": "guides/embedders/huggingface",
+      "destination": "guides/ai/huggingface"
+    },
+    {
+      "source": "guides/embedders/cloudflare",
+      "destination": "guides/ai/cloudflare"
+    },
+    {
+      "source": "guides/embedders/cohere",
+      "destination": "guides/ai/cohere"
+    },
+    {
+      "source": "guides/embedders/mistral",
+      "destination": "guides/ai/mistral"
+    },
+    {
+      "source": "guides/embedders/voyage",
+      "destination": "guides/ai/voyage"
+    },
+    {
+      "source": "learn/cookbooks/vercel",
+      "destination": "guides/vercel"
+    },
+
+    {
+      "source": "guides/back_end/laravel_scout",
+      "destination": "guides/laravel_scout"
     }
   ]
 }
