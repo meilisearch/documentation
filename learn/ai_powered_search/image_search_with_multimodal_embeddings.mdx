@@ -98,7 +98,10 @@ Use `searchFragments` to tell Meilisearch how to send search query data to the c
 }
 ```
 
-This configuration tells Meilisearch how to submit query data for vectorization.
+In this example, two modes of search are configured:
+
+1. A textual search based on the `q` parameter, which will be embedded as text
+2. An image search based on [data url](https://developer.mozilla.org/en-US/docs/Web/URI/Reference/Schemes/data) rebuilt from the `image.mime` and `image.data` field in the `media` field of the query
 
 Search fragments have access to data present in the query parameters `media` and `q`.
 
