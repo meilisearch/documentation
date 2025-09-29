@@ -32,11 +32,11 @@ Much like other embedders, multimodal embedders must set their `source` to `rest
 
 All multimodal embedders must contain an `indexingFragments` field and a `searchFragments` field. Fragments are sets of embeddings built out of specific parts of document data.
 
-Fragments must follow the structure defined by your chosen model and provider.
+Fragments must follow the structure defined by the REST API of your chosen provider.
 
 ### `indexingFragments`
 
-Use `indexingFragments` to tell Meilisearch what data to use when generating document embeddings.
+Use `indexingFragments` to tell Meilisearch how to send document data to the provider's API when generating document embeddings.
 
 For example, when using VoyageAI's multimodal model, an indexing fragment might look like this:
 
@@ -67,11 +67,11 @@ For example, when using VoyageAI's multimodal model, an indexing fragment might 
 
 The example above requests Meilisearch to create two sets of embeddings during indexing: one for the textual description of an image, and another for the actual image.
 
-Each fragment must have one field with a Liquid template where you interpolate document data present in `doc`. In `IMAGE_FRAGMENT_NAME`, that's  `image_url` which outputs the plain URL string in the document field `poster_url`. In `TEXT_FRAGMENT_NAME`, `text` contains a longer string contextualizing two document fields, `title` and `description`.
+Any JSON string value appearing in a fragment is handled as a Liquid template, where you interpolate document data present in `doc`. In `IMAGE_FRAGMENT_NAME`, that's  `image_url` which outputs the plain URL string in the document field `poster_url`. In `TEXT_FRAGMENT_NAME`, `text` contains a longer string contextualizing two document fields, `title` and `description`.
 
 ### `searchFragments`
 
-Use `searchFragments` to tell Meilisearch what data to use when converting user queries into embeddings:
+Use `searchFragments` to tell Meilisearch how to send search query data to the chosen provider's REST API when converting them into embeddings:
 
 ```json
 "searchFragments": {
@@ -98,9 +98,14 @@ Use `searchFragments` to tell Meilisearch what data to use when converting user 
 }
 ```
 
-This configuration tells Meilisearch how to submit query data for vectorization.
+In this example, two modes of search are configured:
+
+1. A textual search based on the `q` parameter, which will be embedded as text
+2. An image search based on [data url](https://developer.mozilla.org/en-US/docs/Web/URI/Reference/Schemes/data) rebuilt from the `image.mime` and `image.data` field in the `media` field of the query
 
 Search fragments have access to data present in the query parameters `media` and `q`.
+
+Each semantic search query for this embedder should match exactly one search fragment of this embedder, so the fragments should each have at least one disambiguating field
 
 ### Complete embedder configuration
 
@@ -218,7 +223,7 @@ In most cases you will need a GUI interface that allows users to submit their im
 
 With multimodal embedders you can:
 
-1. Configure Meilisearch to vectorize both images and queries  
+1. Configure Meilisearch to embed both images and queries  
 2. Add image documents — Meilisearch automatically generates embeddings  
 3. Accept text or image input from users  
 4. Run hybrid searches using a mix of textual and input from other types of media, or run pure semantic semantic searches using only non-textual input
