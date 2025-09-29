@@ -964,38 +964,37 @@
       "destination": "learn/chat/conversational_search"
     },
     {
-      "source": "guides/embedders/openai",
-      "destination": "guides/ai/openai"
+      "source": "guides/ai/openai",
+      "destination": "guides/embedders/openai"
     },
     {
-      "source": "guides/langchain",
-      "destination": "guides/ai/langchain"
+      "source": "guides/ai/langchain",
+      "destination": "guides/langchain"
     },
     {
-      "source": "guides/embedders/huggingface",
-      "destination": "guides/ai/huggingface"
+      "source": "guides/ai/huggingface",
+      "destination": "guides/embedders/huggingface"
     },
     {
-      "source": "guides/embedders/cloudflare",
-      "destination": "guides/ai/cloudflare"
+      "source": "guides/ai/cloudflare",
+      "destination": "guides/embedders/cloudflare"
     },
     {
-      "source": "guides/embedders/cohere",
-      "destination": "guides/ai/cohere"
+      "source": "guides/ai/cohere",
+      "destination": "guides/embedders/cohere"
     },
     {
-      "source": "guides/embedders/mistral",
-      "destination": "guides/ai/mistral"
+      "source": "guides/ai/mistral",
+      "destination": "guides/embedders/mistral"
     },
     {
-      "source": "guides/embedders/voyage",
-      "destination": "guides/ai/voyage"
+      "source": "guides/ai/voyage",
+      "destination": "guides/embedders/voyage"
     },
     {
       "source": "learn/cookbooks/vercel",
       "destination": "guides/vercel"
     },
-
     {
       "source": "guides/back_end/laravel_scout",
       "destination": "guides/laravel_scout"
