@@ -109,6 +109,7 @@ By default, [this endpoint returns a maximum of 1000 results](/learn/resources/k
 | **`limit`**              | Number           | Number of documents to take                                 |
 | **`estimatedTotalHits`** | Number           | Estimated total number of matches                           |
 | **`totalHits`**          | Number           | Exhaustive total number of matches                          |
+| **`semanticHitCount`**   | Number           | Exhaustive number of semantic search matches (only present in AI-powered searches)                          |
 | **`totalPages`**         | Number           | Exhaustive total number of search result pages              |
 | **`hitsPerPage`**        | Number           | Number of results on each page                              |
 | **`page`**               | Number           | Current search results page                                 |
@@ -1217,6 +1218,20 @@ Configures Meilisearch to return search results based on a query's meaning and c
 #### Example
 
 <CodeSamplesSearchParameterGuideHybrid1 />
+
+```json
+{
+  "query": "PLACEHOLDER_QUERY",
+  "processingTimeMs": 10,
+  "limit": 20,
+  "offset": 0,
+  "estimatedTotalHits": 3,
+  "semanticHitCount": 3,
+  "hits": [
+    …
+  ]
+}
+```
 
 ### Vector
 
