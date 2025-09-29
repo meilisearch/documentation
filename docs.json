@@ -992,7 +992,7 @@
       "destination": "/guides/embedders/voyage"
     },
     {
-      "source": "/learn/cookbooks/vercel",
+      "source": "/guides/integrations/vercel",
       "destination": "/guides/vercel"
     },
     {
