@@ -1606,7 +1606,7 @@ get_vector_store_settings_1: |-
     -X GET 'MEILISEARCH_URL/indexes/INDEX_UID/settings/vector-store'
 update_vector_store_settings_1: |-
   curl \
-    -X PUT 'MEILISEARCH_URL/indexes/INDEX_UID/settings/vector-store' \
+    -X PATCH 'MEILISEARCH_URL/indexes/INDEX_UID/settings/vector-store' \
     -H 'Content-Type: application/json' \
     --data-binary '"experimental"'
 reset_vector_store_settings_1: |-
