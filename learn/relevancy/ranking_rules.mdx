@@ -29,6 +29,8 @@ Depending on your needs, you might want to change this order. To do so, use the 
 
 Results are sorted by **decreasing number of matched query terms**. Returns documents that contain all query terms first.
 
+To ensure optimal relevancy, **Meilisearch always sort results as if the `words` ranking rule were present** with a higher priority than the attributes, exactness, typo and proximity ranking rules. This happens even if the words ranking rule has been removed or set with a lower priority.
+
 <Note>
 The `words` rule works from right to left. Therefore, the order of the query string impacts the order of results.
 
