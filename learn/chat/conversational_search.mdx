@@ -3,11 +3,7 @@ title: What is conversational search?
 description: Conversational search is an AI-powered feature that allows users to ask questions in everyday language and receive answers based on the information in Meilisearch's indexes
 ---
 
-## What is conversational search?
-
-In conversational search interfaces, users ask questions in everyday language instead of using keywords, and receive complete answers rather than links to articles.
-
-## When to use chat completions vs traditional search
+## When to use conversational vs traditional search
 
 Use conversational search when:
 
@@ -21,7 +17,7 @@ Use traditional search when:
 - Approximative answers are not acceptable
 - Your users need very quick responses
 
-## How chat completions differs from traditional search
+## How conversational search usage differs from traditional search
 
 ### Traditional search workflow
 
@@ -41,7 +37,7 @@ Use traditional search when:
 
 In the majority of cases, you should use the [`/chats` route](/reference/api/chats) to build a Retrieval Augmented Generation (RAG) pipeline. RAGs excel when working with unstructured data and emphasise high-quality responses.
 
-Meilisearch's chat completions consolidates RAG creation into a single process:
+Meilisearch's chat completions API consolidates RAG creation into a single process:
 
 1. **Query understanding**: automatically transforms questions into search parameters
 2. **Hybrid retrieval**: combines keyword and semantic search for better relevancy
