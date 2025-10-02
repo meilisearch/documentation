@@ -21,13 +21,15 @@ curl \
 ```
 </Note>
 
+<Warning>
+Conversational search is still in early development. Conversational agents may occasionally hallucinate innacurate and misleading information, so it is important to closely monitor it in production environments.
+</Warning>
+
 ## Authorization
 
-When working with a secure Meilisearch instance, Use an API key with access to both the `search` and `chatCompletions` actions, such as the default chat API key. You may also use tenant tokens instead of an API key, provided you generate the tokens with access to the required actions.
+When implementing conversational search, use an API key with access to both the `search` and `chatCompletions` actions such as the default chat API key. You may also use tenant tokens instead of an API key, provided you generate the tokens with access to the required actions.
 
 Chat queries only search indexes its API key can access. The default chat API key has access to all indexes. To limit chat access to specific indexes, you must either create a new key, or [generate a tenant token](/learn/security/generate_tenant_token_sdk) from the default chat API key.
-
-LLM credentials used to querying your AI provider are stored securely in the chat workspace settings.
 
 ## Chat workspace object
 
@@ -89,7 +91,7 @@ List all chat workspaces. Results can be paginated by using the `offset` and `li
 
 <RouteHighlighter method="GET" path="/chats/{workspace_uid}" />
 
-Get information about a workshop.
+Get information about a workspace.
 
 ### Path parameters
 
@@ -131,16 +133,60 @@ Get information about a workshop.
 }
 ```
 
-#### The prompts object
+#### `source`
 
-```json
-{
-  "system": "Description of the general search context",
-  "searchDescription": "Description of internal search processes",
-  "searchQParam": "Description of expected input inside `q`",
-  "searchIndexUidParam": "Description of content inside each accessible index"
-}
-```
+**Type**: String<br />
+**Default value**: N/A<br />
+**Description**: Name of the chosen embeddings provider. Must be one of: `"openAi"`, `"azureOpenAi"`, `"mistral"`, `"gemini"`, or `"vLlm"`
+
+#### `orgId`
+
+**Type**: String<br />
+**Default value**: N/A<br />
+**Description**: Organization ID used to access the LLM provider. Required for Azure OpenAI, incompatible with other sources
+
+#### `projectId`
+
+**Type**: String<br />
+**Default value**: N/A<br />
+**Description**: Project ID used to access the LLM provider. Required for Azure OpenAI, incompatible with other sources
+
+#### `apiVersion`
+
+**Type**: String<br />
+**Default value**: N/A<br />
+**Description**: API version used by the LLM provider. Required for Azure OpenAI, incompatible with other sources
+
+#### `deploymentId`
+
+**Type**: String<br />
+**Default value**: N/A<br />
+**Description**: Deployment ID used by the LLM provider. Required for Azure OpenAI, incompatible with other sources
+
+#### `baseUrl`
+
+**Type**: String<br />
+**Default value**: N/A<br />
+**Description**: Base URL Meilisearch should target when sending requests to the embeddings provider. Required for Azure OpenAI and vLLM
+
+#### `apiKey`
+
+**Type**: String<br />
+**Default value**: N/A<br />
+**Description**: API key to access the LLM provider. Optional for vLLM, mandatory for all other providers
+
+#### `prompts`
+
+**Type**: Object<br />
+**Default value**: N/A<br />
+**Description**: Prompts giving baseline context to the conversational agent.
+
+The prompts object accepts the following fields:
+
+- `prompts.system`: Default prompt giving the general usage context of the conversational search agent. Example: "You are a helpful bot answering questions on how to use Meilisearch"
+- `prompts.searchDescription`: An internal description of the Meilisearch chat tools. Use it to instruct the agent on how and when to use the configured tools. Example: "Tool for retrieving relevant documents. Use it when users ask for factual information, past records, or resources that might exist in indexed content."
+- `prompts.QParam`: Description of expected user input and the desired output. Example: "Users will ask about Meilisearch. Provide short and direct keyword-style queries."
+- `prompts.IndexUidParam`: Instructions describing each index the agent has access to and how to use them. Example: "If user asks about code or API or parameters, use the index called `documentation`."
 
 ### Get chat workspace settings
 
@@ -189,31 +235,31 @@ If a workspace does not exist, querying this endpoint will create it.
 
 #### Path parameters
 
-| Name            | Type   | Description                          |
-| :-------------- | :----- | :----------------------------------- |
+| Name                | Type   | Description                          |
+| :------------------ | :----- | :----------------------------------- |
 | **`workspace_uid`** | String | The workspace identifier             |
 
 #### Settings parameters
 
 | Name              | Type   | Description                                                                   |
 | :---------------- | :----- | :---------------------------------------------------------------------------- |
-| **`source`**      | String | LLM source: `"openAi"`, `"azureOpenAi"`, `"mistral"`, `"gemini"`, or `"vLlm"` |
-| **`orgId`**       | String | Organization ID for the LLM provider (required for azureOpenAi)               |
-| **`projectId`**   | String | Project ID for the LLM provider                                               |
-| **`apiVersion`**  | String | API version for the LLM provider (required for azureOpenAi)                   |
-| **`deploymentId`**| String | Deployment ID for the LLM provider (required for azureOpenAi)                 |
-| **`baseUrl`**     | String | Base URL for the provider (required for azureOpenAi and vLlm)                 |
-| **`apiKey`**      | String | API key for the LLM provider (optional for vLlm)                              |
-| **`prompts`**     | Object | Prompts object containing system prompts and other configuration              |
+| [`source`](#source)      | String | LLM source: `"openAi"`, `"azureOpenAi"`, `"mistral"`, `"gemini"`, or `"vLlm"` |
+| [`orgId`](#orgid)       | String | Organization ID for the LLM provider               |
+| [`projectId`](#projectid)  | String | Project ID for the LLM provider                    |
+| [`apiVersion`](#apiversion)   | String | API version for the LLM provider                   |
+| [`deploymentId`](#deploymentid) | String | Deployment ID for the LLM provider                 |
+| [`baseUrl`](#baseurl)      | String | Base URL for the provider                          |
+| [`apiKey`](#apikey)       | String | API key for the LLM provider                       |
+| [`prompts`](#prompts)      | Object | Prompts object containing system prompts and other configuration |
 
 ##### Prompt parameters
 
 | Name                      | Type   | Description                                                       |
 | :------------------------ | :----- | :---------------------------------------------------------------- |
-| **`system`**              | String | A prompt added to the start of the conversation to guide the LLM  |
-| **`searchDescription`**   | String | A prompt to explain what the internal search function does        |
-| **`searchQParam`**        | String | A prompt to explain what the `q` parameter of the search function does and how to use it |
-| **`searchIndexUidParam`** | String | A prompt to explain what the `indexUid` parameter of the search function does and how to use it |
+| [`system]` (#prompts)             | String | A prompt added to the start of the conversation to guide the LLM  |
+| [`searchDescription`](#prompts)   | String | A prompt to explain what the internal search function does        |
+| [`searchQParam`](#prompts)        | String | A prompt to explain what the `q` parameter of the search function does and how to use it |
+| [`searchIndexUidParam`](#prompts) | String | A prompt to explain what the `indexUid` parameter of the search function does and how to use it |
 
 #### Request body
 
@@ -379,7 +425,7 @@ Create a chat completion using Meilisearch's OpenAI-compatible interface. The en
 
 | Name           | Type    | Required | Description                                                                  |
 | :------------- | :------ | :------- | :--------------------------------------------------------------------------- |
-| **`model`**    | String  | Yes      | Model to use and will be related to the source LLM in the workspace settings |
+| **`model`**    | String  | Yes      | Model the agent should use when generating responses |
 | **`messages`** | Array   | Yes      | Array of message objects with `role` and `content`                           |
 | **`stream`**   | Boolean | No       | Enable streaming responses. Must be `true` if specified                                 |
 

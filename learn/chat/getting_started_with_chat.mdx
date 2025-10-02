@@ -29,6 +29,10 @@ curl \
   }'
 ```
 
+<Warning>
+Conversational search is still in early development. Conversational agents may occasionally hallucinate innacurate and misleading information, so it is important to closely monitor it in production environments.
+</Warning>
+
 ### Find your chat API key
 
 When Meilisearch runs with a master key on an instance created after v1.15.1, it automatically generates a "Default Chat API Key" with `chatCompletions` and `search` permissions on all indexes. Check if you have the key using:
