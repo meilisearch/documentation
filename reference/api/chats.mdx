@@ -426,7 +426,7 @@ Create a chat completion using Meilisearch's OpenAI-compatible interface. The en
 | Name           | Type    | Required | Description                                                                  |
 | :------------- | :------ | :------- | :--------------------------------------------------------------------------- |
 | **`model`**    | String  | Yes      | Model the agent should use when generating responses |
-| **`messages`** | Array   | Yes      | Array of message objects with `role` and `content`                           |
+| **`messages`** | Array   | Yes      | Array of [message objects](#message-object)                          |
 | **`stream`**   | Boolean | No       | Enable streaming responses. Must be `true` if specified                                 |
 
 <Warning>
@@ -439,6 +439,14 @@ Meilisearch chat completions only supports streaming responses (`stream: true`).
 | :------------ | :----- | :--------------------------------------------------------- |
 | **`role`**    | String | Message role: `"system"`, `"user"`, or `"assistant"`       |
 | **`content`** | String | Message content                                            |
+
+#### `role`
+
+Specifies the message origin: Meilisearch (`system`), the LLM provider (`assistant`), or user input (`user`)
+
+#### `content`
+
+String containing the message content.
 
 ### Response
 
