@@ -28,7 +28,9 @@ client.index('movies').update(primary_key: 'movie_id')
 ```
 
 ```go Go
-client.Index("movies").UpdateIndex("id")
+client.Index("movies").UpdateIndex(&meilisearch.UpdateIndexRequestParams{
+  PrimaryKey: "id",
+})
 ```
 
 ```csharp C#
