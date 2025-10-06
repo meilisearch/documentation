@@ -167,6 +167,7 @@
                   "learn/ai_powered_search/getting_started_with_ai_search",
                   "learn/ai_powered_search/configure_rest_embedder",
                   "learn/ai_powered_search/document_template_best_practices",
+                  "learn/ai_powered_search/image_search_with_multimodal_embeddings",
                   "learn/ai_powered_search/image_search_with_user_provided_embeddings",
                   "learn/ai_powered_search/search_with_user_provided_embeddings",
                   "learn/ai_powered_search/retrieve_related_search_results",
@@ -180,6 +181,12 @@
                   "learn/chat/getting_started_with_chat",
                   "learn/chat/chat_tooling_reference",
                   "learn/chat/conversational_search"
+                ]
+              },
+              {
+                "group": "Personalization",
+                "pages": [
+                  "learn/personalization/search_personalization"
                 ]
               },
               {
@@ -280,7 +287,8 @@
                   "learn/indexing/rename_an_index",
                   "learn/indexing/indexing_best_practices",
                   "learn/indexing/ram_multithreading_performance",
-                  "learn/indexing/tokenization"
+                  "learn/indexing/tokenization",
+                  "learn/indexing/multilingual-datasets"
                 ]
               },
               {
@@ -446,9 +454,6 @@
     },
     "segment": {
         "key": "KIC0Lcb5C9ssRY79dUKPOK8Wq6wLHiUP"
-    },
-    "ga4": {
-        "measurementId": "G-S0LFS24LR2"
     },
     "gtm": {
       "tagId": "GTM-TNSCGVBH"
@@ -956,8 +961,44 @@
       "destination": "/learn/chat/getting_started_with_chat"
     },
     {
-      "source": "learn/ai_powered_search/conversational_search_with_chat",
-      "destination": "learn/chat/conversational_search"
+      "source": "/learn/ai_powered_search/conversational_search_with_chat",
+      "destination": "/learn/chat/conversational_search"
+    },
+    {
+      "source": "/guides/ai/openai",
+      "destination": "/guides/embedders/openai"
+    },
+    {
+      "source": "/guides/ai/langchain",
+      "destination": "/guides/langchain"
+    },
+    {
+      "source": "/guides/ai/huggingface",
+      "destination": "/guides/embedders/huggingface"
+    },
+    {
+      "source": "/guides/ai/cloudflare",
+      "destination": "/guides/embedders/cloudflare"
+    },
+    {
+      "source": "/guides/ai/cohere",
+      "destination": "/guides/embedders/cohere"
+    },
+    {
+      "source": "/guides/ai/mistral",
+      "destination": "/guides/embedders/mistral"
+    },
+    {
+      "source": "/guides/ai/voyage",
+      "destination": "/guides/embedders/voyage"
+    },
+    {
+      "source": "/guides/integrations/vercel",
+      "destination": "/guides/vercel"
+    },
+    {
+      "source": "/guides/back_end/laravel_scout",
+      "destination": "/guides/laravel_scout"
     }
   ]
 }

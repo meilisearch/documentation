@@ -69,6 +69,9 @@ import CodeSamplesUpdateSortableAttributes1 from '/snippets/samples/code_samples
 import CodeSamplesUpdateStopWords1 from '/snippets/samples/code_samples_update_stop_words_1.mdx';
 import CodeSamplesUpdateSynonyms1 from '/snippets/samples/code_samples_update_synonyms_1.mdx';
 import CodeSamplesUpdateTypoTolerance1 from '/snippets/samples/code_samples_update_typo_tolerance_1.mdx';
+import CodeSamplesGetVectorStore1 from '/snippets/samples/code_samples_get_vector_store_1.mdx';
+import CodeSamplesUpdateVectorStore1 from '/snippets/samples/code_samples_update_vector_store_1.mdx';
+import CodeSamplesResetVectorStore1 from '/snippets/samples/code_samples_reset_vector_store_1.mdx';
 
 Use the `/settings` route to customize search settings for a given index. You can either modify all index settings at once using the [update settings endpoint](#update-settings), or use a child route to configure a single setting.
 
@@ -127,7 +130,8 @@ By default, the settings object looks like this. All fields are modifiable.
   "prefixSearch": "indexingTime",
   "searchCutoffMs": null,
   "embedders": {},
-  "chat": {}
+  "chat": {},
+  "vectorStore": "stable"
 }
 ```
 
@@ -198,7 +202,8 @@ Get the settings of an index.
   "prefixSearch": "indexingTime",
   "searchCutoffMs": null,
   "embedders": {},
-  "chat": {}
+  "chat": {},
+  "vectorStore": "stable"
 }
 ```
 
@@ -244,6 +249,7 @@ If the provided index does not exist, it will be created.
 | **[`typoTolerance`](#typo-tolerance)**               | Object           | [Default object](#typo-tolerance-object)                                                         | Typo tolerance settings                                                          |
 | **[`embedders`](#embedders)**                        | Object of objects | [Default object](#embedders-object)                                                         | Embedder required for performing meaning-based search queries                                                          |
 | **[`chat`](#conversation)** <NoticeTag type="experimental" label="experimental" /> | Object           | [Default object](#chat-object)                                                         | Chat settings for performing conversation-based queries                                                          |
+| **[`vector-store`](#vector-store)** <NoticeTag type="experimental" label="experimental" /> | String           | `"stable"`                                                         | Vector store used for AI-powered search                                                          |
 
 #### Example
 
@@ -1721,7 +1727,7 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 ## Search cutoff
 
-Configure the maximum duration of a search query. Meilisearch will interrupt any search taking longer than the cutoff value.
+Configure the maximum duration of a search query. If a search operation reaches the cutoff, Meilisearch immediately interrupts it and returns all computed results.
 
 By default, Meilisearch interrupts searches after 1500 milliseconds.
 
@@ -2933,6 +2939,14 @@ For example, for [VoyageAI's multimodal embedding route](https://docs.voyageai.c
 
 Use Liquid templates to interpolate document data into the fragment fields, where `doc` gives you access to all fields within a document.
 
+<Warning>
+If a Liquid template appearing inside of a fragment cannot be rendered, no embedding will be generated for that fragment and that document. If a document has no indexing fragments, it will not be returned in multimodal searches. In most cases, a fragment is not rendered because a field it references is missing in the document.
+
+This is different from embeddings based on `documentTemplate`, which abort the indexing task if the document template cannot be rendered for a document.
+
+You can check which documents have embeddings for a given fragment using [vector filters](/learn/filtering_and_sorting/filter_expression_reference#vector-filters).
+</Warning>
+
 `indexingFragments` is optional when using the `rest` source.
 
 `indexingFragments` is incompatible with all other embedder sources.
@@ -2968,19 +2982,31 @@ curl \
 
 As with `indexingFragments`, the content of `value` should follow your model's specification.
 
-Use Liquid templates to interpolate search query data into the fragment fields, where `media` gives you access to all multimodal data received with a query:
+Use Liquid templates to interpolate search query data into the fragment fields, where `{{media.*}}` gives you access to all [multimodal data received with a query](/reference/api/search#media) and `{{q}}` gives you access to the regular textual query:
 
 ```json
-"SEARCH_FRAGMENT_A": {
-  "value": {
-    "content": [
-      {
-        "type": "image_base64",
-        "image_base64": "data:{{media.image.mime}};base64,{{media.image.data}}"
-      }
-    ]
+{
+  "SEARCH_FRAGMENT_A": {
+    "value": {
+      "content": [
+        {
+          "type": "image_base64",
+          "image_base64": "data:{{media.image.mime}};base64,{{media.image.data}}"
+        }
+      ]
+    }
+  },
+  "SEARCH_FRAGMENT_B": {
+    "value": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{{q}}"
+        }
+      ]
+    }
   }
-},
+}
 ```
 
 `searchFragments` is optional when using the `rest` source.
@@ -3053,7 +3079,6 @@ curl \
     "chatCompletions": true
   }'
 ```
-
 </Note>
 
 The chat settings allow you to configure how your index integrates with Meilisearch's conversational search feature.
@@ -3185,3 +3210,115 @@ curl \
 ```
 
 You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+
+## Vector store <NoticeTag type="experimental" label="experimental" />
+
+<Note>
+This is an experimental feature. On Meilisearch Cloud, contact support to activate it. On OSS, use the experimental features endpoint:
+
+```sh
+curl \
+  -X PATCH 'http://localhost:7700/experimental-features/' \
+  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "vectorStoreSetting": true
+  }'
+```
+</Note>
+
+Use `vectorStore` to switch between the `stable` and `experimental` vector store.
+
+The experimental vector store may improve performance in large Meilisearch databases that make heavy use of AI-powered search features.
+
+### Get vector store settings
+
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/settings/vector-store" />
+
+Get the vector store of an index.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                            |
+| :---------------- | :----- | :--------------------------------------------------------------------- |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
+
+#### Example
+
+<CodeSamplesGetVectorStoreSettings1 />
+
+##### Response: `200 OK`
+
+```json
+"stable"
+```
+
+### Update vector store settings
+
+<RouteHighlighter method="PATCH" path="/indexes/{index_uid}/settings/vector-store" />
+
+Update the vector store of an index.
+
+When switching between vector stores, Meilisearch must convert all vector data for use with the new backend. This operation may take a significant amount of time in existing indexes. If a conversion is taking too long, create a new empty index, set its store to `experimental`, and add your documents.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                            |
+| :---------------- | :----- | :--------------------------------------------------------------------- |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
+
+#### Body
+
+```
+"stable" | "experimental"
+```
+
+#### Example
+
+<CodeSamplesUpdateVectorStoreSettings1 />
+
+##### Response: `202 Accepted`
+
+```json
+{
+  "taskUid": 1,
+  "indexUid": "INDEX_UID",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2024-07-19T22:33:18.523881Z"
+}
+```
+
+Use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+
+### Reset vector store settings
+
+<RouteHighlighter method="DELETE" path="/indexes/{index_uid}/settings/vector-store" />
+
+Reset an index's vector store to its default settings.
+
+If you had set `vectorStore` to anything other than the default value, resetting triggers a convertion operation. This operation may take a significant amount of time depending on the size of the index.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                            |
+| :---------------- | :----- | :--------------------------------------------------------------------- |
+| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
+
+#### Example
+
+<CodeSamplesResetFacetSearchSettings1 />
+
+##### Response: `202 Accepted`
+
+```json
+{
+  "taskUid": 1,
+  "indexUid": "INDEX_UID",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2024-07-19T22:35:33.723983Z"
+}
+```
+
+Use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).

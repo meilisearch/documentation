@@ -109,6 +109,7 @@ By default, [this endpoint returns a maximum of 1000 results](/learn/resources/k
 | **`limit`**              | Number           | Number of documents to take                                 |
 | **`estimatedTotalHits`** | Number           | Estimated total number of matches                           |
 | **`totalHits`**          | Number           | Exhaustive total number of matches                          |
+| **`semanticHitCount`**   | Number           | Exhaustive number of semantic search matches (only present in AI-powered searches)                          |
 | **`totalPages`**         | Number           | Exhaustive total number of search result pages              |
 | **`hitsPerPage`**        | Number           | Number of results on each page                              |
 | **`page`**               | Number           | Current search results page                                 |
@@ -481,20 +482,23 @@ You can then use the filter in a search query:
 
 <CodeSamplesFacetedSearchWalkthroughFilter1 />
 
-#### Filtering results with `_geoRadius` and `_geoBoundingBox`
+#### Filtering results with `_geoRadius`, `_geoBoundingBox`, and `_geoPolygon`
 
-If your documents contain `_geo` data, you can use the `_geoRadius` and `_geoBoundingBox` built-in filter rules to filter results according to their geographic position.
+If your documents contain `_geo` or `_geojson` data, you can use the following built-in filter rules to filter results according to their geographic position:
 
 <Tabs>
 
 <Tab title="_geoRadius">
-`_geoRadius` establishes a circular area based on a central point and a radius. This filter rule requires three parameters: `lat`, `lng` and `distance_in_meters`.
+`_geoRadius` establishes a circular area based on a central point and a radius. This filter rule accepts the following parameters: `lat`, `lng`, `distance_in_meters`, `resolution`.
 
 ```json
-_geoRadius(lat, lng, distance_in_meters)
+_geoRadius(lat, lng, distance_in_meters, resolution)
 ```
 
-`lat` and `lng` should be geographic coordinates expressed as floating point numbers. `distance_in_meters` indicates the radius of the area within which you want your results and should be an integer.
+- `lat` and `lng` should be geographic coordinates expressed as floating point numbers. 
+- `distance_in_meters` indicates the radius of the area within which you want your results and should be an integer.
+- `resolution` must be an integer between `3` and `1000` inclusive, and is an optional parameter. When using `_geojson` coordinates, `resolution` sets how many points Meilisearch will use to create a polygon that approximates the shape of a circle. Documents using `_geo` data ignore this parameter. Defaults to `125`. Increasing `resolution` may result in performance issues and is only necessary when dealing with large country-sized circles.
+
 
 <CodeSamplesGeosearchGuideFilterUsage1 />
 
@@ -504,14 +508,31 @@ _geoRadius(lat, lng, distance_in_meters)
 `_geoBoundingBox` establishes a rectangular area based on the coordinates for its top right and bottom left corners. This filter rule requires two arrays of geographic coordinates:
 
 ```
-_geoBoundingBox([{lat}, {lng}], [{lat}, {lng}])
+_geoBoundingBox([LAT, LNG], [LAT, LNG])
 ```
 
-`lat` and `lng` should be geographic coordinates expressed as floating point numbers. The first array indicates the top right corner and the second array indicates the bottom left corner of the bounding box.
+`LAT` and `LNG` should be geographic coordinates expressed as floating point numbers. The first array indicates the top right corner and the second array indicates the bottom left corner of the bounding box.
 
 <CodeSamplesGeosearchGuideFilterUsage3 />
 
 Meilisearch will throw an error if the top right corner is under the bottom left corner.
+
+</Tab>
+
+<Tab title="_geoPolygon">
+`_geoPolygon` establishes an area based on the coordinates of the specified points. This filter rule requires three arrays or more arrays of geographic coordinates and can only be used with GeoJSON documents:
+
+```
+_geoPolygon([LAT, LNG], [LAT, LNG], [LAT, LNG], …)
+```
+
+`LAT` and `LNG` should be geographic coordinates expressed as floating point numbers. If your polygon is not closed, Meilisearch will close it automatically. Closed polygons are polygons where the first and last points share the same coordinates.
+
+<CodeSamplesGeosearchGuideFilterUsage4 />
+
+Polygons cannot cross the 180th meridian. If a shape crosses the antimeridian, you must make two polygons and join them using the `AND` filter operator.
+
+`_geoPolygon` is not compatible with documents using only `_geo` data. You must specify a `_geojson` attribute to use `_geoPolygon`.
 
 </Tab>
 
@@ -924,7 +945,7 @@ You can search for science fiction books ordered from cheapest to most expensive
 
 #### Sorting results with `_geoPoint`
 
-When dealing with documents containing geolocation data, you can use `_geoPoint` to sort results based on their distance from a specific geographic location.
+When dealing with documents containing `_geo` data, you can use `_geoPoint` to sort results based on their distance from a specific geographic location.
 
 `_geoPoint` is a sorting function that requires two floating point numbers indicating a location's latitude and longitude. You must also specify whether the sort should be ascending (`asc`) or descending (`desc`):
 
@@ -946,7 +967,9 @@ Queries using `_geoPoint` will always include a `geoDistance` field containing t
 ]
 ```
 
-[You can read more about location-based sorting in our dedicated guide.](/learn/filtering_and_sorting/geosearch#sorting-results-with-_geopoint)
+Geographic sorting is only compatible with documents containing `_geo` data. `_geoPoint` ignores all data in the `_geojson` object.
+
+[You can read more about location-based sorting in the dedicated guide.](/learn/filtering_and_sorting/geosearch#sorting-results-with-_geopoint)
 
 ### Matching strategy
 
@@ -1195,6 +1218,20 @@ Configures Meilisearch to return search results based on a query's meaning and c
 #### Example
 
 <CodeSamplesSearchParameterGuideHybrid1 />
+
+```json
+{
+  "query": "PLACEHOLDER_QUERY",
+  "processingTimeMs": 10,
+  "limit": 20,
+  "offset": 0,
+  "estimatedTotalHits": 3,
+  "semanticHitCount": 3,
+  "hits": [
+    …
+  ]
+}
+```
 
 ### Vector
 

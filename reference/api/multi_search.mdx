@@ -226,6 +226,7 @@ Federated search requests return a single object and the following fields:
 | **`offset`**             | Number           | Number of documents skipped                                                      |
 | **`limit`**              | Number           | Number of documents to take                                                      |
 | **`estimatedTotalHits`** | Number           | Estimated total number of matches                                                |
+| **`semanticHitCount`**   | Number           | Exhaustive number of semantic search matches (only present in AI-powered searches)                          |
 | **`processingTimeMs`**   | Number           | Processing time of the query                                                     |
 | **`facetsByIndex`**      | Object           | [Data for facets present in the search results](#facetsbyindex)                  |
 | **`facetDistribution`**  | Object           | [Distribution of the given facets](#mergefacets)                                 |
