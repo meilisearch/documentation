@@ -3,7 +3,7 @@ title: Getting started with conversational search
 description: This article walks you through implementing Meilisearch's chat completions feature to create conversational search experiences in your application.
 ---
 
-To successfully implement a conversational search interface you must follow three steps: configure indexes for chat usage, create chat workspaces targeting different use-cases, and building a chat interface.
+To successfully implement a conversational search interface you must follow three steps: configure indexes for chat usage, create a chat workspaces, and build a chat interface.
 
 ## Prerequisites
 
@@ -21,7 +21,7 @@ First, enable the chat completions experimental feature:
 
 ```bash
 curl \
-  -X PATCH 'http://localhost:7700/experimental-features/' \
+  -X PATCH 'MEILISEARCH_URL/experimental-features/' \
   -H 'Authorization: Bearer MEILISEARCH_KEY' \
   -H 'Content-Type: application/json' \
   --data-binary '{
@@ -38,11 +38,11 @@ Conversational search is still in early development. Conversational agents may o
 When Meilisearch runs with a master key on an instance created after v1.15.1, it automatically generates a "Default Chat API Key" with `chatCompletions` and `search` permissions on all indexes. Check if you have the key using:
 
 ```bash
-curl http://localhost:7700/keys \
+curl MEILISEARCH_URL/keys \
   -H "Authorization: Bearer MEILISEARCH_KEY"
 ```
 
-Look for the key with the description "Default Chat API Key" Use this key when querying the `/chats` endpoint.
+Look for the key with the description "Default Chat API Key".
 
 #### Troubleshooting: Missing default chat API key
 
@@ -50,7 +50,7 @@ If your instance does not have a Default Chat API Key, create one manually:
 
 ```bash
 curl \
-  -X POST 'http://localhost:7700/keys' \
+  -X POST 'MEILISEARCH_URL/keys' \
   -H 'Authorization: Bearer MEILISEARCH_KEY' \
   -H 'Content-Type: application/json' \
   --data-binary '{
@@ -68,7 +68,7 @@ After activating the `/chats` route and obtaining an API key with chat permissio
 
 ```bash
 curl \
-  -X PATCH 'http://localhost:7700/indexes/INDEX_NAME/settings' \
+  -X PATCH 'MEILISEARCH_URL/indexes/INDEX_NAME/settings' \
   -H 'Authorization: Bearer MEILISEARCH_KEY' \
   -H 'Content-Type: application/json' \
   --data-binary '{
@@ -81,13 +81,14 @@ curl \
 ```
 
 - `description` gives the initial context of the conversation to the LLM. A good description improves relevance of the chat's answers
-- `documentTemplate` defines the document data Meilisearch sends to the AI provider. Consult the best [document template best practices](/learn/ai_powered_search/document_template_best_practices) article for more guidance
+- `documentTemplate` defines the document data Meilisearch sends to the AI provider. This template outputs all searchable fields in your documents, which may not be ideal if your documents have many fields. Consult the best [document template best practices](/learn/ai_powered_search/document_template_best_practices) article for more guidance
+- `documentTemplateMaxBytes` establishes a size limit for the document templates. Documents bigger than 400 bytes are truncated to ensure a good balance between speed and relevancy
 
 ## Configure a chat completions workspace
 
 The next step is to create a workspace. Chat completion workspaces are isolated configurations targeting different use cases. Each workspace can:
 
-- Use different embedding providers (openAi, azureOpenAi, mistral, gemini, vLlm)
+- Use different embedding providers (OpenAI, Azure OpenAI, Mistral, Gemini, vLLM)
 - Establish separate conversation contexts via baseline prompts
 - Access a specific set of indexes
 
@@ -99,7 +100,7 @@ Create a workspace setting your LLM provider as its `source`:
 
 ```bash OpenAI
 curl \
-  -X PATCH 'http://localhost:7700/chats/WORKSPACE_NAME/settings' \
+  -X PATCH 'MEILISEARCH_URL/chats/WORKSPACE_NAME/settings' \
   -H 'Authorization: Bearer MEILISEARCH_KEY' \
   -H 'Content-Type: application/json' \
   --data-binary '{
@@ -114,7 +115,7 @@ curl \
 
 ```bash Azure OpenAI
 curl \
-  -X PATCH 'http://localhost:7700/chats/WORKSPACE_NAME/settings' \
+  -X PATCH 'MEILISEARCH_URL/chats/WORKSPACE_NAME/settings' \
   -H 'Authorization: Bearer MEILISEARCH_KEY' \
   -H 'Content-Type: application/json' \
   --data-binary '{
@@ -129,7 +130,7 @@ curl \
 
 ```bash Mistral
 curl \
-  -X PATCH 'http://localhost:7700/chats/WORKSPACE_NAME/settings' \
+  -X PATCH 'MEILISEARCH_URL/chats/WORKSPACE_NAME/settings' \
   -H 'Authorization: Bearer MEILISEARCH_KEY' \
   -H 'Content-Type: application/json' \
   --data-binary '{
@@ -143,7 +144,7 @@ curl \
 
 ```bash Gemini
 curl \
-  -X PATCH 'http://localhost:7700/chats/WORKSPACE_NAME/settings' \
+  -X PATCH 'MEILISEARCH_URL/chats/WORKSPACE_NAME/settings' \
   -H 'Authorization: Bearer MEILISEARCH_KEY' \
   -H 'Content-Type: application/json' \
   --data-binary '{
@@ -157,7 +158,7 @@ curl \
 
 ```bash vLLM
 curl \
-  -X PATCH 'http://localhost:7700/chats/WORKSPACE_NAME/settings' \
+  -X PATCH 'MEILISEARCH_URL/chats/WORKSPACE_NAME/settings' \
   -H 'Authorization: Bearer MEILISEARCH_KEY' \
   -H 'Content-Type: application/json' \
   --data-binary '{
@@ -173,9 +174,9 @@ curl \
 
 Which fields are mandatory will depend on your chosen provider `source`. In most cases, you will have to provide an `apiKey` to access the provider.
 
-`baseUrl` indicates the URL Meilisearch queries when users submit questions to your chat interface.
+`baseUrl` indicates the URL Meilisearch queries when users submit questions to your chat interface. This is only mandatory for Azure OpenAI and vLLM sources.
 
-`prompts.system` gives the conversational search bot the baseline context of your users and their questions. The `prompts` object accepts a few other fields that provide more information to improve how the agent uses the information it finds via Meilisearch. In real-life scenarios filling these fields would improve the quality of conversational search results.
+`prompts.system` gives the conversational search bot the baseline context of your users and their questions. [The `prompts` object accepts a few other fields](/reference/api/chats#prompts) that provide more information to improve how the agent uses the information it finds via Meilisearch. In real-life scenarios filling these fields would improve the quality of conversational search results.
 
 ## Send your first chat completions request
 
@@ -183,7 +184,7 @@ You have finished configuring your conversational search agent. To test everythi
 
 ```bash
 curl -N \
-  -X POST 'http://localhost:7700/chats/WORKSPACE_NAME/chat/completions' \
+  -X POST 'MEILISEARCH_URL/chats/WORKSPACE_NAME/chat/completions' \
   -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
   -H 'Content-Type: application/json' \
   --data-binary '{
@@ -243,7 +244,7 @@ Integrating Meiliearch and the OpenAI SDK with JavaScript would look lik this:
 import OpenAI from 'openai';
 
 const client = new OpenAI({
-  baseURL: 'http://localhost:7700/chats/WORKSPACE_NAME',
+  baseURL: 'MEILISEARCH_URL/chats/WORKSPACE_NAME',
   apiKey: 'PROVIDER_API_KEY',
 });
 
@@ -287,7 +288,7 @@ Take particular note of the last lines, which output the streamed responses to t
 
 - Use either the master key or the "Default Chat API Key"
 - Don't use search or admin API keys for chat endpoints
-- Find your chat key: `curl http://localhost:7700/keys -H "Authorization: Bearer MEILISEARCH_KEY"`
+- Find your chat key: `curl MEILISEARCH_URL/keys -H "Authorization: Bearer MEILISEARCH_KEY"`
 
 #### "Socket connection closed unexpectedly"
 
@@ -298,14 +299,14 @@ Take particular note of the last lines, which output the streamed responses to t
 1. Check workspace configuration:
 
    ```bash
-   curl http://localhost:7700/chats/WORKSPACE_NAME/settings \
+   curl MEILISEARCH_URL/chats/WORKSPACE_NAME/settings \
      -H "Authorization: Bearer MEILISEARCH_KEY"
    ```
 
 2. Update with valid API key:
 
    ```bash
-   curl -X PATCH http://localhost:7700/chats/WORKSPACE_NAME/settings \
+   curl -X PATCH MEILISEARCH_URL/chats/WORKSPACE_NAME/settings \
      -H "Authorization: Bearer MEILISEARCH_KEY" \
      -H "Content-Type: application/json" \
      -d '{"apiKey": "your-valid-api-key"}'

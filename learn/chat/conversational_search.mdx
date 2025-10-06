@@ -1,23 +1,29 @@
 ---
 title: What is conversational search?
-description: Conversational search is an AI-powered feature that allows users to ask questions in everyday language and receive answers based on the information in Meilisearch's indexes
+description: Conversational search allows people to make search queries using natural languages.
 ---
+
+Conversational search is an AI-powered search feature that allows users to ask questions in everyday language and receive answers based on the information in Meilisearch's indexes.
 
 ## When to use conversational vs traditional search
 
 Use conversational search when:
 
 - Users need easy-to-read answers to specific questions
-- You are handling informational-dense content, such as software documentation and knowledge bases
+- You are handling informational-dense content, such as knowledge bases
 - Natural language interaction improves user experience
 
 Use traditional search when:
 
 - Users need to browse multiple options, such as an ecommerce website
-- Approximative answers are not acceptable
+- Approximate answers are not acceptable
 - Your users need very quick responses
 
-## How conversational search usage differs from traditional search
+<Warning>
+Conversational search is still in early development. Conversational agents may occasionally hallucinate inaccurate and misleading information, so it is important to closely monitor it in production environments.
+</Warning>
+
+## Conversational search user workflow
 
 ### Traditional search workflow
 
@@ -45,10 +51,6 @@ Meilisearch's chat completions API consolidates RAG creation into a single proce
 4. **Context management**: maintains conversation history by constantly pushing the full conversation to the dedicated tool
 
 Follow the [chat completions tutorial](/learn/chat/getting_started_with_chat) for information on how to implement a RAG with Meilisearch.
-
-<Warning>
-Conversational search is still in early development. Conversational agents may occasionally hallucinate inaccurate and misleading information, so it is important to closely monitor it in production environments.
-</Warning>
 
 ### Model Context Protocol (MCP)
 
