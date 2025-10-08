@@ -1,36 +1,29 @@
 ---
-title: Conversational search
-sidebarTitle: Conversational search
-description: Learn how to implement AI-powered conversational search using Meilisearch's chat feature
+title: What is conversational search?
+description: Conversational search allows people to make search queries using natural languages.
 ---
 
-Meilisearch's chat completions feature enables AI-powered conversational search, allowing users to ask questions in natural language and receive direct answers based on your indexed content. This feature transforms the traditional search experience into an interactive dialogue.
+Conversational search is an AI-powered search feature that allows users to ask questions in everyday language and receive answers based on the information in Meilisearch's indexes.
 
-<Note>
-This is an experimental feature. Use the Meilisearch Cloud UI or the experimental features endpoint to activate it:
+## When to use conversational vs traditional search
 
-```sh
-curl \
-  -X PATCH 'MEILISEARCH_URL/experimental-features/' \
-  -H 'Content-Type: application/json' \
-  --data-binary '{
-    "chatCompletions": true
-  }'
-```
-</Note>
+Use conversational search when:
 
-## What is conversational search?
+- Users need easy-to-read answers to specific questions
+- You are handling informational-dense content, such as knowledge bases
+- Natural language interaction improves user experience
 
-Conversational search interfaces allow users to:
+Use traditional search when:
 
-- Ask questions in natural language instead of using keywords
-- Receive direct answers rather than just document links
-- Maintain context across multiple questions
-- Get responses grounded in your actual content
+- Users need to browse multiple options, such as an ecommerce website
+- Approximate answers are not acceptable
+- Your users need very quick responses
 
-This approach bridges the gap between traditional search and modern AI experiences, making information more accessible and intuitive to find.
+<Warning>
+Conversational search is still in early development. Conversational agents may occasionally hallucinate inaccurate and misleading information, so it is important to closely monitor it in production environments.
+</Warning>
 
-## How chat completions differs from traditional search
+## Conversational search user workflow
 
 ### Traditional search workflow
 
@@ -43,73 +36,24 @@ This approach bridges the gap between traditional search and modern AI experienc
 1. User asks a question in natural language
 2. Meilisearch retrieves relevant documents
 3. AI generates a direct answer based on those documents
-4. User can ask follow-up questions
 
-## When to use chat completions vs traditional search
+## Implementation strategies
 
-### Use conversational search when:
+### Retrieval Augmented Generation (RAG)
 
-- Users need direct answers to specific questions
-- Content is informational (documentation, knowledge bases, FAQs)
-- Users benefit from follow-up questions
-- Natural language interaction improves user experience
+In the majority of cases, you should use the [`/chats` route](/reference/api/chats) to build a Retrieval Augmented Generation (RAG) pipeline. RAGs excel when working with unstructured data and emphasise high-quality responses.
 
-### Use traditional search when:
-
-- Users need to browse multiple options
-- Results require comparison (e-commerce products, listings)
-- Exact matching is critical
-- Response time is paramount
-
-## Use chat completions to implement RAG pipelines
-
-The chat completions feature implements a complete Retrieval Augmented Generation (RAG) pipeline in a single API endpoint. Meilisearch's chat completions consolidates RAG creation into one streamlined process:
+Meilisearch's chat completions API consolidates RAG creation into a single process:
 
 1. **Query understanding**: automatically transforms questions into search parameters
 2. **Hybrid retrieval**: combines keyword and semantic search for better relevancy
 3. **Answer generation**: uses your chosen LLM to generate responses
 4. **Context management**: maintains conversation history by constantly pushing the full conversation to the dedicated tool
 
-### Alternative: MCP integration
+Follow the [chat completions tutorial](/learn/chat/getting_started_with_chat) for information on how to implement a RAG with Meilisearch.
 
-When integrating Meilisearch with AI assistants and automation tools, consider using [Meilisearch's Model Context Protocol (MCP) server](/guides/ai/mcp). MCP enables standardized tool integration across various AI platforms and applications.
+### Model Context Protocol (MCP)
 
-## Architecture overview
+An alternative method is using a Model Context Protocol (MCP) server. MCPs are designed for broader uses that go beyond answering questions, but can be useful in contexts where having up-to-date data is more important than comprehensive answers.
 
-Chat completions operate through workspaces, which are isolated configurations for different use cases. Each workspace can:
-
-- Use different LLM sources (openAi, azureOpenAi, mistral, gemini, vLlm)
-- Apply custom prompts
-- Access specific indexes based on API keys
-- Maintain separate conversation contexts
-
-### Key components
-
-1. **Chat endpoint**: `/chats/{workspace}/chat/completions`
-   - OpenAI-compatible interface
-   - Supports streaming responses
-   - Handles tool calling for index searches
-
-2. **Workspace settings**: `/chats/{workspace}/settings`
-   - Configure LLM provider and model
-   - Set system prompts
-   - Manage API credentials
-
-3. **Index integration**:
-   - Automatically searches relevant indexes
-   - Uses existing Meilisearch search capabilities
-   - Respects API key permissions
-
-## Security considerations
-
-The chat completions feature integrates with Meilisearch's existing security model:
-
-- **API key permissions**: chat only accesses indexes visible to the provided API key
-- **Tenant tokens**: support for multi-tenant applications
-- **LLM credentials**: stored securely in workspace settings
-- **Content isolation**: responses based only on indexed content
-
-## Next steps
-
-- [Get started with chat completions implementation](/learn/chat/getting_started_with_chat)
-- [Explore the chat completions API reference](/reference/api/chats)
+Follow the [dedicated MCP guide](/guides/ai/mcp) if you want to implement it in your application.
