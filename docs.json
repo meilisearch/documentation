@@ -145,11 +145,25 @@
       }
     ]
   },
+  "api": {
+   "playground": {
+     "display": "simple"
+   },
+   "examples": {
+     "languages": ["curl", "python", "javascript"],
+     "defaults": "required",
+     "prefill": true
+   }
+  },
   "navigation": {
     "versions": [
       {
         "version": "latest",
         "anchors": [
+          {
+            "anchor": "Open API",
+            "openapi": "openapi.json" 
+          },
           {
             "anchor": "Learn",
             "icon": "book",
