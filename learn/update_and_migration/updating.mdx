@@ -164,7 +164,7 @@ Cancelling the update task automatically rolls back your database to its state b
 
 After launching Meilisearch with `--experimental-dumpless-upgrade` flag:
 
-1. Cancel the `databaseUpgrade` task
+1. Cancel the `upgradeDatabase` task
 2. If you cancelled the update before it failed, skip to the next step. If the update failed, relaunch Meilisearch using the binary of the version you were upgrading to
 3. Wait for Meilisearch to process your cancellation request
 4. Replace the new binary with the binary of the previous version
