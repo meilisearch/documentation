@@ -2668,7 +2668,7 @@ This field is incompatible with `rest` and `userProvided` embedders.
 
 ##### `documentTemplate`
 
-`documentTemplate` is a string containing a [Liquid template](https://shopify.github.io/liquid/basics/introduction). Meillisearch interpolates the template for each document and sends the resulting text to the embedder. The embedder then generates document vectors based on this text.
+`documentTemplate` is a string containing a [Liquid template](https://shopify.github.io/liquid/basics/introduction). Meillisearch interpolates the template for each document and sends the resulting text to the embedder. The embedder then generates document vectors based on this text. This only happens when Meilisearch auto-generates embeddings—if you are using custom embedders, you must create an embedding generation pipeline outside of Meilisearch.
 
 You may use the following context values:
 
