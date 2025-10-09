@@ -117,6 +117,40 @@ Meilisearch compresses a response if the request contains the `Accept-Encoding` 
 curl -sH 'Accept-encoding: gzip' 'MEILISEARCH_URL/indexes/movies/search' | gzip -
 ```
 
+### Search metadata
+
+You may use an optional `Meili-Include-Metadata` header when performing search and multi-search requests:
+
+```
+curl -X POST 'http://localhost:7700/indexes/INDEX_NAME/search' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+  -H 'Meili-Include-Metadata: true' \
+  -d '{"q": ""}'
+```
+
+Responses will include a `metadata` object:
+
+```json
+{
+  "hits": [ … ],
+  "metadata": {
+    "queryUid": "0199a41a-8186-70b3-b6e1-90e8cb582f35",
+    "indexUid": "INDEX_NAME",
+    "primaryKey": "INDEX_PRIMARY_KEY"
+  }
+}
+```
+
+`metadata` contains the following fields:
+
+|    Field     |   Type  |                        Description                         |
+|:------------:|:-------:|:----------------------------------------------------------:|
+| `queryUid`   | UUID v7 | Unique identifier for the query                            |
+| `indexUid`   | String  | Index identifier                                           |
+| `primaryKey` | String  | Primary key field name, if index has a primary key         |
+| `remote`     | String  | Remote instance name, if request targets a remote instance |
+
 ## Request body
 
 The request body is data sent to the API. It is used with PUT, POST, and PATCH methods to create or update a resource. You must provide request bodies in JSON.
