@@ -28,6 +28,10 @@ curl \
   }'
 ```
 
+<Warning>
+Embedders with `source: userProvided` are incompatible with  `documentTemplate` and `documentTemplateMaxBytes`.
+</Warning>
+
 ## Add documents to Meilisearch
 
 Next, use [the `/documents` endpoint](/reference/api/documents?utm_campaign=vector-search&utm_source=docs&utm_medium=vector-search-guide) to upload vectorized documents. Place vector data in your documents' `_vectors` field:
