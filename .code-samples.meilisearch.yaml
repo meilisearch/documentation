@@ -1518,7 +1518,9 @@ rename_an_index_1: |-
     -X PATCH 'MEILISEARCH_URL/indexes/INDEX_A' \
     -H 'Content-Type: application/json' \
     --data-binary '{ "uid": "INDEX_B" }'
-
+compact_index_1: |-
+  curl \
+    -X POST 'MEILISEARCH_URL/indexes/INDEX_UID/compact'
 
 ### Code samples for experimental features
 experimental_get_metrics_1: |-

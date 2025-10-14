@@ -1,0 +1,36 @@
+---
+title: Compact
+description: Use the `/compact` route to reduce database fragmentation.
+---
+
+import { RouteHighlighter } from '/snippets/route_highlighter.mdx'
+
+import CodeSamplesCompactIndex1 from '/snippets/samples/code_samples_compact_index_1.mdx';
+
+Index fragmentation occurs naturally as you use Meilisearch and can lead to decreased performance over time. `/compact` reorganizes the database and prunes unused space, which may lead to improved indexing and search speeds.
+
+<Tip>
+To obtain a rough estimate of your index's fragmentation, query the `/stats` route and compute the ratio between `databaseSize` and `usedDatabaseSize`. If the ratio is >= X.Y, compacting your indexes may improve performance.
+</Tip>
+
+## Compact database
+
+<RouteHighlighter method="POST" path="/indexes/{index_uid}/compact" />
+
+Compact the specified index.
+
+### Example
+
+<CodeSamplesCompactIndex1 />
+
+#### Response: `202 Accepted`
+
+```json
+{
+  "taskUid": 1,
+  "indexUid": "INDEX_NAME",
+  "status": "enqueued",
+  "type": "IndexCompaction",
+  "enqueuedAt": "2025-01-01T00:00:00.000000Z"
+}
+```
