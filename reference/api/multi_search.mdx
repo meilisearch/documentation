@@ -215,7 +215,7 @@ Each search result object is composed of the following fields:
 | **`facetStats`**         | Object           | [The numeric `min` and `max` values per facet](/reference/api/search#facetstats) |
 | **`processingTimeMs`**   | Number           | Processing time of the query                                                     |
 | **`query`**              | String           | Query originating the response                                                   |
-| **`requestUid`**         | String           | A UUID v7 identifying the request                               |
+| **`requestUid`**         | String           | A UUID v7 identifying the search request                               |
 
 #### Federated multi-search requests
 
@@ -233,7 +233,7 @@ Federated search requests return a single object and the following fields:
 | **`facetDistribution`**  | Object           | [Distribution of the given facets](#mergefacets)                                 |
 | **`facetStats`**         | Object           | [The numeric `min` and `max` values per facet](#mergefacets)                     |
 | **`remoteErrors`**       | Object           | Indicates which remote requests failed and why                                   |
-| **`requestUid`**         | String           | A UUID v7 identifying the request                               |
+| **`requestUid`**         | String           | A UUID v7 identifying the search request                               |
 
 Each result in the `hits` array contains an additional `_federation` field with the following fields:
 
