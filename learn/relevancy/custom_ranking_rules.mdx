@@ -1,26 +1,27 @@
 ---
 title: Custom ranking rules
-sidebarTitle: Custom ranking rules
-description: Custom ranking rules promote certain documents over other search results that are otherwise equally relevant.
+description: Custom ranking rules sort results based on the lexicographical order of a specified attribute.
 ---
 
 There are two types of ranking rules in Meilisearch: [built-in ranking rules](/learn/relevancy/ranking_rules) and custom ranking rules. This article describes the main aspects of using and configuring custom ranking rules.
 
-Custom ranking rules promote certain documents over other search results that are otherwise equally relevant.
+Custom ranking rules are lexicographical sorts. They order results based on the value of a specific attribute's alphabetic and numeric value.
 
-## Ascending and descending sorting rules
+Custom ranking rules do not take search query relevancy into consideration. In the majority of cases you should place a custom ranking after the built-in ranking rules.
 
-Meilisearch supports two types of custom rules: one for ascending sort and one for descending sort.
+- `attribute_name:asc` sorts results by increasing attribute value. For example, `price:asc` shows a product with `price: 1.00` before a product with `price: 2.00`
 
-To add a custom ranking rule, you have to communicate the attribute name followed by a colon (`:`) and either `asc` for ascending order or `desc` for descending order.
+- `attribute_name:desc` sorts results by decreasing attribute value. For example, `price:desc` shows a product with `price: 5.00` before a product with `price: 3.00`
 
-- To apply an **ascending sort** (results sorted by increasing value of the attribute): `attribute_name:asc`
-
-- To apply a **descending sort** (results sorted by decreasing value of the attribute): `attribute_name:desc`
-
-**The attribute must have either a numeric or a string value** in all of the documents contained in that index.
+**The attribute must have either a numeric or a string value** in all documents contained in that index.
 
 You can add this rule to the existing list of ranking rules using the [update settings endpoint](/reference/api/settings#update-settings) or [update ranking rules endpoint](/reference/api/settings#update-ranking-rules).
+
+<Warning>
+Custom ranking rules are simple lexicographical sorts. They sort results by ascending or descending order and ignore search result relevancy.
+
+If you want to promote results with matches in certain attributes, add them at the beginning of the [searchable attributes list](/reference/api/settings#searchable-attributes).
+</Warning>
 
 ## Example
 
