@@ -9,8 +9,14 @@ import CodeSamplesCompactIndex1 from '/snippets/samples/code_samples_compact_ind
 
 Index fragmentation occurs naturally as you use Meilisearch and can lead to decreased performance over time. `/compact` reorganizes the database and prunes unused space, which may lead to improved indexing and search speeds.
 
+Meilisearch Cloud monitors database fragmentation and compacts indexes as needed. Self-hosted users may have to build a pipeline to periodically indexes and fix performance degradation.
+
 <Tip>
-To obtain a rough estimate of your index's fragmentation, query the `/stats` route and compute the ratio between `databaseSize` and `usedDatabaseSize`. If the ratio is >= X.Y, compacting your indexes may improve performance.
+Fragmentation is directly related to the number of indexing operations Meilisearch performs. Common indexing operations include adding and updating documents, as well as changes to index settings.
+
+To estimate your index's fragmentation, query the `/stats` route. If the ratio between `databaseSize` and `usedDatabaseSize` is bigger than 30%, compacting your indexes may improve performance.
+
+If you update documents in your indexes a few times per day, you may benefit from checking fragmentation and compacting your database once per week. If indexing load is very high, compacting indexes multiple times per week may be necessary to ensure optimal performance.
 </Tip>
 
 ## Compact database
