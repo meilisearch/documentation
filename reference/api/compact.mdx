@@ -25,6 +25,8 @@ If you update documents in your indexes a few times per day, you may benefit fro
 
 Compact the specified index.
 
+During compaction, Meilisearch must temporarily duplicate the database. Ensure you have at least twice the current size of your database in free disk space when compacting an index.
+
 ### Example
 
 <CodeSamplesCompactIndex1 />
