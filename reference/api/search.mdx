@@ -117,6 +117,7 @@ By default, [this endpoint returns a maximum of 1000 results](/learn/resources/k
 | **`facetStats`**         | Object           | [The numeric `min` and `max` values per facet](#facetstats) |
 | **`processingTimeMs`**   | Number           | Processing time of the query                                |
 | **`query`**              | String           | Query originating the response                              |
+| **`requestUid`**         | String           | A UUID v7 identifying the search request                               |
 
 #### Exhaustive and estimated total number of search results
 
@@ -157,7 +158,8 @@ You can [read more about pagination in our dedicated guide](/guides/front_end/pa
   "limit": 20,
   "estimatedTotalHits": 976,
   "processingTimeMs": 35,
-  "query": "american "
+  "query": "american",
+  "requestUid": "0198e71e-47d2-7cd3-b507-1d0cc930b1f1"
 }
 ```
 
@@ -230,6 +232,7 @@ By default, [this endpoint returns a maximum of 1000 results](/learn/resources/k
 | **`facetStats`**         | Object           | [The numeric `min` and `max` values per facet](#facetstats) |
 | **`processingTimeMs`**   | Number           | Processing time of the query                                |
 | **`query`**              | String           | Query originating the response                              |
+| **`requestUid`**         | String           | A UUID v7 identifying the search request                               |
 
 ### Example
 
@@ -260,7 +263,8 @@ By default, [this endpoint returns a maximum of 1000 results](/learn/resources/k
   "limit": 20,
   "estimatedTotalHits": 976,
   "processingTimeMs": 35,
-  "query": "american "
+  "query": "american",
+  "requestUid": "0198e71e-47d2-7cd3-b507-1d0cc930b1f1"
 }
 ```
 

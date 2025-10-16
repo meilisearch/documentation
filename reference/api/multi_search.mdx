@@ -215,6 +215,7 @@ Each search result object is composed of the following fields:
 | **`facetStats`**         | Object           | [The numeric `min` and `max` values per facet](/reference/api/search#facetstats) |
 | **`processingTimeMs`**   | Number           | Processing time of the query                                                     |
 | **`query`**              | String           | Query originating the response                                                   |
+| **`requestUid`**         | String           | A UUID v7 identifying the search request                               |
 
 #### Federated multi-search requests
 
@@ -232,6 +233,7 @@ Federated search requests return a single object and the following fields:
 | **`facetDistribution`**  | Object           | [Distribution of the given facets](#mergefacets)                                 |
 | **`facetStats`**         | Object           | [The numeric `min` and `max` values per facet](#mergefacets)                     |
 | **`remoteErrors`**       | Object           | Indicates which remote requests failed and why                                   |
+| **`requestUid`**         | String           | A UUID v7 identifying the search request                               |
 
 Each result in the `hits` array contains an additional `_federation` field with the following fields:
 
@@ -267,7 +269,8 @@ Each result in the `hits` array contains an additional `_federation` field with 
       "processingTimeMs": 26,
       "limit": 5,
       "offset": 0,
-      "estimatedTotalHits": 22
+      "estimatedTotalHits": 22,
+      "requestUid": "0198e71e-47d2-7cd3-b507-1d0cc930b1f1"
     },
     {
       "indexUid": "movies",
@@ -283,7 +286,8 @@ Each result in the `hits` array contains an additional `_federation` field with 
       "processingTimeMs": 5,
       "limit": 5,
       "offset": 0,
-      "estimatedTotalHits": 11
+      "estimatedTotalHits": 11,
+      "requestUid": "0198e71e-47d2-7cd3-b507-1d0cc930b1f1"
     },
     {
       "indexUid": "movie_ratings",
@@ -298,7 +302,8 @@ Each result in the `hits` array contains an additional `_federation` field with 
       "processingTimeMs": 0,
       "limit": 20,
       "offset": 0,
-      "estimatedTotalHits": 1
+      "estimatedTotalHits": 1,
+      "requestUid": "0198e71e-47d2-7cd3-b507-1d0cc930b1f1"
     }
   ]
 }
@@ -337,7 +342,8 @@ Each result in the `hits` array contains an additional `_federation` field with 
   "limit": 20,
   "offset": 0,
   "estimatedTotalHits": 2,
-  "semanticHitCount": 0
+  "semanticHitCount": 0,
+  "requestUid": "0198e71e-47d2-7cd3-b507-1d0cc930b1f1"
 }
 ```
 
@@ -378,6 +384,7 @@ Each result in the `hits` array contains an additional `_federation` field with 
   "limit": 5,
   "offset": 0,
   "estimatedTotalHits": 111,
+  "requestUid": "0198e71e-47d2-7cd3-b507-1d0cc930b1f1",
   "remoteErrors": {
     "ms-02": {
       "message": "error sending request",
