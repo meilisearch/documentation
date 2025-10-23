@@ -19,6 +19,11 @@
       "dark": "#1A003B"
     }
   },
+  "seo": {
+      "metatags": {
+          "canonical": "https://meilisearch.com/docs"
+      }
+  },
   "appearance": {
     "default": "dark"
   },
