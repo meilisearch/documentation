@@ -1,5 +1,5 @@
 ---
-title: Optimize indexing performance by analyzing batch statistics 
+title: Optimize indexing performance with batch statistics 
 description: Learn how to analyze the `progressTrace` to identify and resolve indexing bottlenecks in Meilisearch.
 ---
 
@@ -7,11 +7,11 @@ description: Learn how to analyze the `progressTrace` to identify and resolve in
 
 Indexing performance can vary significantly depending on your dataset, index settings, and hardware. The [batch object](/reference/api/batches) provides information about the progress of asynchronous indexing operations.
 
-The `progressTrace` field within the batch object offers a detailed breakdown of where time is spent during the indexing process. By analyzing this data, you can identify bottlenecks and adjust configuration settings to improve indexing speed.
+The `progressTrace` field within the batch object offers a detailed breakdown of where time is spent during the indexing process. Use this data to identify bottlenecks and improve indexing speed.
 
 ## Understanding the `progressTrace`
 
-The `progressTrace` is a hierarchical trace showing each phase of indexing and how long it took.
+`progressTrace` is a hierarchical trace showing each phase of indexing and how long it took.
 Each entry follows the structure:
 
 ```json
@@ -24,7 +24,7 @@ This means:
 - The subtask was **extracting word proximity**.
 - It took **33.71 seconds**.
 
-Your goal is to focus on the **longest-running steps** and understand which index settings or data characteristics influence them.
+Focus on the **longest-running steps** and investigate which index settings or data characteristics influence them.
 
 ## Key phases and how to optimize them
 
@@ -32,7 +32,7 @@ Your goal is to focus on the **longest-running steps** and understand which inde
 
 | Trace key | Description | Optimization |
 |------------|--------------|--------------|
-| `computing document changes`, `extracting documents` | Meilisearch compares incoming documents to existing ones. | No direct optimization possible. The duration scales with the number and size of incoming documents.|
+| `computing document changes`, `extracting documents` | Meilisearch compares incoming documents to existing ones. | No direct optimization possible. Process duration scales with the number and size of incoming documents.|
 
 ### Filterable attributes
 
@@ -44,40 +44,40 @@ Your goal is to focus on the **longest-running steps** and understand which inde
 
 | Trace key | Description | Optimization |
 |------------|--------------|--------------|
-| `extracting words`, `merging word caches` | Tokenizes text and builds the inverted index. | - Ensure the [**searchable attributes**](/reference/api/settings#searchable-attributes) list includes only the fields you want to be checked for query word matches. |
+| `extracting words`, `merging word caches` | Tokenizes text and builds the inverted index. | Ensure the [searchable attributes](/reference/api/settings#searchable-attributes) list only includes the fields you want to be checked for query word matches. |
 
 ### Proximity precision
 
 | Trace key | Description | Optimization |
 |------------|--------------|--------------|
-| `extracting word proximity`, `merging word proximity` | Builds the data structures for phrase and attribute ranking. | Lower the precision of this operation by setting [proximity precision](/reference/api/settings#proximity-precision) to `byAttribute` instead of the default `byWord`|
+| `extracting word proximity`, `merging word proximity` | Builds data structures for phrase and attribute ranking. | Lower the precision of this operation by setting [proximity precision](/reference/api/settings#proximity-precision) to `byAttribute` |
 
 ### Disk I/O and hardware bottlenecks
 
 | Trace key | Description | Optimization |
 |------------|--------------|--------------|
-| `waiting for database writes` | Time spent writing data to disk. | No direct optimization possible. Either the disk is slow, either the quantity of data to write is big. Avoid HDDs (Hard Disk Drives). |
+| `waiting for database writes` | Time spent writing data to disk. | No direct optimization possible. Either the disk is too slow or you are writing too much data in a single operation. Avoid HDDs (Hard Disk Drives) |
 | `waiting for extractors` | Time spent waiting for CPU-bound extraction. | No direct optimization possible. Indicates a CPU bottleneck. Use more cores or scale horizontally with [sharding](/learn/advanced/sharding). |
 
 ### Facets and filterable attributes
 
 | Trace key | Description | Optimization |
 |------------|--------------|--------------|
-| `post processing facets > strings bulk` / `numbers bulk` | Processes equality or comparison filters. | - Disable unused [**filter features**](/reference/api/settings#features), such as comparison operators on string values. <br/>- Keep [**sortable attributes**](reference/api/settings#sortable-attributes) to the minimum required. |
+| `post processing facets > strings bulk` / `numbers bulk` | Processes equality or comparison filters. | - Disable unused [**filter features**](/reference/api/settings#features), such as comparison operators on string values. <br /> - Reduce the number of [**sortable attributes**](reference/api/settings#sortable-attributes). |
 | `post processing facets > facet search` | Builds structures for the [facet search API](/reference/api/facet_search). | If you don’t use the facet search API, [disable it](/reference/api/settings#update-facet-search-settings).|
 
 ### Embeddings
 
 | Trace key | Description | Optimization |
 |------------|--------------|--------------|
-| `writing embeddings to database` | Time spent saving vector embeddings. | - Use smaller embedding vectors when possible. <br/>- You can avoid recomputing embeddings on document update by  [disabling embedding regeneration](/reference/api/documents#vectors). <br/>- Consider enabling [binary quantization](/reference/api/settings#binaryquantized) for your embedders. |
+| `writing embeddings to database` | Time spent saving vector embeddings. | Use embedding vectors with fewer dimensions. <br/>- [Disabling embedding regeneration on document update](/reference/api/documents#vectors). <br/>- Consider enabling [binary quantization](/reference/api/settings#binaryquantized). |
 
 ### Word prefixes and post-processing
 
 | Trace key | Description | Optimization |
 |------------|--------------|--------------|
-| `post processing words > word prefix *` | Builds prefix data for autocomplete. Allows to match documents that begin with a specific query term, instead of only exact matches.| Disable [**prefix search**](/reference/api/settings#prefix-search) (`prefixSearch: disabled`) if not required. <br/> Note that this can severely impact search result relevancy. |
-| `post processing words > word fst` | Builds the word FST (finite state transducer). | No direct action possible, as it depends on the number of different words in the database. Fewer searchable words can improve speed. |
+| `post processing words > word prefix *` | Builds prefix data for autocomplete. Allows matching documents that begin with a specific query term, instead of only exact matches.| Disable [**prefix search**](/reference/api/settings#prefix-search) (`prefixSearch: disabled`). *This can severely impact search result relevancy.* |
+| `post processing words > word fst` | Builds the word FST (finite state transducer). | No direct action possible, as FST size reflect the number of different words in the database. Using documents with fewer searchable words may improve operation speed. |
 
 ## Example analysis
 
@@ -87,7 +87,7 @@ If you see:
 "processing tasks > indexing > post processing facets > facet search": "1763.06s"
 ```
 
-The [facet search feature](/learn/filtering_and_sorting/search_with_facet_filters#searching-facet-values) is consuming significant time. If your application doesn’t use it, disable it:
+[Facet searching](/learn/filtering_and_sorting/search_with_facet_filters#searching-facet-values) is raking significant indexing time. If your application doesn’t use facets, disable the feature:
 
 ```
 client.index('INDEX_NAME').updateFacetSearch(false);
