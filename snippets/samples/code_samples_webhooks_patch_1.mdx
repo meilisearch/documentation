@@ -26,4 +26,13 @@ client.UpdateWebhook("WEBHOOK_UUID", &meilisearch.UpdateWebhookRequest{
   },
 });
 ```
+
+```rust Rust
+let mut update = meilisearch_sdk::webhooks::WebhookUpdate::new();
+update.remove_header("referer");
+let webhook = client
+  .update_webhook("WEBHOOK_UUID", &update)
+  .await
+  .unwrap();
+```
 </CodeGroup>
