@@ -20,60 +20,6 @@
     }
   ],
   "paths": {
-    "/dumps": {
-      "post": {
-        "tags": [
-          "Dumps"
-        ],
-        "summary": "Create a dump",
-        "description": "Triggers a dump creation process. Once the process is complete, a dump is created in the\n[dump directory](https://www.meilisearch.com/docs/learn/self_hosted/configure_meilisearch_at_launch#dump-directory).\nIf the dump directory does not exist yet, it will be created.",
-        "operationId": "create_dump",
-        "responses": {
-          "202": {
-            "description": "Dump is being created",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/SummarizedTaskView"
-                },
-                "example": {
-                  "taskUid": 0,
-                  "indexUid": null,
-                  "status": "enqueued",
-                  "type": "DumpCreation",
-                  "enqueuedAt": "2021-01-01T09:39:00.000000Z"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "The authorization header is missing",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseError"
-                },
-                "example": {
-                  "message": "The Authorization header is missing. It must use the bearer authorization method.",
-                  "code": "missing_authorization_header",
-                  "type": "auth",
-                  "link": "https://docs.meilisearch.com/errors#missing_authorization_header"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "Bearer": [
-              "dumps.create",
-              "dumps.*",
-              "*"
-            ]
-          }
-        ]
-      }
-    },
     "/batches": {
       "get": {
         "tags": [
@@ -375,7 +321,7 @@
     "/batches/{batchUid}": {
       "get": {
         "tags": [
-          "Batches"
+          "Batch number 2"
         ],
         "summary": "Get one batch",
         "description": "Get a single batch.",
@@ -448,6 +394,60 @@
             "Bearer": [
               "tasks.get",
               "tasks.*",
+              "*"
+            ]
+          }
+        ]
+      }
+    },
+    "/dumps": {
+      "post": {
+        "tags": [
+          "Dumps1"
+        ],
+        "summary": "Create a dumppty",
+        "description": "Triggers a dump creation process. Once the process is complete, a dump is created in the\n[dump directory](https://www.meilisearch.com/docs/learn/self_hosted/configure_meilisearch_at_launch#dump-directory).\nIf the dump directory does not exist yet, it will be created.",
+        "operationId": "create_dump",
+        "responses": {
+          "202": {
+            "description": "Dump is being created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SummarizedTaskView"
+                },
+                "example": {
+                  "taskUid": 0,
+                  "indexUid": null,
+                  "status": "enqueued",
+                  "type": "DumpCreation",
+                  "enqueuedAt": "2021-01-01T09:39:00.000000Z"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The authorization header is missing",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "example": {
+                  "message": "The Authorization header is missing. It must use the bearer authorization method.",
+                  "code": "missing_authorization_header",
+                  "type": "auth",
+                  "link": "https://docs.meilisearch.com/errors#missing_authorization_header"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": [
+              "dumps.create",
+              "dumps.*",
               "*"
             ]
           }
@@ -14848,10 +14848,11 @@
       }
     },
     {
-      "name": "Dumps",
+      "name": "Dumps2",
       "description": "The `dumps` route allows the creation of database dumps.\nDumps are `.dump` files that can be used to launch Meilisearch. Dumps are compatible between Meilisearch versions.\nCreating a dump is also referred to as exporting it, whereas launching Meilisearch with a dump is referred to as importing it.\nDuring a [dump export](https://www.meilisearch.com/docs/reference/api/dump#create-a-dump), all indexes of the current instance are\nexported—together with their documents and settings—and saved as a single `.dump` file. During a dump import,\nall indexes contained in the indicated `.dump` file are imported along with their associated documents and settings.\nAny existing index with the same uid as an index in the dump file will be overwritten.\nDump imports are [performed at launch](https://www.meilisearch.com/docs/learn/advanced/dumps#importing-a-dump) using an option.",
       "externalDocs": {
-        "url": "https://www.meilisearch.com/docs/reference/api/dump"
+        "url": "https://www.meilisearch.com/docs/reference/api/dump",
+        "description": "lorem ipsum"
       }
     },
     {
