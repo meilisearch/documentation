@@ -28,43 +28,53 @@ Focus on the **longest-running steps** and investigate which index settings or d
 
 ## Key phases and how to optimize them
 
-### Document processing
+### `computing document changes`and `extracting documents`
 
-| Trace key | Description | Optimization |
-|------------|--------------|--------------|
-| `computing document changes`, `extracting documents` | Meilisearch compares incoming documents to existing ones. | No direct optimization possible. Process duration scales with the number and size of incoming documents.|
+| Description | Optimization |
+|--------------|--------------|
+| Meilisearch compares incoming documents to existing ones. | No direct optimization possible. Process duration scales with the number and size of incoming documents.|
 
-### Filterable attributes
+### `extracting facets` and `merging facet caches`
 
-| Trace key | Description | Optimization |
-|------------|--------------|--------------|
-| `extracting facets`, `merging facet caches` | Extracts and merges filterable attributes. | Keep the number of [**filterable attributes**](/reference/api/settings#filterable-attributes) to a minimum. |
+| Description | Optimization |
+|--------------|--------------|
+| Extracts and merges filterable attributes. | Keep the number of [**filterable attributes**](/reference/api/settings#filterable-attributes) to a minimum. |
 
-### Searchable attributes
+### `extracting words` and `merging word caches`
 
-| Trace key | Description | Optimization |
-|------------|--------------|--------------|
-| `extracting words`, `merging word caches` | Tokenizes text and builds the inverted index. | Ensure the [searchable attributes](/reference/api/settings#searchable-attributes) list only includes the fields you want to be checked for query word matches. |
+| Description | Optimization |
+|--------------|--------------|
+| Tokenizes text and builds the inverted index. | Ensure the [searchable attributes](/reference/api/settings#searchable-attributes) list only includes the fields you want to be checked for query word matches. |
 
-### Proximity precision
+### `extracting word proximity`, `merging word proximity`
 
-| Trace key | Description | Optimization |
-|------------|--------------|--------------|
-| `extracting word proximity`, `merging word proximity` | Builds data structures for phrase and attribute ranking. | Lower the precision of this operation by setting [proximity precision](/reference/api/settings#proximity-precision) to `byAttribute` |
+| Description | Optimization |
+|--------------|--------------|
+| Builds data structures for phrase and attribute ranking. | Lower the precision of this operation by setting [proximity precision](/reference/api/settings#proximity-precision) to `byAttribute` |
 
-### Disk I/O and hardware bottlenecks
+### `waiting for database writes`
 
-| Trace key | Description | Optimization |
-|------------|--------------|--------------|
-| `waiting for database writes` | Time spent writing data to disk. | No direct optimization possible. Either the disk is too slow or you are writing too much data in a single operation. Avoid HDDs (Hard Disk Drives) |
-| `waiting for extractors` | Time spent waiting for CPU-bound extraction. | No direct optimization possible. Indicates a CPU bottleneck. Use more cores or scale horizontally with [sharding](/learn/advanced/sharding). |
+| Description | Optimization |
+|--------------|--------------|
+| Time spent writing data to disk. | No direct optimization possible. Either the disk is too slow or you are writing too much data in a single operation. Avoid HDDs (Hard Disk Drives) |
 
-### Facets and filterable attributes
+### `waiting for extractors`
 
-| Trace key | Description | Optimization |
-|------------|--------------|--------------|
-| `post processing facets > strings bulk` / `numbers bulk` | Processes equality or comparison filters. | - Disable unused [**filter features**](/reference/api/settings#features), such as comparison operators on string values. <br /> - Reduce the number of [**sortable attributes**](reference/api/settings#sortable-attributes). |
-| `post processing facets > facet search` | Builds structures for the [facet search API](/reference/api/facet_search). | If you don’t use the facet search API, [disable it](/reference/api/settings#update-facet-search-settings).|
+| Description | Optimization |
+|--------------|--------------|
+| Time spent waiting for CPU-bound extraction. | No direct optimization possible. Indicates a CPU bottleneck. Use more cores or scale horizontally with [sharding](/learn/advanced/sharding). |
+
+### `post processing facets > strings bulk` / `numbers bulk`
+
+| Description | Optimization |
+|--------------|--------------|
+| Processes equality or comparison filters. | - Disable unused [**filter features**](/reference/api/settings#features), such as comparison operators on string values. <br /> - Reduce the number of [**sortable attributes**](reference/api/settings#sortable-attributes). |
+
+### `post processing facets > facet search`
+
+| Description | Optimization |
+|--------------|--------------|
+| Builds structures for the [facet search API](/reference/api/facet_search). | If you don’t use the facet search API, [disable it](/reference/api/settings#update-facet-search-settings).|
 
 ### Embeddings
 
@@ -72,12 +82,17 @@ Focus on the **longest-running steps** and investigate which index settings or d
 |------------|--------------|--------------|
 | `writing embeddings to database` | Time spent saving vector embeddings. | Use embedding vectors with fewer dimensions. <br/>- [Disabling embedding regeneration on document update](/reference/api/documents#vectors). <br/>- Consider enabling [binary quantization](/reference/api/settings#binaryquantized). |
 
-### Word prefixes and post-processing
+### `post processing words > word prefix *`
 
-| Trace key | Description | Optimization |
-|------------|--------------|--------------|
-| `post processing words > word prefix *` | Builds prefix data for autocomplete. Allows matching documents that begin with a specific query term, instead of only exact matches.| Disable [**prefix search**](/reference/api/settings#prefix-search) (`prefixSearch: disabled`). *This can severely impact search result relevancy.* |
-| `post processing words > word fst` | Builds the word FST (finite state transducer). | No direct action possible, as FST size reflect the number of different words in the database. Using documents with fewer searchable words may improve operation speed. |
+| Description | Optimization |
+|--------------|--------------|
+| | Builds prefix data for autocomplete. Allows matching documents that begin with a specific query term, instead of only exact matches.| Disable [**prefix search**](/reference/api/settings#prefix-search) (`prefixSearch: disabled`). _This can severely impact search result relevancy._ |
+
+### `post processing words > word fst`
+
+| Description | Optimization |
+|--------------|--------------|
+| Builds the word FST (finite state transducer). | No direct action possible, as FST size reflect the number of different words in the database. Using documents with fewer searchable words may improve operation speed. |
 
 ## Example analysis
 
@@ -89,8 +104,11 @@ If you see:
 
 [Facet searching](/learn/filtering_and_sorting/search_with_facet_filters#searching-facet-values) is raking significant indexing time. If your application doesn’t use facets, disable the feature:
 
-```
-client.index('INDEX_NAME').updateFacetSearch(false);
+```bash
+curl \
+  -X PUT 'MEILISEARCH_URL/indexes/INDEX_UID/settings/facet-search' \
+  -H 'Content-Type: application/json' \
+  --data-binary 'false'
 ```
 
 ## Learn more
