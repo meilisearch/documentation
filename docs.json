@@ -293,7 +293,8 @@
                   "learn/indexing/indexing_best_practices",
                   "learn/indexing/ram_multithreading_performance",
                   "learn/indexing/tokenization",
-                  "learn/indexing/multilingual-datasets"
+                  "learn/indexing/multilingual-datasets",
+                  "learn/indexing/optimize_indexing_performance"
                 ]
               },
               {
