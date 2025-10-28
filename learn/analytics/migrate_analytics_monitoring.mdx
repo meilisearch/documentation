@@ -1,0 +1,21 @@
+---
+title: Migrate to the November 2025 Meilisearch Cloud analytics
+description: Follow this guide to ensure your Meilisearch Cloud analytics configuration is up to date after the November 2025 release.
+---
+
+## Analytics and monitoring are always active
+
+Analytics and monitoring are now active in all Meilisearch Cloud projects. Basic functionality requires no extra configuration. Tracking user conversion, clickthrough, and clicked result position must instead be explicitly configured.
+
+## Update URLs in your application
+
+Meilisearch no longer requires `edge.meilisearch.com` to track search analytics. Update your application so all API requests, including click and conversion events, point to your project URL:
+
+```sh
+curl \
+  -X POST 'https://PROJECT_URL/indexes/products/search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{ "q": "green socks" }'
+```
+
+`edge.meilisearch.com` remains functional, but no longer provides any benefit and will be discontinued in the future. If you created any custom API keys using the previous URL, you will also need to replace them.
