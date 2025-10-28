@@ -1285,6 +1285,7 @@ analytics_event_click_1: |-
       "eventType": "click",
       "eventName": "Search Result Clicked",
       "indexUid": "products",
+      "userId": "SEARCH_USER_ID",
       "queryUid": "019a01b7-a1c2-7782-a410-bb1274c81393",
       "objectId": "0",
       "objectName": "DOCUMENT_DESCRIPTION",
@@ -1292,14 +1293,16 @@ analytics_event_click_1: |-
     }'
 analytics_event_conversion_1: |-
   curl \
-    -X POST 'https://edge.meilisearch.com/events' \
+    -X POST 'https://PROJECT_URL/events' \
     -H 'Content-Type: application/json' \
     -H 'Authorization: Bearer DEFAULT_SEARCH_API_KEY'
     --data-binary '{
       "eventType": "conversion",
       "eventName": "Product Added To Cart",
       "indexUid": "products",
+      "userId": "SEARCH_USER_ID",
       "objectId": "0",
+      "objectName": "DOCUMENT_DESCRIPTION",
       "position": 0
     }'
 analytics_event_bind_search_1: |-

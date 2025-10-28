@@ -206,8 +206,7 @@
               {
                 "group": "Analytics",
                 "pages": [
-                  "learn/analytics/configure_analytics",
-                  "learn/analytics/configure_monitoring",
+                  "learn/analytics/configure_analytics_events",
                   "learn/analytics/bind_events_user",
                   "learn/analytics/migrate_analytics_monitoring",
                   "learn/analytics/events_endpoint"
