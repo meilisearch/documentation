@@ -1278,14 +1278,16 @@ negative_search_2: |-
     --data-binary '{ "q": "-\"escape room\"" }'
 analytics_event_click_1: |-
   curl \
-    -X POST 'https://edge.meilisearch.com/events' \
+    -X POST 'https://PROJECT_URL/events' \
     -H 'Content-Type: application/json' \
     -H 'Authorization: Bearer DEFAULT_SEARCH_API_KEY' \
     --data-binary '{
       "eventType": "click",
       "eventName": "Search Result Clicked",
       "indexUid": "products",
+      "queryUid": "019a01b7-a1c2-7782-a410-bb1274c81393",
       "objectId": "0",
+      "objectName": "DOCUMENT_DESCRIPTION",
       "position": 0
     }'
 analytics_event_conversion_1: |-
@@ -1309,12 +1311,25 @@ analytics_event_bind_search_1: |-
     --data-binary '{}'
 analytics_event_bind_event_1: |-
   curl \
-    -X POST 'https://edge.meilisearch.com/events' \
+    -X POST 'https://PROJECT_URL/events' \
     -H 'Content-Type: application/json' \
     -H 'Authorization: Bearer DEFAULT_SEARCH_API_KEY' \
-    -H 'X-MS-USER-ID: MEILISEARCH_USER_ID' \
+    -H 'X-MS-USER-ID: SEARCH_USER_ID' \
     --data-binary '{
       "eventType": "click",
+      "eventName": "Search Result Clicked",
+      "indexUid": "products",
+      "objectId": "0",
+      "position": 0
+    }'
+analytics_event_bind_event_2: |-
+  curl \
+    -X POST 'https://PROJECT_URL/events' \
+    -H 'Content-Type: application/json' \
+    -H 'Authorization: Bearer DEFAULT_SEARCH_API_KEY' \
+    --data-binary '{
+      "eventType": "click",
+      "userId": "SEARCH_USER_ID",
       "eventName": "Search Result Clicked",
       "indexUid": "products",
       "objectId": "0",
