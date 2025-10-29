@@ -153,6 +153,12 @@ Responses will include a `metadata` object:
 | `primaryKey` | String  | Primary key field name, if index has a primary key         |
 | `remote`     | String  | Remote instance name, if request targets a remote instance |
 
+<Note>
+A search refers to a single HTTP search request. Every search request is assigned a `requestUid`. A query UID is a combination of `q` and `indexUid`.
+
+In the context of multi-search, for any given `searchUid` there may be multiple `queryUid` values.
+</Note>
+
 ## Request body
 
 The request body is data sent to the API. It is used with PUT, POST, and PATCH methods to create or update a resource. You must provide request bodies in JSON.
