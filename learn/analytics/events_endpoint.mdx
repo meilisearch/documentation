@@ -37,12 +37,12 @@ Send an analytics event to Meilisearch Cloud.
 ```
 
 <Note>
-You must provide a string identifying your user if you want Meilisearch Cloud to track analytics and click events.
+You must provide a string identifying your user if you want Meilisearch Cloud to track conversion and click events.
 
 You may do that in two ways:
 
 - Specify the user ID in the payload, using the `userId` field
-- Specify the user ID with the `X-MS-USER-ID` header when sending search and other analytics events
+- Specify the user ID with the `X-MS-USER-ID` header with your `/events` and search requests
 </Note>
 
 #### Example

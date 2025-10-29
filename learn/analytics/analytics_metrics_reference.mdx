@@ -5,11 +5,11 @@ description: This reference describes the metrics you can find in the Meilisearc
 
 ## Total searches
 
-Total number of searches made in the selected indexes during the specified period. Multi-search and federated search requests count as a single search.
+Total number of searches made during the specified period. Multi-search and federated search requests count as a single search.
 
 ## Total users
 
-Total number of users who performed a search in the selected indexes.
+Total number of users who performed a search in the specified period.
 
 Include the [user ID](/learn/analytics/bind_events_user) in your search request headers for the most accurate metrics. If search requests do not provide any user ID, the total amount of unique users will increase, as each request is assigned to a unique user ID.
 
@@ -31,9 +31,13 @@ Meilisearch does not have access to this information by default. You must [confi
 
 ## Conversion
 
-The percentage of searches resulting in a [conversion event](/learn/analytics/configure_analytics_events) in your application. Conversion events vary depending on your application and indicate a user has performed a specific desired action. For example, a conversion for an e-commerce website might mean a user has bought a product.
+The percentage of searches resulting in a conversion event in your application. Conversion events vary depending on your application and indicate a user has performed a specific desired action. For example, a conversion for an e-commerce website might mean a user has bought a product.
 
-You must explicitly configure your application to send conversion events when conditions are met.
+You must explicitly [configure your application to send conversion](/learn/analytics/configure_analytics_events) events when conditions are met.
+
+<Note>
+It is not possible to associate multiple `conversion` events with the same query.
+</Note>
 
 ## Search requests
 
