@@ -115,12 +115,14 @@ When the task queue reaches its limit (about 10GiB), it will throw a `no_space_l
 
 Meilisearch considers certain tasks high-priority and always places them at the front of the queue.
 
-The following types of tasks are always processed as soon as possible:
+The following types of tasks are always processed as soon as possible in this order:
 
-1. `taskCancelation`
-2. `taskDeletion`
-3. `snapshotCreation`
-4. `dumpCreation`
+1. `indexCompaction`
+2. `upgradeDatabase`
+3. `taskCancelation`
+4. `taskDeletion`
+5. `snapshotCreation`
+6. `dumpCreation`
 
 All other tasks are processed in the order they were enqueued.
 
