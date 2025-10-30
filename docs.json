@@ -206,11 +206,11 @@
               {
                 "group": "Analytics",
                 "pages": [
-                  "learn/analytics/configure_analytics",
-                  "learn/analytics/configure_monitoring",
+                  "learn/analytics/configure_analytics_events",
                   "learn/analytics/bind_events_user",
-                  "learn/analytics/deactivate_analytics_monitoring",
-                  "learn/analytics/events_endpoint"
+                  "learn/analytics/migrate_analytics_monitoring",
+                  "learn/analytics/events_endpoint",
+                  "learn/analytics/analytics_metrics_reference"
                 ]
               },
               {
@@ -1006,6 +1006,10 @@
     {
       "source": "/guides/back_end/laravel_scout",
       "destination": "/guides/laravel_scout"
+    },
+    {
+      "source": "/learn/analytics/deactivate_analytics_monitoring",
+      "destination": "/learn/analytics/migrate_analytics_monitoring"
     }
   ]
 }
