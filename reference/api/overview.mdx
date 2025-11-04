@@ -129,6 +129,8 @@ curl -X POST 'http://localhost:7700/indexes/INDEX_NAME/search' \
   -d '{"q": ""}'
 ```
 
+Meilisearch Cloud includes this header by default.
+
 Responses will include a `metadata` object:
 
 ```json
@@ -150,6 +152,12 @@ Responses will include a `metadata` object:
 | `indexUid`   | String  | Index identifier                                           |
 | `primaryKey` | String  | Primary key field name, if index has a primary key         |
 | `remote`     | String  | Remote instance name, if request targets a remote instance |
+
+<Note>
+A search refers to a single HTTP search request. Every search request is assigned a `requestUid`. A query UID is a combination of `q` and `indexUid`.
+
+In the context of multi-search, for any given `searchUid` there may be multiple `queryUid` values.
+</Note>
 
 ## Request body
 

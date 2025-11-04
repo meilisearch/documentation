@@ -1,38 +1,32 @@
 ---
 title: Analytics events endpoint
-sidebarTitle: Analytics events endpoint
-description: This reference describes /events, the endpoint you should use to submit analytics events to Meilisearch Cloud. It also describes the accepted event objects and the data you must include in them.
+description: Use `/events` to submit analytics events such as `click` and `conversion` to Meilisearch Cloud.
 ---
 
 import CodeSamplesAnalyticsEventClick1 from '/snippets/samples/code_samples_analytics_event_click_1.mdx';
 
-This reference describes `/events`, the endpoint you should use to submit analytics events to Meilisearch Cloud. It also describes the accepted event objects and the data you must include in them.
+<Note>
+This article refers to a new version of the Meilisearch Cloud analytics that is being rolled out in November 2025. Some features described here may not yet be available to your account. Contact support for more information.
+</Note>
 
-## The `/events` endpoint
+## Send an event
 
-The `/events` endpoint is only available for Meilisearch Cloud projects with analytics and monitoring activated.
+<RouteHighlighter method="POST" path="/events" />
 
-### Send an event
+Send an analytics event to Meilisearch Cloud.
 
-```http
-POST https://edge.meilisearch.com/events
-```
+### Body
 
-Send an analytics event to Meilisearch Cloud. Accepts [`click`](#the-click-event-object) and [`conversion`](#the-conversion-event-object) events.
-
-<Tip>
-By default, Meilisearch associates analytics events with the most recent search of the user who triggered them. Include the same `X-MS-USER-ID` header in your search and event requests to manually [bind analytics events to a user](/learn/analytics/bind_events_user).
-</Tip>
-
-#### Example
-
-<CodeSamplesAnalyticsEventClick />
-
-##### Response: `201 Created`
-
-### The `click` event object
-
-The `click` event must deliver an object with the following fields:
+| Name          | Type            | Default value | Description                                                                     |
+| :------------ | :-------------- | :------------ | :------------------------------------------------------------------------------ |
+| `eventType`   | String          | N/A           | The event type, such as `click` or `conversion`, required                       |
+| `eventName`   | String          | N/A           | A string describing the event, required                                         |
+| `indexUid`    | String          | N/A           | The name of the index of the clicked document, required                         |
+| `queryUid`    | String          | N/A           | The [search query's UID](/reference/api/overview#search-metadata)               |
+| `objectId`    | String          | N/A           | The clicked document's primary key value                                        |
+| `objectName`  | String          | N/A           | A string describing the document                                                |
+| `position`    | Integer         | N/A           | An integer indicating the clicked document's position in the search result list |
+| `userId`      | String          | N/A           | An arbitrary string identifying the user who performed the action               |
 
 ```json
 {
@@ -44,28 +38,17 @@ The `click` event must deliver an object with the following fields:
 }
 ```
 
-- `eventType`: a string indicating this is a `click` event
-- `eventName`: a string describing the event
-- `indexUid`: a string indicating the clicked document's index
-- `objectId`: a string indicating the clicked document's primary key
-- `position`: an integer indicating the clicked document's position in the list of search results
+<Note>
+You must provide a string identifying your user if you want Meilisearch Cloud to track conversion and click events.
 
-### The `conversion` event object
+You may do that in two ways:
 
-The `conversion` event must deliver an object with the following fields:
+- Specify the user ID in the payload, using the `userId` field
+- Specify the user ID with the `X-MS-USER-ID` header with your `/events` and search requests
+</Note>
 
-```json
-{
-  "eventType": "conversion",
-  "eventName": "Product Added To Cart",
-  "indexUid": "products",
-  "objectID": "0",
-  "position": 0
-}
-```
+#### Example
 
-- `eventType`: indicates this is a `conversion` event
-- `eventName`: a string describing the event
-- `indexUid`: the document's index
-- `objectID`: the document's primary key
-- `position`: the document's position in the list of search results
+<CodeSamplesAnalyticsEventClick />
+
+##### Response: `201 Created`

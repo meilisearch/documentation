@@ -7,29 +7,46 @@ description: This guide shows you how to manually differentiate users across sea
 import CodeSamplesAnalyticsEventBindSearch1 from '/snippets/samples/code_samples_analytics_event_bind_search_1.mdx';
 import CodeSamplesAnalyticsEventBindEvent1 from '/snippets/samples/code_samples_analytics_event_bind_event_1.mdx';
 
-By default, Meilisearch uses IP addresses to identify users and calculate the total user metrics. This guide shows you how to use the `X-MS-USER-ID` HTTP header to manually link analytics events to specific users.
-
-This is useful if you're searching from your back end, as all searches would otherwise appear to come from your server's IP address, making it difficult to accurately track the number of individual users.
+<Note>
+This article refers to a new version of the Meilisearch Cloud analytics that is being rolled out in November 2025. Some features described here may not yet be available to your account. Contact support for more information.
+</Note>
 
 ## Requirements
 
-- A Meilisearch Cloud project with analytics and monitoring enabled
-- A working pipeline for submitting analytics events
+- A Meilisearch Cloud project
+- A method for identifying users
+- A pipeline for submitting analytics events
 
-## Add `X-MS-USER-ID` to your search query
+## Assign user IDs to search requests
 
-Include the `X-MS-USER-ID` header in your search requests:
+You can assign user IDs to search requests by including an `X-MS-USER-ID` header with your query:
 
 <CodeSamplesAnalyticsEventBindSearch1 />
 
-Replace `MEILISEARCH_USER_ID` with any value that uniquely identifies that user. This may be an authenticated user's ID when running searches from your own back end, or a hash of the user's IP address.
+Replace `SEARCH_USER_ID` with any value that uniquely identifies that user. This may be an authenticated user's ID when running searches from your own back end, or a hash of the user's IP address.
 
-## Add `X-MS-USER-ID` to the analytics event
+<Note>
+Assigning user IDs to search requests is optional. If a Meilisearch Cloud search request does not have an ID, Meilisearch will automatically generate one.
+</Note>
 
-Next, submit your analytics event to the analytics endpoint. Send the same header and value in your API call:
+## Assign user IDs to analytics events
+
+You can assign a user ID to analytics `/events` in two ways: HTTP headers or including it in the event payload.
+
+If using HTTP headers, include an `X-MS-USER-ID` header with your query:
 
 <CodeSamplesAnalyticsEventBindEvent1 />
 
+If you prefer to the event in your payload, include a `userId` field with your request:
+
+<CodeSamplesAnalyticsEventBindEvent2 />
+
+Replace `SEARCH_USER_ID` with any value that uniquely identifies that user. This may be an authenticated user's ID when running searches from your own back end, or a hash of the user's IP address.
+
+<Warning>
+It is mandatory to specify a user ID when sending analytics events.
+</Warning>
+
 ## Conclusion
 
-In this guide you have seen how to bind analytics events to specific users by specifying the same HTTP header for both the search request and the analytics event.
+In this guide you have seen how to bind analytics events to specific users by specifying an HTTP header for the search request, and either an HTTP header or a `userId` field for the analytics event.
