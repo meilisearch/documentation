@@ -4,4 +4,12 @@
 curl \
   -X POST 'MEILISEARCH_URL/indexes/INDEX_UID/compact'
 ```
+
+```python Python
+client.index('movies').compact()
+```
+
+```java Java
+client.index("INDEX_NAME").compact();
+```
 </CodeGroup>
