@@ -32,4 +32,12 @@ client.AddWebhook(&meilisearch.AddWebhookRequest{
   },
 });
 ```
+
+```rust Rust
+let mut payload = meilisearch_sdk::webhooks::WebhookCreate::new("WEBHOOK_TARGET_URL");
+payload
+  .insert_header("authorization", "SECURITY_KEY")
+  .insert_header("referer", "https://example.com");
+let webhook = client.create_webhook(&payload).await.unwrap();
+```
 </CodeGroup>

@@ -2,10 +2,10 @@
 
 ```bash cURL
 curl \
-  -X POST 'https://edge.meilisearch.com/events' \
+  -X POST 'https://PROJECT_URL/events' \
   -H 'Content-Type: application/json' \
   -H 'Authorization: Bearer DEFAULT_SEARCH_API_KEY' \
-  -H 'X-MS-USER-ID: MEILISEARCH_USER_ID' \
+  -H 'X-MS-USER-ID: SEARCH_USER_ID' \
   --data-binary '{
     "eventType": "click",
     "eventName": "Search Result Clicked",
