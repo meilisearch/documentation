@@ -162,21 +162,7 @@
         "anchors": [
           {
             "anchor": "Open API",
-            "groups": [
-              { 
-                "group": "test",
-                "pages": [
-                  "learn/getting_started/cloud_quick_start"
-                ]
-              },
-              { 
-                "group": "Endpoints",
-                "openapi": {
-                  "source": "openapi.json",
-                  "directory": "endpoints"
-                }
-              }
-            ]
+                "openapi": "openapi.json"
           },
           {
             "anchor": "Learn",
