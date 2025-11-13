@@ -584,7 +584,7 @@ The name of your S3 bucket.
 **CLI option**: `--s3-snapshot-prefix`<br />
 **Default value**: `None`<br />
 
-The path leading to the [snapshot directory](#snapshot-destination). Uses normal slashes.
+The path leading to the [snapshot directory](#snapshot-destination) in your S3 bucket. Uses normal slashes.
 
 #### Access key
 
@@ -632,7 +632,7 @@ The maximum duration processing a snapshot can take. Defaults to 8 hours.
 **CLI option**: `--experimental-s3-multipart-part-size`<br />
 **Default value**: `None`<br />
 
-The size of each multipart section. Must be >10MiB and <8GiB. Defaults to 375MiB, which enables databases of up to 3.5TiB.
+The size of each multipart section. Must be \>10MiB and \<8GiB. Defaults to 375MiB, which enables databases of up to 3.5TiB.
 
 ### SSL options
 
