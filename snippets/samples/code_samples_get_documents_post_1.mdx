@@ -23,7 +23,8 @@ client.index('books').getDocuments({
 client.index('books').get_documents({
   'limit':3,
   'fields': ['title', 'genres', 'rating', 'language'],
-  'filter': '(rating > 3 AND (genres=Adventure OR genres=Fiction)) AND language=English'
+  'filter': '(rating > 3 AND (genres=Adventure OR genres=Fiction)) AND language=English',
+  'sort': 'rating:desc, title:asc'  # comma-separated string format
 })
 ```
 
