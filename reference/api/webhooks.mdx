@@ -28,6 +28,7 @@ Use the `/webhooks` to trigger automatic workflows when Meilisearch finishes pro
 - `uuid`: a v4 uuid Meilisearch automatically generates when you create a new webhook
 - `url`: a string indication the URL Meilisearch should notify whenever it completes a task, required
 - `headers`: an object with HTTP headers and their values, optional, often used for authentication
+  - `Authorization` headers: the value of authorization headers is redacted in `webhook` responses. Do not use authorization header values as returned by Meilisearch to update a webhook
 - `isEditable`: read-only Boolean field indicating whether you can edit the webhook. Meilisearch automatically sets this to `true` for all webhooks created via the API and to `false` for reserved webhooks
 
 ## The webhook payload
@@ -121,6 +122,8 @@ You can create up to 20 webhooks. Having multiple webhooks active at the same ti
 <RouteHighlighter method="PATCH" path="/webhooks/{uuid}" />
 
 Update the configuration for the specified webhook. To remove a field, set its value to `null`.
+
+When updating the `headers` field, Meilisearch only changes the headers you have explicitly submitted. All other headers remain unaltered.
 
 <Note>
 It is not possible to edit webhooks whose `isEditable` field is set to `false`.
