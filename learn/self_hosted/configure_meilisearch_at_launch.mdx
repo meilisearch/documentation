@@ -552,6 +552,88 @@ Helps running Meilisearch in cluster environments. It does this by modifying tas
 
 Falls back to previous settings indexer.
 
+### S3 options
+
+#### Bucket URL
+
+**Environment variable**: `MEILI_S3_BUCKET_URL`<br />
+**CLI option**: `--s3-bucket-url`<br />
+**Default value**: `None`<br />
+
+The URL for your S3 bucket. The URL must follow the format `https://s3.REGION.amazonaws.com`.
+
+#### Bucket region
+
+**Environment variable**: `MEILI_S3_BUCKET_REGION`<br />
+**CLI option**: `--s3-bucket-region`<br />
+**Default value**: `None`<br />
+
+The region of your S3 bucket. Must be a valid AWS region, such as `us-east-1`. 
+
+#### Bucket name
+
+**Environment variable**: `MEILI_S3_BUCKET_NAME`<br />
+**CLI option**: `--s3-bucket-name`<br />
+**Default value**: `None`<br />
+
+The name of your S3 bucket.
+
+#### Snapshot prefix
+
+**Environment variable**: `MEILI_S3_SNAPSHOT_PREFIX`<br />
+**CLI option**: `--s3-snapshot-prefix`<br />
+**Default value**: `None`<br />
+
+The path leading to the [snapshot directory](#snapshot-destination) in your S3 bucket. Uses normal slashes.
+
+#### Access key
+
+**Environment variable**: `MEILI_S3_ACCESS_KEY`<br />
+**CLI option**: `--s3-access-key`<br />
+**Default value**: `None`<br />
+
+Your S3 bucket's access key.
+
+#### Secret key
+
+**Environment variable**: `MEILI_S3_SECRET_KEY`<br />
+**CLI option**: `--s3-secret-key`<br />
+**Default value**: `None`<br />
+
+Your S3 bucket's secret key.
+
+#### Maximum parallel in-flight requests <NoticeTag type="experimental" label="experimental" />
+
+**Environment variable**: `MEILI_EXPERIMENTAL_S3_MAX_IN_FLIGHT_PARTS`<br />
+**CLI option**: `--experimental-s3-max-in-flight-parts`<br />
+**Default value**: `10`<br />
+
+The maximum number of in-flight multipart requests Meilisearch should send to S3 in parallel.
+
+#### Compression level <NoticeTag type="experimental" label="experimental" />
+
+**Environment variable**: `MEILI_EXPERIMENTAL_S3_COMPRESSION_LEVEL`<br />
+**CLI option**: `--experimental-s3-compression-level`<br />
+**Default value**: `0`<br />
+
+The compression level to use for the snapshot tarball. Defaults to 0, no compression.
+
+#### Signature duration <NoticeTag type="experimental" label="experimental" />
+
+**Environment variable**: `MEILI_EXPERIMENTAL_S3_SIGNATURE_DURATION_SECONDS`<br />
+**CLI option**: `--experimental-s3-signature-duration-seconds`<br />
+**Default value**: `28800`<br />
+
+The maximum duration processing a snapshot can take. Defaults to 8 hours.
+
+#### Multipart section size <NoticeTag type="experimental" label="experimental" />
+
+**Environment variable**: `MEILI_EXPERIMENTAL_S3_MULTIPART_PART_SIZE`<br />
+**CLI option**: `--experimental-s3-multipart-part-size`<br />
+**Default value**: `None`<br />
+
+The size of each multipart section. Must be \>10MiB and \<8GiB. Defaults to 375MiB, which enables databases of up to 3.5TiB.
+
 ### SSL options
 
 #### SSL authentication path
