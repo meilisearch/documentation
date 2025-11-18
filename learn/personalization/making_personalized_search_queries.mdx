@@ -1,0 +1,54 @@
+---
+title: Performing personalized search queries
+description: Search personalization uses context about the person performing the search to provide results more relevant to that specific user. This tutorial guides you through configuring and performing personalized search queries.
+---
+
+## Requirements
+
+- A Meilisearch project
+- Self-hosted Meilisearch users: a Cohere API key
+
+## Activate personalized search
+
+### Cloud users
+
+Open a support ticket requesting Meilisearch to activate search personalization for your project.
+
+### Self-hosted users
+
+Relaunch your instance using the search personalization instance option:
+
+```sh
+meilisearch --experimental-personalization-api-key="COHERE_API_KEY"
+```
+
+## Generating user context
+
+Search personalization requires a description about the user performing the search. Meilisearch does not currently provide automated generation of user context.
+
+You’ll need to **generate a dynamically plain-text user description** for each search request. This should summarize relevant traits, such as:
+
+- Category preferences like brand and size
+- Price sensitivity
+- Possible use cases
+- Other information regarding user interests
+
+The re-ranking model is optimized to favor positive signals. For best results, focus on affirmatively stated preferences, behaviors, and affinities, such as "likes the color red" and "prefers cheaper brands" over "dislikes blue" and "is not interested in luxury brands".
+
+## Perform a personalized search
+
+Once search personalization is active and you have a pipeline in place to generate user profiles, you are ready to perform personalized searches.
+
+Submit a search query and include the `personalize` search parameter in your query. `personalize` must be an object with a single field, `userContext`. Use the description in  `userContext`:
+
+```sh
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{ 
+    "q": "wireless keyboard",
+    "personalize": {
+      "userContext": "The user prefers compact mechanical keyboards from Keychron or Logitech, with a mid-range budget and quiet keys for remote work."
+    }
+  }'
+```

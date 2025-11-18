@@ -191,6 +191,7 @@
               {
                 "group": "Personalization",
                 "pages": [
+                  "learn/personalization/making_personalized_search_queries",
                   "learn/personalization/search_personalization"
                 ]
               },

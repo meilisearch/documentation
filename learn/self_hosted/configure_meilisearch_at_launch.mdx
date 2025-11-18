@@ -552,6 +552,15 @@ Helps running Meilisearch in cluster environments. It does this by modifying tas
 
 Falls back to previous settings indexer.
 
+### Search personalization <NoticeTag type="experimental" label="experimental" />
+
+**Environment variable**: `MEILI_EXPERIMENTAL_PERSONALIZATION_API_KEY`<br />
+**CLI option**: `--experimental-personalization-api-key`<br />
+**Default value**: `None`<br />
+**Expected value**: a Cohere API key
+
+Enables search personalization. Must be a valid Cohere API key in string format.
+
 ### S3 options
 
 #### Bucket URL
