@@ -13,7 +13,10 @@ client.index('movies').getDocuments({
 ```
 
 ```python Python
-client.index('movies').get_documents({'limit':2, 'filter': 'genres=action'})
+client.index('movies').get_documents({
+  'limit':2, 'filter': 'genres=action',
+  'sort': ['rating:desc', 'release_date:asc']  # list format
+})
 ```
 
 ```php PHP
