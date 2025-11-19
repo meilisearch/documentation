@@ -187,9 +187,7 @@ The `details` object is set to `null` for `snapshotCreation` tasks.
 | **`type`**    | The [error type](/reference/errors/overview#errors) |
 | **`link`**    | A link to the relevant section of the documentation |
 
-### `network`
-
-<NoticeTag type="experimental" label="experimental" />
+### `network` <NoticeTag type="experimental" label="experimental" />
 
 **Type**: Object<br />
 **Description**: If the task was replicated from another remote or to other remotes, `network` will contain information about the remote task uids corresponding to this task. Otherwise, missing in task object.
@@ -228,8 +226,6 @@ curl \
 ```
 </Note>
 
-
-
 ### `duration`
 
 **Type**: String<br />
@@ -249,6 +245,11 @@ curl \
 
 **Type**: String<br />
 **Description**: The date and time when the task finished `processing`, whether `failed`, `succeeded`, or `canceled`, in [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format
+
+### `customMetadata`
+
+**Type**: String<br />
+**Description**: An arbitrary string optionally configured for tasks adding, updating, and deleting documents. Commonly used to keep track of which documents were processed in a specific task.
 
 ### Summarized task object
 
