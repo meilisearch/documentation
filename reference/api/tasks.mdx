@@ -35,8 +35,7 @@ The `/tasks` route gives information about the progress of [asynchronous operati
   "duration": "PT0.001192S",
   "enqueuedAt": "2022-08-04T12:28:15.159167Z",
   "startedAt": "2022-08-04T12:28:15.161996Z",
-  "finishedAt": "2022-08-04T12:28:15.163188Z",
-  "customMetadata": null
+  "finishedAt": "2022-08-04T12:28:15.163188Z"
 }
 ```
 
@@ -188,9 +187,7 @@ The `details` object is set to `null` for `snapshotCreation` tasks.
 | **`type`**    | The [error type](/reference/errors/overview#errors) |
 | **`link`**    | A link to the relevant section of the documentation |
 
-### `network`
-
-<NoticeTag type="experimental" label="experimental" />
+### `network` <NoticeTag type="experimental" label="experimental" />
 
 **Type**: Object<br />
 **Description**: If the task was replicated from another remote or to other remotes, `network` will contain information about the remote task uids corresponding to this task. Otherwise, missing in task object.
@@ -228,8 +225,6 @@ curl \
   }'
 ```
 </Note>
-
-
 
 ### `duration`
 

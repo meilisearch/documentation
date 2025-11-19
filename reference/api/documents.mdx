@@ -256,7 +256,7 @@ This endpoint accepts the following content types:
 | :----------------- | :------------ | :-------------------------------------------------------------------------------------------------------------------------------------- |
 | **`primaryKey`**   | `null`        | [Primary key](/learn/getting_started/primary_key#primary-field) of the index                                                              |
 | **`csvDelimiter`** | `","`         | Configure the character separating CSV fields. Must be a string containing [one ASCII character](https://www.rfc-editor.org/rfc/rfc20). |
-| **`customMetadata`** | `null`         | An arbitrary string accessible in the [generated task object](/reference/api/tasks#custommetadata) |
+| **`customMetadata`** | `null`         | An arbitrary string accessible via the [generated task object](/reference/api/tasks#custommetadata) |
 
 <Warning>
 Configuring `csvDelimiter` and sending data with a content type other than CSV will cause Meilisearch to throw an error.
@@ -379,7 +379,7 @@ This endpoint accepts the following content types:
 | :----------------- | :------------ | :-------------------------------------------------------------------------------------------------------------------------------------- |
 | **`primaryKey`**   | `null`        | [Primary key](/learn/getting_started/primary_key#primary-field) of the documents                                                          |
 | **`csvDelimiter`** | `","`         | Configure the character separating CSV fields. Must be a string containing [one ASCII character](https://www.rfc-editor.org/rfc/rfc20). |
-| **`customMetadata`** | `null`         | An arbitrary string accessible in the [generated task object](/reference/api/tasks#custommetadata) |
+| **`customMetadata`** | `null`         | An arbitrary string accessible via the [generated task object](/reference/api/tasks#custommetadata) |
 
 <Warning>
 Configuring `csvDelimiter` and sending data with a content type other than CSV will cause Meilisearch to throw an error.
@@ -453,7 +453,7 @@ curl \
 | **`function`**     | `null`        | A string containing a RHAI function                                                         |
 | **`filter`**       | `null`        | A string containing a filter expression |
 | **`context`**      | `null`        | An object with data Meilisearch should make available for the editing function |
-| **`customMetadata`** | `null`         | An arbitrary string accessible in the [generated task object](/reference/api/tasks#custommetadata) |
+| **`customMetadata`** | `null`         | An arbitrary string accessible via the [generated task object](/reference/api/tasks#custommetadata) |
 
 #### `function`
 
@@ -494,7 +494,7 @@ Delete all documents in the specified index.
 
 | Query Parameter    | Default Value | Description                                                                                                                             |
 | :----------------- | :------------ | :-------------------------------------------------------------------------------------------------------------------------------------- |
-| **`customMetadata`** | `null`         | An arbitrary string accessible in the [generated task object](/reference/api/tasks#custommetadata) |
+| **`customMetadata`** | `null`         | An arbitrary string accessible via the [generated task object](/reference/api/tasks#custommetadata) |
 
 ### Example
 
@@ -531,7 +531,7 @@ Delete one document based on its unique id.
 
 | Query Parameter    | Default Value | Description                                                                                                                             |
 | :----------------- | :------------ | :-------------------------------------------------------------------------------------------------------------------------------------- |
-| **`customMetadata`** | `null`         | An arbitrary string accessible in the [generated task object](/reference/api/tasks#custommetadata) |
+| **`customMetadata`** | `null`         | An arbitrary string accessible via the [generated task object](/reference/api/tasks#custommetadata) |
 
 ### Example
 
@@ -567,7 +567,7 @@ Delete a set of documents based on a filter.
 
 | Query Parameter    | Default Value | Description                                                                                                                             |
 | :----------------- | :------------ | :-------------------------------------------------------------------------------------------------------------------------------------- |
-| **`customMetadata`** | `null`         | An arbitrary string accessible in the [generated task object](/reference/api/tasks#custommetadata) |
+| **`customMetadata`** | `null`         | An arbitrary string accessible via the [generated task object](/reference/api/tasks#custommetadata) |
 
 ### Body
 
@@ -619,7 +619,7 @@ Delete a set of documents based on an array of document ids.
 
 | Query Parameter    | Default Value | Description                                                                                                                             |
 | :----------------- | :------------ | :-------------------------------------------------------------------------------------------------------------------------------------- |
-| **`customMetadata`** | `null`         | An arbitrary string accessible in the [generated task object](/reference/api/tasks#custommetadata) |
+| **`customMetadata`** | `null`         | An arbitrary string accessible via the [generated task object](/reference/api/tasks#custommetadata) |
 
 ### Body
 
