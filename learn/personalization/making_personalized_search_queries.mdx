@@ -1,6 +1,6 @@
 ---
 title: Performing personalized search queries
-description: Search personalization uses context about the person performing the search to provide results more relevant to that specific user. This tutorial guides you through configuring and performing personalized search queries.
+description: Search personalization uses context about the person performing the search to provide results more relevant to that specific user. This article guides you through configuring and performing personalized search queries.
 ---
 
 ## Requirements
@@ -26,12 +26,12 @@ meilisearch --experimental-personalization-api-key="COHERE_API_KEY"
 
 Search personalization requires a description about the user performing the search. Meilisearch does not currently provide automated generation of user context.
 
-You’ll need to **generate a dynamically plain-text user description** for each search request. This should summarize relevant traits, such as:
+You’ll need to **dynamically generate a plain-text user description** for each search request. This should summarize relevant traits, such as:
 
-- Category preferences like brand and size
-- Price sensitivity
-- Possible use cases
-- Other information regarding user interests
+- Category preferences, like brand or size
+- Price sensitivity, like budget-conscious
+- Possible use cases, such as fitness and sport
+- Other assorted information, such as general interests or location
 
 The re-ranking model is optimized to favor positive signals. For best results, focus on affirmatively stated preferences, behaviors, and affinities, such as "likes the color red" and "prefers cheaper brands" over "dislikes blue" and "is not interested in luxury brands".
 
@@ -39,7 +39,7 @@ The re-ranking model is optimized to favor positive signals. For best results, f
 
 Once search personalization is active and you have a pipeline in place to generate user profiles, you are ready to perform personalized searches.
 
-Submit a search query and include the `personalize` search parameter in your query. `personalize` must be an object with a single field, `userContext`. Use the description in  `userContext`:
+Submit a search query and include the `personalize` search parameter. `personalize` must be an object with a single field, `userContext`. Use the description you generated in the previous step as the value for `userContext`:
 
 ```sh
 curl \
