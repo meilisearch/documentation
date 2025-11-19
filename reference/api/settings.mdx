@@ -2643,7 +2643,7 @@ This field is incompatible with `huggingFace` and `userProvided` embedders.
 
 ##### `apiKey`
 
-Authentication token Meilisearch should send with each request to the embedder.
+Authentication token Meilisearch should send with each request to the embedder. Meilisearch redacts this value when returning embedder settings. Do not use the redacted API key when updating settings.
 
 This field is mandatory if using a protected `rest` embedder.
 
