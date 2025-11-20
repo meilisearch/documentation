@@ -413,6 +413,7 @@
                   "guides/embedders/cohere",
                   "guides/embedders/mistral",
                   "guides/embedders/voyage",
+                  "guides/embedders/gemini",
                   "guides/computing_hugging_face_embeddings_gpu"
                 ]
               },
