@@ -24,4 +24,12 @@ client.batch(BATCH_UID)
 ```go Go
 client.GetBatch(BATCH_UID);
 ```
+
+```rust Rust
+let uid: u32 = 42;
+let batch: meilisearch_sdk::batches::Batch = client
+  .get_batch(uid)
+  .await
+  .unwrap();
+```
 </CodeGroup>
