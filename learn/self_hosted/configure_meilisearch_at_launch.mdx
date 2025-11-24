@@ -519,7 +519,7 @@ Limit the number of tasks Meilisearch performs in a single batch. May improve st
 
 **Environment variable**: `MEILI_EXPERIMENTAL_LIMIT_BATCHED_TASKS_TOTAL_SIZE`<br />
 **CLI option**: `--experimental-limit-batched-tasks-total-size`<br />
-**Default value**: Half of total available memory<br />
+**Default value**: Half of total available memory, up to a maximum of 10 GiB<br />
 **Expected value**: an integer
 
 Sets a maximum payload size for batches in bytes. Smaller batches are less efficient, but consume less RAM and reduce immediate latency.
