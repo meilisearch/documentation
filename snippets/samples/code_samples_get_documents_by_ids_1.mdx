@@ -1,0 +1,11 @@
+<CodeGroup>
+
+```rust Rust
+let index = client.index("books");
+let documents: DocumentsResults = DocumentsQuery::new(&index)
+  .with_ids(["1", "2"]) // retrieve documents by IDs
+  .execute::<Movies>()
+  .await
+  .unwrap();
+```
+</CodeGroup>
