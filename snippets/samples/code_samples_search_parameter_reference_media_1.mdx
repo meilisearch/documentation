@@ -66,4 +66,20 @@ client.Index("INDEX_NAME").Search("", &meilisearch.SearchRequest{
   },
 });
 ```
+
+```rust Rust
+let results = index
+  .search()
+  .with_hybrid("EMBEDDER_NAME", 0.5)
+  .with_media(json!({
+    "FIELD_A": "VALUE_A",
+    "FIELD_B": {
+      "FIELD_C": "VALUE_B",
+      "FIELD_D": "VALUE_C"
+    }
+  }))
+  .execute()
+  .await
+  .unwrap();
+```
 </CodeGroup>
