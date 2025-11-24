@@ -4,20 +4,18 @@ sidebarTitle: Install Meilisearch locally
 description: Use Meilisearch with either Meilisearch Cloud, another cloud service, or install it locally.
 ---
 
-You can install Meilisearch locally or deploy it over a cloud service.
-
 ## Meilisearch Cloud
 
-[Meilisearch Cloud](https://www.meilisearch.com/cloud?utm_campaign=oss&utm_source=docs&utm_medium=installation-guide) greatly simplifies installing, maintaining, and updating Meilisearch. [Get started with a 14-day free trial](https://cloud.meilisearch.com/register?utm_campaign=oss&utm_source=docs&utm_medium=installation-guide).
+[Meilisearch Cloud](https://www.meilisearch.com/cloud) simplifies installing, maintaining, and updating Meilisearch. [Get started with a 14-day free trial](https://cloud.meilisearch.com/register).
 
-Take a look at our [Meilisearch Cloud tutorial](/learn/getting_started/cloud_quick_start) for more information on setting up and using Meilisearch's cloud service.
+Take a look at the [Meilisearch Cloud tutorial](/learn/getting_started/cloud_quick_start) for more information on setting up and using Meilisearch's cloud service.
 
 ## Local installation
 
 <Tabs>
 
 <Tab title="cURL">
-Download the **latest stable release** of Meilisearch with **cURL**.<br />
+Download the **latest stable release** of Meilisearch with **cURL**.
 
 Launch Meilisearch to start the server.
 
@@ -28,7 +26,6 @@ curl -L https://install.meilisearch.com | sh
 # Launch Meilisearch
 ./meilisearch
 ```
-
 </Tab>
 
 <Tab title="Homebrew">
@@ -68,7 +65,6 @@ You can learn more about [using Meilisearch with Docker in our dedicated guide](
 </Tab>
 
 <Tab title="APT">
-
 Download the **latest stable release** of Meilisearch with **APT**.<br />
 
 Launch Meilisearch to start the server.
@@ -83,11 +79,9 @@ sudo apt update && sudo apt install meilisearch
 # Launch Meilisearch
 meilisearch
 ```
-
 </Tab>
 
 <Tab title="Source">
-
 Meilisearch is written in Rust. To compile it, [install the Rust toolchain](https://www.rust-lang.org/tools/install).<br />
 
 Once the Rust toolchain is installed, clone the repository on your local system and change it to your working directory.
@@ -117,7 +111,6 @@ cargo build --release
 # Execute the binary
 ./target/release/meilisearch
 ```
-
 </Tab>
 
 <Tab title="Windows">
@@ -130,11 +123,9 @@ To install Meilisearch on Windows, you can:
 - Compile from source (see "Source" tab above)
 
 To learn more about the Windows command prompt, follow this [introductory guide](https://www.makeuseof.com/tag/a-beginners-guide-to-the-windows-command-line/).
-
 </Tab>
 
 <Tab title="Direct download">
-
 If none of the other installation options work for you, you can always download the Meilisearch binary directly on GitHub.<br />
 
 Go to the [latest Meilisearch release](https://github.com/meilisearch/meilisearch/releases/latest), scroll down to "Assets", and select the binary corresponding to your operating system.
@@ -149,7 +140,6 @@ chmod +x meilisearch
 # Launch Meilisearch
 ./meilisearch
 ```
-
 </Tab>
 
 </Tabs>
@@ -239,7 +229,6 @@ cargo build --release
 </Tab>
 
 <Tab title="Direct download">
-
 Download the binary of a specific version under "Assets" on our [GitHub changelog](https://github.com/meilisearch/meilisearch/releases).
 
 ```bash
@@ -252,7 +241,6 @@ chmod +x meilisearch
 # Launch Meilisearch
 ./meilisearch
 ```
-
 </Tab>
 
 </Tabs>
