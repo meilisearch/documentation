@@ -99,6 +99,7 @@ By default, [this endpoint returns a maximum of 1000 results](/learn/resources/k
 | **[`retrieveVectors`](#display-_vectors-in-response)**  | Boolean          | `false`       | Return document and query vector data                         |
 | **[`locales`](#query-locales)**                         | Array of strings | `null`        | Explicitly specify languages used in a query        |
 | **[`media`](#media)**                                   | Object           | `null`        | Perform AI-powered search queries with multimodal content         |
+| **[`personalize`](#search-personalization)**                                   | Object           | `null`        | Perform AI-powered searches that return different results based on a user's profile          |
 
 ### Response
 
@@ -1371,3 +1372,17 @@ It is mandatory to specify an embedder when using `media`. `media` is incompatib
   …
 }
 ```
+
+### Search personalization <NoticeTag type="experimental" label="experimental" />
+
+**Parameter**: `personalize`<br />
+**Expected value**: Object<br />
+**Default value**: `null`
+
+<Note>
+This is an experimental feature. Contact Meilisearch Cloud support to enable it for your projects. If self-hosting, relaunch your instance providing a Cohere key to the search personalization instance option.
+</Note>
+
+Adds user context to [personalize search results according to user profile](/learn/personalization/making_personalized_search_queries).
+
+`personalize` must be an object. It must include a single field, `userContext`.`userContext` must be a string describing the user performing the search.
