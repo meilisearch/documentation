@@ -12,4 +12,12 @@ client.index('movies').compact()
 ```java Java
 client.index("INDEX_NAME").compact();
 ```
+
+```rust Rust
+let task: TaskInfo = client
+  .index("INDEX_UID")
+  .compact()
+  .await
+  .unwrap();
+```
 </CodeGroup>

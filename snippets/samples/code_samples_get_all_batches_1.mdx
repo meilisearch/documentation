@@ -24,4 +24,11 @@ client.batches
 ```go Go
 client.GetBatches();
 ```
+
+```rust Rust
+let mut query = meilisearch_sdk::batches::BatchesQuery::new(&client);
+query.with_limit(20);
+let batches: meilisearch_sdk::batches::BatchesResults =
+  client.get_batches_with(&query).await.unwrap();
+```
 </CodeGroup>
