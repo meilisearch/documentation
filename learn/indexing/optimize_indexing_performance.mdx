@@ -80,7 +80,11 @@ Focus on the **longest-running steps** and investigate which index settings or d
 
 | Trace key | Description | Optimization |
 |------------|--------------|--------------|
-| `writing embeddings to database` | Time spent saving vector embeddings. | Use embedding vectors with fewer dimensions. <br/>- [Disabling embedding regeneration on document update](/reference/api/documents#vectors). <br/>- Consider enabling [binary quantization](/reference/api/settings#binaryquantized). |
+| `writing embeddings to database` | Time spent saving vector embeddings. | Use embedding vectors with fewer dimensions. <br/>- [Disabling embedding regeneration on document update](/reference/api/documents#vectors). <br/>- Consider enabling [binary quantization](/reference/api/settings#binaryquantized). <br/>- Consider enabling the [experimental vector store](/reference/api/settings#vector-store).|
+
+| Trace key | Description | Optimization |
+|------------|--------------|--------------|
+| `extracting embeddings` | Time spent extracting embeddings from embedding providers' responses. | Reduce the amount of data sent to embeddings provider. <br/>- [Include fewer attributes in `documentTemplate`](/learn/ai_powered_search/document_template_best_practices). <br/>- [Reduce maximum size of the document template](/reference/api/settings#update-embedder-settings). <br/>- If using a third-party service like OpenAI, upgrade your account to a higher tier.|
 
 ### `post processing words > word prefix *`
 
