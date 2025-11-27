@@ -54,7 +54,12 @@ Once you have the query's vector, pass it to the `vector` search parameter to pe
 ```sh
 curl -X POST -H 'content-type: application/json' \
   'localhost:7700/indexes/products/search' \
-  --data-binary '{ "vector": [0, 1, 2] }'
+  --data-binary '{ 
+    "vector": [0, 1, 2],
+    "hybrid": {
+      "embedder": "image2text"
+    }
+  }'
 ```
 
 `vector` must be an array of numbers indicating the search vector. You must generate these yourself when using vector search with user-provided embeddings.
@@ -67,6 +72,9 @@ curl -X POST -H 'content-type: application/json' \
   --data-binary '{
     "vector": [0, 1, 2],
     "filter": "price < 10",
-    "sort": ["price:asc"]
+    "sort": ["price:asc"],
+    "hybrid": {
+      "embedder": "image2text"
+    }
   }'
 ```
