@@ -197,7 +197,8 @@
                   "learn/self_hosted/getting_started_with_self_hosted_meilisearch",
                   "learn/self_hosted/configure_meilisearch_at_launch",
                   "learn/self_hosted/install_meilisearch_locally",
-                  "learn/self_hosted/supported_os"
+                  "learn/self_hosted/supported_os",
+                  "learn/self_hosted/enterprise_edition"
                 ]
               },
               {
