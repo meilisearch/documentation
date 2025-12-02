@@ -10,7 +10,7 @@ jobs:
   add-pr-to-project:
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/add-to-project@4fda2e598c349fd1d6770dc6df8b0b61158c3e90
+      - uses: actions/add-to-project@32da07cbb30091816ce54192caf97979d0812456
         with:
           project-url: https://github.com/orgs/meilisearch/projects/44
           github-token: ${{ secrets.GH_TOKEN }}
