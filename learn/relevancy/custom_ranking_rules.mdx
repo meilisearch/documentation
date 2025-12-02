@@ -6,8 +6,6 @@ description: Custom ranking rules promote certain documents over other search re
 
 There are two types of ranking rules in Meilisearch: [built-in ranking rules](/learn/relevancy/ranking_rules) and custom ranking rules. This article describes the main aspects of using and configuring custom ranking rules.
 
-Custom ranking rules promote certain documents over other search results that are otherwise equally relevant.
-
 ## Ascending and descending sorting rules
 
 Meilisearch supports two types of custom rules: one for ascending sort and one for descending sort.
@@ -21,6 +19,14 @@ To add a custom ranking rule, you have to communicate the attribute name followe
 **The attribute must have either a numeric or a string value** in all of the documents contained in that index.
 
 You can add this rule to the existing list of ranking rules using the [update settings endpoint](/reference/api/settings#update-settings) or [update ranking rules endpoint](/reference/api/settings#update-ranking-rules).
+
+## How to use custom ranking rules
+
+Custom ranking rules sort results in lexicographical order. For example, `Elena` will rank higher than `Ryu` and lower than `11` in a descending sort.
+
+Since this operation does not take into consideration document relevancy, in the majority of cases you should place custom ranking rules after the built-in ranking rules. This ensures that results are first sorted by relevancy, and the lexicographical sorting takes place only when two or more documents share the same ranking score.
+
+Setting a custom ranking role at a high position may result in a degraded search experience, since users will see documents in alphanumerical order instead of sorted by relevance.
 
 ## Example
 
