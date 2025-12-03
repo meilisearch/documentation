@@ -96,7 +96,7 @@ search_get_1: |-
 get_all_tasks_1: |-
   curl \
     -X GET 'MEILISEARCH_URL/tasks'
-# get_tasks_id
+# get_tasks_taskUid
 get_task_1: |-
   curl \
     -X GET 'MEILISEARCH_URL/tasks/1'
@@ -108,7 +108,7 @@ get_all_tasks_paginating_1: |-
 get_all_tasks_paginating_2: |-
   curl \
     -X GET 'MEILISEARCH_URL/tasks?limit=2&from=8
-# get_keys_id
+# get_keys_uidOrKey
 get_one_key_1: |-
   curl \
     -X GET 'MEILISEARCH_URL/keys/6062abda-a5aa-4414-ac91-ecd7944c0f8d' \
@@ -130,7 +130,7 @@ create_a_key_1: |-
       "indexes": ["products"],
       "expiresAt": "2042-04-02T00:42:42Z"
     }'
-# patch_keys_id
+# patch_keys_uidOrKey
 update_a_key_1: |-
   curl \
     -X PATCH 'MEILISEARCH_URL/keys/6062abda-a5aa-4414-ac91-ecd7944c0f8d' \
@@ -140,7 +140,7 @@ update_a_key_1: |-
       "name": "Products/Reviews API key",
       "description": "Manage documents: Products/Reviews API key"
     }'
-# delete_keys_id
+# delete_keys_uidOrKey
 delete_a_key_1: |-
   curl \
     -X DELETE 'MEILISEARCH_URL/keys/6062abda-a5aa-4414-ac91-ecd7944c0f8d' \
@@ -550,7 +550,7 @@ getting_started_add_documents: |-
     -H 'Content-Type: application/json' \
     -H 'Authorization: Bearer aSampleMasterKey' \
     --data-binary @movies.json
-# get_tasks_id
+# get_tasks_taskUid
 getting_started_check_task_status: |-
   curl \
     -X GET 'MEILISEARCH_URL/tasks/0' \
@@ -841,7 +841,7 @@ security_guide_search_key_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/patient_medical_records/search' \
     -H 'Authorization: Bearer API_KEY'
-# patch_keys_id
+# patch_keys_uidOrKey
 security_guide_update_key_1: |-
   curl \
     -X PATCH 'MEILISEARCH_URL/keys/74c9c733-3368-4738-bbe5-1d18a5fecb37' \
@@ -865,7 +865,7 @@ security_guide_list_keys_1: |-
   curl \
     -X GET 'MEILISEARCH_URL/keys' \
     -H 'Authorization: Bearer MASTER_KEY'
-# delete_keys_id
+# delete_keys_uidOrKey
 security_guide_delete_key_1: |-
   curl \
     -X DELETE 'MEILISEARCH_URL/keys/ac5cd97d-5a4b-4226-a868-2d0eb6d197ab' \
@@ -1437,7 +1437,7 @@ index_settings_tutorial_api_put_setting_1: |-
       "title",
       "overview"
     ]'
-# get_tasks_TASK_UID
+# get_tasks_taskUid
 index_settings_tutorial_api_task_1: |-
   curl \
     -X GET 'MEILISEARCH_URL/tasks/TASK_UID'
@@ -1720,7 +1720,7 @@ export_post_1: |-
 webhooks_get_1: |-
   curl \
     -X GET 'MEILISEARCH_URL/webhooks'
-# get_webhooks_id
+# get_webhooks_uid
 webhooks_get_single_1: |-
   curl \
     -X GET 'MEILISEARCH_URL/webhooks/WEBHOOK_UUID'
@@ -1736,7 +1736,7 @@ webhooks_post_1: |-
         "referer": "https://example.com"
       }
     }'
-# patch_webhooks_id
+# patch_webhooks_uid
 webhooks_patch_1: |-
   curl \
     -X PATCH 'MEILISEARCH_URL/webhooks/WEBHOOK_UUID' \
@@ -1746,7 +1746,7 @@ webhooks_patch_1: |-
         "referer": null
       }
     }'
-# delete_webhooks_id
+# delete_webhooks_uid
 webhooks_delete_1: |-
   curl \
     -X DELETE 'MEILISEARCH_URL/webhooks/WEBHOOK_UUID'
