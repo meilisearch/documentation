@@ -100,11 +100,9 @@ get_all_tasks_1: |-
 get_task_1: |-
   curl \
     -X GET 'MEILISEARCH_URL/tasks/1'
-# get_tasks
 get_all_tasks_paginating_1: |-
   curl \
     -X GET 'MEILISEARCH_URL/tasks?limit=2&from=10
-# get_tasks
 get_all_tasks_paginating_2: |-
   curl \
     -X GET 'MEILISEARCH_URL/tasks?limit=2&from=8
@@ -371,13 +369,11 @@ get_health_1: |-
 get_version_1: |-
   curl \
     -X GET 'MEILISEARCH_URL/version'
-# put_indexes_indexUid_settings_distinct_attribute
 distinct_attribute_guide_1: |-
   curl \
     -X PUT 'MEILISEARCH_URL/indexes/jackets/settings/distinct-attribute' \
     -H 'Content-Type: application/json' \
     --data-binary '"product_id"'
-# put_indexes_indexUid_settings_searchable_attributes
 field_properties_guide_searchable_1: |-
   curl \
     -X PUT 'MEILISEARCH_URL/indexes/movies/settings/searchable-attributes' \
@@ -387,7 +383,6 @@ field_properties_guide_searchable_1: |-
         "overview",
         "genres"
       ]'
-# put_indexes_indexUid_settings_displayed_attributes
 field_properties_guide_displayed_1: |-
   curl \
     -X PUT 'MEILISEARCH_URL/indexes/movies/settings/displayed-attributes' \
@@ -398,7 +393,6 @@ field_properties_guide_displayed_1: |-
         "genres",
         "release_date"
       ]'
-# post_indexes_indexUid_search
 filtering_guide_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/movie_ratings/search' \
@@ -407,7 +401,6 @@ filtering_guide_1: |-
       "q": "Avengers",
       "filter": "release_date > 795484800"
     }'
-# post_indexes_indexUid_search
 filtering_guide_2: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/movie_ratings/search' \
@@ -416,7 +409,6 @@ filtering_guide_2: |-
       "q": "Batman",
       "filter": "release_date > 795484800 AND (director = \"Tim Burton\" OR director = \"Christopher Nolan\")"
     }'
-# post_indexes_indexUid_search
 filtering_guide_3: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/movie_ratings/search' \
@@ -425,7 +417,6 @@ filtering_guide_3: |-
       "q": "Planet of the Apes",
       "filter": "release_date > 1577884550 AND (NOT director = \"Tim Burton\")"
     }' \
-# post_indexes_indexUid_search
 filtering_guide_nested_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/movie_ratings/search' \
@@ -434,13 +425,11 @@ filtering_guide_nested_1: |-
       "q": "thriller",
       "filter": "rating.users >= 90"
     }'
-# post_indexes_indexUid_search
 search_parameter_guide_query_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/movies/search' \
     -H 'Content-Type: application/json' \
     --data-binary '{ "q": "shifu" }'
-# post_indexes_indexUid_search
 search_parameter_guide_offset_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/movies/search' \
@@ -449,7 +438,6 @@ search_parameter_guide_offset_1: |-
       "q": "shifu",
       "offset": 1
     }'
-# post_indexes_indexUid_search
 search_parameter_guide_limit_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/movies/search' \
@@ -458,7 +446,6 @@ search_parameter_guide_limit_1: |-
       "q": "shifu",
       "limit": 2
     }'
-# post_indexes_indexUid_search
 search_parameter_guide_hitsperpage_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/movies/search' \
@@ -467,7 +454,6 @@ search_parameter_guide_hitsperpage_1: |-
       "q": "",
       "hitsPerPage": 15
     }'
-# post_indexes_indexUid_search
 search_parameter_guide_page_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/movies/search' \
@@ -476,7 +462,6 @@ search_parameter_guide_page_1: |-
       "q": "",
       "page": 2
     }'
-# post_indexes_indexUid_search
 search_parameter_guide_retrieve_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/movies/search' \
@@ -488,7 +473,6 @@ search_parameter_guide_retrieve_1: |-
         "title"
       ]
     }'
-# post_indexes_indexUid_search
 search_parameter_guide_crop_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/movies/search' \
@@ -498,7 +482,6 @@ search_parameter_guide_crop_1: |-
       "attributesToCrop": ["overview"],
       "cropLength": 5
     }'
-# post_indexes_indexUid_search
 search_parameter_guide_crop_marker_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/movies/search' \
@@ -508,7 +491,6 @@ search_parameter_guide_crop_marker_1: |-
       "cropMarker": "[…]",
       "attributesToCrop": ["overview"]
     }'
-# post_indexes_indexUid_search
 search_parameter_guide_highlight_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/movies/search' \
@@ -517,7 +499,6 @@ search_parameter_guide_highlight_1: |-
       "q": "winter feast",
       "attributesToHighlight": ["overview"]
     }'
-# post_indexes_indexUid_search
 search_parameter_guide_highlight_tag_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/movies/search' \
@@ -528,7 +509,6 @@ search_parameter_guide_highlight_tag_1: |-
       "highlightPreTag": "<span class=\"highlight\">",
       "highlightPostTag": "</span>"
     }'
-# post_indexes_indexUid_search
 search_parameter_guide_show_matches_position_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/movies/search' \
@@ -537,38 +517,32 @@ search_parameter_guide_show_matches_position_1: |-
       "q": "winter feast",
       "showMatchesPosition": true
     }'
-# post_indexes_indexUid_documents
 add_movies_json_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/movies/documents'\
     -H 'Content-Type: application/json' \
     --data-binary @movies.json
-# post_indexes_indexUid_documents
 getting_started_add_documents: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/movies/documents?primaryKey=id' \
     -H 'Content-Type: application/json' \
     -H 'Authorization: Bearer aSampleMasterKey' \
     --data-binary @movies.json
-# get_tasks_taskUid
 getting_started_check_task_status: |-
   curl \
     -X GET 'MEILISEARCH_URL/tasks/0' \
     -H 'Authorization: Bearer aSampleMasterKey'
-# post_indexes_indexUid_search
 getting_started_search: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/movies/search' \
     -H 'Content-Type: application/json' \
     -H 'Authorization: Bearer aSampleMasterKey' \
     --data-binary '{ "q": "botman" }'
-# post_indexes_indexUid_documents
 getting_started_add_meteorites: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/meteorites/documents' \
     -H 'Content-Type: application/json' \
     --data-binary @meteorites.json
-# put_indexes_indexUid_settings_ranking_rules
 getting_started_update_ranking_rules: |-
   curl \
     -X PUT 'MEILISEARCH_URL/indexes/movies/settings/ranking-rules' \
@@ -583,7 +557,6 @@ getting_started_update_ranking_rules: |-
       "release_date:asc",
       "rank:desc"
     ]'
-# put_indexes_indexUid_settings_displayed_attributes
 getting_started_update_displayed_attributes: |-
   curl \
     -X PUT 'MEILISEARCH_URL/indexes/movies/settings/displayed-attributes' \
@@ -593,19 +566,16 @@ getting_started_update_displayed_attributes: |-
       "overview",
       "poster"
     ]'
-# put_indexes_indexUid_settings_searchable_attributes
 getting_started_update_searchable_attributes: |-
   curl \
     -X PUT 'MEILISEARCH_URL/indexes/movies/settings/searchable-attributes' \
     -H 'Content-Type: application/json' \
     --data-binary '["title"]'
-# put_indexes_indexUid_settings_stop_words
 getting_started_update_stop_words: |-
   curl \
     -X PUT 'MEILISEARCH_URL/indexes/movies/settings/stop-words' \
     -H 'Content-Type: application/json' \
     --data-binary '["the"]'
-# put_indexes_indexUid_settings_synonyms
 getting_started_synonyms: |-
   curl \
     -X PUT 'MEILISEARCH_URL/indexes/movies/settings/synonyms' \
@@ -614,25 +584,21 @@ getting_started_synonyms: |-
       "winnie": ["piglet"],
       "piglet": ["winnie"]
     }'
-# post_indexes_indexUid_search
 getting_started_filtering: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/meteorites/search' \
     -H 'Content-Type: application/json' \
     --data-binary '{ "filter": "mass < 200" }'
-# post_indexes_indexUid_search
 getting_started_geo_radius: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/meteorites/search' \
     -H 'Content-type:application/json' \
     --data-binary '{ "filter": "_geoRadius(46.9480, 7.4474, 210000)" }'
-# post_indexes_indexUid_search
 getting_started_geo_point: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/meteorites/search' \
     -H 'Content-type:application/json' \
     --data-binary '{ "sort": ["_geoPoint(48.8583701,2.2922926):asc"] }'
-# post_indexes_indexUid_search
 getting_started_sorting: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/meteorites/search' \
@@ -641,7 +607,6 @@ getting_started_sorting: |-
       "filter": "mass < 200",
       "sort": ["mass:asc"]
     }'
-# patch_indexes_indexUid_settings
 getting_started_configure_settings: |-
   curl \
     -X PATCH 'MEILISEARCH_URL/indexes/meteorites/settings' \
@@ -656,7 +621,6 @@ getting_started_configure_settings: |-
         "_geo"
       ]
     }'
-# post_indexes_indexUid_search
 faceted_search_walkthrough_filter_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/movies/search' \
@@ -675,13 +639,11 @@ faceted_search_walkthrough_filter_1: |-
 post_dump_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/dumps'
-# post_indexes_indexUid_search
 phrase_search_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/movies/search' \
     -H 'Content-Type: application/json' \
   --data-binary '{ "q": "\"african american\" horror" }'
-# get_keys
 authorization_header_1: |-
   # replace the MASTER_KEY placeholder with your master key
   curl \
@@ -696,7 +658,6 @@ sorting_guide_update_sortable_attributes_1: |-
       "author",
       "price"
     ]'
-# put_indexes_indexUid_settings_ranking_rules
 sorting_guide_update_ranking_rules_1: |-
   curl \
     -X PUT 'MEILISEARCH_URL/indexes/books/settings/ranking-rules' \
@@ -709,7 +670,6 @@ sorting_guide_update_ranking_rules_1: |-
       "attribute",
       "exactness"
     ]'
-# post_indexes_indexUid_search
 sorting_guide_sort_nested_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/books/search' \
@@ -718,7 +678,6 @@ sorting_guide_sort_nested_1: |-
       "q": "science fiction",
       "sort": ["rating.users:asc"]
     }'
-# post_indexes_indexUid_search
 sorting_guide_sort_parameter_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/books/search' \
@@ -727,7 +686,6 @@ sorting_guide_sort_parameter_1: |-
       "q": "science fiction",
       "sort": ["price:asc"]
     }'
-# post_indexes_indexUid_search
 sorting_guide_sort_parameter_2: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/books/search' \
@@ -740,7 +698,6 @@ sorting_guide_sort_parameter_2: |-
 get_sortable_attributes_1: |-
   curl \
     -X GET 'MEILISEARCH_URL/indexes/books/settings/sortable-attributes'
-# put_indexes_indexUid_settings_sortable_attributes
 update_sortable_attributes_1: |-
   curl \
     -X PUT 'MEILISEARCH_URL/indexes/books/settings/sortable-attributes' \
@@ -753,7 +710,6 @@ update_sortable_attributes_1: |-
 reset_sortable_attributes_1: |-
   curl \
     -X DELETE 'MEILISEARCH_URL/indexes/books/settings/sortable-attributes'
-# post_indexes_indexUid_search
 search_parameter_guide_sort_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/books/search' \
@@ -762,49 +718,41 @@ search_parameter_guide_sort_1: |-
       "q": "science fiction",
       "sort": ["price:asc"]
     }'
-# put_indexes_indexUid_settings_filterable_attributes
 geosearch_guide_filter_settings_1: |-
   curl \
     -X PUT 'MEILISEARCH_URL/indexes/restaurants/settings/filterable-attributes' \
     -H 'Content-type:application/json' \
     --data-binary '["_geo"]'
-# post_indexes_indexUid_search
 geosearch_guide_filter_usage_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/restaurants/search' \
     -H 'Content-type:application/json' \
     --data-binary '{ "filter": "_geoRadius(45.472735, 9.184019, 2000)" }'
-# post_indexes_indexUid_search
 geosearch_guide_filter_usage_2: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/restaurants/search' \
     -H 'Content-type:application/json' \
     --data-binary '{ "filter": "_geoRadius(45.472735, 9.184019, 2000) AND type = pizza" }'
-# post_indexes_indexUid_search
 geosearch_guide_filter_usage_3: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/restaurants/search' \
     -H 'Content-type:application/json' \
     --data-binary '{ "filter": "_geoBoundingBox([45.494181, 9.214024], [45.449484, 9.179175])" }'
-# post_indexes_indexUid_search
 geosearch_guide_filter_usage_4: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/restaurants/search' \
     -H 'Content-type:application/json' \
     --data-binary '{ "filter": "_geoPolygon([45.494181, 9.214024], [45.449484, 9.179175], [45.449486, 9.179177])" }'
-# put_indexes_indexUid_settings_sortable_attributes
 geosearch_guide_sort_settings_1: |-
   curl \
     -X PUT 'MEILISEARCH_URL/indexes/restaurants/settings/sortable-attributes' \
     -H 'Content-type:application/json' \
     --data-binary '["_geo"]'
-# post_indexes_indexUid_search
 geosearch_guide_sort_usage_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/restaurants/search' \
     -H 'Content-type:application/json' \
     --data-binary '{ "sort": ["_geoPoint(48.8561446,2.2978204):asc"] }'
-# post_indexes_indexUid_search
 geosearch_guide_sort_usage_2: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/restaurants/search' \
@@ -815,11 +763,9 @@ geosearch_guide_sort_usage_2: |-
         "rating:desc"
       ]
     }'
-# get_keys
 basic_security_tutorial_listing_1: |-
   curl -X GET 'MEILISEARCH_URL/keys' \
   -H 'Authorization: Bearer MASTER_KEY'
-# post_indexes
 basic_security_tutorial_admin_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes' \
@@ -829,26 +775,22 @@ basic_security_tutorial_admin_1: |-
       "uid": "medical_records",
       "primaryKey": "id"
     }'
-# post_indexes_indexUid_search
 basic_security_tutorial_search_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/medical_records/search' \
     -H 'Content-Type: application/json' \
     -H 'Authorization: Bearer DEFAULT_SEARCH_API_KEY' \
     --data-binary '{ "q": "appointments" }'
-# post_indexes_indexUid_search
 security_guide_search_key_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/patient_medical_records/search' \
     -H 'Authorization: Bearer API_KEY'
-# patch_keys_uidOrKey
 security_guide_update_key_1: |-
   curl \
     -X PATCH 'MEILISEARCH_URL/keys/74c9c733-3368-4738-bbe5-1d18a5fecb37' \
     -H 'Authorization: Bearer MASTER_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{ "description": "Default Search API Key" }'
-# post_keys
 security_guide_create_key_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/keys' \
@@ -860,17 +802,14 @@ security_guide_create_key_1: |-
       "indexes": ["patient_medical_records"],
       "expiresAt": "2023-01-01T00:00:00Z"
     }'
-# get_keys
 security_guide_list_keys_1: |-
   curl \
     -X GET 'MEILISEARCH_URL/keys' \
     -H 'Authorization: Bearer MASTER_KEY'
-# delete_keys_uidOrKey
 security_guide_delete_key_1: |-
   curl \
     -X DELETE 'MEILISEARCH_URL/keys/ac5cd97d-5a4b-4226-a868-2d0eb6d197ab' \
     -H 'Authorization: Bearer MASTER_KEY'
-# post_indexes
 primary_field_guide_create_index_primary_key: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes' \
@@ -879,7 +818,6 @@ primary_field_guide_create_index_primary_key: |-
       "uid": "books",
       "primaryKey": "reference_number"
     }'
-# post_indexes_indexUid_documents
 primary_field_guide_add_document_primary_key: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/books/documents?primaryKey=reference_number' \
@@ -896,13 +834,11 @@ primary_field_guide_add_document_primary_key: |-
         "price": 5.00
       }
     ]'
-# patch_indexes_indexUid
 primary_field_guide_update_document_primary_key: |-
   curl \
     -X PATCH 'MEILISEARCH_URL/indexes/books' \
     -H 'Content-Type: application/json' \
     --data-binary '{ "primaryKey": "title" }'
-# post_indexes_indexUid_search
 tenant_token_guide_search_no_sdk_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/patient_medical_records/search' \
@@ -927,19 +863,16 @@ update_typo_tolerance_1: |-
 reset_typo_tolerance_1: |-
   curl \
     -X DELETE 'MEILISEARCH_URL/indexes/books/settings/typo-tolerance'
-# patch_indexes_indexUid_settings_typo_tolerance
 typo_tolerance_guide_1: |-
   curl \
     -X PATCH 'MEILISEARCH_URL/indexes/movies/settings/typo-tolerance' \
     -H 'Content-Type: application/json' \
     --data-binary '{ "enabled": false }'
-# patch_indexes_indexUid_settings_typo_tolerance
 typo_tolerance_guide_2: |-
   curl \
     -X PATCH 'MEILISEARCH_URL/indexes/movies/settings/typo-tolerance' \
     -H 'Content-Type: application/json' \
     --data-binary '{ "disableOnAttributes": ["title"] }'
-# patch_indexes_indexUid_settings_typo_tolerance
 typo_tolerance_guide_3: |-
   curl \
     -X PATCH 'MEILISEARCH_URL/indexes/movies/settings/typo-tolerance' \
@@ -949,7 +882,6 @@ typo_tolerance_guide_3: |-
         "shrek"
       ]
     }'
-# patch_indexes_indexUid_settings_typo_tolerance
 typo_tolerance_guide_4: |-
   curl \
     -X PATCH 'MEILISEARCH_URL/indexes/movies/settings/typo-tolerance' \
@@ -960,7 +892,6 @@ typo_tolerance_guide_4: |-
         "twoTypos": 10
       }
     }'
-# patch_indexes_indexUid_settings_typo_tolerance
 typo_tolerance_guide_5: |-
   curl \
     -X PATCH 'MEILISEARCH_URL/indexes/movies/settings/typo-tolerance' \
@@ -981,7 +912,6 @@ updating_guide_get_displayed_attributes_old_authorization_header: |-
   curl \
     -X GET 'http://<your-domain-name>/indexes/{index_uid}/settings/displayed-attributes' \
     -H 'X-Meili-API-Key: API_KEY'
-# delete_indexes_indexUid_settings_typo_tolerance
 updating_guide_reset_displayed_attributes_old_authorization_header: |-
   curl \
     -X DELETE 'http://<your-domain-name>/indexes/{index_uid}/settings/displayed-attributes' \
@@ -991,7 +921,6 @@ updating_guide_create_dump: |-
   curl \
     -X POST 'http://<your-domain-name>/dumps' \
     -H 'Authorization: Bearer API_KEY'
-# patch_indexes_indexUid_settings_typo_tolerance
 getting_started_typo_tolerance: |-
   curl \
     -X PATCH 'MEILISEARCH_URL/indexes/movies/settings/typo-tolerance' \
@@ -1035,7 +964,6 @@ update_faceting_settings_1: |-
 reset_faceting_settings_1: |-
   curl \
     -X DELETE 'MEILISEARCH_URL/indexes/books/settings/faceting'
-# put_indexes_indexUid_settings_synonyms
 synonyms_guide_1: |-
   curl \
     -X PUT 'MEILISEARCH_URL/indexes/movies/settings/synonyms' \
@@ -1043,7 +971,6 @@ synonyms_guide_1: |-
     --data-binary '{
       "great": ["fantastic"], "fantastic": ["great"]
     }'
-# patch_indexes_indexUid_settings_faceting
 getting_started_faceting: |-
   curl \
     -X PATCH 'MEILISEARCH_URL/indexes/movies/settings/faceting' \
@@ -1054,7 +981,6 @@ getting_started_faceting: |-
          "*": "count"
        }
     }'
-# patch_indexes_indexUid_settings_pagination
 getting_started_pagination: |-
   curl \
     -X PATCH 'MEILISEARCH_URL/indexes/movies/settings/pagination' \
@@ -1062,7 +988,6 @@ getting_started_pagination: |-
     --data-binary '{
       "maxTotalHits": 500
     }'
-# post_indexes_indexUid_search
 search_parameter_guide_matching_strategy_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/movies/search' \
@@ -1071,7 +996,6 @@ search_parameter_guide_matching_strategy_1: |-
       "q": "big fat liar",
       "matchingStrategy": "last"
     }'
-# post_indexes_indexUid_search
 search_parameter_guide_matching_strategy_2: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/movies/search' \
@@ -1080,7 +1004,6 @@ search_parameter_guide_matching_strategy_2: |-
       "q": "big fat liar",
       "matchingStrategy": "all"
     }'
-# post_indexes_indexUid_search
 search_parameter_guide_matching_strategy_3: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/movies/search' \
@@ -1094,7 +1017,6 @@ date_guide_index_1: |-
     -x POST 'MEILISEARCH_URL/indexes/games/documents' \
     -h 'content-type: application/json' \
     --data-binary @games.json
-# put_indexes_indexUid_settings_filterable_attributes
 date_guide_filterable_attributes_1: |-
   curl \
     -X PUT 'MEILISEARCH_URL/indexes/games/settings/filterable-attributes' \
@@ -1102,7 +1024,6 @@ date_guide_filterable_attributes_1: |-
     --data-binary '[
       "release_timestamp"
     ]'
-# post_indexes_indexUid_search
 date_guide_filter_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/games/search' \
@@ -1111,7 +1032,6 @@ date_guide_filter_1: |-
       "q": "",
       "filter": "release_timestamp >= 1514761200 AND release_timestamp < 1672527600"
     }'
-# put_indexes_indexUid_settings_sortable_attributes
 date_guide_sortable_attributes_1: |-
   curl \
     -X PUT 'MEILISEARCH_URL/indexes/games/settings/sortable-attributes' \
@@ -1119,7 +1039,6 @@ date_guide_sortable_attributes_1: |-
     --data-binary '[
       "release_timestamp"
     ]'
-# post_indexes_indexUid_search
 date_guide_sort_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/games/search' \
@@ -1128,15 +1047,12 @@ date_guide_sort_1: |-
       "q": "",
       "sort": ["release_timestamp:desc"]
     }'
-# get_tasks
 async_guide_filter_by_statuses_1: |-
   curl \
     -X GET 'MEILISEARCH_URL/tasks?statuses=failed'
-# get_tasks
 async_guide_filter_by_statuses_2: |-
   curl \
     -X GET 'MEILISEARCH_URL/tasks?statuses=failed,canceled'
-# get_tasks
 async_guide_multiple_filters_1: |-
   curl \
     -X GET 'MEILISEARCH_URL/tasks?indexUids=movies&types=documentAdditionOrUpdate,documentDeletion&statuses=processing'
@@ -1190,7 +1106,6 @@ multi_search_1: |-
         }
       ]
     }'
-# post_multi_search
 multi_search_federated_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/multi-search' \
@@ -1208,7 +1123,6 @@ multi_search_federated_1: |-
         }
       ]
     }'
-# put_indexes_indexUid_settings_filterable_attributes
 faceted_search_update_settings_1: |-
   curl \
     -X PUT 'MEILISEARCH_URL/indexes/books/settings/filterable-attributes' \
@@ -1216,7 +1130,6 @@ faceted_search_update_settings_1: |-
     --data-binary '[
       "genres", "rating", "language"
     ]'
-# post_indexes_indexUid_search
 faceted_search_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/books/search' \
@@ -1227,7 +1140,6 @@ faceted_search_1: |-
       "genres", "rating", "language"
     ]
   }'
-# post_indexes_indexUid_search
 search_parameter_guide_facet_stats_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/movie_ratings/search' \
@@ -1236,7 +1148,6 @@ search_parameter_guide_facet_stats_1: |-
       "q": "Batman",
       "facets": ["genres", "rating"]
     }'
-# put_indexes_indexUid_settings_filterable_attributes
 filtering_update_settings_1: |-
   curl \
     -X PUT 'MEILISEARCH_URL/indexes/movie_ratings/settings/filterable-attributes' \
@@ -1247,7 +1158,7 @@ filtering_update_settings_1: |-
       "release_date",
       "ratings"
     ]'
-# post_indexes_indexUid_documents_fetch \
+# post_indexes_indexUid_documents_fetch
 get_documents_post_1: |-
   curl \
     -X POST MEILISEARCH_URL/indexes/books/documents/fetch \
@@ -1257,7 +1168,7 @@ get_documents_post_1: |-
       "fields": ["title", "genres", "rating", "language"],
       "limit": 3
     }'
-# post_indexes_indexUid_documents_delete \
+# post_indexes_indexUid_documents_delete
 delete_documents_by_filter_1: |-
   curl \
     -X POST MEILISEARCH_URL/indexes/movies/documents/delete \
@@ -1287,7 +1198,6 @@ facet_search_1: |-
       "facetName": "genres",
       "filter": "rating > 3"
     }'
-# patch_indexes_indexUid_settings_faceting
 facet_search_2: |-
   curl \
     -X PATCH 'MEILISEARCH_URL/indexes/books/settings/faceting' \
@@ -1297,7 +1207,6 @@ facet_search_2: |-
         "genres": "count"
     }
   }'
-# post_indexes_indexUid_facet_search
 facet_search_3: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/books/facet-search' \
@@ -1306,7 +1215,6 @@ facet_search_3: |-
       "facetQuery": "c",
       "facetName": "genres"
   }'
-# post_indexes_indexUid_search
 search_parameter_guide_show_ranking_score_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/movies/search' \
@@ -1315,7 +1223,6 @@ search_parameter_guide_show_ranking_score_1: |-
       "q": "dragon",
       "showRankingScore": true
     }'
-# post_indexes_indexUid_search
 search_parameter_guide_show_ranking_score_details_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/movies/search' \
@@ -1324,7 +1231,6 @@ search_parameter_guide_show_ranking_score_details_1: |-
       "q": "dragon",
       "showRankingScoreDetails": true
     }'
-# post_indexes_indexUid_search
 search_parameter_guide_attributes_to_search_on_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/movies/search' \
@@ -1424,11 +1330,9 @@ update_prefix_search_settings_1: |-
 reset_prefix_search_settings_1: |-
   curl \
     -X DELETE 'MEILISEARCH_URL/indexes/INDEX_UID/settings/prefix-search'
-# get_indexes_indexUid_settings_searchable_attributes
 index_settings_tutorial_api_get_setting_1: |-
   curl \
     -X GET 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/searchable-attributes'
-# put_indexes_indexUid_settings_searchable_attributes
 index_settings_tutorial_api_put_setting_1: |-
   curl \
     -X PUT 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/searchable-attributes' \
@@ -1437,7 +1341,6 @@ index_settings_tutorial_api_put_setting_1: |-
       "title",
       "overview"
     ]'
-# get_tasks_taskUid
 index_settings_tutorial_api_task_1: |-
   curl \
     -X GET 'MEILISEARCH_URL/tasks/TASK_UID'
@@ -1455,13 +1358,11 @@ update_search_cutoff_1: |-
 reset_search_cutoff_1: |-
   curl \
     -X DELETE 'MEILISEARCH_URL/indexes/movies/settings/search-cutoff-ms'
-# post_indexes_indexUid_search
 negative_search_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/movies/search' \
     -H 'Content-Type: application/json' \
     --data-binary '{ "q": "-escape" }'
-# post_indexes_indexUid_search
 negative_search_2: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/movies/search' \
@@ -1496,7 +1397,6 @@ analytics_event_conversion_1: |-
       "objectName": "DOCUMENT_DESCRIPTION",
       "position": 0
     }'
-# post_indexes_indexUid_search
 analytics_event_bind_search_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
@@ -1530,7 +1430,6 @@ analytics_event_bind_event_2: |-
       "objectId": "0",
       "position": 0
     }'
-# post_indexes_indexUid_search
 search_parameter_reference_distinct_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
@@ -1539,7 +1438,6 @@ search_parameter_reference_distinct_1: |-
       "q": "QUERY TERMS",
       "distinct": "ATTRIBUTE_A"
     }'
-# put_indexes_indexUid_settings_filterable_attributes
 distinct_attribute_guide_filterable_1: |-
   curl \
     -X PUT 'MEILISEARCH_URL/indexes/products/settings/filterable-attributes' \
@@ -1549,7 +1447,6 @@ distinct_attribute_guide_filterable_1: |-
       "sku",
       "url"
     ]'
-# post_indexes_indexUid_search
 distinct_attribute_guide_distinct_parameter_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/products/search' \
@@ -1558,7 +1455,6 @@ distinct_attribute_guide_distinct_parameter_1: |-
       "q": "white shirt",
       "distinct": "sku"
     }'
-# post_indexes_indexUid_search
 search_parameter_reference_ranking_score_threshold_1: |-
   curl \
   -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
@@ -1567,7 +1463,6 @@ search_parameter_reference_ranking_score_threshold_1: |-
       "q": "badman",
       "rankingScoreThreshold": 0.2
   }'
-# post_indexes_indexUid_search
 search_parameter_reference_locales_1: |-
   curl \
   -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
@@ -1635,7 +1530,6 @@ update_embedders_1: |-
 reset_embedders_1: |-
   curl \
     -X DELETE 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/embedders'
-# post_indexes_indexUid_search
 search_parameter_guide_hybrid_1: |-
   curl -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
     -H 'content-type: application/json' \
@@ -1646,7 +1540,6 @@ search_parameter_guide_hybrid_1: |-
         "embedder": "EMBEDDER_NAME"
       }
     }'
-# post_indexes_indexUid_search
 search_parameter_guide_vector_1: |-
   curl -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
     -H 'content-type: application/json' \
@@ -1656,7 +1549,6 @@ search_parameter_guide_vector_1: |-
         "embedder": "EMBEDDER_NAME"
       }
     }'
-# post_indexes_indexUid_search
 search_parameter_reference_retrieve_vectors_1: |-
   curl -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
     -H 'content-type: application/json' \
@@ -1667,7 +1559,6 @@ search_parameter_reference_retrieve_vectors_1: |-
         "embedder": "EMBEDDER_NAME"
       }
     }'
-# patch_indexes_indexUid_settings
 related_results_embedder_1: |-
   curl -X PATCH 'MEILISEARCH_URL/indexes/movies/settings'
     -H 'Content-Type: application/json'
@@ -1682,7 +1573,6 @@ related_results_embedder_1: |-
         }
       }
     }'
-# post_indexes_indexUid_search
 related_results_search_1: |-
   curl -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
     -H 'content-type: application/json' \
@@ -1693,7 +1583,6 @@ related_results_search_1: |-
         "embedder": "EMBEDDER_NAME"
       }
     }'
-# post_indexes_indexUid_similar
 related_results_similar_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/movies/similar' \
@@ -1750,7 +1639,6 @@ webhooks_patch_1: |-
 webhooks_delete_1: |-
   curl \
     -X DELETE 'MEILISEARCH_URL/webhooks/WEBHOOK_UUID'
-# patch_indexes_indexUid
 rename_an_index_1: |-
   curl \
     -X PATCH 'MEILISEARCH_URL/indexes/INDEX_A' \
@@ -1766,7 +1654,7 @@ compact_index_1: |-
 experimental_get_metrics_1: |-
   curl \
     -X GET 'MEILISEARCH_URL/metrics'
-# post_logs_stderr \
+# post_logs_stderr
 experimental_post_logs_stderr_1: |-
   curl \
     -X POST MEILISEARCH_URL/logs/stderr \
@@ -1774,7 +1662,7 @@ experimental_post_logs_stderr_1: |-
     --data-binary '{
         "target": "milli=trace,index_scheduler=info,actix_web=off"
     }'
-# post_logs_stream \
+# post_logs_stream
 experimental_post_logs_stream_1: |-
   curl \
     -X POST MEILISEARCH_URL/logs/stream \
@@ -1787,7 +1675,6 @@ experimental_post_logs_stream_1: |-
 experimental_delete_logs_stream_1: |-
   curl \
     -X DELETE MEILISEARCH_URL/logs/stream
-# post_multi_search
 multi_search_remote_federated_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/multi-search' \
@@ -1833,7 +1720,6 @@ update_network_1: |-
         }
       }
     }'
-# post_indexes_indexUid_search
 search_parameter_reference_media_1: |-
   curl \
   -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
