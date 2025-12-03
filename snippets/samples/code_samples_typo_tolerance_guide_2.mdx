@@ -59,7 +59,6 @@ let typo_tolerance = TypoToleranceSettings {
   disable_on_words: None,
   min_word_size_for_typos: None,
 };
-
 let task: TaskInfo = client
   .index("movies")
   .set_typo_tolerance(&typo_tolerance)
