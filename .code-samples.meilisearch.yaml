@@ -2,6 +2,7 @@
 # Every example written here will be automatically fetched by
 # the documentation on build
 ---
+## BEGIN /references/api 
 # get_indexes_indexUid
 get_one_index_1: |-
   curl \
@@ -29,7 +30,7 @@ update_an_index_1: |-
 delete_an_index_1: |-
   curl \
     -X DELETE 'MEILISEARCH_URL/indexes/movies'
-# get_indexes_indexUid_documents_id
+# get_indexes_indexUid_documents_documentId
 get_one_document_1: |-
   curl \
     -X GET 'MEILISEARCH_URL/indexes/movies/documents/25684?fields=id,title,poster,release_date'
@@ -143,6 +144,8 @@ delete_a_key_1: |-
   curl \
     -X DELETE 'MEILISEARCH_URL/keys/6062abda-a5aa-4414-ac91-ecd7944c0f8d' \
     -H 'Authorization: Bearer MASTER_KEY'
+
+### BEGIN settings + subroutes
 # get_indexes_indexUid_settings
 get_settings_1: |-
   curl \
@@ -353,6 +356,454 @@ update_displayed_attributes_1: |-
 reset_displayed_attributes_1: |-
   curl \
     -X DELETE 'MEILISEARCH_URL/indexes/movies/settings/displayed-attributes'
+# get_indexes_indexUid_settings_sortable_attributes
+get_sortable_attributes_1: |-
+  curl \
+    -X GET 'MEILISEARCH_URL/indexes/books/settings/sortable-attributes'
+# put_indexes_indexUid_settings_sortable_attributes
+update_sortable_attributes_1: |-
+  curl \
+    -X PUT 'MEILISEARCH_URL/indexes/books/settings/sortable-attributes' \
+    -H 'Content-Type: application/json' \
+    --data-binary '[
+      "price",
+      "author"
+    ]'
+# delete_indexes_indexUid_settings_sortable_attributes
+reset_sortable_attributes_1: |-
+  curl \
+    -X DELETE 'MEILISEARCH_URL/indexes/books/settings/sortable-attributes'
+# get_indexes_indexUid_settings_typo_tolerance
+get_typo_tolerance_1: |-
+  curl \
+    -X GET 'MEILISEARCH_URL/indexes/books/settings/typo-tolerance'
+# patch_indexes_indexUid_settings_typo_tolerance
+update_typo_tolerance_1: |-
+  curl \
+    -X PATCH 'MEILISEARCH_URL/indexes/books/settings/typo-tolerance' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "minWordSizeForTypos": {
+        "oneTypo": 4,
+        "twoTypos": 10
+      },
+      "disableOnAttributes": ["title"]
+    }'
+# delete_indexes_indexUid_settings_typo_tolerance
+reset_typo_tolerance_1: |-
+  curl \
+    -X DELETE 'MEILISEARCH_URL/indexes/books/settings/typo-tolerance'
+# get_indexes_indexUid_settings_pagination
+get_pagination_settings_1: |-
+  curl \
+    -X GET 'MEILISEARCH_URL/indexes/books/settings/pagination'
+# patch_indexes_indexUid_settings_pagination
+update_pagination_settings_1: |-
+  curl \
+    -X PATCH 'MEILISEARCH_URL/indexes/books/settings/pagination' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "maxTotalHits": 100
+    }'
+# delete_indexes_indexUid_settings_pagination
+reset_pagination_settings_1: |-
+  curl \
+    -X DELETE 'MEILISEARCH_URL/indexes/books/settings/pagination'
+# get_indexes_indexUid_settings_faceting
+get_faceting_settings_1: |-
+  curl \
+    -X GET 'MEILISEARCH_URL/indexes/books/settings/faceting'
+# patch_indexes_indexUid_settings_faceting
+update_faceting_settings_1: |-
+  curl \
+    -X PATCH 'MEILISEARCH_URL/indexes/books/settings/faceting' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "maxValuesPerFacet": 2,
+      "sortFacetValuesBy": {
+        "*": "alpha",
+        "genres": "count"
+      }
+    }'
+
+# delete_indexes_indexUid_settings_faceting
+reset_faceting_settings_1: |-
+  curl \
+    -X DELETE 'MEILISEARCH_URL/indexes/books/settings/faceting'
+# get_indexes_indexUid_settings_separator_tokens
+get_separator_tokens_1: |-
+  curl \
+    -X GET 'MEILISEARCH_URL/indexes/articles/settings/separator-tokens'
+# put_indexes_indexUid_settings_separator_tokens
+update_separator_tokens_1: |-
+  curl \
+    -X PUT 'MEILISEARCH_URL/indexes/articles/settings/separator-tokens' \
+    -H 'Content-Type: application/json'  \
+    --data-binary '["|", "&hellip;"]'
+# delete_indexes_indexUid_settings_separator_tokens
+reset_separator_tokens_1: |-
+  curl \
+    -X DELETE 'MEILISEARCH_URL/indexes/articles/settings/separator-tokens'
+# get_indexes_indexUid_settings_non_separator_tokens
+get_non_separator_tokens_1: |-
+  curl \
+    -X GET 'MEILISEARCH_URL/indexes/articles/settings/non-separator-tokens'
+# put_indexes_indexUid_settings_non_separator_tokens
+update_non_separator_tokens_1: |-
+  curl \
+    -X PUT 'MEILISEARCH_URL/indexes/articles/settings/non-separator-tokens' \
+    -H 'Content-Type: application/json'  \
+    --data-binary '["@", "#"]'
+# delete_indexes_indexUid_settings_non_separator_tokens
+reset_non_separator_tokens_1: |-
+  curl \
+    -X DELETE 'MEILISEARCH_URL/indexes/articles/settings/non-separator-tokens'
+# get_indexes_indexUid_settings_dictionary
+get_dictionary_1: |-
+  curl \
+    -X GET 'MEILISEARCH_URL/indexes/books/settings/dictionary'
+# put_indexes_indexUid_settings_dictionary
+update_dictionary_1: |-
+  curl \
+    -X PUT 'MEILISEARCH_URL/indexes/books/settings/dictionary' \
+    -H 'Content-Type: application/json' \
+    --data-binary '[
+      "J. R. R.",
+      "W. E. B."
+    ]'
+# delete_indexes_indexUid_settings_dictionary
+reset_dictionary_1: |-
+  curl \
+    -X DELETE 'MEILISEARCH_URL/indexes/books/settings/dictionary'
+# get_indexes_indexUid_settings_proximity_precision
+get_proximity_precision_settings_1: |-
+  curl \
+    -X GET 'MEILISEARCH_URL/indexes/books/settings/proximity-precision'
+# put_indexes_indexUid_settings_proximity_precision
+update_proximity_precision_settings_1: |-
+  curl \
+    -X PUT 'MEILISEARCH_URL/indexes/books/settings/proximity-precision' \
+    -H 'Content-Type: application/json' \
+    --data-binary '"byAttribute"'
+# delete_indexes_indexUid_settings_proximity_precision
+reset_proximity_precision_settings_1: |-
+  curl \
+    -X DELETE 'MEILISEARCH_URL/indexes/books/settings/proximity-precision'
+# get_indexes_indexUid_settings_facet_search
+get_facet_search_settings_1: |-
+  curl \
+    -X GET 'MEILISEARCH_URL/indexes/INDEX_UID/settings/facet-search'
+# put_indexes_indexUid_settings_facet_search
+update_facet_search_settings_1: |-
+  curl \
+    -X PUT 'MEILISEARCH_URL/indexes/INDEX_UID/settings/facet-search' \
+    -H 'Content-Type: application/json' \
+    --data-binary 'false'
+# delete_indexes_indexUid_settings_facet_search
+reset_facet_search_settings_1: |-
+  curl \
+    -X DELETE 'MEILISEARCH_URL/indexes/INDEX_UID/settings/facet-search'
+# get_indexes_indexUid_settings_prefix_search
+get_prefix_search_settings_1: |-
+  curl \
+    -X GET 'MEILISEARCH_URL/indexes/INDEX_UID/settings/prefix-search'
+# put_indexes_indexUid_settings_prefix_search
+update_prefix_search_settings_1: |-
+  curl \
+    -X PUT 'MEILISEARCH_URL/indexes/INDEX_UID/settings/prefix-search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '"disabled"'
+# delete_indexes_indexUid_settings_prefix_search
+reset_prefix_search_settings_1: |-
+  curl \
+    -X DELETE 'MEILISEARCH_URL/indexes/INDEX_UID/settings/prefix-search'
+# get_indexes_indexUid_settings_search_cutoff_ms
+get_search_cutoff_1: |-
+  curl \
+    -X GET 'MEILISEARCH_URL/indexes/movies/settings/search-cutoff-ms'
+# put_indexes_indexUid_settings_search_cutoff_ms
+update_search_cutoff_1: |-
+  curl \
+    -X PUT 'MEILISEARCH_URL/indexes/movies/settings/search-cutoff-ms' \
+    -H 'Content-Type: application/json' \
+    --data-binary '150'
+# delete_indexes_indexUid_settings_search_cutoff_ms
+reset_search_cutoff_1: |-
+  curl \
+    -X DELETE 'MEILISEARCH_URL/indexes/movies/settings/search-cutoff-ms'
+# get_indexes_indexUid_settings_localized_attributes
+get_localized_attribute_settings_1: |-
+  curl \
+    -X GET 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/localized-attributes'
+# put_indexes_indexUid_settings_localized_attributes
+update_localized_attribute_settings_1: |-
+  curl \
+    -X PUT 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/localized-attributes' \
+    -H 'Content-Type: application/json' \
+    --data-binary '[
+      {"locales": ["jpn"], "attributePatterns": ["*_ja"]}
+    ]'
+# delete_indexes_indexUid_settings_localized_attributes
+reset_localized_attribute_settings_1: |-
+  curl \
+    -X DELETE 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/localized-attributes'
+# get_indexes_indexUid_settings_embedders
+get_embedders_1: |-
+  curl \
+    -X GET 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/embedders'
+# patch_indexes_indexUid_settings_embedders
+update_embedders_1: |-
+  curl \
+    -X PATCH 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/embedders' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "default": {
+        "source":  "openAi",
+        "apiKey": "OPEN_AI_API_KEY",
+        "model": "text-embedding-3-small",
+        "documentTemplate": "A document titled '{{doc.title}}' whose description starts with {{doc.overview|truncatewords: 20}}"
+      }
+    }'
+# delete_indexes_indexUid_settings_embedders
+reset_embedders_1: |-
+  curl \
+    -X DELETE 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/embedders'
+# get_indexes_indexUid_settings_vector_store
+get_vector_store_settings_1: |-
+  curl \
+    -X GET 'MEILISEARCH_URL/indexes/INDEX_UID/settings/vector-store'
+# patch_indexes_indexUid_settings_vector_store
+update_vector_store_settings_1: |-
+  curl \
+    -X PATCH 'MEILISEARCH_URL/indexes/INDEX_UID/settings/vector-store' \
+    -H 'Content-Type: application/json' \
+    --data-binary '"experimental"'
+# delete_indexes_indexUid_settings_vector_store
+reset_vector_store_settings_1: |-
+  curl \
+    -X DELETE 'MEILISEARCH_URL/indexes/INDEX_UID/settings/vector-store'
+### END settings + subroutes
+
+# post_dumps
+post_dump_1: |-
+  curl \
+    -X POST 'MEILISEARCH_URL/dumps'
+# delete_tasks
+delete_tasks_1: |-
+  curl \
+    -X DELETE 'MEILISEARCH_URL/tasks?uids=1,2'
+# post_tasks_cancel
+cancel_tasks_1: |-
+  curl \
+    -X POST 'MEILISEARCH_URL/tasks/cancel?uids=1,2'
+# post_swap_indexes
+swap_indexes_1: |-
+  curl \
+    -X POST 'MEILISEARCH_URL/swap-indexes' \
+    -H 'Content-Type: application/json' \
+    --data-binary '[
+      {
+        "indexes": [
+          "indexA",
+          "indexB"
+        ]
+      },
+      {
+        "indexes": [
+          "indexX",
+          "indexY"
+        ]
+      }
+    ]'
+# post_multi_search
+multi_search_1: |-
+  curl \
+    -X POST 'MEILISEARCH_URL/multi-search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "queries": [
+        {
+          "indexUid": "movies",
+          "q": "pooh",
+          "limit": 5
+        },
+        {
+          "indexUid": "movies",
+          "q": "nemo",
+          "limit": 5
+        },
+        {
+          "indexUid": "movie_ratings",
+          "q": "us"
+        }
+      ]
+    }'
+
+# post_indexes_indexUid_documents_fetch
+get_documents_post_1: |-
+  curl \
+    -X POST MEILISEARCH_URL/indexes/books/documents/fetch \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "filter": "(rating > 3 AND (genres = Adventure OR genres = Fiction)) AND language = English",
+      "fields": ["title", "genres", "rating", "language"],
+      "limit": 3
+    }'
+# post_indexes_indexUid_documents_delete
+delete_documents_by_filter_1: |-
+  curl \
+    -X POST MEILISEARCH_URL/indexes/movies/documents/delete \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "filter": "genres = action OR genres = adventure"
+    }'
+# get_experimental_features
+get_experimental_features_1: |-
+  curl \
+    -X GET 'MEILISEARCH_URL/experimental-features/'
+# patch_experimental_features
+update_experimental_features_1: |-
+  curl \
+    -X PATCH 'MEILISEARCH_URL/experimental-features/' \
+    -H 'Content-Type: application/json'  \
+    --data-binary '{
+      "metrics": true
+    }'
+# post_indexes_indexUid_facet_search
+facet_search_1: |-
+  curl \
+    -X POST 'MEILISEARCH_URL/indexes/books/facet-search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "facetQuery": "fiction",
+      "facetName": "genres",
+      "filter": "rating > 3"
+    }'
+# post_snapshots
+create_snapshot_1: |-
+  curl \
+    -X POST 'MEILISEARCH_URL/snapshots'
+# get_batches
+get_all_batches_1: |-
+  curl \
+    -X GET 'http://MEILISEARCH_URL/batches'
+# get_batches_id
+get_batch_1: |-
+  curl \
+    -X GET 'http://MEILISEARCH_URL/batches/BATCH_UID'
+# post_indexes_indexUid_similar
+get_similar_post_1: |-
+  curl \
+    -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/similar' \
+    -H 'Content-Type: application/json' \
+    -H 'Authorization: Bearer DEFAULT_SEARCH_API_KEY' \
+    --data-binary '{
+      "id": TARGET_DOCUMENT_ID,
+      "embedder": "EMBEDDER_NAME"
+    }'
+# get_indexes_indexUid_similar
+get_similar_get_1: |-
+  curl \
+    -X GET 'MEILISEARCH_URL/indexes/INDEX_NAME/similar?id=TARGET_DOCUMENT_ID&embedder=EMBEDDER_NAME'
+# post_export
+export_post_1: |-
+  curl \
+    -X POST 'MEILISEARCH_URL/export' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "url": "TARGET_INSTANCE_URL",
+      "indexes": {
+        "*": {
+          "overrideSettings": true
+        }
+      }
+    }'
+# get_webhooks
+webhooks_get_1: |-
+  curl \
+    -X GET 'MEILISEARCH_URL/webhooks'
+# get_webhooks_uid
+webhooks_get_single_1: |-
+  curl \
+    -X GET 'MEILISEARCH_URL/webhooks/WEBHOOK_UUID'
+# post_webhooks
+webhooks_post_1: |-
+  curl \
+    -X POST 'MEILISEARCH_URL/webhooks' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "url": "WEBHOOK_TARGET_URL",
+      "headers": {
+        "authorization": "SECURITY_KEY",
+        "referer": "https://example.com"
+      }
+    }'
+# patch_webhooks_uid
+webhooks_patch_1: |-
+  curl \
+    -X PATCH 'MEILISEARCH_URL/webhooks/WEBHOOK_UUID' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "header": {
+        "referer": null
+      }
+    }'
+# delete_webhooks_uid
+webhooks_delete_1: |-
+  curl \
+    -X DELETE 'MEILISEARCH_URL/webhooks/WEBHOOK_UUID'
+# post_indexes_indexUid_compact
+compact_index_1: |-
+  curl \
+    -X POST 'MEILISEARCH_URL/indexes/INDEX_UID/compact'
+# get_metrics
+experimental_get_metrics_1: |-
+  curl \
+    -X GET 'MEILISEARCH_URL/metrics'
+# post_logs_stderr
+experimental_post_logs_stderr_1: |-
+  curl \
+    -X POST MEILISEARCH_URL/logs/stderr \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+        "target": "milli=trace,index_scheduler=info,actix_web=off"
+    }'
+# post_logs_stream
+experimental_post_logs_stream_1: |-
+  curl \
+    -X POST MEILISEARCH_URL/logs/stream \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "mode": "human",
+      "target": "index_scheduler=trace"
+    }'
+# delete_logs_stream
+experimental_delete_logs_stream_1: |-
+  curl \
+    -X DELETE MEILISEARCH_URL/logs/stream
+  }'
+# get_network
+get_network_1: |-
+  curl \
+    -X GET 'MEILISEARCH_URL/network'
+# patch_network
+update_network_1: |-
+  curl \
+    -X PATCH 'MEILISEARCH_URL/network' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "self": "ms-00",
+      "remotes": {
+        "ms-00": {
+          "url": "http://INSTANCE_URL",
+          "searchApiKey": "INSTANCE_API_KEY"
+        },
+        "ms-01": {
+          "url": "http://ANOTHER_INSTANCE_URL",
+          "searchApiKey": "ANOTHER_INSTANCE_API_KEY"
+        }
+      }
+    }'
 # get_indexes_indexUid_stats
 get_index_stats_1: |-
   curl \
@@ -369,6 +820,8 @@ get_health_1: |-
 get_version_1: |-
   curl \
     -X GET 'MEILISEARCH_URL/version'
+## END /references/api
+
 distinct_attribute_guide_1: |-
   curl \
     -X PUT 'MEILISEARCH_URL/indexes/jackets/settings/distinct-attribute' \
@@ -635,10 +1088,6 @@ faceted_search_walkthrough_filter_1: |-
         "director = \"Jordan Peele\""
       ]
     }'
-# post_dumps
-post_dump_1: |-
-  curl \
-    -X POST 'MEILISEARCH_URL/dumps'
 phrase_search_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/movies/search' \
@@ -649,7 +1098,6 @@ authorization_header_1: |-
   curl \
     -X GET 'MEILISEARCH_URL/keys' \
     -H 'Authorization: Bearer MASTER_KEY'
-# put_indexes_indexUid_settings_sortable_attributes
 sorting_guide_update_sortable_attributes_1: |-
   curl \
     -X PUT 'MEILISEARCH_URL/indexes/books/settings/sortable-attributes' \
@@ -694,22 +1142,6 @@ sorting_guide_sort_parameter_2: |-
       "q": "butler",
       "sort": ["author:desc"]
     }'
-# get_indexes_indexUid_settings_sortable_attributes
-get_sortable_attributes_1: |-
-  curl \
-    -X GET 'MEILISEARCH_URL/indexes/books/settings/sortable-attributes'
-update_sortable_attributes_1: |-
-  curl \
-    -X PUT 'MEILISEARCH_URL/indexes/books/settings/sortable-attributes' \
-    -H 'Content-Type: application/json' \
-    --data-binary '[
-      "price",
-      "author"
-    ]'
-# delete_indexes_indexUid_settings_sortable_attributes
-reset_sortable_attributes_1: |-
-  curl \
-    -X DELETE 'MEILISEARCH_URL/indexes/books/settings/sortable-attributes'
 search_parameter_guide_sort_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/books/search' \
@@ -843,26 +1275,6 @@ tenant_token_guide_search_no_sdk_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/patient_medical_records/search' \
     -H 'Authorization: Bearer TENANT_TOKEN'
-# get_indexes_indexUid_settings_typo_tolerance
-get_typo_tolerance_1: |-
-  curl \
-    -X GET 'MEILISEARCH_URL/indexes/books/settings/typo-tolerance'
-# patch_indexes_indexUid_settings_typo_tolerance
-update_typo_tolerance_1: |-
-  curl \
-    -X PATCH 'MEILISEARCH_URL/indexes/books/settings/typo-tolerance' \
-    -H 'Content-Type: application/json' \
-    --data-binary '{
-      "minWordSizeForTypos": {
-        "oneTypo": 4,
-        "twoTypos": 10
-      },
-      "disableOnAttributes": ["title"]
-    }'
-# delete_indexes_indexUid_settings_typo_tolerance
-reset_typo_tolerance_1: |-
-  curl \
-    -X DELETE 'MEILISEARCH_URL/indexes/books/settings/typo-tolerance'
 typo_tolerance_guide_1: |-
   curl \
     -X PATCH 'MEILISEARCH_URL/indexes/movies/settings/typo-tolerance' \
@@ -916,7 +1328,7 @@ updating_guide_reset_displayed_attributes_old_authorization_header: |-
   curl \
     -X DELETE 'http://<your-domain-name>/indexes/{index_uid}/settings/displayed-attributes' \
     -H 'X-Meili-API-Key: API_KEY'
-# post_indexes_indexUid_settings_typo_tolerance
+
 updating_guide_create_dump: |-
   curl \
     -X POST 'http://<your-domain-name>/dumps' \
@@ -928,42 +1340,6 @@ getting_started_typo_tolerance: |-
     --data-binary '{
       "minWordSizeForTypos": { "oneTypo": 4 }
   }'
-# get_indexes_indexUid_settings_pagination
-get_pagination_settings_1: |-
-  curl \
-    -X GET 'MEILISEARCH_URL/indexes/books/settings/pagination'
-# patch_indexes_indexUid_settings_pagination
-update_pagination_settings_1: |-
-  curl \
-    -X PATCH 'MEILISEARCH_URL/indexes/books/settings/pagination' \
-    -H 'Content-Type: application/json' \
-    --data-binary '{
-      "maxTotalHits": 100
-    }'
-# delete_indexes_indexUid_settings_pagination
-reset_pagination_settings_1: |-
-  curl \
-    -X DELETE 'MEILISEARCH_URL/indexes/books/settings/pagination'
-# get_indexes_indexUid_settings_faceting
-get_faceting_settings_1: |-
-  curl \
-    -X GET 'MEILISEARCH_URL/indexes/books/settings/faceting'
-# patch_indexes_indexUid_settings_faceting
-update_faceting_settings_1: |-
-  curl \
-    -X PATCH 'MEILISEARCH_URL/indexes/books/settings/faceting' \
-    -H 'Content-Type: application/json' \
-    --data-binary '{
-      "maxValuesPerFacet": 2,
-      "sortFacetValuesBy": {
-        "*": "alpha",
-        "genres": "count"
-      }
-    }'
-# delete_indexes_indexUid_settings_faceting
-reset_faceting_settings_1: |-
-  curl \
-    -X DELETE 'MEILISEARCH_URL/indexes/books/settings/faceting'
 synonyms_guide_1: |-
   curl \
     -X PUT 'MEILISEARCH_URL/indexes/movies/settings/synonyms' \
@@ -1056,56 +1432,6 @@ async_guide_filter_by_statuses_2: |-
 async_guide_multiple_filters_1: |-
   curl \
     -X GET 'MEILISEARCH_URL/tasks?indexUids=movies&types=documentAdditionOrUpdate,documentDeletion&statuses=processing'
-# delete_tasks
-delete_tasks_1: |-
-  curl \
-    -X DELETE 'MEILISEARCH_URL/tasks?uids=1,2'
-# post_tasks_cancel
-cancel_tasks_1: |-
-  curl \
-    -X POST 'MEILISEARCH_URL/tasks/cancel?uids=1,2'
-# post_swap_indexes
-swap_indexes_1: |-
-  curl \
-    -X POST 'MEILISEARCH_URL/swap-indexes' \
-    -H 'Content-Type: application/json' \
-    --data-binary '[
-      {
-        "indexes": [
-          "indexA",
-          "indexB"
-        ]
-      },
-      {
-        "indexes": [
-          "indexX",
-          "indexY"
-        ]
-      }
-    ]'
-# post_multi_search
-multi_search_1: |-
-  curl \
-    -X POST 'MEILISEARCH_URL/multi-search' \
-    -H 'Content-Type: application/json' \
-    --data-binary '{
-      "queries": [
-        {
-          "indexUid": "movies",
-          "q": "pooh",
-          "limit": 5
-        },
-        {
-          "indexUid": "movies",
-          "q": "nemo",
-          "limit": 5
-        },
-        {
-          "indexUid": "movie_ratings",
-          "q": "us"
-        }
-      ]
-    }'
 multi_search_federated_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/multi-search' \
@@ -1158,46 +1484,6 @@ filtering_update_settings_1: |-
       "release_date",
       "ratings"
     ]'
-# post_indexes_indexUid_documents_fetch
-get_documents_post_1: |-
-  curl \
-    -X POST MEILISEARCH_URL/indexes/books/documents/fetch \
-    -H 'Content-Type: application/json' \
-    --data-binary '{
-      "filter": "(rating > 3 AND (genres = Adventure OR genres = Fiction)) AND language = English",
-      "fields": ["title", "genres", "rating", "language"],
-      "limit": 3
-    }'
-# post_indexes_indexUid_documents_delete
-delete_documents_by_filter_1: |-
-  curl \
-    -X POST MEILISEARCH_URL/indexes/movies/documents/delete \
-    -H 'Content-Type: application/json' \
-    --data-binary '{
-      "filter": "genres = action OR genres = adventure"
-    }'
-# get_experimental_features
-get_experimental_features_1: |-
-  curl \
-    -X GET 'MEILISEARCH_URL/experimental-features/'
-# patch_experimental_features
-update_experimental_features_1: |-
-  curl \
-    -X PATCH 'MEILISEARCH_URL/experimental-features/' \
-    -H 'Content-Type: application/json'  \
-    --data-binary '{
-      "metrics": true
-    }'
-# post_indexes_indexUid_facet_search
-facet_search_1: |-
-  curl \
-    -X POST 'MEILISEARCH_URL/indexes/books/facet-search' \
-    -H 'Content-Type: application/json' \
-    --data-binary '{
-      "facetQuery": "fiction",
-      "facetName": "genres",
-      "filter": "rating > 3"
-    }'
 facet_search_2: |-
   curl \
     -X PATCH 'MEILISEARCH_URL/indexes/books/settings/faceting' \
@@ -1239,97 +1525,6 @@ search_parameter_guide_attributes_to_search_on_1: |-
       "q": "adventure",
       "attributesToSearchOn": ["overview"]
     }'
-# get_indexes_indexUid_settings_separator_tokens
-get_separator_tokens_1: |-
-  curl \
-    -X GET 'MEILISEARCH_URL/indexes/articles/settings/separator-tokens'
-# put_indexes_indexUid_settings_separator_tokens
-update_separator_tokens_1: |-
-  curl \
-    -X PUT 'MEILISEARCH_URL/indexes/articles/settings/separator-tokens' \
-    -H 'Content-Type: application/json'  \
-    --data-binary '["|", "&hellip;"]'
-# delete_indexes_indexUid_settings_separator_tokens
-reset_separator_tokens_1: |-
-  curl \
-    -X DELETE 'MEILISEARCH_URL/indexes/articles/settings/separator-tokens'
-# get_indexes_indexUid_settings_non_separator_tokens
-get_non_separator_tokens_1: |-
-  curl \
-    -X GET 'MEILISEARCH_URL/indexes/articles/settings/non-separator-tokens'
-# put_indexes_indexUid_settings_non_separator_tokens
-update_non_separator_tokens_1: |-
-  curl \
-    -X PUT 'MEILISEARCH_URL/indexes/articles/settings/non-separator-tokens' \
-    -H 'Content-Type: application/json'  \
-    --data-binary '["@", "#"]'
-# delete_indexes_indexUid_settings_non_separator_tokens
-reset_non_separator_tokens_1: |-
-  curl \
-    -X DELETE 'MEILISEARCH_URL/indexes/articles/settings/non-separator-tokens'
-# get_indexes_indexUid_settings_dictionary
-get_dictionary_1: |-
-  curl \
-    -X GET 'MEILISEARCH_URL/indexes/books/settings/dictionary'
-# put_indexes_indexUid_settings_dictionary
-update_dictionary_1: |-
-  curl \
-    -X PUT 'MEILISEARCH_URL/indexes/books/settings/dictionary' \
-    -H 'Content-Type: application/json' \
-    --data-binary '[
-      "J. R. R.",
-      "W. E. B."
-    ]'
-# delete_indexes_indexUid_settings_dictionary
-reset_dictionary_1: |-
-  curl \
-    -X DELETE 'MEILISEARCH_URL/indexes/books/settings/dictionary'
-# post_snapshots
-create_snapshot_1: |-
-  curl \
-    -X POST 'MEILISEARCH_URL/snapshots'
-# get_indexes_indexUid_settings_proximity_precision
-get_proximity_precision_settings_1: |-
-  curl \
-    -X GET 'MEILISEARCH_URL/indexes/books/settings/proximity-precision'
-# put_indexes_indexUid_settings_proximity_precision
-update_proximity_precision_settings_1: |-
-  curl \
-    -X PUT 'MEILISEARCH_URL/indexes/books/settings/proximity-precision' \
-    -H 'Content-Type: application/json' \
-    --data-binary '"byAttribute"'
-# delete_indexes_indexUid_settings_proximity_precision
-reset_proximity_precision_settings_1: |-
-  curl \
-    -X DELETE 'MEILISEARCH_URL/indexes/books/settings/proximity-precision'
-# get_indexes_indexUid_settings_facet_search
-get_facet_search_settings_1: |-
-  curl \
-    -X GET 'MEILISEARCH_URL/indexes/INDEX_UID/settings/facet-search'
-# put_indexes_indexUid_settings_facet_search
-update_facet_search_settings_1: |-
-  curl \
-    -X PUT 'MEILISEARCH_URL/indexes/INDEX_UID/settings/facet-search' \
-    -H 'Content-Type: application/json' \
-    --data-binary 'false'
-# delete_indexes_indexUid_settings_facet_search
-reset_facet_search_settings_1: |-
-  curl \
-    -X DELETE 'MEILISEARCH_URL/indexes/INDEX_UID/settings/facet-search'
-# get_indexes_indexUid_settings_prefix_search
-get_prefix_search_settings_1: |-
-  curl \
-    -X GET 'MEILISEARCH_URL/indexes/INDEX_UID/settings/prefix-search'
-# put_indexes_indexUid_settings_prefix_search
-update_prefix_search_settings_1: |-
-  curl \
-    -X PUT 'MEILISEARCH_URL/indexes/INDEX_UID/settings/prefix-search' \
-    -H 'Content-Type: application/json' \
-    --data-binary '"disabled"'
-# delete_indexes_indexUid_settings_prefix_search
-reset_prefix_search_settings_1: |-
-  curl \
-    -X DELETE 'MEILISEARCH_URL/indexes/INDEX_UID/settings/prefix-search'
 index_settings_tutorial_api_get_setting_1: |-
   curl \
     -X GET 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/searchable-attributes'
@@ -1344,20 +1539,6 @@ index_settings_tutorial_api_put_setting_1: |-
 index_settings_tutorial_api_task_1: |-
   curl \
     -X GET 'MEILISEARCH_URL/tasks/TASK_UID'
-# get_indexes_indexUid_settings_search_cutoff_ms
-get_search_cutoff_1: |-
-  curl \
-    -X GET 'MEILISEARCH_URL/indexes/movies/settings/search-cutoff-ms'
-# put_indexes_indexUid_settings_search_cutoff_ms
-update_search_cutoff_1: |-
-  curl \
-    -X PUT 'MEILISEARCH_URL/indexes/movies/settings/search-cutoff-ms' \
-    -H 'Content-Type: application/json' \
-    --data-binary '150'
-# delete_indexes_indexUid_settings_search_cutoff_ms
-reset_search_cutoff_1: |-
-  curl \
-    -X DELETE 'MEILISEARCH_URL/indexes/movies/settings/search-cutoff-ms'
 negative_search_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/movies/search' \
@@ -1471,65 +1652,6 @@ search_parameter_reference_locales_1: |-
     "q": "QUERY TEXT IN JAPANESE",
     "locales": ["jpn"]
   }'
-# get_indexes_indexUid_settings_localized_attributes
-get_localized_attribute_settings_1: |-
-  curl \
-    -X GET 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/localized-attributes'
-# put_indexes_indexUid_settings_localized_attributes
-update_localized_attribute_settings_1: |-
-  curl \
-    -X PUT 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/localized-attributes' \
-    -H 'Content-Type: application/json' \
-    --data-binary '[
-      {"locales": ["jpn"], "attributePatterns": ["*_ja"]}
-    ]'
-# delete_indexes_indexUid_settings_localized_attributes
-reset_localized_attribute_settings_1: |-
-  curl \
-    -X DELETE 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/localized-attributes'
-# get_batches
-get_all_batches_1: |-
-  curl \
-    -X GET 'http://MEILISEARCH_URL/batches'
-# get_batches_id
-get_batch_1: |-
-  curl \
-    -X GET 'http://MEILISEARCH_URL/batches/BATCH_UID'
-# post_indexes_indexUid_similar
-get_similar_post_1: |-
-  curl \
-    -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/similar' \
-    -H 'Content-Type: application/json' \
-    -H 'Authorization: Bearer DEFAULT_SEARCH_API_KEY' \
-    --data-binary '{
-      "id": TARGET_DOCUMENT_ID,
-      "embedder": "EMBEDDER_NAME"
-    }'
-# get_indexes_indexUid_similar
-get_similar_get_1: |-
-  curl \
-    -X GET 'MEILISEARCH_URL/indexes/INDEX_NAME/similar?id=TARGET_DOCUMENT_ID&embedder=EMBEDDER_NAME'
-# get_indexes_indexUid_settings_embedders
-get_embedders_1: |-
-  curl \
-    -X GET 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/embedders'
-# patch_indexes_indexUid_settings_embedders
-update_embedders_1: |-
-  curl \
-    -X PATCH 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/embedders' \
-    -H 'Content-Type: application/json' \
-    --data-binary '{
-      "default": {
-        "source":  "openAi",
-        "apiKey": "OPEN_AI_API_KEY",
-        "model": "text-embedding-3-small",
-        "documentTemplate": "A document titled '{{doc.title}}' whose description starts with {{doc.overview|truncatewords: 20}}"
-      }
-    }'
-# delete_indexes_indexUid_settings_embedders
-reset_embedders_1: |-
-  curl \
-    -X DELETE 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/embedders'
 search_parameter_guide_hybrid_1: |-
   curl -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
     -H 'content-type: application/json' \
@@ -1592,89 +1714,12 @@ related_results_similar_1: |-
       "id": 192,
       "embedder": "EMBEDDER_NAME"
     }'
-# post_export
-export_post_1: |-
-  curl \
-    -X POST 'MEILISEARCH_URL/export' \
-    -H 'Content-Type: application/json' \
-    --data-binary '{
-      "url": "TARGET_INSTANCE_URL",
-      "indexes": {
-        "*": {
-          "overrideSettings": true
-        }
-      }
-    }'
-# get_webhooks
-webhooks_get_1: |-
-  curl \
-    -X GET 'MEILISEARCH_URL/webhooks'
-# get_webhooks_uid
-webhooks_get_single_1: |-
-  curl \
-    -X GET 'MEILISEARCH_URL/webhooks/WEBHOOK_UUID'
-# post_webhooks
-webhooks_post_1: |-
-  curl \
-    -X POST 'MEILISEARCH_URL/webhooks' \
-    -H 'Content-Type: application/json' \
-    --data-binary '{
-      "url": "WEBHOOK_TARGET_URL",
-      "headers": {
-        "authorization": "SECURITY_KEY",
-        "referer": "https://example.com"
-      }
-    }'
-# patch_webhooks_uid
-webhooks_patch_1: |-
-  curl \
-    -X PATCH 'MEILISEARCH_URL/webhooks/WEBHOOK_UUID' \
-    -H 'Content-Type: application/json' \
-    --data-binary '{
-      "header": {
-        "referer": null
-      }
-    }'
-# delete_webhooks_uid
-webhooks_delete_1: |-
-  curl \
-    -X DELETE 'MEILISEARCH_URL/webhooks/WEBHOOK_UUID'
 rename_an_index_1: |-
   curl \
     -X PATCH 'MEILISEARCH_URL/indexes/INDEX_A' \
     -H 'Content-Type: application/json' \
     --data-binary '{ "uid": "INDEX_B" }'
-# post_indexes_indexUid_compact
-compact_index_1: |-
-  curl \
-    -X POST 'MEILISEARCH_URL/indexes/INDEX_UID/compact'
 
-### Code samples for experimental features
-# get_metrics
-experimental_get_metrics_1: |-
-  curl \
-    -X GET 'MEILISEARCH_URL/metrics'
-# post_logs_stderr
-experimental_post_logs_stderr_1: |-
-  curl \
-    -X POST MEILISEARCH_URL/logs/stderr \
-    -H 'Content-Type: application/json' \
-    --data-binary '{
-        "target": "milli=trace,index_scheduler=info,actix_web=off"
-    }'
-# post_logs_stream
-experimental_post_logs_stream_1: |-
-  curl \
-    -X POST MEILISEARCH_URL/logs/stream \
-    -H 'Content-Type: application/json' \
-    --data-binary '{
-      "mode": "human",
-      "target": "index_scheduler=trace"
-    }'
-# delete_logs_stream
-experimental_delete_logs_stream_1: |-
-  curl \
-    -X DELETE MEILISEARCH_URL/logs/stream
 multi_search_remote_federated_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/multi-search' \
@@ -1697,29 +1742,7 @@ multi_search_remote_federated_1: |-
           }
         }
       ]
-    }'
-# get_network
-get_network_1: |-
-  curl \
-    -X GET 'MEILISEARCH_URL/network'
-# patch_network
-update_network_1: |-
-  curl \
-    -X PATCH 'MEILISEARCH_URL/network' \
-    -H 'Content-Type: application/json' \
-    --data-binary '{
-      "self": "ms-00",
-      "remotes": {
-        "ms-00": {
-          "url": "http://INSTANCE_URL",
-          "searchApiKey": "INSTANCE_API_KEY"
-        },
-        "ms-01": {
-          "url": "http://ANOTHER_INSTANCE_URL",
-          "searchApiKey": "ANOTHER_INSTANCE_API_KEY"
-        }
-      }
-    }'
+  
 search_parameter_reference_media_1: |-
   curl \
   -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
@@ -1736,17 +1759,3 @@ search_parameter_reference_media_1: |-
       }
     }
   }'
-# get_indexes_indexUid_settings_vector_store
-get_vector_store_settings_1: |-
-  curl \
-    -X GET 'MEILISEARCH_URL/indexes/INDEX_UID/settings/vector-store'
-# patch_indexes_indexUid_settings_vector_store
-update_vector_store_settings_1: |-
-  curl \
-    -X PATCH 'MEILISEARCH_URL/indexes/INDEX_UID/settings/vector-store' \
-    -H 'Content-Type: application/json' \
-    --data-binary '"experimental"'
-# delete_indexes_indexUid_settings_vector_store
-reset_vector_store_settings_1: |-
-  curl \
-    -X DELETE 'MEILISEARCH_URL/indexes/INDEX_UID/settings/vector-store'
