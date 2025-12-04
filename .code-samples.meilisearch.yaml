@@ -425,7 +425,6 @@ update_faceting_settings_1: |-
         "genres": "count"
       }
     }'
-
 # delete_indexes_indexUid_settings_faceting
 reset_faceting_settings_1: |-
   curl \
@@ -638,7 +637,6 @@ multi_search_1: |-
         }
       ]
     }'
-
 # post_indexes_indexUid_documents_fetch
 get_documents_post_1: |-
   curl \
