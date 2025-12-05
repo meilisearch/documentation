@@ -68,7 +68,7 @@ add_or_update_documents_1: |-
 delete_all_documents_1: |-
   curl \
     -X DELETE 'MEILISEARCH_URL/indexes/movies/documents'
-# delete_indexes_indexUid_documents_id
+# delete_indexes_indexUid_documentId
 delete_one_document_1: |-
   curl \
     -X DELETE 'MEILISEARCH_URL/indexes/movies/documents/25684'
@@ -685,7 +685,7 @@ create_snapshot_1: |-
 get_all_batches_1: |-
   curl \
     -X GET 'http://MEILISEARCH_URL/batches'
-# get_batches_id
+# get_batches_batchUid
 get_batch_1: |-
   curl \
     -X GET 'http://MEILISEARCH_URL/batches/BATCH_UID'
@@ -720,7 +720,7 @@ export_post_1: |-
 webhooks_get_1: |-
   curl \
     -X GET 'MEILISEARCH_URL/webhooks'
-# get_webhooks_uid
+# get_webhooks_uuid
 webhooks_get_single_1: |-
   curl \
     -X GET 'MEILISEARCH_URL/webhooks/WEBHOOK_UUID'
@@ -736,7 +736,7 @@ webhooks_post_1: |-
         "referer": "https://example.com"
       }
     }'
-# patch_webhooks_uid
+# patch_webhooks_uuid
 webhooks_patch_1: |-
   curl \
     -X PATCH 'MEILISEARCH_URL/webhooks/WEBHOOK_UUID' \
@@ -746,7 +746,7 @@ webhooks_patch_1: |-
         "referer": null
       }
     }'
-# delete_webhooks_uid
+# delete_webhooks_uuid
 webhooks_delete_1: |-
   curl \
     -X DELETE 'MEILISEARCH_URL/webhooks/WEBHOOK_UUID'
