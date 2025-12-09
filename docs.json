@@ -157,7 +157,7 @@
         "anchors": [
           {
             "anchor": "Open API",
-                "openapi": "openapi.json"
+                "openapi": "openapi-curqui.json"
           },
           {
             "anchor": "Learn",
