@@ -164,11 +164,28 @@ curl \
               ]
             }
           }
+        },
+        "request": {
+          "inputs": [
+            "{{fragment}}",
+            "{{..}}"
+          ],
+          "model": "voyage-multimodal-3"
+        },
+        "response": {
+          "data": [
+            {
+              "embedding": "{{embedding}}"
+            },
+            "{{..}}"
+          ]
         }
       }
     }
   }'
 ```
+
+Since the `source` of this embedder is `rest`, you must also specify a [`request` and a `response` fields](/reference/api/settings#body-21). These respectively instruct Meilisearch on how to structure the request sent to the embeddings provider, and where to find the embeddings in the provider's response.
 
 ## Add documents
 
