@@ -82,7 +82,8 @@ await index.UpdateDocumentsAsync(movie);
 #[derive(Serialize, Deserialize)]
 struct IncompleteMovie {
   id: usize,
-  title: String
+  title: String,
+  genres: String
 }
 
 let task: TaskInfo = client
@@ -90,7 +91,8 @@ let task: TaskInfo = client
   .add_or_update(&[
     IncompleteMovie {
       id: 287947,
-      title: "Shazam ⚡️".to_string()
+      title: "Shazam ⚡️".to_string(),
+      genres: "comedy".to_string()
     }
   ], None)
   .await

@@ -19,6 +19,13 @@ client.updateWebhook(WEBHOOK_UUID, {
 })
 ```
 
+```python Python
+client.update_webhook('WEBHOOK_UID', {
+  'url': 'https://example.com/new-webhook',
+  'headers': {"Authorization":"", "X-Custom-Header":"test"},
+})
+```
+
 ```go Go
 client.UpdateWebhook("WEBHOOK_UUID", &meilisearch.UpdateWebhookRequest{
   Header: map[string]string{

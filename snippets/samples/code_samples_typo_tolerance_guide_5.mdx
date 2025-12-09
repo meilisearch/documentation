@@ -42,4 +42,18 @@ client.Index("movies").UpdateTypoTolerance(&meilisearch.TypoTolerance{
   DisableOnNumbers: true
 })
 ```
+
+```rust Rust
+// Deactivate typo tolerance on numbers and other high entropy words
+let typo_tolerance = TypoToleranceSettings {
+  disable_on_numbers: Some(true),
+  ..Default::default()
+};
+
+let task: TaskInfo = client
+  .index("movies")
+  .set_typo_tolerance(&typo_tolerance)
+  .await
+  .unwrap();
+```
 </CodeGroup>

@@ -23,6 +23,13 @@ client.createWebhook({
 })
 ```
 
+```python Python
+client.create_webhook({
+  'url': 'https://example.com/webhook',
+  'headers': {"Authorization":"", "X-Custom-Header":"test"},
+})
+```
+
 ```go Go
 client.AddWebhook(&meilisearch.AddWebhookRequest{
   URL: "WEBHOOK_TARGET_URL",
