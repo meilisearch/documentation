@@ -94,7 +94,7 @@ The next step is to create a workspace. Chat completion workspaces are isolated 
 
 For example, you may have one workspace for publicly visible data, and another for data only available for logged in users.
 
-Create a workspace setting your LLM provider as its `source`:
+Create a workspace by setting your LLM provider as its `source`:
 
 <CodeGroup>
 
@@ -170,13 +170,53 @@ curl \
   }'
 ```
 
+```bash AWS Bedrock Mantle
+curl \
+  -X PATCH 'MEILISEARCH_URL/chats/WORKSPACE_NAME/settings' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "source": "openAi",
+    "apiKey": "AWS_BEDROCK_API_KEY",
+    "baseUrl": "https://bedrock-mantle.AWS_REGION.api.aws/v1",
+    "prompts": {
+      "system": "You are a helpful assistant. Answer questions based only on the provided context."
+    }
+  }'
+```
+
 </CodeGroup>
 
 Which fields are mandatory will depend on your chosen provider `source`. In most cases, you will have to provide an `apiKey` to access the provider.
 
-`baseUrl` indicates the URL Meilisearch queries when users submit questions to your chat interface. This is only mandatory for Azure OpenAI and vLLM sources.
+`baseUrl` indicates the URL Meilisearch queries when users submit questions to your chat interface. This is mandatory for Azure OpenAI, vLLM, and AWS Bedrock Mantle sources.
 
 `prompts.system` gives the conversational search bot the baseline context of your users and their questions. [The `prompts` object accepts a few other fields](/reference/api/chats#prompts) that provide more information to improve how the agent uses the information it finds via Meilisearch. In real-life scenarios filling these fields would improve the quality of conversational search results.
+
+### Using AWS Bedrock Mantle
+
+AWS Bedrock Mantle provides OpenAI-compatible API endpoints for Amazon Bedrock models. To use it with Meilisearch, you'll need an [AWS Bedrock API key](https://docs.aws.amazon.com/bedrock/latest/userguide/getting-started-api-keys.html) and configure your workspace with the Mantle endpoint:
+
+```bash
+curl \
+  -X PATCH 'MEILISEARCH_URL/chats/WORKSPACE_NAME/settings' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "source": "openAi",
+    "apiKey": "YOUR_AWS_BEDROCK_API_KEY",
+    "baseUrl": "https://bedrock-mantle.AWS_REGION.api.aws/v1",
+    "prompts": {
+      "system": "You are a helpful assistant. Answer questions based only on the provided context."
+    }
+  }'
+```
+
+Replace `AWS_REGION` with your preferred AWS region (e.g., `us-west-2`, `us-east-1`, `eu-west-1`). When making requests, use Bedrock Mantle model IDs like `openai.gpt-oss-120b`.
+
+<Note>
+AWS Bedrock API keys embed the region into the token. Ensure your API key is generated in the same region as the `baseUrl` endpoint you're using. For example, if using `https://bedrock-mantle.us-west-2.api.aws/v1`, generate your API key in the `us-west-2` region.
+</Note>
 
 ## Send your first chat completions request
 
@@ -259,8 +299,6 @@ for await (const chunk of completion) {
 ```
 
 Take particular note of the last lines, which output the streamed responses to the browser console. In a real-life application, you would instead print the response chunks to the user interface.
-
-</CodeGroup>
 
 ## Troubleshooting
 
