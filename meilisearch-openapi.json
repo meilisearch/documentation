@@ -1676,7 +1676,7 @@
             "source": "client.index('movies').get_documents({\n  'limit':2, 'filter': 'genres=action',\n  'sort': ['rating:desc', 'release_date:asc']  # list format\n})"
           },
           {
-            "lang": "ruby",
+            "lang": "Ruby",
             "source": "client.index('movies').get_documents(limit: 2, filter: 'genres = action')"
           },
           {
@@ -23176,126 +23176,144 @@
       "name": "Tasks",
       "description": "The tasks route gives information about the progress of the [asynchronous operations](https://docs.meilisearch.com/learn/advanced/asynchronous_operations.html).",
       "externalDocs": {
-        "url": "https://www.meilisearch.com/docs/reference/api/tasks"
+        "url": "https://www.meilisearch.com/docs/reference/api/tasks",
+        "description": null
       }
     },
     {
       "name": "Batches",
       "description": "The /batches route gives information about the progress of batches of asynchronous operations.",
       "externalDocs": {
-        "url": "https://www.meilisearch.com/docs/reference/api/batches"
+        "url": "https://www.meilisearch.com/docs/reference/api/batches",
+        "description": null
       }
     },
     {
       "name": "Indexes",
       "description": "An index is an entity that gathers a set of [documents](https://www.meilisearch.com/docs/learn/getting_started/documents) with its own [settings](https://www.meilisearch.com/docs/reference/api/settings). Learn more about indexes.",
       "externalDocs": {
-        "url": "https://www.meilisearch.com/docs/reference/api/indexes"
+        "url": "https://www.meilisearch.com/docs/reference/api/indexes",
+        "description": null
       }
     },
     {
       "name": "Documents",
       "description": "Documents are objects composed of fields that can store any type of data. Each field contains an attribute and its associated value. Documents are stored inside [indexes](https://www.meilisearch.com/docs/learn/getting_started/indexes).",
       "externalDocs": {
-        "url": "https://www.meilisearch.com/docs/learn/getting_started/documents"
+        "url": "https://www.meilisearch.com/docs/learn/getting_started/documents",
+        "description": null
       }
     },
     {
       "name": "Facet Search",
       "description": "The `/facet-search` route allows you to search for facet values. Facet search supports prefix search and typo tolerance. The returned hits are sorted lexicographically in ascending order. You can configure how facets are sorted using the sortFacetValuesBy property of the faceting index settings.",
       "externalDocs": {
-        "url": "https://www.meilisearch.com/docs/reference/api/facet_search"
+        "url": "https://www.meilisearch.com/docs/reference/api/facet_search",
+        "description": null
       }
     },
     {
       "name": "Similar documents",
       "description": "The /similar route uses AI-powered search to return a number of documents similar to a target document.\n\nMeilisearch exposes two routes for retrieving similar documents: POST and GET. In the majority of cases, POST will offer better performance and ease of use.",
       "externalDocs": {
-        "url": "https://www.meilisearch.com/docs/reference/api/similar"
+        "url": "https://www.meilisearch.com/docs/reference/api/similar",
+        "description": null
       }
     },
     {
       "name": "Settings",
       "description": "Use the /settings route to customize search settings for a given index. You can either modify all index settings at once using the update settings endpoint, or use a child route to configure a single setting.",
       "externalDocs": {
-        "url": "https://www.meilisearch.com/docs/reference/api/settings"
+        "url": "https://www.meilisearch.com/docs/reference/api/settings",
+        "description": null
       }
     },
     {
       "name": "Compact an index",
       "description": "The /compact route uses compacts the database to reorganize and make it smaller and more efficient.",
       "externalDocs": {
-        "url": "https://www.meilisearch.com/docs/reference/api/compact"
+        "url": "https://www.meilisearch.com/docs/reference/api/compact",
+        "description": null
       }
     },
     {
       "name": "Search",
       "description": "Meilisearch exposes two routes to perform searches:\n\n- A POST route: this is the preferred route when using API authentication, as it allows [preflight request](https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request) caching and better performance.\n- A GET route: the usage of this route is discouraged, unless you have good reason to do otherwise (specific caching abilities for example)",
       "externalDocs": {
-        "url": "https://www.meilisearch.com/docs/reference/api/search"
+        "url": "https://www.meilisearch.com/docs/reference/api/search",
+        "description": null
       }
     },
     {
       "name": "Snapshots",
       "description": "The snapshots route allows the creation of database snapshots. Snapshots are .snapshot files that can be used to launch Meilisearch.\nCreating a snapshot is also referred to as exporting it, whereas launching Meilisearch with a snapshot is referred to as importing it.\nDuring a snapshot export, all indexes of the current instance are exported—together with their documents and settings—and saved as a single .snapshot file.\nDuring a snapshot import, all indexes contained in the indicated .snapshot file are imported along with their associated documents and settings.\nSnapshot imports are performed at launch using an option.",
       "externalDocs": {
-        "url": "https://www.meilisearch.com/docs/reference/api/snapshots"
+        "url": "https://www.meilisearch.com/docs/reference/api/snapshots",
+        "description": null
       }
     },
     {
       "name": "Dumps",
       "description": "The `dumps` route allows the creation of database dumps.\nDumps are `.dump` files that can be used to launch Meilisearch. Dumps are compatible between Meilisearch versions.\nCreating a dump is also referred to as exporting it, whereas launching Meilisearch with a dump is referred to as importing it.\nDuring a [dump export](https://www.meilisearch.com/docs/reference/api/dump#create-a-dump), all indexes of the current instance are\nexported—together with their documents and settings—and saved as a single `.dump` file. During a dump import,\nall indexes contained in the indicated `.dump` file are imported along with their associated documents and settings.\nAny existing index with the same uid as an index in the dump file will be overwritten.\nDump imports are [performed at launch](https://www.meilisearch.com/docs/learn/advanced/dumps#importing-a-dump) using an option.",
       "externalDocs": {
-        "url": "https://www.meilisearch.com/docs/reference/api/dump"
+        "url": "https://www.meilisearch.com/docs/reference/api/dump",
+        "description": null
       }
     },
     {
       "name": "Keys",
       "description": "Manage API `keys` for a Meilisearch instance. Each key has a given set of permissions.\nYou must have the master key or the default admin key to access the keys route. More information about the keys and their rights.\nAccessing any route under `/keys` without having set a master key will result in an error.",
       "externalDocs": {
-        "url": "https://www.meilisearch.com/docs/reference/api/keys"
+        "url": "https://www.meilisearch.com/docs/reference/api/keys",
+        "description": null
       }
     },
     {
       "name": "Logs",
       "description": "Everything about retrieving or customizing logs.\nCurrently [experimental](https://www.meilisearch.com/docs/learn/experimental/overview).",
       "externalDocs": {
-        "url": "https://www.meilisearch.com/docs/learn/experimental/log_customization"
+        "url": "https://www.meilisearch.com/docs/learn/experimental/log_customization",
+        "description": null
       }
     },
     {
       "name": "Multi-search",
       "description": "The `/multi-search` route allows you to perform multiple search queries on one or more indexes by bundling them into a single HTTP request. Multi-search is also known as federated search.",
       "externalDocs": {
-        "url": "https://www.meilisearch.com/docs/reference/api/multi_search"
+        "url": "https://www.meilisearch.com/docs/reference/api/multi_search",
+        "description": null
       }
     },
     {
       "name": "Experimental features",
       "description": "The `/experimental-features` route allows you to activate or deactivate some of Meilisearch's experimental features.\n\nThis route is **synchronous**. This means that no task object will be returned, and any activated or deactivated features will be made available or unavailable immediately.",
       "externalDocs": {
-        "url": "https://www.meilisearch.com/docs/reference/api/experimental_features"
+        "url": "https://www.meilisearch.com/docs/reference/api/experimental_features",
+        "description": null
       }
     },
     {
       "name": "Export",
       "description": "The `/export` route allows you to trigger an export process to a remote Meilisearch instance.",
       "externalDocs": {
-        "url": "https://www.meilisearch.com/docs/reference/api/export"
+        "url": "https://www.meilisearch.com/docs/reference/api/export",
+        "description": null
       }
     },
     {
       "name": "Network",
       "description": "The `/network` route allows you to describe the topology of a network of Meilisearch instances.\n\nThis route is **synchronous**. This means that no task object will be returned, and any change to the network will be made available immediately.",
       "externalDocs": {
-        "url": "https://www.meilisearch.com/docs/reference/api/network"
+        "url": "https://www.meilisearch.com/docs/reference/api/network",
+        "description": null
       }
     },
     {
       "name": "Webhooks",
       "description": "The `/webhooks` route allows you to register endpoints to be called once tasks are processed.",
       "externalDocs": {
-        "url": "https://www.meilisearch.com/docs/reference/api/webhooks"
+        "url": "https://www.meilisearch.com/docs/reference/api/webhooks",
+        "description": null
       }
     }
   ]
