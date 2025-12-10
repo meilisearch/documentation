@@ -150,7 +150,7 @@
      "display": "simple"
    },
    "examples": {
-     "languages": ["curl", "python", "javascript"],
+     "languages": ["curl", "javascript", "php", "python", "java", "ruby", "go", "csharp", "rust", "dart", "swift"],
      "defaults": "required",
      "prefill": true
    }
