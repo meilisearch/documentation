@@ -1,0 +1,185 @@
+---
+title: Indexing overview
+sidebarTitle: Overview
+description: Learn how Meilisearch indexes your data and how to optimize indexing performance.
+---
+
+Indexing is the process of storing your documents in Meilisearch to make them searchable. This page explains how indexing works and how to optimize it for your use case.
+
+## How indexing works
+
+When you add documents to Meilisearch, it processes them through several stages:
+
+```mermaid
+flowchart LR
+    A[Documents] --> B[Tokenization]
+    B --> C[Inverted Index]
+    C --> D[Ranking Data]
+    D --> E[Searchable]
+
+    style A fill:#f9f,stroke:#333
+    style E fill:#9f9,stroke:#333
+```
+
+| Stage | Description |
+|-------|-------------|
+| **Tokenization** | Splits text into words, handles stop words and language-specific rules |
+| **Inverted index** | Maps words to documents for fast lookups |
+| **Ranking data** | Computes proximity, typo tolerance, and relevancy scores |
+| **Facets & filters** | Builds structures for filtering and sorting |
+
+## Adding documents
+
+Documents are JSON objects with key-value pairs. Every document must have a unique primary key:
+
+```bash
+curl -X POST "${MEILISEARCH_URL}/indexes/movies/documents?primaryKey=id" \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
+  -H "Content-Type: application/json" \
+  --data-binary '[
+    { "id": 1, "title": "The Matrix", "year": 1999 },
+    { "id": 2, "title": "Inception", "year": 2010 }
+  ]'
+```
+
+Meilisearch accepts JSON, NDJSON, and CSV formats. All indexing operations are **asynchronous**—the API returns a task ID immediately.
+
+## Asynchronous operations
+
+Indexing tasks are queued and processed sequentially. Check task status:
+
+```bash
+curl "${MEILISEARCH_URL}/tasks/0" \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}"
+```
+
+| Status | Description |
+|--------|-------------|
+| `enqueued` | Task is waiting in queue |
+| `processing` | Task is being processed |
+| `succeeded` | Task completed successfully |
+| `failed` | Task failed (check `error` field) |
+
+[Learn more about async operations →](/products/platform/asynchronous_operations)
+
+## Index settings
+
+Configure settings **before** adding documents to avoid reindexing:
+
+<CardGroup cols={2}>
+  <Card title="Searchable attributes" icon="magnifying-glass" href="/products/full_text_search/displayed_searchable_attributes#searchable-fields">
+    Which fields to search in
+  </Card>
+  <Card title="Filterable attributes" icon="filter" href="/reference/api/settings/filterable-attributes">
+    Which fields can be filtered
+  </Card>
+  <Card title="Sortable attributes" icon="arrow-down-a-z" href="/reference/api/settings/sortable-attributes">
+    Which fields can be sorted
+  </Card>
+  <Card title="Ranking rules" icon="ranking-star" href="/products/full_text_search/ranking_rules">
+    How results are ranked
+  </Card>
+</CardGroup>
+
+Example settings configuration:
+
+```bash
+curl -X PATCH "${MEILISEARCH_URL}/indexes/movies/settings" \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
+  -H "Content-Type: application/json" \
+  --data-binary '{
+    "searchableAttributes": ["title", "overview"],
+    "filterableAttributes": ["year", "genre"],
+    "sortableAttributes": ["year", "title"]
+  }'
+```
+
+## Performance optimization
+
+### Key recommendations
+
+| Optimization | Impact |
+|--------------|--------|
+| Define `searchableAttributes` | Only index fields you search |
+| Configure before adding docs | Avoid reindexing |
+| Use larger batches | Fewer HTTP requests |
+| Compress payloads | Faster uploads (`gzip`, `br`) |
+| Use SSDs | Much faster than HDDs |
+| Remove unused fields | Smaller documents process faster |
+
+### For AI-powered search
+
+When using vector embeddings:
+
+| Setting | Effect |
+|---------|--------|
+| [`binaryQuantized`](/reference/api/settings/embedders#binaryquantized) | Compress vectors to 1-bit (faster, less accurate) |
+| [`documentTemplate`](/products/ai_powered_search/document_template_best_practices) | Control what text gets embedded |
+| Fewer dimensions | Faster indexing and search |
+
+### Analyzing bottlenecks
+
+Use the `progressTrace` field in batch responses to identify slow operations:
+
+```json
+{
+  "progressTrace": {
+    "processing tasks > indexing > extracting word proximity": "33.71s",
+    "processing tasks > indexing > extracting facets": "12.15s"
+  }
+}
+```
+
+[Detailed performance analysis guide →](/products/indexing/optimize_indexing_performance)
+
+## Tokenization
+
+Meilisearch tokenizes text based on language rules:
+
+| Language | Handling |
+|----------|----------|
+| Latin-based | Split on spaces, punctuation, camelCase |
+| CJK (Chinese/Japanese/Korean) | Character-based tokenization |
+| Hebrew, Thai | Specialized tokenizers |
+
+Configure language-specific behavior in [`localizedAttributes`](/reference/api/settings/localized-attributes).
+
+[Learn more about tokenization →](/products/indexing/tokenization)
+
+## Multilingual datasets
+
+For multilingual content:
+
+1. **Single index**: Use `localizedAttributes` to specify language per field
+2. **Multiple indexes**: Create separate indexes per language (recommended for large datasets)
+
+```bash
+curl -X PATCH "${MEILISEARCH_URL}/indexes/movies/settings" \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
+  -H "Content-Type: application/json" \
+  --data-binary '{
+    "localizedAttributes": [
+      { "attributePatterns": ["title_ja"], "locales": ["jpn"] },
+      { "attributePatterns": ["title_en"], "locales": ["eng"] }
+    ]
+  }'
+```
+
+[Multilingual datasets guide →](/products/indexing/multilingual-datasets)
+
+## Related guides
+
+<CardGroup cols={2}>
+  <Card title="Indexing best practices" icon="bolt" href="/products/indexing/indexing_best_practices">
+    Tips for faster indexing
+  </Card>
+  <Card title="Performance analysis" icon="chart-line" href="/products/indexing/optimize_indexing_performance">
+    Diagnose bottlenecks
+  </Card>
+  <Card title="RAM & multi-threading" icon="microchip" href="/resources/self_hosting/performance/ram_multithreading">
+    Hardware considerations
+  </Card>
+  <Card title="Primary key" icon="key" href="/getting_started/glossary/primary_key">
+    Document identification
+  </Card>
+</CardGroup>

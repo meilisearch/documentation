@@ -1,0 +1,125 @@
+---
+title: Pagination
+sidebarTitle: Pagination
+description: Configure the pagination setting for your Meilisearch index.
+---
+
+import { RouteHighlighter } from '/snippets/route_highlighter.mdx'
+import { NoticeTag } from '/snippets/notice_tag.mdx'
+import CodeSamplesGetPaginationSettings1 from '/snippets/samples/code_samples_get_pagination_settings_1.mdx';
+import CodeSamplesUpdatePaginationSettings1 from '/snippets/samples/code_samples_update_pagination_settings_1.mdx';
+import CodeSamplesResetPaginationSettings1 from '/snippets/samples/code_samples_reset_pagination_settings_1.mdx';
+
+To protect your database from malicious scraping, Meilisearch has a default limit of 1000 results per search. This setting allows you to configure the maximum number of results returned per search.
+
+`maxTotalHits` takes priority over search parameters such as `limit`, `offset`, `hitsPerPage`, and `page`.
+
+For example, if you set `maxTotalHits` to 100, you will not be able to access search results beyond 100 no matter the value configured for `offset`.
+
+[To learn more about paginating search results with Meilisearch, refer to our dedicated guide.](/guides/performance/pagination)
+
+### Pagination object
+
+| Name               | Type    | Default value | Description                                                 |
+| :----------------- | :------ | :------------ | :---------------------------------------------------------- |
+| **`maxTotalHits`** | Integer | `1000`        | The maximum number of search results Meilisearch can return |
+
+<Danger>
+Setting `maxTotalHits` to a value higher than the default will negatively impact search performance. Setting `maxTotalHits` to values over `20000` may result in queries taking seconds to complete.
+</Danger>
+
+### Get pagination settings
+
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/settings/pagination" />
+
+Get the pagination settings of an index.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](getting_started/indexes#index-uid) of the requested index |
+
+#### Example
+
+<CodeSamplesGetPaginationSettings1 />
+
+##### Response: `200 OK`
+
+```json
+{
+  "maxTotalHits": 1000
+}
+```
+
+### Update pagination settings
+
+<RouteHighlighter method="PATCH" path="/indexes/{index_uid}/settings/pagination" />
+
+Partially update the pagination settings for an index.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](getting_started/indexes#index-uid) of the requested index |
+
+#### Body
+
+```
+{maxTotalHits: <Integer>}
+```
+
+| Name               | Type    | Default value | Description                                                 |
+| :----------------- | :------ | :------------ | :---------------------------------------------------------- |
+| **`maxTotalHits`** | Integer | `1000`        | The maximum number of search results Meilisearch can return |
+
+<Danger>
+Setting `maxTotalHits` to a value higher than the default will negatively impact search performance. Setting `maxTotalHits` to values over `20000` may result in queries taking seconds to complete.
+</Danger>
+
+#### Example
+
+<CodeSamplesUpdatePaginationSettings1 />
+
+##### Response: `202 Accepted`
+
+```json
+{
+  "taskUid": 1,
+  "indexUid": "books",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2022-04-14T20:56:44.991039Z"
+}
+```
+
+You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+
+### Reset pagination settings
+
+Reset an index's pagination settings to their [default value](#pagination-object).
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](getting_started/indexes#index-uid) of the requested index |
+
+#### Example
+
+<CodeSamplesResetPaginationSettings1 />
+
+##### Response: `202 Accepted`
+
+```json
+{
+  "taskUid": 1,
+  "indexUid": "books",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2022-04-14T20:53:32.863107Z"
+}
+```
+
+You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).

@@ -1,0 +1,89 @@
+---
+title: Meilisearch vs PostgreSQL full-text search
+sidebarTitle: PostgreSQL
+description: Compare Meilisearch with PostgreSQL's built-in full-text search. Learn when a dedicated search engine outperforms database search.
+---
+
+PostgreSQL includes built-in full-text search capabilities through its `tsvector` and `tsquery` data types. While convenient for simple use cases, PostgreSQL's search falls short compared to dedicated search engines for user-facing applications.
+
+## Quick comparison
+
+|  | Meilisearch | PostgreSQL FTS |
+|---|:---:|:---:|
+| **Primary purpose** | Search engine | Relational database |
+| **Typo tolerance** | Built-in | Requires `pg_trgm` extension |
+| **Faceted search** | Native support | Complex to implement |
+| **Language support** | CJK, Arabic, Hebrew + Latin | Limited (no CJK support) |
+| **Search-as-you-type** | Optimized for under 50ms | Not designed for this |
+| **Relevancy tuning** | Configurable ranking rules | Basic `ts_rank` |
+| **Frontend libraries** | InstantSearch compatible | None |
+
+## What PostgreSQL FTS does well
+
+### Single-system simplicity
+
+Keeping search in your existing PostgreSQL database means no additional infrastructure to manage. For simple use cases, this reduces operational complexity.
+
+### Transactional consistency
+
+Search results are always consistent with your primary data, with no synchronization lag between database and search index.
+
+### SQL integration
+
+You can combine full-text search with regular SQL queries, joins, and aggregations in a single statement.
+
+## When to choose Meilisearch instead
+
+### You need typo tolerance
+
+PostgreSQL's default full-text search cannot handle misspellings. The `pg_trgm` extension helps but doesn't provide true fuzzy matching with word proximity awareness. Meilisearch handles typos automatically with configurable tolerance per attribute.
+
+### You want faceted search
+
+Implementing faceted search in PostgreSQL is complex and resource-intensive, especially with multiple facet types and counts. Meilisearch provides optimized, first-class APIs for facet filtering and counting.
+
+### You need instant search-as-you-type
+
+PostgreSQL isn't optimized for the sub-50ms response times needed for search-as-you-type experiences. Full-text search queries on large datasets become costly, especially when ranking results.
+
+### Your users speak non-Latin languages
+
+PostgreSQL lacks dictionaries for Chinese, Japanese, Korean, and other languages requiring complex tokenization. Meilisearch provides optimized support for these languages with automatic detection.
+
+### You want frontend integration
+
+Search engines like Meilisearch work with InstantSearch libraries, providing pre-built UI components for search bars, facet filters, pagination, and more. PostgreSQL has no equivalent ecosystem.
+
+### You need a public-facing search API
+
+Meilisearch provides a secure REST API designed for public consumption with API key management and tenant tokens for multi-tenancy. Exposing PostgreSQL directly to clients creates security risks and requires building a custom API layer.
+
+### Scaling is a concern
+
+Full-text search queries on large PostgreSQL datasets compete for resources with your primary application workload. A dedicated search engine scales independently and uses data structures optimized for search operations.
+
+### You want better relevancy
+
+PostgreSQL's `ts_rank` only supports attribute weighting. Meilisearch offers configurable ranking rules for typo count, word proximity, exact matches, and custom business logic.
+
+## When PostgreSQL FTS might be enough
+
+Consider PostgreSQL full-text search if:
+
+- You have a small dataset (thousands of documents)
+- Search isn't user-facing or real-time search isn't required
+- Basic keyword matching is sufficient
+- You can't add additional infrastructure
+- You're using a managed PostgreSQL service that restricts extensions
+
+## Migration resources
+
+Ready to upgrade from PostgreSQL full-text search:
+
+- [Quick start guide](/getting_started/overview) - Set up Meilisearch in minutes
+- [Indexing documents](/reference/api/documents) - Import your data
+- [Filter expressions](/products/faceted_search/filter_search_results) - Implement faceted search
+
+<Note>
+PostgreSQL is a registered trademark of the PostgreSQL Global Development Group. This comparison is based on publicly available information and our own analysis.
+</Note>

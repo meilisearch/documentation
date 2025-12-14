@@ -1,0 +1,74 @@
+---
+title: SaaS CRM Search
+sidebarTitle: SaaS CRM
+description: App-wide search across multiple data types in a CRM application
+---
+
+<Info>
+**Live demo**: [saas.meilisearch.com](https://saas.meilisearch.com)
+</Info>
+
+This SaaS demo showcases app-wide search in a CRM context, searching simultaneously across contacts, companies, deals, and activities using Meilisearch's federated search capabilities.
+
+![SaaS demo screenshot](/assets/images/demos/saas-demo-screenshot.png)
+
+## Features demonstrated
+
+- **Multi-index search**: Query multiple data types in a single request
+- **Federated results**: Unified search results from different indexes
+- **Result grouping**: Results organized by entity type
+- **Quick navigation**: Jump directly to contacts, companies, or deals
+- **Universal search bar**: Single search input for entire application
+
+## Use case
+
+SaaS applications often need to search across multiple data types:
+
+- A salesperson searches for "Acme" and sees matching companies, contacts at those companies, and related deals
+- Results are grouped logically so users can quickly find what they need
+- Each result type has appropriate metadata displayed
+- Clicking a result navigates to the relevant section
+
+## Technical highlights
+
+| Feature | Implementation |
+|---------|----------------|
+| Search type | Federated multi-search |
+| Indexes | Contacts, Companies, Deals, Activities |
+| Result merging | Weighted by index relevance |
+| Display | Type-specific result cards |
+
+## Multi-search request example
+
+```json
+{
+  "federation": {},
+  "queries": [
+    { "indexUid": "contacts", "q": "acme" },
+    { "indexUid": "companies", "q": "acme" },
+    { "indexUid": "deals", "q": "acme" }
+  ]
+}
+```
+
+## Links
+
+<CardGroup cols={2}>
+  <Card title="Try the demo" icon="globe" href="https://saas.meilisearch.com">
+    Experience app-wide CRM search
+  </Card>
+  <Card title="Source code" icon="github" href="https://github.com/meilisearch/saas-demo">
+    View implementation on GitHub
+  </Card>
+</CardGroup>
+
+## Related resources
+
+<CardGroup cols={2}>
+  <Card title="Multi-search" icon="layer-group" href="/products/multi_search/overview">
+    Learn about multi-index search
+  </Card>
+  <Card title="Federated search" icon="arrows-to-dot" href="/products/multi_search/performing_federated_search">
+    Implement federated search
+  </Card>
+</CardGroup>

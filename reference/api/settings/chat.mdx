@@ -1,0 +1,156 @@
+---
+title: Chat
+sidebarTitle: Chat
+description: Configure the chat setting for your Meilisearch index.
+---
+
+import { RouteHighlighter } from '/snippets/route_highlighter.mdx'
+import { NoticeTag } from '/snippets/notice_tag.mdx'
+
+<Warning>
+This is an experimental feature. Experimental features may be removed or updated causing breaking changes at any time.
+</Warning>
+
+<Note>
+This is an experimental feature. Use the Meilisearch Cloud UI or the experimental features endpoint to activate it:
+
+```sh
+curl \
+  -X PATCH "${MEILISEARCH_URL}/experimental-features/" \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "chatCompletions": true
+  }'
+```
+</Note>
+
+The chat settings allow you to configure how your index integrates with Meilisearch's conversational search feature.
+
+### Chat object
+
+```json
+{
+  "description": "A comprehensive movie database containing titles, overviews, genres, and release dates to help users find movies",
+  "documentTemplate": "{% for field in fields %}{% if field.is_searchable and field.value != nil %}{{ field.name }}: {{ field.value }}\n{% endif %}{% endfor %}",
+  "documentTemplateMaxBytes": 400,
+  "searchParameters": {
+    "hybrid": { "embedder": "my-embedder" },
+    "limit": 20
+  }
+}
+```
+
+The chat object may contain the following fields:
+
+| Name                           | Type    | Default Value                           | Description                                                                                          |
+| ------------------------------ | ------- | --------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| **`description`**              | String  | Empty                                   | The description of the index. Helps the LLM decide which index to use when generating answers |
+| **`documentTemplate`**         | String  | `{% for field in fields %} {% if field.is_searchable and not field.value == nil %}{{ field.name }}: {{ field.value }} {% endif %} {% endfor %}` | Template defining the data Meilisearch sends to the LLM |
+| **`documentTemplateMaxBytes`** | Integer | 400                                     | Maximum allowed size of rendered document template |
+| **`searchParameters`**         | Object  | Empty                                   | The search parameters to use when LLM is performing search requests |
+
+### Search parameters object
+
+Must be one of the following [search parameters](/reference/api/search#search-parameters-object):
+
+- **`hybrid`**
+- **`limit`**
+- **`sort`**
+- **`distinct`**
+- **`matchingStrategy`**
+- **`attributesToSearchOn`**
+- **`rankingScoreThreshold`**
+
+### Get index chat settings
+
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/settings/chat" />
+
+Get the index chat settings configured for an index.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](getting_started/indexes#index-uid) of the requested index  |
+
+#### Example
+
+```bash
+curl \
+  -X GET "${MEILISEARCH_URL}/indexes/movies/settings/chat" \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}"
+```
+
+##### Response: `200 OK`
+
+```json
+{
+  "description": "",
+  "documentTemplate": "{% for field in fields %} {% if field.is_searchable and not field.value == nil %}{{ field.name }}: {{ field.value }} {% endif %} {% endfor %}",
+  "documentTemplateMaxBytes": 400,
+  "searchParameters": {}
+}
+```
+
+### Update index chat settings
+
+<RouteHighlighter method="PUT" path="/indexes/{index_uid}/settings/chat" />
+
+Partially update the index chat settings for an index.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](getting_started/indexes#index-uid) of the requested index |
+
+#### Body
+
+```json
+{
+  "description": <String>,
+  "documentTemplate": <String>,
+  "documentTemplateMaxBytes": <Integer>,
+  "searchParameters": {
+    "hybrid": <Object>,
+    "limit": <Integer>,
+    "sort": [<String>, <String>, … ],
+    "distinct": <String>,
+    "matchingStrategy": <String>,
+    "attributesToSearchOn": [<String>, <String>, … ],
+    "rankingScoreThreshold": <Float>,
+  }
+}
+```
+
+#### Example
+
+```bash
+curl \
+  -X PATCH "${MEILISEARCH_URL}/indexes/movies/settings/chat" \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "description": "A comprehensive movie database containing titles, descriptions, genres, and release dates to help users find movies",
+    "documentTemplate": "Title: {{ title }}\nDescription: {{ overview }}\nGenres: {{ genres }}\n",
+    "documentTemplateMaxBytes": 400,
+    "searchParameters": {
+      "limit": 20
+    }
+  }'
+```
+
+##### Response: `202 Accepted`
+
+```json
+{
+  "taskUid": 1,
+  "indexUid": "movies",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2024-05-11T09:33:12.691402Z"
+}
+```
+
+You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).

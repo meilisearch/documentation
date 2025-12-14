@@ -1,0 +1,336 @@
+---
+title: Getting started with self-hosted Meilisearch
+sidebarTitle: Getting started
+description: Learn how to install and run Meilisearch locally using various methods including cURL, Docker, Homebrew, and more.
+---
+
+This guide walks you through installing and running Meilisearch on your own infrastructure.
+
+<Tip>
+Using Meilisearch Cloud? Check out the dedicated guide, [Getting started with Meilisearch Cloud](/getting_started/cloud_quick_start).
+</Tip>
+
+## Supported operating systems
+
+Meilisearch officially supports Windows, macOS, and many Linux distributions.
+
+| OS | Requirements |
+|---|---|
+| **Linux** | `amd64/x86_64` or `aarch64/arm64` architecture with glibc 2.35+. Check with `ldd --version` |
+| **macOS** | macOS 14 Sonoma or later with `amd64` or `arm64` architecture |
+| **Windows** | Windows Server 2022 or later. Windows 10+ may work but is not officially supported |
+
+<Note>
+If the provided [binaries](https://github.com/meilisearch/meilisearch/releases) do not work on your operating system, try building Meilisearch from source (see Source tab below). If compilation fails, Meilisearch is not compatible with your machine.
+</Note>
+
+## Installation methods
+
+<Tabs>
+
+<Tab title="cURL">
+Download the **latest stable release** of Meilisearch with **cURL**.
+
+```bash
+# Install Meilisearch
+curl -L https://install.meilisearch.com | sh
+
+# Launch Meilisearch
+./meilisearch
+```
+</Tab>
+
+<Tab title="Docker">
+When using **Docker**, you can run [any tag available in our official Docker image](https://hub.docker.com/r/getmeili/meilisearch/tags).
+
+```bash
+# Fetch the latest version of Meilisearch image from DockerHub
+docker pull getmeili/meilisearch:latest
+
+# Launch Meilisearch in development mode with a master key
+docker run -it --rm \
+    -p 7700:7700 \
+    -e MEILI_ENV='development' \
+    -v $(pwd)/meili_data:/meili_data \
+    getmeili/meilisearch:latest
+# Use ${pwd} instead of $(pwd) in PowerShell
+```
+
+<Warning>
+The `latest` tag will always download the most recent Meilisearch release. Meilisearch advises against using it, as it might result in different machines running different images if significant time passes between setting up each one of them.
+</Warning>
+</Tab>
+
+<Tab title="Homebrew">
+Download the **latest stable release** of Meilisearch with **[Homebrew](https://brew.sh/)**, a package manager for MacOS.
+
+```bash
+# Update brew and install Meilisearch
+brew update && brew install meilisearch
+
+# Launch Meilisearch
+meilisearch
+```
+</Tab>
+
+<Tab title="APT">
+Download the **latest stable release** of Meilisearch with **APT**.
+
+```bash
+# Add Meilisearch package
+echo "deb [trusted=yes] https://apt.fury.io/meilisearch/ /" | sudo tee /etc/apt/sources.list.d/fury.list
+
+# Update APT and install Meilisearch
+sudo apt update && sudo apt install meilisearch
+
+# Launch Meilisearch
+meilisearch
+```
+</Tab>
+
+<Tab title="Source">
+Meilisearch is written in Rust. To compile it, [install the Rust toolchain](https://www.rust-lang.org/tools/install).
+
+Once the Rust toolchain is installed, clone the repository on your local system and change it to your working directory.
+
+```bash
+git clone https://github.com/meilisearch/meilisearch
+cd meilisearch
+```
+
+Choose the release you want to use. You can find the full list [here](https://github.com/meilisearch/meilisearch/releases).
+
+In the cloned repository, run the following command to access the most recent version of Meilisearch:
+
+```bash
+git checkout latest
+```
+
+Finally, update the Rust toolchain, compile the project, and execute the binary.
+
+```bash
+# Update the Rust toolchain to the latest version
+rustup update
+
+# Compile the project
+cargo build --release
+
+# Execute the binary
+./target/release/meilisearch
+```
+</Tab>
+
+<Tab title="Windows">
+
+To install Meilisearch on Windows, you can:
+
+- Use Docker (see "Docker" tab above)
+- Download the latest binary (see "Direct download" tab)
+- Use the installation script (see "cURL" tab) if you have installed [Cygwin](https://www.cygwin.com/), [WSL](https://learn.microsoft.com/en-us/windows/wsl/), or equivalent
+- Compile from source (see "Source" tab)
+
+To learn more about the Windows command prompt, follow this [introductory guide](https://www.makeuseof.com/tag/a-beginners-guide-to-the-windows-command-line/).
+</Tab>
+
+<Tab title="Direct download">
+If none of the other installation options work for you, you can always download the Meilisearch binary directly from GitHub.
+
+Go to the [latest Meilisearch release](https://github.com/meilisearch/meilisearch/releases/latest), scroll down to "Assets", and select the binary corresponding to your operating system.
+
+```bash
+# Rename binary to meilisearch. Replace {meilisearch_os} with the name of the downloaded binary
+mv {meilisearch_os} meilisearch
+
+# Give the binary execute permission
+chmod +x meilisearch
+
+# Launch Meilisearch
+./meilisearch
+```
+</Tab>
+
+</Tabs>
+
+## Running Meilisearch
+
+After installation, launch Meilisearch with a master key:
+
+```bash
+./meilisearch --master-key="aSampleMasterKey"
+```
+
+<Note>
+This example uses `aSampleMasterKey` as a master key, but you should use an alphanumeric string with 16 or more bytes. In most cases, one character corresponds to one byte.
+</Note>
+
+You should see something like this in response:
+
+```
+888b     d888          d8b 888 d8b                                            888
+8888b   d8888          Y8P 888 Y8P                                            888
+88888b.d88888              888                                                888
+888Y88888P888  .d88b.  888 888 888 .d8888b   .d88b.   8888b.  888d888 .d8888b 88888b.
+888 Y888P 888 d8P  Y8b 888 888 888 88K      d8P  Y8b     "88b 888P"  d88P"    888 "88b
+888  Y8P  888 88888888 888 888 888 "Y8888b. 88888888 .d888888 888    888      888  888
+888   "   888 Y8b.     888 888 888      X88 Y8b.     888  888 888    Y88b.    888  888
+888       888  "Y8888  888 888 888  88888P'  "Y8888  "Y888888 888     "Y8888P 888  888
+
+Database path:       "./data.ms"
+Server listening on: "localhost:7700"
+```
+
+Your Meilisearch instance is now running at `http://localhost:7700`.
+
+<Note>
+Setting a master key is optional but strongly recommended in development environments. Master keys are mandatory in production environments.
+</Note>
+
+To learn more about securing Meilisearch, refer to the [security tutorial](/products/platform/basic_security).
+
+## Docker configuration
+
+When using Docker, you can configure Meilisearch using environment variables or CLI arguments.
+
+### Environment variables
+
+Pass environment variables to Docker using the `-e` argument:
+
+```sh
+docker run -it --rm \
+  -p 7700:7700 \
+  -e MEILI_MASTER_KEY='MASTER_KEY'\
+  -v $(pwd)/meili_data:/meili_data \
+  getmeili/meilisearch:latest
+```
+
+### CLI arguments
+
+To pass command-line arguments, add a line to the end of your `docker run` command explicitly launching the `meilisearch` binary:
+
+```sh
+docker run -it --rm \
+  -p 7700:7700 \
+  -v $(pwd)/meili_data:/meili_data \
+  getmeili/meilisearch:latest \
+  meilisearch --master-key="MASTER_KEY"
+```
+
+### Data persistence
+
+By default, data written to a Docker container is deleted every time the container stops running. To keep your data intact between reboots, specify a dedicated volume using the `-v` option:
+
+```sh
+docker run -it --rm \
+  -p 7700:7700 \
+  -v $(pwd)/meili_data:/meili_data \
+  getmeili/meilisearch:latest
+```
+
+When using Docker, your working directory is `/meili_data`. This means the location of your database file is `/meili_data/data.ms`.
+
+### Dumps and snapshots with Docker
+
+To export a dump, [use the create dump endpoint](/resources/self_hosting/data_backup/dumps). Once the task is complete, access the dump file in `/meili_data/dumps` inside your volume.
+
+To import a dump:
+
+```sh
+docker run -it --rm \
+  -p 7700:7700 \
+  -v $(pwd)/meili_data:/meili_data \
+  getmeili/meilisearch:latest \
+  meilisearch --import-dump /meili_data/dumps/20200813-042312213.dump
+```
+
+<Warning>
+If you are storing data in a persistent volume, you must delete `/meili_data/data.ms` before importing a dump.
+</Warning>
+
+To generate snapshots with Docker:
+
+```sh
+docker run -it --rm \
+  -p 7700:7700 \
+  -v $(pwd)/meili_data:/meili_data \
+  getmeili/meilisearch:latest \
+  meilisearch --schedule-snapshot --snapshot-dir /meili_data/snapshots
+```
+
+To import a snapshot:
+
+```sh
+docker run -it --rm \
+  -p 7700:7700 \
+  -v $(pwd)/meili_data:/meili_data \
+  getmeili/meilisearch:latest \
+  meilisearch --import-snapshot /meili_data/snapshots/data.ms.snapshot
+```
+
+## Installing older versions
+
+We discourage the use of older Meilisearch versions. Before installing an older version, please [contact support](https://discord.meilisearch.com) to check if the latest version might work as well.
+
+<Tabs>
+
+<Tab title="cURL">
+
+Download the binary of a specific version under "Assets" on our [GitHub changelog](https://github.com/meilisearch/meilisearch/releases).
+
+```bash
+# Replace {meilisearch_version} and {meilisearch_os} with the specific version and OS
+curl -OL https://github.com/meilisearch/meilisearch/releases/download/{meilisearch_version}/{meilisearch_os}
+
+# Rename binary to meilisearch
+mv {meilisearch_os} meilisearch
+
+# Give the binary execute permission
+chmod +x meilisearch
+
+# Launch Meilisearch
+./meilisearch
+```
+
+</Tab>
+
+<Tab title="Docker">
+
+```bash
+# Fetch specific version of Meilisearch image. Replace vX.Y.Z with the version you want
+docker pull getmeili/meilisearch:vX.Y.Z
+
+# Launch Meilisearch
+docker run -it --rm \
+    -p 7700:7700 \
+    -e MEILI_ENV='development' \
+    -v $(pwd)/meili_data:/meili_data \
+    getmeili/meilisearch:vX.Y.Z
+```
+
+</Tab>
+
+<Tab title="Source">
+
+```bash
+git clone https://github.com/meilisearch/meilisearch
+cd meilisearch
+
+# Replace vX.Y.Z with the specific version you want
+git checkout vX.Y.Z
+
+# Update the Rust toolchain and compile
+rustup update
+cargo build --release
+
+# Execute the binary
+./target/release/meilisearch
+```
+
+</Tab>
+
+</Tabs>
+
+## What's next?
+
+- [Configuration options](/resources/self_hosting/configuration) - Learn about all available configuration options
+- [Deploy on DigitalOcean](/resources/self_hosting/deployment/digitalocean) - Production deployment guide
+- [Security guide](/products/platform/basic_security) - Secure your Meilisearch instance

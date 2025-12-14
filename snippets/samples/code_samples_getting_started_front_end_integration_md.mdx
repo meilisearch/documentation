@@ -18,10 +18,15 @@ The following code sample uses plain [JavaScript](https://developer.mozilla.org/
   <script src="https://cdn.jsdelivr.net/npm/@meilisearch/instant-meilisearch/dist/instant-meilisearch.umd.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4"></script>
   <script>
+    // Replace with your Meilisearch URL and search API key
+    const MEILISEARCH_URL = 'https://your-instance.meilisearch.io';
+    const MEILISEARCH_API_KEY = 'your_search_api_key';
+
     const search = instantsearch({
       indexName: "movies",
       searchClient: instantMeiliSearch(
-        "http://localhost:7700"
+        MEILISEARCH_URL,
+        MEILISEARCH_API_KEY
       ).searchClient
       });
       search.addWidgets([
@@ -72,9 +77,14 @@ The following code sample uses [React](https://reactjs.org/), a JavaScript libra
   <script src="https://cdn.jsdelivr.net/npm/react-instantsearch-dom@6.7.0/dist/umd/ReactInstantSearchDOM.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@meilisearch/instant-meilisearch/dist/instant-meilisearch.umd.min.js"></script>
   <script>
+    // Replace with your Meilisearch URL and search API key
+    const MEILISEARCH_URL = 'https://your-instance.meilisearch.io';
+    const MEILISEARCH_API_KEY = 'your_search_api_key';
+
     const { InstantSearch, SearchBox, Hits, Highlight, Configure } = ReactInstantSearchDOM;
     const searchClient = instantMeiliSearch(
-      "http://localhost:7700"
+      MEILISEARCH_URL,
+      MEILISEARCH_API_KEY
     );
     const App = () => (
       React.createElement(InstantSearch, {
@@ -136,11 +146,15 @@ The following example uses [Vue 2](https://vuejs.org/), the second major release
 <script
   src="https://cdn.jsdelivr.net/npm/@meilisearch/instant-meilisearch/dist/instant-meilisearch.umd.min.js"></script>
 <script>
+  // Replace with your Meilisearch URL and search API key
+  const MEILISEARCH_URL = 'https://your-instance.meilisearch.io';
+  const MEILISEARCH_API_KEY = 'your_search_api_key';
+
   Vue.use(VueInstantSearch)
   var app = new Vue({
     el: '#app',
     data: {
-      searchClient: instantMeiliSearch('http://127.0.0.1:7700')
+      searchClient: instantMeiliSearch(MEILISEARCH_URL, MEILISEARCH_API_KEY)
     }
   })
 </script>
@@ -199,13 +213,17 @@ The following example uses [Vue 3](https://vuejs.org/), a JavaScript framework f
   };
 
 
+  // Replace with your Meilisearch URL and search API key
+  const MEILISEARCH_URL = 'https://your-instance.meilisearch.io';
+  const MEILISEARCH_API_KEY = 'your_search_api_key';
+
   const app = Vue
     .createApp({
       data() {
         return {
           searchClient: instantMeiliSearch(
-            'https://ms-adf78ae33284-106.lon.meilisearch.io',
-            'a63da4928426f12639e19d62886f621130f3fa9ff3c7534c5d179f0f51c4f303',
+            MEILISEARCH_URL,
+            MEILISEARCH_API_KEY,
           ).searchClient,
         }
       }

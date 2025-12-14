@@ -1,7 +1,10 @@
 <CodeGroup>
 
 ```swift Swift
-let client = try MeiliSearch(host: "http://localhost:7700", apiKey: "apiKey")
+let client = try MeiliSearch(
+  host: ProcessInfo.processInfo.environment["MEILISEARCH_URL"]!,
+  apiKey: ProcessInfo.processInfo.environment["MEILISEARCH_API_KEY"]
+)
 
 client.index("movies").search(SearchParameters(query: "")) { (result: Result<Searchable<Movie>, Swift.Error>) in
     switch result {

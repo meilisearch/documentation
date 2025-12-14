@@ -1,0 +1,233 @@
+---
+title: Deploy on AWS
+sidebarTitle: AWS
+description: Deploy Meilisearch on an AWS EC2 instance. Covers installation, server configuration, and securing your instance.
+---
+
+This tutorial will guide you through setting up a production-ready Meilisearch instance on Amazon Web Services (AWS) using an EC2 instance.
+
+<Note>
+[Meilisearch Cloud](https://www.meilisearch.com/cloud?utm_campaign=oss&utm_source=docs&utm_medium=running-production-oss) is the recommended way to run Meilisearch in production environments.
+</Note>
+
+## Requirements
+
+- An AWS account
+- An EC2 instance running Ubuntu 22.04 LTS or Amazon Linux 2023
+- An SSH key pair to connect to that instance
+- A security group allowing inbound traffic on ports 22 (SSH), 80 (HTTP), and 443 (HTTPS)
+
+<Tip>
+AWS has extensive documentation on [launching EC2 instances](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EC2_GetStarted.html) and [connecting via SSH](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html).
+</Tip>
+
+## Step 1: Install Meilisearch
+
+Log into your EC2 instance via SSH and update the system packages:
+
+<Tabs>
+<Tab title="Ubuntu">
+```sh
+sudo apt update && sudo apt upgrade -y
+sudo apt install curl -y
+```
+</Tab>
+<Tab title="Amazon Linux">
+```sh
+sudo yum update -y
+sudo yum install curl -y
+```
+</Tab>
+</Tabs>
+
+Next, use `curl` to download and run the Meilisearch command-line installer:
+
+```sh
+curl -L https://install.meilisearch.com | sh
+```
+
+Move the binary file into `/usr/local/bin` to make it accessible from anywhere:
+
+```sh
+sudo mv ./meilisearch /usr/local/bin/
+```
+
+## Step 2: Create system user
+
+Running applications as root exposes you to unnecessary security risks. Create a dedicated user for Meilisearch:
+
+```sh
+sudo useradd -d /var/lib/meilisearch -s /bin/false -m -r meilisearch
+```
+
+Give the new user ownership of the Meilisearch binary:
+
+```sh
+sudo chown meilisearch:meilisearch /usr/local/bin/meilisearch
+```
+
+## Step 3: Create a configuration file
+
+Create the directories where Meilisearch will store its data:
+
+```bash
+sudo mkdir -p /var/lib/meilisearch/data /var/lib/meilisearch/dumps /var/lib/meilisearch/snapshots
+sudo chown -R meilisearch:meilisearch /var/lib/meilisearch
+sudo chmod 750 /var/lib/meilisearch
+```
+
+<Tip>
+For production workloads, consider using an EBS volume for data storage. This allows for easy snapshots and volume resizing.
+</Tip>
+
+Download the default configuration file:
+
+```bash
+curl https://raw.githubusercontent.com/meilisearch/meilisearch/latest/config.toml | sudo tee /etc/meilisearch.toml > /dev/null
+```
+
+Edit `/etc/meilisearch.toml` and update the following lines, replacing `MASTER_KEY` with a secure 16-byte string:
+
+```ini
+env = "production"
+master_key = "MASTER_KEY"
+db_path = "/var/lib/meilisearch/data"
+dump_dir = "/var/lib/meilisearch/dumps"
+snapshot_dir = "/var/lib/meilisearch/snapshots"
+```
+
+Remember to choose a [safe master key](/products/platform/basic_security#creating-the-master-key-in-a-self-hosted-instance).
+
+## Step 4: Run Meilisearch as a service
+
+Create a systemd service file to run Meilisearch as a background service:
+
+```bash
+sudo cat << EOF > /etc/systemd/system/meilisearch.service
+[Unit]
+Description=Meilisearch
+After=systemd-user-sessions.service
+
+[Service]
+Type=simple
+WorkingDirectory=/var/lib/meilisearch
+ExecStart=/usr/local/bin/meilisearch --config-file-path /etc/meilisearch.toml
+User=meilisearch
+Group=meilisearch
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+EOF
+```
+
+Enable and start the service:
+
+```bash
+sudo systemctl enable meilisearch
+sudo systemctl start meilisearch
+```
+
+Verify the service is running:
+
+```sh
+sudo systemctl status meilisearch
+```
+
+You should see a message confirming your service is active and running.
+
+## Step 5: Secure and finish your setup
+
+### 5.1. Configure security groups
+
+Ensure your EC2 security group allows:
+- Port 22 for SSH access
+- Port 80 for HTTP traffic
+- Port 443 for HTTPS traffic
+
+You can configure this in the AWS Console under EC2 > Security Groups.
+
+### 5.2. Set up a reverse proxy with Nginx
+
+Install Nginx:
+
+<Tabs>
+<Tab title="Ubuntu">
+```bash
+sudo apt install nginx -y
+```
+</Tab>
+<Tab title="Amazon Linux">
+```bash
+sudo yum install nginx -y
+```
+</Tab>
+</Tabs>
+
+Remove the default configuration and create a new one for Meilisearch:
+
+```bash
+sudo rm -f /etc/nginx/sites-enabled/default 2>/dev/null || true
+sudo cat << EOF > /etc/nginx/conf.d/meilisearch.conf
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    server_name _;
+    location / {
+        proxy_pass  http://localhost:7700;
+    }
+}
+EOF
+```
+
+Enable and restart Nginx:
+
+```bash
+sudo systemctl enable nginx
+sudo systemctl restart nginx
+```
+
+### 5.3. Enable HTTPS with Let's Encrypt
+
+<Note>
+Before enabling HTTPS, ensure you have a domain name pointing to your EC2 instance's public IP address.
+</Note>
+
+Install certbot:
+
+<Tabs>
+<Tab title="Ubuntu">
+```bash
+sudo apt install certbot python3-certbot-nginx -y
+```
+</Tab>
+<Tab title="Amazon Linux">
+```bash
+sudo yum install certbot python3-certbot-nginx -y
+```
+</Tab>
+</Tabs>
+
+Run certbot to obtain and configure your SSL certificate:
+
+```bash
+sudo certbot --nginx
+```
+
+Follow the prompts to enter your email, agree to the Terms of Service, and select your domain. Choose to redirect HTTP traffic to HTTPS when prompted.
+
+Verify automatic renewal is configured:
+
+```bash
+sudo certbot renew --dry-run
+```
+
+## Conclusion
+
+Your Meilisearch instance is now running on AWS EC2 with:
+- A dedicated system user for security
+- Automatic restart via systemd
+- Nginx reverse proxy
+- HTTPS encryption via Let's Encrypt
+
+For high-availability setups, consider using an Application Load Balancer (ALB) in front of multiple EC2 instances.

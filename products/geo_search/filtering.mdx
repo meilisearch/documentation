@@ -1,0 +1,195 @@
+---
+title: Geo filtering
+sidebarTitle: Filtering
+description: Filter search results by geographic location using radius, bounding box, or polygon.
+---
+
+import CodeSamplesGeosearchGuideFilterSettings1 from '/snippets/samples/code_samples_geosearch_guide_filter_settings_1.mdx';
+import CodeSamplesGeosearchGuideFilterUsage1 from '/snippets/samples/code_samples_geosearch_guide_filter_usage_1.mdx';
+import CodeSamplesGeosearchGuideFilterUsage2 from '/snippets/samples/code_samples_geosearch_guide_filter_usage_2.mdx';
+import CodeSamplesGeosearchGuideFilterUsage3 from '/snippets/samples/code_samples_geosearch_guide_filter_usage_3.mdx';
+import CodeSamplesGeosearchGuideFilterUsage4 from '/snippets/samples/code_samples_geosearch_guide_filter_usage_4.mdx';
+
+Geo filtering allows you to restrict search results to a specific geographic area. Meilisearch supports three filter types: radius (circle), bounding box (rectangle), and polygon.
+
+## Configuration
+
+Add `_geo` to `filterableAttributes` before using geo filters:
+
+<CodeSamplesGeosearchGuideFilterSettings1 />
+
+<Note>
+Meilisearch rebuilds your index when you update `filterableAttributes`. This may take time for large datasets.
+</Note>
+
+## Filter types
+
+### `_geoRadius` - Circle filter
+
+Find results within a circular area around a point.
+
+**Syntax:**
+```
+_geoRadius(lat, lng, distance_in_meters)
+```
+
+**Parameters:**
+| Parameter | Description |
+|-----------|-------------|
+| `lat` | Latitude of center point (-90 to 90) |
+| `lng` | Longitude of center point (-180 to 180) |
+| `distance_in_meters` | Radius in meters |
+
+**Example:** Find restaurants within 2km of Milan center:
+
+<CodeSamplesGeosearchGuideFilterUsage1 />
+
+**Recommended radius values:**
+| Use case | Radius |
+|----------|--------|
+| Walking distance | 500 - 2,000m |
+| Short drive | 2,000 - 10,000m |
+| City-wide | 10,000 - 50,000m |
+| Regional | 50,000 - 200,000m |
+
+---
+
+### `_geoBoundingBox` - Rectangle filter
+
+Find results within a rectangular area defined by two corners.
+
+**Syntax:**
+```
+_geoBoundingBox([top_left_lat, top_left_lng], [bottom_right_lat, bottom_right_lng])
+```
+
+**Parameters:**
+| Parameter | Description |
+|-----------|-------------|
+| Top-left corner | `[latitude, longitude]` of northwest corner |
+| Bottom-right corner | `[latitude, longitude]` of southeast corner |
+
+**Example:** Find restaurants in a rectangular area:
+
+<CodeSamplesGeosearchGuideFilterUsage3 />
+
+<Tip>
+Bounding boxes are useful for map-based interfaces where users drag to select an area.
+</Tip>
+
+---
+
+### `_geoPolygon` - Polygon filter
+
+Find results within an arbitrary polygon shape. Requires `_geojson` in your documents.
+
+**Syntax:**
+```
+_geoPolygon([lat1, lng1], [lat2, lng2], [lat3, lng3], ...)
+```
+
+**Parameters:**
+- Minimum 3 points defining the polygon vertices
+- Points should be in order (clockwise or counter-clockwise)
+- The polygon is automatically closed
+
+**Example:** Find restaurants in a custom area:
+
+<CodeSamplesGeosearchGuideFilterUsage4 />
+
+<Warning>
+`_geoPolygon` only matches documents with a `_geojson` field. Documents with only `_geo` will not be matched.
+</Warning>
+
+## Combining geo filters with other filters
+
+Geo filters work with standard filter operators:
+
+**With AND:**
+```json
+{
+  "filter": "_geoRadius(45.472735, 9.184019, 2000) AND type = 'pizza'"
+}
+```
+
+<CodeSamplesGeosearchGuideFilterUsage2 />
+
+**With OR:**
+```json
+{
+  "filter": "_geoRadius(48.8566, 2.3522, 1000) OR _geoRadius(45.4642, 9.1900, 1000)"
+}
+```
+
+**Complex filters:**
+```json
+{
+  "filter": "_geoRadius(48.8566, 2.3522, 5000) AND (type = 'pizza' OR type = 'french') AND rating >= 4"
+}
+```
+
+## Filtering documents with geo data
+
+Use `_geo EXISTS` to find only documents that have location data:
+
+```json
+{
+  "filter": "_geo EXISTS"
+}
+```
+
+Combine with geo filters:
+```json
+{
+  "filter": "_geo EXISTS AND _geoRadius(48.8566, 2.3522, 5000)"
+}
+```
+
+## Common errors
+
+| Error | Cause | Solution |
+|-------|-------|----------|
+| `invalid_search_filter` | Using `_geo` directly as filter | Use `_geoRadius`, `_geoBoundingBox`, or `_geoPolygon` |
+| `invalid_search_filter` | Using `_geoDistance` as filter | `_geoDistance` is output only |
+| `invalid_search_filter` | Using `_geoPoint` as filter | `_geoPoint` is for sorting only |
+| No results | `_geo` not in `filterableAttributes` | Update settings first |
+
+## Example response
+
+```json
+{
+  "hits": [
+    {
+      "id": 1,
+      "name": "Nàpiz' Milano",
+      "type": "pizza",
+      "_geo": {
+        "lat": 45.4777599,
+        "lng": 9.1967508
+      }
+    },
+    {
+      "id": 3,
+      "name": "Artico Gelateria Tradizionale",
+      "type": "ice cream",
+      "_geo": {
+        "lat": 45.4632046,
+        "lng": 9.1719421
+      }
+    }
+  ],
+  "query": "",
+  "processingTimeMs": 1
+}
+```
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Geo sorting" icon="arrow-down-short-wide" href="/products/geo_search/sorting">
+    Sort results by distance from a point
+  </Card>
+  <Card title="Filter expressions" icon="code" href="/products/faceted_search/filter_expression_reference">
+    Complete filter syntax reference
+  </Card>
+</CardGroup>

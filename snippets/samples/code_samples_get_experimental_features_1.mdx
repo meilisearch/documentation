@@ -2,7 +2,7 @@
 
 ```bash cURL
 curl \
-  -X GET 'MEILISEARCH_URL/experimental-features/'
+  -X GET "${MEILISEARCH_URL}/experimental-features/"
 ```
 
 ```ruby Ruby
@@ -14,7 +14,12 @@ client.ExperimentalFeatures().Get()
 ```
 
 ```rust Rust
-let client = Client::new("http://localhost:7700", Some("apiKey"));
+use std::env;
+
+let client = Client::new(
+  env::var("MEILISEARCH_URL").unwrap(),
+  Some(env::var("MEILISEARCH_API_KEY").unwrap())
+);
 let features = ExperimentalFeatures::new(&client);
 let res = features
   .get()

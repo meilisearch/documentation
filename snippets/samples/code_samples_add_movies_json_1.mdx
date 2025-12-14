@@ -35,7 +35,7 @@ import java.nio.file.Path;
 
 Path fileName = Path.of("movies.json");
 String moviesJson = Files.readString(fileName);
-Client client = new Client(new Config("http://localhost:7700", "masterKey"));
+// Assumes client is already initialized with environment variables
 Index index = client.index("movies");
 index.addDocuments(moviesJson);
 ```
@@ -78,11 +78,14 @@ use meilisearch_sdk::{
   settings::*
 };
 use serde::{Serialize, Deserialize};
-use std::{io::prelude::*, fs::File};
+use std::{io::prelude::*, fs::File, env};
 use futures::executor::block_on;
 
 fn main() { block_on(async move {
-  let client = Client::new("http://localhost:7700", Some("masterKey"));
+  let client = Client::new(
+    env::var("MEILISEARCH_URL").unwrap(),
+    Some(env::var("MEILISEARCH_API_KEY").unwrap())
+  );
 
   // reading and parsing the file
   let mut file = File::open("movies.json")

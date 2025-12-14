@@ -1,0 +1,103 @@
+---
+title: Facet search
+sidebarTitle: Facet search
+description: Configure the facet search setting for your Meilisearch index.
+---
+
+import { RouteHighlighter } from '/snippets/route_highlighter.mdx'
+import { NoticeTag } from '/snippets/notice_tag.mdx'
+import CodeSamplesGetFacetSearchSettings1 from '/snippets/samples/code_samples_get_facet_search_settings_1.mdx';
+import CodeSamplesUpdateFacetSearchSettings1 from '/snippets/samples/code_samples_update_facet_search_settings_1.mdx';
+import CodeSamplesResetFacetSearchSettings1 from '/snippets/samples/code_samples_reset_facet_search_settings_1.mdx';
+
+Processing filterable attributes for facet search is a resource-intensive operation. This feature is enabled by default, but disabling it may speed up indexing.
+
+`facetSearch` accepts a single Boolean value. If set to `false`, it disables facet search for the whole index. Meilisearch returns an error if you try to access the `/facet-search` endpoint when facet search is disabled.
+
+### Get facet search settings
+
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/settings/facet-search" />
+
+Get the facet search settings of an index.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                            |
+| :---------------- | :----- | :--------------------------------------------------------------------- |
+| **`index_uid`** * | String | [`uid`](getting_started/indexes#index-uid) of the requested index |
+
+#### Example
+
+<CodeSamplesGetFacetSearchSettings1 />
+
+##### Response: `200 OK`
+
+```json
+true
+```
+
+### Update facet search settings
+
+<RouteHighlighter method="PUT" path="/indexes/{index_uid}/settings/facet-search" />
+
+Update the facet search settings for an index.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                            |
+| :---------------- | :----- | :--------------------------------------------------------------------- |
+| **`index_uid`** * | String | [`uid`](getting_started/indexes#index-uid) of the requested index |
+
+#### Body
+
+```
+<Boolean>
+```
+
+#### Example
+
+<CodeSamplesUpdateFacetSearchSettings1 />
+
+##### Response: `202 Accepted`
+
+```json
+{
+  "taskUid": 1,
+  "indexUid": "INDEX_UID",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2024-07-19T22:33:18.523881Z"
+}
+```
+
+Use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+
+### Reset facet search settings
+
+<RouteHighlighter method="DELETE" path="/indexes/{index_uid}/settings/facet-search" />
+
+Reset an index's facet search to its default settings.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                            |
+| :---------------- | :----- | :--------------------------------------------------------------------- |
+| **`index_uid`** * | String | [`uid`](getting_started/indexes#index-uid) of the requested index |
+
+#### Example
+
+<CodeSamplesResetFacetSearchSettings1 />
+
+##### Response: `202 Accepted`
+
+```json
+{
+  "taskUid": 1,
+  "indexUid": "INDEX_UID",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2024-07-19T22:35:33.723983Z"
+}
+```
+
+Use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).

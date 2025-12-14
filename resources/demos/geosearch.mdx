@@ -1,0 +1,86 @@
+---
+title: Geosearch
+sidebarTitle: Geosearch
+description: Search 30,000+ cities with Google Maps integration
+---
+
+<Info>
+**Live demo**: [geosearch-js.meilisearch.com](https://geosearch-js.meilisearch.com)
+</Info>
+
+This demo showcases Meilisearch's geosearch capabilities by combining text search with geographic filtering. Search cities and see results displayed on an interactive Google Map.
+
+## Features demonstrated
+
+- **Geo filtering**: Filter results within a radius or bounding box
+- **Distance sorting**: Sort results by distance from a point
+- **Map integration**: Visual display of search results on Google Maps
+- **Combined search**: Text search + geographic constraints
+
+## Use case
+
+Location-based applications need to combine text and geography:
+
+- "coffee shops" within 5km of current location
+- Hotels in a specific city area
+- Stores nearest to a delivery address
+- Points of interest within a map viewport
+
+## Technical highlights
+
+| Feature | Syntax |
+|---------|--------|
+| Radius filter | `_geoRadius(lat, lng, distance_in_meters)` |
+| Bounding box | `_geoBoundingBox([lat, lng], [lat, lng])` |
+| Distance sort | `_geoPoint(lat, lng):asc` |
+| Response field | `_geoDistance` in meters |
+
+## Example: Find cities near Paris
+
+```json
+{
+  "q": "",
+  "filter": "_geoRadius(48.8566, 2.3522, 100000)",
+  "sort": ["_geoPoint(48.8566, 2.3522):asc"]
+}
+```
+
+This returns cities within 100km of Paris, sorted by distance.
+
+## Geo data format
+
+Documents must include a `_geo` field:
+
+```json
+{
+  "id": 1,
+  "name": "Paris",
+  "country": "France",
+  "_geo": {
+    "lat": 48.8566,
+    "lng": 2.3522
+  }
+}
+```
+
+## Links
+
+<CardGroup cols={2}>
+  <Card title="Try the demo" icon="globe" href="https://geosearch-js.meilisearch.com">
+    Search cities on a map
+  </Card>
+  <Card title="Source code" icon="github" href="https://github.com/meilisearch/demos/tree/main/src/geo-javascript">
+    View implementation
+  </Card>
+</CardGroup>
+
+## Related resources
+
+<CardGroup cols={2}>
+  <Card title="Geo search overview" icon="map" href="/products/geo_search/overview">
+    Learn geo search basics
+  </Card>
+  <Card title="Geo filtering & sorting" icon="map-location-dot" href="/products/geo_search/geosearch">
+    Detailed geo search guide
+  </Card>
+</CardGroup>

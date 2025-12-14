@@ -63,7 +63,10 @@ client.Index("movies").Search("botman", &meilisearch.SearchRequest{})
 ```text C#
 
 
-MeilisearchClient client = new MeilisearchClient("http://localhost:7700", "masterKey");
+MeilisearchClient client = new MeilisearchClient(
+  Environment.GetEnvironmentVariable("MEILISEARCH_URL"),
+  Environment.GetEnvironmentVariable("MEILISEARCH_API_KEY")
+);
 var index = client.Index("movies");
 
 var movies = await index.SearchAsync<Movie>("botman");

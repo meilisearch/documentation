@@ -1,0 +1,198 @@
+---
+title: Geo sorting
+sidebarTitle: Sorting
+description: Sort search results by distance from a geographic point.
+---
+
+import CodeSamplesGeosearchGuideSortSettings1 from '/snippets/samples/code_samples_geosearch_guide_sort_settings_1.mdx';
+import CodeSamplesGeosearchGuideSortUsage1 from '/snippets/samples/code_samples_geosearch_guide_sort_usage_1.mdx';
+import CodeSamplesGeosearchGuideSortUsage2 from '/snippets/samples/code_samples_geosearch_guide_sort_usage_2.mdx';
+
+Geo sorting orders search results by their distance from a specified point. This is essential for "nearest to me" features in store locators, delivery apps, and location-based services.
+
+## Configuration
+
+Add `_geo` to `sortableAttributes` before using geo sorting:
+
+<CodeSamplesGeosearchGuideSortSettings1 />
+
+<Warning>
+Geo sorting only works with the `_geo` field. The `_geojson` field cannot be used for sorting.
+</Warning>
+
+## Using `_geoPoint`
+
+### Syntax
+
+```
+_geoPoint(lat, lng):asc   // Nearest first
+_geoPoint(lat, lng):desc  // Farthest first
+```
+
+**Parameters:**
+| Parameter | Description |
+|-----------|-------------|
+| `lat` | Latitude of reference point (-90 to 90) |
+| `lng` | Longitude of reference point (-180 to 180) |
+| `:asc` / `:desc` | Sort direction |
+
+### Sort nearest first
+
+Find restaurants sorted by distance from the Eiffel Tower:
+
+<CodeSamplesGeosearchGuideSortUsage1 />
+
+### Sort farthest first
+
+```json
+{
+  "sort": ["_geoPoint(48.8584, 2.2945):desc"]
+}
+```
+
+## The `_geoDistance` field
+
+When you use `_geoPoint` sorting, Meilisearch automatically adds `_geoDistance` to each result. This field contains the distance in meters from the reference point.
+
+**Example response:**
+```json
+{
+  "hits": [
+    {
+      "id": 2,
+      "name": "Bouillon Pigalle",
+      "address": "22 Bd de Clichy, 75018 Paris, France",
+      "_geo": {
+        "lat": 48.8826517,
+        "lng": 2.3352748
+      },
+      "_geoDistance": 3150
+    },
+    {
+      "id": 3,
+      "name": "Artico Gelateria Tradizionale",
+      "address": "Via Dogana, 1, 20123 Milan, Italy",
+      "_geo": {
+        "lat": 45.4632046,
+        "lng": 9.1719421
+      },
+      "_geoDistance": 640275
+    }
+  ]
+}
+```
+
+<Note>
+`_geoDistance` is in meters. Divide by 1000 for kilometers, or by 1609 for miles.
+</Note>
+
+## Combining with other sort criteria
+
+Use multiple sort rules to break ties:
+
+<CodeSamplesGeosearchGuideSortUsage2 />
+
+**Distance first, then rating:**
+```json
+{
+  "sort": ["_geoPoint(48.8584, 2.2945):asc", "rating:desc"]
+}
+```
+
+**Rating first, then distance:**
+```json
+{
+  "sort": ["rating:desc", "_geoPoint(48.8584, 2.2945):asc"]
+}
+```
+
+## Combining geo sort with geo filter
+
+Filter to a specific area, then sort by distance within that area:
+
+```json
+{
+  "q": "pizza",
+  "filter": "_geoRadius(48.8566, 2.3522, 5000)",
+  "sort": ["_geoPoint(48.8566, 2.3522):asc"]
+}
+```
+
+This finds pizza places within 5km and sorts them by proximity.
+
+## Combining with text search
+
+Geo sorting works with keyword searches:
+
+```json
+{
+  "q": "coffee",
+  "sort": ["_geoPoint(48.8566, 2.3522):asc"]
+}
+```
+
+Results match "coffee" and are sorted by distance.
+
+## Displaying distance to users
+
+Format `_geoDistance` for user-friendly display:
+
+```javascript
+function formatDistance(meters) {
+  if (meters < 1000) {
+    return `${Math.round(meters)}m`;
+  }
+  return `${(meters / 1000).toFixed(1)}km`;
+}
+
+// Usage
+hits.forEach(hit => {
+  console.log(`${hit.name} - ${formatDistance(hit._geoDistance)}`);
+});
+```
+
+Output:
+```
+Bouillon Pigalle - 3.2km
+Artico Gelateria Tradizionale - 640.3km
+```
+
+## Common errors
+
+| Error | Cause | Solution |
+|-------|-------|----------|
+| `invalid_search_sort` | Using `_geo` directly | Use `_geoPoint(lat, lng):asc` |
+| `invalid_search_sort` | Missing `:asc` or `:desc` | Add sort direction |
+| `invalid_search_sort` | `_geo` not in `sortableAttributes` | Update settings |
+| No `_geoDistance` | Not using `_geoPoint` sort | Add geo sort to get distances |
+
+## Performance tips
+
+1. **Combine filter + sort**: Filter first to reduce the result set, then sort
+   ```json
+   {
+     "filter": "_geoRadius(48.8566, 2.3522, 10000)",
+     "sort": ["_geoPoint(48.8566, 2.3522):asc"]
+   }
+   ```
+
+2. **Use the same point**: Use the same coordinates for filter center and sort reference
+
+3. **Limit results**: Use `limit` to avoid sorting large result sets
+   ```json
+   {
+     "sort": ["_geoPoint(48.8566, 2.3522):asc"],
+     "limit": 20
+   }
+   ```
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Geo filtering" icon="filter" href="/products/geo_search/filtering">
+    Filter by radius, bounding box, or polygon
+  </Card>
+  <Card title="Sorting guide" icon="arrow-up-wide-short" href="/products/faceted_search/sort_search_results">
+    General sorting documentation
+  </Card>
+</CardGroup>

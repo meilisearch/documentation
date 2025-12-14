@@ -1,0 +1,200 @@
+---
+title: Meilisearch & Model Context Protocol - Talk to Meilisearch with Claude desktop
+sidebarTitle: Model Context Protocol
+description: This guide walks Meilisearch users through setting up the MCP server with Claude desktop to talk to the Meilisearch API
+---
+
+# Model Context Protocol - Talk to Meilisearch with Claude desktop
+
+## Introduction
+
+This guide will walk you through setting up and using Meilisearch through natural language interactions with Claude AI via Model Context Protocol (MCP).
+
+## Requirements
+
+To follow this guide, you'll need:
+
+- [Claude Desktop](https://claude.ai/download) (free)
+- [A Meilisearch Cloud project](https://www.meilisearch.com/cloud) (14 days free-trial)
+- Python ≥ 3.9
+- From the Meilisearch Cloud dashboard, your Meilisearch host & api key
+
+## Setting up Claude Desktop with the Meilisearch MCP Server
+
+### 1. Install Claude Desktop
+
+Download and install [Claude Desktop](https://claude.ai/download).
+
+### 2. Install the Meilisearch MCP Server
+
+You can install the Meilisearch MCP server using `uv` or `pip`:
+
+```bash
+# Using uv (recommended)
+uv pip install meilisearch-mcp
+
+# Using pip
+pip install meilisearch-mcp
+```
+
+### 3. Configure Claude Desktop
+
+Open Claude Desktop, click on the Claude menu in the top bar, and select "Settings". In the Settings window, click on "Developer" in the left sidebar, then click "Edit Config". This will open your `claude_desktop_config.json` file.
+
+Add the Meilisearch MCP server to your configuration:
+
+```json
+{
+  "mcpServers": {
+    "meilisearch": {
+      "command": "uvx",
+      "args": ["-n", "meilisearch-mcp"]
+    }
+  }
+```
+
+Save the file and restart Claude.
+
+## Connecting to Your Meilisearch Instance
+
+Once Claude Desktop is set up with the Meilisearch MCP server, you can connect to your Meilisearch instance by asking Claude to update the connection settings.
+
+Open Claude Desktop and start a new conversation.
+
+Next, connect to your Meilisearch instance by asking Claude to update the connection settings, replacing `MEILISEARCH_URL` with your project URL and `API_KEY` with your project's API key:
+
+```
+Please connect to my Meilisearch instance at MEILISEARCH_URL using the API key API_KEY
+```
+
+Claude will use the MCP server's `update-connection-settings` tool to establish a connection to your Meilisearch instance.
+
+Finally, verify the connection by asking:
+
+```
+Can you check the connection to my Meilisearch instance and tell me what version it's running?
+```
+
+Claude will use the `get-version` and `health-check` tools to verify the connection and provide information about your instance.
+
+## Create an e-commerce index
+
+Now you have configured the MCP to work with Meilisearch, you can use it to manage your indexes.
+
+First, verify what indexes you have in your project:
+
+```
+What indexes do I have in my Meilisearch instance?
+```
+
+Next, ask Claude to create an index optimized for e-commerce:
+
+```
+Create a new index called "products" for our e-commerce site with the primary key "product_id"
+```
+
+Finally, check the index has been created successfully and is completely empty:
+
+```
+How many documents are in my "products" index and what's its size?
+```
+
+## Add documents to your new index
+
+Ask Calude to add a couple of test documents to your "products" index:
+
+```
+Add these products to my "products" index:
+[
+  {"product_id": 1, "name": "Ergonomic Chair", "description": "Comfortable office chair", "price": 299.99, "category": "Furniture"},
+  {"product_id": 2, "name": "Standing Desk", "description": "Adjustable height desk", "price": 499.99, "category": "Furniture"}
+]
+```
+
+Since you are only using "products" for testing, you can also ask Claude to automatically populate it with placeholder data:
+
+```
+Add 10 documents in the index "products" with a name, category, price, and description of your choice
+```
+
+To verify data insertion worked as expected, retrieve the first few documents in your index:
+
+```
+Show me the first 5 products in my "products" index
+```
+
+## Configure your index
+
+Before performing your first search, set a few index settings to ensure relevant results.
+
+Ask Claude to prioritize exact word matches over multiple partial matches:
+
+```
+Update the ranking rules for the "products" index to prioritize word matches and handle typos, but make exact matches more important than proximity
+```
+
+It's also a good practice to limit searchable attributes only to highly-relevant fields, and only return attributes you are going to display in your search interface:
+
+```
+Configure my "products" index to make the "name" and "description" fields searchable, but only "name", "price", and "category" should be displayed in results
+```
+
+## Perform searches with MCP
+
+Perform your first search with the following prompt:
+
+```
+Search the "products" index for "desk" and return the top 3 results
+```
+
+You can also request your search uses other Meilisearch features such as filters and sorting:
+
+```
+Search the "products" index for "chair" where the price is less than 200 and the category is "Furniture". Sort results by price in ascending order.
+```
+
+<Warning>
+
+### Important note about LLM limitation
+
+Large Language Models like Claude tend to say "yes" to most requests, even if they can't actually perform them.
+
+Claude can only perform actions that are exposed through the Meilisearch API and implemented in the MCP server. If you're unsure whether a particular operation is possible, refer to the [Meilisearch documentation](https://docs.meilisearch.com) and the [MCP server README](https://github.com/meilisearch/meilisearch-mcp).
+</Warning>
+
+## Troubleshooting
+
+If you encounter issues with the Meilisearch MCP integration, try these steps
+
+### 1. Ask Claude to verify your connection settings
+
+```
+What are the current Meilisearch connection settings?
+```
+
+### 2. Ask Claude to check your Meilisearch instance health
+
+```
+Run a health check on my Meilisearch instance
+```
+
+### 3. Review Claude's logs
+
+Open the logs file in your text editor or log viewer:
+
+- On macOS: `~/Library/Logs/Claude/mcp*.log`
+- On Windows: `%APPDATA%\Claude\logs\mcp*.log`
+
+### 4. Test the MCP server independently
+
+Open your terminal and query the MCP Inspector with `npx`:
+
+```bash
+npx @modelcontextprotocol/inspector uvx -n meilisearch-mcp
+```
+
+## Conclusion
+
+The Meilisearch MCP integration with Claude can transform multiple API calls and configuration tasks into conversational requests. This can help you focus more on building your application and less on implementation details.
+
+For more information about advanced configurations and capabilities, refer to the [Meilisearch documentation](https://docs.meilisearch.com) and the [Meilisearch MCP server repository](https://github.com/meilisearch/meilisearch-mcp).

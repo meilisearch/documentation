@@ -1,0 +1,283 @@
+---
+title: Meilisync
+sidebarTitle: Meilisync
+description: Real-time sync from MySQL, PostgreSQL, or MongoDB to Meilisearch.
+---
+
+[Meilisync](https://github.com/long2ice/meilisync) is a community tool that enables real-time synchronization from MySQL, PostgreSQL, or MongoDB to Meilisearch. Changes in your database are automatically reflected in your search index.
+
+<Note>
+Meilisync is a community-maintained project, not officially supported by Meilisearch.
+</Note>
+
+## Features
+
+- Real-time sync using database change streams (CDC)
+- Support for MySQL, PostgreSQL, and MongoDB
+- Multiple sync tasks for different tables/collections
+- Progress tracking via file or Redis
+- Plugin system for data transformation
+
+## Prerequisites
+
+- Python 3.9 or higher
+- A Meilisearch instance ([Cloud](https://cloud.meilisearch.com) or [self-hosted](/resources/self_hosting/getting_started))
+- A supported database with change data capture enabled
+
+### Database requirements
+
+<Tabs>
+<Tab title="MySQL">
+Enable binary logging with row format:
+
+```ini
+# my.cnf
+[mysqld]
+server-id = 1
+log_bin = mysql-bin
+binlog_format = ROW
+binlog_row_image = FULL
+```
+</Tab>
+<Tab title="PostgreSQL">
+Enable logical replication:
+
+```ini
+# postgresql.conf
+wal_level = logical
+max_replication_slots = 10
+max_wal_senders = 10
+```
+
+Install the wal2json extension:
+
+```bash
+# Debian/Ubuntu
+sudo apt install postgresql-14-wal2json
+```
+</Tab>
+<Tab title="MongoDB">
+Enable replica set mode:
+
+```yaml
+# mongod.conf
+replication:
+  replSetName: "rs0"
+```
+
+Initialize the replica set:
+
+```javascript
+rs.initiate()
+```
+</Tab>
+</Tabs>
+
+## Installation
+
+<Tabs>
+<Tab title="pip">
+```bash
+pip install meilisync
+```
+
+Install database-specific drivers:
+
+```bash
+# For MySQL
+pip install meilisync[mysql]
+
+# For PostgreSQL
+pip install meilisync[postgres]
+
+# For MongoDB
+pip install meilisync[mongo]
+```
+</Tab>
+<Tab title="Docker">
+```bash
+docker pull long2ice/meilisync
+```
+</Tab>
+</Tabs>
+
+## Configuration
+
+Create a `config.yml` file:
+
+```yaml
+meilisearch:
+  api_url: https://your-instance.meilisearch.io
+  api_key: your_master_key
+
+progress:
+  type: file  # or 'redis'
+
+source:
+  type: mysql  # or 'postgres', 'mongo'
+  host: localhost
+  port: 3306
+  user: root
+  password: password
+  database: myapp
+
+sync:
+  - table: products
+    index: products
+    primary_key: id
+    fields:
+      - id
+      - name
+      - description
+      - price
+      - category
+
+  - table: articles
+    index: articles
+    primary_key: id
+```
+
+## Running meilisync
+
+Start the sync process:
+
+```bash
+meilisync start -c config.yml
+```
+
+<Tabs>
+<Tab title="Docker">
+```bash
+docker run -d \
+  -v $(pwd)/config.yml:/app/config.yml \
+  long2ice/meilisync \
+  meilisync start -c /app/config.yml
+```
+</Tab>
+<Tab title="Docker Compose">
+```yaml
+version: '3.8'
+services:
+  meilisync:
+    image: long2ice/meilisync
+    volumes:
+      - ./config.yml:/app/config.yml
+    command: meilisync start -c /app/config.yml
+    depends_on:
+      - mysql
+      - meilisearch
+```
+</Tab>
+</Tabs>
+
+## Full sync
+
+Import all existing data before starting real-time sync:
+
+```bash
+meilisync refresh -c config.yml
+```
+
+This performs a full table scan and indexes all documents.
+
+## Verify sync
+
+Check the sync is working:
+
+```bash
+# Check Meilisearch index stats
+curl "${MEILISEARCH_URL}/indexes/products/stats" \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}"
+```
+
+Insert a test record in your database and verify it appears in Meilisearch within seconds.
+
+## Configuration options
+
+### Source configuration
+
+<Tabs>
+<Tab title="MySQL">
+```yaml
+source:
+  type: mysql
+  host: localhost
+  port: 3306
+  user: root
+  password: password
+  database: myapp
+  server_id: 1  # Unique server ID for replication
+```
+</Tab>
+<Tab title="PostgreSQL">
+```yaml
+source:
+  type: postgres
+  host: localhost
+  port: 5432
+  user: postgres
+  password: password
+  database: myapp
+  slot_name: meilisync_slot  # Replication slot name
+```
+</Tab>
+<Tab title="MongoDB">
+```yaml
+source:
+  type: mongo
+  host: localhost
+  port: 27017
+  database: myapp
+  # Optional authentication
+  user: root
+  password: password
+```
+</Tab>
+</Tabs>
+
+### Progress storage
+
+Track sync progress to resume after restarts:
+
+```yaml
+# File-based (default)
+progress:
+  type: file
+  path: ./progress.json
+
+# Redis-based (for distributed setups)
+progress:
+  type: redis
+  url: redis://localhost:6379/0
+```
+
+### Field mapping
+
+Select specific fields and rename them:
+
+```yaml
+sync:
+  - table: products
+    index: products
+    fields:
+      id: product_id  # Rename 'id' to 'product_id' in Meilisearch
+      name: ~         # Keep original name
+      price: ~
+```
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Configure settings" icon="gear" href="/reference/api/settings">
+    Set up searchable and filterable attributes
+  </Card>
+  <Card title="Full-text search" icon="magnifying-glass" href="/products/full_text_search/overview">
+    Configure ranking and relevancy
+  </Card>
+</CardGroup>
+
+## Resources
+
+- [Meilisync on GitHub](https://github.com/long2ice/meilisync)
+- [Meilisync documentation](https://github.com/long2ice/meilisync#readme)
+- [Meilisync Admin Dashboard](https://github.com/long2ice/meilisync-admin)

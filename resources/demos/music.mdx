@@ -1,0 +1,67 @@
+---
+title: Music Search
+sidebarTitle: Music Search
+description: Search through 40 million songs with instant results
+---
+
+<Info>
+**Live demo**: [music.meilisearch.com](https://music.meilisearch.com)
+</Info>
+
+This demo showcases Meilisearch's ability to handle massive datasets with instant search across 40 million songs from the MusicBrainz database.
+
+## Features demonstrated
+
+- **Large-scale search**: 40 million documents indexed
+- **Instant results**: Sub-100ms response times
+- **Rich metadata**: Artist, album, year, and duration
+- **Typo tolerance**: Find songs even with misspelled names
+
+## Use case
+
+Music databases present unique search challenges:
+
+- Artists and song titles from many languages
+- Common misspellings of artist names
+- Users search by partial song titles
+- Need for instant feedback while typing
+
+## Technical highlights
+
+| Feature | Value |
+|---------|-------|
+| Dataset size | 40 million songs |
+| Source | MusicBrainz database |
+| Searchable fields | Title, artist, album |
+| Average response | <100ms |
+
+## Performance at scale
+
+This demo proves Meilisearch handles large datasets efficiently:
+
+- Indexing 40M documents completes in reasonable time
+- Search latency remains consistent regardless of dataset size
+- Memory-efficient storage using LMDB
+- No degradation as index grows
+
+## Links
+
+<CardGroup cols={2}>
+  <Card title="Try the demo" icon="globe" href="https://music.meilisearch.com">
+    Search 40 million songs
+  </Card>
+  <Card title="Performance guide" icon="gauge-high" href="/resources/self_hosting/performance/ram_multithreading">
+    Optimize for large datasets
+  </Card>
+</CardGroup>
+
+## Related resources
+
+<CardGroup cols={2}>
+  <Card title="Indexing performance" icon="bolt" href="/products/indexing/optimize_indexing_performance">
+    Tips for large document sets
+  </Card>
+  <Card title="Typo tolerance" icon="spell-check" href="/products/full_text_search/typo_tolerance_settings">
+    Configure typo handling
+  </Card>
+</CardGroup>

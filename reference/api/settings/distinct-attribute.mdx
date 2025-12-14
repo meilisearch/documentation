@@ -1,0 +1,117 @@
+---
+title: Distinct attribute
+sidebarTitle: Distinct attribute
+description: Configure the distinct attribute setting for your Meilisearch index.
+---
+
+import { RouteHighlighter } from '/snippets/route_highlighter.mdx'
+import { NoticeTag } from '/snippets/notice_tag.mdx'
+import CodeSamplesGetDistinctAttribute1 from '/snippets/samples/code_samples_get_distinct_attribute_1.mdx';
+import CodeSamplesUpdateDistinctAttribute1 from '/snippets/samples/code_samples_update_distinct_attribute_1.mdx';
+import CodeSamplesResetDistinctAttribute1 from '/snippets/samples/code_samples_reset_distinct_attribute_1.mdx';
+
+The distinct attribute is a field whose value will always be unique in the returned documents.
+
+<Warning>
+Updating distinct attributes will re-index all documents in the index, which can take some time. We recommend updating your index settings first and then adding documents as this reduces RAM consumption.
+</Warning>
+
+[To learn more about the distinct attribute, refer to our dedicated guide.](/products/full_text_search/distinct_attribute)
+
+### Get distinct attribute
+
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/settings/distinct-attribute" />
+
+Get the distinct attribute of an index.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](getting_started/indexes#index-uid) of the requested index |
+
+#### Example
+
+<CodeSamplesGetDistinctAttribute1 />
+
+##### Response: `200 Ok`
+
+```json
+"skuid"
+```
+
+### Update distinct attribute
+
+<RouteHighlighter method="PUT" path="/indexes/{index_uid}/settings/distinct-attribute" />
+
+Update the distinct attribute field of an index.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](getting_started/indexes#index-uid) of the requested index |
+
+#### Body
+
+```
+<String>
+```
+
+A string. The string should be an attribute that exists in the selected index.
+
+If an attribute contains an object, you can use dot notation to set one or more of its keys as a value for this setting, for example, `"distinctAttribute": "product.skuid"`.
+
+<Warning>
+If the field does not exist, no error will be thrown.
+</Warning>
+
+[To learn more about the distinct attribute, refer to our dedicated guide.](/products/full_text_search/distinct_attribute)
+
+#### Example
+
+<CodeSamplesUpdateDistinctAttribute1 />
+
+##### Response: `202 Accepted`
+
+```json
+{
+  "taskUid": 1,
+  "indexUid": "movies",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+}
+```
+
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+
+### Reset distinct attribute
+
+<RouteHighlighter method="DELETE" path="/indexes/{index_uid}/settings/distinct-attribute" />
+
+Reset the distinct attribute of an index to its default value.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](getting_started/indexes#index-uid) of the requested index |
+
+#### Example
+
+<CodeSamplesResetDistinctAttribute1 />
+
+##### Response: `202 Accepted`
+
+```json
+{
+  "taskUid": 1,
+  "indexUid": "movies",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+}
+```
+
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).

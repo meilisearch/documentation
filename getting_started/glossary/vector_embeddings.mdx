@@ -1,0 +1,85 @@
+---
+title: Vector embeddings
+sidebarTitle: Vector embeddings
+description: Vector embeddings are numerical representations of data that capture semantic meaning, enabling AI-powered search features.
+---
+
+Vector embeddings are numerical representations of data (text, images, or other content) that capture semantic meaning in a format computers can process. They are the foundation of [vector search](/getting_started/glossary/vector_search) and [AI-powered search](/products/ai_powered_search/getting_started).
+
+## What embeddings look like
+
+An embedding is an array of floating-point numbers, typically with hundreds or thousands of dimensions:
+
+```json
+[0.0231, -0.0412, 0.1893, 0.0012, -0.0891, ...]
+```
+
+Each dimension captures some aspect of the content's meaning. Similar items have similar embeddings, meaning they are close together in the vector space.
+
+## How embeddings capture meaning
+
+Machine learning models learn to create embeddings by analyzing patterns in large datasets. For text, this means understanding:
+
+- **Semantic similarity**: "car" and "automobile" get similar embeddings
+- **Relationships**: "king" - "man" + "woman" ≈ "queen"
+- **Context**: "bank" in "river bank" vs "bank account" gets different embeddings
+
+## Types of embeddings
+
+| Type | Created from | Common models | Use cases |
+|------|-------------|---------------|-----------|
+| **Word** | Individual words | Word2Vec, GloVe | Text analysis |
+| **Sentence** | Full sentences | Sentence-BERT | Semantic search |
+| **Document** | Entire documents | Doc2Vec | Document similarity |
+| **Image** | Visual content | CLIP, ResNet | Image search |
+
+## Embeddings in Meilisearch
+
+Meilisearch can generate embeddings automatically using configured embedders:
+
+```json
+PATCH /indexes/products/settings
+{
+  "embedders": {
+    "default": {
+      "source": "openAi",
+      "model": "text-embedding-3-small",
+      "documentTemplate": "A product titled '{{doc.name}}' described as: {{doc.description}}"
+    }
+  }
+}
+```
+
+Alternatively, you can provide pre-computed embeddings in the `_vectors` field when adding documents.
+
+## Document templates
+
+Document templates control which fields Meilisearch uses to generate embeddings. A good template focuses on the most semantically relevant content:
+
+```
+A {{doc.category}} product: {{doc.name}}. {{doc.description}}
+```
+
+## Embedding dimensions
+
+Different models produce embeddings of different sizes:
+
+| Model | Dimensions |
+|-------|------------|
+| OpenAI text-embedding-3-small | 1536 |
+| OpenAI text-embedding-3-large | 3072 |
+| Cohere embed-english-v3.0 | 1024 |
+
+Larger embeddings capture more nuance but require more storage and computation.
+
+## Related concepts
+
+- [Vector search](/getting_started/glossary/vector_search): Using embeddings to find similar content
+- [Hybrid search](/getting_started/glossary/hybrid_search): Combining vector and keyword search
+- [Semantic search](/getting_started/glossary/semantic_search): Search based on meaning
+
+## Learn more
+
+- [Choose an embedder](/products/ai_powered_search/choose_an_embedder): Compare embedding providers
+- [Document templates](/products/ai_powered_search/document_template_best_practices): Optimize embedding generation
+- [Embedder settings](/reference/api/settings/embedders): API configuration reference

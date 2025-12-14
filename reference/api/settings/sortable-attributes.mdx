@@ -1,0 +1,122 @@
+---
+title: Sortable attributes
+sidebarTitle: Sortable attributes
+description: Configure the sortable attributes setting for your Meilisearch index.
+---
+
+import { RouteHighlighter } from '/snippets/route_highlighter.mdx'
+import { NoticeTag } from '/snippets/notice_tag.mdx'
+import CodeSamplesGetSortableAttributes1 from '/snippets/samples/code_samples_get_sortable_attributes_1.mdx';
+import CodeSamplesUpdateSortableAttributes1 from '/snippets/samples/code_samples_update_sortable_attributes_1.mdx';
+import CodeSamplesResetSortableAttributes1 from '/snippets/samples/code_samples_reset_sortable_attributes_1.mdx';
+
+Attributes that can be used when sorting search results using the [`sort` search parameter](/reference/api/search#sort).
+
+<Warning>
+Updating sortable attributes will re-index all documents in the index, which can take some time. We recommend updating your index settings first and then adding documents as this reduces RAM consumption.
+</Warning>
+
+[To learn more about sortable attributes, refer to our dedicated guide.](/products/faceted_search/sort_search_results)
+
+### Get sortable attributes
+
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/settings/sortable-attributes" />
+
+Get the sortable attributes of an index.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](getting_started/indexes#index-uid) of the requested index |
+
+#### Example
+
+<CodeSamplesGetSortableAttributes1 />
+
+##### Response: `200 Ok`
+
+```json
+[
+  "price",
+  "author.surname"
+]
+```
+
+### Update sortable attributes
+
+<RouteHighlighter method="PUT" path="/indexes/{index_uid}/settings/sortable-attributes" />
+
+Update an index's sortable attributes list.
+
+[You can read more about sorting at query time on our dedicated guide.](/products/faceted_search/sort_search_results)
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](getting_started/indexes#index-uid) of the requested index |
+
+#### Body
+
+```
+[<String>, <String>, …]
+```
+
+An array of strings. Each string should be an attribute that exists in the selected index.
+
+If an attribute contains an object, you can use dot notation to set one or more of its keys as a value for this setting: `"sortableAttributes": ["author.surname"]`.
+
+<Warning>
+If the field does not exist, no error will be thrown.
+</Warning>
+
+[To learn more about sortable attributes, refer to our dedicated guide.](/products/faceted_search/sort_search_results)
+
+#### Example
+
+<CodeSamplesUpdateSortableAttributes1 />
+
+##### Response: `202 Accepted`
+
+```json
+{
+  "taskUid": 1,
+  "indexUid": "movies",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+}
+```
+
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+
+### Reset sortable attributes
+
+<RouteHighlighter method="DELETE" path="/indexes/{index_uid}/settings/sortable-attributes" />
+
+Reset an index's sortable attributes list back to its default value.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](getting_started/indexes#index-uid) of the requested index |
+
+#### Example
+
+<CodeSamplesResetSortableAttributes1 />
+
+##### Response: `202 Accepted`
+
+```json
+{
+  "taskUid": 1,
+  "indexUid": "movies",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+}
+```
+
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).

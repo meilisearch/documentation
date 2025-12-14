@@ -11,7 +11,7 @@ import CodeSamplesUpdatingGuideCheckVersionOldAuthorizationHeader from '/snippet
 
 This reference describes the general behavior of Meilisearch's RESTful API.
 
-If you are new to Meilisearch, check out the [getting started](/learn/self_hosted/getting_started_with_self_hosted_meilisearch).
+If you are new to Meilisearch, check out the [getting started](/resources/self_hosting/getting_started).
 
 ## OpenAPI
 
@@ -27,7 +27,7 @@ This API documentation uses the following conventions:
 
 ## Authorization
 
-By [providing Meilisearch with a master key at launch](/learn/security/basic_security), you protect your instance from unauthorized requests. The provided master key must be at least 16 bytes. From then on, you must include the `Authorization` header along with a valid API key to access protected routes (all routes except [`/health`](/reference/api/health).
+By [providing Meilisearch with a master key at launch](/products/platform/basic_security), you protect your instance from unauthorized requests. The provided master key must be at least 16 bytes. From then on, you must include the `Authorization` header along with a valid API key to access protected routes (all routes except [`/health`](/reference/api/health).
 
 <CodeSamplesAuthorizationHeader1 />
 
@@ -39,7 +39,7 @@ v0.24 and below use the `X-MEILI-API-KEY: apiKey` authorization header:
 <CodeSamplesUpdatingGuideCheckVersionOldAuthorizationHeader />
 </Tip>
 
-[To learn more about keys and security, refer to our security tutorial.](/learn/security/basic_security)
+[To learn more about keys and security, refer to our security tutorial.](/products/platform/basic_security)
 
 ## Pagination
 
@@ -122,9 +122,9 @@ curl -sH 'Accept-encoding: gzip' 'MEILISEARCH_URL/indexes/movies/search' | gzip 
 You may use an optional `Meili-Include-Metadata` header when performing search and multi-search requests:
 
 ```
-curl -X POST 'http://localhost:7700/indexes/INDEX_NAME/search' \
+curl -X POST "${MEILISEARCH_URL}/indexes/INDEX_NAME/search" \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
   -H 'Meili-Include-Metadata: true' \
   -d '{"q": ""}'
 ```
@@ -179,7 +179,7 @@ Meilisearch is an **asynchronous API**. This means that in response to most writ
 
 You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
 
-See more information about [asynchronous operations](/learn/async/asynchronous_operations).
+See more information about [asynchronous operations](/products/platform/asynchronous_operations).
 
 ## Data types
 

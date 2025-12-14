@@ -1,0 +1,140 @@
+---
+title: Typo tolerance
+sidebarTitle: Typo tolerance
+description: Configure the typo tolerance setting for your Meilisearch index.
+---
+
+import { RouteHighlighter } from '/snippets/route_highlighter.mdx'
+import { NoticeTag } from '/snippets/notice_tag.mdx'
+import CodeSamplesGetTypoTolerance1 from '/snippets/samples/code_samples_get_typo_tolerance_1.mdx';
+import CodeSamplesUpdateTypoTolerance1 from '/snippets/samples/code_samples_update_typo_tolerance_1.mdx';
+import CodeSamplesResetTypoTolerance1 from '/snippets/samples/code_samples_reset_typo_tolerance_1.mdx';
+
+Typo tolerance helps users find relevant results even when their search queries contain spelling mistakes or typos. This setting allows you to configure the minimum word size for typos and disable typo tolerance for specific words or attributes.
+
+[To learn more about typo tolerance, refer to our dedicated guide.](/products/full_text_search/typo_tolerance_settings)
+
+### Typo tolerance object
+
+| Name                               | Type             | Default Value | Description                                                                      |
+| :--------------------------------- | :--------------- | :------------ | :------------------------------------------------------------------------------- |
+| **`enabled`**                      | Boolean          | `true`        | Whether typo tolerance is enabled or not                                         |
+| **`minWordSizeForTypos.oneTypo`**  | Integer          | `5`           | The minimum word size for accepting 1 typo; must be between `0` and `twoTypos`   |
+| **`minWordSizeForTypos.twoTypos`** | Integer          | `9`           | The minimum word size for accepting 2 typos; must be between `oneTypo` and `255` |
+| **`disableOnWords`**               | Array of strings | Empty         | An array of words for which the typo tolerance feature is disabled               |
+| **`disableOnAttributes`**          | Array of strings | Empty         | An array of attributes for which the typo tolerance feature is disabled          |
+| **`disableOnNumbers`**             | Boolean          | `false`       | Whether typo tolerance for numbers is disabled or enabled                        |
+
+### Get typo tolerance settings
+
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/settings/typo-tolerance" />
+
+Get the typo tolerance settings of an index.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](getting_started/indexes#index-uid) of the requested index |
+
+#### Example
+
+<CodeSamplesGetTypoTolerance1 />
+
+##### Response: `200 OK`
+
+```json
+{
+  "enabled": true,
+  "minWordSizeForTypos": {
+    "oneTypo": 5,
+    "twoTypos": 9
+  },
+  "disableOnWords": [],
+  "disableOnAttributes": []
+}
+```
+
+### Update typo tolerance settings
+
+<RouteHighlighter method="PATCH" path="/indexes/{index_uid}/settings/typo-tolerance" />
+
+Partially update the typo tolerance settings for an index.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](getting_started/indexes#index-uid) of the requested index |
+
+#### Body
+
+```
+{
+  "enabled": <Boolean>,
+  "minWordSizeForTypos": {
+    "oneTypo": <Integer>,
+    "twoTypos": <Integer>
+  },
+  "disableOnWords": [<String>, <String>, …],
+  "disableOnAttributes": [<String>, <String>, …]
+  "disableOnNumbers": <Boolean>,
+}
+```
+
+| Name                               | Type             | Default Value | Description                                                                      |
+| :--------------------------------- | :--------------- | :------------ | :------------------------------------------------------------------------------- |
+| **`enabled`**                      | Boolean          | `true`        | Whether typo tolerance is enabled or not                                         |
+| **`minWordSizeForTypos.oneTypo`**  | Integer          | `5`           | The minimum word size for accepting 1 typo; must be between `0` and `twoTypos`   |
+| **`minWordSizeForTypos.twoTypos`** | Integer          | `9`           | The minimum word size for accepting 2 typos; must be between `oneTypo` and `255` |
+| **`disableOnWords`**               | Array of strings | Empty         | An array of words for which the typo tolerance feature is disabled               |
+| **`disableOnAttributes`**          | Array of strings | Empty         | An array of attributes for which the typo tolerance feature is disabled          |
+| **`disableOnNumbers`**             | Boolean          | `false`       | Whether typo tolerance for numbers is disabled or enabled                        |
+
+#### Example
+
+<CodeSamplesUpdateTypoTolerance1 />
+
+##### Response: `202 Accepted`
+
+```json
+{
+  "taskUid": 1,
+  "indexUid": "books",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2022-04-14T20:56:44.991039Z"
+}
+```
+
+You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+
+### Reset typo tolerance settings
+
+<RouteHighlighter method="DELETE" path="/indexes/{index_uid}/settings/typo-tolerance" />
+
+Reset an index's typo tolerance settings to their [default value](#typo-tolerance-object).
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](getting_started/indexes#index-uid) of the requested index |
+
+#### Example
+
+<CodeSamplesResetTypoTolerance1 />
+
+##### Response: `202 Accepted`
+
+```json
+{
+  "taskUid": 1,
+  "indexUid": "books",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2022-04-14T20:53:32.863107Z"
+}
+```
+
+You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).

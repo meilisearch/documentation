@@ -1,0 +1,167 @@
+---
+title: Filterable attributes
+sidebarTitle: Filterable attributes
+description: Configure the filterable attributes setting for your Meilisearch index.
+---
+
+import { RouteHighlighter } from '/snippets/route_highlighter.mdx'
+import { NoticeTag } from '/snippets/notice_tag.mdx'
+import CodeSamplesGetFilterableAttributes1 from '/snippets/samples/code_samples_get_filterable_attributes_1.mdx';
+import CodeSamplesUpdateFilterableAttributes1 from '/snippets/samples/code_samples_update_filterable_attributes_1.mdx';
+import CodeSamplesResetFilterableAttributes1 from '/snippets/samples/code_samples_reset_filterable_attributes_1.mdx';
+
+Attributes in the `filterableAttributes` list can be used as [filters](/products/faceted_search/filter_search_results) or [facets](/products/faceted_search/search_with_facet_filters).
+
+<Warning>
+Updating filterable attributes will re-index all documents in the index, which can take some time. To reduce RAM consumption, first update your index settings and then add documents.
+</Warning>
+
+### Filterable attribute object
+
+`filterableAttributes` may be an array of either strings or filterable attribute objects.
+
+Filterable attribute objects must contain the following fields:
+
+| Name                    | Type             | Default value | Description                                              |
+| ----------------------- | ---------------- | ------------- | -------------------------------------------------------- |
+| **`attributePatterns`** | Array of strings | `[]`          | A list of strings indicating filterable fields                      |
+| **`features`**          | Object           | `{"facetSearch": false, "filter": {"equality": true, "comparison": false}`          | A list outlining filter types enabled for the specified attributes                      |
+
+#### `attributePatterns`
+
+Attribute patterns may begin or end with a * wildcard to match multiple fields: `customer_*`, `attribute*`.
+
+#### `features`
+
+`features` allows you to decide which filter features are allowed for the specified attributes. It accepts the following fields:
+
+- `facetSearch`: Whether facet search should be enabled for the specified attributes. Boolean, defaults to `false`
+- `filter`: A list outlining the filter types for the specified attributes. Must be an object and accepts the following fields:
+  - `equality`: Enables `=`, `!=`, `IN`, `EXISTS`, `IS NULL`, `IS EMPTY`, `NOT`, `AND`, and `OR`. Boolean, defaults to `true`
+  - `comparison`: Enables `>`, `>=`, `<`, `<=`, `TO`, `EXISTS`, `IS NULL`, `IS EMPTY`, `NOT`, `AND`, and `OR`. Boolean, defaults to `false`
+
+Calculating `comparison` filters is a resource-intensive operation. Disabling them may lead to better search and indexing performance. `equality` filters use fewer resources and have limited impact on performance.
+
+<Warning>
+
+#### Filterable attributes and reserved attributes
+
+Use the simple string syntax to match reserved attributes. Reserved Meilisearch fields are always prefixed with an underscore (`_`), such as `_geo` and `_vector`.
+
+If set as a filterable attribute, reserved attributes ignore the `features` field and automatically activate all search features. Reserved fields will not be matched by wildcard `attributePatterns` such as `_*`.
+</Warning>
+
+### Get filterable attributes
+
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/settings/filterable-attributes" />
+
+Get the filterable attributes for an index.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](getting_started/indexes#index-uid) of the requested index |
+
+#### Example
+
+<CodeSamplesGetFilterableAttributes1 />
+
+##### Response: `200 Ok`
+
+```json
+[
+  "genres",
+  "director",
+  "release_date.year"
+]
+```
+
+### Update filterable attributes
+
+<RouteHighlighter method="PUT" path="/indexes/{index_uid}/settings/filterable-attributes" />
+
+Update an index's filterable attributes list.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](getting_started/indexes#index-uid) of the requested index |
+
+#### Body
+
+```
+[<String>, <String>, …]
+```
+
+An array of strings containing the attributes that can be used as filters at query time. All filter types are enabled for the specified attributes when using the array of strings format.
+
+You may also use an array of objects:
+
+```
+[
+  {
+    "attributePatterns": [<String>, <String>, …],
+    "features": {
+      "facetSearch": <Boolean>,
+      "filter": {
+        "equality": <Boolean>,
+        "comparison": <Boolean>
+      }
+    }
+  }
+]
+```
+
+If the specified field does not exist, Meilisearch will silently ignore it.
+
+If an attribute contains an object, you can use dot notation to set one or more of its keys as a value for this setting: `"filterableAttributes": ["release_date.year"]` or `"attributePatterns": ["release_date.year"]`.
+
+#### Example
+
+<CodeSamplesUpdateFilterableAttributes1 />
+
+##### Response: `202 Accepted`
+
+```json
+{
+  "taskUid": 1,
+  "indexUid": "movies",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+}
+```
+
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+
+### Reset filterable attributes
+
+<RouteHighlighter method="DELETE" path="/indexes/{index_uid}/settings/filterable-attributes" />
+
+Reset an index's filterable attributes list back to its default value.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](getting_started/indexes#index-uid) of the requested index |
+
+#### Example
+
+<CodeSamplesResetFilterableAttributes1 />
+
+##### Response: `202 Accepted`
+
+```json
+{
+  "taskUid": 1,
+  "indexUid": "movies",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+}
+```
+
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).

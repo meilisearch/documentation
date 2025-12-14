@@ -1,7 +1,10 @@
 <CodeGroup>
 
 ```javascript JS
-const client = new MeiliSearch('http://localhost:7700', 'masterKey')
+const client = new MeiliSearch(
+  process.env.MEILISEARCH_URL,
+  process.env.MEILISEARCH_API_KEY
+)
 
 await client.index('movies').addDocuments([
   { 'id': 1, 'title': 'Carol' },
@@ -12,13 +15,17 @@ await client.index('movies').addDocuments([
   { 'id': 6, 'title': 'Philadelphia'}
 ])
 
-// be aware this client is using the masterKey, it should not be used in front end
 const search = await index.search('philodelphia')
 console.log(search)
 ```
 
 ```python Python
-client = meilisearch.Client('http://localhost:7700', 'masterKey')
+import os
+
+client = meilisearch.Client(
+  os.environ.get('MEILISEARCH_URL'),
+  os.environ.get('MEILISEARCH_API_KEY')
+)
 
 client.index('movies').add_documents([
   { 'id': 1, 'title': 'Carol' },
@@ -31,7 +38,10 @@ client.index('movies').add_documents([
 ```
 
 ```php PHP
-$client = new Client('http://localhost:7700', 'masterKey');
+$client = new Client(
+  getenv('MEILISEARCH_URL'),
+  getenv('MEILISEARCH_API_KEY')
+);
 
 $client->index('movies')->addDocuments([
   ['id' => 1, 'title' => 'Carol'],
@@ -44,7 +54,10 @@ $client->index('movies')->addDocuments([
 ```
 
 ```java Java
-Client client = new Client(new Config("http://localhost:7700", "masterKey"));
+Client client = new Client(new Config(
+  System.getenv("MEILISEARCH_URL"),
+  System.getenv("MEILISEARCH_API_KEY")
+));
 
 client.index("movies").addDocuments("["
   + "{\"id\": 1, \"title\": \"Carol\"},"
@@ -58,7 +71,10 @@ client.index("movies").addDocuments("["
 ```
 
 ```ruby Ruby
-client = MeiliSearch::Client.new('http://localhost:7700', 'masterKey')
+client = MeiliSearch::Client.new(
+  ENV['MEILISEARCH_URL'],
+  ENV['MEILISEARCH_API_KEY']
+)
 
 client.index('movies').add_documents([
   { id: 1, title: 'Carol' },
@@ -71,7 +87,10 @@ client.index('movies').add_documents([
 ```
 
 ```go Go
-client := meilisearch.New("http://localhost:7700", meilisearch.WithAPIKey("masterKey"))
+client := meilisearch.New(
+  os.Getenv("MEILISEARCH_URL"),
+  meilisearch.WithAPIKey(os.Getenv("MEILISEARCH_API_KEY")),
+)
 
 documents := []map[string]interface{}{
   { "id": 1, "title": "Carol" },
@@ -85,14 +104,17 @@ client.Index("movies").AddDocuments(documents, nil)
 ```
 
 ```csharp C#
-MeilisearchClient client = new MeilisearchClient("http://localhost:7700", "masterKey");
+MeilisearchClient client = new MeilisearchClient(
+  Environment.GetEnvironmentVariable("MEILISEARCH_URL"),
+  Environment.GetEnvironmentVariable("MEILISEARCH_API_KEY")
+);
 
 var documents = new Movie[] {
     new Movie { Id = "1", Title = "Carol" },
     new Movie { Id = "2", Title = "Wonder Woman" },
     new Movie { Id = "3", Title = "Life of Pi" },
     new Movie { Id = "4", Title = "Mad Max: Fury Road" },
-    new Movie { Id = "5", Title = "Moana", ", "Action" },
+    new Movie { Id = "5", Title = "Moana" },
     new Movie { Id = "6", Title = "Philadelphia" }
 };
 
@@ -100,7 +122,12 @@ var task = await client.Index("movies").AddDocumentsAsync<Movie>(documents);
 ```
 
 ```rust Rust
-let client = Client::new("http://localhost:7700", Some("masterKey"));
+use std::env;
+
+let client = Client::new(
+  env::var("MEILISEARCH_URL").unwrap(),
+  Some(env::var("MEILISEARCH_API_KEY").unwrap())
+);
 
 #[derive(Serialize, Deserialize)]
 struct Movie {
@@ -122,7 +149,10 @@ client.index("movies")
 ```
 
 ```swift Swift
-let client = try MeiliSearch(host: "http://localhost:7700", apiKey: "masterKey")
+let client = try MeiliSearch(
+  host: ProcessInfo.processInfo.environment["MEILISEARCH_URL"]!,
+  apiKey: ProcessInfo.processInfo.environment["MEILISEARCH_API_KEY"]
+)
 let documents = """
 [
   { "id": 1, "title": "Carol" },
@@ -154,11 +184,15 @@ client.index("movies").addDocuments(documents: documents, primaryKey: "reference
   <script src="https://cdn.jsdelivr.net/npm/@meilisearch/instant-meilisearch/dist/instant-meilisearch.umd.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4"></script>
   <script>
+    // Replace with your Meilisearch URL and search API key
+    const MEILISEARCH_URL = 'https://your-instance.meilisearch.io';
+    const MEILISEARCH_API_KEY = 'your_search_api_key';
+
     const search = instantsearch({
       indexName: 'movies',
       searchClient: instantMeiliSearch(
-        'http://localhost:7700',
-        'searchKey'
+        MEILISEARCH_URL,
+        MEILISEARCH_API_KEY
       ).searchClient,
     })
 
@@ -189,9 +223,10 @@ import React from 'react';
 import { InstantSearch, SearchBox, Hits, Highlight } from 'react-instantsearch-dom';
 import { instantMeiliSearch } from '@meilisearch/instant-meilisearch';
 
+// Replace with your Meilisearch URL and search API key
 const searchClient = instantMeiliSearch(
-  "http://localhost:7700",
-  "searchKey"
+  process.env.REACT_APP_MEILISEARCH_URL,
+  process.env.REACT_APP_MEILISEARCH_API_KEY
 );
 
 const App = () => (
@@ -239,9 +274,10 @@ import { instantMeiliSearch } from '@meilisearch/instant-meilisearch';
 export default {
   data() {
     return {
+      // Replace with your Meilisearch URL and search API key
       searchClient: instantMeiliSearch(
-        "http://localhost:7700",
-        "searchKey"
+        process.env.VUE_APP_MEILISEARCH_URL,
+        process.env.VUE_APP_MEILISEARCH_API_KEY
       ),
     };
   },

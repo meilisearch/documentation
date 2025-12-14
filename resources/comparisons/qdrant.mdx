@@ -1,0 +1,86 @@
+---
+title: Meilisearch vs Qdrant
+sidebarTitle: Qdrant
+description: Compare Meilisearch and Qdrant for semantic search. Learn the differences between hybrid search engines and vector databases.
+---
+
+Qdrant is an open-source vector database written in Rust, designed specifically for AI applications and semantic search. It focuses on high-performance vector operations with advanced filtering capabilities.
+
+## Quick comparison
+
+|  | Meilisearch | Qdrant |
+|---|:---:|:---:|
+| **Primary focus** | Hybrid search | Vector database |
+| **Full-text search** | Native, optimized | Via sparse vectors |
+| **License** | MIT | Apache 2.0 |
+| **Self-hosting** | Yes | Yes |
+| **Embedding generation** | Built-in | External required |
+| **Typo tolerance** | Built-in | Not applicable |
+| **Cloud pricing** | From $30/month | Free 1GB tier, then usage-based |
+
+## What Qdrant does well
+
+### High-performance vector search
+
+Qdrant's HNSW algorithm, optimized in Rust, delivers excellent vector search performance. Quantization can reduce memory usage significantly while maintaining accuracy.
+
+### Filterable vector search
+
+Qdrant's architecture integrates filtering directly into the search process rather than filtering after retrieval. This enables efficient combination of semantic similarity with metadata filters.
+
+### Deployment flexibility
+
+Unlike some competitors, Qdrant offers self-hosting, managed cloud, and hybrid deployment options. This flexibility supports various data sovereignty and infrastructure requirements.
+
+### Open source
+
+Qdrant is open-source under Apache 2.0 license, allowing inspection, modification, and self-hosting without vendor lock-in.
+
+## When to choose Meilisearch instead
+
+### You need strong full-text search
+
+Meilisearch provides mature full-text search with typo tolerance, prefix matching, and sophisticated relevancy ranking. Qdrant's keyword capabilities via sparse vectors don't match the depth of a dedicated search engine.
+
+### Typo tolerance is important
+
+Meilisearch handles misspellings automatically with configurable tolerance. Vector search operates on embeddings of the exact query text, so typos produce different vectors and potentially different results.
+
+### You want unified hybrid search
+
+Meilisearch combines keyword and semantic search in a single API with adjustable balance. With Qdrant, you'd need to implement hybrid search logic yourself or use their sparse vector support.
+
+### You prefer built-in embedding generation
+
+Meilisearch can generate embeddings automatically through integrations with OpenAI, HuggingFace, and other providers. Qdrant requires external embedding generation before indexing and querying.
+
+### Search relevancy tuning matters
+
+Meilisearch offers configurable ranking rules, custom ranking attributes, and relevancy tuning out-of-the-box. Qdrant focuses on vector similarity with less flexibility for traditional relevancy adjustments.
+
+### Your primary use case is site/app search
+
+If you're building e-commerce search, documentation search, or general site search where keyword matching is essential, Meilisearch's full-text capabilities are more comprehensive.
+
+## When to choose Qdrant
+
+Consider Qdrant if:
+
+- You're building AI applications where pure vector search is the primary requirement
+- You need advanced vector operations like quantization and custom distance metrics
+- You want to combine vector search with complex metadata filtering
+- Your team manages embeddings externally and needs a dedicated vector store
+- You require flexible deployment options including on-premises or hybrid cloud
+- You're building recommendation systems based primarily on similarity matching
+
+## Migration resources
+
+If you're evaluating Meilisearch for semantic search:
+
+- [AI-powered search guide](/products/ai_powered_search/getting_started) - Configure hybrid search
+- [Embedder setup](/products/ai_powered_search/choose_an_embedder) - Integrate embedding providers
+- [Search API reference](/reference/api/search) - Explore search capabilities
+
+<Note>
+Qdrant is a registered trademark of Qdrant Solutions GmbH. This comparison is based on publicly available information and our own analysis.
+</Note>

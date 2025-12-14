@@ -1,0 +1,66 @@
+---
+title: Semantic Image Search
+sidebarTitle: Image Search
+description: Search 100 million Flickr images using AI-powered semantic search
+---
+
+<Info>
+**Live demo**: [flickr.meilisearch.com](https://flickr.meilisearch.com)
+</Info>
+
+This demo showcases Meilisearch's AI-powered search capabilities by enabling semantic search across 100 million Flickr images. Search using natural language descriptions to find images that match your intent, not just exact keywords.
+
+## Features demonstrated
+
+- **Semantic search**: Find images using natural language descriptions
+- **Vector search**: AI embeddings enable meaning-based retrieval
+- **Massive scale**: 100 million images indexed and searchable
+- **Visual results**: Image grid display with instant loading
+
+## Use case
+
+Traditional image search relies on tags and filenames. Semantic search understands meaning:
+
+| Traditional search | Semantic search |
+|-------------------|-----------------|
+| "sunset beach" matches only tagged images | "golden hour on the coast" finds sunsets on beaches |
+| Exact keyword matching | Meaning-based matching |
+| Limited by metadata quality | Works with visual content understanding |
+
+## How it works
+
+1. Images are processed through a multimodal embedding model
+2. Vector embeddings capture visual and semantic information
+3. Search queries are converted to the same vector space
+4. Meilisearch finds images with similar embeddings
+
+## Technical highlights
+
+| Feature | Implementation |
+|---------|----------------|
+| Dataset | 100 million Flickr images |
+| Embeddings | Multimodal AI model |
+| Search type | Hybrid (semantic + keyword) |
+| Response time | Sub-second for 100M documents |
+
+## Links
+
+<CardGroup cols={2}>
+  <Card title="Try the demo" icon="globe" href="https://flickr.meilisearch.com">
+    Search millions of images semantically
+  </Card>
+  <Card title="AI-powered search" icon="brain" href="/products/ai_powered_search/overview">
+    Learn about vector search
+  </Card>
+</CardGroup>
+
+## Related resources
+
+<CardGroup cols={2}>
+  <Card title="Image search guide" icon="image" href="/products/ai_powered_search/image_search_with_multimodal_embeddings">
+    Implement image search in your app
+  </Card>
+  <Card title="Embedders" icon="microchip" href="/products/ai_powered_search/choose_an_embedder">
+    Choose the right embedder
+  </Card>
+</CardGroup>

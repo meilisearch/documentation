@@ -3,11 +3,6 @@
   color:rgb(var(--gray-300))
 }
 
-/* Turn section titles on left-hand sidebar uppercase */
-#navigation-items h5 {
-  text-transform: uppercase;
-}
-
 /* Force callout headings to inherit parent component colour */
 .callout h2,
 .callout h3,

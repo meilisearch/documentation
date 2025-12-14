@@ -1,0 +1,186 @@
+---
+title: Meilisearch Importer
+sidebarTitle: Importer CLI
+description: Efficiently import large CSV, NDJSON, or JSON datasets into Meilisearch using the official CLI tool.
+---
+
+The official [meilisearch-importer](https://github.com/meilisearch/meilisearch-importer) is a high-performance CLI tool for bulk importing large datasets into Meilisearch. It handles millions of documents with automatic retry logic and progress tracking.
+
+## Features
+
+- Import CSV, NDJSON, and JSON (array of objects) files
+- Handle datasets from thousands to 40+ million documents
+- Automatic retry logic for failed batches
+- Real-time progress tracking with ETA
+- Configurable batch sizes for performance tuning
+
+## Prerequisites
+
+- A Meilisearch instance ([Cloud](https://cloud.meilisearch.com) or [self-hosted](/resources/self_hosting/getting_started))
+- One of:
+  - [Rust/Cargo](https://rustup.rs/) installed (for building from source)
+  - Pre-built binary from releases
+
+## Installation
+
+<Tabs>
+<Tab title="Cargo (Rust)">
+```bash
+cargo install meilisearch-importer
+```
+</Tab>
+<Tab title="Pre-built binary">
+Download the latest release from [GitHub Releases](https://github.com/meilisearch/meilisearch-importer/releases) for your platform.
+
+```bash
+# Example for Linux
+wget https://github.com/meilisearch/meilisearch-importer/releases/latest/download/meilisearch-importer-linux-amd64
+chmod +x meilisearch-importer-linux-amd64
+mv meilisearch-importer-linux-amd64 /usr/local/bin/meilisearch-importer
+```
+</Tab>
+</Tabs>
+
+## Basic usage
+
+Import a CSV file:
+
+```bash
+meilisearch-importer \
+  --url "${MEILISEARCH_URL}" \
+  --api-key "${MEILISEARCH_API_KEY}" \
+  --index movies \
+  --file movies.csv
+```
+
+<Note>
+**Set your environment variables:**
+```bash
+export MEILISEARCH_URL="https://your-instance.meilisearch.io"
+export MEILISEARCH_API_KEY="your_api_key"
+```
+</Note>
+
+## Supported formats
+
+### CSV
+
+```bash
+meilisearch-importer --index products --file products.csv
+```
+
+CSV files must have a header row. The importer automatically detects column types.
+
+### NDJSON (Newline-delimited JSON)
+
+```bash
+meilisearch-importer --index products --file products.ndjson
+```
+
+Each line must be a valid JSON object:
+
+```json
+{"id": 1, "title": "Product A", "price": 29.99}
+{"id": 2, "title": "Product B", "price": 39.99}
+```
+
+### JSON array
+
+```bash
+meilisearch-importer --index products --file products.json
+```
+
+File must contain an array of objects:
+
+```json
+[
+  {"id": 1, "title": "Product A", "price": 29.99},
+  {"id": 2, "title": "Product B", "price": 39.99}
+]
+```
+
+## Configuration options
+
+| Option | Description | Default |
+|--------|-------------|---------|
+| `--url` | Meilisearch URL | `http://localhost:7700` |
+| `--api-key` | Meilisearch API key | None |
+| `--index` | Target index name | Required |
+| `--file` | Input file path | Required |
+| `--batch-size` | Documents per batch | `1000` |
+| `--primary-key` | Primary key field | Auto-detected |
+
+## Performance tuning
+
+### Batch size
+
+Adjust batch size based on your document size and network:
+
+```bash
+# Smaller documents: larger batches
+meilisearch-importer --index logs --file logs.ndjson --batch-size 5000
+
+# Larger documents: smaller batches
+meilisearch-importer --index articles --file articles.json --batch-size 100
+```
+
+### Primary key
+
+Specify the primary key if auto-detection fails:
+
+```bash
+meilisearch-importer --index products --file products.csv --primary-key product_id
+```
+
+## Example: Import a large dataset
+
+Import 10 million products with progress tracking:
+
+```bash
+meilisearch-importer \
+  --url "https://ms-xxx.meilisearch.io" \
+  --api-key "your_master_key" \
+  --index products \
+  --file products.ndjson \
+  --batch-size 2000
+```
+
+Output:
+
+```
+Importing products.ndjson to index 'products'...
+[████████████████████░░░░░░░░░░░░░░░░░░░░] 52% (5.2M/10M) ETA: 12m 34s
+```
+
+## After import
+
+Verify your import:
+
+```bash
+curl "${MEILISEARCH_URL}/indexes/products/stats" \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}"
+```
+
+Test a search:
+
+```bash
+curl "${MEILISEARCH_URL}/indexes/products/search" \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
+  -d '{"q": "test"}'
+```
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Configure settings" icon="gear" href="/reference/api/settings">
+    Set up searchable and filterable attributes
+  </Card>
+  <Card title="Optimize indexing" icon="bolt" href="/products/indexing/optimize_indexing_performance">
+    Improve indexing performance
+  </Card>
+</CardGroup>
+
+## Resources
+
+- [meilisearch-importer on GitHub](https://github.com/meilisearch/meilisearch-importer)
+- [Releases](https://github.com/meilisearch/meilisearch-importer/releases)

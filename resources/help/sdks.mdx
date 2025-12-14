@@ -1,0 +1,291 @@
+---
+title: SDKs & Integrations
+sidebarTitle: SDKs & Integrations
+description: Official Meilisearch SDKs, framework integrations, and front-end tools for every stack.
+---
+
+Meilisearch provides official SDKs for all major programming languages and integrations with popular frameworks. All SDKs support the complete Meilisearch API.
+
+## Backend SDKs
+
+<CardGroup cols={3}>
+  <Card title="JavaScript" icon="js" href="https://github.com/meilisearch/meilisearch-js">
+    Node.js and browser
+  </Card>
+  <Card title="Python" icon="python" href="https://github.com/meilisearch/meilisearch-python">
+    Python 3.8+
+  </Card>
+  <Card title="PHP" icon="php" href="https://github.com/meilisearch/meilisearch-php">
+    PHP 7.4+
+  </Card>
+  <Card title="Ruby" icon="gem" href="https://github.com/meilisearch/meilisearch-ruby">
+    Ruby 2.7+
+  </Card>
+  <Card title="Go" icon="golang" href="https://github.com/meilisearch/meilisearch-go">
+    Go 1.16+
+  </Card>
+  <Card title="Rust" icon="rust" href="https://github.com/meilisearch/meilisearch-rust">
+    Rust stable
+  </Card>
+  <Card title="Java" icon="java" href="https://github.com/meilisearch/meilisearch-java">
+    Java 8+
+  </Card>
+  <Card title=".NET" icon="microsoft" href="https://github.com/meilisearch/meilisearch-dotnet">
+    .NET Standard 2.0+
+  </Card>
+  <Card title="Swift" icon="swift" href="https://github.com/meilisearch/meilisearch-swift">
+    iOS 13+, macOS 10.15+
+  </Card>
+  <Card title="Dart" icon="dart" href="https://github.com/meilisearch/meilisearch-dart">
+    Dart 2.12+
+  </Card>
+</CardGroup>
+
+## Quick installation
+
+<Tabs>
+  <Tab title="JavaScript">
+```bash
+npm install meilisearch
+# or
+yarn add meilisearch
+```
+
+```javascript
+import { MeiliSearch } from 'meilisearch'
+
+const client = new MeiliSearch({
+  host: process.env.MEILISEARCH_URL,
+  apiKey: process.env.MEILISEARCH_API_KEY
+})
+
+const results = await client.index('movies').search('star wars')
+```
+  </Tab>
+  <Tab title="Python">
+```bash
+pip install meilisearch
+```
+
+```python
+import meilisearch
+import os
+
+client = meilisearch.Client(
+    os.environ.get('MEILISEARCH_URL'),
+    os.environ.get('MEILISEARCH_API_KEY')
+)
+
+results = client.index('movies').search('star wars')
+```
+  </Tab>
+  <Tab title="PHP">
+```bash
+composer require meilisearch/meilisearch-php
+```
+
+```php
+use MeiliSearch\Client;
+
+$client = new Client(
+    getenv('MEILISEARCH_URL'),
+    getenv('MEILISEARCH_API_KEY')
+);
+
+$results = $client->index('movies')->search('star wars');
+```
+  </Tab>
+  <Tab title="Ruby">
+```bash
+gem install meilisearch
+```
+
+```ruby
+require 'meilisearch'
+
+client = MeiliSearch::Client.new(
+  ENV['MEILISEARCH_URL'],
+  ENV['MEILISEARCH_API_KEY']
+)
+
+results = client.index('movies').search('star wars')
+```
+  </Tab>
+  <Tab title="Go">
+```bash
+go get github.com/meilisearch/meilisearch-go
+```
+
+```go
+import (
+    "os"
+    "github.com/meilisearch/meilisearch-go"
+)
+
+client := meilisearch.New(
+    os.Getenv("MEILISEARCH_URL"),
+    meilisearch.WithAPIKey(os.Getenv("MEILISEARCH_API_KEY")),
+)
+
+results, _ := client.Index("movies").Search("star wars", nil)
+```
+  </Tab>
+</Tabs>
+
+## Framework integrations
+
+### Laravel
+
+Laravel Scout has built-in Meilisearch support:
+
+```bash
+composer require laravel/scout
+php artisan vendor:publish --provider="Laravel\Scout\ScoutServiceProvider"
+```
+
+```php
+// .env
+SCOUT_DRIVER=meilisearch
+MEILISEARCH_HOST=your-meilisearch-url
+MEILISEARCH_KEY=your-api-key
+```
+
+[Laravel Scout guide →](/guides/laravel_scout)
+
+### Ruby on Rails
+
+```bash
+gem install meilisearch-rails
+```
+
+```ruby
+class Article < ApplicationRecord
+  include MeiliSearch::Rails
+
+  meilisearch do
+    attribute :title, :content
+    searchable_attributes [:title, :content]
+  end
+end
+```
+
+[Rails guide →](/guides/ruby_on_rails_quick_start)
+
+### Symfony
+
+```bash
+composer require meilisearch/search-bundle
+```
+
+[Symfony integration →](https://github.com/meilisearch/meilisearch-symfony)
+
+### Strapi
+
+```bash
+npm install strapi-plugin-meilisearch
+```
+
+[Strapi guide →](/guides/strapi_v4)
+
+## Front-end integrations
+
+### InstantSearch
+
+The fastest way to build search UIs. Works with React, Vue, Angular, and vanilla JavaScript.
+
+<CardGroup cols={2}>
+  <Card title="instant-meilisearch" icon="bolt" href="https://github.com/meilisearch/meilisearch-js-plugins/tree/main/packages/instant-meilisearch">
+    Adapter for InstantSearch.js
+  </Card>
+  <Card title="React InstantSearch" icon="react" href="/getting_started/instant_meilisearch/react">
+    React components guide
+  </Card>
+  <Card title="Vue InstantSearch" icon="vuejs" href="/getting_started/instant_meilisearch/vue">
+    Vue components guide
+  </Card>
+  <Card title="Autocomplete" icon="keyboard" href="https://github.com/meilisearch/meilisearch-js-plugins/tree/main/packages/autocomplete-client">
+    Algolia Autocomplete adapter
+  </Card>
+</CardGroup>
+
+### Quick InstantSearch example
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/@meilisearch/instant-meilisearch/dist/instant-meilisearch.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4"></script>
+
+<script>
+const MEILISEARCH_URL = "https://your-instance.meilisearch.io";
+const MEILISEARCH_API_KEY = "your-search-key";
+
+const search = instantsearch({
+  indexName: "movies",
+  searchClient: instantMeiliSearch(MEILISEARCH_URL, MEILISEARCH_API_KEY).searchClient
+});
+
+search.addWidgets([
+  instantsearch.widgets.searchBox({ container: "#searchbox" }),
+  instantsearch.widgets.hits({ container: "#hits" })
+]);
+
+search.start();
+</script>
+```
+
+[Front-end integration guide →](/getting_started/instant_meilisearch/javascript)
+
+## AI & LLM integrations
+
+<CardGroup cols={2}>
+  <Card title="LangChain" icon="link" href="/guides/langchain">
+    Use Meilisearch as a vector store
+  </Card>
+  <Card title="MCP Server" icon="robot" href="/guides/ai/mcp">
+    Model Context Protocol for AI assistants
+  </Card>
+</CardGroup>
+
+## DevOps & deployment
+
+<CardGroup cols={2}>
+  <Card title="Docker" icon="docker" href="/guides/docker">
+    Official Docker images
+  </Card>
+  <Card title="Kubernetes" icon="dharmachakra" href="https://github.com/meilisearch/meilisearch-kubernetes">
+    Helm charts for K8s
+  </Card>
+</CardGroup>
+
+## CMS plugins
+
+| Platform | Repository |
+|----------|------------|
+| Strapi | [strapi-plugin-meilisearch](https://github.com/meilisearch/strapi-plugin-meilisearch/) |
+| Gatsby | [gatsby-plugin-meilisearch](https://github.com/meilisearch/gatsby-plugin-meilisearch/) |
+| VuePress | [vuepress-plugin-meilisearch](https://github.com/meilisearch/vuepress-plugin-meilisearch) |
+| Firebase | [firestore-meilisearch](https://github.com/meilisearch/firestore-meilisearch) |
+
+## Documentation tools
+
+| Tool | Description |
+|------|-------------|
+| [docs-scraper](https://github.com/meilisearch/docs-scraper) | Scrape documentation sites for indexing |
+| [docs-searchbar.js](https://github.com/tauri-apps/meilisearch-docsearch) | DocSearch-compatible search bar |
+
+## Community SDKs
+
+The community has created additional SDKs and tools:
+
+- [Elixir](https://github.com/robottokauf3/meilisearch-elixir)
+- [Scala](https://github.com/meilisearch/meilisearch-scala)
+- [Haskell](https://github.com/meilisearch/meilisearch-haskell)
+
+## Contributing
+
+Want to build an integration? We'd love to help!
+
+1. Check our [integration guidelines](https://github.com/meilisearch/integrations-guides)
+2. Open an issue to discuss your plans
+3. Submit a PR when ready
+
+Many of our best integrations were built by community contributors. ❤️

@@ -1,0 +1,154 @@
+---
+title: Ranking rules
+sidebarTitle: Ranking rules
+description: Configure the ranking rules setting for your Meilisearch index.
+---
+
+import { RouteHighlighter } from '/snippets/route_highlighter.mdx'
+import { NoticeTag } from '/snippets/notice_tag.mdx'
+import CodeSamplesGetRankingRules1 from '/snippets/samples/code_samples_get_ranking_rules_1.mdx';
+import CodeSamplesUpdateRankingRules1 from '/snippets/samples/code_samples_update_ranking_rules_1.mdx';
+import CodeSamplesResetRankingRules1 from '/snippets/samples/code_samples_reset_ranking_rules_1.mdx';
+
+Ranking rules are built-in rules that rank search results according to certain criteria. They are applied in the same order in which they appear in the `rankingRules` array.
+
+[To learn more about ranking rules, refer to our dedicated guide.](/products/full_text_search/ranking_rules)
+
+### Ranking rules array
+
+| Name              | Description                                                                     |
+| :---------------- | :------------------------------------------------------------------------------ |
+| **`"words"`**     | Sorts results by decreasing number of matched query terms                       |
+| **`"typo"`**      | Sorts results by increasing number of typos                                     |
+| **`"proximity"`** | Sorts results by increasing distance between matched query terms                |
+| **`"attribute"`** | Sorts results based on the attribute ranking order                              |
+| **`"sort"`**      | Sorts results based on parameters decided at query time                         |
+| **`"exactness"`** | Sorts results based on the similarity of the matched words with the query words |
+
+#### Default order
+
+```json
+[
+  "words",
+  "typo",
+  "proximity",
+  "attribute",
+  "sort",
+  "exactness"
+]
+```
+
+### Get ranking rules
+
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/settings/ranking-rules" />
+
+Get the ranking rules of an index.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](getting_started/indexes#index-uid) of the requested index |
+
+#### Example
+
+<CodeSamplesGetRankingRules1 />
+
+##### Response: `200 Ok`
+
+```json
+[
+  "words",
+  "typo",
+  "proximity",
+  "attribute",
+  "sort",
+  "exactness",
+  "release_date:desc"
+]
+```
+
+### Update ranking rules
+
+<RouteHighlighter method="PUT" path="/indexes/{index_uid}/settings/ranking-rules" />
+
+Update the ranking rules of an index.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](getting_started/indexes#index-uid) of the requested index |
+
+#### Body
+
+```
+[<String>, <String>, …]
+```
+
+An array that contains ranking rules in order of importance.
+
+To create a custom ranking rule, give an attribute followed by a colon (`:`) and either `asc` for ascending order or `desc` for descending order.
+
+- To apply an **ascending sort** (results sorted by increasing value): `attribute_name:asc`
+- To apply a **descending sort** (results sorted by decreasing value): `attribute_name:desc`
+
+<Warning>
+If some documents do not contain the attribute defined in a custom ranking rule, the application of the ranking rule is undefined and the search results might not be sorted as you expected.
+
+Make sure that any attribute used in a custom ranking rule is present in all of your documents. For example, if you set the custom ranking rule `desc(year)`, make sure that all your documents contain the attribute `year`.
+</Warning>
+
+[To learn more about ranking rules, refer to our dedicated guide.](/products/full_text_search/ranking_rules)
+
+#### Example
+
+<CodeSamplesUpdateRankingRules1 />
+
+##### Response: `202 Accepted`
+
+```json
+{
+  "taskUid": 1,
+  "indexUid": "movies",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+}
+```
+
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+
+### Reset ranking rules
+
+<RouteHighlighter method="DELETE" path="/indexes/{index_uid}/settings/ranking-rules" />
+
+Reset the ranking rules of an index to their [default value](#default-order).
+
+<Tip>
+Resetting ranking rules is not the same as removing them. To remove a ranking rule, use the [update ranking rules endpoint](#update-ranking-rules).
+</Tip>
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](getting_started/indexes#index-uid) of the requested index |
+
+#### Example
+
+<CodeSamplesResetRankingRules1 />
+
+##### Response: `202 Accepted`
+
+```json
+{
+  "taskUid": 1,
+  "indexUid": "movies",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+}
+```
+
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).

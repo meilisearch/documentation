@@ -1,0 +1,82 @@
+---
+title: Meilisearch vs Elasticsearch
+sidebarTitle: Elasticsearch
+description: Compare Meilisearch and Elasticsearch to find the right search solution for your project. Learn key differences in setup, performance, and use cases.
+---
+
+Elasticsearch is a distributed search and analytics engine built on Apache Lucene, created by Shay Banon and first released in 2010. It has become the dominant force in enterprise search, powering everything from website search to log analytics for organizations worldwide.
+
+## Quick comparison
+
+|  | Meilisearch | Elasticsearch |
+|---|:---:|:---:|
+| **Primary focus** | Fast, relevant search | Full-text search & analytics |
+| **Setup complexity** | Ready in minutes | Steep learning curve |
+| **Performance** | Under 50ms out-of-the-box | Fast with proper tuning |
+| **Resource usage** | Lightweight | Memory-intensive |
+| **Pricing** | Free OSS, cloud from $30/month | From $99/month (cloud) |
+| **Open source** | MIT license | AGPL (with limitations) |
+| **Best for** | App/site search | Large-scale analytics |
+
+## What Elasticsearch does well
+
+### Massive scalability
+
+Elasticsearch's distributed architecture can scale horizontally across hundreds of nodes, handling petabytes of data. Its shard-based design enables deployment across clusters of any size, making it suitable for organizations with massive datasets.
+
+### Comprehensive analytics
+
+The aggregations framework enables complex real-time analytics beyond simple search. You can compute metrics, create buckets for grouping data, and build pipeline aggregations. This supports use cases from dashboards to machine learning jobs.
+
+### Elastic Stack ecosystem
+
+Elasticsearch integrates with Kibana for visualization, Logstash and Beats for data ingestion, creating a complete observability platform. With over 300 integrations, it can connect to virtually any data source.
+
+### Versatility
+
+Elasticsearch handles multiple use cases: full-text search, log analytics, security monitoring, and application performance management. Its Query DSL offers extensive control over text analysis and searching.
+
+## When to choose Meilisearch instead
+
+### You need search that works immediately
+
+Meilisearch delivers relevant, typo-tolerant search results out-of-the-box without configuration. With Elasticsearch, achieving similar relevancy requires understanding analyzers, mapping types, and the `fuzziness` parameter, along with significant tuning.
+
+### You want minimal operational overhead
+
+Elasticsearch cluster management requires expertise in shards, replicas, heap sizing, and index lifecycle management. Meilisearch runs as a single binary with no external dependencies, dramatically reducing operational complexity.
+
+### Your team lacks dedicated search expertise
+
+Elasticsearch's Query DSL has a steep learning curve. Simple tasks often require understanding multiple interconnected systems. Meilisearch's intuitive REST API can be learned in hours, not months.
+
+### You need predictable costs
+
+Elasticsearch's resource requirements can lead to infrastructure costs of thousands per month for production workloads. Meilisearch's efficient single-node architecture reduces hosting costs significantly.
+
+### Your dataset is under 500 million documents
+
+For most application search use cases, Elasticsearch's distributed architecture is overkill. Meilisearch handles datasets up to hundreds of millions of documents on a single server with consistent sub-50ms response times.
+
+## When to choose Elasticsearch
+
+Consider Elasticsearch if:
+
+- You need to search and analyze multiple data types (logs, metrics, documents) in a unified platform
+- Your dataset exceeds billions of documents
+- You have a dedicated operations team with Elasticsearch expertise
+- You need advanced aggregations and analytics beyond search
+- You're building observability, security monitoring, or log analytics solutions
+- You require fine-grained control over every aspect of text analysis
+
+## Migration resources
+
+If you're considering switching from Elasticsearch to Meilisearch:
+
+- [Meilisearch quick start](/getting_started/overview) - Get up and running in minutes
+- [Indexing documents](/reference/api/documents) - Learn how to import your data
+- [Search API reference](/reference/api/search) - Explore search capabilities
+
+<Note>
+Elasticsearch is a registered trademark of Elasticsearch B.V. This comparison is based on publicly available information and our own analysis.
+</Note>

@@ -1,0 +1,106 @@
+---
+title: Prefix search
+sidebarTitle: Prefix search
+description: Configure the prefix search setting for your Meilisearch index.
+---
+
+import { RouteHighlighter } from '/snippets/route_highlighter.mdx'
+import { NoticeTag } from '/snippets/notice_tag.mdx'
+import CodeSamplesGetPrefixSearchSettings1 from '/snippets/samples/code_samples_get_prefix_search_settings_1.mdx';
+import CodeSamplesUpdatePrefixSearchSettings1 from '/snippets/samples/code_samples_update_prefix_search_settings_1.mdx';
+import CodeSamplesResetFacetSearchSettings1 from '/snippets/samples/code_samples_reset_facet_search_settings_1.mdx';
+
+Prefix search is the process through which Meilisearch matches documents that begin with a specific query term, instead of only exact matches. This is a resource-intensive operation that happens during indexing by default.
+
+Use `prefixSearch` to change how prefix search works. It accepts one of the following strings:
+
+- `"indexingTime"`: calculate prefix search during indexing. This is the default behavior
+- `"disabled"`: do not calculate prefix search. May speed up indexing, but will severely impact search result relevancy
+
+### Get prefix search settings
+
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/settings/prefix-search" />
+
+Get the prefix search settings of an index.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                            |
+| :---------------- | :----- | :--------------------------------------------------------------------- |
+| **`index_uid`** * | String | [`uid`](getting_started/indexes#index-uid) of the requested index |
+
+#### Example
+
+<CodeSamplesGetPrefixSearchSettings1 />
+
+##### Response: `200 OK`
+
+```json
+"indexingTime"
+```
+
+### Update prefix search settings
+
+<RouteHighlighter method="PUT" path="/indexes/{index_uid}/settings/prefix-search" />
+
+Update the prefix search settings for an index.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                            |
+| :---------------- | :----- | :--------------------------------------------------------------------- |
+| **`index_uid`** * | String | [`uid`](getting_started/indexes#index-uid) of the requested index |
+
+#### Body
+
+```
+"indexingTime" | "disabled"
+```
+
+#### Example
+
+<CodeSamplesUpdatePrefixSearchSettings1 />
+
+##### Response: `202 Accepted`
+
+```json
+{
+  "taskUid": 1,
+  "indexUid": "INDEX_UID",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2024-07-19T22:33:18.523881Z"
+}
+```
+
+Use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+
+### Reset prefix search settings
+
+<RouteHighlighter method="DELETE" path="/indexes/{index_uid}/settings/prefix-search" />
+
+Reset an index's prefix search to its default settings.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                            |
+| :---------------- | :----- | :--------------------------------------------------------------------- |
+| **`index_uid`** * | String | [`uid`](getting_started/indexes#index-uid) of the requested index |
+
+#### Example
+
+<CodeSamplesResetFacetSearchSettings1 />
+
+##### Response: `202 Accepted`
+
+```json
+{
+  "taskUid": 1,
+  "indexUid": "INDEX_UID",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2024-07-19T22:35:33.723983Z"
+}
+```
+
+Use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).

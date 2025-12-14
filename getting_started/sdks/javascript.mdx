@@ -1,0 +1,133 @@
+---
+title: JavaScript quick start
+sidebarTitle: JavaScript
+description: Get started with Meilisearch using the JavaScript SDK in 5 minutes.
+---
+
+This guide walks you through setting up Meilisearch with JavaScript/Node.js.
+
+## Prerequisites
+
+- Node.js 14 or higher
+- A Meilisearch instance ([Cloud](https://cloud.meilisearch.com) or [self-hosted](/resources/self_hosting/getting_started))
+
+## 1. Install the SDK
+
+```bash
+npm install meilisearch
+# or
+yarn add meilisearch
+```
+
+## 2. Connect to Meilisearch
+
+```javascript
+import { MeiliSearch } from 'meilisearch'
+
+const client = new MeiliSearch({
+  host: process.env.MEILISEARCH_URL,
+  apiKey: process.env.MEILISEARCH_API_KEY
+})
+```
+
+<Note>
+**Set your environment variables:**
+```bash
+export MEILISEARCH_URL="https://your-instance.meilisearch.io"  # or http://localhost:7700
+export MEILISEARCH_API_KEY="your_api_key"
+```
+[Get a free Cloud instance →](https://cloud.meilisearch.com)
+</Note>
+
+## 3. Add documents
+
+```javascript
+const movies = [
+  { id: 1, title: 'The Matrix', genres: ['Action', 'Sci-Fi'], year: 1999 },
+  { id: 2, title: 'Inception', genres: ['Action', 'Thriller'], year: 2010 },
+  { id: 3, title: 'Interstellar', genres: ['Drama', 'Sci-Fi'], year: 2014 }
+]
+
+// Add documents to the 'movies' index
+const task = await client.index('movies').addDocuments(movies)
+
+// Wait for indexing to complete
+await client.waitForTask(task.taskUid)
+```
+
+## 4. Search
+
+```javascript
+const results = await client.index('movies').search('matrix')
+
+console.log(results.hits)
+// [{ id: 1, title: 'The Matrix', genres: ['Action', 'Sci-Fi'], year: 1999 }]
+```
+
+## 5. Search with filters
+
+First, configure filterable attributes:
+
+```javascript
+await client.index('movies').updateFilterableAttributes(['genres', 'year'])
+```
+
+Then search with filters:
+
+```javascript
+const results = await client.index('movies').search('', {
+  filter: 'genres = "Sci-Fi" AND year > 2000'
+})
+```
+
+## Full example
+
+```javascript
+import { MeiliSearch } from 'meilisearch'
+
+const client = new MeiliSearch({
+  host: process.env.MEILISEARCH_URL,
+  apiKey: process.env.MEILISEARCH_API_KEY
+})
+
+async function main() {
+  // Add documents
+  const movies = [
+    { id: 1, title: 'The Matrix', genres: ['Action', 'Sci-Fi'], year: 1999 },
+    { id: 2, title: 'Inception', genres: ['Action', 'Thriller'], year: 2010 },
+    { id: 3, title: 'Interstellar', genres: ['Drama', 'Sci-Fi'], year: 2014 }
+  ]
+
+  const task = await client.index('movies').addDocuments(movies)
+  await client.waitForTask(task.taskUid)
+
+  // Search
+  const results = await client.index('movies').search('inter')
+  console.log(results.hits)
+}
+
+main()
+```
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Front-end integration" icon="browser" href="/getting_started/instant_meilisearch/javascript">
+    Add search to your React, Vue, or Angular app
+  </Card>
+  <Card title="Full-text search" icon="magnifying-glass" href="/products/full_text_search/overview">
+    Configure ranking and relevancy
+  </Card>
+  <Card title="Filtering" icon="filter" href="/products/faceted_search/filter_search_results">
+    Add filters and facets
+  </Card>
+  <Card title="API reference" icon="code" href="/reference/api/search">
+    Explore all search parameters
+  </Card>
+</CardGroup>
+
+## Resources
+
+- [meilisearch-js on GitHub](https://github.com/meilisearch/meilisearch-js)
+- [SDK documentation](https://github.com/meilisearch/meilisearch-js#readme)
+- [instant-meilisearch](https://github.com/meilisearch/meilisearch-js-plugins/tree/main/packages/instant-meilisearch) - InstantSearch adapter

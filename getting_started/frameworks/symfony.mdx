@@ -1,0 +1,213 @@
+---
+title: Symfony
+sidebarTitle: Symfony
+description: Integrate Meilisearch with Symfony using the official bundle.
+---
+
+The official [meilisearch-symfony](https://github.com/meilisearch/meilisearch-symfony) bundle provides seamless integration between Meilisearch and Symfony applications with Doctrine ORM support.
+
+## Prerequisites
+
+- PHP 7.4 or higher
+- Symfony 5.4 or higher
+- Doctrine ORM (optional, for automatic entity indexing)
+- A Meilisearch instance ([Cloud](https://cloud.meilisearch.com) or [self-hosted](/resources/self_hosting/getting_started))
+
+## 1. Install the bundle
+
+```bash
+composer require meilisearch/search-bundle
+```
+
+## 2. Configure the bundle
+
+Create or update `config/packages/meilisearch.yaml`:
+
+```yaml
+meilisearch:
+  url: '%env(MEILISEARCH_URL)%'
+  api_key: '%env(MEILISEARCH_API_KEY)%'
+```
+
+Add to your `.env` file:
+
+```bash
+MEILISEARCH_URL=https://your-instance.meilisearch.io
+MEILISEARCH_API_KEY=your_api_key
+```
+
+<Note>
+[Get a free Cloud instance →](https://cloud.meilisearch.com)
+</Note>
+
+## 3. Configure an entity for indexing
+
+Add the `Searchable` attribute to your Doctrine entity:
+
+```php
+<?php
+
+namespace App\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Meilisearch\Bundle\Searchable;
+
+#[ORM\Entity]
+#[Searchable(indexName: 'movies')]
+class Movie
+{
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $title = null;
+
+    #[ORM\Column]
+    private ?int $year = null;
+
+    #[ORM\Column(type: 'json')]
+    private array $genres = [];
+
+    // Getters and setters...
+
+    // Define which fields to index
+    public function getSearchableArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'title' => $this->title,
+            'year' => $this->year,
+            'genres' => $this->genres,
+        ];
+    }
+}
+```
+
+## 4. Index your data
+
+Import existing entities to Meilisearch:
+
+```bash
+php bin/console meilisearch:import
+```
+
+New entities are automatically indexed when created or updated via Doctrine.
+
+## 5. Search
+
+Use the `SearchService` to search your indexed entities:
+
+```php
+<?php
+
+namespace App\Controller;
+
+use Meilisearch\Bundle\SearchService;
+use App\Entity\Movie;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+
+class SearchController extends AbstractController
+{
+    #[Route('/search', name: 'search')]
+    public function search(SearchService $searchService): Response
+    {
+        $results = $searchService->search(
+            Movie::class,
+            'matrix'
+        );
+
+        return $this->render('search/results.html.twig', [
+            'movies' => $results,
+        ]);
+    }
+}
+```
+
+## 6. Search with filters
+
+First, configure filterable attributes in `config/packages/meilisearch.yaml`:
+
+```yaml
+meilisearch:
+  url: '%env(MEILISEARCH_URL)%'
+  api_key: '%env(MEILISEARCH_API_KEY)%'
+  indices:
+    - name: movies
+      class: App\Entity\Movie
+      settings:
+        filterableAttributes: ['genres', 'year']
+        sortableAttributes: ['year']
+```
+
+Update the index settings:
+
+```bash
+php bin/console meilisearch:create
+```
+
+Then search with filters:
+
+```php
+$results = $searchService->search(
+    Movie::class,
+    'action',
+    [
+        'filter' => 'year > 2000',
+        'sort' => ['year:desc'],
+    ]
+);
+```
+
+## Available commands
+
+| Command | Description |
+|---------|-------------|
+| `meilisearch:import` | Import all entities to Meilisearch |
+| `meilisearch:clear` | Clear all indexed data |
+| `meilisearch:create` | Create indexes with configured settings |
+| `meilisearch:delete` | Delete indexes |
+
+## Raw client access
+
+For advanced operations, access the Meilisearch client directly:
+
+```php
+use Meilisearch\Client;
+
+class MyService
+{
+    public function __construct(private Client $client) {}
+
+    public function customOperation(): void
+    {
+        $index = $this->client->index('movies');
+        $stats = $index->getStats();
+    }
+}
+```
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Full-text search" icon="magnifying-glass" href="/products/full_text_search/overview">
+    Configure ranking and relevancy
+  </Card>
+  <Card title="Filtering" icon="filter" href="/products/faceted_search/filter_search_results">
+    Add filters and facets
+  </Card>
+  <Card title="AI-powered search" icon="brain" href="/products/ai_powered_search/getting_started">
+    Add semantic search
+  </Card>
+  <Card title="API reference" icon="code" href="/reference/api/search">
+    Explore all search parameters
+  </Card>
+</CardGroup>
+
+## Resources
+
+- [meilisearch-symfony on GitHub](https://github.com/meilisearch/meilisearch-symfony)
+- [Bundle documentation](https://github.com/meilisearch/meilisearch-symfony/wiki)

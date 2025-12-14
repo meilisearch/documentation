@@ -1,0 +1,118 @@
+---
+title: Dictionary
+sidebarTitle: Dictionary
+description: Configure the dictionary setting for your Meilisearch index.
+---
+
+import { RouteHighlighter } from '/snippets/route_highlighter.mdx'
+import { NoticeTag } from '/snippets/notice_tag.mdx'
+import CodeSamplesGetDictionary1 from '/snippets/samples/code_samples_get_dictionary_1.mdx';
+import CodeSamplesUpdateDictionary1 from '/snippets/samples/code_samples_update_dictionary_1.mdx';
+import CodeSamplesResetDictionary1 from '/snippets/samples/code_samples_reset_dictionary_1.mdx';
+
+Allows users to instruct Meilisearch to consider groups of strings as a single term by adding a supplementary dictionary of user-defined terms.
+
+This is particularly useful when working with datasets containing many domain-specific words, and in languages where words are not separated by whitespace such as Japanese.
+
+Custom dictionaries are also useful in a few use-cases for space-separated languages, such as datasets with names such as `"J. R. R. Tolkien"` and `"W. E. B. Du Bois"`.
+
+<Tip>
+User-defined dictionaries can be used together with synonyms. It can be useful to configure Meilisearch so different spellings of an author's initials return the same results:
+
+```json
+"dictionary": ["W. E. B.", "W.E.B."],
+"synonyms": {
+  "W. E. B.": ["W.E.B."],
+  "W.E.B.": ["W. E. B."]
+}
+```
+
+</Tip>
+
+### Get dictionary
+
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/settings/dictionary" />
+
+Get an index's user-defined dictionary.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](getting_started/indexes#index-uid) of the requested index |
+
+#### Example
+
+<CodeSamplesGetDictionary1 />
+
+##### Response: `200 OK`
+
+```json
+[]
+```
+
+### Update dictionary
+
+<RouteHighlighter method="PUT" path="/indexes/{index_uid}/settings/dictionary" />
+
+Update an index's user-defined dictionary.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](getting_started/indexes#index-uid) of the requested index |
+
+#### Body
+
+```json
+["J. R. R.", "W. E. B."]
+```
+
+#### Example
+
+<CodeSamplesUpdateDictionary1 />
+
+##### Response: `202 Accepted`
+
+```json
+{
+  "taskUid": 1,
+  "indexUid": "books",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2023-09-11T15:39:06.073314Z"
+}
+```
+
+Use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+
+### Reset dictionary
+
+<RouteHighlighter method="DELETE" path="/indexes/{index_uid}/settings/dictionary" />
+
+Reset an index's dictionary to its default value, `[]`.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](getting_started/indexes#index-uid) of the requested index |
+
+#### Example
+
+<CodeSamplesResetDictionary1 />
+
+##### Response: `202 Accepted`
+
+```json
+{
+  "taskUid": 1,
+  "indexUid": "books",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2022-04-14T20:53:32.863107Z"
+}
+```
+
+Use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).

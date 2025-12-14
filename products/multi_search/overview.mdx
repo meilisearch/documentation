@@ -1,0 +1,270 @@
+---
+title: Multi-search overview
+sidebarTitle: Overview
+description: Execute multiple search queries in a single request for complex search interfaces.
+---
+
+Multi-search allows you to send multiple search queries to Meilisearch in a single HTTP request. This is essential for building complex search interfaces that need data from multiple indexes or different query configurations.
+
+## Key features
+
+<CardGroup cols={2}>
+  <Card title="Batch queries" icon="layer-group" href="/reference/api/multi_search">
+    Send multiple queries in one request, reducing latency.
+  </Card>
+  <Card title="Federated search" icon="diagram-project" href="/products/multi_search/performing_federated_search">
+    Merge results from multiple indexes into a single ranked list.
+  </Card>
+  <Card title="Cross-index search" icon="magnifying-glass-plus">
+    Search different indexes simultaneously.
+  </Card>
+  <Card title="Sharding support" icon="database" href="/products/multi_search/implement_sharding">
+    Distribute large datasets across multiple indexes.
+  </Card>
+</CardGroup>
+
+## How it works
+
+Instead of making separate requests:
+
+```
+Request 1: Search "laptop" in products
+Request 2: Search "laptop" in reviews
+Request 3: Search "laptop" in articles
+```
+
+Make a single multi-search request:
+
+```
+Single request: Search "laptop" in products, reviews, and articles
+```
+
+This reduces network round-trips and improves performance.
+
+## Quick start
+
+### Basic multi-search
+
+```bash
+curl -X POST "${MEILISEARCH_URL}/multi-search" \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "queries": [
+      {
+        "indexUid": "products",
+        "q": "laptop",
+        "limit": 5
+      },
+      {
+        "indexUid": "articles",
+        "q": "laptop reviews",
+        "limit": 3
+      },
+      {
+        "indexUid": "brands",
+        "q": "laptop",
+        "limit": 3
+      }
+    ]
+  }'
+```
+
+**Response:**
+
+```json
+{
+  "results": [
+    {
+      "indexUid": "products",
+      "hits": [...],
+      "query": "laptop",
+      "processingTimeMs": 2
+    },
+    {
+      "indexUid": "articles",
+      "hits": [...],
+      "query": "laptop reviews",
+      "processingTimeMs": 1
+    },
+    {
+      "indexUid": "brands",
+      "hits": [...],
+      "query": "laptop",
+      "processingTimeMs": 1
+    }
+  ]
+}
+```
+
+### Federated search
+
+Merge results from multiple indexes into a single ranked list:
+
+```bash
+curl -X POST "${MEILISEARCH_URL}/multi-search" \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "federation": {},
+    "queries": [
+      {
+        "indexUid": "movies",
+        "q": "adventure"
+      },
+      {
+        "indexUid": "books",
+        "q": "adventure"
+      }
+    ]
+  }'
+```
+
+Results are merged and ranked together:
+
+```json
+{
+  "hits": [
+    { "title": "Indiana Jones", "_federation": { "indexUid": "movies" } },
+    { "title": "The Hobbit", "_federation": { "indexUid": "books" } },
+    { "title": "Jurassic Park", "_federation": { "indexUid": "movies" } }
+  ]
+}
+```
+
+## Multi-search vs federated search
+
+| Feature | Multi-search | Federated search |
+|---------|--------------|------------------|
+| Response format | Separate results per query | Single merged result list |
+| Ranking | Per-index ranking | Cross-index ranking |
+| Use case | Different UI sections | Unified search results |
+| Pagination | Per-query | Global |
+
+### When to use multi-search
+
+- **Dashboard search**: Populate different UI sections from one request
+- **Autocomplete**: Get suggestions from multiple indexes
+- **Parallel queries**: Same index, different filters or sorts
+
+### When to use federated search
+
+- **Unified search**: Single search bar across all content types
+- **E-commerce**: Products, categories, and brands in one list
+- **Knowledge base**: Articles, FAQs, and docs together
+
+## Use cases
+
+<CardGroup cols={2}>
+  <Card title="Autocomplete" icon="keyboard">
+    Show product, category, and brand suggestions simultaneously
+  </Card>
+  <Card title="Dashboard" icon="table-columns">
+    Populate multiple search widgets in one request
+  </Card>
+  <Card title="Universal search" icon="globe">
+    Search across all content types with federated results
+  </Card>
+  <Card title="Sharded data" icon="server">
+    Query data distributed across multiple indexes
+  </Card>
+</CardGroup>
+
+## Federation options
+
+### Weight indexes differently
+
+```json
+{
+  "federation": {},
+  "queries": [
+    {
+      "indexUid": "products",
+      "q": "phone",
+      "federationOptions": { "weight": 1.5 }
+    },
+    {
+      "indexUid": "accessories",
+      "q": "phone",
+      "federationOptions": { "weight": 0.8 }
+    }
+  ]
+}
+```
+
+Products will rank higher than accessories.
+
+### Limit results per index
+
+```json
+{
+  "federation": { "limit": 20 },
+  "queries": [
+    {
+      "indexUid": "products",
+      "q": "laptop"
+    },
+    {
+      "indexUid": "deals",
+      "q": "laptop"
+    }
+  ]
+}
+```
+
+### Offset for pagination
+
+```json
+{
+  "federation": {
+    "limit": 20,
+    "offset": 20
+  },
+  "queries": [...]
+}
+```
+
+## Best practices
+
+### Minimize queries
+
+Only include queries you actually need:
+
+```json
+{
+  "queries": [
+    { "indexUid": "products", "q": "laptop", "limit": 10 },
+    { "indexUid": "categories", "q": "laptop", "limit": 3 }
+  ]
+}
+```
+
+### Use consistent attribute names
+
+For federated search, similar attributes should have the same name across indexes for proper merging.
+
+### Handle empty results gracefully
+
+Some indexes may return no results. Your UI should handle this:
+
+```javascript
+results.forEach(result => {
+  if (result.hits.length > 0) {
+    displayResults(result.indexUid, result.hits);
+  }
+});
+```
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Multi-search API" icon="code" href="/reference/api/multi_search">
+    Complete API reference
+  </Card>
+  <Card title="Federated search" icon="diagram-project" href="/products/multi_search/performing_federated_search">
+    Merge results across indexes
+  </Card>
+  <Card title="Implement sharding" icon="database" href="/products/multi_search/implement_sharding">
+    Scale with distributed indexes
+  </Card>
+</CardGroup>

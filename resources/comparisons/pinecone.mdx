@@ -1,0 +1,86 @@
+---
+title: Meilisearch vs Pinecone
+sidebarTitle: Pinecone
+description: Compare Meilisearch and Pinecone for AI-powered search. Learn when a vector database vs a hybrid search engine makes sense.
+---
+
+Pinecone is a fully managed vector database designed for AI applications, launched to make vector search accessible without complex infrastructure. It excels at storing and searching vector embeddings for semantic search and RAG (Retrieval-Augmented Generation) applications.
+
+## Quick comparison
+
+|  | Meilisearch | Pinecone |
+|---|:---:|:---:|
+| **Primary focus** | Hybrid search | Vector database |
+| **Full-text search** | Native, optimized | Via sparse vectors (limited) |
+| **Open source** | Yes (MIT license) | No (proprietary) |
+| **Self-hosting** | Yes | No |
+| **Embedding generation** | Built-in (OpenAI, HuggingFace) | Separate or via Inference API |
+| **Starting price** | Free (self-hosted), $30/month (cloud) | Free tier, then from $50/month |
+| **Typo tolerance** | Built-in | Not applicable |
+
+## What Pinecone does well
+
+### Purpose-built for vectors
+
+Pinecone's architecture is optimized specifically for vector operations. Its HNSW algorithm delivers excellent similarity search performance at scale.
+
+### Fully managed service
+
+Pinecone abstracts away infrastructure complexity entirely. The serverless architecture handles scaling automatically without capacity planning.
+
+### AI ecosystem integration
+
+Pinecone integrates smoothly with OpenAI, Cohere, and other embedding providers. Features like the Inference API and Pinecone Assistant simplify RAG pipeline development.
+
+### Filtered vector search
+
+Pinecone's approach integrates metadata filtering directly into the search process, enabling efficient combination of semantic similarity with business rules.
+
+## When to choose Meilisearch instead
+
+### You need both keyword and semantic search
+
+Meilisearch's hybrid search combines traditional full-text search with vector search in a single query. Users get exact matches when they exist and semantically relevant results when they don't. Pinecone focuses primarily on vectors; its keyword capabilities via sparse vectors are limited compared to dedicated search engines.
+
+### Typo tolerance matters
+
+Meilisearch provides built-in typo tolerance that handles misspellings gracefully. Vector search alone doesn't handle typos in the same way, as embeddings are generated from the exact query text.
+
+### You want open-source flexibility
+
+Meilisearch is fully open-source under MIT license. You can self-host, inspect the code, and avoid vendor lock-in. Pinecone is proprietary with no self-hosting option.
+
+### You need predictable costs
+
+Pinecone's usage-based pricing can be unpredictable, with some users reporting unexpected charges from bandwidth and operation fees. Meilisearch Cloud offers fixed monthly pricing.
+
+### Full-text search is your primary need
+
+If you're building traditional site search, e-commerce search, or documentation search where keyword matching is essential, Meilisearch's full-text capabilities are more mature than Pinecone's sparse vector approach.
+
+### You want simpler architecture
+
+Using Meilisearch for hybrid search means one system instead of running both a full-text search engine and a vector database. This reduces infrastructure complexity and data synchronization challenges.
+
+## When to choose Pinecone
+
+Consider Pinecone if:
+
+- You're building AI-first applications where semantic search is the primary requirement
+- You need a pure vector database for recommendation systems or similarity matching
+- You prefer a fully managed service with zero infrastructure management
+- Your team is deeply invested in AI/ML workflows and embedding pipelines
+- You're implementing RAG for Large Language Models and need specialized tooling
+- You can accept vendor lock-in for reduced operational overhead
+
+## Migration resources
+
+If you're evaluating Meilisearch for AI search:
+
+- [AI-powered search guide](/products/ai_powered_search/getting_started) - Set up hybrid search
+- [Embedder configuration](/products/ai_powered_search/choose_an_embedder) - Connect to embedding providers
+- [Hybrid search](/products/ai_powered_search/difference_full_text_ai_search) - Understand the approach
+
+<Note>
+Pinecone is a registered trademark of Pinecone Systems, Inc. This comparison is based on publicly available information and our own analysis.
+</Note>

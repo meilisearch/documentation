@@ -1,0 +1,100 @@
+---
+title: Federated search
+sidebarTitle: Federated search
+description: Federated search queries multiple indexes simultaneously and returns unified, ranked results from a single request.
+---
+
+Federated search allows you to search across multiple indexes with a single query and receive unified, ranked results. Instead of making separate requests to each index, you get one combined result set ordered by relevance.
+
+## Why use federated search
+
+Many applications store different types of content in separate indexes:
+
+- **E-commerce**: Products, categories, brands, articles
+- **Documentation**: Guides, API references, tutorials, changelogs
+- **Marketplaces**: Listings, sellers, reviews
+
+Without federated search, users would need to search each index separately or you'd need to combine results client-side. Federated search handles this at the engine level.
+
+## How federated search works
+
+1. **Single request**: Send one query targeting multiple indexes
+2. **Parallel search**: Meilisearch searches all specified indexes simultaneously
+3. **Score normalization**: Results from different indexes are made comparable
+4. **Unified ranking**: All results are merged and sorted by relevance
+5. **Single response**: One result set with results from all indexes
+
+## Federated search in Meilisearch
+
+Use the [multi-search endpoint](/reference/api/multi_search) with federation enabled:
+
+```json
+POST /multi-search
+{
+  "federation": {},
+  "queries": [
+    { "indexUid": "products", "q": "wireless headphones" },
+    { "indexUid": "brands", "q": "wireless headphones" },
+    { "indexUid": "articles", "q": "wireless headphones" }
+  ]
+}
+```
+
+The response contains merged results:
+
+```json
+{
+  "hits": [
+    { "title": "Sony WH-1000XM5", "_federation": { "indexUid": "products" } },
+    { "name": "Sony Audio", "_federation": { "indexUid": "brands" } },
+    { "title": "Best Wireless Headphones 2024", "_federation": { "indexUid": "articles" } }
+  ]
+}
+```
+
+## Federation options
+
+Control how results are combined:
+
+```json
+{
+  "federation": {
+    "limit": 20,
+    "offset": 0
+  },
+  "queries": [
+    {
+      "indexUid": "products",
+      "q": "headphones",
+      "federationOptions": { "weight": 1.5 }
+    },
+    {
+      "indexUid": "articles",
+      "q": "headphones",
+      "federationOptions": { "weight": 0.8 }
+    }
+  ]
+}
+```
+
+- **weight**: Boost or reduce results from specific indexes
+- **limit/offset**: Paginate the unified results
+
+## Federated vs multi-search
+
+| Feature | Multi-search | Federated search |
+|---------|-------------|------------------|
+| **Queries** | Multiple indexes | Multiple indexes |
+| **Response** | Separate results per index | Unified, merged results |
+| **Ranking** | Per-index | Global across all indexes |
+| **Use case** | Different queries per index | Same query, unified results |
+
+## Related concepts
+
+- [Indexes](/getting_started/glossary/indexes): The searchable collections being queried
+- [Multi-search](/reference/api/multi_search): The API endpoint for federated queries
+
+## Learn more
+
+- [Multi-search API reference](/reference/api/multi_search): Full endpoint documentation
+- [Federated search guide](/products/multi_search/performing_federated_search): Implementation details

@@ -1,0 +1,103 @@
+---
+title: Non-separator tokens
+sidebarTitle: Non-separator tokens
+description: Configure the non-separator tokens setting for your Meilisearch index.
+---
+
+import { RouteHighlighter } from '/snippets/route_highlighter.mdx'
+import { NoticeTag } from '/snippets/notice_tag.mdx'
+import CodeSamplesGetNonSeparatorTokens1 from '/snippets/samples/code_samples_get_non_separator_tokens_1.mdx';
+import CodeSamplesUpdateNonSeparatorTokens1 from '/snippets/samples/code_samples_update_non_separator_tokens_1.mdx';
+import CodeSamplesResetSeparatorTokens1 from '/snippets/samples/code_samples_reset_separator_tokens_1.mdx';
+
+Remove tokens from Meilisearch's default [list of word separators](/resources/internals/datatypes#string).
+
+### Get non-separator tokens
+
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/settings/non-separator-tokens" />
+
+Get an index's list of non-separator tokens.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](getting_started/indexes#index-uid) of the requested index |
+
+#### Example
+
+<CodeSamplesGetNonSeparatorTokens1 />
+
+##### Response: `200 Ok`
+
+```json
+[]
+```
+
+### Update non-separator tokens
+
+<RouteHighlighter method="PUT" path="/indexes/{index_uid}/settings/non-separator-tokens" />
+
+Update an index's list of non-separator tokens.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](getting_started/indexes#index-uid) of the requested index |
+
+#### Body
+
+```
+["@", "#"]
+```
+
+An array of strings, with each string indicating a token present in [list of word separators](/resources/internals/datatypes#string).
+
+#### Example
+
+<CodeSamplesUpdateNonSeparatorTokens1 />
+
+##### Response: `202 Accepted`
+
+```json
+{
+  "taskUid": 1,
+  "indexUid": "movies",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+}
+```
+
+Use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+
+### Reset non-separator tokens
+
+<RouteHighlighter method="DELETE" path="/indexes/{index_uid}/settings/non-separator-tokens" />
+
+Reset an index's list of non-separator tokens to its default value, `[]`.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](getting_started/indexes#index-uid) of the requested index |
+
+#### Example
+
+<CodeSamplesResetSeparatorTokens1 />
+
+##### Response: `202 Accepted`
+
+```json
+{
+  "taskUid": 1,
+  "indexUid": "movies",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+}
+```
+
+Use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).

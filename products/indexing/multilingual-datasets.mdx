@@ -1,0 +1,120 @@
+---
+title: Handling multilingual datasets
+description: This guide covers indexing strategies, language-specific tokenizers, and best practices for aligning document and query tokenization.
+---
+
+When working with datasets that include content in multiple languages, it’s important to ensure that both documents and queries are processed correctly. This guide explains how to index and search multilingual datasets in Meilisearch, highlighting best practices, useful features, and what to avoid.
+
+## Recommended indexing strategy
+
+### Create a separate index for each language (recommended)
+
+If you have a multilingual dataset, the best practice is to create one index per language.
+
+#### Benefits
+
+- Provides natural sharding of your data by language, making it easier to maintain and scale.
+
+- Lets you apply language-specific settings, such as [stop words](/reference/api/settings/stop-words), and [separators](/reference/api/settings/separator-tokens).
+
+- Simplifies the handling of complex languages like Chinese or Japanese, which require specialized tokenizers.
+
+#### Searching across languages
+
+If you want to allow users to search in more than one language at once, you can:
+
+- Run a [multi-search](/reference/api/multi_search), querying several indexes in parallel.
+
+- Use [federated search](/reference/api/multi_search#federated-multi-search-requests), aggregating results from multiple language indexes into a single response.
+
+### Create a single index for multiple languages
+
+In some cases, you may prefer to keep multiple languages in a **single index**. This approach is generally acceptable for proof of concepts or datasets with fewer than ~1M documents.
+
+#### When it works well
+
+- Suitable for languages that use spaces to separate words and share similar tokenization behavior (e.g., English, French, Italian, Spanish, Portuguese).
+
+- Useful when you want a simple setup without maintaining multiple indexes.
+
+#### Limitations
+
+- Languages with compound words (like German) or diacritics that change meaning (like Swedish), as well as non-space-separated writing systems (like Chinese, or Japanese), work better in their own index since they require specialized [tokenizers](/products/indexing/tokenization).
+
+- Chinese and Japanese documents should not be mixed in the same field, since distinguishing between them automatically is very difficult. Each of these languages works best in its own dedicated index. However, if fields are strictly separated by language (e.g., title_zh always Chinese, title_ja always Japanese), it is possible to store them in the same index.
+
+- As the number of documents and languages grows, performance and relevancy can decrease, since queries must run across a larger, mixed dataset.
+
+#### Best practices for the single index approach
+
+- Use language-specific field names with a prefix or suffix (e.g., title_fr, title_en, or fr_title).
+
+- Declare these fields as [localized attributes](/reference/api/settings/localized-attributes) so Meilisearch can apply the correct tokenizer to each one.
+
+- This allows you to filter and search by language, even when multiple languages are stored in the same index.
+
+## Language detection and configuration
+
+Accurate language detection is essential for applying the right tokenizer and normalization rules, which directly impact search quality.
+
+By default, Meilisearch automatically detects the language of your documents and queries.
+
+This automatic detection works well in most cases, especially with longer texts. However, results can vary depending on the type of input:
+
+- **Documents**: detection is generally reliable for longer content, but short snippets may produce less accurate results.
+- **Queries**: short or partial inputs (such as type-as-you-search) are harder to identify correctly, making explicit configuration more important.
+
+When you explicitly set `localizedAttributes` for documents and `locales` for queries, you **restrict the detection to the languages you’ve declared**.
+
+**Benefits**:
+
+- Meilisearch only chooses between the specified languages (e.g., English vs German).
+
+- Detection is more **reliable and consistent**, reducing mismatches.
+
+For search to work effectively, **queries must be tokenized and normalized in the same way as documents**. If strategies are not aligned, queries may fail to match even when the correct terms exist in the index.
+
+### Aligning document and query tokenization
+
+To keep queries and documents consistent, Meilisearch provides configuration options for both sides. Meilisearch uses the same `locales` configuration concept for both documents and queries:  
+
+- In **documents**, `locales` are declared through `localizedAttributes`.  
+- In **queries**, `locales` are passed as a [search parameter].  
+
+#### Declaring locales for documents
+
+The [`localizedAttributes` setting](/reference/api/settings/localized-attributes) allows you to explicitly define which languages are present in your dataset, and in which fields.
+
+For example, if your dataset contains multilingual titles, you can declare which attribute belongs to which language:
+
+```json
+{
+  "id": 1,
+  "title_en": "Danube Steamship Company",
+  "title_de": "Donaudampfschifffahrtsgesellschaft",
+  "title_fr": "Compagnie de navigation à vapeur du Danube"
+}
+```
+
+```javascript
+client.index('INDEX_NAME').updateLocalizedAttributes([
+  { attributePatterns: ['*_en'], locales: ['eng'] },
+  { attributePatterns: ['*_de'], locales: ['deu'] },
+  { attributePatterns: ['*_fr'], locales: ['fra'] }
+])
+```
+
+#### Specifying locales for queries
+
+When performing searches, you can specify [query locales](/reference/api/search#query-locales) to ensure queries are tokenized with the correct rules.
+
+```javascript
+client.index('INDEX_NAME').search('schiff', { locales: ['deu'] })
+```
+
+This ensures queries are interpreted with the correct tokenizer and normalization rules, avoiding false mismatches.
+
+## Conclusion
+
+Handling multilingual datasets in Meilisearch requires careful planning of both indexing and querying.  
+By choosing the right indexing strategy, and explicitly configuring languages with `localizedAttributes` and `locales`, you ensure that documents and queries are processed consistently.  

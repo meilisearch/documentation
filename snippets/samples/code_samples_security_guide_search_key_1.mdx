@@ -2,47 +2,68 @@
 
 ```bash cURL
 curl \
-  -X POST 'MEILISEARCH_URL/indexes/patient_medical_records/search' \
-  -H 'Authorization: Bearer API_KEY'
+  -X POST "${MEILISEARCH_URL}/indexes/patient_medical_records/search" \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}"
 ```
 
 ```javascript JS
-const client = new MeiliSearch({ host: 'http://localhost:7700', apiKey: 'apiKey' })
+const client = new MeiliSearch({
+  host: process.env.MEILISEARCH_URL,
+  apiKey: process.env.MEILISEARCH_API_KEY
+})
 client.index('patient_medical_records').search()
 ```
 
 ```python Python
-client = Client('http://localhost:7700', 'apiKey')
+import os
+client = Client(
+  os.environ.get('MEILISEARCH_URL'),
+  os.environ.get('MEILISEARCH_API_KEY')
+)
 client.index('patient_medical_records').search()
 ```
 
 ```php PHP
-$client = new Client('http://localhost:7700', 'masterKey');
+$client = new Client(getenv('MEILISEARCH_URL'), getenv('MEILISEARCH_API_KEY'));
 $client->index('patient_medical_records')->search();
 ```
 
 ```java Java
-Client client = new Client(new Config("http://localhost:7700", "apiKey"));
+Client client = new Client(new Config(
+  System.getenv("MEILISEARCH_URL"),
+  System.getenv("MEILISEARCH_API_KEY")
+));
 client.index("patient_medical_records").search();
 ```
 
 ```ruby Ruby
-client = MeiliSearch::Client.new('http://localhost:7700', 'apiKey')
+client = MeiliSearch::Client.new(ENV['MEILISEARCH_URL'], ENV['MEILISEARCH_API_KEY'])
 client.index('patient_medical_records').search
 ```
 
 ```go Go
-client := meilisearch.New("http://localhost:7700", meilisearch.WithAPIKey("masterKey"))
+client := meilisearch.New(
+  os.Getenv("MEILISEARCH_URL"),
+  meilisearch.WithAPIKey(os.Getenv("MEILISEARCH_API_KEY")),
+)
 client.Index("patient_medical_records").Search();
 ```
 
 ```csharp C#
-MeilisearchClient client = new MeilisearchClient("http://localhost:7700", "apiKey");
+MeilisearchClient client = new MeilisearchClient(
+  Environment.GetEnvironmentVariable("MEILISEARCH_URL"),
+  Environment.GetEnvironmentVariable("MEILISEARCH_API_KEY")
+);
 var searchResult = await client.Index("patient_medical_records").SearchAsync<Patient>();
 ```
 
 ```rust Rust
-let client = Client::new("http://localhost:7700", Some("apiKey"));
+use std::env;
+
+let client = Client::new(
+  env::var("MEILISEARCH_URL").unwrap(),
+  Some(env::var("MEILISEARCH_API_KEY").unwrap())
+);
 let result = client.index("patient_medical_records")
   .search()
   .execute()
@@ -51,7 +72,10 @@ let result = client.index("patient_medical_records")
 ```
 
 ```swift Swift
-client = try MeiliSearch(host: "http://localhost:7700", apiKey: "apiKey")
+client = try MeiliSearch(
+  host: ProcessInfo.processInfo.environment["MEILISEARCH_URL"]!,
+  apiKey: ProcessInfo.processInfo.environment["MEILISEARCH_API_KEY"]
+)
 client.index("patient_medical_records")
   .search(SearchParameters(query: "")) { (result: Result<Searchable<Patient>, Swift.Error>) in
     switch result {
@@ -64,7 +88,10 @@ client.index("patient_medical_records")
 ```
 
 ```dart Dart
-var client = MeiliSearchClient('http://localhost:7700', 'apiKey');
+var client = MeiliSearchClient(
+  Platform.environment['MEILISEARCH_URL']!,
+  Platform.environment['MEILISEARCH_API_KEY']!
+);
 await client.index('patient_medical_records').search('');
 ```
 </CodeGroup>

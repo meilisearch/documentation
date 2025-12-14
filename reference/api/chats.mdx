@@ -29,7 +29,7 @@ Conversational search is still in early development. Conversational agents may o
 
 When implementing conversational search, use an API key with access to both the `search` and `chatCompletions` actions such as the default chat API key. You may also use tenant tokens instead of an API key, provided you generate the tokens with a key that has access to the required actions.
 
-Chat queries only search the indexes its API key can access. The default chat API key has access to all indexes. To limit access, you must either create a new key, or [generate a tenant token](/learn/security/generate_tenant_token_sdk) from the default chat API key.
+Chat queries only search the indexes its API key can access. The default chat API key has access to all indexes. To limit access, you must either create a new key, or [generate a tenant token](/products/platform/generate_tenant_token_sdk) from the default chat API key.
 
 ## Chat workspaces
 
@@ -221,8 +221,8 @@ Returns the settings object. For security reasons, the `apiKey` field is obfusca
 
 ```bash cURL
 curl \
-  -X GET 'http://localhost:7700/chats/WORKSPACE_UID/settings' \
-  -H 'Authorization: Bearer MEILISEARCH_KEY'
+  -X GET "${MEILISEARCH_URL}/chats/WORKSPACE_UID/settings" \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}"
 ```
 
 </CodeGroup>
@@ -287,8 +287,8 @@ Returns the updated settings object. `apiKey` is write-only and will not be retu
 
 ```bash openAi
 curl \
-  -X PATCH 'http://localhost:7700/chats/customer-support/settings' \
-  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  -X PATCH "${MEILISEARCH_URL}/chats/customer-support/settings" \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "source": "openAi",
@@ -301,8 +301,8 @@ curl \
 
 ```bash azureOpenAi
 curl \
-  -X PATCH 'http://localhost:7700/chats/customer-support/settings' \
-  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  -X PATCH "${MEILISEARCH_URL}/chats/customer-support/settings" \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "source": "azureOpenAi",
@@ -319,8 +319,8 @@ curl \
 
 ```bash mistral
 curl \
-  -X PATCH 'http://localhost:7700/chats/customer-support/settings' \
-  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  -X PATCH "${MEILISEARCH_URL}/chats/customer-support/settings" \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "source": "mistral",
@@ -333,8 +333,8 @@ curl \
 
 ```bash gemini
 curl \
-  -X PATCH 'http://localhost:7700/chats/customer-support/settings' \
-  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  -X PATCH "${MEILISEARCH_URL}/chats/customer-support/settings" \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "source": "gemini",
@@ -347,8 +347,8 @@ curl \
 
 ```bash vLlm
 curl \
-  -X PATCH 'http://localhost:7700/chats/customer-support/settings' \
-  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  -X PATCH "${MEILISEARCH_URL}/chats/customer-support/settings" \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "source": "vLlm",
@@ -392,8 +392,8 @@ Returns the settings object without the `apiKey` field.
 
 ```bash cURL
 curl \
-  -X DELETE 'http://localhost:7700/chats/customer-support/settings' \
-  -H 'Authorization: Bearer MEILISEARCH_KEY'
+  -X DELETE "${MEILISEARCH_URL}/chats/customer-support/settings" \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}"
 ```
 
 </CodeGroup>
@@ -476,8 +476,8 @@ data: [DONE]
 
 ```bash cURL
 curl -N \
-  -X POST 'http://localhost:7700/chats/customer-support/chat/completions' \
-  -H 'Authorization: Bearer DEFAULT_CHAT_KEY' \
+  -X POST "${MEILISEARCH_URL}/chats/customer-support/chat/completions" \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "model": "gpt-3.5-turbo",
@@ -495,8 +495,8 @@ curl -N \
 import OpenAI from 'openai';
 
 const client = new OpenAI({
-  baseURL: 'http://localhost:7700/chats/customer-support',
-  apiKey: 'DEFAULT_CHAT_KEY',
+  baseURL: `${process.env.MEILISEARCH_URL}/chats/customer-support`,
+  apiKey: process.env.MEILISEARCH_API_KEY,
 });
 
 const stream = await client.chat.completions.create({
@@ -511,11 +511,12 @@ for await (const chunk of stream) {
 ```
 
 ```python Python OpenAI SDK
+import os
 from openai import OpenAI
 
 client = OpenAI(
-    base_url="http://localhost:7700/chats/customer-support",
-    api_key="DEFAULT_CHAT_KEY"
+    base_url=f"{os.environ.get('MEILISEARCH_URL')}/chats/customer-support",
+    api_key=os.environ.get("MEILISEARCH_API_KEY")
 )
 
 stream = client.chat.completions.create(

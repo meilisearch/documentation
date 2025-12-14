@@ -1,0 +1,120 @@
+---
+title: Optimize indexing performance with batch statistics 
+description: Learn how to analyze the `progressTrace` to identify and resolve indexing bottlenecks in Meilisearch.
+---
+
+# Optimize indexing performance by analyzing batch statistics
+
+Indexing performance can vary significantly depending on your dataset, index settings, and hardware. The [batch object](/reference/api/batches) provides information about the progress of asynchronous indexing operations.
+
+The `progressTrace` field within the batch object offers a detailed breakdown of where time is spent during the indexing process. Use this data to identify bottlenecks and improve indexing speed.
+
+## Understanding the `progressTrace`
+
+`progressTrace` is a hierarchical trace showing each phase of indexing and how long it took.
+Each entry follows the structure:
+
+```json
+"processing tasks > indexing > extracting word proximity": "33.71s"
+```
+
+This means:
+
+- The step occurred during **indexing**.
+- The subtask was **extracting word proximity**.
+- It took **33.71 seconds**.
+
+Focus on the **longest-running steps** and investigate which index settings or data characteristics influence them.
+
+## Key phases and how to optimize them
+
+### `computing document changes`and `extracting documents`
+
+| Description | Optimization |
+|--------------|--------------|
+| Meilisearch compares incoming documents to existing ones. | No direct optimization possible. Process duration scales with the number and size of incoming documents.|
+
+### `extracting facets` and `merging facet caches`
+
+| Description | Optimization |
+|--------------|--------------|
+| Extracts and merges filterable attributes. | Keep the number of [**filterable attributes**](/reference/api/settings/filterable-attributes) to a minimum. |
+
+### `extracting words` and `merging word caches`
+
+| Description | Optimization |
+|--------------|--------------|
+| Tokenizes text and builds the inverted index. | Ensure the [searchable attributes](/reference/api/settings/searchable-attributes) list only includes the fields you want to be checked for query word matches. |
+
+### `extracting word proximity` and `merging word proximity`
+
+| Description | Optimization |
+|--------------|--------------|
+| Builds data structures for phrase and attribute ranking. | Lower the precision of this operation by setting [proximity precision](/reference/api/settings/proximity-precision) to `byAttribute` |
+
+### `waiting for database writes`
+
+| Description | Optimization |
+|--------------|--------------|
+| Time spent writing data to disk. | No direct optimization possible. Either the disk is too slow or you are writing too much data in a single operation. Avoid HDDs (Hard Disk Drives) |
+
+### `waiting for extractors`
+
+| Description | Optimization |
+|--------------|--------------|
+| Time spent waiting for CPU-bound extraction. | No direct optimization possible. Indicates a CPU bottleneck. Use more cores or scale horizontally with [sharding](/products/multi_search/implement_sharding). |
+
+### `post processing facets > strings bulk` / `numbers bulk`
+
+| Description | Optimization |
+|--------------|--------------|
+| Processes equality or comparison filters. | - Disable unused [**filter features**](/reference/api/settings/filterable-attributes#features), such as comparison operators on string values. <br /> - Reduce the number of [**sortable attributes**](reference/api/settings#sortable-attributes). |
+
+### `post processing facets > facet search`
+
+| Description | Optimization |
+|--------------|--------------|
+| Builds structures for the [facet search API](/reference/api/facet_search). | If you don’t use the facet search API, [disable it](/reference/api/settings/facet-search#update-facet-search-settings).|
+
+### Embeddings
+
+| Trace key | Description | Optimization |
+|------------|--------------|--------------|
+| `writing embeddings to database` | Time spent saving vector embeddings. | Use embedding vectors with fewer dimensions. <br/>- Consider enabling [binary quantization](/reference/api/settings/embedders#binaryquantized). |
+| `extracting embeddings` | Time spent extracting embeddings from embedding providers' responses. | Reduce the amount of data sent to embeddings provider. <br/>- [Include fewer attributes in `documentTemplate`](/products/ai_powered_search/document_template_best_practices). <br/>- [Reduce maximum size of the document template](/reference/api/settings/embedders#update-embedders). <br/>- [Disabling embedding regeneration on document update](/reference/api/documents#vectors). <br/>- If using a third-party service like OpenAI, upgrade your account to a higher tier.|
+
+### `post processing words > word prefix *`
+
+| Description | Optimization |
+|--------------|--------------|
+| | Builds prefix data for autocomplete. Allows matching documents that begin with a specific query term, instead of only exact matches.| Disable [**prefix search**](/reference/api/settings/prefix-search) (`prefixSearch: disabled`). _This can severely impact search result relevancy._ |
+
+### `post processing words > word fst`
+
+| Description | Optimization |
+|--------------|--------------|
+| Builds the word FST (finite state transducer). | No direct action possible, as FST size reflect the number of different words in the database. Using documents with fewer searchable words may improve operation speed. |
+
+## Example analysis
+
+If you see:
+
+```json
+"processing tasks > indexing > post processing facets > facet search": "1763.06s"
+```
+
+[Facet searching](/products/faceted_search/search_with_facet_filters#searching-facet-values) is raking significant indexing time. If your application doesn’t use facets, disable the feature:
+
+```bash
+curl \
+  -X PUT 'MEILISEARCH_URL/indexes/INDEX_UID/settings/facet-search' \
+  -H 'Content-Type: application/json' \
+  --data-binary 'false'
+```
+
+## Learn more
+
+- [Indexing best practices](/products/indexing/indexing_best_practices)
+- [Impact of RAM and multi-threading on indexing performance
+](/resources/self_hosting/performance/ram_multithreading)  
+- [Configuring index settings](/products/indexing/configuring_index_settings)

@@ -1,0 +1,65 @@
+---
+title: Hybrid search
+sidebarTitle: Hybrid search
+description: Hybrid search combines keyword-based and semantic search to deliver results that are both precise and contextually relevant.
+---
+
+Hybrid search combines keyword-based retrieval with semantic search to deliver results that match both exact terms and contextual meaning. This approach gives users the best of both worlds: precise matches when they use specific terms and relevant results when they describe what they're looking for in natural language.
+
+## How hybrid search works
+
+Hybrid search uses two complementary retrieval methods:
+
+1. **Keyword search** uses sparse vectors to find exact term matches. When you search for "iPhone 15 case," keyword search finds documents containing those exact words.
+
+2. **Semantic search** uses dense vector embeddings to understand meaning. A search for "phone protection" returns results about cases and covers, even without those exact words.
+
+The system retrieves results from both methods, then combines and ranks them based on relevance. You can adjust the balance between keyword and semantic results using a **semantic ratio**.
+
+## Semantic ratio
+
+The semantic ratio controls how much weight Meilisearch gives to semantic versus keyword results:
+
+| Ratio | Behavior |
+|-------|----------|
+| `0.0` | Pure keyword search |
+| `0.5` | Equal weight to both |
+| `1.0` | Pure semantic search |
+
+For most applications, a ratio between `0.5` and `0.8` works well, favoring semantic understanding while preserving keyword precision.
+
+## Example
+
+```json
+POST /indexes/products/search
+{
+  "q": "comfortable shoes for walking all day",
+  "hybrid": {
+    "semanticRatio": 0.7,
+    "embedder": "default"
+  }
+}
+```
+
+This query uses 70% semantic search and 30% keyword search. It will find products described as comfortable walking shoes, but also orthopedic footwear and cushioned sneakers that match the intent.
+
+## When to use hybrid search
+
+Hybrid search is ideal when:
+
+- Users may not know exact product names or terminology
+- Your content uses varied vocabulary for similar concepts
+- You want natural language queries to return relevant results
+- Precision matters for specific searches (model numbers, codes)
+
+## Related concepts
+
+- [Vector embeddings](/getting_started/glossary/vector_embeddings): The numerical representations that power semantic search
+- [Vector search](/getting_started/glossary/vector_search): The underlying technology for semantic retrieval
+- [Semantic search](/getting_started/glossary/semantic_search): Search based on meaning rather than keywords
+
+## Learn more
+
+- [AI-powered search guide](/products/ai_powered_search/getting_started): Set up hybrid search in Meilisearch
+- [Choose an embedder](/products/ai_powered_search/choose_an_embedder): Select the right model for your use case
+- [Search API reference](/reference/api/search): Full search parameter documentation

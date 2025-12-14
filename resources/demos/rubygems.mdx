@@ -1,0 +1,87 @@
+---
+title: RubyGems Finder
+sidebarTitle: RubyGems
+description: Search Ruby packages instantly
+---
+
+<Info>
+**Live demo**: [rubygems.meilisearch.com](https://rubygems.meilisearch.com)
+</Info>
+
+Search through the complete RubyGems package registry. This demo showcases how Meilisearch can power package discovery for developer tools and registries.
+
+## Features demonstrated
+
+- **Package search**: Find Ruby gems by name or description
+- **Version info**: See latest versions and download counts
+- **Relevancy tuning**: Popular packages ranked higher
+- **Instant results**: Fast search across thousands of packages
+
+## Use case
+
+Package registries benefit from smart search:
+
+- Developers search by partial or misspelled names
+- Popular packages should rank higher
+- Descriptions help discover new packages
+- Download counts indicate reliability
+
+## Technical highlights
+
+| Feature | Implementation |
+|---------|----------------|
+| Dataset | Full RubyGems registry |
+| Searchable | Name, description, authors |
+| Ranking boost | Download count as custom ranking |
+| Display | Version, downloads, dependencies |
+
+## Custom ranking example
+
+```json
+{
+  "rankingRules": [
+    "words",
+    "typo",
+    "proximity",
+    "attribute",
+    "sort",
+    "exactness",
+    "downloads:desc"
+  ]
+}
+```
+
+This configuration ranks results by relevance first, then by download count for equally relevant results.
+
+## Similar demos
+
+<CardGroup cols={2}>
+  <Card title="Crates.io" icon="rust" href="https://crates.meilisearch.com">
+    Search Rust packages
+  </Card>
+  <Card title="PyPI" icon="python" href="https://pypi.meilisearch.com">
+    Search Python packages
+  </Card>
+</CardGroup>
+
+## Links
+
+<CardGroup cols={2}>
+  <Card title="Try the demo" icon="globe" href="https://rubygems.meilisearch.com">
+    Search Ruby packages
+  </Card>
+  <Card title="Custom ranking" icon="ranking-star" href="/products/full_text_search/custom_ranking_rules">
+    Boost by popularity
+  </Card>
+</CardGroup>
+
+## Related resources
+
+<CardGroup cols={2}>
+  <Card title="Ruby SDK" icon="gem" href="/getting_started/sdks/ruby">
+    Add search to Ruby apps
+  </Card>
+  <Card title="Rails integration" icon="train" href="/getting_started/frameworks/rails">
+    Meilisearch with Rails
+  </Card>
+</CardGroup>

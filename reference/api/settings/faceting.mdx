@@ -1,0 +1,135 @@
+---
+title: Faceting
+sidebarTitle: Faceting
+description: Configure the faceting setting for your Meilisearch index.
+---
+
+import { RouteHighlighter } from '/snippets/route_highlighter.mdx'
+import { NoticeTag } from '/snippets/notice_tag.mdx'
+import CodeSamplesGetFacetingSettings1 from '/snippets/samples/code_samples_get_faceting_settings_1.mdx';
+import CodeSamplesUpdateFacetingSettings1 from '/snippets/samples/code_samples_update_faceting_settings_1.mdx';
+import CodeSamplesResetFacetingSettings1 from '/snippets/samples/code_samples_reset_faceting_settings_1.mdx';
+
+With Meilisearch, you can create [faceted search interfaces](/products/faceted_search/search_with_facet_filters). This setting allows you to:
+
+- Define the maximum number of values returned by the `facets` search parameter
+- Sort facet values by value count or alphanumeric order
+
+[To learn more about faceting, refer to our dedicated guide.](/products/faceted_search/search_with_facet_filters)
+
+### Faceting object
+
+| Name                    | Type    | Default value                                                                | Description                                                                                                  |
+| :---------------------- | :------ | :--------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------- |
+| **`maxValuesPerFacet`** | Integer | `100`                                                                        | Maximum number of facet values returned for each facet. Values are sorted in ascending lexicographical order |
+| **`sortFacetValuesBy`** | Object  | All facet values are sorted in ascending alphanumeric order (`"*": "alpha"`) | Customize facet order to sort by descending value count (`count`) or ascending alphanumeric order (`alpha`)        |
+
+### Get faceting settings
+
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/settings/faceting" />
+
+Get the faceting settings of an index.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                            |
+| :---------------- | :----- | :--------------------------------------------------------------------- |
+| **`index_uid`** * | String | [`uid`](getting_started/indexes#index-uid) of the requested index |
+
+#### Example
+
+<CodeSamplesGetFacetingSettings1 />
+
+##### Response: `200 OK`
+
+```json
+{
+  "maxValuesPerFacet": 100,
+  "sortFacetValuesBy": {
+    "*": "alpha"
+  }
+}
+```
+
+### Update faceting settings
+
+<RouteHighlighter method="PATCH" path="/indexes/{index_uid}/settings/faceting" />
+
+Partially update the faceting settings for an index. Any parameters not provided in the body will be left unchanged.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                            |
+| :---------------- | :----- | :--------------------------------------------------------------------- |
+| **`index_uid`** * | String | [`uid`](getting_started/indexes#index-uid) of the requested index |
+
+#### Body
+
+```
+{
+  "maxValuesPerFacet": <Integer>,
+  "sortFacetValuesBy": {
+      <String>: "count",
+      <String>: "alpha"
+  }
+}
+```
+
+| Name                    | Type    | Default value                                                                | Description                                                                                                  |
+| :---------------------- | :------ | :--------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------- |
+| **`maxValuesPerFacet`** | Integer | `100`                                                                        | Maximum number of facet values returned for each facet. Values are sorted in ascending lexicographical order |
+| **`sortFacetValuesBy`** | Object  | All facet values are sorted in ascending alphanumeric order (`"*": "alpha"`) | Customize facet order to sort by descending value count(`count`) or ascending alphanumeric order (`alpha`)         |
+
+Suppose a query's search results contain a total of three values for a `colors` facet: `blue`, `green`, and `red`. If you set `maxValuesPerFacet` to `2`, Meilisearch will only return `blue` and `green` in the response body's `facetDistribution` object.
+
+<Note>
+Setting `maxValuesPerFacet` to a high value might negatively impact performance.
+</Note>
+
+#### Example
+
+The following code sample sets `maxValuesPerFacet` to `2`, sorts the `genres` facet by descending count, and all other facets in ascending alphanumeric order:
+
+<CodeSamplesUpdateFacetingSettings1 />
+
+##### Response: `202 Accepted`
+
+```json
+{
+  "taskUid": 1,
+  "indexUid": "books",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2022-04-14T20:56:44.991039Z"
+}
+```
+
+You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+
+### Reset faceting settings
+
+Reset an index's faceting settings to their [default value](#faceting-object). Setting `sortFacetValuesBy` to `null`(`--data-binary '{ "sortFacetValuesBy": null }'`), will restore it to the default value (`"*": "alpha"`).
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](getting_started/indexes#index-uid) of the requested index |
+
+#### Example
+
+<CodeSamplesResetFacetingSettings1 />
+
+##### Response: `200 OK`
+
+```json
+{
+  "taskUid": 1,
+  "indexUid": "books",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2022-04-14T20:53:32.863107Z"
+}
+```
+
+You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).

@@ -1,12 +1,17 @@
 <CodeGroup>
 
 ```bash cURL
-curl -X GET 'MEILISEARCH_URL/keys' \
--H 'Authorization: Bearer MASTER_KEY'
+curl -X GET "${MEILISEARCH_URL}/keys" \
+-H "Authorization: Bearer ${MEILISEARCH_API_KEY}"
 ```
 
 ```rust Rust
-let client = Client::new("http://localhost:7700", Some("MASTER_KEY"));
+use std::env;
+
+let client = Client::new(
+  env::var("MEILISEARCH_URL").unwrap(),
+  Some(env::var("MEILISEARCH_API_KEY").unwrap())
+);
 client
   .get_keys()
   .await

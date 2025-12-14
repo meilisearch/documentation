@@ -1,0 +1,151 @@
+---
+title: Localized attributes
+sidebarTitle: Localized attributes
+description: Configure the localized attributes setting for your Meilisearch index.
+---
+
+import { RouteHighlighter } from '/snippets/route_highlighter.mdx'
+import { NoticeTag } from '/snippets/notice_tag.mdx'
+import CodeSamplesGetLocalizedAttributeSettings1 from '/snippets/samples/code_samples_get_localized_attribute_settings_1.mdx';
+import CodeSamplesUpdateLocalizedAttributeSettings1 from '/snippets/samples/code_samples_update_localized_attribute_settings_1.mdx';
+import CodeSamplesResetLocalizedAttributeSettings1 from '/snippets/samples/code_samples_reset_localized_attribute_settings_1.mdx';
+
+By default, Meilisearch auto-detects the languages used in your documents. This setting allows you to explicitly define which languages are present in a dataset, and in which fields.
+
+Localized attributes affect `searchableAttributes`, `filterableAttributes`, and `sortableAttributes`.
+
+Configuring multiple languages for a single index may negatively impact performance.
+
+<Note>
+[`locales`](/reference/api/search#query-locales) and `localizedAttributes` have the same goal: explicitly state the language used in a search when Meilisearch's language auto-detection is not working as expected.
+
+If you believe Meilisearch is detecting incorrect languages because of the query text, explicitly set the search language with `locales`.
+
+If you believe Meilisearch is detecting incorrect languages because of document, explicitly set the document language at the index level with `localizedAttributes`.
+
+For full control over the way Meilisearch detects languages during indexing and at search time, set both `locales` and `localizedAttributes`.
+</Note>
+
+### Localized attributes object
+
+`localizedAttributes` must be an array of locale objects. Its default value is `[]`.
+
+Locale objects must have the following fields:
+
+| Name               | Type    | Default value | Description                                                 |
+| :----------------- | :------ | :------------ | :---------------------------------------------------------- |
+| **`locales`**      | Array of strings | `[]`        | A list of strings indicating one or more ISO-639 locales |
+| **`attributePatterns`** | Array of strings | `[]`        | A list of strings indicating which fields correspond to the specified locales |
+
+#### `locales`
+
+Meilisearch supports the following [ISO-639-3](https://iso639-3.sil.org/) three-letter `locales`: `epo`, `eng`, `rus`, `cmn`, `spa`, `por`, `ita`, `ben`, `fra`, `deu`, `ukr`, `kat`, `ara`, `hin`, `jpn`, `heb`, `yid`, `pol`, `amh`, `jav`, `kor`, `nob`, `dan`, `swe`, `fin`, `tur`, `nld`, `hun`, `ces`, `ell`, `bul`, `bel`, `mar`, `kan`, `ron`, `slv`, `hrv`, `srp`, `mkd`, `lit`, `lav`, `est`, `tam`, `vie`, `urd`, `tha`, `guj`, `uzb`, `pan`, `aze`, `ind`, `tel`, `pes`, `mal`, `ori`, `mya`, `nep`, `sin`, `khm`, `tuk`, `aka`, `zul`, `sna`, `afr`, `lat`, `slk`, `cat`, `tgl`, `hye`.
+
+You may alternatively use [ISO-639-1 two-letter equivalents](https://iso639-3.sil.org/code_tables/639/data) to the supported `locales`.
+
+You may also assign an empty array to `locales`. In this case, Meilisearch will auto-detect the language of the associated `attributePatterns`.
+
+#### `attributePatterns`
+
+Attribute patterns may begin or end with a `*` wildcard to match multiple fields: `en_*`, `*-ar`.
+
+You may also set `attributePatterns` to `*`, in which case Meilisearch will treat all fields as if they were in the associated locale.
+
+### Get localized attributes settings
+
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/settings/localized-attributes" />
+
+Get the localized attributes settings of an index.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](getting_started/indexes#index-uid) of the requested index |
+
+#### Example
+
+<CodeSamplesGetLocalizedAttributeSettings1 />
+
+##### Response: `200 OK`
+
+```json
+[
+  {"locales": ["jpn"], "attributePatterns": ["*_ja"]}
+]
+```
+
+### Update localized attribute settings
+
+<RouteHighlighter method="PUT" path="/indexes/{index_uid}/settings/localized-attributes" />
+
+Update the localized attributes settings of an index.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](getting_started/indexes#index-uid) of the requested index |
+
+#### Body
+
+```
+[
+  {
+   "locales": [<String>, …],
+   "attributePatterns": [<String>, …],
+  }
+]
+```
+
+| Name               | Type    | Default value | Description                                                 |
+| :----------------- | :------ | :------------ | :---------------------------------------------------------- |
+| **`localizedAttributes`** | Array of objects | `[]`        | Explicitly set specific locales for one or more attributes |
+
+#### Example
+
+<CodeSamplesUpdateLocalizedAttributeSettings1 />
+
+##### Response: `202 Accepted`
+
+```json
+{
+  "taskUid": 1,
+  "indexUid": "INDEX_NAME",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2022-04-14T20:56:44.991039Z"
+}
+```
+
+You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+
+### Reset localized attributes settings
+
+<RouteHighlighter method="DELETE" path="/indexes/{index_uid}/settings/localized-attributes" />
+
+Reset an index's localized attributes to their [default value](#localized-attributes-object).
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](getting_started/indexes#index-uid) of the requested index |
+
+#### Example
+
+<CodeSamplesResetLocalizedAttributeSettings1 />
+
+##### Response: `202 Accepted`
+
+```json
+{
+  "taskUid": 1,
+  "indexUid": "INDEX_NAME",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2022-04-14T20:53:32.863107Z"
+}
+```
+
+You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).

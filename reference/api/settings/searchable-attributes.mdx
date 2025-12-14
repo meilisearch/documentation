@@ -1,0 +1,130 @@
+---
+title: Searchable attributes
+sidebarTitle: Searchable attributes
+description: Configure the searchable attributes setting for your Meilisearch index.
+---
+
+import { RouteHighlighter } from '/snippets/route_highlighter.mdx'
+import { NoticeTag } from '/snippets/notice_tag.mdx'
+import CodeSamplesGetSearchableAttributes1 from '/snippets/samples/code_samples_get_searchable_attributes_1.mdx';
+import CodeSamplesUpdateSearchableAttributes1 from '/snippets/samples/code_samples_update_searchable_attributes_1.mdx';
+import CodeSamplesResetSearchableAttributes1 from '/snippets/samples/code_samples_reset_searchable_attributes_1.mdx';
+
+The values associated with attributes in the `searchableAttributes` list are searched for matching query words. The order of the list also determines the [attribute ranking order](/products/full_text_search/attribute_ranking_order).
+
+By default, the `searchableAttributes` array is equal to all fields in your dataset. This behavior is represented by the value `["*"]`.
+
+<Warning>
+Updating searchable attributes will re-index all documents in the index, which can take some time. We recommend updating your index settings first and then adding documents as this reduces RAM consumption.
+</Warning>
+
+[To learn more about searchable attributes, refer to our dedicated guide.](/products/full_text_search/displayed_searchable_attributes#searchable-fields)
+
+### Get searchable attributes
+
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/settings/searchable-attributes" />
+
+Get the searchable attributes of an index.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](getting_started/indexes#index-uid) of the requested index |
+
+#### Example
+
+<CodeSamplesGetSearchableAttributes1 />
+
+##### Response: `200 Ok`
+
+```json
+[
+  "title",
+  "overview",
+  "genres",
+  "release_date.year"
+]
+```
+
+### Update searchable attributes
+
+<RouteHighlighter method="PUT" path="/indexes/{index_uid}/settings/searchable-attributes" />
+
+Update the searchable attributes of an index.
+
+<Warning>
+Due to an implementation bug, manually updating `searchableAttributes` will change the displayed order of document fields in the JSON response. This behavior is inconsistent and will be fixed in a future release.
+</Warning>
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](getting_started/indexes#index-uid) of the requested index |
+
+#### Body
+
+```
+[<String>, <String>, …]
+```
+
+An array of strings. Each string should be an attribute that exists in the selected index. The array should be given in [order of importance](/products/full_text_search/attribute_ranking_order): from the most important attribute to the least important attribute.
+
+If an attribute contains an object, you can use dot notation to set one or more of its keys as a value for this setting: `"searchableAttributes": ["release_date.year"]`.
+
+<Warning>
+If the field does not exist, no error will be thrown.
+</Warning>
+
+[To learn more about searchable attributes, refer to our dedicated guide.](/products/full_text_search/displayed_searchable_attributes#searchable-fields)
+
+#### Example
+
+<CodeSamplesUpdateSearchableAttributes1 />
+
+In this example, a document with a match in `title` will be more relevant than another document with a match in `overview`.
+
+##### Response: `202 Accepted`
+
+```json
+{
+  "taskUid": 1,
+  "indexUid": "movies",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+}
+```
+
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+
+### Reset searchable attributes
+
+<RouteHighlighter method="DELETE" path="/indexes/{index_uid}/settings/searchable-attributes" />
+
+Reset the searchable attributes of the index to the default value.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](getting_started/indexes#index-uid) of the requested index |
+
+#### Example
+
+<CodeSamplesResetSearchableAttributes1 />
+
+##### Response: `202 Accepted`
+
+```json
+{
+  "taskUid": 1,
+  "indexUid": "movies",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+}
+```
+
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).

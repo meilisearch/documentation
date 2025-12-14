@@ -1,0 +1,86 @@
+---
+title: Meilisearch vs Algolia
+sidebarTitle: Algolia
+description: Compare Meilisearch and Algolia to find the right search-as-a-service solution. Learn about pricing, features, and when each makes sense.
+---
+
+Algolia is a hosted search-as-a-service platform founded in 2012, powering over 1.75 trillion searches annually. Known for lightning-fast results and sophisticated AI features, Algolia has become a go-to choice for enterprises seeking premium search experiences.
+
+## Quick comparison
+
+|  | Meilisearch | Algolia |
+|---|:---:|:---:|
+| **Primary focus** | Developer-friendly search | Enterprise search-as-a-service |
+| **Open source** | Yes (MIT license) | No (closed source) |
+| **Self-hosting** | Yes | No |
+| **Setup complexity** | Minimal | Low to moderate |
+| **AI search** | Hybrid search (all plans) | NeuralSearch (premium only) |
+| **Pricing model** | Fixed monthly tiers | Usage-based (records + searches) |
+| **Starting price** | Free (self-hosted), $30/month (cloud) | Free tier, then usage-based |
+
+## What Algolia does well
+
+### Mature e-commerce features
+
+Algolia excels with merchandising tools, including a visual editor for drag-and-drop product positioning, rules engine for promotions, and A/B testing capabilities. These features help optimize conversion rates for online stores.
+
+### Global infrastructure
+
+With 16 server regions worldwide, Algolia's Distributed Search Network ensures low latency globally. This extensive coverage is beneficial for businesses operating internationally.
+
+### Advanced analytics
+
+Algolia provides comprehensive analytics including click-through rates, conversion tracking, and revenue attribution. The A/B testing feature allows comparing different search configurations with statistical analysis.
+
+### AI capabilities
+
+NeuralSearch combines traditional keyword search with semantic vector search. Dynamic Re-Ranking automatically adjusts results based on user behavior patterns.
+
+## When to choose Meilisearch instead
+
+### You value open-source flexibility
+
+Meilisearch is fully open-source under the MIT license. You can inspect the code, contribute improvements, self-host without limitations, and avoid vendor lock-in. Algolia is entirely closed-source.
+
+### You need predictable pricing
+
+Algolia's usage-based model can lead to unexpected costs as you scale. Meilisearch Cloud offers fixed monthly pricing ($30/month for Build, $300/month for Pro), making budgeting straightforward.
+
+### You want AI search without premium tiers
+
+Meilisearch's hybrid search combining keyword and semantic search is available on all plans and for self-hosted deployments. Algolia restricts NeuralSearch to its highest-priced Elevate plan.
+
+### You prefer self-hosting
+
+Meilisearch can be self-hosted for free with full feature access. Algolia has no self-hosting option, meaning you're entirely dependent on their infrastructure and pricing decisions.
+
+### You need simpler setup
+
+While both platforms work well out-of-the-box, Meilisearch's API is designed for maximum simplicity. Features like sorting don't require index replication, and configuration has fewer moving parts.
+
+### Budget is a concern
+
+Algolia's pricing can become expensive for small-to-medium businesses. Their premium features and complex pricing model (records, searches, API operations) can lead to higher total costs than anticipated.
+
+## When to choose Algolia
+
+Consider Algolia if:
+
+- You need sophisticated e-commerce merchandising with visual editors and A/B testing
+- You require 16+ global server regions for international deployments
+- You have the budget for premium features and usage-based pricing
+- You prefer a fully managed service without any self-hosting requirements
+- You need advanced personalization based on user behavior tracking
+- Your team can dedicate resources to implementation and optimization
+
+## Migration resources
+
+If you're switching from Algolia to Meilisearch:
+
+- [Algolia migration guide](/resources/migration/algolia_migration) - Step-by-step migration instructions
+- [InstantSearch integration](/getting_started/instant_meilisearch/javascript) - Use the same frontend libraries
+- [Pricing comparison](https://www.meilisearch.com/pricing) - Compare costs for your use case
+
+<Note>
+Algolia is a registered trademark of Algolia, Inc. This comparison is based on publicly available information and our own analysis.
+</Note>

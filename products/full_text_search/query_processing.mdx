@@ -1,0 +1,76 @@
+---
+title: Query processing
+sidebarTitle: Query processing
+description: How Meilisearch processes search queries, including prefix matching, word splitting, and concatenation.
+---
+
+Meilisearch applies several algorithms to search queries to maximize the chances of finding relevant results. This includes prefix search, word splitting, and word concatenation.
+
+## Prefix search
+
+In Meilisearch, **you can perform a search with only a single letter as your query**. This is because we follow the philosophy of **prefix search**.
+
+Prefix search is when document sorting starts by comparing the search query against the beginning of each word in your dataset. All documents with words that match the query term are added to the [bucket sort](https://en.wikipedia.org/wiki/Bucket_sort), before the [ranking rules](/products/full_text_search/ranking_rules) are applied sequentially.
+
+In other words, prefix search means that it's not necessary to type a word in its entirety to find documents containing that word—you can just type the first one or two letters.
+
+Prefix search is only performed on the last word in a search query—prior words must be typed out fully to get accurate results.
+
+Searching by prefix (rather than using complete words) has a significant impact on search time. The shorter the query term, the more possible matches in the dataset.
+
+### Prefix search example
+
+Given a set of words in a dataset:
+
+`film` `cinema` `movies` `show` `harry` `potter` `shine` `musical`
+
+query: `s`:
+response:
+
+- `show`
+- `shine`
+
+but not
+
+- `movies`
+- `musical`
+
+query: `sho`:
+response:
+
+- `show`
+
+Meilisearch also handles typos while performing the prefix search. You can [read more about the typo rules on the dedicated page](/products/full_text_search/typo_tolerance_settings).
+
+## Concatenated queries
+
+When your search contains several words, Meilisearch applies a concatenation algorithm to it.
+
+When searching for multiple words, a search is also done on the concatenation of those words. When concatenation is done on a search query containing multiple words, it will concatenate the words following each other. Thus, the first and third words will not be concatenated without the second word.
+
+### Concatenation example
+
+A search on `The news paper` will also search for the following concatenated queries:
+
+- `Thenews paper`
+- `the newspaper`
+- `Thenewspaper`
+
+<Warning>
+This concatenation is done on a **maximum of 3 words**.
+</Warning>
+
+## Split queries
+
+When you do a search, Meilisearch **applies the splitting algorithm to every word** (_string separated by a space_).
+
+This consists of finding the most interesting place to separate the words and to create a parallel search query with this proposition.
+
+This is achieved by finding the best frequency of the separate words in the dictionary of all words in the dataset. It will look out that both words have a minimum of interesting results, and not just one of them.
+
+Split words are not considered as multiple words in a search query because they must stay next to each other.
+
+### Split query example
+
+On a search on `newspaper`, it will split into `news` and `paper` and not into `new` and `spaper`.
+A document containing `news` and `paper` separated by other words will not be relevant to the search.

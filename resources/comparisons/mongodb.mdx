@@ -1,0 +1,94 @@
+---
+title: Meilisearch vs MongoDB Atlas Search
+sidebarTitle: MongoDB
+description: Compare Meilisearch with MongoDB Atlas Search. Learn when a dedicated search engine outperforms database-integrated search.
+---
+
+MongoDB Atlas Search integrates Apache Lucene-based full-text search directly into MongoDB Atlas. It allows searching MongoDB collections without a separate search infrastructure, using familiar MongoDB Query API syntax.
+
+## Quick comparison
+
+|  | Meilisearch | MongoDB Atlas Search |
+|---|:---:|:---:|
+| **Primary purpose** | Search engine | Database with search |
+| **Typo tolerance** | Built-in | Via fuzzy matching config |
+| **Search-as-you-type** | Optimized (under 50ms) | Possible but not optimized |
+| **Self-hosting** | Yes | Atlas only (managed) |
+| **Faceted search** | Native, optimized | Via aggregation pipeline |
+| **Relevancy tuning** | Configurable ranking rules | Score modifiers |
+| **Frontend libraries** | InstantSearch compatible | None |
+
+## What MongoDB Atlas Search does well
+
+### Unified data platform
+
+Atlas Search eliminates the need to synchronize data between MongoDB and a separate search engine. Your search index stays automatically in sync with your documents.
+
+### Familiar syntax
+
+If you're already using MongoDB, Atlas Search uses the same aggregation pipeline syntax. No new query language to learn.
+
+### Vector search support
+
+Atlas Vector Search enables semantic search and RAG applications using vector embeddings alongside traditional search.
+
+### Managed infrastructure
+
+As part of Atlas, search infrastructure is fully managed with automatic scaling, backups, and monitoring.
+
+## When to choose Meilisearch instead
+
+### You need instant search-as-you-type
+
+Meilisearch is architected for sub-50ms response times, essential for search-as-you-type experiences. Atlas Search, while capable, isn't optimized specifically for this use case.
+
+### Typo tolerance is critical
+
+Meilisearch handles typos automatically with configurable tolerance per attribute. Atlas Search requires explicit fuzzy matching configuration and doesn't provide the same level of automatic typo handling.
+
+### You want better relevancy out-of-the-box
+
+Meilisearch's ranking rules provide relevant results without configuration. Atlas Search requires more tuning through score modifiers to achieve similar relevancy.
+
+### You need frontend integration
+
+Meilisearch works with InstantSearch libraries, providing pre-built UI components for search bars, facets, and pagination. Atlas Search has no equivalent frontend ecosystem.
+
+### Self-hosting is required
+
+Meilisearch can be self-hosted anywhere. Atlas Search is only available on MongoDB Atlas (managed cloud), which may not meet all data sovereignty or infrastructure requirements.
+
+### You use a different database
+
+If your primary database isn't MongoDB, adding Atlas Search isn't an option. Meilisearch works with any data source through its REST API.
+
+### Faceted search performance matters
+
+Meilisearch provides optimized APIs for facet filtering and counting. Atlas Search handles facets through aggregation pipelines, which can be less efficient for complex faceted navigation.
+
+### You're not on Atlas
+
+Atlas Search requires MongoDB Atlas. If you're using self-hosted MongoDB or a different MongoDB hosting provider, Atlas Search isn't available.
+
+## When to choose MongoDB Atlas Search
+
+Consider Atlas Search if:
+
+- You're already using MongoDB Atlas and want to minimize infrastructure
+- Keeping search synchronized with your primary data is a priority
+- Your team is deeply familiar with MongoDB aggregation pipelines
+- Search requirements are moderate (not real-time, not highly tuned)
+- You need vector search alongside your existing MongoDB documents
+- Managed infrastructure is preferred over self-hosting
+
+## Migration resources
+
+If you're evaluating Meilisearch:
+
+- [Quick start guide](/getting_started/overview) - Set up Meilisearch
+- [Indexing documents](/reference/api/documents) - Import data from any source
+- [Faceted search](/products/faceted_search/facets_vs_filters) - Implement filtering
+
+<Note>
+MongoDB and MongoDB Atlas are registered trademarks of MongoDB, Inc. This comparison is based on publicly available information and our own analysis.
+</Note>

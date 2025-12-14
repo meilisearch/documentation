@@ -1,0 +1,111 @@
+---
+title: Facets and filters
+sidebarTitle: Facets
+description: Facets enable drill-down navigation by showing filterable categories and counts alongside search results.
+---
+
+Facets are the clickable filter categories you see alongside search results, like "Brand," "Price range," or "Color." They let users narrow down results by selecting attribute values, and show how many results match each option.
+
+## Facets vs filters
+
+In Meilisearch, facets and filters use the same underlying feature:
+
+| Term | What it means |
+|------|---------------|
+| **Filter** | A constraint that narrows search results |
+| **Facet** | A filter displayed with counts in the UI |
+
+Any filterable attribute can be used as a facet. The difference is in how you present it to users.
+
+## How facets work
+
+1. **Configure filterable attributes** in index settings
+2. **Request facet distribution** in search queries
+3. **Display counts** to users (e.g., "Nike (45)")
+4. **Apply filters** when users select options
+
+## Example
+
+### 1. Configure filterable attributes
+
+```bash
+curl -X PATCH "${MEILISEARCH_URL}/indexes/products/settings" \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "filterableAttributes": ["brand", "category", "price"]
+  }'
+```
+
+### 2. Search with facets
+
+```json
+POST /indexes/products/search
+{
+  "q": "running shoes",
+  "facets": ["brand", "category"]
+}
+```
+
+### 3. Response includes facet distribution
+
+```json
+{
+  "hits": [...],
+  "facetDistribution": {
+    "brand": {
+      "Nike": 45,
+      "Adidas": 32,
+      "Puma": 18
+    },
+    "category": {
+      "Running": 65,
+      "Training": 20,
+      "Casual": 10
+    }
+  }
+}
+```
+
+### 4. Apply a filter
+
+```json
+POST /indexes/products/search
+{
+  "q": "running shoes",
+  "filter": "brand = 'Nike'",
+  "facets": ["brand", "category"]
+}
+```
+
+## Filter syntax
+
+Meilisearch supports various filter expressions:
+
+| Expression | Example |
+|------------|---------|
+| Equality | `brand = 'Nike'` |
+| Inequality | `price != 0` |
+| Comparison | `price > 50`, `price <= 200` |
+| Range | `price 50 TO 200` |
+| IN | `brand IN ['Nike', 'Adidas']` |
+| AND/OR | `brand = 'Nike' AND price < 100` |
+| NOT | `NOT category = 'Sale'` |
+
+## Common use cases
+
+- **E-commerce**: Filter by brand, price, size, color, rating
+- **Job boards**: Filter by location, salary, experience level
+- **Real estate**: Filter by price, bedrooms, neighborhood
+- **Content sites**: Filter by category, date, author
+
+## Related concepts
+
+- [Ranking rules](/getting_started/glossary/ranking_rules): How results are sorted (not filtered)
+- [Indexes](/getting_started/glossary/indexes): Where filterable attributes are configured
+
+## Learn more
+
+- [Faceted search guide](/products/faceted_search/overview): Complete implementation guide
+- [Filter expressions](/products/faceted_search/filter_expression_reference): Full syntax reference
+- [Sorting results](/products/faceted_search/sort_search_results): Combine filters with sorting

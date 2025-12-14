@@ -28,7 +28,7 @@ The requested database has reached its maximum size.
 
 ## `document_fields_limit_reached`
 
-A document exceeds the [maximum limit of 65,535 fields](/learn/resources/known_limitations#maximum-number-of-attributes-per-document).
+A document exceeds the [maximum limit of 65,535 fields](resources/known_limitations#maximum-number-of-attributes-per-document).
 
 ## `document_not_found`
 
@@ -40,11 +40,11 @@ An error occurred during the dump creation process. The task was aborted.
 
 ## `facet_search_disabled`
 
-The [`/facet-search`](/reference/api/facet_search) route has been queried while [the `facetSearch` index setting](/reference/api/settings#facet-search) is set to `false`.
+The [`/facet-search`](/reference/api/facet_search) route has been queried while [the `facetSearch` index setting](/reference/api/settings/facet-search) is set to `false`.
 
 ## `feature_not_enabled`
 
-You have tried using an [experimental feature](/learn/resources/experimental_features_overview) without activating it.
+You have tried using an [experimental feature](resources/experimental_features_overview) without activating it.
 
 ## `immutable_api_key_actions`
 
@@ -96,23 +96,23 @@ You tried to manually set a webhook's `isEditable` field. Meilisearch automatica
 
 ## `index_already_exists`
 
-An index with this [`uid`](/reference/api/indexes#index-object) already exists, check out our guide on [index creation](/learn/getting_started/indexes).
+An index with this [`uid`](/reference/api/indexes#index-object) already exists, check out our guide on [index creation](getting_started/indexes).
 
 ## `index_creation_failed`
 
-An error occurred while trying to create an index, check out our guide on [index creation](/learn/getting_started/indexes).
+An error occurred while trying to create an index, check out our guide on [index creation](getting_started/indexes).
 
 ## `index_not_found`
 
-An index with this `uid` was not found, check out our guide on [index creation](/learn/getting_started/indexes).
+An index with this `uid` was not found, check out our guide on [index creation](getting_started/indexes).
 
 ## `index_primary_key_already_exists`
 
-The requested index already has a primary key that [cannot be changed](/learn/getting_started/primary_key#changing-your-primary-key-with-the-update-index-endpoint).
+The requested index already has a primary key that [cannot be changed](getting_started/primary_key#changing-your-primary-key-with-the-update-index-endpoint).
 
 ## `index_primary_key_multiple_candidates_found`
 
-[Primary key inference](/learn/getting_started/primary_key#meilisearch-guesses-your-primary-key) failed because the received documents contain multiple fields ending with `id`. Use the [update index endpoint](/reference/api/indexes#update-an-index) to manually set a primary key.
+[Primary key inference](getting_started/primary_key#meilisearch-guesses-your-primary-key) failed because the received documents contain multiple fields ending with `id`. Use the [update index endpoint](/reference/api/indexes#update-an-index) to manually set a primary key.
 
 ## `internal`
 
@@ -120,7 +120,7 @@ Meilisearch experienced an internal error. Check the error message, and [open an
 
 ## `invalid_api_key`
 
-The requested resources are protected with an API key. The provided API key is invalid. Read more about it in our [security tutorial](/learn/security/basic_security).
+The requested resources are protected with an API key. The provided API key is invalid. Read more about it in our [security tutorial](/products/platform/basic_security).
 
 ## `invalid_api_key_actions`
 
@@ -156,7 +156,7 @@ The given [`uid`](/reference/api/keys#uid) is invalid. The `uid` must follow the
 
 ## `invalid_search_attributes_to_search_on`
 
-The value passed to [`attributesToSearchOn`](/reference/api/search#customize-attributes-to-search-on-at-search-time) is invalid. `attributesToSearchOn` accepts an array of strings indicating document attributes. Attributes given to `attributesToSearchOn` must be present in the [`searchableAttributes` list](/learn/relevancy/displayed_searchable_attributes#the-searchableattributes-list).
+The value passed to [`attributesToSearchOn`](/reference/api/search#customize-attributes-to-search-on-at-search-time) is invalid. `attributesToSearchOn` accepts an array of strings indicating document attributes. Attributes given to `attributesToSearchOn` must be present in the [`searchableAttributes` list](/products/full_text_search/displayed_searchable_attributes#the-searchableattributes-list).
 
 ## `invalid_search_media`
 
@@ -176,7 +176,7 @@ The [`csvDelimiter`](/reference/api/documents#add-or-replace-documents) paramete
 
 ## `invalid_document_id`
 
-The provided [document identifier](/learn/getting_started/primary_key#document-id) does not meet the format requirements. A document identifier must be of type integer or string, composed only of alphanumeric characters (a-z A-Z 0-9), hyphens (-), and underscores (_).
+The provided [document identifier](getting_started/primary_key#document-id) does not meet the format requirements. A document identifier must be of type integer or string, composed only of alphanumeric characters (a-z A-Z 0-9), hyphens (-), and underscores (_).
 
 ## `invalid_document_fields`
 
@@ -189,8 +189,8 @@ This error occurs if:
 - The [`filter`](/reference/api/documents#query-parameters) parameter is invalid
   - It should be a string, array of strings, or array of array of strings for the [get documents with POST endpoint](/reference/api/documents#get-documents-with-post)
   - It should be a string for the [get documents with GET endpoint](/reference/api/documents#get-documents-with-get)
-- The attribute used for filtering is not defined in the [`filterableAttributes` list](/reference/api/settings#filterable-attributes)
-- The [filter expression](/learn/filtering_and_sorting/filter_expression_reference) has a missing or invalid operator. [Read more about our supported operators](/learn/filtering_and_sorting/filter_expression_reference)
+- The attribute used for filtering is not defined in the [`filterableAttributes` list](/reference/api/settings/filterable-attributes)
+- The [filter expression](/products/faceted_search/filter_expression_reference) has a missing or invalid operator. [Read more about our supported operators](/products/faceted_search/filter_expression_reference)
 
 ## `invalid_document_limit`
 
@@ -205,12 +205,12 @@ The [`offset`](/reference/api/documents#query-parameters) parameter is invalid. 
 This error occurs if:
 
 - The syntax for the [`sort`](/reference/api/documents#body) parameter is invalid
-- The attribute used for sorting is not defined in the [`sortableAttributes`](/reference/api/settings#sortable-attributes) list or the `sort` ranking rule is missing from the settings
+- The attribute used for sorting is not defined in the [`sortableAttributes`](/reference/api/settings/sortable-attributes) list or the `sort` ranking rule is missing from the settings
 - A reserved keyword like `_geo`, `_geoDistance`, `_geoRadius`, or `_geoBoundingBox` is used as a filter
 
 ## `invalid_document_geo_field`
 
-The provided `_geo` field of one or more documents is invalid. Meilisearch expects `_geo` to be an object with two fields, `lat` and `lng`, each containing geographic coordinates expressed as a string or floating point number. Read more about `_geo` and how to troubleshoot it in [our dedicated guide](/learn/filtering_and_sorting/geosearch).
+The provided `_geo` field of one or more documents is invalid. Meilisearch expects `_geo` to be an object with two fields, `lat` and `lng`, each containing geographic coordinates expressed as a string or floating point number. Read more about `_geo` and how to troubleshoot it in [our dedicated guide](/products/geo_search/geosearch).
 
 ## `invalid_document_geojson_field`
 
@@ -234,11 +234,11 @@ The provided index pattern is invalid. The index pattern must be an alphanumeric
 
 ## `invalid_export_index_filter`
 
-The provided index export filter is not a valid [filter expression](/learn/filtering_and_sorting/filter_expression_reference).
+The provided index export filter is not a valid [filter expression](/products/faceted_search/filter_expression_reference).
 
 ## `invalid_facet_search_facet_name`
 
-The attribute used for the `facetName` field is either not a string or not defined in the [`filterableAttributes` list](/reference/api/settings#filterable-attributes).
+The attribute used for the `facetName` field is either not a string or not defined in the [`filterableAttributes` list](/reference/api/settings/filterable-attributes).
 
 ## `invalid_facet_search_facet_query`
 
@@ -254,7 +254,7 @@ The [`offset`](/reference/api/indexes#query-parameters) parameter is invalid. It
 
 ## `invalid_index_uid`
 
-There is an error in the provided index format, check out our guide on [index creation](/learn/getting_started/indexes).
+There is an error in the provided index format, check out our guide on [index creation](getting_started/indexes).
 
 ## `invalid_index_primary_key`
 
@@ -357,14 +357,14 @@ The [`cropMarker`](/reference/api/search#crop-marker) parameter is invalid. It s
 This error occurs if:
 
 - The [`facets`](/reference/api/search#facets) parameter is invalid. It should be an array of strings, a string, or set to `null`
-- The attribute used for faceting is not defined in the [`filterableAttributes` list](/reference/api/settings#filterable-attributes)
+- The attribute used for faceting is not defined in the [`filterableAttributes` list](/reference/api/settings/filterable-attributes)
 
 ## `invalid_search_filter`
 
 This error occurs if:
 
 - The syntax for the [`filter`](/reference/api/search#filter) parameter is invalid
-- The attribute used for filtering is not defined in the [`filterableAttributes` list](/reference/api/settings#filterable-attributes)
+- The attribute used for filtering is not defined in the [`filterableAttributes` list](/reference/api/settings/filterable-attributes)
 - A reserved keyword like `_geo`, `_geoDistance`, or `_geoPoint` is used as a filter
 
 ## `invalid_search_highlight_post_tag`
@@ -393,15 +393,15 @@ The [`locales`](/reference/api/search#query-locales) parameter is invalid.
 
 ## `invalid_settings_embedder`
 
-The [`embedders`](/reference/api/settings#embedders) index setting value is invalid.
+The [`embedders`](/reference/api/settings/embedders) index setting value is invalid.
 
 ## `invalid_settings_facet_search`
 
-The [`facetSearch`](/reference/api/settings#facet-search) index setting value is invalid.
+The [`facetSearch`](/reference/api/settings/facet-search) index setting value is invalid.
 
 ## `invalid_settings_localized_attributes`
 
-The [`localizedAttributes`](/reference/api/settings#localized-attributes) index setting value is invalid.
+The [`localizedAttributes`](/reference/api/settings/localized-attributes) index setting value is invalid.
 
 ## `invalid_search_matching_strategy`
 
@@ -413,7 +413,7 @@ The [`offset`](/reference/api/search#offset) parameter is invalid. It should be 
 
 ## `invalid_settings_prefix_search`
 
-The [`prefixSearch`](/reference/api/settings#prefix-search) index setting value is invalid.
+The [`prefixSearch`](/reference/api/settings/prefix-search) index setting value is invalid.
 
 ## `invalid_search_page`
 
@@ -436,32 +436,32 @@ The [`showMatchesPosition`](/reference/api/search#show-matches-position) paramet
 This error occurs if:
 
 - The syntax for the [`sort`](/reference/api/search#sort) parameter is invalid
-- The attribute used for sorting is not defined in the [`sortableAttributes`](/reference/api/settings#sortable-attributes) list or the `sort` ranking rule is missing from the settings
+- The attribute used for sorting is not defined in the [`sortableAttributes`](/reference/api/settings/sortable-attributes) list or the `sort` ranking rule is missing from the settings
 - A reserved keyword like `_geo`, `_geoDistance`, `_geoRadius`, or `_geoBoundingBox` is used as a filter
 
 ## `invalid_settings_displayed_attributes`
 
-The value of [displayed attributes](/learn/relevancy/displayed_searchable_attributes#displayed-fields) is invalid. It should be an empty array, an array of strings, or set to `null`.
+The value of [displayed attributes](/products/full_text_search/displayed_searchable_attributes#displayed-fields) is invalid. It should be an empty array, an array of strings, or set to `null`.
 
 ## `invalid_settings_distinct_attribute`
 
-The value of [distinct attributes](/learn/relevancy/distinct_attribute) is invalid. It should be a string or set to `null`.
+The value of [distinct attributes](/products/full_text_search/distinct_attribute) is invalid. It should be a string or set to `null`.
 
 ## `invalid_settings_faceting_sort_facet_values_by`
 
-The value provided for the [`sortFacetValuesBy`](/reference/api/settings#faceting-object) object is incorrect. The accepted values are `alpha` or `count`.
+The value provided for the [`sortFacetValuesBy`](/reference/api/settings/faceting#faceting-object) object is incorrect. The accepted values are `alpha` or `count`.
 
 ## `invalid_settings_faceting_max_values_per_facet`
 
-The value for the [`maxValuesPerFacet`](/reference/api/settings#faceting-object) field is invalid. It should either be an integer or set to `null`.
+The value for the [`maxValuesPerFacet`](/reference/api/settings/faceting#faceting-object) field is invalid. It should either be an integer or set to `null`.
 
 ## `invalid_settings_filterable_attributes`
 
-The value of [filterable attributes](/reference/api/settings#filterable-attributes) is invalid. It should be an empty array, an array of strings, or set to `null`.
+The value of [filterable attributes](/reference/api/settings/filterable-attributes) is invalid. It should be an empty array, an array of strings, or set to `null`.
 
 ## `invalid_settings_pagination`
 
-The value for the [`maxTotalHits`](/reference/api/settings#pagination-object) field is invalid. It should either be an integer or set to `null`.
+The value for the [`maxTotalHits`](/reference/api/settings/pagination#pagination-object) field is invalid. It should either be an integer or set to `null`.
 
 ## `invalid_settings_ranking_rules`
 
@@ -474,33 +474,33 @@ This error occurs if:
 
 ## `invalid_settings_searchable_attributes`
 
-The value of [searchable attributes](/reference/api/settings#searchable-attributes) is invalid. It should be an empty array, an array of strings or set to `null`.
+The value of [searchable attributes](/reference/api/settings/searchable-attributes) is invalid. It should be an empty array, an array of strings or set to `null`.
 
 ## `invalid_settings_search_cutoff_ms`
 
-The specified value for [`searchCutoffMs](/reference/api/settings#search-cutoff) is invalid. It should be an integer indicating the cutoff in milliseconds.
+The specified value for [`searchCutoffMs](/reference/api/settings/search-cutoff) is invalid. It should be an integer indicating the cutoff in milliseconds.
 
 ## `invalid_settings_sortable_attributes`
 
-The value of [sortable attributes](/reference/api/settings#sortable-attributes) is invalid. It should be an empty array, an array of strings or set to `null`.
+The value of [sortable attributes](/reference/api/settings/sortable-attributes) is invalid. It should be an empty array, an array of strings or set to `null`.
 
 ## `invalid_settings_stop_words`
 
-The value of [stop words](/reference/api/settings#stop-words) is invalid. It should be an empty array, an array of strings or set to `null`.
+The value of [stop words](/reference/api/settings/stop-words) is invalid. It should be an empty array, an array of strings or set to `null`.
 
 ## `invalid_settings_synonyms`
 
-The value of the [synonyms](/reference/api/settings#synonyms) is invalid. It should either be an object or set to `null`.
+The value of the [synonyms](/reference/api/settings/synonyms) is invalid. It should either be an object or set to `null`.
 
 ## `invalid_settings_typo_tolerance`
 
 This error occurs if:
 
-- The [`enabled`](/reference/api/settings#typo-tolerance-object) field is invalid. It should either be a boolean or set to `null`
-- The [`disableOnAttributes`](/reference/api/settings#typo-tolerance-object) field is invalid. It should either be an array of strings or set to `null`
-- The [`disableOnWords`](/reference/api/settings#typo-tolerance-object) field is invalid. It should either be an array of strings or set to `null`
-- The [`minWordSizeForTypos`](/reference/api/settings#typo-tolerance-object) field is invalid. It should either be an integer or set to `null`
-- The value of either [`oneTypo`](/reference/api/settings#typo-tolerance-object) or [`twoTypos`](/reference/api/settings#typo-tolerance-object) is invalid. It should either be an integer or set to `null`
+- The [`enabled`](/reference/api/settings/typo-tolerance#typo-tolerance-object) field is invalid. It should either be a boolean or set to `null`
+- The [`disableOnAttributes`](/reference/api/settings/typo-tolerance#typo-tolerance-object) field is invalid. It should either be an array of strings or set to `null`
+- The [`disableOnWords`](/reference/api/settings/typo-tolerance#typo-tolerance-object) field is invalid. It should either be an array of strings or set to `null`
+- The [`minWordSizeForTypos`](/reference/api/settings/typo-tolerance#typo-tolerance-object) field is invalid. It should either be an integer or set to `null`
+- The value of either [`oneTypo`](/reference/api/settings/typo-tolerance#typo-tolerance-object) or [`twoTypos`](/reference/api/settings/typo-tolerance#typo-tolerance-object) is invalid. It should either be an integer or set to `null`
 
 ## `invalid_similar_id`
 
@@ -633,7 +633,7 @@ This error generally occurs when the host system has no space left on the device
 
 ## `index_primary_key_no_candidate_found`
 
-[Primary key inference](/learn/getting_started/primary_key#meilisearch-guesses-your-primary-key) failed as the received documents do not contain any fields ending with `id`. [Manually designate the primary key](/learn/getting_started/primary_key#setting-the-primary-key), or add some field ending with `id` to your documents.
+[Primary key inference](getting_started/primary_key#meilisearch-guesses-your-primary-key) failed as the received documents do not contain any fields ending with `id`. [Manually designate the primary key](getting_started/primary_key#setting-the-primary-key), or add some field ending with `id` to your documents.
 
 ## `malformed_payload`
 
@@ -655,7 +655,7 @@ The [`indexes`](/reference/api/keys#indexes) field is missing from payload.
 
 This error happens if:
 
-- The requested resources are protected with an API key that was not provided in the request header. Check our [security tutorial](/learn/security/basic_security) for more information
+- The requested resources are protected with an API key that was not provided in the request header. Check our [security tutorial](/products/platform/basic_security) for more information
 - You are using the wrong authorization header for your version. **v0.24 and below** use `X-MEILI-API-KEY: apiKey`, whereas **v0.25 and above** use `Authorization: Bearer apiKey`
 
 ## `missing_content_type`
@@ -680,7 +680,7 @@ The [`facetName`](/reference/api/facet_search#body) parameter is required.
 
 ## `missing_master_key`
 
-You need to set a master key before you can access the `/keys` route. Read more about setting a master key at launch in our [security tutorial](/learn/security/basic_security).
+You need to set a master key before you can access the `/keys` route. Read more about setting a master key at launch in our [security tutorial](/products/platform/basic_security).
 
 ## `missing_network_url`
 
@@ -711,7 +711,7 @@ The requested resources could not be found.
 
 ## `payload_too_large`
 
-The payload sent to the server was too large. Check out this [guide](/learn/self_hosted/configure_meilisearch_at_launch#payload-limit-size) to customize the maximum payload size accepted by Meilisearch.
+The payload sent to the server was too large. Check out this [guide](/resources/self_hosting/configuration#payload-limit-size) to customize the maximum payload size accepted by Meilisearch.
 
 ## `task_not_found`
 
@@ -723,7 +723,7 @@ Indexing a large batch of documents, such as a JSON file over 3.5GB in size, can
 
 ## `too_many_search_requests`
 
-You have reached the limit of concurrent search requests. You may configure it by relaunching your instance and setting a higher value to [`--experimental-search-queue-size`](/learn/self_hosted/configure_meilisearch_at_launch).
+You have reached the limit of concurrent search requests. You may configure it by relaunching your instance and setting a higher value to [`--experimental-search-queue-size`](/resources/self_hosting/configuration).
 
 ## `unretrievable_document`
 

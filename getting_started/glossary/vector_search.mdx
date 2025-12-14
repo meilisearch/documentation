@@ -1,0 +1,70 @@
+---
+title: Vector search
+sidebarTitle: Vector search
+description: Vector search finds results based on semantic similarity rather than exact keyword matches, using numerical representations called embeddings.
+---
+
+Vector search is a method for finding information based on meaning rather than exact word matches. It transforms both your data and search queries into numerical representations called [vector embeddings](/getting_started/glossary/vector_embeddings), then finds the closest matches in this mathematical space.
+
+## How vector search works
+
+1. **Indexing**: Documents are converted into vector embeddings using a machine learning model. Each embedding is an array of numbers (typically hundreds or thousands of dimensions) that captures the semantic meaning of the content.
+
+2. **Querying**: When a user searches, their query is converted into a vector using the same model.
+
+3. **Matching**: The system compares the query vector against all document vectors, finding those that are mathematically closest (most similar in meaning).
+
+4. **Ranking**: Results are returned ordered by similarity score.
+
+## Why vector search matters
+
+Traditional keyword search fails when users don't know the exact terms in your data:
+
+| Query | Keyword search | Vector search |
+|-------|---------------|---------------|
+| "world warm" | No results | Climate change, global warming |
+| "cheap flights" | Only "cheap flights" | Budget airlines, discount travel |
+| "fix slow computer" | Exact matches only | Performance optimization guides |
+
+Vector search understands that "laptop" and "notebook computer" are related concepts, even though they share no words.
+
+## Similarity metrics
+
+Vector search uses mathematical functions to measure how close two vectors are:
+
+- **Cosine similarity**: Measures the angle between vectors. Most common for text.
+- **Euclidean distance**: Measures straight-line distance between points.
+- **Dot product**: Fast calculation, works well for normalized vectors.
+
+## Vector search in Meilisearch
+
+Meilisearch supports vector search through its [AI-powered search](/products/ai_powered_search/getting_started) features. You can:
+
+- Use built-in embedder integrations (OpenAI, Hugging Face, etc.)
+- Provide your own pre-computed vectors
+- Combine vector search with keyword search using [hybrid search](/getting_started/glossary/hybrid_search)
+
+## Example
+
+```json
+POST /indexes/movies/search
+{
+  "vector": [0.123, 0.456, 0.789, ...],
+  "hybrid": {
+    "semanticRatio": 1.0,
+    "embedder": "default"
+  }
+}
+```
+
+## Related concepts
+
+- [Vector embeddings](/getting_started/glossary/vector_embeddings): The numerical representations used in vector search
+- [Hybrid search](/getting_started/glossary/hybrid_search): Combining vector and keyword search
+- [Semantic search](/getting_started/glossary/semantic_search): The broader category of meaning-based search
+
+## Learn more
+
+- [AI-powered search guide](/products/ai_powered_search/getting_started): Configure vector search
+- [Choose an embedder](/products/ai_powered_search/choose_an_embedder): Select embedding models
+- [Search API reference](/reference/api/search): Vector search parameters

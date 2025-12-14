@@ -1,0 +1,85 @@
+---
+title: Ranking rules
+sidebarTitle: Ranking rules
+description: Ranking rules determine how Meilisearch orders search results by relevance, using a bucket sort algorithm.
+---
+
+Ranking rules are the criteria Meilisearch uses to sort search results by relevance. They determine why one document appears before another in search results.
+
+## How ranking rules work
+
+Meilisearch uses a **bucket sort** algorithm:
+
+1. The first ranking rule sorts all matching documents
+2. Documents tied under the first rule are sorted by the second rule
+3. This continues until all rules are applied or ties are broken
+
+**Rule order matters.** The first rule has the most impact on results. The last rule only affects documents that tied under all previous rules.
+
+## Default ranking rules
+
+Meilisearch applies these rules in order:
+
+```json
+["words", "typo", "proximity", "attribute", "sort", "exactness"]
+```
+
+| Rule | Sorts by |
+|------|----------|
+| **words** | Number of matched query terms (more matches = higher) |
+| **typo** | Number of typos (fewer typos = higher) |
+| **proximity** | Distance between matched terms (closer = higher) |
+| **attribute** | Which field contains the match (based on searchable attributes order) |
+| **sort** | User-defined sort parameter at query time |
+| **exactness** | How closely matches resemble the query (exact = higher) |
+
+## Example
+
+For query `batman dark knight`:
+
+1. **words**: Documents with all 3 terms rank first, then 2 terms, then 1
+2. **typo**: Among documents with equal term matches, fewer typos rank higher
+3. **proximity**: Documents where terms appear close together rank higher
+4. **attribute**: Matches in `title` rank higher than matches in `description`
+5. **exactness**: Exact phrase matches rank higher than partial matches
+
+## Customizing ranking rules
+
+Reorder rules to change relevance behavior:
+
+```bash
+curl -X PATCH "${MEILISEARCH_URL}/indexes/movies/settings/ranking-rules" \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
+  -H 'Content-Type: application/json' \
+  --data-binary '["words", "exactness", "typo", "proximity", "attribute", "sort"]'
+```
+
+### Custom ranking rules
+
+Add business-specific sorting with custom rules:
+
+```json
+["words", "typo", "proximity", "attribute", "sort", "exactness", "rating:desc", "popularity:desc"]
+```
+
+Custom rules use the format `attribute:asc` or `attribute:desc`.
+
+## Common customizations
+
+| Goal | Configuration |
+|------|---------------|
+| Prioritize exact matches | Move `exactness` higher |
+| Boost popular items | Add `popularity:desc` |
+| Prefer newer content | Add `date:desc` |
+| De-emphasize typos | Move `typo` lower or remove it |
+
+## Related concepts
+
+- [Typo tolerance](/getting_started/glossary/typo_tolerance): The `typo` rule behavior
+- [Facets](/getting_started/glossary/facets): Filtering vs ranking
+
+## Learn more
+
+- [Ranking rules guide](/products/full_text_search/ranking_rules): Detailed explanations
+- [Custom ranking rules](/products/full_text_search/custom_ranking_rules): Business logic sorting
+- [Ranking rules API](/reference/api/settings/ranking-rules): API reference

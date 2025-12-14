@@ -1,0 +1,119 @@
+---
+title: Stop words
+sidebarTitle: Stop words
+description: Configure the stop words setting for your Meilisearch index.
+---
+
+import { RouteHighlighter } from '/snippets/route_highlighter.mdx'
+import { NoticeTag } from '/snippets/notice_tag.mdx'
+import CodeSamplesGetStopWords1 from '/snippets/samples/code_samples_get_stop_words_1.mdx';
+import CodeSamplesUpdateStopWords1 from '/snippets/samples/code_samples_update_stop_words_1.mdx';
+import CodeSamplesResetStopWords1 from '/snippets/samples/code_samples_reset_stop_words_1.mdx';
+
+Words added to the `stopWords` list are ignored in future search queries.
+
+<Warning>
+Updating stop words will re-index all documents in the index, which can take some time. We recommend updating your index settings first and then adding documents as this reduces RAM consumption.
+</Warning>
+
+<Tip>
+Stop words are strongly related to the language used in your dataset. For example, most datasets containing English documents will have countless occurrences of `the` and `of`. Italian datasets, instead, will benefit from ignoring words like `a`, `la`, or `il`.
+
+[This open-source project on GitHub](https://github.com/stopwords-iso/stopwords-iso) offers lists of possible stop words in different languages. Note that, depending on your dataset and use case, you will need to tweak these lists for optimal results.
+</Tip>
+
+### Get stop words
+
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/settings/stop-words" />
+
+Get the stop words list of an index.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](getting_started/indexes#index-uid) of the requested index |
+
+#### Example
+
+<CodeSamplesGetStopWords1 />
+
+##### Response: `200 Ok`
+
+```json
+[
+  "of",
+  "the",
+  "to"
+]
+```
+
+### Update stop words
+
+<RouteHighlighter method="PUT" path="/indexes/{index_uid}/settings/stop-words" />
+
+Update the list of stop words of an index.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](getting_started/indexes#index-uid) of the requested index |
+
+#### Body
+
+```
+[<String>, <String>, …]
+```
+
+An array of strings. Each string should be a single word.
+
+If a list of stop words already exists, it will be overwritten (_replaced_).
+
+#### Example
+
+<CodeSamplesUpdateStopWords1 />
+
+##### Response: `202 Accepted`
+
+```json
+{
+  "taskUid": 1,
+  "indexUid": "movies",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+}
+```
+
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+
+### Reset stop words
+
+<RouteHighlighter method="DELETE" path="/indexes/{index_uid}/settings/stop-words" />
+
+Reset the list of stop words of an index to its default value.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](getting_started/indexes#index-uid) of the requested index |
+
+#### Example
+
+<CodeSamplesResetStopWords1 />
+
+##### Response: `202 Accepted`
+
+```json
+{
+  "taskUid": 1,
+  "indexUid": "movies",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+}
+```
+
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).

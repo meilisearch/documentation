@@ -8,7 +8,7 @@ import { RouteHighlighter } from '/snippets/route_highlighter.mdx'
 
 import CodeSamplesFacetSearch1 from '/snippets/samples/code_samples_facet_search_1.mdx';
 
-The `/facet-search` route allows you to search for facet values. Facet search supports [prefix search](/learn/engine/prefix) and [typo tolerance](/learn/relevancy/typo_tolerance_settings). The returned hits are sorted lexicographically in ascending order.
+The `/facet-search` route allows you to search for facet values. Facet search supports [prefix search](/products/full_text_search/query_processing) and [typo tolerance](/products/full_text_search/typo_tolerance_settings). The returned hits are sorted lexicographically in ascending order.
 
 <Note>
 Meilisearch does not support facet search on numbers. Convert numeric facets to strings to make them searchable.
@@ -23,7 +23,7 @@ Search for a facet value within a given facet.
 <RouteHighlighter method="POST" path="/indexes/{index_uid}/facet-search" />
 
 <Warning>
-This endpoint will not work without first explicitly adding attributes to the [`filterableAttributes`](/reference/api/settings#update-filterable-attributes) list. [Learn more about facets in our dedicated guide.](/learn/filtering_and_sorting/search_with_facet_filters)
+This endpoint will not work without first explicitly adding attributes to the [`filterableAttributes`](/reference/api/settings/filterable-attributes#update-filterable-attributes) list. [Learn more about facets in our dedicated guide.](/products/faceted_search/search_with_facet_filters)
 </Warning>
 
 <Warning>
@@ -39,10 +39,10 @@ For example, searching for `Jane` will return `Jane Austen`, but searching for `
 | **`facetName`** *                                                                                     | String                                                              | `null`        | Facet name to search values on                                                                                                                     |
 | **`facetQuery`**                                                                                      | String                                                              | `null`        | Search query for a given facet value. If `facetQuery` isn't specified, Meilisearch returns all facet values for the searched facet, limited to 100 |
 | **[`q`](/reference/api/search#query-q)**                                                              | String                                                              | `""`          | Query string                                                                                                                                       |
-| **[`filter`](/reference/api/search#filter)**                                                          | [String*](/learn/filtering_and_sorting/filter_expression_reference) | `null`        | Filter queries by an attribute's value                                                                                                             |
+| **[`filter`](/reference/api/search#filter)**                                                          | [String*](/products/faceted_search/filter_expression_reference) | `null`        | Filter queries by an attribute's value                                                                                                             |
 | **[`matchingStrategy`](/reference/api/search#matching-strategy)**                                     | String                                                              | `"last"`        | Strategy used to match query terms within documents                                                                                                |
 | **[`attributesToSearchOn`](/reference/api/search##customize-attributes-to-search-on-at-search-time)** | Array of strings                                                    | `null`        | Restrict search to the specified attributes                                                                                                        |
-| **`exhaustiveFacetCount`**                                                                            | Boolean                                                             | `false`        | Return an exhaustive count of facets, up to the limit defined by [`maxTotalHits`](/reference/api/settings#pagination) |
+| **`exhaustiveFacetCount`**                                                                            | Boolean                                                             | `false`        | Return an exhaustive count of facets, up to the limit defined by [`maxTotalHits`](/reference/api/settings/pagination) |
 
 ### Response
 

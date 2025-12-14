@@ -1,0 +1,208 @@
+---
+title: Deploy on Google Cloud
+sidebarTitle: Google Cloud
+description: Deploy Meilisearch on a Google Cloud Compute Engine VM. Covers installation, server configuration, and securing your instance.
+---
+
+This tutorial will guide you through setting up a production-ready Meilisearch instance on Google Cloud Platform (GCP) using a Compute Engine virtual machine.
+
+<Note>
+[Meilisearch Cloud](https://www.meilisearch.com/cloud?utm_campaign=oss&utm_source=docs&utm_medium=running-production-oss) is the recommended way to run Meilisearch in production environments.
+</Note>
+
+## Requirements
+
+- A Google Cloud account with billing enabled
+- A Compute Engine VM running Debian 12 or Ubuntu 22.04 LTS
+- An SSH key pair or access via Google Cloud Console SSH
+- Firewall rules allowing inbound traffic on ports 22 (SSH), 80 (HTTP), and 443 (HTTPS)
+
+<Tip>
+Google Cloud has extensive documentation on [creating VM instances](https://cloud.google.com/compute/docs/instances/create-start-instance) and [connecting via SSH](https://cloud.google.com/compute/docs/instances/connecting-to-instance).
+</Tip>
+
+## Step 1: Install Meilisearch
+
+Connect to your VM via SSH (using the Google Cloud Console or gcloud CLI) and update the system:
+
+```sh
+sudo apt update && sudo apt upgrade -y
+sudo apt install curl -y
+```
+
+Download and run the Meilisearch installer:
+
+```sh
+curl -L https://install.meilisearch.com | sh
+```
+
+Move the binary to make it accessible system-wide:
+
+```sh
+sudo mv ./meilisearch /usr/local/bin/
+```
+
+## Step 2: Create system user
+
+Create a dedicated user for running Meilisearch:
+
+```sh
+sudo useradd -d /var/lib/meilisearch -s /bin/false -m -r meilisearch
+```
+
+Give the new user ownership of the Meilisearch binary:
+
+```sh
+sudo chown meilisearch:meilisearch /usr/local/bin/meilisearch
+```
+
+## Step 3: Create a configuration file
+
+Create data directories for Meilisearch:
+
+```bash
+sudo mkdir -p /var/lib/meilisearch/data /var/lib/meilisearch/dumps /var/lib/meilisearch/snapshots
+sudo chown -R meilisearch:meilisearch /var/lib/meilisearch
+sudo chmod 750 /var/lib/meilisearch
+```
+
+<Tip>
+For production workloads, consider attaching a persistent disk for data storage. This allows for easy snapshots and disk resizing independent of the VM.
+</Tip>
+
+Download the default configuration file:
+
+```bash
+curl https://raw.githubusercontent.com/meilisearch/meilisearch/latest/config.toml | sudo tee /etc/meilisearch.toml > /dev/null
+```
+
+Edit `/etc/meilisearch.toml` and update these settings, replacing `MASTER_KEY` with a secure 16-byte string:
+
+```ini
+env = "production"
+master_key = "MASTER_KEY"
+db_path = "/var/lib/meilisearch/data"
+dump_dir = "/var/lib/meilisearch/dumps"
+snapshot_dir = "/var/lib/meilisearch/snapshots"
+```
+
+Remember to choose a [safe master key](/products/platform/basic_security#creating-the-master-key-in-a-self-hosted-instance).
+
+## Step 4: Run Meilisearch as a service
+
+Create a systemd service file:
+
+```bash
+sudo cat << EOF > /etc/systemd/system/meilisearch.service
+[Unit]
+Description=Meilisearch
+After=systemd-user-sessions.service
+
+[Service]
+Type=simple
+WorkingDirectory=/var/lib/meilisearch
+ExecStart=/usr/local/bin/meilisearch --config-file-path /etc/meilisearch.toml
+User=meilisearch
+Group=meilisearch
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+EOF
+```
+
+Enable and start the service:
+
+```bash
+sudo systemctl enable meilisearch
+sudo systemctl start meilisearch
+```
+
+Verify the service is running:
+
+```sh
+sudo systemctl status meilisearch
+```
+
+## Step 5: Secure and finish your setup
+
+### 5.1. Configure firewall rules
+
+In the Google Cloud Console, navigate to VPC Network > Firewall and ensure you have rules allowing:
+- Port 22 for SSH access
+- Port 80 for HTTP traffic
+- Port 443 for HTTPS traffic
+
+You can also use gcloud CLI:
+
+```bash
+gcloud compute firewall-rules create allow-http --allow tcp:80
+gcloud compute firewall-rules create allow-https --allow tcp:443
+```
+
+### 5.2. Set up a reverse proxy with Nginx
+
+Install Nginx:
+
+```bash
+sudo apt install nginx -y
+```
+
+Remove the default configuration and create one for Meilisearch:
+
+```bash
+sudo rm -f /etc/nginx/sites-enabled/default
+sudo cat << EOF > /etc/nginx/sites-enabled/meilisearch
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    server_name _;
+    location / {
+        proxy_pass  http://localhost:7700;
+    }
+}
+EOF
+```
+
+Restart Nginx:
+
+```bash
+sudo systemctl enable nginx
+sudo systemctl restart nginx
+```
+
+### 5.3. Enable HTTPS with Let's Encrypt
+
+<Note>
+Before enabling HTTPS, ensure you have a domain name pointing to your VM's external IP address. You can reserve a static IP in Google Cloud Console under VPC Network > External IP addresses.
+</Note>
+
+Install certbot:
+
+```bash
+sudo apt install certbot python3-certbot-nginx -y
+```
+
+Run certbot to obtain and configure your SSL certificate:
+
+```bash
+sudo certbot --nginx
+```
+
+Follow the prompts to enter your email, agree to the Terms of Service, and select your domain. Choose to redirect HTTP traffic to HTTPS when prompted.
+
+Verify automatic renewal is configured:
+
+```bash
+sudo certbot renew --dry-run
+```
+
+## Conclusion
+
+Your Meilisearch instance is now running on Google Cloud with:
+- A dedicated system user for security
+- Automatic restart via systemd
+- Nginx reverse proxy
+- HTTPS encryption via Let's Encrypt
+
+For high-availability setups, consider using a managed instance group with a Cloud Load Balancer.

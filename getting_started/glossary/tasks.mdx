@@ -1,0 +1,131 @@
+---
+title: Tasks
+sidebarTitle: Tasks
+description: Tasks are asynchronous operations that Meilisearch queues and processes in order, allowing resource-intensive work without blocking searches.
+---
+
+Tasks are asynchronous operations in Meilisearch. When you add documents, update settings, or perform other resource-intensive operations, Meilisearch creates a task and processes it in the background. This keeps search fast while heavy work happens asynchronously.
+
+## Why tasks exist
+
+Search must be fast. If adding 100,000 documents blocked all searches until complete, users would experience delays. Tasks solve this by:
+
+1. Immediately acknowledging your request
+2. Queuing the work for background processing
+3. Letting you check progress anytime
+
+## Asynchronous operations
+
+These operations create tasks:
+
+| Operation | Task type |
+|-----------|-----------|
+| Add/update documents | `documentAdditionOrUpdate` |
+| Delete documents | `documentDeletion` |
+| Create/update/delete index | `indexCreation`, `indexUpdate`, `indexDeletion` |
+| Update settings | `settingsUpdate` |
+| Swap indexes | `indexSwap` |
+| Create dump | `dumpCreation` |
+| Create snapshot | `snapshotCreation` |
+
+## Task lifecycle
+
+```
+enqueued → processing → succeeded/failed/canceled
+```
+
+| Status | Meaning |
+|--------|---------|
+| `enqueued` | Waiting in queue |
+| `processing` | Currently running |
+| `succeeded` | Completed successfully |
+| `failed` | Completed with error |
+| `canceled` | Stopped before completion |
+
+## Working with tasks
+
+### Check a task's status
+
+When you create a task, you get a `taskUid`:
+
+```json
+{
+  "taskUid": 1,
+  "indexUid": "movies",
+  "status": "enqueued",
+  "enqueuedAt": "2024-01-15T10:00:00.000Z"
+}
+```
+
+Check its progress:
+
+```bash
+curl "${MEILISEARCH_URL}/tasks/1" \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}"
+```
+
+### List recent tasks
+
+```bash
+curl "${MEILISEARCH_URL}/tasks?limit=10" \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}"
+```
+
+### Filter tasks
+
+```bash
+# Failed tasks only
+curl "${MEILISEARCH_URL}/tasks?statuses=failed"
+
+# Tasks for a specific index
+curl "${MEILISEARCH_URL}/tasks?indexUids=movies"
+
+# Specific task types
+curl "${MEILISEARCH_URL}/tasks?types=documentAdditionOrUpdate"
+```
+
+## Task queue
+
+Tasks are processed **in order** (FIFO). A task won't start until all previous tasks complete. This ensures data consistency but means large tasks can delay subsequent ones.
+
+## Handling failures
+
+Failed tasks include error details:
+
+```json
+{
+  "uid": 5,
+  "status": "failed",
+  "error": {
+    "message": "Document id `123` not found.",
+    "code": "document_not_found",
+    "type": "invalid_request",
+    "link": "https://docs.meilisearch.com/errors#document_not_found"
+  }
+}
+```
+
+## Webhooks
+
+Configure webhooks to receive notifications when tasks complete:
+
+```json
+POST /indexes/movies/settings
+{
+  "taskWebhook": {
+    "url": "https://your-app.com/webhook",
+    "events": ["succeeded", "failed"]
+  }
+}
+```
+
+## Related concepts
+
+- [Indexes](/getting_started/glossary/indexes): Most tasks operate on indexes
+- [Documents](/getting_started/glossary/documents): Document operations create tasks
+
+## Learn more
+
+- [Working with tasks](/products/platform/working_with_tasks): Task management guide
+- [Tasks API reference](/reference/api/tasks): Full API documentation
+- [Task webhooks](/products/platform/task_webhook): Webhook configuration

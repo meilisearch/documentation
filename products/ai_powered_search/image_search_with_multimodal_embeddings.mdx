@@ -1,0 +1,246 @@
+---
+title: Image search with multimodal embeddings
+description: This article shows you the main steps for performing multimodal text-to-image searches
+---
+
+This guide shows the main steps to search through a database of images using Meilisearch's experimental multimodal embeddings.
+
+## Requirements
+
+- A database of images
+- A Meilisearch project  
+- Access to a multimodal embedding provider (for example, [VoyageAI multimodal embeddings](https://docs.voyageai.com/reference/multimodal-embeddings-api))  
+
+## Enable multimodal embeddings
+
+First, enable the `multimodal` experimental feature:
+
+```sh
+curl \
+  -X PATCH 'MEILISEARCH_URL/experimental-features/' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "multimodal": true
+  }'
+```
+
+You may also enable multimodal in your Meilisearch Cloud project's general settings, under "Experimental features".
+
+## Configure a multimodal embedder
+
+Much like other embedders, multimodal embedders must set their `source` to `rest` and explicitly declare their `url`. Depending on your chosen provider, you may also have to specify `apiKey`.
+
+All multimodal embedders must contain an `indexingFragments` field and a `searchFragments` field. Fragments are sets of embeddings built out of specific parts of document data.
+
+Fragments must follow the structure defined by the REST API of your chosen provider.
+
+### `indexingFragments`
+
+Use `indexingFragments` to tell Meilisearch how to send document data to the provider's API when generating document embeddings.
+
+For example, when using VoyageAI's multimodal model, an indexing fragment might look like this:
+
+```json
+"indexingFragments": {
+  "TEXTUAL_FRAGMENT_NAME": {
+    "value": {
+      "content": [
+        {
+          "type": "text",
+          "text": "A document named {{doc.title}} described as {{doc.description}}"
+        }
+      ]
+    }
+  },
+  "IMAGE_FRAGMENT_NAME": {
+    "value": {
+      "content": [
+        {
+          "type": "image_url",
+          "image_url": "{{doc.poster_url}}"
+        }
+      ]
+    }
+  }
+}
+```
+
+The example above requests Meilisearch to create two sets of embeddings during indexing: one for the textual description of an image, and another for the actual image.
+
+Any JSON string value appearing in a fragment is handled as a Liquid template, where you interpolate document data present in `doc`. In `IMAGE_FRAGMENT_NAME`, that's  `image_url` which outputs the plain URL string in the document field `poster_url`. In `TEXT_FRAGMENT_NAME`, `text` contains a longer string contextualizing two document fields, `title` and `description`.
+
+### `searchFragments`
+
+Use `searchFragments` to tell Meilisearch how to send search query data to the chosen provider's REST API when converting them into embeddings:
+
+```json
+"searchFragments": {
+  "USER_TEXT_FRAGMENT": {
+    "value": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{{q}}"
+        }
+      ]
+    }
+  },
+  "USER_SUBMITTED_IMAGE_FRAGMENT": {
+    "value": {
+      "content": [
+        {
+          "type": "image_base64",
+          "image_base64": "data:{{media.image.mime}};base64,{{media.image.data}}"
+        }
+      ]
+    }
+  }
+}
+```
+
+In this example, two modes of search are configured:
+
+1. A textual search based on the `q` parameter, which will be embedded as text
+2. An image search based on [data url](https://developer.mozilla.org/en-US/docs/Web/URI/Reference/Schemes/data) rebuilt from the `image.mime` and `image.data` field in the `media` field of the query
+
+Search fragments have access to data present in the query parameters `media` and `q`.
+
+Each semantic search query for this embedder should match exactly one search fragment of this embedder, so the fragments should each have at least one disambiguating field
+
+### Complete embedder configuration
+
+Your embedder should look similar to this example with all fragments and embedding provider data:
+
+```sh
+curl \
+  -X PATCH 'MEILISEARCH_URL/indexes/INDEX_NAME/settings' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "embedders": {
+      "MULTIMODAL_EMBEDDER_NAME": {
+        "source": "rest",
+        "url": "https://api.voyageai.com/v1/multimodal-embeddings",
+        "apiKey": "VOYAGE_API_KEY",
+        "indexingFragments": {
+          "TEXTUAL_FRAGMENT_NAME": {
+            "value": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "A document named {{doc.title}} described as {{doc.description}}"
+                }
+              ]
+            }
+          },
+          "IMAGE_FRAGMENT_NAME": {
+            "value": {
+              "content": [
+                {
+                  "type": "image_url",
+                  "image_url": "{{doc.poster_url}}"
+                }
+              ]
+            }
+          }
+        },
+        "searchFragments": {
+          "USER_TEXT_FRAGMENT": {
+            "value": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "{{q}}"
+                }
+              ]
+            }
+          },
+          "USER_SUBMITTED_IMAGE_FRAGMENT": {
+            "value": {
+              "content": [
+                {
+                  "type": "image_base64",
+                  "image_base64": "data:{{media.image.mime}};base64,{{media.image.data}}"
+                }
+              ]
+            }
+          }
+        },
+        "request": {
+          "inputs": [
+            "{{fragment}}",
+            "{{..}}"
+          ],
+          "model": "voyage-multimodal-3"
+        },
+        "response": {
+          "data": [
+            {
+              "embedding": "{{embedding}}"
+            },
+            "{{..}}"
+          ]
+        }
+      }
+    }
+  }'
+```
+
+Since the `source` of this embedder is `rest`, you must also specify a [`request` and a `response` fields](/reference/api/settings#body-21). These respectively instruct Meilisearch on how to structure the request sent to the embeddings provider, and where to find the embeddings in the provider's response.
+
+## Add documents
+
+Once your embedder is configured, you can [add documents to your index](getting_started/cloud_quick_start) with the [`/documents` endpoint](/reference/api/documents).
+
+During indexing, Meilisearch will automatically generate multimodal embeddings for each document using the configured `indexingFragments`.
+
+## Perform searches
+
+The final step is to perform searches using different types of content.
+
+### Use text to search for images
+
+Use the following search query to retrieve a mix of documents with images matching the description, documents with and documents containing the specified keywords:
+
+```sh
+curl -X POST "${MEILISEARCH_URL}/indexes/INDEX_NAME/search" \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "q": "a mountain sunset with snow",
+    "hybrid": {
+      "embedder": "MULTIMODAL_EMBEDDER_NAME"
+    }
+  }'
+```
+
+### Use an image to search for images
+
+You can also use an image to search for other, similar images:
+
+```sh
+curl -X POST "${MEILISEARCH_URL}/indexes/INDEX_NAME/search" \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "media": {
+      "image": {
+        "mime": "image/jpeg",
+        "data": "<BASE64_ENCODED_IMAGE>"
+      }
+    },
+    "hybrid": {
+      "embedder": "MULTIMODAL_EMBEDDER_NAME"
+    }
+  }'
+```
+
+<Tip>
+In most cases you will need a GUI interface that allows users to submit their images and converts these images to Base64 format. Creating this is outside the scope of this guide.
+</Tip>
+
+## Conclusion
+
+With multimodal embedders you can:
+
+1. Configure Meilisearch to embed both images and queries  
+2. Add image documents — Meilisearch automatically generates embeddings  
+3. Accept text or image input from users  
+4. Run hybrid searches using a mix of textual and input from other types of media, or run pure semantic semantic searches using only non-textual input

@@ -1,0 +1,60 @@
+---
+title: Where to Watch
+sidebarTitle: Where to Watch
+description: Find streaming platforms for your favorite movies with instant search
+---
+
+<Info>
+**Live demo**: [where2watch.meilisearch.com](https://where2watch.meilisearch.com)
+</Info>
+
+Where to Watch is a movie discovery application that helps users find which streaming platforms offer the movies they want to watch. Built with Meilisearch, it demonstrates how to create a fast, responsive search experience across a large movie database.
+
+[![Movies demo showing search results](/assets/images/movies-demo-dark.gif)](https://where2watch.meilisearch.com)
+
+## Features demonstrated
+
+- **Instant search**: Results appear as you type with sub-50ms response times
+- **Typo tolerance**: Find movies even with misspelled titles
+- **Faceted filtering**: Filter by genre, release year, and streaming platform
+- **Rich result display**: Movie posters, descriptions, ratings, and platform availability
+
+## Use case
+
+This demo showcases a common search pattern for media catalogs:
+
+- Users search for movies by title or keywords
+- Results include rich metadata (posters, ratings, descriptions)
+- Filters help narrow down by preferences
+- Platform availability helps users decide where to watch
+
+## Technical highlights
+
+| Feature | Implementation |
+|---------|----------------|
+| Dataset | Movie database with streaming availability |
+| Filtering | Disjunctive facets for multi-select genres |
+| Ranking | Custom ranking by popularity and release date |
+| Display | Highlighted search matches in titles |
+
+## Links
+
+<CardGroup cols={2}>
+  <Card title="Try the demo" icon="globe" href="https://where2watch.meilisearch.com">
+    Search movies and find where to stream them
+  </Card>
+  <Card title="Source code" icon="github" href="https://github.com/meilisearch/demo-movies">
+    View implementation on GitHub
+  </Card>
+</CardGroup>
+
+## Related resources
+
+<CardGroup cols={2}>
+  <Card title="Full-text search" icon="magnifying-glass" href="/products/full_text_search/overview">
+    Learn about Meilisearch search capabilities
+  </Card>
+  <Card title="Faceted search" icon="filter" href="/products/faceted_search/overview">
+    Implement filtering in your application
+  </Card>
+</CardGroup>

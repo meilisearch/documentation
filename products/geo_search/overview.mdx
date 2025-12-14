@@ -1,0 +1,117 @@
+---
+title: Geo search
+sidebarTitle: Overview
+description: Filter and sort search results by geographic location.
+---
+
+Geo search enables location-based filtering and sorting. Find nearby restaurants, sort stores by distance, or filter listings within a geographic area.
+
+## Features
+
+<CardGroup cols={2}>
+  <Card title="Radius filtering" icon="circle" href="/products/geo_search/filtering">
+    Find results within a distance from a point using `_geoRadius`.
+  </Card>
+  <Card title="Bounding box" icon="vector-square" href="/products/geo_search/filtering">
+    Filter results within a rectangular area using `_geoBoundingBox`.
+  </Card>
+  <Card title="Polygon filtering" icon="draw-polygon" href="/products/geo_search/filtering">
+    Filter results within custom shapes using `_geoPolygon`.
+  </Card>
+  <Card title="Distance sorting" icon="arrow-down-short-wide" href="/products/geo_search/sorting">
+    Sort results by distance from a location using `_geoPoint`.
+  </Card>
+</CardGroup>
+
+## Quick start
+
+### 1. Add documents with location
+
+```json
+[
+  {
+    "id": 1,
+    "name": "Sushi Palace",
+    "_geo": { "lat": 48.8566, "lng": 2.3522 }
+  },
+  {
+    "id": 2,
+    "name": "Pizza Roma",
+    "_geo": { "lat": 48.8606, "lng": 2.3376 }
+  }
+]
+```
+
+### 2. Configure geo attributes
+
+```bash
+curl -X PATCH "${MEILISEARCH_URL}/indexes/restaurants/settings" \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
+  -H "Content-Type: application/json" \
+  --data-binary '{
+    "filterableAttributes": ["_geo"],
+    "sortableAttributes": ["_geo"]
+  }'
+```
+
+### 3. Filter by location
+
+Find restaurants within 2km:
+
+```bash
+curl -X POST "${MEILISEARCH_URL}/indexes/restaurants/search" \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
+  -H "Content-Type: application/json" \
+  --data-binary '{
+    "filter": "_geoRadius(48.8584, 2.2945, 2000)"
+  }'
+```
+
+### 4. Sort by distance
+
+```bash
+curl -X POST "${MEILISEARCH_URL}/indexes/restaurants/search" \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
+  -H "Content-Type: application/json" \
+  --data-binary '{
+    "sort": ["_geoPoint(48.8584, 2.2945):asc"]
+  }'
+```
+
+Results include distance in meters:
+
+```json
+{
+  "hits": [
+    {
+      "id": 1,
+      "name": "Sushi Palace",
+      "_geo": { "lat": 48.8566, "lng": 2.3522 },
+      "_geoDistance": 4823
+    }
+  ]
+}
+```
+
+## Use cases
+
+| Use case | Features used |
+|----------|---------------|
+| Store locator | `_geoRadius` + `_geoPoint` sorting |
+| Food delivery | `_geoRadius` for delivery zones |
+| Real estate | `_geoBoundingBox` for map area |
+| Service areas | `_geoPolygon` for custom zones |
+
+## Learn more
+
+<CardGroup cols={3}>
+  <Card title="Preparing documents" icon="file-code" href="/products/geo_search/preparing_documents">
+    `_geo` and `_geojson` field formats
+  </Card>
+  <Card title="Filtering" icon="filter" href="/products/geo_search/filtering">
+    Radius, bounding box, polygon filters
+  </Card>
+  <Card title="Sorting" icon="arrow-down-short-wide" href="/products/geo_search/sorting">
+    Sort by distance with `_geoPoint`
+  </Card>
+</CardGroup>

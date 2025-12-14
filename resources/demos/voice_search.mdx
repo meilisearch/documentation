@@ -1,0 +1,97 @@
+---
+title: Voice Search
+sidebarTitle: Voice Search
+description: Search using voice input with speech recognition
+---
+
+<Info>
+**Live demo**: [voice.meilisearch.com](https://voice.meilisearch.com)
+</Info>
+
+This demo showcases voice-enabled search by integrating Meilisearch with browser speech recognition APIs. Speak your search query and see instant results.
+
+## Features demonstrated
+
+- **Voice input**: Search by speaking instead of typing
+- **Real-time transcription**: See your words as you speak
+- **Instant results**: Meilisearch processes voice queries immediately
+- **Accessibility**: Alternative input method for users
+
+## Use case
+
+Voice search improves accessibility and convenience:
+
+- Hands-free search while cooking or driving
+- Accessibility for users with motor impairments
+- Faster input for long or complex queries
+- Natural language queries
+
+## How it works
+
+```mermaid
+flowchart LR
+    A[User speaks] --> B[Browser Speech API]
+    B --> C[Text transcription]
+    C --> D[Meilisearch query]
+    D --> E[Search results]
+```
+
+1. User clicks microphone and speaks
+2. Browser's Web Speech API transcribes audio to text
+3. Transcribed text is sent to Meilisearch
+4. Results appear in real-time as words are recognized
+
+## Technical highlights
+
+| Component | Technology |
+|-----------|------------|
+| Speech recognition | Web Speech API |
+| Search engine | Meilisearch |
+| Processing | Client-side transcription |
+| Latency | Real-time streaming |
+
+## Browser support
+
+The Web Speech API is supported in:
+
+- Chrome (desktop and mobile)
+- Safari (desktop and mobile)
+- Edge
+- Firefox (partial support)
+
+## Integration example
+
+```javascript
+const recognition = new webkitSpeechRecognition();
+recognition.continuous = true;
+recognition.interimResults = true;
+
+recognition.onresult = (event) => {
+  const transcript = event.results[event.results.length - 1][0].transcript;
+  searchMeilisearch(transcript);
+};
+
+recognition.start();
+```
+
+## Links
+
+<CardGroup cols={2}>
+  <Card title="Try the demo" icon="globe" href="https://voice.meilisearch.com">
+    Search with your voice
+  </Card>
+  <Card title="JavaScript SDK" icon="js" href="/getting_started/sdks/javascript">
+    Integrate with your frontend
+  </Card>
+</CardGroup>
+
+## Related resources
+
+<CardGroup cols={2}>
+  <Card title="instant-meilisearch" icon="bolt" href="/getting_started/instant_meilisearch/javascript">
+    Build search UIs quickly
+  </Card>
+  <Card title="React integration" icon="react" href="/getting_started/instant_meilisearch/react">
+    Voice search in React apps
+  </Card>
+</CardGroup>

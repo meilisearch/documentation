@@ -1,0 +1,84 @@
+---
+title: RAG (Retrieval-Augmented Generation)
+sidebarTitle: RAG
+description: RAG combines search retrieval with AI text generation to produce accurate, grounded responses based on your data.
+---
+
+RAG (Retrieval-Augmented Generation) is a technique that combines information retrieval with AI text generation. Instead of relying solely on an AI model's training data, RAG retrieves relevant documents from your data and uses them to generate accurate, contextual responses.
+
+## Why RAG matters
+
+Large Language Models (LLMs) have limitations:
+
+- **Outdated knowledge**: Training data has a cutoff date
+- **Hallucinations**: Models may generate plausible but incorrect information
+- **No access to private data**: Models can't search your internal documents
+
+RAG solves these problems by grounding AI responses in your actual data.
+
+## How RAG works
+
+```
+User Query → Retrieve Relevant Documents → Augment Prompt → Generate Response
+```
+
+1. **Query**: User asks a question ("What's our refund policy?")
+2. **Retrieve**: Search engine finds relevant documents from your knowledge base
+3. **Augment**: Retrieved content is added to the AI prompt as context
+4. **Generate**: LLM produces a response based on the retrieved information
+
+## RAG components
+
+| Component | Purpose | Example |
+|-----------|---------|---------|
+| **Knowledge base** | Stores your data | Product docs, policies, FAQs |
+| **Retriever** | Finds relevant content | Meilisearch with hybrid search |
+| **Generator** | Produces responses | GPT-4, Claude, Mistral |
+
+## RAG with Meilisearch
+
+Meilisearch serves as the retriever in RAG pipelines, providing fast, relevant document retrieval. The [conversational search](/products/conversational_search/overview) feature combines retrieval and generation in one API:
+
+```json
+POST /indexes/docs/chat
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "How do I reset my password?"
+    }
+  ]
+}
+```
+
+Meilisearch retrieves relevant documentation and generates a grounded response.
+
+## Building RAG applications
+
+For custom RAG implementations:
+
+1. **Index your data** in Meilisearch with [AI-powered search](/products/ai_powered_search/getting_started)
+2. **Configure hybrid search** for optimal retrieval
+3. **Connect to an LLM** using the retrieved documents as context
+4. **Optionally use the Chat API** for built-in RAG functionality
+
+## RAG vs fine-tuning
+
+| Approach | Best for | Trade-offs |
+|----------|----------|------------|
+| **RAG** | Dynamic data, real-time updates | Requires retrieval infrastructure |
+| **Fine-tuning** | Consistent style/behavior | Expensive, data becomes stale |
+
+RAG is generally preferred when your data changes frequently or accuracy is critical.
+
+## Related concepts
+
+- [Hybrid search](/getting_started/glossary/hybrid_search): Retrieval method often used in RAG
+- [Semantic search](/getting_started/glossary/semantic_search): Understanding query intent
+- [Vector embeddings](/getting_started/glossary/vector_embeddings): Enabling semantic retrieval
+
+## Learn more
+
+- [Conversational search](/products/conversational_search/getting_started): Built-in RAG with Meilisearch
+- [Chat API reference](/reference/api/chats): RAG endpoint documentation
+- [AI-powered search](/products/ai_powered_search/getting_started): Configure retrieval for RAG

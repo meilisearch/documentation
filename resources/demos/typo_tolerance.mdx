@@ -1,0 +1,83 @@
+---
+title: Typo Tolerance
+sidebarTitle: Typo Tolerance
+description: See different typo tolerance configurations in action
+---
+
+<Info>
+**Live demo**: [typo-tolerance.meilisearch.com](https://typo-tolerance.meilisearch.com)
+</Info>
+
+This demo lets you experiment with Meilisearch's typo tolerance settings. See how different configurations affect search results when users make spelling mistakes.
+
+## Features demonstrated
+
+- **Configurable tolerance**: Adjust typo limits per word length
+- **Side-by-side comparison**: See results with different settings
+- **Real-time updates**: Changes apply instantly
+- **Edge cases**: Test with intentional misspellings
+
+## Use case
+
+Typo tolerance is essential for good search UX:
+
+- Users type quickly and make mistakes
+- Mobile keyboards lead to more typos
+- International users may not know exact spellings
+- Product names and technical terms are often misspelled
+
+## How typo tolerance works
+
+Meilisearch calculates the Levenshtein distance (number of edits) between the query and indexed words:
+
+| Word length | Default typos allowed |
+|-------------|----------------------|
+| 1-4 characters | 0 typos |
+| 5-8 characters | 1 typo |
+| 9+ characters | 2 typos |
+
+## Configuration options
+
+```json
+{
+  "typoTolerance": {
+    "enabled": true,
+    "minWordSizeForTypos": {
+      "oneTypo": 5,
+      "twoTypos": 9
+    },
+    "disableOnWords": ["exact_match_required"],
+    "disableOnAttributes": ["sku", "id"]
+  }
+}
+```
+
+## Example comparisons
+
+| Query | Intended | Typos |
+|-------|----------|-------|
+| "laptpo" | "laptop" | 1 (transposition) |
+| "iphoen" | "iphone" | 1 (transposition) |
+| "recieved" | "received" | 1 (substitution) |
+
+## Links
+
+<CardGroup cols={2}>
+  <Card title="Try the demo" icon="globe" href="https://typo-tolerance.meilisearch.com">
+    Experiment with typo settings
+  </Card>
+  <Card title="Typo tolerance guide" icon="spell-check" href="/products/full_text_search/typo_tolerance_settings">
+    Configure for your app
+  </Card>
+</CardGroup>
+
+## Related resources
+
+<CardGroup cols={2}>
+  <Card title="How typos are calculated" icon="calculator" href="/products/full_text_search/typo_tolerance_calculations">
+    Understanding the algorithm
+  </Card>
+  <Card title="Ranking rules" icon="ranking-star" href="/products/full_text_search/ranking_rules">
+    How typos affect ranking
+  </Card>
+</CardGroup>

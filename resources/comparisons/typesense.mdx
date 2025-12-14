@@ -1,0 +1,86 @@
+---
+title: Meilisearch vs Typesense
+sidebarTitle: Typesense
+description: Compare Meilisearch and Typesense, two open-source search engines focused on speed and simplicity. Learn key differences and when to choose each.
+---
+
+Typesense is an open-source search engine first released in 2015, built in C++ and focused on speed and ease of use. Like Meilisearch, it prioritizes developer experience and typo-tolerant instant search.
+
+## Quick comparison
+
+|  | Meilisearch | Typesense |
+|---|:---:|:---:|
+| **License** | MIT | GPL-3 |
+| **Built with** | Rust | C++ |
+| **Data storage** | Disk (memory-mapped) | RAM-limited |
+| **Language support** | Optimized for CJK, Arabic, Hebrew | Unicode-based (limited CJK) |
+| **Auto language detection** | Yes | No |
+| **Built-in analytics** | Yes (Cloud) | Basic query popularity |
+| **Embedding generation** | Yes | No |
+| **Stop words** | Built-in | Manual client-side |
+
+## What Typesense does well
+
+### Field weighting
+
+Typesense allows boosting specific fields for increased relevancy. You can ensure matches in product titles rank higher than description matches. Meilisearch offers similar capabilities through searchable attributes ordering and is adding field boosting support.
+
+### Grouping results
+
+Typesense provides the ability to group search results by a specified field, useful for deduplication or organizing results by category.
+
+### Memory-optimized performance
+
+By storing indexes entirely in RAM, Typesense achieves excellent search speeds for datasets that fit in memory. This is particularly beneficial when rapid response times are critical.
+
+### Geospatial and faceted search
+
+Typesense offers advanced configurations for location-based services and complex product filtering, making it popular for e-commerce applications.
+
+## When to choose Meilisearch instead
+
+### You need robust language support
+
+Meilisearch provides optimized support for Chinese, Japanese, Korean, Hebrew, Arabic, and other languages requiring complex tokenization. Typesense's Unicode-based tokenization struggles with languages without conventional word spacing or morphologically rich languages.
+
+### Automatic language detection matters
+
+Meilisearch automatically detects document language and applies appropriate tokenization. With Typesense, you need to manually specify the language or implement detection client-side.
+
+### Your dataset exceeds available RAM
+
+Meilisearch uses disk storage with memory mapping, meaning your dataset size isn't limited by RAM. Typesense stores indexes entirely in memory, which can become costly or impractical for large datasets.
+
+### You want built-in AI search
+
+Meilisearch handles embedding generation through integrations with OpenAI, HuggingFace, and other providers. Typesense requires you to generate and manage embeddings externally.
+
+### You prefer MIT licensing
+
+Meilisearch uses the permissive MIT license. Typesense uses GPL-3, which has more restrictions for commercial use and derivative works.
+
+### You need comprehensive analytics
+
+Meilisearch Cloud provides detailed search analytics including no-result rates, popular queries, and geographic distribution. Typesense offers basic query popularity tracking.
+
+## When to choose Typesense
+
+Consider Typesense if:
+
+- Field weighting for relevancy is critical for your use case
+- You need to group search results by field values
+- Your dataset fits comfortably in RAM and you want memory-optimized performance
+- You're building location-based services with complex geospatial queries
+- GPL-3 licensing aligns with your project requirements
+
+## Migration resources
+
+If you're considering Meilisearch:
+
+- [Meilisearch quick start](/getting_started/overview) - Get started in minutes
+- [AI-powered search](/products/ai_powered_search/getting_started) - Hybrid search capabilities
+- [Language support](/resources/help/language) - Supported languages and tokenization
+
+<Note>
+Typesense is a registered trademark of Typesense, Inc. This comparison is based on publicly available information and our own analysis.
+</Note>

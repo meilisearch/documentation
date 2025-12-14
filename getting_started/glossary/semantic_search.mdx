@@ -1,0 +1,83 @@
+---
+title: Semantic search
+sidebarTitle: Semantic search
+description: Semantic search understands the meaning and intent behind queries, delivering relevant results even without exact keyword matches.
+---
+
+Semantic search is a search method that understands the meaning and intent behind a query rather than simply matching keywords. It bridges the gap between how humans think and how machines process language, delivering more relevant results for natural language queries.
+
+## Semantic vs keyword search
+
+| Aspect | Keyword search | Semantic search |
+|--------|---------------|-----------------|
+| **Matching** | Exact words | Meaning and intent |
+| **Query handling** | Literal interpretation | Contextual understanding |
+| **"Running shoes"** | Documents with "running" and "shoes" | Jogging sneakers, athletic footwear |
+| **Typos/synonyms** | Often fails | Handles naturally |
+
+## How semantic search works
+
+1. **Query analysis**: Natural language processing breaks down the query to understand entities, intent, and context.
+
+2. **Embedding generation**: The query is converted into a [vector embedding](/getting_started/glossary/vector_embeddings) that captures its meaning.
+
+3. **Similarity matching**: The system finds documents with embeddings closest to the query embedding using [vector search](/getting_started/glossary/vector_search).
+
+4. **Ranking**: Results are ordered by semantic relevance, with optional re-ranking based on additional signals.
+
+## Example
+
+A search for "affordable laptops for students" using semantic search understands:
+- **Intent**: Finding budget-friendly computers
+- **Context**: Educational use, likely basic tasks
+- **Related concepts**: Chromebooks, budget notebooks, student discounts
+
+The results include relevant products even if they don't contain the exact words "affordable," "laptop," or "student."
+
+## Semantic search in Meilisearch
+
+Meilisearch implements semantic search through its [AI-powered search](/products/ai_powered_search/getting_started) features. When you configure an embedder, Meilisearch can:
+
+- Understand natural language queries
+- Find conceptually related content
+- Return relevant results for vague or exploratory searches
+
+For best results, combine semantic search with keyword search using [hybrid search](/getting_started/glossary/hybrid_search):
+
+```json
+POST /indexes/products/search
+{
+  "q": "comfortable office chair for long hours",
+  "hybrid": {
+    "semanticRatio": 0.7,
+    "embedder": "default"
+  }
+}
+```
+
+## When to use semantic search
+
+Semantic search excels when:
+
+- Users describe what they want in natural language
+- Your content uses varied vocabulary for similar concepts
+- Exact terminology isn't known to users
+- You want to improve discovery and exploration
+
+Keyword search remains better for:
+
+- Exact matches (product codes, IDs, technical terms)
+- Users who know precisely what they're looking for
+- Structured data queries
+
+## Related concepts
+
+- [Vector search](/getting_started/glossary/vector_search): The technology underlying semantic search
+- [Vector embeddings](/getting_started/glossary/vector_embeddings): Numerical representations of meaning
+- [Hybrid search](/getting_started/glossary/hybrid_search): Combining semantic and keyword search
+
+## Learn more
+
+- [AI-powered search guide](/products/ai_powered_search/getting_started): Enable semantic search
+- [Full-text vs AI search](/products/ai_powered_search/difference_full_text_ai_search): Understand the differences
+- [Choose an embedder](/products/ai_powered_search/choose_an_embedder): Select the right model

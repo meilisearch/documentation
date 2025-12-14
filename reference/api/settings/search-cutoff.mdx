@@ -1,0 +1,103 @@
+---
+title: Search cutoff
+sidebarTitle: Search cutoff
+description: Configure the search cutoff setting for your Meilisearch index.
+---
+
+import { RouteHighlighter } from '/snippets/route_highlighter.mdx'
+import { NoticeTag } from '/snippets/notice_tag.mdx'
+import CodeSamplesGetSearchCutoff1 from '/snippets/samples/code_samples_get_search_cutoff_1.mdx';
+import CodeSamplesUpdateSearchCutoff1 from '/snippets/samples/code_samples_update_search_cutoff_1.mdx';
+import CodeSamplesResetSearchCutoff1 from '/snippets/samples/code_samples_reset_search_cutoff_1.mdx';
+
+Configure the maximum duration of a search query. If a search operation reaches the cutoff, Meilisearch immediately interrupts it and returns all computed results.
+
+By default, Meilisearch interrupts searches after 1500 milliseconds.
+
+### Get search cutoff
+
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/settings/search-cutoff-ms" />
+
+Get an index's search cutoff value.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](getting_started/indexes#index-uid) of the requested index |
+
+#### Example
+
+<CodeSamplesGetSearchCutoff1 />
+
+##### Response: `200 Ok`
+
+```json
+null
+```
+
+### Update search cutoff
+
+<RouteHighlighter method="PUT" path="/indexes/{index_uid}/settings/search-cutoff-ms" />
+
+Update an index's search cutoff value.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](getting_started/indexes#index-uid) of the requested index |
+
+#### Body
+
+```
+150
+```
+
+A single integer indicating the cutoff value in milliseconds.
+
+#### Example
+
+<CodeSamplesUpdateSearchCutoff1 />
+
+##### Response: `202 Accepted`
+
+```json
+{
+  "taskUid": 1,
+  "indexUid": "movies",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2023-03-21T06:33:41.000000Z"
+}
+```
+
+Use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+
+### Reset search cutoff
+
+<RouteHighlighter method="DELETE" path="/indexes/{index_uid}/settings/search-cutoff-ms" />
+
+Reset an index's search cutoff value to its default value, `null`. This translates to a cutoff of 1500ms.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](getting_started/indexes#index-uid) of the requested index |
+
+#### Example
+
+<CodeSamplesResetSearchCutoff1 />
+
+##### Response: `202 Accepted`
+
+```json
+{
+  "taskUid": 1,
+  "indexUid": "movies",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2023-03-21T07:05:16.000000Z"
+}
+```

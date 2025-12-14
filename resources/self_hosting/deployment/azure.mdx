@@ -1,0 +1,211 @@
+---
+title: Deploy on Azure
+sidebarTitle: Azure
+description: Deploy Meilisearch on an Azure Virtual Machine. Covers installation, server configuration, and securing your instance.
+---
+
+This tutorial will guide you through setting up a production-ready Meilisearch instance on Microsoft Azure using a Virtual Machine.
+
+<Note>
+[Meilisearch Cloud](https://www.meilisearch.com/cloud?utm_campaign=oss&utm_source=docs&utm_medium=running-production-oss) is the recommended way to run Meilisearch in production environments.
+</Note>
+
+## Requirements
+
+- An Azure account with an active subscription
+- A Virtual Machine running Ubuntu 22.04 LTS
+- An SSH key pair to connect to the VM
+- A Network Security Group (NSG) allowing inbound traffic on ports 22 (SSH), 80 (HTTP), and 443 (HTTPS)
+
+<Tip>
+Azure has extensive documentation on [creating Linux VMs](https://learn.microsoft.com/en-us/azure/virtual-machines/linux/quick-create-portal) and [connecting via SSH](https://learn.microsoft.com/en-us/azure/virtual-machines/linux/ssh-from-windows).
+</Tip>
+
+## Step 1: Install Meilisearch
+
+Connect to your VM via SSH and update the system:
+
+```sh
+sudo apt update && sudo apt upgrade -y
+sudo apt install curl -y
+```
+
+Download and run the Meilisearch installer:
+
+```sh
+curl -L https://install.meilisearch.com | sh
+```
+
+Move the binary to make it accessible system-wide:
+
+```sh
+sudo mv ./meilisearch /usr/local/bin/
+```
+
+## Step 2: Create system user
+
+Create a dedicated user for running Meilisearch:
+
+```sh
+sudo useradd -d /var/lib/meilisearch -s /bin/false -m -r meilisearch
+```
+
+Give the new user ownership of the Meilisearch binary:
+
+```sh
+sudo chown meilisearch:meilisearch /usr/local/bin/meilisearch
+```
+
+## Step 3: Create a configuration file
+
+Create data directories for Meilisearch:
+
+```bash
+sudo mkdir -p /var/lib/meilisearch/data /var/lib/meilisearch/dumps /var/lib/meilisearch/snapshots
+sudo chown -R meilisearch:meilisearch /var/lib/meilisearch
+sudo chmod 750 /var/lib/meilisearch
+```
+
+<Tip>
+For production workloads, consider attaching a managed disk for data storage. This allows for easy snapshots and independent scaling of storage.
+</Tip>
+
+Download the default configuration file:
+
+```bash
+curl https://raw.githubusercontent.com/meilisearch/meilisearch/latest/config.toml | sudo tee /etc/meilisearch.toml > /dev/null
+```
+
+Edit `/etc/meilisearch.toml` and update these settings, replacing `MASTER_KEY` with a secure 16-byte string:
+
+```ini
+env = "production"
+master_key = "MASTER_KEY"
+db_path = "/var/lib/meilisearch/data"
+dump_dir = "/var/lib/meilisearch/dumps"
+snapshot_dir = "/var/lib/meilisearch/snapshots"
+```
+
+Remember to choose a [safe master key](/products/platform/basic_security#creating-the-master-key-in-a-self-hosted-instance).
+
+## Step 4: Run Meilisearch as a service
+
+Create a systemd service file:
+
+```bash
+sudo cat << EOF > /etc/systemd/system/meilisearch.service
+[Unit]
+Description=Meilisearch
+After=systemd-user-sessions.service
+
+[Service]
+Type=simple
+WorkingDirectory=/var/lib/meilisearch
+ExecStart=/usr/local/bin/meilisearch --config-file-path /etc/meilisearch.toml
+User=meilisearch
+Group=meilisearch
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+EOF
+```
+
+Enable and start the service:
+
+```bash
+sudo systemctl enable meilisearch
+sudo systemctl start meilisearch
+```
+
+Verify the service is running:
+
+```sh
+sudo systemctl status meilisearch
+```
+
+## Step 5: Secure and finish your setup
+
+### 5.1. Configure Network Security Group
+
+In the Azure Portal, navigate to your VM's Network Security Group and ensure you have inbound rules for:
+- Port 22 for SSH access
+- Port 80 for HTTP traffic
+- Port 443 for HTTPS traffic
+
+You can also use Azure CLI:
+
+```bash
+az network nsg rule create --resource-group myResourceGroup --nsg-name myNSG \
+  --name allow-http --priority 100 --destination-port-ranges 80 --access Allow --protocol Tcp
+
+az network nsg rule create --resource-group myResourceGroup --nsg-name myNSG \
+  --name allow-https --priority 101 --destination-port-ranges 443 --access Allow --protocol Tcp
+```
+
+### 5.2. Set up a reverse proxy with Nginx
+
+Install Nginx:
+
+```bash
+sudo apt install nginx -y
+```
+
+Remove the default configuration and create one for Meilisearch:
+
+```bash
+sudo rm -f /etc/nginx/sites-enabled/default
+sudo cat << EOF > /etc/nginx/sites-enabled/meilisearch
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    server_name _;
+    location / {
+        proxy_pass  http://localhost:7700;
+    }
+}
+EOF
+```
+
+Restart Nginx:
+
+```bash
+sudo systemctl enable nginx
+sudo systemctl restart nginx
+```
+
+### 5.3. Enable HTTPS with Let's Encrypt
+
+<Note>
+Before enabling HTTPS, ensure you have a domain name pointing to your VM's public IP address. You can configure a static IP in the Azure Portal under your VM's networking settings.
+</Note>
+
+Install certbot:
+
+```bash
+sudo apt install certbot python3-certbot-nginx -y
+```
+
+Run certbot to obtain and configure your SSL certificate:
+
+```bash
+sudo certbot --nginx
+```
+
+Follow the prompts to enter your email, agree to the Terms of Service, and select your domain. Choose to redirect HTTP traffic to HTTPS when prompted.
+
+Verify automatic renewal is configured:
+
+```bash
+sudo certbot renew --dry-run
+```
+
+## Conclusion
+
+Your Meilisearch instance is now running on Azure with:
+- A dedicated system user for security
+- Automatic restart via systemd
+- Nginx reverse proxy
+- HTTPS encryption via Let's Encrypt
+
+For high-availability setups, consider using Azure Virtual Machine Scale Sets with an Azure Load Balancer.

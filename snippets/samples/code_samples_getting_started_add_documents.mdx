@@ -2,9 +2,9 @@
 
 ```bash cURL
 curl \
-  -X POST 'MEILISEARCH_URL/indexes/movies/documents?primaryKey=id' \
+  -X POST "${MEILISEARCH_URL}/indexes/movies/documents?primaryKey=id" \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer aSampleMasterKey' \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
   --data-binary @movies.json
 ```
 
@@ -24,8 +24,8 @@ import { MeiliSearch } from 'meilisearch'
 import movies from './movies.json'
 
 const client = new MeiliSearch({
-  host: 'http://localhost:7700',
-  apiKey: 'aSampleMasterKey'
+  host: process.env.MEILISEARCH_URL,
+  apiKey: process.env.MEILISEARCH_API_KEY
 })
 client.index('movies').addDocuments(movies)
   .then((res) => console.log(res))
@@ -38,8 +38,12 @@ client.index('movies').addDocuments(movies)
 # In your .py file:
 import meilisearch
 import json
+import os
 
-client = meilisearch.Client('http://localhost:7700', 'aSampleMasterKey')
+client = meilisearch.Client(
+  os.environ.get('MEILISEARCH_URL'),
+  os.environ.get('MEILISEARCH_API_KEY')
+)
 
 json_file = open('movies.json', encoding='utf-8')
 movies = json.load(json_file)
@@ -63,7 +67,10 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 use Meilisearch\Client;
 
-$client = new Client('http://localhost:7700', 'aSampleMasterKey');
+$client = new Client(
+  getenv('MEILISEARCH_URL'),
+  getenv('MEILISEARCH_API_KEY')
+);
 
 $movies_json = file_get_contents('movies.json');
 $movies = json_decode($movies_json);
@@ -94,7 +101,10 @@ import java.nio.file.Path;
 
 Path fileName = Path.of("movies.json");
 String moviesJson = Files.readString(fileName);
-Client client = new Client(new Config("http://localhost:7700", "aSampleMasterKey"));
+Client client = new Client(new Config(
+  System.getenv("MEILISEARCH_URL"),
+  System.getenv("MEILISEARCH_API_KEY")
+));
 Index index = client.index("movies");
 index.addDocuments(moviesJson);
 ```
@@ -107,7 +117,10 @@ index.addDocuments(moviesJson);
 require 'json'
 require 'meilisearch'
 
-client = MeiliSearch::Client.new('http://localhost:7700', 'aSampleMasterKey')
+client = MeiliSearch::Client.new(
+  ENV['MEILISEARCH_URL'],
+  ENV['MEILISEARCH_API_KEY']
+)
 
 movies_json = File.read('movies.json')
 movies = JSON.parse(movies_json)
@@ -131,7 +144,10 @@ import (
 )
 
 func main() {
-  client := meilisearch.New("http://localhost:7700", meilisearch.WithAPIKey("masterKey"))
+  client := meilisearch.New(
+    os.Getenv("MEILISEARCH_URL"),
+    meilisearch.WithAPIKey(os.Getenv("MEILISEARCH_API_KEY")),
+  )
 
   jsonFile, _ := os.Open("movies.json")
   defer jsonFile.Close()
@@ -152,6 +168,7 @@ func main() {
 // dotnet add package Meilisearch
 
 // In your .cs file:
+using System;
 using System.IO;
 using System.Text.Json;
 using Meilisearch;
@@ -173,7 +190,10 @@ namespace Meilisearch_demo
     {
         static async Task Main(string[] args)
         {
-            MeilisearchClient client = new MeilisearchClient("http://localhost:7700", "aSampleMasterKey");
+            MeilisearchClient client = new MeilisearchClient(
+                Environment.GetEnvironmentVariable("MEILISEARCH_URL"),
+                Environment.GetEnvironmentVariable("MEILISEARCH_API_KEY")
+            );
             var options = new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true
@@ -231,11 +251,14 @@ use meilisearch_sdk::{
   settings::*
 };
 use serde::{Serialize, Deserialize};
-use std::{io::prelude::*, fs::File};
+use std::{io::prelude::*, fs::File, env};
 use futures::executor::block_on;
 
 fn main() { block_on(async move {
-  let client = Client::new("http://localhost:7700", Some("aSampleMasterKey"));
+  let client = Client::new(
+    env::var("MEILISEARCH_URL").unwrap(),
+    Some(env::var("MEILISEARCH_API_KEY").unwrap())
+  );
 
   // Reading and parsing the file
   let mut file = File::open("movies.json")
@@ -265,7 +288,10 @@ dependencies: [
 // In your .swift file:
 let path = Bundle.main.url(forResource: "movies", withExtension: "json")!
 let documents: Data = try Data(contentsOf: path)
-let client = try MeiliSearch(host: "http://localhost:7700", apiKey: "aSampleMasterKey")
+let client = try MeiliSearch(
+  host: ProcessInfo.processInfo.environment["MEILISEARCH_URL"]!,
+  apiKey: ProcessInfo.processInfo.environment["MEILISEARCH_API_KEY"]
+)
 
 client.index("movies").addDocuments(documents: documents) { (result) in
     switch result {
@@ -284,7 +310,11 @@ client.index("movies").addDocuments(documents: documents) { (result) in
 import 'package:meilisearch/meilisearch.dart';
 import 'dart:io';
 import 'dart:convert';
-var client = MeiliSearchClient('http://localhost:7700', 'aSampleMasterKey');
+
+var client = MeiliSearchClient(
+  Platform.environment['MEILISEARCH_URL']!,
+  Platform.environment['MEILISEARCH_API_KEY'],
+);
 final json = await File('movies.json').readAsString();
 await client.index('movies').addDocumentsJson(json);
 ```

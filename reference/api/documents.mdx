@@ -19,7 +19,7 @@ import CodeSamplesGetOneDocument1 from '/snippets/samples/code_samples_get_one_d
 
 The `/documents` route allows you to create, manage, and delete documents.
 
-[Learn more about documents.](/learn/getting_started/documents)
+[Learn more about documents.](getting_started/documents)
 
 ## Get documents with POST
 
@@ -30,14 +30,14 @@ Get a set of documents.
 Use `offset` and `limit` to browse through documents.
 
 <Warning>
-`filter` will not work without first explicitly adding attributes to the [`filterableAttributes` list](/reference/api/settings#update-filterable-attributes). [Learn more about filters in our dedicated guide.](/learn/filtering_and_sorting/filter_search_results)
+`filter` will not work without first explicitly adding attributes to the [`filterableAttributes` list](/reference/api/settings/filterable-attributes#update-filterable-attributes). [Learn more about filters in our dedicated guide.](/products/faceted_search/filter_search_results)
 </Warning>
 
 ### Path parameters
 
 | Name              | Type   | Description                                                            |
 | :---------------- | :----- | :--------------------------------------------------------------------- |
-| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](getting_started/indexes#index-uid) of the requested index |
 
 ### Body
 
@@ -116,17 +116,17 @@ This endpoint will be deprecated in the near future. Consider using POST `/index
 
 Get a set of documents.
 
-Using the query parameters `offset` and `limit`, you can browse through all your documents.`filter` must be a string. To create [filter expressions](/learn/filtering_and_sorting/filter_expression_reference) use `AND` or `OR`.
+Using the query parameters `offset` and `limit`, you can browse through all your documents.`filter` must be a string. To create [filter expressions](/products/faceted_search/filter_expression_reference) use `AND` or `OR`.
 
 <Warning>
-`filter` will not work without first explicitly adding attributes to the [`filterableAttributes` list](/reference/api/settings#update-filterable-attributes). [Learn more about filters in our dedicated guide.](/learn/filtering_and_sorting/filter_search_results)
+`filter` will not work without first explicitly adding attributes to the [`filterableAttributes` list](/reference/api/settings/filterable-attributes#update-filterable-attributes). [Learn more about filters in our dedicated guide.](/products/faceted_search/filter_search_results)
 </Warning>
 
 ### Path parameters
 
 | Name              | Type   | Description                                                            |
 | :---------------- | :----- | :--------------------------------------------------------------------- |
-| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](getting_started/indexes#index-uid) of the requested index |
 
 ### Query parameters
 
@@ -204,8 +204,8 @@ Get one document using its unique id.
 
 | Name                | Type           | Description                                                                           |
 | :------------------ | :------------- | :------------------------------------------------------------------------------------ |
-| **`index_uid`** *   | String         | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index                |
-| **`document_id`** * | String/Integer | [Document id](/learn/getting_started/primary_key#document-id) of the requested document |
+| **`index_uid`** *   | String         | [`uid`](getting_started/indexes#index-uid) of the requested index                |
+| **`document_id`** * | String/Integer | [Document id](getting_started/primary_key#document-id) of the requested document |
 
 ### Query parameters
 
@@ -235,7 +235,7 @@ Get one document using its unique id.
 
 Add an array of documents or replace them if they already exist. If the provided index does not exist, it will be created.
 
-If you send an already existing document (same [document id](/learn/getting_started/primary_key#document-id)) the **whole existing document** will be overwritten by the new document. Fields that are no longer present in the new document are removed. For a partial update of the document see the [add or update documents](/reference/api/documents#add-or-update-documents) endpoint.
+If you send an already existing document (same [document id](getting_started/primary_key#document-id)) the **whole existing document** will be overwritten by the new document. Fields that are no longer present in the new document are removed. For a partial update of the document see the [add or update documents](/reference/api/documents#add-or-update-documents) endpoint.
 
 This endpoint accepts the following content types:
 
@@ -247,13 +247,13 @@ This endpoint accepts the following content types:
 
 | Name              | Type   | Description                                                            |
 | :---------------- | :----- | :--------------------------------------------------------------------- |
-| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](getting_started/indexes#index-uid) of the requested index |
 
 ### Query parameters
 
 | Query Parameter    | Default Value | Description                                                                                                                             |
 | :----------------- | :------------ | :-------------------------------------------------------------------------------------------------------------------------------------- |
-| **`primaryKey`**   | `null`        | [Primary key](/learn/getting_started/primary_key#primary-field) of the index                                                              |
+| **`primaryKey`**   | `null`        | [Primary key](getting_started/primary_key#primary-field) of the index                                                              |
 | **`csvDelimiter`** | `","`         | Configure the character separating CSV fields. Must be a string containing [one ASCII character](https://www.rfc-editor.org/rfc/rfc20). |
 | **`customMetadata`** | `null`         | An arbitrary string accessible via the [generated task object](/reference/api/tasks#custommetadata) |
 | **`skipCreation`**   | `false`       | If `true`, updates existing documents, but does not add new documents to the index |
@@ -262,7 +262,7 @@ This endpoint accepts the following content types:
 Configuring `csvDelimiter` and sending data with a content type other than CSV will cause Meilisearch to throw an error.
 </Warning>
 
-If you want to [set the primary key of your index on document addition](/learn/getting_started/primary_key#setting-the-primary-key-on-document-addition), it can only be done **the first time you add documents** to the index. After this, the `primaryKey` parameter will be ignored if given.
+If you want to [set the primary key of your index on document addition](getting_started/primary_key#setting-the-primary-key-on-document-addition), it can only be done **the first time you add documents** to the index. After this, the `primaryKey` parameter will be ignored if given.
 
 ### Body
 
@@ -355,7 +355,7 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 Add a list of documents or update them if they already exist. If the provided index does not exist, it will be created.
 
-If you send an already existing document (same [document id](/learn/getting_started/primary_key#document-id)) the old document will be only partially updated according to the fields of the new document. Any fields not present in the new document are kept and remain unchanged.
+If you send an already existing document (same [document id](getting_started/primary_key#document-id)) the old document will be only partially updated according to the fields of the new document. Any fields not present in the new document are kept and remain unchanged.
 
 <Warning>
 Partial updates apply only to top-level fields. You cannot perform a partial update of a nested field.
@@ -367,7 +367,7 @@ Using dot notation in an update request creates a new flat attribute instead of 
 
 To completely overwrite a document, check out the [add or replace documents route](/reference/api/documents#add-or-replace-documents).
 
-If you want to set the [**primary key** of your index](/learn/getting_started/primary_key#setting-the-primary-key-on-document-addition) through this route, you may only do so **the first time you add documents** to the index. If you try to set the primary key after having added documents to the index, the task will return an error.
+If you want to set the [**primary key** of your index](getting_started/primary_key#setting-the-primary-key-on-document-addition) through this route, you may only do so **the first time you add documents** to the index. If you try to set the primary key after having added documents to the index, the task will return an error.
 
 This endpoint accepts the following content types:
 
@@ -379,15 +379,15 @@ This endpoint accepts the following content types:
 
 | Name              | Type   | Description                                                            |
 | :---------------- | :----- | :--------------------------------------------------------------------- |
-| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](getting_started/indexes#index-uid) of the requested index |
 
 ### Query parameters
 
-| Query Parameter      | Default Value | Description                                                                                                                             |
-| :------------------- | :------------ | :-------------------------------------------------------------------------------------------------------------------------------------- |
-| **`primaryKey`**     | `null`        | [Primary key](/learn/getting_started/primary_key#primary-field) of the documents                                                          |
-| **`csvDelimiter`**   | `","`         | Configure the character separating CSV fields. Must be a string containing [one ASCII character](https://www.rfc-editor.org/rfc/rfc20). |
-| **`customMetadata`** | `null`        | An arbitrary string accessible via the [generated task object](/reference/api/tasks#custommetadata) |
+| Query Parameter    | Default Value | Description                                                                                                                             |
+| :----------------- | :------------ | :-------------------------------------------------------------------------------------------------------------------------------------- |
+| **`primaryKey`**   | `null`        | [Primary key](getting_started/primary_key#primary-field) of the documents                                                          |
+| **`csvDelimiter`** | `","`         | Configure the character separating CSV fields. Must be a string containing [one ASCII character](https://www.rfc-editor.org/rfc/rfc20). |
+| **`customMetadata`** | `null`         | An arbitrary string accessible via the [generated task object](/reference/api/tasks#custommetadata) |
 | **`skipCreation`**   | `false`       | If `true`, updates existing documents, but does not add new documents to the index |
 
 <Warning>
@@ -413,7 +413,7 @@ An array of documents. Each document is represented as a JSON object.
 
 This document is an update of the document found in [add or replace document](/reference/api/documents#add-or-replace-documents).
 
-The documents are matched because they have the same [primary key](/learn/getting_started/documents#primary-field) value `id: 287947`. This route will update the `title` field as it changed from `Shazam` to `Shazam ⚡️` and add the new `genres` field to that document. The rest of the document will remain unchanged.
+The documents are matched because they have the same [primary key](getting_started/documents#primary-field) value `id: 287947`. This route will update the `title` field as it changed from `Shazam` to `Shazam ⚡️` and add the new `genres` field to that document. The rest of the document will remain unchanged.
 
 #### Response: `202 Accepted`
 
@@ -453,7 +453,7 @@ curl \
 
 | Name              | Type   | Description                                                            |
 | :---------------- | :----- | :--------------------------------------------------------------------- |
-| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](getting_started/indexes#index-uid) of the requested index |
 
 ### Query parameters
 
@@ -497,7 +497,7 @@ Delete all documents in the specified index.
 
 | Name              | Type   | Description                                                            |
 | :---------------- | :----- | :--------------------------------------------------------------------- |
-| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](getting_started/indexes#index-uid) of the requested index |
 
 ### Query parameters
 
@@ -533,8 +533,8 @@ Delete one document based on its unique id.
 
 | Name                | Type           | Description                                                                           |
 | :------------------ | :------------- | :------------------------------------------------------------------------------------ |
-| **`index_uid`** *   | String         | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index                |
-| **`document_id`** * | String/Integer | [Document id](/learn/getting_started/primary_key#document-id) of the requested document |
+| **`index_uid`** *   | String         | [`uid`](getting_started/indexes#index-uid) of the requested index                |
+| **`document_id`** * | String/Integer | [Document id](getting_started/primary_key#document-id) of the requested document |
 
 ### Query parameters
 
@@ -570,7 +570,7 @@ Delete a set of documents based on a filter.
 
 | Name              | Type   | Description                                                            |
 | :---------------- | :----- | :--------------------------------------------------------------------- |
-| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](getting_started/indexes#index-uid) of the requested index |
 
 ### Query parameters
 
@@ -583,7 +583,7 @@ Delete a set of documents based on a filter.
 A filter expression written as a string or array of array of strings for the documents to be deleted.
 
 <Warning>
-`filter` will not work without first explicitly adding attributes to the [`filterableAttributes` list](/reference/api/settings#update-filterable-attributes). [Learn more about filters in our dedicated guide.](/learn/filtering_and_sorting/filter_search_results)
+`filter` will not work without first explicitly adding attributes to the [`filterableAttributes` list](/reference/api/settings/filterable-attributes#update-filterable-attributes). [Learn more about filters in our dedicated guide.](/products/faceted_search/filter_search_results)
 </Warning>
 
 ```
@@ -622,7 +622,7 @@ Delete a set of documents based on an array of document ids.
 
 | Name              | Type   | Description                                                            |
 | :---------------- | :----- | :--------------------------------------------------------------------- |
-| **`index_uid`** * | String | [`uid`](/learn/getting_started/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](getting_started/indexes#index-uid) of the requested index |
 
 ### Query parameters
 

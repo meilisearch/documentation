@@ -1,0 +1,61 @@
+---
+title: Search preview
+sidebarTitle: Search preview
+description: Meilisearch comes with a built-in search interface for quick testing during development.
+---
+
+Meilisearch Cloud gives you access to a dedicated search preview interface. This is useful to test search result relevancy when you are tweaking an index's settings.
+
+<Info>
+If you are self-hosting Meilisearch and need a local search interface, access your Meilisearch instance URL (e.g., `http://localhost:7700`) in your browser. This local preview only allows you to perform plain searches and offers no customization options.
+</Info>
+
+## Accessing and using search preview
+
+Log into your [Meilisearch Cloud](https://cloud.meilisearch.com/login) account, navigate to your project, then click on "Search preview":
+
+<Frame>
+  <img src="/assets/images/search_preview/01-search-preview-menu.png" alt="Meilisearch Cloud's project menu with the last option, 'Search preview', selected" />
+</Frame>
+
+Select the index you want to search on using the input on the left-hand side:
+
+<Frame>
+  <img src="/assets/images/search_preview/02-select-index.png" alt="Meilisearch Cloud's search preview interface, with the index selecting input highlighted" />
+</Frame>
+
+Then use the main input to perform plain keyword searches:
+
+<Frame>
+  <img src="/assets/images/search_preview/03-basic-search.png" alt="Meilisearch Cloud's search preview interface, with the search input selected and containing a search string" />
+</Frame>
+
+When debugging relevancy, you may want to activate the "Ranking score" option. This displays the overall [ranking score](/products/full_text_search/ranking_score) for each result, together with the score for each individual ranking rule:
+
+<Frame>
+  <img src="/assets/images/search_preview/04-score.png" alt="The same search preview interface as in the previous image, but with the 'Ranking score' option turned on. Search results are the same, but include the document's ranking score" />
+</Frame>
+
+## Configuring search options
+
+Use the menu on the left-hand side to configure [sorting](/products/faceted_search/sort_search_results) and [filtering](/products/faceted_search/filter_search_results). These require you to first edit your index's sortable and filterable attributes. You may additionally configure any filterable attributes as facets. In this example, "Genres" is one of the configured facets:
+
+<Frame>
+  <img src="/assets/images/search_preview/05-sidebar-options.png" alt="The sidebar of the search preview interface, with a handful of options, including 'Sort by', 'AI-powered search', 'Filters', and 'Genres'" />
+</Frame>
+
+You can also perform [AI-powered searches](/products/ai_powered_search/getting_started) if this functionality has been enabled for your project.
+
+Clicking on "Advanced parameters" gives you access to further customization options, including setting which document fields Meilisearch returns and explicitly declaring the search language:
+
+<Frame>
+  <img src="/assets/images/search_preview/06-sidebar-options-advanced.png" alt="The same sidebar as before with the 'Advanced parameters' option highlighted" />
+</Frame>
+
+## Exporting search options
+
+You can export the full search query for further testing in other tools and environments. Click on the cloud icon next to "Advanced parameters", then choose to download a JSON file or copy the query to your clipboard:
+
+<Frame>
+  <img src="/assets/images/search_preview/07-sidebar-options-export.png" alt="The same sidebar as before with the 'Export' option highlighted" />
+</Frame>

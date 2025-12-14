@@ -22,7 +22,7 @@ client.index('meteorites').add_documents(meteorites)
 ```
 
 ```php PHP
-$client = new Client('http://localhost:7700');
+$client = new Client(getenv('MEILISEARCH_URL'), getenv('MEILISEARCH_API_KEY'));
 
 $meteorites_json = file_get_contents('meteorites.json');
 $meteorites = json_decode($meteorites_json);
@@ -38,7 +38,10 @@ import java.nio.file.Path;
 
 Path fileName = Path.of("meteorites.json");
 String meteoritesJson = Files.readString(fileName);
-Client client = new Client(new Config("http://localhost:7700", "masterKey"));
+Client client = new Client(new Config(
+  System.getenv("MEILISEARCH_URL"),
+  System.getenv("MEILISEARCH_API_KEY")
+));
 
 client.index("meteorites").addDocuments(meteoritesJson);
 ```
@@ -51,7 +54,10 @@ client.index('meteorites').add_documents(json)
 ```
 
 ```go Go
-client := meilisearch.New("http://localhost:7700")
+client := meilisearch.New(
+  os.Getenv("MEILISEARCH_URL"),
+  meilisearch.WithAPIKey(os.Getenv("MEILISEARCH_API_KEY")),
+)
 
 jsonFile, _ := os.Open("meteorites.json")
 defer jsonFile.Close()
@@ -64,7 +70,10 @@ client.Index("meteorites").AddDocuments(meteorites, nil)
 ```
 
 ```csharp C#
-MeilisearchClient client = new MeilisearchClient("http://localhost:7700", "masterKey");
+MeilisearchClient client = new MeilisearchClient(
+  Environment.GetEnvironmentVariable("MEILISEARCH_URL"),
+  Environment.GetEnvironmentVariable("MEILISEARCH_API_KEY")
+);
 var options = new JsonSerializerOptions
 {
     PropertyNameCaseInsensitive = true

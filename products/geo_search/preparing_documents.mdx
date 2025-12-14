@@ -1,0 +1,196 @@
+---
+title: Preparing documents for geo search
+sidebarTitle: Preparing documents
+description: Add geographic coordinates to your documents for location-based search.
+---
+
+To use geo search features, your documents must contain location data in a specific format. Meilisearch supports two geo fields: `_geo` for point coordinates and `_geojson` for complex shapes.
+
+## The `_geo` field
+
+The `_geo` field stores a single point location using latitude and longitude. Use this for:
+- Store locations
+- User addresses
+- Event venues
+- Any single-point location
+
+### Format
+
+`_geo` must be an object with `lat` and `lng` keys:
+
+```json
+{
+  "id": 1,
+  "name": "Eiffel Tower",
+  "_geo": {
+    "lat": 48.8584,
+    "lng": 2.2945
+  }
+}
+```
+
+| Field | Type | Range | Description |
+|-------|------|-------|-------------|
+| `lat` | number or string | -90 to 90 | Latitude (north-south position) |
+| `lng` | number or string | -180 to 180 | Longitude (east-west position) |
+
+<Warning>
+The field must be named exactly `_geo` with `lat` and `lng` keys. Other formats like `latitude`/`longitude`, `coordinates`, or arrays are not supported.
+</Warning>
+
+### Example dataset
+
+```json
+[
+  {
+    "id": 1,
+    "name": "Nàpiz' Milano",
+    "address": "Viale Vittorio Veneto, 30, 20124, Milan, Italy",
+    "type": "pizza",
+    "rating": 9,
+    "_geo": {
+      "lat": 45.4777599,
+      "lng": 9.1967508
+    }
+  },
+  {
+    "id": 2,
+    "name": "Bouillon Pigalle",
+    "address": "22 Bd de Clichy, 75018 Paris, France",
+    "type": "french",
+    "rating": 8,
+    "_geo": {
+      "lat": 48.8826517,
+      "lng": 2.3352748
+    }
+  }
+]
+```
+
+## The `_geojson` field
+
+The `_geojson` field stores complex geographic shapes following the [GeoJSON specification](https://geojson.org/). Use this for:
+- Delivery zones
+- Service areas
+- Property boundaries
+- Any polygon or multi-point shape
+
+### Format
+
+```json
+{
+  "id": 1,
+  "name": "Central Paris Delivery Zone",
+  "_geojson": {
+    "type": "Feature",
+    "geometry": {
+      "type": "Polygon",
+      "coordinates": [[[2.25, 48.82], [2.42, 48.82], [2.42, 48.90], [2.25, 48.90], [2.25, 48.82]]]
+    }
+  }
+}
+```
+
+### Supported GeoJSON types
+
+| Type | Description |
+|------|-------------|
+| `Point` | Single location |
+| `LineString` | Path or route |
+| `Polygon` | Closed area |
+| `MultiPoint` | Multiple points |
+| `MultiLineString` | Multiple paths |
+| `MultiPolygon` | Multiple areas |
+
+### Limitations
+
+<Warning>
+**Transmeridian shapes**: Meilisearch does not support shapes crossing the 180th meridian. Split these into separate shapes grouped as `MultiPolygon` or `MultiLineString`.
+
+**Polygons with holes**: Inner rings (holes) are ignored. Meilisearch treats all polygons as solid shapes.
+</Warning>
+
+## Using `_geo` and `_geojson` together
+
+If your application needs both distance sorting and polygon filtering, include both fields:
+
+```json
+{
+  "id": 1,
+  "name": "Restaurant",
+  "_geo": {
+    "lat": 48.8566,
+    "lng": 2.3522
+  },
+  "_geojson": {
+    "type": "Feature",
+    "geometry": {
+      "type": "Polygon",
+      "coordinates": [[[2.35, 48.85], [2.36, 48.85], [2.36, 48.86], [2.35, 48.86], [2.35, 48.85]]]
+    }
+  }
+}
+```
+
+<Note>
+When both fields are present:
+- **Sorting** uses only `_geo` (ignores `_geojson`)
+- **`_geoPolygon` filtering** uses only `_geojson` (ignores `_geo`)
+- **`_geoRadius` and `_geoBoundingBox` filtering** matches both fields
+</Note>
+
+## CSV format
+
+For CSV datasets, use a `_geo` column with comma-separated latitude and longitude:
+
+```csv
+"id:number","name:string","type:string","_geo:string"
+"1","Nàpiz Milano","pizzeria","45.4777599,9.1967508"
+"2","Bouillon Pigalle","french","48.8826517,2.3352748"
+```
+
+<Warning>
+CSV files do not support the `_geojson` attribute. Use JSON or NDJSON for complex shapes.
+</Warning>
+
+## Error handling
+
+Meilisearch validates geo fields during indexing. Invalid formats cause the entire batch to fail:
+
+| Error code | Cause |
+|------------|-------|
+| `invalid_document_geo_field` | Malformed `_geo` (missing lat/lng, wrong types) |
+| `invalid_document_geo_field` | Coordinates out of range |
+
+### Valid formats
+
+```json
+// All valid
+{"_geo": {"lat": 48.8566, "lng": 2.3522}}
+{"_geo": {"lat": "48.8566", "lng": "2.3522"}}
+{"_geo": {"lat": 48, "lng": 2}}
+```
+
+### Invalid formats
+
+```json
+// Invalid - wrong key names
+{"_geo": {"latitude": 48.8566, "longitude": 2.3522}}
+
+// Invalid - array format
+{"_geo": [48.8566, 2.3522]}
+
+// Invalid - out of range
+{"_geo": {"lat": 95.0, "lng": 2.3522}}
+```
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Geo filtering" icon="filter" href="/products/geo_search/filtering">
+    Filter by radius, bounding box, or polygon
+  </Card>
+  <Card title="Geo sorting" icon="arrow-down-short-wide" href="/products/geo_search/sorting">
+    Sort results by distance
+  </Card>
+</CardGroup>

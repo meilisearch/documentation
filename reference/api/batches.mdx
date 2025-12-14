@@ -9,7 +9,7 @@ import { RouteHighlighter } from '/snippets/route_highlighter.mdx'
 import CodeSamplesGetAllBatches1 from '/snippets/samples/code_samples_get_all_batches_1.mdx';
 import CodeSamplesGetBatch1 from '/snippets/samples/code_samples_get_batch_1.mdx';
 
-The `/batches` route gives information about the progress of batches of [asynchronous operations](/learn/async/asynchronous_operations).
+The `/batches` route gives information about the progress of batches of [asynchronous operations](/products/platform/asynchronous_operations).
 
 ## Batch object
 
@@ -162,7 +162,7 @@ List all batches, regardless of index. The batch objects are contained in the `r
 
 Batches are always returned in descending order of `uid`. This means that by default, **the most recently created batch objects appear first**.
 
-Batch results are [paginated](/learn/async/paginating_tasks) and can be [filtered](/learn/async/filtering_tasks) with query parameters.
+Batch results are [paginated](/products/platform/paginating_tasks) and can be [filtered](/products/platform/filtering_tasks) with query parameters.
 
 <Warning>
 Some query parameters for `/batches`, such as `uids` and `statuses`, target tasks instead of batches.

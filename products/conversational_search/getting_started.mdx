@@ -1,0 +1,320 @@
+---
+title: Getting started with conversational search
+description: This article walks you through implementing Meilisearch's chat completions feature to create conversational search experiences in your application.
+---
+
+To successfully implement a conversational search interface you must follow three steps: configure indexes for chat usage, create a chat workspaces, and build a chat interface.
+
+## Prerequisites
+
+Before starting, ensure you have:
+
+- A [secure](/products/platform/basic_security) Meilisearch >= v1.15.1 project
+- An API key from an LLM provider
+- At least one index with searchable content
+
+## Setup
+
+### Enable the chat completions feature
+
+First, enable the chat completions experimental feature:
+
+```bash
+curl \
+  -X PATCH 'MEILISEARCH_URL/experimental-features/' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "chatCompletions": true
+  }'
+```
+
+<Warning>
+Conversational search is still in early development. Conversational agents may occasionally hallucinate inaccurate and misleading information, so it is important to closely monitor it in production environments.
+</Warning>
+
+### Find your chat API key
+
+When Meilisearch runs with a master key on an instance created after v1.15.1, it automatically generates a "Default Chat API Key" with `chatCompletions` and `search` permissions on all indexes. Check if you have the key using:
+
+```bash
+curl MEILISEARCH_URL/keys \
+  -H "Authorization: Bearer MEILISEARCH_KEY"
+```
+
+Look for the key with the description "Default Chat API Key".
+
+#### Troubleshooting: Missing default chat API key
+
+If your instance does not have a Default Chat API Key, create one manually:
+
+```bash
+curl \
+  -X POST 'MEILISEARCH_URL/keys' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "name": "Chat API Key",
+    "description": "API key for chat completions",
+    "actions": ["search", "chatCompletions"],
+    "indexes": ["*"],
+    "expiresAt": null
+  }'
+```
+
+## Configure your indexes
+
+After activating the `/chats` route and obtaining an API key with chat permissions, configure the `chat` settings for each index you want to be searchable via chat UI:
+
+```bash
+curl \
+  -X PATCH 'MEILISEARCH_URL/indexes/INDEX_NAME/settings' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "chat": {
+      "description": "A comprehensive database of TYPE_OF_DOCUMENT containing titles, descriptions, genres, and release dates to help users searching for TYPE_OF_DOCUMENT",
+      "documentTemplate": "{% for field in fields %}{% if field.is_searchable and field.value != nil %}{{ field.name }}: {{ field.value }}\n{% endif %}{% endfor %}",
+      "documentTemplateMaxBytes": 400
+    }
+  }'
+```
+
+- `description` gives the initial context of the conversation to the LLM. A good description improves relevance of the chat's answers
+- `documentTemplate` defines the document data Meilisearch sends to the AI provider. This template outputs all searchable fields in your documents, which may not be ideal if your documents have many fields. Consult the best [document template best practices](/products/ai_powered_search/document_template_best_practices) article for more guidance
+- `documentTemplateMaxBytes` establishes a size limit for the document templates. Documents bigger than 400 bytes are truncated to ensure a good balance between speed and relevancy
+
+## Configure a chat completions workspace
+
+The next step is to create a workspace. Chat completion workspaces are isolated configurations targeting different use cases. Each workspace can:
+
+- Use different embedding providers (OpenAI, Azure OpenAI, Mistral, Gemini, vLLM)
+- Establish separate conversation contexts via baseline prompts
+- Access a specific set of indexes
+
+For example, you may have one workspace for publicly visible data, and another for data only available for logged in users.
+
+Create a workspace setting your LLM provider as its `source`:
+
+<CodeGroup>
+
+```bash OpenAI
+curl \
+  -X PATCH 'MEILISEARCH_URL/chats/WORKSPACE_NAME/settings' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "source": "openAi",
+    "apiKey": "PROVIDER_API_KEY",
+    "baseUrl": "PROVIDER_API_URL",
+    "prompts": {
+      "system": "You are a helpful assistant. Answer questions based only on the provided context."
+    }
+  }'
+```
+
+```bash Azure OpenAI
+curl \
+  -X PATCH 'MEILISEARCH_URL/chats/WORKSPACE_NAME/settings' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "source": "azureOpenAi",
+    "apiKey": "PROVIDER_API_KEY",
+    "baseUrl": "PROVIDER_API_URL",
+    "prompts": {
+      "system": "You are a helpful assistant. Answer questions based only on the provided context."
+    }
+  }'
+```
+
+```bash Mistral
+curl \
+  -X PATCH 'MEILISEARCH_URL/chats/WORKSPACE_NAME/settings' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "source": "mistral",
+    "apiKey": "PROVIDER_API_KEY",
+    "prompts": {
+      "system": "You are a helpful assistant. Answer questions based only on the provided context."
+    }
+  }'
+```
+
+```bash Gemini
+curl \
+  -X PATCH 'MEILISEARCH_URL/chats/WORKSPACE_NAME/settings' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "source": "gemini",
+    "apiKey": "PROVIDER_API_KEY",
+    "prompts": {
+      "system": "You are a helpful assistant. Answer questions based only on the provided context."
+    }
+  }'
+```
+
+```bash vLLM
+curl \
+  -X PATCH 'MEILISEARCH_URL/chats/WORKSPACE_NAME/settings' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "source": "vLlm",
+    "baseUrl": "PROVIDER_API_URL",
+    "prompts": {
+      "system": "You are a helpful assistant. Answer questions based only on the provided context."
+    }
+  }'
+```
+
+</CodeGroup>
+
+Which fields are mandatory will depend on your chosen provider `source`. In most cases, you will have to provide an `apiKey` to access the provider.
+
+`baseUrl` indicates the URL Meilisearch queries when users submit questions to your chat interface. This is only mandatory for Azure OpenAI and vLLM sources.
+
+`prompts.system` gives the conversational search bot the baseline context of your users and their questions. [The `prompts` object accepts a few other fields](/reference/api/chats#prompts) that provide more information to improve how the agent uses the information it finds via Meilisearch. In real-life scenarios filling these fields would improve the quality of conversational search results.
+
+## Send your first chat completions request
+
+You have finished configuring your conversational search agent. To test everything is working as expected, send a streaming `curl` query to the chat completions API route:
+
+```bash
+curl -N \
+  -X POST 'MEILISEARCH_URL/chats/WORKSPACE_NAME/chat/completions' \
+  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "model": "PROVIDER_MODEL_UID",
+    "messages": [
+      {
+        "role": "user",
+        "content": "USER_PROMPT"
+      }
+    ],
+    "tools": [
+      {
+        "type": "function",
+        "function": {
+          "name": "_meiliSearchProgress",
+          "description": "Reports real-time search progress to the user"
+        }
+      },
+      {
+        "type": "function",
+        "function": {
+          "name": "_meiliSearchSources",
+          "description": "Provides sources and references for the information"
+        }
+      }
+    ]
+  }'
+```
+
+- `model` is mandatory and must indicate a model supported by your chosen `source`
+- `messages` contains the messages exchanged between the conversational search agent and the user
+- `tools` sets up two optional but highly [recommended tools](/products/conversational_search/chat_tooling_reference):
+  - `_meiliSearchProgress`: shows users what searches are being performed
+  - `_meiliSearchSources`: displays the actual documents used to generate responses
+
+If Meilisearch returns a stream of data containing the chat agent response, you have correctly configured Meilisearch for conversational search:
+
+```sh
+data: {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1677652288,"model":"gpt-3.5-turbo","choices":[{"index":0,"delta":{"content":"Meilisearch"},"finish_reason":null}]}
+```
+
+If Meilisearch returns an error, consult the [troubleshooting section](#troubleshooting) to understand diagnose and fix the issues you encountered.
+
+## Next steps
+
+In this article, you have seen how to activate the chats completion route, prepare your indexes to serve as a base for your AI agent, and performed your first conversational search.
+
+In most cases, that is only the beginning of adding conversational search to your application. Next, you are most likely going to want to add a graphical user interface to your application.
+
+### Building a chat interface using the OpenAI SDK
+
+Meilisearch's chat endpoint was designed to be OpenAI-compatible. This means you can use the official OpenAI SDK in any supported programming language, even if your provider is not OpenAI.
+
+Integrating Meilisearch and the OpenAI SDK with JavaScript would look like this:
+
+```javascript JavaScript
+import OpenAI from 'openai';
+
+const client = new OpenAI({
+  baseURL: 'MEILISEARCH_URL/chats/WORKSPACE_NAME',
+  apiKey: 'PROVIDER_API_KEY',
+});
+
+const completion = await client.chat.completions.create({
+  model: 'PROVIDER_MODEL_UID',
+  messages: [{ role: 'user', content: 'USER_PROMPT' }]
+});
+
+for await (const chunk of completion) {
+  console.log(chunk.choices[0]?.delta?.content || '');
+}
+```
+
+Take particular note of the last lines, which output the streamed responses to the browser console. In a real-life application, you would instead print the response chunks to the user interface.
+
+## Troubleshooting
+
+### Common issues and solutions
+
+#### Empty reply from server (curl error 52)
+
+**Causes:**
+
+- Meilisearch not started with a master key
+- Experimental features not enabled
+- Missing authentication in requests
+
+**Solution:**
+
+1. Restart Meilisearch with a master key: `meilisearch --master-key yourKey`
+2. Enable experimental features (see setup instructions above)
+3. Include Authorization header in all requests
+
+#### "Invalid API key" error
+
+**Cause:** Using the wrong type of API key
+
+**Solution:**
+
+- Use either the master key or the "Default Chat API Key"
+- Don't use search or admin API keys for chat endpoints
+- Find your chat key: `curl MEILISEARCH_URL/keys -H "Authorization: Bearer MEILISEARCH_KEY"`
+
+#### "Socket connection closed unexpectedly"
+
+**Cause:** Usually means the OpenAI API key is missing or invalid in workspace settings
+
+**Solution:**
+
+1. Check workspace configuration:
+
+   ```bash
+   curl MEILISEARCH_URL/chats/WORKSPACE_NAME/settings \
+     -H "Authorization: Bearer MEILISEARCH_KEY"
+   ```
+
+2. Update with valid API key:
+
+   ```bash
+   curl -X PATCH MEILISEARCH_URL/chats/WORKSPACE_NAME/settings \
+     -H "Authorization: Bearer MEILISEARCH_KEY" \
+     -H "Content-Type: application/json" \
+     -d '{"apiKey": "your-valid-api-key"}'
+   ```
+
+#### Chat not searching the database
+
+**Cause:** Missing Meilisearch tools in the request
+
+**Solution:**
+
+- Include `_meiliSearchProgress` and `_meiliSearchSources` tools in your request
+- Ensure indexes have proper chat descriptions configured

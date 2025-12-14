@@ -1,0 +1,223 @@
+---
+title: Gatsby
+sidebarTitle: Gatsby
+description: Index your Gatsby site content to Meilisearch using the official plugin.
+---
+
+The official [gatsby-plugin-meilisearch](https://github.com/meilisearch/gatsby-plugin-meilisearch) indexes your Gatsby content to Meilisearch at build time using GraphQL queries.
+
+<Note>
+[Meilisearch Cloud](https://www.meilisearch.com/cloud?utm_campaign=oss&utm_source=docs&utm_medium=gatsby) is the easiest way to get a Meilisearch instance for your Gatsby site.
+</Note>
+
+## Prerequisites
+
+- A Gatsby project (v4.3.x or later)
+- Node.js >= 14.15.x
+- A running Meilisearch instance ([Cloud](https://cloud.meilisearch.com) or [self-hosted](/resources/self_hosting/getting_started))
+
+## Installation
+
+Install the plugin using npm or yarn:
+
+<Tabs>
+<Tab title="npm">
+```bash
+npm install gatsby-plugin-meilisearch
+```
+</Tab>
+<Tab title="yarn">
+```bash
+yarn add gatsby-plugin-meilisearch
+```
+</Tab>
+</Tabs>
+
+## Configuration
+
+Add the plugin to your `gatsby-config.js` file:
+
+```javascript
+module.exports = {
+  plugins: [
+    {
+      resolve: 'gatsby-plugin-meilisearch',
+      options: {
+        host: process.env.MEILISEARCH_URL,
+        apiKey: process.env.MEILISEARCH_API_KEY,
+        indexes: [
+          {
+            indexUid: 'pages',
+            query: `
+              query {
+                allMdx {
+                  nodes {
+                    frontmatter {
+                      title
+                      description
+                    }
+                    slug
+                    excerpt
+                  }
+                }
+              }
+            `,
+            transformer: (data) =>
+              data.allMdx.nodes.map((node, index) => ({
+                id: index,
+                title: node.frontmatter.title,
+                description: node.frontmatter.description,
+                slug: node.slug,
+                excerpt: node.excerpt
+              }))
+          }
+        ]
+      }
+    }
+  ]
+}
+```
+
+## Plugin options
+
+| Option | Required | Default | Description |
+|--------|----------|---------|-------------|
+| `host` | Yes | - | Your Meilisearch instance URL |
+| `apiKey` | No | - | API key (required if instance is password-protected) |
+| `indexes` | Yes | - | Array of index configurations |
+| `skipIndexing` | No | `false` | Skip indexing during build |
+| `batchSize` | No | `1000` | Number of documents per indexing batch |
+
+## Index configuration
+
+Each index object requires three properties:
+
+### indexUid
+
+The name of your Meilisearch index. If the index already exists, it will be deleted and recreated during each build.
+
+```javascript
+indexUid: 'blog_posts'
+```
+
+### query
+
+A GraphQL query that fetches the data you want to index:
+
+```javascript
+query: `
+  query {
+    allMarkdownRemark {
+      nodes {
+        frontmatter {
+          title
+          date
+          tags
+        }
+        html
+        excerpt
+      }
+    }
+  }
+`
+```
+
+### transformer
+
+A function that transforms the GraphQL response into an array of documents for Meilisearch. Each document **must have an `id` field**:
+
+```javascript
+transformer: (data) =>
+  data.allMarkdownRemark.nodes.map((node, index) => ({
+    id: index,
+    title: node.frontmatter.title,
+    date: node.frontmatter.date,
+    tags: node.frontmatter.tags,
+    content: node.excerpt
+  }))
+```
+
+<Warning>
+The transformer must return a flat array of objects. Nested structures should be flattened, and each object must include a unique `id` field.
+</Warning>
+
+## Index settings
+
+You can configure Meilisearch index settings like searchable attributes and filters:
+
+```javascript
+{
+  resolve: 'gatsby-plugin-meilisearch',
+  options: {
+    host: process.env.MEILISEARCH_URL,
+    apiKey: process.env.MEILISEARCH_API_KEY,
+    indexes: [
+      {
+        indexUid: 'blog',
+        query: `...`,
+        transformer: (data) => ...,
+        settings: {
+          searchableAttributes: ['title', 'content', 'tags'],
+          filterableAttributes: ['tags', 'date'],
+          sortableAttributes: ['date']
+        }
+      }
+    ]
+  }
+}
+```
+
+## Build and index
+
+Run `gatsby build` to trigger indexing:
+
+```bash
+gatsby build
+```
+
+You'll see a success message confirming documents were indexed:
+
+```
+gatsby-plugin-meilisearch: 42 documents added to "blog" index
+```
+
+## Add search to your site
+
+Use [instant-meilisearch](/getting_started/instant_meilisearch/javascript) to add a search interface:
+
+```jsx
+import React from 'react'
+import { InstantSearch, SearchBox, Hits } from 'react-instantsearch'
+import { instantMeiliSearch } from '@meilisearch/instant-meilisearch'
+
+const searchClient = instantMeiliSearch(
+  process.env.GATSBY_MEILISEARCH_URL,
+  process.env.GATSBY_MEILISEARCH_SEARCH_KEY
+)
+
+const Search = () => (
+  <InstantSearch indexName="blog" searchClient={searchClient}>
+    <SearchBox />
+    <Hits hitComponent={Hit} />
+  </InstantSearch>
+)
+
+const Hit = ({ hit }) => (
+  <article>
+    <h2>{hit.title}</h2>
+    <p>{hit.excerpt}</p>
+  </article>
+)
+
+export default Search
+```
+
+<Tip>
+Use a search-only API key (`GATSBY_MEILISEARCH_SEARCH_KEY`) for client-side search. Never expose your admin API key in the browser.
+</Tip>
+
+## Resources
+
+- [GitHub repository](https://github.com/meilisearch/gatsby-plugin-meilisearch)
+- [Meilisearch blog: Add search to Gatsby](https://www.meilisearch.com/blog/add-a-search-bar-to-your-gatsby-project-using-meilisearch)
+- [instant-meilisearch documentation](/getting_started/instant_meilisearch/javascript)

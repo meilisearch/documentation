@@ -1,0 +1,106 @@
+---
+title: Proximity precision
+sidebarTitle: Proximity precision
+description: Configure the proximity precision setting for your Meilisearch index.
+---
+
+import { RouteHighlighter } from '/snippets/route_highlighter.mdx'
+import { NoticeTag } from '/snippets/notice_tag.mdx'
+import CodeSamplesGetProximityPrecisionSettings1 from '/snippets/samples/code_samples_get_proximity_precision_settings_1.mdx';
+import CodeSamplesUpdateProximityPrecisionSettings1 from '/snippets/samples/code_samples_update_proximity_precision_settings_1.mdx';
+import CodeSamplesResetProximityPrecisionSettings1 from '/snippets/samples/code_samples_reset_proximity_precision_settings_1.mdx';
+
+Calculating the distance between words is a resource-intensive operation. Lowering the precision of this operation may significantly improve performance and will have little impact on result relevancy in most use-cases. Meilisearch uses word distance when [ranking results according to proximity](/products/full_text_search/ranking_rules#3-proximity) and when users perform [phrase searches](/reference/api/search#phrase-search).
+
+`proximityPrecision` accepts one of the following string values:
+
+- `"byWord"`: calculate the precise distance between query terms. Higher precision, but may lead to longer indexing time. This is the default setting
+- `"byAttribute"`: determine if multiple query terms are present in the same attribute. Lower precision, but shorter indexing time
+
+### Get proximity precision settings
+
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/settings/proximity-precision" />
+
+Get the proximity precision settings of an index.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                            |
+| :---------------- | :----- | :--------------------------------------------------------------------- |
+| **`index_uid`** * | String | [`uid`](getting_started/indexes#index-uid) of the requested index |
+
+#### Example
+
+<CodeSamplesGetProximityPrecisionSettings1 />
+
+##### Response: `200 OK`
+
+```
+"byWord"
+```
+
+### Update proximity precision settings
+
+<RouteHighlighter method="PUT" path="/indexes/{index_uid}/settings/proximity-precision" />
+
+Update the pagination settings for an index.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                            |
+| :---------------- | :----- | :--------------------------------------------------------------------- |
+| **`index_uid`** * | String | [`uid`](getting_started/indexes#index-uid) of the requested index |
+
+#### Body
+
+```
+"byWord"|"byAttribute"
+```
+
+#### Example
+
+<CodeSamplesUpdateProximityPrecisionSettings1 />
+
+##### Response: `202 Accepted`
+
+```json
+{
+  "taskUid": 1,
+  "indexUid": "books",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2023-04-14T15:50:29.821044Z"
+}
+```
+
+You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+
+### Reset proximity precision settings
+
+<RouteHighlighter method="DELETE" path="/indexes/{index_uid}/settings/proximity-precision" />
+
+Reset an index's proximity precision setting to its default value.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                            |
+| :---------------- | :----- | :--------------------------------------------------------------------- |
+| **`index_uid`** * | String | [`uid`](getting_started/indexes#index-uid) of the requested index |
+
+#### Example
+
+<CodeSamplesResetProximityPrecisionSettings1 />
+
+##### Response: `202 Accepted`
+
+```json
+{
+  "taskUid": 1,
+  "indexUid": "books",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2023-04-14T15:51:47.821044Z"
+}
+```
+
+You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).

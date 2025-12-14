@@ -1,0 +1,90 @@
+---
+title: Meilisearch vs OpenSearch
+sidebarTitle: OpenSearch
+description: Compare Meilisearch and OpenSearch for search and analytics. Learn the differences and when each solution makes sense.
+---
+
+OpenSearch is an open-source search and analytics suite derived from Elasticsearch 7.10.2. Created by AWS in 2021 after Elastic changed Elasticsearch's license, OpenSearch maintains compatibility with the Elasticsearch API while being fully open-source under Apache 2.0.
+
+## Quick comparison
+
+|  | Meilisearch | OpenSearch |
+|---|:---:|:---:|
+| **Primary focus** | Fast, relevant search | Search & analytics platform |
+| **License** | MIT | Apache 2.0 |
+| **Setup complexity** | Ready in minutes | Steep learning curve |
+| **Performance** | Under 50ms out-of-the-box | Requires tuning |
+| **Resource usage** | Lightweight | Memory-intensive |
+| **Architecture** | Single-node (enterprise clustering) | Distributed clusters |
+| **Best for** | App/site search | Large-scale analytics |
+
+## What OpenSearch does well
+
+### Truly open source
+
+OpenSearch is fully open-source under Apache 2.0 with no proprietary components. AWS maintains the project with community governance, ensuring no licensing surprises.
+
+### Elasticsearch compatibility
+
+OpenSearch maintains API compatibility with Elasticsearch 7.x, making migration straightforward for existing Elasticsearch users. Most Elasticsearch tooling and knowledge transfers directly.
+
+### Distributed architecture
+
+Like Elasticsearch, OpenSearch scales horizontally across clusters for petabyte-scale deployments. The shard-based architecture supports massive data volumes.
+
+### Analytics capabilities
+
+OpenSearch includes dashboards (fork of Kibana), aggregations, and analytics features suitable for log analysis, observability, and business intelligence use cases.
+
+### AWS integration
+
+OpenSearch Service on AWS provides managed hosting with tight integration into the AWS ecosystem, including IAM, VPC, and CloudWatch.
+
+## When to choose Meilisearch instead
+
+### You need search that works immediately
+
+Meilisearch delivers relevant, typo-tolerant search results without configuration. OpenSearch, like Elasticsearch, requires understanding analyzers, mappings, and query DSL to achieve similar relevancy.
+
+### You want minimal operational overhead
+
+OpenSearch cluster management requires expertise in shards, replicas, and distributed systems. Meilisearch runs as a single binary with no external dependencies.
+
+### Your team lacks search expertise
+
+OpenSearch inherits Elasticsearch's complexity. The Query DSL has a steep learning curve, and optimal configuration requires significant experience. Meilisearch's intuitive API can be learned quickly.
+
+### You need predictable resource usage
+
+OpenSearch is memory-intensive and requires careful capacity planning. Meilisearch's efficient architecture provides consistent performance with lower resource requirements.
+
+### Your dataset is under 500 million documents
+
+For typical application search, OpenSearch's distributed architecture adds unnecessary complexity. Meilisearch handles most use cases on a single server with consistent sub-50ms responses.
+
+### You're building end-user search
+
+OpenSearch is designed for backend search and analytics. Meilisearch is built specifically for user-facing instant search with features like typo tolerance and search-as-you-type.
+
+## When to choose OpenSearch
+
+Consider OpenSearch if:
+
+- You're migrating from Elasticsearch and need API compatibility
+- You need distributed search across petabytes of data
+- You're building log analytics, observability, or SIEM solutions
+- You require complex aggregations and analytics beyond search
+- You want tight AWS integration through OpenSearch Service
+- You have teams with existing Elasticsearch expertise
+
+## Migration resources
+
+If you're considering Meilisearch:
+
+- [Quick start guide](/getting_started/overview) - Get running in minutes
+- [Search API reference](/reference/api/search) - Explore capabilities
+- [Indexing documents](/reference/api/documents) - Import your data
+
+<Note>
+OpenSearch is a registered trademark of Amazon Web Services. This comparison is based on publicly available information and our own analysis.
+</Note>

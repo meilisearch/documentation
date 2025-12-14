@@ -1,0 +1,105 @@
+---
+title: Separator tokens
+sidebarTitle: Separator tokens
+description: Configure the separator tokens setting for your Meilisearch index.
+---
+
+import { RouteHighlighter } from '/snippets/route_highlighter.mdx'
+import { NoticeTag } from '/snippets/notice_tag.mdx'
+import CodeSamplesGetSeparatorTokens1 from '/snippets/samples/code_samples_get_separator_tokens_1.mdx';
+import CodeSamplesUpdateSeparatorTokens1 from '/snippets/samples/code_samples_update_separator_tokens_1.mdx';
+import CodeSamplesResetSeparatorTokens1 from '/snippets/samples/code_samples_reset_separator_tokens_1.mdx';
+
+Configure strings as custom separator tokens indicating where a word ends and begins.
+
+Tokens in the `separatorTokens` list are added on top of [Meilisearch's default list of separators](/resources/internals/datatypes#string). To remove separators from the default list, use [the `nonSeparatorTokens` setting](#non-separator-tokens).
+
+### Get separator tokens
+
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/settings/separator-tokens" />
+
+Get an index's list of custom separator tokens.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](getting_started/indexes#index-uid) of the requested index |
+
+#### Example
+
+<CodeSamplesGetSeparatorTokens1 />
+
+##### Response: `200 Ok`
+
+```json
+[]
+```
+
+### Update separator tokens
+
+<RouteHighlighter method="PUT" path="/indexes/{index_uid}/settings/separator-tokens" />
+
+Update an index's list of custom separator tokens.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](getting_started/indexes#index-uid) of the requested index |
+
+#### Body
+
+```
+["|", "&hellip;"]
+```
+
+An array of strings, with each string indicating a word separator.
+
+#### Example
+
+<CodeSamplesUpdateSeparatorTokens1 />
+
+##### Response: `202 Accepted`
+
+```json
+{
+  "taskUid": 1,
+  "indexUid": "movies",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+}
+```
+
+Use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+
+### Reset separator tokens
+
+<RouteHighlighter method="DELETE" path="/indexes/{index_uid}/settings/separator-tokens" />
+
+Reset an index's list of custom separator tokens to its default value, `[]`.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](getting_started/indexes#index-uid) of the requested index |
+
+#### Example
+
+<CodeSamplesResetSeparatorTokens1 />
+
+##### Response: `202 Accepted`
+
+```json
+{
+  "taskUid": 1,
+  "indexUid": "movies",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+}
+```
+
+Use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).

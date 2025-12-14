@@ -1,0 +1,122 @@
+---
+title: Synonyms
+sidebarTitle: Synonyms
+description: Configure the synonyms setting for your Meilisearch index.
+---
+
+import { RouteHighlighter } from '/snippets/route_highlighter.mdx'
+import { NoticeTag } from '/snippets/notice_tag.mdx'
+import CodeSamplesGetSynonyms1 from '/snippets/samples/code_samples_get_synonyms_1.mdx';
+import CodeSamplesUpdateSynonyms1 from '/snippets/samples/code_samples_update_synonyms_1.mdx';
+import CodeSamplesResetSynonyms1 from '/snippets/samples/code_samples_reset_synonyms_1.mdx';
+
+The `synonyms` object contains words and their respective synonyms. A synonym in Meilisearch is considered equal to its associated word for the purposes of calculating search results.
+
+[To learn more about synonyms, refer to our dedicated guide.](/products/full_text_search/synonyms)
+
+### Get synonyms
+
+<RouteHighlighter method="GET" path="/indexes/{index_uid}/settings/synonyms" />
+
+Get the list of synonyms of an index.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](getting_started/indexes#index-uid) of the requested index |
+
+#### Example
+
+<CodeSamplesGetSynonyms1 />
+
+##### Response: `200 OK`
+
+```json
+{
+  "wolverine": [
+    "xmen",
+    "logan"
+  ],
+  "logan": [
+    "wolverine",
+    "xmen"
+  ],
+  "wow": [
+    "world of warcraft"
+  ]
+}
+```
+
+### Update synonyms
+
+<RouteHighlighter method="PUT" path="/indexes/{index_uid}/settings/synonyms" />
+
+Update the list of synonyms of an index. Synonyms are [normalized](/products/full_text_search/synonyms#normalization).
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](getting_started/indexes#index-uid) of the requested index |
+
+#### Body
+
+```
+{
+  <String>: [<String>, <String>, …],
+  …
+}
+```
+
+An object that contains all synonyms and their associated words. Add the associated words in an array to set a synonym for a word.
+
+[To learn more about synonyms, refer to our dedicated guide.](/products/full_text_search/synonyms)
+
+#### Example
+
+<CodeSamplesUpdateSynonyms1 />
+
+##### Response: `202 Accepted`
+
+```json
+{
+  "taskUid": 1,
+  "indexUid": "movies",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+}
+```
+
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+
+### Reset synonyms
+
+<RouteHighlighter method="DELETE" path="/indexes/{index_uid}/settings/synonyms" />
+
+Reset the list of synonyms of an index to its default value.
+
+#### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](getting_started/indexes#index-uid) of the requested index |
+
+#### Example
+
+<CodeSamplesResetSynonyms1 />
+
+##### Response: `202 Accepted`
+
+```json
+{
+  "taskUid": 1,
+  "indexUid": "movies",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+}
+```
+
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).

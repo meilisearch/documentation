@@ -1,0 +1,73 @@
+---
+title: Nobel Prizes
+sidebarTitle: Nobel Prizes
+description: Search Nobel Prize winners and their achievements
+---
+
+<Info>
+**Live demo**: [nobel-prizes.meilisearch.com](https://nobel-prizes.meilisearch.com)
+</Info>
+
+Search through the complete history of Nobel Prize winners. This demo shows how Meilisearch handles biographical and historical data with rich filtering options.
+
+## Features demonstrated
+
+- **Biographical search**: Find laureates by name or achievement
+- **Category filtering**: Filter by prize category (Physics, Chemistry, Peace, etc.)
+- **Year filtering**: Search within specific time periods
+- **Rich profiles**: Display biographical information and prize details
+
+## Use case
+
+Historical and biographical databases benefit from:
+
+- Full-text search across names and descriptions
+- Faceted filtering by category and time period
+- Handling of international names and transliterations
+- Display of structured biographical data
+
+## Dataset
+
+The Nobel Prize dataset includes:
+
+- All laureates from 1901 to present
+- Six categories: Physics, Chemistry, Medicine, Literature, Peace, Economics
+- Prize motivation and biographical details
+- Shared prizes and organizational recipients
+
+## Technical highlights
+
+| Feature | Implementation |
+|---------|----------------|
+| Searchable | Name, motivation, affiliation |
+| Filterable | Category, year, country |
+| Sortable | Year (ascending/descending) |
+| Display | Photo, bio, prize details |
+
+## Example searches
+
+- "quantum" - Find physics prizes related to quantum mechanics
+- "peace" + filter by year range - Peace prizes from specific decades
+- "Marie" - Find Marie Curie's multiple prizes
+
+## Links
+
+<CardGroup cols={2}>
+  <Card title="Try the demo" icon="globe" href="https://nobel-prizes.meilisearch.com">
+    Search Nobel laureates
+  </Card>
+  <Card title="Working with dates" icon="calendar" href="/products/faceted_search/working_with_dates">
+    Filter by time periods
+  </Card>
+</CardGroup>
+
+## Related resources
+
+<CardGroup cols={2}>
+  <Card title="Sort results" icon="arrow-up-wide-short" href="/products/faceted_search/sort_search_results">
+    Order results by date or relevance
+  </Card>
+  <Card title="Filter expressions" icon="code" href="/products/faceted_search/filter_expression_reference">
+    Build complex filter queries
+  </Card>
+</CardGroup>
