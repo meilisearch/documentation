@@ -28,7 +28,7 @@ The requested database has reached its maximum size.
 
 ## `document_fields_limit_reached`
 
-A document exceeds the [maximum limit of 65,535 fields](resources/known_limitations#maximum-number-of-attributes-per-document).
+A document exceeds the [maximum limit of 65,535 fields](/resources/known_limitations#maximum-number-of-attributes-per-document).
 
 ## `document_not_found`
 
@@ -44,7 +44,7 @@ The [`/facet-search`](/reference/api/facet_search) route has been queried while 
 
 ## `feature_not_enabled`
 
-You have tried using an [experimental feature](resources/experimental_features_overview) without activating it.
+You have tried using an [experimental feature](/resources/experimental_features_overview) without activating it.
 
 ## `immutable_api_key_actions`
 
@@ -96,23 +96,23 @@ You tried to manually set a webhook's `isEditable` field. Meilisearch automatica
 
 ## `index_already_exists`
 
-An index with this [`uid`](/reference/api/indexes#index-object) already exists, check out our guide on [index creation](resources/glossary/indexes).
+An index with this [`uid`](/reference/api/indexes#index-object) already exists, check out our guide on [index creation](/resources/glossary/indexes).
 
 ## `index_creation_failed`
 
-An error occurred while trying to create an index, check out our guide on [index creation](resources/glossary/indexes).
+An error occurred while trying to create an index, check out our guide on [index creation](/resources/glossary/indexes).
 
 ## `index_not_found`
 
-An index with this `uid` was not found, check out our guide on [index creation](resources/glossary/indexes).
+An index with this `uid` was not found, check out our guide on [index creation](/resources/glossary/indexes).
 
 ## `index_primary_key_already_exists`
 
-The requested index already has a primary key that [cannot be changed](resources/glossary/primary_key#changing-your-primary-key-with-the-update-index-endpoint).
+The requested index already has a primary key that [cannot be changed](/resources/glossary/primary_key#changing-your-primary-key-with-the-update-index-endpoint).
 
 ## `index_primary_key_multiple_candidates_found`
 
-[Primary key inference](resources/glossary/primary_key#meilisearch-guesses-your-primary-key) failed because the received documents contain multiple fields ending with `id`. Use the [update index endpoint](/reference/api/indexes#update-an-index) to manually set a primary key.
+[Primary key inference](/resources/glossary/primary_key#meilisearch-guesses-your-primary-key) failed because the received documents contain multiple fields ending with `id`. Use the [update index endpoint](/reference/api/indexes#update-an-index) to manually set a primary key.
 
 ## `internal`
 
@@ -176,7 +176,7 @@ The [`csvDelimiter`](/reference/api/documents#add-or-replace-documents) paramete
 
 ## `invalid_document_id`
 
-The provided [document identifier](resources/glossary/primary_key#document-id) does not meet the format requirements. A document identifier must be of type integer or string, composed only of alphanumeric characters (a-z A-Z 0-9), hyphens (-), and underscores (_).
+The provided [document identifier](/resources/glossary/primary_key#document-id) does not meet the format requirements. A document identifier must be of type integer or string, composed only of alphanumeric characters (a-z A-Z 0-9), hyphens (-), and underscores (_).
 
 ## `invalid_document_fields`
 
@@ -254,7 +254,7 @@ The [`offset`](/reference/api/indexes#query-parameters) parameter is invalid. It
 
 ## `invalid_index_uid`
 
-There is an error in the provided index format, check out our guide on [index creation](resources/glossary/indexes).
+There is an error in the provided index format, check out our guide on [index creation](/resources/glossary/indexes).
 
 ## `invalid_index_primary_key`
 
@@ -633,7 +633,7 @@ This error generally occurs when the host system has no space left on the device
 
 ## `index_primary_key_no_candidate_found`
 
-[Primary key inference](resources/glossary/primary_key#meilisearch-guesses-your-primary-key) failed as the received documents do not contain any fields ending with `id`. [Manually designate the primary key](resources/glossary/primary_key#setting-the-primary-key), or add some field ending with `id` to your documents.
+[Primary key inference](/resources/glossary/primary_key#meilisearch-guesses-your-primary-key) failed as the received documents do not contain any fields ending with `id`. [Manually designate the primary key](/resources/glossary/primary_key#setting-the-primary-key), or add some field ending with `id` to your documents.
 
 ## `malformed_payload`
 

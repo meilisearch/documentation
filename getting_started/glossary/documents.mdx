@@ -5,7 +5,7 @@ description: Documents are the individual items that make up a dataset. Each doc
 sidebarDepth: 3
 ---
 
-A document is an object composed of one or more fields. Each field consists of an **attribute** and its associated **value**. Documents function as containers for organizing data and are the basic building blocks of a Meilisearch database. To search for a document, you must first add it to an [index](resources/glossary/indexes).
+A document is an object composed of one or more fields. Each field consists of an **attribute** and its associated **value**. Documents function as containers for organizing data and are the basic building blocks of a Meilisearch database. To search for a document, you must first add it to an [index](/resources/glossary/indexes).
 
 Nothing will be shared between two indexes if they contain the exact same document. Instead, both documents will be treated as different documents. Depending on the [index's settings](/reference/api/settings), the documents might have different sizes.
 
@@ -31,7 +31,7 @@ An **attribute** is a case-sensitive string that functions as a field's name and
 
 That data is the field's **value**. Every field has a data type dictated by its value. Every value must be a valid [JSON data type](https://www.w3schools.com/js/js_json_datatypes.asp).
 
-If the value is a string, it **[can contain at most 65535 positions](resources/known_limitations#maximum-number-of-words-per-attribute)**. Words exceeding the 65535 position limit will be ignored.
+If the value is a string, it **[can contain at most 65535 positions](/resources/known_limitations#maximum-number-of-words-per-attribute)**. Words exceeding the 65535 position limit will be ignored.
 
 If a field contains an object, Meilisearch flattens it during indexing using dot notation and brings the object's keys and values to the root level of the document itself. This flattened object is only an intermediary representation—you will get the original structure upon search. You can read more about this in our [dedicated guide](/resources/internals/datatypes#objects).
 
@@ -59,15 +59,15 @@ To learn more, refer to our [displayed and searchable attributes guide](/product
 
 ## Primary field
 
-The primary field is a special field that must be present in all documents. Its attribute is the [primary key](resources/glossary/primary_key#primary-field) and its value is the [document id](resources/glossary/primary_key#document-id). If you try to [index a document](/resources/self_hosting/getting_started#add-documents) that's missing a primary key or possessing the wrong primary key for a given index, it will cause an error and no documents will be added.
+The primary field is a special field that must be present in all documents. Its attribute is the [primary key](/resources/glossary/primary_key#primary-field) and its value is the [document id](/resources/glossary/primary_key#document-id). If you try to [index a document](/resources/self_hosting/getting_started#add-documents) that's missing a primary key or possessing the wrong primary key for a given index, it will cause an error and no documents will be added.
 
-To learn more, refer to the [primary key explanation](resources/glossary/primary_key).
+To learn more, refer to the [primary key explanation](/resources/glossary/primary_key).
 
 ## Upload
 
 By default, Meilisearch limits the size of all payloads—and therefore document uploads—to 100MB. You can [change the payload size limit](/resources/self_hosting/configuration#payload-limit-size) at runtime using the `http-payload-size-limit` option.
 
-Meilisearch uses a lot of RAM when indexing documents. Be aware of your [RAM availability](resources/faq#what-are-the-recommended-requirements-for-hosting-a-meilisearch-instance) as you increase your batch size as this could cause Meilisearch to crash.
+Meilisearch uses a lot of RAM when indexing documents. Be aware of your [RAM availability](/resources/faq#what-are-the-recommended-requirements-for-hosting-a-meilisearch-instance) as you increase your batch size as this could cause Meilisearch to crash.
 
 When using the [add new documents endpoint](/reference/api/documents#add-or-update-documents), ensure:
 

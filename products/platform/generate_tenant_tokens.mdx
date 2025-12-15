@@ -1,0 +1,181 @@
+---
+title: Generate tenant tokens
+sidebarTitle: Generate tenant tokens
+description: Learn how to generate tenant tokens using official SDKs or third-party JWT libraries.
+---
+
+import CodeSamplesTenantTokenGuideGenerateSdk1 from '/snippets/samples/code_samples_tenant_token_guide_generate_sdk_1.mdx';
+import CodeSamplesTenantTokenGuideSearchSdk1 from '/snippets/samples/code_samples_tenant_token_guide_search_sdk_1.mdx';
+import CodeSamplesTenantTokenGuideSearchNoSdk1 from '/snippets/samples/code_samples_tenant_token_guide_search_no_sdk_1.mdx';
+
+There are two main approaches to generating tenant tokens: using an official Meilisearch SDK, or creating a JWT manually with a third-party library.
+
+## Requirements
+
+- A working Meilisearch project
+- An application supporting authenticated users
+- Your API key's UID (see [how to obtain it](#get-your-api-key-uid))
+
+## Get your API key UID
+
+Query the [get an API key endpoint](/reference/api/keys#get-one-key) and inspect the `uid` field:
+
+```sh
+curl \
+  -X GET 'MEILISEARCH_URL/keys/API_KEY' \
+  -H 'Authorization: Bearer MASTER_KEY'
+```
+
+## Generate a tenant token
+
+<Tabs>
+  <Tab title="Official SDK (Recommended)">
+    The quickest method to generate tenant tokens is using one of Meilisearch's official SDKs.
+
+    First, create a set of [search rules](/products/platform/tenant_token_reference#search-rules):
+
+    ```json
+    {
+      "patient_medical_records": {
+        "filter": "user_id = 1"
+      }
+    }
+    ```
+
+    Search rules must be an object where each key corresponds to an index in your instance. You may configure any number of filters for each index.
+
+    For maximum security, define an expiry date for your tokens.
+
+    Finally, send this data to your chosen SDK's tenant token generator:
+
+    <CodeSamplesTenantTokenGuideGenerateSdk1 />
+
+    The SDK will return a valid tenant token.
+  </Tab>
+  <Tab title="Third-party library">
+    You can use any JWT-compatible library to generate tenant tokens. This example uses [`jsonwebtoken`](https://www.npmjs.com/package/jsonwebtoken) for Node.js.
+
+    ### Build the token payload
+
+    First, create a set of search rules:
+
+    ```json
+    {
+      "INDEX_NAME": {
+        "filter": "ATTRIBUTE = VALUE"
+      }
+    }
+    ```
+
+    For maximum security, set an expiry date. This example configures the token to expire 20 minutes after creation:
+
+    ```js
+    parseInt(Date.now() / 1000) + 20 * 60
+    ```
+
+    ### Create tenant token
+
+    Include `jsonwebtoken` in your application, assemble the token payload, and pass it to the `sign` method:
+
+    ```js
+    const jwt = require('jsonwebtoken');
+
+    const apiKey = 'API_KEY';
+    const apiKeyUid = 'API_KEY_UID';
+    const currentUserID = 'USER_ID';
+    const expiryDate = parseInt(Date.now() / 1000) + 20 * 60; // 20 minutes
+
+    const tokenPayload = {
+      searchRules: {
+        'INDEX_NAME': {
+          'filter': `user_id = ${currentUserID}`
+         }
+      },
+      apiKeyUid: apiKeyUid,
+      exp: expiryDate
+    };
+
+    const token = jwt.sign(tokenPayload, apiKey, {algorithm: 'HS256'});
+    ```
+
+    The `sign` method requires the payload, a Meilisearch API key, and an encryption algorithm. Supported algorithms: `HS256`, `HS384`, `HS512`.
+
+    <Note>
+    Though this example uses `jsonwebtoken`, a Node.js package, you may use any JWT-compatible library in whatever language you prefer.
+    </Note>
+  </Tab>
+  <Tab title="Manual (no library)">
+    Generating tenant tokens without a library is possible, but not recommended. This approach requires you to create a token header, prepare the data payload, and sign the token manually.
+
+    ### Prepare token header
+
+    The token header must specify a `JWT` type and an encryption algorithm:
+
+    ```json
+    {
+      "alg": "HS256",
+      "typ": "JWT"
+    }
+    ```
+
+    Supported encryption algorithms: `HS256`, `HS384`, `HS512`.
+
+    ### Build token payload
+
+    Create a set of search rules:
+
+    ```json
+    {
+      "INDEX_NAME": {
+        "filter": "ATTRIBUTE = VALUE"
+      }
+    }
+    ```
+
+    Set an expiry date (recommended):
+
+    ```js
+    parseInt(Date.now() / 1000) + 20 * 60  // 20 minutes
+    ```
+
+    Assemble all parts of the payload:
+
+    ```json
+    {
+      "exp": UNIX_TIMESTAMP,
+      "apiKeyUid": "API_KEY_UID",
+      "searchRules": {
+        "INDEX_NAME": {
+          "filter": "ATTRIBUTE = VALUE"
+        }
+      }
+    }
+    ```
+
+    ### Encode and sign
+
+    Encode both the header and payload into `base64`, concatenate them, and generate the token by signing it using your chosen encryption algorithm and your API key.
+
+    Consult the [token payload reference](/products/platform/tenant_token_reference) for more information on payload fields.
+  </Tab>
+</Tabs>
+
+## Make a search request using a tenant token
+
+After creating a token, send it to your application's front end. Once available, use it to authenticate search requests as if it were an API key:
+
+<Tabs>
+  <Tab title="SDK">
+    <CodeSamplesTenantTokenGuideSearchSdk1 />
+  </Tab>
+  <Tab title="cURL">
+    <CodeSamplesTenantTokenGuideSearchNoSdk1 />
+  </Tab>
+</Tabs>
+
+Applications may use tenant tokens and API keys interchangeably when searching. For example, the same application might use a default search API key for queries on public indexes and a tenant token for logged-in users searching private data.
+
+## Next steps
+
+- [Tenant token payload reference](/products/platform/tenant_token_reference) - Full documentation of search rules, API key UID, and expiry date
+- [Multitenancy overview](/products/platform/multitenancy_tenant_tokens) - Learn about multitenancy concepts

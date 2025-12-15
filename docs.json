@@ -353,9 +353,7 @@
                 "pages": [
                   "products/platform/basic_security",
                   "products/platform/multitenancy_tenant_tokens",
-                  "products/platform/generate_tenant_token_sdk",
-                  "products/platform/generate_tenant_token_third_party",
-                  "products/platform/generate_tenant_token_scratch",
+                  "products/platform/generate_tenant_tokens",
                   "products/platform/tenant_token_reference"
                 ]
               },
@@ -1117,7 +1115,7 @@
     },
     {
       "source": "/learn/security/tenant_tokens",
-      "destination": "/products/platform/generate_tenant_token_sdk"
+      "destination": "/products/platform/generate_tenant_tokens"
     },
     {
       "source": "/learn/what_is_meilisearch/sdks.html",
@@ -1629,19 +1627,31 @@
     },
     {
       "source": "/learn/security/generate_tenant_token_sdk",
-      "destination": "/products/platform/generate_tenant_token_sdk"
+      "destination": "/products/platform/generate_tenant_tokens"
     },
     {
       "source": "/learn/security/generate_tenant_token_third_party",
-      "destination": "/products/platform/generate_tenant_token_third_party"
+      "destination": "/products/platform/generate_tenant_tokens"
     },
     {
       "source": "/learn/security/generate_tenant_token_scratch",
-      "destination": "/products/platform/generate_tenant_token_scratch"
+      "destination": "/products/platform/generate_tenant_tokens"
     },
     {
       "source": "/learn/security/tenant_token_reference",
       "destination": "/products/platform/tenant_token_reference"
+    },
+    {
+      "source": "/products/platform/generate_tenant_token_sdk",
+      "destination": "/products/platform/generate_tenant_tokens"
+    },
+    {
+      "source": "/products/platform/generate_tenant_token_third_party",
+      "destination": "/products/platform/generate_tenant_tokens"
+    },
+    {
+      "source": "/products/platform/generate_tenant_token_scratch",
+      "destination": "/products/platform/generate_tenant_tokens"
     },
     {
       "source": "/learn/async/working_with_tasks",
