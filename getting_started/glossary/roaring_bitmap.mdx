@@ -1,0 +1,87 @@
+---
+title: Roaring bitmap
+sidebarTitle: Roaring bitmap
+description: Roaring bitmaps are compressed data structures for storing sets of integers, used extensively in Meilisearch for document ID operations.
+---
+
+A **roaring bitmap** is a compressed data structure for storing large sets of integers. Meilisearch uses roaring bitmaps extensively to store and manipulate document IDs efficiently.
+
+## Why roaring bitmaps?
+
+Search engines constantly work with sets of document IDs:
+- Documents matching a filter
+- Documents containing a word
+- Documents in a specific category
+
+These sets can contain millions of integers. Roaring bitmaps store them compactly while supporting fast set operations.
+
+## How they work
+
+Roaring bitmaps divide integers into chunks of 65,536 values and choose the best storage for each chunk:
+
+| Chunk density | Storage method | Space used |
+|---------------|----------------|------------|
+| **Sparse** (few values) | Sorted array | 2 bytes per value |
+| **Dense** (many values) | Bitmap | 8KB fixed |
+| **Runs** (consecutive) | Run-length encoding | Very compact |
+
+This hybrid approach adapts to your data automatically.
+
+## Fast set operations
+
+Roaring bitmaps support efficient operations that search engines need:
+
+| Operation | Use case | Complexity |
+|-----------|----------|------------|
+| **Union** | OR filters, combining results | O(n) |
+| **Intersection** | AND filters, finding common docs | O(n) |
+| **Difference** | NOT filters, excluding docs | O(n) |
+| **Rank** | Count values up to position | O(log n) |
+| **Select** | Get nth value | O(log n) |
+
+## Use in Meilisearch
+
+### Inverted indexes
+
+Each word in the [inverted index](/resources/glossary/inverted_index) maps to a roaring bitmap of document IDs:
+
+```
+"coffee" → RoaringBitmap[1, 3, 5, 8, 12, ...]
+```
+
+### Filtering
+
+When you filter with `category = "electronics" AND price < 100`:
+1. Get bitmap for `category = "electronics"`
+2. Get bitmap for `price < 100`
+3. Intersect both bitmaps
+4. Result: documents matching both conditions
+
+### Vector search
+
+In [Hannoy](/resources/internals/hannoy), roaring bitmaps store:
+- Filter candidate sets for filtered vector search
+- Graph connectivity information
+- Available node IDs for dynamic updates
+
+## Example
+
+Storing document IDs [1, 2, 3, 100, 101, 102, 1000000]:
+
+| Storage | Size |
+|---------|------|
+| Raw integers (32-bit) | 28 bytes |
+| Roaring bitmap | ~14 bytes |
+
+The savings grow dramatically with larger sets. A million consecutive IDs might take only a few bytes with run-length encoding.
+
+## Related concepts
+
+- [Inverted index](/resources/glossary/inverted_index): Uses roaring bitmaps for document lists
+- [Hannoy](/resources/internals/hannoy): Uses roaring bitmaps for filtered search
+- [FST](/resources/glossary/fst): Another compact data structure used in Meilisearch
+
+## Learn more
+
+- [RoaringBitmap specification](https://roaringbitmap.org/): Official documentation
+- [roaring-rs](https://github.com/RoaringBitmap/roaring-rs): Rust implementation used by Meilisearch

@@ -1,0 +1,108 @@
+---
+title: LMDB
+sidebarTitle: LMDB
+description: LMDB (Lightning Memory-Mapped Database) is the embedded key-value store that powers Meilisearch's storage layer.
+---
+
+**LMDB** (Lightning Memory-Mapped Database) is an embedded, transactional key-value store that serves as Meilisearch's storage backend. All indexes, documents, and search data structures are stored in LMDB.
+
+## Why LMDB?
+
+| Feature | Benefit for Meilisearch |
+|---------|------------------------|
+| **Memory-mapped** | OS manages caching automatically |
+| **Transactional** | Atomic updates, crash recovery |
+| **Concurrent reads** | Multiple search threads simultaneously |
+| **Zero-copy reads** | Direct access to data without copying |
+| **B+ tree structure** | Fast ordered key lookups |
+
+## How it works
+
+### Memory mapping
+
+LMDB maps the database file directly into virtual memory. The operating system handles:
+- Loading pages from disk on demand
+- Caching frequently accessed data in RAM
+- Evicting old pages when memory is needed
+
+This means Meilisearch doesn't manage its own cache—it relies on the OS, which is typically more efficient.
+
+### Transactions
+
+All operations in LMDB are transactional:
+
+```rust
+// Simplified example
+let txn = env.begin_write()?;
+db.put(&txn, "key", "value")?;
+txn.commit()?;  // Atomic: all or nothing
+```
+
+If Meilisearch crashes mid-operation, the database remains consistent. Uncommitted changes are simply discarded.
+
+### Read/write model
+
+| Operation | Behavior |
+|-----------|----------|
+| **Reads** | Multiple concurrent readers allowed |
+| **Writes** | Single writer at a time |
+
+This model is ideal for search: many users can search simultaneously while indexing happens in the background.
+
+## LMDB in Meilisearch
+
+### What's stored
+
+- **Documents**: Your original JSON documents
+- **Inverted indexes**: Word → document mappings
+- **FSTs**: Word dictionaries
+- **Settings**: Index configuration
+- **Vector data**: Arroy trees and embeddings
+
+### Database location
+
+By default, Meilisearch stores LMDB data in:
+- Linux: `./data.ms/`
+- macOS: `./data.ms/`
+- Docker: `/meili_data/`
+
+Configure with `--db-path`:
+
+```bash
+meilisearch --db-path /var/lib/meilisearch
+```
+
+### Memory usage
+
+LMDB's memory-mapped design means:
+- **Virtual memory** can exceed physical RAM
+- **Resident memory** grows as data is accessed
+- **OS manages** which pages stay in RAM
+
+Monitor with `MEILI_MAX_INDEXING_MEMORY` to limit indexing memory usage.
+
+## Performance characteristics
+
+### Strengths
+
+- **Fast reads**: Direct memory access, no serialization
+- **Reliable**: Battle-tested in Firefox, OpenLDAP, and many databases
+- **Simple**: No background threads, no complex configuration
+
+### Considerations
+
+- **Single writer**: Indexing is serialized (but searches aren't affected)
+- **File size**: Database file grows but doesn't shrink automatically
+- **Memory mapping limits**: Very large databases may hit OS limits
+
+## Related concepts
+
+- [Storage](/resources/internals/storage): How Meilisearch organizes data
+- [Hannoy](/resources/internals/hannoy): Uses LMDB for vector storage
+- [Tasks](/resources/glossary/tasks): Write operations are queued and processed sequentially
+
+## Learn more
+
+- [LMDB documentation](http://www.lmdb.tech/doc/): Official LMDB docs
+- [heed](https://github.com/meilisearch/heed): Meilisearch's Rust LMDB wrapper
+- [Instance configuration](/resources/self_hosting/configuration): Database path and memory settings

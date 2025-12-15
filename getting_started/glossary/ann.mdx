@@ -1,0 +1,109 @@
+---
+title: ANN (Approximate Nearest Neighbors)
+sidebarTitle: ANN
+description: Approximate Nearest Neighbors is an algorithm for finding similar vectors quickly by trading perfect accuracy for speed.
+---
+
+**Approximate Nearest Neighbors (ANN)** is an algorithm for finding vectors similar to a query vector. It's the foundation of [vector search](/resources/glossary/vector_search) and powers Meilisearch's AI-powered search features.
+
+## The problem
+
+Given a query vector and millions of stored vectors, find the most similar ones.
+
+**Exact search** compares the query against every vector. For 1 million 768-dimension vectors, that's 768 million floating-point operations per search—too slow for real-time applications.
+
+**Approximate search** uses clever data structures to find *probably* the nearest neighbors in a fraction of the time.
+
+## How ANN works
+
+ANN algorithms organize vectors into searchable structures. Meilisearch uses [Hannoy](/resources/internals/hannoy), which implements **HNSW** (Hierarchical Navigable Small World):
+
+1. **Indexing**: Build a layered graph where each vector connects to nearby neighbors
+2. **Searching**: Navigate from top layers (sparse, fast) to bottom layers (dense, precise)
+3. **Result**: Find approximate nearest neighbors through efficient graph traversal
+
+### Trade-off: Speed vs accuracy
+
+| Approach | Speed | Accuracy |
+|----------|-------|----------|
+| Exact search | Slow (O(n)) | 100% |
+| ANN | Fast (O(log n)) | 95-99% |
+
+ANN might miss the absolute closest vector occasionally, but it's fast enough for real-time search.
+
+## Measuring ANN quality
+
+### Recall
+
+Recall measures how many true nearest neighbors the algorithm finds:
+
+```
+Recall@k = (true neighbors found) / k
+```
+
+For example, Recall@10 = 0.95 means the algorithm found 9.5 out of 10 true nearest neighbors on average.
+
+### Typical results
+
+| Configuration | Recall@10 | Search time |
+|---------------|-----------|-------------|
+| High accuracy | 0.99 | Slower |
+| Balanced | 0.95 | Medium |
+| High speed | 0.85 | Faster |
+
+Meilisearch optimizes for high recall while maintaining fast search times.
+
+## ANN algorithms
+
+| Algorithm | Used by | Approach |
+|-----------|---------|----------|
+| **HNSW** | Hannoy, many vector DBs | Hierarchical graph navigation |
+| **Hyperplane trees** | Annoy | Random hyperplanes divide space |
+| **IVF** | Faiss | Cluster-based indexing |
+| **DiskANN** | Microsoft | Disk-optimized graph |
+
+Meilisearch uses HNSW via Hannoy because it:
+- Offers high recall (95-99%) with consistent performance
+- Works well with disk-based storage (LMDB)
+- Supports filtered search efficiently
+- Allows dynamic insertions and deletions
+
+## ANN in Meilisearch
+
+### Basic vector search
+
+```json
+POST /indexes/products/search
+{
+  "vector": [0.123, 0.456, 0.789, ...],
+  "hybrid": {
+    "semanticRatio": 1.0,
+    "embedder": "default"
+  }
+}
+```
+
+### Filtered ANN
+
+Meilisearch supports filtering during ANN search:
+
+```json
+POST /indexes/products/search
+{
+  "vector": [0.123, 0.456, ...],
+  "filter": "category = 'electronics'",
+  "hybrid": {
+    "semanticRatio": 1.0,
+    "embedder": "default"
+  }
+}
+```
+
+This uses Hannoy's filtered HNSW implementation to efficiently search within a subset of vectors.
+
+## Related concepts
+
+- [Hannoy](/resources/internals/hannoy): Meilisearch's ANN implementation
+- [Vector search](/resources/glossary/vector_search): Using ANN for semantic search
+- [Vector embeddings](/resources/glossary/vector_embeddings): The vectors being searched
+- [Hybrid search](/resources/glossary/hybrid_search): Combining ANN with keyword search

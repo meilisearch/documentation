@@ -231,7 +231,13 @@
               "getting_started/glossary/vector_embeddings",
               "getting_started/glossary/semantic_search",
               "getting_started/glossary/rag",
-              "getting_started/glossary/federated_search"
+              "getting_started/glossary/federated_search",
+              "getting_started/glossary/inverted_index",
+              "getting_started/glossary/roaring_bitmap",
+              "getting_started/glossary/fst",
+              "getting_started/glossary/tokenization",
+              "getting_started/glossary/lmdb",
+              "getting_started/glossary/ann"
             ]
           }
         ]
@@ -576,6 +582,8 @@
             "pages": [
               "resources/internals/storage",
               "resources/internals/datatypes",
+              "resources/internals/bucket_sort",
+              "resources/internals/hannoy",
               "resources/internals/telemetry"
             ]
           },

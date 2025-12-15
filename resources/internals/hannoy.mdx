@@ -1,0 +1,172 @@
+---
+title: Hannoy vector store
+sidebarTitle: Hannoy
+description: How Meilisearch stores and searches vector embeddings using Hannoy, a disk-backed HNSW implementation that delivers 10x faster vector search.
+---
+
+**Hannoy** is Meilisearch's vector store library, introduced in v1.29. It implements **HNSW** (Hierarchical Navigable Small World) with LMDB persistence, delivering up to 10x faster indexing and search compared to its predecessor.
+
+## Why Hannoy replaced Arroy
+
+Meilisearch previously used [Arroy](https://github.com/meilisearch/arroy), which built hyperplane trees (k-d trees) for vector search. While Arroy worked well for lower dimensions, it had limitations:
+
+| Issue | Impact |
+|-------|--------|
+| **Dimension sensitivity** | Performance degraded significantly beyond ~20 dimensions |
+| **Leaf node comparisons** | Required comparing against all vectors in leaf nodes |
+| **Read-heavy indexing** | Over 90% of indexing time spent on I/O and page faults |
+| **Complex maintenance** | Tree balancing and temporary file management |
+
+Hannoy addresses all these issues using a graph-based HNSW approach.
+
+## Performance improvements
+
+Benchmarks on 1 million documents show dramatic improvements:
+
+### 768-dimensional embeddings
+
+| Metric | Arroy | Hannoy | Improvement |
+|--------|-------|--------|-------------|
+| **Build time** | 2,387s | 506s | **4.7x faster** |
+| **Search latency** | 190ms | 29ms | **6.5x faster** |
+| **Disk usage** | 16.19 GiB | 4.03 GiB | **4x smaller** |
+
+### 1536-dimensional (quantized)
+
+| Metric | Arroy | Hannoy | Improvement |
+|--------|-------|--------|-------------|
+| **Build time** | 141s | 67s | **2x faster** |
+| **Search latency** | 168ms | 13ms | **13x faster** |
+| **Disk usage** | 1.86 GiB | 481 MiB | **4x smaller** |
+
+Real-world impact: One customer's indexing time dropped from 2 months to 6 seconds.
+
+## How HNSW works
+
+HNSW organizes vectors into a hierarchical graph structure:
+
+```
+Layer 2:    A -------- D              (sparse, long-range links)
+            |          |
+Layer 1:    A -- B --- D -- E         (medium density)
+            |    |     |    |
+Layer 0:    A-B-C-D-E-F-G-H-I-J      (all vectors, short links)
+```
+
+**Search process:**
+1. Enter at the top layer (sparse, enables fast navigation)
+2. Greedily navigate toward the query vector
+3. Descend to the next layer at each local minimum
+4. Return nearest neighbors from the bottom layer
+
+This "small world" property—where any vector can reach any other through few hops—enables efficient search without checking every vector.
+
+## Key features
+
+### LMDB integration
+
+Hannoy stores the graph structure in LMDB:
+
+- **Disk-backed**: Handle datasets larger than available RAM
+- **Memory-mapped**: OS manages caching automatically
+- **Concurrent reads**: Multiple search threads simultaneously
+- **~200 bytes overhead** per vector for graph edges
+
+### Incremental updates
+
+Unlike tree-based approaches requiring rebalancing, Hannoy handles updates efficiently:
+
+**Insertions:**
+- New vectors added to an in-memory temporary index
+- When threshold reached, merges with disk index using streaming operations
+- Only ~1% of vectors need re-indexing during merge
+
+**Deletions:**
+- Uses DiskANN-style deletion policy
+- Patches neighboring links to maintain graph connectivity
+- No tombstones or graph gaps
+
+### Quantization support
+
+Binary quantization reduces storage and improves speed for high-dimensional embeddings:
+
+| Dimensions | Full precision | Quantized |
+|------------|----------------|-----------|
+| 768 | 3 KiB/vector | ~100 bytes/vector |
+| 1536 | 6 KiB/vector | ~200 bytes/vector |
+| 3072 | 12 KiB/vector | ~400 bytes/vector |
+
+Quantized vectors use Hamming distance for extremely fast comparisons.
+
+### Distance metrics
+
+| Metric | Use case |
+|--------|----------|
+| **Cosine** | Text embeddings (normalized) |
+| **Euclidean** | General purpose |
+| **Dot product** | When vectors are pre-normalized |
+| **Hamming** | Binary/quantized vectors |
+
+## Filtered search
+
+Hannoy integrates with Meilisearch's filtering using [RoaringBitmaps](/resources/glossary/roaring_bitmap):
+
+```json
+POST /indexes/products/search
+{
+  "vector": [0.123, 0.456, ...],
+  "filter": "price < 50 AND in_stock = true",
+  "hybrid": {
+    "semanticRatio": 1.0,
+    "embedder": "default"
+  }
+}
+```
+
+The filter is evaluated first, then HNSW search operates only on matching documents.
+
+## Multiple embedders
+
+Configure different embedders for different use cases:
+
+```json
+PATCH /indexes/products/settings
+{
+  "embedders": {
+    "text": {
+      "source": "openAi",
+      "model": "text-embedding-3-small",
+      "documentTemplate": "{{doc.title}} {{doc.description}}"
+    },
+    "image": {
+      "source": "userProvided",
+      "dimensions": 512
+    }
+  }
+}
+```
+
+Each embedder maintains its own HNSW graph.
+
+## Configuration
+
+**Memory prefetching**: Reduce cold-start latency by preloading graph structure:
+
+```bash
+export HANNOY_READER_PREFETCH_MEMORY=true
+```
+
+This can reduce initial search latency by several milliseconds.
+
+## Related concepts
+
+- [AI-powered search](/products/ai_powered_search/getting_started): Using vector search in Meilisearch
+- [ANN](/resources/glossary/ann): Approximate nearest neighbors explained
+- [Vector embeddings](/resources/glossary/vector_embeddings): What embeddings are
+- [Hybrid search](/resources/glossary/hybrid_search): Combining vector and keyword search
+- [LMDB](/resources/glossary/lmdb): The storage backend
+
+## Learn more
+
+- [Hannoy on GitHub](https://github.com/nnethercott/hannoy): Source code
+- [From Trees to Graphs: Speeding Up Vector Search 10x](https://blog.kerollmops.com/from-trees-to-graphs-speeding-up-vector-search-10x-with-hannoy): Technical deep-dive

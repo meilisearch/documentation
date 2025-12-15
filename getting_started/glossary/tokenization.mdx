@@ -1,0 +1,126 @@
+---
+title: Tokenization
+sidebarTitle: Tokenization
+description: Tokenization breaks text into individual searchable units called tokens, enabling full-text search to find and match content.
+---
+
+**Tokenization** is the process of breaking text into individual searchable units called **tokens**. It's the first step in making your documents searchable.
+
+## How tokenization works
+
+Tokenization has two main phases:
+
+### 1. Segmentation
+
+Text is split into individual tokens. For most languages, this means splitting on whitespace and punctuation:
+
+```
+"Le café de Nicolas" → ["Le", "café", "de", "Nicolas"]
+```
+
+For languages without spaces (Chinese, Japanese, Thai), Meilisearch uses specialized segmenters.
+
+### 2. Normalization
+
+Tokens are standardized to improve matching:
+
+| Transformation | Before | After |
+|----------------|--------|-------|
+| Lowercase | "Coffee" | "coffee" |
+| Remove accents | "café" | "cafe" |
+| Unicode normalization | "ﬁ" | "fi" |
+
+After normalization, searching for "cafe" matches documents containing "Café", "CAFE", or "café".
+
+## Charabia
+
+Meilisearch uses [Charabia](https://github.com/meilisearch/charabia), an open-source tokenizer built specifically for search. It supports:
+
+- **80+ languages** with appropriate segmentation rules
+- **Script detection** to apply the right tokenizer
+- **Configurable normalization** per language
+
+## What gets tokenized
+
+Only [searchable attributes](/reference/api/settings/searchable-attributes) are tokenized. By default, all attributes are searchable, but you can configure this:
+
+```json
+PATCH /indexes/products/settings
+{
+  "searchableAttributes": ["title", "description"]
+}
+```
+
+Non-searchable attributes are stored but not tokenized, saving index space.
+
+## Token positions
+
+Meilisearch tracks where each token appears in a document:
+
+```
+"The quick brown fox"
+ [0]  [1]   [2]   [3]
+```
+
+Position data enables:
+- **Phrase search**: Find "quick brown" as adjacent words
+- **Proximity ranking**: Rank documents where query words appear close together
+
+## Special cases
+
+### Stop words
+
+Common words like "the", "a", "is" can be configured as stop words:
+
+```json
+PATCH /indexes/products/settings
+{
+  "stopWords": ["the", "a", "an", "is", "are"]
+}
+```
+
+Stop words are removed during tokenization, reducing index size and noise.
+
+### Separators
+
+You can define custom characters that split tokens:
+
+```json
+PATCH /indexes/products/settings
+{
+  "separatorTokens": ["@", "#"],
+  "nonSeparatorTokens": ["-"]
+}
+```
+
+This affects how terms like "user@email.com" or "self-driving" are tokenized.
+
+### CJK languages
+
+Chinese, Japanese, and Korean don't use spaces between words. Charabia uses dictionary-based segmentation:
+
+```
+"東京都" → ["東京", "都"] (Tokyo, metropolis)
+```
+
+## Impact on search
+
+Tokenization directly affects search behavior:
+
+| Scenario | Tokenization | Search behavior |
+|----------|--------------|-----------------|
+| "New York" | ["new", "york"] | Matches "new york", "New York", "NEW YORK" |
+| "self-driving" | ["self", "driving"] or ["self-driving"] | Depends on separator settings |
+| "user@email.com" | Depends on settings | May match "user", "email", "com" separately |
+
+## Related concepts
+
+- [Inverted index](/resources/glossary/inverted_index): Stores tokenized words
+- [FST](/resources/glossary/fst): Dictionary of all tokens
+- [Typo tolerance](/resources/glossary/typo_tolerance): Fuzzy matching on tokens
+
+## Learn more
+
+- [Language support](/resources/help/language): Supported languages and scripts
+- [Stop words](/reference/api/settings/stop-words): Configure stop words
+- [Separator tokens](/reference/api/settings/separator-tokens): Custom tokenization rules

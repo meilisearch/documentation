@@ -1,0 +1,91 @@
+---
+title: Inverted index
+sidebarTitle: Inverted index
+description: An inverted index maps words to the documents containing them, enabling fast full-text search lookups.
+---
+
+An **inverted index** is a data structure that maps words (tokens) to the documents containing them. It's the core technology enabling fast full-text search.
+
+## How it works
+
+Instead of scanning every document to find matches, an inverted index flips the relationship:
+
+```
+"coffee" → [Doc1, Doc3, Doc5]
+"beans"  → [Doc3, Doc4]
+"organic" → [Doc1, Doc5]
+```
+
+When you search for "coffee beans", the engine:
+1. Looks up "coffee" → gets [Doc1, Doc3, Doc5]
+2. Looks up "beans" → gets [Doc3, Doc4]
+3. Intersects the sets → Doc3 contains both
+
+This is orders of magnitude faster than reading every document.
+
+## What Meilisearch stores
+
+Meilisearch's inverted indexes store more than just document IDs:
+
+| Data | Purpose |
+|------|---------|
+| **Document IDs** | Which documents contain the term |
+| **Positions** | Where in the document the term appears |
+| **Field information** | Which attribute contains the term |
+
+Position data enables phrase searching and proximity ranking. Field information supports attribute-based ranking.
+
+## Multiple indexes
+
+Meilisearch creates nearly 20 inverted indexes per document index to support different features:
+
+- Word-to-document mapping
+- Prefix-to-document mapping (for search-as-you-type)
+- Filterable attribute indexes
+- Sortable attribute indexes
+
+## Building the index
+
+When you add documents, Meilisearch:
+
+1. **Tokenizes** text into individual words
+2. **Normalizes** tokens (lowercase, remove accents)
+3. **Updates** the inverted index mappings
+4. **Stores** position and field metadata
+
+This happens during indexing, not at search time, which is why searches are fast.
+
+## Example
+
+Given these documents:
+
+```json
+[
+  {"id": 1, "title": "Coffee Brewing Guide"},
+  {"id": 2, "title": "Tea Brewing Methods"},
+  {"id": 3, "title": "Coffee Bean Selection"}
+]
+```
+
+The inverted index for `title` would include:
+
+```
+"coffee"   → [1, 3]
+"brewing"  → [1, 2]
+"guide"    → [1]
+"tea"      → [2]
+"methods"  → [2]
+"bean"     → [3]
+"selection" → [3]
+```
+
+## Related concepts
+
+- [Tokenization](/resources/glossary/tokenization): Breaking text into tokens
+- [Roaring bitmap](/resources/glossary/roaring_bitmap): How document ID lists are stored
+- [FST](/resources/glossary/fst): Compact word dictionary storage
+
+## Learn more
+
+- [Full-text search](/products/full_text_search/overview): How Meilisearch uses inverted indexes
+- [Searchable attributes](/reference/api/settings/searchable-attributes): Control which fields are indexed

@@ -1,0 +1,88 @@
+---
+title: FST (Finite State Transducer)
+sidebarTitle: FST
+description: Finite state transducers are compact data structures for storing sorted strings, enabling fast prefix search and typo tolerance in Meilisearch.
+---
+
+A **finite state transducer (FST)** is a compact data structure for storing sorted strings with associated values. Meilisearch uses FSTs as word dictionaries to enable fast prefix search and typo tolerance.
+
+## How FSTs work
+
+An FST represents strings as paths through a directed graph:
+
+```
+       ┌─c─┐
+start ─┼─a─┼─t─► (cat)
+       └─b─┴─s─► (abs)
+```
+
+Each path from start to an accepting state spells out a stored string. Shared prefixes share nodes, making FSTs extremely compact.
+
+## Why FSTs?
+
+| Feature | Benefit |
+|---------|---------|
+| **Compact** | Shared prefixes reduce memory usage |
+| **Sorted** | Strings are stored in lexicographic order |
+| **Fast lookup** | O(n) where n is string length |
+| **Automata support** | Enables regex-like pattern matching |
+
+## Use in Meilisearch
+
+### Word dictionary
+
+Meilisearch maintains an FST containing every word in your index. This enables:
+
+- **Existence checks**: Is "coffee" a word in this index?
+- **Prefix enumeration**: What words start with "coff"?
+- **Fuzzy matching**: What words are within 1 edit of "coffe"?
+
+### Prefix search
+
+For search-as-you-type, Meilisearch stores common prefixes in a separate FST. When you type "coff", it instantly retrieves all words starting with those letters.
+
+### Typo tolerance
+
+FSTs work with the Levenshtein automaton to find words within a specified edit distance:
+
+```
+Query: "coffe" (typo)
+FST + Levenshtein → ["coffee"] (1 edit: add 'e')
+```
+
+The automaton traverses the FST, finding all words within the allowed number of:
+- Insertions: `hat` → `chat`
+- Deletions: `tiger` → `tier`
+- Substitutions: `cat` → `hat`
+- Transpositions: `scared` → `sacred`
+
+## FST vs inverted index
+
+| Data structure | Stores | Purpose |
+|----------------|--------|---------|
+| **FST** | Words (strings) | "Does this word exist?" |
+| **Inverted index** | Word → document IDs | "Which documents contain this word?" |
+
+They work together: the FST validates and expands query terms, then the inverted index retrieves matching documents.
+
+## Compression efficiency
+
+For a dataset with 1 million unique words:
+
+| Storage | Size |
+|---------|------|
+| Plain text (average 8 chars) | ~8 MB |
+| FST | ~2-4 MB |
+
+FSTs compress better when words share common prefixes (like "play", "player", "playing", "plays").
+
+## Related concepts
+
+- [Inverted index](/resources/glossary/inverted_index): Maps words to documents
+- [Tokenization](/resources/glossary/tokenization): Creates words stored in the FST
+- [Typo tolerance](/resources/glossary/typo_tolerance): Uses FST for fuzzy matching
+
+## Learn more
+
+- [fst crate](https://github.com/BurntSushi/fst): Rust FST library used by Meilisearch
+- [Typo tolerance settings](/reference/api/settings/typo-tolerance): Configure fuzzy matching
