@@ -15,7 +15,7 @@ import CodeSamplesUpdateAnIndex1 from '/snippets/samples/code_samples_update_an_
 
 The `/indexes` route allows you to create, manage, and delete your indexes.
 
-[Learn more about indexes](getting_started/indexes).
+[Learn more about indexes](resources/glossary/indexes).
 
 ## Index object
 
@@ -30,10 +30,10 @@ The `/indexes` route allows you to create, manage, and delete your indexes.
 
 | Name             | Type            | Default value | Description                                                                                                                                                                                                                                                    |
 | :--------------- | :-------------- | :------------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **`uid`**        | String          | N/A           | [Unique identifier](getting_started/indexes#index-uid) of the index. Once created, it cannot be changed                                                                                                                                                |
+| **`uid`**        | String          | N/A           | [Unique identifier](resources/glossary/indexes#index-uid) of the index. Once created, it cannot be changed                                                                                                                                                |
 | **`createdAt`**  | String          | N/A           | Creation date of the index, represented in [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. Auto-generated on index creation                                                                                                                           |
 | **`updatedAt`**  | String          | N/A           | Latest date of index update, represented in [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. Auto-generated on index creation or update                                                                                                                |
-| **`primaryKey`** | String / `null` | `null`        | [Primary key](getting_started/primary_key#primary-field) of the index. If not specified, Meilisearch [guesses your primary key](getting_started/primary_key#meilisearch-guesses-your-primary-key) from the first document you add to the index |
+| **`primaryKey`** | String / `null` | `null`        | [Primary key](resources/glossary/primary_key#primary-field) of the index. If not specified, Meilisearch [guesses your primary key](resources/glossary/primary_key#meilisearch-guesses-your-primary-key) from the first document you add to the index |
 
 ## List all indexes
 
@@ -101,7 +101,7 @@ Get information about an index.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](getting_started/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](resources/glossary/indexes#index-uid) of the requested index |
 
 ### Example
 
@@ -128,8 +128,8 @@ Create an index.
 
 | Name             | Type            | Default value | Description                                                                               |
 | :--------------- | :-------------- | :------------ | :---------------------------------------------------------------------------------------- |
-| **`uid`** *      | String          | N/A           | [`uid`](getting_started/indexes#index-uid) of the requested index                 |
-| **`primaryKey`** | String / `null` | `null`        | [`Primary key`](getting_started/primary_key#primary-field) of the requested index |
+| **`uid`** *      | String          | N/A           | [`uid`](resources/glossary/indexes#index-uid) of the requested index                 |
+| **`primaryKey`** | String / `null` | `null`        | [`Primary key`](resources/glossary/primary_key#primary-field) of the requested index |
 
 ```json
 {
@@ -160,7 +160,7 @@ You can use the response's `taskUid` to [track the status of your request](/refe
 
 <RouteHighlighter method="PATCH" path="/indexes/{index_uid}" />
 
-Update an index's [primary key](getting_started/primary_key#primary-key). You can freely update the primary key of an index as long as it contains no documents.
+Update an index's [primary key](resources/glossary/primary_key#primary-key). You can freely update the primary key of an index as long as it contains no documents.
 
 To change the primary key of an index that already contains documents, you must first delete all documents in that index. You may then change the primary key and index your dataset again.
 
@@ -168,13 +168,13 @@ To change the primary key of an index that already contains documents, you must 
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](getting_started/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](resources/glossary/indexes#index-uid) of the requested index |
 
 ### Body
 
 | Name               | Type            | Default value | Description                                                                               |
 | :----------------- | :-------------- | :------------ | :---------------------------------------------------------------------------------------- |
-| **`primaryKey`** * | String / `null` | N/A           | [`Primary key`](getting_started/primary_key#primary-field) of the requested index |
+| **`primaryKey`** * | String / `null` | N/A           | [`Primary key`](resources/glossary/primary_key#primary-field) of the requested index |
 | **`uid`** * | String / `null` | N/A           | New `uid` of the requested index |
 
 ### Example
@@ -205,7 +205,7 @@ Delete an index.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](getting_started/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](resources/glossary/indexes#index-uid) of the requested index |
 
 ### Example
 
@@ -235,7 +235,7 @@ Swapping indexes is an atomic transaction: **either all indexes in a request are
 
 Swapping `indexA` and `indexB` will also replace every mention of `indexA` by `indexB` and vice-versa in the task history. `enqueued` tasks are left unmodified.
 
-[To learn more about index swapping, refer to this short guide.](getting_started/indexes#swapping-indexes)
+[To learn more about index swapping, refer to this short guide.](resources/glossary/indexes#swapping-indexes)
 
 ### Body
 

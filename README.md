@@ -20,7 +20,7 @@ This repository is the documentation for the **open-source search engine API [Me
 
 Hey, thank you so much for wanting to contribute! If you'd like to help improve this documentation, we'd love to have you!
 
-For more information, see the [contributing overview](resources/contributing_docs.mdx).
+For more information, see the [contributing overview](resources/help/contributing_docs.mdx).
 
 ## Contact
 

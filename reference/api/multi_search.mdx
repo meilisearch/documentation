@@ -25,7 +25,7 @@ Bundle multiple search queries in a single API request. Use this endpoint to sea
 | Name          | Type             | Description                                                                                                                                          |
 | :------------ | :--------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **`federation`** | Object | If present and not `null`, returns a single list merging all search results across all specified queries |
-| **`queries`** | Array of objects | Contains the list of search queries to perform. The [`indexUid`](getting_started/indexes#index-uid) search parameter is required, all other parameters are optional |
+| **`queries`** | Array of objects | Contains the list of search queries to perform. The [`indexUid`](resources/glossary/indexes#index-uid) search parameter is required, all other parameters are optional |
 
 <Warning>
 If Meilisearch encounters an error when handling any of the queries in a multi-search request, it immediately stops processing the request and returns an error message. The returned message will only address the first error encountered.
@@ -147,7 +147,7 @@ There is no way to specify that two documents should be treated as the same acro
 | Search parameter                                                             | Type             | Default value | Description                                         |
 | :--------------------------------------------------------------------------- | :--------------- | :------------ | :-------------------------------------------------- |
 | **[`federationOptions`](#federationoptions)**                                | Object           | `null`        | Configure federation settings for a specific query  |
-| **[`indexUid`](getting_started/indexes#index-uid)**                   | String           | N/A           | `uid` of the requested index                        |
+| **[`indexUid`](resources/glossary/indexes#index-uid)**                   | String           | N/A           | `uid` of the requested index                        |
 | **[`q`](/reference/api/search#query-q)**                                     | String           | `""`          | Query string                                        |
 | **[`offset`](/reference/api/search#offset)**                                 | Integer          | `0`           | Number of documents to skip                         |
 | **[`limit`](/reference/api/search#limit)**                                   | Integer          | `20`          | Maximum number of documents returned                |
@@ -202,7 +202,7 @@ Each search result object is composed of the following fields:
 
 | Name                     | Type             | Description                                                                      |
 | :----------------------- | :--------------- | :------------------------------------------------------------------------------- |
-| **`indexUid`**           | String           | [`uid`](getting_started/indexes#index-uid) of the requested index         |
+| **`indexUid`**           | String           | [`uid`](resources/glossary/indexes#index-uid) of the requested index         |
 | **`hits`**               | Array of objects | Results of the query                                                             |
 | **`offset`**             | Number           | Number of documents skipped                                                      |
 | **`limit`**              | Number           | Number of documents to take                                                      |
