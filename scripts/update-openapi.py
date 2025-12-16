@@ -45,7 +45,21 @@ def fix_openapi(spec):
     """Fix known validation issues in the OpenAPI spec."""
     fixes_applied = 0
 
-    # Fix 1: Remove null descriptions in externalDocs
+    # Fix 1: Update servers to use absolute URLs (required for code sample generation)
+    spec["servers"] = [
+        {
+            "url": "https://your-instance.meilisearch.io",
+            "description": "Meilisearch Cloud"
+        },
+        {
+            "url": "http://localhost:7700",
+            "description": "Local server"
+        }
+    ]
+    fixes_applied += 1
+    print("  Fixed: Updated servers with absolute URLs for code sample generation")
+
+    # Fix 2: Remove null descriptions in externalDocs (tags)
     if "tags" in spec:
         for tag in spec["tags"]:
             if "externalDocs" in tag:
@@ -54,7 +68,7 @@ def fix_openapi(spec):
                     fixes_applied += 1
                     print(f"  Fixed: Removed null description from tag '{tag.get('name', 'unknown')}'")
 
-    # Fix 2: Check paths for null externalDocs descriptions
+    # Fix 3: Remove null descriptions in externalDocs (paths)
     if "paths" in spec:
         for path, methods in spec["paths"].items():
             for method, operation in methods.items():
