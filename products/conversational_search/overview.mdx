@@ -16,7 +16,7 @@ Conversational search combines Meilisearch's search capabilities with large lang
     Works with OpenAI SDKs and any OpenAI-compatible client.
   </Card>
   <Card title="Multiple LLM providers" icon="brain">
-    Use OpenAI, Mistral, Gemini, Azure OpenAI, or self-hosted models.
+    Use OpenAI, Mistral, Gemini, Azure OpenAI, or vLLM.
   </Card>
   <Card title="Streaming responses" icon="wave-pulse">
     Real-time streaming for responsive chat experiences.
@@ -126,7 +126,7 @@ for chunk in response:
 | Azure OpenAI | `azureOpenAi` | Enterprise Azure deployment |
 | Mistral | `mistral` | European hosting |
 | Google Gemini | `gemini` | Gemini Pro models |
-| vLLM | `vLlm` | Self-hosted open models |
+| vLLM | `vLlm` | Open models |
 
 ### Configure different providers
 
@@ -147,7 +147,7 @@ for chunk in response:
 }
 ```
   </Tab>
-  <Tab title="Self-hosted">
+  <Tab title="vLLM">
 ```json
 {
   "source": "vLlm",

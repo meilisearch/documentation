@@ -1,25 +1,24 @@
 ---
-title: Using task webhooks
-sidebarTitle: Using task webhooks
-description: Learn how to use webhooks to react to changes in your Meilisearch database.
-sidebarDepth: 3
+title: Configuring webhooks via CLI
+sidebarTitle: Webhooks
+description: Learn how to configure a webhook via command-line options to react to changes in your Meilisearch database.
 ---
 
 This guide teaches you how to configure a single webhook via instance options to notify a URL when Meilisearch completes a [task](/products/platform/asynchronous_operations).
 
 <Tip>
-If you are using Meilisearch Cloud or need to configure multiple webhooks, use the [`/webhooks` API route](/reference/api/webhooks) instead.
+For multiple webhooks or Cloud projects, use the [`/webhooks` API route](/reference/api/webhooks).
 </Tip>
 
 ## Requirements
 
-- a command-line console
-- a self-hosted Meilisearch instance
-- a server configured to receive `POST` requests with an ndjson payload
+- A command-line console
+- A Meilisearch instance
+- A server configured to receive `POST` requests with an ndjson payload
 
 ## Configure the webhook URL
 
-Restart your Meilisearch instance and provide the webhook URL to `--task-webhook-URL`:
+Start your Meilisearch instance and provide the webhook URL to `--task-webhook-url`:
 
 ```sh
 meilisearch --task-webhook-url http://localhost:8000
@@ -29,10 +28,10 @@ You may also define the webhook URL with environment variables or in the configu
 
 ## Optional: configure an authorization header
 
-Depending on your setup, you may need to provide an authorization header. Provide it to `task-webhook-authorization-header`:
+Depending on your setup, you may need to provide an authorization header. Provide it to `--task-webhook-authorization-header`:
 
 ```sh
-meilisearch --task-webhook-url http://localhost:8000 --task-webhook-authorization-header Bearer aSampleMasterKey
+meilisearch --task-webhook-url http://localhost:8000 --task-webhook-authorization-header "Bearer aSampleMasterKey"
 ```
 
 ## Test the webhook
@@ -41,7 +40,7 @@ A common asynchronous operation is adding or updating documents to an index. The
 
 ```sh
 curl \
-  -X POST 'MEILISEARCH_URL/indexes/books/documents' \
+  -X POST '${MEILISEARCH_URL}/indexes/books/documents' \
   -H 'Content-Type: application/json' \
   --data-binary '[
     {

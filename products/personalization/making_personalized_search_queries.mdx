@@ -5,22 +5,15 @@ description: Search personalization uses context about the person performing the
 
 ## Requirements
 
-- A Meilisearch project
-- Self-hosted Meilisearch users: a Cohere API key
+- A Meilisearch Cloud project
 
 ## Activate personalized search
 
-### Cloud users
-
 Open a support ticket requesting Meilisearch to activate search personalization for your project.
 
-### Self-hosted users
-
-Relaunch your instance using the search personalization instance option:
-
-```sh
-meilisearch --experimental-personalization-api-key="COHERE_API_KEY"
-```
+<Note>
+For self-hosting configuration, see the [configuration reference](/resources/self_hosting/configuration).
+</Note>
 
 ## Generating user context
 

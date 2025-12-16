@@ -26,17 +26,11 @@ To minimize issues and limit unexpected behavior, instance, network, and index c
 
 ## Activate the `/network` endpoint
 
-### Meilisearch Cloud
-
-If you are using Meilisearch Cloud, contact support to enable this feature in your projects.
-
-### Self-hosting
-
-Use the `/experimental-features` route to enable `network`:
+Contact support to enable this feature in your projects, or use the `/experimental-features` route:
 
 ```sh
 curl \
-  -X PATCH 'MEILISEARCH_URL/experimental-features/' \
+  -X PATCH '${MEILISEARCH_URL}/experimental-features/' \
   -H 'Content-Type: application/json'  \
   --data-binary '{
     "network": true

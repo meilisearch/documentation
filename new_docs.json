@@ -353,9 +353,7 @@
                 "pages": [
                   "products/platform/basic_security",
                   "products/platform/multitenancy_tenant_tokens",
-                  "products/platform/generate_tenant_token_sdk",
-                  "products/platform/generate_tenant_token_third_party",
-                  "products/platform/generate_tenant_token_scratch",
+                  "products/platform/generate_tenant_tokens",
                   "products/platform/tenant_token_reference"
                 ]
               },
@@ -365,7 +363,6 @@
                   "products/platform/working_with_tasks",
                   "products/platform/filtering_tasks",
                   "products/platform/paginating_tasks",
-                  "products/platform/task_webhook",
                   "products/platform/asynchronous_operations"
                 ]
               }
@@ -446,6 +443,36 @@
             ]
           },
           {
+            "group": "API Reference v2",
+            "pages": [
+              {
+                "group": "Indexes",
+                "pages": [
+                  "reference/api_v2/indexes",
+                  "reference/api_v2/create_index",
+                  "reference/api_v2/get_index",
+                  "reference/api_v2/update_index",
+                  "reference/api_v2/delete_index"
+                ]
+              },
+              {
+                "group": "Documents",
+                "pages": [
+                  "reference/api_v2/documents",
+                  "reference/api_v2/add_documents",
+                  "reference/api_v2/update_documents",
+                  "reference/api_v2/delete_documents"
+                ]
+              },
+              "reference/api_v2/search",
+              "reference/api_v2/tasks",
+              "reference/api_v2/keys",
+              "reference/api_v2/settings",
+              "reference/api_v2/health",
+              "reference/api_v2/version"
+            ]
+          },
+          {
             "group": "SDKs",
             "pages": [
               "resources/help/sdks"
@@ -479,8 +506,7 @@
                 ]
               },
               "guides/ai_embedders/langchain",
-              "guides/ai_embedders/mcp",
-              "guides/ai_embedders/huggingface_gpu"
+              "guides/ai_embedders/mcp"
             ]
           },
           {
@@ -507,6 +533,7 @@
             "pages": [
               "resources/self_hosting/getting_started",
               "resources/self_hosting/configuration",
+              "resources/self_hosting/webhooks",
               "resources/self_hosting/enterprise_edition",
               {
                 "group": "Deployment",
@@ -535,7 +562,8 @@
               {
                 "group": "Performance",
                 "pages": [
-                  "resources/self_hosting/performance/ram_multithreading"
+                  "resources/self_hosting/performance/ram_multithreading",
+                  "resources/self_hosting/huggingface_gpu"
                 ]
               }
             ]
@@ -885,7 +913,7 @@
     },
     {
       "source": "/learn/cookbooks/computing_hugging_face_embeddings_gpu",
-      "destination": "/guides/ai_embedders/huggingface_gpu"
+      "destination": "/resources/self_hosting/huggingface_gpu"
     },
     {
       "source": "/learn/cookbooks/strapi_v4",
@@ -1117,7 +1145,7 @@
     },
     {
       "source": "/learn/security/tenant_tokens",
-      "destination": "/products/platform/generate_tenant_token_sdk"
+      "destination": "/products/platform/generate_tenant_tokens"
     },
     {
       "source": "/learn/what_is_meilisearch/sdks.html",
@@ -1249,7 +1277,7 @@
     },
     {
       "source": "/guides/ai/computing_hugging_face_embeddings_gpu",
-      "destination": "/guides/ai_embedders/huggingface_gpu"
+      "destination": "/resources/self_hosting/huggingface_gpu"
     },
     {
       "source": "/reference/api/settings#dictionary",
@@ -1629,19 +1657,39 @@
     },
     {
       "source": "/learn/security/generate_tenant_token_sdk",
-      "destination": "/products/platform/generate_tenant_token_sdk"
+      "destination": "/products/platform/generate_tenant_tokens"
     },
     {
       "source": "/learn/security/generate_tenant_token_third_party",
-      "destination": "/products/platform/generate_tenant_token_third_party"
+      "destination": "/products/platform/generate_tenant_tokens"
     },
     {
       "source": "/learn/security/generate_tenant_token_scratch",
-      "destination": "/products/platform/generate_tenant_token_scratch"
+      "destination": "/products/platform/generate_tenant_tokens"
     },
     {
       "source": "/learn/security/tenant_token_reference",
       "destination": "/products/platform/tenant_token_reference"
+    },
+    {
+      "source": "/products/platform/generate_tenant_token_sdk",
+      "destination": "/products/platform/generate_tenant_tokens"
+    },
+    {
+      "source": "/products/platform/generate_tenant_token_third_party",
+      "destination": "/products/platform/generate_tenant_tokens"
+    },
+    {
+      "source": "/products/platform/generate_tenant_token_scratch",
+      "destination": "/products/platform/generate_tenant_tokens"
+    },
+    {
+      "source": "/products/platform/task_webhook",
+      "destination": "/resources/self_hosting/webhooks"
+    },
+    {
+      "source": "/guides/ai_embedders/huggingface_gpu",
+      "destination": "/resources/self_hosting/huggingface_gpu"
     },
     {
       "source": "/learn/async/working_with_tasks",
@@ -1733,7 +1781,7 @@
     },
     {
       "source": "/guides/computing_hugging_face_embeddings_gpu",
-      "destination": "/guides/ai_embedders/huggingface_gpu"
+      "destination": "/resources/self_hosting/huggingface_gpu"
     },
     {
       "source": "/guides/improve_relevancy_large_documents",

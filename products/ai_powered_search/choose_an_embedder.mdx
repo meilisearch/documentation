@@ -23,14 +23,6 @@ Meilisearch does not support searching images, audio, or any other content not p
 
 In these cases, you will have to supply your own embeddings.
 
-## Only choose Hugging Face when self-hosting small static datasets
+## Using Hugging Face embedders
 
-Although it returns very relevant search results, the Hugging Face embedder must run directly in your server. This may lead to lower performance and extra costs when you are hosting Meilisearch in a service like DigitalOcean or AWS.
-
-That said, Hugging Face can be a good embedder for datasets under 10k documents that you don't plan to update often.
-
-<Note>
-Meilisearch Cloud does not support embedders with `{"source": "huggingFace"}`.
-
-To implement Hugging Face embedders in the Cloud, use [HuggingFace inference points with the REST embedder](/guides/ai_embedders/providers/huggingface).
-</Note>
+For Hugging Face models, use [HuggingFace Inference Endpoints with the REST embedder](/guides/ai_embedders/providers/huggingface). This approach works with Meilisearch Cloud and provides better scalability than running models locally.

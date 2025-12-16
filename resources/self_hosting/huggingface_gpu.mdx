@@ -1,10 +1,10 @@
 ---
-title: Computing Hugging Face embeddings with the GPU
-sidebarTitle: Hugging Face Local
-description: This guide for experienced users shows you how to compile a Meilisearch binary that generates Hugging Face embeddings with an Nvidia GPU.
+title: Computing Hugging Face embeddings with GPU
+sidebarTitle: GPU embeddings
+description: This guide shows you how to compile a Meilisearch binary that generates Hugging Face embeddings with an Nvidia GPU.
 ---
 
-This guide is aimed at experienced users working with a self-hosted Meilisearch instance. It shows you how to compile a Meilisearch binary that generates Hugging Face embeddings with an Nvidia GPU.
+This guide shows you how to compile a Meilisearch binary that generates Hugging Face embeddings with an Nvidia GPU.
 
 ## Prerequisites
 
@@ -58,7 +58,7 @@ Then add the Hugging Face embedder to your index settings:
 
 ```sh
 curl \
-  -X PATCH 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/embedders' \
+  -X PATCH '${MEILISEARCH_URL}/indexes/INDEX_NAME/settings/embedders' \
   -H 'Content-Type: application/json' \
   --data-binary '{ "default": { "source": "huggingFace" } }'
 ```

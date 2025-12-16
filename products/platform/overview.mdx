@@ -52,7 +52,7 @@ Meilisearch uses API keys to authenticate requests and control access.
 
 | Key type | Purpose | Capabilities |
 |----------|---------|--------------|
-| **Master key** | Admin access (self-hosted) | Everything |
+| **Master key** | Full admin access | Everything |
 | **Admin API key** | Server-side operations | Create indexes, manage settings |
 | **Search API key** | Client-side search | Search only, safe for browsers |
 
@@ -130,14 +130,6 @@ curl -X POST "${MEILISEARCH_URL}/webhooks" \
     "url": "https://your-app.com/webhooks/meilisearch",
     "description": "Notify on task completion"
   }'
-```
-
-### Configure webhooks (Self-hosted)
-
-Use launch configuration:
-
-```bash
-./meilisearch --task-webhook-url="https://your-app.com/webhooks/meilisearch"
 ```
 
 [Learn more about webhooks →](/products/platform/task_webhook)
