@@ -5,16 +5,21 @@
   "repository": "meilisearch/documentation",
   "bugs": "https://github.com/meilisearch/documentation/issues",
   "dependencies": {
+    "@octokit/rest": "^22.0.1",
     "js-yaml": "^4.1.1",
-    "node-fetch": "^2.7.0"
+    "node-fetch": "^2.7.0",
+    "openai": "^4.0.0"
   },
   "devDependencies": {
     "@ocular-d/vale-bin": "^2.29.6",
-    "markdownlint-cli": "^0.47.0"
+    "@types/node": "^20.0.0",
+    "markdownlint-cli": "^0.47.0",
+    "typescript": "^5.0.0"
   },
   "scripts": {
     "marklint": "markdownlint '**/*.mdx' --config .markdownlint.jsonc",
     "marklint:fix": "markdownlint '**/*.mdx' --config .markdownlint.jsonc --fix",
-    "proselint": "vale --glob='!.github/*' ."
+    "proselint": "vale --glob='!.github/*' .",
+    "generate-changelog": "npx tsx scripts/generate-changelog.ts"
   }
 }
