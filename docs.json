@@ -27,7 +27,7 @@
   "appearance": {
     "default": "dark"
   },
-  "openapi": "https://raw.githubusercontent.com/meilisearch/open-api/main/open-api.json",
+  "openapi": "reference/openapi.json",
   "api": {
     "playground": {
       "display": "interactive"
@@ -363,7 +363,6 @@
                   "products/platform/working_with_tasks",
                   "products/platform/filtering_tasks",
                   "products/platform/paginating_tasks",
-                  "products/platform/task_webhook",
                   "products/platform/asynchronous_operations"
                 ]
               }
@@ -444,6 +443,379 @@
             ]
           },
           {
+            "group": "API Reference v2",
+            "pages": [
+              {
+                "group": "Indexes",
+                "pages": [
+                  "reference/api_v2/indexes/overview",
+                  "reference/api_v2/indexes/list-indexes",
+                  "reference/api_v2/indexes/create-index",
+                  "reference/api_v2/indexes/get-index",
+                  "reference/api_v2/indexes/update-index",
+                  "reference/api_v2/indexes/delete-index",
+                  "reference/api_v2/indexes/swap-indexes"
+                ]
+              },
+              {
+                "group": "Documents",
+                "pages": [
+                  "reference/api_v2/documents/overview",
+                  "reference/api_v2/documents/get-documents",
+                  "reference/api_v2/documents/get-documents-with-post",
+                  "reference/api_v2/documents/get-one-document",
+                  "reference/api_v2/documents/add-or-replace-documents",
+                  "reference/api_v2/documents/add-or-update-documents",
+                  "reference/api_v2/documents/delete-a-document",
+                  "reference/api_v2/documents/delete-all-documents",
+                  "reference/api_v2/documents/delete-documents-by-batch",
+                  "reference/api_v2/documents/delete-documents-by-filter",
+                  "reference/api_v2/documents/edit-documents-by-function"
+                ]
+              },
+              {
+                "group": "Search",
+                "pages": [
+                  "reference/api_v2/indexes/search-with-post",
+                  "reference/api_v2/indexes/search-an-index-with-get"
+                ]
+              },
+              {
+                "group": "Multi-search",
+                "pages": [
+                  "reference/api_v2/multi-search/overview",
+                  "reference/api_v2/multi-search/perform-a-multi-search"
+                ]
+              },
+              {
+                "group": "Facet search",
+                "pages": [
+                  "reference/api_v2/facet-search/overview",
+                  "reference/api_v2/facet-search/perform-a-facet-search"
+                ]
+              },
+              {
+                "group": "Similar documents",
+                "pages": [
+                  "reference/api_v2/similar-documents/overview",
+                  "reference/api_v2/similar-documents/get-similar-documents-with-post",
+                  "reference/api_v2/similar-documents/get-similar-documents-with-get"
+                ]
+              },
+              {
+                "group": "Tasks",
+                "pages": [
+                  "reference/api_v2/tasks/overview",
+                  "reference/api_v2/tasks/get-all-tasks",
+                  "reference/api_v2/tasks/get-a-task",
+                  "reference/api_v2/tasks/cancel-tasks",
+                  "reference/api_v2/tasks/delete-tasks"
+                ]
+              },
+              {
+                "group": "Batches",
+                "pages": [
+                  "reference/api_v2/batches/overview",
+                  "reference/api_v2/batches/get-batches",
+                  "reference/api_v2/batches/get-one-batch"
+                ]
+              },
+              {
+                "group": "Keys",
+                "pages": [
+                  "reference/api_v2/keys/overview",
+                  "reference/api_v2/keys/get-api-keys",
+                  "reference/api_v2/keys/create-an-api-key",
+                  "reference/api_v2/keys/get-an-api-key",
+                  "reference/api_v2/keys/update-a-key",
+                  "reference/api_v2/keys/delete-a-key"
+                ]
+              },
+              {
+                "group": "Settings",
+                "pages": [
+                  "reference/api_v2/settings/overview",
+                  {
+                    "group": "All settings",
+                    "pages": [
+                      "reference/api_v2/settings/all-settings",
+                      "reference/api_v2/settings/update-settings",
+                      "reference/api_v2/settings/reset-settings"
+                    ]
+                  },
+                  {
+                    "group": "Displayed attributes",
+                    "pages": [
+                      "reference/api_v2/settings/get-displayedattributes",
+                      "reference/api_v2/settings/update-displayedattributes",
+                      "reference/api_v2/settings/reset-displayedattributes"
+                    ]
+                  },
+                  {
+                    "group": "Searchable attributes",
+                    "pages": [
+                      "reference/api_v2/settings/get-searchableattributes",
+                      "reference/api_v2/settings/update-searchableattributes",
+                      "reference/api_v2/settings/reset-searchableattributes"
+                    ]
+                  },
+                  {
+                    "group": "Filterable attributes",
+                    "pages": [
+                      "reference/api_v2/settings/get-filterableattributes",
+                      "reference/api_v2/settings/update-filterableattributes",
+                      "reference/api_v2/settings/reset-filterableattributes"
+                    ]
+                  },
+                  {
+                    "group": "Sortable attributes",
+                    "pages": [
+                      "reference/api_v2/settings/get-sortableattributes",
+                      "reference/api_v2/settings/update-sortableattributes",
+                      "reference/api_v2/settings/reset-sortableattributes"
+                    ]
+                  },
+                  {
+                    "group": "Ranking rules",
+                    "pages": [
+                      "reference/api_v2/settings/get-rankingrules",
+                      "reference/api_v2/settings/update-rankingrules",
+                      "reference/api_v2/settings/reset-rankingrules"
+                    ]
+                  },
+                  {
+                    "group": "Typo tolerance",
+                    "pages": [
+                      "reference/api_v2/settings/get-typotolerance",
+                      "reference/api_v2/settings/update-typotolerance",
+                      "reference/api_v2/settings/reset-typotolerance"
+                    ]
+                  },
+                  {
+                    "group": "Synonyms",
+                    "pages": [
+                      "reference/api_v2/settings/get-synonyms",
+                      "reference/api_v2/settings/update-synonyms",
+                      "reference/api_v2/settings/reset-synonyms"
+                    ]
+                  },
+                  {
+                    "group": "Stop words",
+                    "pages": [
+                      "reference/api_v2/settings/get-stopwords",
+                      "reference/api_v2/settings/update-stopwords",
+                      "reference/api_v2/settings/reset-stopwords"
+                    ]
+                  },
+                  {
+                    "group": "Distinct attribute",
+                    "pages": [
+                      "reference/api_v2/settings/get-distinctattribute",
+                      "reference/api_v2/settings/update-distinctattribute",
+                      "reference/api_v2/settings/reset-distinctattribute"
+                    ]
+                  },
+                  {
+                    "group": "Faceting",
+                    "pages": [
+                      "reference/api_v2/settings/get-faceting",
+                      "reference/api_v2/settings/update-faceting",
+                      "reference/api_v2/settings/reset-faceting"
+                    ]
+                  },
+                  {
+                    "group": "Pagination",
+                    "pages": [
+                      "reference/api_v2/settings/get-pagination",
+                      "reference/api_v2/settings/update-pagination",
+                      "reference/api_v2/settings/reset-pagination"
+                    ]
+                  },
+                  {
+                    "group": "Proximity precision",
+                    "pages": [
+                      "reference/api_v2/settings/get-proximityprecision",
+                      "reference/api_v2/settings/update-proximityprecision",
+                      "reference/api_v2/settings/reset-proximityprecision"
+                    ]
+                  },
+                  {
+                    "group": "Dictionary",
+                    "pages": [
+                      "reference/api_v2/settings/get-dictionary",
+                      "reference/api_v2/settings/update-dictionary",
+                      "reference/api_v2/settings/reset-dictionary"
+                    ]
+                  },
+                  {
+                    "group": "Separator tokens",
+                    "pages": [
+                      "reference/api_v2/settings/get-separatortokens",
+                      "reference/api_v2/settings/update-separatortokens",
+                      "reference/api_v2/settings/reset-separatortokens"
+                    ]
+                  },
+                  {
+                    "group": "Non-separator tokens",
+                    "pages": [
+                      "reference/api_v2/settings/get-nonseparatortokens",
+                      "reference/api_v2/settings/update-nonseparatortokens",
+                      "reference/api_v2/settings/reset-nonseparatortokens"
+                    ]
+                  },
+                  {
+                    "group": "Localized attributes",
+                    "pages": [
+                      "reference/api_v2/settings/get-localizedattributes",
+                      "reference/api_v2/settings/update-localizedattributes",
+                      "reference/api_v2/settings/reset-localizedattributes"
+                    ]
+                  },
+                  {
+                    "group": "Facet search",
+                    "pages": [
+                      "reference/api_v2/settings/get-facetsearch",
+                      "reference/api_v2/settings/update-facetsearch",
+                      "reference/api_v2/settings/reset-facetsearch"
+                    ]
+                  },
+                  {
+                    "group": "Prefix search",
+                    "pages": [
+                      "reference/api_v2/settings/get-prefixsearch",
+                      "reference/api_v2/settings/update-prefixsearch",
+                      "reference/api_v2/settings/reset-prefixsearch"
+                    ]
+                  },
+                  {
+                    "group": "Search cutoff",
+                    "pages": [
+                      "reference/api_v2/settings/get-searchcutoffms",
+                      "reference/api_v2/settings/update-searchcutoffms",
+                      "reference/api_v2/settings/reset-searchcutoffms"
+                    ]
+                  },
+                  {
+                    "group": "Embedders",
+                    "pages": [
+                      "reference/api_v2/settings/get-embedders",
+                      "reference/api_v2/settings/update-embedders",
+                      "reference/api_v2/settings/reset-embedders"
+                    ]
+                  },
+                  {
+                    "group": "Chat",
+                    "pages": [
+                      "reference/api_v2/settings/get-chat",
+                      "reference/api_v2/settings/update-chat",
+                      "reference/api_v2/settings/reset-chat"
+                    ]
+                  },
+                  {
+                    "group": "Vector store",
+                    "pages": [
+                      "reference/api_v2/settings/get-vectorstore",
+                      "reference/api_v2/settings/update-vectorstore",
+                      "reference/api_v2/settings/reset-vectorstore"
+                    ]
+                  }
+                ]
+              },
+              {
+                "group": "Stats",
+                "pages": [
+                  "reference/api_v2/stats/overview",
+                  "reference/api_v2/stats/get-stats-of-all-indexes",
+                  "reference/api_v2/stats/get-stats-of-index"
+                ]
+              },
+              {
+                "group": "Health",
+                "pages": [
+                  "reference/api_v2/health/overview",
+                  "reference/api_v2/health/get-health"
+                ]
+              },
+              {
+                "group": "Version",
+                "pages": [
+                  "reference/api_v2/version/overview",
+                  "reference/api_v2/version/get-version"
+                ]
+              },
+              {
+                "group": "Snapshots",
+                "pages": [
+                  "reference/api_v2/snapshots/overview",
+                  "reference/api_v2/snapshots/create-a-snapshot"
+                ]
+              },
+              {
+                "group": "Dumps",
+                "pages": [
+                  "reference/api_v2/dumps/overview",
+                  "reference/api_v2/dumps/create-a-dump"
+                ]
+              },
+              {
+                "group": "Logs",
+                "pages": [
+                  "reference/api_v2/logs/overview",
+                  "reference/api_v2/logs/retrieve-logs",
+                  "reference/api_v2/logs/stop-retrieving-logs",
+                  "reference/api_v2/logs/update-target-of-the-console-logs"
+                ]
+              },
+              {
+                "group": "Metrics",
+                "pages": [
+                  "reference/api_v2/stats/get-prometheus-metrics"
+                ]
+              },
+              {
+                "group": "Experimental features",
+                "pages": [
+                  "reference/api_v2/experimental-features/overview",
+                  "reference/api_v2/experimental-features/get-all-experimental-features",
+                  "reference/api_v2/experimental-features/configure-experimental-features"
+                ]
+              },
+              {
+                "group": "Network",
+                "pages": [
+                  "reference/api_v2/network/overview",
+                  "reference/api_v2/network/get-network-topology",
+                  "reference/api_v2/network/configure-network"
+                ]
+              },
+              {
+                "group": "Webhooks",
+                "pages": [
+                  "reference/api_v2/webhooks/overview",
+                  "reference/api_v2/webhooks/get-webhooks",
+                  "reference/api_v2/webhooks/post-webhooks",
+                  "reference/api_v2/webhooks/get-webhooks-1",
+                  "reference/api_v2/webhooks/patch-webhooks",
+                  "reference/api_v2/webhooks/delete-webhooks"
+                ]
+              },
+              {
+                "group": "Compact",
+                "pages": [
+                  "reference/api_v2/compact-an-index/overview",
+                  "reference/api_v2/compact-an-index/compact-an-index"
+                ]
+              },
+              {
+                "group": "Export",
+                "pages": [
+                  "reference/api_v2/export/overview",
+                  "reference/api_v2/export/post-export"
+                ]
+              }
+            ]
+          },
+          {
             "group": "SDKs",
             "pages": [
               "resources/help/sdks"
@@ -477,8 +849,7 @@
                 ]
               },
               "guides/ai_embedders/langchain",
-              "guides/ai_embedders/mcp",
-              "guides/ai_embedders/huggingface_gpu"
+              "guides/ai_embedders/mcp"
             ]
           },
           {
@@ -505,6 +876,7 @@
             "pages": [
               "resources/self_hosting/getting_started",
               "resources/self_hosting/configuration",
+              "resources/self_hosting/webhooks",
               "resources/self_hosting/enterprise_edition",
               {
                 "group": "Deployment",
@@ -533,7 +905,8 @@
               {
                 "group": "Performance",
                 "pages": [
-                  "resources/self_hosting/performance/ram_multithreading"
+                  "resources/self_hosting/performance/ram_multithreading",
+                  "resources/self_hosting/huggingface_gpu"
                 ]
               }
             ]
@@ -883,7 +1256,7 @@
     },
     {
       "source": "/learn/cookbooks/computing_hugging_face_embeddings_gpu",
-      "destination": "/guides/ai_embedders/huggingface_gpu"
+      "destination": "/resources/self_hosting/huggingface_gpu"
     },
     {
       "source": "/learn/cookbooks/strapi_v4",
@@ -1247,7 +1620,7 @@
     },
     {
       "source": "/guides/ai/computing_hugging_face_embeddings_gpu",
-      "destination": "/guides/ai_embedders/huggingface_gpu"
+      "destination": "/resources/self_hosting/huggingface_gpu"
     },
     {
       "source": "/reference/api/settings#dictionary",
@@ -1654,6 +2027,14 @@
       "destination": "/products/platform/generate_tenant_tokens"
     },
     {
+      "source": "/products/platform/task_webhook",
+      "destination": "/resources/self_hosting/webhooks"
+    },
+    {
+      "source": "/guides/ai_embedders/huggingface_gpu",
+      "destination": "/resources/self_hosting/huggingface_gpu"
+    },
+    {
       "source": "/learn/async/working_with_tasks",
       "destination": "/products/platform/asynchronous_operations"
     },
@@ -1743,7 +2124,7 @@
     },
     {
       "source": "/guides/computing_hugging_face_embeddings_gpu",
-      "destination": "/guides/ai_embedders/huggingface_gpu"
+      "destination": "/resources/self_hosting/huggingface_gpu"
     },
     {
       "source": "/guides/improve_relevancy_large_documents",
