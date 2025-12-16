@@ -22,6 +22,22 @@ Hey, thank you so much for wanting to contribute! If you'd like to help improve 
 
 For more information, see the [contributing overview](resources/help/contributing_docs.mdx).
 
+## Updating the OpenAPI spec
+
+The API Reference uses the OpenAPI specification from [Meilisearch releases](https://github.com/meilisearch/meilisearch/releases). To update to the latest version:
+
+```bash
+python3 scripts/update-openapi.py
+```
+
+This script:
+1. Fetches the latest Meilisearch release version from GitHub
+2. Downloads the OpenAPI spec from the release assets
+3. Fixes known validation issues (null descriptions in externalDocs)
+4. Saves it to `reference/openapi.json`
+
+Run this script whenever a new Meilisearch version is released to keep the API documentation up to date.
+
 ## Contact
 
 Feel free to contact us about any questions you may have:
