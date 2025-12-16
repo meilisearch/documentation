@@ -387,281 +387,281 @@
         "tab": "References",
         "groups": [
           {
-            "group": "API Reference v2",
+            "group": "API Reference",
             "pages": [
-              "reference/api_v2/overview",
+              "reference/api/overview",
               {
                 "group": "Indexes",
                 "pages": [
-                  "reference/api_v2/indexes/overview",
-                  "reference/api_v2/indexes/list-indexes",
-                  "reference/api_v2/indexes/create-index",
-                  "reference/api_v2/indexes/get-index",
-                  "reference/api_v2/indexes/update-index",
-                  "reference/api_v2/indexes/delete-index",
-                  "reference/api_v2/indexes/swap-indexes"
+                  "reference/api/indexes/overview",
+                  "reference/api/indexes/list-indexes",
+                  "reference/api/indexes/create-index",
+                  "reference/api/indexes/get-index",
+                  "reference/api/indexes/update-index",
+                  "reference/api/indexes/delete-index",
+                  "reference/api/indexes/swap-indexes"
                 ]
               },
               {
                 "group": "Documents",
                 "pages": [
-                  "reference/api_v2/documents/overview",
-                  "reference/api_v2/documents/get-documents",
-                  "reference/api_v2/documents/get-documents-with-post",
-                  "reference/api_v2/documents/get-one-document",
-                  "reference/api_v2/documents/add-or-replace-documents",
-                  "reference/api_v2/documents/add-or-update-documents",
-                  "reference/api_v2/documents/delete-a-document",
-                  "reference/api_v2/documents/delete-all-documents",
-                  "reference/api_v2/documents/delete-documents-by-batch",
-                  "reference/api_v2/documents/delete-documents-by-filter",
-                  "reference/api_v2/documents/edit-documents-by-function"
+                  "reference/api/documents/overview",
+                  "reference/api/documents/get-documents",
+                  "reference/api/documents/get-documents-with-post",
+                  "reference/api/documents/get-one-document",
+                  "reference/api/documents/add-or-replace-documents",
+                  "reference/api/documents/add-or-update-documents",
+                  "reference/api/documents/delete-a-document",
+                  "reference/api/documents/delete-all-documents",
+                  "reference/api/documents/delete-documents-by-batch",
+                  "reference/api/documents/delete-documents-by-filter",
+                  "reference/api/documents/edit-documents-by-function"
                 ]
               },
               {
                 "group": "Search",
                 "pages": [
-                  "reference/api_v2/indexes/search-with-post",
-                  "reference/api_v2/indexes/search-an-index-with-get"
+                  "reference/api/indexes/search-with-post",
+                  "reference/api/indexes/search-an-index-with-get"
                 ]
               },
               {
                 "group": "Multi-search",
                 "pages": [
-                  "reference/api_v2/multi-search/overview",
-                  "reference/api_v2/multi-search/perform-a-multi-search"
+                  "reference/api/multi-search/overview",
+                  "reference/api/multi-search/perform-a-multi-search"
                 ]
               },
               {
                 "group": "Facet search",
                 "pages": [
-                  "reference/api_v2/facet-search/overview",
-                  "reference/api_v2/facet-search/perform-a-facet-search"
+                  "reference/api/facet-search/overview",
+                  "reference/api/facet-search/perform-a-facet-search"
                 ]
               },
               {
                 "group": "Similar documents",
                 "pages": [
-                  "reference/api_v2/similar-documents/overview",
-                  "reference/api_v2/similar-documents/get-similar-documents-with-post",
-                  "reference/api_v2/similar-documents/get-similar-documents-with-get"
+                  "reference/api/similar-documents/overview",
+                  "reference/api/similar-documents/get-similar-documents-with-post",
+                  "reference/api/similar-documents/get-similar-documents-with-get"
                 ]
               },
               {
                 "group": "Tasks",
                 "pages": [
-                  "reference/api_v2/tasks/overview",
-                  "reference/api_v2/tasks/get-all-tasks",
-                  "reference/api_v2/tasks/get-a-task",
-                  "reference/api_v2/tasks/cancel-tasks",
-                  "reference/api_v2/tasks/delete-tasks"
+                  "reference/api/tasks/overview",
+                  "reference/api/tasks/get-all-tasks",
+                  "reference/api/tasks/get-a-task",
+                  "reference/api/tasks/cancel-tasks",
+                  "reference/api/tasks/delete-tasks"
                 ]
               },
               {
                 "group": "Batches",
                 "pages": [
-                  "reference/api_v2/batches/overview",
-                  "reference/api_v2/batches/get-batches",
-                  "reference/api_v2/batches/get-one-batch"
+                  "reference/api/batches/overview",
+                  "reference/api/batches/get-batches",
+                  "reference/api/batches/get-one-batch"
                 ]
               },
               {
                 "group": "Keys",
                 "pages": [
-                  "reference/api_v2/keys/overview",
-                  "reference/api_v2/keys/get-api-keys",
-                  "reference/api_v2/keys/create-an-api-key",
-                  "reference/api_v2/keys/get-an-api-key",
-                  "reference/api_v2/keys/update-a-key",
-                  "reference/api_v2/keys/delete-a-key"
+                  "reference/api/keys/overview",
+                  "reference/api/keys/get-api-keys",
+                  "reference/api/keys/create-an-api-key",
+                  "reference/api/keys/get-an-api-key",
+                  "reference/api/keys/update-a-key",
+                  "reference/api/keys/delete-a-key"
                 ]
               },
               {
                 "group": "Settings",
                 "pages": [
-                  "reference/api_v2/settings/overview",
+                  "reference/api/settings/overview",
                   {
                     "group": "All settings",
                     "pages": [
-                      "reference/api_v2/settings/all-settings",
-                      "reference/api_v2/settings/update-settings",
-                      "reference/api_v2/settings/reset-settings"
+                      "reference/api/settings/all-settings",
+                      "reference/api/settings/update-settings",
+                      "reference/api/settings/reset-settings"
                     ]
                   },
                   {
                     "group": "Displayed attributes",
                     "pages": [
-                      "reference/api_v2/settings/get-displayedattributes",
-                      "reference/api_v2/settings/update-displayedattributes",
-                      "reference/api_v2/settings/reset-displayedattributes"
+                      "reference/api/settings/get-displayedattributes",
+                      "reference/api/settings/update-displayedattributes",
+                      "reference/api/settings/reset-displayedattributes"
                     ]
                   },
                   {
                     "group": "Searchable attributes",
                     "pages": [
-                      "reference/api_v2/settings/get-searchableattributes",
-                      "reference/api_v2/settings/update-searchableattributes",
-                      "reference/api_v2/settings/reset-searchableattributes"
+                      "reference/api/settings/get-searchableattributes",
+                      "reference/api/settings/update-searchableattributes",
+                      "reference/api/settings/reset-searchableattributes"
                     ]
                   },
                   {
                     "group": "Filterable attributes",
                     "pages": [
-                      "reference/api_v2/settings/get-filterableattributes",
-                      "reference/api_v2/settings/update-filterableattributes",
-                      "reference/api_v2/settings/reset-filterableattributes"
+                      "reference/api/settings/get-filterableattributes",
+                      "reference/api/settings/update-filterableattributes",
+                      "reference/api/settings/reset-filterableattributes"
                     ]
                   },
                   {
                     "group": "Sortable attributes",
                     "pages": [
-                      "reference/api_v2/settings/get-sortableattributes",
-                      "reference/api_v2/settings/update-sortableattributes",
-                      "reference/api_v2/settings/reset-sortableattributes"
+                      "reference/api/settings/get-sortableattributes",
+                      "reference/api/settings/update-sortableattributes",
+                      "reference/api/settings/reset-sortableattributes"
                     ]
                   },
                   {
                     "group": "Ranking rules",
                     "pages": [
-                      "reference/api_v2/settings/get-rankingrules",
-                      "reference/api_v2/settings/update-rankingrules",
-                      "reference/api_v2/settings/reset-rankingrules"
+                      "reference/api/settings/get-rankingrules",
+                      "reference/api/settings/update-rankingrules",
+                      "reference/api/settings/reset-rankingrules"
                     ]
                   },
                   {
                     "group": "Typo tolerance",
                     "pages": [
-                      "reference/api_v2/settings/get-typotolerance",
-                      "reference/api_v2/settings/update-typotolerance",
-                      "reference/api_v2/settings/reset-typotolerance"
+                      "reference/api/settings/get-typotolerance",
+                      "reference/api/settings/update-typotolerance",
+                      "reference/api/settings/reset-typotolerance"
                     ]
                   },
                   {
                     "group": "Synonyms",
                     "pages": [
-                      "reference/api_v2/settings/get-synonyms",
-                      "reference/api_v2/settings/update-synonyms",
-                      "reference/api_v2/settings/reset-synonyms"
+                      "reference/api/settings/get-synonyms",
+                      "reference/api/settings/update-synonyms",
+                      "reference/api/settings/reset-synonyms"
                     ]
                   },
                   {
                     "group": "Stop words",
                     "pages": [
-                      "reference/api_v2/settings/get-stopwords",
-                      "reference/api_v2/settings/update-stopwords",
-                      "reference/api_v2/settings/reset-stopwords"
+                      "reference/api/settings/get-stopwords",
+                      "reference/api/settings/update-stopwords",
+                      "reference/api/settings/reset-stopwords"
                     ]
                   },
                   {
                     "group": "Distinct attribute",
                     "pages": [
-                      "reference/api_v2/settings/get-distinctattribute",
-                      "reference/api_v2/settings/update-distinctattribute",
-                      "reference/api_v2/settings/reset-distinctattribute"
+                      "reference/api/settings/get-distinctattribute",
+                      "reference/api/settings/update-distinctattribute",
+                      "reference/api/settings/reset-distinctattribute"
                     ]
                   },
                   {
                     "group": "Faceting",
                     "pages": [
-                      "reference/api_v2/settings/get-faceting",
-                      "reference/api_v2/settings/update-faceting",
-                      "reference/api_v2/settings/reset-faceting"
+                      "reference/api/settings/get-faceting",
+                      "reference/api/settings/update-faceting",
+                      "reference/api/settings/reset-faceting"
                     ]
                   },
                   {
                     "group": "Pagination",
                     "pages": [
-                      "reference/api_v2/settings/get-pagination",
-                      "reference/api_v2/settings/update-pagination",
-                      "reference/api_v2/settings/reset-pagination"
+                      "reference/api/settings/get-pagination",
+                      "reference/api/settings/update-pagination",
+                      "reference/api/settings/reset-pagination"
                     ]
                   },
                   {
                     "group": "Proximity precision",
                     "pages": [
-                      "reference/api_v2/settings/get-proximityprecision",
-                      "reference/api_v2/settings/update-proximityprecision",
-                      "reference/api_v2/settings/reset-proximityprecision"
+                      "reference/api/settings/get-proximityprecision",
+                      "reference/api/settings/update-proximityprecision",
+                      "reference/api/settings/reset-proximityprecision"
                     ]
                   },
                   {
                     "group": "Dictionary",
                     "pages": [
-                      "reference/api_v2/settings/get-dictionary",
-                      "reference/api_v2/settings/update-dictionary",
-                      "reference/api_v2/settings/reset-dictionary"
+                      "reference/api/settings/get-dictionary",
+                      "reference/api/settings/update-dictionary",
+                      "reference/api/settings/reset-dictionary"
                     ]
                   },
                   {
                     "group": "Separator tokens",
                     "pages": [
-                      "reference/api_v2/settings/get-separatortokens",
-                      "reference/api_v2/settings/update-separatortokens",
-                      "reference/api_v2/settings/reset-separatortokens"
+                      "reference/api/settings/get-separatortokens",
+                      "reference/api/settings/update-separatortokens",
+                      "reference/api/settings/reset-separatortokens"
                     ]
                   },
                   {
                     "group": "Non-separator tokens",
                     "pages": [
-                      "reference/api_v2/settings/get-nonseparatortokens",
-                      "reference/api_v2/settings/update-nonseparatortokens",
-                      "reference/api_v2/settings/reset-nonseparatortokens"
+                      "reference/api/settings/get-nonseparatortokens",
+                      "reference/api/settings/update-nonseparatortokens",
+                      "reference/api/settings/reset-nonseparatortokens"
                     ]
                   },
                   {
                     "group": "Localized attributes",
                     "pages": [
-                      "reference/api_v2/settings/get-localizedattributes",
-                      "reference/api_v2/settings/update-localizedattributes",
-                      "reference/api_v2/settings/reset-localizedattributes"
+                      "reference/api/settings/get-localizedattributes",
+                      "reference/api/settings/update-localizedattributes",
+                      "reference/api/settings/reset-localizedattributes"
                     ]
                   },
                   {
                     "group": "Facet search",
                     "pages": [
-                      "reference/api_v2/settings/get-facetsearch",
-                      "reference/api_v2/settings/update-facetsearch",
-                      "reference/api_v2/settings/reset-facetsearch"
+                      "reference/api/settings/get-facetsearch",
+                      "reference/api/settings/update-facetsearch",
+                      "reference/api/settings/reset-facetsearch"
                     ]
                   },
                   {
                     "group": "Prefix search",
                     "pages": [
-                      "reference/api_v2/settings/get-prefixsearch",
-                      "reference/api_v2/settings/update-prefixsearch",
-                      "reference/api_v2/settings/reset-prefixsearch"
+                      "reference/api/settings/get-prefixsearch",
+                      "reference/api/settings/update-prefixsearch",
+                      "reference/api/settings/reset-prefixsearch"
                     ]
                   },
                   {
                     "group": "Search cutoff",
                     "pages": [
-                      "reference/api_v2/settings/get-searchcutoffms",
-                      "reference/api_v2/settings/update-searchcutoffms",
-                      "reference/api_v2/settings/reset-searchcutoffms"
+                      "reference/api/settings/get-searchcutoffms",
+                      "reference/api/settings/update-searchcutoffms",
+                      "reference/api/settings/reset-searchcutoffms"
                     ]
                   },
                   {
                     "group": "Embedders",
                     "pages": [
-                      "reference/api_v2/settings/get-embedders",
-                      "reference/api_v2/settings/update-embedders",
-                      "reference/api_v2/settings/reset-embedders"
+                      "reference/api/settings/get-embedders",
+                      "reference/api/settings/update-embedders",
+                      "reference/api/settings/reset-embedders"
                     ]
                   },
                   {
                     "group": "Chat",
                     "pages": [
-                      "reference/api_v2/settings/get-chat",
-                      "reference/api_v2/settings/update-chat",
-                      "reference/api_v2/settings/reset-chat"
+                      "reference/api/settings/get-chat",
+                      "reference/api/settings/update-chat",
+                      "reference/api/settings/reset-chat"
                     ]
                   },
                   {
                     "group": "Vector store",
                     "pages": [
-                      "reference/api_v2/settings/get-vectorstore",
-                      "reference/api_v2/settings/update-vectorstore",
-                      "reference/api_v2/settings/reset-vectorstore"
+                      "reference/api/settings/get-vectorstore",
+                      "reference/api/settings/update-vectorstore",
+                      "reference/api/settings/reset-vectorstore"
                     ]
                   }
                 ]
@@ -669,93 +669,93 @@
               {
                 "group": "Stats",
                 "pages": [
-                  "reference/api_v2/stats/overview",
-                  "reference/api_v2/stats/get-stats-of-all-indexes",
-                  "reference/api_v2/stats/get-stats-of-index"
+                  "reference/api/stats/overview",
+                  "reference/api/stats/get-stats-of-all-indexes",
+                  "reference/api/stats/get-stats-of-index"
                 ]
               },
               {
                 "group": "Health",
                 "pages": [
-                  "reference/api_v2/health/overview",
-                  "reference/api_v2/health/get-health"
+                  "reference/api/health/overview",
+                  "reference/api/health/get-health"
                 ]
               },
               {
                 "group": "Version",
                 "pages": [
-                  "reference/api_v2/version/overview",
-                  "reference/api_v2/version/get-version"
+                  "reference/api/version/overview",
+                  "reference/api/version/get-version"
                 ]
               },
               {
                 "group": "Snapshots",
                 "pages": [
-                  "reference/api_v2/snapshots/overview",
-                  "reference/api_v2/snapshots/create-a-snapshot"
+                  "reference/api/snapshots/overview",
+                  "reference/api/snapshots/create-a-snapshot"
                 ]
               },
               {
                 "group": "Dumps",
                 "pages": [
-                  "reference/api_v2/dumps/overview",
-                  "reference/api_v2/dumps/create-a-dump"
+                  "reference/api/dumps/overview",
+                  "reference/api/dumps/create-a-dump"
                 ]
               },
               {
                 "group": "Logs",
                 "pages": [
-                  "reference/api_v2/logs/overview",
-                  "reference/api_v2/logs/retrieve-logs",
-                  "reference/api_v2/logs/stop-retrieving-logs",
-                  "reference/api_v2/logs/update-target-of-the-console-logs"
+                  "reference/api/logs/overview",
+                  "reference/api/logs/retrieve-logs",
+                  "reference/api/logs/stop-retrieving-logs",
+                  "reference/api/logs/update-target-of-the-console-logs"
                 ]
               },
               {
                 "group": "Metrics",
                 "pages": [
-                  "reference/api_v2/stats/get-prometheus-metrics"
+                  "reference/api/stats/get-prometheus-metrics"
                 ]
               },
               {
                 "group": "Experimental features",
                 "pages": [
-                  "reference/api_v2/experimental-features/overview",
-                  "reference/api_v2/experimental-features/get-all-experimental-features",
-                  "reference/api_v2/experimental-features/configure-experimental-features"
+                  "reference/api/experimental-features/overview",
+                  "reference/api/experimental-features/get-all-experimental-features",
+                  "reference/api/experimental-features/configure-experimental-features"
                 ]
               },
               {
                 "group": "Network",
                 "pages": [
-                  "reference/api_v2/network/overview",
-                  "reference/api_v2/network/get-network-topology",
-                  "reference/api_v2/network/configure-network"
+                  "reference/api/network/overview",
+                  "reference/api/network/get-network-topology",
+                  "reference/api/network/configure-network"
                 ]
               },
               {
                 "group": "Webhooks",
                 "pages": [
-                  "reference/api_v2/webhooks/overview",
-                  "reference/api_v2/webhooks/get-webhooks",
-                  "reference/api_v2/webhooks/post-webhooks",
-                  "reference/api_v2/webhooks/get-webhooks-1",
-                  "reference/api_v2/webhooks/patch-webhooks",
-                  "reference/api_v2/webhooks/delete-webhooks"
+                  "reference/api/webhooks/overview",
+                  "reference/api/webhooks/get-webhooks",
+                  "reference/api/webhooks/post-webhook",
+                  "reference/api/webhooks/get-webhook",
+                  "reference/api/webhooks/patch-webhook",
+                  "reference/api/webhooks/delete-webhook"
                 ]
               },
               {
                 "group": "Compact",
                 "pages": [
-                  "reference/api_v2/compact-an-index/overview",
-                  "reference/api_v2/compact-an-index/compact-an-index"
+                  "reference/api/compact-an-index/overview",
+                  "reference/api/compact-an-index/compact-an-index"
                 ]
               },
               {
                 "group": "Export",
                 "pages": [
-                  "reference/api_v2/export/overview",
-                  "reference/api_v2/export/post-export"
+                  "reference/api/export/overview",
+                  "reference/api/export/post-export"
                 ]
               }
             ]
