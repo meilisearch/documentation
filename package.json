@@ -20,6 +20,7 @@
     "marklint": "markdownlint '**/*.mdx' --config .markdownlint.jsonc",
     "marklint:fix": "markdownlint '**/*.mdx' --config .markdownlint.jsonc --fix",
     "proselint": "vale --glob='!.github/*' .",
-    "generate-changelog": "npx tsx scripts/generate-changelog.ts"
+    "generate-changelog": "npx tsx scripts/generate-changelog.ts",
+    "update-openapi": "npx tsx scripts/update-openapi.ts"
   }
 }
