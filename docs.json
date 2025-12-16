@@ -387,62 +387,6 @@
         "tab": "References",
         "groups": [
           {
-            "group": "API reference",
-            "pages": [
-              "reference/api/overview",
-              "reference/api/indexes",
-              "reference/api/documents",
-              "reference/api/search",
-              "reference/api/multi_search",
-              "reference/api/facet_search",
-              "reference/api/similar",
-              "reference/api/chats",
-              "reference/api/tasks",
-              "reference/api/batches",
-              "reference/api/keys",
-              {
-                "group": "Settings",
-                "pages": [
-                  "reference/api/settings",
-                  "reference/api/settings/displayed-attributes",
-                  "reference/api/settings/searchable-attributes",
-                  "reference/api/settings/filterable-attributes",
-                  "reference/api/settings/sortable-attributes",
-                  "reference/api/settings/ranking-rules",
-                  "reference/api/settings/typo-tolerance",
-                  "reference/api/settings/synonyms",
-                  "reference/api/settings/stop-words",
-                  "reference/api/settings/distinct-attribute",
-                  "reference/api/settings/faceting",
-                  "reference/api/settings/pagination",
-                  "reference/api/settings/proximity-precision",
-                  "reference/api/settings/dictionary",
-                  "reference/api/settings/separator-tokens",
-                  "reference/api/settings/non-separator-tokens",
-                  "reference/api/settings/localized-attributes",
-                  "reference/api/settings/facet-search",
-                  "reference/api/settings/prefix-search",
-                  "reference/api/settings/search-cutoff",
-                  "reference/api/settings/embedders",
-                  "reference/api/settings/chat",
-                  "reference/api/settings/vector-store"
-                ]
-              },
-              "reference/api/stats",
-              "reference/api/health",
-              "reference/api/version",
-              "reference/api/snapshots",
-              "reference/api/dump",
-              "reference/api/export",
-              "reference/api/logs",
-              "reference/api/metrics",
-              "reference/api/experimental_features",
-              "reference/api/network",
-              "reference/api/webhooks",
-              "reference/api/compact"
-            ]
-          },
-          {
             "group": "API Reference v2",
             "pages": [
               "reference/api_v2/overview",
