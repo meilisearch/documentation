@@ -15,7 +15,11 @@
   },
   "servers": [
     {
-      "url": "/",
+      "url": "https://your-instance.meilisearch.io",
+      "description": "Meilisearch Cloud"
+    },
+    {
+      "url": "http://localhost:7700",
       "description": "Local server"
     }
   ],
