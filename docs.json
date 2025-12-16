@@ -445,6 +445,7 @@
           {
             "group": "API Reference v2",
             "pages": [
+              "reference/api_v2/overview",
               {
                 "group": "Indexes",
                 "pages": [
