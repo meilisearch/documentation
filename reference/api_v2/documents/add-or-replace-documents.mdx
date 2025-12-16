@@ -1,0 +1,15 @@
+---
+openapi: post /indexes/{indexUid}/documents
+---
+
+Add a list of documents or replace them if they already exist. If the provided index does not exist, it will be created.
+
+<Note>
+If you want to set the primary key of your index through this route, it only has to be done the first time you add documents to the index. After which it will be ignored if given.
+</Note>
+
+<Warning>
+Documents are sent in a JSON array. If you use a single JSON object, this endpoint will return an error.
+</Warning>
+
+[Learn more about documents.](/resources/glossary/documents)

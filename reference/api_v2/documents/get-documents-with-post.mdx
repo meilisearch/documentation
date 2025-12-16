@@ -1,0 +1,15 @@
+---
+openapi: post /indexes/{indexUid}/documents/fetch
+---
+
+Get a set of documents. Use `offset` and `limit` to browse through documents.
+
+<Warning>
+`filter` will not work without first explicitly adding attributes to the [`filterableAttributes` list](/reference/api/settings/filterable-attributes#update-filterable-attributes). [Learn more about filters.](/products/faceted_search/filter_search_results)
+</Warning>
+
+<Note>
+Sending an empty payload (`--data-binary '{}'`) will return all documents in the index.
+</Note>
+
+[Learn more about documents.](/resources/glossary/documents)

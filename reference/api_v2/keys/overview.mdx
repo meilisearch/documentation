@@ -1,0 +1,58 @@
+---
+title: Keys
+sidebarTitle: Overview
+description: The /keys route allows you to create, manage, and delete API keys.
+---
+
+The `/keys` route allows you to create, manage, and delete API keys.
+
+<Warning>
+To use these endpoints, you must first [set a master key](/products/platform/basic_security). All key management operations require the master key for authorization.
+</Warning>
+
+## Key object
+
+```json
+{
+  "name": "Default Search API Key",
+  "description": "Use it to search from the frontend code",
+  "key": "0a6e572506c52ab0bd6195921575d23092b7f0c284ab4ac86d12346c33057f99",
+  "uid": "74c9c733-3368-4738-bbe5-1d18a5fecb37",
+  "actions": ["search"],
+  "indexes": ["*"],
+  "expiresAt": null,
+  "createdAt": "2021-08-11T10:00:00Z",
+  "updatedAt": "2021-08-11T10:00:00Z"
+}
+```
+
+## Default keys
+
+When you set a master key, Meilisearch automatically creates two default API keys:
+
+| Key | Actions | Use case |
+|:----|:--------|:---------|
+| **Default Search API Key** | `search` | Frontend search queries |
+| **Default Admin API Key** | `*` | Backend operations |
+
+## Endpoints
+
+<CardGroup cols={2}>
+  <Card title="Get all keys" href="/reference/api_v2/keys/get-api-keys">
+    List all API keys
+  </Card>
+  <Card title="Get a key" href="/reference/api_v2/keys/get-an-api-key">
+    Get a single API key
+  </Card>
+  <Card title="Create a key" href="/reference/api_v2/keys/create-an-api-key">
+    Create a new API key
+  </Card>
+  <Card title="Update a key" href="/reference/api_v2/keys/update-a-key">
+    Update key name/description
+  </Card>
+  <Card title="Delete a key" href="/reference/api_v2/keys/delete-a-key">
+    Delete an API key
+  </Card>
+</CardGroup>
+
+For detailed parameter documentation, see the [v1 Keys reference](/reference/api/keys).

@@ -1,0 +1,11 @@
+---
+openapi: patch /indexes/{indexUid}
+---
+
+Update an index's primary key. You can freely update the primary key of an index as long as it contains no documents.
+
+<Warning>
+To update the primary key of an index that already contains documents, you must first delete all documents in that index.
+</Warning>
+
+[Learn more about indexes.](/resources/glossary/indexes)

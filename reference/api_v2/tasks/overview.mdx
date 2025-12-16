@@ -1,0 +1,62 @@
+---
+title: Tasks
+sidebarTitle: Overview
+description: The /tasks route allows you to manage and monitor Meilisearch's asynchronous operations.
+---
+
+The `/tasks` route gives information about the progress of [asynchronous operations](/products/platform/asynchronous_operations).
+
+<Note>
+Meilisearch is an asynchronous API. Most write operations (adding documents, updating settings) return a task that you can monitor to track progress.
+</Note>
+
+## Task object
+
+```json
+{
+  "uid": 4,
+  "batchUid": 0,
+  "indexUid": "movies",
+  "status": "succeeded",
+  "type": "documentAdditionOrUpdate",
+  "canceledBy": null,
+  "details": {
+    "receivedDocuments": 100,
+    "indexedDocuments": 100
+  },
+  "error": null,
+  "duration": "PT0.001192S",
+  "enqueuedAt": "2022-08-04T12:28:15.159167Z",
+  "startedAt": "2022-08-04T12:28:15.161996Z",
+  "finishedAt": "2022-08-04T12:28:15.163188Z"
+}
+```
+
+## Task statuses
+
+| Status | Description |
+|:-------|:------------|
+| **`enqueued`** | Task is waiting to be processed |
+| **`processing`** | Task is currently being processed |
+| **`succeeded`** | Task completed successfully |
+| **`failed`** | Task failed with an error |
+| **`canceled`** | Task was canceled before completion |
+
+## Endpoints
+
+<CardGroup cols={2}>
+  <Card title="Get all tasks" href="/reference/api_v2/tasks/get-all-tasks">
+    List all tasks with filtering
+  </Card>
+  <Card title="Get a task" href="/reference/api_v2/tasks/get-a-task">
+    Get a single task by UID
+  </Card>
+  <Card title="Cancel tasks" href="/reference/api_v2/tasks/cancel-tasks">
+    Cancel enqueued or processing tasks
+  </Card>
+  <Card title="Delete tasks" href="/reference/api_v2/tasks/delete-tasks">
+    Delete finished tasks
+  </Card>
+</CardGroup>
+
+For detailed parameter documentation, see the [v1 Tasks reference](/reference/api/tasks).

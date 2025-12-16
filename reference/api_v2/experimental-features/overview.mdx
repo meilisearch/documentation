@@ -1,0 +1,41 @@
+---
+title: Experimental Features
+sidebarTitle: Overview
+description: The /experimental-features route allows you to enable or disable experimental features.
+---
+
+The `/experimental-features` route allows you to manage experimental features in Meilisearch.
+
+<Warning>
+Experimental features may change or be removed without notice. Use in production at your own risk.
+</Warning>
+
+## Available experimental features
+
+| Feature | Description |
+|:--------|:------------|
+| **Logs route** | Stream logs via API |
+| **Metrics** | Prometheus-compatible metrics endpoint |
+| **Network** | Multi-node deployment configuration |
+| **Vector store** | Advanced vector storage settings |
+| **Edit documents by function** | Modify documents with Rhai scripts |
+
+## Enabling features
+
+Features can be enabled via:
+1. **API**: Using the PATCH endpoint below
+2. **CLI**: Using `--experimental-*` flags
+3. **Environment**: Using `MEILI_EXPERIMENTAL_*` variables
+
+## Endpoints
+
+<CardGroup cols={2}>
+  <Card title="Get features" href="/reference/api_v2/experimental-features/get-all-experimental-features">
+    Get status of all experimental features
+  </Card>
+  <Card title="Configure features" href="/reference/api_v2/experimental-features/configure-experimental-features">
+    Enable or disable features
+  </Card>
+</CardGroup>
+
+[Learn more about experimental features.](/resources/help/experimental_features)

@@ -1,0 +1,13 @@
+---
+openapi: get /metrics
+---
+
+Get Prometheus-formatted metrics for monitoring Meilisearch performance.
+
+<Tip>
+Use this endpoint to integrate Meilisearch with Prometheus/Grafana monitoring stacks.
+</Tip>
+
+<Note>
+You must enable Prometheus metrics via the `--experimental-enable-metrics` CLI flag or `MEILI_EXPERIMENTAL_ENABLE_METRICS` environment variable.
+</Note>

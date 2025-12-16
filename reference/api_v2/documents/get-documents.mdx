@@ -1,0 +1,15 @@
+---
+openapi: get /indexes/{indexUid}/documents
+---
+
+<Warning>
+This endpoint will be deprecated in the near future. Consider using POST `/indexes/{index_uid}/documents/fetch` instead.
+</Warning>
+
+Get a set of documents using query parameters.
+
+<Warning>
+`filter` will not work without first explicitly adding attributes to the [`filterableAttributes` list](/reference/api/settings/filterable-attributes#update-filterable-attributes). [Learn more about filters.](/products/faceted_search/filter_search_results)
+</Warning>
+
+[Learn more about documents.](/resources/glossary/documents)

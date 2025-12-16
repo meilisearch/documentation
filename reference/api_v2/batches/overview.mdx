@@ -1,0 +1,43 @@
+---
+title: Batches
+sidebarTitle: Overview
+description: The /batches route allows you to monitor how tasks are grouped for processing.
+---
+
+The `/batches` route provides information about how Meilisearch groups tasks for efficient processing.
+
+<Note>
+A batch is a group of tasks that were processed together. Meilisearch automatically groups compatible tasks to optimize performance.
+</Note>
+
+## Batch object
+
+```json
+{
+  "uid": 1,
+  "details": {
+    "receivedDocuments": 100,
+    "indexedDocuments": 100
+  },
+  "stats": {
+    "totalNbTasks": 2,
+    "status": { "succeeded": 2 },
+    "types": { "documentAdditionOrUpdate": 2 },
+    "indexUids": { "movies": 2 }
+  },
+  "duration": "PT0.005192S",
+  "startedAt": "2022-08-04T12:28:15.161996Z",
+  "finishedAt": "2022-08-04T12:28:15.167188Z"
+}
+```
+
+## Endpoints
+
+<CardGroup cols={2}>
+  <Card title="Get all batches" href="/reference/api_v2/batches/get-batches">
+    List all batches
+  </Card>
+  <Card title="Get a batch" href="/reference/api_v2/batches/get-one-batch">
+    Get a single batch by UID
+  </Card>
+</CardGroup>

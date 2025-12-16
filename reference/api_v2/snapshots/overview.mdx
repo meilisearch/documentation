@@ -1,0 +1,30 @@
+---
+title: Snapshots
+sidebarTitle: Overview
+description: The /snapshots route allows you to create fast, version-specific backups.
+---
+
+The `/snapshots` route allows you to create fast, version-specific backups of your Meilisearch database.
+
+<Note>
+Snapshots are faster to create than dumps but can only be used with the same Meilisearch version.
+</Note>
+
+## Dumps vs Snapshots
+
+| Feature | Dumps | Snapshots |
+|:--------|:------|:----------|
+| **Portability** | Any version | Same version only |
+| **Speed** | Slower | Faster |
+| **Format** | Raw data | Binary database |
+| **Use case** | Migration | Quick backup |
+
+## Endpoints
+
+<CardGroup cols={1}>
+  <Card title="Create a snapshot" href="/reference/api_v2/snapshots/create-a-snapshot">
+    Create a database snapshot
+  </Card>
+</CardGroup>
+
+[Learn more about snapshots.](/resources/self_hosting/data_backup/snapshots) | [Dumps vs Snapshots.](/resources/self_hosting/data_backup/snapshots_vs_dumps)

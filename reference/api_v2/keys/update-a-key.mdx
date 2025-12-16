@@ -1,0 +1,15 @@
+---
+openapi: patch /keys/{uidOrKey}
+---
+
+Update an API key. You can update the `name` and `description` of an existing key.
+
+<Note>
+This endpoint requires the master key for authorization.
+</Note>
+
+<Warning>
+You cannot update the `actions`, `indexes`, or `expiresAt` fields of an existing key. You must delete the key and create a new one.
+</Warning>
+
+[Learn more about API keys.](/products/platform/basic_security)

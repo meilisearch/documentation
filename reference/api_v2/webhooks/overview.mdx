@@ -1,0 +1,51 @@
+---
+title: Webhooks
+sidebarTitle: Overview
+description: The /webhooks route allows you to register HTTP callbacks for task completion events.
+---
+
+The `/webhooks` route allows you to register HTTP callbacks that Meilisearch will trigger when tasks complete.
+
+<Note>
+Webhooks are useful for triggering CI/CD pipelines, sending notifications, or updating external systems when indexing operations complete.
+</Note>
+
+## Webhook object
+
+```json
+{
+  "uid": "550e8400-e29b-41d4-a716-446655440000",
+  "url": "https://example.com/webhook",
+  "description": "Notify on task completion",
+  "enabled": true,
+  "createdAt": "2024-01-15T10:00:00Z",
+  "updatedAt": "2024-01-15T10:00:00Z"
+}
+```
+
+## Use cases
+
+- **CI/CD Integration**: Trigger deployments when indexing completes
+- **Notifications**: Send alerts when large imports finish
+- **Data Synchronization**: Update external systems after document changes
+- **Monitoring**: Track task completion for observability
+
+## Endpoints
+
+<CardGroup cols={2}>
+  <Card title="Get all webhooks" href="/reference/api_v2/webhooks/get-webhooks">
+    List all registered webhooks
+  </Card>
+  <Card title="Get a webhook" href="/reference/api_v2/webhooks/get-webhooks-1">
+    Get a single webhook by UUID
+  </Card>
+  <Card title="Create a webhook" href="/reference/api_v2/webhooks/post-webhooks">
+    Register a new webhook
+  </Card>
+  <Card title="Update a webhook" href="/reference/api_v2/webhooks/patch-webhooks">
+    Update webhook configuration
+  </Card>
+  <Card title="Delete a webhook" href="/reference/api_v2/webhooks/delete-webhooks">
+    Delete a webhook
+  </Card>
+</CardGroup>

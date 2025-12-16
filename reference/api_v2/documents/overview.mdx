@@ -1,0 +1,58 @@
+---
+title: Documents
+sidebarTitle: Overview
+description: The /documents route allows you to create, manage, and delete documents.
+---
+
+The `/documents` route allows you to create, manage, and delete documents.
+
+[Learn more about documents.](/resources/glossary/documents)
+
+## Document object
+
+A document is a JSON object composed of fields. Each field contains an attribute and its associated value.
+
+```json
+{
+  "id": 1,
+  "title": "Alien",
+  "overview": "In space, no one can hear you scream.",
+  "genres": ["Science Fiction", "Horror"],
+  "release_date": "1979-05-25"
+}
+```
+
+<Note>
+Documents are the basic building blocks of a Meilisearch database. To search through them, you must first add them to an index.
+</Note>
+
+## Primary key
+
+Every document must have a unique identifier called a primary key. If you don't specify one, Meilisearch will try to infer it from your documents.
+
+[Learn more about primary keys.](/resources/glossary/primary_key)
+
+## Endpoints
+
+<CardGroup cols={2}>
+  <Card title="Add or replace" href="/reference/api_v2/documents/add-or-replace-documents">
+    Add new documents or replace existing ones
+  </Card>
+  <Card title="Add or update" href="/reference/api_v2/documents/add-or-update-documents">
+    Add new documents or update existing ones
+  </Card>
+  <Card title="Get documents" href="/reference/api_v2/documents/get-documents-with-post">
+    Retrieve documents from an index
+  </Card>
+  <Card title="Get one document" href="/reference/api_v2/documents/get-one-document">
+    Get a single document by ID
+  </Card>
+  <Card title="Delete by filter" href="/reference/api_v2/documents/delete-documents-by-filter">
+    Delete documents matching a filter
+  </Card>
+  <Card title="Delete all" href="/reference/api_v2/documents/delete-all-documents">
+    Delete all documents in an index
+  </Card>
+</CardGroup>
+
+For detailed parameter documentation, see the [v1 Documents reference](/reference/api/documents).

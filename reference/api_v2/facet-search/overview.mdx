@@ -1,0 +1,49 @@
+---
+title: Facet Search
+sidebarTitle: Overview
+description: The /facet-search route allows you to search for facet values.
+---
+
+The `/facet-search` route allows you to search for facet values within a specific attribute.
+
+<Tip>
+Use facet search to build autocomplete for facet filters. This is especially useful when you have many possible values for a facet (like brands or categories).
+</Tip>
+
+## Use cases
+
+- **Filter Autocomplete**: Let users search through hundreds of brand names
+- **Dynamic Facets**: Show matching facet values as users type
+- **Large Catalogs**: Handle categories with thousands of values
+
+## Example
+
+Search for brands starting with "ni":
+
+```json
+{
+  "facetName": "brand",
+  "facetQuery": "ni"
+}
+```
+
+Returns:
+```json
+{
+  "facetHits": [
+    { "value": "Nike", "count": 125 },
+    { "value": "Nintendo", "count": 48 },
+    { "value": "Nikon", "count": 32 }
+  ]
+}
+```
+
+## Endpoints
+
+<CardGroup cols={1}>
+  <Card title="Perform facet search" href="/reference/api_v2/facet-search/perform-a-facet-search">
+    Search for facet values
+  </Card>
+</CardGroup>
+
+[Learn more about faceted search.](/products/faceted_search/overview)

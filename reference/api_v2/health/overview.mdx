@@ -1,0 +1,35 @@
+---
+title: Health
+sidebarTitle: Overview
+description: The /health route allows you to check if Meilisearch is running and ready to accept requests.
+---
+
+The `/health` route allows you to verify that Meilisearch is running and ready to accept requests.
+
+<Tip>
+Use this endpoint for health checks in container orchestration systems like Kubernetes, Docker Swarm, or load balancers.
+</Tip>
+
+## Response
+
+A healthy Meilisearch instance returns:
+
+```json
+{
+  "status": "available"
+}
+```
+
+## Use cases
+
+- **Kubernetes**: Liveness and readiness probes
+- **Load Balancers**: Backend health verification
+- **Monitoring**: Uptime checks and alerting
+
+## Endpoints
+
+<CardGroup cols={1}>
+  <Card title="Get health" href="/reference/api_v2/health/get-health">
+    Check server health status
+  </Card>
+</CardGroup>

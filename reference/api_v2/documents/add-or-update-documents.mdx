@@ -1,0 +1,15 @@
+---
+openapi: put /indexes/{indexUid}/documents
+---
+
+Add a list of documents or update them if they already exist. If the provided index does not exist, it will be created.
+
+<Note>
+If you want to set the primary key of your index through this route, it only has to be done the first time you add documents to the index. After which it will be ignored if given.
+</Note>
+
+<Tip>
+Use this endpoint when you want to update existing documents with new data without removing fields that aren't present in the update. This is useful for partial updates.
+</Tip>
+
+[Learn more about documents.](/resources/glossary/documents)

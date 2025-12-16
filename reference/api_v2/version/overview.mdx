@@ -1,0 +1,31 @@
+---
+title: Version
+sidebarTitle: Overview
+description: The /version route returns information about the Meilisearch version.
+---
+
+The `/version` route returns information about the Meilisearch version running on the server.
+
+## Response
+
+```json
+{
+  "commitSha": "b46889b5f0f2f8b91438a08a358ba8f05fc09fc1",
+  "commitDate": "2024-01-15T10:00:00Z",
+  "pkgVersion": "1.6.0"
+}
+```
+
+| Field | Description |
+|:------|:------------|
+| **`commitSha`** | Git commit hash of the build |
+| **`commitDate`** | Date of the commit |
+| **`pkgVersion`** | Meilisearch version number |
+
+## Endpoints
+
+<CardGroup cols={1}>
+  <Card title="Get version" href="/reference/api_v2/version/get-version">
+    Get Meilisearch version info
+  </Card>
+</CardGroup>

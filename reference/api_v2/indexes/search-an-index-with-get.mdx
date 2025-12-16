@@ -1,0 +1,15 @@
+---
+openapi: get /indexes/{indexUid}/search
+---
+
+This endpoint should only be used when no API key is required. If an API key is required, use the [POST route](/reference/api_v2/indexes/search-with-post) instead.
+
+<Warning>
+This endpoint only accepts [string filter expressions](/products/faceted_search/filter_expression_reference).
+</Warning>
+
+<Note>
+By default, this endpoint returns a maximum of 1000 results. If you want to scrape your database, use the [get documents endpoint](/reference/api_v2/documents/get-documents-with-post) instead.
+</Note>
+
+For detailed information about search parameters, see [Search parameters reference](/reference/api/search#search-parameters).

@@ -1,0 +1,49 @@
+---
+title: Stats
+sidebarTitle: Overview
+description: The /stats route returns statistics about your indexes and database.
+---
+
+The `/stats` route returns statistics about your indexes and the overall database.
+
+## Stats object
+
+```json
+{
+  "databaseSize": 447819776,
+  "lastUpdate": "2024-01-15T10:00:00Z",
+  "indexes": {
+    "movies": {
+      "numberOfDocuments": 19654,
+      "isIndexing": false,
+      "fieldDistribution": {
+        "id": 19654,
+        "title": 19654,
+        "overview": 19654
+      }
+    }
+  }
+}
+```
+
+## Prometheus metrics
+
+For production monitoring, Meilisearch can expose Prometheus-compatible metrics at `/metrics`.
+
+<Note>
+Enable Prometheus metrics with the `--experimental-enable-metrics` CLI flag or `MEILI_EXPERIMENTAL_ENABLE_METRICS` environment variable.
+</Note>
+
+## Endpoints
+
+<CardGroup cols={2}>
+  <Card title="Get all stats" href="/reference/api_v2/stats/get-stats-of-all-indexes">
+    Get statistics for all indexes
+  </Card>
+  <Card title="Get index stats" href="/reference/api_v2/stats/get-stats-of-index">
+    Get statistics for one index
+  </Card>
+  <Card title="Prometheus metrics" href="/reference/api_v2/stats/get-prometheus-metrics">
+    Get Prometheus-formatted metrics
+  </Card>
+</CardGroup>

@@ -1,0 +1,30 @@
+---
+title: Dumps
+sidebarTitle: Overview
+description: The /dumps route allows you to create portable backups of your Meilisearch database.
+---
+
+The `/dumps` route allows you to create portable backups of your Meilisearch database.
+
+<Tip>
+Dumps are ideal for migrating between Meilisearch versions or moving data between servers. They can be imported on any Meilisearch instance.
+</Tip>
+
+## Dumps vs Snapshots
+
+| Feature | Dumps | Snapshots |
+|:--------|:------|:----------|
+| **Portability** | Any version | Same version only |
+| **Speed** | Slower | Faster |
+| **Format** | Raw data | Binary database |
+| **Use case** | Migration | Quick backup |
+
+## Endpoints
+
+<CardGroup cols={1}>
+  <Card title="Create a dump" href="/reference/api_v2/dumps/create-a-dump">
+    Create a database dump
+  </Card>
+</CardGroup>
+
+[Learn more about dumps.](/resources/self_hosting/data_backup/dumps) | [Dumps vs Snapshots.](/resources/self_hosting/data_backup/snapshots_vs_dumps)

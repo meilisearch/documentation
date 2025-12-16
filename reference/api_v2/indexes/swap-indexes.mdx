@@ -1,0 +1,11 @@
+---
+openapi: post /swap-indexes
+---
+
+Swap the documents, settings, and task history of two or more indexes. You can only swap indexes in pairs. Swapping indexes is an atomic operation: either all indexes are swapped or none are.
+
+<Tip>
+Index swapping is useful for zero-downtime deployments when updating large indexes. Create a new index, populate it, then swap it with the production index.
+</Tip>
+
+[Learn more about indexes.](/resources/glossary/indexes)

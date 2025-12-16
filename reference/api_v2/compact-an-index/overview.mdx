@@ -1,0 +1,29 @@
+---
+title: Compact
+sidebarTitle: Overview
+description: The /compact route allows you to reclaim disk space by removing deleted documents from storage.
+---
+
+The `/compact` route allows you to reclaim disk space by removing deleted documents from the index storage.
+
+<Note>
+When you delete documents, Meilisearch marks them as deleted but doesn't immediately free the disk space. Compacting removes this unused space.
+</Note>
+
+<Warning>
+Compacting is a resource-intensive operation. Run it during low-traffic periods.
+</Warning>
+
+## When to compact
+
+- After deleting a large number of documents
+- When disk usage is higher than expected
+- As part of regular maintenance
+
+## Endpoints
+
+<CardGroup cols={1}>
+  <Card title="Compact an index" href="/reference/api_v2/compact-an-index/compact-an-index">
+    Compact an index to reclaim disk space
+  </Card>
+</CardGroup>

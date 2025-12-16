@@ -1,0 +1,11 @@
+---
+openapi: post /tasks/cancel
+---
+
+Cancel any number of enqueued or processing tasks based on their uid, status, type, indexUid, or the date at which they were enqueued, started, or finished.
+
+<Warning>
+Task cancellation is an atomic operation: either all tasks matching the filter are canceled, or none are. If any of the tasks are already `processing`, `succeeded`, `failed`, or `canceled`, an error will be returned.
+</Warning>
+
+[Learn more about asynchronous operations.](/products/platform/asynchronous_operations)

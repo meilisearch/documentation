@@ -1,0 +1,47 @@
+---
+title: Multi-search
+sidebarTitle: Overview
+description: The /multi-search route allows you to perform multiple search queries in a single request.
+---
+
+The `/multi-search` route allows you to perform multiple search queries in a single HTTP request, improving efficiency.
+
+<Tip>
+Multi-search is ideal for autocomplete interfaces, dashboards, or any scenario where you need results from multiple queries or indexes simultaneously.
+</Tip>
+
+## Use cases
+
+- **Autocomplete**: Search products, categories, and brands in one request
+- **Dashboards**: Populate multiple widgets with a single API call
+- **Universal Search**: Search across multiple indexes simultaneously
+- **Sharding**: Distribute searches across sharded indexes
+
+## Multi-search vs Federated search
+
+| Feature | Multi-search | Federated search |
+|:--------|:-------------|:-----------------|
+| Results | Separate per query | Merged into one list |
+| Ranking | Per query | Cross-query with weights |
+| Use case | Multiple widgets | Unified search results |
+
+## Example request
+
+```json
+{
+  "queries": [
+    { "indexUid": "movies", "q": "avengers" },
+    { "indexUid": "actors", "q": "avengers" }
+  ]
+}
+```
+
+## Endpoints
+
+<CardGroup cols={1}>
+  <Card title="Perform multi-search" href="/reference/api_v2/multi-search/perform-a-multi-search">
+    Execute multiple search queries
+  </Card>
+</CardGroup>
+
+[Learn more about multi-search.](/products/multi_search/overview) | [Learn about federated search.](/products/multi_search/performing_federated_search)

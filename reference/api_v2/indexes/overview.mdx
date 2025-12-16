@@ -1,0 +1,67 @@
+---
+title: Indexes
+sidebarTitle: Overview
+description: The /indexes route allows you to create, manage, and delete your indexes.
+---
+
+The `/indexes` route allows you to create, manage, and delete your indexes.
+
+[Learn more about indexes.](/resources/glossary/indexes)
+
+## Index object
+
+```json
+{
+  "uid": "movies",
+  "createdAt": "2022-02-10T07:45:15.628261Z",
+  "updatedAt": "2022-02-21T15:28:43.496574Z",
+  "primaryKey": "id"
+}
+```
+
+| Name | Type | Description |
+|:-----|:-----|:------------|
+| **`uid`** | String | Unique identifier of the index. Once created, it cannot be changed |
+| **`createdAt`** | String | Creation date in RFC 3339 format |
+| **`updatedAt`** | String | Latest update date in RFC 3339 format |
+| **`primaryKey`** | String/null | Primary key of the index |
+
+<Note>
+An index is automatically created when you add documents if it doesn't exist yet. You only need to explicitly create an index if you want to set the primary key beforehand.
+</Note>
+
+## Endpoints
+
+<CardGroup cols={2}>
+  <Card title="List indexes" href="/reference/api_v2/indexes/list-indexes">
+    Get all indexes
+  </Card>
+  <Card title="Create index" href="/reference/api_v2/indexes/create-index">
+    Create a new index
+  </Card>
+  <Card title="Get index" href="/reference/api_v2/indexes/get-index">
+    Get information about an index
+  </Card>
+  <Card title="Update index" href="/reference/api_v2/indexes/update-index">
+    Update an index's primary key
+  </Card>
+  <Card title="Delete index" href="/reference/api_v2/indexes/delete-index">
+    Delete an index
+  </Card>
+  <Card title="Swap indexes" href="/reference/api_v2/indexes/swap-indexes">
+    Swap two indexes atomically
+  </Card>
+</CardGroup>
+
+## Search
+
+<CardGroup cols={2}>
+  <Card title="Search (POST)" href="/reference/api_v2/indexes/search-with-post">
+    Search with POST - preferred method
+  </Card>
+  <Card title="Search (GET)" href="/reference/api_v2/indexes/search-an-index-with-get">
+    Search with GET - for public access
+  </Card>
+</CardGroup>
+
+For detailed parameter documentation, see the [v1 Indexes reference](/reference/api/indexes).

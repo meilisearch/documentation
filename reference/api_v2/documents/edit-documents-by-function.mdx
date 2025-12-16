@@ -1,0 +1,13 @@
+---
+openapi: post /indexes/{indexUid}/documents/edit
+---
+
+Edit documents with a user-defined function. This endpoint allows you to transform document fields programmatically.
+
+<Note>
+This is an experimental feature. You must enable it using the experimental features endpoint before use.
+</Note>
+
+The function is a [Rhai](https://rhai.rs/) script that receives each document and can modify it in place.
+
+[Learn more about documents.](/resources/glossary/documents)

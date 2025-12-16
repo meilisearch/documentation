@@ -1,0 +1,95 @@
+---
+title: Settings
+sidebarTitle: Overview
+description: The /settings route allows you to customize Meilisearch's search behavior.
+---
+
+The `/settings` route allows you to customize search behavior for each index.
+
+<Note>
+Settings are index-specific. Each index can have different settings configured.
+</Note>
+
+## Settings object
+
+```json
+{
+  "displayedAttributes": ["*"],
+  "searchableAttributes": ["*"],
+  "filterableAttributes": [],
+  "sortableAttributes": [],
+  "rankingRules": ["words", "typo", "proximity", "attribute", "sort", "exactness"],
+  "stopWords": [],
+  "synonyms": {},
+  "distinctAttribute": null,
+  "typoTolerance": { "enabled": true },
+  "faceting": { "maxValuesPerFacet": 100 },
+  "pagination": { "maxTotalHits": 1000 }
+}
+```
+
+## Settings categories
+
+### Core settings
+
+<CardGroup cols={2}>
+  <Card title="Displayed attributes" href="/reference/api_v2/settings/get-displayedattributes">
+    Fields shown in search results
+  </Card>
+  <Card title="Searchable attributes" href="/reference/api_v2/settings/get-searchableattributes">
+    Fields searched for query matches
+  </Card>
+  <Card title="Filterable attributes" href="/reference/api_v2/settings/get-filterableattributes">
+    Fields that can be filtered/faceted
+  </Card>
+  <Card title="Sortable attributes" href="/reference/api_v2/settings/get-sortableattributes">
+    Fields that can be sorted
+  </Card>
+</CardGroup>
+
+### Relevancy settings
+
+<CardGroup cols={2}>
+  <Card title="Ranking rules" href="/reference/api_v2/settings/get-rankingrules">
+    Rules determining result relevancy
+  </Card>
+  <Card title="Stop words" href="/reference/api_v2/settings/get-stopwords">
+    Words ignored during search
+  </Card>
+  <Card title="Synonyms" href="/reference/api_v2/settings/get-synonyms">
+    Words considered equivalent
+  </Card>
+  <Card title="Typo tolerance" href="/reference/api_v2/settings/get-typotolerance">
+    Typo handling settings
+  </Card>
+</CardGroup>
+
+### AI-powered search
+
+<CardGroup cols={2}>
+  <Card title="Embedders" href="/reference/api_v2/settings/get-embedders">
+    AI embedder configurations
+  </Card>
+  <Card title="Vector store" href="/reference/api_v2/settings/get-vectorstore">
+    Vector storage settings
+  </Card>
+  <Card title="Chat" href="/reference/api_v2/settings/get-chat">
+    Conversational search settings
+  </Card>
+</CardGroup>
+
+### All settings at once
+
+<CardGroup cols={2}>
+  <Card title="Get all settings" href="/reference/api_v2/settings/all-settings">
+    Retrieve all settings
+  </Card>
+  <Card title="Update settings" href="/reference/api_v2/settings/update-settings">
+    Update multiple settings
+  </Card>
+  <Card title="Reset settings" href="/reference/api_v2/settings/reset-settings">
+    Reset to defaults
+  </Card>
+</CardGroup>
+
+For detailed parameter documentation, see the [v1 Settings reference](/reference/api/settings).

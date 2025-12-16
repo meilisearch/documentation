@@ -1,0 +1,37 @@
+---
+title: Similar Documents
+sidebarTitle: Overview
+description: The /similar route returns documents similar to a given document using vector similarity.
+---
+
+The `/similar` route returns documents similar to a given document using vector similarity search.
+
+<Warning>
+This feature requires AI-powered search to be configured. You must have embedders set up in your index settings.
+</Warning>
+
+## How it works
+
+1. Meilisearch generates embeddings for your documents using configured embedders
+2. When you request similar documents, it finds the nearest vectors to the target document
+3. Results are ranked by vector similarity
+
+## Use cases
+
+- **Recommendations**: "More like this" product suggestions
+- **Content Discovery**: Related articles or media
+- **Duplicate Detection**: Find near-duplicate content
+- **Clustering**: Group similar documents together
+
+## Endpoints
+
+<CardGroup cols={2}>
+  <Card title="Similar (POST)" href="/reference/api_v2/similar-documents/get-similar-documents-with-post">
+    Get similar documents with POST - preferred method
+  </Card>
+  <Card title="Similar (GET)" href="/reference/api_v2/similar-documents/get-similar-documents-with-get">
+    Get similar documents with GET
+  </Card>
+</CardGroup>
+
+[Learn more about AI-powered search.](/products/ai_powered_search/overview) | [Learn about retrieving similar documents.](/products/ai_powered_search/retrieve_related_search_results)

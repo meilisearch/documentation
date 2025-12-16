@@ -1,0 +1,9 @@
+---
+openapi: post /indexes{indexUid}/compact
+---
+
+Compact an index to reclaim disk space. This operation removes deleted documents from the index storage.
+
+<Note>
+This is useful after deleting a large number of documents, as deletions don't immediately free disk space.
+</Note>

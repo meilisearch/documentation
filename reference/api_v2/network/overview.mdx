@@ -1,0 +1,28 @@
+---
+title: Network
+sidebarTitle: Overview
+description: The /network route allows you to configure multi-node deployments.
+---
+
+The `/network` route allows you to configure network topology for distributed Meilisearch deployments.
+
+<Warning>
+This is an experimental feature for multi-node deployments.
+</Warning>
+
+## Use cases
+
+- **Horizontal Scaling**: Distribute load across multiple nodes
+- **High Availability**: Configure failover and redundancy
+- **Sharding**: Partition indexes across nodes
+
+## Endpoints
+
+<CardGroup cols={2}>
+  <Card title="Get topology" href="/reference/api_v2/network/get-network-topology">
+    Get current network configuration
+  </Card>
+  <Card title="Configure network" href="/reference/api_v2/network/configure-network">
+    Update network topology
+  </Card>
+</CardGroup>
