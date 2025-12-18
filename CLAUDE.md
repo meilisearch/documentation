@@ -55,7 +55,6 @@ documentation/
 ├── snippets/                 # Reusable code samples
 │   └── samples/
 ├── docs.json                 # Navigation config (PRIMARY)
-├── new_docs.json             # Keep synced with docs.json
 └── docs.json.backup          # Original backup
 ```
 
@@ -66,8 +65,6 @@ documentation/
 - **Redirects** - backward compatibility for moved pages
 - **API config** - OpenAPI spec, playground settings
 - **Theme/branding** - colors, logos, footer
-
-After editing docs.json, always sync: `cp docs.json new_docs.json`
 
 ### Page frontmatter (required)
 ```yaml
@@ -186,21 +183,18 @@ const client = new MeiliSearch({
 1. Create `.mdx` file in appropriate folder
 2. Add frontmatter (title, description)
 3. Add to `docs.json` navigation in correct group
-4. Sync: `cp docs.json new_docs.json`
 
 ### Move a page
 1. Move the file to new location
 2. Update path in `docs.json` navigation
 3. Add redirect from old path to new path
 4. Update any internal links pointing to old path
-5. Sync: `cp docs.json new_docs.json`
 
 ### Rename a page
 1. Rename the file
 2. Update `docs.json` navigation
 3. Add redirect
 4. Update internal links
-5. Sync: `cp docs.json new_docs.json`
 
 ### Create a new group
 ```json

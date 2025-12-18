@@ -1005,7 +1005,7 @@
     },
     {
       "source": "/learn",
-      "destination": "/home"
+      "destination": "/getting_started/overview"
     },
     {
       "source": "/reference/features/authentication",
@@ -1017,7 +1017,7 @@
     },
     {
       "source": "/learn/what_is_meilisearch/features",
-      "destination": "/getting_started/what_is_meilisearch#features"
+      "destination": "/getting_started/features#features"
     },
     {
       "source": "/learn/contributing/overview",
@@ -1025,7 +1025,7 @@
     },
     {
       "source": "/learn/what_is_meilisearch/search_preview",
-      "destination": "/resources/archives/search_preview"
+      "destination": "/getting_started/overview"
     },
     {
       "source": "/learn/advanced/pagination",
@@ -1057,7 +1057,7 @@
     },
     {
       "source": "/learn/what_is_meilisearch/philosophy",
-      "destination": "/getting_started/what_is_meilisearch#philosophy"
+      "destination": "/getting_started/features#philosophy"
     },
     {
       "source": "/learn/getting_started/quick_start#front-end-integration",
@@ -1065,19 +1065,19 @@
     },
     {
       "source": "/reference/api/search#search-in-an-index-with-post-route",
-      "destination": "/reference/api/search#search-in-an-index-with-post"
+      "destination": "/reference/api/indexes/search-with-post#search-in-an-index-with-post"
     },
     {
       "source": "/reference/api/search#search-in-an-index-with-get-route",
-      "destination": "/reference/api/search#search-in-an-index-with-get"
+      "destination": "/reference/api/indexes/search-with-post#search-in-an-index-with-get"
     },
     {
       "source": "/reference/api/documents#get-documents",
-      "destination": "/reference/api/documents#get-documents-with-get"
+      "destination": "/reference/api/documents/overview#get-documents-with-get"
     },
     {
       "source": "/reference/api/multi_search#post-route",
-      "destination": "/reference/api/multi_search#perform-a-multi-search"
+      "destination": "/reference/api/multi-search/overview#perform-a-multi-search"
     },
     {
       "source": "/learn/what_is_meilisearch/overview#sdks-and-integrations",
@@ -1101,7 +1101,7 @@
     },
     {
       "source": "/learn/getting_started/getting_ready_for_production",
-      "destination": "/getting_started/cloud_quick_start"
+      "destination": "/getting_started/overview"
     },
     {
       "source": "/learn/security/master_api_keys",
@@ -1109,7 +1109,7 @@
     },
     {
       "source": "/learn/experimental/ranking_rule_score_details",
-      "destination": "/reference/api/search#ranking_score_details"
+      "destination": "/reference/api/indexes/search-with-post#ranking_score_details"
     },
     {
       "source": "/learn/cookbooks/aws",
@@ -1241,11 +1241,11 @@
     },
     {
       "source": "/learn/security/managing_api_keys",
-      "destination": "/reference/api/keys"
+      "destination": "/reference/api/keys/overview"
     },
     {
       "source": "/learn/experimental/puffin_reports",
-      "destination": "/reference/api/logs"
+      "destination": "/reference/api/logs/overview"
     },
     {
       "source": "/learn/index_settings/distinct",
@@ -1269,7 +1269,7 @@
     },
     {
       "source": "/learn/configuration/settings",
-      "destination": "/reference/api/settings"
+      "destination": "/reference/api/settings/overview"
     },
     {
       "source": "/learn/fine_tuning_results/faceted_search",
@@ -1301,7 +1301,7 @@
     },
     {
       "source": "/learn/getting_started/quick_start",
-      "destination": "/getting_started/cloud_quick_start"
+      "destination": "/getting_started/overview"
     },
     {
       "source": "/learn/getting_started/supported_os",
@@ -1329,7 +1329,7 @@
     },
     {
       "source": "/learn/what_is_meilisearch/overview",
-      "destination": "/getting_started/what_is_meilisearch"
+      "destination": "/getting_started/features"
     },
     {
       "source": "/learn/core_concepts/documents",
@@ -1373,7 +1373,7 @@
     },
     {
       "source": "/learn/experimental/metrics",
-      "destination": "/reference/api/metrics"
+      "destination": "/reference/api/stats/get-prometheus-metrics"
     },
     {
       "source": "/learn/experimental/reduce-indexing-memory-usage",
@@ -1381,7 +1381,7 @@
     },
     {
       "source": "/learn/experimental/log_customization",
-      "destination": "/reference/api/logs"
+      "destination": "/reference/api/logs/overview"
     },
     {
       "source": "/learn/experimental/vector_search",
@@ -1445,15 +1445,15 @@
     },
     {
       "source": "/learn/getting_started/a",
-      "destination": "/getting_started/cloud_quick_start"
+      "destination": "/getting_started/overview"
     },
     {
       "source": "/reference/api/tasks.html#delete-task",
-      "destination": "/reference/api/tasks#delete-tasks"
+      "destination": "/reference/api/tasks/overview#delete-tasks"
     },
     {
       "source": "/reference/api/tasks#delete-task",
-      "destination": "/reference/api/tasks#delete-tasks"
+      "destination": "/reference/api/tasks/overview#delete-tasks"
     },
     {
       "source": "/reference",
@@ -1469,7 +1469,7 @@
     },
     {
       "source": "/learn/ai_powered_search/conversational_search_with_chat",
-      "destination": "/products/conversational_search/conversational_search"
+      "destination": "/products/conversational_search/overview"
     },
     {
       "source": "/guides/ai/openai",
@@ -1548,10 +1548,6 @@
       "destination": "/resources/self_hosting/security/http2_ssl"
     },
     {
-      "source": "/guides/security/laravel_multitenancy",
-      "destination": "/guides/security/laravel_multitenancy"
-    },
-    {
       "source": "/guides/security/multitenancy_nodejs",
       "destination": "/guides/security/nodejs_multitenancy"
     },
@@ -1560,100 +1556,96 @@
       "destination": "/getting_started/frameworks/strapi"
     },
     {
-      "source": "/guides/performance/large_documents",
-      "destination": "/guides/performance/large_documents"
-    },
-    {
       "source": "/guides/ai/computing_hugging_face_embeddings_gpu",
       "destination": "/resources/self_hosting/huggingface_gpu"
     },
     {
       "source": "/reference/api/settings#dictionary",
-      "destination": "/reference/api/settings/dictionary"
+      "destination": "/reference/api/settings/get-dictionary"
     },
     {
       "source": "/reference/api/settings#displayed-attributes",
-      "destination": "/reference/api/settings/displayed-attributes"
+      "destination": "/reference/api/settings/get-displayedattributes"
     },
     {
       "source": "/reference/api/settings#distinct-attribute",
-      "destination": "/reference/api/settings/distinct-attribute"
+      "destination": "/reference/api/settings/get-distinctattribute"
     },
     {
       "source": "/reference/api/settings#faceting",
-      "destination": "/reference/api/settings/faceting"
+      "destination": "/reference/api/settings/get-faceting"
     },
     {
       "source": "/reference/api/settings#filterable-attributes",
-      "destination": "/reference/api/settings/filterable-attributes"
+      "destination": "/reference/api/settings/get-filterableattributes"
     },
     {
       "source": "/reference/api/settings#localized-attributes",
-      "destination": "/reference/api/settings/localized-attributes"
+      "destination": "/reference/api/settings/get-localizedattributes"
     },
     {
       "source": "/reference/api/settings#pagination",
-      "destination": "/reference/api/settings/pagination"
+      "destination": "/reference/api/settings/get-pagination"
     },
     {
       "source": "/reference/api/settings#proximity-precision",
-      "destination": "/reference/api/settings/proximity-precision"
+      "destination": "/reference/api/settings/get-proximityprecision"
     },
     {
       "source": "/reference/api/settings#facet-search",
-      "destination": "/reference/api/settings/facet-search"
+      "destination": "/reference/api/settings/get-facetsearch"
     },
     {
       "source": "/reference/api/settings#prefix-search",
-      "destination": "/reference/api/settings/prefix-search"
+      "destination": "/reference/api/settings/get-prefixsearch"
     },
     {
       "source": "/reference/api/settings#ranking-rules",
-      "destination": "/reference/api/settings/ranking-rules"
+      "destination": "/reference/api/settings/get-rankingrules"
     },
     {
       "source": "/reference/api/settings#searchable-attributes",
-      "destination": "/reference/api/settings/searchable-attributes"
+      "destination": "/reference/api/settings/get-searchableattributes"
     },
     {
       "source": "/reference/api/settings#search-cutoff",
-      "destination": "/reference/api/settings/search-cutoff"
+      "destination": "/reference/api/settings/get-searchcutoffms"
     },
     {
       "source": "/reference/api/settings#separator-tokens",
-      "destination": "/reference/api/settings/separator-tokens"
+      "destination": "/reference/api/settings/get-separatortokens"
     },
     {
       "source": "/reference/api/settings#non-separator-tokens",
-      "destination": "/reference/api/settings/non-separator-tokens"
+      "destination": "/reference/api/settings/get-nonseparatortokens"
     },
     {
       "source": "/reference/api/settings#sortable-attributes",
-      "destination": "/reference/api/settings/sortable-attributes"
+      "destination": "/reference/api/settings/get-sortableattributes"
     },
     {
       "source": "/reference/api/settings#stop-words",
-      "destination": "/reference/api/settings/stop-words"
+      "destination": "/reference/api/settings/get-stopwords"
     },
     {
       "source": "/reference/api/settings#synonyms",
-      "destination": "/reference/api/settings/synonyms"
+      "destination": "/reference/api/settings/get-synonyms"
     },
     {
       "source": "/reference/api/settings#typo-tolerance",
-      "destination": "/reference/api/settings/typo-tolerance"
+      "destination": "/reference/api/settings/get-typotolerance"
     },
     {
       "source": "/reference/api/settings#embedders",
-      "destination": "/reference/api/settings/embedders"
+      "destination": "/reference/api/settings/get-embedders"
     },
     {
       "source": "/reference/api/settings#chat",
-      "destination": "/reference/api/settings/chat"
+      "destination": "/reference/api/settings/get-chat"
     },
     {
       "source": "/reference/api/settings#vector-store",
-      "destination": "/reference/api/settings/vector-store"
+      "destination": "/reference/api/settings/get-vectorstore"
     },
     {
       "source": "/learn/getting_started/quick_start_javascript",
@@ -1729,7 +1721,7 @@
     },
     {
       "source": "/resources/archives/search_preview",
-      "destination": "/resources/archives/search_preview"
+      "destination": "/getting_started/overview"
     },
     {
       "source": "/guides/front_end/pagination",
@@ -1837,7 +1829,7 @@
     },
     {
       "source": "/learn/chat/conversational_search",
-      "destination": "/products/conversational_search/conversational_search"
+      "destination": "/products/conversational_search/overview"
     },
     {
       "source": "/learn/chat/chat_tooling_reference",
@@ -1993,7 +1985,7 @@
     },
     {
       "source": "/learn/async/task_webhook",
-      "destination": "/products/platform/task_webhook"
+      "destination": "/resources/self_hosting/webhooks"
     },
     {
       "source": "/learn/async/asynchronous_operations",
@@ -2133,11 +2125,11 @@
     },
     {
       "source": "/learn/security/protected_unprotected",
-      "destination": "/resources/self_hosting/security/protected_unprotected"
+      "destination": "/products/platform/basic_security"
     },
     {
       "source": "/learn/security/resetting_master_key",
-      "destination": "/resources/self_hosting/security/resetting_master_key"
+      "destination": "/resources/self_hosting/security/master_api_keys"
     },
     {
       "source": "/learn/data_backup/dumps",
@@ -2225,7 +2217,7 @@
     },
     {
       "source": "/learn/filtering_and_sorting/facets_vs_filters",
-      "destination": "/products/faceted_search/facets_vs_filters"
+      "destination": "/products/faceted_search/overview"
     },
     {
       "source": "/resources/self_hosting/install_locally",
@@ -2253,7 +2245,195 @@
     },
     {
       "source": "/getting_started/glossary/search_preview",
+      "destination": "/getting_started/overview"
+    },
+    {
+      "source": "/guides/database/meilisync_mysql",
+      "destination": "https://github.com/long2ice/meilisync"
+    },
+    {
+      "source": "/guides/database/meilisync_postgresql",
+      "destination": "https://github.com/long2ice/meilisync"
+    },
+    {
+      "source": "/learn/advanced/asynchronous_operations#combine-filters",
+      "destination": "/products/platform/filtering_tasks#combine-filters"
+    },
+    {
+      "source": "/learn/advanced/asynchronous_operations#filter-by-canceledby",
+      "destination": "/products/platform/filtering_tasks#filter-by-canceledby"
+    },
+    {
+      "source": "/learn/advanced/asynchronous_operations#filter-by-date",
+      "destination": "/products/platform/filtering_tasks#filter-by-date"
+    },
+    {
+      "source": "/learn/advanced/asynchronous_operations#filter-by-indexuid",
+      "destination": "/products/platform/filtering_tasks#filter-by-indexuid"
+    },
+    {
+      "source": "/learn/advanced/asynchronous_operations#filter-by-status",
+      "destination": "/products/platform/filtering_tasks#filter-by-status"
+    },
+    {
+      "source": "/learn/advanced/asynchronous_operations#filter-by-type",
+      "destination": "/products/platform/filtering_tasks#filter-by-type"
+    },
+    {
+      "source": "/learn/advanced/asynchronous_operations#filter-by-uid",
+      "destination": "/products/platform/filtering_tasks#filter-by-uid"
+    },
+    {
+      "source": "/learn/advanced/asynchronous_operations#filtering-tasks",
+      "destination": "/products/platform/filtering_tasks"
+    },
+    {
+      "source": "/learn/advanced/asynchronous_operations#paginating-tasks",
+      "destination": "/products/platform/paginating_tasks"
+    },
+    {
+      "source": "/learn/getting_started/search_preview",
       "destination": "/resources/archives/search_preview"
+    },
+    {
+      "source": "/home",
+      "destination": "/getting_started/overview"
+    },
+    {
+      "source": "/learn/getting_started/cloud_quick_start",
+      "destination": "/getting_started/overview"
+    },
+    {
+      "source": "/learn/getting_started/documents",
+      "destination": "/resources/glossary/documents"
+    },
+    {
+      "source": "/learn/getting_started/indexes",
+      "destination": "/resources/glossary/indexes"
+    },
+    {
+      "source": "/learn/getting_started/primary_key",
+      "destination": "/resources/glossary/primary_key"
+    },
+    {
+      "source": "/learn/getting_started/what_is_meilisearch",
+      "destination": "/getting_started/features"
+    },
+    {
+      "source": "/learn/resources/contributing_docs",
+      "destination": "/resources/help/contributing_docs"
+    },
+    {
+      "source": "/learn/resources/experimental_features_overview",
+      "destination": "/resources/help/experimental_features"
+    },
+    {
+      "source": "/learn/resources/faq",
+      "destination": "/resources/help/faq"
+    },
+    {
+      "source": "/learn/resources/known_limitations",
+      "destination": "/resources/help/known_limitations"
+    },
+    {
+      "source": "/learn/resources/telemetry",
+      "destination": "/resources/internals/telemetry"
+    },
+    {
+      "source": "/learn/resources/versioning",
+      "destination": "/resources/help/versioning"
+    },
+    {
+      "source": "/reference/api/batches",
+      "destination": "/reference/api/batches/overview"
+    },
+    {
+      "source": "/reference/api/chats",
+      "destination": "/products/conversational_search/chat_tooling_reference"
+    },
+    {
+      "source": "/reference/api/compact",
+      "destination": "/reference/api/compact-an-index/overview"
+    },
+    {
+      "source": "/reference/api/documents",
+      "destination": "/reference/api/documents/overview"
+    },
+    {
+      "source": "/reference/api/dump",
+      "destination": "/reference/api/dumps/overview"
+    },
+    {
+      "source": "/reference/api/experimental_features",
+      "destination": "/reference/api/experimental-features/overview"
+    },
+    {
+      "source": "/reference/api/export",
+      "destination": "/reference/api/export/overview"
+    },
+    {
+      "source": "/reference/api/facet_search",
+      "destination": "/reference/api/facet-search/overview"
+    },
+    {
+      "source": "/reference/api/health",
+      "destination": "/reference/api/health/overview"
+    },
+    {
+      "source": "/reference/api/indexes",
+      "destination": "/reference/api/indexes/overview"
+    },
+    {
+      "source": "/reference/api/keys",
+      "destination": "/reference/api/keys/overview"
+    },
+    {
+      "source": "/reference/api/logs",
+      "destination": "/reference/api/logs/overview"
+    },
+    {
+      "source": "/reference/api/metrics",
+      "destination": "/reference/api/stats/get-prometheus-metrics"
+    },
+    {
+      "source": "/reference/api/multi_search",
+      "destination": "/reference/api/multi-search/overview"
+    },
+    {
+      "source": "/reference/api/network",
+      "destination": "/reference/api/network/overview"
+    },
+    {
+      "source": "/reference/api/search",
+      "destination": "/reference/api/indexes/search-with-post"
+    },
+    {
+      "source": "/reference/api/settings",
+      "destination": "/reference/api/settings/overview"
+    },
+    {
+      "source": "/reference/api/similar",
+      "destination": "/reference/api/similar-documents/overview"
+    },
+    {
+      "source": "/reference/api/snapshots",
+      "destination": "/reference/api/snapshots/overview"
+    },
+    {
+      "source": "/reference/api/stats",
+      "destination": "/reference/api/stats/overview"
+    },
+    {
+      "source": "/reference/api/tasks",
+      "destination": "/reference/api/tasks/overview"
+    },
+    {
+      "source": "/reference/api/version",
+      "destination": "/reference/api/version/overview"
+    },
+    {
+      "source": "/reference/api/webhooks",
+      "destination": "/reference/api/webhooks/overview"
     }
   ]
 }
