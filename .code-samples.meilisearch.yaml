@@ -68,7 +68,7 @@ add_or_update_documents_1: |-
 delete_all_documents_1: |-
   curl \
     -X DELETE 'MEILISEARCH_URL/indexes/movies/documents'
-# delete_indexes_indexUid_documentId
+# delete_indexes_indexUid_documents_documentId
 delete_one_document_1: |-
   curl \
     -X DELETE 'MEILISEARCH_URL/indexes/movies/documents/25684'
