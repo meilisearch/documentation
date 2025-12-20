@@ -1,0 +1,160 @@
+---
+title: Matching strategy
+sidebarTitle: Matching strategy
+description: Control how Meilisearch matches query terms in documents using the last, all, or frequency strategies.
+---
+
+The matching strategy determines how Meilisearch handles multi-word queries when not all terms are found in a document. Choose the strategy that best fits your search experience needs.
+
+## Available strategies
+
+| Strategy | Behavior | Best for |
+|----------|----------|----------|
+| `last` (default) | Progressively drops terms from the end | General search with fallback |
+| `all` | Requires all terms to match | Strict, precise search |
+| `frequency` | Drops most common terms first | Prioritizing rare terms |
+
+## Strategy: `last`
+
+The default strategy. Returns documents containing all query terms first, then progressively relaxes requirements by removing terms from the end of the query.
+
+### How it works
+
+For the query `big fat cat`:
+
+1. First, return documents matching `big fat cat` (all 3 terms)
+2. If more results needed, return documents matching `big fat` (first 2 terms)
+3. If still more needed, return documents matching `big` (first term only)
+
+### Example
+
+```bash
+curl \
+  -X POST "${MEILISEARCH_URL}/indexes/movies/search" \
+  -H 'Content-Type: application/json' \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
+  --data-binary '{
+    "q": "big fat cat",
+    "matchingStrategy": "last"
+  }'
+```
+
+### When to use
+
+- Default choice for most applications
+- When you want users to always get results
+- When query order indicates importance (first terms matter most)
+
+## Strategy: `all`
+
+Strict matching. Only returns documents containing every query term. If not enough documents match, the result set may be smaller than the requested `limit`.
+
+### How it works
+
+For the query `big fat cat`:
+
+- Only return documents containing all three terms: `big`, `fat`, AND `cat`
+- No fallback to partial matches
+
+### Example
+
+```bash
+curl \
+  -X POST "${MEILISEARCH_URL}/indexes/movies/search" \
+  -H 'Content-Type: application/json' \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
+  --data-binary '{
+    "q": "big fat cat",
+    "matchingStrategy": "all"
+  }'
+```
+
+### When to use
+
+- When precision is more important than recall
+- For technical or specialized searches
+- When users expect exact matches only
+
+## Strategy: `frequency`
+
+Intelligent term dropping. Returns documents with all terms first, then drops the most common terms in your dataset to find more results.
+
+### How it works
+
+For the query `white shirt` in a clothing dataset where "shirt" appears in many documents:
+
+1. First, return documents matching both `white` AND `shirt`
+2. If more results needed, drop `shirt` (more common) and return documents matching `white`
+
+This effectively gives more weight to rare, distinctive terms.
+
+### Example
+
+```bash
+curl \
+  -X POST "${MEILISEARCH_URL}/indexes/products/search" \
+  -H 'Content-Type: application/json' \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
+  --data-binary '{
+    "q": "vintage leather jacket",
+    "matchingStrategy": "frequency"
+  }'
+```
+
+If "jacket" appears in thousands of documents but "vintage" appears in only a few, `frequency` prioritizes documents with "vintage".
+
+### When to use
+
+- E-commerce and product search
+- When common category terms dilute results
+- When distinctive terms should have more impact
+
+## Comparison
+
+Consider a movie database search for `american pie comedy`:
+
+| Strategy | Result behavior |
+|----------|-----------------|
+| `last` | Shows movies with all 3 terms, then `american pie`, then just `american` |
+| `all` | Only shows movies containing all 3 terms |
+| `frequency` | Shows all 3 terms first, then drops the most common term (likely `comedy`) |
+
+## Combining with other features
+
+### With filters
+
+Matching strategy applies after filters:
+
+```bash
+curl \
+  -X POST "${MEILISEARCH_URL}/indexes/movies/search" \
+  -H 'Content-Type: application/json' \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
+  --data-binary '{
+    "q": "space adventure",
+    "matchingStrategy": "frequency",
+    "filter": "genres = \"Science Fiction\""
+  }'
+```
+
+### With ranking score threshold
+
+Use `rankingScoreThreshold` to exclude low-relevance partial matches:
+
+```bash
+curl \
+  -X POST "${MEILISEARCH_URL}/indexes/movies/search" \
+  -H 'Content-Type: application/json' \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
+  --data-binary '{
+    "q": "space adventure thriller",
+    "matchingStrategy": "last",
+    "rankingScoreThreshold": 0.5
+  }'
+```
+
+## Related resources
+
+- [Ranking rules](/products/full_text_search/ranking_rules)
+- [Query syntax](/products/full_text_search/query_syntax)
+- [Search API reference](/reference/api/indexes/search-with-post)

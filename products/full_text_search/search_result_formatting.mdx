@@ -1,0 +1,276 @@
+---
+title: Search result formatting
+sidebarTitle: Result formatting
+description: Learn how to use highlighting and cropping to format search results for display.
+---
+
+Meilisearch provides built-in formatting features to help you display search results effectively. Use highlighting to emphasize matching terms and cropping to show relevant excerpts from long text fields.
+
+## Highlighting
+
+Highlighting wraps matching query terms in customizable HTML tags, making them visually distinct in your UI.
+
+### Basic highlighting
+
+Use `attributesToHighlight` to specify which fields to highlight:
+
+```bash
+curl \
+  -X POST "${MEILISEARCH_URL}/indexes/movies/search" \
+  -H 'Content-Type: application/json' \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
+  --data-binary '{
+    "q": "adventure",
+    "attributesToHighlight": ["title", "overview"]
+  }'
+```
+
+Response includes a `_formatted` object with highlighted text:
+
+```json
+{
+  "hits": [
+    {
+      "title": "The Adventure Begins",
+      "overview": "An exciting adventure story...",
+      "_formatted": {
+        "title": "The <em>Adventure</em> Begins",
+        "overview": "An exciting <em>adventure</em> story..."
+      }
+    }
+  ]
+}
+```
+
+### Custom highlight tags
+
+Change the default `<em>` tags using `highlightPreTag` and `highlightPostTag`:
+
+```bash
+curl \
+  -X POST "${MEILISEARCH_URL}/indexes/movies/search" \
+  -H 'Content-Type: application/json' \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
+  --data-binary '{
+    "q": "adventure",
+    "attributesToHighlight": ["title"],
+    "highlightPreTag": "<mark class=\"highlight\">",
+    "highlightPostTag": "</mark>"
+  }'
+```
+
+### Highlight all attributes
+
+Use `["*"]` to highlight all retrieved attributes:
+
+```json
+{
+  "q": "adventure",
+  "attributesToHighlight": ["*"]
+}
+```
+
+## Cropping
+
+Cropping extracts relevant excerpts from long text fields, centered around matching query terms. This is essential for displaying search results from documents with lengthy content.
+
+### Basic cropping
+
+Use `attributesToCrop` to specify fields to crop:
+
+```bash
+curl \
+  -X POST "${MEILISEARCH_URL}/indexes/movies/search" \
+  -H 'Content-Type: application/json' \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
+  --data-binary '{
+    "q": "shifu",
+    "attributesToCrop": ["overview"],
+    "cropLength": 10
+  }'
+```
+
+Response:
+
+```json
+{
+  "hits": [
+    {
+      "overview": "The Winter Feast is Po's favorite holiday...",
+      "_formatted": {
+        "overview": "…this year Shifu informs Po that…"
+      }
+    }
+  ]
+}
+```
+
+### How the cropping algorithm works
+
+Meilisearch uses an intelligent algorithm to determine what text to show:
+
+#### Single term queries
+
+For a single search term, Meilisearch crops around the **first occurrence** of that term.
+
+**Example**: Searching for `turtle` with `cropLength: 7` in:
+
+> Donatello is a skilled and smart turtle. Leonardo is the most skilled turtle.
+
+Returns:
+
+> Donatello is a skilled and smart turtle.
+
+#### Multi-term queries
+
+For multiple search terms, Meilisearch centers the crop around the **largest cluster of unique matches**, prioritizing:
+1. Terms that are closer together
+2. Terms in the original query order
+
+**Example**: Searching for `skilled turtle` with `cropLength: 6` in:
+
+> Donatello is a skilled and smart turtle. Leonardo is the most skilled turtle.
+
+Returns:
+
+> Leonardo is the most skilled turtle.
+
+The second sentence has both terms closer together.
+
+#### Sentence boundaries
+
+Meilisearch tries to respect sentence boundaries when cropping.
+
+**Example**: Searching for `Leonardo` with `cropLength: 6` in:
+
+> Donatello is a skilled and smart turtle. Leonardo is the most skilled turtle.
+
+Returns:
+
+> Leonardo is the most skilled turtle.
+
+Meilisearch keeps the complete sentence rather than cutting mid-sentence.
+
+#### No matches found
+
+If no query terms appear in a field, cropping starts from the beginning:
+
+**Example**: Searching for `Michelangelo` with `cropLength: 4` when the term exists in another field:
+
+> Donatello is a skilled…
+
+### Crop length
+
+The `cropLength` parameter controls the total number of words in the cropped result:
+
+```json
+{
+  "q": "adventure",
+  "attributesToCrop": ["overview"],
+  "cropLength": 15
+}
+```
+
+**Important considerations**:
+- Query terms count toward the crop length
+- Stop words count toward the crop length
+- Default crop length is 10 words
+
+**Example**: With `cropLength: 2` searching for `shifu`:
+
+> …Shifu informs…
+
+(2 words total: the query term + 1 word)
+
+### Per-attribute crop length
+
+Specify different crop lengths for different attributes:
+
+```json
+{
+  "attributesToCrop": ["title:5", "overview:20"]
+}
+```
+
+Per-attribute lengths override the global `cropLength`.
+
+### Crop marker
+
+The `cropMarker` parameter sets the string shown at crop boundaries:
+
+```bash
+curl \
+  -X POST "${MEILISEARCH_URL}/indexes/movies/search" \
+  -H 'Content-Type: application/json' \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
+  --data-binary '{
+    "q": "adventure",
+    "attributesToCrop": ["overview"],
+    "cropMarker": "[...]"
+  }'
+```
+
+- Default marker: `…` (ellipsis)
+- Set to `""` or `null` to disable markers
+- Markers only appear where content was actually removed (not at field boundaries)
+
+## Combining highlighting and cropping
+
+Use both features together for the best display:
+
+```bash
+curl \
+  -X POST "${MEILISEARCH_URL}/indexes/movies/search" \
+  -H 'Content-Type: application/json' \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
+  --data-binary '{
+    "q": "kung fu panda",
+    "attributesToHighlight": ["title", "overview"],
+    "attributesToCrop": ["overview"],
+    "cropLength": 20,
+    "highlightPreTag": "<strong>",
+    "highlightPostTag": "</strong>",
+    "cropMarker": "..."
+  }'
+```
+
+Response:
+
+```json
+{
+  "_formatted": {
+    "title": "<strong>Kung</strong> <strong>Fu</strong> <strong>Panda</strong>",
+    "overview": "...the Dragon Warrior must protect the Valley of Peace from <strong>Kung</strong> <strong>Fu</strong> villains..."
+  }
+}
+```
+
+## Match positions
+
+For advanced use cases, use `showMatchesPosition` to get exact character positions of matches:
+
+```json
+{
+  "q": "adventure",
+  "showMatchesPosition": true
+}
+```
+
+Response includes `_matchesPosition`:
+
+```json
+{
+  "_matchesPosition": {
+    "overview": [
+      { "start": 15, "length": 9 }
+    ]
+  }
+}
+```
+
+This allows you to implement custom highlighting logic in your frontend.
+
+## Related resources
+
+- [Search API reference](/reference/api/indexes/search-with-post)
+- [Displayed and searchable attributes](/products/full_text_search/displayed_searchable_attributes)

@@ -1,0 +1,126 @@
+---
+title: Index swapping
+sidebarTitle: Index swapping
+description: Learn how to use index swapping for zero-downtime deployments, blue-green reindexing, and atomic index updates.
+---
+
+import CodeSamplesSwapIndexes1 from '/snippets/samples/code_samples_swap_indexes_1.mdx';
+
+Index swapping allows you to atomically exchange the documents, settings, and task history of two indexes. This enables zero-downtime deployments and safe reindexing strategies.
+
+## Why use index swapping
+
+Index swapping solves several common challenges:
+
+- **Zero-downtime reindexing**: Update an index without interrupting search traffic
+- **Blue-green deployments**: Test changes on a staging index before swapping to production
+- **Atomic rollback**: Quickly revert to a previous index version if issues arise
+- **Settings migration**: Apply new settings without affecting live search
+
+## How it works
+
+When you swap indexes `A` and `B`:
+
+1. All documents in `A` move to `B`, and vice versa
+2. All settings in `A` move to `B`, and vice versa
+3. Task history references are updated (`A` becomes `B`, `B` becomes `A`)
+4. The operation is atomic: either everything swaps, or nothing does
+
+<Note>
+Enqueued tasks are not modified during a swap. Only completed task history is updated.
+</Note>
+
+## Zero-downtime reindexing
+
+The most common use case for index swapping is updating an index without downtime.
+
+### Step 1: Create a new index
+
+Create a staging index with your updated configuration:
+
+```bash
+curl \
+  -X POST "${MEILISEARCH_URL}/indexes" \
+  -H 'Content-Type: application/json' \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
+  --data-binary '{
+    "uid": "movies_staging",
+    "primaryKey": "id"
+  }'
+```
+
+### Step 2: Configure and populate
+
+Apply your new settings and add documents to the staging index:
+
+```bash
+curl \
+  -X PATCH "${MEILISEARCH_URL}/indexes/movies_staging/settings" \
+  -H 'Content-Type: application/json' \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
+  --data-binary '{
+    "rankingRules": ["words", "typo", "proximity", "attribute", "sort", "exactness"],
+    "searchableAttributes": ["title", "overview", "genres"]
+  }'
+```
+
+### Step 3: Swap indexes
+
+Once the staging index is ready, swap it with production:
+
+<CodeSamplesSwapIndexes1 />
+
+Your users continue searching `movies` without interruption, but now receive results from the updated index.
+
+### Step 4: Clean up or keep for rollback
+
+After verifying the swap was successful, you can either:
+
+- **Delete the old index**: `DELETE /indexes/movies_staging`
+- **Keep it for rollback**: If issues arise, swap again to revert
+
+## Renaming an index
+
+Use the `rename` option when the target index doesn't exist:
+
+```bash
+curl \
+  -X POST "${MEILISEARCH_URL}/swap-indexes" \
+  -H 'Content-Type: application/json' \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
+  --data-binary '[
+    {
+      "indexes": ["movies_v2", "movies"],
+      "rename": true
+    }
+  ]'
+```
+
+This effectively renames `movies_v2` to `movies`.
+
+## Swapping multiple pairs
+
+You can swap multiple index pairs in a single atomic operation:
+
+```bash
+curl \
+  -X POST "${MEILISEARCH_URL}/swap-indexes" \
+  -H 'Content-Type: application/json' \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
+  --data-binary '[
+    { "indexes": ["movies", "movies_staging"] },
+    { "indexes": ["actors", "actors_staging"] }
+  ]'
+```
+
+All pairs swap together, or none do.
+
+## API key permissions
+
+To swap indexes, your API key needs the `indexes.swap` action. Non-authorized indexes in the swap request will not be swapped.
+
+## Related resources
+
+- [Swap indexes API reference](/reference/api/indexes/swap-indexes)
+- [Asynchronous operations](/products/platform/asynchronous_operations)
+- [API key permissions](/products/platform/api_key_permissions)

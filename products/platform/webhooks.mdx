@@ -1,0 +1,215 @@
+---
+title: Webhooks
+sidebarTitle: Webhooks
+description: Learn how to use webhooks to trigger workflows when Meilisearch finishes processing tasks.
+---
+
+Webhooks allow you to receive automatic notifications when Meilisearch completes a task. Use them to trigger workflows, update external systems, or monitor indexing operations.
+
+## How webhooks work
+
+When Meilisearch finishes processing any [asynchronous task](/products/platform/asynchronous_operations), it sends a POST request to all configured webhook URLs with the completed [task object](/reference/api/tasks) as the payload.
+
+```
+Meilisearch completes task → POST request sent to webhook URL → Your server processes notification
+```
+
+## Use cases
+
+### Sync external systems
+
+Trigger updates in external databases or caches when documents are indexed:
+
+```javascript
+// Your webhook endpoint
+app.post('/webhook/meilisearch', (req, res) => {
+  const task = req.body;
+
+  if (task.type === 'documentAdditionOrUpdate' && task.status === 'succeeded') {
+    // Update your cache, notify other services, etc.
+    refreshSearchCache(task.indexUid);
+  }
+
+  res.sendStatus(200);
+});
+```
+
+### Monitor indexing pipelines
+
+Track task completion for batch indexing operations:
+
+```javascript
+app.post('/webhook/meilisearch', (req, res) => {
+  const task = req.body;
+
+  if (task.status === 'failed') {
+    alertOps(`Task ${task.uid} failed: ${task.error.message}`);
+  }
+
+  // Log all completed tasks
+  logTaskCompletion(task);
+
+  res.sendStatus(200);
+});
+```
+
+### Trigger downstream workflows
+
+Start additional processes when indexing completes:
+
+```javascript
+app.post('/webhook/meilisearch', async (req, res) => {
+  const task = req.body;
+
+  if (task.type === 'settingsUpdate' && task.status === 'succeeded') {
+    // Run search quality tests after settings change
+    await runSearchQualityTests(task.indexUid);
+  }
+
+  res.sendStatus(200);
+});
+```
+
+## Creating a webhook
+
+### Via API
+
+```bash
+curl \
+  -X POST "${MEILISEARCH_URL}/webhooks" \
+  -H 'Content-Type: application/json' \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
+  --data-binary '{
+    "url": "https://your-server.com/webhook/meilisearch",
+    "headers": {
+      "Authorization": "Bearer your-secret-token"
+    }
+  }'
+```
+
+### Via CLI (single webhook)
+
+For self-hosted instances, configure a single webhook at startup:
+
+```bash
+meilisearch --task-webhook-url https://your-server.com/webhook
+```
+
+See the [CLI webhook configuration guide](/resources/self_hosting/webhooks) for more options.
+
+## Webhook payload
+
+Webhooks receive the completed [task object](/reference/api/tasks) as the request body:
+
+```json
+{
+  "uid": 42,
+  "indexUid": "movies",
+  "status": "succeeded",
+  "type": "documentAdditionOrUpdate",
+  "details": {
+    "receivedDocuments": 100,
+    "indexedDocuments": 100
+  },
+  "duration": "PT0.123456S",
+  "enqueuedAt": "2024-01-15T10:00:00.000000Z",
+  "startedAt": "2024-01-15T10:00:01.000000Z",
+  "finishedAt": "2024-01-15T10:00:02.123456Z"
+}
+```
+
+## Authentication
+
+Protect your webhook endpoint by including authentication headers:
+
+```bash
+curl \
+  -X POST "${MEILISEARCH_URL}/webhooks" \
+  -H 'Content-Type: application/json' \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
+  --data-binary '{
+    "url": "https://your-server.com/webhook",
+    "headers": {
+      "Authorization": "Bearer my-secret-webhook-token"
+    }
+  }'
+```
+
+<Note>
+Authorization header values are redacted in webhook GET responses for security. Store your tokens securely.
+</Note>
+
+## Best practices
+
+### Respond quickly
+
+Webhook requests have a timeout. Return a 200 status immediately and process the task asynchronously:
+
+```javascript
+app.post('/webhook/meilisearch', (req, res) => {
+  // Acknowledge receipt immediately
+  res.sendStatus(200);
+
+  // Process asynchronously
+  processTaskAsync(req.body);
+});
+```
+
+### Handle failures gracefully
+
+Your webhook endpoint should handle all task statuses:
+
+```javascript
+const task = req.body;
+
+switch (task.status) {
+  case 'succeeded':
+    handleSuccess(task);
+    break;
+  case 'failed':
+    handleFailure(task);
+    break;
+  case 'canceled':
+    handleCancellation(task);
+    break;
+}
+```
+
+### Validate the payload
+
+Verify incoming webhooks are from Meilisearch:
+
+```javascript
+app.post('/webhook/meilisearch', (req, res) => {
+  const authHeader = req.headers['authorization'];
+
+  if (authHeader !== `Bearer ${process.env.WEBHOOK_SECRET}`) {
+    return res.sendStatus(401);
+  }
+
+  // Process valid webhook
+  processTask(req.body);
+  res.sendStatus(200);
+});
+```
+
+## Limits
+
+- Maximum 20 webhooks per instance
+- Multiple active webhooks may impact performance
+- Webhook requests timeout after a configured duration
+
+## API key permissions
+
+Managing webhooks requires one of these permissions:
+- `webhooks.get` - List and view webhooks
+- `webhooks.create` - Create new webhooks
+- `webhooks.update` - Modify existing webhooks
+- `webhooks.delete` - Remove webhooks
+
+## Related resources
+
+- [Webhooks API reference](/reference/api/webhooks)
+- [CLI webhook configuration](/resources/self_hosting/webhooks)
+- [Asynchronous operations](/products/platform/asynchronous_operations)
+- [Task reference](/reference/api/tasks)

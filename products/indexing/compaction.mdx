@@ -1,0 +1,146 @@
+---
+title: Index compaction
+sidebarTitle: Compaction
+description: Learn how to use index compaction to reduce disk usage and improve performance.
+---
+
+Index compaction reorganizes the database and prunes unused space. This can reduce disk usage and improve both indexing and search performance.
+
+## Why use compaction
+
+As you add, update, and delete documents, Meilisearch's database accumulates fragmentation. This is normal behavior but can lead to:
+
+- **Increased disk usage**: Unused space isn't immediately reclaimed
+- **Slower indexing**: Fragmented data structures take longer to update
+- **Reduced search performance**: More data to scan for the same results
+
+Compaction addresses these issues by reorganizing and optimizing the database.
+
+<Note>
+Meilisearch Cloud monitors database fragmentation and compacts indexes automatically.
+</Note>
+
+## When to compact
+
+### Check fragmentation level
+
+Use the `/stats` endpoint to assess fragmentation:
+
+```bash
+curl \
+  -X GET "${MEILISEARCH_URL}/indexes/movies/stats" \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}"
+```
+
+Compare `databaseSize` (total size) to `usedDatabaseSize` (actual data):
+
+```json
+{
+  "numberOfDocuments": 19546,
+  "isIndexing": false,
+  "databaseSize": 542000000,
+  "usedDatabaseSize": 350000000
+}
+```
+
+**If the ratio exceeds 30% overhead, consider compacting.**
+
+In this example: `(542M - 350M) / 542M = 35%` overhead — compaction recommended.
+
+### Recommended schedule
+
+| Indexing frequency | Compaction frequency |
+|-------------------|---------------------|
+| A few times per day | Once per week |
+| Multiple times per hour | Multiple times per week |
+| Continuous high-volume | Daily or more |
+
+## Running compaction
+
+### Compact an index
+
+```bash
+curl \
+  -X POST "${MEILISEARCH_URL}/indexes/movies/compact" \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}"
+```
+
+Response:
+
+```json
+{
+  "taskUid": 42,
+  "indexUid": "movies",
+  "status": "enqueued",
+  "type": "IndexCompaction",
+  "enqueuedAt": "2025-01-15T10:00:00.000000Z"
+}
+```
+
+Compaction is an [asynchronous operation](/products/platform/asynchronous_operations). Track progress using the returned `taskUid`.
+
+### Compact multiple indexes
+
+Run compaction on each index separately. You can trigger multiple compactions in sequence:
+
+```bash
+# Compact movies index
+curl -X POST "${MEILISEARCH_URL}/indexes/movies/compact" \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}"
+
+# Compact actors index
+curl -X POST "${MEILISEARCH_URL}/indexes/actors/compact" \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}"
+```
+
+## Disk space requirements
+
+<Warning>
+Compaction temporarily duplicates the database. Ensure you have at least **twice the current database size** in free disk space before running compaction.
+</Warning>
+
+For example, if your index's `databaseSize` is 10GB, ensure at least 20GB of free disk space is available.
+
+## Performance impact
+
+During compaction:
+
+- **Indexing operations** continue to work but may be slower
+- **Search operations** are unaffected
+- **CPU and I/O usage** increases temporarily
+
+Consider running compaction during off-peak hours for production indexes.
+
+## Best practices
+
+### Monitor regularly
+
+Set up monitoring to track the `databaseSize` to `usedDatabaseSize` ratio over time.
+
+### Schedule maintenance windows
+
+For large indexes, schedule compaction during low-traffic periods.
+
+### Automate with webhooks
+
+Use [webhooks](/products/platform/webhooks) to trigger follow-up actions when compaction completes:
+
+```javascript
+app.post('/webhook/meilisearch', (req, res) => {
+  const task = req.body;
+
+  if (task.type === 'IndexCompaction' && task.status === 'succeeded') {
+    logCompactionComplete(task.indexUid);
+    checkNextIndexForCompaction();
+  }
+
+  res.sendStatus(200);
+});
+```
+
+## Related resources
+
+- [Compact API reference](/reference/api/compact-an-index)
+- [Stats API reference](/reference/api/stats)
+- [Optimize indexing performance](/products/indexing/optimize_indexing_performance)
+- [Asynchronous operations](/products/platform/asynchronous_operations)

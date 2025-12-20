@@ -27,6 +27,7 @@
   "appearance": {
     "default": "dark"
   },
+  "css": "/style.css",
   "openapi": "reference/openapi.json",
   "api": {
     "playground": {
@@ -268,7 +269,11 @@
               "products/full_text_search/synonyms",
               "products/full_text_search/distinct_attribute",
               "products/full_text_search/displayed_searchable_attributes",
-              "products/full_text_search/query_processing"
+              "products/full_text_search/query_processing",
+              "products/full_text_search/query_syntax",
+              "products/full_text_search/matching_strategy",
+              "products/full_text_search/search_result_formatting",
+              "products/full_text_search/pagination"
             ]
           },
           {
@@ -352,6 +357,7 @@
                 "group": "Security & API keys",
                 "pages": [
                   "products/platform/basic_security",
+                  "products/platform/api_key_permissions",
                   "products/platform/multitenancy_tenant_tokens",
                   "products/platform/generate_tenant_tokens",
                   "products/platform/tenant_token_reference"
@@ -363,7 +369,8 @@
                   "products/platform/working_with_tasks",
                   "products/platform/filtering_tasks",
                   "products/platform/paginating_tasks",
-                  "products/platform/asynchronous_operations"
+                  "products/platform/asynchronous_operations",
+                  "products/platform/webhooks"
                 ]
               }
             ]
@@ -374,8 +381,11 @@
               "products/indexing/overview",
               "products/indexing/configuring_index_settings",
               "products/indexing/configuring_index_settings_api",
+              "products/indexing/updating_documents",
               "products/indexing/indexing_best_practices",
               "products/indexing/optimize_indexing_performance",
+              "products/indexing/index_swapping",
+              "products/indexing/compaction",
               "products/indexing/rename_an_index",
               "products/indexing/tokenization",
               "products/indexing/multilingual-datasets"

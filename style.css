@@ -61,3 +61,8 @@
 .routeHighlighter__path {
   font-family: var(--font-jetbrains-mono),ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace
 }
+
+/* Blockquote styling - pink bar to match Meilisearch branding */
+blockquote {
+  border-left-color: #FF5CB2 !important;
+}

@@ -1,0 +1,171 @@
+---
+title: Updating documents
+sidebarTitle: Updating documents
+description: Learn the difference between replacing and partially updating documents in Meilisearch.
+---
+
+Meilisearch offers two ways to update documents: **full replacement** and **partial update**. Understanding when to use each method helps you manage your data efficiently.
+
+## Full replacement vs partial update
+
+| Method | HTTP | Behavior | Use case |
+|--------|------|----------|----------|
+| **Replace** | `POST /documents` | Overwrites the entire document | Sync from source of truth |
+| **Update** | `PUT /documents` | Merges with existing document | Incremental field updates |
+
+## Full replacement (POST)
+
+Use `POST /indexes/{index_uid}/documents` to completely replace a document. If a document with the same primary key exists, the entire document is overwritten.
+
+**Fields not present in the new document are removed.**
+
+### Example
+
+Suppose you have this document:
+
+```json
+{
+  "id": 1,
+  "title": "Alien",
+  "genres": ["Science Fiction", "Horror"],
+  "release_date": 233366400
+}
+```
+
+Sending this via POST:
+
+```json
+{
+  "id": 1,
+  "title": "Aliens"
+}
+```
+
+Results in:
+
+```json
+{
+  "id": 1,
+  "title": "Aliens"
+}
+```
+
+The `genres` and `release_date` fields are removed because they weren't included in the replacement document.
+
+### When to use full replacement
+
+- Syncing documents from an external database
+- Re-importing data after schema changes
+- When you want to ensure documents match an external source exactly
+
+```bash
+curl \
+  -X POST "${MEILISEARCH_URL}/indexes/movies/documents" \
+  -H 'Content-Type: application/json' \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
+  --data-binary '[
+    {
+      "id": 1,
+      "title": "Alien",
+      "genres": ["Science Fiction", "Horror"]
+    }
+  ]'
+```
+
+## Partial update (PUT)
+
+Use `PUT /indexes/{index_uid}/documents` to partially update a document. Only the fields you provide are modified. **Existing fields not in the update are preserved.**
+
+### Example
+
+Starting with the same document:
+
+```json
+{
+  "id": 1,
+  "title": "Alien",
+  "genres": ["Science Fiction", "Horror"],
+  "release_date": 233366400
+}
+```
+
+Sending this via PUT:
+
+```json
+{
+  "id": 1,
+  "title": "Aliens"
+}
+```
+
+Results in:
+
+```json
+{
+  "id": 1,
+  "title": "Aliens",
+  "genres": ["Science Fiction", "Horror"],
+  "release_date": 233366400
+}
+```
+
+Only `title` changed. The `genres` and `release_date` fields are preserved.
+
+### When to use partial update
+
+- Updating specific fields without fetching the full document
+- Incrementally adding new fields to existing documents
+- Modifying metadata without affecting other attributes
+
+```bash
+curl \
+  -X PUT "${MEILISEARCH_URL}/indexes/movies/documents" \
+  -H 'Content-Type: application/json' \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
+  --data-binary '[
+    {
+      "id": 1,
+      "rating": 8.5
+    }
+  ]'
+```
+
+## Adding new fields
+
+Both methods can add new fields to documents. The key difference is what happens to fields you don't include:
+
+| | New fields | Missing fields |
+|---|---|---|
+| **POST (replace)** | Added | Removed |
+| **PUT (update)** | Added | Preserved |
+
+## Batch operations
+
+Both endpoints accept arrays of documents, allowing efficient batch operations:
+
+```bash
+curl \
+  -X PUT "${MEILISEARCH_URL}/indexes/movies/documents" \
+  -H 'Content-Type: application/json' \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
+  --data-binary '[
+    { "id": 1, "rating": 8.5 },
+    { "id": 2, "rating": 7.2 },
+    { "id": 3, "rating": 9.1 }
+  ]'
+```
+
+## Content types
+
+Both endpoints accept:
+
+- `application/json` - JSON array of documents
+- `application/x-ndjson` - Newline-delimited JSON (one document per line)
+- `text/csv` - CSV format with headers
+
+## Related resources
+
+- [Add or replace documents API](/reference/api/documents/add-or-replace-documents)
+- [Add or update documents API](/reference/api/documents/add-or-update-documents)
+- [Primary key](/resources/glossary/primary_key)
+- [Indexing best practices](/products/indexing/indexing_best_practices)

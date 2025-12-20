@@ -1,0 +1,86 @@
+---
+title: Query syntax
+sidebarTitle: Query syntax
+description: Learn about Meilisearch's query syntax including placeholder search, phrase search, and negative search operators.
+---
+
+import CodeSamplesPhraseSearch1 from '/snippets/samples/code_samples_phrase_search_1.mdx';
+import CodeSamplesNegativeSearch1 from '/snippets/samples/code_samples_negative_search_1.mdx';
+import CodeSamplesNegativeSearch2 from '/snippets/samples/code_samples_negative_search_2.mdx';
+
+Meilisearch supports several query syntax features that give you fine-grained control over search results. This guide covers normalization, placeholder search, phrase search, and negative search.
+
+## Query term normalization
+
+Query terms go through a normalization process that removes [non-spacing marks](https://www.compart.com/en/unicode/category/Mn). Because of this, Meilisearch effectively ignores accents and diacritics when returning results.
+
+For example, searching for `"sábia"` returns documents containing `"sábia"`, `"sabiá"`, and `"sabia"`.
+
+Normalization also converts all letters to lowercase. Searching for `"Video"` returns the same results as searching for `"video"`, `"VIDEO"`, or `"viDEO"`.
+
+## Placeholder search
+
+When no query term is provided, Meilisearch performs a **placeholder search**. A placeholder search returns all searchable documents in an index, modified by any search parameters used and sorted by that index's [custom ranking rules](/products/full_text_search/custom_ranking_rules).
+
+Since there is no query term, the [built-in ranking rules](/products/full_text_search/ranking_rules) **do not apply**.
+
+If the index has no sort or custom ranking rules, results are returned in the order of their internal database position.
+
+<Tip>
+Placeholder search is particularly useful when building [faceted search interfaces](/products/faceted_search/search_with_facet_filters), as it allows users to browse the catalog and alter sorting rules without entering a query.
+</Tip>
+
+### Example
+
+```bash
+curl \
+  -X POST "${MEILISEARCH_URL}/indexes/movies/search" \
+  -H 'Content-Type: application/json' \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
+  --data-binary '{
+    "q": "",
+    "sort": ["release_date:desc"]
+  }'
+```
+
+## Phrase search
+
+Enclose search terms in double quotes (`"`) to perform a **phrase search**. Meilisearch only returns documents containing those terms in the exact order given.
+
+Phrase searches are:
+- **Case-insensitive**: `"Octavia Butler"` matches `"octavia butler"`
+- **Soft separator tolerant**: ignores separators like `-`, `,`, and `:` within the phrase
+
+Using a hard separator (like `.`) within a phrase search splits it into multiple separate phrase searches: `"Octavia.Butler"` returns the same results as `"Octavia" "Butler"`.
+
+You can combine phrase search with normal queries in a single request. Meilisearch first fetches all documents with exact matches to the given phrase(s), then proceeds with its [default ranking behavior](/products/full_text_search/ranking_rules).
+
+### Example
+
+<CodeSamplesPhraseSearch1 />
+
+## Negative search
+
+Use the minus (`-`) operator in front of a word or phrase to **exclude** it from search results.
+
+### Exclude a word
+
+The following query returns all documents that do not include the word "escape":
+
+<CodeSamplesNegativeSearch1 />
+
+### Exclude a phrase
+
+Negative search can be combined with phrase search to exclude exact phrases:
+
+<CodeSamplesNegativeSearch2 />
+
+## Query limits
+
+Meilisearch processes a maximum of **10 words** per search query. Any words beyond this limit are ignored. This limitation ensures consistent search performance.
+
+## Related resources
+
+- [Ranking rules](/products/full_text_search/ranking_rules)
+- [Typo tolerance](/products/full_text_search/typo_tolerance_settings)
+- [Synonyms](/products/full_text_search/synonyms)

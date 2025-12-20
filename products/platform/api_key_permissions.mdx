@@ -1,0 +1,208 @@
+---
+title: API key permissions
+sidebarTitle: API key permissions
+description: Complete reference for Meilisearch API key actions and granular permissions.
+---
+
+API keys control access to Meilisearch endpoints. Each key has a set of **actions** defining what operations it can perform, and an **indexes** array specifying which indexes it can access.
+
+## Default API keys
+
+When you set a master key, Meilisearch creates two default keys:
+
+| Key | Actions | Use case |
+|-----|---------|----------|
+| **Default Search API Key** | `search` | Safe for frontend use |
+| **Default Admin API Key** | `*` | Backend operations only |
+
+<Warning>
+Never expose the Admin API Key or master key in frontend code.
+</Warning>
+
+## Actions reference
+
+Use the `actions` array when [creating API keys](/reference/api/keys/create-an-api-key) to grant specific permissions.
+
+### Search
+
+| Action | Description |
+|--------|-------------|
+| `search` | Access to [`POST`](/reference/api/indexes/search-with-post) and [`GET`](/reference/api/indexes/search-an-index-with-get) search endpoints |
+
+### Documents
+
+| Action | Description |
+|--------|-------------|
+| `documents.add` | [Add](/reference/api/documents/add-or-replace-documents) and [update](/reference/api/documents/add-or-update-documents) documents |
+| `documents.get` | [Get one document](/reference/api/documents/get-one-document), [get documents](/reference/api/documents/get-documents), [get documents with POST](/reference/api/documents/get-documents-with-post) |
+| `documents.delete` | [Delete one](/reference/api/documents/delete-a-document), [delete all](/reference/api/documents/delete-all-documents), [batch delete](/reference/api/documents/delete-documents-by-batch), [delete by filter](/reference/api/documents/delete-documents-by-filter) |
+| `documents.*` | All document operations |
+
+### Indexes
+
+| Action | Description |
+|--------|-------------|
+| `indexes.create` | [Create an index](/reference/api/indexes/create-index) |
+| `indexes.get` | [Get one index](/reference/api/indexes/get-index), [list all indexes](/reference/api/indexes/list-indexes). Non-authorized indexes omitted from response |
+| `indexes.update` | [Update an index](/reference/api/indexes/update-index) |
+| `indexes.delete` | [Delete an index](/reference/api/indexes/delete-index) |
+| `indexes.swap` | [Swap indexes](/reference/api/indexes/swap-indexes). Non-authorized indexes will not be swapped |
+| `indexes.*` | All index operations |
+
+### Tasks
+
+| Action | Description |
+|--------|-------------|
+| `tasks.get` | [Get one task](/reference/api/tasks), [get tasks](/reference/api/tasks). Tasks from non-authorized indexes omitted |
+| `tasks.cancel` | [Cancel tasks](/reference/api/tasks). Tasks from non-authorized indexes not canceled |
+| `tasks.delete` | [Delete tasks](/reference/api/tasks). Tasks from non-authorized indexes not deleted |
+| `tasks.*` | All task operations |
+
+### Settings
+
+| Action | Description |
+|--------|-------------|
+| `settings.get` | [Get settings](/reference/api/settings) and all subroutes |
+| `settings.update` | [Update settings](/reference/api/settings) and [reset settings](/reference/api/settings) and all subroutes |
+| `settings.*` | All settings operations |
+
+### Stats
+
+| Action | Description |
+|--------|-------------|
+| `stats.get` | [Get index stats](/reference/api/stats), [get all stats](/reference/api/stats). Non-authorized indexes omitted |
+
+### Dumps and snapshots
+
+| Action | Description |
+|--------|-------------|
+| `dumps.create` | [Create a dump](/reference/api/dumps). Not restricted by indexes |
+| `snapshots.create` | [Create a snapshot](/reference/api/snapshots). Not restricted by indexes |
+
+### Keys
+
+| Action | Description |
+|--------|-------------|
+| `keys.get` | [Get all keys](/reference/api/keys/get-api-keys), [get one key](/reference/api/keys/get-an-api-key) |
+| `keys.create` | [Create a key](/reference/api/keys/create-an-api-key) |
+| `keys.update` | [Update a key](/reference/api/keys/update-a-key) |
+| `keys.delete` | [Delete a key](/reference/api/keys/delete-a-key) |
+
+### Network (Enterprise)
+
+| Action | Description |
+|--------|-------------|
+| `network.get` | [Get network configuration](/reference/api/network/get-network-topology) |
+| `network.update` | [Update network configuration](/reference/api/network/configure-network) |
+
+### Webhooks
+
+| Action | Description |
+|--------|-------------|
+| `webhooks.get` | [Get all webhooks](/reference/api/webhooks/get-webhooks), [get one webhook](/reference/api/webhooks/get-webhook) |
+| `webhooks.create` | [Create a webhook](/reference/api/webhooks/post-webhook) |
+| `webhooks.update` | [Update a webhook](/reference/api/webhooks/patch-webhook) |
+| `webhooks.delete` | [Delete a webhook](/reference/api/webhooks/delete-webhook) |
+
+### Other
+
+| Action | Description |
+|--------|-------------|
+| `version` | [Get Meilisearch version](/reference/api/version) |
+| `chatCompletions` | Access [chat completions endpoints](/reference/api/chats) (requires experimental feature) |
+| `*` | All actions (use with caution) |
+
+## Index restrictions
+
+The `indexes` array limits which indexes a key can access:
+
+```json
+{
+  "actions": ["search", "documents.get"],
+  "indexes": ["movies", "actors"]
+}
+```
+
+### Wildcard patterns
+
+Use `*` as a wildcard at the end of index names:
+
+```json
+{
+  "actions": ["search"],
+  "indexes": ["movies_*"]
+}
+```
+
+This grants access to `movies_en`, `movies_fr`, `movies_2024`, etc.
+
+### All indexes
+
+Use `["*"]` to grant access to all indexes:
+
+```json
+{
+  "actions": ["search"],
+  "indexes": ["*"]
+}
+```
+
+## Creating a restricted key
+
+Create a search-only key for a specific index:
+
+```bash
+curl \
+  -X POST "${MEILISEARCH_URL}/keys" \
+  -H 'Content-Type: application/json' \
+  -H "Authorization: Bearer ${MEILISEARCH_MASTER_KEY}" \
+  --data-binary '{
+    "name": "Movies search key",
+    "description": "Search-only access to movies index",
+    "actions": ["search"],
+    "indexes": ["movies"],
+    "expiresAt": "2025-12-31T23:59:59Z"
+  }'
+```
+
+## Best practices
+
+### Principle of least privilege
+
+Grant only the permissions each key needs:
+
+```json
+{
+  "name": "Frontend search key",
+  "actions": ["search"],
+  "indexes": ["products"]
+}
+```
+
+### Separate keys by function
+
+- **Frontend**: `search` only
+- **Backend indexing**: `documents.add`, `documents.delete`
+- **Admin operations**: Full access via Admin key
+
+### Use expiration dates
+
+Set `expiresAt` for temporary access:
+
+```json
+{
+  "actions": ["search"],
+  "indexes": ["*"],
+  "expiresAt": "2025-06-30T00:00:00Z"
+}
+```
+
+### Use tenant tokens for multi-tenant apps
+
+For user-specific search restrictions, use [tenant tokens](/products/platform/multitenancy_tenant_tokens) instead of creating individual API keys.
+
+## Related resources
+
+- [Keys API reference](/reference/api/keys)
+- [Securing your project](/products/platform/basic_security)
+- [Tenant tokens](/products/platform/multitenancy_tenant_tokens)

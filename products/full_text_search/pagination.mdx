@@ -1,0 +1,228 @@
+---
+title: Pagination
+sidebarTitle: Pagination
+description: Learn about pagination strategies and the difference between estimated and exhaustive total hits.
+---
+
+Meilisearch offers two pagination approaches with different trade-offs between performance and accuracy. Choose the right approach based on your UI requirements.
+
+## Two pagination methods
+
+| Method | Parameters | Total hits | Performance | Use case |
+|--------|------------|------------|-------------|----------|
+| **Offset/Limit** | `offset`, `limit` | Estimated | Faster | Infinite scroll, "Load more" |
+| **Page/HitsPerPage** | `page`, `hitsPerPage` | Exhaustive | Slightly slower | Numbered page navigation |
+
+## Estimated total hits (offset/limit)
+
+By default, Meilisearch returns an **estimate** of total results using `estimatedTotalHits`. This prioritizes speed over accuracy.
+
+### Example
+
+```bash
+curl \
+  -X POST "${MEILISEARCH_URL}/indexes/movies/search" \
+  -H 'Content-Type: application/json' \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
+  --data-binary '{
+    "q": "adventure",
+    "offset": 0,
+    "limit": 20
+  }'
+```
+
+Response:
+
+```json
+{
+  "hits": [...],
+  "offset": 0,
+  "limit": 20,
+  "estimatedTotalHits": 245,
+  "processingTimeMs": 2
+}
+```
+
+### Navigation with offset/limit
+
+```bash
+# First page
+{ "offset": 0, "limit": 20 }
+
+# Second page
+{ "offset": 20, "limit": 20 }
+
+# Third page
+{ "offset": 40, "limit": 20 }
+```
+
+### When to use
+
+- **Infinite scroll**: Load more results as users scroll
+- **"Load more" buttons**: Append results to existing list
+- **Performance-critical applications**: When speed matters most
+- **Large result sets**: When exact count isn't needed
+
+### Limitations
+
+- `estimatedTotalHits` may be inaccurate, especially for large result sets
+- Cannot reliably display "Page X of Y" navigation
+- Estimate becomes less accurate as offset increases
+
+## Exhaustive total hits (page/hitsPerPage)
+
+For accurate pagination with exact result counts, use `page` and `hitsPerPage`. This returns `totalHits` and `totalPages` instead of `estimatedTotalHits`.
+
+### Example
+
+```bash
+curl \
+  -X POST "${MEILISEARCH_URL}/indexes/movies/search" \
+  -H 'Content-Type: application/json' \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
+  --data-binary '{
+    "q": "adventure",
+    "page": 1,
+    "hitsPerPage": 20
+  }'
+```
+
+Response:
+
+```json
+{
+  "hits": [...],
+  "page": 1,
+  "hitsPerPage": 20,
+  "totalHits": 243,
+  "totalPages": 13,
+  "processingTimeMs": 5
+}
+```
+
+### Navigation with page/hitsPerPage
+
+```bash
+# First page
+{ "page": 1, "hitsPerPage": 20 }
+
+# Second page
+{ "page": 2, "hitsPerPage": 20 }
+
+# Jump to page 10
+{ "page": 10, "hitsPerPage": 20 }
+```
+
+### When to use
+
+- **Numbered page selectors**: Display "1 2 3 ... 13"
+- **"Showing X of Y results"**: When users need exact counts
+- **E-commerce**: Product listing pages with page navigation
+- **Data tables**: Administrative interfaces
+
+### Performance considerations
+
+Exhaustive counting requires more processing than estimation. The performance difference is typically small but may be noticeable for:
+- Very large indexes (millions of documents)
+- Complex queries with many filters
+- High-traffic applications
+
+## Maximum results limit
+
+Both methods respect the `maxTotalHits` setting, which defaults to 1000. Neither `estimatedTotalHits` nor `totalHits` will exceed this limit.
+
+### Check current limit
+
+```bash
+curl \
+  -X GET "${MEILISEARCH_URL}/indexes/movies/settings/pagination" \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}"
+```
+
+### Increase the limit
+
+```bash
+curl \
+  -X PATCH "${MEILISEARCH_URL}/indexes/movies/settings/pagination" \
+  -H 'Content-Type: application/json' \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
+  --data-binary '{
+    "maxTotalHits": 5000
+  }'
+```
+
+<Warning>
+Increasing `maxTotalHits` beyond 1000 may impact performance. Only increase if your use case requires accessing deep result pages.
+</Warning>
+
+## Offset limits
+
+When using offset/limit pagination:
+
+```bash
+# This works
+{ "offset": 980, "limit": 20 }  # Gets results 981-1000
+
+# This returns empty results (exceeds maxTotalHits)
+{ "offset": 1000, "limit": 20 }
+```
+
+Setting `offset` to a value greater than `maxTotalHits` returns an empty array.
+
+## Choosing the right approach
+
+### Use offset/limit when:
+
+```javascript
+// Infinite scroll implementation
+let offset = 0;
+const limit = 20;
+
+async function loadMore() {
+  const results = await client.index('movies').search(query, {
+    offset,
+    limit
+  });
+  offset += limit;
+  appendResults(results.hits);
+}
+```
+
+### Use page/hitsPerPage when:
+
+```javascript
+// Page navigation implementation
+async function goToPage(pageNumber) {
+  const results = await client.index('movies').search(query, {
+    page: pageNumber,
+    hitsPerPage: 20
+  });
+
+  displayResults(results.hits);
+  renderPagination(results.page, results.totalPages);
+}
+```
+
+## Combining with filters
+
+Pagination parameters work with all other search features:
+
+```bash
+curl \
+  -X POST "${MEILISEARCH_URL}/indexes/movies/search" \
+  -H 'Content-Type: application/json' \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
+  --data-binary '{
+    "q": "adventure",
+    "filter": "genres = Action AND release_date > 1577836800",
+    "sort": ["release_date:desc"],
+    "page": 1,
+    "hitsPerPage": 20
+  }'
+```
+
+## Related resources
+
+- [Pagination settings API](/reference/api/settings/pagination)
+- [Search API reference](/reference/api/indexes/search-with-post)
+- [Filter search results](/products/faceted_search/filter_search_results)

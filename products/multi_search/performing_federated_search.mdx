@@ -137,6 +137,36 @@ This request will lead to results from the query targeting `profile` ranking hig
 }
 ```
 
+## How results are merged
+
+Federated search returns results sorted by ranking score in descending order. When comparing documents from different queries, Meilisearch uses the following algorithm:
+
+### Merge algorithm
+
+1. **Normalize ranking scores**: Consecutive relevancy scores (from `words`, `typo`, `attribute`, `exactness`, or `vector` rules) are grouped into a single score per document. `sort` and `geosort` scores remain separate.
+
+2. **Compare normalized scores lexicographically**:
+   - If both documents have a relevancy score, the higher score wins
+   - If one document has a relevancy score and the other has a sort/geosort score, the relevancy-scored document wins
+   - If both documents have sort/geosort scores in the same direction, compare values according to that direction
+   - If still tied, compare global ranking scores ignoring any sorting
+   - In a perfect tie, documents from earlier queries in the `queries` array are preferred
+
+### Document deduplication
+
+Meilisearch considers two documents identical if they:
+1. Come from the same index
+2. Have the same primary key
+
+Documents from different indexes are never deduplicated, even if they have the same primary key value.
+
+### Performance considerations
+
+The merge algorithm compares documents across all queries in real-time. For best performance:
+- Limit the number of queries in a single federated search
+- Use filters to reduce the result set when possible
+- Consider using `rankingScoreThreshold` to exclude low-relevance results early
+
 ## Conclusion
 
 You have created three indexes, then performed a federated multi-index search to receive all results in a single list. You then used `weight` to boost results from the index most likely to contain the information you wanted.
