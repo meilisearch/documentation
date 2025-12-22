@@ -148,11 +148,6 @@
   "api": {
    "playground": {
      "display": "simple"
-   },
-   "examples": {
-     "languages": ["curl", "javascript", "php", "python", "java", "ruby", "go", "csharp", "rust", "dart", "swift"],
-     "defaults": "required",
-     "prefill": true
    }
   },
   "navigation": {
