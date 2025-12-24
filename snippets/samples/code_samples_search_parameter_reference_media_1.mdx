@@ -35,6 +35,27 @@ client.index('INDEX_NAME').search('a futuristic movie', {
 })
 ```
 
+```python Python
+client.index('movies_fragments').search(
+    "a futuristic space movie",
+    {
+        "media": {
+            "textAndPoster": {
+                "text": "a futuristic space movie",
+                "image": {
+                    "mime": "image/jpeg",
+                    "data": "BASE64_ENCODED_IMAGE_DATA"
+                }
+            }
+        },
+        "hybrid": {
+            "embedder": "multimodal",
+            "semanticRatio": 1.0
+        },
+    }
+)
+```
+
 ```php PHP
 $client->index('INDEX_NAME')->search('a futuristic movie', [
   'hybrid' => [
