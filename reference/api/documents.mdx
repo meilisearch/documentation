@@ -257,6 +257,7 @@ This endpoint accepts the following content types:
 | **`primaryKey`**   | `null`        | [Primary key](/learn/getting_started/primary_key#primary-field) of the index                                                              |
 | **`csvDelimiter`** | `","`         | Configure the character separating CSV fields. Must be a string containing [one ASCII character](https://www.rfc-editor.org/rfc/rfc20). |
 | **`customMetadata`** | `null`         | An arbitrary string accessible via the [generated task object](/reference/api/tasks#custommetadata) |
+| **`skipCreation`**   | `false`       | If `true`, the request updates existing documents, but does not add new documents to the index |
 
 <Warning>
 Configuring `csvDelimiter` and sending data with a content type other than CSV will cause Meilisearch to throw an error.
@@ -375,11 +376,12 @@ This endpoint accepts the following content types:
 
 ### Query parameters
 
-| Query Parameter    | Default Value | Description                                                                                                                             |
-| :----------------- | :------------ | :-------------------------------------------------------------------------------------------------------------------------------------- |
-| **`primaryKey`**   | `null`        | [Primary key](/learn/getting_started/primary_key#primary-field) of the documents                                                          |
-| **`csvDelimiter`** | `","`         | Configure the character separating CSV fields. Must be a string containing [one ASCII character](https://www.rfc-editor.org/rfc/rfc20). |
-| **`customMetadata`** | `null`         | An arbitrary string accessible via the [generated task object](/reference/api/tasks#custommetadata) |
+| Query Parameter      | Default Value | Description                                                                                                                             |
+| :------------------- | :------------ | :-------------------------------------------------------------------------------------------------------------------------------------- |
+| **`primaryKey`**     | `null`        | [Primary key](/learn/getting_started/primary_key#primary-field) of the documents                                                          |
+| **`csvDelimiter`**   | `","`         | Configure the character separating CSV fields. Must be a string containing [one ASCII character](https://www.rfc-editor.org/rfc/rfc20). |
+| **`customMetadata`** | `null`        | An arbitrary string accessible via the [generated task object](/reference/api/tasks#custommetadata) |
+| **`skipCreation`**   | `false`       | If `true`, the request updates existing documents, but does not add new documents to the index |
 
 <Warning>
 Configuring `csvDelimiter` and sending data with a content type other than CSV will cause Meilisearch to throw an error.
