@@ -355,7 +355,7 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 Add a list of documents or update them if they already exist. If the provided index does not exist, it will be created.
 
-If you send an already existing document (same [document id](/learn/getting_started/primary_key#document-id)) the old document will be only partially updated according to the fields of the new document. Thus, any fields not present in the new document are kept and remain unchanged.
+If you send an already existing document (same [document id](/learn/getting_started/primary_key#document-id)) the old document will be only partially updated according to the fields of the new document. Thus, any fields not present in the new document are kept and remain unchanged. Partial updates apply only to top-level fields: updating an object field replaces the entire object, removing any omitted subfields.
 
 To completely overwrite a document, check out the [add or replace documents route](/reference/api/documents#add-or-replace-documents).
 
