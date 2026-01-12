@@ -19,6 +19,17 @@ curl \
   }'
 ```
 
+```python Python
+client.add_or_update_networks({
+    "remotes": {
+        "http://localhost:7700": {
+            "searchApiKey": "masterKey"
+        }
+    },
+    "leader": None
+})
+```
+
 ```php PHP
 $client->updateNetwork([
   'self' => 'ms-00',
@@ -36,5 +47,41 @@ $client->updateNetwork([
     ]
   ]
 ]);
+```
+
+```go Go
+client.UpdateNetwork(&meilisearch.UpdateNetworkRequest{
+  Self: meilisearch.String("ms-00"),
+  Leader: meilisearch.String("ms-00"),
+  Remotes: meilisearch.NewOpt(map[string]meilisearch.Opt[meilisearch.Remote]{
+    "ms-00": meilisearch.NewOpt(meilisearch.Remote{
+      URL:          meilisearch.String("https://meilisearch.com"),
+      SearchAPIKey: meilisearch.String("ReadKey"),
+      WriteAPIKey: meilisearch.String("WriteKey"),
+    },
+  },
+});
+```
+
+```rust Rust
+let mut remotes = std::collections::HashMap::new();
+remotes.insert(String::from("ms-01"), Some(meilisearch_sdk::network::RemoteConfig {
+  url: "https://ms-01.enterprise.meilisearch.com".to_string(),
+  search_api_key: "SEARCH_API_KEY".to_string(),
+  write_api_key: Some("WRITE_API_KEY".to_string()),
+}));
+// Remove ms-00 from the topology
+remotes.insert(String::from("ms-00"), None);
+
+let update = meilisearch_sdk::network::NetworkUpdate {
+  leader: Some("ms-01".to_string()),
+  remotes: Some(remotes),
+  ..meilisearch_sdk::network::NetworkUpdate::default()
+};
+
+let task: TaskInfo = client
+  .update_network_state(&update)
+  .await
+  .unwrap();
 ```
 </CodeGroup>
