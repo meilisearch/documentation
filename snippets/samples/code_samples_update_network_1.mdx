@@ -19,6 +19,17 @@ curl \
   }'
 ```
 
+```python Python
+client.add_or_update_networks({
+    "remotes": {
+        "http://localhost:7700": {
+            "searchApiKey": "masterKey"
+        }
+    },
+    "leader": None
+})
+```
+
 ```php PHP
 $client->updateNetwork([
   'self' => 'ms-00',
@@ -36,6 +47,20 @@ $client->updateNetwork([
     ]
   ]
 ]);
+```
+
+```go Go
+client.UpdateNetwork(&meilisearch.UpdateNetworkRequest{
+  Self: meilisearch.String("ms-00"),
+  Leader: meilisearch.String("ms-00"),
+  Remotes: meilisearch.NewOpt(map[string]meilisearch.Opt[meilisearch.Remote]{
+    "ms-00": meilisearch.NewOpt(meilisearch.Remote{
+      URL:          meilisearch.String("https://meilisearch.com"),
+      SearchAPIKey: meilisearch.String("ReadKey"),
+      WriteAPIKey: meilisearch.String("WriteKey"),
+    },
+  },
+});
 ```
 
 ```rust Rust

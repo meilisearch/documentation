@@ -5,8 +5,16 @@ curl \
   -X GET 'MEILISEARCH_URL/network'
 ```
 
+```python Python
+client.get_all_networks()
+```
+
 ```php PHP
 $client->getNetwork();
+```
+
+```go Go
+client.GetNetwork();
 ```
 
 ```rust Rust
@@ -15,5 +23,4 @@ let network = client
   .await
   .unwrap();
 ```
-  
 </CodeGroup>

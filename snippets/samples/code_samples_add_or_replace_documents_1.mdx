@@ -80,7 +80,8 @@ documents := []map[string]interface{}{
     "release_date": "2019-03-23",
   },
 }
-client.Index("movies").AddDocuments(documents, nil)
+options := &meilisearch.DocumentOptions{SkipCreation: false}
+client.Index("movies").AddDocuments(documents, options)
 ```
 
 ```csharp C#
