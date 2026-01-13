@@ -1,0 +1,13 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X PATCH 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/chat' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "description": "An index of movies.",
+    "documentTemplate": "A movie titled '{{doc.title}}' released in {{ doc.release_date }}",
+    "documentTemplateMaxBytes": 400
+  }'
+```
+</CodeGroup>

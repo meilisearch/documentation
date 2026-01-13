@@ -26,7 +26,7 @@ client.index('movies').update_documents([{
     'id': 287947,
     'title': 'Shazam ⚡️',
     'genres': 'comedy'
-}])
+}], skip_creation=True)
 ```
 
 ```php PHP
@@ -66,7 +66,8 @@ documents := []map[string]interface{}{
     "genres": "comedy",
   },
 }
-client.Index("movies").UpdateDocuments(documents, nil)
+options := &meilisearch.DocumentOptions{SkipCreation: true}
+client.Index("movies").UpdateDocuments(documents, options)
 ```
 
 ```csharp C#
