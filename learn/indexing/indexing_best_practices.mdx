@@ -48,6 +48,12 @@ Meilisearch is optimized for information retrieval was not designed to be your m
 
 If you have a multilingual dataset, create a separate index for each language.
 
+## Avoid creating too many indexes
+
+Due to the complexities of dynamic virtual address management, having more indexes than necessary can negatively impact performance.
+
+What constitutes too many indexes depends on your specific setup. If you notice significant performance degradation when performing multi-index searches, try to reduce the number of indexes in your instance.
+
 ## Remove I/O operation limits
 
 Ensure there is no limit to I/O operations in your machine. The restrictions imposed by cloud providers such as [AWS's Amazon EBS service](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-volume-types.html#IOcredit) can severely impact indexing performance.
