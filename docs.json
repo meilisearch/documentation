@@ -341,11 +341,13 @@
             "group": "Analytics",
             "pages": [
               "products/analytics/overview",
-              "products/analytics/configure_analytics_events",
+              "products/analytics/search_analytics",
+              "products/analytics/track_click_events",
+              "products/analytics/track_conversion_events",
+              "products/analytics/track_custom_events",
               "products/analytics/bind_events_user",
               "products/analytics/events_endpoint",
-              "products/analytics/analytics_metrics_reference",
-              "products/analytics/migrate_analytics_monitoring"
+              "products/analytics/analytics_metrics_reference"
             ]
           },
           {
@@ -1243,7 +1245,11 @@
     },
     {
       "source": "/learn/cloud/analytics",
-      "destination": "/products/analytics/configure_analytics_events"
+      "destination": "/products/analytics/overview"
+    },
+    {
+      "source": "/products/analytics/configure_analytics_events",
+      "destination": "/products/analytics/track_click_events"
     },
     {
       "source": "/learn/cloud/teams",
@@ -1519,7 +1525,11 @@
     },
     {
       "source": "/learn/analytics/deactivate_analytics_monitoring",
-      "destination": "/products/analytics/migrate_analytics_monitoring"
+      "destination": "/products/analytics/overview"
+    },
+    {
+      "source": "/products/analytics/migrate_analytics_monitoring",
+      "destination": "/products/analytics/overview"
     },
     {
       "source": "/guides/deployment/aws",
@@ -1911,7 +1921,7 @@
     },
     {
       "source": "/learn/analytics/configure_analytics_events",
-      "destination": "/products/analytics/configure_analytics_events"
+      "destination": "/products/analytics/track_click_events"
     },
     {
       "source": "/learn/analytics/bind_events_user",
@@ -1927,7 +1937,7 @@
     },
     {
       "source": "/learn/analytics/migrate_analytics_monitoring",
-      "destination": "/products/analytics/migrate_analytics_monitoring"
+      "destination": "/products/analytics/overview"
     },
     {
       "source": "/learn/platform/overview",

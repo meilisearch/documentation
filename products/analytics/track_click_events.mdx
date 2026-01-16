@@ -1,0 +1,224 @@
+---
+title: Track click events
+sidebarTitle: Track clicks
+description: Learn how to track when users click on search results to measure engagement and relevancy.
+---
+
+Click tracking tells you which search results users actually engage with. This data powers click-through rate (CTR) and average click position metrics, helping you understand if your search results are relevant.
+
+## Why track clicks
+
+Without click data, you only know what users searched for. With clicks, you know:
+
+- **Click-through rate (CTR)**: What percentage of searches lead to a click
+- **Average click position**: How far down the list users click
+- **Most clicked documents**: Which results are most engaging
+
+A low CTR or high average click position suggests users aren't finding what they need in top results.
+
+## Requirements
+
+- A Meilisearch Cloud project
+- A way to capture user interactions in your application
+
+## Send click events
+
+When a user clicks a search result, send a `click` event to Meilisearch:
+
+```bash
+curl -X POST "${MEILISEARCH_URL}/events" \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
+  -H "Content-Type: application/json" \
+  --data-binary '{
+    "eventType": "click",
+    "eventName": "Search Result Clicked",
+    "indexUid": "products",
+    "objectId": "product_123",
+    "position": 1,
+    "userId": "user_456"
+  }'
+```
+
+### Required fields
+
+| Field | Description |
+|-------|-------------|
+| `eventType` | Must be `"click"` |
+| `eventName` | A descriptive name for the event |
+| `indexUid` | The index containing the clicked document |
+| `objectId` | The primary key of the clicked document |
+| `userId` | Identifier for the user who clicked |
+
+### Optional but recommended
+
+| Field | Description |
+|-------|-------------|
+| `position` | The position of the clicked result (1-indexed). Required for average click position metric. |
+| `queryUid` | Links the click to a specific search. Found in search response `metadata`. |
+
+## Implementation examples
+
+### JavaScript
+
+```javascript
+async function trackClick({ indexUid, objectId, position, userId, queryUid }) {
+  await fetch(`${process.env.MEILISEARCH_URL}/events`, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${process.env.MEILISEARCH_API_KEY}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      eventType: 'click',
+      eventName: 'Search Result Clicked',
+      indexUid,
+      objectId,
+      position,
+      userId,
+      queryUid
+    })
+  });
+}
+
+// When user clicks a search result
+function handleResultClick(hit, position, searchMetadata, userId) {
+  trackClick({
+    indexUid: 'products',
+    objectId: hit.id,
+    position: position + 1, // Convert 0-indexed to 1-indexed
+    userId,
+    queryUid: searchMetadata?.queryUid
+  });
+
+  // Navigate to the result
+  window.location.href = hit.url;
+}
+```
+
+### React
+
+```jsx
+function SearchResult({ hit, position, searchMetadata, userId }) {
+  const handleClick = () => {
+    // Track the click
+    fetch(`${process.env.NEXT_PUBLIC_MEILISEARCH_URL}/events`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${process.env.NEXT_PUBLIC_MEILISEARCH_API_KEY}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        eventType: 'click',
+        eventName: 'Search Result Clicked',
+        indexUid: 'products',
+        objectId: hit.id,
+        position: position + 1,
+        userId,
+        queryUid: searchMetadata?.queryUid
+      })
+    });
+  };
+
+  return (
+    <a href={hit.url} onClick={handleClick}>
+      <h3>{hit.title}</h3>
+      <p>{hit.description}</p>
+    </a>
+  );
+}
+```
+
+### Via backend proxy
+
+For better security, route click events through your backend:
+
+```javascript
+// Frontend
+function trackClick(objectId, position) {
+  fetch('/api/analytics/click', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ objectId, position })
+  });
+}
+
+// Backend (Express example)
+app.post('/api/analytics/click', async (req, res) => {
+  const { objectId, position } = req.body;
+  const userId = req.user?.id || hashIp(req.ip);
+
+  await fetch(`${process.env.MEILISEARCH_URL}/events`, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${process.env.MEILISEARCH_API_KEY}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      eventType: 'click',
+      eventName: 'Search Result Clicked',
+      indexUid: 'products',
+      objectId,
+      position,
+      userId
+    })
+  });
+
+  res.sendStatus(200);
+});
+```
+
+## Linking clicks to searches
+
+For the most accurate analytics, link click events to their originating search using `queryUid`:
+
+```javascript
+// 1. Perform search and capture metadata
+const response = await client.index('products').search('headphones');
+const queryUid = response.metadata?.queryUid;
+
+// 2. When user clicks, include queryUid
+await trackClick({
+  indexUid: 'products',
+  objectId: clickedHit.id,
+  position: clickPosition,
+  userId: currentUserId,
+  queryUid // Links this click to the search
+});
+```
+
+## What you'll see in the dashboard
+
+Once click tracking is set up, the dashboard shows:
+
+<Frame>
+  <img src="/assets/images/analytics/click-metrics.png" alt="Dashboard showing click-through rate and average click position metrics" />
+</Frame>
+
+- **Click-through rate**: Percentage of searches with at least one click
+- **Average click position**: Mean position of clicked results (lower is better)
+- **Clicks over time**: Click volume trends
+
+## Troubleshooting
+
+### Clicks not appearing
+
+- Verify `userId` is included—it's required for click events
+- Check that `eventType` is exactly `"click"`
+- Ensure requests reach Meilisearch (check network tab)
+
+### CTR seems too low
+
+- Confirm clicks are tracked on all result interactions, not just some
+- Check if users navigate away before click events fire
+- Consider tracking clicks on result card hover or mousedown for faster capture
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Track conversions" icon="cart-shopping" href="/products/analytics/track_conversion_events">
+    Measure when clicks lead to business outcomes
+  </Card>
+  <Card title="Bind to users" icon="user" href="/products/analytics/bind_events_user">
+    Learn more about user identification
+  </Card>
+</CardGroup>

@@ -1,0 +1,231 @@
+---
+title: Track conversion events
+sidebarTitle: Track conversions
+description: Learn how to track when searches lead to desired business outcomes like purchases, signups, or other conversions.
+---
+
+Conversion tracking measures when searches lead to meaningful business outcomes. A conversion is any action that represents value—a purchase, signup, subscription, or download.
+
+## Why track conversions
+
+Clicks tell you users engaged with results. Conversions tell you results delivered value:
+
+- **Conversion rate**: Percentage of searches that lead to a conversion
+- **Search ROI**: Which queries drive the most business value
+- **Relevancy validation**: Proof that your search configuration works
+
+## What counts as a conversion
+
+A conversion depends on your business. Common examples:
+
+| Business type | Conversion examples |
+|---------------|---------------------|
+| **E-commerce** | Purchase, add to cart, checkout started |
+| **SaaS** | Signup, subscription, upgrade |
+| **Content** | Article read, video watched, download |
+| **Marketplace** | Booking, inquiry, contact |
+
+Choose conversions that represent real business value, not just engagement.
+
+## Requirements
+
+- A Meilisearch Cloud project
+- A way to detect conversion events in your application
+
+## Send conversion events
+
+When a user completes a conversion, send a `conversion` event:
+
+```bash
+curl -X POST "${MEILISEARCH_URL}/events" \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
+  -H "Content-Type: application/json" \
+  --data-binary '{
+    "eventType": "conversion",
+    "eventName": "Purchase Completed",
+    "indexUid": "products",
+    "objectId": "product_123",
+    "userId": "user_456"
+  }'
+```
+
+### Required fields
+
+| Field | Description |
+|-------|-------------|
+| `eventType` | Must be `"conversion"` |
+| `eventName` | Descriptive name (e.g., "Purchase Completed", "Signup Finished") |
+| `indexUid` | The index containing the converted document |
+| `objectId` | The primary key of the document that converted |
+| `userId` | Identifier for the user who converted |
+
+### Optional
+
+| Field | Description |
+|-------|-------------|
+| `queryUid` | Links the conversion to a specific search. Found in search response `metadata`. |
+
+<Note>
+Each search can only have one conversion event. Sending multiple conversions for the same `queryUid` will not increment the conversion count.
+</Note>
+
+## Implementation examples
+
+### E-commerce: Track purchases
+
+```javascript
+// After successful checkout
+async function trackPurchase(order, userId) {
+  // Track conversion for each purchased item
+  for (const item of order.items) {
+    await fetch(`${process.env.MEILISEARCH_URL}/events`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${process.env.MEILISEARCH_API_KEY}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        eventType: 'conversion',
+        eventName: 'Purchase Completed',
+        indexUid: 'products',
+        objectId: item.productId,
+        userId
+      })
+    });
+  }
+}
+```
+
+### SaaS: Track signups
+
+```javascript
+// After user completes registration
+async function trackSignup(userId, planId) {
+  await fetch(`${process.env.MEILISEARCH_URL}/events`, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${process.env.MEILISEARCH_API_KEY}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      eventType: 'conversion',
+      eventName: 'Signup Completed',
+      indexUid: 'plans',
+      objectId: planId,
+      userId
+    })
+  });
+}
+```
+
+### Content: Track article reads
+
+```javascript
+// After user reads article (e.g., scrolled 80% or spent 2+ minutes)
+async function trackArticleRead(articleId, userId, queryUid) {
+  await fetch(`${process.env.MEILISEARCH_URL}/events`, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${process.env.MEILISEARCH_API_KEY}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      eventType: 'conversion',
+      eventName: 'Article Read',
+      indexUid: 'articles',
+      objectId: articleId,
+      userId,
+      queryUid
+    })
+  });
+}
+```
+
+## Linking conversions to searches
+
+Conversions often happen after users leave the search results page. To link them back to the originating search:
+
+### Option 1: Store queryUid in session
+
+```javascript
+// When user searches
+const response = await search('headphones');
+sessionStorage.setItem('lastQueryUid', response.metadata?.queryUid);
+
+// Later, when user converts
+const queryUid = sessionStorage.getItem('lastQueryUid');
+await trackConversion({
+  eventType: 'conversion',
+  eventName: 'Purchase Completed',
+  indexUid: 'products',
+  objectId: productId,
+  userId,
+  queryUid
+});
+```
+
+### Option 2: Pass queryUid through the funnel
+
+```javascript
+// Add queryUid to product page URL
+const productUrl = `/products/${hit.id}?quid=${searchMetadata.queryUid}`;
+
+// On product page, store in hidden field or state
+const queryUid = new URLSearchParams(window.location.search).get('quid');
+
+// On conversion, include stored queryUid
+await trackConversion({ ..., queryUid });
+```
+
+## What you'll see in the dashboard
+
+Once conversion tracking is set up:
+
+<Frame>
+  <img src="/assets/images/analytics/conversion-metrics.png" alt="Dashboard showing conversion rate metrics" />
+</Frame>
+
+- **Conversion rate**: Percentage of searches leading to conversion
+- **Conversions over time**: Volume trends
+- **Top converting queries**: Which searches drive the most conversions
+
+## Best practices
+
+### Track the right moment
+
+- **E-commerce**: Track after payment succeeds, not when checkout starts
+- **SaaS**: Track after email verification, not just form submission
+- **Content**: Track meaningful engagement (time on page, scroll depth), not just page views
+
+### Don't double-count
+
+Since each search can only have one conversion, choose the most meaningful conversion point. For e-commerce, track the purchase—not add-to-cart and purchase.
+
+### Handle offline conversions
+
+If conversions happen outside your app (phone orders, in-store pickups), consider a batch import process to send conversion events from your backend systems.
+
+## Troubleshooting
+
+### Conversions not appearing
+
+- Verify `userId` is included—it's required
+- Check that `eventType` is exactly `"conversion"`
+- Confirm events reach Meilisearch (check network requests)
+
+### Conversion rate seems wrong
+
+- Only one conversion per search counts—ensure you're not sending duplicates
+- Check if `queryUid` is correctly passed through the conversion funnel
+- Verify conversions are sent for the correct `indexUid`
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Track custom events" icon="bolt" href="/products/analytics/track_custom_events">
+    Track other interactions beyond clicks and conversions
+  </Card>
+  <Card title="Metrics reference" icon="chart-bar" href="/products/analytics/analytics_metrics_reference">
+    Understand all available metrics
+  </Card>
+</CardGroup>

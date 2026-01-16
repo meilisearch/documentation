@@ -482,7 +482,26 @@ Once standardized, documentation should meet:
 
 ---
 
-## Part 10: Next Steps
+## Part 10: Missing Images
+
+The following images need to be added to complete the documentation:
+
+### Analytics Dashboard Screenshots
+
+| Image Path | Description | Used In |
+|------------|-------------|---------|
+| `/assets/images/analytics/dashboard-overview.png` | Main dashboard showing search metrics over time (total searches, users, CTR, conversion rate) | `overview.mdx` |
+| `/assets/images/analytics/top-queries.png` | Most searched queries and searches without results | `overview.mdx` |
+| `/assets/images/analytics/country-analysis.png` | Geographic breakdown of searches | `overview.mdx` |
+| `/assets/images/analytics/no-result-queries.png` | Detail view of queries with no results | `search_analytics.mdx` |
+| `/assets/images/analytics/top-queries-detail.png` | Detail view of most searched queries | `search_analytics.mdx` |
+| `/assets/images/analytics/period-comparison.png` | Comparing metrics between two time periods | `search_analytics.mdx` |
+| `/assets/images/analytics/click-metrics.png` | Click-through rate and average click position | `track_click_events.mdx` |
+| `/assets/images/analytics/conversion-metrics.png` | Conversion rate metrics | `track_conversion_events.mdx` |
+
+---
+
+## Part 11: Next Steps
 
 1. **Review and approve this analysis**
 2. **Fix critical/blocking issues** (4 files)

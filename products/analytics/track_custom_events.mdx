@@ -1,0 +1,251 @@
+---
+title: Track custom events
+sidebarTitle: Custom events
+description: Track any user interaction with your documents beyond clicks and conversions—page views, favorites, shares, and more.
+---
+
+Custom events let you track any user interaction with your documents. While clicks and conversions measure search engagement, custom events capture the full picture of how users interact with your content.
+
+## Why track custom events
+
+Custom events help you understand user behavior beyond search:
+
+- **Page views**: Track which documents users view, regardless of how they got there
+- **Favorites/wishlists**: Understand what users save for later
+- **Shares**: See which content users spread
+- **Add to cart**: Track purchase intent before conversion
+- **Downloads**: Measure content consumption
+
+This data builds a richer picture of document engagement and may power personalization features in the future.
+
+## Send custom events
+
+Custom events use the same `/events` endpoint as clicks and conversions:
+
+```bash
+curl -X POST "${MEILISEARCH_URL}/events" \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
+  -H "Content-Type: application/json" \
+  --data-binary '{
+    "eventType": "custom",
+    "eventName": "Added to Favorites",
+    "indexUid": "products",
+    "objectId": "product_123",
+    "userId": "user_456"
+  }'
+```
+
+### Fields
+
+| Field | Required | Description |
+|-------|----------|-------------|
+| `eventType` | Yes | Must be `"custom"` |
+| `eventName` | Yes | Descriptive name for the event (e.g., "Page View", "Added to Wishlist") |
+| `indexUid` | Yes | The index containing the document |
+| `objectId` | Yes | The primary key of the document |
+| `userId` | Yes | Identifier for the user |
+
+## Use cases and examples
+
+### Track page views
+
+Track when users view document detail pages:
+
+```javascript
+// On product page load
+async function trackPageView(productId, userId) {
+  await fetch(`${process.env.MEILISEARCH_URL}/events`, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${process.env.MEILISEARCH_API_KEY}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      eventType: 'custom',
+      eventName: 'Page View',
+      indexUid: 'products',
+      objectId: productId,
+      userId
+    })
+  });
+}
+
+// Call when page loads
+useEffect(() => {
+  trackPageView(product.id, currentUser.id);
+}, [product.id]);
+```
+
+### Track favorites and wishlists
+
+Track when users save items for later:
+
+```javascript
+async function handleAddToFavorites(productId, userId) {
+  // Add to user's favorites in your database
+  await addToFavorites(userId, productId);
+
+  // Track the event in Meilisearch
+  await fetch(`${process.env.MEILISEARCH_URL}/events`, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${process.env.MEILISEARCH_API_KEY}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      eventType: 'custom',
+      eventName: 'Added to Favorites',
+      indexUid: 'products',
+      objectId: productId,
+      userId
+    })
+  });
+}
+```
+
+### Track shares
+
+Track when users share content:
+
+```javascript
+async function handleShare(articleId, userId, platform) {
+  // Open share dialog
+  await navigator.share({ url: articleUrl });
+
+  // Track the share event
+  await fetch(`${process.env.MEILISEARCH_URL}/events`, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${process.env.MEILISEARCH_API_KEY}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      eventType: 'custom',
+      eventName: `Shared via ${platform}`,
+      indexUid: 'articles',
+      objectId: articleId,
+      userId
+    })
+  });
+}
+```
+
+### Track add to cart
+
+Track purchase intent before conversion:
+
+```javascript
+async function handleAddToCart(productId, userId, quantity) {
+  // Add to cart in your system
+  await cart.add(productId, quantity);
+
+  // Track the event
+  await fetch(`${process.env.MEILISEARCH_URL}/events`, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${process.env.MEILISEARCH_API_KEY}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      eventType: 'custom',
+      eventName: 'Added to Cart',
+      indexUid: 'products',
+      objectId: productId,
+      userId
+    })
+  });
+}
+```
+
+### Track downloads
+
+Track when users download content:
+
+```javascript
+async function handleDownload(documentId, userId) {
+  // Track before starting download
+  await fetch(`${process.env.MEILISEARCH_URL}/events`, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${process.env.MEILISEARCH_API_KEY}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      eventType: 'custom',
+      eventName: 'Document Downloaded',
+      indexUid: 'documents',
+      objectId: documentId,
+      userId
+    })
+  });
+
+  // Start download
+  window.location.href = `/downloads/${documentId}`;
+}
+```
+
+## Creating a reusable tracking function
+
+For consistency, create a single function to handle all custom events:
+
+```javascript
+async function trackEvent({ eventName, indexUid, objectId, userId }) {
+  try {
+    await fetch(`${process.env.MEILISEARCH_URL}/events`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${process.env.MEILISEARCH_API_KEY}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        eventType: 'custom',
+        eventName,
+        indexUid,
+        objectId,
+        userId
+      })
+    });
+  } catch (error) {
+    // Don't let analytics failures break the user experience
+    console.error('Failed to track event:', error);
+  }
+}
+
+// Usage
+trackEvent({
+  eventName: 'Added to Wishlist',
+  indexUid: 'products',
+  objectId: product.id,
+  userId: currentUser.id
+});
+```
+
+## Naming conventions
+
+Use consistent, descriptive event names:
+
+| Good | Bad |
+|------|-----|
+| `Page View` | `view` |
+| `Added to Favorites` | `fav` |
+| `Shared via Twitter` | `share` |
+| `Document Downloaded` | `dl` |
+
+Clear names make your analytics data easier to understand and analyze.
+
+## Future: Personalization
+
+Custom events may power personalization features in the future. By tracking user interactions like page views, favorites, and purchases, Meilisearch can build user profiles that inform search result ranking.
+
+Start tracking custom events now to build valuable data for when these features become available.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Bind to users" icon="user" href="/products/analytics/bind_events_user">
+    Learn about user identification options
+  </Card>
+  <Card title="Events API reference" icon="code" href="/products/analytics/events_endpoint">
+    Full API documentation
+  </Card>
+</CardGroup>
