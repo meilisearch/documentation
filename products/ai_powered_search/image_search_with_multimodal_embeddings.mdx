@@ -17,7 +17,8 @@ First, enable the `multimodal` experimental feature:
 
 ```sh
 curl \
-  -X PATCH 'MEILISEARCH_URL/experimental-features/' \
+  -X PATCH "${MEILISEARCH_URL}/experimental-features/" \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "multimodal": true
@@ -113,7 +114,8 @@ Your embedder should look similar to this example with all fragments and embeddi
 
 ```sh
 curl \
-  -X PATCH 'MEILISEARCH_URL/indexes/INDEX_NAME/settings' \
+  -X PATCH "${MEILISEARCH_URL}/indexes/INDEX_NAME/settings" \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "embedders": {

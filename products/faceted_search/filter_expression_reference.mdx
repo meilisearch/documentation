@@ -200,7 +200,8 @@ This is an experimental feature. Use the experimental features endpoint to activ
 
 ```sh
 curl \
-  -X PATCH 'MEILISEARCH_URL/experimental-features/' \
+  -X PATCH "${MEILISEARCH_URL}/experimental-features/" \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "containsFilter": true

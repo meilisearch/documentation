@@ -107,7 +107,8 @@ If you see:
 
 ```bash
 curl \
-  -X PUT 'MEILISEARCH_URL/indexes/INDEX_UID/settings/facet-search' \
+  -X PUT "${MEILISEARCH_URL}/indexes/INDEX_UID/settings/facet-search" \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
   -H 'Content-Type: application/json' \
   --data-binary 'false'
 ```

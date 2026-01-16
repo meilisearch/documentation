@@ -21,7 +21,7 @@ First, enable the chat completions experimental feature:
 
 ```bash
 curl \
-  -X PATCH 'MEILISEARCH_URL/experimental-features/' \
+  -X PATCH "${MEILISEARCH_URL}/experimental-features/" \
   -H 'Authorization: Bearer MEILISEARCH_KEY' \
   -H 'Content-Type: application/json' \
   --data-binary '{
@@ -38,8 +38,8 @@ Conversational search is still in early development. Conversational agents may o
 When Meilisearch runs with a master key on an instance created after v1.15.1, it automatically generates a "Default Chat API Key" with `chatCompletions` and `search` permissions on all indexes. Check if you have the key using:
 
 ```bash
-curl MEILISEARCH_URL/keys \
-  -H "Authorization: Bearer MEILISEARCH_KEY"
+curl "${MEILISEARCH_URL}/keys" \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}"
 ```
 
 Look for the key with the description "Default Chat API Key".
@@ -50,7 +50,7 @@ If your instance does not have a Default Chat API Key, create one manually:
 
 ```bash
 curl \
-  -X POST 'MEILISEARCH_URL/keys' \
+  -X POST "${MEILISEARCH_URL}/keys" \
   -H 'Authorization: Bearer MEILISEARCH_KEY' \
   -H 'Content-Type: application/json' \
   --data-binary '{
@@ -68,7 +68,7 @@ After activating the `/chats` route and obtaining an API key with chat permissio
 
 ```bash
 curl \
-  -X PATCH 'MEILISEARCH_URL/indexes/INDEX_NAME/settings' \
+  -X PATCH "${MEILISEARCH_URL}/indexes/INDEX_NAME/settings" \
   -H 'Authorization: Bearer MEILISEARCH_KEY' \
   -H 'Content-Type: application/json' \
   --data-binary '{
@@ -100,7 +100,7 @@ Create a workspace setting your LLM provider as its `source`:
 
 ```bash OpenAI
 curl \
-  -X PATCH 'MEILISEARCH_URL/chats/WORKSPACE_NAME/settings' \
+  -X PATCH "${MEILISEARCH_URL}/chats/WORKSPACE_NAME/settings" \
   -H 'Authorization: Bearer MEILISEARCH_KEY' \
   -H 'Content-Type: application/json' \
   --data-binary '{
@@ -115,7 +115,7 @@ curl \
 
 ```bash Azure OpenAI
 curl \
-  -X PATCH 'MEILISEARCH_URL/chats/WORKSPACE_NAME/settings' \
+  -X PATCH "${MEILISEARCH_URL}/chats/WORKSPACE_NAME/settings" \
   -H 'Authorization: Bearer MEILISEARCH_KEY' \
   -H 'Content-Type: application/json' \
   --data-binary '{
@@ -130,7 +130,7 @@ curl \
 
 ```bash Mistral
 curl \
-  -X PATCH 'MEILISEARCH_URL/chats/WORKSPACE_NAME/settings' \
+  -X PATCH "${MEILISEARCH_URL}/chats/WORKSPACE_NAME/settings" \
   -H 'Authorization: Bearer MEILISEARCH_KEY' \
   -H 'Content-Type: application/json' \
   --data-binary '{
@@ -144,7 +144,7 @@ curl \
 
 ```bash Gemini
 curl \
-  -X PATCH 'MEILISEARCH_URL/chats/WORKSPACE_NAME/settings' \
+  -X PATCH "${MEILISEARCH_URL}/chats/WORKSPACE_NAME/settings" \
   -H 'Authorization: Bearer MEILISEARCH_KEY' \
   -H 'Content-Type: application/json' \
   --data-binary '{
@@ -158,7 +158,7 @@ curl \
 
 ```bash vLLM
 curl \
-  -X PATCH 'MEILISEARCH_URL/chats/WORKSPACE_NAME/settings' \
+  -X PATCH "${MEILISEARCH_URL}/chats/WORKSPACE_NAME/settings" \
   -H 'Authorization: Bearer MEILISEARCH_KEY' \
   -H 'Content-Type: application/json' \
   --data-binary '{
@@ -184,7 +184,7 @@ You have finished configuring your conversational search agent. To test everythi
 
 ```bash
 curl -N \
-  -X POST 'MEILISEARCH_URL/chats/WORKSPACE_NAME/chat/completions' \
+  -X POST "${MEILISEARCH_URL}/chats/WORKSPACE_NAME/chat/completions" \
   -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
   -H 'Content-Type: application/json' \
   --data-binary '{
@@ -244,7 +244,7 @@ Integrating Meilisearch and the OpenAI SDK with JavaScript would look like this:
 import OpenAI from 'openai';
 
 const client = new OpenAI({
-  baseURL: 'MEILISEARCH_URL/chats/WORKSPACE_NAME',
+  baseURL: process.env.MEILISEARCH_URL + '/chats/WORKSPACE_NAME',
   apiKey: 'PROVIDER_API_KEY',
 });
 
@@ -286,7 +286,7 @@ Take particular note of the last lines, which output the streamed responses to t
 
 - Use either the master key or the "Default Chat API Key"
 - Don't use search or admin API keys for chat endpoints
-- Find your chat key: `curl MEILISEARCH_URL/keys -H "Authorization: Bearer MEILISEARCH_KEY"`
+- Find your chat key: `curl "${MEILISEARCH_URL}/keys" -H "Authorization: Bearer ${MEILISEARCH_API_KEY}"`
 
 #### "Socket connection closed unexpectedly"
 
@@ -297,15 +297,15 @@ Take particular note of the last lines, which output the streamed responses to t
 1. Check workspace configuration:
 
    ```bash
-   curl MEILISEARCH_URL/chats/WORKSPACE_NAME/settings \
-     -H "Authorization: Bearer MEILISEARCH_KEY"
+   curl "${MEILISEARCH_URL}/chats/WORKSPACE_NAME/settings" \
+     -H "Authorization: Bearer ${MEILISEARCH_API_KEY}"
    ```
 
 2. Update with valid API key:
 
    ```bash
-   curl -X PATCH MEILISEARCH_URL/chats/WORKSPACE_NAME/settings \
-     -H "Authorization: Bearer MEILISEARCH_KEY" \
+   curl -X PATCH "${MEILISEARCH_URL}/chats/WORKSPACE_NAME/settings" \
+     -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
      -H "Content-Type: application/json" \
      -d '{"apiKey": "your-valid-api-key"}'
    ```

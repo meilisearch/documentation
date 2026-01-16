@@ -118,7 +118,8 @@ Your embedder object is ready. Send it to Meilisearch by updating your index set
 
 ```sh
 curl \
-  -X PATCH 'MEILISEARCH_URL/indexes/kitchenware/settings/embedders' \
+  -X PATCH "${MEILISEARCH_URL}/indexes/kitchenware/settings/embedders" \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "products-openai": {
@@ -130,7 +131,7 @@ curl \
   }'
 ```
 
-Replace `MEILISEARCH_URL` with the address of your Meilisearch project, and `OPEN_AI_API_KEY` with your [OpenAI API key](https://platform.openai.com/api-keys).
+Replace `OPEN_AI_API_KEY` with your [OpenAI API key](https://platform.openai.com/api-keys).
 
 Meilisearch and OpenAI will start processing your documents and updating your index. This may take a few moments, but once it's done you are ready to perform an AI-powered search.
 
@@ -140,8 +141,9 @@ AI-powered searches are very similar to basic text searches. You must query the 
 
 ```sh
 curl \
-  -X POST 'MEILISEARCH_URL/indexes/kitchenware/search' \
-  -H 'content-type: application/json' \
+  -X POST "${MEILISEARCH_URL}/indexes/kitchenware/search" \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
+  -H 'Content-Type: application/json' \
   --data-binary '{
     "q": "kitchen utensils made of wood",
     "hybrid": {

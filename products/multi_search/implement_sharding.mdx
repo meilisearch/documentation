@@ -30,7 +30,8 @@ Contact support to enable this feature in your projects, or use the `/experiment
 
 ```sh
 curl \
-  -X PATCH '${MEILISEARCH_URL}/experimental-features/' \
+  -X PATCH "${MEILISEARCH_URL}/experimental-features/" \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
   -H 'Content-Type: application/json'  \
   --data-binary '{
     "network": true
@@ -53,7 +54,8 @@ Use the `/network` route to configure the `remotes` field of the network object.
 
 ```sh
 curl \
-  -X PATCH 'MEILISEARCH_URL/network' \
+  -X PATCH "${MEILISEARCH_URL}/network" \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "remotes": {
@@ -82,7 +84,8 @@ Now all instances share the same list of remotes, set the `self` field to specif
 
 ```sh
 curl \
-  -X PATCH 'MEILISEARCH_URL/network' \
+  -X PATCH "${MEILISEARCH_URL}/network" \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "self": "REMOTE_NAME_1"
@@ -97,7 +100,8 @@ Finally enable the automatic sharding of documents by Meilisearch on all instanc
 
 ```sh
 curl \
-  -X PATCH 'MEILISEARCH_URL/network' \
+  -X PATCH "${MEILISEARCH_URL}/network" \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "sharding": true

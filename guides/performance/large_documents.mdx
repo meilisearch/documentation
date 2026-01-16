@@ -46,6 +46,8 @@ Create a `split_documents.js` file in your working directory:
 ```js
 #!/usr/bin/env node
 
+const fs = require('fs');
+
 const datasetPath = process.argv[2];
 const datasetFile = fs.readFileSync(datasetPath);
 const documents = JSON.parse(datasetFile);
@@ -57,7 +59,7 @@ for (let documentNumber = documents.length, i = 0; i < documentNumber; i += 1) {
   const story = document.text;
 
   const paragraphs = story.split("\n\n");
-  
+
   for (let paragraphNumber = paragraphs.length, o = 0; o < paragraphNumber; o += 1) {
     splitDocuments.push({
       "id": document.id,
@@ -88,6 +90,8 @@ Update the script from the previous step to create a new field, `story_id`:
 ```js
 #!/usr/bin/env node
 
+const fs = require('fs');
+
 const datasetPath = process.argv[2];
 const datasetFile = fs.readFileSync(datasetPath);
 const documents = JSON.parse(datasetFile);
@@ -99,7 +103,7 @@ for (let documentNumber = documents.length, i = 0; i < documentNumber; i += 1) {
   const story = document.text;
 
   const paragraphs = story.split("\n\n");
-  
+
   for (let paragraphNumber = paragraphs.length, o = 0; o < paragraphNumber; o += 1) {
     splitDocuments.push({
       "story_id": document.id,
@@ -122,7 +126,8 @@ To prevent that from happening, configure `story_id` as the index's distinct att
 
 ```sh
 curl \
-  -X PUT 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/distinct-attribute' \
+  -X PUT "${MEILISEARCH_URL}/indexes/INDEX_NAME/settings/distinct-attribute" \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
   -H 'Content-Type: application/json' \
   --data-binary '"story_id"'
 ```

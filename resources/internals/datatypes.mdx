@@ -256,11 +256,12 @@ The following query returns patients `0` and `1`:
 
 ```sh
 curl \
-  -X POST 'MEILISEARCH_URL/indexes/clinic_patients/search' \
+  -X POST "${MEILISEARCH_URL}/indexes/clinic_patients/search" \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "q": "",
-    "filter": "(appointments.date = 2022-01-01 AND appointments.doctor = 'Jester Lavorre')"
+    "filter": "(appointments.date = 2022-01-01 AND appointments.doctor = '\''Jester Lavorre'\'')"
   }'
 ```
 

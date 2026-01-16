@@ -22,8 +22,8 @@ Query the [get an API key endpoint](/reference/api/keys#get-one-key) and inspect
 
 ```sh
 curl \
-  -X GET 'MEILISEARCH_URL/keys/API_KEY' \
-  -H 'Authorization: Bearer MASTER_KEY'
+  -X GET "${MEILISEARCH_URL}/keys/API_KEY" \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}"
 ```
 
 ## Generate a tenant token

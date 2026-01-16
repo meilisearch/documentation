@@ -328,7 +328,8 @@ Now the embedder object is complete, update your index settings:
 
 ```sh
 curl \
-  -X PATCH 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/embedders' \
+  -X PATCH "${MEILISEARCH_URL}/indexes/INDEX_NAME/settings/embedders" \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "EMBEDDER_NAME": {

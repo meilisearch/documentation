@@ -74,7 +74,7 @@ const client = new Meilisearch({
 export function createTenantToken(patientName) {
   const searchRules = {
     [indexName]: {
-      'filter': `patient = ${patientName}`
+      'filter': `patient = "${patientName}"`
     }
   }
 

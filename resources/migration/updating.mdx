@@ -63,7 +63,8 @@ Dumpless upgrades are an experimental feature. Because of that, it may in rare o
 
 ```sh
 curl \
-  -X POST 'MEILISEARCH_URL/snapshots'
+  -X POST "${MEILISEARCH_URL}/snapshots" \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}"
 ```
 
 Meilisearch will respond with a partial task object. Use its `taskUid` to monitor the snapshot creation status. Once the task is completed, proceed to the next step.

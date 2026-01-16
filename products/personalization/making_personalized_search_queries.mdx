@@ -36,9 +36,10 @@ Submit a search query and include the `personalize` search parameter. `personali
 
 ```sh
 curl \
-  -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
+  -X POST "${MEILISEARCH_URL}/indexes/INDEX_NAME/search" \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
   -H 'Content-Type: application/json' \
-  --data-binary '{ 
+  --data-binary '{
     "q": "wireless keyboard",
     "personalize": {
       "userContext": "The user prefers compact mechanical keyboards from Keychron or Logitech, with a mid-range budget and quiet keys for remote work."

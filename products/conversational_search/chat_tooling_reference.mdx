@@ -10,7 +10,8 @@ This is an experimental feature. Use the Meilisearch Cloud UI or the experimenta
 
 ```sh
 curl \
-  -X PATCH 'MEILISEARCH_URL/experimental-features/' \
+  -X PATCH "${MEILISEARCH_URL}/experimental-features/" \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "chatCompletions": true
