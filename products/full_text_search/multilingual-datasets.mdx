@@ -39,7 +39,7 @@ In some cases, you may prefer to keep multiple languages in a **single index**. 
 
 #### Limitations
 
-- Languages with compound words (like German) or diacritics that change meaning (like Swedish), as well as non-space-separated writing systems (like Chinese, or Japanese), work better in their own index since they require specialized [tokenizers](/products/indexing/tokenization).
+- Languages with compound words (like German) or diacritics that change meaning (like Swedish), as well as non-space-separated writing systems (like Chinese, or Japanese), work better in their own index since they require specialized [tokenizers](/products/full_text_search/tokenization).
 
 - Chinese and Japanese documents should not be mixed in the same field, since distinguishing between them automatically is very difficult. Each of these languages works best in its own dedicated index. However, if fields are strictly separated by language (e.g., title_zh always Chinese, title_ja always Japanese), it is possible to store them in the same index.
 

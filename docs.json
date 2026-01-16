@@ -273,7 +273,9 @@
               "products/full_text_search/query_syntax",
               "products/full_text_search/matching_strategy",
               "products/full_text_search/search_result_formatting",
-              "products/full_text_search/pagination"
+              "products/full_text_search/pagination",
+              "products/full_text_search/tokenization",
+              "products/full_text_search/multilingual-datasets"
             ]
           },
           {
@@ -381,23 +383,14 @@
                   "products/platform/tasks",
                   "products/platform/webhooks"
                 ]
+              },
+              {
+                "group": "Index operations",
+                "pages": [
+                  "products/platform/index_swapping",
+                  "products/platform/compaction"
+                ]
               }
-            ]
-          },
-          {
-            "group": "Indexing",
-            "pages": [
-              "products/indexing/overview",
-              "products/indexing/configuring_index_settings",
-              "products/indexing/configuring_index_settings_api",
-              "products/indexing/updating_documents",
-              "products/indexing/indexing_best_practices",
-              "products/indexing/optimize_indexing_performance",
-              "products/indexing/index_swapping",
-              "products/indexing/compaction",
-              "products/indexing/rename_an_index",
-              "products/indexing/tokenization",
-              "products/indexing/multilingual-datasets"
             ]
           }
         ]
@@ -820,7 +813,9 @@
             "group": "Performance",
             "pages": [
               "guides/performance/large_documents",
-              "guides/performance/pagination"
+              "guides/performance/pagination",
+              "guides/performance/indexing_best_practices",
+              "guides/performance/updating_documents"
             ]
           },
           {
@@ -1116,7 +1111,7 @@
     },
     {
       "source": "/learn/getting_started/customizing_relevancy",
-      "destination": "/products/indexing/configuring_index_settings"
+      "destination": "/reference/api/settings/overview"
     },
     {
       "source": "/learn/getting_started/getting_ready_for_production",
@@ -1216,7 +1211,7 @@
     },
     {
       "source": "/learn/cookbooks/indexing_best_practices",
-      "destination": "/products/indexing/indexing_best_practices"
+      "destination": "/guides/performance/indexing_best_practices"
     },
     {
       "source": "/learn/cookbooks/computing_hugging_face_embeddings_gpu",
@@ -1332,15 +1327,15 @@
     },
     {
       "source": "/learn/advanced/indexing",
-      "destination": "/products/indexing/indexing_best_practices"
+      "destination": "/guides/performance/indexing_best_practices"
     },
     {
-      "source": "/guides/performance/indexing_best_practices",
-      "destination": "/products/indexing/indexing_best_practices"
+      "source": "/guides/indexing_best_practices",
+      "destination": "/guides/performance/indexing_best_practices"
     },
     {
       "source": "/learn/advanced/tokenization",
-      "destination": "/products/indexing/tokenization"
+      "destination": "/products/full_text_search/tokenization"
     },
     {
       "source": "/learn/advanced/known_limitations",
@@ -2020,35 +2015,79 @@
     },
     {
       "source": "/learn/indexing/overview",
-      "destination": "/products/indexing/overview"
+      "destination": "/products/platform/overview"
     },
     {
       "source": "/learn/configuration/configuring_index_settings",
-      "destination": "/products/indexing/configuring_index_settings"
+      "destination": "/reference/api/settings/overview"
     },
     {
       "source": "/learn/configuration/configuring_index_settings_api",
-      "destination": "/products/indexing/configuring_index_settings_api"
+      "destination": "/reference/api/settings/overview"
     },
     {
       "source": "/learn/indexing/indexing_best_practices",
-      "destination": "/products/indexing/indexing_best_practices"
+      "destination": "/guides/performance/indexing_best_practices"
     },
     {
       "source": "/learn/indexing/optimize_indexing_performance",
-      "destination": "/products/indexing/optimize_indexing_performance"
+      "destination": "/products/platform/batch_debugging"
     },
     {
       "source": "/learn/indexing/rename_an_index",
-      "destination": "/products/indexing/rename_an_index"
+      "destination": "/products/platform/index_swapping"
     },
     {
       "source": "/learn/indexing/tokenization",
-      "destination": "/products/indexing/tokenization"
+      "destination": "/products/full_text_search/tokenization"
     },
     {
       "source": "/learn/indexing/multilingual-datasets",
-      "destination": "/products/indexing/multilingual-datasets"
+      "destination": "/products/full_text_search/multilingual-datasets"
+    },
+    {
+      "source": "/products/indexing/tokenization",
+      "destination": "/products/full_text_search/tokenization"
+    },
+    {
+      "source": "/products/indexing/multilingual-datasets",
+      "destination": "/products/full_text_search/multilingual-datasets"
+    },
+    {
+      "source": "/products/indexing/index_swapping",
+      "destination": "/products/platform/index_swapping"
+    },
+    {
+      "source": "/products/indexing/compaction",
+      "destination": "/products/platform/compaction"
+    },
+    {
+      "source": "/products/indexing/indexing_best_practices",
+      "destination": "/guides/performance/indexing_best_practices"
+    },
+    {
+      "source": "/products/indexing/updating_documents",
+      "destination": "/guides/performance/updating_documents"
+    },
+    {
+      "source": "/products/indexing/optimize_indexing_performance",
+      "destination": "/products/platform/batch_debugging"
+    },
+    {
+      "source": "/products/indexing/overview",
+      "destination": "/products/platform/overview"
+    },
+    {
+      "source": "/products/indexing/configuring_index_settings",
+      "destination": "/reference/api/settings/overview"
+    },
+    {
+      "source": "/products/indexing/configuring_index_settings_api",
+      "destination": "/reference/api/settings/overview"
+    },
+    {
+      "source": "/products/indexing/rename_an_index",
+      "destination": "/products/platform/index_swapping"
     },
     {
       "source": "/guides/embedders/openai",
