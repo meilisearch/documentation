@@ -1,0 +1,249 @@
+---
+title: Debug batch performance
+sidebarTitle: Debug performance
+description: Use progressTrace, storage metrics, and operation timelines to identify and resolve indexing performance bottlenecks.
+---
+
+When indexing is slow or resource usage is unexpected, the batch object provides detailed metrics to help you identify bottlenecks. This guide shows you how to read batch statistics and take action to improve performance.
+
+<Note>
+The Meilisearch Cloud dashboard provides the best visualization of batch performance data. The screenshots in this guide show the Cloud UI, which presents this information more clearly than the raw API response.
+</Note>
+
+## Key debugging metrics
+
+Each batch contains several fields that help diagnose performance issues:
+
+| Field | What it tells you |
+|-------|-------------------|
+| `progressTrace` | Time spent on each indexing operation |
+| `internalDatabaseSizes` | Storage changes by category (vectors, words, facets) |
+| `writeChannelCongestion` | Whether disk writes are a bottleneck |
+| `embedderRequests` | AI embedding provider performance |
+
+## Understanding progressTrace
+
+The `progressTrace` field shows a breakdown of time spent on each indexing operation. This is the most valuable tool for identifying bottlenecks.
+
+### Viewing progressTrace in Cloud
+
+The Cloud dashboard displays progressTrace as an interactive timeline:
+
+<Frame>
+  <img src="/assets/images/platform/batch-timeline.png" alt="Batch timeline showing duration of each indexing operation including extracting words, computing facets, and writing to database" />
+</Frame>
+
+Each bar represents an operation with its duration. Longer bars indicate potential bottlenecks.
+
+### progressTrace in API response
+
+The raw API response shows progressTrace as nested paths with durations:
+
+```json
+{
+  "stats": {
+    "progressTrace": {
+      "processing tasks > indexing > extracting documents": "1.23s",
+      "processing tasks > indexing > extracting words": "5.67s",
+      "processing tasks > indexing > extracting word proximity": "33.71s",
+      "processing tasks > indexing > extracting facets": "2.45s",
+      "processing tasks > indexing > merging word caches": "0.89s",
+      "processing tasks > indexing > waiting for database writes": "3.21s",
+      "processing tasks > indexing > post processing facets > facet search": "1763.06s"
+    }
+  }
+}
+```
+
+### Key operations and optimizations
+
+| Operation | Description | If slow, consider... |
+|-----------|-------------|---------------------|
+| `extracting documents` | Parsing incoming documents | Reduce document size or batch size |
+| `extracting words` | Tokenizing text for search | Reduce searchable attributes |
+| `extracting word proximity` | Building phrase matching data | Set [proximity precision](/reference/api/settings/proximity-precision) to `byAttribute` |
+| `extracting facets` | Processing filterable attributes | Reduce filterable attributes |
+| `merging word caches` / `merging facet caches` | Combining extracted data | No direct action—scales with data volume |
+| `waiting for database writes` | Writing to disk | Upgrade to faster storage (avoid HDDs) |
+| `waiting for extractors` | CPU-bound extraction | Add more CPU cores or use [sharding](/products/multi_search/implement_sharding) |
+| `post processing facets > facet search` | Building facet search structures | [Disable facet search](/reference/api/settings/facet-search) if not used |
+| `post processing facets > strings bulk` | Processing string filters | Disable unused [filter features](/reference/api/settings/filterable-attributes#features) |
+| `post processing words > word prefix` | Building autocomplete data | [Disable prefix search](/reference/api/settings/prefix-search) if not needed |
+
+### Embeddings-related operations
+
+When using AI-powered search, additional operations appear:
+
+| Operation | Description | If slow, consider... |
+|-----------|-------------|---------------------|
+| `extracting embeddings` | Getting vectors from provider | Reduce document template size, upgrade provider tier |
+| `writing embeddings to database` | Storing vectors | Use fewer dimensions, enable [binary quantization](/reference/api/settings/embedders#binaryquantized) |
+
+## Storage changes: internalDatabaseSizes
+
+The `internalDatabaseSizes` field shows how each batch affects disk usage, broken down by category:
+
+<Frame>
+  <img src="/assets/images/platform/batch-storage-changes.png" alt="Storage breakdown showing changes in vectors, word positions, facets, and other database components" />
+</Frame>
+
+### API response example
+
+```json
+{
+  "stats": {
+    "internalDatabaseSizes": {
+      "main": { "before": 1048576, "after": 1572864, "change": 524288 },
+      "documents": { "before": 524288, "after": 786432, "change": 262144 },
+      "vectors": { "before": 2097152, "after": 4194304, "change": 2097152 },
+      "wordPositions": { "before": 131072, "after": 196608, "change": 65536 },
+      "facets": { "before": 65536, "after": 98304, "change": 32768 }
+    }
+  }
+}
+```
+
+### What to look for
+
+| Category | Large growth indicates... | Action |
+|----------|--------------------------|--------|
+| `vectors` | AI embeddings consuming space | Use smaller embedding dimensions, enable binary quantization |
+| `wordPositions` | Text-heavy documents | Reduce searchable attributes |
+| `facets` | Many filterable values | Reduce filterable attributes or unique values |
+| `documents` | Document storage | Expected growth proportional to document size |
+
+## Write channel congestion
+
+The `writeChannelCongestion` field indicates whether disk I/O is limiting indexing speed:
+
+```json
+{
+  "stats": {
+    "writeChannelCongestion": {
+      "congested": true,
+      "ratio": 0.85
+    }
+  }
+}
+```
+
+- **`congested: true`**: Disk writes are a bottleneck
+- **`ratio`**: How congested (0.0 = no congestion, 1.0 = fully congested)
+
+### If congested
+
+1. **Check disk type**: HDDs are too slow for Meilisearch. Use SSDs.
+2. **Check disk IOPS**: Cloud instances with small disks may have limited IOPS
+3. **Batch smaller**: Smaller batches reduce peak write load
+4. **Upgrade instance**: Larger instances typically have higher disk bandwidth
+
+## Embedder request statistics
+
+When using AI-powered search, `embedderRequests` shows provider performance:
+
+```json
+{
+  "stats": {
+    "embedderRequests": {
+      "total": 1000,
+      "failed": 5,
+      "latestError": "Rate limit exceeded"
+    }
+  }
+}
+```
+
+### If embedder is slow
+
+- **High `failed` count**: Check provider API key and rate limits
+- **`latestError`**: Indicates the specific issue (rate limits, auth, etc.)
+- **Many requests**: Reduce document template size to fit more in each request
+
+## Debugging workflow
+
+When indexing is slower than expected:
+
+### Step 1: Identify the slow batch
+
+In Cloud dashboard, look for batches with long durations:
+
+<Frame>
+  <img src="/assets/images/platform/batch-list-slow.png" alt="Batch list highlighting a batch with unusually long duration" />
+</Frame>
+
+### Step 2: Open the batch timeline
+
+Click the batch to see the progressTrace timeline:
+
+<Frame>
+  <img src="/assets/images/platform/batch-timeline-bottleneck.png" alt="Batch timeline with one operation taking significantly longer than others" />
+</Frame>
+
+### Step 3: Identify the bottleneck
+
+Find the longest-running operation. Common bottlenecks:
+
+| Symptom | Likely cause |
+|---------|--------------|
+| `extracting word proximity` is longest | Proximity precision too high |
+| `post processing facets > facet search` is longest | Facet search enabled but not used |
+| `waiting for database writes` is longest | Disk I/O bottleneck |
+| `extracting embeddings` is longest | Slow embedding provider |
+
+### Step 4: Take action
+
+Based on the bottleneck, adjust your index settings:
+
+```bash
+# Example: Reduce proximity precision
+curl -X PATCH "${MEILISEARCH_URL}/indexes/products/settings/proximity-precision" \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
+  -H 'Content-Type: application/json' \
+  --data-binary '"byAttribute"'
+```
+
+### Step 5: Monitor the next batch
+
+After making changes, index new documents and compare batch performance.
+
+## Example analysis
+
+Here's a real-world debugging session:
+
+**Symptom**: Indexing 100K documents takes 30 minutes
+
+**Batch progressTrace** shows:
+```json
+"processing tasks > indexing > post processing facets > facet search": "1763.06s"
+```
+
+**Analysis**: Facet search processing is taking 29 minutes out of 30 minutes total.
+
+**Question**: Does this application use facet search?
+
+**Finding**: No, facet search is not used in the application.
+
+**Action**: Disable facet search:
+
+```bash
+curl -X PUT "${MEILISEARCH_URL}/indexes/products/settings/facet-search" \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
+  -H 'Content-Type: application/json' \
+  --data-binary 'false'
+```
+
+**Result**: Next batch completes in under 2 minutes.
+
+## Related resources
+
+<CardGroup cols={2}>
+  <Card title="Index settings reference" icon="gear" href="/reference/api/settings">
+    All configurable index settings
+  </Card>
+  <Card title="Batches API reference" icon="code" href="/reference/api/batches">
+    Full batch object documentation
+  </Card>
+  <Card title="Indexing best practices" icon="rocket" href="/products/indexing/indexing_best_practices">
+    General indexing optimization tips
+  </Card>
+</CardGroup>

@@ -1,0 +1,257 @@
+---
+title: Pricing and billing
+sidebarTitle: Billing
+description: Compare Meilisearch Cloud pricing models, manage payments, and understand billing cycles.
+---
+
+Meilisearch Cloud offers two pricing models: **usage-based** for flexibility and **resource-based** for predictable costs. Both provide fully managed infrastructure with enterprise-grade reliability.
+
+## Pricing models
+
+| | Usage-based | Resource-based |
+|---|-------------|----------------|
+| **Billing** | Pay for searches and documents | Pay for CPU, RAM, and storage |
+| **Scaling** | Automatic | Manual (choose your resources) |
+| **Best for** | Variable traffic, MVPs, prototypes | High traffic, predictable workloads |
+| **Cost predictability** | Variable (based on usage) | Fixed (based on resources) |
+| **Starting price** | $30/month | Custom |
+
+### Usage-based pricing
+
+Usage-based pricing charges based on what you actually use:
+
+- **Searches**: Number of search queries
+- **Documents**: Number of stored documents
+
+**How it works:**
+1. Choose a plan tier with included searches and documents
+2. If you exceed the included limits, pay overage rates
+3. Infrastructure scales automatically
+
+**Best for:**
+- Prototypes and MVPs
+- Applications with variable or unpredictable traffic
+- Teams testing Meilisearch before committing
+
+<Frame>
+  <img src="/assets/images/platform/usage-based-pricing.png" alt="Usage-based pricing tiers showing included searches and documents" />
+</Frame>
+
+### Resource-based pricing
+
+Resource-based pricing lets you choose specific CPU, RAM, and storage:
+
+**How it works:**
+1. Select your CPU and RAM allocation
+2. Disk scales automatically based on data volume
+3. Pay a fixed monthly price for your resources
+
+**Best for:**
+- Production applications with consistent traffic
+- High-traffic applications
+- Vector search and AI workloads
+- Applications requiring cost predictability
+
+<Frame>
+  <img src="/assets/images/platform/resource-based-pricing.png" alt="Resource-based pricing showing CPU and RAM selection options" />
+</Frame>
+
+### Resource sizing guidance
+
+| Workload | Recommended starting point |
+|----------|---------------------------|
+| Small (< 100K docs, light traffic) | 1 vCPU, 2 GB RAM |
+| Medium (< 1M docs, moderate traffic) | 2 vCPU, 4 GB RAM |
+| Large (< 10M docs, high traffic) | 4 vCPU, 8 GB RAM |
+| Vector search / AI workloads | 4+ vCPU, 16+ GB RAM |
+
+<Tip>
+For development and staging environments, you can use smaller instances to reduce costs. Reserve larger instances for production where performance matters.
+</Tip>
+
+## Plan features
+
+All plans include:
+
+| Feature | Included |
+|---------|----------|
+| Fully managed infrastructure | ✅ |
+| Automatic failover | ✅ |
+| Zero-downtime upgrades | ✅ |
+| SSL/TLS encryption | ✅ |
+| API key management | ✅ |
+| Cloud dashboard | ✅ |
+| Automatic backups | ✅ |
+
+### Enterprise features
+
+Additional features available for enterprise customers:
+
+| Feature | Description |
+|---------|-------------|
+| SSO/SAML | Single sign-on integration |
+| SCIM | Automated user provisioning |
+| Custom backup retention | Configurable backup schedule |
+| Priority support | Faster response times |
+| Dedicated account manager | Direct support contact |
+| Custom SLAs | Guaranteed uptime commitments |
+
+## Support tiers
+
+| Tier | Hours | Channels | Response time |
+|------|-------|----------|---------------|
+| Standard | 8 AM–11 PM CET, Mon-Fri | Email, chat | Best effort |
+| Priority | 8 AM–10 PM CET, Mon-Fri | Email, chat, phone | < 4 hours |
+| Enterprise | 24/7 for critical issues | All channels | < 1 hour critical |
+
+## Free trial
+
+All new Meilisearch Cloud accounts include a **14-day free trial** with:
+- Full access to features
+- No credit card required to start
+- Upgrade anytime during or after trial
+
+## Billing details
+
+### Where billing lives
+
+| Plan | Billing level | Description |
+|------|---------------|-------------|
+| **Standard** | Team | Each team has its own billing and payment methods |
+| **Enterprise** | Organization | Billing consolidates across all teams in the organization |
+
+<Note>
+On standard plans, go to **Team Settings** > **Billing**. On enterprise plans with organizations, go to **Organization Settings** > **Billing**.
+</Note>
+
+### Billing cycle
+
+Meilisearch Cloud uses **monthly billing cycles**:
+
+1. Billing starts when you create your first paid project
+2. Usage is tracked throughout the month
+3. Invoices are generated at the end of each billing cycle
+4. Payment is automatically charged to your payment method
+
+### Payment methods
+
+Meilisearch Cloud accepts:
+
+- **Credit cards**: Visa, Mastercard, American Express
+- **Debit cards**: Most major debit cards
+- **Invoice billing**: Available for enterprise customers
+
+### Adding a payment method
+
+1. Go to **Team Settings** > **Billing** (or **Organization Settings** for enterprise)
+2. Click **Add payment method**
+3. Enter your card details
+4. Click **Save**
+
+<Frame>
+  <img src="/assets/images/platform/add-payment-method.png" alt="Adding a payment method in billing settings" />
+</Frame>
+
+### Viewing invoices
+
+Access your invoices in the Cloud dashboard:
+
+1. Go to **Team Settings** > **Billing** (or **Organization Settings** for enterprise)
+2. Click **Invoices** or **Billing history**
+3. View or download individual invoices
+
+<Frame>
+  <img src="/assets/images/platform/invoice-list.png" alt="List of invoices in billing history" />
+</Frame>
+
+## Taxes
+
+### VAT (Europe)
+
+- VAT is charged based on your billing address
+- Business customers can provide a VAT ID for reverse charge
+- VAT ID is validated automatically
+
+To add a VAT ID:
+1. Go to **Team Settings** > **Billing** (or **Organization Settings** for enterprise)
+2. Enter your VAT ID in the tax information section
+3. The ID is validated automatically
+4. Future invoices will reflect the reverse charge
+
+### Sales tax (USA)
+
+- Sales tax is calculated based on your billing address
+- Rates vary by state and local jurisdiction
+- Tax-exempt organizations can contact support with documentation
+
+## Changing plans
+
+### Upgrading
+
+You can upgrade your plan at any time:
+- Usage-based → higher tier: Immediate
+- Resource-based → larger resources: Minimal downtime
+
+### Downgrading
+
+Contact support to downgrade:
+- Downgrades take effect at next billing cycle
+- Data is preserved during the transition
+
+## Failed payments
+
+If a payment fails:
+
+1. Meilisearch sends an email notification
+2. You have a grace period to update your payment method
+3. If not resolved, projects may be paused
+
+To resolve:
+1. Go to **Team Settings** > **Billing** (or **Organization Settings** for enterprise)
+2. Update your payment method
+3. Click **Retry payment** if available
+
+<Warning>
+Keep your payment information current to avoid service interruption.
+</Warning>
+
+## Cancellation
+
+To cancel your subscription:
+
+1. Delete all projects in your team
+2. Go to **Team Settings** > **Billing** (or **Organization Settings** for enterprise)
+3. Cancel your subscription
+
+<Note>
+Deleting a project permanently removes all data. Export any data you need before canceling.
+</Note>
+
+## Special programs
+
+### Startups
+
+Early-stage startups may qualify for discounted pricing. [Contact sales](https://www.meilisearch.com/contact) to learn more.
+
+### Open source projects
+
+Open source projects may qualify for free or discounted access. [Contact sales](https://www.meilisearch.com/contact) with details about your project.
+
+### Education and non-profits
+
+Educational institutions and non-profit organizations may qualify for special pricing. [Contact sales](https://www.meilisearch.com/contact) to discuss your needs.
+
+## Current pricing
+
+For current pricing details, visit [meilisearch.com/pricing](https://www.meilisearch.com/pricing).
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Infrastructure" icon="server" href="/products/platform/infrastructure">
+    Learn about regions and architecture
+  </Card>
+  <Card title="Teams" icon="users" href="/products/platform/teams">
+    Manage team access and permissions
+  </Card>
+</CardGroup>

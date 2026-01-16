@@ -155,10 +155,8 @@ Query the [get one API key endpoint](/reference/api/keys) to obtain an API key's
 
 The UID must indicate an API key with access to [the search action](/reference/api/keys#actions). A token has access to the same indexes and routes as the API key used to generate it.
 
-Since a master key is not an API key, **you cannot use a master key to create a tenant token**. Avoid exposing API keys and **always generate tokens on your application's back end**.
-
 <Warning>
-If an API key expires, any tenant tokens created with it will become invalid. The same applies if the API key is deleted or regenerated due to a changed master key.
+If an API key expires or is deleted, any tenant tokens created with it will become invalid. Always generate tokens on your application's backend.
 </Warning>
 
 ## Expiry date
@@ -177,6 +175,4 @@ Setting a token expiry date is optional, but highly recommended. Tokens without 
 
 <Warning>
 The only way to revoke a token without an expiry date is to [delete](/reference/api/keys#delete-a-key) its parent API key.
-
-Changing an instance's master key forces Meilisearch to regenerate all API keys and will also render all existing tenant tokens invalid.
 </Warning>

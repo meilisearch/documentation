@@ -8,15 +8,16 @@ API keys control access to Meilisearch endpoints. Each key has a set of **action
 
 ## Default API keys
 
-When you set a master key, Meilisearch creates two default keys:
+Meilisearch Cloud projects include three default keys:
 
 | Key | Actions | Use case |
 |-----|---------|----------|
 | **Default Search API Key** | `search` | Safe for frontend use |
 | **Default Admin API Key** | `*` | Backend operations only |
+| **Default Chat API Key** | `search`, `chatCompletions` | Conversational search |
 
 <Warning>
-Never expose the Admin API Key or master key in frontend code.
+Never expose the Admin API Key in frontend code.
 </Warning>
 
 ## Actions reference
@@ -155,7 +156,7 @@ Create a search-only key for a specific index:
 curl \
   -X POST "${MEILISEARCH_URL}/keys" \
   -H 'Content-Type: application/json' \
-  -H "Authorization: Bearer ${MEILISEARCH_MASTER_KEY}" \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
   --data-binary '{
     "name": "Movies search key",
     "description": "Search-only access to movies index",

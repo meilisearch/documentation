@@ -499,6 +499,30 @@ The following images need to be added to complete the documentation:
 | `/assets/images/analytics/click-metrics.png` | Click-through rate and average click position | `track_click_events.mdx` |
 | `/assets/images/analytics/conversion-metrics.png` | Conversion rate metrics | `track_conversion_events.mdx` |
 
+### Platform Screenshots
+
+| Image Path | Description | Used In |
+|------------|-------------|---------|
+| `/assets/images/platform/one-click-upgrade.png` | Project settings showing upgrade button | `upgrades_and_backups.mdx` |
+| `/assets/images/platform/project-version.png` | Project dashboard showing current Meilisearch version | `upgrades_and_backups.mdx` |
+| `/assets/images/platform/usage-based-pricing.png` | Usage-based pricing tiers | `pricing_and_plans.mdx` |
+| `/assets/images/platform/resource-based-pricing.png` | Resource-based pricing CPU/RAM selection | `pricing_and_plans.mdx` |
+| `/assets/images/platform/region-selection.png` | Region selection dropdown in project creation | `cloud_infrastructure.mdx` |
+| `/assets/images/platform/project-dashboard.png` | Project dashboard showing resource usage metrics | `cloud_infrastructure.mdx` |
+| `/assets/images/platform/batch-list.png` | Batch list showing recent batches with status and duration | `batches.mdx` |
+| `/assets/images/platform/batch-detail.png` | Batch detail view showing tasks and statistics | `batches.mdx` |
+| `/assets/images/platform/batch-progress.png` | Batch progress indicator showing current operation | `batches.mdx` |
+| `/assets/images/platform/batch-timeline.png` | Batch timeline showing duration of each indexing operation | `batch_debugging.mdx` |
+| `/assets/images/platform/batch-storage-changes.png` | Storage breakdown showing changes by category | `batch_debugging.mdx` |
+| `/assets/images/platform/batch-list-slow.png` | Batch list highlighting slow batch | `batch_debugging.mdx` |
+| `/assets/images/platform/batch-timeline-bottleneck.png` | Batch timeline showing bottleneck operation | `batch_debugging.mdx` |
+| `/assets/images/platform/add-payment-method.png` | Adding payment method in billing settings | `billing.mdx` |
+| `/assets/images/platform/invoice-list.png` | List of invoices in billing history | `billing.mdx` |
+| `/assets/images/platform/organization-settings.png` | Organization settings page | `teams.mdx` |
+| `/assets/images/platform/project-settings.png` | Project settings showing configuration options | `teams.mdx` |
+| `/assets/images/platform/invite-member.png` | Team member invitation dialog | `teams.mdx` |
+| `/assets/images/platform/tasks-overview.png` | Tasks overview in Meilisearch Cloud | `tasks.mdx` |
+
 ---
 
 ## Part 11: Next Steps

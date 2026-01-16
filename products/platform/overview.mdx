@@ -1,64 +1,69 @@
 ---
 title: Platform overview
 sidebarTitle: Overview
-description: Manage your Meilisearch projects with teams, security, tasks, and monitoring.
+description: Meilisearch Cloud platform features including infrastructure, teams, security, and operational monitoring.
 ---
 
-The Meilisearch platform provides everything you need to run search in production: team collaboration, security and access control, asynchronous task management, and operational monitoring.
+The Meilisearch platform provides everything you need to run search in production: managed cloud infrastructure, team collaboration, security and access control, and operational monitoring.
 
-## Key capabilities
+## Meilisearch Cloud
+
+Meilisearch Cloud is the fully managed way to run Meilisearch. It handles infrastructure, scaling, backups, and upgrades so you can focus on building great search experiences.
+
+| Feature | Description |
+|---------|-------------|
+| **Dedicated resources** | Your own CPU, RAM, and storage—no multi-tenancy |
+| **Global regions** | Deploy close to your users for low latency |
+| **Zero-downtime upgrades** | Dumpless upgrades complete in seconds |
+| **Automatic backups** | Data protection with configurable retention |
+| **SOC 2 Type 2** | Enterprise-grade security certification |
+
+See [Infrastructure](/products/platform/infrastructure) for regions, architecture, and backups. See [Billing](/products/platform/billing) for pricing and payments.
+
+## Teams and collaboration
+
+Meilisearch Cloud uses **teams** to organize resources and collaboration. On standard plans, teams are the top-level entity with their own billing. Enterprise customers can use **organizations** to manage multiple teams with consolidated billing.
 
 <CardGroup cols={2}>
-  <Card title="Teams & collaboration" icon="users" href="/products/platform/teams">
-    Invite team members, manage roles, and collaborate on projects.
+  <Card title="Teams and organizations" icon="users" href="/products/platform/teams">
+    Manage team collaboration and access
   </Card>
-  <Card title="Security & API keys" icon="key" href="/products/platform/basic_security">
-    Protect your data with API keys, tenant tokens, and access control.
-  </Card>
-  <Card title="Tasks & async operations" icon="list-check" href="/products/platform/working_with_tasks">
-    Monitor indexing tasks and asynchronous operations.
-  </Card>
-  <Card title="Webhooks" icon="webhook" href="/products/platform/task_webhook">
-    Get notified when tasks complete for real-time integrations.
+  <Card title="SSO and SCIM" icon="key" href="/products/platform/sso_and_scim">
+    Enterprise authentication (enterprise tier)
   </Card>
 </CardGroup>
 
-## Teams & collaboration
-
-<Note>
-Team management is a Meilisearch Cloud feature.
-</Note>
-
-### Invite team members
-
-Add developers, content managers, and stakeholders to your projects with appropriate access levels.
-
-### Role-based access
+### Team roles
 
 | Role | Capabilities |
 |------|--------------|
-| **Owner** | Full access, billing, delete project |
-| **Admin** | Manage settings, keys, team members |
-| **Developer** | API access, view settings |
-| **Viewer** | Read-only dashboard access |
+| **Owner** | Full access including billing and team management |
+| **Member** | Project access, cannot manage billing or team |
 
-[Learn more about teams →](/products/platform/teams)
-
-## Security & API keys
+## Security and API keys
 
 Meilisearch uses API keys to authenticate requests and control access.
 
+<CardGroup cols={2}>
+  <Card title="API key security" icon="lock" href="/products/platform/basic_security">
+    Create and manage API keys
+  </Card>
+  <Card title="Tenant tokens" icon="id-badge" href="/products/platform/multitenancy_tenant_tokens">
+    Multi-tenant access control
+  </Card>
+</CardGroup>
+
 ### Key types
 
-| Key type | Purpose | Capabilities |
-|----------|---------|--------------|
-| **Master key** | Full admin access | Everything |
-| **Admin API key** | Server-side operations | Create indexes, manage settings |
-| **Search API key** | Client-side search | Search only, safe for browsers |
+| Key type | Purpose | Safe for client-side? |
+|----------|---------|----------------------|
+| **Admin API key** | Server-side operations (indexing, settings) | No |
+| **Search API key** | Search operations only | Yes |
+| **Chat API key** | Conversational search | Yes |
 
 ### Tenant tokens
 
-For multi-tenant applications, generate scoped tokens that restrict access to specific data:
+For multi-tenant applications, generate scoped tokens that restrict access:
 
 ```javascript
 const token = client.generateTenantToken(
@@ -68,23 +73,35 @@ const token = client.generateTenantToken(
 );
 ```
 
-[Learn more about security →](/products/platform/basic_security)
+## Batches and tasks
 
-## Tasks & async operations
+Meilisearch processes operations asynchronously. Understanding batches is key to monitoring and optimizing your search infrastructure.
 
-Most Meilisearch operations are asynchronous. When you add documents or update settings, Meilisearch returns a task ID immediately while processing happens in the background.
+<CardGroup cols={2}>
+  <Card title="Understanding batches" icon="layer-group" href="/products/platform/batches">
+    How Meilisearch groups tasks for efficient processing
+  </Card>
+  <Card title="Debug batch performance" icon="bug" href="/products/platform/batch_debugging">
+    Use progressTrace to identify bottlenecks
+  </Card>
+  <Card title="Tasks" icon="list-check" href="/products/platform/tasks">
+    Monitor individual async operations
+  </Card>
+  <Card title="Webhooks" icon="webhook" href="/products/platform/webhooks">
+    Get notified when tasks complete
+  </Card>
+</CardGroup>
 
-### Task lifecycle
+### Batches vs tasks
 
-```mermaid
-graph LR
-    A[enqueued] --> B[processing]
-    B --> C[succeeded]
-    B --> D[failed]
-    A --> E[canceled]
-```
+| Concept | Description |
+|---------|-------------|
+| **Batch** | A group of tasks processed together (primary unit of work) |
+| **Task** | A single operation (add documents, update settings, etc.) |
 
-### Monitor tasks
+The Meilisearch Cloud dashboard provides rich batch visualization including operation timelines, storage changes, and performance metrics.
+
+### Quick task check
 
 ```bash
 # Get task status
@@ -92,72 +109,19 @@ curl "${MEILISEARCH_URL}/tasks/42" \
   -H "Authorization: Bearer ${MEILISEARCH_API_KEY}"
 ```
 
-```json
-{
-  "uid": 42,
-  "status": "succeeded",
-  "type": "documentAdditionOrUpdate",
-  "duration": "PT0.125S",
-  "enqueuedAt": "2024-01-15T10:00:00Z",
-  "startedAt": "2024-01-15T10:00:00Z",
-  "finishedAt": "2024-01-15T10:00:00Z"
-}
-```
-
-### Filter and paginate tasks
-
-```bash
-# Get failed tasks for an index
-curl "${MEILISEARCH_URL}/tasks?indexUids=products&statuses=failed" \
-  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}"
-```
-
-[Learn more about tasks →](/products/platform/working_with_tasks)
-
-## Webhooks
-
-Get notified when tasks complete via HTTP webhooks:
-
-### Configure webhooks (Cloud)
-
-Use the webhooks API:
-
-```bash
-curl -X POST "${MEILISEARCH_URL}/webhooks" \
-  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
-  -H 'Content-Type: application/json' \
-  --data-binary '{
-    "url": "https://your-app.com/webhooks/meilisearch",
-    "description": "Notify on task completion"
-  }'
-```
-
-[Learn more about webhooks →](/products/platform/task_webhook)
-
 ## Quick reference
 
-### API key management
+### Common operations
 
 ```bash
-# List all keys
+# List API keys
 curl "${MEILISEARCH_URL}/keys" \
   -H "Authorization: Bearer ${MEILISEARCH_API_KEY}"
 
-# Create a new key
-curl -X POST "${MEILISEARCH_URL}/keys" \
-  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
-  -H 'Content-Type: application/json' \
-  --data-binary '{
-    "description": "Search key for mobile app",
-    "actions": ["search"],
-    "indexes": ["products"],
-    "expiresAt": "2025-01-01T00:00:00Z"
-  }'
-```
+# List recent batches
+curl "${MEILISEARCH_URL}/batches?limit=10" \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}"
 
-### Task management
-
-```bash
 # List recent tasks
 curl "${MEILISEARCH_URL}/tasks?limit=10" \
   -H "Authorization: Bearer ${MEILISEARCH_API_KEY}"
@@ -167,25 +131,37 @@ curl -X POST "${MEILISEARCH_URL}/tasks/cancel?statuses=enqueued" \
   -H "Authorization: Bearer ${MEILISEARCH_API_KEY}"
 ```
 
-## Platform sections
+## All platform sections
 
 <CardGroup cols={2}>
-  <Card title="Teams" icon="users" href="/products/platform/teams">
-    Collaborate with your team
+  <Card title="Infrastructure" icon="server" href="/products/platform/infrastructure">
+    Regions, architecture, upgrades, backups
   </Card>
-  <Card title="Security basics" icon="lock" href="/products/platform/basic_security">
-    API keys and authentication
+  <Card title="Billing" icon="tags" href="/products/platform/billing">
+    Pricing, payments, invoices
+  </Card>
+  <Card title="Teams" icon="users" href="/products/platform/teams">
+    Team collaboration
+  </Card>
+  <Card title="SSO and SCIM" icon="key" href="/products/platform/sso_and_scim">
+    Enterprise authentication
+  </Card>
+  <Card title="API keys" icon="lock" href="/products/platform/basic_security">
+    Authentication and access
   </Card>
   <Card title="Tenant tokens" icon="id-badge" href="/products/platform/multitenancy_tenant_tokens">
-    Multi-tenant access control
+    Multi-tenant security
   </Card>
-  <Card title="Working with tasks" icon="list-check" href="/products/platform/working_with_tasks">
-    Monitor async operations
+  <Card title="Batches" icon="layer-group" href="/products/platform/batches">
+    Primary unit of work
   </Card>
-  <Card title="Task webhooks" icon="webhook" href="/products/platform/task_webhook">
-    Get task notifications
+  <Card title="Debug performance" icon="bug" href="/products/platform/batch_debugging">
+    Identify bottlenecks
   </Card>
-  <Card title="Async operations" icon="clock" href="/products/platform/asynchronous_operations">
-    Understand async behavior
+  <Card title="Tasks" icon="list-check" href="/products/platform/tasks">
+    Async operations
+  </Card>
+  <Card title="Webhooks" icon="webhook" href="/products/platform/webhooks">
+    Task notifications
   </Card>
 </CardGroup>

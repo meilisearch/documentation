@@ -354,7 +354,15 @@
             "group": "Platform",
             "pages": [
               "products/platform/overview",
-              "products/platform/teams",
+              "products/platform/infrastructure",
+              "products/platform/billing",
+              {
+                "group": "Teams & organizations",
+                "pages": [
+                  "products/platform/teams",
+                  "products/platform/sso_and_scim"
+                ]
+              },
               {
                 "group": "Security & API keys",
                 "pages": [
@@ -366,12 +374,11 @@
                 ]
               },
               {
-                "group": "Tasks & async",
+                "group": "Batches & tasks",
                 "pages": [
-                  "products/platform/working_with_tasks",
-                  "products/platform/filtering_tasks",
-                  "products/platform/paginating_tasks",
-                  "products/platform/asynchronous_operations",
+                  "products/platform/batches",
+                  "products/platform/batch_debugging",
+                  "products/platform/tasks",
                   "products/platform/webhooks"
                 ]
               }
@@ -1045,7 +1052,7 @@
     },
     {
       "source": "/learn/advanced/asynchronous_operations",
-      "destination": "/products/platform/asynchronous_operations"
+      "destination": "/products/platform/tasks"
     },
     {
       "source": "/learn/advanced/faceted_search",
@@ -1101,7 +1108,7 @@
     },
     {
       "source": "/learn/async/managing_tasks",
-      "destination": "/products/platform/asynchronous_operations"
+      "destination": "/products/platform/tasks"
     },
     {
       "source": "/learn/getting_started/filtering_and_sorting",
@@ -1993,15 +2000,15 @@
     },
     {
       "source": "/learn/async/working_with_tasks",
-      "destination": "/products/platform/asynchronous_operations"
+      "destination": "/products/platform/tasks"
     },
     {
       "source": "/learn/async/filtering_tasks",
-      "destination": "/products/platform/filtering_tasks"
+      "destination": "/products/platform/tasks#filtering-tasks"
     },
     {
       "source": "/learn/async/paginating_tasks",
-      "destination": "/products/platform/paginating_tasks"
+      "destination": "/products/platform/tasks#paginating-tasks"
     },
     {
       "source": "/learn/async/task_webhook",
@@ -2009,7 +2016,7 @@
     },
     {
       "source": "/learn/async/asynchronous_operations",
-      "destination": "/products/platform/asynchronous_operations"
+      "destination": "/products/platform/tasks"
     },
     {
       "source": "/learn/indexing/overview",
@@ -2305,11 +2312,11 @@
     },
     {
       "source": "/learn/advanced/asynchronous_operations#filtering-tasks",
-      "destination": "/products/platform/filtering_tasks"
+      "destination": "/products/platform/tasks#filtering-tasks"
     },
     {
       "source": "/learn/advanced/asynchronous_operations#paginating-tasks",
-      "destination": "/products/platform/paginating_tasks"
+      "destination": "/products/platform/tasks#paginating-tasks"
     },
     {
       "source": "/learn/getting_started/search_preview",
@@ -2454,6 +2461,34 @@
     {
       "source": "/reference/api/webhooks",
       "destination": "/reference/api/webhooks/overview"
+    },
+    {
+      "source": "/products/platform/working_with_tasks",
+      "destination": "/products/platform/tasks"
+    },
+    {
+      "source": "/products/platform/filtering_tasks",
+      "destination": "/products/platform/tasks#filtering-tasks"
+    },
+    {
+      "source": "/products/platform/paginating_tasks",
+      "destination": "/products/platform/tasks#paginating-tasks"
+    },
+    {
+      "source": "/products/platform/asynchronous_operations",
+      "destination": "/products/platform/tasks"
+    },
+    {
+      "source": "/products/platform/cloud_infrastructure",
+      "destination": "/products/platform/infrastructure"
+    },
+    {
+      "source": "/products/platform/upgrades_and_backups",
+      "destination": "/products/platform/infrastructure#zero-downtime-upgrades"
+    },
+    {
+      "source": "/products/platform/pricing_and_plans",
+      "destination": "/products/platform/billing#pricing-models"
     }
   ]
 }

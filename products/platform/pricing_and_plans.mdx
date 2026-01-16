@@ -1,0 +1,171 @@
+---
+title: Pricing and plans
+sidebarTitle: Pricing and plans
+description: Compare Meilisearch Cloud pricing models and choose the right plan for your needs.
+---
+
+Meilisearch Cloud offers two pricing models: **usage-based** for flexibility and **resource-based** for predictable costs. Both provide fully managed infrastructure with enterprise-grade reliability.
+
+## Pricing models compared
+
+| | Usage-based | Resource-based |
+|---|-------------|----------------|
+| **Billing** | Pay for searches and documents | Pay for CPU, RAM, and storage |
+| **Scaling** | Automatic | Manual (choose your resources) |
+| **Best for** | Variable traffic, MVPs, prototypes | High traffic, predictable workloads |
+| **Cost predictability** | Variable (based on usage) | Fixed (based on resources) |
+| **Starting price** | $30/month | Custom |
+
+## Usage-based plans
+
+Usage-based pricing charges based on what you actually use:
+
+- **Searches**: Number of search queries
+- **Documents**: Number of stored documents
+
+### How it works
+
+1. Choose a plan tier with included searches and documents
+2. If you exceed the included limits, pay overage rates
+3. Infrastructure scales automatically
+
+### Benefits
+
+- **Start small**: Begin with minimal commitment
+- **Scale automatically**: Resources grow with your traffic
+- **Pay for what you use**: No paying for idle capacity
+
+### Best for
+
+- Prototypes and MVPs
+- Applications with variable or unpredictable traffic
+- Teams testing Meilisearch before committing
+
+<Frame>
+  <img src="/assets/images/platform/usage-based-pricing.png" alt="Usage-based pricing tiers showing included searches and documents" />
+</Frame>
+
+## Resource-based plans
+
+Resource-based pricing lets you choose specific CPU, RAM, and storage:
+
+### How it works
+
+1. Select your CPU and RAM allocation
+2. Disk scales automatically based on data volume
+3. Pay a fixed monthly price for your resources
+
+### Benefits
+
+- **Predictable costs**: Know your bill in advance
+- **Dedicated resources**: Guaranteed performance
+- **No surprise charges**: No overage billing
+
+### Best for
+
+- Production applications with consistent traffic
+- High-traffic applications
+- Vector search and AI workloads
+- Applications requiring cost predictability
+
+<Frame>
+  <img src="/assets/images/platform/resource-based-pricing.png" alt="Resource-based pricing showing CPU and RAM selection options" />
+</Frame>
+
+### Resource sizing guidance
+
+| Workload | Recommended starting point |
+|----------|---------------------------|
+| Small (< 100K docs, light traffic) | 1 vCPU, 2 GB RAM |
+| Medium (< 1M docs, moderate traffic) | 2 vCPU, 4 GB RAM |
+| Large (< 10M docs, high traffic) | 4 vCPU, 8 GB RAM |
+| Vector search / AI workloads | 4+ vCPU, 16+ GB RAM |
+
+<Tip>
+For development and staging environments, you can use smaller instances to reduce costs. Reserve larger instances for production where performance matters.
+</Tip>
+
+## Plan features comparison
+
+All plans include:
+
+| Feature | Included |
+|---------|----------|
+| Fully managed infrastructure | ✅ |
+| Automatic failover | ✅ |
+| Zero-downtime upgrades | ✅ |
+| SSL/TLS encryption | ✅ |
+| API key management | ✅ |
+| Cloud dashboard | ✅ |
+| Automatic backups | ✅ |
+
+### Enterprise features
+
+Additional features available for enterprise customers:
+
+| Feature | Description |
+|---------|-------------|
+| SSO/SAML | Single sign-on integration |
+| SCIM | Automated user provisioning |
+| Custom backup retention | Configurable backup schedule |
+| Priority support | Faster response times |
+| Dedicated account manager | Direct support contact |
+| Custom SLAs | Guaranteed uptime commitments |
+
+## Support tiers
+
+| Tier | Hours | Channels | Response time |
+|------|-------|----------|---------------|
+| Standard | 8 AM–11 PM CET, Mon-Fri | Email, chat | Best effort |
+| Priority | 8 AM–10 PM CET, Mon-Fri | Email, chat, phone | < 4 hours |
+| Enterprise | 24/7 for critical issues | All channels | < 1 hour critical |
+
+## Special programs
+
+### Startups
+
+Early-stage startups may qualify for discounted pricing. [Contact sales](https://www.meilisearch.com/contact) to learn more.
+
+### Open source projects
+
+Open source projects may qualify for free or discounted access. [Contact sales](https://www.meilisearch.com/contact) with details about your project.
+
+### Education and non-profits
+
+Educational institutions and non-profit organizations may qualify for special pricing. [Contact sales](https://www.meilisearch.com/contact) to discuss your needs.
+
+## Switching plans
+
+### Upgrading
+
+You can upgrade your plan at any time:
+- Usage-based → higher tier: Immediate
+- Resource-based → larger resources: Minimal downtime
+
+### Downgrading
+
+Contact support to downgrade:
+- Downgrades take effect at next billing cycle
+- Data is preserved during the transition
+
+## Free trial
+
+All new Meilisearch Cloud accounts include a **14-day free trial** with:
+- Full access to features
+- No credit card required to start
+- Upgrade anytime during or after trial
+
+## Current pricing
+
+For current pricing details, visit [meilisearch.com/pricing](https://www.meilisearch.com/pricing).
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Create a project" icon="plus" href="https://cloud.meilisearch.com">
+    Start your free trial
+  </Card>
+  <Card title="Billing and invoicing" icon="file-invoice" href="/products/platform/billing">
+    Learn about billing cycles and payment
+  </Card>
+</CardGroup>

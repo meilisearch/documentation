@@ -35,7 +35,7 @@ Conversational search is still in early development. Conversational agents may o
 
 ### Find your chat API key
 
-When Meilisearch runs with a master key on an instance created after v1.15.1, it automatically generates a "Default Chat API Key" with `chatCompletions` and `search` permissions on all indexes. Check if you have the key using:
+Meilisearch Cloud projects automatically include a "Default Chat API Key" with `chatCompletions` and `search` permissions on all indexes. Check if you have the key using:
 
 ```bash
 curl "${MEILISEARCH_URL}/keys" \
@@ -268,15 +268,13 @@ Take particular note of the last lines, which output the streamed responses to t
 
 **Causes:**
 
-- Meilisearch not started with a master key
 - Experimental features not enabled
 - Missing authentication in requests
 
 **Solution:**
 
-1. Restart Meilisearch with a master key: `meilisearch --master-key yourKey`
-2. Enable experimental features (see setup instructions above)
-3. Include Authorization header in all requests
+1. Enable experimental features (see setup instructions above)
+2. Include Authorization header in all requests
 
 #### "Invalid API key" error
 
@@ -284,7 +282,7 @@ Take particular note of the last lines, which output the streamed responses to t
 
 **Solution:**
 
-- Use either the master key or the "Default Chat API Key"
+- Use the "Default Chat API Key" or create a key with `chatCompletions` permission
 - Don't use search or admin API keys for chat endpoints
 - Find your chat key: `curl "${MEILISEARCH_URL}/keys" -H "Authorization: Bearer ${MEILISEARCH_API_KEY}"`
 

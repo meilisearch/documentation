@@ -1,23 +1,29 @@
 ---
-title: Securing your project
-sidebarTitle: Securing your project
-description: This tutorial will show you how to secure your Meilisearch project.
+title: API keys and authentication
+sidebarTitle: API keys
+description: Learn how to authenticate requests to Meilisearch using API keys.
 ---
 
 import CodeSamplesBasicSecurityTutorialAdmin1 from '/snippets/samples/code_samples_basic_security_tutorial_admin_1.mdx';
 import CodeSamplesBasicSecurityTutorialListing1 from '/snippets/samples/code_samples_basic_security_tutorial_listing_1.mdx';
 import CodeSamplesBasicSecurityTutorialSearch1 from '/snippets/samples/code_samples_basic_security_tutorial_search_1.mdx';
 
-This tutorial will show you how to secure your Meilisearch project. You will see how to manage your master key and how to safely send requests to the Meilisearch API using an API key.
+Meilisearch uses API keys to authenticate requests. Every Meilisearch Cloud project comes with three default API keys that you can use immediately.
 
-## Master key
+## Default API keys
 
-The master key is the first and most important step to secure your Meilisearch project. Meilisearch Cloud automatically generates a master key for each project, so your projects are secure by default.
+Meilisearch Cloud automatically creates three API keys for each project:
 
-View your master key by visiting your project settings, then clicking "API Keys" on the sidebar:
+| Key | Purpose | Safe for frontend? |
+|-----|---------|-------------------|
+| **Default Search API Key** | Search operations only | Yes |
+| **Default Admin API Key** | All operations (indexing, settings, etc.) | No |
+| **Default Chat API Key** | Chat completions and search | Yes |
+
+Find your API keys in the Cloud dashboard under **Project Settings** > **API Keys**.
 
 <Frame>
-  <img src="/assets/images/security/01-master-api-keys.png" alt="An interface element named 'API keys' showing obscured security keys including: 'Master key', 'Default Search API Key', and 'Default Admin API Key'" />
+  <img src="/assets/images/security/api-keys-dashboard.png" alt="API keys section in Meilisearch Cloud showing Default Search API Key and Default Admin API Key" />
 </Frame>
 
 ## API keys
@@ -105,20 +111,32 @@ Meilisearch's response will include at least the default API keys:
       "createdAt": "2024-01-25T16:19:53.94606Z",
       "updatedAt": "2024-01-25T16:19:53.94606Z"
     }
-  ],
-  …
+  ]
 }
 ```
 
-## Sending secure API requests to Meilisearch
+## Authenticating requests
 
-Now you have your API keys, you can safely query the Meilisearch API. Add API keys to requests using an `Authorization` bearer token header.
+Add your API key to requests using the `Authorization` header with a Bearer token:
 
-Use the `Default Admin API Key` to perform sensitive operations, such as creating a new index:
+```bash
+curl "${MEILISEARCH_URL}/indexes" \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}"
+```
+
+### Server-side operations
+
+Use the **Admin API Key** for operations like creating indexes, adding documents, or updating settings:
 
 <CodeSamplesBasicSecurityTutorialAdmin1 />
 
-Then use the `Default Search API Key` to perform search operations in the index you just created:
+<Warning>
+Never expose the Admin API Key in frontend code. It grants full access to your Meilisearch project.
+</Warning>
+
+### Client-side search
+
+Use the **Search API Key** for search operations in your frontend:
 
 <CodeSamplesBasicSecurityTutorialSearch1 />
 
@@ -139,4 +157,73 @@ The `Default Chat API Key` is designed for frontend usage with [conversational s
 
 ## Conclusion
 
-You have successfully secured Meilisearch by configuring a master key. You then saw how to access the Meilisearch API by adding an API key to your request's authorization header.
+## Creating custom API keys
+
+Create custom keys with specific permissions for different use cases:
+
+```bash
+curl -X POST "${MEILISEARCH_URL}/keys" \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "name": "Mobile app search key",
+    "description": "Search key for mobile application",
+    "actions": ["search"],
+    "indexes": ["products", "articles"],
+    "expiresAt": "2025-12-31T23:59:59Z"
+  }'
+```
+
+### Key parameters
+
+| Parameter | Description |
+|-----------|-------------|
+| `name` | Human-readable name for the key |
+| `description` | Optional description of the key's purpose |
+| `actions` | Array of permitted actions (`search`, `documents.add`, `*`, etc.) |
+| `indexes` | Array of indexes the key can access (`*` for all) |
+| `expiresAt` | Expiration date (ISO 8601 format) or `null` for no expiration |
+
+For a complete list of available actions, see [API key permissions](/products/platform/api_key_permissions).
+
+## Revoking API keys
+
+Delete a key when it's no longer needed or if it may have been compromised:
+
+```bash
+curl -X DELETE "${MEILISEARCH_URL}/keys/KEY_UID" \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}"
+```
+
+<Tip>
+Regularly audit your API keys and remove any that are no longer in use.
+</Tip>
+
+## Best practices
+
+### Use the right key for each context
+
+| Context | Recommended key |
+|---------|----------------|
+| Frontend search | Search API Key |
+| Backend indexing | Admin API Key |
+| Mobile apps | Custom key with limited scope |
+| Third-party integrations | Custom key with specific permissions |
+
+### Security recommendations
+
+- **Never commit API keys to source control** - use environment variables
+- **Create scoped keys** for third-party integrations instead of sharing the Admin key
+- **Set expiration dates** on keys when possible
+- **Use tenant tokens** for multi-tenant applications
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="API key permissions" icon="lock" href="/products/platform/api_key_permissions">
+    Learn about available actions and permissions
+  </Card>
+  <Card title="Tenant tokens" icon="id-badge" href="/products/platform/multitenancy_tenant_tokens">
+    Secure multi-tenant applications
+  </Card>
+</CardGroup>
