@@ -81,7 +81,7 @@ curl \
 ```
 
 - `description` gives the initial context of the conversation to the LLM. A good description improves relevance of the chat's answers
-- `documentTemplate` defines the document data Meilisearch sends to the AI provider. This template outputs all searchable fields in your documents, which may not be ideal if your documents have many fields. Consult the best [document template best practices](/products/ai_powered_search/document_template_best_practices) article for more guidance
+- `documentTemplate` defines the document data Meilisearch sends to the AI provider. This template outputs all searchable fields in your documents, which may not be ideal if your documents have many fields. Consult the best [document template best practices](/products/hybrid_search/document_template_best_practices) article for more guidance
 - `documentTemplateMaxBytes` establishes a size limit for the document templates. Documents bigger than 400 bytes are truncated to ensure a good balance between speed and relevancy
 
 ## Configure a chat completions workspace

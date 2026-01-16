@@ -1,25 +1,25 @@
 ---
-title: AI-powered search overview
+title: Hybrid search overview
 sidebarTitle: Overview
 description: Combine semantic understanding with keyword search for more relevant results using AI embeddings.
 ---
 
-AI-powered search uses machine learning embeddings to understand the *meaning* behind queries, not just matching keywords. Combined with Meilisearch's full-text search, it delivers highly relevant results even when users don't know the exact terms.
+Hybrid search combines Meilisearch's full-text search with AI-powered semantic search. It understands the *meaning* behind queries, not just matching keywords, delivering highly relevant results even when users don't know the exact terms.
 
 ## Key features
 
 <CardGroup cols={2}>
-  <Card title="Semantic search" icon="brain" href="/products/ai_powered_search/getting_started">
+  <Card title="Semantic search" icon="brain" href="/products/hybrid_search/getting_started">
     Find results based on meaning, not just keywords. "affordable housing" matches "budget apartments".
   </Card>
-  <Card title="Hybrid search" icon="circle-half-stroke" href="/products/ai_powered_search/difference_full_text_ai_search">
+  <Card title="Hybrid ranking" icon="circle-half-stroke" href="/products/hybrid_search/difference_full_text_ai_search">
     Combine keyword precision with semantic understanding for the best of both worlds.
   </Card>
-  <Card title="Multiple embedders" icon="plug" href="/products/ai_powered_search/choose_an_embedder">
+  <Card title="Multiple embedders" icon="plug" href="/products/hybrid_search/choose_an_embedder">
     Use OpenAI, Hugging Face, Cohere, Mistral, or any REST-based embedding provider.
   </Card>
-  <Card title="Image search" icon="image" href="/products/ai_powered_search/image_search_with_multimodal_embeddings">
-    Search images using text descriptions with multimodal embeddings.
+  <Card title="Related results" icon="link" href="/products/hybrid_search/retrieve_related_search_results">
+    Find semantically similar documents for recommendations.
   </Card>
 </CardGroup>
 
@@ -38,6 +38,9 @@ graph LR
     G --> J[Hybrid Ranking]
     I --> J
     J --> K[Final Results]
+
+    style A fill:#FF5CB2,stroke:#333,color:#000
+    style K fill:#4ade80,stroke:#333,color:#000
 ```
 
 1. **Indexing**: Documents are converted to vector embeddings capturing semantic meaning
@@ -144,31 +147,31 @@ Control the balance between semantic and keyword search:
   </Card>
 </CardGroup>
 
-## Comparison: Full-text vs AI-powered
+## Comparison: Full-text vs Hybrid
 
-| Aspect | Full-text search | AI-powered search |
-|--------|------------------|-------------------|
-| Matching | Exact/fuzzy keywords | Semantic meaning |
-| Typos | Handled automatically | N/A (meaning-based) |
+| Aspect | Full-text search | Hybrid search |
+|--------|------------------|---------------|
+| Matching | Exact/fuzzy keywords | Semantic meaning + keywords |
+| Typos | Handled automatically | Handled automatically |
 | Synonyms | Must be configured | Understood automatically |
 | Speed | Fastest | Fast (slight overhead) |
 | Best for | Known-item search | Exploratory search |
 
-[Learn more about the differences →](/products/ai_powered_search/difference_full_text_ai_search)
+[Learn more about the differences →](/products/hybrid_search/difference_full_text_ai_search)
 
 ## Next steps
 
 <CardGroup cols={2}>
-  <Card title="Get started" icon="rocket" href="/products/ai_powered_search/getting_started">
-    Set up AI-powered search step by step
+  <Card title="Get started" icon="rocket" href="/products/hybrid_search/getting_started">
+    Set up hybrid search step by step
   </Card>
-  <Card title="Choose an embedder" icon="plug" href="/products/ai_powered_search/choose_an_embedder">
+  <Card title="Choose an embedder" icon="plug" href="/products/hybrid_search/choose_an_embedder">
     Compare embedding providers
   </Card>
   <Card title="Conversational search" icon="comments" href="/products/conversational_search/getting_started">
     Build chat interfaces with RAG
   </Card>
-  <Card title="Image search" icon="image" href="/products/ai_powered_search/image_search_with_multimodal_embeddings">
-    Search images with text
+  <Card title="Multimodal search" icon="image" href="/products/multimodal_search/overview">
+    Search images with text or other images
   </Card>
 </CardGroup>

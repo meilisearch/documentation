@@ -279,18 +279,24 @@
             ]
           },
           {
-            "group": "AI-powered search",
+            "group": "Hybrid search",
             "pages": [
-              "products/ai_powered_search/overview",
-              "products/ai_powered_search/getting_started",
-              "products/ai_powered_search/difference_full_text_ai_search",
-              "products/ai_powered_search/choose_an_embedder",
-              "products/ai_powered_search/configure_rest_embedder",
-              "products/ai_powered_search/document_template_best_practices",
-              "products/ai_powered_search/search_with_user_provided_embeddings",
-              "products/ai_powered_search/retrieve_related_search_results",
-              "products/ai_powered_search/image_search_with_multimodal_embeddings",
-              "products/ai_powered_search/image_search_with_user_provided_embeddings"
+              "products/hybrid_search/overview",
+              "products/hybrid_search/getting_started",
+              "products/hybrid_search/difference_full_text_ai_search",
+              "products/hybrid_search/choose_an_embedder",
+              "products/hybrid_search/configure_rest_embedder",
+              "products/hybrid_search/document_template_best_practices",
+              "products/hybrid_search/search_with_user_provided_embeddings",
+              "products/hybrid_search/retrieve_related_search_results"
+            ]
+          },
+          {
+            "group": "Multimodal search",
+            "pages": [
+              "products/multimodal_search/overview",
+              "products/multimodal_search/image_search_with_multimodal_embeddings",
+              "products/multimodal_search/image_search_with_user_provided_embeddings"
             ]
           },
           {
@@ -1403,7 +1409,7 @@
     },
     {
       "source": "/learn/experimental/vector_search",
-      "destination": "/products/ai_powered_search/getting_started"
+      "destination": "/products/hybrid_search/getting_started"
     },
     {
       "source": "/learn/experimental/search_queue_size",
@@ -1415,19 +1421,19 @@
     },
     {
       "source": "/learn/ai-powered-search/search_with_user_provided_embeddings",
-      "destination": "/products/ai_powered_search/search_with_user_provided_embeddings"
+      "destination": "/products/hybrid_search/search_with_user_provided_embeddings"
     },
     {
       "source": "/learn/ai-powered-search/getting_started_with_ai_search",
-      "destination": "/products/ai_powered_search/getting_started"
+      "destination": "/products/hybrid_search/getting_started"
     },
     {
       "source": "/learn/ai-powered-search/deactivate_ai_powered_search",
-      "destination": "/products/ai_powered_search/getting_started"
+      "destination": "/products/hybrid_search/getting_started"
     },
     {
       "source": "/learn/ai-powered-search/difference_full_text_ai_search",
-      "destination": "/products/ai_powered_search/difference_full_text_ai_search"
+      "destination": "/products/hybrid_search/difference_full_text_ai_search"
     },
     {
       "source": "/reference/features/installation#download-and-launch",
@@ -1803,43 +1809,83 @@
     },
     {
       "source": "/learn/ai_powered_search/overview",
-      "destination": "/products/ai_powered_search/overview"
+      "destination": "/products/hybrid_search/overview"
     },
     {
       "source": "/learn/ai_powered_search/getting_started_with_ai_search",
-      "destination": "/products/ai_powered_search/getting_started"
+      "destination": "/products/hybrid_search/getting_started"
     },
     {
       "source": "/learn/ai_powered_search/difference_full_text_ai_search",
-      "destination": "/products/ai_powered_search/difference_full_text_ai_search"
+      "destination": "/products/hybrid_search/difference_full_text_ai_search"
     },
     {
       "source": "/learn/ai_powered_search/choose_an_embedder",
-      "destination": "/products/ai_powered_search/choose_an_embedder"
+      "destination": "/products/hybrid_search/choose_an_embedder"
     },
     {
       "source": "/learn/ai_powered_search/configure_rest_embedder",
-      "destination": "/products/ai_powered_search/configure_rest_embedder"
+      "destination": "/products/hybrid_search/configure_rest_embedder"
     },
     {
       "source": "/learn/ai_powered_search/document_template_best_practices",
-      "destination": "/products/ai_powered_search/document_template_best_practices"
+      "destination": "/products/hybrid_search/document_template_best_practices"
     },
     {
       "source": "/learn/ai_powered_search/search_with_user_provided_embeddings",
-      "destination": "/products/ai_powered_search/search_with_user_provided_embeddings"
+      "destination": "/products/hybrid_search/search_with_user_provided_embeddings"
     },
     {
       "source": "/learn/ai_powered_search/retrieve_related_search_results",
-      "destination": "/products/ai_powered_search/retrieve_related_search_results"
+      "destination": "/products/hybrid_search/retrieve_related_search_results"
     },
     {
       "source": "/learn/ai_powered_search/image_search_with_multimodal_embeddings",
-      "destination": "/products/ai_powered_search/image_search_with_multimodal_embeddings"
+      "destination": "/products/multimodal_search/image_search_with_multimodal_embeddings"
     },
     {
       "source": "/learn/ai_powered_search/image_search_with_user_provided_embeddings",
-      "destination": "/products/ai_powered_search/image_search_with_user_provided_embeddings"
+      "destination": "/products/multimodal_search/image_search_with_user_provided_embeddings"
+    },
+    {
+      "source": "/products/ai_powered_search/overview",
+      "destination": "/products/hybrid_search/overview"
+    },
+    {
+      "source": "/products/ai_powered_search/getting_started",
+      "destination": "/products/hybrid_search/getting_started"
+    },
+    {
+      "source": "/products/ai_powered_search/difference_full_text_ai_search",
+      "destination": "/products/hybrid_search/difference_full_text_ai_search"
+    },
+    {
+      "source": "/products/ai_powered_search/choose_an_embedder",
+      "destination": "/products/hybrid_search/choose_an_embedder"
+    },
+    {
+      "source": "/products/ai_powered_search/configure_rest_embedder",
+      "destination": "/products/hybrid_search/configure_rest_embedder"
+    },
+    {
+      "source": "/products/ai_powered_search/document_template_best_practices",
+      "destination": "/products/hybrid_search/document_template_best_practices"
+    },
+    {
+      "source": "/products/ai_powered_search/search_with_user_provided_embeddings",
+      "destination": "/products/hybrid_search/search_with_user_provided_embeddings"
+    },
+    {
+      "source": "/products/ai_powered_search/retrieve_related_search_results",
+      "destination": "/products/hybrid_search/retrieve_related_search_results"
+    },
+    {
+      "source": "/products/ai_powered_search/image_search_with_multimodal_embeddings",
+      "destination": "/products/multimodal_search/image_search_with_multimodal_embeddings"
+    },
+    {
+      "source": "/products/ai_powered_search/image_search_with_user_provided_embeddings",
+      "destination": "/products/multimodal_search/image_search_with_user_provided_embeddings"
     },
     {
       "source": "/learn/conversational_search/overview",
