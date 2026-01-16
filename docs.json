@@ -283,7 +283,6 @@
             "pages": [
               "products/hybrid_search/overview",
               "products/hybrid_search/getting_started",
-              "products/hybrid_search/difference_full_text_ai_search",
               "products/hybrid_search/choose_an_embedder",
               "products/hybrid_search/configure_rest_embedder",
               "products/hybrid_search/document_template_best_practices",
@@ -1433,7 +1432,7 @@
     },
     {
       "source": "/learn/ai-powered-search/difference_full_text_ai_search",
-      "destination": "/products/hybrid_search/difference_full_text_ai_search"
+      "destination": "/products/hybrid_search/overview"
     },
     {
       "source": "/reference/features/installation#download-and-launch",
@@ -1817,7 +1816,7 @@
     },
     {
       "source": "/learn/ai_powered_search/difference_full_text_ai_search",
-      "destination": "/products/hybrid_search/difference_full_text_ai_search"
+      "destination": "/products/hybrid_search/overview"
     },
     {
       "source": "/learn/ai_powered_search/choose_an_embedder",
@@ -1857,7 +1856,7 @@
     },
     {
       "source": "/products/ai_powered_search/difference_full_text_ai_search",
-      "destination": "/products/hybrid_search/difference_full_text_ai_search"
+      "destination": "/products/hybrid_search/overview"
     },
     {
       "source": "/products/ai_powered_search/choose_an_embedder",

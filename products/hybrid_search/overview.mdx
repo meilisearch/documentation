@@ -12,14 +12,14 @@ Hybrid search combines Meilisearch's full-text search with AI-powered semantic s
   <Card title="Semantic search" icon="brain" href="/products/hybrid_search/getting_started">
     Find results based on meaning, not just keywords. "affordable housing" matches "budget apartments".
   </Card>
-  <Card title="Hybrid ranking" icon="circle-half-stroke" href="/products/hybrid_search/difference_full_text_ai_search">
-    Combine keyword precision with semantic understanding for the best of both worlds.
-  </Card>
   <Card title="Multiple embedders" icon="plug" href="/products/hybrid_search/choose_an_embedder">
     Use OpenAI, Hugging Face, Cohere, Mistral, or any REST-based embedding provider.
   </Card>
   <Card title="Related results" icon="link" href="/products/hybrid_search/retrieve_related_search_results">
     Find semantically similar documents for recommendations.
+  </Card>
+  <Card title="User-provided vectors" icon="code" href="/products/hybrid_search/search_with_user_provided_embeddings">
+    Bring your own embeddings for full control.
   </Card>
 </CardGroup>
 
@@ -147,7 +147,27 @@ Control the balance between semantic and keyword search:
   </Card>
 </CardGroup>
 
-## Comparison: Full-text vs Hybrid
+## Full-text vs Hybrid search
+
+Meilisearch offers two search modes that can be used together or separately.
+
+### Full-text search
+
+Meilisearch's default search mode. It checks indexed documents for matches to search terms—fast and reliable.
+
+**Example**: Searching for `"pink sandals"` returns items explicitly mentioning these terms. A query like `"pink summer shoes for girls"` may return fewer results if those exact words aren't in your documents.
+
+**Best for**: Precise keyword matching, known-item search, when users know the exact terms.
+
+### Hybrid search
+
+Combines full-text with semantic search using AI embeddings. Returns results based on meaning and context, not just keywords.
+
+**Example**: Searching for `"cute pink summer shoes for girls"` returns relevant results including light-colored open shoes, even if documents don't contain those exact words.
+
+**Best for**: Exploratory search, natural language queries, when users describe what they want rather than using exact terms.
+
+### Comparison
 
 | Aspect | Full-text search | Hybrid search |
 |--------|------------------|---------------|
@@ -155,9 +175,8 @@ Control the balance between semantic and keyword search:
 | Typos | Handled automatically | Handled automatically |
 | Synonyms | Must be configured | Understood automatically |
 | Speed | Fastest | Fast (slight overhead) |
-| Best for | Known-item search | Exploratory search |
-
-[Learn more about the differences →](/products/hybrid_search/difference_full_text_ai_search)
+| Configuration | None required | Requires embedder setup |
+| Cost | Included | May require third-party API |
 
 ## Next steps
 
