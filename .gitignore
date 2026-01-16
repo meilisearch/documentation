@@ -142,3 +142,5 @@ blog_posts/
 
 # Changelog generator cache
 changelog/.cache.json
+
+.beads
