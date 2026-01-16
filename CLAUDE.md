@@ -1,15 +1,38 @@
 # Meilisearch Documentation
 
-> **Note**: This project uses [bd (beads)](https://github.com/steveyegge/beads) for issue tracking.
-> Use `bd` commands instead of markdown TODOs. See AGENTS.md for workflow details.
+## Project Vision
 
-## Working relationship
-- Push back on ideas when appropriate - cite sources and explain reasoning
+This documentation aims to be **maintainable by AI with human oversight**. Claude Code should be able to work almost autonomously on documentation writing, analysis, and improvements—while humans always make the final decisions.
+
+### Core Principles
+
+1. **Product-first organization**: Documentation is structured around products (full-text search, AI-powered search, conversational search, faceted search, geo search, multi-search, personalization, analytics, platform, indexing). Each product tells a complete story.
+
+2. **Cloud-first approach**: Meilisearch Cloud is the primary experience. All examples use environment variables (`${MEILISEARCH_URL}`, `${MEILISEARCH_API_KEY}`) instead of localhost.
+
+3. **Two audiences, one flow**:
+   - Beginners need smooth onboarding and quick wins
+   - Advanced developers need deep customization options
+   - Don't separate them—use progressive disclosure within pages
+
+4. **Consistency through tooling**: Use STYLE_GUIDE.md templates and patterns to ensure consistent writing across all pages.
+
+5. **Human review required**: Claude proposes, humans decide. Never push changes without review.
+
+### Reference Documents
+
+- **STYLE_GUIDE.md**: Templates, patterns, and quality checklists for each page type
+- **DOCUMENTATION_ANALYSIS.md**: Quality assessment, gaps, and improvement priorities
+
+## Working Relationship
+
+- Push back on ideas when appropriate—cite sources and explain reasoning
 - ALWAYS ask for clarification rather than making assumptions
 - NEVER lie, guess, or make up anything
-- Use `bd` for task tracking (see AGENTS.md for details)
+- When analyzing docs, go deep—read many pages, identify patterns
+- Propose concrete improvements with specific file paths and changes
 
-## Project structure
+## Project Structure
 
 ```
 documentation/
@@ -21,23 +44,23 @@ documentation/
 │   ├── frameworks/           # Laravel, Strapi, Rails
 │   ├── integrations/         # Vercel, Postman
 │   └── glossary/             # Documents, Indexes, Primary key
-├── products/                 # Products tab - organized by capability
-│   ├── full_text_search/
-│   ├── ai_powered_search/
-│   ├── conversational_search/
-│   ├── faceted_search/
-│   ├── geo_search/
-│   ├── multi_search/
-│   ├── personalization/
-│   ├── analytics/
-│   ├── platform/
-│   └── indexing/
+├── products/                 # Products tab - THE HEART OF THE DOCS
+│   ├── full_text_search/     # Core search with typos, ranking
+│   ├── ai_powered_search/    # Semantic/vector search with embeddings
+│   ├── conversational_search/# Chat-based RAG search
+│   ├── faceted_search/       # Filters, facets, refinement
+│   ├── geo_search/           # Location-based search
+│   ├── multi_search/         # Federated search, sharding
+│   ├── personalization/      # User-specific ranking
+│   ├── analytics/            # Search analytics, metrics
+│   ├── platform/             # API keys, tasks, multitenancy
+│   └── indexing/             # Document management, settings
 ├── reference/                # References tab
 │   ├── api/                  # API reference pages
 │   └── errors/
-├── guides/                   # Guides tab
+├── guides/                   # Guides tab - How-to content
 │   ├── ai_embedders/
-│   │   └── providers/        # OpenAI, Cohere, etc.
+│   │   └── providers/        # OpenAI, Cohere, etc. (standalone guides)
 │   ├── performance/
 │   ├── security/
 │   └── comparisons/
@@ -52,13 +75,31 @@ documentation/
 │   ├── help/
 │   └── archives/             # Deprecated pages (not in nav)
 ├── changelog/
-├── snippets/                 # Reusable code samples
+├── snippets/                 # SDK-generated code samples (don't edit manually)
 │   └── samples/
 ├── docs.json                 # Navigation config (PRIMARY)
-└── docs.json.backup          # Original backup
+├── STYLE_GUIDE.md            # Writing templates and standards
+├── DOCUMENTATION_ANALYSIS.md # Quality assessment and priorities
+└── CLAUDE.md                 # This file
 ```
 
-## Configuration files
+## Product Page Structure
+
+Each product folder should follow this pattern:
+
+1. **Overview** (`overview.mdx` or `product_name.mdx`): What is it, why use it, business value
+2. **Getting Started**: Quickest path to a working example
+3. **Deep Dive pages**: Detailed explanations of specific features
+4. **Reference links**: Connect to API reference pages
+
+### Gold Standard Products
+
+Reference these for quality and structure:
+- `products/full_text_search/` - Excellent ranking rules explanation
+- `products/conversational_search/` - Good getting started flow
+- `products/faceted_search/` - Comprehensive filter coverage
+
+## Configuration Files
 
 ### docs.json
 - **Primary navigation config** - all tabs, groups, pages
@@ -75,7 +116,7 @@ description: Concise summary for SEO
 ---
 ```
 
-## Navigation rules (CRITICAL)
+## Navigation Rules (CRITICAL)
 
 ### Mintlify tabs limitations
 1. **Tabs CANNOT mix ungrouped `pages` with `groups`** - all content must be in named groups
@@ -96,14 +137,54 @@ description: Concise summary for SEO
 }
 ```
 
-### Wrong structure (won't work)
-```json
-{
-  "tab": "Tab Name",
-  "pages": ["ungrouped-page"],  // This gets ignored!
-  "groups": [...]
-}
+## Code Sample Conventions
+
+**Always use environment variables** - this is the cloud-first approach:
+
+```bash
+# cURL - correct pattern
+curl \
+  -X POST "${MEILISEARCH_URL}/indexes/movies/search" \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
+  -H 'Content-Type: application/json' \
+  --data-binary '{"q": "search query"}'
 ```
+
+```javascript
+// JavaScript - correct pattern
+const client = new MeiliSearch({
+  host: process.env.MEILISEARCH_URL,
+  apiKey: process.env.MEILISEARCH_API_KEY
+})
+```
+
+**Never use:**
+- `localhost:7700`
+- `'MEILISEARCH_URL/...` (missing `${}` and quotes)
+- Hardcoded API keys
+
+## Mintlify Components
+
+| Component | Use for |
+|-----------|---------|
+| `<Note>` | Important information, setup instructions |
+| `<Tip>` | Helpful suggestions, best practices |
+| `<Warning>` | Potential issues, breaking changes |
+| `<Info>` | Additional context |
+| `<Tabs>` | Multiple options (installation methods, languages) |
+| `<CardGroup>` | Grid of linked cards for navigation |
+| `<Steps>` | Numbered procedural guides |
+| `<Accordion>` | Collapsible content |
+| `<CodeGroup>` | Multiple code examples in tabs |
+
+## Writing Standards
+
+- Second-person voice ("you")
+- Prerequisites at start of procedural content
+- Test all code examples before publishing
+- Include both basic and advanced use cases
+- Alt text on all images
+- Relative paths for internal links (no .mdx extension)
 
 ## Redirects
 
@@ -116,73 +197,13 @@ Always add redirects when moving or renaming pages:
 }
 ```
 
-- Redirects go in `docs.json` under `"redirects": []`
-- Use leading slashes for both source and destination
-- Can redirect to anchors: `"/new/path#section-name"`
-
-## Mintlify components
-
-### When to use what
-| Component | Use for |
-|-----------|---------|
-| `<Note>` | Important information, setup instructions |
-| `<Tip>` | Helpful suggestions, best practices |
-| `<Warning>` | Potential issues, breaking changes |
-| `<Info>` | Additional context |
-| `<Tabs>` | Multiple options (installation methods, languages) |
-| `<Tab>` | Individual tab content |
-| `<CardGroup>` | Grid of linked cards |
-| `<Card>` | Single linked card with icon |
-| `<Steps>` | Numbered procedural guides |
-| `<Accordion>` | Collapsible content |
-| `<CodeGroup>` | Multiple code examples in tabs |
-
-### Code blocks
-Always include language tag:
-```javascript
-// code here
-```
-
-## Content strategy
-- Document just enough for user success
-- Prioritize accuracy and usability
-- Make content evergreen when possible
-- Search for existing content before adding - avoid duplication
-- Check existing patterns for consistency
-- Start with the smallest reasonable changes
-- Cloud-first approach: environment variables over localhost in examples
-
-## Code sample conventions
-
-Use environment variables in all code samples:
-```bash
-# cURL
-curl "${MEILISEARCH_URL}/indexes" -H "Authorization: Bearer ${MEILISEARCH_API_KEY}"
-```
-
-```javascript
-// JavaScript
-const client = new MeiliSearch({
-  host: process.env.MEILISEARCH_URL,
-  apiKey: process.env.MEILISEARCH_API_KEY
-})
-```
-
-## Writing standards
-- Second-person voice ("you")
-- Prerequisites at start of procedural content
-- Test all code examples before publishing
-- Match style and formatting of existing pages
-- Include both basic and advanced use cases
-- Alt text on all images
-- Relative paths for internal links (no .mdx extension)
-
-## Common tasks
+## Common Tasks
 
 ### Add a new page
 1. Create `.mdx` file in appropriate folder
 2. Add frontmatter (title, description)
 3. Add to `docs.json` navigation in correct group
+4. Follow STYLE_GUIDE.md template for page type
 
 ### Move a page
 1. Move the file to new location
@@ -190,41 +211,19 @@ const client = new MeiliSearch({
 3. Add redirect from old path to new path
 4. Update any internal links pointing to old path
 
-### Rename a page
-1. Rename the file
-2. Update `docs.json` navigation
-3. Add redirect
-4. Update internal links
+### Analyze documentation quality
+1. Read DOCUMENTATION_ANALYSIS.md for current state
+2. Use Explore agent to read multiple pages in a section
+3. Compare against gold standard pages
+4. Propose specific improvements with file paths
 
-### Create a new group
-```json
-{
-  "group": "Group Name",
-  "pages": ["folder/page1", "folder/page2"]
-}
-```
+## Git Workflow
 
-### Create a sub-group (nested)
-```json
-{
-  "group": "Parent Group",
-  "pages": [
-    "folder/page1",
-    {
-      "group": "Sub-group",
-      "pages": ["folder/subpage1", "folder/subpage2"]
-    }
-  ]
-}
-```
-
-## Git workflow
 - NEVER use --no-verify when committing
 - Ask how to handle uncommitted changes before starting
 - Create a new branch when no clear branch exists
 - Commit frequently throughout development
 - NEVER skip or disable pre-commit hooks
-- NEVER commit with Claude/Anthropic name in author
 
 ## Validation
 
@@ -263,10 +262,13 @@ PYTHON
 ```
 
 ## Do NOT
+
 - Skip frontmatter on any MDX file
 - Use absolute URLs for internal links
 - Include untested code examples
-- Make assumptions - always ask for clarification
+- Make assumptions—always ask for clarification
 - Use localhost:7700 in code samples (use env vars)
 - Create nested groups more than one level deep
 - Mix ungrouped pages with groups at tab level
+- Edit files in `snippets/samples/` (SDK-generated)
+- Push changes without human review
