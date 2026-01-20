@@ -7,6 +7,10 @@ curl \
   --data-binary '{ "uid": "INDEX_B" }'
 ```
 
+```python Python
+client.index("INDEX_A").update(new_uid="INDEX_B")
+```
+
 ```java Java
 client.updateIndex("indexA", null, "indexB");
 ```
