@@ -83,7 +83,7 @@ Restart Meilisearch with the argument above to use this new and secure master ke
 
 ## Obtaining API keys
 
-When your project is protected, Meilisearch automatically generates two API keys: `Default Search API Key` and `Default Admin API Key`. API keys are authorization tokens designed to safely communicate with the Meilisearch API.
+When your project is protected, Meilisearch automatically generates four API keys: `Default Search API Key`, `Default Admin API Key`, `Default Read-Only Admin API Key`, and `Default Chat API Key`. API keys are authorization tokens designed to safely communicate with the Meilisearch API.
 
 ### Obtaining API keys in Meilisearch Cloud
 
@@ -103,7 +103,7 @@ Use your master key to query the `/keys` endpoint to view all API keys in your i
 Only use the master key to manage API keys. Never use the master key to perform searches or other common operations.
 </Warning>
 
-Meilisearch's response will include at least the two default API keys:
+Meilisearch's response will include at least the default API keys:
 
 ```json
 {
@@ -112,7 +112,7 @@ Meilisearch's response will include at least the two default API keys:
       "name": "Default Search API Key",
       "description": "Use it to search from the frontend",
       "key": "0beec7b5ea3f0fdbc95d0dd47f3c5bc275da8a33",
-      "uid": "123-345-456-987-abc",
+      "uid": "74c9c733-3368-4738-bbe5-1d18a5fecb37",
       "actions": [
         "search"
       ],
@@ -127,7 +127,7 @@ Meilisearch's response will include at least the two default API keys:
       "name": "Default Admin API Key",
       "description": "Use it for anything that is not a search operation. Caution! Do not expose it on a public frontend",
       "key": "62cdb7020ff920e5aa642c3d4066950dd1f01f4d",
-      "uid": "123-345-456-987-abc",
+      "uid": "20f7e4c4-612c-4dd1-b783-7934cc038213",
       "actions": [
         "*"
       ],
@@ -137,6 +137,38 @@ Meilisearch's response will include at least the two default API keys:
       "expiresAt": null,
       "createdAt": "2024-01-25T16:19:53.94816Z",
       "updatedAt": "2024-01-25T16:19:53.94816Z"
+    },
+    {
+      "name": "Default Read-Only Admin API Key",
+      "description": "Use it to read information across the whole database. Caution! Do not expose this key on a public frontend",
+      "key": "9e32fb64e3569a749b0b87900d1026074e798743",
+      "uid": "7dc1ec09-94fb-49b5-b77b-03ce75af89a0",
+      "actions": [
+        "*.get",
+        "keys.get"
+      ],
+      "indexes": [
+        "*"
+      ],
+      "expiresAt": null,
+      "createdAt": "2024-01-25T16:19:53.94716Z",
+      "updatedAt": "2024-01-25T16:19:53.94716Z"
+    },
+    {
+      "name": "Default Chat API Key",
+      "description": "Use it to chat and search from the frontend",
+      "key": "0acaa4f3d57517e4b4d7c0052b02772620bd375a",
+      "uid": "d4e13ace-2a00-428c-90d1-b1c99eec98bd",
+      "actions": [
+        "chatCompletions",
+        "search"
+      ],
+      "indexes": [
+        "*"
+      ],
+      "expiresAt": null,
+      "createdAt": "2024-01-25T16:19:53.94606Z",
+      "updatedAt": "2024-01-25T16:19:53.94606Z"
     }
   ],
   …
@@ -154,6 +186,21 @@ Use the `Default Admin API Key` to perform sensitive operations, such as creatin
 Then use the `Default Search API Key` to perform search operations in the index you just created:
 
 <CodeSamplesBasicSecurityTutorialSearch1 />
+
+### Admin API keys
+
+Meilisearch provides two admin API keys for managing your instance:
+
+- The `Default Admin API Key` grants full access to all Meilisearch operations except API key management. Use it to configure index settings, add documents, and perform other administrative tasks.
+- The `Default Read-Only Admin API Key` allows read-only access to the whole database. Use it when you need to retrieve information from your Meilisearch instance without being able to modify it.
+
+<Warning>
+Do not expose admin API keys on a public frontend.
+</Warning>
+
+### Chat API key
+
+The `Default Chat API Key` is designed for frontend usage with [conversational search](/learn/chat/getting_started_with_chat). It has access to both `search` and `chatCompletions` actions, allowing users to both perform searches and interact with the chat completions feature.
 
 ## Conclusion
 

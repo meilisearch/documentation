@@ -24,4 +24,9 @@ API keys grant access to a specific set of indexes, routes, and endpoints. You c
 
 **Use API keys for all API operations except API key management.** This includes search, configuring index settings, managing indexes, and adding and updating documents.
 
-In many cases, the default API keys are all you need to safely manage your Meilisearch project. Use the `Default Search API key` for searching, and the `Default Admin API Key` to configure index settings, add documents, and other operations.
+In many cases, the default API keys are all you need to safely manage your Meilisearch project:
+
+- Use the `Default Search API Key` for search operations from the frontend
+- Use the `Default Admin API Key` to configure index settings, add documents, and other operations. Do not expose it on a public frontend
+- Use the `Default Read-Only Admin API Key` for read-only access to all indexes, documents, and settings. Do not expose it on a public frontend
+- Use the `Default Chat API Key` for [conversational search](/learn/chat/getting_started_with_chat). It can be safely used from the frontend
