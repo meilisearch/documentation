@@ -238,7 +238,7 @@ In most cases, that is only the beginning of adding conversational search to you
 
 Meilisearch's chat endpoint was designed to be OpenAI-compatible. This means you can use the official OpenAI SDK in any supported programming language, even if your provider is not OpenAI.
 
-Integrating Meiliearch and the OpenAI SDK with JavaScript would look lik this:
+Integrating Meilisearch and the OpenAI SDK with JavaScript would look like this:
 
 ```javascript JavaScript
 import OpenAI from 'openai';
@@ -259,8 +259,6 @@ for await (const chunk of completion) {
 ```
 
 Take particular note of the last lines, which output the streamed responses to the browser console. In a real-life application, you would instead print the response chunks to the user interface.
-
-</CodeGroup>
 
 ## Troubleshooting
 
