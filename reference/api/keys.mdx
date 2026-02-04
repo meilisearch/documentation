@@ -198,7 +198,7 @@ Results can be paginated using the `offset` and `limit` query parameters.
     },
     {
       "name": "Default Search API Key",
-      "description": "Use it to search from the frontend code",
+      "description": "Use it to search from the frontend",
       "key": "0a6e572506c52ab0bd6195921575d23092b7f0c284ab4ac86d12346c33057f99",
       "uid": "74c9c733-3368-4738-bbe5-1d18a5fecb37",
       "actions": [
@@ -225,11 +225,43 @@ Results can be paginated using the `offset` and `limit` query parameters.
       "expiresAt": null,
       "createdAt": "2021-08-11T10:00:00Z",
       "updatedAt": "2021-08-11T10:00:00Z"
+    },
+    {
+      "name": "Default Read-Only Admin API Key",
+      "description": "Use it to read information across the whole database. Caution! Do not expose this key on a public frontend",
+      "key": "9e32fb64e3569a749b0b87900d1026074e798743cde77bf44c9ef33884100923",
+      "uid": "7dc1ec09-94fb-49b5-b77b-03ce75af89a0",
+      "actions": [
+        "*.get",
+        "keys.get"
+      ],
+      "indexes": [
+        "*"
+      ],
+      "expiresAt": null,
+      "createdAt": "2021-08-11T10:00:00Z",
+      "updatedAt": "2021-08-11T10:00:00Z"
+    },
+    {
+      "name": "Default Chat API Key",
+      "description": "Use it to chat and search from the frontend",
+      "key": "0acaa4f3d57517e4b4d7c0052b02772620bd375a2a5e742aaebf7f6b8b9638cc",
+      "uid": "d4e13ace-2a00-428c-90d1-b1c99eec98bd",
+      "actions": [
+        "chatCompletions",
+        "search"
+      ],
+      "indexes": [
+        "*"
+      ],
+      "expiresAt": null,
+      "createdAt": "2021-08-11T10:00:00Z",
+      "updatedAt": "2021-08-11T10:00:00Z"
     }
   ],
   "offset": 0,
-  "limit": 3,
-  "total": 7
+  "limit": 20,
+  "total": 5
 }
 ```
 

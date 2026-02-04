@@ -288,6 +288,10 @@ The best way to work around this limitation is reformatting your data. The above
 ]
 ```
 
+### Updating object fields
+
+Object fields cannot be partially updated. Updating an object field with either the `PUT` or `POST` routes with an object fully replaces that value and removes any omitted subfields. Dot notation is also not supported when updating a document.
+
 ## Possible tokenization issues
 
 Even if it behaves exactly as expected, the tokenization process may lead to counterintuitive results in some cases, such as:

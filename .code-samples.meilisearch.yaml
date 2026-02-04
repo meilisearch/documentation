@@ -2,7 +2,7 @@
 # Every example written here will be automatically fetched by
 # the documentation on build
 ---
-## BEGIN /references/api 
+## BEGIN /references/api
 # get_indexes_indexUid
 get_one_index_1: |-
   curl \
@@ -68,7 +68,7 @@ add_or_update_documents_1: |-
 delete_all_documents_1: |-
   curl \
     -X DELETE 'MEILISEARCH_URL/indexes/movies/documents'
-# delete_indexes_indexUid_documentId
+# delete_indexes_indexUid_documents_documentId
 delete_one_document_1: |-
   curl \
     -X DELETE 'MEILISEARCH_URL/indexes/movies/documents/25684'
@@ -581,6 +581,24 @@ update_vector_store_settings_1: |-
 reset_vector_store_settings_1: |-
   curl \
     -X DELETE 'MEILISEARCH_URL/indexes/INDEX_UID/settings/vector-store'
+# get_indexes_indexUid_settings_chat
+get_chat_settings_1: |-
+  curl \
+    -X GET 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/chat'
+# patch_indexes_indexUid_settings_chat
+update_chat_settings_1: |-
+  curl \
+    -X PATCH 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/chat' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "description": "An index of movies.",
+      "documentTemplate": "A movie titled '{{doc.title}}' released in {{ doc.release_date }}",
+      "documentTemplateMaxBytes": 400
+    }'
+# delete_indexes_indexUid_settings_chat
+reset_chat_settings_1: |-
+  curl \
+    -X DELETE 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/chat'
 ### END settings + subroutes
 
 # post_dumps
@@ -654,6 +672,18 @@ delete_documents_by_filter_1: |-
     -H 'Content-Type: application/json' \
     --data-binary '{
       "filter": "genres = action OR genres = adventure"
+    }'
+# post_indexes_indexUid_documents_edit
+edit_documents_by_function_1: |-
+  curl \
+    -X POST 'MEILISEARCH_URL/indexes/movies/documents/edit' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "function": "doc.new_field = `a]new[value`",
+      "filter": "id > 3000",
+      "context": {
+        "max_title_length": 10
+      }
     }'
 # get_experimental_features
 get_experimental_features_1: |-
@@ -1740,7 +1770,7 @@ multi_search_remote_federated_1: |-
           }
         }
       ]
-  
+
 search_parameter_reference_media_1: |-
   curl \
   -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \

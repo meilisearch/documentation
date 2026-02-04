@@ -1268,6 +1268,10 @@ If `q` is missing and `semanticRatio` is explicitly set to `0`, Meilisearch perf
 
 Return document and query embeddings with search results. If `true`, Meilisearch will display vector data in each [document's `_vectors` field](/reference/api/documents#_vectors).
 
+<Warning>
+`_vectors` must be included in the [displayedAttributes](/reference/api/settings#displayed-attributes) list to be returned in the response.
+</Warning>
+
 #### Example
 
 <CodeSamplesSearchParameterReferenceRetrieveVectors1 />
