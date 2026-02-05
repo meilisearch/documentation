@@ -35,7 +35,7 @@
     },
     "links": [
       {
-        "label": "Github",
+        "label": "GitHub",
         "href": "https://github.com/meilisearch/meilisearch"
       },
       {
@@ -93,7 +93,7 @@
         "header": "Contact us",
         "items": [
           {
-            "label": "Github",
+            "label": "GitHub",
             "href": "https://github.com/meilisearch"
           },
           {
@@ -155,10 +155,6 @@
       {
         "version": "latest",
         "anchors": [
-          {
-            "anchor": "Open API",
-                "openapi": "openapi-curqui.json"
-          },
           {
             "anchor": "Learn",
             "icon": "book",
@@ -349,48 +345,6 @@
             ]
           },
           {
-            "anchor": "References",
-            "icon": "code",
-            "groups": [
-              {
-                "group": "API reference",
-                "pages": [
-                  "reference/api/overview",
-                  "reference/api/indexes",
-                  "reference/api/documents",
-                  "reference/api/search",
-                  "reference/api/multi_search",
-                  "reference/api/network",
-                  "reference/api/similar",
-                  "reference/api/facet_search",
-                  "reference/api/chats",
-                  "reference/api/tasks",
-                  "reference/api/batches",
-                  "reference/api/keys",
-                  "reference/api/settings",
-                  "reference/api/snapshots",
-                  "reference/api/stats",
-                  "reference/api/health",
-                  "reference/api/version",
-                  "reference/api/dump",
-                  "reference/api/experimental_features",
-                  "reference/api/metrics",
-                  "reference/api/logs",
-                  "reference/api/export",
-                  "reference/api/webhooks",
-                  "reference/api/compact"
-                ]
-              },
-              {
-                "group": "Errors",
-                "pages": [
-                  "reference/errors/overview",
-                  "reference/errors/error_codes"
-                ]
-              }
-            ]
-          },
-          {
             "anchor": "Guides",
             "icon": "file-lines",
             "groups": [
@@ -461,6 +415,16 @@
                 ]
               }
             ]
+          },
+          {
+            "anchor": "API Reference",
+            "openapi": "openapi-curqui.json",
+            "icon": "code",
+            "examples": {
+              "languages": ["curl", "javascript", "php", "python", "java", "ruby", "go", "csharp", "rust", "dart", "swift"],
+              "defaults": "required",
+              "prefill": true
+            }
           }
         ]
       }
