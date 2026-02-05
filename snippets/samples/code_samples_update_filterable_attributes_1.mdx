@@ -58,9 +58,23 @@ $client->index('movies')->updateFilterableAttributes([
 ```
 
 ```java Java
-Settings settings = new Settings();
-settings.setFilterableAttributes(new String[] {"genres", "director"});
-client.index("movies").updateSettings(settings);
+FilterableAttributesConfig genres = FilterableAttributesConfig.simple("genres");
+
+FilterableAttributesFilter directorFilter = new FilterableAttributesFilter();
+directorFilter.setEquality(true);
+directorFilter.setComparison(false);
+
+FilterableAttributesFeatures directorFeatures = new FilterableAttributesFeatures();
+directorFeatures.setFacetSearch(true);
+directorFeatures.setFilter(directorFilter);
+
+FilterableAttributesConfig director = new FilterableAttributesConfig();
+director.setAttributePatterns(new String[] {"director"});
+director.setFeatures(directorFeatures);
+
+// Update settings
+client.index("movies").updateGranularFilterableAttributesSettings(
+  new FilterableAttributesConfig[] {genres, director});
 ```
 
 ```ruby Ruby
