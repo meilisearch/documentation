@@ -18,6 +18,9 @@ $client->index('movies')->getFilterableAttributes();
 ```
 
 ```java Java
+// Granular filterable attributes API (v1.14+)
+client.index("movies").getGranularFilterableAttributesSettings();
+// Legacy String[] API
 client.index("movies").getFilterableAttributesSettings();
 ```
 

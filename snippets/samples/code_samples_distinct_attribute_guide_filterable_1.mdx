@@ -25,7 +25,7 @@ $client->index('products')->updateFilterableAttributes(['product_id', 'sku', 'ur
 
 ```java Java
 Settings settings = new Settings();
-settings.setFilterableAttributes(new String[] {"product_id", "SKU", "url"});
+settings.setFilterableAttributes(new String[] { "product_id", "SKU", "url" });
 client.index("products").updateSettings(settings);
 ```
 
