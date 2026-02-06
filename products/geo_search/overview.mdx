@@ -1,12 +1,12 @@
 ---
-title: Geo search
+title: Geo search overview
 sidebarTitle: Overview
 description: Filter and sort search results by geographic location.
 ---
 
 Geo search enables location-based filtering and sorting. Find nearby restaurants, sort stores by distance, or filter listings within a geographic area.
 
-## Features
+## Key features
 
 <CardGroup cols={2}>
   <Card title="Radius filtering" icon="circle" href="/products/geo_search/filtering">
@@ -22,6 +22,27 @@ Geo search enables location-based filtering and sorting. Find nearby restaurants
     Sort results by distance from a location using `_geoPoint`.
   </Card>
 </CardGroup>
+
+## How it works
+
+```mermaid
+graph LR
+    A[Documents with _geo] --> B[Meilisearch Index]
+    C[Search Query] --> D{Geo Parameters}
+    D --> E[_geoRadius / _geoBoundingBox / _geoPolygon]
+    D --> F[_geoPoint sorting]
+    E --> G[Filtered Results]
+    F --> G
+    G --> H[Results + _geoDistance]
+
+    style A fill:#FF5CB2,stroke:#333,color:#000
+    style H fill:#4ade80,stroke:#333,color:#000
+```
+
+1. **Index documents** with `_geo` coordinates (latitude and longitude)
+2. **Configure** `_geo` as a filterable and/or sortable attribute
+3. **Search** using geo filters to limit results to a geographic area
+4. **Sort** results by distance from a reference point
 
 ## Quick start
 
@@ -95,14 +116,22 @@ Results include distance in meters:
 
 ## Use cases
 
-| Use case | Features used |
-|----------|---------------|
-| Store locator | `_geoRadius` + `_geoPoint` sorting |
-| Food delivery | `_geoRadius` for delivery zones |
-| Real estate | `_geoBoundingBox` for map area |
-| Service areas | `_geoPolygon` for custom zones |
+<CardGroup cols={2}>
+  <Card title="Store locator" icon="location-dot">
+    Find stores near a user with `_geoRadius` and sort by distance
+  </Card>
+  <Card title="Food delivery" icon="truck">
+    Define delivery zones with `_geoRadius` or `_geoPolygon`
+  </Card>
+  <Card title="Real estate" icon="house">
+    Search listings within a map viewport using `_geoBoundingBox`
+  </Card>
+  <Card title="Service areas" icon="map">
+    Define custom coverage zones with `_geoPolygon`
+  </Card>
+</CardGroup>
 
-## Learn more
+## Next steps
 
 <CardGroup cols={3}>
   <Card title="Preparing documents" icon="file-code" href="/products/geo_search/preparing_documents">
