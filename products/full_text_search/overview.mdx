@@ -25,19 +25,26 @@ Full-text search is Meilisearch's core capability. It allows users to search thr
 
 ## How it works
 
-When you add documents to Meilisearch, it:
+```mermaid
+graph LR
+    A[Documents] --> B[Tokenizer]
+    B --> C[Inverted Index]
+    D[Search Query] --> E[Query Processing]
+    E --> F{Typo Tolerance & Prefix Matching}
+    F --> C
+    C --> G[Ranking Rules]
+    G --> H[Ranked Results]
 
-1. **Tokenizes** text into searchable terms
-2. **Indexes** terms for instant retrieval
-3. **Builds** data structures for typo tolerance and prefix matching
+    style A fill:#FF5CB2,stroke:#333,color:#000
+    style H fill:#4ade80,stroke:#333,color:#000
+```
 
-When users search:
+1. **Index**: documents are tokenized and stored in an inverted index
+2. **Search**: the query is processed with typo tolerance and prefix matching
+3. **Rank**: results are ordered by [ranking rules](/products/full_text_search/ranking_rules)
+4. **Return**: top results are delivered in milliseconds
 
-1. Query is processed and compared against the index
-2. Results are ranked by relevancy using [ranking rules](/products/full_text_search/ranking_rules)
-3. Top results are returned in milliseconds
-
-## Quick example
+## Quick start
 
 ```bash
 # Add documents
@@ -69,14 +76,22 @@ Even with "dar knigt" (typos), Meilisearch returns "The Dark Knight".
 | Synonyms | Define equivalent terms | [Learn more](/products/full_text_search/synonyms) |
 | Typo tolerance | Fine-tune error handling | [Learn more](/products/full_text_search/typo_tolerance_settings) |
 
-## When to use full-text search
+## Use cases
 
-Full-text search is ideal for:
-
-- **Product catalogs** - Search by name, description, brand
-- **Content sites** - Articles, documentation, blog posts
-- **User directories** - Names, emails, profiles
-- **Any text-heavy dataset** - Where keyword matching matters
+<CardGroup cols={2}>
+  <Card title="Product catalogs" icon="cart-shopping">
+    Search by name, description, brand across your product inventory
+  </Card>
+  <Card title="Content sites" icon="newspaper">
+    Search articles, documentation, and blog posts
+  </Card>
+  <Card title="User directories" icon="address-book">
+    Find users by name, email, or profile information
+  </Card>
+  <Card title="Text-heavy datasets" icon="file-lines">
+    Any dataset where keyword matching matters
+  </Card>
+</CardGroup>
 
 ## Combine with other capabilities
 

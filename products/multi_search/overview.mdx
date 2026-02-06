@@ -25,21 +25,26 @@ Multi-search allows you to send multiple search queries to Meilisearch in a sing
 
 ## How it works
 
-Instead of making separate requests:
+```mermaid
+graph LR
+    A[Single Request] --> B["/multi-search"]
+    B --> C[Query 1: products]
+    B --> D[Query 2: reviews]
+    B --> E[Query 3: articles]
+    C --> F{Federation?}
+    D --> F
+    E --> F
+    F -->|No| G[Separate Results]
+    F -->|Yes| H[Merged & Ranked]
 
-```
-Request 1: Search "laptop" in products
-Request 2: Search "laptop" in reviews
-Request 3: Search "laptop" in articles
-```
-
-Make a single multi-search request:
-
-```
-Single request: Search "laptop" in products, reviews, and articles
+    style A fill:#FF5CB2,stroke:#333,color:#000
+    style G fill:#4ade80,stroke:#333,color:#000
+    style H fill:#4ade80,stroke:#333,color:#000
 ```
 
-This reduces network round-trips and improves performance.
+1. **Send** multiple queries in a single HTTP request to `/multi-search`
+2. **Execute** each query against its target index in parallel
+3. **Return** separate results per query, or merge into a single ranked list with federation
 
 ## Quick start
 

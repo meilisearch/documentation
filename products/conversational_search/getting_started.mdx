@@ -23,7 +23,7 @@ First, enable the chat completions experimental feature:
 ```bash
 curl \
   -X PATCH "${MEILISEARCH_URL}/experimental-features/" \
-  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "chatCompletions": true
@@ -52,7 +52,7 @@ If your instance does not have a Default Chat API Key, create one manually:
 ```bash
 curl \
   -X POST "${MEILISEARCH_URL}/keys" \
-  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "name": "Chat API Key",
@@ -70,7 +70,7 @@ After activating the `/chats` route and obtaining an API key with chat permissio
 ```bash
 curl \
   -X PATCH "${MEILISEARCH_URL}/indexes/INDEX_NAME/settings" \
-  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "chat": {
@@ -102,7 +102,7 @@ Create a workspace setting your LLM provider as its `source`:
 ```bash OpenAI
 curl \
   -X PATCH "${MEILISEARCH_URL}/chats/WORKSPACE_NAME/settings" \
-  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "source": "openAi",
@@ -117,7 +117,7 @@ curl \
 ```bash Azure OpenAI
 curl \
   -X PATCH "${MEILISEARCH_URL}/chats/WORKSPACE_NAME/settings" \
-  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "source": "azureOpenAi",
@@ -132,7 +132,7 @@ curl \
 ```bash Mistral
 curl \
   -X PATCH "${MEILISEARCH_URL}/chats/WORKSPACE_NAME/settings" \
-  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "source": "mistral",
@@ -146,7 +146,7 @@ curl \
 ```bash Gemini
 curl \
   -X PATCH "${MEILISEARCH_URL}/chats/WORKSPACE_NAME/settings" \
-  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "source": "gemini",
@@ -160,7 +160,7 @@ curl \
 ```bash vLLM
 curl \
   -X PATCH "${MEILISEARCH_URL}/chats/WORKSPACE_NAME/settings" \
-  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "source": "vLlm",
@@ -186,7 +186,7 @@ You have finished configuring your conversational search agent. To test everythi
 ```bash
 curl -N \
   -X POST "${MEILISEARCH_URL}/chats/WORKSPACE_NAME/chat/completions" \
-  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "model": "PROVIDER_MODEL_UID",
