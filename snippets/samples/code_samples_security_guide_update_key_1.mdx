@@ -2,58 +2,45 @@
 
 ```bash cURL
 curl \
-  -X PATCH "${MEILISEARCH_URL}/keys/74c9c733-3368-4738-bbe5-1d18a5fecb37" \
-  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
+  -X PATCH 'MEILISEARCH_URL/keys/74c9c733-3368-4738-bbe5-1d18a5fecb37' \
+  -H 'Authorization: Bearer MASTER_KEY' \
   -H 'Content-Type: application/json' \
   --data-binary '{ "description": "Default Search API Key" }'
 ```
 
 ```javascript JS
-const client = new MeiliSearch({
-  host: process.env.MEILISEARCH_URL,
-  apiKey: process.env.MEILISEARCH_API_KEY
-})
+const client = new MeiliSearch({ host: 'http://localhost:7700', apiKey: 'masterKey' })
 client.updateKey('74c9c733-3368-4738-bbe5-1d18a5fecb37', {
   description: 'Default Search API Key'
 })
 ```
 
 ```python Python
-import os
-client = Client(
-  os.environ.get('MEILISEARCH_URL'),
-  os.environ.get('MEILISEARCH_API_KEY')
-)
+client = Client('http://localhost:7700', 'masterKey')
 client.update_key(key_or_uid='74c9c733-3368-4738-bbe5-1d18a5fecb37', options={
   'description': 'Default Search API Key'
 })
 ```
 
 ```php PHP
-$client = new Client(getenv('MEILISEARCH_URL'), getenv('MEILISEARCH_API_KEY'));
+$client = new Client('http://localhost:7700', 'masterKey');
 $client->updateKey('74c9c733-3368-4738-bbe5-1d18a5fecb37',
   ['description' => 'Default Search API Key']
 );
 ```
 
 ```java Java
-Client client = new Client(new Config(
-  System.getenv("MEILISEARCH_URL"),
-  System.getenv("MEILISEARCH_API_KEY")
-));
+Client client = new Client(new Config("http://localhost:7700", "masterKey"));
 client.updateKey("74c9c733-3368-4738-bbe5-1d18a5fecb37", new KeyUpdate().setDescription("Default Search API Key"));
 ```
 
 ```ruby Ruby
-client = MeiliSearch::Client.new(ENV['MEILISEARCH_URL'], ENV['MEILISEARCH_API_KEY'])
+client = MeiliSearch::Client.new('http://localhost:7700', 'masterKey')
 client.update_key('74c9c733-3368-4738-bbe5-1d18a5fecb37', description: 'Default Search API Key')
 ```
 
 ```go Go
-client := meilisearch.New(
-  os.Getenv("MEILISEARCH_URL"),
-  meilisearch.WithAPIKey(os.Getenv("MEILISEARCH_API_KEY")),
-)
+client := meilisearch.New("http://localhost:7700", meilisearch.WithAPIKey("masterKey"))
 
 client.UpdateKey("74c9c733-3368-4738-bbe5-1d18a5fecb37", &meilisearch.Key{
   Indexes: []string{"doctors"},
@@ -61,20 +48,12 @@ client.UpdateKey("74c9c733-3368-4738-bbe5-1d18a5fecb37", &meilisearch.Key{
 ```
 
 ```csharp C#
-MeilisearchClient client = new MeilisearchClient(
-  Environment.GetEnvironmentVariable("MEILISEARCH_URL"),
-  Environment.GetEnvironmentVariable("MEILISEARCH_API_KEY")
-);
+MeilisearchClient client = new MeilisearchClient("http://localhost:7700", "masterKey");
 await client.UpdateKeyAsync("74c9c733-3368-4738-bbe5-1d18a5fecb37", description: "Default Search API Key");
 ```
 
 ```rust Rust
-use std::env;
-
-let client = Client::new(
-  env::var("MEILISEARCH_URL").unwrap(),
-  Some(env::var("MEILISEARCH_API_KEY").unwrap())
-);
+let client = Client::new("http://localhost:7700", Some("masterKey"));
 let mut key = client
   .get_key("74c9c733-3368-4738-bbe5-1d18a5fecb37")
   .await
@@ -85,10 +64,7 @@ key
 ```
 
 ```swift Swift
-let client = try MeiliSearch(
-  host: ProcessInfo.processInfo.environment["MEILISEARCH_URL"]!,
-  apiKey: ProcessInfo.processInfo.environment["MEILISEARCH_API_KEY"]
-)
+let client = try MeiliSearch(host: "http://localhost:7700", apiKey: "masterKey")
 let keyParams = KeyUpdateParams(description: "Default Search API Key")
 
 client.updateKey(key: "74c9c733-3368-4738-bbe5-1d18a5fecb37", keyParams: keyParams) { result in
@@ -102,10 +78,7 @@ client.updateKey(key: "74c9c733-3368-4738-bbe5-1d18a5fecb37", keyParams: keyPara
 ```
 
 ```dart Dart
-var client = MeiliSearchClient(
-  Platform.environment['MEILISEARCH_URL']!,
-  Platform.environment['MEILISEARCH_API_KEY']!
-);
+var client = MeiliSearchClient('http://localhost:7700', 'masterKey');
 await client.updateKey(
   '74c9c733-3368-4738-bbe5-1d18a5fecb37',
   description: 'Default Search API Key',

@@ -2,19 +2,14 @@
 
 ```bash cURL
 curl \
-  -X POST "${MEILISEARCH_URL}/indexes/medical_records/search" \
+  -X POST 'MEILISEARCH_URL/indexes/medical_records/search' \
   -H 'Content-Type: application/json' \
-  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
+  -H 'Authorization: Bearer DEFAULT_SEARCH_API_KEY' \
   --data-binary '{ "q": "appointments" }'
 ```
 
 ```rust Rust
-use std::env;
-
-let client = Client::new(
-  env::var("MEILISEARCH_URL").unwrap(),
-  Some(env::var("MEILISEARCH_API_KEY").unwrap())
-);
+let client = Client::new("http://localhost:7700", Some("DEFAULT_SEARCH_API_KEY"));
 let index = client.index("medical_records");
 index
   .search()

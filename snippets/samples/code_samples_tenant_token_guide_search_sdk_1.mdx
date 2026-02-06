@@ -1,49 +1,43 @@
 <CodeGroup>
 
 ```javascript JS
-const frontEndClient = new MeiliSearch({
-  host: process.env.MEILISEARCH_URL,
-  apiKey: token
-})
+const frontEndClient = new MeiliSearch({ host: 'http://localhost:7700', apiKey: token })
 frontEndClient.index('patient_medical_records').search('blood test')
 ```
 
 ```python Python
-import os
-front_end_client = Client(os.environ.get('MEILISEARCH_URL'), token)
+front_end_client = Client('http://localhost:7700', token)
 front_end_client.index('patient_medical_records').search('blood test')
 ```
 
 ```php PHP
-$frontEndClient = new Client(getenv('MEILISEARCH_URL'), $token);
+$frontEndClient = new Client('http://localhost:7700', $token);
 $frontEndClient->index('patient_medical_records')->search('blood test');
 ```
 
 ```java Java
-Client frontEndClient = new Client(new Config(System.getenv("MEILISEARCH_URL"), token));
+Client frontEndClient = new Client(new Config("http://localhost:7700", token));
 frontEndClient.index("patient_medical_records").search("blood test");
 ```
 
 ```ruby Ruby
-front_end_client = MeiliSearch::Client.new(ENV['MEILISEARCH_URL'], token)
+front_end_client = MeiliSearch::Client.new('http://localhost:7700', token)
 
 front_end_client.index('patient_medical_records').search('blood test')
 ```
 
 ```go Go
-client := meilisearch.New(os.Getenv("MEILISEARCH_URL"), meilisearch.WithAPIKey(token))
+client := meilisearch.New("http://localhost:7700", meilisearch.WithAPIKey("masterKey"))
 client.Index("patient_medical_records").Search("blood test", &meilisearch.SearchRequest{});
 ```
 
 ```csharp C#
-frontEndClient = new MeilisearchClient(Environment.GetEnvironmentVariable("MEILISEARCH_URL"), token);
+frontEndClient = new MeilisearchClient("http://localhost:7700", token);
 var searchResult = await frontEndClient.Index("patient_medical_records").SearchAsync<Patient>("blood test");
 ```
 
 ```rust Rust
-use std::env;
-
-let front_end_client = Client::new(env::var("MEILISEARCH_URL").unwrap(), Some(token));
+let front_end_client = Client::new("http://localhost:7700", Some(token));
 let results: SearchResults<Patient> = front_end_client
   .index("patient_medical_records")
   .search()

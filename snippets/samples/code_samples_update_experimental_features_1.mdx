@@ -2,7 +2,7 @@
 
 ```bash cURL
 curl \
-  -X PATCH "${MEILISEARCH_URL}/experimental-features/" \
+  -X PATCH 'MEILISEARCH_URL/experimental-features/' \
   -H 'Content-Type: application/json'  \
   --data-binary '{
     "metrics": true
@@ -18,12 +18,7 @@ client.ExperimentalFeatures().SetMetrics(true).Update()
 ```
 
 ```rust Rust
-use std::env;
-
-let client = Client::new(
-  env::var("MEILISEARCH_URL").unwrap(),
-  Some(env::var("MEILISEARCH_API_KEY").unwrap())
-);
+let client = Client::new("http://localhost:7700", Some("apiKey"));
 let features = ExperimentalFeatures::new(&client);
 features.set_metrics(true)
 let res = features
