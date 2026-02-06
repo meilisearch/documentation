@@ -70,13 +70,15 @@ curl -X POST "${MEILISEARCH_URL}/indexes/products/search" \
 When a user clicks a search result:
 
 ```bash
-curl -X POST "${MEILISEARCH_URL}/analytics/events" \
+curl -X POST "${MEILISEARCH_URL}/events" \
   -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
   -H 'Content-Type: application/json' \
   --data-binary '{
-    "type": "click",
-    "searchId": "abc123",
-    "documentId": "product_456",
+    "eventType": "click",
+    "eventName": "Search Result Clicked",
+    "indexUid": "products",
+    "objectId": "product_456",
+    "userId": "user_123",
     "position": 3
   }'
 ```
@@ -86,13 +88,15 @@ curl -X POST "${MEILISEARCH_URL}/analytics/events" \
 When a user completes a desired action:
 
 ```bash
-curl -X POST "${MEILISEARCH_URL}/analytics/events" \
+curl -X POST "${MEILISEARCH_URL}/events" \
   -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
   -H 'Content-Type: application/json' \
   --data-binary '{
-    "type": "conversion",
-    "searchId": "abc123",
-    "documentId": "product_456"
+    "eventType": "conversion",
+    "eventName": "Purchase Completed",
+    "indexUid": "products",
+    "objectId": "product_456",
+    "userId": "user_123"
   }'
 ```
 
@@ -165,26 +169,31 @@ Associate events with user IDs for better analysis:
 
 ```json
 {
-  "type": "click",
-  "searchId": "abc123",
-  "documentId": "product_456",
+  "eventType": "click",
+  "eventName": "Search Result Clicked",
+  "indexUid": "products",
+  "objectId": "product_456",
   "userId": "user_789"
 }
 ```
 
-### Use search IDs
+### Use query UIDs
 
-The search ID links events to specific queries:
+The query UID links events to specific searches:
 
 ```javascript
-// Get search ID from response
-const { hits, searchId } = await index.search('headphones');
+// Get query UID from response metadata
+const response = await index.search('headphones');
+const queryUid = response.metadata?.queryUid;
 
-// Send click event with same ID
+// Send click event linked to that search
 await sendClickEvent({
-  searchId,
-  documentId: hits[0].id,
-  position: 1
+  eventType: 'click',
+  eventName: 'Search Result Clicked',
+  indexUid: 'products',
+  objectId: hits[0].id,
+  position: 1,
+  queryUid
 });
 ```
 
@@ -210,19 +219,23 @@ const client = new MeiliSearch({
 
 // Search
 const results = await client.index('products').search('laptop');
+const queryUid = results.metadata?.queryUid;
 
 // Track click
-await fetch(`${process.env.MEILISEARCH_URL}/analytics/events`, {
+await fetch(`${process.env.MEILISEARCH_URL}/events`, {
   method: 'POST',
   headers: {
     'Authorization': `Bearer ${process.env.MEILISEARCH_API_KEY}`,
     'Content-Type': 'application/json'
   },
   body: JSON.stringify({
-    type: 'click',
-    searchId: results.searchId,
-    documentId: clickedProduct.id,
-    position: clickPosition
+    eventType: 'click',
+    eventName: 'Search Result Clicked',
+    indexUid: 'products',
+    objectId: clickedProduct.id,
+    position: clickPosition,
+    userId: currentUserId,
+    queryUid
   })
 });
 ```
@@ -230,14 +243,16 @@ await fetch(`${process.env.MEILISEARCH_URL}/analytics/events`, {
 ### React with InstantSearch
 
 ```jsx
-function Hit({ hit, position, searchId }) {
+function Hit({ hit, position, queryUid, userId }) {
   const trackClick = () => {
     fetch('/api/analytics/click', {
       method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        searchId,
-        documentId: hit.id,
-        position
+        objectId: hit.id,
+        position,
+        queryUid,
+        userId
       })
     });
   };
