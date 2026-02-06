@@ -494,196 +494,6 @@
                 ]
               },
               {
-                "group": "Settings",
-                "pages": [
-                  "reference/api/settings/overview",
-                  {
-                    "group": "All settings",
-                    "pages": [
-                      "reference/api/settings/all-settings",
-                      "reference/api/settings/update-settings",
-                      "reference/api/settings/reset-settings"
-                    ]
-                  },
-                  {
-                    "group": "Displayed attributes",
-                    "pages": [
-                      "reference/api/settings/get-displayedattributes",
-                      "reference/api/settings/update-displayedattributes",
-                      "reference/api/settings/reset-displayedattributes"
-                    ]
-                  },
-                  {
-                    "group": "Searchable attributes",
-                    "pages": [
-                      "reference/api/settings/get-searchableattributes",
-                      "reference/api/settings/update-searchableattributes",
-                      "reference/api/settings/reset-searchableattributes"
-                    ]
-                  },
-                  {
-                    "group": "Filterable attributes",
-                    "pages": [
-                      "reference/api/settings/get-filterableattributes",
-                      "reference/api/settings/update-filterableattributes",
-                      "reference/api/settings/reset-filterableattributes"
-                    ]
-                  },
-                  {
-                    "group": "Sortable attributes",
-                    "pages": [
-                      "reference/api/settings/get-sortableattributes",
-                      "reference/api/settings/update-sortableattributes",
-                      "reference/api/settings/reset-sortableattributes"
-                    ]
-                  },
-                  {
-                    "group": "Ranking rules",
-                    "pages": [
-                      "reference/api/settings/get-rankingrules",
-                      "reference/api/settings/update-rankingrules",
-                      "reference/api/settings/reset-rankingrules"
-                    ]
-                  },
-                  {
-                    "group": "Typo tolerance",
-                    "pages": [
-                      "reference/api/settings/get-typotolerance",
-                      "reference/api/settings/update-typotolerance",
-                      "reference/api/settings/reset-typotolerance"
-                    ]
-                  },
-                  {
-                    "group": "Synonyms",
-                    "pages": [
-                      "reference/api/settings/get-synonyms",
-                      "reference/api/settings/update-synonyms",
-                      "reference/api/settings/reset-synonyms"
-                    ]
-                  },
-                  {
-                    "group": "Stop words",
-                    "pages": [
-                      "reference/api/settings/get-stopwords",
-                      "reference/api/settings/update-stopwords",
-                      "reference/api/settings/reset-stopwords"
-                    ]
-                  },
-                  {
-                    "group": "Distinct attribute",
-                    "pages": [
-                      "reference/api/settings/get-distinctattribute",
-                      "reference/api/settings/update-distinctattribute",
-                      "reference/api/settings/reset-distinctattribute"
-                    ]
-                  },
-                  {
-                    "group": "Faceting",
-                    "pages": [
-                      "reference/api/settings/get-faceting",
-                      "reference/api/settings/update-faceting",
-                      "reference/api/settings/reset-faceting"
-                    ]
-                  },
-                  {
-                    "group": "Pagination",
-                    "pages": [
-                      "reference/api/settings/get-pagination",
-                      "reference/api/settings/update-pagination",
-                      "reference/api/settings/reset-pagination"
-                    ]
-                  },
-                  {
-                    "group": "Proximity precision",
-                    "pages": [
-                      "reference/api/settings/get-proximityprecision",
-                      "reference/api/settings/update-proximityprecision",
-                      "reference/api/settings/reset-proximityprecision"
-                    ]
-                  },
-                  {
-                    "group": "Dictionary",
-                    "pages": [
-                      "reference/api/settings/get-dictionary",
-                      "reference/api/settings/update-dictionary",
-                      "reference/api/settings/reset-dictionary"
-                    ]
-                  },
-                  {
-                    "group": "Separator tokens",
-                    "pages": [
-                      "reference/api/settings/get-separatortokens",
-                      "reference/api/settings/update-separatortokens",
-                      "reference/api/settings/reset-separatortokens"
-                    ]
-                  },
-                  {
-                    "group": "Non-separator tokens",
-                    "pages": [
-                      "reference/api/settings/get-nonseparatortokens",
-                      "reference/api/settings/update-nonseparatortokens",
-                      "reference/api/settings/reset-nonseparatortokens"
-                    ]
-                  },
-                  {
-                    "group": "Localized attributes",
-                    "pages": [
-                      "reference/api/settings/get-localizedattributes",
-                      "reference/api/settings/update-localizedattributes",
-                      "reference/api/settings/reset-localizedattributes"
-                    ]
-                  },
-                  {
-                    "group": "Facet search",
-                    "pages": [
-                      "reference/api/settings/get-facetsearch",
-                      "reference/api/settings/update-facetsearch",
-                      "reference/api/settings/reset-facetsearch"
-                    ]
-                  },
-                  {
-                    "group": "Prefix search",
-                    "pages": [
-                      "reference/api/settings/get-prefixsearch",
-                      "reference/api/settings/update-prefixsearch",
-                      "reference/api/settings/reset-prefixsearch"
-                    ]
-                  },
-                  {
-                    "group": "Search cutoff",
-                    "pages": [
-                      "reference/api/settings/get-searchcutoffms",
-                      "reference/api/settings/update-searchcutoffms",
-                      "reference/api/settings/reset-searchcutoffms"
-                    ]
-                  },
-                  {
-                    "group": "Embedders",
-                    "pages": [
-                      "reference/api/settings/get-embedders",
-                      "reference/api/settings/update-embedders",
-                      "reference/api/settings/reset-embedders"
-                    ]
-                  },
-                  {
-                    "group": "Chat",
-                    "pages": [
-                      "reference/api/settings/get-chat",
-                      "reference/api/settings/update-chat",
-                      "reference/api/settings/reset-chat"
-                    ]
-                  },
-                  {
-                    "group": "Vector store",
-                    "pages": [
-                      "reference/api/settings/get-vectorstore",
-                      "reference/api/settings/update-vectorstore",
-                      "reference/api/settings/reset-vectorstore"
-                    ]
-                  }
-                ]
-              },
-              {
                 "group": "Stats",
                 "pages": [
                   "reference/api/stats/overview",
@@ -773,6 +583,196 @@
                 "pages": [
                   "reference/api/export/overview",
                   "reference/api/export/post-export"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Settings",
+            "pages": [
+              "reference/api/settings/overview",
+              {
+                "group": "All settings",
+                "pages": [
+                  "reference/api/settings/all-settings",
+                  "reference/api/settings/update-settings",
+                  "reference/api/settings/reset-settings"
+                ]
+              },
+              {
+                "group": "Displayed attributes",
+                "pages": [
+                  "reference/api/settings/get-displayedattributes",
+                  "reference/api/settings/update-displayedattributes",
+                  "reference/api/settings/reset-displayedattributes"
+                ]
+              },
+              {
+                "group": "Searchable attributes",
+                "pages": [
+                  "reference/api/settings/get-searchableattributes",
+                  "reference/api/settings/update-searchableattributes",
+                  "reference/api/settings/reset-searchableattributes"
+                ]
+              },
+              {
+                "group": "Filterable attributes",
+                "pages": [
+                  "reference/api/settings/get-filterableattributes",
+                  "reference/api/settings/update-filterableattributes",
+                  "reference/api/settings/reset-filterableattributes"
+                ]
+              },
+              {
+                "group": "Sortable attributes",
+                "pages": [
+                  "reference/api/settings/get-sortableattributes",
+                  "reference/api/settings/update-sortableattributes",
+                  "reference/api/settings/reset-sortableattributes"
+                ]
+              },
+              {
+                "group": "Ranking rules",
+                "pages": [
+                  "reference/api/settings/get-rankingrules",
+                  "reference/api/settings/update-rankingrules",
+                  "reference/api/settings/reset-rankingrules"
+                ]
+              },
+              {
+                "group": "Typo tolerance",
+                "pages": [
+                  "reference/api/settings/get-typotolerance",
+                  "reference/api/settings/update-typotolerance",
+                  "reference/api/settings/reset-typotolerance"
+                ]
+              },
+              {
+                "group": "Synonyms",
+                "pages": [
+                  "reference/api/settings/get-synonyms",
+                  "reference/api/settings/update-synonyms",
+                  "reference/api/settings/reset-synonyms"
+                ]
+              },
+              {
+                "group": "Stop words",
+                "pages": [
+                  "reference/api/settings/get-stopwords",
+                  "reference/api/settings/update-stopwords",
+                  "reference/api/settings/reset-stopwords"
+                ]
+              },
+              {
+                "group": "Distinct attribute",
+                "pages": [
+                  "reference/api/settings/get-distinctattribute",
+                  "reference/api/settings/update-distinctattribute",
+                  "reference/api/settings/reset-distinctattribute"
+                ]
+              },
+              {
+                "group": "Faceting",
+                "pages": [
+                  "reference/api/settings/get-faceting",
+                  "reference/api/settings/update-faceting",
+                  "reference/api/settings/reset-faceting"
+                ]
+              },
+              {
+                "group": "Pagination",
+                "pages": [
+                  "reference/api/settings/get-pagination",
+                  "reference/api/settings/update-pagination",
+                  "reference/api/settings/reset-pagination"
+                ]
+              },
+              {
+                "group": "Proximity precision",
+                "pages": [
+                  "reference/api/settings/get-proximityprecision",
+                  "reference/api/settings/update-proximityprecision",
+                  "reference/api/settings/reset-proximityprecision"
+                ]
+              },
+              {
+                "group": "Dictionary",
+                "pages": [
+                  "reference/api/settings/get-dictionary",
+                  "reference/api/settings/update-dictionary",
+                  "reference/api/settings/reset-dictionary"
+                ]
+              },
+              {
+                "group": "Separator tokens",
+                "pages": [
+                  "reference/api/settings/get-separatortokens",
+                  "reference/api/settings/update-separatortokens",
+                  "reference/api/settings/reset-separatortokens"
+                ]
+              },
+              {
+                "group": "Non-separator tokens",
+                "pages": [
+                  "reference/api/settings/get-nonseparatortokens",
+                  "reference/api/settings/update-nonseparatortokens",
+                  "reference/api/settings/reset-nonseparatortokens"
+                ]
+              },
+              {
+                "group": "Localized attributes",
+                "pages": [
+                  "reference/api/settings/get-localizedattributes",
+                  "reference/api/settings/update-localizedattributes",
+                  "reference/api/settings/reset-localizedattributes"
+                ]
+              },
+              {
+                "group": "Facet search",
+                "pages": [
+                  "reference/api/settings/get-facetsearch",
+                  "reference/api/settings/update-facetsearch",
+                  "reference/api/settings/reset-facetsearch"
+                ]
+              },
+              {
+                "group": "Prefix search",
+                "pages": [
+                  "reference/api/settings/get-prefixsearch",
+                  "reference/api/settings/update-prefixsearch",
+                  "reference/api/settings/reset-prefixsearch"
+                ]
+              },
+              {
+                "group": "Search cutoff",
+                "pages": [
+                  "reference/api/settings/get-searchcutoffms",
+                  "reference/api/settings/update-searchcutoffms",
+                  "reference/api/settings/reset-searchcutoffms"
+                ]
+              },
+              {
+                "group": "Embedders",
+                "pages": [
+                  "reference/api/settings/get-embedders",
+                  "reference/api/settings/update-embedders",
+                  "reference/api/settings/reset-embedders"
+                ]
+              },
+              {
+                "group": "Chat",
+                "pages": [
+                  "reference/api/settings/get-chat",
+                  "reference/api/settings/update-chat",
+                  "reference/api/settings/reset-chat"
+                ]
+              },
+              {
+                "group": "Vector store",
+                "pages": [
+                  "reference/api/settings/get-vectorstore",
+                  "reference/api/settings/update-vectorstore",
+                  "reference/api/settings/reset-vectorstore"
                 ]
               }
             ]
