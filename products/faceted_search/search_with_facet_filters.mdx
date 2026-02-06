@@ -84,7 +84,7 @@ The response returns all books matching the query. It also returns two fields yo
 
 ### Sorting facet values
 
-By default, all facet values are sorted in ascending alphanumeric order. You can change this using the `sortFacetValuesBy` property of the [`faceting` index settings](/reference/api/settings/faceting):
+By default, all facet values are sorted in ascending alphanumeric order. You can change this using the `sortFacetValuesBy` property of the [`faceting` index settings](/reference/api/settings/get-faceting):
 
 <CodeSamplesFacetSearch2 />
 
@@ -119,7 +119,7 @@ Repeating the previous query using the new settings will result in a different o
 
 ## Searching facet values
 
-You can also search for facet values with the [facet search endpoint](/reference/api/facet_search):
+You can also search for facet values with the [facet search endpoint](/reference/api/facet-search/overview):
 
 <CodeSamplesFacetSearch3 />
 
@@ -153,4 +153,4 @@ The response contains a `facetHits` array listing all matching facets, together 
 }
 ```
 
-You can further refine results using the `q`, `filter`, and `matchingStrategy` parameters. [Learn more about them in the API reference.](/reference/api/facet_search)
+You can further refine results using the `q`, `filter`, and `matchingStrategy` parameters. [Learn more about them in the API reference.](/reference/api/facet-search/overview)

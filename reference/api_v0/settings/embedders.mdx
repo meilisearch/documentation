@@ -64,7 +64,7 @@ Get the embedders configured for an index.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/resources/glossary/indexes#index-uid) of the requested index  |
+| **`index_uid`** * | String | [`uid`](/getting_started/glossary/indexes#index-uid) of the requested index  |
 
 #### Example
 
@@ -94,7 +94,7 @@ Partially update the embedder settings for an index. When this setting is update
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/resources/glossary/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/getting_started/glossary/indexes#index-uid) of the requested index |
 
 #### Body
 
@@ -502,7 +502,7 @@ curl \
 ```
 </Note>
 
-`searchFragments` instructs Meilisearch how to parse fields present in a query's [`media` search parameter](/reference/api/search#media). It must be an object following the same structure as the [`indexingFragments`](/reference/api/settings/embedders#indexingfragments) object:
+`searchFragments` instructs Meilisearch how to parse fields present in a query's [`media` search parameter](/reference/api/indexes/search-with-post#media). It must be an object following the same structure as the [`indexingFragments`](/reference/api/settings/get-embedders#indexingfragments) object:
 
 ```json
   "FRAGMENT_NAME": {
@@ -514,7 +514,7 @@ curl \
 
 As with `indexingFragments`, the content of `value` should follow your model's specification.
 
-Use Liquid templates to interpolate search query data into the fragment fields, where `{{media.*}}` gives you access to all [multimodal data received with a query](/reference/api/search#media) and `{{q}}` gives you access to the regular textual query:
+Use Liquid templates to interpolate search query data into the fragment fields, where `{{media.*}}` gives you access to all [multimodal data received with a query](/reference/api/indexes/search-with-post#media) and `{{q}}` gives you access to the regular textual query:
 
 ```json
 {
@@ -563,7 +563,7 @@ You must specify at least one valid fragment in `indexingFragments` when using `
 }
 ```
 
-You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks/overview#get-one-task).
 
 ### Reset embedder settings
 
@@ -577,7 +577,7 @@ To remove a single embedder, use the [update embedder settings endpoint](#update
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/resources/glossary/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/getting_started/glossary/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -595,4 +595,4 @@ To remove a single embedder, use the [update embedder settings endpoint](#update
 }
 ```
 
-You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks/overview#get-one-task).

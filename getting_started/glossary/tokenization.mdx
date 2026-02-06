@@ -42,7 +42,7 @@ Meilisearch uses [Charabia](https://github.com/meilisearch/charabia), an open-so
 
 ## What gets tokenized
 
-Only [searchable attributes](/reference/api/settings/searchable-attributes) are tokenized. By default, all attributes are searchable, but you can configure this:
+Only [searchable attributes](/reference/api/settings/get-searchableattributes) are tokenized. By default, all attributes are searchable, but you can configure this:
 
 ```json
 PATCH /indexes/products/settings
@@ -115,12 +115,12 @@ Tokenization directly affects search behavior:
 
 ## Related concepts
 
-- [Inverted index](/resources/glossary/inverted_index): Stores tokenized words
-- [FST](/resources/glossary/fst): Dictionary of all tokens
-- [Typo tolerance](/resources/glossary/typo_tolerance): Fuzzy matching on tokens
+- [Inverted index](/getting_started/glossary/inverted_index): Stores tokenized words
+- [FST](/getting_started/glossary/fst): Dictionary of all tokens
+- [Typo tolerance](/getting_started/glossary/typo_tolerance): Fuzzy matching on tokens
 
 ## Learn more
 
 - [Language support](/resources/help/language): Supported languages and scripts
-- [Stop words](/reference/api/settings/stop-words): Configure stop words
-- [Separator tokens](/reference/api/settings/separator-tokens): Custom tokenization rules
+- [Stop words](/reference/api/settings/get-stopwords): Configure stop words
+- [Separator tokens](/reference/api/settings/get-separatortokens): Custom tokenization rules

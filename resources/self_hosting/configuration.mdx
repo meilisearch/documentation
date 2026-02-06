@@ -9,7 +9,7 @@ import { NoticeTag } from '/snippets/notice_tag.mdx';
 
 When self-hosting Meilisearch, you can configure your instance at launch with **command-line options**, **environment variables**, or a **configuration file**.
 
-These startup options affect your entire Meilisearch instance, not just a single index. For settings that affect search within a single index, see [index settings](/reference/api/settings).
+These startup options affect your entire Meilisearch instance, not just a single index. For settings that affect search within a single index, see [index settings](/reference/api/settings/overview).
 
 ## Command-line options and flags
 
@@ -136,7 +136,7 @@ Specifying the `config_file_path` option within the configuration file will thro
 
 ## Configuring cloud-hosted instances
 
-To configure Meilisearch with command-line options in a cloud-hosted instance, edit its [service file](/guides/running_production#step-4-run-meilisearch-as-a-service). The default location of the service file is `/etc/systemd/system/meilisearch.service`.
+To configure Meilisearch with command-line options in a cloud-hosted instance, edit its [service file](/resources/self_hosting/getting_started#step-4-run-meilisearch-as-a-service). The default location of the service file is `/etc/systemd/system/meilisearch.service`.
 
 To configure Meilisearch with environment variables in a cloud-hosted instance, modify Meilisearch's `env` file. Its default location is `/var/opt/meilisearch/env`.
 
@@ -213,7 +213,7 @@ Sets the HTTP address and port Meilisearch will use.
 **Default value**: `None`<br />
 **Expected value**: a UTF-8 string of at least 16 bytes
 
-Sets the instance's master key, automatically protecting all routes except [`GET /health`](/reference/api/health). This means you will need a valid API key to access all other endpoints.
+Sets the instance's master key, automatically protecting all routes except [`GET /health`](/reference/api/health/overview). This means you will need a valid API key to access all other endpoints.
 
 When `--env` is set to `production`, providing a master key is mandatory. If none is given, or it is under 16 bytes, Meilisearch will throw an error and refuse to launch.
 
@@ -234,9 +234,9 @@ If you do not supply a master key in `production` or `development` environments 
 
 Deactivates Meilisearch's built-in telemetry when provided.
 
-Meilisearch automatically collects data from all instances that do not opt out using this flag. All gathered data is used solely for the purpose of improving Meilisearch, and can be [deleted at any time](/resources/telemetry#how-to-delete-all-collected-data).
+Meilisearch automatically collects data from all instances that do not opt out using this flag. All gathered data is used solely for the purpose of improving Meilisearch, and can be [deleted at any time](/resources/internals/telemetry#how-to-delete-all-collected-data).
 
-[Read more about our policy on data collection](/resources/internals/telemetry), or take a look at [the comprehensive list of all data points we collect](/resources/telemetry#exhaustive-list-of-all-collected-data).
+[Read more about our policy on data collection](/resources/internals/telemetry), or take a look at [the comprehensive list of all data points we collect](/resources/internals/telemetry#exhaustive-list-of-all-collected-data).
 
 ### Dumpless upgrade <NoticeTag type="experimental" label="experimental" />
 
@@ -266,7 +266,7 @@ Dumpless upgrade are not currently atomic. It is possible some processes fail an
 
 Sets the directory where Meilisearch will create dump files.
 
-[Learn more about creating dumps](/reference/api/dump).
+[Learn more about creating dumps](/reference/api/dumps/overview).
 
 ### Import dump
 
@@ -385,7 +385,7 @@ Avoid setting `--max-indexing-threads` to the total of your machine's processor 
 **Default value**: `104857600` (~100MB)<br />
 **Expected value**: an integer
 
-Sets the maximum size of [accepted payloads](/resources/glossary/documents#dataset-format). Value must be given in bytes or explicitly stating a base unit. For example, the default value can be written as `107374182400`, `'107.7Gb'`, or `'107374 Mb'`.
+Sets the maximum size of [accepted payloads](/getting_started/glossary/documents#dataset-format). Value must be given in bytes or explicitly stating a base unit. For example, the default value can be written as `107374182400`, `'107.7Gb'`, or `'107374 Mb'`.
 
 ### Search queue size <NoticeTag type="experimental" label="experimental" />
 
@@ -493,9 +493,9 @@ This command will throw an error if `--import-snapshot` is not defined.
 
 Notifies the configured URL whenever Meilisearch [finishes processing a task](/products/platform/asynchronous_operations#task-status) or batch of tasks. Meilisearch uses the URL as given, retaining any specified query parameters.
 
-The webhook payload contains the list of finished tasks in [ndjson](https://github.com/ndjson/ndjson-spec). For more information, [consult the dedicated task webhook guide](/products/platform/task_webhook).
+The webhook payload contains the list of finished tasks in [ndjson](https://github.com/ndjson/ndjson-spec). For more information, [consult the dedicated task webhook guide](/products/platform/webhooks).
 
-The task webhook option requires having access to a command-line interface. If you are using Meilisearch Cloud, use the [`/webhooks` API route](/reference/api/webhooks) instead.
+The task webhook option requires having access to a command-line interface. If you are using Meilisearch Cloud, use the [`/webhooks` API route](/reference/api/webhooks/overview) instead.
 
 ### Task webhook authorization header
 

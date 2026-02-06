@@ -10,7 +10,7 @@ import CodeSamplesGetProximityPrecisionSettings1 from '/snippets/samples/code_sa
 import CodeSamplesUpdateProximityPrecisionSettings1 from '/snippets/samples/code_samples_update_proximity_precision_settings_1.mdx';
 import CodeSamplesResetProximityPrecisionSettings1 from '/snippets/samples/code_samples_reset_proximity_precision_settings_1.mdx';
 
-Calculating the distance between words is a resource-intensive operation. Lowering the precision of this operation may significantly improve performance and will have little impact on result relevancy in most use-cases. Meilisearch uses word distance when [ranking results according to proximity](/products/full_text_search/ranking_rules#3-proximity) and when users perform [phrase searches](/reference/api/search#phrase-search).
+Calculating the distance between words is a resource-intensive operation. Lowering the precision of this operation may significantly improve performance and will have little impact on result relevancy in most use-cases. Meilisearch uses word distance when [ranking results according to proximity](/products/full_text_search/ranking_rules#3-proximity) and when users perform [phrase searches](/reference/api/indexes/search-with-post#phrase-search).
 
 `proximityPrecision` accepts one of the following string values:
 
@@ -27,7 +27,7 @@ Get the proximity precision settings of an index.
 
 | Name              | Type   | Description                                                            |
 | :---------------- | :----- | :--------------------------------------------------------------------- |
-| **`index_uid`** * | String | [`uid`](/resources/glossary/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/getting_started/glossary/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -49,7 +49,7 @@ Update the pagination settings for an index.
 
 | Name              | Type   | Description                                                            |
 | :---------------- | :----- | :--------------------------------------------------------------------- |
-| **`index_uid`** * | String | [`uid`](/resources/glossary/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/getting_started/glossary/indexes#index-uid) of the requested index |
 
 #### Body
 
@@ -73,7 +73,7 @@ Update the pagination settings for an index.
 }
 ```
 
-You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks/overview#get-one-task).
 
 ### Reset proximity precision settings
 
@@ -85,7 +85,7 @@ Reset an index's proximity precision setting to its default value.
 
 | Name              | Type   | Description                                                            |
 | :---------------- | :----- | :--------------------------------------------------------------------- |
-| **`index_uid`** * | String | [`uid`](/resources/glossary/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/getting_started/glossary/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -103,4 +103,4 @@ Reset an index's proximity precision setting to its default value.
 }
 ```
 
-You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks/overview#get-one-task).

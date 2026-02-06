@@ -86,7 +86,7 @@ This will return the full task object:
 }
 ```
 
-If the task is still `enqueued` or `processing`, wait a few moments and query the database once again. You may also [set up a webhook listener](/reference/api/webhooks).
+If the task is still `enqueued` or `processing`, wait a few moments and query the database once again. You may also [set up a webhook listener](/reference/api/webhooks/overview).
 
 When `status` changes to `succeeded`, Meilisearch has finished processing your request.
 
@@ -94,4 +94,4 @@ If the task `status` changes to `failed`, Meilisearch was not able to fulfill yo
 
 ## Conclusion
 
-You have seen what happens when an API request adds a task to the task queue, and how to check the status of a that task. Consult the [task API reference](/reference/api/tasks) and the [asynchronous operations explanation](/products/platform/asynchronous_operations) for more information on how tasks work.
+You have seen what happens when an API request adds a task to the task queue, and how to check the status of a that task. Consult the [task API reference](/reference/api/tasks/overview) and the [asynchronous operations explanation](/products/platform/asynchronous_operations) for more information on how tasks work.

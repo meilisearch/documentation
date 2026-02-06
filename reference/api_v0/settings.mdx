@@ -13,7 +13,7 @@ import CodeSamplesResetSettings1 from '/snippets/samples/code_samples_reset_sett
 
 Use the `/settings` route to customize search settings for a given index. You can either modify all index settings at once using the [update settings endpoint](#update-settings), or use a child route to configure a single setting.
 
-For a conceptual overview of index settings, refer to the [indexes explanation](/resources/glossary/indexes#index-settings). To learn more about the basics of index configuration, refer to the [settings API reference](/reference/api/settings/overview).
+For a conceptual overview of index settings, refer to the [indexes explanation](/getting_started/glossary/indexes#index-settings). To learn more about the basics of index configuration, refer to the [settings API reference](/reference/api/settings/overview).
 
 ## Settings interface
 
@@ -24,40 +24,40 @@ For a conceptual overview of index settings, refer to the [indexes explanation](
 Each setting can be configured individually using its dedicated endpoint:
 
 <CardGroup cols={2}>
-  <Card title="Displayed attributes" icon="eye" href="/reference/api/settings/displayed-attributes">
+  <Card title="Displayed attributes" icon="eye" href="/reference/api/settings/get-displayedattributes">
     Fields returned in search results
   </Card>
-  <Card title="Searchable attributes" icon="magnifying-glass" href="/reference/api/settings/searchable-attributes">
+  <Card title="Searchable attributes" icon="magnifying-glass" href="/reference/api/settings/get-searchableattributes">
     Fields searched for query matches
   </Card>
-  <Card title="Filterable attributes" icon="filter" href="/reference/api/settings/filterable-attributes">
+  <Card title="Filterable attributes" icon="filter" href="/reference/api/settings/get-filterableattributes">
     Fields available for filtering and faceting
   </Card>
-  <Card title="Sortable attributes" icon="arrow-down-a-z" href="/reference/api/settings/sortable-attributes">
+  <Card title="Sortable attributes" icon="arrow-down-a-z" href="/reference/api/settings/get-sortableattributes">
     Fields available for sorting results
   </Card>
-  <Card title="Ranking rules" icon="ranking-star" href="/reference/api/settings/ranking-rules">
+  <Card title="Ranking rules" icon="ranking-star" href="/reference/api/settings/get-rankingrules">
     Order of relevancy criteria
   </Card>
-  <Card title="Typo tolerance" icon="spell-check" href="/reference/api/settings/typo-tolerance">
+  <Card title="Typo tolerance" icon="spell-check" href="/reference/api/settings/get-typotolerance">
     Fuzzy matching configuration
   </Card>
-  <Card title="Synonyms" icon="equals" href="/reference/api/settings/synonyms">
+  <Card title="Synonyms" icon="equals" href="/reference/api/settings/get-synonyms">
     Words treated as equivalent
   </Card>
-  <Card title="Stop words" icon="ban" href="/reference/api/settings/stop-words">
+  <Card title="Stop words" icon="ban" href="/reference/api/settings/get-stopwords">
     Words ignored in searches
   </Card>
-  <Card title="Distinct attribute" icon="fingerprint" href="/reference/api/settings/distinct-attribute">
+  <Card title="Distinct attribute" icon="fingerprint" href="/reference/api/settings/get-distinctattribute">
     De-duplicate results by field
   </Card>
-  <Card title="Faceting" icon="chart-pie" href="/reference/api/settings/faceting">
+  <Card title="Faceting" icon="chart-pie" href="/reference/api/settings/get-faceting">
     Facet display limits
   </Card>
-  <Card title="Pagination" icon="book-open" href="/reference/api/settings/pagination">
+  <Card title="Pagination" icon="book-open" href="/reference/api/settings/get-pagination">
     Result pagination limits
   </Card>
-  <Card title="Proximity precision" icon="ruler" href="/reference/api/settings/proximity-precision">
+  <Card title="Proximity precision" icon="ruler" href="/reference/api/settings/get-proximityprecision">
     Word proximity calculation
   </Card>
 </CardGroup>
@@ -65,16 +65,16 @@ Each setting can be configured individually using its dedicated endpoint:
 ### Tokenization settings
 
 <CardGroup cols={2}>
-  <Card title="Dictionary" icon="book" href="/reference/api/settings/dictionary">
+  <Card title="Dictionary" icon="book" href="/reference/api/settings/get-dictionary">
     Custom multi-word terms
   </Card>
-  <Card title="Separator tokens" icon="scissors" href="/reference/api/settings/separator-tokens">
+  <Card title="Separator tokens" icon="scissors" href="/reference/api/settings/get-separatortokens">
     Characters that split words
   </Card>
-  <Card title="Non-separator tokens" icon="link" href="/reference/api/settings/non-separator-tokens">
+  <Card title="Non-separator tokens" icon="link" href="/reference/api/settings/get-nonseparatortokens">
     Characters that don't split words
   </Card>
-  <Card title="Localized attributes" icon="globe" href="/reference/api/settings/localized-attributes">
+  <Card title="Localized attributes" icon="globe" href="/reference/api/settings/get-localizedattributes">
     Language-specific tokenization
   </Card>
 </CardGroup>
@@ -82,13 +82,13 @@ Each setting can be configured individually using its dedicated endpoint:
 ### Search behavior settings
 
 <CardGroup cols={2}>
-  <Card title="Facet search" icon="magnifying-glass-plus" href="/reference/api/settings/facet-search">
+  <Card title="Facet search" icon="magnifying-glass-plus" href="/reference/api/settings/get-facetsearch">
     Enable/disable facet value search
   </Card>
-  <Card title="Prefix search" icon="text-slash" href="/reference/api/settings/prefix-search">
+  <Card title="Prefix search" icon="text-slash" href="/reference/api/settings/get-prefixsearch">
     Prefix matching behavior
   </Card>
-  <Card title="Search cutoff" icon="clock" href="/reference/api/settings/search-cutoff">
+  <Card title="Search cutoff" icon="clock" href="/reference/api/settings/get-searchcutoffms">
     Maximum search duration
   </Card>
 </CardGroup>
@@ -96,13 +96,13 @@ Each setting can be configured individually using its dedicated endpoint:
 ### AI-powered search settings
 
 <CardGroup cols={2}>
-  <Card title="Embedders" icon="brain" href="/reference/api/settings/embedders">
+  <Card title="Embedders" icon="brain" href="/reference/api/settings/get-embedders">
     Vector embedding configuration
   </Card>
-  <Card title="Chat" icon="comments" href="/reference/api/settings/chat">
+  <Card title="Chat" icon="comments" href="/reference/api/settings/get-chat">
     Conversational search settings
   </Card>
-  <Card title="Vector store" icon="database" href="/reference/api/settings/vector-store">
+  <Card title="Vector store" icon="database" href="/reference/api/settings/get-vectorstore">
     Vector storage configuration
   </Card>
 </CardGroup>
@@ -156,7 +156,7 @@ Get the settings of an index.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/resources/glossary/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/getting_started/glossary/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -211,34 +211,34 @@ If the provided index does not exist, it will be created.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/resources/glossary/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/getting_started/glossary/indexes#index-uid) of the requested index |
 
 #### Body
 
 | Name | Type | Default | Description |
 | :--- | :--- | :------ | :---------- |
-| **[`dictionary`](/reference/api/settings/dictionary)** | Array of strings | Empty | List of strings Meilisearch should parse as a single term |
-| **[`displayedAttributes`](/reference/api/settings/displayed-attributes)** | Array of strings | `["*"]` | Fields displayed in the returned documents |
-| **[`distinctAttribute`](/reference/api/settings/distinct-attribute)** | String | `null` | Search returns documents with distinct values of the given field |
-| **[`faceting`](/reference/api/settings/faceting)** | Object | [Default](#settings-object) | Faceting settings |
-| **[`filterableAttributes`](/reference/api/settings/filterable-attributes)** | Array | Empty | Attributes to use as filters and facets |
-| **[`localizedAttributes`](/reference/api/settings/localized-attributes)** | Array | Empty | Language-specific tokenization rules |
-| **[`pagination`](/reference/api/settings/pagination)** | Object | [Default](#settings-object) | Pagination settings |
-| **[`proximityPrecision`](/reference/api/settings/proximity-precision)** | String | `"byWord"` | Precision level for proximity ranking |
-| **[`facetSearch`](/reference/api/settings/facet-search)** | Boolean | `true` | Enable facet search functionality |
-| **[`prefixSearch`](/reference/api/settings/prefix-search)** | String | `"indexingTime"` | When to return prefix matches |
-| **[`rankingRules`](/reference/api/settings/ranking-rules)** | Array of strings | [Default](#settings-object) | List of ranking rules in order of importance |
-| **[`searchableAttributes`](/reference/api/settings/searchable-attributes)** | Array of strings | `["*"]` | Fields to search for matching query words |
-| **[`searchCutoffMs`](/reference/api/settings/search-cutoff)** | Integer | `null` | Maximum duration of a search query |
-| **[`separatorTokens`](/reference/api/settings/separator-tokens)** | Array of strings | Empty | Characters delimiting terms |
-| **[`nonSeparatorTokens`](/reference/api/settings/non-separator-tokens)** | Array of strings | Empty | Characters not delimiting terms |
-| **[`sortableAttributes`](/reference/api/settings/sortable-attributes)** | Array of strings | Empty | Attributes for sorting results |
-| **[`stopWords`](/reference/api/settings/stop-words)** | Array of strings | Empty | Words ignored in search queries |
-| **[`synonyms`](/reference/api/settings/synonyms)** | Object | Empty | Associated words treated similarly |
-| **[`typoTolerance`](/reference/api/settings/typo-tolerance)** | Object | [Default](#settings-object) | Typo tolerance settings |
-| **[`embedders`](/reference/api/settings/embedders)** | Object | Empty | Embedders for AI-powered search |
-| **[`chat`](/reference/api/settings/chat)** <NoticeTag type="experimental" label="experimental" /> | Object | Empty | Chat settings for conversational queries |
-| **[`vectorStore`](/reference/api/settings/vector-store)** <NoticeTag type="experimental" label="experimental" /> | String | `"stable"` | Vector store configuration |
+| **[`dictionary`](/reference/api/settings/get-dictionary)** | Array of strings | Empty | List of strings Meilisearch should parse as a single term |
+| **[`displayedAttributes`](/reference/api/settings/get-displayedattributes)** | Array of strings | `["*"]` | Fields displayed in the returned documents |
+| **[`distinctAttribute`](/reference/api/settings/get-distinctattribute)** | String | `null` | Search returns documents with distinct values of the given field |
+| **[`faceting`](/reference/api/settings/get-faceting)** | Object | [Default](#settings-object) | Faceting settings |
+| **[`filterableAttributes`](/reference/api/settings/get-filterableattributes)** | Array | Empty | Attributes to use as filters and facets |
+| **[`localizedAttributes`](/reference/api/settings/get-localizedattributes)** | Array | Empty | Language-specific tokenization rules |
+| **[`pagination`](/reference/api/settings/get-pagination)** | Object | [Default](#settings-object) | Pagination settings |
+| **[`proximityPrecision`](/reference/api/settings/get-proximityprecision)** | String | `"byWord"` | Precision level for proximity ranking |
+| **[`facetSearch`](/reference/api/settings/get-facetsearch)** | Boolean | `true` | Enable facet search functionality |
+| **[`prefixSearch`](/reference/api/settings/get-prefixsearch)** | String | `"indexingTime"` | When to return prefix matches |
+| **[`rankingRules`](/reference/api/settings/get-rankingrules)** | Array of strings | [Default](#settings-object) | List of ranking rules in order of importance |
+| **[`searchableAttributes`](/reference/api/settings/get-searchableattributes)** | Array of strings | `["*"]` | Fields to search for matching query words |
+| **[`searchCutoffMs`](/reference/api/settings/get-searchcutoffms)** | Integer | `null` | Maximum duration of a search query |
+| **[`separatorTokens`](/reference/api/settings/get-separatortokens)** | Array of strings | Empty | Characters delimiting terms |
+| **[`nonSeparatorTokens`](/reference/api/settings/get-nonseparatortokens)** | Array of strings | Empty | Characters not delimiting terms |
+| **[`sortableAttributes`](/reference/api/settings/get-sortableattributes)** | Array of strings | Empty | Attributes for sorting results |
+| **[`stopWords`](/reference/api/settings/get-stopwords)** | Array of strings | Empty | Words ignored in search queries |
+| **[`synonyms`](/reference/api/settings/get-synonyms)** | Object | Empty | Associated words treated similarly |
+| **[`typoTolerance`](/reference/api/settings/get-typotolerance)** | Object | [Default](#settings-object) | Typo tolerance settings |
+| **[`embedders`](/reference/api/settings/get-embedders)** | Object | Empty | Embedders for AI-powered search |
+| **[`chat`](/reference/api/settings/get-chat)** <NoticeTag type="experimental" label="experimental" /> | Object | Empty | Chat settings for conversational queries |
+| **[`vectorStore`](/reference/api/settings/get-vectorstore)** <NoticeTag type="experimental" label="experimental" /> | String | `"stable"` | Vector store configuration |
 
 #### Example
 
@@ -260,7 +260,7 @@ If Meilisearch encounters an error when updating any of the settings in a reques
 }
 ```
 
-You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks/overview#get-one-task).
 
 ### Reset settings
 
@@ -272,7 +272,7 @@ Reset all the settings of an index to their [default value](#settings-object).
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/resources/glossary/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/getting_started/glossary/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -290,4 +290,4 @@ Reset all the settings of an index to their [default value](#settings-object).
 }
 ```
 
-You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks/overview#get-one-task).

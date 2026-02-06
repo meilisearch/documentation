@@ -2555,6 +2555,62 @@
     {
       "source": "/products/platform/pricing_and_plans",
       "destination": "/products/platform/billing#pricing-models"
+    },
+    {
+      "source": "/products/platform/generate_tenant_token_sdk",
+      "destination": "/products/platform/generate_tenant_tokens"
+    },
+    {
+      "source": "/products/platform/task_webhook",
+      "destination": "/products/platform/webhooks"
+    },
+    {
+      "source": "/reference/api/compact-an-index",
+      "destination": "/reference/api/compact-an-index/overview"
+    },
+    {
+      "source": "/reference/api/settings/embedders",
+      "destination": "/reference/api/settings/get-embedders"
+    },
+    {
+      "source": "/reference/api/settings/filterable-attributes",
+      "destination": "/reference/api/settings/get-filterableattributes"
+    },
+    {
+      "source": "/reference/api/settings/pagination",
+      "destination": "/reference/api/settings/get-pagination"
+    },
+    {
+      "source": "/reference/api/settings/searchable-attributes",
+      "destination": "/reference/api/settings/get-searchableattributes"
+    },
+    {
+      "source": "/reference/api/settings/sortable-attributes",
+      "destination": "/reference/api/settings/get-sortableattributes"
+    },
+    {
+      "source": "/reference/api/settings/stop-words",
+      "destination": "/reference/api/settings/get-stopwords"
+    },
+    {
+      "source": "/reference/api/settings/synonyms",
+      "destination": "/reference/api/settings/get-synonyms"
+    },
+    {
+      "source": "/reference/api/settings/typo-tolerance",
+      "destination": "/reference/api/settings/get-typotolerance"
+    },
+    {
+      "source": "/resources/glossary/documents",
+      "destination": "/getting_started/glossary/documents"
+    },
+    {
+      "source": "/resources/glossary/indexes",
+      "destination": "/getting_started/glossary/indexes"
+    },
+    {
+      "source": "/resources/glossary/primary_key",
+      "destination": "/getting_started/glossary/primary_key"
     }
   ]
 }

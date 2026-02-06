@@ -16,7 +16,7 @@ By default, Meilisearch focuses on ordering results according to their relevancy
 This can be useful in many situations, such as when a user wants to see the cheapest products available in a webshop.
 
 <Tip>
-Sorting at search time can be particularly effective when combined with [placeholder searches](/reference/api/search#placeholder-search).
+Sorting at search time can be particularly effective when combined with [placeholder searches](/reference/api/indexes/search-with-post#placeholder-search).
 </Tip>
 
 ## Configure Meilisearch for sorting at search time
@@ -37,7 +37,7 @@ Uppercase letters are sorted as if they were lowercase. They will still appear u
 
 Meilisearch allows you to sort results based on document fields. Only fields containing numbers, strings, arrays of numeric values, and arrays of string values can be used for sorting.
 
-After you have decided which fields you will allow your users to sort on, you must add their attributes to the [`sortableAttributes` index setting](/reference/api/settings/sortable-attributes).
+After you have decided which fields you will allow your users to sort on, you must add their attributes to the [`sortableAttributes` index setting](/reference/api/settings/get-sortableattributes).
 
 <Warning>
 If a field has values of different types across documents, Meilisearch will give precedence to numbers over strings. This means documents with numeric field values will be ranked higher than those with string values.
@@ -105,7 +105,7 @@ If your users care more about finding cheaper books than they care about finding
 
 ## Sort results at search time
 
-After configuring `sortableAttributes`, you can use the [`sort` search parameter](/reference/api/search#sort) to control the sorting order of your search results.
+After configuring `sortableAttributes`, you can use the [`sort` search parameter](/reference/api/indexes/search-with-post#sort) to control the sorting order of your search results.
 
 `sort` expects a list of attributes that have been added to the `sortableAttributes` list.
 

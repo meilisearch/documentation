@@ -61,14 +61,14 @@ The raw API response shows progressTrace as nested paths with durations:
 |-----------|-------------|---------------------|
 | `extracting documents` | Parsing incoming documents | Reduce document size or batch size |
 | `extracting words` | Tokenizing text for search | Reduce searchable attributes |
-| `extracting word proximity` | Building phrase matching data | Set [proximity precision](/reference/api/settings/proximity-precision) to `byAttribute` |
+| `extracting word proximity` | Building phrase matching data | Set [proximity precision](/reference/api/settings/get-proximityprecision) to `byAttribute` |
 | `extracting facets` | Processing filterable attributes | Reduce filterable attributes |
 | `merging word caches` / `merging facet caches` | Combining extracted data | No direct action—scales with data volume |
 | `waiting for database writes` | Writing to disk | Upgrade to faster storage (avoid HDDs) |
 | `waiting for extractors` | CPU-bound extraction | Add more CPU cores or use [sharding](/products/multi_search/implement_sharding) |
-| `post processing facets > facet search` | Building facet search structures | [Disable facet search](/reference/api/settings/facet-search) if not used |
-| `post processing facets > strings bulk` | Processing string filters | Disable unused [filter features](/reference/api/settings/filterable-attributes#features) |
-| `post processing words > word prefix` | Building autocomplete data | [Disable prefix search](/reference/api/settings/prefix-search) if not needed |
+| `post processing facets > facet search` | Building facet search structures | [Disable facet search](/reference/api/settings/get-facetsearch) if not used |
+| `post processing facets > strings bulk` | Processing string filters | Disable unused [filter features](/reference/api/settings/get-filterableattributes#features) |
+| `post processing words > word prefix` | Building autocomplete data | [Disable prefix search](/reference/api/settings/get-prefixsearch) if not needed |
 
 ### Embeddings-related operations
 
@@ -77,7 +77,7 @@ When using AI-powered search, additional operations appear:
 | Operation | Description | If slow, consider... |
 |-----------|-------------|---------------------|
 | `extracting embeddings` | Getting vectors from provider | Reduce document template size, upgrade provider tier |
-| `writing embeddings to database` | Storing vectors | Use fewer dimensions, enable [binary quantization](/reference/api/settings/embedders#binaryquantized) |
+| `writing embeddings to database` | Storing vectors | Use fewer dimensions, enable [binary quantization](/reference/api/settings/get-embedders#binaryquantized) |
 
 ## Storage changes: internalDatabaseSizes
 
@@ -237,10 +237,10 @@ curl -X PUT "${MEILISEARCH_URL}/indexes/products/settings/facet-search" \
 ## Related resources
 
 <CardGroup cols={2}>
-  <Card title="Index settings reference" icon="gear" href="/reference/api/settings">
+  <Card title="Index settings reference" icon="gear" href="/reference/api/settings/overview">
     All configurable index settings
   </Card>
-  <Card title="Batches API reference" icon="code" href="/reference/api/batches">
+  <Card title="Batches API reference" icon="code" href="/reference/api/batches/overview">
     Full batch object documentation
   </Card>
   <Card title="Indexing best practices" icon="rocket" href="/guides/performance/indexing_best_practices">

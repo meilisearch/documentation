@@ -43,7 +43,7 @@ Roaring bitmaps support efficient operations that search engines need:
 
 ### Inverted indexes
 
-Each word in the [inverted index](/resources/glossary/inverted_index) maps to a roaring bitmap of document IDs:
+Each word in the [inverted index](/getting_started/glossary/inverted_index) maps to a roaring bitmap of document IDs:
 
 ```
 "coffee" → RoaringBitmap[1, 3, 5, 8, 12, ...]
@@ -77,9 +77,9 @@ The savings grow dramatically with larger sets. A million consecutive IDs might 
 
 ## Related concepts
 
-- [Inverted index](/resources/glossary/inverted_index): Uses roaring bitmaps for document lists
+- [Inverted index](/getting_started/glossary/inverted_index): Uses roaring bitmaps for document lists
 - [Hannoy](/resources/internals/hannoy): Uses roaring bitmaps for filtered search
-- [FST](/resources/glossary/fst): Another compact data structure used in Meilisearch
+- [FST](/getting_started/glossary/fst): Another compact data structure used in Meilisearch
 
 ## Learn more
 

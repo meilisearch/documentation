@@ -52,7 +52,7 @@ The chat object may contain the following fields:
 
 ### Search parameters object
 
-Must be one of the following [search parameters](/reference/api/search#search-parameters-object):
+Must be one of the following [search parameters](/reference/api/indexes/search-with-post#search-parameters-object):
 
 - **`hybrid`**
 - **`limit`**
@@ -72,7 +72,7 @@ Get the index chat settings configured for an index.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/resources/glossary/indexes#index-uid) of the requested index  |
+| **`index_uid`** * | String | [`uid`](/getting_started/glossary/indexes#index-uid) of the requested index  |
 
 #### Example
 
@@ -103,7 +103,7 @@ Partially update the index chat settings for an index.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/resources/glossary/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/getting_started/glossary/indexes#index-uid) of the requested index |
 
 #### Body
 
@@ -153,4 +153,4 @@ curl \
 }
 ```
 
-You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks/overview#get-one-task).

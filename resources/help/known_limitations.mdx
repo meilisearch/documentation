@@ -6,17 +6,17 @@ description: Meilisearch has a number of known limitations. These are hard limit
 
 Meilisearch has a number of known limitations. Some of these limitations are the result of intentional design trade-offs, while others can be attributed to [LMDB](/resources/internals/storage), the key-value store that Meilisearch uses under the hood.
 
-This article covers hard limits that cannot be altered. Meilisearch also has some default limits that _can_ be changed, such as a [default payload limit of 100MB](/resources/self_hosting/configuration#payload-limit-size) and a [default search limit of 20 hits](/reference/api/search#limit).
+This article covers hard limits that cannot be altered. Meilisearch also has some default limits that _can_ be changed, such as a [default payload limit of 100MB](/resources/self_hosting/configuration#payload-limit-size) and a [default search limit of 20 hits](/reference/api/indexes/search-with-post#limit).
 
 ## Maximum Meilisearch Cloud upload size
 
 **Limitation:** The maximum file upload size when using the Meilisearch Cloud interface is 20mb.
 
-**Explanation:** Handling large files may result in degraded user experience and performance issues. To add datasets larger than 20mb to a Meilisearch Cloud project, use the [add documents endpoint](/reference/api/documents#add-or-replace-documents) or [`meilisearch-importer`](https://github.com/meilisearch/meilisearch-importer).
+**Explanation:** Handling large files may result in degraded user experience and performance issues. To add datasets larger than 20mb to a Meilisearch Cloud project, use the [add documents endpoint](/reference/api/documents/overview#add-or-replace-documents) or [`meilisearch-importer`](https://github.com/meilisearch/meilisearch-importer).
 
 ## Maximum number of query words
 
-**Limitation:** The maximum number of terms taken into account for each [search query](/reference/api/search#query-q) is 10. If a search query includes more than 10 words, all words after the 10th will be ignored.
+**Limitation:** The maximum number of terms taken into account for each [search query](/reference/api/indexes/search-with-post#query-q) is 10. If a search query includes more than 10 words, all words after the 10th will be ignored.
 
 **Explanation:** Queries with many search terms can lead to long response times. This goes against our goal of providing a fast search-as-you-type experience.
 
@@ -87,7 +87,7 @@ If your query is `Hello - World`:
 
 ## Maximum filter depth
 
-**Limitation:** searches using the [`filter` search parameter](/reference/api/search#filter) may have a maximum filtering depth of 2000.
+**Limitation:** searches using the [`filter` search parameter](/reference/api/indexes/search-with-post#filter) may have a maximum filtering depth of 2000.
 
 **Explanation:** mixing and alternating `AND` and `OR` operators filters creates nested logic structures. Excessive nesting can lead to stack overflow.
 
@@ -135,7 +135,7 @@ user = 1 OR (user = 2 AND user = 3) OR (user = 4 AND user = 5) OR user = 6
 
 **Limitation:** By default, Meilisearch returns up to 1000 documents per search.
 
-**Explanation:** Meilisearch limits the maximum amount of returned search results to protect your database from malicious scraping. You may change this by using the `maxTotalHits` property of the [pagination index settings](/reference/api/settings/pagination#pagination-object). `maxTotalHits` only applies to the [search route](/reference/api/search) and has no effect on the [get documents with POST](/reference/api/documents#get-documents-with-post) and [get documents with GET](/reference/api/documents#get-documents-with-get) endpoints.
+**Explanation:** Meilisearch limits the maximum amount of returned search results to protect your database from malicious scraping. You may change this by using the `maxTotalHits` property of the [pagination index settings](/reference/api/settings/get-pagination#pagination-object). `maxTotalHits` only applies to the [search route](/reference/api/indexes/search-with-post) and has no effect on the [get documents with POST](/reference/api/documents/overview#get-documents-with-post) and [get documents with GET](/reference/api/documents/overview#get-documents-with-get) endpoints.
 
 ## Large datasets and internal errors
 
@@ -163,6 +163,6 @@ user = 1 OR (user = 2 AND user = 3) OR (user = 4 AND user = 5) OR user = 6
 
 ## Facet Search limitation
 
-**Limitation:** When [searching for facet values](/reference/api/facet_search), Meilisearch returns a maximum of 100 facets.
+**Limitation:** When [searching for facet values](/reference/api/facet-search/overview), Meilisearch returns a maximum of 100 facets.
 
 **Explanation:** the limit to the maximum number of returned facets has been implemented to offer a good balance between usability and comprehensive results. Facet search allows users to filter a large list of facets so they may quickly find categories relevant to their query. This is different from searching through an index of documents. Faceting index settings such as the `maxValuesPerFacet` limit do not impact facet search and only affect queries searching through documents.

@@ -26,11 +26,11 @@ Besides, we published a [comparison between Meilisearch and other search engines
 
 The `400 - Bad request` response often means that your data is not in an expected format. You might have extraneous commas, mismatched brackets, missing quotes, etc. Meilisearch API accepts JSON, CSV, and NDJSON formats.
 
-When [adding or replacing documents](/reference/api/documents#add-or-replace-documents), you must enclose them in an array even if there is only one new document.
+When [adding or replacing documents](/reference/api/documents/overview#add-or-replace-documents), you must enclose them in an array even if there is only one new document.
 
 ## I have uploaded my documents, but I get no result when I search in my index
 
-Your document upload probably failed. To understand why, please check the status of the document addition task using the returned [`taskUid`](/reference/api/tasks#get-one-task). If the task failed, the response should contain an `error` object.
+Your document upload probably failed. To understand why, please check the status of the document addition task using the returned [`taskUid`](/reference/api/tasks/overview#get-one-task). If the task failed, the response should contain an `error` object.
 
 Here is an example of a failed task:
 
@@ -100,7 +100,7 @@ The following factors have a great impact on the size of your database (in no pa
 - The number of different words present in the dataset
 
 <Tip>
-Beware heavily multi-lingual datasets and datasets with many unique words, such as IDs or URLs, as they can slow search speed and greatly increase database size. If you do have ID or URL fields, [make them non-searchable](/reference/api/settings/searchable-attributes#update-searchable-attributes) unless they are useful as search criteria.
+Beware heavily multi-lingual datasets and datasets with many unique words, such as IDs or URLs, as they can slow search speed and greatly increase database size. If you do have ID or URL fields, [make them non-searchable](/reference/api/settings/get-searchableattributes#update-searchable-attributes) unless they are useful as search criteria.
 </Tip>
 
 ### Search speed
@@ -125,9 +125,9 @@ In general, we recommend the former. However, if you need to reduce the size of 
 
 - **More relevancy rules => a larger database**
   - The proximity [ranking rule](/products/full_text_search/ranking_rules) alone can be responsible for almost 80% of database size
-- Adding many attributes to [`filterableAttributes`](/reference/api/settings/filterable-attributes) also consumes a large amount of disk space
+- Adding many attributes to [`filterableAttributes`](/reference/api/settings/get-filterableattributes) also consumes a large amount of disk space
 - Multi-lingual datasets are costly, so split your dataset—one language per index
-- [Stop words](/reference/api/settings/stop-words) are essential to reducing database size
+- [Stop words](/reference/api/settings/get-stopwords) are essential to reducing database size
 - Not all attributes need to be [searchable](/products/full_text_search/displayed_searchable_attributes#searchable-fields). Avoid indexing unique IDs.
 
 ## Why does Meilisearch send data to Segment? Does Meilisearch track its users?

@@ -17,7 +17,7 @@ Lightning-fast keyword search with typo tolerance and customizable relevancy.
 | [Typo tolerance](/products/full_text_search/typo_tolerance_settings) | Get relevant results even with spelling mistakes |
 | [Ranking rules](/products/full_text_search/ranking_rules) | Customize how results are ordered |
 | [Synonyms](/products/full_text_search/synonyms) | Define equivalent terms for better recall |
-| [Stop words](/reference/api/settings/stop-words) | Ignore common words like "the" or "and" |
+| [Stop words](/reference/api/settings/get-stopwords) | Ignore common words like "the" or "and" |
 
 [Learn more about full-text search →](/products/full_text_search/overview)
 
@@ -41,7 +41,7 @@ Build chat interfaces powered by your search data with LLM integration.
 | Feature | Description |
 |---------|-------------|
 | [Chat completions](/products/conversational_search/getting_started) | RAG-powered conversational search |
-| [LLM providers](/reference/api/chats) | OpenAI, Mistral, and custom providers |
+| [LLM providers](/products/conversational_search/chat_tooling_reference) | OpenAI, Mistral, and custom providers |
 
 [Learn more about conversational search →](/products/conversational_search/overview)
 
@@ -54,7 +54,7 @@ Refine search results with powerful filters and build faceted navigation.
 | [Filters](/products/faceted_search/filter_search_results) | Filter by any attribute |
 | [Facets](/products/faceted_search/search_with_facet_filters) | Build faceted navigation interfaces |
 | [Sorting](/products/faceted_search/sort_search_results) | Sort results by any field |
-| [Geo search](/products/geo_search/geosearch) | Location-based filtering and sorting |
+| [Geo search](/products/geo_search/overview) | Location-based filtering and sorting |
 
 [Learn more about faceted search →](/products/faceted_search/overview)
 
@@ -98,8 +98,8 @@ Monitor indexing operations and receive notifications.
 | Feature | Description |
 |---------|-------------|
 | [Task management](/products/platform/working_with_tasks) | Track async operations |
-| [Webhooks](/products/platform/task_webhook) | Get notified when tasks complete |
-| [Batches](/reference/api/batches) | Group related operations |
+| [Webhooks](/products/platform/webhooks) | Get notified when tasks complete |
+| [Batches](/reference/api/batches/overview) | Group related operations |
 
 ## Performance features
 
@@ -107,9 +107,9 @@ Monitor indexing operations and receive notifications.
 |---------|-------------|---------------|
 | **Sub-50ms responses** | Fast search regardless of dataset size | - |
 | **Prefix search** | Results update as users type | [Learn more](/products/full_text_search/query_processing) |
-| **Highlighting** | Show matching terms in results | [API reference](/reference/api/search#highlight-tags) |
+| **Highlighting** | Show matching terms in results | [API reference](/reference/api/indexes/search-with-post#highlight-tags) |
 | **Pagination** | Efficient result pagination | [Guide](/guides/performance/pagination) |
-| **Search cutoff** | Limit search time for large datasets | [Settings](/reference/api/settings/search-cutoff) |
+| **Search cutoff** | Limit search time for large datasets | [Settings](/reference/api/settings/get-searchcutoffms) |
 
 ## Language support
 
@@ -120,7 +120,7 @@ Meilisearch provides optimized support for many languages:
 - **RTL languages**: Hebrew, Arabic
 - **Others**: Thai, Greek, and more
 
-[See full language support →](/resources/language)
+[See full language support →](/resources/help/language)
 
 ## Integration options
 
@@ -128,4 +128,4 @@ Meilisearch provides optimized support for many languages:
 |--------|-------------|
 | [REST API](/reference/api/overview) | Direct HTTP integration |
 | [Official SDKs](/resources/help/sdks) | 10+ language SDKs |
-| [Frameworks](/resources/sdks#framework-integrations) | Laravel, Rails, Strapi, etc. |
+| [Frameworks](/resources/help/sdks#framework-integrations) | Laravel, Rails, Strapi, etc. |

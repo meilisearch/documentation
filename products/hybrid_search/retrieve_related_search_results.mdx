@@ -5,7 +5,7 @@ description: This guide shows you how to use the similar documents endpoint to c
 
 # Retrieve related search results
 
-This guide shows you how to use the [similar documents endpoint](/reference/api/similar) to create an AI-powered movie recommendation workflow.
+This guide shows you how to use the [similar documents endpoint](/reference/api/similar-documents/overview) to create an AI-powered movie recommendation workflow.
 
 First, you will create an embedder and add documents to your index. You will then perform a search, and use the top result's primary key to retrieve similar movies in your database.
 
@@ -51,7 +51,7 @@ This request returns a list of movies. Pick the top result and take note of its 
 
 ## Return similar documents
 
-Pass "Batman"'s `id` to your index's [`/similar` route](/reference/api/similar), specifying `movies-text` as your embedder:
+Pass "Batman"'s `id` to your index's [`/similar` route](/reference/api/similar-documents/overview), specifying `movies-text` as your embedder:
 
 <CodeSamples id="related_results_similar_1" />
 

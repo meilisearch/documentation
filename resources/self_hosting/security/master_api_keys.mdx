@@ -50,7 +50,7 @@ Resetting the master key automatically invalidates all existing API keys. You wi
 
 ## API keys
 
-API keys grant access to a specific set of indexes, routes, and endpoints. You can configure them to expire after a certain date. Use the [`/keys` route](/reference/api/keys) to create, configure, and delete API keys.
+API keys grant access to a specific set of indexes, routes, and endpoints. You can configure them to expire after a certain date. Use the [`/keys` route](/reference/api/keys/overview) to create, configure, and delete API keys.
 
 **Use API keys for all API operations except API key management.** This includes:
 - Searching documents
@@ -102,7 +102,7 @@ curl -X POST "${MEILISEARCH_URL}/keys" \
 ## Related resources
 
 <CardGroup cols={2}>
-  <Card title="API keys reference" icon="key" href="/reference/api/keys">
+  <Card title="API keys reference" icon="key" href="/reference/api/keys/overview">
     Full API documentation for key management
   </Card>
   <Card title="Security overview" icon="shield" href="/products/platform/basic_security">

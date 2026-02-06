@@ -199,7 +199,7 @@ If you get the `missing_authorization_header` error, you might be using **v0.24 
 <CodeSamplesUpdatingGuideCheckVersionOldAuthorizationHeader />
 </Tip>
 
-If your [`pkgVersion`](/reference/api/version#version-object) is 0.21 or above, you can jump to [creating the dump](#create-the-dump). If not, proceed to the next step.
+If your [`pkgVersion`](/reference/api/version/overview#version-object) is 0.21 or above, you can jump to [creating the dump](#create-the-dump). If not, proceed to the next step.
 
 ##### Set all fields as displayed attributes
 
@@ -284,7 +284,7 @@ It should return something like this:
 </Tabs>
 
 <Warning>
-Due to an error allowing malformed `_geo` fields in Meilisearch **v0.27, v0.28, and v0.29**, you might not be able to import your dump. Please ensure the `_geo` field follows the [correct format](/products/geo_search/geosearch#preparing-documents-for-location-based-search) before creating your dump.
+Due to an error allowing malformed `_geo` fields in Meilisearch **v0.27, v0.28, and v0.29**, you might not be able to import your dump. Please ensure the `_geo` field follows the [correct format](/products/geo_search/overview#preparing-documents-for-location-based-search) before creating your dump.
 </Warning>
 
 You can then create a dump of your database:
@@ -303,7 +303,7 @@ The server should return a response that looks like this:
 }
 ```
 
-Use the `taskUid` to [track the status](/reference/api/tasks#get-one-task) of your dump. Keep in mind that the process can take some time to complete.
+Use the `taskUid` to [track the status](/reference/api/tasks/overview#get-one-task) of your dump. Keep in mind that the process can take some time to complete.
 
 <Note>
 For v0.27 and below, the response to your request returns a dump `uid`. Use it  with the `/dumps/:dump_uid/status` route to track the request status:
@@ -449,7 +449,7 @@ If you're running a **cloud instance**, press `Ctrl`+`C`  to stop Meilisearch on
 meilisearch-setup
 ```
 
-If required, set `displayedAttributes` back to its previous value using the [update displayed attributes endpoint](/reference/api/settings/displayed-attributes#update-displayed-attributes).
+If required, set `displayedAttributes` back to its previous value using the [update displayed attributes endpoint](/reference/api/settings/get-displayedattributes#update-displayed-attributes).
 
 ### Conclusion
 

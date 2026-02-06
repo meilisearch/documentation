@@ -10,7 +10,7 @@ import CodeSamplesGetSortableAttributes1 from '/snippets/samples/code_samples_ge
 import CodeSamplesUpdateSortableAttributes1 from '/snippets/samples/code_samples_update_sortable_attributes_1.mdx';
 import CodeSamplesResetSortableAttributes1 from '/snippets/samples/code_samples_reset_sortable_attributes_1.mdx';
 
-Attributes that can be used when sorting search results using the [`sort` search parameter](/reference/api/search#sort).
+Attributes that can be used when sorting search results using the [`sort` search parameter](/reference/api/indexes/search-with-post#sort).
 
 <Warning>
 Updating sortable attributes will re-index all documents in the index, which can take some time. We recommend updating your index settings first and then adding documents as this reduces RAM consumption.
@@ -28,7 +28,7 @@ Get the sortable attributes of an index.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/resources/glossary/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/getting_started/glossary/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -55,7 +55,7 @@ Update an index's sortable attributes list.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/resources/glossary/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/getting_started/glossary/indexes#index-uid) of the requested index |
 
 #### Body
 
@@ -89,7 +89,7 @@ If the field does not exist, no error will be thrown.
 }
 ```
 
-You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks/overview#get-one-task).
 
 ### Reset sortable attributes
 
@@ -101,7 +101,7 @@ Reset an index's sortable attributes list back to its default value.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/resources/glossary/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/getting_started/glossary/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -119,4 +119,4 @@ Reset an index's sortable attributes list back to its default value.
 }
 ```
 
-You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks/overview#get-one-task).

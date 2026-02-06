@@ -25,7 +25,7 @@ Bundle multiple search queries in a single API request. Use this endpoint to sea
 | Name          | Type             | Description                                                                                                                                          |
 | :------------ | :--------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **`federation`** | Object | If present and not `null`, returns a single list merging all search results across all specified queries |
-| **`queries`** | Array of objects | Contains the list of search queries to perform. The [`indexUid`](/resources/glossary/indexes#index-uid) search parameter is required, all other parameters are optional |
+| **`queries`** | Array of objects | Contains the list of search queries to perform. The [`indexUid`](/getting_started/glossary/indexes#index-uid) search parameter is required, all other parameters are optional |
 
 <Warning>
 If Meilisearch encounters an error when handling any of the queries in a multi-search request, it immediately stops processing the request and returns an error message. The returned message will only address the first error encountered.
@@ -39,8 +39,8 @@ Use `federation` to receive a single list with all search results from all speci
 
 | Parameter                                                             | Type             | Default value | Description                                         |
 | :--------------------------------------------------------------------------- | :--------------- | :------------ | :-------------------------------------------------- |
-| **[`offset`](/reference/api/search#offset)**                                 | Integer          | `0`           | Number of documents to skip                         |
-| **[`limit`](/reference/api/search#limit)**                                   | Integer          | `20`          | Maximum number of documents returned                |
+| **[`offset`](/reference/api/indexes/search-with-post#offset)**                                 | Integer          | `0`           | Number of documents to skip                         |
+| **[`limit`](/reference/api/indexes/search-with-post#limit)**                                   | Integer          | `20`          | Maximum number of documents returned                |
 | **[`facetsByIndex`](#facetsbyindex)**                                   | Object of arrays          | `null`          | Display facet information for the specified indexes                |
 | **[`mergeFacets`](#mergefacets)**                                   | Object          | `null`          | Display facet information for the specified indexes                |
 
@@ -94,7 +94,7 @@ When you specify `facetsByIndex`, multi-search responses include an extra `facet
 
 `mergeFacets` must be an object and may contain the following fields:
 
-- `maxValuesPerFacet`: must be an integer. When specified, indicates the maximum number of returned values for a single facet. Defaults to the value assigned to [the `maxValuesPerFacet` index setting](/reference/api/settings/faceting)
+- `maxValuesPerFacet`: must be an integer. When specified, indicates the maximum number of returned values for a single facet. Defaults to the value assigned to [the `maxValuesPerFacet` index setting](/reference/api/settings/get-faceting)
 
 When both `facetsByIndex` and `mergeFacets` are present and not null, facet information included in multi-search responses is merged across all queried indexes. Instead of `facetsByIndex`, the response includes two extra fields: `facetDistribution` and `facetStats`:
 
@@ -147,35 +147,35 @@ There is no way to specify that two documents should be treated as the same acro
 | Search parameter                                                             | Type             | Default value | Description                                         |
 | :--------------------------------------------------------------------------- | :--------------- | :------------ | :-------------------------------------------------- |
 | **[`federationOptions`](#federationoptions)**                                | Object           | `null`        | Configure federation settings for a specific query  |
-| **[`indexUid`](/resources/glossary/indexes#index-uid)**                   | String           | N/A           | `uid` of the requested index                        |
-| **[`q`](/reference/api/search#query-q)**                                     | String           | `""`          | Query string                                        |
-| **[`offset`](/reference/api/search#offset)**                                 | Integer          | `0`           | Number of documents to skip                         |
-| **[`limit`](/reference/api/search#limit)**                                   | Integer          | `20`          | Maximum number of documents returned                |
-| **[`hitsPerPage`](/reference/api/search#number-of-results-per-page)**        | Integer          | `1`           | Maximum number of documents returned for a page     |
-| **[`page`](/reference/api/search#page)**                                     | Integer          | `1`           | Request a specific page of results                  |
-| **[`filter`](/reference/api/search#filter)**                                 | String           | `null`        | Filter queries by an attribute's value              |
-| **[`facets`](/reference/api/search#facets)**                                 | Array of strings | `null`        | Display the count of matches per facet              |
-| **[`distinct`](/reference/api/search#distinct-attributes-at-search-time)**   | String           | `null`        | Restrict search to documents with unique values of specified attribute |
-| **[`attributesToRetrieve`](/reference/api/search#attributes-to-retrieve)**   | Array of strings | `["*"]`       | Attributes to display in the returned documents     |
-| **[`attributesToCrop`](/reference/api/search#attributes-to-crop)**           | Array of strings | `null`        | Attributes whose values have to be cropped          |
-| **[`cropLength`](/reference/api/search#crop-length)**                        | Integer          | `10`          | Maximum length of cropped value in words            |
-| **[`cropMarker`](/reference/api/search#crop-marker)**                        | String           | `"…"`         | String marking crop boundaries                      |
-| **[`attributesToHighlight`](/reference/api/search#attributes-to-highlight)** | Array of strings | `null`        | Highlight matching terms contained in an attribute  |
-| **[`highlightPreTag`](/reference/api/search#highlight-tags)**                | String           | `"<em>"`      | String inserted at the start of a highlighted term  |
-| **[`highlightPostTag`](/reference/api/search#highlight-tags)**               | String           | `"</em>"`     | String inserted at the end of a highlighted term    |
-| **[`showMatchesPosition`](/reference/api/search#show-matches-position)**     | Boolean          | `false`       | Return matching terms location                      |
-| **[`sort`](/reference/api/search#sort)**                                     | Array of strings | `null`        | Sort search results by an attribute's value         |
-| **[`matchingStrategy`](/reference/api/search#matching-strategy)**            | String           | `last`        | Strategy used to match query terms within documents |
-| **[`showRankingScore`](/reference/api/search#ranking-score)**                | Boolean          | `false`       | Display the global ranking score of a document      |
-| **[`showRankingScoreDetails`](/reference/api/search#ranking-score-details)** | Boolean          | `false`       | Adds a detailed global ranking score field          |
-| **[`rankingScoreThreshold`](/reference/api/search#ranking-score-threshold)** | Number           | `null`        | Excludes results with low ranking scores            |
-| **[`attributesToSearchOn`](/reference/api/search#customize-attributes-to-search-on-at-search-time)** | Array of strings | `["*"]` | Restrict search to the specified attributes |
-| **[`hybrid`](/reference/api/search#hybrid-search)**                          | Object           | `null`        | Return results based on query keywords and meaning  |
-| **[`vector`](/reference/api/search#vector)**                                 | Array of numbers | `null`        | Search using a custom query vector                  |
-| **[`retrieveVectors`](/reference/api/search#display-_vectors-in-response)**  | Boolean          | `false`       | Return document vector data                         |
-| **[`locales`](/reference/api/search#query-locales)**                         | Array of strings | `null`        | Explicitly specify languages used in a query        |
+| **[`indexUid`](/getting_started/glossary/indexes#index-uid)**                   | String           | N/A           | `uid` of the requested index                        |
+| **[`q`](/reference/api/indexes/search-with-post#query-q)**                                     | String           | `""`          | Query string                                        |
+| **[`offset`](/reference/api/indexes/search-with-post#offset)**                                 | Integer          | `0`           | Number of documents to skip                         |
+| **[`limit`](/reference/api/indexes/search-with-post#limit)**                                   | Integer          | `20`          | Maximum number of documents returned                |
+| **[`hitsPerPage`](/reference/api/indexes/search-with-post#number-of-results-per-page)**        | Integer          | `1`           | Maximum number of documents returned for a page     |
+| **[`page`](/reference/api/indexes/search-with-post#page)**                                     | Integer          | `1`           | Request a specific page of results                  |
+| **[`filter`](/reference/api/indexes/search-with-post#filter)**                                 | String           | `null`        | Filter queries by an attribute's value              |
+| **[`facets`](/reference/api/indexes/search-with-post#facets)**                                 | Array of strings | `null`        | Display the count of matches per facet              |
+| **[`distinct`](/reference/api/indexes/search-with-post#distinct-attributes-at-search-time)**   | String           | `null`        | Restrict search to documents with unique values of specified attribute |
+| **[`attributesToRetrieve`](/reference/api/indexes/search-with-post#attributes-to-retrieve)**   | Array of strings | `["*"]`       | Attributes to display in the returned documents     |
+| **[`attributesToCrop`](/reference/api/indexes/search-with-post#attributes-to-crop)**           | Array of strings | `null`        | Attributes whose values have to be cropped          |
+| **[`cropLength`](/reference/api/indexes/search-with-post#crop-length)**                        | Integer          | `10`          | Maximum length of cropped value in words            |
+| **[`cropMarker`](/reference/api/indexes/search-with-post#crop-marker)**                        | String           | `"…"`         | String marking crop boundaries                      |
+| **[`attributesToHighlight`](/reference/api/indexes/search-with-post#attributes-to-highlight)** | Array of strings | `null`        | Highlight matching terms contained in an attribute  |
+| **[`highlightPreTag`](/reference/api/indexes/search-with-post#highlight-tags)**                | String           | `"<em>"`      | String inserted at the start of a highlighted term  |
+| **[`highlightPostTag`](/reference/api/indexes/search-with-post#highlight-tags)**               | String           | `"</em>"`     | String inserted at the end of a highlighted term    |
+| **[`showMatchesPosition`](/reference/api/indexes/search-with-post#show-matches-position)**     | Boolean          | `false`       | Return matching terms location                      |
+| **[`sort`](/reference/api/indexes/search-with-post#sort)**                                     | Array of strings | `null`        | Sort search results by an attribute's value         |
+| **[`matchingStrategy`](/reference/api/indexes/search-with-post#matching-strategy)**            | String           | `last`        | Strategy used to match query terms within documents |
+| **[`showRankingScore`](/reference/api/indexes/search-with-post#ranking-score)**                | Boolean          | `false`       | Display the global ranking score of a document      |
+| **[`showRankingScoreDetails`](/reference/api/indexes/search-with-post#ranking-score-details)** | Boolean          | `false`       | Adds a detailed global ranking score field          |
+| **[`rankingScoreThreshold`](/reference/api/indexes/search-with-post#ranking-score-threshold)** | Number           | `null`        | Excludes results with low ranking scores            |
+| **[`attributesToSearchOn`](/reference/api/indexes/search-with-post#customize-attributes-to-search-on-at-search-time)** | Array of strings | `["*"]` | Restrict search to the specified attributes |
+| **[`hybrid`](/reference/api/indexes/search-with-post#hybrid-search)**                          | Object           | `null`        | Return results based on query keywords and meaning  |
+| **[`vector`](/reference/api/indexes/search-with-post#vector)**                                 | Array of numbers | `null`        | Search using a custom query vector                  |
+| **[`retrieveVectors`](/reference/api/indexes/search-with-post#display-_vectors-in-response)**  | Boolean          | `false`       | Return document vector data                         |
+| **[`locales`](/reference/api/indexes/search-with-post#query-locales)**                         | Array of strings | `null`        | Explicitly specify languages used in a query        |
 
-Unless otherwise noted, search parameters for multi-search queries function exactly like [search parameters for the `/search` endpoint](/reference/api/search#search-parameters).
+Unless otherwise noted, search parameters for multi-search queries function exactly like [search parameters for the `/search` endpoint](/reference/api/indexes/search-with-post#search-parameters).
 
 ##### `limit`, `offset`, `hitsPerPage` and `page`
 
@@ -186,7 +186,7 @@ These options are not compatible with federated searches.
 `federationOptions` must be an object. It accepts the following parameters:
 
 - `weight`: serves as a multiplicative factor to ranking scores of search results in this specific query. If < `1.0`, the hits from this query are less likely to appear in the final results list. If > `1.0`, the hits from this query are more likely to appear in the final results list. Must be a positive floating-point number. Defaults to `1.0`
-- `remote` <NoticeTag type="experimental" label="experimental" />: indicates the remote instance where Meilisearch will perform the query. Must be a string corresponding to a [remote object](/reference/api/network). Defaults to `null`
+- `remote` <NoticeTag type="experimental" label="experimental" />: indicates the remote instance where Meilisearch will perform the query. Must be a string corresponding to a [remote object](/reference/api/network/overview). Defaults to `null`
 
 ### Response
 
@@ -202,7 +202,7 @@ Each search result object is composed of the following fields:
 
 | Name                     | Type             | Description                                                                      |
 | :----------------------- | :--------------- | :------------------------------------------------------------------------------- |
-| **`indexUid`**           | String           | [`uid`](/resources/glossary/indexes#index-uid) of the requested index         |
+| **`indexUid`**           | String           | [`uid`](/getting_started/glossary/indexes#index-uid) of the requested index         |
 | **`hits`**               | Array of objects | Results of the query                                                             |
 | **`offset`**             | Number           | Number of documents skipped                                                      |
 | **`limit`**              | Number           | Number of documents to take                                                      |
@@ -211,8 +211,8 @@ Each search result object is composed of the following fields:
 | **`totalPages`**         | Number           | Exhaustive total number of search result pages                                   |
 | **`hitsPerPage`**        | Number           | Number of results on each page                                                   |
 | **`page`**               | Number           | Current search results page                                                      |
-| **`facetDistribution`**  | Object           | **[Distribution of the given facets](/reference/api/search#facetdistribution)**  |
-| **`facetStats`**         | Object           | [The numeric `min` and `max` values per facet](/reference/api/search#facetstats) |
+| **`facetDistribution`**  | Object           | **[Distribution of the given facets](/reference/api/indexes/search-with-post#facetdistribution)**  |
+| **`facetStats`**         | Object           | [The numeric `min` and `max` values per facet](/reference/api/indexes/search-with-post#facetstats) |
 | **`processingTimeMs`**   | Number           | Processing time of the query                                                     |
 | **`query`**              | String           | Query originating the response                                                   |
 | **`requestUid`**         | String           | A UUID v7 identifying the search request                               |

@@ -15,7 +15,7 @@ If you have a multilingual dataset, the best practice is to create one index per
 
 - Provides natural sharding of your data by language, making it easier to maintain and scale.
 
-- Lets you apply language-specific settings, such as [stop words](/reference/api/settings/stop-words), and [separators](/reference/api/settings/separator-tokens).
+- Lets you apply language-specific settings, such as [stop words](/reference/api/settings/get-stopwords), and [separators](/reference/api/settings/get-separatortokens).
 
 - Simplifies the handling of complex languages like Chinese or Japanese, which require specialized tokenizers.
 
@@ -23,9 +23,9 @@ If you have a multilingual dataset, the best practice is to create one index per
 
 If you want to allow users to search in more than one language at once, you can:
 
-- Run a [multi-search](/reference/api/multi_search), querying several indexes in parallel.
+- Run a [multi-search](/reference/api/multi-search/overview), querying several indexes in parallel.
 
-- Use [federated search](/reference/api/multi_search#federated-multi-search-requests), aggregating results from multiple language indexes into a single response.
+- Use [federated search](/reference/api/multi-search/overview#federated-multi-search-requests), aggregating results from multiple language indexes into a single response.
 
 ### Create a single index for multiple languages
 
@@ -49,7 +49,7 @@ In some cases, you may prefer to keep multiple languages in a **single index**. 
 
 - Use language-specific field names with a prefix or suffix (e.g., title_fr, title_en, or fr_title).
 
-- Declare these fields as [localized attributes](/reference/api/settings/localized-attributes) so Meilisearch can apply the correct tokenizer to each one.
+- Declare these fields as [localized attributes](/reference/api/settings/get-localizedattributes) so Meilisearch can apply the correct tokenizer to each one.
 
 - This allows you to filter and search by language, even when multiple languages are stored in the same index.
 
@@ -83,7 +83,7 @@ To keep queries and documents consistent, Meilisearch provides configuration opt
 
 #### Declaring locales for documents
 
-The [`localizedAttributes` setting](/reference/api/settings/localized-attributes) allows you to explicitly define which languages are present in your dataset, and in which fields.
+The [`localizedAttributes` setting](/reference/api/settings/get-localizedattributes) allows you to explicitly define which languages are present in your dataset, and in which fields.
 
 For example, if your dataset contains multilingual titles, you can declare which attribute belongs to which language:
 
@@ -106,7 +106,7 @@ client.index('INDEX_NAME').updateLocalizedAttributes([
 
 #### Specifying locales for queries
 
-When performing searches, you can specify [query locales](/reference/api/search#query-locales) to ensure queries are tokenized with the correct rules.
+When performing searches, you can specify [query locales](/reference/api/indexes/search-with-post#query-locales) to ensure queries are tokenized with the correct rules.
 
 ```javascript
 client.index('INDEX_NAME').search('schiff', { locales: ['deu'] })

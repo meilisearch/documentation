@@ -35,7 +35,7 @@ Embedders with `source: userProvided` are incompatible with  `documentTemplate` 
 
 ## Add documents to Meilisearch
 
-Next, use [the `/documents` endpoint](/reference/api/documents?utm_campaign=vector-search&utm_source=docs&utm_medium=vector-search-guide) to upload vectorized documents. Place vector data in your documents' `_vectors` field:
+Next, use [the `/documents` endpoint](/reference/api/documents/overview?utm_campaign=vector-search&utm_source=docs&utm_medium=vector-search-guide) to upload vectorized documents. Place vector data in your documents' `_vectors` field:
 
 ```sh
 curl -X POST -H 'content-type: application/json' \
@@ -65,7 +65,7 @@ curl -X POST -H 'content-type: application/json' \
 
 `vector` must be an array of numbers indicating the search vector. You must generate these yourself when using vector search with user-provided embeddings.
 
-`vector` can be used together with [other search parameters](/reference/api/search?utm_campaign=vector-search&utm_source=docs&utm_medium=vector-search-guide), including [`filter`](/reference/api/search#filter) and [`sort`](/reference/api/search#sort):
+`vector` can be used together with [other search parameters](/reference/api/indexes/search-with-post?utm_campaign=vector-search&utm_source=docs&utm_medium=vector-search-guide), including [`filter`](/reference/api/indexes/search-with-post#filter) and [`sort`](/reference/api/indexes/search-with-post#sort):
 
 ```sh
 curl -X POST -H 'content-type: application/json' \

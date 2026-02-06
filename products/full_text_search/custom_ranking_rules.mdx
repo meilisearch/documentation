@@ -18,7 +18,7 @@ To add a custom ranking rule, you have to communicate the attribute name followe
 
 **The attribute must have either a numeric or a string value** in all of the documents contained in that index.
 
-You can add this rule to the existing list of ranking rules using the [update settings endpoint](/reference/api/settings#update-settings) or [update ranking rules endpoint](/reference/api/settings/ranking-rules#update-ranking-rules).
+You can add this rule to the existing list of ranking rules using the [update settings endpoint](/reference/api/settings/overview#update-settings) or [update ranking rules endpoint](/reference/api/settings/get-rankingrules#update-ranking-rules).
 
 ## How to use custom ranking rules
 
@@ -61,7 +61,7 @@ The following array includes all built-in ranking rules and places the custom ru
 
 ## Sorting at search time and custom ranking rules
 
-Meilisearch allows users to define [sorting order at query time](/products/faceted_search/sort_search_results) by using the [`sort` search parameter](/reference/api/search#sort). There is some overlap between sorting and custom ranking rules, but the two do have different uses.
+Meilisearch allows users to define [sorting order at query time](/products/faceted_search/sort_search_results) by using the [`sort` search parameter](/reference/api/indexes/search-with-post#sort). There is some overlap between sorting and custom ranking rules, but the two do have different uses.
 
 In general, `sort` will be most useful when you want to allow users to define what type of results they want to see first. A good use-case for `sort` is creating a webshop interface where customers can sort products by descending or ascending product price.
 

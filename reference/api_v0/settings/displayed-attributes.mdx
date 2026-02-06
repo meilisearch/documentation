@@ -10,7 +10,7 @@ import CodeSamplesGetDisplayedAttributes1 from '/snippets/samples/code_samples_g
 import CodeSamplesUpdateDisplayedAttributes1 from '/snippets/samples/code_samples_update_displayed_attributes_1.mdx';
 import CodeSamplesResetDisplayedAttributes1 from '/snippets/samples/code_samples_reset_displayed_attributes_1.mdx';
 
-The attributes added to the `displayedAttributes` list appear in search results. `displayedAttributes` only affects the search endpoints. It has no impact on the [get documents with POST](/reference/api/documents#get-documents-with-post) and [get documents with GET](/reference/api/documents#get-documents-with-get) endpoints.
+The attributes added to the `displayedAttributes` list appear in search results. `displayedAttributes` only affects the search endpoints. It has no impact on the [get documents with POST](/reference/api/documents/overview#get-documents-with-post) and [get documents with GET](/reference/api/documents/overview#get-documents-with-get) endpoints.
 
 By default, the `displayedAttributes` array is equal to all fields in your dataset. This behavior is represented by the value `["*"]`.
 
@@ -26,7 +26,7 @@ Get the displayed attributes of an index.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/resources/glossary/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/getting_started/glossary/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -53,7 +53,7 @@ Update the displayed attributes of an index.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/resources/glossary/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/getting_started/glossary/indexes#index-uid) of the requested index |
 
 #### Body
 
@@ -85,7 +85,7 @@ If the field does not exist, no error will be thrown.
 }
 ```
 
-You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks/overview#get-one-task).
 
 ### Reset displayed attributes
 
@@ -97,7 +97,7 @@ Reset the displayed attributes of the index to the default value.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/resources/glossary/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/getting_started/glossary/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -115,4 +115,4 @@ Reset the displayed attributes of the index to the default value.
 }
 ```
 
-You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks/overview#get-one-task).

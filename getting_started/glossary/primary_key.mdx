@@ -11,7 +11,7 @@ import CodeSamplesPrimaryFieldGuideUpdateDocumentPrimaryKey from '/snippets/samp
 
 ## Primary field
 
-An [index](/resources/glossary/indexes) in Meilisearch is a collection of [documents](/resources/glossary/documents). Documents are composed of fields, each field containing an attribute and a value.
+An [index](/getting_started/glossary/indexes) in Meilisearch is a collection of [documents](/getting_started/glossary/documents). Documents are composed of fields, each field containing an attribute and a value.
 
 The primary field is a special field that must be present in all documents. Its attribute is the **[primary key](#primary-key-1)** and its value is the **[document id](#document-id)**. It uniquely identifies each document in an index, ensuring that **it is impossible to have two exactly identical documents** present in the same index.
 
@@ -130,7 +130,7 @@ The code below adds a document to the `books` index and sets `reference_number` 
 
 ### Changing your primary key with the update index endpoint
 
-The primary key cannot be changed while documents are present in the index. To change the primary key of an index that already contains documents, you must therefore [delete all documents](/reference/api/documents#delete-all-documents) from that index, [change the primary key](/reference/api/indexes#update-an-index), then [add them](/reference/api/documents#add-or-replace-documents) again.
+The primary key cannot be changed while documents are present in the index. To change the primary key of an index that already contains documents, you must therefore [delete all documents](/reference/api/documents/overview#delete-all-documents) from that index, [change the primary key](/reference/api/indexes/overview#update-an-index), then [add them](/reference/api/documents/overview#add-or-replace-documents) again.
 
 The code below updates the primary key to `title`:
 

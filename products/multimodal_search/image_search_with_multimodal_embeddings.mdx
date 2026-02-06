@@ -187,11 +187,11 @@ curl \
   }'
 ```
 
-Since the `source` of this embedder is `rest`, you must also specify a [`request` and a `response` fields](/reference/api/settings#body-21). These respectively instruct Meilisearch on how to structure the request sent to the embeddings provider, and where to find the embeddings in the provider's response.
+Since the `source` of this embedder is `rest`, you must also specify a [`request` and a `response` fields](/reference/api/settings/overview#body-21). These respectively instruct Meilisearch on how to structure the request sent to the embeddings provider, and where to find the embeddings in the provider's response.
 
 ## Add documents
 
-Once your embedder is configured, you can [add documents to your index](/getting_started/cloud_quick_start) with the [`/documents` endpoint](/reference/api/documents).
+Once your embedder is configured, you can [add documents to your index](/getting_started/cloud_quick_start) with the [`/documents` endpoint](/reference/api/documents/overview).
 
 During indexing, Meilisearch will automatically generate multimodal embeddings for each document using the configured `indexingFragments`.
 

@@ -30,7 +30,7 @@ Get a set of documents.
 Use `offset` and `limit` to browse through documents.
 
 <Warning>
-`filter` will not work without first explicitly adding attributes to the [`filterableAttributes` list](/reference/api/settings/filterable-attributes#update-filterable-attributes). [Learn more about filters in our dedicated guide.](/products/faceted_search/filter_search_results)
+`filter` will not work without first explicitly adding attributes to the [`filterableAttributes` list](/reference/api/settings/get-filterableattributes#update-filterable-attributes). [Learn more about filters in our dedicated guide.](/products/faceted_search/filter_search_results)
 </Warning>
 
 ### Path parameters
@@ -119,7 +119,7 @@ Get a set of documents.
 Using the query parameters `offset` and `limit`, you can browse through all your documents.`filter` must be a string. To create [filter expressions](/products/faceted_search/filter_expression_reference) use `AND` or `OR`.
 
 <Warning>
-`filter` will not work without first explicitly adding attributes to the [`filterableAttributes` list](/reference/api/settings/filterable-attributes#update-filterable-attributes). [Learn more about filters in our dedicated guide.](/products/faceted_search/filter_search_results)
+`filter` will not work without first explicitly adding attributes to the [`filterableAttributes` list](/reference/api/settings/get-filterableattributes#update-filterable-attributes). [Learn more about filters in our dedicated guide.](/products/faceted_search/filter_search_results)
 </Warning>
 
 ### Path parameters
@@ -235,7 +235,7 @@ Get one document using its unique id.
 
 Add an array of documents or replace them if they already exist. If the provided index does not exist, it will be created.
 
-If you send an already existing document (same [document id](getting_started/glossary/primary_key#document-id)) the **whole existing document** will be overwritten by the new document. Fields that are no longer present in the new document are removed. For a partial update of the document see the [add or update documents](/reference/api/documents#add-or-update-documents) endpoint.
+If you send an already existing document (same [document id](getting_started/glossary/primary_key#document-id)) the **whole existing document** will be overwritten by the new document. Fields that are no longer present in the new document are removed. For a partial update of the document see the [add or update documents](/reference/api/documents/overview#add-or-update-documents) endpoint.
 
 This endpoint accepts the following content types:
 
@@ -255,7 +255,7 @@ This endpoint accepts the following content types:
 | :----------------- | :------------ | :-------------------------------------------------------------------------------------------------------------------------------------- |
 | **`primaryKey`**   | `null`        | [Primary key](getting_started/glossary/primary_key#primary-field) of the index                                                              |
 | **`csvDelimiter`** | `","`         | Configure the character separating CSV fields. Must be a string containing [one ASCII character](https://www.rfc-editor.org/rfc/rfc20). |
-| **`customMetadata`** | `null`         | An arbitrary string accessible via the [generated task object](/reference/api/tasks#custommetadata) |
+| **`customMetadata`** | `null`         | An arbitrary string accessible via the [generated task object](/reference/api/tasks/overview#custommetadata) |
 | **`skipCreation`**   | `false`       | If `true`, updates existing documents, but does not add new documents to the index |
 
 <Warning>
@@ -347,7 +347,7 @@ If the key for an embedder inside `_vectors` is empty or `null`, Meilisearch tre
 }
 ```
 
-You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks/overview#get-one-task).
 
 ## Add or update documents
 
@@ -365,7 +365,7 @@ Updating an object replaces the entire object and removes any omitted subfields.
 Using dot notation in an update request creates a new flat attribute instead of updating the existing nested field.
 </Warning>
 
-To completely overwrite a document, check out the [add or replace documents route](/reference/api/documents#add-or-replace-documents).
+To completely overwrite a document, check out the [add or replace documents route](/reference/api/documents/overview#add-or-replace-documents).
 
 If you want to set the [**primary key** of your index](getting_started/glossary/primary_key#setting-the-primary-key-on-document-addition) through this route, you may only do so **the first time you add documents** to the index. If you try to set the primary key after having added documents to the index, the task will return an error.
 
@@ -387,7 +387,7 @@ This endpoint accepts the following content types:
 | :----------------- | :------------ | :-------------------------------------------------------------------------------------------------------------------------------------- |
 | **`primaryKey`**   | `null`        | [Primary key](getting_started/glossary/primary_key#primary-field) of the documents                                                          |
 | **`csvDelimiter`** | `","`         | Configure the character separating CSV fields. Must be a string containing [one ASCII character](https://www.rfc-editor.org/rfc/rfc20). |
-| **`customMetadata`** | `null`         | An arbitrary string accessible via the [generated task object](/reference/api/tasks#custommetadata) |
+| **`customMetadata`** | `null`         | An arbitrary string accessible via the [generated task object](/reference/api/tasks/overview#custommetadata) |
 | **`skipCreation`**   | `false`       | If `true`, updates existing documents, but does not add new documents to the index |
 
 <Warning>
@@ -411,7 +411,7 @@ An array of documents. Each document is represented as a JSON object.
 
 <CodeSamplesAddOrUpdateDocuments1 />
 
-This document is an update of the document found in [add or replace document](/reference/api/documents#add-or-replace-documents).
+This document is an update of the document found in [add or replace document](/reference/api/documents/overview#add-or-replace-documents).
 
 The documents are matched because they have the same [primary key](/getting_started/glossary/documents#primary-field) value `id: 287947`. This route will update the `title` field as it changed from `Shazam` to `Shazam ⚡️` and add the new `genres` field to that document. The rest of the document will remain unchanged.
 
@@ -427,7 +427,7 @@ The documents are matched because they have the same [primary key](/getting_star
 }
 ```
 
-You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks/overview#get-one-task).
 
 ## Update documents with function <NoticeTag type="experimental" label="experimental" />
 
@@ -462,7 +462,7 @@ curl \
 | **`function`**     | `null`        | A string containing a RHAI function                                                         |
 | **`filter`**       | `null`        | A string containing a filter expression |
 | **`context`**      | `null`        | An object with data Meilisearch should make available for the editing function |
-| **`customMetadata`** | `null`         | An arbitrary string accessible via the [generated task object](/reference/api/tasks#custommetadata) |
+| **`customMetadata`** | `null`         | An arbitrary string accessible via the [generated task object](/reference/api/tasks/overview#custommetadata) |
 
 #### `function`
 
@@ -503,7 +503,7 @@ Delete all documents in the specified index.
 
 | Query Parameter    | Default Value | Description                                                                                                                             |
 | :----------------- | :------------ | :-------------------------------------------------------------------------------------------------------------------------------------- |
-| **`customMetadata`** | `null`         | An arbitrary string accessible via the [generated task object](/reference/api/tasks#custommetadata) |
+| **`customMetadata`** | `null`         | An arbitrary string accessible via the [generated task object](/reference/api/tasks/overview#custommetadata) |
 
 ### Example
 
@@ -521,7 +521,7 @@ Delete all documents in the specified index.
 }
 ```
 
-You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks/overview#get-one-task).
 
 ## Delete one document
 
@@ -540,7 +540,7 @@ Delete one document based on its unique id.
 
 | Query Parameter    | Default Value | Description                                                                                                                             |
 | :----------------- | :------------ | :-------------------------------------------------------------------------------------------------------------------------------------- |
-| **`customMetadata`** | `null`         | An arbitrary string accessible via the [generated task object](/reference/api/tasks#custommetadata) |
+| **`customMetadata`** | `null`         | An arbitrary string accessible via the [generated task object](/reference/api/tasks/overview#custommetadata) |
 
 ### Example
 
@@ -558,7 +558,7 @@ Delete one document based on its unique id.
 }
 ```
 
-You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks/overview#get-one-task).
 
 ## Delete documents by filter
 
@@ -576,14 +576,14 @@ Delete a set of documents based on a filter.
 
 | Query Parameter    | Default Value | Description                                                                                                                             |
 | :----------------- | :------------ | :-------------------------------------------------------------------------------------------------------------------------------------- |
-| **`customMetadata`** | `null`         | An arbitrary string accessible via the [generated task object](/reference/api/tasks#custommetadata) |
+| **`customMetadata`** | `null`         | An arbitrary string accessible via the [generated task object](/reference/api/tasks/overview#custommetadata) |
 
 ### Body
 
 A filter expression written as a string or array of array of strings for the documents to be deleted.
 
 <Warning>
-`filter` will not work without first explicitly adding attributes to the [`filterableAttributes` list](/reference/api/settings/filterable-attributes#update-filterable-attributes). [Learn more about filters in our dedicated guide.](/products/faceted_search/filter_search_results)
+`filter` will not work without first explicitly adding attributes to the [`filterableAttributes` list](/reference/api/settings/get-filterableattributes#update-filterable-attributes). [Learn more about filters in our dedicated guide.](/products/faceted_search/filter_search_results)
 </Warning>
 
 ```
@@ -610,7 +610,7 @@ Sending an empty payload (`--data-binary '{}'`) will return a `bad_request` erro
 }
 ```
 
-You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks/overview#get-one-task).
 
 ## Delete documents by batch
 
@@ -628,7 +628,7 @@ Delete a set of documents based on an array of document ids.
 
 | Query Parameter    | Default Value | Description                                                                                                                             |
 | :----------------- | :------------ | :-------------------------------------------------------------------------------------------------------------------------------------- |
-| **`customMetadata`** | `null`         | An arbitrary string accessible via the [generated task object](/reference/api/tasks#custommetadata) |
+| **`customMetadata`** | `null`         | An arbitrary string accessible via the [generated task object](/reference/api/tasks/overview#custommetadata) |
 
 ### Body
 
@@ -654,4 +654,4 @@ An array of numbers containing the unique ids of the documents to be deleted.
 }
 ```
 
-You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks/overview#get-one-task).

@@ -4,7 +4,7 @@ sidebarTitle: Ranking score
 description: This article explains how the order of attributes in the `searchableAttributes` array impacts search result relevancy.
 ---
 
-When using the [`showRankingScore` search parameter](/reference/api/search#ranking-score), Meilisearch adds a global ranking score field, `_rankingScore`, to each document. The `_rankingScore` is between `0.0` and `1.0`. The higher the ranking score, the more relevant the document.
+When using the [`showRankingScore` search parameter](/reference/api/indexes/search-with-post#ranking-score), Meilisearch adds a global ranking score field, `_rankingScore`, to each document. The `_rankingScore` is between `0.0` and `1.0`. The higher the ranking score, the more relevant the document.
 
 Ranking rules sort documents either by relevancy (`words`, `typo`, `proximity`, `exactness`, `attribute`) or by the value of a field (`sort`). Since `sort`  doesn't rank documents by relevancy, it does not influence the `_rankingScore`.
 

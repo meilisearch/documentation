@@ -17,7 +17,7 @@ Localized attributes affect `searchableAttributes`, `filterableAttributes`, and 
 Configuring multiple languages for a single index may negatively impact performance.
 
 <Note>
-[`locales`](/reference/api/search#query-locales) and `localizedAttributes` have the same goal: explicitly state the language used in a search when Meilisearch's language auto-detection is not working as expected.
+[`locales`](/reference/api/indexes/search-with-post#query-locales) and `localizedAttributes` have the same goal: explicitly state the language used in a search when Meilisearch's language auto-detection is not working as expected.
 
 If you believe Meilisearch is detecting incorrect languages because of the query text, explicitly set the search language with `locales`.
 
@@ -61,7 +61,7 @@ Get the localized attributes settings of an index.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/resources/glossary/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/getting_started/glossary/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -85,7 +85,7 @@ Update the localized attributes settings of an index.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/resources/glossary/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/getting_started/glossary/indexes#index-uid) of the requested index |
 
 #### Body
 
@@ -118,7 +118,7 @@ Update the localized attributes settings of an index.
 }
 ```
 
-You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks/overview#get-one-task).
 
 ### Reset localized attributes settings
 
@@ -130,7 +130,7 @@ Reset an index's localized attributes to their [default value](#localized-attrib
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/resources/glossary/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/getting_started/glossary/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -148,4 +148,4 @@ Reset an index's localized attributes to their [default value](#localized-attrib
 }
 ```
 
-You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks/overview#get-one-task).

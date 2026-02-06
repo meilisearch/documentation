@@ -54,31 +54,31 @@ Use the `actions` array when [creating API keys](/reference/api/keys/create-an-a
 
 | Action | Description |
 |--------|-------------|
-| `tasks.get` | [Get one task](/reference/api/tasks), [get tasks](/reference/api/tasks). Tasks from non-authorized indexes omitted |
-| `tasks.cancel` | [Cancel tasks](/reference/api/tasks). Tasks from non-authorized indexes not canceled |
-| `tasks.delete` | [Delete tasks](/reference/api/tasks). Tasks from non-authorized indexes not deleted |
+| `tasks.get` | [Get one task](/reference/api/tasks/overview), [get tasks](/reference/api/tasks/overview). Tasks from non-authorized indexes omitted |
+| `tasks.cancel` | [Cancel tasks](/reference/api/tasks/overview). Tasks from non-authorized indexes not canceled |
+| `tasks.delete` | [Delete tasks](/reference/api/tasks/overview). Tasks from non-authorized indexes not deleted |
 | `tasks.*` | All task operations |
 
 ### Settings
 
 | Action | Description |
 |--------|-------------|
-| `settings.get` | [Get settings](/reference/api/settings) and all subroutes |
-| `settings.update` | [Update settings](/reference/api/settings) and [reset settings](/reference/api/settings) and all subroutes |
+| `settings.get` | [Get settings](/reference/api/settings/overview) and all subroutes |
+| `settings.update` | [Update settings](/reference/api/settings/overview) and [reset settings](/reference/api/settings/overview) and all subroutes |
 | `settings.*` | All settings operations |
 
 ### Stats
 
 | Action | Description |
 |--------|-------------|
-| `stats.get` | [Get index stats](/reference/api/stats), [get all stats](/reference/api/stats). Non-authorized indexes omitted |
+| `stats.get` | [Get index stats](/reference/api/stats/overview), [get all stats](/reference/api/stats/overview). Non-authorized indexes omitted |
 
 ### Dumps and snapshots
 
 | Action | Description |
 |--------|-------------|
-| `dumps.create` | [Create a dump](/reference/api/dumps). Not restricted by indexes |
-| `snapshots.create` | [Create a snapshot](/reference/api/snapshots). Not restricted by indexes |
+| `dumps.create` | [Create a dump](/reference/api/dumps/overview). Not restricted by indexes |
+| `snapshots.create` | [Create a snapshot](/reference/api/snapshots/overview). Not restricted by indexes |
 
 ### Keys
 
@@ -109,8 +109,8 @@ Use the `actions` array when [creating API keys](/reference/api/keys/create-an-a
 
 | Action | Description |
 |--------|-------------|
-| `version` | [Get Meilisearch version](/reference/api/version) |
-| `chatCompletions` | Access [chat completions endpoints](/reference/api/chats) (requires experimental feature) |
+| `version` | [Get Meilisearch version](/reference/api/version/overview) |
+| `chatCompletions` | Access [chat completions endpoints](/products/conversational_search/chat_tooling_reference) (requires experimental feature) |
 | `*` | All actions (use with caution) |
 
 ## Index restrictions
@@ -204,6 +204,6 @@ For user-specific search restrictions, use [tenant tokens](/products/platform/mu
 
 ## Related resources
 
-- [Keys API reference](/reference/api/keys)
+- [Keys API reference](/reference/api/keys/overview)
 - [Securing your project](/products/platform/basic_security)
 - [Tenant tokens](/products/platform/multitenancy_tenant_tokens)

@@ -33,7 +33,7 @@ Use the `/webhooks` to trigger automatic workflows when Meilisearch finishes pro
 
 ## The webhook payload
 
-When Meilisearch finishes processing a task, it sends the relevant [task object](/reference/api/tasks#task-object) to all configured webhooks.
+When Meilisearch finishes processing a task, it sends the relevant [task object](/reference/api/tasks/overview#task-object) to all configured webhooks.
 
 ## Get all webhooks
 
@@ -95,7 +95,7 @@ Get a single webhook configured in the current Meilisearch instance.
 
 <RouteHighlighter method="POST" path="/webhooks" />
 
-Create a new webhook. When Meilisearch finishes processing a task, it sends the relevant [task object](/reference/api/tasks#task-object) to all configured webhooks.
+Create a new webhook. When Meilisearch finishes processing a task, it sends the relevant [task object](/reference/api/tasks/overview#task-object) to all configured webhooks.
 
 You can create up to 20 webhooks. Having multiple webhooks active at the same time may negatively impact performance.
 

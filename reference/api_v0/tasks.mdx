@@ -204,10 +204,10 @@ The `details` object is set to `null` for `snapshotCreation` tasks.
 
 | Name          | Description                                     |
 | :--------------- | :--------------------------------------------|
-| **`remoteName`** | The name of the [remote](/reference/api/network) |
+| **`remoteName`** | The name of the [remote](/reference/api/network/overview) |
 | **`taskUid`**    | The uid of the task of origin                |
 
-`remotes` is itself an object whose keys are the [remotes](/reference/api/network) and values an object with a single key that is either `task_uid` or `error`:
+`remotes` is itself an object whose keys are the [remotes](/reference/api/network/overview) and values an object with a single key that is either `task_uid` or `error`:
 
 | Name           | Description                                                                                   |
 | :------------- | :---------------------------------------------------------------------------------------------|
@@ -467,7 +467,7 @@ You can cancel all `processing` and `enqueued` tasks using the following filter:
 
 <RouteHighlighter method="POST" path="/tasks/cancel?statuses=processing,enqueued" />
 
-The API key used must have access to all indexes (`"indexes": [*]`) and the [`task.cancel`](/reference/api/keys#actions) action.
+The API key used must have access to all indexes (`"indexes": [*]`) and the [`task.cancel`](/reference/api/keys/overview#actions) action.
 
 ## Delete tasks
 
@@ -531,4 +531,4 @@ You can delete all finished tasks by using the following filter:
 
 <RouteHighlighter method="DELETE" path="/tasks?statuses=failed,canceled,succeeded" />
 
-The API key used must have access to all indexes (`"indexes": [*]`) and the [`task.delete`](/reference/api/keys#actions) action.
+The API key used must have access to all indexes (`"indexes": [*]`) and the [`task.delete`](/reference/api/keys/overview#actions) action.

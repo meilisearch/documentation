@@ -23,22 +23,22 @@ Retrieve documents similar to a specific search result.
 
 | Name              | Type   | Description                                                            |
 | :---------------- | :----- | :--------------------------------------------------------------------- |
-| **`index_uid`** * | String | [`uid`](/resources/glossary/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/getting_started/glossary/indexes#index-uid) of the requested index |
 
 ### Body
 
 | Parameter                                                                    | Type             | Default value | Description                                    |
 | ---------------------------------------------------------------------------- | ---------------- | ------------- | ---------------------------------------------- |
 | **`id`**                                                                     | String or number | `null`        | Identifier of the target document (mandatory)  |
-| **[`embedder`](/reference/api/search#hybrid-search)**           | String           | `null`   | Embedder to use when computing recommendations. Mandatory |
-| **[`attributesToRetrieve`](/reference/api/search#attributes-to-retrieve)**   | Array of strings | `["*"]`       | Attributes to display in the returned documents|
-| **[`offset`](/reference/api/search#offset)**                                 | Integer          | `0`           | Number of documents to skip                    |
-| **[`limit`](/reference/api/search#limit)**                                   | Integer          | `20`          | Maximum number of documents returned           |
-| **[`filter`](/reference/api/search#filter)**                                 | String           | `null`        | Filter queries by an attribute's value         |
-| **[`showRankingScore`](/reference/api/search#ranking-score)**                | Boolean          | `false`       | Display the global ranking score of a document |
-| **[`showRankingScoreDetails`](/reference/api/search#ranking-score-details)** | Boolean          | `false`       | Display detailed ranking score information     |
-| **[`rankingScoreThreshold`](/reference/api/search#ranking-score-threshold)** | Number           | `null`        | Exclude results with low ranking scores        |
-| **[`retrieveVectors`](/reference/api/search#display-_vectors-in-response)**           | Boolean          | `false`       | Return document vector data                    |
+| **[`embedder`](/reference/api/indexes/search-with-post#hybrid-search)**           | String           | `null`   | Embedder to use when computing recommendations. Mandatory |
+| **[`attributesToRetrieve`](/reference/api/indexes/search-with-post#attributes-to-retrieve)**   | Array of strings | `["*"]`       | Attributes to display in the returned documents|
+| **[`offset`](/reference/api/indexes/search-with-post#offset)**                                 | Integer          | `0`           | Number of documents to skip                    |
+| **[`limit`](/reference/api/indexes/search-with-post#limit)**                                   | Integer          | `20`          | Maximum number of documents returned           |
+| **[`filter`](/reference/api/indexes/search-with-post#filter)**                                 | String           | `null`        | Filter queries by an attribute's value         |
+| **[`showRankingScore`](/reference/api/indexes/search-with-post#ranking-score)**                | Boolean          | `false`       | Display the global ranking score of a document |
+| **[`showRankingScoreDetails`](/reference/api/indexes/search-with-post#ranking-score-details)** | Boolean          | `false`       | Display detailed ranking score information     |
+| **[`rankingScoreThreshold`](/reference/api/indexes/search-with-post#ranking-score-threshold)** | Number           | `null`        | Exclude results with low ranking scores        |
+| **[`retrieveVectors`](/reference/api/indexes/search-with-post#display-_vectors-in-response)**           | Boolean          | `false`       | Return document vector data                    |
 
 ### Example
 
@@ -80,22 +80,22 @@ Retrieve documents similar to a specific search result.
 
 | Name              | Type   | Description                                                            |
 | :---------------- | :----- | :--------------------------------------------------------------------- |
-| **`index_uid`** * | String | [`uid`](/resources/glossary/indexes#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/getting_started/glossary/indexes#index-uid) of the requested index |
 
 ### Query parameters
 
 | Parameter                                                                    | Type             | Default value | Description                                    |
 | ---------------------------------------------------------------------------- | ---------------- | ------------- | ---------------------------------------------- |
 | **`id`**                                                                     | String or number | `null`        | Identifier of the target document (mandatory)  |
-| **[`embedder`](/reference/api/search#hybrid-search)**           | String           | `"default"`   | Embedder to use when computing recommendations. Mandatory |
-| **[`attributesToRetrieve`](/reference/api/search#attributes-to-retrieve)**   | Array of strings | `["*"]`       | Attributes to display in the returned documents|
-| **[`offset`](/reference/api/search#offset)**                                 | Integer          | `0`           | Number of documents to skip                    |
-| **[`limit`](/reference/api/search#limit)**                                   | Integer          | `20`          | Maximum number of documents returned           |
-| **[`filter`](/reference/api/search#filter)**                                 | String           | `null`        | Filter queries by an attribute's value         |
-| **[`showRankingScore`](/reference/api/search#ranking-score)**                | Boolean          | `false`       | Display the global ranking score of a document |
-| **[`showRankingScoreDetails`](/reference/api/search#ranking-score-details)** | Boolean          | `false`       | Display detailed ranking score information     |
-| **[`rankingScoreThreshold`](/reference/api/search#ranking-score-threshold)** | Number           | `null`        | Exclude results with low ranking scores        |
-| **[`retrieveVectors`](/reference/api/search#display-_vectors-in-response)**           | Boolean          | `false`       | Return document vector data                    |
+| **[`embedder`](/reference/api/indexes/search-with-post#hybrid-search)**           | String           | `"default"`   | Embedder to use when computing recommendations. Mandatory |
+| **[`attributesToRetrieve`](/reference/api/indexes/search-with-post#attributes-to-retrieve)**   | Array of strings | `["*"]`       | Attributes to display in the returned documents|
+| **[`offset`](/reference/api/indexes/search-with-post#offset)**                                 | Integer          | `0`           | Number of documents to skip                    |
+| **[`limit`](/reference/api/indexes/search-with-post#limit)**                                   | Integer          | `20`          | Maximum number of documents returned           |
+| **[`filter`](/reference/api/indexes/search-with-post#filter)**                                 | String           | `null`        | Filter queries by an attribute's value         |
+| **[`showRankingScore`](/reference/api/indexes/search-with-post#ranking-score)**                | Boolean          | `false`       | Display the global ranking score of a document |
+| **[`showRankingScoreDetails`](/reference/api/indexes/search-with-post#ranking-score-details)** | Boolean          | `false`       | Display detailed ranking score information     |
+| **[`rankingScoreThreshold`](/reference/api/indexes/search-with-post#ranking-score-threshold)** | Number           | `null`        | Exclude results with low ranking scores        |
+| **[`retrieveVectors`](/reference/api/indexes/search-with-post#display-_vectors-in-response)**           | Boolean          | `false`       | Return document vector data                    |
 
 ### Example
 

@@ -24,11 +24,11 @@ This API documentation uses the following conventions:
 
 ## Authorization
 
-By [providing Meilisearch with a master key at launch](/products/platform/basic_security), you protect your instance from unauthorized requests. The provided master key must be at least 16 bytes. From then on, you must include the `Authorization` header along with a valid API key to access protected routes (all routes except [`/health`](/reference/api_v2/health/overview)).
+By [providing Meilisearch with a master key at launch](/products/platform/basic_security), you protect your instance from unauthorized requests. The provided master key must be at least 16 bytes. From then on, you must include the `Authorization` header along with a valid API key to access protected routes (all routes except [`/health`](/reference/api/health/overview)).
 
 <CodeSamplesAuthorizationHeader1 />
 
-The [`/keys`](/reference/api_v2/keys/overview) route can only be accessed using the master key. For security reasons, we recommend using regular API keys for all other routes.
+The [`/keys`](/reference/api/keys/overview) route can only be accessed using the master key. For security reasons, we recommend using regular API keys for all other routes.
 
 [To learn more about keys and security, refer to our security tutorial.](/products/platform/basic_security)
 
@@ -46,7 +46,7 @@ All paginated responses contain the following fields:
 
 ### `/tasks` endpoint
 
-Since the `/tasks` endpoint uses a different type of pagination, the response contains different fields. You can read more about it in the [tasks API reference](/reference/api_v2/tasks/overview).
+Since the `/tasks` endpoint uses a different type of pagination, the response contains different fields. You can read more about it in the [tasks API reference](/reference/api/tasks/overview).
 
 ## Parameters
 
@@ -80,7 +80,7 @@ Meilisearch currently supports the following formats:
 - `Content-Type: application/x-ndjson` for NDJSON
 - `Content-Type: text/csv` for CSV
 
-Only the [add documents](/reference/api_v2/documents/add-or-replace-documents) and [update documents](/reference/api_v2/documents/add-or-update-documents) endpoints accept NDJSON and CSV. For all others, use `Content-Type: application/json`.
+Only the [add documents](/reference/api/documents/add-or-replace-documents) and [update documents](/reference/api/documents/add-or-update-documents) endpoints accept NDJSON and CSV. For all others, use `Content-Type: application/json`.
 
 ### Content encoding
 
@@ -168,7 +168,7 @@ Meilisearch is an **asynchronous API**. This means that in response to most writ
 }
 ```
 
-You can use this `taskUid` to get more details on [the status of the task](/reference/api_v2/tasks/get-a-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks/get-a-task).
 
 See more information about [asynchronous operations](/products/platform/asynchronous_operations).
 
