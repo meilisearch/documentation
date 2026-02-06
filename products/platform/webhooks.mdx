@@ -8,7 +8,7 @@ Webhooks allow you to receive automatic notifications when Meilisearch completes
 
 ## How webhooks work
 
-When Meilisearch finishes processing any [asynchronous task](/products/platform/asynchronous_operations), it sends a POST request to all configured webhook URLs with the completed [task object](/reference/api/tasks/overview) as the payload.
+When Meilisearch finishes processing any [asynchronous task](/products/platform/tasks), it sends a POST request to all configured webhook URLs with the completed [task object](/reference/api/tasks/overview) as the payload.
 
 ```
 Meilisearch completes task → POST request sent to webhook URL → Your server processes notification
@@ -211,5 +211,5 @@ Managing webhooks requires one of these permissions:
 
 - [Webhooks API reference](/reference/api/webhooks/overview)
 - [CLI webhook configuration](/resources/self_hosting/webhooks)
-- [Asynchronous operations](/products/platform/asynchronous_operations)
+- [Asynchronous operations](/products/platform/tasks)
 - [Task reference](/reference/api/tasks/overview)

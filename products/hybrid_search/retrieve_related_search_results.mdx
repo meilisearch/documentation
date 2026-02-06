@@ -16,7 +16,7 @@ First, you will create an embedder and add documents to your index. You will the
 
 ## Create a new index
 
-Create an index called `movies` and add this <a href="/assets/datasets/movies.json" download="movies.json">`movies.json`</a> dataset to it. If necessary, consult the [getting started](/getting_started/cloud_quick_start) for more instructions on index creation.
+Create an index called `movies` and add this <a href="/assets/datasets/movies.json" download="movies.json">`movies.json`</a> dataset to it. If necessary, consult the [getting started](/getting_started/overview) for more instructions on index creation.
 
 Each document in the dataset represents a single movie and has the following structure:
 
@@ -39,7 +39,7 @@ You may also use the `/settings/embedders` API subroute to configure your embedd
 
 Replace `MEILISEARCH_URL`, `MEILISEARCH_API_KEY`, and `OPENAI_API_KEY` with the corresponding values in your application.
 
-Meilisearch will start generating the embeddings for all movies in your dataset. Use the returned `taskUid` to [track the progress of this task](/products/platform/asynchronous_operations). Once it is finished, you are ready to start searching.
+Meilisearch will start generating the embeddings for all movies in your dataset. Use the returned `taskUid` to [track the progress of this task](/products/platform/tasks). Once it is finished, you are ready to start searching.
 
 ## Perform a hybrid search
 

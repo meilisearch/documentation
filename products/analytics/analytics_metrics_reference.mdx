@@ -21,19 +21,19 @@ Percentage of searches that did not return any results.
 
 The ratio between the number of times users clicked on a result and the number of times Meilisearch showed that result. Since users will click on results that potentially match what they were looking for, a higher number indicates better relevancy.
 
-Meilisearch does not have access to this information by default. You must [configure your application to submit click events](/products/analytics/configure_analytics_events) to Meilisearch if you want to track it in the Meilisearch Cloud interface.
+Meilisearch does not have access to this information by default. You must [configure your application to submit click events](/products/analytics/track_click_events) to Meilisearch if you want to track it in the Meilisearch Cloud interface.
 
 ## Average click position
 
 The average list position of clicked search results. A lower number means users have clicked on the first search results and indicates good relevancy.
 
-Meilisearch does not have access to this information by default. You must [configure your application to submit click events](/products/analytics/configure_analytics_events) to Meilisearch if you want to track it in the Meilisearch Cloud interface.
+Meilisearch does not have access to this information by default. You must [configure your application to submit click events](/products/analytics/track_click_events) to Meilisearch if you want to track it in the Meilisearch Cloud interface.
 
 ## Conversion
 
 The percentage of searches resulting in a conversion event in your application. Conversion events vary depending on your application and indicate a user has performed a specific desired action. For example, a conversion for an e-commerce website might mean a user has bought a product.
 
-You must explicitly [configure your application to send conversion](/products/analytics/configure_analytics_events) events when conditions are met.
+You must explicitly [configure your application to send conversion](/products/analytics/track_click_events) events when conditions are met.
 
 <Note>
 It is not possible to associate multiple `conversion` events with the same query.

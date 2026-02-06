@@ -11,7 +11,7 @@ In this guide, you’ll use OpenAI’s text embeddings to measure the similarity
 This guide assumes a basic understanding of Python and LangChain. Beginners to LangChain will still find the tutorial accessible.
 
 - Python (LangChain requires >= 3.8.1 and < 4.0) and the pip CLI
-- A [Meilisearch >= 1.6 project](/getting_started/cloud_quick_start)
+- A [Meilisearch >= 1.6 project](/getting_started/overview)
 - An [OpenAI API key](https://platform.openai.com/account/api-keys)
 
 ## Creating the application
@@ -98,7 +98,7 @@ vector_store = Meilisearch.from_documents(documents=documents, embedding=embeddi
 print("Started importing documents")
 ```
 
-Your Meilisearch instance will now contain your documents. Meilisearch runs tasks like document import asynchronously, so you might need to wait a bit for documents to be available. Consult [the asynchronous operations explanation](/products/platform/asynchronous_operations) for more information on how tasks work.
+Your Meilisearch instance will now contain your documents. Meilisearch runs tasks like document import asynchronously, so you might need to wait a bit for documents to be available. Consult [the asynchronous operations explanation](/products/platform/tasks) for more information on how tasks work.
 
 ## Performing similarity search
 

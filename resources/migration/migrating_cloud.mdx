@@ -24,7 +24,7 @@ To export a dump, make sure your self-hosted Meilisearch instance is running. Th
 curl -X POST 'MEILISEARCH_URL:7700/dumps'
 ```
 
-Meilisearch will return a summarized task object and begin creating the dump. [Use the returned object's `taskUid` to monitor its progress.](/products/platform/asynchronous_operations)
+Meilisearch will return a summarized task object and begin creating the dump. [Use the returned object's `taskUid` to monitor its progress.](/products/platform/tasks)
 
 Once the task has been completed, you can find the dump in your project's dump directory. By default, this is `/dumps`.
 

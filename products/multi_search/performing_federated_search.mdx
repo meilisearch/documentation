@@ -25,7 +25,7 @@ curl -X POST "${MEILISEARCH_URL}/indexes/chats/documents" -H "Authorization: Bea
 curl -X POST "${MEILISEARCH_URL}/indexes/tickets/documents" -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" -H 'Content-Type: application/json' --data-binary @crm-tickets.json
 ```
 
-[Use the tasks endpoint](/products/platform/working_with_tasks) to check the indexing status. Once Meilisearch successfully indexed all three datasets, you are ready to perform a federated search.
+[Use the tasks endpoint](/products/platform/tasks) to check the indexing status. Once Meilisearch successfully indexed all three datasets, you are ready to perform a federated search.
 
 ## Perform a federated search
 
