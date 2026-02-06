@@ -47,14 +47,21 @@ graph LR
 
 ### 1. Enable personalization
 
-Set your Cohere API key when starting Meilisearch:
+In Meilisearch Cloud, enable the personalization experimental feature in your project settings and configure your Cohere API key.
 
-```bash
-export MEILI_EXPERIMENTAL_PERSONALIZATION_API_KEY="your-cohere-api-key"
-./meilisearch
-```
+<Tabs>
+  <Tab title="Cloud">
+    Enable personalization in your project's **Settings** > **Experimental features** panel and add your Cohere API key.
+  </Tab>
+  <Tab title="Self-hosted">
+    Set your Cohere API key when starting Meilisearch:
 
-Or in Meilisearch Cloud, contact support to enable the feature.
+    ```bash
+    export MEILI_EXPERIMENTAL_PERSONALIZATION_API_KEY="your-cohere-api-key"
+    meilisearch
+    ```
+  </Tab>
+</Tabs>
 
 ### 2. Search with personalization
 
