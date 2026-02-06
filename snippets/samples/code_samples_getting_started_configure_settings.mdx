@@ -51,7 +51,7 @@ $client->index('meteorites')->updateSettings([
 
 ```java Java
 Settings settings = new Settings();
-settings.setFilterableAttributes(new String[] {"mass", "_geo"});
+settings.setFilterableAttributes(new String[] { "mass", "_geo" });
 settings.setSortableAttributes(new String[] {"mass", "_geo"});
 client.index("meteorites").updateSettings(settings);
 ```
