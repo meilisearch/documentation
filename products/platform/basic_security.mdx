@@ -26,15 +26,7 @@ Find your API keys in the Cloud dashboard under **Project Settings** > **API Key
   <img src="/assets/images/security/api-keys-dashboard.png" alt="API keys section in Meilisearch Cloud showing Default Search API Key and Default Admin API Key" />
 </Frame>
 
-## API keys
-
-Meilisearch automatically generates four API keys: `Default Search API Key`, `Default Admin API Key`, `Default Read-Only Admin API Key`, and `Default Chat API Key`. API keys are authorization tokens designed to safely communicate with the Meilisearch API.
-
-Find your API keys by visiting your project settings, then clicking "API Keys" on the sidebar:
-
-<Frame>
-  <img src="/assets/images/security/01-master-api-keys.png" alt="An interface element named 'API keys' showing three obscured keys: 'Master key', 'Default Search API Key', and 'Default Admin API Key'" />
-</Frame>
+### View keys programmatically
 
 You can also query the `/keys` endpoint programmatically:
 
@@ -154,8 +146,6 @@ Do not expose admin API keys on a public frontend.
 ### Chat API key
 
 The `Default Chat API Key` is designed for frontend usage with [conversational search](/products/conversational_search/getting_started). It has access to both `search` and `chatCompletions` actions, allowing users to both perform searches and interact with the chat completions feature.
-
-## Conclusion
 
 ## Creating custom API keys
 
