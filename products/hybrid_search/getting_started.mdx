@@ -82,7 +82,7 @@ Add the `apiKey` field to your embedder:
   "products-openai": {
     "source": "openAi",
     "model": "text-embedding-3-small",
-    "apiKey": "OPEN_AI_API_KEY",
+    "apiKey": "OPEN_AI_API_KEY"
   }
 }
 ```
@@ -158,12 +158,21 @@ Meilisearch will then return an equal mix of semantic and full-text matches.
 
 ## Conclusion
 
-Congratulations! You have created an index, added a small dataset to it, and activated AI-powered search. You then used OpenAI to generate embeddings out of your documents, and performed your first AI-powered search.
+You have created an index, configured an OpenAI embedder, generated embeddings from your documents, and performed your first AI-powered search.
 
 ## Next steps
 
-Now you have a basic overview of the basic steps required for setting up and performing AI-powered searches, you might want to try and implement this feature in your own application.
-
-For practical information on implementing AI-powered search with other services, consult our [guides section](/guides/ai_embedders/providers/openai). There you will find specific instructions for embedders such as [LangChain](/guides/ai_embedders/langchain) and [Cloudflare](/guides/ai_embedders/providers/cloudflare).
-
-For more in-depth information, consult the API reference for [embedder settings](/reference/api/settings/get-embedders) and [the `hybrid` search parameter](/reference/api/indexes/search-with-post#hybrid-search).
+<CardGroup cols={2}>
+  <Card title="Embedder provider guides" icon="plug" href="/guides/ai_embedders/providers/openai">
+    Set up embedders with OpenAI, Cohere, Mistral, and other providers
+  </Card>
+  <Card title="Hybrid search overview" icon="magnifying-glass" href="/products/hybrid_search/overview">
+    Learn how semantic and full-text search work together
+  </Card>
+  <Card title="Embedder settings API" icon="gear" href="/reference/api/settings/get-embedders">
+    Full API reference for configuring embedders
+  </Card>
+  <Card title="Hybrid search parameter" icon="code" href="/reference/api/indexes/search-with-post#hybrid-search">
+    Control semantic vs. full-text balance with `semanticRatio`
+  </Card>
+</CardGroup>
