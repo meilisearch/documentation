@@ -778,12 +778,6 @@
             ]
           },
           {
-            "group": "SDKs",
-            "pages": [
-              "resources/help/sdks"
-            ]
-          },
-          {
             "group": "Errors",
             "pages": [
               "reference/errors/overview",
@@ -1735,18 +1729,6 @@
       "destination": "/getting_started/integrations/postman"
     },
     {
-      "source": "/getting_started/glossary/documents",
-      "destination": "/getting_started/glossary/documents"
-    },
-    {
-      "source": "/getting_started/glossary/indexes",
-      "destination": "/getting_started/glossary/indexes"
-    },
-    {
-      "source": "/getting_started/glossary/primary_key",
-      "destination": "/getting_started/glossary/primary_key"
-    },
-    {
       "source": "/resources/archives/search_preview",
       "destination": "/getting_started/overview"
     },
@@ -2368,31 +2350,31 @@
     },
     {
       "source": "/learn/advanced/asynchronous_operations#combine-filters",
-      "destination": "/products/platform/filtering_tasks#combine-filters"
+      "destination": "/products/platform/tasks#filtering-tasks"
     },
     {
       "source": "/learn/advanced/asynchronous_operations#filter-by-canceledby",
-      "destination": "/products/platform/filtering_tasks#filter-by-canceledby"
+      "destination": "/products/platform/tasks#filtering-tasks"
     },
     {
       "source": "/learn/advanced/asynchronous_operations#filter-by-date",
-      "destination": "/products/platform/filtering_tasks#filter-by-date"
+      "destination": "/products/platform/tasks#filtering-tasks"
     },
     {
       "source": "/learn/advanced/asynchronous_operations#filter-by-indexuid",
-      "destination": "/products/platform/filtering_tasks#filter-by-indexuid"
+      "destination": "/products/platform/tasks#filtering-tasks"
     },
     {
       "source": "/learn/advanced/asynchronous_operations#filter-by-status",
-      "destination": "/products/platform/filtering_tasks#filter-by-status"
+      "destination": "/products/platform/tasks#filtering-tasks"
     },
     {
       "source": "/learn/advanced/asynchronous_operations#filter-by-type",
-      "destination": "/products/platform/filtering_tasks#filter-by-type"
+      "destination": "/products/platform/tasks#filtering-tasks"
     },
     {
       "source": "/learn/advanced/asynchronous_operations#filter-by-uid",
-      "destination": "/products/platform/filtering_tasks#filter-by-uid"
+      "destination": "/products/platform/tasks#filtering-tasks"
     },
     {
       "source": "/learn/advanced/asynchronous_operations#filtering-tasks",
@@ -2404,7 +2386,7 @@
     },
     {
       "source": "/learn/getting_started/search_preview",
-      "destination": "/resources/archives/search_preview"
+      "destination": "/getting_started/overview"
     },
     {
       "source": "/home",
