@@ -22,7 +22,8 @@ $client->index('games')->updateFilterableAttributes(['release_timestamp']);
 ```
 
 ```java Java
-client.index("movies").updateFilterableAttributesSettings(new String[] { "release_timestamp" });
+client.index("movies").updateFilterableAttributesSettings(
+  new String[] { "release_timestamp" });
 ```
 
 ```ruby Ruby

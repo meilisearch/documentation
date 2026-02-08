@@ -20,4 +20,14 @@ indexes.put("*", ExportIndexFilter.builder().overrideSettings(true).build());
 ExportRequest request = ExportRequest.builder().url("TARGET_INSTANCE_URL").indexes(indexes).build();
 client.export(request);
 ```
+
+```dart Dart
+await client.export(
+  ExportQuery(
+    url: 'new_instance_url',
+    apiKey: 'new_instance_api_key',
+    payloadSize: "100 MiB",
+  ),
+);
+```
 </CodeGroup>
