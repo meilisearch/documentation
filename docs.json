@@ -425,7 +425,7 @@
                 "pages": [
                   "reference/api/authorization",
                   "reference/api/headers",
-                  "reference/api/parameters_and_requests",
+                  "reference/api/requests",
                   "reference/api/pagination",
                   "reference/api/openapi"
                 ]
@@ -951,7 +951,7 @@
     },
     {
       "source": "/reference",
-      "destination": "/reference/api/parameters_and_requests"
+      "destination": "/reference/api/request"
     },
     {
       "source": "/guides/deployment/gcp",
