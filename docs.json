@@ -433,6 +433,7 @@
               {
                 "group": "API Routes",
                 "openapi": "assets/open-api/meilisearch-openapi-mintlify.json",
+                "internal-meili-fetch-automation": true,
                 "examples": {
                   "languages": ["curl", "javascript", "php", "python", "java", "ruby", "go", "csharp", "rust", "dart", "swift"],
                   "autogenerate": false
