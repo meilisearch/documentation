@@ -39,9 +39,9 @@ jobs:
           if [[ $has_changes == "true" ]]; then
             echo "There are changes in the Git working directory."
             git config user.name "meili-bot"
-            git config user.email "meili-bot@meilisearch.com"
+            git config user.email "robot@meilisearch.com"
             git add snippets/
-            git commit -m "Update code samples"
+            git commit -m "[AUTOMATION POST DEPLOYMENT] Update code samples"
             git push origin main
           else
             echo "No changes in the Git working directory."
