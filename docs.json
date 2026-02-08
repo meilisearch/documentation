@@ -951,7 +951,7 @@
     },
     {
       "source": "/reference",
-      "destination": "/reference/api/request"
+      "destination": "/reference/api/authorization"
     },
     {
       "source": "/guides/deployment/gcp",
