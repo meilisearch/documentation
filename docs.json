@@ -426,13 +426,36 @@
           },
           {
             "anchor": "API Reference",
-            "openapi": "openapi-curqui.json",
             "icon": "code",
-            "examples": {
-              "languages": ["curl", "javascript", "php", "python", "java", "ruby", "go", "csharp", "rust", "dart", "swift"],
-              "defaults": "required",
-              "prefill": true
-            }
+            "groups": [
+              {
+                "group": "Overview",
+                "pages": [
+                  "reference/api/authorization",
+                  "reference/api/headers",
+                  "reference/api/parameters_and_requests",
+                  "reference/api/pagination",
+                  "reference/api/openapi"
+                ]
+              },
+              {
+                "group": "API Routes",
+                "openapi": "openapi-curqui.json",
+                "examples": {
+                  "languages": ["curl", "javascript", "php", "python", "java", "ruby", "go", "csharp", "rust", "dart", "swift"],
+                  "autogenerate": false
+                }
+              },
+              {
+                "group": "Errors",
+                "pages": [
+                  "reference/errors/overview",
+                  "reference/errors/error_codes"
+                ]
+              }
+
+            ]
+
           }
         ]
       }
@@ -936,7 +959,7 @@
     },
     {
       "source": "/reference",
-      "destination": "/reference/api/overview"
+      "destination": "/reference/api/parameters_and_requests"
     },
     {
       "source": "/guides/deployment/gcp",
