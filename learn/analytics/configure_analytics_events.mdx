@@ -24,7 +24,7 @@ Every time a user clicks on a search result, your application must send a `click
 
 You must explicitly submit a `userId` associated with the event. This can be any arbitrary string you use to identify the user, such as their profile ID in your application or their hashed IP address. You may submit user IDs directly on the event payload, or setting a `X-MS-USER-ID` request header.
 
-Specifying a `queryUid` is optional but recommended as it ensures Meilisearch correctly associates the search query with the event. You can find the query UID in the [`metadata` field present in Meilisearch Cloud's search query responses](/reference/api/overview#search-metadata).
+Specifying a `queryUid` is optional but recommended as it ensures Meilisearch correctly associates the search query with the event. You can find the query UID in the [`metadata` field present in Meilisearch Cloud's search query responses](/reference/api/headers#search-metadata).
 
 For more information, consult the [analytics events endpoint reference](/learn/analytics/events_endpoint).
 

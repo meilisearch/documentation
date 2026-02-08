@@ -22,7 +22,7 @@ When creating a new index, first [configure its settings](/reference/api/setting
 
 ## Optimize document size
 
-Smaller documents are processed faster, so make sure to trim down any unnecessary data from your documents. When a document field is missing from the list of [searchable](/reference/api/settings#searchable-attributes), [filterable](/reference/api/settings#filterable-attributes), [sortable](/reference/api/settings#sortable-attributes), or [displayed](/reference/api/settings#displayed-attributes) attributes, it might be best to remove it from the document. To go further, consider compressing your data using methods such as `br`, `deflate`, or `gzip`. Consult the [supported encoding formats reference](/reference/api/overview#content-encoding).
+Smaller documents are processed faster, so make sure to trim down any unnecessary data from your documents. When a document field is missing from the list of [searchable](/reference/api/settings#searchable-attributes), [filterable](/reference/api/settings#filterable-attributes), [sortable](/reference/api/settings#sortable-attributes), or [displayed](/reference/api/settings#displayed-attributes) attributes, it might be best to remove it from the document. To go further, consider compressing your data using methods such as `br`, `deflate`, or `gzip`. Consult the [supported encoding formats reference](/reference/api/headers#content-encoding).
 
 ## Prefer bigger HTTP payloads
 

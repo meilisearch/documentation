@@ -1,0 +1,51 @@
+---
+title: Parameters & Requests
+sidebarTitle: Parameters & Requests
+description: Parameters, request and response bodies, and data types for the Meilisearch API.
+---
+
+## Parameters
+
+Parameters are options you can pass to an API endpoint to modify its response. There are three main types of parameters in Meilisearch's API: request body parameters, path parameters, and query parameters.
+
+### Request body parameters
+
+These parameters are mandatory parts of POST, PUT, and PATCH requests. They accept a wide variety of values and data types depending on the resource you're modifying. You must add these parameters to your request's data payload.
+
+### Path parameters
+
+These are parameters you pass to the API in the endpoint's path. They are used to identify a resource uniquely. You can have multiple path parameters, for example, `/indexes/{index_uid}/documents/{document_id}`.
+
+If an endpoint does not take any path parameters, this section is not present in that endpoint's documentation.
+
+### Query parameters
+
+These optional parameters are a sequence of key-value pairs and appear after the question mark (`?`) in the endpoint. You can list multiple query parameters by separating them with an ampersand (`&`). The order of query parameters does not matter. They are mostly used with GET endpoints.
+
+If an endpoint does not take any query parameters, this section is not present in that endpoint's documentation.
+
+## Request body
+
+The request body is data sent to the API. It is used with PUT, POST, and PATCH methods to create or update a resource. You must provide request bodies in JSON.
+
+## Response body
+
+Meilisearch is an **asynchronous API**. This means that in response to most write requests, you will receive a summarized version of the `task` object:
+
+```json
+{
+    "taskUid": 1,
+    "indexUid": "movies",
+    "status": "enqueued",
+    "type": "indexUpdate",
+    "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+}
+```
+
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+
+See more information about [asynchronous operations](/learn/async/asynchronous_operations).
+
+## Data types
+
+The Meilisearch API supports [JSON data types](https://www.w3schools.com/js/js_json_datatypes.asp).
