@@ -1,4 +1,4 @@
-const MEILISEARCH_HOST = 'https://edge.meilisearch.com/'
+const MEILISEARCH_HOST = 'https://ms-909f535664f8-173.lon.meilisearch.io'
 const MEILISEARCH_API_KEY = '776dc6a11c118bd1640c3a9ff9679f920bc384238534fc4861fcde0152e7fd68'; // Public search-only API key
 const MEILISEARCH_INDEX = 'mintlify-production';
 
@@ -7,18 +7,18 @@ function initializeMeilisearchIntegration() {
   if (document.getElementById('meilisearch-bar-container')) {
     return;
   }
-  
+
   // Modify the responsive visibility handler
   const handleResponsiveVisibility = () => {
     // Check for both possible IDs
     const searchBarContainer = document.getElementById('meilisearch-bar-container');
     const originalSearchButton = document.getElementById('search-bar-entry');
     const originalMobileSearchButton = document.getElementById('search-bar-entry-mobile');
-    
+
     if (!searchBarContainer) return;
-    
+
     const isMobileView = window.innerWidth < 1024;
-    
+
     if (isMobileView) {
       // Hide our search bar
       searchBarContainer.style.display = 'none';
@@ -33,7 +33,7 @@ function initializeMeilisearchIntegration() {
     } else {
       // Show our search bar
       searchBarContainer.style.display = 'block';
-      
+
       // Hide Mintlify's search buttons
       if (originalSearchButton) {
         originalSearchButton.style.display = 'none';
@@ -46,39 +46,39 @@ function initializeMeilisearchIntegration() {
 
   // ========= Step 1: Create and inject the visible search bar in the header =========
   const initSearchBar = () => {
-    
+
     // When finding the original search button, also look for mobile version icon
     const originalSearchButton = document.getElementById('search-bar-entry');
     const originalMobileSearchButton = document.getElementById('search-bar-entry-mobile');
-    
+
     // Find the header where we'll add our search input
     const header = document.querySelector('header');
     if (!header) { //header not found, cannot add search bar
       return;
     }
-    
+
     // Log header properties to help with debugging
     // console.log('Header found, dimensions:', {
     //   width: header.offsetWidth,
     //   height: header.offsetHeight,
     //   position: window.getComputedStyle(header).position
     // });
-    
+
     // Try to find a proper container within the header for the search
     let headerContainer = null;
-    
+
     // Option 1: Look for navigation in the header
     const navElement = header.querySelector('nav');
     if (navElement) {
       headerContainer = navElement;
-    } 
+    }
     // Option 2: Look for a flex container in the header
     else {
       const potentialContainers = Array.from(header.children).filter(el => {
         const style = window.getComputedStyle(el);
         return style.display === 'flex' || style.display === 'inline-flex';
       });
-      
+
       if (potentialContainers.length > 0) {
         // Use the widest container
         headerContainer = potentialContainers.reduce((prev, current) => {
@@ -89,29 +89,29 @@ function initializeMeilisearchIntegration() {
         headerContainer = header;
       }
     }
-    
+
     // If we found the original search button, use its positioning and parent
     if (originalSearchButton) {
       // Get the parent element of the search button
       const searchParent = originalSearchButton.parentElement;
-      
+
       if (searchParent) {
         headerContainer = searchParent;
       }
     }
-    
+
     // Create our search input container
     const searchBarContainer = document.createElement('div');
     searchBarContainer.id = 'meilisearch-bar-container';
     searchBarContainer.className = 'meilisearch-bar-container';
-    
+
     // Create the search input that looks like Meilisearch's
     const searchBar = document.createElement('div');
     searchBar.id = 'meilisearch-search-bar';
     searchBar.className = 'meilisearch-search-bar';
     searchBar.role = 'button';
     searchBar.tabIndex = 0;
-    
+
     // Add the search icon and placeholder text
     searchBar.innerHTML = `
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 10px;">
@@ -121,14 +121,14 @@ function initializeMeilisearchIntegration() {
       <span class="meilisearch-search-bar__text">Search…</span>
       <span class="meilisearch-search-bar__shortcut">⌘K</span>
     `;
-    
+
     // Append the search bar to the container
     searchBarContainer.appendChild(searchBar);
-    
+
     // Check if the header container is a flex container
     const containerStyle = window.getComputedStyle(headerContainer);
     const isFlexContainer = containerStyle.display === 'flex' || containerStyle.display === 'inline-flex';
-    
+
     // If the header isn't a flex container, we need to make it one for proper centering
     if (!isFlexContainer) {
       // Create a wrapper to center the search bar
@@ -140,7 +140,7 @@ function initializeMeilisearchIntegration() {
       // Insert the search container into the flex container
       // Find the right position - ideally in the middle
       const childCount = headerContainer.children.length;
-      
+
       if (childCount > 2) {
         // If there are more than 2 children, insert it in the middle
         const middleIndex = Math.floor(childCount / 2);
@@ -149,39 +149,39 @@ function initializeMeilisearchIntegration() {
       } else {
         // Otherwise just append it
         headerContainer.appendChild(searchBarContainer);
-        
+
         // If this is a flex container, we need to adjust styles for centering
         searchBarContainer.style.flex = '1';
         searchBarContainer.style.margin = '0 auto';
       }
     }
-    
+
     // ========= Step 2: Create the modal search overlay =========
     const modalOverlay = document.createElement('div');
     modalOverlay.id = 'meilisearch-modal-overlay';
     modalOverlay.className = 'meilisearch-modal-overlay';
-    
+
     // Create the search modal container
     const searchModal = document.createElement('div');
     searchModal.id = 'meilisearch-modal';
     searchModal.className = 'meilisearch-modal';
-    
+
     // Create the search input container
     const searchInputContainer = document.createElement('div');
     searchInputContainer.className = 'meilisearch-modal__input-container'
-    
+
     // Create the search input
     const searchInput = document.createElement('input');
     searchInput.id = 'meilisearch-search-input';
     searchInput.className = 'meilisearch-modal__input';
     searchInput.type = 'text';
     searchInput.placeholder = 'Search…';
-    
+
     // Create the ESC key indicator
     const escIndicator = document.createElement('span');
     escIndicator.textContent = 'ESC';
     escIndicator.className = 'meilisearch-modal__escape';
-    
+
     // Create the search icon
     const searchIcon = document.createElement('div');
     searchIcon.className = 'meilisearch-modal__icon';
@@ -191,38 +191,38 @@ function initializeMeilisearchIntegration() {
         <path d="m21 21-4.3-4.3"></path>
       </svg>
     `;
-    
+
     // Add elements to the search input container
     searchInputContainer.appendChild(searchIcon);
     searchInputContainer.appendChild(searchInput);
     searchInputContainer.appendChild(escIndicator);
-    
+
     // Create the results container
     const resultsContainer = document.createElement('div');
     resultsContainer.id = 'meilisearch-results';
     resultsContainer.className = 'meilisearch-modal__results';
     resultsContainer.style.cssText = `
     `;
-    
+
     // Create the faceted filter container
     const filterContainer = document.createElement('div');
     filterContainer.id = 'meilisearch-filter-container';
     filterContainer.className = 'meilisearch-filter-container';
     filterContainer.style.display = 'none';
-    
+
     // Create filter title
     const filterTitle = document.createElement('div');
     filterTitle.className = 'meilisearch-filter-title';
     filterTitle.textContent = 'Narrow down by section';
-    
+
     // Create filter tags container
     const filterTagsContainer = document.createElement('div');
     filterTagsContainer.className = 'meilisearch-filter-tags';
-    
+
     // Create filter tags for each section
     const sections = ['learn', 'guides', 'reference'];
     const filterTags = {};
-    
+
     sections.forEach(section => {
       const tag = document.createElement('button');
       tag.className = 'meilisearch-filter-tag';
@@ -230,14 +230,14 @@ function initializeMeilisearchIntegration() {
       tag.dataset.section = section;
       tag.addEventListener('click', () => {
         tag.classList.toggle('active');
-        
+
         // Get current active filters
         const activeFilters = Array.from(filterContainer.querySelectorAll('.meilisearch-filter-tag.active'))
           .map(tag => tag.dataset.section);
-        
+
         // Show filter container if there are active filters
         filterContainer.style.display = activeFilters.length > 0 ? 'block' : 'none';
-        
+
         // Trigger search with current filters if there's a search query
         if (searchInput.value.trim().length >= 2) {
           const inputEvent = new Event('input', { bubbles: true });
@@ -247,35 +247,35 @@ function initializeMeilisearchIntegration() {
       filterTagsContainer.appendChild(tag);
       filterTags[section] = tag;
     });
-    
+
     // Add filter elements to container
     filterContainer.appendChild(filterTitle);
     filterContainer.appendChild(filterTagsContainer);
-    
+
     // Append everything to the modal
     searchModal.appendChild(searchInputContainer);
     searchModal.appendChild(filterContainer);
     searchModal.appendChild(resultsContainer);
-    
+
     // Add the modal to the overlay
     modalOverlay.appendChild(searchModal);
-    
+
     // Add the overlay to the body
     document.body.appendChild(modalOverlay);
-    
+
     // ========= Step 3: Set up event listeners =========
-    
+
     // Function to open the search modal
     const openSearchModal = () => {
       // Always place the modal at the top, regardless of scroll position
       modalOverlay.style.display = 'flex';
-      
+
       // Focus the input
       setTimeout(() => {
         searchInput.focus();
       }, 10);
     };
-    
+
     // Function to close the search modal
     const closeSearchModal = () => {
       modalOverlay.style.display = 'none';
@@ -289,7 +289,7 @@ function initializeMeilisearchIntegration() {
       e.stopPropagation();
       openSearchModal();
     };
-    
+
     // Open modal when clicking the search bar
     searchBar.addEventListener('click', openSearchModal);
 
@@ -315,14 +315,14 @@ function initializeMeilisearchIntegration() {
     });
 
     searchButtonObserver.observe(document.body, { childList: true, subtree: true });
-    
+
     // Close modal when clicking outside the search modal
     modalOverlay.addEventListener('click', (e) => {
       if (e.target === modalOverlay) {
         closeSearchModal();
       }
     });
-    
+
     // Keyboard shortcuts
     document.addEventListener('keydown', (e) => {
       // Open with Cmd+K / Ctrl+K
@@ -333,7 +333,7 @@ function initializeMeilisearchIntegration() {
         openSearchModal();
         return false;
       }
-      
+
       // Close with Escape
       if (e.key === 'Escape' && modalOverlay.style.display === 'flex') {
         e.preventDefault();
@@ -343,7 +343,7 @@ function initializeMeilisearchIntegration() {
         return false;
       }
     }, true);
-    
+
     // ========= Step 4: Set up Meilisearch for searching =========
     // Load Meilisearch client
     if (!window.meilisearch) {
@@ -371,7 +371,7 @@ function initializeMeilisearchIntegration() {
       resizeTimeout = setTimeout(handleResponsiveVisibility, 100);
     });
   };
-  
+
   // Set up the search functionality
   const setupMeilisearchHandlers = (searchInput, resultsContainer) => {
     try {
@@ -381,7 +381,7 @@ function initializeMeilisearchIntegration() {
       });
 
       const index = client.index(MEILISEARCH_INDEX);
-      
+
       // Function to get active filters
       const getActiveFilters = () => {
         const filterContainer = document.getElementById('meilisearch-filter-container');
@@ -389,7 +389,7 @@ function initializeMeilisearchIntegration() {
         const activeTags = filterContainer.querySelectorAll('.meilisearch-filter-tag.active');
         return Array.from(activeTags).map(tag => tag.dataset.section);
       };
-      
+
       // Function to perform search with filters
       const performSearch = (query, activeFilters = []) => {
         // Show loading indicator
@@ -397,7 +397,7 @@ function initializeMeilisearchIntegration() {
         indicatorEl.className = 'meilisearch-modal__indicator';
         indicatorEl.innerHTML = 'Searching…';
         resultsContainer.appendChild(indicatorEl);
-        
+
         // Build base search options
         const baseSearchOptions = {
           attributesToHighlight: ['hierarchy_lvl1', 'hierarchy_lvl2', 'hierarchy_lvl3', 'hierarchy_lvl4', 'hierarchy_lvl5', 'content'],
@@ -408,14 +408,14 @@ function initializeMeilisearchIntegration() {
             embedder: "default"
           }
         };
-        
+
         // Create federated multi-search queries
         const multiSearchQueries = [
           {
             indexUid: MEILISEARCH_INDEX,
             q: query,
             // Lower  weight for error code results
-            filter: activeFilters.length > 0 
+            filter: activeFilters.length > 0
               ? `(${activeFilters.map(section => `section = "${section}"`).join(' OR ')}) AND (hierarchy_lvl0 = "Errors" OR hierarchy_lvl1 = "Error codes")`
               : `hierarchy_lvl0 = "Errors" OR hierarchy_lvl1 = "Error codes"`,
             federationOptions: {
@@ -427,7 +427,7 @@ function initializeMeilisearchIntegration() {
             indexUid: MEILISEARCH_INDEX,
             q: query,
             // Higher weight for non-error code results
-            filter: activeFilters.length > 0 
+            filter: activeFilters.length > 0
               ? `(${activeFilters.map(section => `section = "${section}"`).join(' OR ')}) AND NOT (hierarchy_lvl0 = "Errors" OR hierarchy_lvl1 = "Error codes")`
               : `NOT (hierarchy_lvl0 = "Errors" OR hierarchy_lvl1 = "Error codes")`,
             federationOptions: {
@@ -436,7 +436,7 @@ function initializeMeilisearchIntegration() {
             ...baseSearchOptions
           }
         ];
-        
+
         // Perform federated multi-search
         const multiSearchRequest = {
           federation: {
@@ -444,16 +444,16 @@ function initializeMeilisearchIntegration() {
           },
           queries: multiSearchQueries
         };
-        
+
         client.multiSearch(multiSearchRequest)
         .then(response => {
           resultsContainer.innerHTML = '';
-          
+
           const filterContainer = document.getElementById('meilisearch-filter-container');
-          
+
           // Handle federated multi-search response
           const allHits = response.hits || [];
-          
+
           if (allHits.length === 0) {
             if (filterContainer) filterContainer.style.display = 'none';
             const noResultsEl = document.createElement('div');
@@ -462,10 +462,10 @@ function initializeMeilisearchIntegration() {
             resultsContainer.appendChild(noResultsEl);
             return;
           }
-          
+
           // Show filter container when there are results
           if (filterContainer) filterContainer.style.display = 'block';
-          
+
           // Group results by category if available
           const grouped = {};
           allHits.forEach(hit => {
@@ -475,11 +475,11 @@ function initializeMeilisearchIntegration() {
             }
             grouped[category].push(hit);
           });
-          
+
           // Create result items
           Object.keys(grouped).forEach(category => {
             const results = grouped[category];
-            
+
             // Only add category header if there are multiple categories
             if (Object.keys(grouped).length > 1) {
               const categoryHeader = document.createElement('div');
@@ -487,30 +487,30 @@ function initializeMeilisearchIntegration() {
               categoryHeader.textContent = category;
               resultsContainer.appendChild(categoryHeader);
             }
-            
+
             results.forEach(hit => {
               const resultItem = document.createElement('a');
               resultItem.href = hit.url || `/${hit.path}`;
               resultItem.className = 'meilisearch-modal__result';
-              
+
               // Format content nicely
               // Build title from hierarchy levels
-              const hierarchy_lvl1 = hit._formatted?.hierarchy_lvl1 
+              const hierarchy_lvl1 = hit._formatted?.hierarchy_lvl1
                 ? hit._formatted.hierarchy_lvl1.replace(/<em>/g, '<em class="meilisearch-modal__category-em">')
                 : '';
-              const hierarchy_lvl2 = hit._formatted?.hierarchy_lvl2 
+              const hierarchy_lvl2 = hit._formatted?.hierarchy_lvl2
                 ? hit._formatted.hierarchy_lvl2.replace(/<em>/g, '<em class="meilisearch-modal__category-em">')
                 : '';
-              const hierarchy_lvl3 = hit._formatted?.hierarchy_lvl3 
+              const hierarchy_lvl3 = hit._formatted?.hierarchy_lvl3
                 ? hit._formatted.hierarchy_lvl3.replace(/<em>/g, '<em class="meilisearch-modal__category-em">')
                 : '';
-              const hierarchy_lvl4 = hit._formatted?.hierarchy_lvl4 
+              const hierarchy_lvl4 = hit._formatted?.hierarchy_lvl4
                 ? hit._formatted.hierarchy_lvl4.replace(/<em>/g, '<em class="meilisearch-modal__category-em">')
                 : '';
-              const hierarchy_lvl5 = hit._formatted?.hierarchy_lvl5 
+              const hierarchy_lvl5 = hit._formatted?.hierarchy_lvl5
                 ? hit._formatted.hierarchy_lvl5.replace(/<em>/g, '<em class="meilisearch-modal__category-em">')
                 : '';
-              const content = hit._formatted?.content 
+              const content = hit._formatted?.content
                 ? hit._formatted.content.replace(/<em>/g, '<em class="meilisearch-modal__category-em">')
                 : '';
 
@@ -530,21 +530,21 @@ function initializeMeilisearchIntegration() {
                   }
                 }
               }
-              
+
               resultItem.innerHTML = `
                 <div class="meilisearch-modal__result-heading">${title}</div>
                 ${content ? `<div class="meilisearch-modal__result-content">${content}</div>` : ''}
               `;
-              
+
               // Make clicking the result close the modal
               resultItem.addEventListener('click', () => {
                 document.getElementById('meilisearch-modal-overlay').style.display = 'none';
               });
-              
+
               resultsContainer.appendChild(resultItem);
             });
           });
-          
+
         })
         .catch(error => {
           console.error('Meilisearch error:', error);
@@ -555,15 +555,15 @@ function initializeMeilisearchIntegration() {
           resultsContainer.appendChild(errorEl);
         });
       };
-      
+
       // Add search event listener
       let debounceTimer;
       searchInput.addEventListener('input', (e) => {
         clearTimeout(debounceTimer);
-        
+
         const query = e.target.value.trim();
         const activeFilters = getActiveFilters();
-        
+
         if (query.length < 2) {
           resultsContainer.innerHTML = '';
           const filterContainer = document.getElementById('meilisearch-filter-container');
@@ -573,7 +573,7 @@ function initializeMeilisearchIntegration() {
           }
           return;
         }
-        
+
         debounceTimer = setTimeout(() => {
           performSearch(query, activeFilters);
         }, 300);
@@ -582,10 +582,10 @@ function initializeMeilisearchIntegration() {
       console.error('Error setting up Meilisearch handlers:', error);
     }
   };
-  
+
   // Initialize the search bar
   initSearchBar();
-  
+
   // Update the MutationObserver logic
   const observer = new MutationObserver(mutations => {
     if (observer.processing) return;
@@ -597,11 +597,11 @@ function initializeMeilisearchIntegration() {
         if (mutation.target === header || header?.contains(mutation.target)) {
           if (window.innerWidth >= 1024) {
             // Check for both possible IDs
-            const searchBar = document.getElementById('meilisearch-search-bar') || 
+            const searchBar = document.getElementById('meilisearch-search-bar') ||
                             document.getElementById('search-bar-entry');
-            const searchBarContainer = document.getElementById('meilisearch-bar-container') || 
+            const searchBarContainer = document.getElementById('meilisearch-bar-container') ||
                                      document.getElementById('search-bar-entry');
-            
+
             if (!searchBar && !searchBarContainer) { //searchbar missing in desktop view, reinitialize
               initSearchBar();
             }
