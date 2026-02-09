@@ -448,7 +448,6 @@
               {
                 "group": "Miscellaneous",
                 "pages": [
-                  "guides/postman_collection",
                   "guides/docker"
                 ]
               }
@@ -649,10 +648,6 @@
     {
       "source": "/learn/cookbooks/running_production",
       "destination": "/guides/deployment/running_production"
-    },
-    {
-      "source": "/learn/cookbooks/postman_collection",
-      "destination": "/guides/misc/postman_collection"
     },
     {
       "source": "/learn/cookbooks/docker",
