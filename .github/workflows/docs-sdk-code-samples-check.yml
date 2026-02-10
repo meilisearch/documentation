@@ -1,0 +1,51 @@
+# Runs daily and on workflow_dispatch.
+# - Job 1: Fails if local code samples are not properly used (route comment → OpenAPI, no comment → snippet in docs).
+# - Job 2: Fails if any SDK has code samples not present in the local .code-samples.meilisearch.yaml.
+# - Job 3: Informational only (never fails) – lists local samples missing from each SDK.
+name: Check Docs & SDK code sample files
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Every day at 06:00 UTC
+    - cron: '0 6 * * *'
+
+jobs:
+  # Fails if a code sample's route comment doesn't match a valid OpenAPI path,
+  # or if a sample without a route comment isn't referenced in any doc page.
+  local-samples-usage:
+    name: Local code samples usage
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Check local code samples are used
+        run: node scripts/check-code-samples-usage.mjs
+
+  # Fails if an SDK's .code-samples.meilisearch.yaml contains keys absent from
+  # the local .code-samples.meilisearch.yaml (those SDK samples are useless).
+  unused-sdk-samples:
+    name: Unused code samples in SDKs
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check for unused SDK code samples
+        run: node scripts/check-unused-sdk-samples.mjs
+
+  # Informational only – this job never fails.
+  # Lists local samples that are missing from each SDK.
+  missing-sdk-samples:
+    name: "[Info only - never fails] Missing SDK code samples"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: List missing SDK code samples (informational, never fails)
+        run: node scripts/check-missing-sdk-samples.mjs
