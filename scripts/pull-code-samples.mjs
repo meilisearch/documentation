@@ -95,6 +95,11 @@ function extractLanguageFromUrl(repoUrl) {
   return match ? match[1] : 'text'; // Default to 'text' if not found
 }
 
+function loadLocalYaml(filePath) {
+  const content = fs.readFileSync(filePath, 'utf-8');
+  return yaml.load(content);
+}
+
 async function fetchYaml(url) {
   const response = await fetch(url);
   if (!response.ok) throw new Error(`Failed to fetch samples for ${url}`);
@@ -109,7 +114,10 @@ async function processRepos() {
     const sdkInfo = SDK[i];
 
     try {
-      const snippets = await fetchYaml(repoUrl);
+      // Read local file for cURL samples (documentation project), fetch remote for all other SDKs
+      const snippets = sdkInfo.project === 'documentation'
+        ? loadLocalYaml(path.join(process.cwd(), sdkInfo.source || '.code-samples.meilisearch.yaml'))
+        : await fetchYaml(repoUrl);
 
       for (const [operationName, snippetContent] of Object.entries(snippets)) {
         if (!operationSnippets[operationName]) {
