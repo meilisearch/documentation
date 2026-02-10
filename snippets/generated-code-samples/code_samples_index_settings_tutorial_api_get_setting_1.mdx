@@ -5,6 +5,10 @@ curl \
   -X GET 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/searchable-attributes'
 ```
 
+```ruby Ruby
+client.index('INDEX_NAME').searchable_attributes
+```
+
 ```rust Rust
 let searchable_attributes: Vec<String> = index
   .get_searchable_attributes()
