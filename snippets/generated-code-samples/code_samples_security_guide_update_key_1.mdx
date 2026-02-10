@@ -1,13 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X PATCH 'MEILISEARCH_URL/keys/74c9c733-3368-4738-bbe5-1d18a5fecb37' \
-  -H 'Authorization: Bearer MASTER_KEY' \
-  -H 'Content-Type: application/json' \
-  --data-binary '{ "description": "Default Search API Key" }'
-```
-
 ```javascript JS
 const client = new MeiliSearch({ host: 'http://localhost:7700', apiKey: 'masterKey' })
 client.updateKey('74c9c733-3368-4738-bbe5-1d18a5fecb37', {

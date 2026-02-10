@@ -1,14 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X PATCH 'MEILISEARCH_URL/indexes/movies/settings/pagination' \
-  -H 'Content-Type: application/json' \
-  --data-binary '{
-    "maxTotalHits": 500
-  }'
-```
-
 ```javascript JS
 client.index('movies').updatePagination({ maxTotalHits: 500 })
 ```
