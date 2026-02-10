@@ -1,11 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X DELETE 'MEILISEARCH_URL/keys/ac5cd97d-5a4b-4226-a868-2d0eb6d197ab' \
-  -H 'Authorization: Bearer MASTER_KEY'
-```
-
 ```javascript JS
 const client = new MeiliSearch({ host: 'http://localhost:7700', apiKey: 'masterKey' })
 client.deleteKey('ac5cd97d-5a4b-4226-a868-2d0eb6d197ab')

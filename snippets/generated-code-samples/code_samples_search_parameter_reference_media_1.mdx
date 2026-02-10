@@ -1,23 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
--X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
--H 'Content-Type: application/json' \
---data-binary '{
-  "hybrid": {
-    "embedder": "EMBEDDER_NAME"
-  },
-  "media": {
-    "FIELD_A": "VALUE_A",
-    "FIELD_B" : {
-      "FIELD_C": "VALUE_B"
-      "FIELD_D": "VALUE_C"
-    }
-  }
-}'
-```
-
 ```javascript JS
 client.index('INDEX_NAME').search('a futuristic movie', {
   hybrid: {

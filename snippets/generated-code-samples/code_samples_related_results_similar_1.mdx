@@ -1,16 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X POST 'MEILISEARCH_URL/indexes/movies/similar' \
-  -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer DEFAULT_SEARCH_API_KEY' \
-  --data-binary '{
-    "id": 192,
-    "embedder": "EMBEDDER_NAME"
-  }'
-```
-
 ```rust Rust
 let results = movies.similar_search("192", "EMBEDDER_NAME")
   .execute()

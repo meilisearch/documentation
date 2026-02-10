@@ -1,16 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X PUT 'MEILISEARCH_URL/indexes/movies/settings/displayed-attributes' \
-  -H 'Content-Type: application/json' \
-  --data-binary '[
-    "title",
-    "overview",
-    "poster"
-  ]'
-```
-
 ```javascript JS
 client.index('movies').updateDisplayedAttributes([
   'title',

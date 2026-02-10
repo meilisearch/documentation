@@ -1,21 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl -X PATCH 'MEILISEARCH_URL/indexes/movies/settings'
-  -H 'Content-Type: application/json'
-  -H 'Authorization: Bearer MEILISEARCH_API_KEY'
-  --data-binary '{
-    "embedders": {
-      "movies-text": {
-        "source": "openAi",
-        "apiKey": "OPENAI_API_KEY",
-        "model": "text-embedding-3-small",
-        "documentTemplate": "A movie titled '{{doc.title}}' released in {{ doc.release_date }}. The movie genres are: {{doc.genres}}. The story is about: {{doc.overview|truncatewords: 20}}"
-      }
-    }
-  }'
-```
-
 ```rust Rust
 let embedders = HashMap::from([(
   String::from("movies-text"),

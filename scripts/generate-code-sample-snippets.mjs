@@ -108,6 +108,11 @@ async function fetchYaml(url) {
   return yaml.load(await response.text());
 }
 
+function loadLocalYaml(filePath) {
+  const content = fs.readFileSync(filePath, 'utf-8');
+  return yaml.load(content);
+}
+
 async function buildSnippets() {
   // Step 1: Clean existing snippets
   cleanSnippets();
@@ -123,7 +128,10 @@ async function buildSnippets() {
     const sdkInfo = SDK[i];
 
     try {
-      const snippets = await fetchYaml(repoUrl);
+      const isLocal = sdkInfo.project === 'documentation';
+      const snippets = isLocal
+        ? loadLocalYaml(path.join(process.cwd(), sdkInfo.source || '.code-samples.meilisearch.yaml'))
+        : await fetchYaml(repoUrl);
 
       for (const [operationName, snippetContent] of Object.entries(snippets)) {
         if (!operationSnippets[operationName]) {

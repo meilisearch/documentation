@@ -1,11 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X POST 'MEILISEARCH_URL/indexes/patient_medical_records/search' \
-  -H 'Authorization: Bearer API_KEY'
-```
-
 ```javascript JS
 const client = new MeiliSearch({ host: 'http://localhost:7700', apiKey: 'apiKey' })
 client.index('patient_medical_records').search()
