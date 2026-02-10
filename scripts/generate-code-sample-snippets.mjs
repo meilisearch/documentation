@@ -58,27 +58,6 @@ const SDK = [
     language: 'dart',
     label: 'Dart',
     project: 'meilisearch-dart'
-  },
-  {
-    language: 'javascript',
-    label: 'Vanilla JS',
-    project: 'instant-meilisearch'
-  },
-  {
-    language: 'javascript',
-    label: 'React',
-    project: 'meilisearch-react'
-  },
-  {
-    language: 'javascript',
-    label: 'Vue.js',
-    project: 'meilisearch-vue'
-  },
-  {
-    language: 'javascript',
-    label: 'Vue3.js',
-    project: 'meilisearch-vue',
-    source: '.code-samples-vue-3.meilisearch.yaml' //vue3 specific source
   }
 ];
 

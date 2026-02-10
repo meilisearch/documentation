@@ -1,15 +1,5 @@
 <CodeGroup>
 
-```javascript JS
-const client = new MeiliSearch({ host: 'http://localhost:7700', apiKey: 'masterKey' })
-client.createKey({
-  description: 'Search patient records key',
-  actions: ['search'],
-  indexes: ['patient_medical_records'],
-  expiresAt: '2023-01-01T00:00:00Z'
-})
-```
-
 ```python Python
 client = Client('http://localhost:7700', 'masterKey')
   client.create_key(options={
