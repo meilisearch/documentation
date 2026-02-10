@@ -40,7 +40,11 @@ jobs:
       - name: Check for changes
         id: changes
         run: |
-          echo "has_changes=$(git diff --quiet snippets/ && echo "false" || echo "true")" >> "$GITHUB_ENV"
+          if git diff --quiet snippets/; then
+            echo "has_changes=false" >> "$GITHUB_ENV"
+          else
+            echo "has_changes=true" >> "$GITHUB_ENV"
+          fi
 
       - name: Commit changes
         run: |
@@ -81,7 +85,11 @@ jobs:
       - name: Check for changes
         id: openapi_changes
         run: |
-          echo "has_changes=$(git diff --quiet assets/open-api/ && echo "false" || echo "true")" >> "$GITHUB_ENV"
+          if git diff --quiet assets/open-api/; then
+            echo "has_changes=false" >> "$GITHUB_ENV"
+          else
+            echo "has_changes=true" >> "$GITHUB_ENV"
+          fi
 
       - name: Commit changes
         run: |
