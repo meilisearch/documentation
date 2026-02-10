@@ -3,7 +3,7 @@ title: Rename an index
 description: Use the PATCH endpoint of the /indexes route to rename an index
 ---
 
-import CodeSamplesRenameAnIndex1 from '/snippets/samples/code_samples_rename_an_index_1.mdx';
+import CodeSamplesRenameAnIndex1 from '/snippets/generated-code-samples/code_samples_rename_an_index_1.mdx';
 
 This guide shows you how to change the name of an index.
 

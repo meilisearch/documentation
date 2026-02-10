@@ -86,7 +86,7 @@ const REPOS = SDK.map(sdk =>
   `https://raw.githubusercontent.com/meilisearch/${sdk.project}/main/${sdk.source || '.code-samples.meilisearch.yaml'}`
 );
 
-const OUTPUT_DIR = path.join(process.cwd(), 'snippets/samples');
+const OUTPUT_DIR = path.join(process.cwd(), 'snippets/generated-code-samples');
 
 /**
  * Remove all existing code sample snippets before regenerating them.
