@@ -4,11 +4,11 @@ name: Post Deployment
 
 on:
   workflow_dispatch:
-  # schedule:
-  #   - cron: '0 23 * * *' # Every day at 11:00 PM UTC
-  # push:
-  #   branches:
-  #     - 'main'
+  schedule:
+    - cron: '0 23 * * *' # Every day at 11:00 PM UTC
+  push:
+    branches:
+      - 'main'
 
 jobs:
   build-code-samples:
