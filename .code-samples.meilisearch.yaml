@@ -1019,89 +1019,6 @@ getting_started_search: |-
     -H 'Content-Type: application/json' \
     -H 'Authorization: Bearer aSampleMasterKey' \
     --data-binary '{ "q": "botman" }'
-getting_started_add_meteorites: |-
-  curl \
-    -X POST 'MEILISEARCH_URL/indexes/meteorites/documents' \
-    -H 'Content-Type: application/json' \
-    --data-binary @meteorites.json
-getting_started_update_ranking_rules: |-
-  curl \
-    -X PUT 'MEILISEARCH_URL/indexes/movies/settings/ranking-rules' \
-    -H 'Content-Type: application/json' \
-    --data-binary '[
-      "exactness",
-      "words",
-      "typo",
-      "proximity",
-      "attribute",
-      "sort",
-      "release_date:asc",
-      "rank:desc"
-    ]'
-getting_started_update_displayed_attributes: |-
-  curl \
-    -X PUT 'MEILISEARCH_URL/indexes/movies/settings/displayed-attributes' \
-    -H 'Content-Type: application/json' \
-    --data-binary '[
-      "title",
-      "overview",
-      "poster"
-    ]'
-getting_started_update_searchable_attributes: |-
-  curl \
-    -X PUT 'MEILISEARCH_URL/indexes/movies/settings/searchable-attributes' \
-    -H 'Content-Type: application/json' \
-    --data-binary '["title"]'
-getting_started_update_stop_words: |-
-  curl \
-    -X PUT 'MEILISEARCH_URL/indexes/movies/settings/stop-words' \
-    -H 'Content-Type: application/json' \
-    --data-binary '["the"]'
-getting_started_synonyms: |-
-  curl \
-    -X PUT 'MEILISEARCH_URL/indexes/movies/settings/synonyms' \
-    -H 'Content-Type: application/json' \
-    --data-binary '{
-      "winnie": ["piglet"],
-      "piglet": ["winnie"]
-    }'
-getting_started_filtering: |-
-  curl \
-    -X POST 'MEILISEARCH_URL/indexes/meteorites/search' \
-    -H 'Content-Type: application/json' \
-    --data-binary '{ "filter": "mass < 200" }'
-getting_started_geo_radius: |-
-  curl \
-    -X POST 'MEILISEARCH_URL/indexes/meteorites/search' \
-    -H 'Content-type:application/json' \
-    --data-binary '{ "filter": "_geoRadius(46.9480, 7.4474, 210000)" }'
-getting_started_geo_point: |-
-  curl \
-    -X POST 'MEILISEARCH_URL/indexes/meteorites/search' \
-    -H 'Content-type:application/json' \
-    --data-binary '{ "sort": ["_geoPoint(48.8583701,2.2922926):asc"] }'
-getting_started_sorting: |-
-  curl \
-    -X POST 'MEILISEARCH_URL/indexes/meteorites/search' \
-    -H 'Content-Type: application/json' \
-    --data-binary '{
-      "filter": "mass < 200",
-      "sort": ["mass:asc"]
-    }'
-getting_started_configure_settings: |-
-  curl \
-    -X PATCH 'MEILISEARCH_URL/indexes/meteorites/settings' \
-    -H 'Content-Type: application/json' \
-    --data-binary '{
-      "filterableAttributes": [
-        "mass",
-        "_geo"
-      ],
-      "sortableAttributes": [
-        "mass",
-        "_geo"
-      ]
-    }'
 faceted_search_walkthrough_filter_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/movies/search' \
@@ -1198,11 +1115,6 @@ geosearch_guide_filter_usage_3: |-
     -X POST 'MEILISEARCH_URL/indexes/restaurants/search' \
     -H 'Content-type:application/json' \
     --data-binary '{ "filter": "_geoBoundingBox([45.494181, 9.214024], [45.449484, 9.179175])" }'
-geosearch_guide_filter_usage_4: |-
-  curl \
-    -X POST 'MEILISEARCH_URL/indexes/restaurants/search' \
-    -H 'Content-type:application/json' \
-    --data-binary '{ "filter": "_geoPolygon([45.494181, 9.214024], [45.449484, 9.179175], [45.449486, 9.179177])" }'
 geosearch_guide_sort_settings_1: |-
   curl \
     -X PUT 'MEILISEARCH_URL/indexes/restaurants/settings/sortable-attributes' \
@@ -1241,35 +1153,6 @@ basic_security_tutorial_search_1: |-
     -H 'Content-Type: application/json' \
     -H 'Authorization: Bearer DEFAULT_SEARCH_API_KEY' \
     --data-binary '{ "q": "appointments" }'
-security_guide_search_key_1: |-
-  curl \
-    -X POST 'MEILISEARCH_URL/indexes/patient_medical_records/search' \
-    -H 'Authorization: Bearer API_KEY'
-security_guide_update_key_1: |-
-  curl \
-    -X PATCH 'MEILISEARCH_URL/keys/74c9c733-3368-4738-bbe5-1d18a5fecb37' \
-    -H 'Authorization: Bearer MASTER_KEY' \
-    -H 'Content-Type: application/json' \
-    --data-binary '{ "description": "Default Search API Key" }'
-security_guide_create_key_1: |-
-  curl \
-    -X POST 'MEILISEARCH_URL/keys' \
-    -H 'Content-Type: application/json' \
-    -H 'Authorization: Bearer MASTER_KEY' \
-    --data-binary '{
-      "description": "Search patient records key",
-      "actions": ["search"],
-      "indexes": ["patient_medical_records"],
-      "expiresAt": "2023-01-01T00:00:00Z"
-    }'
-security_guide_list_keys_1: |-
-  curl \
-    -X GET 'MEILISEARCH_URL/keys' \
-    -H 'Authorization: Bearer MASTER_KEY'
-security_guide_delete_key_1: |-
-  curl \
-    -X DELETE 'MEILISEARCH_URL/keys/ac5cd97d-5a4b-4226-a868-2d0eb6d197ab' \
-    -H 'Authorization: Bearer MASTER_KEY'
 primary_field_guide_create_index_primary_key: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes' \
@@ -1332,13 +1215,6 @@ typo_tolerance_guide_4: |-
         "twoTypos": 10
       }
     }'
-typo_tolerance_guide_5: |-
-  curl \
-    -X PATCH 'MEILISEARCH_URL/indexes/movies/settings/typo-tolerance' \
-    -H 'Content-Type: application/json' \
-    --data-binary '{
-      "disableOnNumbers": true
-    }'
 updating_guide_check_version_new_authorization_header: |-
   curl \
     -X GET 'http://<your-domain-name>/version' \
@@ -1361,36 +1237,12 @@ updating_guide_create_dump: |-
   curl \
     -X POST 'http://<your-domain-name>/dumps' \
     -H 'Authorization: Bearer API_KEY'
-getting_started_typo_tolerance: |-
-  curl \
-    -X PATCH 'MEILISEARCH_URL/indexes/movies/settings/typo-tolerance' \
-    -H 'Content-Type: application/json' \
-    --data-binary '{
-      "minWordSizeForTypos": { "oneTypo": 4 }
-  }'
 synonyms_guide_1: |-
   curl \
     -X PUT 'MEILISEARCH_URL/indexes/movies/settings/synonyms' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "great": ["fantastic"], "fantastic": ["great"]
-    }'
-getting_started_faceting: |-
-  curl \
-    -X PATCH 'MEILISEARCH_URL/indexes/movies/settings/faceting' \
-    -H 'Content-Type: application/json' \
-    --data-binary '{
-      "maxValuesPerFacet": 2,
-       "sortFacetValuesBy": {
-         "*": "count"
-       }
-    }'
-getting_started_pagination: |-
-  curl \
-    -X PATCH 'MEILISEARCH_URL/indexes/movies/settings/pagination' \
-    -H 'Content-Type: application/json' \
-    --data-binary '{
-      "maxTotalHits": 500
     }'
 search_parameter_guide_matching_strategy_1: |-
   curl \
@@ -1626,19 +1478,6 @@ analytics_event_bind_event_1: |-
       "objectId": "0",
       "position": 0
     }'
-analytics_event_bind_event_2: |-
-  curl \
-    -X POST 'https://PROJECT_URL/events' \
-    -H 'Content-Type: application/json' \
-    -H 'Authorization: Bearer DEFAULT_SEARCH_API_KEY' \
-    --data-binary '{
-      "eventType": "click",
-      "userId": "SEARCH_USER_ID",
-      "eventName": "Search Result Clicked",
-      "indexUid": "products",
-      "objectId": "0",
-      "position": 0
-    }'
 search_parameter_reference_distinct_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
@@ -1709,39 +1548,6 @@ search_parameter_reference_retrieve_vectors_1: |-
         "embedder": "EMBEDDER_NAME"
       }
     }'
-related_results_embedder_1: |-
-  curl -X PATCH 'MEILISEARCH_URL/indexes/movies/settings'
-    -H 'Content-Type: application/json'
-    -H 'Authorization: Bearer MEILISEARCH_API_KEY'
-    --data-binary '{
-      "embedders": {
-        "movies-text": {
-          "source": "openAi",
-          "apiKey": "OPENAI_API_KEY",
-          "model": "text-embedding-3-small",
-          "documentTemplate": "A movie titled '{{doc.title}}' released in {{ doc.release_date }}. The movie genres are: {{doc.genres}}. The story is about: {{doc.overview|truncatewords: 20}}"
-        }
-      }
-    }'
-related_results_search_1: |-
-  curl -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
-    -H 'content-type: application/json' \
-    -H 'Authorization: Bearer DEFAULT_SEARCH_API_KEY' \
-    --data-binary '{
-      "q": "batman",
-      "hybrid": {
-        "embedder": "EMBEDDER_NAME"
-      }
-    }'
-related_results_similar_1: |-
-  curl \
-    -X POST 'MEILISEARCH_URL/indexes/movies/similar' \
-    -H 'Content-Type: application/json' \
-    -H 'Authorization: Bearer DEFAULT_SEARCH_API_KEY' \
-    --data-binary '{
-      "id": 192,
-      "embedder": "EMBEDDER_NAME"
-    }'
 rename_an_index_1: |-
   curl \
     -X PATCH 'MEILISEARCH_URL/indexes/INDEX_A' \
@@ -1770,20 +1576,3 @@ multi_search_remote_federated_1: |-
           }
         }
       ]
-
-search_parameter_reference_media_1: |-
-  curl \
-  -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
-  -H 'Content-Type: application/json' \
-  --data-binary '{
-    "hybrid": {
-      "embedder": "EMBEDDER_NAME"
-    },
-    "media": {
-      "FIELD_A": "VALUE_A",
-      "FIELD_B" : {
-        "FIELD_C": "VALUE_B"
-        "FIELD_D": "VALUE_C"
-      }
-    }
-  }'
