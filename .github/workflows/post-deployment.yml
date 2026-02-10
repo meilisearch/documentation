@@ -12,6 +12,7 @@ on:
 
 jobs:
   build-code-samples:
+    name: Build code samples
     runs-on: ubuntu-latest
     outputs:
       run_openapi_automation: ${{ steps.openapi_automation.outputs.run }}
@@ -65,6 +66,7 @@ jobs:
   # In case of issues with the latest release OpenAPI file: fetch the desired OpenAPI file
   # manually, then set "internal-meili-fetch-automation" to false to prevent this automation from running.
   fetch-openapi-files:
+    name: Fetch OpenAPI files from Meilisearch release
     runs-on: ubuntu-latest
     needs: build-code-samples
     if: needs.build-code-samples.outputs.run_openapi_automation == 'true'
