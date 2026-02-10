@@ -13,19 +13,6 @@ client.index('meteorites').update_settings({
 })
 ```
 
-```php PHP
-$client->index('meteorites')->updateSettings([
-  'filterableAttributes' => [
-    'mass',
-    '_geo'
-  ],
-  'sortableAttributes' => [
-    'mass',
-    '_geo'
-  ]
-]);
-```
-
 ```java Java
 Settings settings = new Settings();
 settings.setFilterableAttributes(new String[] { "mass", "_geo" });

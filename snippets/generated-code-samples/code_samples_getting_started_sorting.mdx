@@ -7,13 +7,6 @@ client.index('meteorites').search('', {
 })
 ```
 
-```php PHP
-$client->index('meteorites')->search('', [
-  'filter' => 'mass < 200',
-  'sort' => ['mass:asc']
-]);
-```
-
 ```java Java
 SearchRequest searchRequest = SearchRequest.builder().q("").filter(new String[] {"mass < 200"}).sort(new String[] {"mass:asc"}).build();
 client.index("meteorites").search(searchRequest);

@@ -13,19 +13,6 @@ client.index('movies').update_ranking_rules([
 ])
 ```
 
-```php PHP
-$client->index('movies')->updateRankingRules([
-  'exactness',
-  'words',
-  'typo',
-  'proximity',
-  'attribute',
-  'sort',
-  'release_date:asc',
-  'rank:desc'
-]);
-```
-
 ```java Java
 Settings settings = new Settings();
 settings.setRankingRules(new String[]

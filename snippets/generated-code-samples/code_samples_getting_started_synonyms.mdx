@@ -7,13 +7,6 @@ client.index('movies').update_synonyms({
 })
 ```
 
-```php PHP
-$client->index('movies')->updateSynonyms([
-  'winnie' => ['piglet'],
-  'piglet' => ['winnie']
-]);
-```
-
 ```java Java
 Settings settings = new Settings();
 HashMap<String, String[]> synonyms = new HashMap<String, String[]>();

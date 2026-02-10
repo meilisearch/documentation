@@ -6,12 +6,6 @@ client.index('meteorites').search('', {
 })
 ```
 
-```php PHP
-$client->index('meteorites')->search('', [
-  'sort' => ['_geoPoint(48.8583701,2.2922926):asc']
-]);
-```
-
 ```java Java
 SearchRequest searchRequest = SearchRequest.builder().q("").sort(new String[] {"_geoPoint(48.8583701,2.2922926):asc"}).build();
 client.index("meteorites").search(searchRequest);

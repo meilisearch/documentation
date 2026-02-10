@@ -12,21 +12,6 @@ search_rules = {
 token = client.generate_tenant_token(api_key_uid=uid, search_rules=search_rules, api_key=api_key, expires_at=expires_at)
 ```
 
-```php PHP
-$apiKeyUid = '85c3c2f9-bdd6-41f1-abd8-11fcf80e0f76';
-$searchRules = (object) [
-  'patient_medical_records' => (object) [
-    'filter' => 'user_id = 1',
-  ]
-];
-$options = [
-    'apiKey' => 'B5KdX2MY2jV6EXfUs6scSfmC...',
-    'expiresAt' => new DateTime('2025-12-20'),
-];
-
-$token = $client->generateTenantToken($apiKeyUid, $searchRules, $options);
-```
-
 ```java Java
 Map<String, Object> filters = new HashMap<String, Object>();
 filters.put("filter", "user_id = 1");

@@ -4,10 +4,6 @@
 client.index('movies').update_pagination_settings({'maxTotalHits': 500})
 ```
 
-```php PHP
-$client->index('movies')->updatePagination(['maxTotalHits' => 500]);
-```
-
 ```java Java
 Pagination newPagination = new Pagination();
 newPagination.setMaxTotalHits(500);

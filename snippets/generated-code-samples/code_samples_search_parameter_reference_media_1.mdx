@@ -21,23 +21,6 @@ client.index('movies_fragments').search(
 )
 ```
 
-```php PHP
-$client->index('INDEX_NAME')->search('a futuristic movie', [
-  'hybrid' => [
-    'embedder' => 'EMBEDDER_NAME'
-  ],
-  'media' => [
-    'textAndPoster' => [
-      'text' => 'a futuristic movie',
-      'image' => [
-        'mime' => 'image/jpeg',
-        'data' => 'base64EncodedImageData'
-      ]
-    ]
-  ]
-]);
-```
-
 ```go Go
 client.Index("INDEX_NAME").Search("", &meilisearch.SearchRequest{
   Hybrid: &meilisearch.SearchRequestHybrid{

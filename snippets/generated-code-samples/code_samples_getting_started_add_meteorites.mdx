@@ -8,15 +8,6 @@ meteorites = json.load(json_file)
 client.index('meteorites').add_documents(meteorites)
 ```
 
-```php PHP
-$client = new Client('http://localhost:7700');
-
-$meteorites_json = file_get_contents('meteorites.json');
-$meteorites = json_decode($meteorites_json);
-
-$client->index('meteorites')->addDocuments($meteorites);
-```
-
 ```java Java
 import com.meilisearch.sdk;
 import org.json.JSONArray;

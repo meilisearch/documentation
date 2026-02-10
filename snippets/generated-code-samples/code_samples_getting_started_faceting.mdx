@@ -9,14 +9,6 @@ client.index('movies').update_faceting_settings({
 })
 ```
 
-```php PHP
-$client->index('movies')
-  ->updateFaceting([
-    'maxValuesPerFacet' => 2,
-    'sortFacetValuesBy' => ['*' => 'count']
-  ]);
-```
-
 ```java Java
 Faceting newFaceting = new Faceting();
 newFaceting.setMaxValuesPerFacet(2);

@@ -5,11 +5,6 @@ front_end_client = Client('http://localhost:7700', token)
 front_end_client.index('patient_medical_records').search('blood test')
 ```
 
-```php PHP
-$frontEndClient = new Client('http://localhost:7700', $token);
-$frontEndClient->index('patient_medical_records')->search('blood test');
-```
-
 ```java Java
 Client frontEndClient = new Client(new Config("http://localhost:7700", token));
 frontEndClient.index("patient_medical_records").search("blood test");

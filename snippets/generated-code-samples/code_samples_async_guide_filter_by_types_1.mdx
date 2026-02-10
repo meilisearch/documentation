@@ -4,10 +4,6 @@
 client.get_tasks({'types': ['dumpCreation', 'indexSwap']})
 ```
 
-```php PHP
-$client->getTasks((new TasksQuery())->setTypes(['dumpCreation', 'indexSwap']));
-```
-
 ```java Java
 TasksQuery query = new TasksQuery().setTypes(new String[] {"dumpCreation", "indexSwap"});
 client.getTasks(query);

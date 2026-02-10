@@ -8,14 +8,6 @@ client.index('movies').update_typo_tolerance({
 })
 ```
 
-```php PHP
-$client->index('books')->updateTypoTolerance([
-  'minWordSizeForTypos' => [
-    'oneTypo' => 4
-  ]
-]);
-```
-
 ```java Java
 HashMap<String, Integer> minWordSizeTypos =
 new HashMap<String, Integer>() {

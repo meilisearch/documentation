@@ -4,10 +4,6 @@
 client.get_tasks({'canceledBy': ['9', '15']})
 ```
 
-```php PHP
-$client->getTasks((new TasksQuery())->setCanceledBy([9, 15]));
-```
-
 ```java Java
 TasksQuery query = new TasksQuery().setCanceledBy(new int[] {9, 15});
 client.getTasks(query);
