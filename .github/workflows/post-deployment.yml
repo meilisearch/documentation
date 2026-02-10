@@ -26,8 +26,8 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run pull-code-samples script to fetch new code samples
-        run: node scripts/pull-code-samples.mjs
+      - name: Generate code sample snippets
+        run: node scripts/generate-code-sample-snippets.mjs
 
       - name: Check for changes
         id: changes
@@ -39,7 +39,7 @@ jobs:
           if [[ $has_changes == "true" ]]; then
             echo "There are changes in the Git working directory."
             git config user.name "meili-bot"
-            git config user.email "meili-bot@users.noreply.github.com"
+            git config user.email "meili-bot@meilisearch.com"
             git add snippets/
             git commit -m "Update code samples"
             git push origin main

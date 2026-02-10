@@ -86,13 +86,20 @@ const REPOS = SDK.map(sdk =>
   `https://raw.githubusercontent.com/meilisearch/${sdk.project}/main/${sdk.source || '.code-samples.meilisearch.yaml'}`
 );
 
-const OUTPUT_DIR = path.join(process.cwd(), 'snippets/samples');
-if (!fs.existsSync(OUTPUT_DIR)) fs.mkdirSync(OUTPUT_DIR, { recursive: true });
+const OUTPUT_DIR = path.join(process.cwd(), 'snippets/generated-code-samples');
 
+/**
+ * Remove all existing code sample snippets before regenerating them.
+ * This ensures stale/unused snippets don't persist.
+ */
+function cleanSnippets() {
+  if (!fs.existsSync(OUTPUT_DIR)) return;
 
-function extractLanguageFromUrl(repoUrl) {
-  const match = repoUrl.match(/meilisearch-([a-zA-Z]+)/);
-  return match ? match[1] : 'text'; // Default to 'text' if not found
+  const files = fs.readdirSync(OUTPUT_DIR).filter(f => f.startsWith('code_samples_') && f.endsWith('.mdx'));
+  for (const file of files) {
+    fs.unlinkSync(path.join(OUTPUT_DIR, file));
+  }
+  console.log(`Cleaned ${files.length} existing code sample snippets.`);
 }
 
 async function fetchYaml(url) {
@@ -101,7 +108,14 @@ async function fetchYaml(url) {
   return yaml.load(await response.text());
 }
 
-async function processRepos() {
+async function buildSnippets() {
+  // Step 1: Clean existing snippets
+  cleanSnippets();
+
+  // Step 2: Ensure output directory exists
+  if (!fs.existsSync(OUTPUT_DIR)) fs.mkdirSync(OUTPUT_DIR, { recursive: true });
+
+  // Step 3: Fetch and aggregate all code samples
   const operationSnippets = {};
 
   for (let i = 0; i < REPOS.length; i++) {
@@ -127,7 +141,8 @@ async function processRepos() {
     }
   }
 
-  // Write each sample name content to a file in the snippets folder
+  // Step 4: Write each sample to a file in the snippets folder
+  let count = 0;
   for (const [operationName, snippets] of Object.entries(operationSnippets)) {
     const filePath = path.join(OUTPUT_DIR, `code_samples_${operationName}.mdx`);
     const content = `
@@ -148,7 +163,7 @@ ${description}
 
 ${codeBlocks.map(block => {
   // Remove language identifier and code block markers to ensure Mintlify can parse it
-  const cleanBlock = block.replace(/^[a-z]+\s*/, '').replace(/```$/, '');
+  const cleanBlock = block.replace(/^[a-z]+\s*/, '').replace(/\`\`\`$/, '');
   return cleanBlock;
 }).join('\n')}
 \`\`\``;
@@ -164,8 +179,10 @@ ${snippet.content}
     `.trim();
 
     fs.writeFileSync(filePath, content, 'utf-8');
-    console.log(`Saved: ${operationName}.mdx`);
+    count++;
   }
+
+  console.log(`Generated ${count} code sample snippets.`);
 }
 
-processRepos();
+buildSnippets();

@@ -8,7 +8,7 @@ on:
 jobs:
   update-samples:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
@@ -22,8 +22,8 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run pull-code-samples script
-        run: node scripts/pull-code-samples.mjs
+      - name: Generate code sample snippets
+        run: node scripts/generate-code-sample-snippets.mjs
 
       - name: Commit changes
         run: |
@@ -31,4 +31,4 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git add snippets/
           git diff --quiet && git diff --staged --quiet || git commit -m "Update code samples [skip ci]"
-          git push 
+          git push
