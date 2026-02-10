@@ -1,22 +1,5 @@
 <CodeGroup>
 
-```javascript JS
-client.index('INDEX_NAME').search('a futuristic movie', {
-  hybrid: {
-    embedder: 'EMBEDDER_NAME'
-  },
-  media: {
-    textAndPoster: {
-      text: 'a futuristic movie',
-      image: {
-        mime: 'image/jpeg',
-        data: 'base64EncodedImageData'
-      }
-    }
-  }
-})
-```
-
 ```python Python
 client.index('movies_fragments').search(
     "a futuristic space movie",
