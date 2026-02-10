@@ -12397,7 +12397,7 @@
           "Mochi ze Cat"
         ],
         "summary": "Ask Mochi",
-        "description": "Send parameters to Mochi ze Cat and get a status back. This is a demo route showcasing request body annotations with utoipa.",
+        "description": "Send a question to Mochi ze Cat and get a status back.\nThis is a **demo route** to show how to document a POST endpoint\nwith a request body using `utoipa`.",
         "operationId": "post_mochi",
         "requestBody": {
           "description": "Parameters to send to Mochi",
@@ -17152,7 +17152,6 @@
           "cute": {
             "type": "boolean",
             "description": "Is Mochi cute? (spoiler: always yes)",
-            "default": true,
             "example": true
           },
           "work": {
