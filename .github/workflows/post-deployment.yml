@@ -26,8 +26,8 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Build code sample snippets
-        run: node scripts/build-code-sample-snippets.mjs
+      - name: Generate code sample snippets
+        run: node scripts/generate-code-sample-snippets.mjs
 
       - name: Check for changes
         id: changes
