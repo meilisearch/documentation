@@ -3,9 +3,9 @@ title: Ordering ranking rules
 description: Learn how Meilisearch orders search results and how to customize ranking rule order for your use case.
 ---
 
-# Ranking Rules: Getting the Order Right For You
+# Ranking rules: getting the order right for you
 
-**When to Read This Guide**
+**When to read this guide**
 
 This guide is for you if you want to understand how Meilisearch orders your search results and how to customize that behavior for your specific use case.
 
@@ -13,19 +13,19 @@ You might be here because you've noticed a document with a lower ranking score a
 
 **What you'll learn:** This guide explains how Meilisearch's ranking rules system works behind the scenes - how ranking scores relate to final result order, and how to adjust rankings to match your needs. You'll get practical tips and recommendations for common scenarios, so you can confidently tune your search results.
 
-## **How Meilisearch Ranks Results**
+## **How Meilisearch ranks results**
 
-### **Ranking Score vs. Final Order**
+### **Ranking score vs. final order**
 
 **Ranking score only measures text match quality.** It doesn't include Sort or Custom ranking rules.
 
 Ever noticed a document with a lower ranking score appearing higher in results? That's normal. The ranking score captures text relevance, but your final result order also includes Sort and Custom ranking rules, which don’t care for textual relevancy, and so these don't contribute to the ranking score. Understanding how these two work together is important to tweak effectively. 
 
-### **How Ranking Rules Work**
+### **How ranking rules work**
 
 Meilisearch applies ranking rules sequentially. Each rule sorts documents into buckets and passes them to the next rule. This is why rule order matters - earlier rules take priority and later rules serve only as tie-breakers.
 
-### Types of Ranking Rules
+### Types of ranking rules
 
 **Group 1 - Broad matching: Word, Type, Proximity (included in ranking score)**
 
@@ -50,7 +50,7 @@ If you want to dive deeper into the [built in ranking rules](https://www.meilise
 
 **And finally.. Sort & Custom ranking rules (NOT included in ranking score)**
 
-Its important to note that `Sort` ,`Asc/Desc` custom ranking rules will not be reflected in the Ranking Score. However if they are set, and how they are set, can affect your results. Heres what you need to know..
+Its important to note that `sort` ,`asc/desc` custom ranking rules will not be reflected in the Ranking Score. However if they are set, and how they are set, can affect your results. Heres what you need to know..
 
 **Sort**
 

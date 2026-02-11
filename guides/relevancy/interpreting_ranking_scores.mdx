@@ -91,7 +91,7 @@ Let's see how moving Sort **one position** in your ranking rules changes which r
 
 ---
 
-## Scenario A: Sort placed AFTER Group 1 rules (recommended)
+## Scenario A: `sort` placed AFTER Group 1 rules (recommended)
 
 We’ve set up our ranking rules to have sort after our Group 1 wide net rules.
 
@@ -191,7 +191,7 @@ Also notice: Sort shows a `value` instead of a `score`. That's because Sort does
 
 ---
 
-## Scenario B: Sort placed BEFORE Group 1 rules
+## Scenario B: `sort` placed BEFORE Group 1 rules
 
 Now let's move `sort` to the top of our ranking rules:
 
@@ -285,7 +285,7 @@ Notice something important: **Doc 1 still has a higher `_rankingScore` (0.998 vs
 
 ---
 
-## Side by Side
+## Side by side
 In both scenarios the user searches for `"chicken curry"` and sorts by `prep_time_minutes:asc` (quickest first). The only change is the ranking rule placement.
 
 |  | Scenario A (Sort is placed after Group 1 ranking rules) | Scenario B (Sort is placed first) |
@@ -298,7 +298,7 @@ In both scenarios the user searches for `"chicken curry"` and sorts by `prep_tim
 
 ---
 
-## The Takeaway
+## The takeaway
 
 Moving Sort **one position** flipped the results. The ranking score details let you see exactly why:
 
