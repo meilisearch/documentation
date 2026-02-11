@@ -1,0 +1,23 @@
+<CodeGroup>
+
+```javascript JS
+const frontEndClient = new MeiliSearch({ host: 'http://localhost:7700', apiKey: token })
+frontEndClient.index('patient_medical_records').search('blood test')
+```
+
+```python Python
+front_end_client = Client('http://localhost:7700', token)
+front_end_client.index('patient_medical_records').search('blood test')
+```
+
+```ruby Ruby
+front_end_client = MeiliSearch::Client.new('http://localhost:7700', token)
+
+front_end_client.index('patient_medical_records').search('blood test')
+```
+
+```go Go
+client := meilisearch.New("http://localhost:7700", meilisearch.WithAPIKey("masterKey"))
+client.Index("patient_medical_records").Search("blood test", &meilisearch.SearchRequest{});
+```
+</CodeGroup>

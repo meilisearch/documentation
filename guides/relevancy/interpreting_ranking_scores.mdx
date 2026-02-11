@@ -1,0 +1,309 @@
+---
+title: Interpreting ranking score details
+description: Learn how to understand ranking score details to see how Meilisearch evaluates each result and which rules determined their order.
+---
+
+# How do I interpret ranking score details?
+
+[In the previous guide](/guides/relevancy/ordering_ranking_rules), we covered how ranking rules determine result order and how changing their sequence affects what your users see first. But when you're actually making those tweaks, how do you know if they're working the way you expect?
+
+That's where ranking score details come in. They give you a behind-the-scenes view of every ranking decision Meilisearch made for each result — with specific numeric scores for each relevancy rule, in the order they were evaluated.
+
+You'll be able to see things like: did Proximity decide this result's position, or was it Typo? Did Sort even get a chance to act, or did an earlier rule already settle things? And since Sort doesn't measure relevance (it shows a `value` rather than a `score`), the details also make it clear exactly where Sort slotted into the evaluation path and whether it actually influenced the final order.
+
+**Firstly, how do I see ranking score details?**
+
+When you search you can pass in an option to view the details of scoring and sorting using `“showRankingScoreDetails”: true`  and it will return an indepth look at the ranking rules that you are working with
+
+```markdown
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/movies/search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "q": "dragon",
+    "showRankingScoreDetails": true
+  }'
+```
+
+Ranking Score details example
+
+```markdown
+{
+  "hits": [
+    {
+      "id": 31072,
+      "title": "Dragon",
+      "overview": "In a desperate attempt to save her kingdom…",
+      …
+      "_rankingScoreDetails": {
+        "words": {
+          "order": 0,
+          "matchingWords": 4,
+          "maxMatchingWords": 4,
+          "score": 1.0
+        },
+        "typo": {
+          "order": 2,
+          "typoCount": 1,
+          "maxTypoCount": 4,
+          "score": 0.75
+        },
+        "name:asc": {
+          "order": 1,
+          "value": "Dragon"
+        }
+      }
+    },
+    …
+  ],
+  …
+}
+```
+
+# Ranking rules: same data, different results. How `sort` placement changes outcomes
+
+## The setup
+
+You run a **recipe search app**. You have two recipes in your index:
+
+```json
+[
+  {
+    "id": 1,
+    "title": "Easy Chicken Curry",
+    "description": "A quick and simple chicken curry ready in 20 minutes",
+    "prep_time_minutes": 20
+  },
+  {
+    "id": 2,
+    "title": "Chicken Stew with Curry Spices and Vegetables",
+    "description": "A hearty stew with warming spices",
+    "prep_time_minutes": 15
+  }
+]
+```
+
+A user searches for `"chicken curry"` and sorts by `prep_time_minutes:asc` (quickest first).
+
+Both documents match both search words. But **Doc 1** is clearly the stronger text match as `"chicken"` and `"curry"` appear right next to each other in the title. **Doc 2** has both words in the title too, but they're separated by several other words.
+
+Let's see how moving Sort **one position** in your ranking rules changes which result comes first, and how to read the ranking score details to understand why.
+
+---
+
+## Scenario A: `sort` placed AFTER Group 1 rules (recommended)
+
+We’ve set up our ranking rules to have sort after our Group 1 wide net rules.
+
+```json
+["words", "typo", "proximity", "sort", "attribute", "exactness"]
+```
+
+With this set up Meilisearch evaluates the text relevance rules first, *then* uses Sort.
+
+### 🥇 Result #1 — Easy Chicken Curry
+
+```json
+{
+      "prep_time_minutes": 20,
+      "title": "Easy Chicken Curry",
+      "id": 1,
+      "description": "A quick and simple chicken curry ready in 20 minutes",
+      "_rankingScore": 0.9982363315696648,
+      "_rankingScoreDetails": {
+        "words": {
+          "order": 0,
+          "matchingWords": 2,
+          "maxMatchingWords": 2,
+          "score": 1.0
+        },
+        "typo": { "order": 1, "typoCount": 0, "maxTypoCount": 2, "score": 1.0 },
+        "proximity": { "order": 2, "score": 1.0 },
+        "prep_time_minutes:asc": { "order": 3, "value": 20.0 },
+        "attribute": {
+          "order": 4,
+          "attributeRankingOrderScore": 1.0,
+          "queryWordDistanceScore": 0.9047619047619048,
+          "score": 0.9682539682539683
+        },
+        "exactness": {
+          "order": 5,
+          "matchType": "noExactMatch",
+          "matchingWords": 2,
+          "maxMatchingWords": 2,
+          "score": 0.3333333333333333
+        }
+      }
+    }
+```
+
+### 🥈 Result #2 — Chicken Stew with Curry Spices and Vegetables
+
+```json
+{
+      "prep_time_minutes": 15,
+      "title": "Chicken Stew with Curry Spices and Vegetables",
+      "id": 2,
+      "description": "A hearty stew with warming spices",
+      "_rankingScore": 0.9149029982363316,
+      "_rankingScoreDetails": {
+        "words": {
+          "order": 0,
+          "matchingWords": 2,
+          "maxMatchingWords": 2,
+          "score": 1.0
+        },
+        "typo": { "order": 1, "typoCount": 0, "maxTypoCount": 2, "score": 1.0 },
+        "proximity": { "order": 2, "score": 0.5 },
+        "prep_time_minutes:asc": { "order": 3, "value": 15.0 },
+        "attribute": {
+          "order": 4,
+          "attributeRankingOrderScore": 1.0,
+          "queryWordDistanceScore": 0.9047619047619048,
+          "score": 0.9682539682539683
+        },
+        "exactness": {
+          "order": 5,
+          "matchType": "noExactMatch",
+          "matchingWords": 2,
+          "maxMatchingWords": 2,
+          "score": 0.3333333333333333
+        }
+      }
+   
+```
+
+### What decided this? Reading the score details
+
+Walk through the rules in `order` (0, 1, 2…) and look for where the scores diverge:
+
+| Step | Rule | Doc 1 | Doc 2 | Outcome |
+| --- | --- | --- | --- | --- |
+| 0 | **Words** | 2/2 → `1.0` | 2/2 → `1.0` | 🤝 Tie |
+| 1 | **Typo** | 0 typos → `1.0` | 0 typos → `1.0` | 🤝 Tie |
+| 2 | **Proximity** | `1.0` | `0.5` | ✅ **Doc 1 wins here** |
+
+Proximity broke the tie. `"chicken"` and `"curry"` sit right next to each other in Doc 1's title (score `1.0`), but are separated by three words in Doc 2's title (score `0.5`).
+
+Sort (order 3) never got a chance to act because Proximity already decided the winner. **Even though Doc 2 has a faster prep time (15 min vs 20 min), it ranks second because text relevance was evaluated first.**
+
+Also notice: Sort shows a `value` instead of a `score`. That's because Sort doesn't measure relevance, it just orders by the field value. This is why Sort doesn't contribute to `_rankingScore`.
+
+---
+
+## Scenario B: `sort` placed BEFORE Group 1 rules
+
+Now let's move `sort` to the top of our ranking rules:
+
+```json
+["sort", "words", "typo", "proximity", "attribute", "exactness"]
+```
+
+### 🥇 Result #1 — Chicken Stew with Curry Spices and Vegetables
+
+```json
+ {
+      "prep_time_minutes": 15,
+      "title": "Chicken Stew with Curry Spices and Vegetables",
+      "id": 2,
+      "description": "A hearty stew with warming spices",
+      "_rankingScore": 0.9149029982363316,
+      "_rankingScoreDetails": {
+        "prep_time_minutes:asc": { "order": 0, "value": 15.0 },
+        "words": {
+          "order": 1,
+          "matchingWords": 2,
+          "maxMatchingWords": 2,
+          "score": 1.0
+        },
+        "typo": { "order": 2, "typoCount": 0, "maxTypoCount": 2, "score": 1.0 },
+        "proximity": { "order": 3, "score": 0.5 },
+        "attribute": {
+          "order": 4,
+          "attributeRankingOrderScore": 1.0,
+          "queryWordDistanceScore": 0.9047619047619048,
+          "score": 0.9682539682539683
+        },
+        "exactness": {
+          "order": 5,
+          "matchType": "noExactMatch",
+          "matchingWords": 2,
+          "maxMatchingWords": 2,
+          "score": 0.3333333333333333
+        }
+      }
+  }
+```
+
+### 🥈 Result #2 — Easy Chicken Curry
+
+```json
+{
+      "prep_time_minutes": 20,
+      "title": "Easy Chicken Curry",
+      "id": 1,
+      "description": "A quick and simple chicken curry ready in 20 minutes",
+      "_rankingScore": 0.9982363315696648,
+      "_rankingScoreDetails": {
+        "prep_time_minutes:asc": { "order": 0, "value": 20.0 },
+        "words": {
+          "order": 1,
+          "matchingWords": 2,
+          "maxMatchingWords": 2,
+          "score": 1.0
+        },
+        "typo": { "order": 2, "typoCount": 0, "maxTypoCount": 2, "score": 1.0 },
+        "proximity": { "order": 3, "score": 1.0 },
+        "attribute": {
+          "order": 4,
+          "attributeRankingOrderScore": 1.0,
+          "queryWordDistanceScore": 0.9047619047619048,
+          "score": 0.9682539682539683
+        },
+        "exactness": {
+          "order": 5,
+          "matchType": "noExactMatch",
+          "matchingWords": 2,
+          "maxMatchingWords": 2,
+          "score": 0.3333333333333333
+        }
+      }
+ }
+```
+
+### Reading the score details - what changed?
+
+Look at the `order` values. Sort is now `order: 0` so it runs first.
+
+| Step | Rule | Doc 1 (Easy Chicken Curry) | Doc 2 (Chicken Stew…) | Outcome |
+| --- | --- | --- | --- | --- |
+| 0 | **Sort** (`prep_time_minutes:asc`) | value: `20` | value: `15` | ✅ **Doc 2 wins here** |
+
+Sort immediately separated the documents: 15 min beats 20 min. `:asc` will sort lowest to highest. Words, Typo, Proximity, and the rest never got a say.
+
+Notice something important: **Doc 1 still has a higher `_rankingScore` (0.998 vs 0.914)** but it ranks second. This is exactly what we described in [Ordering ranking rules](/guides/relevancy/ordering_ranking_rules): ranking score only measures text relevance. Sort affects the final order but doesn't change the ranking score. If you only looked at `_rankingScore`, you'd think Doc 1 should be first. The score details tell you the real story.
+
+---
+
+## Side by side
+In both scenarios the user searches for `"chicken curry"` and sorts by `prep_time_minutes:asc` (quickest first). The only change is the ranking rule placement.
+
+|  | Scenario A (Sort is placed after Group 1 ranking rules) | Scenario B (Sort is placed first) |
+| --- | --- | --- |
+| **#1 result** | Easy Chicken Curry (20 min) | Chicken Stew with Curry… (15 min) |
+| **Decided by** | Proximity (order 2) | Sort (order 0) |
+| **Doc 1 `_rankingScore`** | 0.998 | 0.998 (same — sort doesn't affect it) |
+| **Doc 2 `_rankingScore`** | 0.914 | 0.914(same — sort doesn't affect it) |
+| **Best for** | Users who want the most relevant recipe | Users who want the quickest recipe regardless of match quality |
+
+---
+
+## The takeaway
+
+Moving Sort **one position** flipped the results. The ranking score details let you see exactly why:
+
+- **Look at the `order` values** to understand the sequence rules were applied
+- **Find where scores first diverge** — that's the rule that decided the final order
+- **Remember that Sort shows a `value`, not a `score`**  It doesn't contribute to `_rankingScore`, which is why a higher-scored document can rank lower when Sort takes priority
+
+Start with Sort after Group 1 rules (Scenario A) and adjust from there based on what your users expect.
