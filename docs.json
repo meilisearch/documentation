@@ -411,6 +411,7 @@
                   "guides/embedders/openai",
                   "guides/langchain",
                   "guides/embedders/huggingface",
+                  "guides/embedders/bedrock",
                   "guides/embedders/cloudflare",
                   "guides/embedders/cohere",
                   "guides/embedders/mistral",
