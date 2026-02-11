@@ -53,4 +53,23 @@ options := &meilisearch.TenantTokenOptions{
 
 token, err := client.GenerateTenantToken(searchRules, options);
 ```
+
+```swift Swift
+let apiKey = "B5KdX2MY2jV6EXfUs6scSfmC..."
+let expiresAt = Date.distantFuture
+let searchRules = SearchRulesGroup(SearchRules("patient_medical_records", filter: "user_id = 1"))
+
+client.generateTenantToken(
+  searchRules,
+  apiKey: apiKey, // optional
+  expiresAt: expiresAt // optional
+) { (result: Result<String, Error>) in
+  switch result {
+  case .success(let token):
+    print(token)
+  case .failure(let error):
+    print(error)
+  }
+}
+```
 </CodeGroup>

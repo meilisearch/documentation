@@ -20,4 +20,18 @@ front_end_client.index('patient_medical_records').search('blood test')
 client := meilisearch.New("http://localhost:7700", meilisearch.WithAPIKey("masterKey"))
 client.Index("patient_medical_records").Search("blood test", &meilisearch.SearchRequest{});
 ```
+
+```swift Swift
+let frontEndClient = MeiliSearch(host: "http://localhost:7700", apiKey: token)
+
+client.index("patient_medical_records")
+  .search(parameters) { (result: Result<SearchResult<Record>, Swift.Error>) in
+    switch result {
+    case .success(let searchResult):
+      print(searchResult)
+    case .failure(let error):
+      print(error)
+    }
+}
+```
 </CodeGroup>
