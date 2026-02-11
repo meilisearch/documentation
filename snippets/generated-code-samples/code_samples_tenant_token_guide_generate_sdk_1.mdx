@@ -27,6 +27,36 @@ search_rules = {
 token = client.generate_tenant_token(api_key_uid=uid, search_rules=search_rules, api_key=api_key, expires_at=expires_at)
 ```
 
+```php PHP
+$apiKeyUid = '85c3c2f9-bdd6-41f1-abd8-11fcf80e0f76';
+$searchRules = (object) [
+  'patient_medical_records' => (object) [
+    'filter' => 'user_id = 1',
+  ]
+];
+$options = [
+    'apiKey' => 'B5KdX2MY2jV6EXfUs6scSfmC...',
+    'expiresAt' => new DateTime('2025-12-20'),
+];
+
+$token = $client->generateTenantToken($apiKeyUid, $searchRules, $options);
+```
+
+```java Java
+Map<String, Object> filters = new HashMap<String, Object>();
+filters.put("filter", "user_id = 1");
+Map<String, Object> searchRules = new HashMap<String, Object>();
+searchRules.put("patient_medical_records", filters);
+
+Date expiresAt = new SimpleDateFormat("yyyy-MM-dd").parse("2025-12-20");
+TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+TenantTokenOptions options = new TenantTokenOptions();
+options.setApiKey("B5KdX2MY2jV6EXfUs6scSfmC...");
+options.setExpiresAt(expiresAt);
+
+String token = client.generateTenantToken("85c3c2f9-bdd6-41f1-abd8-11fcf80e0f76", searchRules, options);
+```
+
 ```ruby Ruby
 uid = '85c3c2f9-bdd6-41f1-abd8-11fcf80e0f76'
 api_key = 'B5KdX2MY2jV6EXfUs6scSfmC...'
@@ -52,5 +82,67 @@ options := &meilisearch.TenantTokenOptions{
 }
 
 token, err := client.GenerateTenantToken(searchRules, options);
+```
+
+```csharp C#
+var apiKey = "B5KdX2MY2jV6EXfUs6scSfmC...";
+var expiresAt = new DateTime(2025, 12, 20);
+var searchRules = new TenantTokenRules(new Dictionary<string, object> {
+  { "patient_medical_records", new Dictionary<string, object> { { "filter", "user_id = 1" } } }
+});
+
+token = client.GenerateTenantToken(
+  searchRules,
+  apiKey: apiKey // optional,
+  expiresAt: expiresAt // optional
+);
+```
+
+```rust Rust
+let api_key = "B5KdX2MY2jV6EXfUs6scSfmC...";
+let api_key_uid = "6062abda-a5aa-4414-ac91-ecd7944c0f8d";
+let expires_at = time::macros::datetime!(2025 - 12 - 20 00:00:00 UTC);
+let search_rules = json!({ "patient_medical_records": { "filter": "user_id = 1" } });
+
+let token = client
+  .generate_tenant_token(api_key_uid, search_rules, api_key, expires_at)
+  .unwrap();
+```
+
+```swift Swift
+let apiKey = "B5KdX2MY2jV6EXfUs6scSfmC..."
+let expiresAt = Date.distantFuture
+let searchRules = SearchRulesGroup(SearchRules("patient_medical_records", filter: "user_id = 1"))
+
+client.generateTenantToken(
+  searchRules,
+  apiKey: apiKey, // optional
+  expiresAt: expiresAt // optional
+) { (result: Result<String, Error>) in
+  switch result {
+  case .success(let token):
+    print(token)
+  case .failure(let error):
+    print(error)
+  }
+}
+```
+
+```dart Dart
+final uid = '85c3c2f9-bdd6-41f1-abd8-11fcf80e0f76';
+final apiKey = 'B5KdX2MY2jV6EXfUs6scSfmC...';
+final expiresAt = DateTime.utc(2025, 12, 20);
+final searchRules = {
+  'patient_medical_records': {
+    'filter': 'user_id = 1'
+  }
+};
+
+final token = client.generateTenantToken(
+  uid,
+  searchRules,
+  apiKey: apiKey, // optional
+  expiresAt: expiresAt // optional
+);
 ```
 </CodeGroup>
