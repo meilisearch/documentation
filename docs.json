@@ -434,6 +434,13 @@
                 ]
               },
               {
+                "group": "Relevancy",
+                "pages": [
+                  "guides/relevancy/ordering_ranking_rules",
+                  "guides/relevancy/interpreting_ranking_scores"
+                ]
+              },              
+              {
                 "group": "Deployment",
                 "pages": [
                   "guides/running_production"

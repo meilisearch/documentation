@@ -1,0 +1,122 @@
+---
+title: Ordering ranking rules
+description: Learn how Meilisearch orders search results and how to customize ranking rule order for your use case.
+---
+
+# Ranking Rules: Getting the Order Right For You
+
+**When to Read This Guide**
+
+This guide is for you if you want to understand how Meilisearch orders your search results and how to customize that behavior for your specific use case.
+
+You might be here because you've noticed a document with a lower ranking score appearing above one with a higher score, or you're curious about what happens when you adjust the ranking rule sequence. Maybe you're proactively exploring how to fine-tune results before going live, or you want to prioritize certain types of content over others.
+
+**What you'll learn:** This guide explains how Meilisearch's ranking rules system works behind the scenes - how ranking scores relate to final result order, and how to adjust rankings to match your needs. You'll get practical tips and recommendations for common scenarios, so you can confidently tune your search results.
+
+## **How Meilisearch Ranks Results**
+
+### **Ranking Score vs. Final Order**
+
+**Ranking score only measures text match quality.** It doesn't include Sort or Custom ranking rules.
+
+Ever noticed a document with a lower ranking score appearing higher in results? That's normal. The ranking score captures text relevance, but your final result order also includes Sort and Custom ranking rules, which don’t care for textual relevancy, and so these don't contribute to the ranking score. Understanding how these two work together is important to tweak effectively. 
+
+### **How Ranking Rules Work**
+
+Meilisearch applies ranking rules sequentially. Each rule sorts documents into buckets and passes them to the next rule. This is why rule order matters - earlier rules take priority and later rules serve only as tie-breakers.
+
+### Types of Ranking Rules
+
+**Group 1 - Broad matching: Word, Type, Proximity (included in ranking score)**
+
+This covers things like:
+
+- **Word**: How many of your search terms appear in the document (more matches = higher ranking)
+- **Typo**: Whether these matches are the exact words or matches that are included through typo-tolerance (exact matches rank higher)
+- **Proximity**: How close together your search terms appear in the document (closer = more relevant)
+
+**These three rules cast a wide net and return lots of results.** That's good—you want to start broad and then narrow down, not the other way around. If you start too narrow you can lose relevancy easily. 
+
+**Group 2 - Fine-tuning : Exactness, Attribute (included in ranking score)**
+
+This covers things like:
+
+- **Exactness**: Did the document match your whole search term or just pieces of it? Whole matches rank higher, especially when an entire field matches exactly or starts with your query. Documents containing extra content beyond the search term are ranked lower.
+- **Attribute**: Matches in your most important fields rank higher, and matches near the beginning of a field rank higher. You set field priority in `searchableAttributes`, with fields at the top of the list treated as the most important.
+
+**These are your fine-tuning filters.** They return fewer, more precise results. Use these after Group 1 rules to refine your large result set into something more precise.
+
+If you want to dive deeper into the [built in ranking rules](https://www.meilisearch.com/docs/learn/relevancy/ranking_rules) and [custom ranking rules](https://www.meilisearch.com/docs/learn/relevancy/custom_ranking_rules) we have more information available in our documentation.
+
+**And finally.. Sort & Custom ranking rules (NOT included in ranking score)**
+
+Its important to note that `Sort` ,`Asc/Desc` custom ranking rules will not be reflected in the Ranking Score. However if they are set, and how they are set, can affect your results. Heres what you need to know..
+
+**Sort**
+
+The Sort rule only activates when you use the `sort` parameter in your search query. **Without that parameter, it has no effect.**
+
+When you do use `sort`, whatever you specify as a sort gets swapped into the Sort position in your ranking rules:
+
+Search query:
+
+```json
+"q": "hello"
+"sort": [
+  "price:asc",
+  "author:desc"
+]
+```
+
+Ranking rules:
+
+```json
+[
+  "words",
+  "typo",
+  "proximity",
+  "attribute",
+  "sort", // "price:asc" "author:desc" gets swapped in here
+  "exactness",
+  "release_date:asc",
+  "movie_ranking:desc"
+]
+```
+
+**Key behaviour: Sort ignores text relevance**
+
+Sort and Custom ranking rules don't consider how well documents match your search query - they simply order results alphabetically or numerically by your chosen field (price, date, etc.).
+
+**Placement matters.** If you put Sort or Custom ranking rules at the top of your ranking rules, results will be ordered by that field instead of by text relevance. Apart from very specific use cases, such as price ordering, this usually creates a poor search experience where less relevant results appear first just because they have the right price or date. 
+
+## Our Recommendations for Ranking Rule Ordering
+
+### Keep Group 1 rules first (Words, Typo, Proximity)
+
+Start with `words` as your first rule as it's the foundation. Every other rule depends on word matches existing, so it makes sense to establish those first. Follow it with `typo` and `proximity` to round out your broad matching.
+
+These three rules cast a wide net and pass a large pool of relevant results through the ranking chain. Starting broad is important. If you begin too narrow, you risk losing relevant documents before the later rules get a chance to refine them.
+
+### Place Sort strategically
+
+We recommend putting Sort after your Group 1 rules and before your Group 2 rules (Attribute, Exactness). This way, Meilisearch finds relevant results first and then uses your sort field to order documents that have similar text relevance, giving you a balance of match quality and sorting.
+
+If sorting matters more than text relevance for your use case - like an e-commerce price filter where users expect strict price ordering - move Sort higher. Just remember that Sort only activates when you include the `sort` parameter in your search query. Without it, the Sort rule has no effect.
+
+One thing to watch: placing Sort too late means most results are already in their final position before Sort gets a chance to act. If your sort field isn't influencing results the way you expect, try moving it up one position at a time and testing until you find the right spot. For a practical look at how this works, see [How Do I Interpret Ranking Score Details?](/guides/relevancy/interpreting_ranking_scores) where we show the same search returning different results just by moving Sort one position.
+
+### Use Custom ranking rules as tiebreakers
+
+Place custom ranking rules at the end of your sequence. They work best for adding business logic after text relevance has been established — things like popularity, recency, or user ratings. For example, if two recipes match equally well for "chicken curry," a custom `popularity:desc` rule can push the one with more saves to the top.
+
+### Going deeper
+
+Each ranking rule has its own settings you can fine-tune beyond just ordering. For example, you can adjust which fields take priority in attribute ranking, or configure how aggressively typo tolerance matches similar words. If you want to dig into the specifics:
+
+- [Built-in ranking rules](https://www.meilisearch.com/docs/learn/relevancy/ranking_rules#list-of-built-in-ranking-rules) — how each rule works and what it evaluates
+- [Attribute ranking order](https://www.meilisearch.com/docs/learn/relevancy/attribute_ranking_order) — controlling which fields matter most
+- [Typo tolerance settings](https://www.meilisearch.com/docs/learn/relevancy/typo_tolerance_settings) — adjusting how flexible matching behaves
+
+**Want to see these rules in action?** In our next guide, [How Do I Interpret Ranking Score Details?](/guides/relevancy/interpreting_ranking_scores), we walk through a real example showing exactly how Meilisearch evaluates each rule — and how moving Sort one position can flip your results.
+
+---
