@@ -1,7 +1,7 @@
 # Runs daily and on workflow_dispatch.
 # - Job 1: Fails if local code samples are not properly used (route comment → OpenAPI, no comment → snippet in docs).
 # - Job 2: Fails if any SDK has code samples not present in the local .code-samples.meilisearch.yaml.
-# - Job 3: Informational only (never fails) – lists local samples missing from each SDK.
+# - Job 3: Informational only (never fails) – lists CodeSamples* import keys missing from each SDK.
 name: Check Docs & SDK code sample files
 
 on:
@@ -37,7 +37,7 @@ jobs:
         run: node scripts/check-unused-sdk-samples.mjs
 
   # Informational only – this job never fails.
-  # Lists local samples that are missing from each SDK.
+  # Lists code sample keys referenced by CodeSamples* imports in the docs that are missing from each SDK.
   missing-sdk-samples:
     name: "[Info only - never fails] Missing SDK code samples"
     runs-on: ubuntu-latest
