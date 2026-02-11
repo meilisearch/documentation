@@ -35,7 +35,7 @@ Ranking Score details example
       "title": "Dragon",
       "overview": "In a desperate attempt to save her kingdom…",
       …
-      **"_rankingScoreDetails"**: {
+      "_rankingScoreDetails": {
         "words": {
           "order": 0,
           "matchingWords": 4,
@@ -115,10 +115,10 @@ With this set up Meilisearch evaluates the text relevance rules first, *then* us
           "order": 0,
           "matchingWords": 2,
           "maxMatchingWords": 2,
-          **"score": 1.0**
+          "score": 1.0
         },
-        "typo": { "order": 1, "typoCount": 0, "maxTypoCount": 2, "**score": 1.0** },
-        "proximity": { "order": 2, "**score": 1.0** },
+        "typo": { "order": 1, "typoCount": 0, "maxTypoCount": 2, "score": 1.0 },
+        "proximity": { "order": 2, "score": 1.0 },
         "prep_time_minutes:asc": { "order": 3, "value": 20.0 },
         "attribute": {
           "order": 4,
@@ -151,10 +151,10 @@ With this set up Meilisearch evaluates the text relevance rules first, *then* us
           "order": 0,
           "matchingWords": 2,
           "maxMatchingWords": 2,
-          **"score": 1.0**
+          "score": 1.0
         },
-        "typo": { "order": 1, "typoCount": 0, "maxTypoCount": 2, **"score": 1.0** },
-        "proximity": { "order": 2, **"score": 0.5** },
+        "typo": { "order": 1, "typoCount": 0, "maxTypoCount": 2, "score": 1.0 },
+        "proximity": { "order": 2, "score": 0.5 },
         "prep_time_minutes:asc": { "order": 3, "value": 15.0 },
         "attribute": {
           "order": 4,
@@ -209,7 +209,7 @@ Now let's move `sort` to the top of our ranking rules:
       "description": "A hearty stew with warming spices",
       "_rankingScore": 0.9149029982363316,
       "_rankingScoreDetails": {
-        **"prep_time_minutes:asc": { "order": 0, "value": 15.0 },**
+        "prep_time_minutes:asc": { "order": 0, "value": 15.0 },
         "words": {
           "order": 1,
           "matchingWords": 2,
@@ -245,7 +245,7 @@ Now let's move `sort` to the top of our ranking rules:
       "description": "A quick and simple chicken curry ready in 20 minutes",
       "_rankingScore": 0.9982363315696648,
       "_rankingScoreDetails": {
-        **"prep_time_minutes:asc": { "order": 0, "value": 20.0 },**
+        "prep_time_minutes:asc": { "order": 0, "value": 20.0 },
         "words": {
           "order": 1,
           "matchingWords": 2,
