@@ -281,7 +281,7 @@ Look at the `order` values. Sort is now `order: 0` so it runs first.
 
 Sort immediately separated the documents: 15 min beats 20 min. `:asc` will sort lowest to highest. Words, Typo, Proximity, and the rest never got a say.
 
-Notice something important: **Doc 1 still has a higher `_rankingScore` (0.998 vs 0.914)** but it ranks second. This is exactly what the guide means when it says ranking score only measures text relevance. Sort affects the final order but doesn't change the score. If you only looked at `_rankingScore`, you'd think Doc 1 should be first. The score details tell you the real story.
+Notice something important: **Doc 1 still has a higher `_rankingScore` (0.998 vs 0.914)** but it ranks second. This is exactly what we described in [Ordering ranking rules](/guides/relevancy/ordering_ranking_rules): ranking score only measures text relevance. Sort affects the final order but doesn't change the ranking score. If you only looked at `_rankingScore`, you'd think Doc 1 should be first. The score details tell you the real story.
 
 ---
 
