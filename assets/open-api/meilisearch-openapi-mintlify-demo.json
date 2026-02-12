@@ -12409,10 +12409,6 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/MochiRequest"
-              },
-              "example": {
-                "cute": true,
-                "work": false
               }
             }
           },
