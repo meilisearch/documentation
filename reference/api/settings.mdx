@@ -100,8 +100,9 @@ By default, the settings object looks like this. All fields are modifiable.
     "words",
     "typo",
     "proximity",
-    "attribute",
+    "attributeRank",
     "sort",
+    "attributePosition",
     "exactness"
   ],
   "stopWords": [],
@@ -238,7 +239,7 @@ If the provided index does not exist, it will be created.
 | **[`proximityPrecision`](#proximity-precision)**     | String           | `"byWord"`                                                                                       |  Precision level when calculating the proximity ranking rule                     |
 | **[`facetSearch`](#facet-search)**     | Boolean           | `true`                                                                                       |  Enable or disable [facet search](/reference/api/facet_search) functionality                     |
 | **[`prefixSearch`](#prefix-search)**     | String           | `"indexingTime"`                                                                                       | When Meilisearch should return results only matching the beginning of query                     |
-| **[`rankingRules`](#ranking-rules)**                 | Array of strings | `["words",`<br />`"typo",`<br />`"proximity",`<br />`"attribute",`<br />`"sort",`<br />`"exactness"]` | List of ranking rules in order of importance                                |
+| **[`rankingRules`](#ranking-rules)**                 | Array of strings | `["words",`<br />`"typo",`<br />`"proximity",`<br />`"attributeRank",`<br />`"sort",`<br />`"attributePosition",`<br />`"exactness"]` | List of ranking rules in order of importance                                |
 | **[`searchableAttributes`](#searchable-attributes)** | Array of strings | All attributes: `["*"]`                                                                          | Fields in which to search for matching query words sorted by order of importance |
 | **[`searchCutoffMs`](#search-cutoff)**              | Integer          | `null`, or 1500ms                                                                                | Maximum duration of a search query                                               |
 | **[`separatorTokens`](#separator-tokens)**           | Array of strings | Empty                                                                                            | List of characters delimiting where one term begins and ends                     |
@@ -1467,14 +1468,16 @@ Ranking rules are built-in rules that rank search results according to certain c
 
 ### Ranking rules array
 
-| Name              | Description                                                                     |
-| :---------------- | :------------------------------------------------------------------------------ |
-| **`"words"`**     | Sorts results by decreasing number of matched query terms                       |
-| **`"typo"`**      | Sorts results by increasing number of typos                                     |
-| **`"proximity"`** | Sorts results by increasing distance between matched query terms                |
-| **`"attribute"`** | Sorts results based on the attribute ranking order                              |
-| **`"sort"`**      | Sorts results based on parameters decided at query time                         |
-| **`"exactness"`** | Sorts results based on the similarity of the matched words with the query words |
+| Name                     | Description                                                                     |
+| :----------------------- | :------------------------------------------------------------------------------ |
+| **`"words"`**            | Sorts results by decreasing number of matched query terms                       |
+| **`"typo"`**             | Sorts results by increasing number of typos                                     |
+| **`"proximity"`**        | Sorts results by increasing distance between matched query terms                |
+| **`"attributeRank"`**    | Sorts results by the attribute rank of the query terms within attributes        |
+| **`"attributePosition"`**| Sorts results by the position of query terms within attributes                  |
+| **`"attribute"`**        | Legacy rule combining `attributeRank` and `attributePosition`                   |
+| **`"sort"`**             | Sorts results based on parameters decided at query time                         |
+| **`"exactness"`**        | Sorts results based on the similarity of the matched words with the query words |
 
 #### Default order
 
@@ -1483,8 +1486,9 @@ Ranking rules are built-in rules that rank search results according to certain c
   "words",
   "typo",
   "proximity",
-  "attribute",
+  "attributeRank",
   "sort",
+  "attributePosition",
   "exactness"
 ]
 ```
@@ -1512,8 +1516,9 @@ Get the ranking rules of an index.
   "words",
   "typo",
   "proximity",
-  "attribute",
+  "attributeRank",
   "sort",
+  "attributePosition",
   "exactness",
   "release_date:desc"
 ]
@@ -1548,6 +1553,8 @@ To create a custom ranking rule, give an attribute followed by a colon (`:`) and
 If some documents do not contain the attribute defined in a custom ranking rule, the application of the ranking rule is undefined and the search results might not be sorted as you expected.
 
 Make sure that any attribute used in a custom ranking rule is present in all of your documents. For example, if you set the custom ranking rule `desc(year)`, make sure that all your documents contain the attribute `year`.
+
+You cannot use the `attribute` ranking rule together with `attributeRank` or `attributePosition`. If you try to configure ranking rules with both, Meilisearch will return an error. We recommend using a combination of the `attributeRank` and `attributePosition` rules.
 </Warning>
 
 [To learn more about ranking rules, refer to our dedicated guide.](/learn/relevancy/ranking_rules)
