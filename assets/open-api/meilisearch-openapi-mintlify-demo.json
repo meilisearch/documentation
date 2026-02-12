@@ -1510,6 +1510,10 @@
             "source": "client.index('INDEX_UID').compact"
           },
           {
+            "lang": "Go",
+            "source": "client.Index(\"INDEX_UID\").Compact();"
+          },
+          {
             "lang": "Rust",
             "source": "let task: TaskInfo = client\n  .index(\"INDEX_UID\")\n  .compact()\n  .await\n  .unwrap();"
           }
@@ -4807,7 +4811,7 @@
           },
           {
             "lang": "Java",
-            "source": "client.index(\"movies\").resetDisplayedAttributesSettings();"
+            "source": "client.index(\"movies\").resetDisplayedAttributesSettings();\nt_typo_tolerance_1:\nclient.index(\"books\").getTypoToleranceSettings();"
           },
           {
             "lang": "Ruby",
@@ -13941,7 +13945,7 @@
           },
           {
             "lang": "Dart",
-            "source": "await client.cancelTasks(params: CancelTasksQuery(uids: [1, 2]));"
+            "source": "await client.cancelTasks(params: CancelTasksQuery(uids: [1, 2]));\nap_indexes_1: \"await client.swapIndexes([\\n  SwapIndex(['indexA', 'indexB']),\\n  SwapIndex(['indexX', 'indexY']),\\n]);\"\narch_parameter_guide_hitsperpage_1: \"await client\\n    .index('movies')\\n    .search('', SearchQuery(hitsPerPage: 15))\\n    .asPaginatedResult();\"\narch_parameter_guide_page_1: \"await client\\n    .index('movies')\\n    .search('', SearchQuery(page: 2))\\n    .asPaginatedResult();\"\nnonyms_guide_1: \"await client.index('movies').updateSynonyms({\\n  'great': ['fantastic'],\\n  'fantastic': ['great'],\\n});\"\nte_guide_index_1: \"\\/\\/import 'dart:io';\\n\\/\\/import 'dart:convert';\\nfinal json = await File('games.json').readAsString();\\nawait client.index('games').addDocumentsJson(json);\"\nte_guide_filterable_attributes_1: \"await client\\n    .index('games')\\n    .updateFilterableAttributes(['release_timestamp']);\"\nte_guide_filter_1: \"await client.index('games').search(\\n      '',\\n      SearchQuery(\\n        filterExpression: Meili.and([\\n          Meili.gte(\\n            'release_timestamp'.toMeiliAttribute(),\\n            Meili.value(DateTime(2017, 12, 31, 23, 0)),\\n          ),\\n          Meili.lt(\\n            'release_timestamp'.toMeiliAttribute(),\\n            Meili.value(DateTime(2022, 12, 31, 23, 0)),\\n          ),\\n        ]),\\n      ),\\n    );\"\nte_guide_sortable_attributes_1: \"await client\\n    .index('games')\\n    .updateSortableAttributes(['release_timestamp']);\"\nte_guide_sort_1: \"await client\\n    .index('games')\\n    .search('', SearchQuery(sort: ['release_timestamp:desc']));\""
           },
           {
             "lang": "Swift",
