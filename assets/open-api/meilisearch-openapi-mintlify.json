@@ -15,7 +15,7 @@
   },
   "servers": [
     {
-      "url": "/",
+      "url": "http://localhost:7700",
       "description": "Local server"
     }
   ],
@@ -23,16 +23,16 @@
     "/batches": {
       "get": {
         "tags": [
-          "Batches"
+          "Async task management"
         ],
-        "summary": "Get batches",
-        "description": "List all batches, regardless of index. The batch objects are contained in\nthe results array. Batches are always returned in descending order of uid.\nThis means that by default, the most recently created batch objects appear\nfirst. Batch results are paginated and can be filtered with query\nparameters.",
+        "summary": "List batches",
+        "description": "The `/batches` route gives information about the progress of batches of [asynchronous operations](/learn/async/asynchronous_operations).\n\nBatches are always returned in descending order of uid. This means that by default, the most recently created batch objects appear first. Batch results are paginated and can be filtered with query parameters.",
         "operationId": "get_batches",
         "parameters": [
           {
             "name": "limit",
             "in": "query",
-            "description": "Maximum number of results to return.",
+            "description": "Maximum number of batches to return",
             "required": false,
             "schema": {
               "type": "integer",
@@ -45,7 +45,7 @@
           {
             "name": "from",
             "in": "query",
-            "description": "Fetch the next set of results from the given uid.",
+            "description": "`uid` of the first batch returned",
             "required": false,
             "schema": {
               "type": "integer",
@@ -57,7 +57,7 @@
           {
             "name": "reverse",
             "in": "query",
-            "description": "The order you want to retrieve the objects.",
+            "description": "If `true`, returns results in the reverse order, from oldest to most recent",
             "required": false,
             "schema": {
               "type": "boolean"
@@ -259,10 +259,10 @@
                       "finishedAt": "2024-12-10T15:49:05.105404Z"
                     }
                   ],
-                  "total": 3,
-                  "limit": 1,
-                  "from": 2,
-                  "next": 1
+                  "total": 1,
+                  "limit": 20,
+                  "from": 1,
+                  "next": null
                 }
               }
             }
@@ -328,10 +328,10 @@
     "/batches/{batchUid}": {
       "get": {
         "tags": [
-          "Batches"
+          "Async task management"
         ],
-        "summary": "Get one batch",
-        "description": "Get a single batch.",
+        "summary": "Get batch",
+        "description": "Get a single batch by its unique identifier.\n\nThe `/batches` route gives information about the progress of batches of [asynchronous operations](/learn/async/asynchronous_operations).",
         "operationId": "get_batch",
         "parameters": [
           {
@@ -354,7 +354,7 @@
                   "$ref": "#/components/schemas/BatchView"
                 },
                 "example": {
-                  "uid": 1,
+                  "uid": 0,
                   "details": {
                     "receivedDocuments": 1,
                     "indexedDocuments": 1
@@ -441,9 +441,9 @@
     "/dumps": {
       "post": {
         "tags": [
-          "Dumps"
+          "Backups"
         ],
-        "summary": "Create a dump",
+        "summary": "Create dump",
         "description": "Triggers a dump creation process. Once the process is complete, a dump is created in the\n[dump directory](https://www.meilisearch.com/docs/learn/self_hosted/configure_meilisearch_at_launch#dump-directory).\nIf the dump directory does not exist yet, it will be created.",
         "operationId": "create_dump",
         "responses": {
@@ -543,7 +543,7 @@
         "tags": [
           "Experimental features"
         ],
-        "summary": "Get all experimental features",
+        "summary": "List experimental features",
         "description": "Get a list of all experimental features that can be activated via the\n/experimental-features route and whether or not they are currently\nactivated.",
         "operationId": "get_features",
         "responses": {
@@ -693,7 +693,7 @@
     "/export": {
       "post": {
         "tags": [
-          "Export"
+          "Documents"
         ],
         "summary": "Export to a remote Meilisearch",
         "description": "Triggers an export process to a remote Meilisearch instance. This allows you to send\ndocuments and settings from the current instance to another Meilisearch server.",
@@ -767,7 +767,7 @@
         "tags": [
           "Health"
         ],
-        "summary": "Get Health",
+        "summary": "Get health",
         "description": "The health check endpoint enables you to periodically test the health of\nyour Meilisearch instance.",
         "operationId": "get_health",
         "responses": {
@@ -1432,9 +1432,9 @@
     "/indexes/{indexUid}/compact": {
       "post": {
         "tags": [
-          "Compact an index"
+          "Indexes"
         ],
-        "summary": "Compact an index",
+        "summary": "Compact index",
         "description": "Triggers a compaction process on the specified index. Compaction reorganizes the index database to make it smaller and more efficient.",
         "operationId": "compact",
         "parameters": [
@@ -1529,7 +1529,7 @@
         "tags": [
           "Documents"
         ],
-        "summary": "Get documents",
+        "summary": "List documents with GET",
         "description": "Get documents by batches.",
         "operationId": "get_documents",
         "parameters": [
@@ -2392,7 +2392,7 @@
         "tags": [
           "Documents"
         ],
-        "summary": "Edit documents by function.",
+        "summary": "Edit documents by function",
         "description": "Use a [RHAI function](https://rhai.rs/book/engine/hello-world.html) to\nedit one or more documents directly in Meilisearch.",
         "operationId": "edit_documents_by_function",
         "parameters": [
@@ -2473,7 +2473,7 @@
         "tags": [
           "Documents"
         ],
-        "summary": "Get documents with POST",
+        "summary": "List documents with POST",
         "description": "Get a set of documents.",
         "operationId": "documents_by_query_post",
         "parameters": [
@@ -2607,7 +2607,7 @@
         "tags": [
           "Documents"
         ],
-        "summary": "Get one document",
+        "summary": "Get document",
         "description": "Get one document from its primary key.",
         "operationId": "get_document",
         "parameters": [
@@ -2758,7 +2758,7 @@
         "tags": [
           "Documents"
         ],
-        "summary": "Delete a document",
+        "summary": "Delete document",
         "description": "Delete a single document by id.",
         "operationId": "delete_document",
         "parameters": [
@@ -2880,7 +2880,7 @@
         "tags": [
           "Facet Search"
         ],
-        "summary": "Perform a facet search",
+        "summary": "Search in facets",
         "description": "Search for a facet value within a given facet.",
         "operationId": "search",
         "parameters": [
@@ -3020,13 +3020,156 @@
         ]
       }
     },
+    "/indexes/{indexUid}/fields": {
+      "post": {
+        "tags": [
+          "Indexes"
+        ],
+        "summary": "List index fields",
+        "description": "Returns a paginated list of fields in the index with their metadata: whether they are displayed, searchable, sortable, filterable, distinct, have a custom ranking rule (asc/desc), and for filterable fields the sort order for facet values.",
+        "operationId": "post_index_fields",
+        "parameters": [
+          {
+            "name": "indexUid",
+            "in": "path",
+            "description": "Unique identifier of the index whose fields to list",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "movies"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ListFields"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginationView_Field"
+                },
+                "example": {
+                  "results": [
+                    {
+                      "name": "title",
+                      "displayed": {
+                        "enabled": true
+                      },
+                      "searchable": {
+                        "enabled": true
+                      },
+                      "sortable": {
+                        "enabled": true
+                      },
+                      "distinct": {
+                        "enabled": false
+                      },
+                      "rankingRule": {
+                        "enabled": false,
+                        "order": null
+                      },
+                      "filterable": {
+                        "enabled": false,
+                        "sortBy": "count",
+                        "facetSearch": false,
+                        "equality": false,
+                        "comparison": false
+                      },
+                      "localized": {
+                        "locales": []
+                      }
+                    },
+                    {
+                      "name": "genre",
+                      "displayed": {
+                        "enabled": true
+                      },
+                      "searchable": {
+                        "enabled": false
+                      },
+                      "sortable": {
+                        "enabled": false
+                      },
+                      "distinct": {
+                        "enabled": false
+                      },
+                      "rankingRule": {
+                        "enabled": false,
+                        "order": null
+                      },
+                      "filterable": {
+                        "enabled": true,
+                        "sortBy": "alpha",
+                        "facetSearch": true,
+                        "equality": true,
+                        "comparison": false
+                      },
+                      "localized": {
+                        "locales": []
+                      }
+                    }
+                  ],
+                  "offset": 0,
+                  "limit": 20,
+                  "total": 2
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid authorization header",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Index not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": [
+              "fields.post",
+              "fields.*",
+              "*"
+            ]
+          }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "cURL",
+            "source": "curl \\\n  -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/fields' \\\n  -H 'Content-Type: application/json'"
+          }
+        ]
+      }
+    },
     "/indexes/{indexUid}/search": {
       "get": {
         "tags": [
-          "Indexes",
           "Search"
         ],
-        "summary": "Search an index with GET",
+        "summary": "Search with GET",
         "description": "Search for documents matching a specific query in the given index.",
         "operationId": "search_with_url_query",
         "parameters": [
@@ -3440,7 +3583,6 @@
       },
       "post": {
         "tags": [
-          "Indexes",
           "Search"
         ],
         "summary": "Search with POST",
@@ -3596,7 +3738,7 @@
         "tags": [
           "Settings"
         ],
-        "summary": "All settings",
+        "summary": "List settings",
         "description": "This route allows you to retrieve, configure, or reset all of an index's settings at once.",
         "operationId": "get_all",
         "parameters": [
@@ -11578,8 +11720,8 @@
         "tags": [
           "Keys"
         ],
-        "summary": "Get API Keys",
-        "description": "List all API Keys",
+        "summary": "List API keys",
+        "description": "List all API keys",
         "operationId": "list_api_keys",
         "parameters": [
           {
@@ -11715,7 +11857,7 @@
         "tags": [
           "Keys"
         ],
-        "summary": "Create an API Key",
+        "summary": "Create API key",
         "description": "Create an API Key.",
         "operationId": "create_api_key",
         "requestBody": {
@@ -11829,7 +11971,7 @@
         "tags": [
           "Keys"
         ],
-        "summary": "Get an API Key",
+        "summary": "Get API key",
         "description": "Get an API key from its `uid` or its `key` field.",
         "operationId": "get_api_key",
         "parameters": [
@@ -11948,7 +12090,7 @@
         "tags": [
           "Keys"
         ],
-        "summary": "Delete a key",
+        "summary": "Delete API key",
         "description": "Delete the specified API key.",
         "operationId": "delete_api_key",
         "parameters": [
@@ -12045,7 +12187,7 @@
         "tags": [
           "Keys"
         ],
-        "summary": "Update a Key",
+        "summary": "Update API key",
         "description": "Update the name and description of an API key. Updates to keys are partial.\nThis means you should provide only the fields you intend to update, as any\nfields not present in the payload will remain unchanged.",
         "operationId": "patch_api_key",
         "parameters": [
@@ -12170,7 +12312,7 @@
     "/logs/stderr": {
       "post": {
         "tags": [
-          "Logs"
+          "Experimental features"
         ],
         "summary": "Update target of the console logs",
         "description": "This route lets you specify at runtime the level of the console logs\noutputted on stderr.",
@@ -12226,7 +12368,7 @@
     "/logs/stream": {
       "post": {
         "tags": [
-          "Logs"
+          "Experimental features"
         ],
         "summary": "Retrieve logs",
         "description": "Stream logs over HTTP. The format of the logs depends on the\nconfiguration specified in the payload. The logs are sent as multi-part,\nand the stream never stops, so make sure your clients correctly handle\nthat. To make the server stop sending you logs, you can call the `DELETE\n/logs/stream` route.\n\nThere can only be one listener at a timeand an error will be returned if\nyou call this route while it's being used by another client.",
@@ -12304,7 +12446,7 @@
       },
       "delete": {
         "tags": [
-          "Logs"
+          "Experimental features"
         ],
         "summary": "Stop retrieving logs",
         "description": "Call this route to make the engine stops sending logs through the `POST\n/logs/stream` route.",
@@ -12404,7 +12546,7 @@
     "/multi-search": {
       "post": {
         "tags": [
-          "Multi-search"
+          "Search"
         ],
         "summary": "Perform a multi-search",
         "description": "Bundle multiple search queries in a single API request. Use this endpoint\nto search through multiple indexes at once.",
@@ -12525,7 +12667,7 @@
     "/network": {
       "get": {
         "tags": [
-          "Network"
+          "Experimental features"
         ],
         "summary": "Get network topology",
         "description": "Get a list of all Meilisearch instances currently known to this instance.",
@@ -12611,9 +12753,9 @@
       },
       "patch": {
         "tags": [
-          "Network"
+          "Experimental features"
         ],
-        "summary": "Configure Network",
+        "summary": "Configure network topology",
         "description": "Add or remove nodes from network.",
         "operationId": "patch_network",
         "requestBody": {
@@ -12709,9 +12851,9 @@
     "/snapshots": {
       "post": {
         "tags": [
-          "Snapshots"
+          "Backups"
         ],
-        "summary": "Create a snapshot",
+        "summary": "Create snapshot",
         "description": "Triggers a snapshot creation process. Once the process is complete, a snapshot is created in the snapshot directory. If the snapshot directory does not exist yet, it will be created.",
         "operationId": "create_snapshot",
         "responses": {
@@ -12807,7 +12949,7 @@
         "tags": [
           "Stats"
         ],
-        "summary": "Get stats of all indexes.",
+        "summary": "Get stats of all indexes",
         "description": "Get stats of all indexes.",
         "operationId": "get_stats",
         "responses": {
@@ -13024,16 +13166,16 @@
     "/tasks": {
       "get": {
         "tags": [
-          "Tasks"
+          "Async task management"
         ],
-        "summary": "Get all tasks",
+        "summary": "List tasks",
         "description": "Get all [tasks](https://docs.meilisearch.com/learn/advanced/asynchronous_operations.html)",
         "operationId": "get_tasks",
         "parameters": [
           {
             "name": "limit",
             "in": "query",
-            "description": "Maximum number of results to return.",
+            "description": "Maximum number of batches to return",
             "required": false,
             "schema": {
               "type": "integer",
@@ -13046,7 +13188,7 @@
           {
             "name": "from",
             "in": "query",
-            "description": "Fetch the next set of results from the given uid.",
+            "description": "`uid` of the first batch returned",
             "required": false,
             "schema": {
               "type": "integer",
@@ -13058,7 +13200,7 @@
           {
             "name": "reverse",
             "in": "query",
-            "description": "The order you want to retrieve the objects.",
+            "description": "If `true`, returns results in the reverse order, from oldest to most recent",
             "required": false,
             "schema": {
               "type": "boolean"
@@ -13327,7 +13469,7 @@
       },
       "delete": {
         "tags": [
-          "Tasks"
+          "Async task management"
         ],
         "summary": "Delete tasks",
         "description": "Delete [tasks](https://docs.meilisearch.com/learn/advanced/asynchronous_operations.html) on filter",
@@ -13624,7 +13766,7 @@
     "/tasks/cancel": {
       "post": {
         "tags": [
-          "Tasks"
+          "Async task management"
         ],
         "summary": "Cancel tasks",
         "description": "Cancel enqueued and/or processing [tasks](https://www.meilisearch.com/docs/learn/async/asynchronous_operations)",
@@ -13921,9 +14063,9 @@
     "/tasks/{taskUid}": {
       "get": {
         "tags": [
-          "Tasks"
+          "Async task management"
         ],
-        "summary": "Get a task",
+        "summary": "Get task",
         "description": "Get a [task](https://www.meilisearch.com/docs/learn/async/asynchronous_operations)",
         "operationId": "get_task",
         "parameters": [
@@ -14236,7 +14378,7 @@
         "tags": [
           "Webhooks"
         ],
-        "summary": "Create a webhook",
+        "summary": "Create webhook",
         "description": "Create a new webhook to receive task notifications.",
         "operationId": "post_webhook",
         "requestBody": {
@@ -14327,7 +14469,7 @@
         "tags": [
           "Webhooks"
         ],
-        "summary": "Get a webhook",
+        "summary": "Get webhook",
         "description": "Get a single webhook by its UUID.",
         "operationId": "get_webhook",
         "parameters": [
@@ -14419,7 +14561,7 @@
         "tags": [
           "Webhooks"
         ],
-        "summary": "Delete a webhook",
+        "summary": "Delete webhook",
         "description": "Delete an existing webhook by its UUID.",
         "operationId": "delete_webhook",
         "parameters": [
@@ -14495,7 +14637,7 @@
         "tags": [
           "Webhooks"
         ],
-        "summary": "Update a webhook",
+        "summary": "Update webhook",
         "description": "Update an existing webhook's URL or headers.",
         "operationId": "patch_webhook",
         "parameters": [
@@ -16391,6 +16533,147 @@
           }
         }
       },
+      "Field": {
+        "type": "object",
+        "required": [
+          "name",
+          "displayed",
+          "searchable",
+          "sortable",
+          "distinct",
+          "rankingRule",
+          "filterable",
+          "localized"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "displayed": {
+            "$ref": "#/components/schemas/FieldDisplayConfig"
+          },
+          "searchable": {
+            "$ref": "#/components/schemas/FieldSearchConfig"
+          },
+          "sortable": {
+            "$ref": "#/components/schemas/FieldSortableConfig"
+          },
+          "distinct": {
+            "$ref": "#/components/schemas/FieldDistinctConfig"
+          },
+          "rankingRule": {
+            "$ref": "#/components/schemas/FieldRankingRuleConfig"
+          },
+          "filterable": {
+            "$ref": "#/components/schemas/FieldFilterableConfig"
+          },
+          "localized": {
+            "$ref": "#/components/schemas/FieldLocalizedConfig"
+          }
+        }
+      },
+      "FieldDisplayConfig": {
+        "type": "object",
+        "required": [
+          "enabled"
+        ],
+        "properties": {
+          "enabled": {
+            "type": "boolean"
+          }
+        }
+      },
+      "FieldDistinctConfig": {
+        "type": "object",
+        "required": [
+          "enabled"
+        ],
+        "properties": {
+          "enabled": {
+            "type": "boolean"
+          }
+        }
+      },
+      "FieldFilterableConfig": {
+        "type": "object",
+        "required": [
+          "enabled",
+          "sortBy",
+          "facetSearch",
+          "equality",
+          "comparison"
+        ],
+        "properties": {
+          "enabled": {
+            "type": "boolean"
+          },
+          "sortBy": {
+            "$ref": "#/components/schemas/FacetValuesSort"
+          },
+          "facetSearch": {
+            "type": "boolean"
+          },
+          "equality": {
+            "type": "boolean"
+          },
+          "comparison": {
+            "type": "boolean"
+          }
+        }
+      },
+      "FieldLocalizedConfig": {
+        "type": "object",
+        "required": [
+          "locales"
+        ],
+        "properties": {
+          "locales": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "FieldRankingRuleConfig": {
+        "type": "object",
+        "required": [
+          "enabled"
+        ],
+        "properties": {
+          "enabled": {
+            "type": "boolean"
+          },
+          "order": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "FieldSearchConfig": {
+        "type": "object",
+        "required": [
+          "enabled"
+        ],
+        "properties": {
+          "enabled": {
+            "type": "boolean"
+          }
+        }
+      },
+      "FieldSortableConfig": {
+        "type": "object",
+        "required": [
+          "enabled"
+        ],
+        "properties": {
+          "enabled": {
+            "type": "boolean"
+          }
+        }
+      },
       "FilterFeatures": {
         "type": "object",
         "description": "Controls which filter operators are allowed for an attribute. This\nprovides fine-grained control over filtering capabilities.",
@@ -16850,6 +17133,95 @@
         ],
         "example": "documentAdditionOrUpdate"
       },
+      "ListFields": {
+        "type": "object",
+        "required": [
+          "offset",
+          "limit"
+        ],
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "description": "Number of fields to skip. Defaults to 0.",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "description": "Maximum number of fields to return. Defaults to 20.",
+            "minimum": 0
+          },
+          "filter": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/ListFieldsFilter",
+                "description": "Optional filter to restrict which fields are returned (e.g. by attribute patterns or by capability: displayed, searchable, sortable, filterable, etc.)."
+              }
+            ]
+          }
+        }
+      },
+      "ListFieldsFilter": {
+        "type": "object",
+        "description": "Filter fields by attribute name patterns or by capability (displayed, searchable, sortable, etc.). All criteria are ANDed.",
+        "properties": {
+          "attribute_patterns": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/AttributePatterns",
+                "description": "Only include fields whose names match these patterns (e.g. `[\"title\", \"desc*\"]`)."
+              }
+            ]
+          },
+          "displayed": {
+            "type": [
+              "boolean",
+              "null"
+            ],
+            "description": "Only include fields that are displayed (true) or not displayed (false) in search results."
+          },
+          "searchable": {
+            "type": [
+              "boolean",
+              "null"
+            ],
+            "description": "Only include fields that are searchable (true) or not searchable (false)."
+          },
+          "sortable": {
+            "type": [
+              "boolean",
+              "null"
+            ],
+            "description": "Only include fields that are sortable (true) or not sortable (false)."
+          },
+          "distinct": {
+            "type": [
+              "boolean",
+              "null"
+            ],
+            "description": "Only include fields that are used as distinct attribute (true) or not (false)."
+          },
+          "ranking_rule": {
+            "type": [
+              "boolean",
+              "null"
+            ],
+            "description": "Only include fields that have a custom ranking rule (asc/desc) (true) or not (false)."
+          },
+          "filterable": {
+            "type": [
+              "boolean",
+              "null"
+            ],
+            "description": "Only include fields that are filterable (true) or not filterable (false)."
+          }
+        }
+      },
       "Locale": {
         "type": "string",
         "enum": [
@@ -17224,9 +17596,77 @@
         },
         "additionalProperties": false
       },
+      "PaginationView_Field": {
+        "type": "object",
+        "required": [
+          "results",
+          "offset",
+          "limit",
+          "total"
+        ],
+        "properties": {
+          "results": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "name",
+                "displayed",
+                "searchable",
+                "sortable",
+                "distinct",
+                "rankingRule",
+                "filterable",
+                "localized"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "displayed": {
+                  "$ref": "#/components/schemas/FieldDisplayConfig"
+                },
+                "searchable": {
+                  "$ref": "#/components/schemas/FieldSearchConfig"
+                },
+                "sortable": {
+                  "$ref": "#/components/schemas/FieldSortableConfig"
+                },
+                "distinct": {
+                  "$ref": "#/components/schemas/FieldDistinctConfig"
+                },
+                "rankingRule": {
+                  "$ref": "#/components/schemas/FieldRankingRuleConfig"
+                },
+                "filterable": {
+                  "$ref": "#/components/schemas/FieldFilterableConfig"
+                },
+                "localized": {
+                  "$ref": "#/components/schemas/FieldLocalizedConfig"
+                }
+              }
+            },
+            "description": "Array of items for the current page"
+          },
+          "offset": {
+            "type": "integer",
+            "description": "Number of items skipped",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "description": "Maximum number of items returned",
+            "minimum": 0
+          },
+          "total": {
+            "type": "integer",
+            "description": "Total number of items matching the query",
+            "minimum": 0
+          }
+        }
+      },
       "PaginationView_IndexView": {
         "type": "object",
-        "description": "Paginated response wrapper",
         "required": [
           "results",
           "offset",
@@ -17289,7 +17729,6 @@
       },
       "PaginationView_KeyView": {
         "type": "object",
-        "description": "Paginated response wrapper",
         "required": [
           "results",
           "offset",
@@ -17391,7 +17830,6 @@
       },
       "PaginationView_Value": {
         "type": "object",
-        "description": "Paginated response wrapper",
         "required": [
           "results",
           "offset",
@@ -19909,7 +20347,7 @@
         "type": "http",
         "scheme": "bearer",
         "bearerFormat": "Uuidv4, string or JWT",
-        "description": "An API key is a token that you provide when making API calls. Include the token in a header parameter called `Authorization`.\nExample: `Authorization: Bearer 8fece4405662dd830e4cb265e7e047aab2e79672a760a12712d2a263c9003509`"
+        "description": "An API key is a token that you provide when making API calls. Read more about [how to secure your project](https://www.meilisearch.com/docs/learn/security/basic_security).\n\nInclude the API key to the `Authorization` header, for instance:\n`Authorization: Bearer 6436fc5237b0d6e0d64253fbaac21d135012ecf1`.\n\nIf you use a SDK, ensure you instantiate the client with the API key, for instance with JS SDK:\n`const client = new MeiliSearch({ host: 'https://your-domain.com', apiKey: '6436fc5237b0d6e0d64253fbaac21d135012ecf1' })`"
       }
     }
   },
@@ -19927,130 +20365,64 @@
       "description": "Returns the version of the running Meilisearch instance."
     },
     {
+      "name": "Backups",
+      "description": "Meilisearch offers two types of backups: snapshots and dumps. Snapshots are mainly intended as a safeguard, while dumps are useful when migrating Meilisearch."
+    },
+    {
       "name": "Tasks",
-      "description": "The tasks route gives information about the progress of the [asynchronous operations](https://docs.meilisearch.com/learn/advanced/asynchronous_operations.html).",
-      "externalDocs": {
-        "url": "https://www.meilisearch.com/docs/reference/api/tasks"
-      }
+      "description": "The tasks route gives information about the progress of the [asynchronous operations](https://docs.meilisearch.com/learn/advanced/asynchronous_operations.html)."
     },
     {
       "name": "Batches",
-      "description": "The /batches route gives information about the progress of batches of asynchronous operations.",
-      "externalDocs": {
-        "url": "https://www.meilisearch.com/docs/reference/api/batches"
-      }
+      "description": "The /batches route gives information about the progress of batches of asynchronous operations."
     },
     {
       "name": "Indexes",
-      "description": "An index is an entity that gathers a set of [documents](https://www.meilisearch.com/docs/learn/getting_started/documents) with its own [settings](https://www.meilisearch.com/docs/reference/api/settings). Learn more about indexes.",
-      "externalDocs": {
-        "url": "https://www.meilisearch.com/docs/reference/api/indexes"
-      }
+      "description": "An index is an entity that gathers a set of [documents](https://www.meilisearch.com/docs/learn/getting_started/documents) with its own [settings](https://www.meilisearch.com/docs/reference/api/settings). Learn more about indexes."
     },
     {
       "name": "Documents",
-      "description": "Documents are objects composed of fields that can store any type of data. Each field contains an attribute and its associated value. Documents are stored inside [indexes](https://www.meilisearch.com/docs/learn/getting_started/indexes).",
-      "externalDocs": {
-        "url": "https://www.meilisearch.com/docs/learn/getting_started/documents"
-      }
+      "description": "Documents are objects composed of fields that can store any type of data. Each field contains an attribute and its associated value. Documents are stored inside [indexes](https://www.meilisearch.com/docs/learn/getting_started/indexes)."
     },
     {
       "name": "Facet Search",
-      "description": "The `/facet-search` route allows you to search for facet values. Facet search supports prefix search and typo tolerance. The returned hits are sorted lexicographically in ascending order. You can configure how facets are sorted using the sortFacetValuesBy property of the faceting index settings.",
-      "externalDocs": {
-        "url": "https://www.meilisearch.com/docs/reference/api/facet_search"
-      }
+      "description": "The `/facet-search` route allows you to search for facet values. Facet search supports prefix search and typo tolerance. The returned hits are sorted lexicographically in ascending order. You can configure how facets are sorted using the sortFacetValuesBy property of the faceting index settings."
     },
     {
       "name": "Similar documents",
-      "description": "The /similar route uses AI-powered search to return a number of documents similar to a target document.\n\nMeilisearch exposes two routes for retrieving similar documents: POST and GET. In the majority of cases, POST will offer better performance and ease of use.",
-      "externalDocs": {
-        "url": "https://www.meilisearch.com/docs/reference/api/similar"
-      }
+      "description": "The /similar route uses AI-powered search to return a number of documents similar to a target document.\n\nMeilisearch exposes two routes for retrieving similar documents: POST and GET. In the majority of cases, POST will offer better performance and ease of use."
     },
     {
       "name": "Settings",
-      "description": "Use the /settings route to customize search settings for a given index. You can either modify all index settings at once using the update settings endpoint, or use a child route to configure a single setting.",
-      "externalDocs": {
-        "url": "https://www.meilisearch.com/docs/reference/api/settings"
-      }
-    },
-    {
-      "name": "Compact an index",
-      "description": "The /compact route uses compacts the database to reorganize and make it smaller and more efficient.",
-      "externalDocs": {
-        "url": "https://www.meilisearch.com/docs/reference/api/compact"
-      }
+      "description": "Use the /settings route to customize search settings for a given index. You can either modify all index settings at once using the update settings endpoint, or use a child route to configure a single setting."
     },
     {
       "name": "Search",
-      "description": "Meilisearch exposes two routes to perform searches:\n\n- A POST route: this is the preferred route when using API authentication, as it allows [preflight request](https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request) caching and better performance.\n- A GET route: the usage of this route is discouraged, unless you have good reason to do otherwise (specific caching abilities for example)",
-      "externalDocs": {
-        "url": "https://www.meilisearch.com/docs/reference/api/search"
-      }
-    },
-    {
-      "name": "Snapshots",
-      "description": "The snapshots route allows the creation of database snapshots. Snapshots are .snapshot files that can be used to launch Meilisearch.\nCreating a snapshot is also referred to as exporting it, whereas launching Meilisearch with a snapshot is referred to as importing it.\nDuring a snapshot export, all indexes of the current instance are exported—together with their documents and settings—and saved as a single .snapshot file.\nDuring a snapshot import, all indexes contained in the indicated .snapshot file are imported along with their associated documents and settings.\nSnapshot imports are performed at launch using an option.",
-      "externalDocs": {
-        "url": "https://www.meilisearch.com/docs/reference/api/snapshots"
-      }
-    },
-    {
-      "name": "Dumps",
-      "description": "The `dumps` route allows the creation of database dumps.\nDumps are `.dump` files that can be used to launch Meilisearch. Dumps are compatible between Meilisearch versions.\nCreating a dump is also referred to as exporting it, whereas launching Meilisearch with a dump is referred to as importing it.\nDuring a [dump export](https://www.meilisearch.com/docs/reference/api/dump#create-a-dump), all indexes of the current instance are\nexported—together with their documents and settings—and saved as a single `.dump` file. During a dump import,\nall indexes contained in the indicated `.dump` file are imported along with their associated documents and settings.\nAny existing index with the same uid as an index in the dump file will be overwritten.\nDump imports are [performed at launch](https://www.meilisearch.com/docs/learn/advanced/dumps#importing-a-dump) using an option.",
-      "externalDocs": {
-        "url": "https://www.meilisearch.com/docs/reference/api/dump"
-      }
+      "description": "Meilisearch exposes two routes to perform searches:\n\n- A POST route: this is the preferred route when using API authentication, as it allows [preflight request](https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request) caching and better performance.\n- A GET route: the usage of this route is discouraged, unless you have good reason to do otherwise (specific caching abilities for example)"
     },
     {
       "name": "Keys",
-      "description": "Manage API `keys` for a Meilisearch instance. Each key has a given set of permissions.\nYou must have the master key or the default admin key to access the keys route. More information about the keys and their rights.\nAccessing any route under `/keys` without having set a master key will result in an error.",
-      "externalDocs": {
-        "url": "https://www.meilisearch.com/docs/reference/api/keys"
-      }
+      "description": "Manage API `keys` for a Meilisearch instance. Each key has a given set of permissions.\nYou must have the master key or the default admin key to access the keys route. More information about the keys and their rights.\nAccessing any route under `/keys` without having set a master key will result in an error."
     },
     {
       "name": "Logs",
-      "description": "Everything about retrieving or customizing logs.\nCurrently [experimental](https://www.meilisearch.com/docs/learn/experimental/overview).",
-      "externalDocs": {
-        "url": "https://www.meilisearch.com/docs/learn/experimental/log_customization"
-      }
+      "description": "Everything about retrieving or customizing logs.\nCurrently [experimental](https://www.meilisearch.com/docs/learn/experimental/overview)."
     },
     {
       "name": "Multi-search",
-      "description": "The `/multi-search` route allows you to perform multiple search queries on one or more indexes by bundling them into a single HTTP request. Multi-search is also known as federated search.",
-      "externalDocs": {
-        "url": "https://www.meilisearch.com/docs/reference/api/multi_search"
-      }
+      "description": "The `/multi-search` route allows you to perform multiple search queries on one or more indexes by bundling them into a single HTTP request. Multi-search is also known as federated search."
     },
     {
       "name": "Experimental features",
-      "description": "The `/experimental-features` route allows you to activate or deactivate some of Meilisearch's experimental features.\n\nThis route is **synchronous**. This means that no task object will be returned, and any activated or deactivated features will be made available or unavailable immediately.",
-      "externalDocs": {
-        "url": "https://www.meilisearch.com/docs/reference/api/experimental_features"
-      }
-    },
-    {
-      "name": "Export",
-      "description": "The `/export` route allows you to trigger an export process to a remote Meilisearch instance.",
-      "externalDocs": {
-        "url": "https://www.meilisearch.com/docs/reference/api/export"
-      }
+      "description": "The `/experimental-features` route allows you to activate or deactivate some of Meilisearch's experimental features.\n\nThis route is **synchronous**. This means that no task object will be returned, and any activated or deactivated features will be made available or unavailable immediately."
     },
     {
       "name": "Network",
-      "description": "The `/network` route allows you to describe the topology of a network of Meilisearch instances.\n\nThis route is **synchronous**. This means that no task object will be returned, and any change to the network will be made available immediately.",
-      "externalDocs": {
-        "url": "https://www.meilisearch.com/docs/reference/api/network"
-      }
+      "description": "The `/network` route allows you to describe the topology of a network of Meilisearch instances.\n\nThis route is **synchronous**. This means that no task object will be returned, and any change to the network will be made available immediately."
     },
     {
       "name": "Webhooks",
-      "description": "The `/webhooks` route allows you to register endpoints to be called once tasks are processed.",
-      "externalDocs": {
-        "url": "https://www.meilisearch.com/docs/reference/api/webhooks"
-      }
+      "description": "The `/webhooks` route allows you to register endpoints to be called once tasks are processed."
     }
   ]
 }
