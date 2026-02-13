@@ -1579,3 +1579,8 @@ multi_search_remote_federated_1: |-
           }
         }
       ]
+# post_indexes_indexUid_fields
+list_index_fields_1: |-
+  curl \
+    -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/fields' \
+    -H 'Content-Type: application/json'
