@@ -36,7 +36,7 @@ jobs:
         run: npm install
 
       - name: Generate code sample snippets
-        run: npm run generate-code-sample-snippets
+        run: npm run generate-code-sample-snippets-file
 
       - name: Check for changes
         id: changes
@@ -82,7 +82,7 @@ jobs:
         uses: actions/setup-node@v6
 
       - name: Fetch latest meilisearch-openapi.json from Meilisearch release
-        run: npm run fetch-meilisearch-openapi
+        run: npm run fetch-meilisearch-openapi-file
 
       - name: Check for changes
         id: openapi_changes

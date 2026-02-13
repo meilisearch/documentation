@@ -13,9 +13,9 @@
     "markdownlint-cli": "^0.47.0"
   },
   "scripts": {
-    "generate-mintlify-openapi": "node scripts/generate-mintlify-openapi.mjs",
-    "fetch-meilisearch-openapi": "node scripts/fetch-meilisearch-openapi-file.mjs",
-    "generate-code-sample-snippets": "node scripts/generate-code-sample-snippets.mjs",
+    "generate-mintlify-openapi-file": "node scripts/generate-mintlify-openapi.mjs",
+    "fetch-meilisearch-openapi-file": "node scripts/fetch-meilisearch-openapi-file.mjs",
+    "generate-code-sample-snippets-file": "node scripts/generate-code-sample-snippets.mjs",
     "check-unused-sdk-samples": "node scripts/check-unused-sdk-samples.mjs",
     "check-openapi-code-samples": "node scripts/check-openapi-code-samples.mjs",
     "check-missing-sdk-samples": "node scripts/check-missing-sdk-samples.mjs",
