@@ -2,9 +2,7 @@
 
 /**
  * Fetches the latest Meilisearch release from GitHub and replaces
- * the OpenAPI assets in assets/open-api/ with those from that release:
- * - meilisearch-openapi-mintlify.json
- * - meilisearch-openapi.json
+ * assets/open-api/meilisearch-openapi.json with the one from that release.
  *
  * Optional: set GITHUB_PAT or GH_TOKEN for higher API rate limits.
  */
@@ -17,10 +15,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = path.resolve(__dirname, "..");
 const OPENAPI_DIR = path.join(REPO_ROOT, "assets", "open-api");
 
-const OPENAPI_ASSET_NAMES = [
-  "meilisearch-openapi-mintlify.json",
-  "meilisearch-openapi.json",
-];
+const OPENAPI_ASSET_NAMES = ["meilisearch-openapi.json"];
 
 const GITHUB_API_LATEST =
   "https://api.github.com/repos/meilisearch/meilisearch/releases/latest";
