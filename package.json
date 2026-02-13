@@ -13,6 +13,7 @@
     "markdownlint-cli": "^0.47.0"
   },
   "scripts": {
+    "generate-mintlify-openapi": "node scripts/generate-mintlify-openapi.mjs",
     "marklint": "markdownlint '**/*.mdx' --config .markdownlint.jsonc",
     "marklint:fix": "markdownlint '**/*.mdx' --config .markdownlint.jsonc --fix",
     "proselint": "vale --glob='!.github/*' ."
