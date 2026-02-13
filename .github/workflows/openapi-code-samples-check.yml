@@ -19,7 +19,7 @@ jobs:
 
       - name: Check routes have cURL in x-codeSamples
         run: |
-          node scripts/check-openapi-code-samples.mjs curl-check assets/open-api/meilisearch-openapi-mintlify.json
+          npm run check-openapi-code-samples -- curl-check assets/open-api/meilisearch-openapi-mintlify.json
 
   # Informational only: list routes and missing code sample languages.
   # This job never fails the workflow (information check only).
@@ -31,4 +31,4 @@ jobs:
 
       - name: List routes and missing code samples (informational, never fails)
         run: |
-          node scripts/check-openapi-code-samples.mjs info assets/open-api/meilisearch-openapi-mintlify.json || true
+          npm run check-openapi-code-samples -- info assets/open-api/meilisearch-openapi-mintlify.json || true
