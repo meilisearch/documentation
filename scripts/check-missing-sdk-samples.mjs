@@ -2,10 +2,11 @@
 /**
  * Informational check – never fails.
  *
- * Compares the sample keys in the local .code-samples.meilisearch.yaml with
- * each SDK's .code-samples.meilisearch.yaml (fetched from GitHub).
+ * Collects code sample keys from doc imports that start with "CodeSamples"
+ * (e.g. "import CodeSamplesTenantTokenGuideSearchSdk1 from '...'"), then
+ * compares with each SDK's .code-samples.meilisearch.yaml (fetched from GitHub).
  *
- * Lists, per SDK, which local sample keys are missing on the SDK side.
+ * Lists, per SDK, which imported sample keys are missing on the SDK side.
  */
 
 import fs from 'fs';
@@ -26,14 +27,79 @@ const SDK = [
   { label: 'Dart', project: 'meilisearch-dart' },
 ];
 
-const LOCAL_YAML = path.join(
-  process.cwd(),
-  '.code-samples.meilisearch.yaml'
-);
+/** Keys that are not expected in SDKs (e.g. no-SDK / curl-only samples). Never reported as missing. */
+const NOT_MISSING_IN_SDK = new Set(['tenant_token_guide_search_no_sdk_1']);
 
-// Load local sample keys
-const localSamples = yaml.load(fs.readFileSync(LOCAL_YAML, 'utf-8'));
-const localKeys = Object.keys(localSamples).sort();
+/**
+ * Convert a CodeSamples* component name to the YAML key (snake_case).
+ * e.g. CodeSamplesTenantTokenGuideSearchSdk1 → tenant_token_guide_search_sdk_1
+ *      CodeSamplesCreateAKey1 → create_a_key_1
+ */
+function componentNameToKey(name) {
+  if (!name.startsWith('CodeSamples') || name.length <= 'CodeSamples'.length) {
+    return null;
+  }
+  const rest = name.slice('CodeSamples'.length);
+  let out = '';
+  for (let i = 0; i < rest.length; i++) {
+    const c = rest[i];
+    const prev = i > 0 ? rest[i - 1] : '';
+    const prevLetter = (prev >= 'a' && prev <= 'z') || (prev >= 'A' && prev <= 'Z');
+    const currUpper = c >= 'A' && c <= 'Z';
+    const currDigit = c >= '0' && c <= '9';
+    if (i > 0) {
+      if (currUpper) out += '_'; // _ before every uppercase (e.g. CreateAKey → create_a_key)
+      else if (currDigit && prevLetter) out += '_'; // _ before digit after letter (e.g. Sdk1 → sdk_1)
+    }
+    out += c.toLowerCase();
+  }
+  return out;
+}
+
+/**
+ * Collect code sample keys from doc imports starting with "CodeSamples".
+ * Scans .mdx and .md files for import lines and extracts component names.
+ */
+function getCodeSampleKeysFromDocImports() {
+  const keys = new Set();
+  const componentRe = /CodeSamples[A-Za-z0-9]+/g;
+  const root = process.cwd();
+  const skipDirs = new Set(['node_modules', 'generated-code-samples', '.git']);
+
+  function walk(dir) {
+    const entries = fs.readdirSync(dir, { withFileTypes: true });
+    for (const e of entries) {
+      const full = path.join(dir, e.name);
+      if (e.isDirectory()) {
+        if (!skipDirs.has(e.name)) walk(full);
+        continue;
+      }
+      if (!e.name.endsWith('.mdx') && !e.name.endsWith('.md')) continue;
+      const content = fs.readFileSync(full, 'utf-8');
+      const lines = content.split('\n');
+      for (const line of lines) {
+        if (!line.includes('import') || !line.includes('from')) continue;
+        let m;
+        while ((m = componentRe.exec(line)) !== null) {
+          const key = componentNameToKey(m[0]);
+          if (key) keys.add(key);
+        }
+      }
+    }
+  }
+
+  walk(root);
+  return [...keys].sort();
+}
+
+const expectedKeys = getCodeSampleKeysFromDocImports();
+
+if (expectedKeys.length === 0) {
+  console.warn(
+    '⚠ No "CodeSamples*" imports found in the documentation.'
+  );
+  process.exit(0);
+}
 
 async function fetchYaml(url) {
   const res = await fetch(url);
@@ -42,7 +108,7 @@ async function fetchYaml(url) {
 }
 
 console.log(
-  `Local .code-samples.meilisearch.yaml contains ${localKeys.length} sample(s).\n`
+  `Doc imports (CodeSamples*) reference ${expectedKeys.length} code sample key(s).\n`
 );
 
 // Per-sample tracking: which SDKs are missing each sample
@@ -62,7 +128,9 @@ for (const sdk of SDK) {
   }
 
   const remoteKeys = new Set(Object.keys(remoteSamples));
-  const missing = localKeys.filter((key) => !remoteKeys.has(key));
+  const missing = expectedKeys.filter(
+    (key) => !NOT_MISSING_IN_SDK.has(key) && !remoteKeys.has(key)
+  );
 
   if (missing.length > 0) {
     console.log(

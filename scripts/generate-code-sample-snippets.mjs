@@ -10,13 +10,13 @@ const SDK = [
     project: 'documentation'
   },
   {
-    language: 'javascript', 
+    language: 'javascript',
     label: 'JS',
     project: 'meilisearch-js'
   },
   {
     language: 'python',
-    label: 'Python', 
+    label: 'Python',
     project: 'meilisearch-python'
   },
   {
@@ -61,7 +61,7 @@ const SDK = [
   }
 ];
 
-const REPOS = SDK.map(sdk => 
+const REPOS = SDK.map(sdk =>
   `https://raw.githubusercontent.com/meilisearch/${sdk.project}/main/${sdk.source || '.code-samples.meilisearch.yaml'}`
 );
 
@@ -81,15 +81,15 @@ function cleanSnippets() {
   console.log(`Cleaned ${files.length} existing code sample snippets.`);
 }
 
+function loadLocalYaml(filePath) {
+  const content = fs.readFileSync(filePath, 'utf-8');
+  return yaml.load(content);
+}
+
 async function fetchYaml(url) {
   const response = await fetch(url);
   if (!response.ok) throw new Error(`Failed to fetch samples for ${url}`);
   return yaml.load(await response.text());
-}
-
-function loadLocalYaml(filePath) {
-  const content = fs.readFileSync(filePath, 'utf-8');
-  return yaml.load(content);
 }
 
 async function buildSnippets() {
@@ -107,8 +107,8 @@ async function buildSnippets() {
     const sdkInfo = SDK[i];
 
     try {
-      const isLocal = sdkInfo.project === 'documentation';
-      const snippets = isLocal
+      // Read local file for cURL samples (documentation project), fetch remote for all other SDKs
+      const snippets = sdkInfo.project === 'documentation'
         ? loadLocalYaml(path.join(process.cwd(), sdkInfo.source || '.code-samples.meilisearch.yaml'))
         : await fetchYaml(repoUrl);
 
@@ -137,12 +137,12 @@ async function buildSnippets() {
 ${snippets.map(snippet => {
   // Split content into description and code if it contains a nested code block
   const parts = snippet.content.split('```');
-  
+
   if (parts.length > 1) { // handle samples with nested code blocks
     // Has description and code blocks
     const description = parts[0].trim();
     const codeBlocks = parts.slice(1);
-    
+
     // Join all parts back together, keeping the description at the top
     return `
 \`\`\`text ${snippet.label}
