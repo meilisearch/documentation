@@ -1,11 +1,14 @@
 #!/usr/bin/env node
 /**
  * For each SDK, fetches its .code-samples.meilisearch.yaml from GitHub and
- * checks if it contains sample keys that do NOT exist in the local
- * .code-samples.meilisearch.yaml.
+ * checks if it contains sample keys that are neither in the local
+ * .code-samples.meilisearch.yaml nor used in the docs as a snippet.
  *
- * Such samples are useless (the documentation does not reference them) and
- * can be removed from the SDK.
+ * A sample is considered used if it is:
+ * - present in the local .code-samples.meilisearch.yaml, OR
+ * - referenced in the documentation (import or path to code_samples_<key>.mdx).
+ *
+ * Samples that are unused can be removed from the SDKs.
  *
  * Exits with code 1 if any unused SDK samples are found.
  */
@@ -37,6 +40,40 @@ const LOCAL_YAML = path.join(
 const localSamples = yaml.load(fs.readFileSync(LOCAL_YAML, 'utf-8'));
 const localKeys = new Set(Object.keys(localSamples));
 
+/**
+ * Collect all code sample keys referenced in the documentation (snippets).
+ * Scans .mdx and .md files for paths like code_samples_<key>.mdx.
+ */
+function getDocSnippetKeys() {
+  const keys = new Set();
+  const snippetRe = /code_samples_([a-z0-9_]+)\.mdx/gi;
+  const root = process.cwd();
+  const skipDirs = new Set(['node_modules', 'generated-code-samples', '.git']);
+
+  function walk(dir) {
+    const entries = fs.readdirSync(dir, { withFileTypes: true });
+    for (const e of entries) {
+      const full = path.join(dir, e.name);
+      if (e.isDirectory()) {
+        if (!skipDirs.has(e.name)) walk(full);
+        continue;
+      }
+      if (!e.name.endsWith('.mdx') && !e.name.endsWith('.md')) continue;
+      const content = fs.readFileSync(full, 'utf-8');
+      let m;
+      while ((m = snippetRe.exec(content)) !== null) {
+        keys.add(m[1]);
+      }
+    }
+  }
+
+  walk(root);
+  return keys;
+}
+
+const docSnippetKeys = getDocSnippetKeys();
+const usedKeys = new Set([...localKeys, ...docSnippetKeys]);
+
 async function fetchYaml(url) {
   const res = await fetch(url);
   if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
@@ -57,12 +94,12 @@ for (const sdk of SDK) {
   }
 
   const remoteKeys = Object.keys(remoteSamples);
-  const unused = remoteKeys.filter((key) => !localKeys.has(key));
+  const unused = remoteKeys.filter((key) => !usedKeys.has(key));
 
   if (unused.length > 0) {
     hasUnused = true;
     console.error(
-      `\n${sdk.label} (${sdk.project}): ${unused.length} sample(s) not in local .code-samples.meilisearch.yaml:`
+      `\n${sdk.label} (${sdk.project}): ${unused.length} unused sample(s) (not in local .code-samples.meilisearch.yaml nor referenced as snippet in docs):`
     );
     for (const key of unused.sort()) {
       console.error(`  - ${key}`);
@@ -72,13 +109,13 @@ for (const sdk of SDK) {
 
 if (!hasUnused) {
   console.log(
-    'OK: All SDK code samples exist in the local .code-samples.meilisearch.yaml.'
+    'OK: All SDK code samples are used (in local .code-samples.meilisearch.yaml or referenced as snippet in docs).'
   );
   process.exit(0);
 }
 
 console.error(
-  '\nThe samples listed above exist in SDK repos but NOT in the local ' +
-    '.code-samples.meilisearch.yaml. They are unused and can be removed from the SDKs.'
+  '\nThe samples listed above exist in SDK repos but are neither in the local ' +
+    '.code-samples.meilisearch.yaml nor referenced as snippets in the docs. They can be removed from the SDKs.'
 );
 process.exit(1);
