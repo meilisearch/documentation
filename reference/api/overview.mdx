@@ -7,7 +7,6 @@ description: Consult this page for an overview of how to query Meilisearch's API
 import { RouteHighlighter } from '/snippets/route_highlighter.mdx'
 
 import CodeSamplesAuthorizationHeader1 from '/snippets/generated-code-samples/code_samples_authorization_header_1.mdx';
-import CodeSamplesUpdatingGuideCheckVersionOldAuthorizationHeader from '/snippets/generated-code-samples/code_samples_updating_guide_check_version_old_authorization_header.mdx';
 
 This reference describes the general behavior of Meilisearch's RESTful API.
 
@@ -32,12 +31,6 @@ By [providing Meilisearch with a master key at launch](/learn/security/basic_sec
 <CodeSamplesAuthorizationHeader1 />
 
 The [`/keys`](/reference/api/keys) route can only be accessed using the master key. For security reasons, we recommend using regular API keys for all other routes.
-
-<Tip>
-v0.24 and below use the `X-MEILI-API-KEY: apiKey` authorization header:
-
-<CodeSamplesUpdatingGuideCheckVersionOldAuthorizationHeader />
-</Tip>
 
 [To learn more about keys and security, refer to our security tutorial.](/learn/security/basic_security)
 
