@@ -35,7 +35,7 @@
     },
     "links": [
       {
-        "label": "Github",
+        "label": "GitHub",
         "href": "https://github.com/meilisearch/meilisearch"
       },
       {
@@ -93,7 +93,7 @@
         "header": "Contact us",
         "items": [
           {
-            "label": "Github",
+            "label": "GitHub",
             "href": "https://github.com/meilisearch"
           },
           {
@@ -144,6 +144,11 @@
         ]
       }
     ]
+  },
+  "api": {
+   "playground": {
+     "display": "simple"
+   }
   },
   "navigation": {
     "versions": [
@@ -340,37 +345,30 @@
             ]
           },
           {
-            "anchor": "References",
+            "anchor": "API Reference",
             "icon": "code",
             "groups": [
               {
-                "group": "API reference",
+                "group": "Overview",
                 "pages": [
-                  "reference/api/overview",
-                  "reference/api/indexes",
-                  "reference/api/documents",
-                  "reference/api/search",
-                  "reference/api/multi_search",
-                  "reference/api/network",
-                  "reference/api/similar",
-                  "reference/api/facet_search",
-                  "reference/api/chats",
-                  "reference/api/tasks",
-                  "reference/api/batches",
-                  "reference/api/keys",
-                  "reference/api/settings",
-                  "reference/api/snapshots",
-                  "reference/api/stats",
-                  "reference/api/health",
-                  "reference/api/version",
-                  "reference/api/dump",
-                  "reference/api/experimental_features",
-                  "reference/api/metrics",
-                  "reference/api/logs",
-                  "reference/api/export",
-                  "reference/api/webhooks",
-                  "reference/api/compact"
+                  "reference/api/authorization",
+                  "reference/api/headers",
+                  "reference/api/requests",
+                  "reference/api/pagination",
+                  "reference/api/openapi"
                 ]
+              },
+              {
+                "group": "API Routes",
+                "openapi": {
+                  "source": "assets/open-api/meilisearch-openapi-mintlify.json",
+                  "directory": "reference/api"
+                },
+                "internal-meili-fetch-automation": true,
+                "examples": {
+                  "languages": ["curl", "javascript", "php", "python", "java", "ruby", "go", "csharp", "rust", "dart", "swift"],
+                  "autogenerate": false
+                }
               },
               {
                 "group": "Errors",
@@ -379,7 +377,9 @@
                   "reference/errors/error_codes"
                 ]
               }
+
             ]
+
           },
           {
             "anchor": "Guides",
@@ -963,7 +963,7 @@
     },
     {
       "source": "/reference",
-      "destination": "/reference/api/overview"
+      "destination": "/reference/api/authorization"
     },
     {
       "source": "/guides/deployment/gcp",

@@ -55,11 +55,11 @@ A [task object](/reference/api/tasks#task-object) includes data not present in t
 }
 ```
 
-For a comprehensive description of each task object field, consult the [task API reference](/reference/api/tasks).
+For a comprehensive description of each task object field, consult the [task API reference](/reference/api/async-task-management/get-task).
 
 #### Summarized task objects
 
-When you make an API request for an asynchronous operation, Meilisearch returns a [summarized version](/reference/api/tasks#summarized-task-object) of the full `task` object.
+When you make an API request for an asynchronous operation, Meilisearch returns a [summarized version](/reference/api/async-task-management/get-task) of the full `task` object.
 
 ```json
 {
@@ -71,7 +71,7 @@ When you make an API request for an asynchronous operation, Meilisearch returns 
 }
 ```
 
-Use the summarized task's `taskUid` to [track the progress of a task](/reference/api/tasks#get-one-task).
+Use the summarized task's `taskUid` to [track the progress of a task](/reference/api/async-task-management/get-task).
 
 #### Task `status`
 
@@ -131,7 +131,7 @@ All other tasks are processed in the order they were enqueued.
 
 When you make a [request for an asynchronous operation](#which-operations-are-asynchronous), Meilisearch processes all tasks following the same steps:
 
-1. Meilisearch creates a task, puts it in the task queue, and returns a [summarized `task` object](/learn/async/asynchronous_operations#summarized-task-objects). Task `status` set to `enqueued`
+1. Meilisearch creates a task, puts it in the task queue, and returns a [summarized `task` object](/reference/api/async-task-management/get-task). Task `status` set to `enqueued`
 2. When your task reaches the front of the queue, Meilisearch begins working on it. Task `status` set to `processing`
 3. Meilisearch finishes the task. Status set to `succeeded` if task was successfully processed, or `failed` if there was an error
 
@@ -153,7 +153,7 @@ Tasks are not canceled when you terminate a Meilisearch instance. Meilisearch di
 
 ### Deleting tasks
 
-[Finished tasks](#task-status) remain visible in [the task list](/reference/api/tasks#get-tasks). To delete them manually, use the [delete tasks route](/reference/api/tasks#delete-tasks).
+[Finished tasks](#task-status) remain visible in [the task list](/reference/api/async-task-management/list-tasks). To delete them manually, use the [delete tasks route](/reference/api/async-task-management/delete-tasks).
 
 Meilisearch stores up to 1M tasks in the task database. If enqueuing a new task would exceed this limit, Meilisearch automatically tries to delete the oldest 100K finished tasks. If there are no finished tasks in the database, Meilisearch does not delete anything and enqueues the new task as usual.
 

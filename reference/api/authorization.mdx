@@ -1,0 +1,19 @@
+---
+title: Authorization
+sidebarTitle: Authorization
+description: How to authenticate with the Meilisearch API using API keys and the Authorization header.
+---
+
+import CodeSamplesAuthorizationHeader1 from '/snippets/generated-code-samples/code_samples_authorization_header_1.mdx';
+
+<Tip>
+If you are new to Meilisearch, check out the [getting started guide](/learn/self_hosted/getting_started_with_self_hosted_meilisearch).
+</Tip>
+
+By [providing Meilisearch with a master key at launch](/learn/security/basic_security), you protect your instance from unauthorized requests. The provided master key must be at least 16 bytes. From then on, you must include the `Authorization` header along with a valid API key to access protected routes (all routes except [`/health`](/reference/api/health)).
+
+<CodeSamplesAuthorizationHeader1 />
+
+The [`/keys`](/reference/api/keys) route can only be accessed using the master key. For security reasons, we recommend using regular API keys for all other routes.
+
+[To learn more about keys and security, refer to our security tutorial.](/learn/security/basic_security)
