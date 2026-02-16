@@ -345,6 +345,43 @@
             ]
           },
           {
+            "anchor": "API Reference",
+            "icon": "code",
+            "groups": [
+              {
+                "group": "Overview",
+                "pages": [
+                  "reference/api/authorization",
+                  "reference/api/headers",
+                  "reference/api/requests",
+                  "reference/api/pagination",
+                  "reference/api/openapi"
+                ]
+              },
+              {
+                "group": "API Routes",
+                "openapi": {
+                  "source": "assets/open-api/meilisearch-openapi-mintlify.json",
+                  "directory": "reference/api"
+                },
+                "internal-meili-fetch-automation": true,
+                "examples": {
+                  "languages": ["curl", "javascript", "php", "python", "java", "ruby", "go", "csharp", "rust", "dart", "swift"],
+                  "autogenerate": false
+                }
+              },
+              {
+                "group": "Errors",
+                "pages": [
+                  "reference/errors/overview",
+                  "reference/errors/error_codes"
+                ]
+              }
+
+            ]
+
+          },
+          {
             "anchor": "Guides",
             "icon": "file-lines",
             "groups": [
@@ -423,40 +460,6 @@
                 ]
               }
             ]
-          },
-          {
-            "anchor": "API Reference",
-            "icon": "code",
-            "groups": [
-              {
-                "group": "Overview",
-                "pages": [
-                  "reference/api/authorization",
-                  "reference/api/headers",
-                  "reference/api/requests",
-                  "reference/api/pagination",
-                  "reference/api/openapi"
-                ]
-              },
-              {
-                "group": "API Routes",
-                "openapi": "assets/open-api/meilisearch-openapi-mintlify.json",
-                "internal-meili-fetch-automation": true,
-                "examples": {
-                  "languages": ["curl", "javascript", "php", "python", "java", "ruby", "go", "csharp", "rust", "dart", "swift"],
-                  "autogenerate": false
-                }
-              },
-              {
-                "group": "Errors",
-                "pages": [
-                  "reference/errors/overview",
-                  "reference/errors/error_codes"
-                ]
-              }
-
-            ]
-
           }
         ]
       }
