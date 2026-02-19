@@ -160,8 +160,9 @@ update_settings_1: |-
         "words",
         "typo",
         "proximity",
-        "attribute",
+        "attributeRank",
         "sort",
+        "attributePosition",
         "exactness",
         "release_date:desc",
         "rank:desc"
@@ -268,8 +269,9 @@ update_ranking_rules_1: |-
       "words",
       "typo",
       "proximity",
-      "attribute",
+      "attributeRank",
       "sort",
+      "attributePosition",
       "exactness",
       "release_date:asc",
       "rank:desc"
@@ -1060,7 +1062,8 @@ sorting_guide_update_ranking_rules_1: |-
       "sort",
       "typo",
       "proximity",
-      "attribute",
+      "attributeRank",
+      "attributePosition",
       "exactness"
     ]'
 sorting_guide_sort_nested_1: |-
