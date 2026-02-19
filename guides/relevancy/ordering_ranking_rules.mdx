@@ -78,7 +78,7 @@ Ranking rules:
   "proximity",
   "attributeRank",
   "sort", // "price:asc" "author:desc" gets swapped in here
-  "attributePosition",
+  "wordPosition",
   "exactness",
   "release_date:asc",
   "movie_ranking:desc"
@@ -116,7 +116,7 @@ Place custom ranking rules at the end of your sequence. They work best for addin
 Each ranking rule has its own settings you can fine-tune beyond just ordering. For example, you can adjust which fields take priority in attribute ranking, or configure how aggressively typo tolerance matches similar words. If you want to dig into the specifics:
 
 - [Built-in ranking rules](https://www.meilisearch.com/docs/learn/relevancy/ranking_rules#list-of-built-in-ranking-rules) — how each rule works and what it evaluates
-- [Attribute ranking order](https://www.meilisearch.com/docs/learn/relevancy/attribute_ranking_order) — controlling which fields matter most with `attributeRank` and `attributePosition`
+- [Attribute ranking order](https://www.meilisearch.com/docs/learn/relevancy/attribute_ranking_order) — controlling which fields matter most with `attributeRank` and `wordPosition`
 - [Typo tolerance settings](https://www.meilisearch.com/docs/learn/relevancy/typo_tolerance_settings) — adjusting how flexible matching behaves
 
 **Want to see these rules in action?** In our next guide, [How Do I Interpret Ranking Score Details?](/guides/relevancy/interpreting_ranking_scores), we walk through a real example showing exactly how Meilisearch evaluates each rule — and how moving Sort one position can flip your results.

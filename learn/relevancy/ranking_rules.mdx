@@ -19,7 +19,7 @@ Meilisearch contains seven built-in ranking rules in the following order:
   "proximity",
   "attributeRank",
   "sort",
-  "attributePosition",
+  "wordPosition",
   "exactness"
 ]
 ```
@@ -62,13 +62,13 @@ This rule evaluates only the position of matched words within attributes and doe
 
 ## Attribute
 
-`attribute` is an older built-in ranking rule equivalent to using both `attributeRank` and `attributePosition` together. When you use `attribute`, Meilisearch first sorts results by the attribute ranking order, then uses the position within attributes as a tiebreaker.
+`attribute` is an older built-in ranking rule equivalent to using both `attributeRank` and `wordPosition` together. When you use `attribute`, Meilisearch first sorts results by the attribute ranking order, then uses the position within attributes as a tiebreaker.
 
 <Warning>
-You cannot use `attribute` together with `attributeRank` or `attributePosition`. If you try to configure ranking rules with both, Meilisearch will return an error. We recommend using a combination of the `attributeRank` and `attributePosition` rules.
+You cannot use `attribute` together with `attributeRank` or `wordPosition`. If you try to configure ranking rules with both, Meilisearch will return an error. We recommend using a combination of the `attributeRank` and `wordPosition` rules.
 </Warning>
 
-For most use-cases, we recommend using `attributeRank` and `attributePosition` separately. This gives you more control over result ordering by allowing you to place other ranking rules (like `sort` or custom ranking rules) between them.
+For most use-cases, we recommend using `attributeRank` and `wordPosition` separately. This gives you more control over result ordering by allowing you to place other ranking rules (like `sort` or custom ranking rules) between them.
 
 ## 6. Sort
 
