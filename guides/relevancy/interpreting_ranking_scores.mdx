@@ -96,7 +96,7 @@ Let's see how moving Sort **one position** in your ranking rules changes which r
 We’ve set up our ranking rules to have sort after our Group 1 wide net rules.
 
 ```json
-["words", "typo", "proximity", "sort", "attribute", "exactness"]
+["words", "typo", "proximity", "sort", "attributeRank", "wordPosition", "exactness"]
 ```
 
 With this set up Meilisearch evaluates the text relevance rules first, *then* uses Sort.
@@ -196,7 +196,7 @@ Also notice: Sort shows a `value` instead of a `score`. That's because Sort does
 Now let's move `sort` to the top of our ranking rules:
 
 ```json
-["sort", "words", "typo", "proximity", "attribute", "exactness"]
+["sort", "words", "typo", "proximity", "attributeRank", "wordPosition", "exactness"]
 ```
 
 ### 🥇 Result #1 — Chicken Stew with Curry Spices and Vegetables

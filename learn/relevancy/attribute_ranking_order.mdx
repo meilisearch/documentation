@@ -38,5 +38,7 @@ By default, nested fields share the same weight as their parent attribute. Use d
 With the above ranking order, `review.critic` becomes more important than its sibling `review.user` when calculating a document's ranking score.
 
 <Note>
-The `attribute` rule's position in [`rankingRules`](/learn/relevancy/ranking_rules) determines how the results are sorted. Meaning, **if `attribute` is at the bottom of the ranking rules list, it will have almost no impact on your search results.**
+The `attributeRank` and `wordPosition` rules' positions in [`rankingRules`](/learn/relevancy/ranking_rules) determine how the results are sorted. Meaning, **if `attributeRank` is at the bottom of the ranking rules list, it will have almost no impact on your search results.**
+
+The legacy `attribute` rule combines both `attributeRank` and `wordPosition`. If you use `attribute`, its position determines the impact of both attribute ranking order and position within attributes.
 </Note>
