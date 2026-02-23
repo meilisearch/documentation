@@ -82,15 +82,15 @@ The [`uid`](/reference/api/indexes#index-object) field of an index cannot be mod
 
 The [`updatedAt`](/reference/api/indexes#index-object) field of an index cannot be modified.
 
-### `immutable_webhook`
+## `immutable_webhook`
 
 You tried to modify a reserved [webhook](/reference/api/webhooks). Reserved webhooks are configured by Meilisearch Cloud and have `isEditable` set to `true`. Webhooks created with an instance option are also immutable.
 
-### `immutable_webhook_uuid`
+## `immutable_webhook_uuid`
 
 You tried to manually set a webhook `uuid`. Meilisearch automatically generates `uuid` for webhooks.
 
-### `immutable_webhook_is_editable`
+## `immutable_webhook_is_editable`
 
 You tried to manually set a webhook's `isEditable` field. Meilisearch automatically sets `isEditable` for all webhooks. Only reserved webhooks have `isEditable` set to `false`.
 
@@ -348,7 +348,7 @@ The [`cropLength`](/reference/api/search#crop-length) parameter is invalid. It s
 
 The [`cropMarker`](/reference/api/search#crop-marker) parameter is invalid. It should be a string or set to `null`.
 
-### `invalid_search_embedder`
+## `invalid_search_embedder`
 
 [`embedder`](/reference/api/search#hybrid-search) is invalid. It should be a string corresponding to the name of a configured embedder.
 
@@ -514,7 +514,7 @@ Meilisearch could not find the target document. Make sure your target document i
 
 [`attributesToRetrieve`](/reference/api/search#attributes-to-retrieve) is invalid. It should be an array of strings, a string, or set to null.
 
-### `invalid_similar_embedder`
+## `invalid_similar_embedder`
 
 [`embedder`](/reference/api/similar#body) is invalid. It should be a string corresponding to the name of a configured embedder.
 
@@ -611,19 +611,19 @@ The requested task type is invalid. Please use one of the [possible values](/ref
 
 The [`uids`](/reference/api/tasks#query-parameters) query parameter is invalid.
 
-### `invalid_webhooks`
+## `invalid_webhooks`
 
 The create webhook request did not contain a valid JSON payload. Meilisearch also returns this error when you try to create more than 20 webhooks.
 
-### `invalid_webhook_url`
+## `invalid_webhook_url`
 
 The provided webhook URL isn’t a valid JSON string, is `null`, is missing, or its value cannot be parsed as a valid URL.
 
-### `invalid_webhook_headers`
+## `invalid_webhook_headers`
 
 The provided webhook `headers` field is not a JSON object or not a valid HTTP header. Meilisearch also returns this error if you set more than 200 header fields for a single webhook.
 
-### `invalid_webhook_uuid`
+## `invalid_webhook_uuid`
 
 The provided webhook `uuid` is not a valid uuid v4 value.
 
@@ -735,32 +735,30 @@ Error while generating embeddings. You may often see this error when the embeddi
 
 Inaccessible embedding provider errors usually include a message stating Meilisearch "could not reach embedding server".
 
-## Remote federated search errors
-
-### `remote_bad_response`
+## `remote_bad_response`
 
 The remote instance answered with a response that this instance could not use as a federated search response.
 
-### `remote_bad_request`
+## `remote_bad_request`
 
 The remote instance answered with `400 BAD REQUEST`.
 
-### `remote_could_not_send_request`
+## `remote_could_not_send_request`
 
 There was an error while sending the remote federated search request.
 
-### `remote_invalid_api_key`
+## `remote_invalid_api_key`
 
 The remote instance answered with `403 FORBIDDEN` or `401 UNAUTHORIZED` to this instance’s request. The configured search API key is either missing, invalid, or lacks the required search permission.
 
-### `remote_remote_error`
+## `remote_remote_error`
 
 The remote instance answered with `500 INTERNAL ERROR`.
 
-### `remote_timeout`
+## `remote_timeout`
 
 The proxy did not answer in the allocated time.
 
-### `webhook_not_found`
+## `webhook_not_found`
 
 The provided webhook `uuid` does not correspond to any configured webhooks in the instance.
