@@ -39,7 +39,7 @@ The code sample below uses the `Content-Encoding: gzip` header, indicating that 
 Meilisearch compresses a response if the request contains the `Accept-Encoding` header. The code sample below uses the `gzip` algorithm:
 
 ```
-curl -sH 'Accept-encoding: gzip' 'MEILISEARCH_URL/indexes/movies/search' | gzip -
+curl -sH 'Accept-encoding: gzip' 'MEILISEARCH_URL/indexes/movies/search' | gzip -dc
 ```
 
 ## Search metadata

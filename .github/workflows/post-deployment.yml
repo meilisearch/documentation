@@ -110,7 +110,8 @@ jobs:
   generate-and-check-mintlify-openapi:
     name: Generate and check Mintlify OpenAPI file
     runs-on: ubuntu-latest
-    needs: fetch-openapi-file
+    needs: [build-code-samples, fetch-openapi-file]
+    if: needs.build-code-samples.outputs.run_openapi_automation == 'true'
 
     steps:
       - name: Checkout repository
