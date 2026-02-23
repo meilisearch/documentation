@@ -23,7 +23,7 @@ jobs:
           cache: "npm"
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
       - name: Check routes have cURL in x-codeSamples
         run: |
@@ -43,7 +43,7 @@ jobs:
           cache: "npm"
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
       - name: List routes and missing code samples (informational, never fails)
         run: |
