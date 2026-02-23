@@ -17540,11 +17540,11 @@
           {
             "type": "string",
             "description": "Documents with query words at the beginning of an attribute\nare considered better.",
-            "enum": ["AttributePosition"]
+            "enum": ["WordPosition"]
           },
           {
             "type": "string",
-            "description": "Legacy rule combining AttributeRank and AttributePosition.\nDocuments with query words contained in more important\nattributes are considered better.",
+            "description": "Legacy rule combining AttributeRank and WordPosition.\nDocuments with query words contained in more important\nattributes are considered better.",
             "enum": ["Attribute"]
           },
           {
