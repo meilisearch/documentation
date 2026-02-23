@@ -35,7 +35,7 @@
     },
     "links": [
       {
-        "label": "Github",
+        "label": "GitHub",
         "href": "https://github.com/meilisearch/meilisearch"
       },
       {
@@ -93,7 +93,7 @@
         "header": "Contact us",
         "items": [
           {
-            "label": "Github",
+            "label": "GitHub",
             "href": "https://github.com/meilisearch"
           },
           {
@@ -144,6 +144,11 @@
         ]
       }
     ]
+  },
+  "api": {
+   "playground": {
+     "display": "simple"
+   }
   },
   "navigation": {
     "versions": [
@@ -340,37 +345,30 @@
             ]
           },
           {
-            "anchor": "References",
+            "anchor": "API Reference",
             "icon": "code",
             "groups": [
               {
-                "group": "API reference",
+                "group": "Overview",
                 "pages": [
-                  "reference/api/overview",
-                  "reference/api/indexes",
-                  "reference/api/documents",
-                  "reference/api/search",
-                  "reference/api/multi_search",
-                  "reference/api/network",
-                  "reference/api/similar",
-                  "reference/api/facet_search",
-                  "reference/api/chats",
-                  "reference/api/tasks",
-                  "reference/api/batches",
-                  "reference/api/keys",
-                  "reference/api/settings",
-                  "reference/api/snapshots",
-                  "reference/api/stats",
-                  "reference/api/health",
-                  "reference/api/version",
-                  "reference/api/dump",
-                  "reference/api/experimental_features",
-                  "reference/api/metrics",
-                  "reference/api/logs",
-                  "reference/api/export",
-                  "reference/api/webhooks",
-                  "reference/api/compact"
+                  "reference/api/authorization",
+                  "reference/api/headers",
+                  "reference/api/requests",
+                  "reference/api/pagination",
+                  "reference/api/openapi"
                 ]
+              },
+              {
+                "group": "API Routes",
+                "openapi": {
+                  "source": "assets/open-api/meilisearch-openapi-mintlify.json",
+                  "directory": "reference/api"
+                },
+                "internal-meili-fetch-automation": true,
+                "examples": {
+                  "languages": ["curl", "javascript", "php", "python", "java", "ruby", "go", "csharp", "rust", "dart", "swift"],
+                  "autogenerate": false
+                }
               },
               {
                 "group": "Errors",
@@ -379,7 +377,9 @@
                   "reference/errors/error_codes"
                 ]
               }
+
             ]
+
           },
           {
             "anchor": "Guides",
@@ -440,7 +440,7 @@
                   "guides/relevancy/ordering_ranking_rules",
                   "guides/relevancy/interpreting_ranking_scores"
                 ]
-              },              
+              },
               {
                 "group": "Deployment",
                 "pages": [
@@ -955,15 +955,299 @@
     },
     {
       "source": "/reference/api/tasks.html#delete-task",
-      "destination": "/reference/api/tasks#delete-tasks"
+      "destination": "/reference/api/async-task-management/delete-tasks"
     },
     {
       "source": "/reference/api/tasks#delete-task",
-      "destination": "/reference/api/tasks#delete-tasks"
+      "destination": "/reference/api/async-task-management/delete-tasks"
+    },
+    {
+      "source": "/reference/api/search",
+      "destination": "/reference/api/search/search-with-post"
+    },
+    {
+      "source": "/reference/api/documents",
+      "destination": "/reference/api/documents/list-documents-with-get"
+    },
+    {
+      "source": "/reference/api/tasks",
+      "destination": "/reference/api/async-task-management/list-tasks"
+    },
+    {
+      "source": "/reference/api/batches",
+      "destination": "/reference/api/async-task-management/list-batches"
+    },
+    {
+      "source": "/reference/api/settings",
+      "destination": "/reference/api/settings/list-all-settings"
+    },
+    {
+      "source": "/reference/api/indexes",
+      "destination": "/reference/api/settings/list-all-indexes"
+    },
+    {
+      "source": "/reference/api/similar",
+      "destination": "/reference/api/similar-documents/get-similar-documents-with-post"
+    },
+    {
+      "source": "/reference/api/webhook",
+      "destination": "/reference/api/webhooks/list-webhooks"
+    },
+    {
+      "source": "/reference/api/experimental_features",
+      "destination": "/reference/api/experimental-features/list-experimental-features"
+    },
+    {
+      "source": "/reference/api/tasks#get-one-task",
+      "destination": "/reference/api/async-task-management/get-task"
+    },
+    {
+      "source": "/reference/api/tasks#delete-tasks",
+      "destination": "/reference/api/async-task-management/delete-tasks"
+    },
+    {
+      "source": "/reference/api/tasks#response",
+      "destination": "/reference/api/async-task-management/list-tasks"
+    },
+    {
+      "source": "/reference/api/keys",
+      "destination": "/reference/api/keys/list-api-keys"
+    },
+    {
+      "source": "/reference/api/keys#get-one-key",
+      "destination": "/reference/api/keys/get-api-key"
+    },
+    {
+      "source": "/reference/api/health",
+      "destination": "/reference/api/health/get-health"
+    },
+    {
+      "source": "/reference/api/dump",
+      "destination": "/reference/api/backups/create-dump"
+    },
+    {
+      "source": "/reference/api/facet_search",
+      "destination": "/reference/api/facet-search/search-in-facets"
+    },
+    {
+      "source": "/reference/api/multi_search",
+      "destination": "/reference/api/search/perform-a-multi-search"
+    },
+    {
+      "source": "/reference/api/snapshots",
+      "destination": "/reference/api/backups/create-snapshot"
+    },
+    {
+      "source": "/reference/api/version",
+      "destination": "/reference/api/version/get-version"
+    },
+    {
+      "source": "/reference/api/version#version-object",
+      "destination": "/reference/api/version/get-version"
+    },
+    {
+      "source": "/reference/api/chats",
+      "destination": "/reference/api/chats/update-chat"
+    },
+    {
+      "source": "/reference/api/chats#prompts",
+      "destination": "/reference/api/chats/update-chat"
+    },
+    {
+      "source": "/reference/api/webhooks",
+      "destination": "/reference/api/webhooks/list-webhooks"
+    },
+    {
+      "source": "/reference/api/network",
+      "destination": "/reference/api/network/get-network"
+    },
+    {
+      "source": "/reference/api/keys#actions",
+      "destination": "/reference/api/keys/create-api-key#body-actions"
+    },
+    {
+      "source": "/reference/api/keys#delete-a-key",
+      "destination": "/reference/api/keys/delete-api-key"
+    },
+    {
+      "source": "/reference/api/tasks#cancel-tasks",
+      "destination": "/reference/api/async-task-management/cancel-tasks"
+    },
+    {
+      "source": "/reference/api/tasks#query-parameters",
+      "destination": "/reference/api/async-task-management/list-tasks"
+    },
+    {
+      "source": "/reference/api/tasks#status",
+      "destination": "/reference/api/async-task-management/get-task"
+    },
+    {
+      "source": "/reference/api/tasks#type",
+      "destination": "/reference/api/async-task-management/get-task"
+    },
+    {
+      "source": "/reference/api/tasks#canceledby",
+      "destination": "/reference/api/async-task-management/list-tasks"
+    },
+    {
+      "source": "/reference/api/tasks#uid",
+      "destination": "/reference/api/async-task-management/get-task"
+    },
+    {
+      "source": "/reference/api/settings#update-searchable-attributes",
+      "destination": "/reference/api/settings/update-searchableattributes"
+    },
+    {
+      "source": "/reference/api/settings#filterable-attributes",
+      "destination": "/reference/api/settings/get-filterableattributes"
+    },
+    {
+      "source": "/reference/api/settings#stop-words",
+      "destination": "/reference/api/settings/get-stopwords"
+    },
+    {
+      "source": "/reference/api/settings#update-typo-tolerance-settings",
+      "destination": "/reference/api/settings/update-typotolerance"
+    },
+    {
+      "source": "/reference/api/settings#reset-searchable-attributes",
+      "destination": "/reference/api/settings/delete-searchableattributes"
+    },
+    {
+      "source": "/reference/api/settings#composite-embedders",
+      "destination": "/reference/api/settings/get-embedders"
+    },
+    {
+      "source": "/reference/api/settings#searchable-attributes",
+      "destination": "/reference/api/settings/get-searchableattributes"
+    },
+    {
+      "source": "/reference/api/settings#displayed-attributes",
+      "destination": "/reference/api/settings/get-displayedattributes"
+    },
+    {
+      "source": "/reference/api/settings#sortable-attributes",
+      "destination": "/reference/api/settings/get-sortableattributes"
+    },
+    {
+      "source": "/reference/api/settings#update-displayed-attributes",
+      "destination": "/reference/api/settings/update-displayedattributes"
+    },
+    {
+      "source": "/reference/api/settings#update-filterable-attributes",
+      "destination": "/reference/api/settings/update-filterableattributes"
+    },
+    {
+      "source": "/reference/api/settings#update-sortable-attributes",
+      "destination": "/reference/api/settings/update-sortableattributes"
+    },
+    {
+      "source": "/reference/api/settings#update-ranking-rules",
+      "destination": "/reference/api/settings/update-rankingrules"
+    },
+    {
+      "source": "/reference/api/settings#synonyms",
+      "destination": "/reference/api/settings/get-synonyms"
+    },
+    {
+      "source": "/reference/api/settings#update-synonyms",
+      "destination": "/reference/api/settings/update-synonyms"
+    },
+    {
+      "source": "/reference/api/settings#dictionary",
+      "destination": "/reference/api/settings/get-dictionary"
+    },
+    {
+      "source": "/reference/api/settings#faceting",
+      "destination": "/reference/api/settings/get-faceting"
+    },
+    {
+      "source": "/reference/api/settings#update-faceting-settings",
+      "destination": "/reference/api/settings/update-facetsearch"
+    },
+    {
+      "source": "/reference/api/settings#pagination",
+      "destination": "/reference/api/settings/update-pagination"
+    },
+    {
+      "source": "/reference/api/settings#pagination-object",
+      "destination": "/reference/api/settings/update-pagination"
+    },
+    {
+      "source": "/reference/api/settings#typo-tolerance",
+      "destination": "/reference/api/settings/get-typotolerance"
+    },
+    {
+      "source": "/reference/api/settings#typo-tolerance-object",
+      "destination": "/reference/api/settings/get-typotolerance"
+    },
+    {
+      "source": "/reference/api/settings#update-settings",
+      "destination": "/reference/api/settings/update-all-settings"
+    },
+    {
+      "source": "/reference/api/settings#update-typo-tolerance",
+      "destination": "/reference/api/settings/update-typotolerance"
+    },
+    {
+      "source": "/reference/api/settings#distinct-attribute",
+      "destination": "/reference/api/settings/get-distinctattribute"
+    },
+    {
+      "source": "/reference/api/settings#update-distinct-attribute",
+      "destination": "/reference/api/settings/update-distinctattribute"
+    },
+    {
+      "source": "/reference/api/settings#facet-search",
+      "destination": "/reference/api/settings/get-facetsearch"
+    },
+    {
+      "source": "/reference/api/settings#prefix-search",
+      "destination": "/reference/api/settings/get-prefix-search"
+    },
+    {
+      "source": "/reference/api/settings#localized-attributes",
+      "destination": "/reference/api/settings/get-localized-attributes"
+    },
+    {
+      "source": "/reference/api/settings#separator-tokens",
+      "destination": "/reference/api/settings/get-separatortokens"
+    },
+    {
+      "source": "/reference/api/settings#body",
+      "destination": "/reference/api/settings/update-all-settings"
+    },
+    {
+      "source": "/reference/api/documents#update-documents-with-function",
+      "destination": "/reference/api/documents/edit-documents-by-function"
+    },
+    {
+      "source": "/reference/api/facet_search#body",
+      "destination": "/reference/api/facet-search/search-in-facets"
+    },
+    {
+      "source": "/reference/api/documents/clear-all-documents",
+      "destination": "/reference/api/documents/delete-all-documents"
+    },
+    {
+      "source": "/reference/api/settings/update-all",
+      "destination": "/reference/api/settings/update-all-settings"
+    },
+    {
+      "source": "/reference/api/snapshots/create-snapshot",
+      "destination": "/reference/api/backups/create-snapshot"
+    },
+    {
+      "source": "/reference/api/headers#content-type",
+      "destination": "/reference/api/headers"
+    },
+    {
+      "source": "/reference/api/headers#search-metadata",
+      "destination": "/reference/api/headers"
     },
     {
       "source": "/reference",
-      "destination": "/reference/api/overview"
+      "destination": "/reference/api/authorization"
     },
     {
       "source": "/guides/deployment/gcp",

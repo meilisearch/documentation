@@ -10,9 +10,17 @@
   },
   "devDependencies": {
     "@ocular-d/vale-bin": "^2.29.6",
-    "markdownlint-cli": "^0.47.0"
+    "markdownlint-cli": "^0.47.0",
+    "mint": "^4.2.108"
   },
   "scripts": {
+    "generate-mintlify-openapi-file": "node scripts/generate-mintlify-openapi.mjs",
+    "fetch-meilisearch-openapi-file": "node scripts/fetch-meilisearch-openapi-file.mjs",
+    "generate-code-sample-snippets-file": "node scripts/generate-code-sample-snippets.mjs",
+    "check-unused-sdk-samples": "node scripts/check-unused-sdk-samples.mjs",
+    "check-openapi-code-samples": "node scripts/check-openapi-code-samples.mjs",
+    "check-missing-sdk-samples": "node scripts/check-missing-sdk-samples.mjs",
+    "check-code-samples-usage": "node scripts/check-code-samples-usage.mjs",
     "marklint": "markdownlint '**/*.mdx' --config .markdownlint.jsonc",
     "marklint:fix": "markdownlint '**/*.mdx' --config .markdownlint.jsonc --fix",
     "proselint": "vale --glob='!.github/*' ."

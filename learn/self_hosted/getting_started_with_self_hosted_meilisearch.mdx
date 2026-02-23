@@ -113,7 +113,7 @@ After adding documents, you should receive a response like this:
 }
 ```
 
-Use the returned `taskUid` to [check the status](/reference/api/tasks) of your documents:
+Use the returned `taskUid` to [check the status](/reference/api/async-task-management/get-task) of your documents:
 
 <CodeSamplesGettingStartedCheckTaskStatus />
 
@@ -183,7 +183,7 @@ In the above code sample, the parameter `q` represents the search query. This qu
 }
 ```
 
-By default, Meilisearch only returns the first 20 results for a search query. You can change this using the [`limit` parameter](/reference/api/search#limit).
+By default, Meilisearch only returns the first 20 results for a search query. You can change this using the [`limit` parameter](/reference/api/search/search-with-post#body-limit).
 
 ## What's next?
 
@@ -191,4 +191,4 @@ You now know how to install Meilisearch, create an index, add documents, check t
 
 If you'd like to search through the documents you just added using a clean browser interface rather than the terminal, you can do so with [our built-in search preview](/learn/getting_started/search_preview). You can also [learn how to quickly build a front-end interface](/guides/front_end/front_end_integration) of your own.
 
-For a more advanced approach, consult the [API reference](/reference/api/overview).
+For a more advanced approach, consult the [API reference](/reference/api/requests).

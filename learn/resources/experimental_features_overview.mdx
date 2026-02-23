@@ -17,7 +17,7 @@ Meilisearch makes experimental features available expecting they will become sta
 Experimental features fall into two groups based on how they are activated or deactivated:
 
 1. Those that are activated at launch with a command-line flag or environment variable
-2. Those that are activated with the [`/experimental-features` API route](/reference/api/experimental_features).
+2. Those that are activated with the [`/experimental-features` API route](/reference/api/experimental-features/list-experimental-features).
 
 ## Activating experimental features at launch
 
@@ -35,7 +35,7 @@ Activating or deactivating experimental features this way requires you to relaun
 
 ### Activating experimental features during runtime
 
-Some experimental features can be activated via an HTTP call using the [`/experimental-features` API route](/reference/api/experimental_features):
+Some experimental features can be activated via an HTTP call using the [`/experimental-features` API route](/reference/api/experimental-features/list-experimental-features):
 
 <CodeSamplesUpdateExperimentalFeatures1 />
 
@@ -52,14 +52,14 @@ Activating or deactivating experimental features this way does not require you t
 | [Replication parameters](/learn/self_hosted/configure_meilisearch_at_launch)                    | Alters task processing for clustering compatibility                        | CLI flag or environment variable            |
 | [Search queue size](/learn/self_hosted/configure_meilisearch_at_launch)                         | Configure maximum number of concurrent search requests                     | CLI flag or environment variable            |
 | [`CONTAINS` filter operator](/learn/filtering_and_sorting/filter_expression_reference#contains) | Enables usage of `CONTAINS` with the `filter` search parameter             | API route                                   |
-| [Edit documents with function](/reference/api/documents#update-documents-with-function)         | Use a RHAI function to edit documents directly in the Meilisearch database | API route                                   |
-| [`/network` route](/reference/api/network)                                                      | Enable `/network` route                                                    | API route                                   |
+| [Edit documents with function](/reference/api/documents/edit-documents-by-function)         | Use a RHAI function to edit documents directly in the Meilisearch database | API route                                   |
+| [`/network` route](/reference/api/network/get-network)                                                      | Enable `/network` route                                                    | API route                                   |
 | [Dumpless upgrade](/learn/self_hosted/configure_meilisearch_at_launch#dumpless-upgrade)         | Upgrade Meilisearch without generating a dump                              | API route                                   |
-| [Composite embedders](/reference/api/settings#composite-embedders)                              | Enable composite embedders                                                 | API route                                   |
+| [Composite embedders](/reference/api/settings/get-embedders)                              | Enable composite embedders                                                 | API route                                   |
 | [Search query embedding cache](/learn/self_hosted/configure_meilisearch_at_launch#search-query-embedding-cache) | Enable a cache for search query embeddings                 | CLI flag or environment variable            |
 | [Uncompressed snapshots](/learn/self_hosted/configure_meilisearch_at_launch#uncompressed-snapshots) | Disable snapshot compaction                                            | CLI flag or environment variable            |
 | [Maximum batch payload size](/learn/self_hosted/configure_meilisearch_at_launch#maximum-batch-payload-size) | Limit batch payload size                                       | CLI flag or environment variable            |
-| [Multimodal search](/reference/api/settings)                                                    | Enable multimodal search                                                   | API route                                   |
+| [Multimodal search](/reference/api/settings/list-all-settings)                                                    | Enable multimodal search                                                   | API route                                   |
 | [Disable new indexer](/learn/self_hosted/configure_meilisearch_at_launch)                       | Use previous settings indexer                                              | CLI flag or environment variable            |
-| [Experimental vector store](/reference/api/settings)                       | Enables index setting to use experimental vector store                                              | API route            |
+| [Experimental vector store](/reference/api/settings/list-all-settings)                       | Enables index setting to use experimental vector store                                              | API route            |
 | [Search personalization](/learn/personalization/making_personalized_search_queries)                       | Enables search personalization                                              | CLI flag or environment variable            |

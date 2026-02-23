@@ -5,7 +5,7 @@ description: Learn how to analyze the `progressTrace` to identify and resolve in
 
 # Optimize indexing performance by analyzing batch statistics
 
-Indexing performance can vary significantly depending on your dataset, index settings, and hardware. The [batch object](/reference/api/batches) provides information about the progress of asynchronous indexing operations.
+Indexing performance can vary significantly depending on your dataset, index settings, and hardware. The [batch object](/reference/api/async-task-management/list-batches) provides information about the progress of asynchronous indexing operations.
 
 The `progressTrace` field within the batch object offers a detailed breakdown of where time is spent during the indexing process. Use this data to identify bottlenecks and improve indexing speed.
 
@@ -38,19 +38,19 @@ Focus on the **longest-running steps** and investigate which index settings or d
 
 | Description | Optimization |
 |--------------|--------------|
-| Extracts and merges filterable attributes. | Keep the number of [**filterable attributes**](/reference/api/settings#filterable-attributes) to a minimum. |
+| Extracts and merges filterable attributes. | Keep the number of [**filterable attributes**](/reference/api/settings/get-filterableattributes) to a minimum. |
 
 ### `extracting words` and `merging word caches`
 
 | Description | Optimization |
 |--------------|--------------|
-| Tokenizes text and builds the inverted index. | Ensure the [searchable attributes](/reference/api/settings#searchable-attributes) list only includes the fields you want to be checked for query word matches. |
+| Tokenizes text and builds the inverted index. | Ensure the [searchable attributes](/reference/api/settings/get-searchableattributes) list only includes the fields you want to be checked for query word matches. |
 
 ### `extracting word proximity` and `merging word proximity`
 
 | Description | Optimization |
 |--------------|--------------|
-| Builds data structures for phrase and attribute ranking. | Lower the precision of this operation by setting [proximity precision](/reference/api/settings#proximity-precision) to `byAttribute` |
+| Builds data structures for phrase and attribute ranking. | Lower the precision of this operation by setting [proximity precision](/reference/api/settings/update-proximity-precision) to `byAttribute` |
 
 ### `waiting for database writes`
 
@@ -68,26 +68,26 @@ Focus on the **longest-running steps** and investigate which index settings or d
 
 | Description | Optimization |
 |--------------|--------------|
-| Processes equality or comparison filters. | - Disable unused [**filter features**](/reference/api/settings#features), such as comparison operators on string values. <br /> - Reduce the number of [**sortable attributes**](reference/api/settings#sortable-attributes). |
+| Processes equality or comparison filters. | - Disable unused [**filter features**](/reference/api/settings/get-features), such as comparison operators on string values. <br /> - Reduce the number of [**sortable attributes**](/reference/api/settings/get-sortableattributes). |
 
 ### `post processing facets > facet search`
 
 | Description | Optimization |
 |--------------|--------------|
-| Builds structures for the [facet search API](/reference/api/facet_search). | If you don’t use the facet search API, [disable it](/reference/api/settings#update-facet-search-settings).|
+| Builds structures for the [facet search API](/reference/api/facet-search/search-in-facets). | If you don’t use the facet search API, [disable it](/reference/api/settings/update-facetsearch).|
 
 ### Embeddings
 
 | Trace key | Description | Optimization |
 |------------|--------------|--------------|
-| `writing embeddings to database` | Time spent saving vector embeddings. | Use embedding vectors with fewer dimensions. <br/>- Consider enabling [binary quantization](/reference/api/settings#binaryquantized). |
-| `extracting embeddings` | Time spent extracting embeddings from embedding providers' responses. | Reduce the amount of data sent to embeddings provider. <br/>- [Include fewer attributes in `documentTemplate`](/learn/ai_powered_search/document_template_best_practices). <br/>- [Reduce maximum size of the document template](/reference/api/settings#update-embedder-settings). <br/>- [Disabling embedding regeneration on document update](/reference/api/documents#vectors). <br/>- If using a third-party service like OpenAI, upgrade your account to a higher tier.|
+| `writing embeddings to database` | Time spent saving vector embeddings. | Use embedding vectors with fewer dimensions. <br/>- Consider enabling [binary quantization](/reference/api/settings/update-embedders). |
+| `extracting embeddings` | Time spent extracting embeddings from embedding providers' responses. | Reduce the amount of data sent to embeddings provider. <br/>- [Include fewer attributes in `documentTemplate`](/learn/ai_powered_search/document_template_best_practices). <br/>- [Reduce maximum size of the document template](/reference/api/settings/update-embedders). <br/>- [Disabling embedding regeneration on document update](/reference/api/documents/add-or-update-documents). <br/>- If using a third-party service like OpenAI, upgrade your account to a higher tier.|
 
 ### `post processing words > word prefix *`
 
 | Description | Optimization |
 |--------------|--------------|
-| | Builds prefix data for autocomplete. Allows matching documents that begin with a specific query term, instead of only exact matches.| Disable [**prefix search**](/reference/api/settings#prefix-search) (`prefixSearch: disabled`). _This can severely impact search result relevancy._ |
+| | Builds prefix data for autocomplete. Allows matching documents that begin with a specific query term, instead of only exact matches.| Disable [**prefix search**](/reference/api/settings/get-prefix-search) (`prefixSearch: disabled`). _This can severely impact search result relevancy._ |
 
 ### `post processing words > word fst`
 

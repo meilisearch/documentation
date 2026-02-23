@@ -1,0 +1,50 @@
+# On every push to main, check meilisearch-openapi-mintlify.json for code samples:
+# - Job 1: Ensure every route that has x-codeSamples includes a cURL sample (can fail).
+# - Job 2: Informational only – list routes and all missing code sample languages (never fails).
+name: OpenAPI code samples check
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  # Fails if any route with x-codeSamples has no cURL sample.
+  require-curl-samples:
+    name: Require cURL in x-codeSamples
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Check routes have cURL in x-codeSamples
+        run: |
+          npm run check-openapi-code-samples -- curl-check assets/open-api/meilisearch-openapi-mintlify.json
+
+  # Informational only: list routes and missing code sample languages.
+  # This job never fails the workflow (information check only).
+  info-missing-code-samples:
+    name: "[Info only - never fails] Missing code samples per route"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: List routes and missing code samples (informational, never fails)
+        run: |
+          npm run check-openapi-code-samples -- info assets/open-api/meilisearch-openapi-mintlify.json || true

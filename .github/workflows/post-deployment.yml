@@ -4,15 +4,22 @@ name: Post Deployment
 
 on:
   workflow_dispatch:
-  # schedule:
-  #   - cron: '0 23 * * *' # Every day at 11:00 PM UTC
-  # push:
-  #   branches:
-  #     - 'main'
+  schedule:
+    - cron: '0 23 * * *' # Every day at 11:00 PM UTC
+  push:
+    branches:
+      - 'main'
+
+concurrency:
+  group: post-deployment
+  cancel-in-progress: false
 
 jobs:
-  update-samples:
+  build-code-samples:
+    name: Build code samples
     runs-on: ubuntu-latest
+    outputs:
+      run_openapi_automation: ${{ steps.openapi_automation.outputs.run }}
 
     steps:
       - name: Checkout repository
@@ -20,29 +27,145 @@ jobs:
         with:
           token: ${{ secrets.GH_TOKEN }}
 
+      - name: Get OpenAPI automation flag from docs.json
+        id: openapi_automation
+        run: |
+          value=$(jq -r '.. | select(type == "object" and has("internal-meili-fetch-automation")) | .["internal-meili-fetch-automation"] | select(. != null) | tostring' docs.json 2>/dev/null | head -1)
+          echo "run=${value:-false}" >> "$GITHUB_OUTPUT"
+
       - name: Setup Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
 
       - name: Install dependencies
         run: npm install
 
       - name: Generate code sample snippets
-        run: node scripts/generate-code-sample-snippets.mjs
+        run: npm run generate-code-sample-snippets-file
 
       - name: Check for changes
         id: changes
         run: |
-          echo "has_changes=$(git diff --quiet snippets/ && echo "false" || echo "true")" >> "$GITHUB_ENV"
+          if git diff --quiet snippets/; then
+            echo "has_changes=false" >> "$GITHUB_ENV"
+          else
+            echo "has_changes=true" >> "$GITHUB_ENV"
+          fi
 
       - name: Commit changes
         run: |
           if [[ $has_changes == "true" ]]; then
             echo "There are changes in the Git working directory."
             git config user.name "meili-bot"
-            git config user.email "meili-bot@meilisearch.com"
+            git config user.email "robot@meilisearch.com"
             git add snippets/
-            git commit -m "Update code samples"
+            git commit -m "[AUTOMATION POST DEPLOYMENT] Update code samples"
             git push origin main
           else
             echo "No changes in the Git working directory."
+          fi
+
+  # We need to wait for build-code-samples to commit first so we can push a separate commit
+  # (avoid stacking both changes in one run and keep history clear).
+  # Only runs when docs.json has "internal-meili-fetch-automation": true.
+  # In case of issues with the latest release OpenAPI file: fetch the desired OpenAPI file
+  # manually, then set "internal-meili-fetch-automation" to false to prevent this automation from running.
+  fetch-openapi-file:
+    name: Fetch OpenAPI file from Meilisearch release
+    runs-on: ubuntu-latest
+    needs: build-code-samples
+    if: needs.build-code-samples.outputs.run_openapi_automation == 'true'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          ref: main
+          token: ${{ secrets.GH_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Fetch latest meilisearch-openapi.json from Meilisearch release
+        run: npm run fetch-meilisearch-openapi-file
+
+      - name: Check for changes
+        id: openapi_changes
+        run: |
+          if git diff --quiet assets/open-api/meilisearch-openapi.json; then
+            echo "has_changes=false" >> "$GITHUB_ENV"
+          else
+            echo "has_changes=true" >> "$GITHUB_ENV"
+          fi
+
+      - name: Commit changes
+        run: |
+          if [[ $has_changes == "true" ]]; then
+            echo "There are changes in the OpenAPI file."
+            git config user.name "meili-bot"
+            git config user.email "robot@meilisearch.com"
+            git add assets/open-api/meilisearch-openapi.json
+            git commit -m "[AUTOMATION POST DEPLOYMENT] Update meilisearch-openapi.json from latest Meilisearch release"
+            git push origin main
+          else
+            echo "No changes in the OpenAPI file."
+          fi
+
+  # Runs after fetch-openapi-file: generate Mintlify OpenAPI file, validate with mint openapi-check, commit if valid.
+  generate-and-check-mintlify-openapi:
+    name: Generate and check Mintlify OpenAPI file
+    runs-on: ubuntu-latest
+    needs: [build-code-samples, fetch-openapi-file]
+    if: needs.build-code-samples.outputs.run_openapi_automation == 'true'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          ref: main
+          token: ${{ secrets.GH_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Generate Mintlify OpenAPI file
+        run: npm run generate-mintlify-openapi-file
+
+      - name: Validate OpenAPI with Mintlify CLI
+        run: npx mint openapi-check assets/open-api/meilisearch-openapi-mintlify.json
+
+      - name: Check for changes
+        id: mintlify_changes
+        run: |
+          if git diff --quiet assets/open-api/meilisearch-openapi-mintlify.json; then
+            echo "has_changes=false" >> "$GITHUB_ENV"
+          else
+            echo "has_changes=true" >> "$GITHUB_ENV"
+          fi
+
+      - name: Commit changes
+        run: |
+          if [[ $has_changes == "true" ]]; then
+            echo "There are changes in the Mintlify OpenAPI file."
+            git config user.name "meili-bot"
+            git config user.email "robot@meilisearch.com"
+            git add assets/open-api/meilisearch-openapi-mintlify.json
+            git commit -m "[AUTOMATION POST DEPLOYMENT] Update meilisearch-openapi-mintlify.json"
+            git push origin main
+          else
+            echo "No changes in the Mintlify OpenAPI file."
           fi

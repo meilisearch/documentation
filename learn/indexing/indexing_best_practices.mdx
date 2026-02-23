@@ -18,11 +18,11 @@ Some document fields are necessary for [filtering](/learn/filtering_and_sorting/
 
 ## Configure your index before adding documents
 
-When creating a new index, first [configure its settings](/reference/api/settings) and only then add your documents. Whenever you update settings such as [ranking rules](/learn/relevancy/relevancy), Meilisearch will trigger a reindexing of all your documents. This can be a time-consuming process, especially if you have a large dataset. For this reason, it is better to define ranking rules and other settings before indexing your data.
+When creating a new index, first [configure its settings](/reference/api/settings/list-all-settings) and only then add your documents. Whenever you update settings such as [ranking rules](/learn/relevancy/relevancy), Meilisearch will trigger a reindexing of all your documents. This can be a time-consuming process, especially if you have a large dataset. For this reason, it is better to define ranking rules and other settings before indexing your data.
 
 ## Optimize document size
 
-Smaller documents are processed faster, so make sure to trim down any unnecessary data from your documents. When a document field is missing from the list of [searchable](/reference/api/settings#searchable-attributes), [filterable](/reference/api/settings#filterable-attributes), [sortable](/reference/api/settings#sortable-attributes), or [displayed](/reference/api/settings#displayed-attributes) attributes, it might be best to remove it from the document. To go further, consider compressing your data using methods such as `br`, `deflate`, or `gzip`. Consult the [supported encoding formats reference](/reference/api/overview#content-encoding).
+Smaller documents are processed faster, so make sure to trim down any unnecessary data from your documents. When a document field is missing from the list of [searchable](/reference/api/settings/get-searchableattributes), [filterable](/reference/api/settings/get-filterableattributes), [sortable](/reference/api/settings/get-sortableattributes), or [displayed](/reference/api/settings/get-displayedattributes) attributes, it might be best to remove it from the document. To go further, consider compressing your data using methods such as `br`, `deflate`, or `gzip`. Consult the [supported encoding formats reference](/reference/api/headers).
 
 ## Prefer bigger HTTP payloads
 
@@ -68,7 +68,7 @@ Due to how Meilisearch works, it is best to avoid HDDs (Hard Disk Drives) as the
 
 ## Enable binary quantization when using AI-powered search
 
-If you are experiencing performance issues when indexing documents for AI-powered search, consider enabling [binary quantization](/reference/api/settings#binaryquantized) for your embedders. Binary quantization compresses vectors by representing each dimension with 1-bit values. This reduces the relevancy of semantic search results, but greatly improves performance.
+If you are experiencing performance issues when indexing documents for AI-powered search, consider enabling [binary quantization](/reference/api/settings/update-embedders) for your embedders. Binary quantization compresses vectors by representing each dimension with 1-bit values. This reduces the relevancy of semantic search results, but greatly improves performance.
 
 Binary quantization works best with large datasets containing more than 1M documents and using models with more than 1400 dimensions.
 

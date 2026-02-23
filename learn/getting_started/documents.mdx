@@ -7,7 +7,7 @@ sidebarDepth: 3
 
 A document is an object composed of one or more fields. Each field consists of an **attribute** and its associated **value**. Documents function as containers for organizing data and are the basic building blocks of a Meilisearch database. To search for a document, you must first add it to an [index](/learn/getting_started/indexes).
 
-Nothing will be shared between two indexes if they contain the exact same document. Instead, both documents will be treated as different documents. Depending on the [index's settings](/reference/api/settings), the documents might have different sizes.
+Nothing will be shared between two indexes if they contain the exact same document. Instead, both documents will be treated as different documents. Depending on the [index's settings](/reference/api/settings/list-all-settings), the documents might have different sizes.
 
 ## Structure
 
@@ -47,7 +47,7 @@ Reserved attributes are always prefixed with an underscore (`_`).
 
 By default, all fields in a document are both displayed and searchable. Displayed fields are contained in each matching document, while searchable fields are searched for matching query words.
 
-You can modify this behavior using the [update settings endpoint](/reference/api/settings#update-settings), or the respective update endpoints for [displayed attributes](/reference/api/settings#update-displayed-attributes), and [searchable attributes](/reference/api/settings#update-searchable-attributes) so that a field is:
+You can modify this behavior using the [update settings endpoint](/reference/api/settings/update-all-settings), or the respective update endpoints for [displayed attributes](/reference/api/settings/update-displayedattributes), and [searchable attributes](/reference/api/settings/update-searchableattributes) so that a field is:
 
 - Searchable but not displayed
 - Displayed but not searchable
@@ -69,7 +69,7 @@ By default, Meilisearch limits the size of all payloads—and therefore document
 
 Meilisearch uses a lot of RAM when indexing documents. Be aware of your [RAM availability](/learn/resources/faq#what-are-the-recommended-requirements-for-hosting-a-meilisearch-instance) as you increase your batch size as this could cause Meilisearch to crash.
 
-When using the [add new documents endpoint](/reference/api/documents#add-or-update-documents), ensure:
+When using the [add new documents endpoint](/reference/api/documents/add-or-update-documents), ensure:
 
 - The payload format is correct. There are no extraneous commas, mismatched brackets, missing quotes, etc.
 - All documents are sent in an array, even if there is only one document
@@ -127,7 +127,7 @@ The above JSON document would look like this in NDJSON:
 
 CSV files express data as a sequence of values separated by a delimiter character. Meilisearch accepts `string`, `boolean`, and `number` data types for CSV documents. If you don't specify the data type for an attribute, it will default to `string`. Empty fields such as `,,` and `, ,` will be considered `null`.
 
-By default, Meilisearch uses a single comma (`,`) as the delimiter. Use the `csvDelimiter` query parameter with the [add or update documents](/reference/api/documents#add-or-update-documents) or [add or replace documents](/reference/api/documents#add-or-replace-documents) endpoints to set a different character. Any [rules that apply to formatting CSV](https://datatracker.ietf.org/doc/html/rfc4180) also apply to Meilisearch documents.
+By default, Meilisearch uses a single comma (`,`) as the delimiter. Use the `csvDelimiter` query parameter with the [add or update documents](/reference/api/documents/add-or-update-documents) or [add or replace documents](/reference/api/documents/add-or-replace-documents) endpoints to set a different character. Any [rules that apply to formatting CSV](https://datatracker.ietf.org/doc/html/rfc4180) also apply to Meilisearch documents.
 
 Meilisearch will only accept CSV documents when it receives the `text/csv` content-type header.
 
