@@ -17,6 +17,14 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
       - name: Check routes have cURL in x-codeSamples
         run: |
           npm run check-openapi-code-samples -- curl-check assets/open-api/meilisearch-openapi-mintlify.json
@@ -28,6 +36,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
 
       - name: List routes and missing code samples (informational, never fails)
         run: |
