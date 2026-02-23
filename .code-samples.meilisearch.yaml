@@ -2,7 +2,7 @@
 # Every example written here will be automatically fetched by
 # the documentation on build
 ---
-## BEGIN /references/api
+## BEGIN /reference/api
 # get_indexes_indexUid
 get_one_index_1: |-
   curl \
@@ -850,7 +850,7 @@ get_health_1: |-
 get_version_1: |-
   curl \
     -X GET 'MEILISEARCH_URL/version'
-## END /references/api
+## END /reference/api
 
 distinct_attribute_guide_1: |-
   curl \
