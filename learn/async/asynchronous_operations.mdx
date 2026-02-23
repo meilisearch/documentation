@@ -34,7 +34,7 @@ When an API request triggers an asynchronous process, Meilisearch creates a task
 
 Tasks are objects containing information that allow you to track their progress and troubleshoot problems when things go wrong.
 
-A [task object](/reference/api/tasks#task-object) includes data not present in the original request, such as when the request was enqueued, the type of request, and an error code when the task fails:
+A [task object](/reference/api/async-task-management/get-task) includes data not present in the original request, such as when the request was enqueued, the type of request, and an error code when the task fails:
 
 ```json
 {
@@ -83,7 +83,7 @@ Tasks always contain a field indicating the task's current `status`. This field 
 - **`failed`**: a failure occurred when processing the task. No changes were made to the database
 - **`canceled`**: the task was canceled
 
-`succeeded`, `failed`, and `canceled` tasks are finished tasks. Meilisearch keeps them in the task database but has finished processing these tasks. It is possible to [configure a webhook](/reference/api/webhooks) to notify external services when a task is finished.
+`succeeded`, `failed`, and `canceled` tasks are finished tasks. Meilisearch keeps them in the task database but has finished processing these tasks. It is possible to [configure a webhook](/reference/api/webhooks/list-webhooks) to notify external services when a task is finished.
 
 `enqueued` and `processing` tasks are unfinished tasks. Meilisearch is either processing them or will do so in the future.
 
@@ -93,11 +93,11 @@ Some task types are not associated with a particular index but apply to the enti
 
 Meilisearch considers the following task types as global:
 
-- [`dumpCreation`](/reference/api/tasks#dumpcreation)
-- [`taskCancelation`](/reference/api/tasks#taskcancelation)
-- [`taskDeletion`](/reference/api/tasks#taskdeletion)
-- [`indexSwap`](/reference/api/tasks#indexswap)
-- [`snapshotCreation`](/reference/api/tasks#snapshotcreation)
+- `dumpCreation`
+- `taskCancelation`
+- `taskDeletion`
+- `indexSwap`
+- `snapshotCreation`
 
 <Note>
 In a protected instance, your API key must have access to all indexes (`"indexes": [*]`) to view global tasks.
@@ -108,7 +108,7 @@ In a protected instance, your API key must have access to all indexes (`"indexes
 After creating a task, Meilisearch places it in a queue. Enqueued tasks are processed one at a time, following the order in which they were requested.
 
 <Warning>
-When the task queue reaches its limit (about 10GiB), it will throw a `no_space_left_on_device` error. Users will need to delete tasks using the [delete tasks endpoint](/reference/api/tasks#delete-tasks) to continue write operations.
+When the task queue reaches its limit (about 10GiB), it will throw a `no_space_left_on_device` error. Users will need to delete tasks using the [delete tasks endpoint](/reference/api/async-task-management/delete-tasks) to continue write operations.
 </Warning>
 
 #### Task queue priority
@@ -141,11 +141,11 @@ When you make a [request for an asynchronous operation](#which-operations-are-as
 
 ### Task batches
 
-Meilisearch processes tasks in batches, grouping tasks for the best possible performance. In most cases, batching should be transparent and have no impact on the overall task workflow. Use [the `/batches` route](/reference/api/batches) to obtain more information on batches and how they are processing your tasks.
+Meilisearch processes tasks in batches, grouping tasks for the best possible performance. In most cases, batching should be transparent and have no impact on the overall task workflow. Use [the `/batches` route](/reference/api/async-task-management/list-batches) to obtain more information on batches and how they are processing your tasks.
 
 ### Canceling tasks
 
-You can cancel a task while it is `enqueued` or `processing` by using [the cancel tasks endpoint](/reference/api/tasks#cancel-tasks). Doing so changes a task's `status` to `canceled`.
+You can cancel a task while it is `enqueued` or `processing` by using [the cancel tasks endpoint](/reference/api/async-task-management/cancel-tasks). Doing so changes a task's `status` to `canceled`.
 
 <Note>
 Tasks are not canceled when you terminate a Meilisearch instance. Meilisearch discards all progress made on `processing` tasks and resets them to `enqueued`. Task handling proceeds as normal once the instance is relaunched.
@@ -159,9 +159,9 @@ Meilisearch stores up to 1M tasks in the task database. If enqueuing a new task 
 
 #### Examples
 
-Suppose you add a new document to your instance using the [add documents endpoint](/reference/api/documents#add-or-replace-documents) and receive a `taskUid` in response.
+Suppose you add a new document to your instance using the [add documents endpoint](/reference/api/documents/add-or-replace-documents) and receive a `taskUid` in response.
 
-When you query the [get task endpoint](/reference/api/tasks#get-one-task) using this value, you see that it has been `enqueued`:
+When you query the [get task endpoint](/reference/api/async-task-management/get-task) using this value, you see that it has been `enqueued`:
 
 ```json
 {
@@ -229,6 +229,6 @@ Had the task failed, the response would have included a detailed `error` object:
 }
 ```
 
-If the task had been [canceled](/reference/api/tasks#cancel-tasks) while it was `enqueued` or `processing`, it would have the `canceled` status and a non-`null` value for the `canceledBy` field.
+If the task had been [canceled](/reference/api/async-task-management/cancel-tasks) while it was `enqueued` or `processing`, it would have the `canceled` status and a non-`null` value for the `canceledBy` field.
 
-After a task has been [deleted](/reference/api/tasks#delete-tasks), trying to access it returns a [`task_not_found`](/reference/errors/error_codes#task_not_found) error.
+After a task has been [deleted](/reference/api/async-task-management/delete-tasks), trying to access it returns a [`task_not_found`](/reference/errors/error_codes#task_not_found) error.

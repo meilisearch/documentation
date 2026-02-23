@@ -130,7 +130,7 @@ The code below adds a document to the `books` index and sets `reference_number` 
 
 ### Changing your primary key with the update index endpoint
 
-The primary key cannot be changed while documents are present in the index. To change the primary key of an index that already contains documents, you must therefore [delete all documents](/reference/api/documents#delete-all-documents) from that index, [change the primary key](/reference/api/indexes#update-an-index), then [add them](/reference/api/documents#add-or-replace-documents) again.
+The primary key cannot be changed while documents are present in the index. To change the primary key of an index that already contains documents, you must therefore [delete all documents](/reference/api/documents/delete-all-documents) from that index, [change the primary key](/reference/api/indexes/update-index), then [add them](/reference/api/documents/add-or-replace-documents) again.
 
 The code below updates the primary key to `title`:
 

@@ -55,7 +55,7 @@ A token may contain rules for any number of indexes. **Specific rulesets take pr
 <Warning>
 Because tenant tokens are generated in your application, Meilisearch cannot check if search rule filters are valid. Invalid search rules return throw errors when searching.
 
-Consult the search API reference for [more information on Meilisearch filter syntax](/reference/api/search/search-with-post#filter).
+Consult the search API reference for [more information on Meilisearch filter syntax](/reference/api/search/search-with-post#body-filter).
 </Warning>
 
 The search rule may also be an empty object. In this case, the tenant token will have access to all documents in an index:
@@ -151,9 +151,9 @@ Tenant token payloads must include an API key UID to validate requests. The UID 
 }
 ```
 
-Query the [get one API key endpoint](/reference/api/keys) to obtain an API key's UID.
+Query the [get one API key endpoint](/reference/api/keys/get-api-key) to obtain an API key's UID.
 
-The UID must indicate an API key with access to [the search action](/reference/api/keys#actions). A token has access to the same indexes and routes as the API key used to generate it.
+The UID must indicate an API key with access to [the search action](/reference/api/keys/create-api-key#body-actions). A token has access to the same indexes and routes as the API key used to generate it.
 
 Since a master key is not an API key, **you cannot use a master key to create a tenant token**. Avoid exposing API keys and **always generate tokens on your application's back end**.
 
@@ -176,7 +176,7 @@ A token's expiration date cannot exceed its parent API key's expiration date.
 Setting a token expiry date is optional, but highly recommended. Tokens without an expiry date remain valid indefinitely and may be a security liability.
 
 <Warning>
-The only way to revoke a token without an expiry date is to [delete](/reference/api/keys#delete-a-key) its parent API key.
+The only way to revoke a token without an expiry date is to [delete](/reference/api/keys/delete-api-key) its parent API key.
 
 Changing an instance's master key forces Meilisearch to regenerate all API keys and will also render all existing tenant tokens invalid.
 </Warning>

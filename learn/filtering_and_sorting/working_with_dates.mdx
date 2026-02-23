@@ -41,13 +41,13 @@ As an example, consider a database of video games. In this dataset, the release 
 ]
 ```
 
-Once all documents in your dataset have a date field, [index your data](/reference/api/documents#add-or-replace-documents) as usual. The example below adds a <a id="downloadVideogames" href="/assets/datasets/videogames.json" download="videogames.json">videogame dataset</a> to a `games` index:
+Once all documents in your dataset have a date field, [index your data](/reference/api/documents/add-or-replace-documents) as usual. The example below adds a <a id="downloadVideogames" href="/assets/datasets/videogames.json" download="videogames.json">videogame dataset</a> to a `games` index:
 
 <CodeSamplesDateGuideIndex1 />
 
 ## Filtering by date
 
-To filter search results based on their timestamp, add your document's timestamp field to the list of [`filterableAttributes`](/reference/api/settings#update-filterable-attributes):
+To filter search results based on their timestamp, add your document's timestamp field to the list of [`filterableAttributes`](/reference/api/settings/update-filterableattributes):
 
 <CodeSamplesDateGuideFilterableAttributes1 />
 
@@ -57,7 +57,7 @@ Once you have configured `filterableAttributes`, you can filter search results b
 
 ## Sorting by date
 
-To sort search results chronologically, add your document's timestamp field to the list of [`sortableAttributes`](/reference/api/settings#update-sortable-attributes):
+To sort search results chronologically, add your document's timestamp field to the list of [`sortableAttributes`](/reference/api/settings/update-sortableattributes):
 
 <CodeSamplesDateGuideSortableAttributes1 />
 

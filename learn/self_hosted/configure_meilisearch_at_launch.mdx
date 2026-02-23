@@ -9,7 +9,7 @@ import { NoticeTag } from '/snippets/notice_tag.mdx';
 
 When self-hosting Meilisearch, you can configure your instance at launch with **command-line options**, **environment variables**, or a **configuration file**.
 
-These startup options affect your entire Meilisearch instance, not just a single index. For settings that affect search within a single index, see [index settings](/reference/api/settings).
+These startup options affect your entire Meilisearch instance, not just a single index. For settings that affect search within a single index, see [index settings](/reference/api/settings/list-all-settings).
 
 ## Command-line options and flags
 
@@ -213,7 +213,7 @@ Sets the HTTP address and port Meilisearch will use.
 **Default value**: `None`<br />
 **Expected value**: a UTF-8 string of at least 16 bytes
 
-Sets the instance's master key, automatically protecting all routes except [`GET /health`](/reference/api/health). This means you will need a valid API key to access all other endpoints.
+Sets the instance's master key, automatically protecting all routes except [`GET /health`](/reference/api/health/get-health). This means you will need a valid API key to access all other endpoints.
 
 When `--env` is set to `production`, providing a master key is mandatory. If none is given, or it is under 16 bytes, Meilisearch will throw an error and refuse to launch.
 
@@ -266,7 +266,7 @@ Dumpless upgrade are not currently atomic. It is possible some processes fail an
 
 Sets the directory where Meilisearch will create dump files.
 
-[Learn more about creating dumps](/reference/api/dump).
+[Learn more about creating dumps](/reference/api/backups/create-dump).
 
 ### Import dump
 
@@ -495,7 +495,7 @@ Notifies the configured URL whenever Meilisearch [finishes processing a task](/l
 
 The webhook payload contains the list of finished tasks in [ndjson](https://github.com/ndjson/ndjson-spec). For more information, [consult the dedicated task webhook guide](/learn/async/task_webhook).
 
-The task webhook option requires having access to a command-line interface. If you are using Meilisearch Cloud, use the [`/webhooks` API route](/reference/api/webhooks) instead.
+The task webhook option requires having access to a command-line interface. If you are using Meilisearch Cloud, use the [`/webhooks` API route](/reference/api/webhooks/list-webhooks) instead.
 
 ### Task webhook authorization header
 

@@ -50,7 +50,7 @@ In this configuration:
 - `request`: defines the structure and parameters of the request Meilisearch will send to the embedder
 - `response`: defines the structure of the embedder's  response
 
-Once you've configured the embedder, Meilisearch will automatically generate embeddings for your documents. Monitor the task using the Cloud UI or the [get task endpoint](/reference/api/tasks).
+Once you've configured the embedder, Meilisearch will automatically generate embeddings for your documents. Monitor the task using the Cloud UI or the [get task endpoint](/reference/api/async-task-management/list-tasks).
 
 <Note>
 This example uses [BAAI/bge-small-en-v1.5](https://huggingface.co/BAAI/bge-small-en-v1.5) as its model, but Hugging Face offers [other options that may fit your dataset better](https://ui.endpoints.huggingface.co/catalog?task=sentence-embeddings).
@@ -81,4 +81,4 @@ In this request:
 
 You have set up with an embedder using Hugging Face Inference Endpoints. This allows you to use pure semantic search capabilities in your application.
 
-Consult the [embedder setting documentation](/reference/api/settings) for more information on other embedder configuration options.
+Consult the [embedder setting documentation](/reference/api/settings/list-all-settings) for more information on other embedder configuration options.

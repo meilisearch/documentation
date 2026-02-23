@@ -8,8 +8,8 @@ This guide shows the main steps to search through a database of images using Mei
 ## Requirements
 
 - A database of images
-- A Meilisearch project  
-- Access to a multimodal embedding provider (for example, [VoyageAI multimodal embeddings](https://docs.voyageai.com/reference/multimodal-embeddings-api))  
+- A Meilisearch project
+- Access to a multimodal embedding provider (for example, [VoyageAI multimodal embeddings](https://docs.voyageai.com/reference/multimodal-embeddings-api))
 
 ## Enable multimodal embeddings
 
@@ -185,11 +185,11 @@ curl \
   }'
 ```
 
-Since the `source` of this embedder is `rest`, you must also specify a [`request` and a `response` fields](/reference/api/settings#body-21). These respectively instruct Meilisearch on how to structure the request sent to the embeddings provider, and where to find the embeddings in the provider's response.
+Since the `source` of this embedder is `rest`, you must also specify a `request` and a `response` fields. These respectively instruct Meilisearch on how to structure the request sent to the embeddings provider, and where to find the embeddings in the provider's response.
 
 ## Add documents
 
-Once your embedder is configured, you can [add documents to your index](/learn/getting_started/cloud_quick_start) with the [`/documents` endpoint](/reference/api/documents).
+Once your embedder is configured, you can [add documents to your index](/learn/getting_started/cloud_quick_start) with the [`/documents` endpoint](/reference/api/documents/list-documents-with-get).
 
 During indexing, Meilisearch will automatically generate multimodal embeddings for each document using the configured `indexingFragments`.
 
@@ -240,7 +240,7 @@ In most cases you will need a GUI interface that allows users to submit their im
 
 With multimodal embedders you can:
 
-1. Configure Meilisearch to embed both images and queries  
-2. Add image documents — Meilisearch automatically generates embeddings  
-3. Accept text or image input from users  
+1. Configure Meilisearch to embed both images and queries
+2. Add image documents — Meilisearch automatically generates embeddings
+3. Accept text or image input from users
 4. Run hybrid searches using a mix of textual and input from other types of media, or run pure semantic semantic searches using only non-textual input
