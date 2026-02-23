@@ -11,7 +11,7 @@
       "name": "MIT",
       "identifier": "MIT"
     },
-    "version": "1.35.0"
+    "version": "1.36.0"
   },
   "servers": [
     {
@@ -511,7 +511,7 @@
           "Experimental features"
         ],
         "summary": "Configure experimental features",
-        "description": "Enable or disable experimental features at runtime. Only features that are marked as runtime-togglable can be changed.",
+        "description": "Enable or disable experimental features at runtime.",
         "operationId": "patch_features",
         "responses": {
           "200": {
@@ -1302,7 +1302,7 @@
           "Documents"
         ],
         "summary": "Add or update documents",
-        "description": "Add a list of documents or update them if they already exist.\n\nIf you send an already existing document (same id) the old document will\nbe only partially updated according to the fields of the new document.\nThus, any fields not present in the new document are kept and remained\nunchanged.\n\nIf the provided index does not exist, it will be created.\n\nTo completely overwrite a document, see [add or replace documents route](https://docs.meilisearch.com/docs/api-reference/documents/add-or-replace-documents).\n\n> Use the reserved `_geo` object to add geo coordinates to a document.\n> `_geo` is an object made of `lat` and `lng` field.",
+        "description": "Add a list of documents or update them if they already exist.\n\nIf you send an already existing document (same id) the old document will\nbe only partially updated according to the fields of the new document.\nThus, any fields not present in the new document are kept and remained\nunchanged.\n\nIf the provided index does not exist, it will be created.\n\nTo completely overwrite a document, see [add or replace documents route](/reference/api/documents/add-or-replace-documents).\n\n> Use the reserved `_geo` object to add geo coordinates to a document.\n> `_geo` is an object made of `lat` and `lng` field.",
         "operationId": "update_documents",
         "parameters": [
           {
@@ -1431,7 +1431,7 @@
           "Documents"
         ],
         "summary": "Add or replace documents",
-        "description": "Add a list of documents or replace them if they already exist.\n\nIf you send an already existing document (same id) the whole existing\ndocument will be overwritten by the new document. Fields previously in the\ndocument not present in the new document are removed.\n\nIf the provided index does not exist, it will be created.\n\nFor a partial update of the document see [add or update documents route](https://docs.meilisearch.com/docs/api-reference/documents/add-or-update-documents).\n\n> Use the reserved `_geo` object to add geo coordinates to a document.\n> `_geo` is an object made of `lat` and `lng` field.",
+        "description": "Add a list of documents or replace them if they already exist.\n\nIf you send an already existing document (same id) the whole existing\ndocument will be overwritten by the new document. Fields previously in the\ndocument not present in the new document are removed.\n\nIf the provided index does not exist, it will be created.\n\nFor a partial update of the document see [add or update documents route](/reference/api/documents/add-or-update-documents).\n\n> Use the reserved `_geo` object to add geo coordinates to a document.\n> `_geo` is an object made of `lat` and `lng` field.",
         "operationId": "replace_documents",
         "parameters": [
           {
@@ -1827,7 +1827,7 @@
           "Documents"
         ],
         "summary": "Edit documents by function",
-        "description": "Use a [RHAI function](https://rhai.rs/book/engine/hello-world.html) to edit one or more documents directly in Meilisearch. The function receives each document and returns the modified document.",
+        "description": "Use a [RHAI function](https://rhai.rs/book/engine/hello-world.html) to edit one or more documents directly in Meilisearch. The function receives each document and returns the modified document.\n\nThis feature is experimental and must be enabled through the experimental route.",
         "operationId": "edit_documents_by_function",
         "parameters": [
           {
@@ -2488,7 +2488,7 @@
           "Search"
         ],
         "summary": "Search with GET",
-        "description": "Search for documents matching a query in the given index.\n\n> Equivalent to the [search with POST route](https://www.meilisearch.com/docs/api-reference/search/search-with-post) in the Meilisearch API.",
+        "description": "Search for documents matching a query in the given index.\n\n> Equivalent to the [search with POST route](/reference/api/search/search-with-post) in the Meilisearch API.",
         "operationId": "search_with_url_query",
         "parameters": [
           {
@@ -2895,7 +2895,7 @@
           "Search"
         ],
         "summary": "Search with POST",
-        "description": "Search for documents matching a query in the given index.\n\n> Equivalent to the [search with GET route](https://www.meilisearch.com/docs/api-reference/search/search-with-get) in the Meilisearch API.",
+        "description": "Search for documents matching a query in the given index.\n\n> Equivalent to the [search with GET route](/reference/api/search/search-with-get) in the Meilisearch API.",
         "operationId": "search_with_post",
         "parameters": [
           {
@@ -11235,7 +11235,7 @@
           {
             "name": "uuid",
             "in": "path",
-            "description": "Unique identifier of the webhook.",
+            "description": "Universally unique identifier of the webhook.",
             "required": true,
             "schema": {
               "type": "string",
@@ -14689,7 +14689,7 @@
         "oneOf": [
           {
             "type": "string",
-            "description": "Sorted by decreasing number of matched query terms.\nQuery words at the front of an attribute is considered better than if\nit was at the back.",
+            "description": "Sorted by decreasing number of matched query terms.",
             "enum": [
               "Words"
             ]
@@ -14710,9 +14710,23 @@
           },
           {
             "type": "string",
-            "description": "Documents with quey words contained in more important\nattributes are considered better.",
+            "description": "Documents with query words contained in more important\nattributes and at a closer-to-the-front position in it\nare considered better.",
             "enum": [
               "Attribute"
+            ]
+          },
+          {
+            "type": "string",
+            "description": "Documents with query words contained in more important\nattributes are considered better. Position of the\nquery words in an attribute is not considered.",
+            "enum": [
+              "AttributeRank"
+            ]
+          },
+          {
+            "type": "string",
+            "description": "Documents with query words that are closer to the front\nof an attribute are considered better. Attribute rank\nis not considered.",
+            "enum": [
+              "WordPosition"
             ]
           },
           {
