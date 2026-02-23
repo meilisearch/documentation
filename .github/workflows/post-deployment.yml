@@ -85,6 +85,9 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v6
 
+      - name: Install dependencies
+        run: npm ci
+
       - name: Fetch latest meilisearch-openapi.json from Meilisearch release
         run: npm run fetch-meilisearch-openapi-file
 
