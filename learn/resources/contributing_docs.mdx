@@ -16,20 +16,6 @@ Our documentation aims to be:
 - **Thorough**: the documentation website should contain all information anyone needs to use Meilisearch
 - **Open source**: this is a resource by Meilisearch users, for Meilisearch users
 
-## Documentation repository and local development
-
-The Meilisearch documentation repository only stores the content of the docs website. Because the code that makes up the website lives in another repository, **it is not possible to run a local copy of the documentation**.
-
-### Handling images and other static assets
-
-When contributing content to the Meilisearch docs, store screenshots, images, GIFs, and videos in the relevant directory under `/assets`.
-
-The build process does not currently support static assets with relative paths. When adding them to a document, make sure the asset URL points to the raw GitHub file address:
-
-```markdown
-\!\[Image description\]\(https://raw.githubusercontent.com/meilisearch/documentation/[branch_name]/assets/images/[guide_name]/diagram.png\)
-```
-
 ## How to contribute?
 
 ### Issues
@@ -58,7 +44,39 @@ To open an issue you need a [GitHub account](https://github.com). Create one if 
 8. A member of our team should [get back to you](#how-we-review-contributions) shortly
 9. Enjoy the feeling of a job well done! 🎉
 
-### Pull requests
+### Updating the documentation
+
+#### Documentation repository and local development
+
+The Meilisearch documentation is built with [Mintlify](https://mintlify.com). You can run a local preview to see your changes before opening a pull request.
+
+**Running the docs in dev mode**
+
+From the root of the repository:
+
+1. Install dependencies (if you haven't already):
+   ```bash
+   npm install
+   ```
+
+2. Start the dev server:
+   ```bash
+   npx mintlify dev
+   ```
+
+3. Open [http://localhost:3000](http://localhost:3000) in your browser. The preview updates automatically when you edit the MDX files.
+
+**Handling images and other static assets**
+
+When contributing content to the Meilisearch docs, store screenshots, images, GIFs, and videos in the relevant directory under `/assets`.
+
+The build process does not currently support static assets with relative paths. When adding them to a document, make sure the asset URL points to the raw GitHub file address:
+
+```markdown
+\!\[Image description\]\(https://raw.githubusercontent.com/meilisearch/documentation/[branch_name]/assets/images/[guide_name]/diagram.png\)
+```
+
+#### Pull requests
 
 You can also improve the documentation by making a [pull request](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/about-pull-requests).
 
