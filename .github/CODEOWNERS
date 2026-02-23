@@ -2,8 +2,8 @@
 .code-samples.meilisearch.yaml @meilisearch/integration-team
 
 # Content maintained by DevRel
-/learn/front_end/react_instantsearch.mdx @meilisearch/devrel-team
+/learn/front_end/react_instantsearch.mdx @CaroFG
 /learn/cookbooks/vercel.mdx @CaroFG
 
 # Content maintained by Product
-/learn/resources/comparison_to_alternatives.mdx @meilisearch/product-team
+/learn/resources/comparison_to_alternatives.mdx @qdequele
