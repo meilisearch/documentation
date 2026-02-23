@@ -88,7 +88,7 @@ curl \
 
 The next step is to create a workspace. Chat completion workspaces are isolated configurations targeting different use cases. Each workspace can:
 
-- Use different embedding providers (OpenAI, Azure OpenAI, Mistral, Gemini, vLLM)
+- Use different embedding providers (OpenAI, Azure OpenAI, Mistral, vLLM)
 - Establish separate conversation contexts via baseline prompts
 - Access a specific set of indexes
 
@@ -135,20 +135,6 @@ curl \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "source": "mistral",
-    "apiKey": "PROVIDER_API_KEY",
-    "prompts": {
-      "system": "You are a helpful assistant. Answer questions based only on the provided context."
-    }
-  }'
-```
-
-```bash Gemini
-curl \
-  -X PATCH 'MEILISEARCH_URL/chats/WORKSPACE_NAME/settings' \
-  -H 'Authorization: Bearer MEILISEARCH_KEY' \
-  -H 'Content-Type: application/json' \
-  --data-binary '{
-    "source": "gemini",
     "apiKey": "PROVIDER_API_KEY",
     "prompts": {
       "system": "You are a helpful assistant. Answer questions based only on the provided context."

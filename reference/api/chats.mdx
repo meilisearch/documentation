@@ -68,7 +68,7 @@ Workspaces are groups of chat settings tailored towards specific use cases. You 
 
 **Type**: String<br />
 **Default value**: N/A<br />
-**Description**: Name of the chosen embeddings provider. Must be one of: `"openAi"`, `"azureOpenAi"`, `"mistral"`, `"gemini"`, or `"vLlm"`
+**Description**: Name of the chosen embeddings provider. Must be one of: `"openAi"`, `"azureOpenAi"`, `"mistral"`, or `"vLlm"`
 
 #### `orgId`
 
@@ -245,7 +245,7 @@ If a workspace does not exist, querying this endpoint will create it.
 
 | Name              | Type   | Description                                                                   |
 | :---------------- | :----- | :---------------------------------------------------------------------------- |
-| [`source`](#source)      | String | LLM source: `"openAi"`, `"azureOpenAi"`, `"mistral"`, `"gemini"`, or `"vLlm"` |
+| [`source`](#source)      | String | LLM source: `"openAi"`, `"azureOpenAi"`, `"mistral"`, or `"vLlm"` |
 | [`orgId`](#orgid)       | String | Organization ID for the LLM provider               |
 | [`projectId`](#projectid)  | String | Project ID for the LLM provider                    |
 | [`apiVersion`](#apiversion)   | String | API version for the LLM provider                   |
@@ -325,20 +325,6 @@ curl \
   --data-binary '{
     "source": "mistral",
     "apiKey": "your-mistral-api-key",
-    "prompts": {
-      "system": "You are a helpful customer support assistant."
-    }
-  }'
-```
-
-```bash gemini
-curl \
-  -X PATCH 'http://localhost:7700/chats/customer-support/settings' \
-  -H 'Authorization: Bearer MEILISEARCH_KEY' \
-  -H 'Content-Type: application/json' \
-  --data-binary '{
-    "source": "gemini",
-    "apiKey": "your-gemini-api-key",
     "prompts": {
       "system": "You are a helpful customer support assistant."
     }
