@@ -10,6 +10,10 @@ on:
     branches:
       - 'main'
 
+concurrency:
+  group: post-deployment
+  cancel-in-progress: false
+
 jobs:
   build-code-samples:
     name: Build code samples
@@ -33,7 +37,7 @@ jobs:
         uses: actions/setup-node@v6
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Generate code sample snippets
         run: npm run generate-code-sample-snippets-file
@@ -124,13 +128,13 @@ jobs:
         uses: actions/setup-node@v6
 
       - name: Install dependencies
-        run: npm install && npm install mintlify
+        run: npm ci
 
       - name: Generate Mintlify OpenAPI file
         run: npm run generate-mintlify-openapi-file
 
       - name: Validate OpenAPI with Mintlify CLI
-        run: npx mintlify openapi-check assets/open-api/meilisearch-openapi-mintlify.json
+        run: npx mint openapi-check assets/open-api/meilisearch-openapi-mintlify.json
 
       - name: Check for changes
         id: mintlify_changes
