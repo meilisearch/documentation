@@ -8,10 +8,7 @@ sidebarDepth: 3
 import { NoticeTag } from '/snippets/notice_tag.mdx';
 
 import CodeSamplesUpdatingGuideCheckVersionNewAuthorizationHeader from '/snippets/generated-code-samples/code_samples_updating_guide_check_version_new_authorization_header.mdx';
-import CodeSamplesUpdatingGuideCheckVersionOldAuthorizationHeader from '/snippets/generated-code-samples/code_samples_updating_guide_check_version_old_authorization_header.mdx';
 import CodeSamplesUpdatingGuideCreateDump from '/snippets/generated-code-samples/code_samples_updating_guide_create_dump.mdx';
-import CodeSamplesUpdatingGuideGetDisplayedAttributesOldAuthorizationHeader from '/snippets/generated-code-samples/code_samples_updating_guide_get_displayed_attributes_old_authorization_header.mdx';
-import CodeSamplesUpdatingGuideResetDisplayedAttributesOldAuthorizationHeader from '/snippets/generated-code-samples/code_samples_updating_guide_reset_displayed_attributes_old_authorization_header.mdx';
 
 Currently, Meilisearch databases are only compatible with the version of Meilisearch used to create them. The following guide will walk you through using a [dump](/learn/data_backup/dumps) to migrate an existing database from an older version of Meilisearch to the most recent one.
 
@@ -20,7 +17,7 @@ If you're updating your Meilisearch instance on cloud platforms like DigitalOcea
 If migrating to the latest version of Meilisearch will cause you to skip multiple versions, this may require changes to your codebase. [Refer to our version-specific update warnings for more details](#version-specific-warnings).
 
 <Tip>
-If you are running Meilisearch as a `systemctl` service using v0.22 or above, try our [migration script](https://github.com/meilisearch/meilisearch-migration).
+If you are running Meilisearch as a `systemctl` service, try our [migration script](https://github.com/meilisearch/meilisearch-migration).
 </Tip>
 
 ## Updating Meilisearch Cloud
@@ -48,10 +45,6 @@ Once the project has been successfully updated, you will receive an email confir
 ## Updating a self-hosted Meilisearch instance
 
 You may update a self-hosted instance in one of two ways: with or without a dump.
-
-<Warning>
-This guide only works for v0.15 and above. If you are using an older Meilisearch release, please [contact support](https://discord.meilisearch.com) for more information.
-</Warning>
 
 ### Dumpless upgrade <NoticeTag type="experimental" label="experimental" />
 
@@ -192,42 +185,7 @@ The response should look something like this:
 }
 ```
 
-<Tip>
-If you get the `missing_authorization_header` error, you might be using **v0.24 or below**. For each command, replace the `Authorization: Bearer` header with the `X-Meili-API-Key: API_KEY` header:
-
-<CodeSamplesUpdatingGuideCheckVersionOldAuthorizationHeader />
-</Tip>
-
-If your [`pkgVersion`](/reference/api/version/get-version) is 0.21 or above, you can jump to [creating the dump](/reference/api/backups/create-dump) (see the [create a dump endpoint](/reference/api/backups/create-dump)). If not, proceed to the next step.
-
-##### Set all fields as displayed attributes
-
-<Note>
-If your dump was created in Meilisearch v0.21 or above, [skip this step](#create-the-dump).
-</Note>
-
-When creating dumps using Meilisearch versions below v0.21, all fields must be [displayed](/learn/relevancy/displayed_searchable_attributes#displayed-fields) in order to be saved in the dump.
-
-Start by verifying that all attributes are included in the displayed attributes list:
-
-<CodeSamplesUpdatingGuideGetDisplayedAttributesOldAuthorizationHeader />
-
-If the response for all indexes is `{'displayedAttributes': '["*"]'}`, you can move on to the [next step](#create-the-dump).
-
-If the response is anything else, save the current list of displayed attributes in a text file and then reset the displayed attributes list to its default value `(["*"])`:
-
-<CodeSamplesUpdatingGuideResetDisplayedAttributesOldAuthorizationHeader />
-
-This command returns an `updateId`. Use the get update endpoint to track the status of the operation:
-
-```sh
- # replace {indexUid} with the uid of your index and {updateId} with the updateId returned by the previous request
-  curl \
-    -X GET 'http://<your-domain-name>/indexes/{indexUid}/updates/{updateId}'
-    -H 'X-Meili-API-Key: API_KEY'
-```
-
-Once the status is `processed`, you're good to go. Repeat this process for all indexes, then move on to creating your dump.
+Proceed to [creating the dump](/reference/api/backups/create-dump) (see the [create a dump endpoint](/reference/api/backups/create-dump)).
 
 ##### Create the dump
 
@@ -282,10 +240,6 @@ It should return something like this:
 </Tab>
 </Tabs>
 
-<Warning>
-Due to an error allowing malformed `_geo` fields in Meilisearch **v0.27, v0.28, and v0.29**, you might not be able to import your dump. Please ensure the `_geo` field follows the [correct format](/learn/filtering_and_sorting/geosearch#preparing-documents-for-location-based-search) before creating your dump.
-</Warning>
-
 You can then create a dump of your database using the [create a dump endpoint](/reference/api/backups/create-dump):
 
 <CodeSamplesUpdatingGuideCreateDump />
@@ -303,17 +257,6 @@ The server should return a response that looks like this:
 ```
 
 Use the `taskUid` to [track the status](/reference/api/async-task-management/get-task) of your dump. Keep in mind that the process can take some time to complete.
-
-<Note>
-For v0.27 and below, the response to your request returns a dump `uid`. Use it  with the `/dumps/:dump_uid/status` route to track the request status:
-
-```sh
-  curl \
-    -X GET 'http://<your-domain-name>/dumps/:dump_uid/status'
-    -H 'Authorization: Bearer API_KEY'
-  # -H 'X-Meili-API-Key: API_KEY' for v0.24 or below
-```
-</Note>
 
 Once the `dumpCreation` task shows `"status": "succeeded"`, you're ready to move on.
 
@@ -519,12 +462,5 @@ rm /var/opt/meilisearch/dumps/{dump_uid.dump}
 
 ## Version-specific warnings
 
-After migrating to the most recent version of Meilisearch, your code-base may require some changes. This section contains warnings for some of the most impactful version-specific changes. For full changelogs, see the [releases tab on GitHub](https://github.com/meilisearch/meilisearch/releases).
+After migrating to the most recent version of Meilisearch, your codebase may require some changes. For version-specific changes and full changelogs, see the [releases tab on GitHub](https://github.com/meilisearch/meilisearch/releases).
 
-- If you are updating from **v0.25 or below**, be aware that:
-  - The `private` and `public` keys have been deprecated and replaced by two default API keys with similar permissions: `Default Admin API Key` and `Default Search API Key`.
-  - The `updates` API has been replaced with the `tasks` API.
-- If you are **updating from v0.27 or below**, existing keys will have their `key` and `uid` fields regenerated.
-- If you are **updating from v0.30 or below to v1.0 or above on a cloud platform**, replace `--dumps-dir` with `--dump-dir` in the following files:
-  - `/etc/systemd/system/meilisearch.service`
-  - `/var/opt/meilisearch/scripts/first-login/001-setup-prod.sh`

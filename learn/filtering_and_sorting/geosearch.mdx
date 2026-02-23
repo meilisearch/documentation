@@ -15,10 +15,6 @@ import CodeSamplesGeosearchGuideSortUsage2 from '/snippets/generated-code-sample
 
 Meilisearch allows you to filter and sort results based on their geographic location. This can be useful when you only want results within a specific area or when sorting results based on their distance from a specific location.
 
-<Warning>
-Due to Meilisearch allowing malformed `_geo` fields in the following versions (v0.27, v0.28 and v0.29), please ensure the `_geo` field follows the correct format.
-</Warning>
-
 ## Preparing documents for location-based search
 
 To start filtering documents based on their geographic location, you must make sure they contain a valid `_geo` or `_geojson` field. If you also want to sort documents geogeraphically, they must have a valid `_geo` field.

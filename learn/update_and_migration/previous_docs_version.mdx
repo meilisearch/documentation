@@ -38,12 +38,12 @@ Alternatively, you may [clone the repository using an SSH URL](https://docs.gith
 
 ## Select a Meilisearch version
 
-The documentation repository contains tags for versions from `v0.8` up to the latest release. Use these tags together with `git checkout` to access a specific version.
+The documentation repository contains tags for versions from `v1.0` up to the latest release. Use these tags together with `git checkout` to access a specific version.
 
-For example, the following command retrieves the Meilisearch v0.20 documentation:
+For example, the following command retrieves the Meilisearch v1.0 documentation:
 
 ```sh
-git checkout v0.20
+git checkout v1.0
 ```
 
 Visit the repository on GitHub to [view all documentation tags](https://github.com/meilisearch/documentation/tags).
@@ -62,7 +62,7 @@ Starting with v1.2, Meilisearch's documentation content and build code live in s
 
 To access the Meilisearch documentation for versions 1.2 and later, read the `.mdx` files directly, either locally with the help of a modern text editor or remotely using GitHub's interface.
 
-### v0.17-v1.1: run a local Vuepress server
+### v1.0-v1.1: run a local Vuepress server
 
 #### Install dependencies
 
@@ -83,21 +83,6 @@ yarn dev
 Yarn will build the website from the markdown source files. Once the server is online, use your browser to navigate to `http://localhost:8080`.
 
 <Warning>
-SDK code samples are not available in local copies of the documentation for Meilisearch v0.17 - v1.1.
+SDK code samples are not available in local copies of the documentation for Meilisearch v1.0 - v1.1.
 </Warning>
 
-### v0.11-v0.16: run a simple Python server
-
-Accessing Meilisearch documentation from v0.11 to v0.16 requires launching an HTTP server on your local machine. Run the following command on your console:
-
-```sh
-python3 -m http.server 8080
-```
-
-Once the server is online, use your browser to navigate to `http://localhost:8080`.
-
-The above example uses Python to launch a local server, but alternatives such as `npx serve`  work equally well.
-
-### v0.8 to v0.10: read markdown source files
-
-The build workflow on early versions of the documentation website involves multiple deprecated tools and libraries. Browse the source markdown files, either locally with the help of a modern text editor or remotely using GitHub's interface.
