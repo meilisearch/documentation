@@ -37,13 +37,13 @@ This covers things like:
 
 **These three rules cast a wide net and return lots of results.** That's good—you want to start broad and then narrow down, not the other way around. If you start too narrow you can lose relevancy easily. 
 
-**Group 2 - Fine-tuning : Exactness, Attribute Rank, Attribute Position (included in ranking score)**
+**Group 2 - Fine-tuning : Exactness, Attribute Rank, Word Position (included in ranking score)**
 
 This covers things like:
 
 - **Exactness**: Did the document match your whole search term or just pieces of it? Whole matches rank higher, especially when an entire field matches exactly or starts with your query. Documents containing extra content beyond the search term are ranked lower.
 - **Attribute Rank**: Matches in your most important fields rank higher. You set field priority in `searchableAttributes`, with fields at the top of the list treated as the most important.
-- **Attribute Position**: Matches near the beginning of a field rank higher.
+- **Word Position**: Matches near the beginning of a field rank higher.
 
 **These are your fine-tuning filters.** They return fewer, more precise results. Use these after Group 1 rules to refine your large result set into something more precise.
 
@@ -101,7 +101,7 @@ These three rules cast a wide net and pass a large pool of relevant results thro
 
 ### Place Sort strategically
 
-We recommend putting Sort after your Group 1 rules and before your Group 2 rules (Attribute Rank, Attribute Position, Exactness). This way, Meilisearch finds relevant results first and then uses your sort field to order documents that have similar text relevance, giving you a balance of match quality and sorting.
+We recommend putting Sort after your Group 1 rules and before your Group 2 rules (Attribute Rank, Word Position, Exactness). This way, Meilisearch finds relevant results first and then uses your sort field to order documents that have similar text relevance, giving you a balance of match quality and sorting.
 
 If sorting matters more than text relevance for your use case - like an e-commerce price filter where users expect strict price ordering - move Sort higher. Just remember that Sort only activates when you include the `sort` parameter in your search query. Without it, the Sort rule has no effect.
 
