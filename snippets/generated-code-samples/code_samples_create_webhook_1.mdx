@@ -1,0 +1,11 @@
+<CodeGroup>
+
+```java Java
+HashMap<String, Object> headers = new HashMap<>();
+headers.put("authorization", "MASTER_KEY");
+headers.put("referer", "http://example.com");
+CreateUpdateWebhookRequest webhookReq1 = new CreateUpdateWebhookRequest("http://webiste.com", headers);
+
+Webhook webhook = client.createWebhook();
+```
+</CodeGroup>
