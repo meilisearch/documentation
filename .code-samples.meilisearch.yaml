@@ -1255,7 +1255,7 @@ search_parameter_guide_matching_strategy_3: |-
     }'
 date_guide_index_1: |-
   curl \
-    -x POST 'MEILISEARCH_URL/indexes/games/documents' \
+    -X POST 'MEILISEARCH_URL/indexes/games/documents' \
     -H 'Content-Type: application/json' \
     --data-binary @games.json
 date_guide_filterable_attributes_1: |-
@@ -1844,7 +1844,7 @@ ai_search_getting_started_embedders_1: |-
         "source": "openAi",
         "apiKey": "OPEN_AI_API_KEY",
         "model": "text-embedding-3-small",
-        "documentTemplate": "An object used in a kitchen named ''{{doc.name}}''"
+        "documentTemplate": "An object used in a kitchen named '\''{{doc.name}}'\''"
       }
     }'
 ai_search_getting_started_search_1: |-
