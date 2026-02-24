@@ -9,7 +9,6 @@
     "node-fetch": "^2.7.0"
   },
   "devDependencies": {
-    "@ocular-d/vale-bin": "^2.29.6",
     "markdownlint-cli": "^0.47.0",
     "mint": "^4.2.108"
   },
@@ -22,7 +21,6 @@
     "check-missing-sdk-samples": "node scripts/check-missing-sdk-samples.mjs",
     "check-code-samples-usage": "node scripts/check-code-samples-usage.mjs",
     "marklint": "markdownlint '**/*.mdx' --config .markdownlint.jsonc",
-    "marklint:fix": "markdownlint '**/*.mdx' --config .markdownlint.jsonc --fix",
-    "proselint": "vale --glob='!.github/*' ."
+    "marklint:fix": "markdownlint '**/*.mdx' --config .markdownlint.jsonc --fix"
   }
 }

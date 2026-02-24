@@ -40,3 +40,37 @@ When adding a cURL example in `/learn/` or in the **API reference** (`/reference
 3. **Import and use** the generated snippet in the MDX page (e.g. `import CodeSamplesXxx1 from '/snippets/generated-code-samples/code_samples_xxx_1.mdx'` and `<CodeSamplesXxx1 />`).
 
 This keeps examples centralized, testable, and consistent across the docs.
+
+## Prose and writing-style rules
+
+When writing or editing documentation text, apply the following. They replace the former Vale-based checks.
+
+### Spelling and terminology
+
+- **American English**: use American spelling (e.g. *analyze*, *behavior*, *color*, *center*, *license*, *canceled*, *cancelation*, *program*, *labeling*, *initialed*, *favorite*, *dependent*). Avoid British variants (*analyse*, *behaviour*, *colour*, *centre*, *licence*, *cancelled*, *cancellation*, *programme*, *labelling*, *initialled*, *favourite*, *dependant*).
+- **Indexing**: use "indexing", not "indexation".
+- **Product name**: always "Meilisearch" (not MeiliSearch, MieliSearch, meiliSearch).
+- **Technical and product names**: spell as in official sources (e.g. Meilisearch, Algolia, Vue, Nginx, OpenAPI, JSON, SDK, CLI, GitHub, Docker, Kubernetes, etc.). When in doubt, keep the form used in the rest of the docs.
+
+### Grammar and punctuation
+
+- **Oxford comma**: use the serial comma in lists (e.g. "A, B, and C").
+- **Acronyms and initialisms**: no periods (e.g. "HTML", "API", not "H.T.M.L").
+- **Semicolons**: use sparingly; prefer splitting into two sentences or rewording for clarity.
+- **Spacing**: one space between words and one space after sentence-ending punctuation (e.g. period, question mark) before the next sentence. No double spaces.
+
+### Style and readability
+
+- **First person**: avoid "I", "me", "my", "mine" in general docs; first person is acceptable in FAQs or similar.
+- **Headings**: use sentence-style capitalization (first word and proper nouns only). Exceptions: product names (Meilisearch, GitHub, etc.), acronyms (API, CLI, SDK, JSON), and patterns like "Step 1: Do this" or "1. Do this".
+- **Latin abbreviations**: prefer "for example" and "that is" over "e.g." and "i.e." so the text stays accessible.
+- **Sentence length**: prefer shorter sentences; if a sentence runs over ~40 words, consider splitting or simplifying.
+- **Repetition**: avoid repeated words in a row (e.g. "This is is wrong").
+
+### Wording
+
+- **URL/HTML**: write "a URL", "an HTML" (not "an URL", "a HTML"). Prefer "URL of" over "URL for" where it reads naturally.
+
+### Quality
+
+- **Merge conflicts**: do not leave merge conflict markers (`<<<<<<<`, `=======`, `>>>>>>>`) in documentation content.
