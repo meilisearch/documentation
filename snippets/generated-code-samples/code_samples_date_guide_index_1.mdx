@@ -2,7 +2,7 @@
 
 ```bash cURL
 curl \
-  -x POST 'MEILISEARCH_URL/indexes/games/documents' \
+  -X POST 'MEILISEARCH_URL/indexes/games/documents' \
   -H 'Content-Type: application/json' \
   --data-binary @games.json
 ```
