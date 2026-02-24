@@ -5319,7 +5319,7 @@
           },
           {
             "lang": "Java",
-            "source": "client.index(\"movies\").resetDisplayedAttributesSettings();\nget_typo_tolerance_1:\nclient.index(\"books\").getTypoToleranceSettings();"
+            "source": "client.index(\"movies\").resetDisplayedAttributesSettings();"
           },
           {
             "lang": "Ruby",
@@ -13728,7 +13728,7 @@
           },
           {
             "lang": "Java",
-            "source": "MultiSearchRequest multiSearchRequest = new MultiSearchRequest();\nmultiIndexSearch.addQuery(new IndexSearchRequest(\"movies\").setQuery(\"pooh\").setLimit(5));\nmultiIndexSearch.addQuery(new IndexSearchRequest(\"movies\").setQuery(\"nemo\").setLimit(5));\nmultiIndexSearch.addQuery(new IndexSearchRequest(\"movie_ratings\").setQuery(\"us\"));\n\nclient.multiSearch(multiSearchRequest);\nget_similar_post_1:\nSimilarDocumentRequest query = new SimilarDocumentRequest()\n  .setId(\"143\")\n  .setEmbedder(\"manual\");\nclient.index(\"movies\").searchSimilarDocuments(query)"
+            "source": "MultiSearchRequest multiSearchRequest = new MultiSearchRequest();\nmultiIndexSearch.addQuery(new IndexSearchRequest(\"movies\").setQuery(\"pooh\").setLimit(5));\nmultiIndexSearch.addQuery(new IndexSearchRequest(\"movies\").setQuery(\"nemo\").setLimit(5));\nmultiIndexSearch.addQuery(new IndexSearchRequest(\"movie_ratings\").setQuery(\"us\"));\n\nclient.multiSearch(multiSearchRequest);\nget_similar_post_1: SimilarDocumentRequest query = new SimilarDocumentRequest()\n.setId(\"143\")\n.setEmbedder(\"manual\");\nclient.index(\"movies\").searchSimilarDocuments(query)"
           },
           {
             "lang": "Ruby",
