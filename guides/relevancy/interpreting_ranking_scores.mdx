@@ -93,7 +93,7 @@ We’ve set up our ranking rules to have sort after our Group 1 wide net rules.
 ["words", "typo", "proximity", "sort", "attributeRank", "wordPosition", "exactness"]
 ```
 
-With this set up Meilisearch evaluates the text relevance rules first, *then* uses Sort.
+With this set up Meilisearch evaluates the text relevance rules first, _then_ uses Sort.
 
 ### 🥇 Result #1 — Easy Chicken Curry
 
@@ -280,6 +280,7 @@ Notice something important: **Doc 1 still has a higher `_rankingScore` (0.998 vs
 ---
 
 ## Side by side
+
 In both scenarios the user searches for `"chicken curry"` and sorts by `prep_time_minutes:asc` (quickest first). The only change is the ranking rule placement.
 
 |  | Scenario A (Sort is placed after Group 1 ranking rules) | Scenario B (Sort is placed first) |
