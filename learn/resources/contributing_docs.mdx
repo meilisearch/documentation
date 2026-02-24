@@ -18,94 +18,31 @@ Our documentation aims to be:
 
 ## How to contribute?
 
-### Issues
+Both options below require a [GitHub account](https://github.com/signup). Create one if you don't have it yet.
 
-The maintainers of Meilisearch's documentation use [GitHub Issues](https://github.com/meilisearch/documentation/issues/new) to track tasks. Helpful issues include:
+The two most common ways to contribute are:
 
-- Notify the docs team about content that is inaccurate, outdated, or confusing
-- Requests for new features such as versioning or an embedded console
-- Requests for new content such as new guides and tutorials
+1. **Opening an [issue](https://github.com/meilisearch/documentation/issues/new)** — to report a problem, request an improvement, or suggest new content
+2. **Updating the documentation content by opening a Pull Request (PR)** — either by creating the PR from your local text editor, or directly from GitHub. Before opening a PR, check our [open issues](https://github.com/meilisearch/documentation/issues) to see if one already exists for your change. In most cases, it's a good idea to [open an issue](https://github.com/meilisearch/documentation/issues/new) first so you can coordinate with the maintainers.
 
-Before opening an issue or PR, please look through our [open issues](https://github.com/meilisearch/documentation/issues) to see if one already exists for your problem. If yes, please leave a comment letting us know that you're waiting for a fix or willing to work on it yourself. If not, please open a new issue describing the problem and informing us whether you want to work on it or not.
+### Creating a PR from your local editor
 
-We love issues at Meilisearch, because they help us do our jobs better. Nine times out of ten, the most useful contribution is a simple GitHub issue that points out a problem and proposes a solution.
+To edit the docs in your preferred editor and open a PR, follow the detailed instructions in our [CONTRIBUTING.md](https://github.com/meilisearch/documentation/blob/main/CONTRIBUTING.md).
 
-#### Creating your first issue
+### Editing content directly on GitHub
 
-To open an issue you need a [GitHub account](https://github.com). Create one if necessary, then follow these steps:
+The simplest way to update the docs is to use the "Edit this page" link at the bottom left of every page. Follow these steps:
 
-1. Log into your account
-2. Go to the [Meilisearch Documentation repository](https://github.com/meilisearch/documentation)
-3. Click on "Issues"
-4. Use the search bar to check if somebody else has reported the same problem. If they have, upvote with a 👍 and **don't create a new issue**!
-5. If no one reported the problem you experienced, click on "New issue"
-6. Write a short and descriptive title, then add a longer summary explaining the issue. If you're reporting a bug, make sure to include steps to reproduce the error, as well as your OS and browser version
-7. Click on "Submit new issue"
-8. A member of our team should [get back to you](#how-we-review-contributions) shortly
-9. Enjoy the feeling of a job well done! 🎉
-
-### Updating the documentation
-
-#### Documentation repository and local development
-
-The Meilisearch documentation is built with [Mintlify](https://mintlify.com). You can run a local preview to see your changes before opening a pull request.
-
-**Running the docs in dev mode**
-
-From the root of the repository:
-
-1. Install dependencies (if you haven't already):
-   ```bash
-   npm install
-   ```
-
-2. Start the dev server:
-   ```bash
-   npx mintlify dev
-   ```
-
-3. Open [http://localhost:3000](http://localhost:3000) in your browser. The preview updates automatically when you edit the MDX files.
-
-**Handling images and other static assets**
-
-When contributing content to the Meilisearch docs, store screenshots, images, GIFs, and videos in the relevant directory under `/assets`.
-
-The build process does not currently support static assets with relative paths. When adding them to a document, make sure the asset URL points to the raw GitHub file address:
-
-```markdown
-\!\[Image description\]\(https://raw.githubusercontent.com/meilisearch/documentation/[branch_name]/assets/images/[guide_name]/diagram.png\)
-```
-
-#### Pull requests
-
-You can also improve the documentation by making a [pull request](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/about-pull-requests).
-
-Pull requests ("PRs" for short) are requests to integrate changes into a GitHub repository. The simplest way to create a PR on our documentation is using the "Edit this page" link at the bottom left of every page.
-
-Pull requests are particularly good when you want to:
-
-- **Solve an [existing issue](https://github.com/meilisearch/documentation/issues)**
-- Fix a small error, such as a typo or broken link
-- Create or improve content about something you know very well—for example, a guide on how to integrate Meilisearch with a tool you have mastered
-
-In most cases, it is a good idea to [create an issue](#creating-your-first-issue) before making a PR. This allows you to coordinate with the documentation maintainers and find the best way of addressing the problem you want to solve.
-
-#### Creating your first PR
-
-To create a PR you need a [GitHub account](https://github.com). Create one if necessary, then follow these steps:
-
-1. Go to the documentation page you'd like to edit, scroll down, and click "Edit this page" at the bottom left of the screen. This will take you to GitHub
-2. If you're not already signed in, do so now. You may be prompted to create a [fork](https://docs.github.com/en/github/getting-started-with-github/fork-a-repo)
+1. Go to the documentation page you'd like to edit, scroll down, and click **"Edit this page"** at the bottom left of the screen. This will take you to GitHub
+2. You may be prompted to [fork the repository](https://docs.github.com/en/github/getting-started-with-github/fork-a-repo)
 3. Use GitHub's text editor to update the page
-4. Scroll down until you reach a box named "Propose changes"
-5. Fill in the first field to give your PR a short and descriptive title—for example, "Fix typo in search API reference"
-6. Use the second field to add a more detailed explanation of the changes you're proposing
-7. Click the "Propose changes" button to continue. You should see a page that says "Comparing changes"
-8. Make sure the base repository is set to `meilisearch/documentation` and the base branch is set to `main`. You can ignore the remaining fields
-9. This screen will also show you a "diff", which allows you to see the changes you made compared to what's currently published on the documentation website
-10. Click "Create pull request"
-11. **Congrats, you made your first PR!** A documentation maintainer will review your pull request shortly. They may ask for changes, so keep an eye on your GitHub notifications
-12. If everything looks good, your work will be merged into the `main` branch and become part of the official documentation site. You are now a Meilisearch Contributor! 🚀
+4. Scroll down until you reach the box named **"Propose changes"**
+5. Fill in the first field with a short, descriptive title (e.g. "Fix typo in search API reference")
+6. Use the second field to add a brief explanation of your changes
+7. Click **"Propose changes"**. You should see a "Comparing changes" page
+8. Check that the base repository is `meilisearch/documentation` and the base branch is `main`
+9. Click **"Create pull request"**
+10. A documentation maintainer will review your PR shortly. If everything looks good, your changes will be merged and published. You're now a Meilisearch contributor! 🚀
 
 ## How we review contributions
 
