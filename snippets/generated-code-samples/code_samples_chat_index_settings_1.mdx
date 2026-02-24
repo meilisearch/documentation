@@ -1,0 +1,16 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X PATCH 'MEILISEARCH_URL/indexes/INDEX_NAME/settings' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "chat": {
+      "description": "A comprehensive database of TYPE_OF_DOCUMENT containing titles, descriptions, genres, and release dates to help users searching for TYPE_OF_DOCUMENT",
+      "documentTemplate": "{% for field in fields %}{% if field.is_searchable and field.value != nil %}{{ field.name }}: {{ field.value }}\n{% endif %}{% endfor %}",
+      "documentTemplateMaxBytes": 400
+    }
+  }'
+```
+</CodeGroup>

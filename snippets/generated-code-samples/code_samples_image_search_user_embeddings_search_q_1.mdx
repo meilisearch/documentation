@@ -1,0 +1,13 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/products/search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "vector": VECTORIZED_QUERY,
+    "hybrid": { "embedder": "EMBEDDER_NAME" },
+    "q": "QUERY"
+  }'
+```
+</CodeGroup>

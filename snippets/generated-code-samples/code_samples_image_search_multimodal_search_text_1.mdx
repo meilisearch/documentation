@@ -1,0 +1,14 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "q": "a mountain sunset with snow",
+    "hybrid": {
+      "embedder": "MULTIMODAL_EMBEDDER_NAME"
+    }
+  }'
+```
+</CodeGroup>

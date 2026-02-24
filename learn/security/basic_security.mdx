@@ -5,7 +5,7 @@ description: This tutorial will show you how to secure your Meilisearch project.
 ---
 
 import CodeSamplesBasicSecurityTutorialAdmin1 from '/snippets/generated-code-samples/code_samples_basic_security_tutorial_admin_1.mdx';
-import CodeSamplesBasicSecurityTutorialListing1 from '/snippets/generated-code-samples/code_samples_basic_security_tutorial_listing_1.mdx';
+import CodeSamplesAuthorizationHeader1 from '/snippets/generated-code-samples/code_samples_authorization_header_1.mdx';
 import CodeSamplesBasicSecurityTutorialSearch1 from '/snippets/generated-code-samples/code_samples_basic_security_tutorial_search_1.mdx';
 
 This tutorial will show you how to secure your Meilisearch project. You will see how to manage your master key and how to safely send requests to the Meilisearch API using an API key.
@@ -97,7 +97,7 @@ Find your API keys by visiting your project settings, then clicking "API Keys" o
 
 Use your master key to query the `/keys` endpoint to view all API keys in your instance:
 
-<CodeSamplesBasicSecurityTutorialListing1 />
+<CodeSamplesAuthorizationHeader1 />
 
 <Warning>
 Only use the master key to manage API keys. Never use the master key to perform searches or other common operations.

@@ -1,0 +1,34 @@
+<CodeGroup>
+
+```bash cURL
+curl -N \
+  -X POST 'MEILISEARCH_URL/chats/WORKSPACE_NAME/chat/completions' \
+  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "model": "PROVIDER_MODEL_UID",
+    "messages": [
+      {
+        "role": "user",
+        "content": "USER_PROMPT"
+      }
+    ],
+    "tools": [
+      {
+        "type": "function",
+        "function": {
+          "name": "_meiliSearchProgress",
+          "description": "Reports real-time search progress to the user"
+        }
+      },
+      {
+        "type": "function",
+        "function": {
+          "name": "_meiliSearchSources",
+          "description": "Provides sources and references for the information"
+        }
+      }
+    ]
+  }'
+```
+</CodeGroup>

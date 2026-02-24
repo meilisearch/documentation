@@ -1,0 +1,26 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X PATCH 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/embedders' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "EMBEDDER_NAME": {
+      "source": "rest",
+      "url": "PROVIDER_URL",
+      "request": {
+        "model": "MODEL_NAME",
+        "input": ["{{text}}", "{{..}}"]
+      },
+      "response": {
+        "data": [
+          { "embedding": "{{embedding}}" },
+          "{{..}}"
+        ]
+      },
+      "apiKey": "PROVIDER_API_KEY",
+      "documentTemplate": "SHORT_AND_RELEVANT_DOCUMENT_TEMPLATE"
+    }
+  }'
+```
+</CodeGroup>

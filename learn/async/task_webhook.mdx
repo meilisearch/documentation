@@ -5,6 +5,8 @@ description: Learn how to use webhooks to react to changes in your Meilisearch d
 sidebarDepth: 3
 ---
 
+import CodeSamplesAddOrReplaceDocuments1 from '/snippets/generated-code-samples/code_samples_add_or_replace_documents_1.mdx';
+
 This guide teaches you how to configure a single webhook via instance options to notify a URL when Meilisearch completes a [task](/learn/async/asynchronous_operations).
 
 <Tip>
@@ -37,31 +39,20 @@ meilisearch --task-webhook-url http://localhost:8000 --task-webhook-authorizatio
 
 ## Test the webhook
 
-A common asynchronous operation is adding or updating documents to an index. The following example adds a test document to our `books` index:
+A common asynchronous operation is adding or updating documents to an index. The following example adds a test document to our `movies` index:
 
-```sh
-curl \
-  -X POST 'MEILISEARCH_URL/indexes/books/documents' \
-  -H 'Content-Type: application/json' \
-  --data-binary '[
-    {
-      "id": 1,
-      "title": "Nuestra parte de noche",
-      "author": "Mariana Enríquez"
-    }
-  ]'
-```
+<CodeSamplesAddOrReplaceDocuments1 />
 
 When Meilisearch finishes indexing this document, it will send a `POST` request the URL you configured with `--task-webhook-url`. The request body will be one or more task objects in [ndjson](https://github.com/ndjson/ndjson-spec) format:
 
 ```ndjson
-{"uid":4,"indexUid":"books","status":"succeeded","type":"documentAdditionOrUpdate","canceledBy":null,"details.receivedDocuments":1,"details.indexedDocuments":1,"duration":"PT0.001192S","enqueuedAt":"2022-08-04T12:28:15.159167Z","startedAt":"2022-08-04T12:28:15.161996Z","finishedAt":"2022-08-04T12:28:15.163188Z"}
+{"uid":4,"indexUid":"movies","status":"succeeded","type":"documentAdditionOrUpdate","canceledBy":null,"details.receivedDocuments":1,"details.indexedDocuments":1,"duration":"PT0.001192S","enqueuedAt":"2022-08-04T12:28:15.159167Z","startedAt":"2022-08-04T12:28:15.161996Z","finishedAt":"2022-08-04T12:28:15.163188Z"}
 ```
 
 If Meilisearch has batched multiple tasks, it will only trigger the webhook once all tasks in a batch are finished. In this case, the response payload will include all tasks, each separated by a new line:
 
 ```ndjson
-{"uid":4,"indexUid":"books","status":"succeeded","type":"documentAdditionOrUpdate","canceledBy":null,"details.receivedDocuments":1,"details.indexedDocuments":1,"duration":"PT0.001192S","enqueuedAt":"2022-08-04T12:28:15.159167Z","startedAt":"2022-08-04T12:28:15.161996Z","finishedAt":"2022-08-04T12:28:15.163188Z"}
-{"uid":5,"indexUid":"books","status":"succeeded","type":"documentAdditionOrUpdate","canceledBy":null,"details.receivedDocuments":1,"details.indexedDocuments":1,"duration":"PT0.001192S","enqueuedAt":"2022-08-04T12:28:15.159167Z","startedAt":"2022-08-04T12:28:15.161996Z","finishedAt":"2022-08-04T12:28:15.163188Z"}
-{"uid":6,"indexUid":"books","status":"succeeded","type":"documentAdditionOrUpdate","canceledBy":null,"details.receivedDocuments":1,"details.indexedDocuments":1,"duration":"PT0.001192S","enqueuedAt":"2022-08-04T12:28:15.159167Z","startedAt":"2022-08-04T12:28:15.161996Z","finishedAt":"2022-08-04T12:28:15.163188Z"}
+{"uid":4,"indexUid":"movies","status":"succeeded","type":"documentAdditionOrUpdate","canceledBy":null,"details.receivedDocuments":1,"details.indexedDocuments":1,"duration":"PT0.001192S","enqueuedAt":"2022-08-04T12:28:15.159167Z","startedAt":"2022-08-04T12:28:15.161996Z","finishedAt":"2022-08-04T12:28:15.163188Z"}
+{"uid":5,"indexUid":"movies","status":"succeeded","type":"documentAdditionOrUpdate","canceledBy":null,"details.receivedDocuments":1,"details.indexedDocuments":1,"duration":"PT0.001192S","enqueuedAt":"2022-08-04T12:28:15.159167Z","startedAt":"2022-08-04T12:28:15.161996Z","finishedAt":"2022-08-04T12:28:15.163188Z"}
+{"uid":6,"indexUid":"movies","status":"succeeded","type":"documentAdditionOrUpdate","canceledBy":null,"details.receivedDocuments":1,"details.indexedDocuments":1,"duration":"PT0.001192S","enqueuedAt":"2022-08-04T12:28:15.159167Z","startedAt":"2022-08-04T12:28:15.161996Z","finishedAt":"2022-08-04T12:28:15.163188Z"}
 ```

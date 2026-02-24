@@ -1,0 +1,26 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/multi-search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "federation": {},
+    "queries": [
+      {
+        "indexUid": "chats",
+        "q": "rotondo"
+      },
+      {
+        "indexUid": "profiles",
+        "q": "rotondo",
+        "federationOptions": { "weight": 1.2 }
+      },
+      {
+        "indexUid": "tickets",
+        "q": "rotondo"
+      }
+    ]
+  }'
+```
+</CodeGroup>

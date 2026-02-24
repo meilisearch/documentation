@@ -1,0 +1,12 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/documents' \
+  -H 'Content-Type: application/json' \
+  --data-binary '[
+    { "id": 0, "_vectors": { "EMBEDDER_NAME": [0, 0.8, -0.2]}, "text": "frying pan" },
+    { "id": 1, "_vectors": { "EMBEDDER_NAME": [1, -0.2, 0]}, "text": "baking dish" }
+  ]'
+```
+</CodeGroup>

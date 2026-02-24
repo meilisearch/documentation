@@ -1,0 +1,16 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/keys' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "name": "Chat API Key",
+    "description": "API key for chat completions",
+    "actions": ["search", "chatCompletions"],
+    "indexes": ["*"],
+    "expiresAt": null
+  }'
+```
+</CodeGroup>
