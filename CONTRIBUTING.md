@@ -59,8 +59,6 @@ npx mint broken-links
 
 | Script | What it does |
 |--------|----------------|
-| `npm run marklint` | Lints MDX files with markdownlint (style and structure). |
-| `npm run marklint:fix` | Same as above, with automatic fixes where possible. |
 | `npm run check-code-samples-usage` | Ensures every entry in `.code-samples.meilisearch.yaml` is either mapped to an OpenAPI route or used in an MDX snippet. Exits with error if not. |
 | `npm run check-openapi-code-samples` | Checks the Mintlify OpenAPI file for missing cURL code samples per route. Use with `curl-check` or `info` (see script header). |
 | `npm run check-unused-sdk-samples` | Fetches each SDK’s `.code-samples.meilisearch.yaml` and reports samples that are not used in this repo (candidates for removal in SDKs). |
