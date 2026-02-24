@@ -1222,20 +1222,6 @@ updating_guide_check_version_new_authorization_header: |-
   curl \
     -X GET 'http://<your-domain-name>/version' \
     -H 'Authorization: Bearer API_KEY'
-updating_guide_check_version_old_authorization_header: |-
-  curl \
-    -X GET 'http://<your-domain-name>/version' \
-    -H 'X-Meili-API-Key: API_KEY'
-updating_guide_get_displayed_attributes_old_authorization_header: |-
-  # whenever you see {index_uid}, replace it with your index's unique id
-  curl \
-    -X GET 'http://<your-domain-name>/indexes/{index_uid}/settings/displayed-attributes' \
-    -H 'X-Meili-API-Key: API_KEY'
-updating_guide_reset_displayed_attributes_old_authorization_header: |-
-  curl \
-    -X DELETE 'http://<your-domain-name>/indexes/{index_uid}/settings/displayed-attributes' \
-    -H 'X-Meili-API-Key: API_KEY'
-
 updating_guide_create_dump: |-
   curl \
     -X POST 'http://<your-domain-name>/dumps' \

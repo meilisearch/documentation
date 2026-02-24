@@ -26,10 +26,10 @@ Before continuing, make sure you have both Meilisearch and Node.js installed and
 <Note>
 This guide was tested with the following package versions:
 
-- [`node.js`](https://nodejs.org/en/): `16.16`
+- [`node.js`](https://nodejs.org/en/): `16.16` or later
 - [`algoliasearch`](https://www.npmjs.com/package/algoliasearch): `4.13`
-- [`meilisearch-js`](https://www.npmjs.com/package/meilisearch): `0.27.0`
-- [`meilisearch`](https://github.com/meilisearch/meilisearch): `0.28`
+- [`meilisearch-js`](https://www.npmjs.com/package/meilisearch): compatible with Meilisearch v1.0 and above
+- [`meilisearch`](https://github.com/meilisearch/meilisearch): v1.0 or later
 </Note>
 
 ## Export your Algolia data
@@ -59,7 +59,7 @@ This file will contain our migration script.
 To get started, you'll need two different packages. The first is `algoliasearch`, the JavaScript client for the Algolia API, and the second is `meilisearch`, the JavaScript client for the Meilisearch API.
 
 ```bash
-npm install -s algoliasearch@4.13 meilisearch@0.25.1
+npm install -s algoliasearch@4.13 meilisearch
 ```
 
 ### Create Algolia client

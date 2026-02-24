@@ -281,8 +281,7 @@
                 "pages": [
                   "learn/update_and_migration/migrating_cloud",
                   "learn/update_and_migration/updating",
-                  "learn/update_and_migration/algolia_migration",
-                  "learn/update_and_migration/previous_docs_version"
+                  "learn/update_and_migration/algolia_migration"
                 ]
               },
               {
