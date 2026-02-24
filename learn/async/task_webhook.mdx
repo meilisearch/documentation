@@ -34,7 +34,9 @@ You may also define the webhook URL with environment variables or in the configu
 Depending on your setup, you may need to provide an authorization header. Provide it to `task-webhook-authorization-header`:
 
 ```sh
-meilisearch --task-webhook-url http://localhost:8000 --task-webhook-authorization-header Bearer aSampleMasterKey
+meilisearch \
+  --task-webhook-url http://localhost:8000 \
+  --task-webhook-authorization-header Bearer aSampleMasterKey
 ```
 
 ## Test the webhook
