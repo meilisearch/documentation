@@ -20,7 +20,8 @@ This repository is the documentation for the **open-source search engine API [Me
 
 Hey, thank you so much for wanting to contribute! If you'd like to help improve this documentation, we'd love to have you!
 
-For more information, see the [contributing overview](/learn/resources/contributing_docs.mdx).
+- **Ways to contribute:** see the [contributing overview](https://www.meilisearch.com/docs/learn/resources/contributing-docs) on the docs site.
+- **Local setup, tests, code samples, and OpenAPI:** see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Contact
 
