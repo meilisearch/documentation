@@ -2,7 +2,7 @@
 
 ```bash cURL
 curl \
-  -X POST 'MEILISEARCH_URL/indexes/products/search' \
+  -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "vector": VECTORIZED_QUERY,
