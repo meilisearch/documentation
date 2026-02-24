@@ -6,6 +6,7 @@ This guide covers how to set up your environment and run the docs locally, run t
 
 - [Technical requirements](#technical-requirements)
 - [Install](#install)
+- [Docs writing](#docs-writing)
 - [Run the docs locally](#run-the-docs-locally)
 - [Tests](#tests)
 - [Code samples](#code-samples)
@@ -24,6 +25,13 @@ From the root of the repository:
 ```bash
 npm install
 ```
+
+## Docs writing
+
+Before writing or editing documentation content:
+
+- **If you use a generative AI tool:** an [AGENTS.md](AGENTS.md) file exists in this repo with instructions for agents. Point your AI tool to it so that it follows our documentation philosophy, quality checklist, and writing-style rules.
+- **Otherwise:** read [AGENTS.md](AGENTS.md) carefully. In particular, use the **documentation philosophy** and **quality checklist** when writing or reviewing docs, and follow the **prose and writing-style rules** (spelling, terminology, grammar, style, and wording).
 
 ## Run the docs locally
 
