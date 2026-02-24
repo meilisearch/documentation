@@ -1,0 +1,71 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X PATCH 'MEILISEARCH_URL/indexes/INDEX_NAME/settings' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "embedders": {
+      "MULTIMODAL_EMBEDDER_NAME": {
+        "source": "rest",
+        "url": "https://api.voyageai.com/v1/multimodal-embeddings",
+        "apiKey": "VOYAGE_API_KEY",
+        "indexingFragments": {
+          "TEXTUAL_FRAGMENT_NAME": {
+            "value": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "A document named {{doc.title}} described as {{doc.description}}"
+                }
+              ]
+            }
+          },
+          "IMAGE_FRAGMENT_NAME": {
+            "value": {
+              "content": [
+                {
+                  "type": "image_url",
+                  "image_url": "{{doc.poster_url}}"
+                }
+              ]
+            }
+          }
+        },
+        "searchFragments": {
+          "USER_TEXT_FRAGMENT": {
+            "value": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "{{q}}"
+                }
+              ]
+            }
+          },
+          "USER_SUBMITTED_IMAGE_FRAGMENT": {
+            "value": {
+              "content": [
+                {
+                  "type": "image_base64",
+                  "image_base64": "data:{{media.image.mime}};base64,{{media.image.data}}"
+                }
+              ]
+            }
+          }
+        },
+        "request": {
+          "inputs": ["{{fragment}}", "{{..}}"],
+          "model": "voyage-multimodal-3"
+        },
+        "response": {
+          "data": [
+            { "embedding": "{{embedding}}" },
+            "{{..}}"
+          ]
+        }
+      }
+    }
+  }'
+```
+</CodeGroup>

@@ -544,6 +544,15 @@ update_localized_attribute_settings_1: |-
     --data-binary '[
       {"locales": ["jpn"], "attributePatterns": ["*_ja"]}
     ]'
+multilingual_dataset_guide_update_localized_attributes_1: |-
+  curl \
+    -X PUT 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/localized-attributes' \
+    -H 'Content-Type: application/json' \
+    --data-binary '[
+      { "attributePatterns": ["*_en"], "locales": ["eng"] },
+      { "attributePatterns": ["*_de"], "locales": ["deu"] },
+      { "attributePatterns": ["*_fr"], "locales": ["fra"] }
+    ]'
 # delete_indexes_indexUid_settings_localized_attributes
 reset_localized_attribute_settings_1: |-
   curl \
@@ -1041,7 +1050,6 @@ phrase_search_1: |-
     -H 'Content-Type: application/json' \
   --data-binary '{ "q": "\"african american\" horror" }'
 authorization_header_1: |-
-  # replace the MASTER_KEY placeholder with your master key
   curl \
     -X GET 'MEILISEARCH_URL/keys' \
     -H 'Authorization: Bearer MASTER_KEY'
@@ -1138,9 +1146,6 @@ geosearch_guide_sort_usage_2: |-
         "rating:desc"
       ]
     }'
-basic_security_tutorial_listing_1: |-
-  curl -X GET 'MEILISEARCH_URL/keys' \
-  -H 'Authorization: Bearer MASTER_KEY'
 basic_security_tutorial_admin_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes' \
@@ -1259,8 +1264,8 @@ search_parameter_guide_matching_strategy_3: |-
     }'
 date_guide_index_1: |-
   curl \
-    -x POST 'MEILISEARCH_URL/indexes/games/documents' \
-    -h 'content-type: application/json' \
+    -X POST 'MEILISEARCH_URL/indexes/games/documents' \
+    -H 'Content-Type: application/json' \
     --data-binary @games.json
 date_guide_filterable_attributes_1: |-
   curl \
@@ -1510,7 +1515,7 @@ search_parameter_reference_locales_1: |-
   }'
 search_parameter_guide_hybrid_1: |-
   curl -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
-    -H 'content-type: application/json' \
+    -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "kitchen utensils",
       "hybrid": {
@@ -1520,7 +1525,7 @@ search_parameter_guide_hybrid_1: |-
     }'
 search_parameter_guide_vector_1: |-
   curl -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
-    -H 'content-type: application/json' \
+    -H 'Content-Type: application/json' \
     --data-binary '{
       "vector": [0, 1, 2],
       "hybrid": {
@@ -1529,7 +1534,7 @@ search_parameter_guide_vector_1: |-
     }'
 search_parameter_reference_retrieve_vectors_1: |-
   curl -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
-    -H 'content-type: application/json' \
+    -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "kitchen utensils",
       "retrieveVectors": true,
@@ -1570,3 +1575,326 @@ list_index_fields_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/fields' \
     -H 'Content-Type: application/json'
+update_experimental_features_chat_1: |-
+  curl \
+    -X PATCH 'MEILISEARCH_URL/experimental-features/' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "chatCompletions": true
+    }'
+update_experimental_features_contains_1: |-
+  curl \
+    -X PATCH 'MEILISEARCH_URL/experimental-features/' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "containsFilter": true
+    }'
+update_experimental_features_multimodal_1: |-
+  curl \
+    -X PATCH 'MEILISEARCH_URL/experimental-features/' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "multimodal": true
+    }'
+ai_search_user_embeddings_documents_1: |-
+  curl \
+    -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/documents' \
+    -H 'Content-Type: application/json' \
+    --data-binary '[
+      { "id": 0, "_vectors": { "EMBEDDER_NAME": [0, 0.8, -0.2]}, "text": "frying pan" },
+      { "id": 1, "_vectors": { "EMBEDDER_NAME": [1, -0.2, 0]}, "text": "baking dish" }
+    ]'
+ai_search_user_embeddings_search_vector_filter_1: |-
+  curl \
+    -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "vector": [0, 1, 2],
+      "filter": "price < 10",
+      "sort": ["price:asc"],
+      "hybrid": {
+        "embedder": "EMBEDDER_NAME"
+      }
+    }'
+user_provided_embeddings_settings_1: |-
+  curl \
+    -X PATCH 'MEILISEARCH_URL/indexes/INDEX_NAME/settings' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "embedders": {
+        "EMBEDDER_NAME": {
+          "source": "userProvided",
+          "dimensions": MODEL_DIMENSIONS
+        }
+      }
+    }'
+image_search_user_embeddings_search_1: |-
+  curl \
+    -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "vector": VECTORIZED_QUERY,
+      "hybrid": { "embedder": "EMBEDDER_NAME" }
+    }'
+image_search_user_embeddings_search_q_1: |-
+  curl \
+    -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "vector": VECTORIZED_QUERY,
+      "hybrid": { "embedder": "EMBEDDER_NAME" },
+      "q": "QUERY"
+    }'
+federated_search_multi_search_1: |-
+  curl \
+    -X POST 'MEILISEARCH_URL/multi-search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "federation": {},
+      "queries": [
+        {
+          "indexUid": "chats",
+          "q": "natasha"
+        },
+        {
+          "indexUid": "profiles",
+          "q": "natasha"
+        },
+        {
+          "indexUid": "tickets",
+          "q": "natasha"
+        }
+      ]
+    }'
+federated_search_multi_search_weight_1: |-
+  curl \
+    -X POST 'MEILISEARCH_URL/multi-search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "federation": {},
+      "queries": [
+        {
+          "indexUid": "chats",
+          "q": "rotondo"
+        },
+        {
+          "indexUid": "profiles",
+          "q": "rotondo",
+          "federationOptions": { "weight": 1.2 }
+        },
+        {
+          "indexUid": "tickets",
+          "q": "rotondo"
+        }
+      ]
+    }'
+chat_create_key_1: |-
+  curl \
+    -X POST 'MEILISEARCH_URL/keys' \
+    -H 'Authorization: Bearer MEILISEARCH_KEY' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "name": "Chat API Key",
+      "description": "API key for chat completions",
+      "actions": ["search", "chatCompletions"],
+      "indexes": ["*"],
+      "expiresAt": null
+    }'
+chat_index_settings_1: |-
+  curl \
+    -X PATCH 'MEILISEARCH_URL/indexes/INDEX_NAME/settings' \
+    -H 'Authorization: Bearer MEILISEARCH_KEY' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "chat": {
+        "description": "A comprehensive database of TYPE_OF_DOCUMENT containing titles, descriptions, genres, and release dates to help users searching for TYPE_OF_DOCUMENT",
+        "documentTemplate": "{% for field in fields %}{% if field.is_searchable and field.value != nil %}{{ field.name }}: {{ field.value }}\n{% endif %}{% endfor %}",
+        "documentTemplateMaxBytes": 400
+      }
+    }'
+chat_completions_1: |-
+  curl -N \
+    -X POST 'MEILISEARCH_URL/chats/WORKSPACE_NAME/chat/completions' \
+    -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "model": "PROVIDER_MODEL_UID",
+      "messages": [
+        {
+          "role": "user",
+          "content": "USER_PROMPT"
+        }
+      ],
+      "tools": [
+        {
+          "type": "function",
+          "function": {
+            "name": "_meiliSearchProgress",
+            "description": "Reports real-time search progress to the user"
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "_meiliSearchSources",
+            "description": "Provides sources and references for the information"
+          }
+        }
+      ]
+    }'
+chat_get_settings_1: |-
+  curl \
+    -X GET 'MEILISEARCH_URL/chats/WORKSPACE_NAME/settings' \
+    -H "Authorization: Bearer MEILISEARCH_KEY"
+chat_patch_settings_1: |-
+  curl \
+    -X PATCH 'MEILISEARCH_URL/chats/WORKSPACE_NAME/settings' \
+    -H "Authorization: Bearer MEILISEARCH_KEY" \
+    -H "Content-Type: application/json" \
+    --data-binary '{ "apiKey": "your-valid-api-key" }'
+image_search_multimodal_settings_1: |-
+  curl \
+    -X PATCH 'MEILISEARCH_URL/indexes/INDEX_NAME/settings' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "embedders": {
+        "MULTIMODAL_EMBEDDER_NAME": {
+          "source": "rest",
+          "url": "https://api.voyageai.com/v1/multimodal-embeddings",
+          "apiKey": "VOYAGE_API_KEY",
+          "indexingFragments": {
+            "TEXTUAL_FRAGMENT_NAME": {
+              "value": {
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "A document named {{doc.title}} described as {{doc.description}}"
+                  }
+                ]
+              }
+            },
+            "IMAGE_FRAGMENT_NAME": {
+              "value": {
+                "content": [
+                  {
+                    "type": "image_url",
+                    "image_url": "{{doc.poster_url}}"
+                  }
+                ]
+              }
+            }
+          },
+          "searchFragments": {
+            "USER_TEXT_FRAGMENT": {
+              "value": {
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "{{q}}"
+                  }
+                ]
+              }
+            },
+            "USER_SUBMITTED_IMAGE_FRAGMENT": {
+              "value": {
+                "content": [
+                  {
+                    "type": "image_base64",
+                    "image_base64": "data:{{media.image.mime}};base64,{{media.image.data}}"
+                  }
+                ]
+              }
+            }
+          },
+          "request": {
+            "inputs": ["{{fragment}}", "{{..}}"],
+            "model": "voyage-multimodal-3"
+          },
+          "response": {
+            "data": [
+              { "embedding": "{{embedding}}" },
+              "{{..}}"
+            ]
+          }
+        }
+      }
+    }'
+image_search_multimodal_search_text_1: |-
+  curl \
+    -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "q": "a mountain sunset with snow",
+      "hybrid": {
+        "embedder": "MULTIMODAL_EMBEDDER_NAME"
+      }
+    }'
+image_search_multimodal_search_image_1: |-
+  curl \
+    -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "media": {
+        "image": {
+          "mime": "image/jpeg",
+          "data": "<BASE64_ENCODED_IMAGE>"
+        }
+      },
+      "hybrid": {
+        "embedder": "MULTIMODAL_EMBEDDER_NAME"
+      }
+    }'
+ai_search_getting_started_embedders_1: |-
+  curl \
+    -X PATCH 'MEILISEARCH_URL/indexes/kitchenware/settings/embedders' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "products-openai": {
+        "source": "openAi",
+        "apiKey": "OPEN_AI_API_KEY",
+        "model": "text-embedding-3-small",
+        "documentTemplate": "An object used in a kitchen named '\''{{doc.name}}'\''"
+      }
+    }'
+ai_search_getting_started_search_1: |-
+  curl \
+    -X POST 'MEILISEARCH_URL/indexes/kitchenware/search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "q": "kitchen utensils made of wood",
+      "hybrid": {
+        "embedder": "products-openai"
+      }
+    }'
+personalization_search_1: |-
+  curl \
+    -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "q": "wireless keyboard",
+      "personalize": {
+        "userContext": "The user prefers compact mechanical keyboards from Keychron or Logitech, with a mid-range budget and quiet keys for remote work."
+      }
+    }'
+configure_rest_embedder_1: |-
+  curl \
+    -X PATCH 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/embedders' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "EMBEDDER_NAME": {
+        "source": "rest",
+        "url": "PROVIDER_URL",
+        "request": {
+          "model": "MODEL_NAME",
+          "input": ["{{text}}", "{{..}}"]
+        },
+        "response": {
+          "data": [
+            { "embedding": "{{embedding}}" },
+            "{{..}}"
+          ]
+        },
+        "apiKey": "PROVIDER_API_KEY",
+        "documentTemplate": "SHORT_AND_RELEVANT_DOCUMENT_TEMPLATE"
+      }
+    }'

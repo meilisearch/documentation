@@ -9,6 +9,7 @@ import { NoticeTag } from '/snippets/notice_tag.mdx';
 
 import CodeSamplesUpdatingGuideCheckVersionNewAuthorizationHeader from '/snippets/generated-code-samples/code_samples_updating_guide_check_version_new_authorization_header.mdx';
 import CodeSamplesUpdatingGuideCreateDump from '/snippets/generated-code-samples/code_samples_updating_guide_create_dump.mdx';
+import CodeSamplesCreateSnapshot1 from '/snippets/generated-code-samples/code_samples_create_snapshot_1.mdx';
 
 Currently, Meilisearch databases are only compatible with the version of Meilisearch used to create them. The following guide will walk you through using a [dump](/learn/data_backup/dumps) to migrate an existing database from an older version of Meilisearch to the most recent one.
 
@@ -50,10 +51,7 @@ Dumpless upgrades are available when upgrading from Meilisearch >=v1.12 to Meili
 
 Dumpless upgrades are an experimental feature. Because of that, it may in rare occasions partially fail and result in a corrupted database. To prevent data loss, create a snapshot of your instance:
 
-```sh
-curl \
-  -X POST 'MEILISEARCH_URL/snapshots'
-```
+<CodeSamplesCreateSnapshot1 />
 
 Meilisearch will respond with a partial task object. Use its `taskUid` to monitor the snapshot creation status. Once the task is completed, proceed to the next step.
 

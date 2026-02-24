@@ -1,0 +1,16 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X PATCH 'MEILISEARCH_URL/indexes/kitchenware/settings/embedders' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "products-openai": {
+      "source": "openAi",
+      "apiKey": "OPEN_AI_API_KEY",
+      "model": "text-embedding-3-small",
+      "documentTemplate": "An object used in a kitchen named '\''{{doc.name}}'\''"
+    }
+  }'
+```
+</CodeGroup>

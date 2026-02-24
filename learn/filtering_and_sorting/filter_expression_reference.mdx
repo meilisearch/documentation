@@ -5,6 +5,7 @@ description: The `filter` search parameter expects a filter expression. Filter e
 ---
 
 import { NoticeTag } from '/snippets/notice_tag.mdx';
+import CodeSamplesUpdateExperimentalFeaturesContains1 from '/snippets/generated-code-samples/code_samples_update_experimental_features_contains_1.mdx';
 
 The `filter` search parameter expects a filter expression. Filter expressions are made of attributes, values, and several operators.
 
@@ -198,14 +199,7 @@ NOT dairy_product.name CONTAINS kef
 <Note>
 This is an experimental feature. Use the experimental features endpoint to activate it:
 
-```sh
-curl \
-  -X PATCH 'MEILISEARCH_URL/experimental-features/' \
-  -H 'Content-Type: application/json' \
-  --data-binary '{
-    "containsFilter": true
-  }'
-```
+<CodeSamplesUpdateExperimentalFeaturesContains1 />
 </Note>
 
 ### `STARTS WITH`

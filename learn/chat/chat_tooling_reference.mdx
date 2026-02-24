@@ -3,19 +3,14 @@ title: Chat tooling reference
 description: An exhaustive reference of special chat tools supported by Meilisearch
 ---
 
+import CodeSamplesUpdateExperimentalFeaturesChat1 from '/snippets/generated-code-samples/code_samples_update_experimental_features_chat_1.mdx';
+
 When creating your conversational search agent, you may be able to extend the model's capabilities with a number of tools. This page lists Meilisearch-specific tools that may improve user experience.
 
 <Note>
 This is an experimental feature. Use the Meilisearch Cloud UI or the experimental features endpoint to activate it:
 
-```sh
-curl \
-  -X PATCH 'MEILISEARCH_URL/experimental-features/' \
-  -H 'Content-Type: application/json' \
-  --data-binary '{
-    "chatCompletions": true
-  }'
-```
+<CodeSamplesUpdateExperimentalFeaturesChat1 />
 </Note>
 
 ## Meilisearch chat tools

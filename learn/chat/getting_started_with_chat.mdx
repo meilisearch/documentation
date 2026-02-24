@@ -3,6 +3,14 @@ title: Getting started with conversational search
 description: This article walks you through implementing Meilisearch's chat completions feature to create conversational search experiences in your application.
 ---
 
+import CodeSamplesUpdateExperimentalFeaturesChat1 from '/snippets/generated-code-samples/code_samples_update_experimental_features_chat_1.mdx';
+import CodeSamplesAuthorizationHeader1 from '/snippets/generated-code-samples/code_samples_authorization_header_1.mdx';
+import CodeSamplesChatCreateKey1 from '/snippets/generated-code-samples/code_samples_chat_create_key_1.mdx';
+import CodeSamplesChatIndexSettings1 from '/snippets/generated-code-samples/code_samples_chat_index_settings_1.mdx';
+import CodeSamplesChatCompletions1 from '/snippets/generated-code-samples/code_samples_chat_completions_1.mdx';
+import CodeSamplesChatGetSettings1 from '/snippets/generated-code-samples/code_samples_chat_get_settings_1.mdx';
+import CodeSamplesChatPatchSettings1 from '/snippets/generated-code-samples/code_samples_chat_patch_settings_1.mdx';
+
 To successfully implement a conversational search interface you must follow three steps: configure indexes for chat usage, create a chat workspaces, and build a chat interface.
 
 ## Prerequisites
@@ -19,15 +27,7 @@ Before starting, ensure you have:
 
 First, enable the chat completions experimental feature:
 
-```bash
-curl \
-  -X PATCH 'MEILISEARCH_URL/experimental-features/' \
-  -H 'Authorization: Bearer MEILISEARCH_KEY' \
-  -H 'Content-Type: application/json' \
-  --data-binary '{
-    "chatCompletions": true
-  }'
-```
+<CodeSamplesUpdateExperimentalFeaturesChat1 />
 
 <Warning>
 Conversational search is still in early development. Conversational agents may occasionally hallucinate inaccurate and misleading information, so it is important to closely monitor it in production environments.
@@ -37,10 +37,7 @@ Conversational search is still in early development. Conversational agents may o
 
 When Meilisearch runs with a master key on an instance created after v1.15.1, it automatically generates a "Default Chat API Key" with `chatCompletions` and `search` permissions on all indexes. Check if you have the key using:
 
-```bash
-curl MEILISEARCH_URL/keys \
-  -H "Authorization: Bearer MEILISEARCH_KEY"
-```
+<CodeSamplesAuthorizationHeader1 />
 
 Look for the key with the description "Default Chat API Key".
 
@@ -48,37 +45,13 @@ Look for the key with the description "Default Chat API Key".
 
 If your instance does not have a Default Chat API Key, create one manually:
 
-```bash
-curl \
-  -X POST 'MEILISEARCH_URL/keys' \
-  -H 'Authorization: Bearer MEILISEARCH_KEY' \
-  -H 'Content-Type: application/json' \
-  --data-binary '{
-    "name": "Chat API Key",
-    "description": "API key for chat completions",
-    "actions": ["search", "chatCompletions"],
-    "indexes": ["*"],
-    "expiresAt": null
-  }'
-```
+<CodeSamplesChatCreateKey1 />
 
 ## Configure your indexes
 
 After activating the `/chats` route and obtaining an API key with chat permissions, configure the `chat` settings for each index you want to be searchable via chat UI:
 
-```bash
-curl \
-  -X PATCH 'MEILISEARCH_URL/indexes/INDEX_NAME/settings' \
-  -H 'Authorization: Bearer MEILISEARCH_KEY' \
-  -H 'Content-Type: application/json' \
-  --data-binary '{
-    "chat": {
-      "description": "A comprehensive database of TYPE_OF_DOCUMENT containing titles, descriptions, genres, and release dates to help users searching for TYPE_OF_DOCUMENT",
-      "documentTemplate": "{% for field in fields %}{% if field.is_searchable and field.value != nil %}{{ field.name }}: {{ field.value }}\n{% endif %}{% endfor %}",
-      "documentTemplateMaxBytes": 400
-    }
-  }'
-```
+<CodeSamplesChatIndexSettings1 />
 
 - `description` gives the initial context of the conversation to the LLM. A good description improves relevance of the chat's answers
 - `documentTemplate` defines the document data Meilisearch sends to the AI provider. This template outputs all searchable fields in your documents, which may not be ideal if your documents have many fields. Consult the best [document template best practices](/learn/ai_powered_search/document_template_best_practices) article for more guidance
@@ -168,37 +141,7 @@ Which fields are mandatory will depend on your chosen provider `source`. In most
 
 You have finished configuring your conversational search agent. To test everything is working as expected, send a streaming `curl` query to the chat completions API route:
 
-```bash
-curl -N \
-  -X POST 'MEILISEARCH_URL/chats/WORKSPACE_NAME/chat/completions' \
-  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
-  -H 'Content-Type: application/json' \
-  --data-binary '{
-    "model": "PROVIDER_MODEL_UID",
-    "messages": [
-      {
-        "role": "user",
-        "content": "USER_PROMPT"
-      }
-    ],
-    "tools": [
-      {
-        "type": "function",
-        "function": {
-          "name": "_meiliSearchProgress",
-          "description": "Reports real-time search progress to the user"
-        }
-      },
-      {
-        "type": "function",
-        "function": {
-          "name": "_meiliSearchSources",
-          "description": "Provides sources and references for the information"
-        }
-      }
-    ]
-  }'
-```
+<CodeSamplesChatCompletions1 />
 
 - `model` is mandatory and must indicate a model supported by your chosen `source`
 - `messages` contains the messages exchanged between the conversational search agent and the user
@@ -226,7 +169,7 @@ Meilisearch's chat endpoint was designed to be OpenAI-compatible. This means you
 
 Integrating Meilisearch and the OpenAI SDK with JavaScript would look like this:
 
-```javascript JavaScript
+```javascript
 import OpenAI from 'openai';
 
 const client = new OpenAI({
@@ -272,7 +215,7 @@ Take particular note of the last lines, which output the streamed responses to t
 
 - Use either the master key or the "Default Chat API Key"
 - Don't use search or admin API keys for chat endpoints
-- Find your chat key: `curl MEILISEARCH_URL/keys -H "Authorization: Bearer MEILISEARCH_KEY"`
+- Find your chat key with the [list keys endpoint](/reference/api/keys/get-api-keys)
 
 #### "Socket connection closed unexpectedly"
 
@@ -282,19 +225,11 @@ Take particular note of the last lines, which output the streamed responses to t
 
 1. Check workspace configuration:
 
-   ```bash
-   curl MEILISEARCH_URL/chats/WORKSPACE_NAME/settings \
-     -H "Authorization: Bearer MEILISEARCH_KEY"
-   ```
+   <CodeSamplesChatGetSettings1 />
 
 2. Update with valid API key:
 
-   ```bash
-   curl -X PATCH MEILISEARCH_URL/chats/WORKSPACE_NAME/settings \
-     -H "Authorization: Bearer MEILISEARCH_KEY" \
-     -H "Content-Type: application/json" \
-     -d '{"apiKey": "your-valid-api-key"}'
-   ```
+   <CodeSamplesChatPatchSettings1 />
 
 #### Chat not searching the database
 

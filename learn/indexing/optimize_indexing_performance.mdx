@@ -3,6 +3,8 @@ title: Optimize indexing performance with batch statistics
 description: Learn how to analyze the `progressTrace` to identify and resolve indexing bottlenecks in Meilisearch.
 ---
 
+import CodeSamplesUpdateFacetSearchSettings1 from '/snippets/generated-code-samples/code_samples_update_facet_search_settings_1.mdx';
+
 # Optimize indexing performance by analyzing batch statistics
 
 Indexing performance can vary significantly depending on your dataset, index settings, and hardware. The [batch object](/reference/api/async-task-management/list-batches) provides information about the progress of asynchronous indexing operations.
@@ -105,12 +107,7 @@ If you see:
 
 [Facet searching](/learn/filtering_and_sorting/search_with_facet_filters#searching-facet-values) is raking significant indexing time. If your application doesn’t use facets, disable the feature:
 
-```bash
-curl \
-  -X PUT 'MEILISEARCH_URL/indexes/INDEX_UID/settings/facet-search' \
-  -H 'Content-Type: application/json' \
-  --data-binary 'false'
-```
+<CodeSamplesUpdateFacetSearchSettings1 />
 
 ## Learn more
 

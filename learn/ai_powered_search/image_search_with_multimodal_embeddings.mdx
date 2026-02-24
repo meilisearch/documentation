@@ -3,6 +3,11 @@ title: Image search with multimodal embeddings
 description: This article shows you the main steps for performing multimodal text-to-image searches
 ---
 
+import CodeSamplesUpdateExperimentalFeaturesMultimodal1 from '/snippets/generated-code-samples/code_samples_update_experimental_features_multimodal_1.mdx';
+import CodeSamplesImageSearchMultimodalSettings1 from '/snippets/generated-code-samples/code_samples_image_search_multimodal_settings_1.mdx';
+import CodeSamplesImageSearchMultimodalSearchText1 from '/snippets/generated-code-samples/code_samples_image_search_multimodal_search_text_1.mdx';
+import CodeSamplesImageSearchMultimodalSearchImage1 from '/snippets/generated-code-samples/code_samples_image_search_multimodal_search_image_1.mdx';
+
 This guide shows the main steps to search through a database of images using Meilisearch's experimental multimodal embeddings.
 
 ## Requirements
@@ -15,14 +20,7 @@ This guide shows the main steps to search through a database of images using Mei
 
 First, enable the `multimodal` experimental feature:
 
-```sh
-curl \
-  -X PATCH 'MEILISEARCH_URL/experimental-features/' \
-  -H 'Content-Type: application/json' \
-  --data-binary '{
-    "multimodal": true
-  }'
-```
+<CodeSamplesUpdateExperimentalFeaturesMultimodal1 />
 
 You may also enable multimodal in your Meilisearch Cloud project's general settings, under "Experimental features".
 
@@ -111,79 +109,7 @@ Each semantic search query for this embedder should match exactly one search fra
 
 Your embedder should look similar to this example with all fragments and embedding provider data:
 
-```sh
-curl \
-  -X PATCH 'MEILISEARCH_URL/indexes/INDEX_NAME/settings' \
-  -H 'Content-Type: application/json' \
-  --data-binary '{
-    "embedders": {
-      "MULTIMODAL_EMBEDDER_NAME": {
-        "source": "rest",
-        "url": "https://api.voyageai.com/v1/multimodal-embeddings",
-        "apiKey": "VOYAGE_API_KEY",
-        "indexingFragments": {
-          "TEXTUAL_FRAGMENT_NAME": {
-            "value": {
-              "content": [
-                {
-                  "type": "text",
-                  "text": "A document named {{doc.title}} described as {{doc.description}}"
-                }
-              ]
-            }
-          },
-          "IMAGE_FRAGMENT_NAME": {
-            "value": {
-              "content": [
-                {
-                  "type": "image_url",
-                  "image_url": "{{doc.poster_url}}"
-                }
-              ]
-            }
-          }
-        },
-        "searchFragments": {
-          "USER_TEXT_FRAGMENT": {
-            "value": {
-              "content": [
-                {
-                  "type": "text",
-                  "text": "{{q}}"
-                }
-              ]
-            }
-          },
-          "USER_SUBMITTED_IMAGE_FRAGMENT": {
-            "value": {
-              "content": [
-                {
-                  "type": "image_base64",
-                  "image_base64": "data:{{media.image.mime}};base64,{{media.image.data}}"
-                }
-              ]
-            }
-          }
-        },
-        "request": {
-          "inputs": [
-            "{{fragment}}",
-            "{{..}}"
-          ],
-          "model": "voyage-multimodal-3"
-        },
-        "response": {
-          "data": [
-            {
-              "embedding": "{{embedding}}"
-            },
-            "{{..}}"
-          ]
-        }
-      }
-    }
-  }'
-```
+<CodeSamplesImageSearchMultimodalSettings1 />
 
 Since the `source` of this embedder is `rest`, you must also specify a `request` and a `response` fields. These respectively instruct Meilisearch on how to structure the request sent to the embeddings provider, and where to find the embeddings in the provider's response.
 
@@ -201,36 +127,13 @@ The final step is to perform searches using different types of content.
 
 Use the following search query to retrieve a mix of documents with images matching the description, documents with and documents containing the specified keywords:
 
-```sh
-curl -X POST 'http://localhost:7700/indexes/INDEX_NAME/search' \
-  -H 'Content-Type: application/json' \
-  --data-binary '{
-    "q": "a mountain sunset with snow",
-    "hybrid": {
-      "embedder": "MULTIMODAL_EMBEDDER_NAME"
-    }
-  }'
-```
+<CodeSamplesImageSearchMultimodalSearchText1 />
 
 ### Use an image to search for images
 
 You can also use an image to search for other, similar images:
 
-```sh
-curl -X POST 'http://localhost:7700/indexes/INDEX_NAME/search' \
-  -H 'Content-Type: application/json' \
-  --data-binary '{
-    "media": {
-      "image": {
-        "mime": "image/jpeg",
-        "data": "<BASE64_ENCODED_IMAGE>"
-      }
-    },
-    "hybrid": {
-      "embedder": "MULTIMODAL_EMBEDDER_NAME"
-    }
-  }'
-```
+<CodeSamplesImageSearchMultimodalSearchImage1 />
 
 <Tip>
 In most cases you will need a GUI interface that allows users to submit their images and converts these images to Base64 format. Creating this is outside the scope of this guide.

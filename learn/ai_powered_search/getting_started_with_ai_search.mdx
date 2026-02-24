@@ -4,6 +4,9 @@ sidebarTitle: Getting started with AI-powered search
 description: AI-powered search uses LLMs to retrieve search results. This tutorial shows you how to configure an OpenAI embedder and perform your first search.
 ---
 
+import CodeSamplesAiSearchGettingStartedEmbedders1 from '/snippets/generated-code-samples/code_samples_ai_search_getting_started_embedders_1.mdx';
+import CodeSamplesAiSearchGettingStartedSearch1 from '/snippets/generated-code-samples/code_samples_ai_search_getting_started_search_1.mdx';
+
 [AI-powered search](https://meilisearch.com/solutions/vector-search), sometimes also called vector search or hybrid search, uses [large language models (LLMs)](https://en.wikipedia.org/wiki/Large_language_model) to retrieve search results based on the meaning and context of a query.
 
 This tutorial will walk you through configuring AI-powered search in your Meilisearch project. You will see how to set up an embedder with OpenAI, generate document embeddings, and perform your first search.
@@ -116,19 +119,7 @@ This template starts by giving the general context of the document: `An object u
 
 Your embedder object is ready. Send it to Meilisearch by updating your index settings:
 
-```sh
-curl \
-  -X PATCH 'MEILISEARCH_URL/indexes/kitchenware/settings/embedders' \
-  -H 'Content-Type: application/json' \
-  --data-binary '{
-    "products-openai": {
-      "source": "openAi",
-      "apiKey": "OPEN_AI_API_KEY",
-      "model": "text-embedding-3-small",
-      "documentTemplate": "An object used in a kitchen named '{{doc.name}}'"
-    }
-  }'
-```
+<CodeSamplesAiSearchGettingStartedEmbedders1 />
 
 Replace `MEILISEARCH_URL` with the address of your Meilisearch project, and `OPEN_AI_API_KEY` with your [OpenAI API key](https://platform.openai.com/api-keys).
 
@@ -138,17 +129,7 @@ Meilisearch and OpenAI will start processing your documents and updating your in
 
 AI-powered searches are very similar to basic text searches. You must query the `/search` endpoint with a request containing both the `q` and the `hybrid` parameters:
 
-```sh
-curl \
-  -X POST 'MEILISEARCH_URL/indexes/kitchenware/search' \
-  -H 'content-type: application/json' \
-  --data-binary '{
-    "q": "kitchen utensils made of wood",
-    "hybrid": {
-      "embedder": "products-openai"
-    }
-  }'
-```
+<CodeSamplesAiSearchGettingStartedSearch1 />
 
 For this tutorial, `hybrid` is an object with a single `embedder` field.
 

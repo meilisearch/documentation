@@ -4,6 +4,7 @@ sidebarTitle: Generate tenant tokens without a Meilisearch SDK
 description: This guide shows you the main steps when creating tenant tokens without using Meilisearch's official SDKs.
 ---
 
+import CodeSamplesAuthorizationHeader1 from '/snippets/generated-code-samples/code_samples_authorization_header_1.mdx';
 import CodeSamplesTenantTokenGuideSearchNoSdk1 from '/snippets/generated-code-samples/code_samples_tenant_token_guide_search_no_sdk_1.mdx';
 
 This guide shows you the main steps when creating tenant tokens using [`node-jsonwebtoken`](https://www.npmjs.com/package/jsonwebtoken), a third-party library.
@@ -28,13 +29,9 @@ First, create a set of search rules:
 }
 ```
 
-Next, find your default search API key. Query the [get an API key endpoint](/reference/api/keys/get-api-key) and inspect the `uid` field to obtain your API key's UID:
+Next, find your default search API key. Query the [get API keys endpoint](/reference/api/keys/get-api-key) and inspect the `uid` field to obtain your API key's UID:
 
-```sh
-curl \
-  -X GET 'MEILISEARCH_URL/keys/API_KEY' \
-  -H 'Authorization: Bearer MASTER_KEY'
-```
+<CodeSamplesAuthorizationHeader1 />
 
 For maximum security, you should also set an expiry date for your tenant tokens. The following example configures the token to expire 20 minutes after its creation:
 

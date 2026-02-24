@@ -1,0 +1,14 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/kitchenware/search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "q": "kitchen utensils made of wood",
+    "hybrid": {
+      "embedder": "products-openai"
+    }
+  }'
+```
+</CodeGroup>

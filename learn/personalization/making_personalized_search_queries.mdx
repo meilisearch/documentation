@@ -3,6 +3,8 @@ title: Performing personalized search queries
 description: Search personalization uses context about the person performing the search to provide results more relevant to that specific user. This article guides you through configuring and performing personalized search queries.
 ---
 
+import CodeSamplesPersonalizationSearch1 from '/snippets/generated-code-samples/code_samples_personalization_search_1.mdx';
+
 ## Requirements
 
 - A Meilisearch project
@@ -41,14 +43,4 @@ Once search personalization is active and you have a pipeline in place to genera
 
 Submit a search query and include the `personalize` search parameter. `personalize` must be an object with a single field, `userContext`. Use the description you generated in the previous step as the value for `userContext`:
 
-```sh
-curl \
-  -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
-  -H 'Content-Type: application/json' \
-  --data-binary '{ 
-    "q": "wireless keyboard",
-    "personalize": {
-      "userContext": "The user prefers compact mechanical keyboards from Keychron or Logitech, with a mid-range budget and quiet keys for remote work."
-    }
-  }'
-```
+<CodeSamplesPersonalizationSearch1 />
