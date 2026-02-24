@@ -3,6 +3,8 @@ title: Interpreting ranking score details
 description: Learn how to understand ranking score details to see how Meilisearch evaluates each result and which rules determined their order.
 ---
 
+import CodeSamplesSearchParameterGuideShowRankingScoreDetails1 from '/snippets/generated-code-samples/code_samples_search_parameter_guide_show_ranking_score_details_1.mdx';
+
 # How do I interpret ranking score details?
 
 [In the previous guide](/guides/relevancy/ordering_ranking_rules), we covered how ranking rules determine result order and how changing their sequence affects what your users see first. But when you're actually making those tweaks, how do you know if they're working the way you expect?
@@ -15,19 +17,11 @@ You'll be able to see things like: did Proximity decide this result's position, 
 
 When you search you can pass in an option to view the details of scoring and sorting using `“showRankingScoreDetails”: true`  and it will return an indepth look at the ranking rules that you are working with
 
-```markdown
-curl \
-  -X POST 'MEILISEARCH_URL/indexes/movies/search' \
-  -H 'Content-Type: application/json' \
-  --data-binary '{
-    "q": "dragon",
-    "showRankingScoreDetails": true
-  }'
-```
+<CodeSamplesSearchParameterGuideShowRankingScoreDetails1 />
 
 Ranking Score details example
 
-```markdown
+```sh
 {
   "hits": [
     {
@@ -170,7 +164,7 @@ With this set up Meilisearch evaluates the text relevance rules first, *then* us
           "score": 0.3333333333333333
         }
       }
-   
+
 ```
 
 ### What decided this? Reading the score details

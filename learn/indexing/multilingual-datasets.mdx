@@ -3,6 +3,8 @@ title: Handling multilingual datasets
 description: This guide covers indexing strategies, language-specific tokenizers, and best practices for aligning document and query tokenization.
 ---
 
+import CodeSamplesMultilingualDatasetGuideUpdateLocalizedAttributes1 from '/snippets/generated-code-samples/code_samples_multilingual_dataset_guide_update_localized_attributes_1.mdx';
+
 When working with datasets that include content in multiple languages, it’s important to ensure that both documents and queries are processed correctly. This guide explains how to index and search multilingual datasets in Meilisearch, highlighting best practices, useful features, and what to avoid.
 
 ## Recommended indexing strategy
@@ -76,10 +78,10 @@ For search to work effectively, **queries must be tokenized and normalized in th
 
 ### Aligning document and query tokenization
 
-To keep queries and documents consistent, Meilisearch provides configuration options for both sides. Meilisearch uses the same `locales` configuration concept for both documents and queries:  
+To keep queries and documents consistent, Meilisearch provides configuration options for both sides. Meilisearch uses the same `locales` configuration concept for both documents and queries:
 
-- In **documents**, `locales` are declared through `localizedAttributes`.  
-- In **queries**, `locales` are passed as a [search parameter].  
+- In **documents**, `locales` are declared through `localizedAttributes`.
+- In **queries**, `locales` are passed as a [search parameter].
 
 #### Declaring locales for documents
 
@@ -96,13 +98,7 @@ For example, if your dataset contains multilingual titles, you can declare which
 }
 ```
 
-```javascript
-client.index('INDEX_NAME').updateLocalizedAttributes([
-  { attributePatterns: ['*_en'], locales: ['eng'] },
-  { attributePatterns: ['*_de'], locales: ['deu'] },
-  { attributePatterns: ['*_fr'], locales: ['fra'] }
-])
-```
+<CodeSamplesMultilingualDatasetGuideUpdateLocalizedAttributes1 />
 
 #### Specifying locales for queries
 
@@ -116,5 +112,5 @@ This ensures queries are interpreted with the correct tokenizer and normalizatio
 
 ## Conclusion
 
-Handling multilingual datasets in Meilisearch requires careful planning of both indexing and querying.  
-By choosing the right indexing strategy, and explicitly configuring languages with `localizedAttributes` and `locales`, you ensure that documents and queries are processed consistently.  
+Handling multilingual datasets in Meilisearch requires careful planning of both indexing and querying.
+By choosing the right indexing strategy, and explicitly configuring languages with `localizedAttributes` and `locales`, you ensure that documents and queries are processed consistently.

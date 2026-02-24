@@ -544,6 +544,15 @@ update_localized_attribute_settings_1: |-
     --data-binary '[
       {"locales": ["jpn"], "attributePatterns": ["*_ja"]}
     ]'
+multilingual_dataset_guide_update_localized_attributes_1: |-
+  curl \
+    -X PUT 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/localized-attributes' \
+    -H 'Content-Type: application/json' \
+    --data-binary '[
+      { "attributePatterns": ["*_en"], "locales": ["eng"] },
+      { "attributePatterns": ["*_de"], "locales": ["deu"] },
+      { "attributePatterns": ["*_fr"], "locales": ["fra"] }
+    ]'
 # delete_indexes_indexUid_settings_localized_attributes
 reset_localized_attribute_settings_1: |-
   curl \
