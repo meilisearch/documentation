@@ -26,6 +26,15 @@ client.update_webhook('WEBHOOK_UID', {
 })
 ```
 
+```java Java
+Webhook webhook = this.client.createWebhook(webhookReq1);
+HashMap<String, Object> headers = new HashMap<>();
+headers.put("referer", null);
+CreateUpdateWebhookRequest webhookReq2 = new CreateUpdateWebhookRequest(webhook.getUrl(), headers);
+
+Webhook updated_webhook = this.client.updateWebhook(webhook.getUuid(), webhookReq2);
+```
+
 ```go Go
 client.UpdateWebhook("WEBHOOK_UUID", &meilisearch.UpdateWebhookRequest{
   Header: map[string]string{

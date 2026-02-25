@@ -1,15 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X POST 'MEILISEARCH_URL/indexes/movies/search' \
-  -H 'Content-Type: application/json' \
-  --data-binary '{
-    "q": "white shirt",
-    "matchingStrategy": "frequency"
-  }'
-```
-
 ```javascript JS
 client.index('movies').search('white shirt', {
   matchingStrategy: 'frequency'

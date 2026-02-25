@@ -1,16 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X POST 'MEILISEARCH_URL/indexes/movies/search' \
-  -H 'Content-Type: application/json' \
-  --data-binary '{
-    "q": "shifu",
-    "attributesToCrop": ["overview"],
-    "cropLength": 5
-  }'
-```
-
 ```javascript JS
 client.index('movies').search('shifu', {
   attributesToCrop: ['overview'],
