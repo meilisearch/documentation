@@ -1,7 +1,7 @@
 # On every push to main, check meilisearch-openapi-mintlify.json for code samples:
 # - Job 1: Ensure every route that has x-codeSamples includes a cURL sample (can fail).
 # - Job 2: Informational only – list routes and all missing code sample languages (never fails).
-name: OpenAPI code samples check
+name: Check OpenAPI code samples
 
 on:
   workflow_dispatch:
