@@ -173,7 +173,10 @@ for (const key of withoutComment) {
 
 if (unusedSnippets.length > 0) {
   console.error(
-    `❌ ${unusedSnippets.length} sample(s) without route comment are not referenced in any doc page:\n`
+    `❌ ${unusedSnippets.length} sample(s) without route comment are not referenced in any doc page.\n`
+  );
+  console.error(
+    'These code samples can be removed from .code-samples.meilisearch.yaml\n'
   );
   for (const key of unusedSnippets) {
     console.error(`  - ${key}`);
