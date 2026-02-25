@@ -5319,7 +5319,7 @@
           },
           {
             "lang": "Java",
-            "source": "client.index(\"movies\").resetDisplayedAttributesSettings();"
+            "source": "client.index(\"movies\").resetDisplayedAttributesSettings();\nget_typo_tolerance_1:\nclient.index(\"books\").getTypoToleranceSettings();"
           },
           {
             "lang": "Ruby",
@@ -13240,7 +13240,7 @@
           },
           {
             "lang": "Rust",
-            "source": "let key = client\n  .get_key(\"6062abda-a5aa-4414-ac91-ecd7944c0f8d\")\n  .await\n  .unwrap();\nclient\n  .delete_key(&key)\n  .await?;\nauthorization_header_1:\nlet client = Client::new(\"http://localhost:7700\", Some(\"masterKey\"));\nlet keys = client\n.get_keys()\n.await\n.unwrap();"
+            "source": "let key = client\n  .get_key(\"6062abda-a5aa-4414-ac91-ecd7944c0f8d\")\n  .await\n  .unwrap();\nclient\n  .delete_key(&key)\n  .await?;\nauthorization_header_1:\nlet client = Client::new(\"http://localhost:7700\", Some(\"MASTER_KEY\"));\nlet keys = client\n  .get_keys()\n  .await\n  .unwrap();"
           },
           {
             "lang": "Dart",
@@ -15434,6 +15434,10 @@
             "source": "client.get_webhooks()"
           },
           {
+            "lang": "Java",
+            "source": "client.getWebhooks();"
+          },
+          {
             "lang": "Go",
             "source": "client.ListWebhooks();"
           },
@@ -15533,6 +15537,10 @@
           {
             "lang": "Python",
             "source": "client.create_webhook({\n  'url': 'https://example.com/webhook',\n  'headers': {\"Authorization\":\"\", \"X-Custom-Header\":\"test\"},\n})"
+          },
+          {
+            "lang": "Java",
+            "source": "HashMap<String, Object> headers = new HashMap<>();\nheaders.put(\"authorization\", \"MASTER_KEY\");\nheaders.put(\"referer\", \"http://example.com\");\nCreateUpdateWebhookRequest webhookReq1 = new CreateUpdateWebhookRequest(\"http://webiste.com\", headers);\n\nWebhook webhook = client.createWebhook();"
           },
           {
             "lang": "Go",
@@ -15641,6 +15649,10 @@
             "source": "client.get_webhook('WEBHOOK_UID')"
           },
           {
+            "lang": "Java",
+            "source": "client.getWebhook();"
+          },
+          {
             "lang": "Go",
             "source": "client.GetWebhook(\"WEBHOOK_UUID\");"
           },
@@ -15727,6 +15739,10 @@
           {
             "lang": "Python",
             "source": "client.delete_webhook('WEBHOOK_UID')"
+          },
+          {
+            "lang": "Java",
+            "source": "this.client.deleteWebhook(\"WEBHOOK_UUID\");"
           },
           {
             "lang": "Go",
@@ -15856,6 +15872,10 @@
           {
             "lang": "Python",
             "source": "client.update_webhook('WEBHOOK_UID', {\n  'url': 'https://example.com/new-webhook',\n  'headers': {\"Authorization\":\"\", \"X-Custom-Header\":\"test\"},\n})"
+          },
+          {
+            "lang": "Java",
+            "source": "Webhook webhook = this.client.createWebhook(webhookReq1);\nHashMap<String, Object> headers = new HashMap<>();\nheaders.put(\"referer\", null);\nCreateUpdateWebhookRequest webhookReq2 = new CreateUpdateWebhookRequest(webhook.getUrl(), headers);\n\nWebhook updated_webhook = this.client.updateWebhook(webhook.getUuid(), webhookReq2);"
           },
           {
             "lang": "Go",
