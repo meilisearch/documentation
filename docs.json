@@ -390,7 +390,6 @@
                   "guides/front_end/front_end_integration",
                   "guides/front_end/react_quick_start",
                   "guides/front_end/vue_quick_start",
-                  "guides/front_end/search_bar_for_docs",
                   "guides/front_end/pagination"
                 ]
               },
@@ -662,7 +661,11 @@
     },
     {
       "source": "/learn/cookbooks/search_bar_for_docs",
-      "destination": "/guides/front_end/search_bar_for_docs"
+      "destination": "/guides/front_end/front_end_integration"
+    },
+    {
+      "source": "/guides/front_end/search_bar_for_docs",
+      "destination": "/guides/front_end/front_end_integration"
     },
     {
       "source": "/learn/cookbooks/http2_ssl",
