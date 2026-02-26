@@ -617,6 +617,10 @@
             "source": "curl \\\n  -X GET 'MEILISEARCH_URL/experimental-features/'"
           },
           {
+            "lang": "Python",
+            "source": "client.get_experimental_features()"
+          },
+          {
             "lang": "Ruby",
             "source": "client.experimental_features"
           },
@@ -626,7 +630,7 @@
           },
           {
             "lang": "Rust",
-            "source": "let client = Client::new(\"http://localhost:7700\", Some(\"apiKey\"));\nlet features = ExperimentalFeatures::new(&client);\nlet res = features\n  .get()\n  .await\n  .unwrap();"
+            "source": "let client = Client::new(\"MEILISEARCH_URL\", Some(\"apiKey\"));\nlet features = ExperimentalFeatures::new(&client);\nlet res = features\n  .get()\n  .await\n  .unwrap();"
           }
         ]
       },
@@ -692,6 +696,10 @@
             "source": "curl \\\n  -X PATCH 'MEILISEARCH_URL/experimental-features/' \\\n  -H 'Content-Type: application/json'  \\\n  --data-binary '{\n    \"metrics\": true\n  }'"
           },
           {
+            "lang": "Python",
+            "source": "client.update_experimental_features({\"metrics\": True})"
+          },
+          {
             "lang": "Ruby",
             "source": "client.update_experimental_features(metrics: true)"
           },
@@ -701,7 +709,7 @@
           },
           {
             "lang": "Rust",
-            "source": "let client = Client::new(\"http://localhost:7700\", Some(\"apiKey\"));\nlet features = ExperimentalFeatures::new(&client);\nfeatures.set_metrics(true)\nlet res = features\n  .update()\n  .await\n  .unwrap();"
+            "source": "let client = Client::new(\"MEILISEARCH_URL\", Some(\"apiKey\"));\nlet features = ExperimentalFeatures::new(&client);\nfeatures.set_metrics(true)\nlet res = features\n  .update()\n  .await\n  .unwrap();"
           }
         ]
       }
@@ -5818,6 +5826,10 @@
             "source": "curl \\\n  -X GET 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/embedders'"
           },
           {
+            "lang": "Python",
+            "source": "client.index('INDEX_NAME').get_embedders()"
+          },
+          {
             "lang": "Ruby",
             "source": "client.index('INDEX_NAME').embedders"
           },
@@ -5910,6 +5922,10 @@
           {
             "lang": "cURL",
             "source": "curl \\\n  -X DELETE 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/embedders'"
+          },
+          {
+            "lang": "Python",
+            "source": "client.index('INDEX_NAME').reset_embedders()"
           },
           {
             "lang": "Ruby",
@@ -6028,6 +6044,10 @@
           {
             "lang": "PHP",
             "source": "$client->updateEmbedders([\n  'default' => [\n    'source' => 'openAi',\n    'apiKey' => 'OPEN_AI_API_KEY',\n    'model' => 'text-embedding-3-small',\n    'documentTemplate' => 'A document titled '{{doc.title}}' whose description starts with {{doc.overview|truncatewords: 20}}'\n  ]\n]);"
+          },
+          {
+            "lang": "Python",
+            "source": "client.index('INDEX_NAME').update_embedders({\n  \"default\": {\n    \"source\": \"openAi\",\n    \"apiKey\": \"OPEN_AI_API_KEY\",\n    \"model\": \"text-embedding-3-small\",\n    \"documentTemplate\": \"A document titled '{{doc.title}}' whose description starts with {{doc.overview|truncatewords: 20}}\"\n  }\n})"
           },
           {
             "lang": "Ruby",
@@ -13240,7 +13260,7 @@
           },
           {
             "lang": "Rust",
-            "source": "let key = client\n  .get_key(\"6062abda-a5aa-4414-ac91-ecd7944c0f8d\")\n  .await\n  .unwrap();\nclient\n  .delete_key(&key)\n  .await?;\nauthorization_header_1:\nlet client = Client::new(\"http://localhost:7700\", Some(\"MASTER_KEY\"));\nlet keys = client\n  .get_keys()\n  .await\n  .unwrap();"
+            "source": "let key = client\n  .get_key(\"6062abda-a5aa-4414-ac91-ecd7944c0f8d\")\n  .await\n  .unwrap();\nclient\n  .delete_key(&key)\n  .await?;\nauthorization_header_1:\nlet client = Client::new(\"MEILISEARCH_URL\", Some(\"MASTER_KEY\"));\nlet keys = client\n.get_keys()\n.await\n.unwrap();"
           },
           {
             "lang": "Dart",
@@ -13920,7 +13940,7 @@
           },
           {
             "lang": "Python",
-            "source": "client.add_or_update_networks({\n    \"remotes\": {\n        \"http://localhost:7700\": {\n            \"searchApiKey\": \"masterKey\"\n        }\n    },\n    \"leader\": None\n})"
+            "source": "client.add_or_update_networks({\n    \"remotes\": {\n        \"MEILISEARCH_URL\": {\n            \"searchApiKey\": \"masterKey\"\n        }\n    },\n    \"leader\": None\n})"
           },
           {
             "lang": "Go",
