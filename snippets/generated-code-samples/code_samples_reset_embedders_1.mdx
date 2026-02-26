@@ -5,6 +5,10 @@ curl \
   -X DELETE 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/embedders'
 ```
 
+```python Python
+client.index('INDEX_NAME').reset_embedders()
+```
+
 ```ruby Ruby
 client.index('INDEX_NAME').reset_embedders
 ```

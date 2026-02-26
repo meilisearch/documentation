@@ -24,7 +24,7 @@ import { MeiliSearch } from 'meilisearch'
 import movies from './movies.json'
 
 const client = new MeiliSearch({
-  host: 'http://localhost:7700',
+  host: 'MEILISEARCH_URL',
   apiKey: 'aSampleMasterKey'
 })
 client.index('movies').addDocuments(movies)
@@ -39,7 +39,7 @@ client.index('movies').addDocuments(movies)
 import meilisearch
 import json
 
-client = meilisearch.Client('http://localhost:7700', 'aSampleMasterKey')
+client = meilisearch.Client('MEILISEARCH_URL', 'aSampleMasterKey')
 
 json_file = open('movies.json', encoding='utf-8')
 movies = json.load(json_file)
@@ -63,7 +63,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 use Meilisearch\Client;
 
-$client = new Client('http://localhost:7700', 'aSampleMasterKey');
+$client = new Client('MEILISEARCH_URL', 'aSampleMasterKey');
 
 $movies_json = file_get_contents('movies.json');
 $movies = json_decode($movies_json);
@@ -107,7 +107,7 @@ index.addDocuments(moviesJson);
 require 'json'
 require 'meilisearch'
 
-client = MeiliSearch::Client.new('http://localhost:7700', 'aSampleMasterKey')
+client = MeiliSearch::Client.new('MEILISEARCH_URL', 'aSampleMasterKey')
 
 movies_json = File.read('movies.json')
 movies = JSON.parse(movies_json)
@@ -131,7 +131,7 @@ import (
 )
 
 func main() {
-  client := meilisearch.New("http://localhost:7700", meilisearch.WithAPIKey("masterKey"))
+  client := meilisearch.New("MEILISEARCH_URL", meilisearch.WithAPIKey("masterKey"))
 
   jsonFile, _ := os.Open("movies.json")
   defer jsonFile.Close()
@@ -173,7 +173,7 @@ namespace Meilisearch_demo
     {
         static async Task Main(string[] args)
         {
-            MeilisearchClient client = new MeilisearchClient("http://localhost:7700", "aSampleMasterKey");
+            MeilisearchClient client = new MeilisearchClient("MEILISEARCH_URL", "aSampleMasterKey");
             var options = new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true
@@ -235,7 +235,7 @@ use std::{io::prelude::*, fs::File};
 use futures::executor::block_on;
 
 fn main() { block_on(async move {
-  let client = Client::new("http://localhost:7700", Some("aSampleMasterKey"));
+  let client = Client::new("MEILISEARCH_URL", Some("aSampleMasterKey"));
 
   // Reading and parsing the file
   let mut file = File::open("movies.json")
@@ -265,7 +265,7 @@ dependencies: [
 // In your .swift file:
 let path = Bundle.main.url(forResource: "movies", withExtension: "json")!
 let documents: Data = try Data(contentsOf: path)
-let client = try MeiliSearch(host: "http://localhost:7700", apiKey: "aSampleMasterKey")
+let client = try MeiliSearch(host: "MEILISEARCH_URL", apiKey: "aSampleMasterKey")
 
 client.index("movies").addDocuments(documents: documents) { (result) in
     switch result {

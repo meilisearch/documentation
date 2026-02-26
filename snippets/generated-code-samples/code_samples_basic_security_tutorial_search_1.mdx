@@ -9,7 +9,7 @@ curl \
 ```
 
 ```rust Rust
-let client = Client::new("http://localhost:7700", Some("DEFAULT_SEARCH_API_KEY"));
+let client = Client::new("MEILISEARCH_URL", Some("DEFAULT_SEARCH_API_KEY"));
 let index = client.index("medical_records");
 index
   .search()

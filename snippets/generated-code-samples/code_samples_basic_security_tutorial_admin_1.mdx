@@ -12,7 +12,7 @@ curl \
 ```
 
 ```rust Rust
-let client = Client::new("http://localhost:7700", Some("DEFAULT_ADMIN_API_KEY"));
+let client = Client::new("MEILISEARCH_URL", Some("DEFAULT_ADMIN_API_KEY"));
 let task = client
   .create_index("medical_records", Some("id"))
   .await

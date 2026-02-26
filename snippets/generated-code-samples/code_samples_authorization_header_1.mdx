@@ -7,17 +7,17 @@ curl \
 ```
 
 ```javascript JS
-const client = new MeiliSearch({ host: 'http://localhost:7700', apiKey: 'masterKey' })
+const client = new MeiliSearch({ host: 'MEILISEARCH_URL', apiKey: 'masterKey' })
 client.getKeys()
 ```
 
 ```python Python
-client = Client('http://localhost:7700', 'masterKey')
+client = Client('MEILISEARCH_URL', 'masterKey')
 client.get_keys()
 ```
 
 ```php PHP
-$client = new Client('http://localhost:7700', 'masterKey');
+$client = new Client('MEILISEARCH_URL', 'masterKey');
 $client->getKeys();
 ```
 
@@ -27,26 +27,26 @@ client.getKeys();
 ```
 
 ```ruby Ruby
-client = MeiliSearch::Client.new('http://localhost:7700', 'masterKey')
+client = MeiliSearch::Client.new('MEILISEARCH_URL', 'masterKey')
 client.keys
 ```
 
 ```go Go
-client := meilisearch.New("http://localhost:7700", meilisearch.WithAPIKey("masterKey"))
+client := meilisearch.New("MEILISEARCH_URL", meilisearch.WithAPIKey("masterKey"))
 client.GetKeys(nil);
 ```
 
 ```csharp C#
-MeilisearchClient client = new MeilisearchClient("http://localhost:7700", "masterKey");
+MeilisearchClient client = new MeilisearchClient("MEILISEARCH_URL", "masterKey");
 var keys = await client.GetKeysAsync();
 ```
 
 ```rust Rust
-let client = Client::new("http://localhost:7700", Some("MASTER_KEY")); let keys = client .get_keys() .await .unwrap();
+let client = Client::new("MEILISEARCH_URL", Some("MASTER_KEY")); let keys = client .get_keys() .await .unwrap();
 ```
 
 ```swift Swift
-client = try MeiliSearch(host: "http://localhost:7700", apiKey: "masterKey")
+client = try MeiliSearch(host: "MEILISEARCH_URL", apiKey: "masterKey")
 client.getKeys { result in
     switch result {
     case .success(let keys):

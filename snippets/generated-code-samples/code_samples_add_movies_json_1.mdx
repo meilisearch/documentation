@@ -82,7 +82,7 @@ use std::{io::prelude::*, fs::File};
 use futures::executor::block_on;
 
 fn main() { block_on(async move {
-  let client = Client::new("http://localhost:7700", Some("masterKey"));
+  let client = Client::new("MEILISEARCH_URL", Some("masterKey"));
 
   // reading and parsing the file
   let mut file = File::open("movies.json")

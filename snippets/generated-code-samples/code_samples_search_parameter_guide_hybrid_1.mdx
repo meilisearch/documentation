@@ -9,6 +9,15 @@ client.index('INDEX_NAME').search('kitchen utensils', {
 })
 ```
 
+```python Python
+client.index('books').search('kitchen utensils', {
+  "hybrid": {
+    "semanticRatio": 0.9,
+    "embedder": 'EMBEDDER_NAME'
+  }
+})
+```
+
 ```php PHP
 $client->index('INDEX_NAME')->search('kitchen utensils', [
   'hybrid' => [

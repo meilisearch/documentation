@@ -11,6 +11,15 @@ curl -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
   }'
 ```
 
+```python Python
+client.index('books').search('',{
+  "vector": [0, 1, 2],
+  "hybrid": {
+    "embedder": "EMBEDDER_NAME"
+  }
+})
+```
+
 ```rust Rust
 let results = index
   .search()

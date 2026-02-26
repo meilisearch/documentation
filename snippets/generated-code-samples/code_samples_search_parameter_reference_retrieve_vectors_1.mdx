@@ -9,6 +9,15 @@ client.index('INDEX_NAME').search('kitchen utensils', {
 })
 ```
 
+```python Python
+client.index('INDEX_NAME').search('kitchen utensils', {
+  "retrieveVectors": True,
+  "hybrid": {
+    "embedder": "EMBEDDER_NAME"
+  }
+})
+```
+
 ```php PHP
 $client->index('INDEX_NAME')->search('kitchen utensils', [
   'retrieveVectors' => true,

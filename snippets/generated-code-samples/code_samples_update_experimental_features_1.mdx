@@ -9,6 +9,10 @@ curl \
   }'
 ```
 
+```python Python
+client.update_experimental_features({"metrics": True})
+```
+
 ```ruby Ruby
 client.update_experimental_features(metrics: true)
 ```
@@ -18,7 +22,7 @@ client.ExperimentalFeatures().SetMetrics(true).Update()
 ```
 
 ```rust Rust
-let client = Client::new("http://localhost:7700", Some("apiKey"));
+let client = Client::new("MEILISEARCH_URL", Some("apiKey"));
 let features = ExperimentalFeatures::new(&client);
 features.set_metrics(true)
 let res = features

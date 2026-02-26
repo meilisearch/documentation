@@ -5,6 +5,10 @@ curl \
   -X GET 'MEILISEARCH_URL/experimental-features/'
 ```
 
+```python Python
+client.get_experimental_features()
+```
+
 ```ruby Ruby
 client.experimental_features
 ```
@@ -14,7 +18,7 @@ client.ExperimentalFeatures().Get()
 ```
 
 ```rust Rust
-let client = Client::new("http://localhost:7700", Some("apiKey"));
+let client = Client::new("MEILISEARCH_URL", Some("apiKey"));
 let features = ExperimentalFeatures::new(&client);
 let res = features
   .get()
