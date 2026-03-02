@@ -780,6 +780,10 @@
           {
             "lang": "Java",
             "source": "Map<String, ExportIndexFilter> indexes = new HashMap<>();\nindexes.put(\"*\", ExportIndexFilter.builder().overrideSettings(true).build());\nExportRequest request = ExportRequest.builder().url(\"TARGET_INSTANCE_URL\").indexes(indexes).build();\nclient.export(request);"
+          },
+          {
+            "lang": "Dart",
+            "source": "await client.export(\n  ExportQuery(\n    url: 'new_instance_url',\n    apiKey: 'new_instance_api_key',\n    payloadSize: \"100 MiB\",\n  ),\n);"
           }
         ]
       }
@@ -1338,7 +1342,7 @@
           },
           {
             "lang": "Dart",
-            "source": "await client.index('movies').delete();\nget_one_document_1: \"await client.index('movies').getDocument(25684,\\n    fields: ['id', 'title', 'poster', 'release_date']);\""
+            "source": "await client.index('movies').delete();"
           },
           {
             "lang": "Swift",
@@ -1798,6 +1802,10 @@
             "source": "let index = client.index(\"movies\");\nlet documents: DocumentsResults = DocumentsQuery::new(&index)\n  .with_filter(\"genres = action\")\n  .with_limit(2)\n  .execute::<Movies>()\n  .await\n  .unwrap();"
           },
           {
+            "lang": "Dart",
+            "source": "await client.index('movies').getDocuments(\n      params: DocumentsQuery(\n        limit: 2,\n        filter: Meili.attr('genres').eq('action'.toMeiliValue()),\n      ),\n    );"
+          },
+          {
             "lang": "Swift",
             "source": "client.index(\"movies\").getDocuments(params: DocumentsQuery(limit: 2)) { (result: Result<DocumentsResults<Movie>, Swift.Error>) in\n    switch result {\n    case .success(let movies):\n        print(movies)\n    case .failure(let error):\n        print(error)\n    }\n}"
           }
@@ -1967,6 +1975,10 @@
           {
             "lang": "Rust",
             "source": "// Define the type of our documents\n#[derive(Serialize, Deserialize)]\nstruct IncompleteMovie {\n  id: usize,\n  title: String,\n  genres: String\n}\n\nlet task: TaskInfo = client\n  .index(\"movies\")\n  .add_or_update(&[\n    IncompleteMovie {\n      id: 287947,\n      title: \"Shazam ⚡️\".to_string(),\n      genres: \"comedy\".to_string()\n    }\n  ], None)\n  .await\n  .unwrap();"
+          },
+          {
+            "lang": "Dart",
+            "source": "await client.index('movies').updateDocuments([\n  {\n    'id': 287947,\n    'title': 'Shazam ⚡️',\n    'genres': 'comedy',\n  }\n]);"
           },
           {
             "lang": "Swift",
@@ -2141,7 +2153,7 @@
           },
           {
             "lang": "Dart",
-            "source": "await client.index('movies').addDocuments([\n  {\n    'id': 287947,\n    'title': 'Shazam',\n    'poster':\n        'https://image.tmdb.org/t/p/w1280/xnopI5Xtky18MPhK40cZAGAOVeV.jpg',\n    'overview':\n        'A boy is given the ability to become an adult superhero in times of need with a single magic word.',\n    'release_date': '2019-03-23'\n  }\n]);\nadd_or_update_documents_1: \"await client.index('movies').updateDocuments([\\n  {\\n    'id': 287947,\\n    'title': 'Shazam ⚡️',\\n    'genres': 'comedy',\\n  }\\n]);\""
+            "source": "await client.index('movies').addDocuments([\n  {\n    'id': 287947,\n    'title': 'Shazam',\n    'poster':\n        'https://image.tmdb.org/t/p/w1280/xnopI5Xtky18MPhK40cZAGAOVeV.jpg',\n    'overview':\n        'A boy is given the ability to become an adult superhero in times of need with a single magic word.',\n    'release_date': '2019-03-23'\n  }\n]);"
           },
           {
             "lang": "Swift",
@@ -2402,6 +2414,10 @@
           {
             "lang": "Rust",
             "source": "let index = client.index(\"movies\");\nlet task = DocumentDeletionQuery::new(&index)\n  .with_filter(\"genres = action OR genres = adventure\")\n  .execute()\n  .await\n  .unwrap();"
+          },
+          {
+            "lang": "Dart",
+            "source": "await client.index('movies').deleteDocuments(\n      DeleteDocumentsQuery(\n        filterExpression: Meili.or([\n          Meili.attr('genres').eq(Meili.value('action')),\n          Meili.attr('genres').eq(Meili.value('adventure')),\n        ]),\n      ),\n    );"
           }
         ]
       }
@@ -2533,6 +2549,10 @@
           {
             "lang": "Rust",
             "source": "let task: TaskInfo = client\n  .index(\"movies\")\n  .delete_documents(&[23488, 153738, 437035, 363869])\n  .await\n  .unwrap();"
+          },
+          {
+            "lang": "Dart",
+            "source": "await client.index('movies').deleteDocuments(\n      DeleteDocumentsQuery(\n        ids: [23488, 153738, 437035, 363869],\n      ),\n    );"
           }
         ]
       }
@@ -2780,6 +2800,10 @@
           {
             "lang": "Rust",
             "source": "let index = client.index(\"books\");\nlet documents: DocumentsResults = DocumentsQuery::new(&index)\n  .with_filter(\"(rating > 3 AND (genres = Adventure OR genres = Fiction)) AND language = English\")\n  .with_fields([\"title\", \"genres\", \"rating\", \"language\"])\n  .with_limit(2)\n  .execute::<Movies>()\n  .await\n  .unwrap();"
+          },
+          {
+            "lang": "Dart",
+            "source": "await client.index('movies').getDocuments(\n      params: DocumentsQuery(\n        filterExpression: Meili.and([\n          'language'.toMeiliAttribute().eq('English'.toMeiliValue()),\n          Meili.and([\n            'rating'.toMeiliAttribute().gt(3.toMeiliValue()),\n            Meili.or([\n              'genres'.toMeiliAttribute().eq('Adventure'.toMeiliValue()),\n              'genres'.toMeiliAttribute().eq('Fiction'.toMeiliValue()),\n            ]),\n          ]),\n        ]),\n        fields: ['title', 'genres', 'rating', 'language'],\n        limit: 3,\n      ),\n    );"
           }
         ]
       }
@@ -2931,6 +2955,10 @@
             "source": "let index = client\n  .index(\"movies\");\nlet document = DocumentQuery::new(&index)\n  .with_fields([\"id\", \"title\", \"poster\", \"release_date\"])\n  .execute::<Movie>(\"25684\")\n  .await\n  .unwrap();"
           },
           {
+            "lang": "Dart",
+            "source": "await client.index('movies').getDocument(25684,\n    fields: ['id', 'title', 'poster', 'release_date']);"
+          },
+          {
             "lang": "Swift",
             "source": "client.index(\"movies\").getDocument(25684) { (result: Result<Movie, Swift.Error>) in\n    switch result {\n    case .success(let movie):\n        print(movie)\n    case .failure(let error):\n        print(error)\n    }\n}"
           }
@@ -3064,7 +3092,7 @@
           },
           {
             "lang": "Dart",
-            "source": "await client.index('movies').deleteDocument(25684);\ndelete_documents_by_batch_1: \"await client.index('movies').deleteDocuments(\\n      DeleteDocumentsQuery(\\n        ids: [23488, 153738, 437035, 363869],\\n      ),\\n    );\""
+            "source": "await client.index('movies').deleteDocument(25684);"
           },
           {
             "lang": "Swift",
@@ -3214,6 +3242,10 @@
           {
             "lang": "Rust",
             "source": "let res = client.index(\"books\")\n  .facet_search(\"genres\")\n  .with_facet_query(\"fiction\")\n  .with_filter(\"rating > 3\")\n  .execute()\n  .await\n  .unwrap();"
+          },
+          {
+            "lang": "Dart",
+            "source": "await client.index('books').facetSearch(\n      FacetSearchQuery(\n        facetQuery: 'fiction',\n        facetName: 'genres',\n        filter: 'rating > 3',\n      ),\n    );"
           }
         ]
       }
@@ -3789,6 +3821,10 @@
           {
             "lang": "JS",
             "source": "client.index('movies').searchGet('American ninja')"
+          },
+          {
+            "lang": "Dart",
+            "source": "await client.index('movies').search('American ninja');"
           }
         ]
       },
@@ -3927,7 +3963,7 @@
           },
           {
             "lang": "C#",
-            "source": "await client.Index(\"movies\").SearchAsync<Movie>(\"American ninja\");\nget_task_1: |\nTaskInfo task = await client.GetTaskAsync(1);\nget_all_tasks_1: |\nResourceResults<Task> taskResult = await client.GetTasksAsync();"
+            "source": "await client.Index(\"movies\").SearchAsync<Movie>(\"American ninja\");"
           },
           {
             "lang": "Rust",
@@ -4057,7 +4093,7 @@
           },
           {
             "lang": "Dart",
-            "source": "await client.index('movies').getSettings();\nupdate_settings_1: \"await client.index('movies').updateSettings(\\n      IndexSettings(\\n        rankingRules: [\\n          'words',\\n          'typo',\\n          'proximity',\\n          'attribute',\\n          'sort',\\n          'exactness',\\n          'release_date:desc',\\n          'rank:desc'\\n        ],\\n        distinctAttribute: 'movie_id',\\n        searchableAttributes: ['title', 'overview', 'genres'],\\n        displayedAttributes: [\\n          'title',\\n          'overview',\\n          'genres',\\n          'release_date'\\n        ],\\n        stopWords: ['the', 'a', 'an'],\\n        sortableAttributes: ['title', 'release_date'],\\n        synonyms: {\\n          'wolverine': ['xmen', 'logan'],\\n          'logan': ['wolverine'],\\n        },\\n      ),\\n    );\""
+            "source": "await client.index('movies').getSettings();"
           },
           {
             "lang": "Swift",
@@ -4316,6 +4352,10 @@
           {
             "lang": "Rust",
             "source": "let mut synonyms = std::collections::HashMap::new();\nsynonyms.insert(String::from(\"wolverine\"), vec![\"xmen\", \"logan\"]);\nsynonyms.insert(String::from(\"logan\"), vec![\"wolverine\"]);\n\nlet min_word_size_for_typos = MinWordSizeForTypos {\n  one_typo: Some(4),\n  two_typos; Some(12)\n}\nlet typo_tolerance = TypoToleranceSettings {\n  enabled: Some(true),\n  disable_on_attributes: Some(vec![\"title\".to_string()]),\n  disable_on_words: Some(vec![])\n  min_word_size_for_typos: Some(min_word_size_for_typos),\n};\n\nlet settings = Settings::new()\n  .with_ranking_rules([\n    \"words\",\n    \"typo\",\n    \"proximity\",\n    \"attribute\",\n    \"sort\",\n    \"exactness\",\n    \"release_date:desc\",\n    \"rank:desc\"\n  ])\n  .with_distinct_attribute(Some(\"movie_id\"))\n  .with_searchable_attributes([\n    \"title\",\n    \"overview\",\n    \"genres\"\n  ])\n  .with_displayed_attributes([\n    \"title\",\n    \"overview\",\n    \"genres\",\n    \"release_date\"\n  ])\n  .with_stop_words([\n    \"the\",\n    \"a\",\n    \"an\"\n  ])\n  .with_sortable_attributes([\n    \"title\",\n    \"release_date\"\n  ])\n  .with_synonyms(synonyms)\n  .with_typo_tolerance(typo_tolerance)\n  .with_search_cutoff(150);\n\nlet task: TaskInfo = client\n  .index(\"movies\")\n  .set_settings(&settings)\n  .await\n  .unwrap();"
+          },
+          {
+            "lang": "Dart",
+            "source": "await client.index('movies').updateSettings(\n      IndexSettings(\n        rankingRules: [\n          'words',\n          'typo',\n          'proximity',\n          'attribute',\n          'sort',\n          'exactness',\n          'release_date:desc',\n          'rank:desc'\n        ],\n        distinctAttribute: 'movie_id',\n        searchableAttributes: ['title', 'overview', 'genres'],\n        displayedAttributes: [\n          'title',\n          'overview',\n          'genres',\n          'release_date'\n        ],\n        stopWords: ['the', 'a', 'an'],\n        sortableAttributes: ['title', 'release_date'],\n        synonyms: {\n          'wolverine': ['xmen', 'logan'],\n          'logan': ['wolverine'],\n        },\n      ),\n    );"
           },
           {
             "lang": "Swift",
@@ -5084,7 +5124,7 @@
           },
           {
             "lang": "Dart",
-            "source": "await client.index('movies').getDisplayedAttributes();\nupdate_displayed_attributes_1: \"await client.index('movies').updateDisplayedAttributes([\\n  'title',\\n  'overview',\\n  'genres',\\n  'release_date',\\n]);\""
+            "source": "await client.index('movies').getDisplayedAttributes();"
           },
           {
             "lang": "Swift",
@@ -5222,6 +5262,10 @@
             "source": "let displayed_attributes = [\n  \"title\",\n  \"overview\",\n  \"genres\",\n  \"release_date\"\n];\n\nlet task: TaskInfo = client\n  .index(\"movies\")\n  .set_displayed_attributes(&displayed_attributes)\n  .await\n  .unwrap();"
           },
           {
+            "lang": "Dart",
+            "source": "await client.index('movies').updateDisplayedAttributes([\n  'title',\n  'overview',\n  'genres',\n  'release_date',\n]);"
+          },
+          {
             "lang": "Swift",
             "source": "let displayedAttributes: [String] = [\"title\", \"overview\", \"genres\", \"release_date\"]\nclient.index(\"movies\").updateDisplayedAttributes(displayedAttributes) { (result) in\n    switch result {\n    case .success(let task):\n        print(task)\n    case .failure(let error):\n        print(error)\n    }\n}"
           }
@@ -5325,7 +5369,7 @@
           },
           {
             "lang": "Java",
-            "source": "client.index(\"movies\").resetDisplayedAttributesSettings();\nget_typo_tolerance_1:\nclient.index(\"books\").getTypoToleranceSettings();"
+            "source": "client.index(\"movies\").resetDisplayedAttributesSettings();"
           },
           {
             "lang": "Ruby",
@@ -6507,7 +6551,7 @@
           },
           {
             "lang": "Dart",
-            "source": "await client.index('movies').getFaceting();\nupdate_faceting_settings_1: \"await client.index('books').updateFaceting(Faceting(\\n        maxValuesPerFacet: 2,\\n        sortFacetValuesBy: {\\n          '*': FacetingSortTypes.alpha,\\n          'genres': FacetingSortTypes.count\\n        }));\""
+            "source": "await client.index('movies').getFaceting();"
           }
         ]
       },
@@ -6758,6 +6802,10 @@
           {
             "lang": "Rust",
             "source": "let mut facet_sort_setting = BTreeMap::new();\nfacet_sort_setting.insert(String::from(\"*\"), FacetSortValue::Alpha);\nfacet_sort_setting.insert(String::from(\"genres\"), FacetSortValue::Count);\nlet mut faceting = FacetingSettings {\n  max_values_per_facet: 2,\n  sort_facet_values_by: Some(facet_sort_setting),\n};\n\nlet task: TaskInfo = client\n  .index(\"books\")\n  .set_faceting(&faceting)\n  .await\n  .unwrap();"
+          },
+          {
+            "lang": "Dart",
+            "source": "await client.index('books').updateFaceting(Faceting(\n        maxValuesPerFacet: 2,\n        sortFacetValuesBy: {\n          '*': FacetingSortTypes.alpha,\n          'genres': FacetingSortTypes.count\n        }));"
           }
         ]
       }
@@ -6878,7 +6926,7 @@
           },
           {
             "lang": "Dart",
-            "source": "await client.index('movies').getFilterableAttributes();\nupdate_filterable_attributes_1: \"await client\\n    .index('movies')\\n    .updateFilterableAttributes(['genres', 'director']);\""
+            "source": "await client.index('movies').getFilterableAttributes();"
           },
           {
             "lang": "Swift",
@@ -7014,6 +7062,10 @@
           {
             "lang": "Rust",
             "source": "use meilisearch_sdk::settings::{\n  FilterableAttribute,\n  FilterableAttributesSettings,\n  FilterFeatures,\n  FilterFeatureModes,\n};\n\n// Mixed legacy + new syntax\nlet filterable_attributes: Vec<FilterableAttribute> = vec![\n  // legacy: plain attribute name\n  \"author\".into(),\n  // new syntax: settings object\n  FilterableAttribute::Settings(FilterableAttributesSettings {\n    attribute_patterns: vec![\"genre\".to_string()],\n    features: FilterFeatures {\n      facet_search: true,\n      filter: FilterFeatureModes { equality: true, comparison: false },\n    },\n  }),\n];\n\nlet task: TaskInfo = client\n  .index(\"movies\")\n  .set_filterable_attributes_advanced(filterable_attributes)\n  .await\n  .unwrap();"
+          },
+          {
+            "lang": "Dart",
+            "source": "await client\n    .index('movies')\n    .updateFilterableAttributes(['genres', 'director']);"
           },
           {
             "lang": "Swift",
@@ -7618,6 +7670,10 @@
             "source": "let task: TaskInfo = client\n  .index('articles')\n  .get_non_separator_tokens()\n  .await\n  .unwrap();"
           },
           {
+            "lang": "Dart",
+            "source": "await client.index('articles').getNonSeparatorTokens();"
+          },
+          {
             "lang": "Swift",
             "source": "client.index(\"books\").getNonSeparatorTokens { result in\n  // handle result\n}"
           }
@@ -7754,6 +7810,10 @@
             "source": "let task: TaskInfo = client\n  .index('articles')\n  .set_non_separator_tokens(&vec!['@'.to_string(), '#'.to_string()])\n  .await\n  .unwrap();"
           },
           {
+            "lang": "Dart",
+            "source": "await client.index('articles').updateNonSeparatorTokens([\"@\", \"#\"]);"
+          },
+          {
             "lang": "Swift",
             "source": "client.index(\"books\").updateNonSeparatorTokens([\"@\", \"#\"]) { result in\n  // handle result\n}"
           }
@@ -7876,6 +7936,10 @@
             "source": "let task: TaskInfo = client\n  .index('articles')\n  .reset_non_separator_tokens()\n  .await\n  .unwrap();"
           },
           {
+            "lang": "Dart",
+            "source": "await client.index('articles').resetNonSeparatorTokens();"
+          },
+          {
             "lang": "Swift",
             "source": "client.index(\"books\").resetNonSeparatorTokens { result in\n  // handle result\n}"
           }
@@ -7995,7 +8059,7 @@
           },
           {
             "lang": "Dart",
-            "source": "await client.index('movies').getPagination();\nupdate_pagination_settings_1: \"await client\\n    .index('books')\\n    .updatePagination(Pagination(maxTotalHits: 100));\""
+            "source": "await client.index('movies').getPagination();"
           }
         ]
       },
@@ -8246,6 +8310,10 @@
           {
             "lang": "Rust",
             "source": "let pagination = PaginationSetting {max_total_hits:100};\n\nlet task: TaskInfo = client\n  .index(\"books\")\n  .set_pagination(pagination)\n  .await\n  .unwrap();"
+          },
+          {
+            "lang": "Dart",
+            "source": "await client\n    .index('books')\n    .updatePagination(Pagination(maxTotalHits: 100));"
           }
         ]
       }
@@ -9074,7 +9142,7 @@
           },
           {
             "lang": "Dart",
-            "source": "await client.index('movies').getRankingRules();\nupdate_ranking_rules_1: \"await client.index('movies').updateRankingRules([\\n  'words',\\n  'typo',\\n  'proximity',\\n  'attribute',\\n  'sort',\\n  'exactness',\\n  'release_date:asc',\\n  'rank:desc',\\n]);\""
+            "source": "await client.index('movies').getRankingRules();"
           },
           {
             "lang": "Swift",
@@ -9210,6 +9278,10 @@
           {
             "lang": "Rust",
             "source": "let ranking_rules = [\n  \"words\",\n  \"typo\",\n  \"proximity\",\n  \"attribute\",\n  \"sort\",\n  \"exactness\",\n  \"release_date:asc\",\n  \"rank:desc\",\n];\n\nlet task: TaskInfo = client\n  .index(\"movies\")\n  .set_ranking_rules(&ranking_rules)\n  .await\n  .unwrap();"
+          },
+          {
+            "lang": "Dart",
+            "source": "await client.index('movies').updateRankingRules([\n  'words',\n  'typo',\n  'proximity',\n  'attribute',\n  'sort',\n  'exactness',\n  'release_date:asc',\n  'rank:desc',\n]);"
           },
           {
             "lang": "Swift",
@@ -9836,7 +9908,7 @@
           },
           {
             "lang": "Dart",
-            "source": "await client.index('movies').getSearchableAttributes();\nupdate_searchable_attributes_1: \"await client\\n    .index('movies')\\n    .updateSearchableAttributes(['title', 'overview', 'genres']);\""
+            "source": "await client.index('movies').getSearchableAttributes();"
           },
           {
             "lang": "Swift",
@@ -9972,6 +10044,10 @@
           {
             "lang": "Rust",
             "source": "let searchable_attributes = [\n  \"title\",\n  \"overview\",\n  \"genres\"\n];\n\nlet task: TaskInfo = client\n  .index(\"movies\")\n  .set_searchable_attributes(&searchable_attributes)\n  .await\n  .unwrap();"
+          },
+          {
+            "lang": "Dart",
+            "source": "await client\n    .index('movies')\n    .updateSearchableAttributes(['title', 'overview', 'genres']);"
           },
           {
             "lang": "Swift",
@@ -10222,6 +10298,10 @@
             "source": "let task: TaskInfo = client\n  .index('articles')\n  .get_separator_tokens()\n  .await\n  .unwrap();"
           },
           {
+            "lang": "Dart",
+            "source": "await client.index('articles').getSeparatorTokens();"
+          },
+          {
             "lang": "Swift",
             "source": "client.index(\"books\").getSeparatorTokens { result in\n  // handle result\n}"
           }
@@ -10358,6 +10438,10 @@
             "source": "let task: TaskInfo = client\n  .index('articles')\n  .set_separator_tokens(&vec!['|'.to_string(), '&hellip;'.to_string()])\n  .await\n  .unwrap();"
           },
           {
+            "lang": "Dart",
+            "source": "await client.index('articles').updateSeparatorTokens([\"|\", \"&hellip;\"]);"
+          },
+          {
             "lang": "Swift",
             "source": "client.index(\"books\").updateSeparatorTokens([\"|\", \"&hellip;\"]) { result in\n  // handle result\n}"
           }
@@ -10478,6 +10562,10 @@
           {
             "lang": "Rust",
             "source": "let task: TaskInfo = client\n  .index('articles')\n  .reset_separator_tokens()\n  .await\n  .unwrap();"
+          },
+          {
+            "lang": "Dart",
+            "source": "await client.index('articles').resetSeparatorTokens();"
           },
           {
             "lang": "Swift",
@@ -10603,7 +10691,7 @@
           },
           {
             "lang": "Dart",
-            "source": "await client.index('books').getSortableAttributes();\nupdate_sortable_attributes_1: \"await client.index('books').updateSortableAttributes(['price', 'author']);\""
+            "source": "await client.index('books').getSortableAttributes();"
           },
           {
             "lang": "Swift",
@@ -10740,6 +10828,10 @@
           {
             "lang": "Rust",
             "source": "let sortable_attributes = [\n  \"price\",\n  \"author\"\n];\n\nlet task: TaskInfo = client\n  .index(\"books\")\n  .set_sortable_attributes(&sortable_attributes)\n  .await\n  .unwrap();"
+          },
+          {
+            "lang": "Dart",
+            "source": "await client.index('books').updateSortableAttributes(['price', 'author']);"
           },
           {
             "lang": "Swift",
@@ -11388,7 +11480,7 @@
           },
           {
             "lang": "Dart",
-            "source": "await client.index('movies').getSynonyms();\nupdate_synonyms_1: \"await client.index('movies').updateSynonyms({\\n  'wolverine': ['xmen', 'logan'],\\n  'logan': ['wolverine', 'xmen'],\\n  'wow': ['world of warcraft'],\\n});\""
+            "source": "await client.index('movies').getSynonyms();"
           },
           {
             "lang": "Swift",
@@ -11530,6 +11622,10 @@
           {
             "lang": "Rust",
             "source": "let mut synonyms = std::collections::HashMap::new();\nsynonyms.insert(String::from(\"wolverine\"), vec![String::from(\"xmen\"), String::from(\"logan\")]);\nsynonyms.insert(String::from(\"logan\"), vec![String::from(\"xmen\"), String::from(\"wolverine\")]);\nsynonyms.insert(String::from(\"wow\"), vec![String::from(\"world of warcraft\")]);\n\nlet task: TaskInfo = client\n  .index(\"movies\")\n  .set_synonyms(&synonyms)\n  .await\n  .unwrap();"
+          },
+          {
+            "lang": "Dart",
+            "source": "await client.index('movies').updateSynonyms({\n  'wolverine': ['xmen', 'logan'],\n  'logan': ['wolverine', 'xmen'],\n  'wow': ['world of warcraft'],\n});"
           },
           {
             "lang": "Swift",
@@ -11756,12 +11852,20 @@
             "source": "client.index('books').get_typo_tolerance()"
           },
           {
+            "lang": "Java",
+            "source": "client.index(\"books\").getTypoToleranceSettings();"
+          },
+          {
             "lang": "Ruby",
             "source": "index('books').typo_tolerance"
           },
           {
             "lang": "Go",
             "source": "client.Index(\"books\").GetTypoTolerance()"
+          },
+          {
+            "lang": "C#",
+            "source": "await client.Index(\"books\").GetTypoToleranceAsync();"
           },
           {
             "lang": "Rust",
@@ -12359,6 +12463,10 @@
             "source": "client.index(\"INDEX_NAME\").get_similar_documents({\"id\": \"TARGET_DOCUMENT_ID\", \"embedder\": \"default\"})"
           },
           {
+            "lang": "Java",
+            "source": "SimilarDocumentRequest query = new SimilarDocumentRequest() .setId(\"143\") .setEmbedder(\"manual\"); client.index(\"movies\").searchSimilarDocuments(query)"
+          },
+          {
             "lang": "Ruby",
             "source": "client.index('INDEX_NAME').search_similar_documents('TARGET_DOCUMENT_ID', embedder: 'default')"
           },
@@ -12636,7 +12744,7 @@
           },
           {
             "lang": "Dart",
-            "source": "await client.getKeys(params: KeysQuery(limit: 3));\ncreate_a_key_1: \"await client.createKey(\\n    description: 'Add documents: Products API key',\\n    actions: ['documents.add'],\\n    indexes: ['products'],\\n    expiresAt: DateTime(2042, 04, 02));\"\nupdate_a_key_1: \"await client.updateKey(\\n  '6062abda-a5aa-4414-ac91-ecd7944c0f8d',\\n  description: 'Manage documents: Products\\/Reviews API key',\\n  name: 'Products\\/Reviews API key',\\n);\""
+            "source": "await client.getKeys(params: KeysQuery(limit: 3));"
           },
           {
             "lang": "Swift",
@@ -12749,6 +12857,10 @@
           {
             "lang": "Rust",
             "source": "let mut key_options = KeyBuilder::new();\nkey_options\n  .with_name(\"Add documents: Products API key\")\n  .with_action(Action::DocumentsAdd)\n  .with_expires_at(time::macros::datetime!(2042 - 04 - 02 00:42:42 UTC))\n  .with_index(\"products\");\nlet new_key = client\n  .create_key(key_options)\n  .await\n  .unwrap();"
+          },
+          {
+            "lang": "Dart",
+            "source": "await client.createKey(\n    description: 'Add documents: Products API key',\n    actions: ['documents.add'],\n    indexes: ['products'],\n    expiresAt: DateTime(2042, 04, 02));"
           },
           {
             "lang": "Swift",
@@ -12994,7 +13106,7 @@
           },
           {
             "lang": "Rust",
-            "source": "let key = client\n  .get_key(\"6062abda-a5aa-4414-ac91-ecd7944c0f8d\")\n  .await\n  .unwrap();\nclient\n  .delete_key(&key)\n  .await?;\nauthorization_header_1:\nlet client = Client::new(\"MEILISEARCH_URL\", Some(\"MASTER_KEY\"));\nlet keys = client\n.get_keys()\n.await\n.unwrap();"
+            "source": "let key = client\n  .get_key(\"6062abda-a5aa-4414-ac91-ecd7944c0f8d\")\n  .await\n  .unwrap();\nclient\n  .delete_key(&key)\n  .await?;"
           },
           {
             "lang": "Dart",
@@ -13140,6 +13252,10 @@
           {
             "lang": "Rust",
             "source": "let mut key = client\n  .get_key(\"6062abda-a5aa-4414-ac91-ecd7944c0f8d\")\n  .await\n  .unwrap();\nkey\n    .with_description(\"Manage documents: Products/Reviews API key\".to_string())\n    .with_name(\"Products/Reviews API key\".to_string())\n    .update(&client)\n    .await\n    .unwrap();"
+          },
+          {
+            "lang": "Dart",
+            "source": "await client.updateKey(\n  '6062abda-a5aa-4414-ac91-ecd7944c0f8d',\n  description: 'Manage documents: Products/Reviews API key',\n  name: 'Products/Reviews API key',\n);"
           },
           {
             "lang": "Swift",
@@ -13482,7 +13598,7 @@
           },
           {
             "lang": "Java",
-            "source": "MultiSearchRequest multiSearchRequest = new MultiSearchRequest();\nmultiIndexSearch.addQuery(new IndexSearchRequest(\"movies\").setQuery(\"pooh\").setLimit(5));\nmultiIndexSearch.addQuery(new IndexSearchRequest(\"movies\").setQuery(\"nemo\").setLimit(5));\nmultiIndexSearch.addQuery(new IndexSearchRequest(\"movie_ratings\").setQuery(\"us\"));\n\nclient.multiSearch(multiSearchRequest);\nget_similar_post_1: SimilarDocumentRequest query = new SimilarDocumentRequest()\n.setId(\"143\")\n.setEmbedder(\"manual\");\nclient.index(\"movies\").searchSimilarDocuments(query)"
+            "source": "MultiSearchRequest multiSearchRequest = new MultiSearchRequest();\nmultiIndexSearch.addQuery(new IndexSearchRequest(\"movies\").setQuery(\"pooh\").setLimit(5));\nmultiIndexSearch.addQuery(new IndexSearchRequest(\"movies\").setQuery(\"nemo\").setLimit(5));\nmultiIndexSearch.addQuery(new IndexSearchRequest(\"movie_ratings\").setQuery(\"us\"));\n\nclient.multiSearch(multiSearchRequest);"
           },
           {
             "lang": "Ruby",
@@ -13499,6 +13615,10 @@
           {
             "lang": "Rust",
             "source": "let movie = client.index(\"movie\");\nlet movie_ratings = client.index(\"movie_ratings\");\n\nlet search_query_1 = SearchQuery::new(&movie)\n    .with_query(\"pooh\")\n    .with_limit(5)\n    .build();\nlet search_query_2 = SearchQuery::new(&movie)\n    .with_query(\"nemo\")\n    .with_limit(5)\n    .build();\nlet search_query_3 = SearchQuery::new(&movie_ratings)\n    .with_query(\"us\")\n    .build();\n\nlet response = client\n    .multi_search()\n    .with_search_query(search_query_1)\n    .with_search_query(search_query_2)\n    .with_search_query(search_query_3)\n    .execute::<Document>()\n    .await\n    .unwrap();"
+          },
+          {
+            "lang": "Dart",
+            "source": "await client.multiSearch(MultiSearchQuery(queries: [\n  IndexSearchQuery(query: 'pooh', indexUid: 'movies', limit: 5),\n  IndexSearchQuery(query: 'nemo', indexUid: 'movies', limit: 5),\n  IndexSearchQuery(query: 'us', indexUid: 'movies_ratings'),\n]));"
           }
         ]
       }
@@ -13996,6 +14116,10 @@
             "source": "client.swap_indexes([\n  &SwapIndexes {\n    indexes: (\n        \"indexA\".to_string(),\n        \"indexB\".to_string(),\n    ),\n  }, &SwapIndexes {\n    indexes: (\n        \"indexX\".to_string(),\n        \"indexY\".to_string(),\n    ),\n}])"
           },
           {
+            "lang": "Dart",
+            "source": "await client.swapIndexes([\n  SwapIndex(['indexA', 'indexB']),\n  SwapIndex(['indexX', 'indexY']),\n]);"
+          },
+          {
             "lang": "Swift",
             "source": "let task = try await self.client.swapIndexes([\n  (\"indexA\", \"indexB\"),\n  (\"indexX\", \"indexY\")\n])"
           }
@@ -14291,6 +14415,10 @@
           {
             "lang": "Go",
             "source": "client.GetTasks(nil);"
+          },
+          {
+            "lang": "C#",
+            "source": "ResourceResults<Task> taskResult = await client.GetTasksAsync();"
           },
           {
             "lang": "Rust",
@@ -14874,7 +15002,7 @@
           },
           {
             "lang": "Dart",
-            "source": "await client.cancelTasks(params: CancelTasksQuery(uids: [1, 2]));\nswap_indexes_1: \"await client.swapIndexes([\\n  SwapIndex(['indexA', 'indexB']),\\n  SwapIndex(['indexX', 'indexY']),\\n]);\"\nsynonyms_guide_1: \"await client.index('movies').updateSynonyms({\\n  'great': ['fantastic'],\\n  'fantastic': ['great'],\\n});\"\ndate_guide_index_1: \"\\/\\/import 'dart:io';\\n\\/\\/import 'dart:convert';\\nfinal json = await File('games.json').readAsString();\\nawait client.index('games').addDocumentsJson(json);\"\ndate_guide_filterable_attributes_1: \"await client\\n    .index('games')\\n    .updateFilterableAttributes(['release_timestamp']);\"\ndate_guide_filter_1: \"await client.index('games').search(\\n      '',\\n      SearchQuery(\\n        filterExpression: Meili.and([\\n          Meili.gte(\\n            'release_timestamp'.toMeiliAttribute(),\\n            Meili.value(DateTime(2017, 12, 31, 23, 0)),\\n          ),\\n          Meili.lt(\\n            'release_timestamp'.toMeiliAttribute(),\\n            Meili.value(DateTime(2022, 12, 31, 23, 0)),\\n          ),\\n        ]),\\n      ),\\n    );\"\ndate_guide_sortable_attributes_1: \"await client\\n    .index('games')\\n    .updateSortableAttributes(['release_timestamp']);\"\ndate_guide_sort_1: \"await client\\n    .index('games')\\n    .search('', SearchQuery(sort: ['release_timestamp:desc']));\""
+            "source": "await client.cancelTasks(params: CancelTasksQuery(uids: [1, 2]));"
           },
           {
             "lang": "Swift",
@@ -14998,6 +15126,10 @@
           {
             "lang": "Go",
             "source": "client.GetTask(1);"
+          },
+          {
+            "lang": "C#",
+            "source": "TaskInfo task = await client.GetTaskAsync(1);"
           },
           {
             "lang": "Rust",
