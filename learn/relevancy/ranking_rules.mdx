@@ -48,19 +48,7 @@ Results are sorted by **increasing distance between matched query terms**. Retur
 
 [It is possible to lower the precision of this ranking rule.](/reference/api/settings/update-proximity-precision) This may significantly improve indexing performance. In a minority of use cases, lowering precision may also lead to lower search relevancy for queries using multiple search terms.
 
-## 4. Attribute rank
-
-Results are sorted according to the **[attribute ranking order](/learn/relevancy/attribute_ranking_order)**. Returns documents that contain query terms in more important attributes first.
-
-This rule evaluates only the attribute ranking order and does not consider the position of matched words within attributes.
-
-## 5. Attribute position
-
-Results are sorted by the **position of query terms within the attributes**. Returns documents that contain query terms closer to the beginning of an attribute first.
-
-This rule evaluates only the position of matched words within attributes and does not consider the attribute ranking order.
-
-## Attribute
+## 4. Attribute
 
 `attribute` is an older built-in ranking rule equivalent to using both `attributeRank` and `wordPosition` together. When you use `attribute`, Meilisearch first sorts results by the attribute ranking order, then uses the position within attributes as a tiebreaker.
 
@@ -70,13 +58,25 @@ You cannot use `attribute` together with `attributeRank` or `wordPosition`. If y
 
 For most use-cases, we recommend using `attributeRank` and `wordPosition` separately. This gives you more control over result ordering by allowing you to place other ranking rules (like `sort` or custom ranking rules) between them.
 
-## 6. Sort
+## 4. Attribute rank
+
+Results are sorted according to the **[attribute ranking order](/learn/relevancy/attribute_ranking_order)**. Returns documents that contain query terms in more important attributes first.
+
+This rule evaluates only the attribute ranking order and does not consider the position of matched words within attributes.
+
+## 5. Sort
 
 Results are sorted **according to parameters decided at query time**. When the `sort` ranking rule is in a higher position, sorting is exhaustive: results will be less relevant but follow the user-defined sorting order more closely. When `sort` is in a lower position, sorting is relevant: results will be very relevant but might not always follow the order defined by the user.
 
 <Note>
 Differently from other ranking rules, sort is only active for queries containing the [`sort` search parameter](/reference/api/search/search-with-post#body-sort). If a search request does not contain `sort`, or if its value is invalid, this rule will be ignored.
 </Note>
+
+## 6. Word position
+
+Results are sorted by the **position of query terms within the attributes**. Returns documents that contain query terms closer to the beginning of an attribute first.
+
+This rule evaluates only the position of matched words within attributes and does not consider the attribute ranking order.
 
 ## 7. Exactness
 
