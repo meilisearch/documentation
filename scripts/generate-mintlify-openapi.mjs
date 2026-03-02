@@ -15,6 +15,7 @@
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
+import yaml from "js-yaml";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = path.resolve(__dirname, "..");
@@ -139,58 +140,27 @@ function buildOpenapiKeyMapping(content) {
 }
 
 /**
- * Parses code samples from a YAML-like file.
- * Sample: line containing ": |-", ID is first word before ":".
- * Value: lines until next ": |-" or line starting with "#" at column 0 or EOF.
- * Dedent by first line's indentation.
+ * Parses code samples from a YAML file (e.g. .code-samples.meilisearch.yaml).
+ * Uses js-yaml so that both YAML value styles are handled correctly:
+ * - Block scalar (e.g. "key: |-" with indented multi-line value)
+ * - Quoted scalar on the same line (e.g. "key: \"string with \\n\"")
+ * Only string values are kept; keys with non-string values are skipped.
  */
 function parseCodeSamplesFromFile(content) {
   const samples = new Map();
-  let currentSampleId = null;
-  const currentLines = [];
-  let baseIndent = null;
-
-  const flush = () => {
-    if (currentSampleId) {
-      const value = currentLines.join("\n").trimEnd();
-      samples.set(currentSampleId, value);
-    }
-    currentSampleId = null;
-    currentLines.length = 0;
-    baseIndent = null;
-  };
-
-  for (const line of content.split(/\r?\n/)) {
-    if (line.includes(": |-")) {
-      flush();
-      const id = line.split(":")[0]?.trim();
-      if (id) currentSampleId = id;
-      continue;
-    }
-
-    if (line.startsWith("#")) {
-      flush();
-      continue;
-    }
-
-    if (currentSampleId != null) {
-      if (line.trim() === "") {
-        if (currentLines.length > 0) currentLines.push("");
-        continue;
+  let data;
+  try {
+    data = yaml.load(content);
+  } catch (err) {
+    throw new Error(`Failed to parse code samples YAML: ${err.message}`);
+  }
+  if (data != null && typeof data === "object" && !Array.isArray(data)) {
+    for (const [id, value] of Object.entries(data)) {
+      if (typeof value === "string") {
+        samples.set(id, value.trimEnd());
       }
-      const indent = line.length - line.trimStart().length;
-      if (baseIndent == null) baseIndent = indent;
-      const dedented = indent >= baseIndent ? line.slice(baseIndent) : line.trimStart();
-      currentLines.push(dedented);
     }
   }
-
-  // Save last sample
-  if (currentSampleId) {
-    const value = currentLines.join("\n").trimEnd();
-    samples.set(currentSampleId, value);
-  }
-
   return samples;
 }
 
