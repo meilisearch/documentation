@@ -11,7 +11,7 @@
       "name": "MIT",
       "identifier": "MIT"
     },
-    "version": "1.36.0"
+    "version": "1.37.0"
   },
   "servers": [
     {
@@ -579,8 +579,7 @@
                   "getTaskDocumentsRoute": false,
                   "compositeEmbedders": false,
                   "chatCompletions": false,
-                  "multimodal": false,
-                  "vectorStoreSetting": false
+                  "multimodal": false
                 }
               }
             }
@@ -658,8 +657,7 @@
                   "getTaskDocumentsRoute": false,
                   "compositeEmbedders": false,
                   "chatCompletions": false,
-                  "multimodal": false,
-                  "vectorStoreSetting": false
+                  "multimodal": false
                 }
               }
             }
@@ -12030,270 +12028,6 @@
         ]
       }
     },
-    "/indexes/{indexUid}/settings/vector-store": {
-      "get": {
-        "tags": [
-          "Settings"
-        ],
-        "summary": "Get vectorStore",
-        "description": "Returns the current value of the `vectorStore` setting for the index.",
-        "operationId": "getvectorStore",
-        "parameters": [
-          {
-            "name": "indexUid",
-            "in": "path",
-            "description": "Unique identifier of the index.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "example": "movies"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Returns the current value of the `vectorStore` setting.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/VectorStoreBackend"
-                },
-                "example": "stable"
-              }
-            }
-          },
-          "401": {
-            "description": "The authorization header is missing.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseError"
-                },
-                "example": {
-                  "message": "The Authorization header is missing. It must use the bearer authorization method.",
-                  "code": "missing_authorization_header",
-                  "type": "auth",
-                  "link": "https://docs.meilisearch.com/errors#missing_authorization_header"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Index not found.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseError"
-                },
-                "example": {
-                  "message": "Index `movies` not found.",
-                  "code": "index_not_found",
-                  "type": "invalid_request",
-                  "link": "https://docs.meilisearch.com/errors#index_not_found"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "Bearer": [
-              "settings.get",
-              "settings.*",
-              "*"
-            ]
-          }
-        ],
-        "x-codeSamples": [
-          {
-            "lang": "cURL",
-            "source": "curl \\\n  -X GET 'MEILISEARCH_URL/indexes/INDEX_UID/settings/vector-store'"
-          }
-        ]
-      },
-      "delete": {
-        "tags": [
-          "Settings"
-        ],
-        "summary": "Reset vectorStore",
-        "description": "Resets the `vectorStore` setting to its default value.",
-        "operationId": "deletevectorStore",
-        "parameters": [
-          {
-            "name": "indexUid",
-            "in": "path",
-            "description": "Unique identifier of the index.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "example": "movies"
-          }
-        ],
-        "responses": {
-          "202": {
-            "description": "Task successfully enqueued.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/SummarizedTaskView"
-                },
-                "example": {
-                  "taskUid": 147,
-                  "indexUid": "movies",
-                  "status": "enqueued",
-                  "type": "settingsUpdate",
-                  "enqueuedAt": "2024-08-08T17:05:55.791772Z"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "The authorization header is missing.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseError"
-                },
-                "example": {
-                  "message": "The Authorization header is missing. It must use the bearer authorization method.",
-                  "code": "missing_authorization_header",
-                  "type": "auth",
-                  "link": "https://docs.meilisearch.com/errors#missing_authorization_header"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Index not found.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseError"
-                },
-                "example": {
-                  "message": "Index `movies` not found.",
-                  "code": "index_not_found",
-                  "type": "invalid_request",
-                  "link": "https://docs.meilisearch.com/errors#index_not_found"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "Bearer": [
-              "settings.update",
-              "settings.*",
-              "*"
-            ]
-          }
-        ],
-        "x-codeSamples": [
-          {
-            "lang": "cURL",
-            "source": "curl \\\n  -X DELETE 'MEILISEARCH_URL/indexes/INDEX_UID/settings/vector-store'"
-          }
-        ]
-      },
-      "patch": {
-        "tags": [
-          "Settings"
-        ],
-        "summary": "Update vectorStore",
-        "description": "Updates the `vectorStore` setting for the index. Send the new value in the request body; send null to reset to default.",
-        "operationId": "patchvectorStore",
-        "parameters": [
-          {
-            "name": "indexUid",
-            "in": "path",
-            "description": "Unique identifier of the index.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "example": "movies"
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/VectorStoreBackend"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "202": {
-            "description": "Task successfully enqueued.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/SummarizedTaskView"
-                },
-                "example": {
-                  "taskUid": 147,
-                  "indexUid": "movies",
-                  "status": "enqueued",
-                  "type": "settingsUpdate",
-                  "enqueuedAt": "2024-08-08T17:05:55.791772Z"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "The authorization header is missing.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseError"
-                },
-                "example": {
-                  "message": "The Authorization header is missing. It must use the bearer authorization method.",
-                  "code": "missing_authorization_header",
-                  "type": "auth",
-                  "link": "https://docs.meilisearch.com/errors#missing_authorization_header"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Index not found.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseError"
-                },
-                "example": {
-                  "message": "Index `movies` not found.",
-                  "code": "index_not_found",
-                  "type": "invalid_request",
-                  "link": "https://docs.meilisearch.com/errors#index_not_found"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "Bearer": [
-              "settings.update",
-              "settings.*",
-              "*"
-            ]
-          }
-        ],
-        "x-codeSamples": [
-          {
-            "lang": "cURL",
-            "source": "curl \\\n  -X PATCH 'MEILISEARCH_URL/indexes/INDEX_UID/settings/vector-store' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '\"experimental\"'"
-          }
-        ]
-      }
-    },
     "/indexes/{indexUid}/similar": {
       "get": {
         "tags": [
@@ -16478,6 +16212,7 @@
           "immutable_index_updated_at",
           "import_task_already_received",
           "import_task_unknown_remote",
+          "receive_import_finished_unknown_remote",
           "import_task_without_network_task",
           "index_already_exists",
           "index_creation_failed",
@@ -16539,6 +16274,7 @@
           "invalid_multi_search_weight",
           "invalid_network_leader",
           "invalid_network_remotes",
+          "invalid_network_shards",
           "invalid_network_self",
           "invalid_network_search_api_key",
           "invalid_network_write_api_key",
@@ -16678,7 +16414,6 @@
           "invalid_document_edition_function_filter",
           "edit_documents_by_function_error",
           "invalid_settings_index_chat",
-          "invalid_settings_vector_store",
           "invalid_export_url",
           "invalid_export_api_key",
           "invalid_export_payload_size",
@@ -18648,7 +18383,7 @@
               "object",
               "null"
             ],
-            "description": "Map of remote instance names to their configurations",
+            "description": "Map of remote instance names to their configurations\n\n- Pass `null` as a value for a remote to remove it from the configuration.\n- Removing a remote will also remove it from all shards.\n- Remotes that don't appear in this list will be unmodified by the network call.",
             "additionalProperties": {
               "$ref": "#/components/schemas/Remote"
             },
@@ -18661,6 +18396,48 @@
               },
               "ms-01": {
                 "url": "http://localhost:7701"
+              }
+            }
+          },
+          "shards": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "description": "Map of shard names to their configurations.\n\n- Pass `null` as a value for a shard to remove it from the configuration.\n- Shards that don't appear in this list will be unmodified by the network call.",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/Shard"
+            },
+            "propertyNames": {
+              "type": "string"
+            },
+            "example": {
+              "shard-00": {
+                "remotes": [
+                  "ms-00",
+                  "ms-01"
+                ]
+              }
+            }
+          },
+          "previousShards": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "description": "Previous shard configurations\n\nThis field should not be passed by end-users. It is used in internal communications between Meilisearch instances",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/Shard"
+            },
+            "propertyNames": {
+              "type": "string"
+            },
+            "example": {
+              "shard-00": {
+                "remotes": [
+                  "ms-00",
+                  "ms-01"
+                ]
               }
             }
           },
@@ -18685,7 +18462,7 @@
               "object",
               "null"
             ],
-            "description": "Previous remote configurations (for rollback)",
+            "description": "Previous remote configurations\n\nThis field should not be passed by end-users. It is used in internal communications between Meilisearch instances",
             "additionalProperties": {
               "$ref": "#/components/schemas/Remote"
             },
@@ -19352,13 +19129,6 @@
               "null"
             ],
             "description": "Enable multimodal search with images and other media"
-          },
-          "vectorStoreSetting": {
-            "type": [
-              "boolean",
-              "null"
-            ],
-            "description": "Enable vector store settings configuration"
           }
         }
       },
@@ -20502,20 +20272,8 @@
                 "description": "Chat settings for AI-powered search. Configure the index description,\ndocument template for rendering, and search parameters used when the\nLLM queries this index."
               }
             ]
-          },
-          "vectorStore": {
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/components/schemas/VectorStoreBackend",
-                "description": "Backend storage for vector embeddings. `memory` stores vectors in\nmemory for fastest performance. `database` stores vectors on disk to\nreduce memory usage at the cost of speed."
-              }
-            ]
           }
-        },
-        "additionalProperties": false
+        }
       },
       "Settings_Unchecked": {
         "type": "object",
@@ -20799,20 +20557,47 @@
                 "description": "Chat settings for AI-powered search. Configure the index description,\ndocument template for rendering, and search parameters used when the\nLLM queries this index."
               }
             ]
-          },
-          "vectorStore": {
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/components/schemas/VectorStoreBackend",
-                "description": "Backend storage for vector embeddings. `memory` stores vectors in\nmemory for fastest performance. `database` stores vectors on disk to\nreduce memory usage at the cost of speed."
-              }
-            ]
           }
-        },
-        "additionalProperties": false
+        }
+      },
+      "Shard": {
+        "type": "object",
+        "description": "Configuration for a named shard of the network\n\nDocuments are distributed among the various declared shards.\nRemotes own shards, meaning they own the documents that belong to these shards.",
+        "properties": {
+          "remotes": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "type": "string"
+            },
+            "description": "List of remotes that own this shard.\n\n- The remotes must be part of the network's configuration\n- Setting this to a non-`null` value will replace all existing remotes for this shard.\n- `addRemotes` and `removeRemotes` are applied after `remotes` if multiple options are present.",
+            "uniqueItems": true
+          },
+          "addRemotes": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "type": "string"
+            },
+            "description": "Remotes to add to the list of owners of this shard.\n\n- The remotes must be part of the network's configuration\n- Setting this to non-`null` will append the listed remotes to the list of owners of this shard.\n- `remotes` is applied before `addRemotes`\n- `removeRemotes` is applied after `addRemotes`",
+            "uniqueItems": true
+          },
+          "removeRemotes": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "type": "string"
+            },
+            "description": "Remotes to remove from the list of owners of this shard.\n\n- The remotes may or may not be part of the network's configuration\n- Setting this to non-`null` will remove the listed remotes from the list of owners of this shard.\n- `remotes` and `addRemotes` are applied before `removeRemotes`\n- Remotes removed from the configuration are automatically removed from all shards and it is not necessary\n  to explicitly pass them as `removeRemotes`.",
+            "uniqueItems": true
+          }
+        }
       },
       "SimilarQuery": {
         "type": "object",
