@@ -145,14 +145,19 @@ function buildOpenapiKeyMapping(content) {
  * - Block scalar (e.g. "key: |-" with indented multi-line value)
  * - Quoted scalar on the same line (e.g. "key: \"string with \\n\"")
  * Only string values are kept; keys with non-string values are skipped.
+ * On parse error, logs a warning (with optional context) and returns null so the caller can skip this source.
  */
-function parseCodeSamplesFromFile(content) {
+function parseCodeSamplesFromFile(content, context = {}) {
   const samples = new Map();
   let data;
   try {
     data = yaml.load(content);
   } catch (err) {
-    throw new Error(`Failed to parse code samples YAML: ${err.message}`);
+    const ctx = [context.lang, context.url].filter(Boolean).join(" ");
+    console.warn(
+      `Warning: Failed to parse code samples YAML${ctx ? ` (${ctx})` : ""}: ${err.message}`
+    );
+    return null;
   }
   if (data != null && typeof data === "object" && !Array.isArray(data)) {
     for (const [id, value] of Object.entries(data)) {
@@ -218,7 +223,9 @@ async function fetchAllCodeSamples(options = {}) {
       }
     }
 
-    const sampleIdToCode = parseCodeSamplesFromFile(content);
+    const sampleIdToCode = parseCodeSamplesFromFile(content, { lang, url });
+    if (sampleIdToCode === null) continue;
+
     for (const [openapiKey, sampleId] of openapiKeyToSampleId) {
       const source = sampleIdToCode.get(sampleId);
       if (source !== undefined) {
