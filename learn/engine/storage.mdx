@@ -26,7 +26,7 @@ All documents stored on disk are automatically loaded in memory when Meilisearch
 
 For best performance, Meilisearch works optimally when the full dataset fits in RAM. In practice, however, we consistently observe that a **RAM‑to‑disk ratio around 1/3 does not materially impact performance**, and for many workloads even ~1/10 works well. The effective memory requirement is highly use‑case‑dependent and varies with search and indexing pressure. RAM can be increased later to unlock more performance, but Meilisearch will not crash simply because the dataset size on disk exceeds the available RAM.
 
-Disk latency is also important for performance: using a **low‑latency disk** (for example, an NVMe SSD) will give better results than a **high‑latency disk** (for example, HDD or NFS or other network‑mounted storage).
+Disk latency is also important for performance: using a **low‑latency disk** (for example, an NVMe SSD) will give better results than a **high‑latency disk** (for example, HDD, NFS, or other network‑mounted storage).
 
 ### Understanding LMDB
 
