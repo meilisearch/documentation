@@ -40,7 +40,7 @@ When deleting documents from a Meilisearch index, you may notice disk space usag
 
 Since LMDB is memory mapped, it is the operating system that manages the real memory allocated (or not) to Meilisearch.
 
-Thus, if you run Meilisearch as a standalone program on a server, LMDB will use the maximum RAM it can use. In general, you should have the same amount of RAM as the space taken on disk by Meilisearch for optimal performance.
+Thus, if you run Meilisearch as a standalone program on a server, LMDB will use the maximum RAM it can use. More RAM means more of the dataset stays in cache and fewer reads hit disk, but a [RAM‑to‑disk ratio of around 1/3 does not materially impact performance](#memory-mapping) for most workloads.
 
 On the other hand, if you run Meilisearch along with other programs, the OS will manage memory based on everyone's needs. This makes Meilisearch's memory usage quite flexible when used in development.
 
