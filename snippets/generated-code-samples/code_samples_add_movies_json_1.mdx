@@ -35,7 +35,7 @@ import java.nio.file.Path;
 
 Path fileName = Path.of("movies.json");
 String moviesJson = Files.readString(fileName);
-Client client = new Client(new Config("http://localhost:7700", "masterKey"));
+Client client = new Client(new Config("MEILISEARCH_URL", "masterKey"));
 Index index = client.index("movies");
 index.addDocuments(moviesJson);
 ```

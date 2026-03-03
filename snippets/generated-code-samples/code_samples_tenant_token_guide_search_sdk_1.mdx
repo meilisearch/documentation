@@ -16,7 +16,7 @@ $frontEndClient->index('patient_medical_records')->search('blood test');
 ```
 
 ```java Java
-Client frontEndClient = new Client(new Config("http://localhost:7700", token));
+Client frontEndClient = new Client(new Config("MEILISEARCH_URL", token));
 frontEndClient.index("patient_medical_records").search("blood test");
 ```
 
@@ -62,7 +62,7 @@ client.index("patient_medical_records")
 ```
 
 ```dart Dart
-final frontEndClient = MeiliSearchClient('http://localhost:7700', token);
+final frontEndClient = MeiliSearchClient('MEILISEARCH_URL', token);
 await frontEndClient.index('patient_medical_records').search('blood test');
 ```
 </CodeGroup>

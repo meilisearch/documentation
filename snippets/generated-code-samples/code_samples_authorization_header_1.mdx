@@ -22,7 +22,7 @@ $client->getKeys();
 ```
 
 ```java Java
-Client client = new Client(new Config("http://localhost:7700", "masterKey"));
+Client client = new Client(new Config("MEILISEARCH_URL", "masterKey"));
 client.getKeys();
 ```
 
@@ -58,7 +58,7 @@ client.getKeys { result in
 ```
 
 ```dart Dart
-var client = MeiliSearchClient('http://localhost:7700', 'masterKey');
+var client = MeiliSearchClient('MEILISEARCH_URL', 'masterKey');
 await client.getKeys();
 ```
 </CodeGroup>

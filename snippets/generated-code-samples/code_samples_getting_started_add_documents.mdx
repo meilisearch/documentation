@@ -94,7 +94,7 @@ import java.nio.file.Path;
 
 Path fileName = Path.of("movies.json");
 String moviesJson = Files.readString(fileName);
-Client client = new Client(new Config("http://localhost:7700", "aSampleMasterKey"));
+Client client = new Client(new Config("MEILISEARCH_URL", "aSampleMasterKey"));
 Index index = client.index("movies");
 index.addDocuments(moviesJson);
 ```
@@ -284,7 +284,7 @@ client.index("movies").addDocuments(documents: documents) { (result) in
 import 'package:meilisearch/meilisearch.dart';
 import 'dart:io';
 import 'dart:convert';
-var client = MeiliSearchClient('http://localhost:7700', 'aSampleMasterKey');
+var client = MeiliSearchClient('MEILISEARCH_URL', 'aSampleMasterKey');
 final json = await File('movies.json').readAsString();
 await client.index('movies').addDocumentsJson(json);
 ```
