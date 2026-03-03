@@ -1,7 +1,7 @@
 ---
-title: Storage
-sidebarTitle: Storage
-description: Learn about how Meilisearch stores and handles data in its LMDB storage engine.
+title: "Storage"
+sidebarTitle: "Storage"
+description: "Learn about how Meilisearch stores and handles data in its LMDB storage engine."
 ---
 
 Meilisearch is in many ways a database: it stores indexed documents along with the data needed to return relevant search results.
@@ -10,7 +10,7 @@ Meilisearch is in many ways a database: it stores indexed documents along with t
 
 Meilisearch creates the database the moment you first launch an instance. By default, you can find it inside a `data.ms` folder located in the same directory as the `meilisearch` binary.
 
-The database location can change depending on a number of factors, such as whether you have configured a different database path with the [`--db-path` instance option](/learn/self_hosted/configure_meilisearch_at_launch#database-path), or if you're using an OS virtualization tool like [Docker](https://docker.com).
+The database location can change depending on a number of factors, such as whether you have configured a different database path with the [`--db-path instance option`](/learn/self_hosted/configure_meilisearch_at_launch#database-path), or if you're using an OS virtualization tool like [Docker](https://docker.com).
 
 ## LMDB
 
@@ -24,7 +24,9 @@ LMDB stores its data in a [memory-mapped file](https://en.wikipedia.org/wiki/Mem
 
 All documents stored on disk are automatically loaded in memory when Meilisearch asks for them. This ensures LMDB will always make the best use of the RAM available to retrieve the documents.
 
-For the best performance, it is recommended to provide the same amount of RAM as the size the database takes on disk, so all the data structures can fit in memory.
+For best performance, Meilisearch works optimally when the full dataset fits in RAM. In practice, however, we consistently observe that a **RAM‑to‑disk ratio around 1/3 does not materially impact performance**, and for many workloads even ~1/10 works well. The effective memory requirement is highly use‑case‑dependent and varies with search and indexing pressure. RAM can be increased later to unlock more performance, but Meilisearch will not crash simply because the dataset size on disk exceeds the available RAM.
+
+Disk latency is also important for performance: using a **low‑latency disk** (for example, an NVMe SSD) will give better results than a **high‑latency disk** (for example, HDD or NFS or other network‑mounted storage).
 
 ### Understanding LMDB
 
@@ -43,15 +45,16 @@ Thus, if you run Meilisearch as a standalone program on a server, LMDB will use 
 On the other hand, if you run Meilisearch along with other programs, the OS will manage memory based on everyone's needs. This makes Meilisearch's memory usage quite flexible when used in development.
 
 <Tip>
-**Virtual Memory != Real Memory**
-Virtual memory is the disk space a program requests from the OS. It is not the memory that the program will actually use.
+  **Virtual Memory != Real Memory** Virtual memory is the disk space a program requests from the OS. It is not the memory that the program will actually use.
 
-Meilisearch will always demand a certain amount of space to use as a [memory map](#memory-mapping). This space will be used as virtual memory, but the amount of real memory (RAM) used will be much smaller.
+  Meilisearch will always demand a certain amount of space to use as a [memory map](#memory-mapping). This space will be used as virtual memory, but the amount of real memory (RAM) used will be much smaller.
 </Tip>
 
 ## Measured disk usage
 
-The following measurements were taken using <a href="/assets/datasets/movies.json" download="movies.json">movies.json</a> an 8.6 MB JSON dataset containing 19,553 documents.
+The following measurements were taken using <a href="/assets/datasets/movies.json" download="movies.json">movies.json</a>
+
+ an 8.6 MB JSON dataset containing 19,553 documents.
 
 After indexing, the dataset size in LMDB is about 122MB.
 
@@ -62,7 +65,7 @@ After indexing, the dataset size in LMDB is about 122MB.
 This means the database is using **305 MB of RAM and 224 MB of disk space.** Note that [virtual memory](https://www.enterprisestorageforum.com/hardware/virtual-memory/) **refers only to disk space allocated by your computer for Meilisearch—it does not mean that it's actually in use by the database.** See [Memory Usage](#memory-usage) for more details.
 
 <Warning>
-These metrics are highly dependent on the machine that is running Meilisearch. Running this test on significantly underpowered machines is likely to give different results.
+  These metrics are highly dependent on the machine that is running Meilisearch. Running this test on significantly underpowered machines is likely to give different results.
 </Warning>
 
 It is important to note that **there is no reliable way to predict the final size of a database**. This is true for just about any search engine on the market—we're just the only ones saying it out loud.
