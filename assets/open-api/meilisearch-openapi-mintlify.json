@@ -778,6 +778,10 @@
             "source": "curl \\\n  -X POST 'MEILISEARCH_URL/export' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '{\n    \"url\": \"TARGET_INSTANCE_URL\",\n    \"indexes\": {\n      \"*\": {\n        \"overrideSettings\": true\n      }\n    }\n  }'"
           },
           {
+            "lang": "Python",
+            "source": "client.export(\n  url='https://remote-meilisearch-instance.com',\n  api_key='masterKey',\n  payload_size='50 MiB',\n  indexes={\n    'movies*': {},\n    'books*': {},\n  },\n)"
+          },
+          {
             "lang": "Java",
             "source": "Map<String, ExportIndexFilter> indexes = new HashMap<>();\nindexes.put(\"*\", ExportIndexFilter.builder().overrideSettings(true).build());\nExportRequest request = ExportRequest.builder().url(\"TARGET_INSTANCE_URL\").indexes(indexes).build();\nclient.export(request);"
           },
