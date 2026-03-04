@@ -14,6 +14,18 @@ curl \
   }'
 ```
 
+```python Python
+client.export(
+  url='https://remote-meilisearch-instance.com',
+  api_key='masterKey',
+  payload_size='50 MiB',
+  indexes={
+    'movies*': {},
+    'books*': {},
+  },
+)
+```
+
 ```java Java
 Map<String, ExportIndexFilter> indexes = new HashMap<>();
 indexes.put("*", ExportIndexFilter.builder().overrideSettings(true).build());
