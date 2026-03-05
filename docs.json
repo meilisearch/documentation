@@ -1344,6 +1344,10 @@
     {
       "source": "/guides/performance/indexing_best_practices",
       "destination": "/learn/indexing/indexing_best_practices"
+    },
+    {
+      "source": "/reference/api/keys/get-api-keys",
+      "destination": "/reference/api/keys/list-api-keys"
     }
   ]
 }
