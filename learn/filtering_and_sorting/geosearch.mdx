@@ -17,9 +17,9 @@ Meilisearch allows you to filter and sort results based on their geographic loca
 
 ## Preparing documents for location-based search
 
-To start filtering documents based on their geographic location, you must make sure they contain a valid `_geo` or `_geojson` field. If you also want to sort documents geogeraphically, they must have a valid `_geo` field.
+To start filtering documents based on their geographic location, you must make sure they contain a valid `_geo`, `_geojson`, or `_geo_list` field. If you also want to sort documents geographically, they must have a valid `_geo` or `_geo_list` field.
 
-`_geo` and `_geojson` are reserved fields. If you include one of them in your documents, Meilisearch expects its value to conform to a specific format.
+`_geo`, `_geojson`, and `_geo_list` are reserved fields. If you include any of them in your documents, Meilisearch expects their values to conform to a specific format.
 
 When using JSON and NDJSON, `_geo` must contain an object with two keys: `lat` and `lng`. Both fields must contain either a floating point number or a string indicating, respectively, latitude and longitude:
 
@@ -52,16 +52,34 @@ Meilisearch does not support transmeridian shapes. If your document includes a t
 
 **Meilisearch does not support polygons with holes**. If your polygon consists of an external ring and an inner empty space, Meilisearch ignores the hole and treats the polygon as a solid shape.
 
+`_geo_list` must be a non-empty array of objects, each containing `lat` and `lng` keys. Use `_geo_list` when a single document represents multiple discrete locations, such as a company with several offices:
+
+```json
+{
+  …
+  "_geo_list": [
+    { "lat": 48.8566, "lng": 2.3522 },
+    { "lat": 45.4642, "lng": 9.1900 },
+    { "lat": 41.9028, "lng": 12.4964 }
+  ]
+}
+```
+
+`null` values within the array are ignored and treated as if the point were absent.
+
 <Note>
-### Using `_geo` and `_geojson` together
+### Using `_geo`, `_geojson`, and `_geo_list` together
 
-If your application requires both sorting by distance to a point and filtering by shapes other than a circle or a rectangle, you will need to add both `_geo` and `_geojson` to your documents.
+`_geo`, `_geojson`, and `_geo_list` can coexist on the same document. `_geo_list` works with all three geo filter functions (`_geoRadius`, `_geoBoundingBox`, `_geoPolygon`) and with `_geoPoint` sorting.
 
-When handling documents with both fields, Meilisearch:
+When filtering, a document matches if *any* point across all its geo fields falls within the specified area. When sorting with `_geoPoint`, Meilisearch uses the *closest* point from all geo fields.
+
+When handling documents with multiple geo fields, Meilisearch:
 
 - Ignores `_geojson` values when sorting
 - Ignores `_geo` values when filtering with `_geoPolygon`
-- Matches both `_geo` and `_geojson` values when filtering with `_geoRadius` and `_geoBoundingBox`
+- Merges points from `_geo`, `_geojson`, and `_geo_list` when filtering with `_geoRadius` and `_geoBoundingBox`
+- Merges points from `_geo` and `_geo_list` when sorting with `_geoPoint`
 </Note>
 
 ### Examples
@@ -149,15 +167,15 @@ If your dataset is formatted as CSV, the file header must have a `_geo` column. 
 "3","Artico Gelateria Tradizionale","Via Dogana, 1, 20123 Milan, Italy","ice cream",10,"48.8826517,2.3352748"
 ```
 
-CSV files do not support the `_geojson` attribute.
+CSV files do not support the `_geojson` or `_geo_list` attributes.
 
 ## Filtering results with `_geoRadius`, `_geoBoundingBox`, and `_geoPolygon`
 
-You can use `_geo` and `_geojson` data to filter queries so you only receive results located within a given geographic area.
+You can use `_geo`, `_geojson`, and `_geo_list` data to filter queries so you only receive results located within a given geographic area.
 
 ### Configuration
 
-To filter results based on their location, you must add `_geo` or `_geojson` to the `filterableAttributes` list:
+To filter results based on their location, you must add `_geo`, `_geojson`, or `_geo_list` to the `filterableAttributes` list:
 
 <CodeSamplesGeosearchGuideFilterSettings1 />
 
@@ -256,12 +274,12 @@ It is also possible to combine `_geoRadius`, `_geoBoundingBox`, and `_geoPolygon
 
 ### Configuration
 
-Before using geosearch for sorting, you must add the `_geo` attribute to the [`sortableAttributes` list](/learn/filtering_and_sorting/sort_search_results):
+Before using geosearch for sorting, you must add the `_geo` or `_geo_list` attribute to the [`sortableAttributes` list](/learn/filtering_and_sorting/sort_search_results):
 
 <CodeSamplesGeosearchGuideSortSettings1 />
 
 <Danger>
-It is not possible to sort documents based on the `_geojson` attribute.
+It is not possible to sort documents based on the `_geojson` attribute. Use `_geo` or `_geo_list` instead.
 </Danger>
 
 ### Usage
