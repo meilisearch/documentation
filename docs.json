@@ -363,7 +363,6 @@
                   "source": "assets/open-api/meilisearch-openapi-mintlify.json",
                   "directory": "reference/api"
                 },
-                "internal-meili-fetch-automation": true,
                 "examples": {
                   "languages": [
                     "curl",
@@ -379,7 +378,355 @@
                     "swift"
                   ],
                   "autogenerate": false
-                }
+                },
+                "pages": [
+                  {
+                    "group": "Indexes",
+                    "pages": [
+                      "GET /indexes",
+                      "POST /indexes",
+                      "GET /indexes/{indexUid}",
+                      "PATCH /indexes/{indexUid}",
+                      "DELETE /indexes/{indexUid}",
+                      "POST /swap-indexes",
+                      "POST /indexes/{indexUid}/fields"
+                    ]
+                  },
+                  {
+                    "group": "Documents",
+                    "pages": [
+                      "GET /indexes/{indexUid}/documents",
+                      "POST /indexes/{indexUid}/documents/fetch",
+                      "GET /indexes/{indexUid}/documents/{documentId}",
+                      "POST /indexes/{indexUid}/documents",
+                      "PUT /indexes/{indexUid}/documents",
+                      "DELETE /indexes/{indexUid}/documents/{documentId}",
+                      "DELETE /indexes/{indexUid}/documents",
+                      "POST /indexes/{indexUid}/documents/delete",
+                      "POST /indexes/{indexUid}/documents/delete-batch",
+                      "POST /indexes/{indexUid}/documents/edit"
+                    ]
+                  },
+                  {
+                    "group": "Search",
+                    "pages": [
+                      "POST /indexes/{indexUid}/search",
+                      "GET /indexes/{indexUid}/search"
+                    ]
+                  },
+                  {
+                    "group": "Multi-search",
+                    "pages": [
+                      "POST /multi-search"
+                    ]
+                  },
+                  {
+                    "group": "Facet search",
+                    "pages": [
+                      "POST /indexes/{indexUid}/facet-search"
+                    ]
+                  },
+                  {
+                    "group": "Similar documents",
+                    "pages": [
+                      "POST /indexes/{indexUid}/similar",
+                      "GET /indexes/{indexUid}/similar"
+                    ]
+                  },
+                  {
+                    "group": "Tasks",
+                    "pages": [
+                      "GET /tasks",
+                      "GET /tasks/{taskUid}",
+                      "POST /tasks/cancel",
+                      "DELETE /tasks"
+                    ]
+                  },
+                  {
+                    "group": "Batches",
+                    "pages": [
+                      "GET /batches",
+                      "GET /batches/{batchUid}"
+                    ]
+                  },
+                  {
+                    "group": "Keys",
+                    "pages": [
+                      "GET /keys",
+                      "POST /keys",
+                      "GET /keys/{uidOrKey}",
+                      "PATCH /keys/{uidOrKey}",
+                      "DELETE /keys/{uidOrKey}"
+                    ]
+                  },
+                  {
+                    "group": "Settings",
+                    "pages": [
+                      {
+                        "group": "All settings",
+                        "pages": [
+                          "GET /indexes/{indexUid}/settings",
+                          "PATCH /indexes/{indexUid}/settings",
+                          "DELETE /indexes/{indexUid}/settings"
+                        ]
+                      },
+                      {
+                        "group": "Chat",
+                        "pages": [
+                          "GET /indexes/{indexUid}/settings/chat",
+                          "PATCH /indexes/{indexUid}/settings/chat",
+                          "DELETE /indexes/{indexUid}/settings/chat"
+                        ]
+                      },
+                      {
+                        "group": "Dictionary",
+                        "pages": [
+                          "GET /indexes/{indexUid}/settings/dictionary",
+                          "PUT /indexes/{indexUid}/settings/dictionary",
+                          "DELETE /indexes/{indexUid}/settings/dictionary"
+                        ]
+                      },
+                      {
+                        "group": "Displayed attributes",
+                        "pages": [
+                          "GET /indexes/{indexUid}/settings/displayed-attributes",
+                          "PUT /indexes/{indexUid}/settings/displayed-attributes",
+                          "DELETE /indexes/{indexUid}/settings/displayed-attributes"
+                        ]
+                      },
+                      {
+                        "group": "Distinct attribute",
+                        "pages": [
+                          "GET /indexes/{indexUid}/settings/distinct-attribute",
+                          "PUT /indexes/{indexUid}/settings/distinct-attribute",
+                          "DELETE /indexes/{indexUid}/settings/distinct-attribute"
+                        ]
+                      },
+                      {
+                        "group": "Embedders",
+                        "pages": [
+                          "GET /indexes/{indexUid}/settings/embedders",
+                          "PATCH /indexes/{indexUid}/settings/embedders",
+                          "DELETE /indexes/{indexUid}/settings/embedders"
+                        ]
+                      },
+                      {
+                        "group": "Facet search",
+                        "pages": [
+                          "GET /indexes/{indexUid}/settings/facet-search",
+                          "PUT /indexes/{indexUid}/settings/facet-search",
+                          "DELETE /indexes/{indexUid}/settings/facet-search"
+                        ]
+                      },
+                      {
+                        "group": "Faceting",
+                        "pages": [
+                          "GET /indexes/{indexUid}/settings/faceting",
+                          "PATCH /indexes/{indexUid}/settings/faceting",
+                          "DELETE /indexes/{indexUid}/settings/faceting"
+                        ]
+                      },
+                      {
+                        "group": "Filterable attributes",
+                        "pages": [
+                          "GET /indexes/{indexUid}/settings/filterable-attributes",
+                          "PUT /indexes/{indexUid}/settings/filterable-attributes",
+                          "DELETE /indexes/{indexUid}/settings/filterable-attributes"
+                        ]
+                      },
+                      {
+                        "group": "Localized attributes",
+                        "pages": [
+                          "GET /indexes/{indexUid}/settings/localized-attributes",
+                          "PUT /indexes/{indexUid}/settings/localized-attributes",
+                          "DELETE /indexes/{indexUid}/settings/localized-attributes"
+                        ]
+                      },
+                      {
+                        "group": "Non-separator tokens",
+                        "pages": [
+                          "GET /indexes/{indexUid}/settings/non-separator-tokens",
+                          "PUT /indexes/{indexUid}/settings/non-separator-tokens",
+                          "DELETE /indexes/{indexUid}/settings/non-separator-tokens"
+                        ]
+                      },
+                      {
+                        "group": "Pagination",
+                        "pages": [
+                          "GET /indexes/{indexUid}/settings/pagination",
+                          "PATCH /indexes/{indexUid}/settings/pagination",
+                          "DELETE /indexes/{indexUid}/settings/pagination"
+                        ]
+                      },
+                      {
+                        "group": "Prefix search",
+                        "pages": [
+                          "GET /indexes/{indexUid}/settings/prefix-search",
+                          "PUT /indexes/{indexUid}/settings/prefix-search",
+                          "DELETE /indexes/{indexUid}/settings/prefix-search"
+                        ]
+                      },
+                      {
+                        "group": "Proximity precision",
+                        "pages": [
+                          "GET /indexes/{indexUid}/settings/proximity-precision",
+                          "PUT /indexes/{indexUid}/settings/proximity-precision",
+                          "DELETE /indexes/{indexUid}/settings/proximity-precision"
+                        ]
+                      },
+                      {
+                        "group": "Ranking rules",
+                        "pages": [
+                          "GET /indexes/{indexUid}/settings/ranking-rules",
+                          "PUT /indexes/{indexUid}/settings/ranking-rules",
+                          "DELETE /indexes/{indexUid}/settings/ranking-rules"
+                        ]
+                      },
+                      {
+                        "group": "Search cutoff",
+                        "pages": [
+                          "GET /indexes/{indexUid}/settings/search-cutoff-ms",
+                          "PUT /indexes/{indexUid}/settings/search-cutoff-ms",
+                          "DELETE /indexes/{indexUid}/settings/search-cutoff-ms"
+                        ]
+                      },
+                      {
+                        "group": "Searchable attributes",
+                        "pages": [
+                          "GET /indexes/{indexUid}/settings/searchable-attributes",
+                          "PUT /indexes/{indexUid}/settings/searchable-attributes",
+                          "DELETE /indexes/{indexUid}/settings/searchable-attributes"
+                        ]
+                      },
+                      {
+                        "group": "Separator tokens",
+                        "pages": [
+                          "GET /indexes/{indexUid}/settings/separator-tokens",
+                          "PUT /indexes/{indexUid}/settings/separator-tokens",
+                          "DELETE /indexes/{indexUid}/settings/separator-tokens"
+                        ]
+                      },
+                      {
+                        "group": "Sortable attributes",
+                        "pages": [
+                          "GET /indexes/{indexUid}/settings/sortable-attributes",
+                          "PUT /indexes/{indexUid}/settings/sortable-attributes",
+                          "DELETE /indexes/{indexUid}/settings/sortable-attributes"
+                        ]
+                      },
+                      {
+                        "group": "Stop words",
+                        "pages": [
+                          "GET /indexes/{indexUid}/settings/stop-words",
+                          "PUT /indexes/{indexUid}/settings/stop-words",
+                          "DELETE /indexes/{indexUid}/settings/stop-words"
+                        ]
+                      },
+                      {
+                        "group": "Synonyms",
+                        "pages": [
+                          "GET /indexes/{indexUid}/settings/synonyms",
+                          "PUT /indexes/{indexUid}/settings/synonyms",
+                          "DELETE /indexes/{indexUid}/settings/synonyms"
+                        ]
+                      },
+                      {
+                        "group": "Typo tolerance",
+                        "pages": [
+                          "GET /indexes/{indexUid}/settings/typo-tolerance",
+                          "PATCH /indexes/{indexUid}/settings/typo-tolerance",
+                          "DELETE /indexes/{indexUid}/settings/typo-tolerance"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "group": "Management",
+                    "pages": [
+                      {
+                        "group": "Stats",
+                        "pages": [
+                          "GET /indexes/{indexUid}/stats",
+                          "GET /stats"
+                        ]
+                      },
+                      {
+                        "group": "Health",
+                        "pages": [
+                          "GET /health"
+                        ]
+                      },
+                      {
+                        "group": "Version",
+                        "pages": [
+                          "GET /version"
+                        ]
+                      },
+                      {
+                        "group": "Snapshots",
+                        "pages": [
+                          "POST /snapshots"
+                        ]
+                      },
+                      {
+                        "group": "Dumps",
+                        "pages": [
+                          "POST /dumps"
+                        ]
+                      },
+                      {
+                        "group": "Logs",
+                        "pages": [
+                          "POST /logs/stream",
+                          "DELETE /logs/stream",
+                          "POST /logs/stderr"
+                        ]
+                      },
+                      {
+                        "group": "Metrics",
+                        "pages": [
+                          "GET /metrics"
+                        ]
+                      },
+                      {
+                        "group": "Experimental features",
+                        "pages": [
+                          "GET /experimental-features",
+                          "PATCH /experimental-features"
+                        ]
+                      },
+                      {
+                        "group": "Network",
+                        "pages": [
+                          "GET /network",
+                          "PATCH /network"
+                        ]
+                      },
+                      {
+                        "group": "Webhooks",
+                        "pages": [
+                          "GET /webhooks",
+                          "POST /webhooks",
+                          "GET /webhooks/{uuid}",
+                          "PATCH /webhooks/{uuid}",
+                          "DELETE /webhooks/{uuid}"
+                        ]
+                      },
+                      {
+                        "group": "Compact",
+                        "pages": [
+                          "POST /indexes/{indexUid}/compact"
+                        ]
+                      },
+                      {
+                        "group": "Export",
+                        "pages": [
+                          "POST /export"
+                        ]
+                      }
+                    ]
+                  }
+                ]
               },
               {
                 "group": "Errors",
@@ -1344,6 +1691,146 @@
     {
       "source": "/guides/performance/indexing_best_practices",
       "destination": "/learn/indexing/indexing_best_practices"
+    },
+    {
+      "source": "/reference/api/analyze",
+      "destination": "/reference/api/authorization"
+    },
+    {
+      "source": "/reference/api/attributes_for_faceting",
+      "destination": "/reference/api/settings/get-filterableattributes"
+    },
+    {
+      "source": "/reference/api/chat_completions",
+      "destination": "/reference/api/chat-completions"
+    },
+    {
+      "source": "/reference/api/compact",
+      "destination": "/reference/api/indexes/compact-index"
+    },
+    {
+      "source": "/reference/api/configuration",
+      "destination": "/reference/api/authorization"
+    },
+    {
+      "source": "/reference/api/distinct_attribute",
+      "destination": "/reference/api/settings/get-distinctattribute"
+    },
+    {
+      "source": "/reference/api/documents/documents-by-query-post",
+      "destination": "/reference/api/documents/list-documents-with-post"
+    },
+    {
+      "source": "/reference/api/dumps",
+      "destination": "/reference/api/backups/create-dump"
+    },
+    {
+      "source": "/reference/api/embedders",
+      "destination": "/reference/api/settings/get-embedders"
+    },
+    {
+      "source": "/reference/api/environment_variables",
+      "destination": "/reference/api/authorization"
+    },
+    {
+      "source": "/reference/api/error_codes",
+      "destination": "/reference/errors/error_codes"
+    },
+    {
+      "source": "/reference/api/errors",
+      "destination": "/reference/errors/overview"
+    },
+    {
+      "source": "/reference/api/experimental",
+      "destination": "/reference/api/experimental-features/list-experimental-features"
+    },
+    {
+      "source": "/reference/api/fields",
+      "destination": "/reference/api/indexes/list-index-fields"
+    },
+    {
+      "source": "/reference/api/filterable_attributes",
+      "destination": "/reference/api/settings/get-filterableattributes"
+    },
+    {
+      "source": "/reference/api/filtering",
+      "destination": "/reference/api/settings/get-filterableattributes"
+    },
+    {
+      "source": "/reference/api/keys.html",
+      "destination": "/reference/api/keys/list-api-keys"
+    },
+    {
+      "source": "/reference/api/keys/get-api-keys",
+      "destination": "/reference/api/keys/list-api-keys"
+    },
+    {
+      "source": "/reference/api/logs",
+      "destination": "/reference/api/experimental-features/retrieve-logs"
+    },
+    {
+      "source": "/reference/api/metrics",
+      "destination": "/reference/api/stats/get-prometheus-metrics"
+    },
+    {
+      "source": "/reference/api/network/get-network",
+      "destination": "/reference/api/experimental-features/get-network-topology"
+    },
+    {
+      "source": "/reference/api/overview",
+      "destination": "/reference/api/authorization"
+    },
+    {
+      "source": "/reference/api/plugins",
+      "destination": "/reference/api/authorization"
+    },
+    {
+      "source": "/reference/api/python",
+      "destination": "/reference/api/authorization"
+    },
+    {
+      "source": "/reference/api/reference/sdks/javascript",
+      "destination": "/reference/api/authorization"
+    },
+    {
+      "source": "/reference/api/search.html",
+      "destination": "/reference/api/search/search-with-post"
+    },
+    {
+      "source": "/reference/api/search/search",
+      "destination": "/reference/api/search/search-with-post"
+    },
+    {
+      "source": "/reference/api/search_parameters",
+      "destination": "/reference/api/search/search-with-post"
+    },
+    {
+      "source": "/reference/api/searchable_attributes",
+      "destination": "/reference/api/settings/get-searchableattributes"
+    },
+    {
+      "source": "/reference/api/settings/embedders",
+      "destination": "/reference/api/settings/get-embedders"
+    },
+    {
+      "source": "/reference/api/settings/list-all-indexes",
+      "destination": "/reference/api/settings/list-all-settings"
+    },
+    {
+      "source": "/reference/api/sortable_attributes",
+      "destination": "/reference/api/settings/get-sortableattributes"
+    },
+    {
+      "source": "/reference/api/swap_indexes",
+      "destination": "/reference/api/indexes/swap-indexes"
+    },
+    {
+      "source": "/reference/api/synonyms",
+      "destination": "/reference/api/settings/get-synonyms"
+    },
+    {
+      "source": "/reference/api/tokenize",
+      "destination": "/reference/api/authorization"
     }
   ]
 }
