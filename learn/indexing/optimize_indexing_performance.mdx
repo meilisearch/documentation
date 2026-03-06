@@ -52,7 +52,7 @@ Focus on the **longest-running steps** and investigate which index settings or d
 
 | Description | Optimization |
 |--------------|--------------|
-| Builds data structures for phrase and attribute ranking. | Lower the precision of this operation by setting [proximity precision](/reference/api/settings/update-proximity-precision) to `byAttribute` |
+| Builds data structures for phrase and attribute ranking. | Lower the precision of this operation by setting [proximity precision](/reference/api/settings/update-proximityprecision) to `byAttribute` |
 
 ### `waiting for database writes`
 
@@ -70,7 +70,7 @@ Focus on the **longest-running steps** and investigate which index settings or d
 
 | Description | Optimization |
 |--------------|--------------|
-| Processes equality or comparison filters. | - Disable unused [**filter features**](/reference/api/settings/get-features), such as comparison operators on string values. <br /> - Reduce the number of [**sortable attributes**](/reference/api/settings/get-sortableattributes). |
+| Processes equality or comparison filters. | - Disable unused [**filter features**](/reference/api/settings/get-filterableattributes), such as comparison operators on string values. <br /> - Reduce the number of [**sortable attributes**](/reference/api/settings/get-sortableattributes). |
 
 ### `post processing facets > facet search`
 
