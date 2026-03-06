@@ -363,6 +363,7 @@
                   "source": "assets/open-api/meilisearch-openapi-mintlify.json",
                   "directory": "reference/api"
                 },
+                "internal-meili-fetch-automation": true,
                 "examples": {
                   "languages": [
                     "curl",
