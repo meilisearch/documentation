@@ -170,12 +170,14 @@ jobs:
             echo "No changes in the Mintlify OpenAPI file."
           fi
 
-  # Runs after all other jobs. Checks if a new Meilisearch release exists that
-  # isn't yet documented in the changelog, and regenerates if needed.
+  # Runs alongside the OpenAPI automation. A new Meilisearch release triggers both
+  # the OpenAPI update and the changelog update at the same time.
+  # Only runs when docs.json has "internal-meili-fetch-automation": true.
   update-changelog:
     name: Update changelog if new release exists
     runs-on: ubuntu-latest
     needs: [build-code-samples]
+    if: needs.build-code-samples.outputs.run_openapi_automation == 'true'
 
     steps:
       - name: Checkout repository
