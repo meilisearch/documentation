@@ -352,7 +352,18 @@ Return ONLY the JSON array, nothing else.`,
   });
 
   const textBlock = response.content.find((block) => block.type === "text");
-  const content = textBlock?.text || "[]";
+  let content = textBlock?.text || "[]";
+  // Strip markdown code fences if present (e.g. ```json [...] ```)
+  const jsonMatch = content.match(/```(?:json)?\s*([\s\S]*?)```/);
+  if (jsonMatch) {
+    content = jsonMatch[1].trim();
+  } else {
+    // Try to extract a JSON array from the response
+    const arrayMatch = content.match(/\[[\s\S]*\]/);
+    if (arrayMatch) {
+      content = arrayMatch[0];
+    }
+  }
   try {
     const features = JSON.parse(content);
     return features.map((feature: string) => ({
@@ -361,7 +372,7 @@ Return ONLY the JSON array, nothing else.`,
       date,
     }));
   } catch {
-    console.warn(`Failed to parse features for ${version}`);
+    console.warn(`Failed to parse features for ${version}: ${content.slice(0, 200)}`);
     return [];
   }
 }
