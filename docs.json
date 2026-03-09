@@ -386,33 +386,33 @@
                     "pages": [
                       "GET /indexes",
                       "POST /indexes",
-                      "GET /indexes/{indexUid}",
-                      "PATCH /indexes/{indexUid}",
-                      "DELETE /indexes/{indexUid}",
+                      "GET /indexes/{index_uid}",
+                      "PATCH /indexes/{index_uid}",
+                      "DELETE /indexes/{index_uid}",
                       "POST /swap-indexes",
-                      "POST /indexes/{indexUid}/fields"
+                      "POST /indexes/{index_uid}/fields"
                     ]
                   },
                   {
                     "group": "Documents",
                     "pages": [
-                      "GET /indexes/{indexUid}/documents",
-                      "POST /indexes/{indexUid}/documents/fetch",
-                      "GET /indexes/{indexUid}/documents/{documentId}",
-                      "POST /indexes/{indexUid}/documents",
-                      "PUT /indexes/{indexUid}/documents",
-                      "DELETE /indexes/{indexUid}/documents/{documentId}",
-                      "DELETE /indexes/{indexUid}/documents",
-                      "POST /indexes/{indexUid}/documents/delete",
-                      "POST /indexes/{indexUid}/documents/delete-batch",
-                      "POST /indexes/{indexUid}/documents/edit"
+                      "GET /indexes/{index_uid}/documents",
+                      "POST /indexes/{index_uid}/documents/fetch",
+                      "GET /indexes/{index_uid}/documents/{document_id}",
+                      "POST /indexes/{index_uid}/documents",
+                      "PUT /indexes/{index_uid}/documents",
+                      "DELETE /indexes/{index_uid}/documents/{document_id}",
+                      "DELETE /indexes/{index_uid}/documents",
+                      "POST /indexes/{index_uid}/documents/delete",
+                      "POST /indexes/{index_uid}/documents/delete-batch",
+                      "POST /indexes/{index_uid}/documents/edit"
                     ]
                   },
                   {
                     "group": "Search",
                     "pages": [
-                      "POST /indexes/{indexUid}/search",
-                      "GET /indexes/{indexUid}/search"
+                      "POST /indexes/{index_uid}/search",
+                      "GET /indexes/{index_uid}/search"
                     ]
                   },
                   {
@@ -424,14 +424,14 @@
                   {
                     "group": "Facet search",
                     "pages": [
-                      "POST /indexes/{indexUid}/facet-search"
+                      "POST /indexes/{index_uid}/facet-search"
                     ]
                   },
                   {
                     "group": "Similar documents",
                     "pages": [
-                      "POST /indexes/{indexUid}/similar",
-                      "GET /indexes/{indexUid}/similar"
+                      "POST /indexes/{index_uid}/similar",
+                      "GET /indexes/{index_uid}/similar"
                     ]
                   },
                   {
@@ -479,177 +479,177 @@
                       {
                         "group": "All settings",
                         "pages": [
-                          "GET /indexes/{indexUid}/settings",
-                          "PATCH /indexes/{indexUid}/settings",
-                          "DELETE /indexes/{indexUid}/settings"
+                          "GET /indexes/{index_uid}/settings",
+                          "PATCH /indexes/{index_uid}/settings",
+                          "DELETE /indexes/{index_uid}/settings"
                         ]
                       },
                       {
                         "group": "Chat",
                         "pages": [
-                          "GET /indexes/{indexUid}/settings/chat",
-                          "PATCH /indexes/{indexUid}/settings/chat",
-                          "DELETE /indexes/{indexUid}/settings/chat"
+                          "GET /indexes/{index_uid}/settings/chat",
+                          "PATCH /indexes/{index_uid}/settings/chat",
+                          "DELETE /indexes/{index_uid}/settings/chat"
                         ]
                       },
                       {
                         "group": "Dictionary",
                         "pages": [
-                          "GET /indexes/{indexUid}/settings/dictionary",
-                          "PUT /indexes/{indexUid}/settings/dictionary",
-                          "DELETE /indexes/{indexUid}/settings/dictionary"
+                          "GET /indexes/{index_uid}/settings/dictionary",
+                          "PUT /indexes/{index_uid}/settings/dictionary",
+                          "DELETE /indexes/{index_uid}/settings/dictionary"
                         ]
                       },
                       {
                         "group": "Displayed attributes",
                         "pages": [
-                          "GET /indexes/{indexUid}/settings/displayed-attributes",
-                          "PUT /indexes/{indexUid}/settings/displayed-attributes",
-                          "DELETE /indexes/{indexUid}/settings/displayed-attributes"
+                          "GET /indexes/{index_uid}/settings/displayed-attributes",
+                          "PUT /indexes/{index_uid}/settings/displayed-attributes",
+                          "DELETE /indexes/{index_uid}/settings/displayed-attributes"
                         ]
                       },
                       {
                         "group": "Distinct attribute",
                         "pages": [
-                          "GET /indexes/{indexUid}/settings/distinct-attribute",
-                          "PUT /indexes/{indexUid}/settings/distinct-attribute",
-                          "DELETE /indexes/{indexUid}/settings/distinct-attribute"
+                          "GET /indexes/{index_uid}/settings/distinct-attribute",
+                          "PUT /indexes/{index_uid}/settings/distinct-attribute",
+                          "DELETE /indexes/{index_uid}/settings/distinct-attribute"
                         ]
                       },
                       {
                         "group": "Embedders",
                         "pages": [
-                          "GET /indexes/{indexUid}/settings/embedders",
-                          "PATCH /indexes/{indexUid}/settings/embedders",
-                          "DELETE /indexes/{indexUid}/settings/embedders"
+                          "GET /indexes/{index_uid}/settings/embedders",
+                          "PATCH /indexes/{index_uid}/settings/embedders",
+                          "DELETE /indexes/{index_uid}/settings/embedders"
                         ]
                       },
                       {
                         "group": "Facet search",
                         "pages": [
-                          "GET /indexes/{indexUid}/settings/facet-search",
-                          "PUT /indexes/{indexUid}/settings/facet-search",
-                          "DELETE /indexes/{indexUid}/settings/facet-search"
+                          "GET /indexes/{index_uid}/settings/facet-search",
+                          "PUT /indexes/{index_uid}/settings/facet-search",
+                          "DELETE /indexes/{index_uid}/settings/facet-search"
                         ]
                       },
                       {
                         "group": "Faceting",
                         "pages": [
-                          "GET /indexes/{indexUid}/settings/faceting",
-                          "PATCH /indexes/{indexUid}/settings/faceting",
-                          "DELETE /indexes/{indexUid}/settings/faceting"
+                          "GET /indexes/{index_uid}/settings/faceting",
+                          "PATCH /indexes/{index_uid}/settings/faceting",
+                          "DELETE /indexes/{index_uid}/settings/faceting"
                         ]
                       },
                       {
                         "group": "Filterable attributes",
                         "pages": [
-                          "GET /indexes/{indexUid}/settings/filterable-attributes",
-                          "PUT /indexes/{indexUid}/settings/filterable-attributes",
-                          "DELETE /indexes/{indexUid}/settings/filterable-attributes"
+                          "GET /indexes/{index_uid}/settings/filterable-attributes",
+                          "PUT /indexes/{index_uid}/settings/filterable-attributes",
+                          "DELETE /indexes/{index_uid}/settings/filterable-attributes"
                         ]
                       },
                       {
                         "group": "Localized attributes",
                         "pages": [
-                          "GET /indexes/{indexUid}/settings/localized-attributes",
-                          "PUT /indexes/{indexUid}/settings/localized-attributes",
-                          "DELETE /indexes/{indexUid}/settings/localized-attributes"
+                          "GET /indexes/{index_uid}/settings/localized-attributes",
+                          "PUT /indexes/{index_uid}/settings/localized-attributes",
+                          "DELETE /indexes/{index_uid}/settings/localized-attributes"
                         ]
                       },
                       {
                         "group": "Non-separator tokens",
                         "pages": [
-                          "GET /indexes/{indexUid}/settings/non-separator-tokens",
-                          "PUT /indexes/{indexUid}/settings/non-separator-tokens",
-                          "DELETE /indexes/{indexUid}/settings/non-separator-tokens"
+                          "GET /indexes/{index_uid}/settings/non-separator-tokens",
+                          "PUT /indexes/{index_uid}/settings/non-separator-tokens",
+                          "DELETE /indexes/{index_uid}/settings/non-separator-tokens"
                         ]
                       },
                       {
                         "group": "Pagination",
                         "pages": [
-                          "GET /indexes/{indexUid}/settings/pagination",
-                          "PATCH /indexes/{indexUid}/settings/pagination",
-                          "DELETE /indexes/{indexUid}/settings/pagination"
+                          "GET /indexes/{index_uid}/settings/pagination",
+                          "PATCH /indexes/{index_uid}/settings/pagination",
+                          "DELETE /indexes/{index_uid}/settings/pagination"
                         ]
                       },
                       {
                         "group": "Prefix search",
                         "pages": [
-                          "GET /indexes/{indexUid}/settings/prefix-search",
-                          "PUT /indexes/{indexUid}/settings/prefix-search",
-                          "DELETE /indexes/{indexUid}/settings/prefix-search"
+                          "GET /indexes/{index_uid}/settings/prefix-search",
+                          "PUT /indexes/{index_uid}/settings/prefix-search",
+                          "DELETE /indexes/{index_uid}/settings/prefix-search"
                         ]
                       },
                       {
                         "group": "Proximity precision",
                         "pages": [
-                          "GET /indexes/{indexUid}/settings/proximity-precision",
-                          "PUT /indexes/{indexUid}/settings/proximity-precision",
-                          "DELETE /indexes/{indexUid}/settings/proximity-precision"
+                          "GET /indexes/{index_uid}/settings/proximity-precision",
+                          "PUT /indexes/{index_uid}/settings/proximity-precision",
+                          "DELETE /indexes/{index_uid}/settings/proximity-precision"
                         ]
                       },
                       {
                         "group": "Ranking rules",
                         "pages": [
-                          "GET /indexes/{indexUid}/settings/ranking-rules",
-                          "PUT /indexes/{indexUid}/settings/ranking-rules",
-                          "DELETE /indexes/{indexUid}/settings/ranking-rules"
+                          "GET /indexes/{index_uid}/settings/ranking-rules",
+                          "PUT /indexes/{index_uid}/settings/ranking-rules",
+                          "DELETE /indexes/{index_uid}/settings/ranking-rules"
                         ]
                       },
                       {
                         "group": "Search cutoff",
                         "pages": [
-                          "GET /indexes/{indexUid}/settings/search-cutoff-ms",
-                          "PUT /indexes/{indexUid}/settings/search-cutoff-ms",
-                          "DELETE /indexes/{indexUid}/settings/search-cutoff-ms"
+                          "GET /indexes/{index_uid}/settings/search-cutoff-ms",
+                          "PUT /indexes/{index_uid}/settings/search-cutoff-ms",
+                          "DELETE /indexes/{index_uid}/settings/search-cutoff-ms"
                         ]
                       },
                       {
                         "group": "Searchable attributes",
                         "pages": [
-                          "GET /indexes/{indexUid}/settings/searchable-attributes",
-                          "PUT /indexes/{indexUid}/settings/searchable-attributes",
-                          "DELETE /indexes/{indexUid}/settings/searchable-attributes"
+                          "GET /indexes/{index_uid}/settings/searchable-attributes",
+                          "PUT /indexes/{index_uid}/settings/searchable-attributes",
+                          "DELETE /indexes/{index_uid}/settings/searchable-attributes"
                         ]
                       },
                       {
                         "group": "Separator tokens",
                         "pages": [
-                          "GET /indexes/{indexUid}/settings/separator-tokens",
-                          "PUT /indexes/{indexUid}/settings/separator-tokens",
-                          "DELETE /indexes/{indexUid}/settings/separator-tokens"
+                          "GET /indexes/{index_uid}/settings/separator-tokens",
+                          "PUT /indexes/{index_uid}/settings/separator-tokens",
+                          "DELETE /indexes/{index_uid}/settings/separator-tokens"
                         ]
                       },
                       {
                         "group": "Sortable attributes",
                         "pages": [
-                          "GET /indexes/{indexUid}/settings/sortable-attributes",
-                          "PUT /indexes/{indexUid}/settings/sortable-attributes",
-                          "DELETE /indexes/{indexUid}/settings/sortable-attributes"
+                          "GET /indexes/{index_uid}/settings/sortable-attributes",
+                          "PUT /indexes/{index_uid}/settings/sortable-attributes",
+                          "DELETE /indexes/{index_uid}/settings/sortable-attributes"
                         ]
                       },
                       {
                         "group": "Stop words",
                         "pages": [
-                          "GET /indexes/{indexUid}/settings/stop-words",
-                          "PUT /indexes/{indexUid}/settings/stop-words",
-                          "DELETE /indexes/{indexUid}/settings/stop-words"
+                          "GET /indexes/{index_uid}/settings/stop-words",
+                          "PUT /indexes/{index_uid}/settings/stop-words",
+                          "DELETE /indexes/{index_uid}/settings/stop-words"
                         ]
                       },
                       {
                         "group": "Synonyms",
                         "pages": [
-                          "GET /indexes/{indexUid}/settings/synonyms",
-                          "PUT /indexes/{indexUid}/settings/synonyms",
-                          "DELETE /indexes/{indexUid}/settings/synonyms"
+                          "GET /indexes/{index_uid}/settings/synonyms",
+                          "PUT /indexes/{index_uid}/settings/synonyms",
+                          "DELETE /indexes/{index_uid}/settings/synonyms"
                         ]
                       },
                       {
                         "group": "Typo tolerance",
                         "pages": [
-                          "GET /indexes/{indexUid}/settings/typo-tolerance",
-                          "PATCH /indexes/{indexUid}/settings/typo-tolerance",
-                          "DELETE /indexes/{indexUid}/settings/typo-tolerance"
+                          "GET /indexes/{index_uid}/settings/typo-tolerance",
+                          "PATCH /indexes/{index_uid}/settings/typo-tolerance",
+                          "DELETE /indexes/{index_uid}/settings/typo-tolerance"
                         ]
                       }
                     ]
@@ -660,7 +660,7 @@
                       {
                         "group": "Stats",
                         "pages": [
-                          "GET /indexes/{indexUid}/stats",
+                          "GET /indexes/{index_uid}/stats",
                           "GET /stats"
                         ]
                       },
@@ -730,7 +730,7 @@
                       {
                         "group": "Compact",
                         "pages": [
-                          "POST /indexes/{indexUid}/compact"
+                          "POST /indexes/{index_uid}/compact"
                         ]
                       },
                       {
