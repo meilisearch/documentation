@@ -156,6 +156,62 @@
         "version": "latest",
         "tabs": [
           {
+            "tab": "Getting started",
+            "groups": [
+              {
+                "group": "Introduction",
+                "pages": [
+                  "getting_started/overview",
+                  "getting_started/features"
+                ]
+              },
+              {
+                "group": "Back-end SDKs",
+                "pages": [
+                  "getting_started/sdks/javascript",
+                  "getting_started/sdks/python",
+                  "getting_started/sdks/php",
+                  "getting_started/sdks/ruby",
+                  "getting_started/sdks/go",
+                  "getting_started/sdks/rust",
+                  "getting_started/sdks/java",
+                  "getting_started/sdks/dotnet",
+                  "getting_started/sdks/swift",
+                  "getting_started/sdks/dart"
+                ]
+              },
+              {
+                "group": "Instant-meilisearch",
+                "pages": [
+                  "getting_started/instant_meilisearch/javascript",
+                  "getting_started/instant_meilisearch/react",
+                  "getting_started/instant_meilisearch/vue",
+                  "getting_started/instant_meilisearch/docsearch"
+                ]
+              },
+              {
+                "group": "Framework integrations",
+                "pages": [
+                  "getting_started/frameworks/laravel",
+                  "getting_started/frameworks/strapi",
+                  "getting_started/frameworks/rails",
+                  "getting_started/frameworks/symfony"
+                ]
+              },
+              {
+                "group": "Integrations",
+                "pages": [
+                  "getting_started/integrations/firebase",
+                  "getting_started/integrations/gatsby",
+                  "getting_started/integrations/vercel",
+                  "getting_started/integrations/postman",
+                  "getting_started/integrations/meilisearch_importer",
+                  "getting_started/integrations/meilisync"
+                ]
+              }
+            ]
+          },
+          {
             "tab": "Learn",
             "groups": [
               {
