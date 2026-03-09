@@ -855,6 +855,437 @@
         ]
       }
     },
+    "/chats": {
+      "get": {
+        "tags": [
+          "Chats"
+        ],
+        "summary": "List chat workspaces",
+        "operationId": "list_workspaces",
+        "responses": {
+          "401": {
+            "description": "The authorization header is missing.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "example": {
+                  "message": "The Authorization header is missing. It must use the bearer authorization method.",
+                  "code": "missing_authorization_header",
+                  "type": "auth",
+                  "link": "https://docs.meilisearch.com/errors#missing_authorization_header"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": [
+              "chats.get",
+              "*"
+            ]
+          }
+        ]
+      }
+    },
+    "/chats/{workspace_uid}": {
+      "get": {
+        "tags": [
+          "Chats"
+        ],
+        "summary": "Get a chat workspace",
+        "operationId": "get_chat",
+        "parameters": [
+          {
+            "name": "workspaceUid",
+            "in": "path",
+            "description": "The unique identifier of the chat workspace.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "my-workspace"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "The authorization header is missing.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "example": {
+                  "message": "The Authorization header is missing. It must use the bearer authorization method.",
+                  "code": "missing_authorization_header",
+                  "type": "auth",
+                  "link": "https://docs.meilisearch.com/errors#missing_authorization_header"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Chat not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "example": {
+                  "message": "Chat :workspaceUid not found.",
+                  "code": "chat_not_found",
+                  "type": "invalid_request",
+                  "link": "https://docs.meilisearch.com/errors#chat_not_found"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": [
+              "chats.get",
+              "*"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Chats"
+        ],
+        "summary": "Delete a chat workspace",
+        "operationId": "delete_chat",
+        "parameters": [
+          {
+            "name": "workspaceUid",
+            "in": "path",
+            "description": "The unique identifier of the chat workspace.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "my-workspace"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "The authorization header is missing.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "example": {
+                  "message": "The Authorization header is missing. It must use the bearer authorization method.",
+                  "code": "missing_authorization_header",
+                  "type": "auth",
+                  "link": "https://docs.meilisearch.com/errors#missing_authorization_header"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Chat not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "example": {
+                  "message": "Chat :workspaceUid not found.",
+                  "code": "chat_not_found",
+                  "type": "invalid_request",
+                  "link": "https://docs.meilisearch.com/errors#chat_not_found"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": [
+              "chats.delete",
+              "*"
+            ]
+          }
+        ]
+      }
+    },
+    "/chats/{workspace_uid}/chat/completions": {
+      "post": {
+        "tags": [
+          "Chats"
+        ],
+        "summary": "Request a chat completion",
+        "operationId": "chat",
+        "parameters": [
+          {
+            "name": "workspaceUid",
+            "in": "path",
+            "description": "The unique identifier of the chat workspace.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "my-workspace"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": {},
+                "propertyNames": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "401": {
+            "description": "The authorization header is missing.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "example": {
+                  "message": "The Authorization header is missing. It must use the bearer authorization method.",
+                  "code": "missing_authorization_header",
+                  "type": "auth",
+                  "link": "https://docs.meilisearch.com/errors#missing_authorization_header"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Chat not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "example": {
+                  "message": "Chat :workspaceUid not found.",
+                  "code": "chat_not_found",
+                  "type": "invalid_request",
+                  "link": "https://docs.meilisearch.com/errors#chat_not_found"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": [
+              "chats.completions",
+              "*"
+            ]
+          }
+        ]
+      }
+    },
+    "/chats/{workspace_uid}/settings": {
+      "get": {
+        "tags": [
+          "Chats"
+        ],
+        "summary": "Get settings of a chat workspace",
+        "operationId": "get_settings",
+        "parameters": [
+          {
+            "name": "workspaceUid",
+            "in": "path",
+            "description": "The unique identifier of the chat workspace.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "my-workspace"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "The authorization header is missing.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "example": {
+                  "message": "The Authorization header is missing. It must use the bearer authorization method.",
+                  "code": "missing_authorization_header",
+                  "type": "auth",
+                  "link": "https://docs.meilisearch.com/errors#missing_authorization_header"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Chat not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "example": {
+                  "message": "Chat :workspaceUid not found.",
+                  "code": "chat_not_found",
+                  "type": "invalid_request",
+                  "link": "https://docs.meilisearch.com/errors#chat_not_found"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": [
+              "chats.settings.get",
+              "*"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Chats"
+        ],
+        "summary": "Reset the settings of a chat workspace",
+        "operationId": "reset_settings",
+        "parameters": [
+          {
+            "name": "workspaceUid",
+            "in": "path",
+            "description": "The unique identifier of the chat workspace.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "my-workspace"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "The authorization header is missing.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "example": {
+                  "message": "The Authorization header is missing. It must use the bearer authorization method.",
+                  "code": "missing_authorization_header",
+                  "type": "auth",
+                  "link": "https://docs.meilisearch.com/errors#missing_authorization_header"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Chat not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "example": {
+                  "message": "Chat :workspaceUid not found.",
+                  "code": "chat_not_found",
+                  "type": "invalid_request",
+                  "link": "https://docs.meilisearch.com/errors#chat_not_found"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": [
+              "chats.settings.update",
+              "*"
+            ]
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "Chats"
+        ],
+        "summary": "Update settings of a chat workspace",
+        "operationId": "patch_settings",
+        "parameters": [
+          {
+            "name": "workspaceUid",
+            "in": "path",
+            "description": "The unique identifier of the chat workspace.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "my-workspace"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChatWorkspaceSettings"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "401": {
+            "description": "The authorization header is missing.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "example": {
+                  "message": "The Authorization header is missing. It must use the bearer authorization method.",
+                  "code": "missing_authorization_header",
+                  "type": "auth",
+                  "link": "https://docs.meilisearch.com/errors#missing_authorization_header"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Chat not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "example": {
+                  "message": "Chat :workspaceUid not found.",
+                  "code": "chat_not_found",
+                  "type": "invalid_request",
+                  "link": "https://docs.meilisearch.com/errors#chat_not_found"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": [
+              "chats.settings.update",
+              "*"
+            ]
+          }
+        ]
+      }
+    },
     "/dumps": {
       "post": {
         "tags": [
@@ -15467,6 +15898,81 @@
                   "startedAt": "2021-01-01T09:39:01.000000Z",
                   "finishedAt": "2021-01-01T09:39:02.000000Z"
                 }
+              }
+            }
+          },
+          "401": {
+            "description": "The authorization header is missing.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "example": {
+                  "message": "The Authorization header is missing. It must use the bearer authorization method.",
+                  "code": "missing_authorization_header",
+                  "type": "auth",
+                  "link": "https://docs.meilisearch.com/errors#missing_authorization_header"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The task uid does not exist.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "example": {
+                  "message": "Task :taskUid not found.",
+                  "code": "task_not_found",
+                  "type": "invalid_request",
+                  "link": "https://docs.meilisearch.com/errors/#task_not_found"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": [
+              "tasks.get",
+              "tasks.*",
+              "*"
+            ]
+          }
+        ]
+      }
+    },
+    "/tasks/{task_id}/documents": {
+      "get": {
+        "tags": [
+          "Async task management"
+        ],
+        "summary": "Get task's documents",
+        "description": "Retrieve the list of documents that were processed or affected by a given [task](https://www.meilisearch.com/docs/learn/async/asynchronous_operations). Only available for document-related tasks.",
+        "operationId": "get_task_documents_file",
+        "parameters": [
+          {
+            "name": "taskUid",
+            "in": "path",
+            "description": "The task identifier.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "u-int32",
+              "minimum": 0
+            },
+            "example": 0
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The content of the task update.",
+            "content": {
+              "application/x-ndjson": {
+                "schema": {}
               }
             }
           },

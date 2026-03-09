@@ -1,6 +1,7 @@
-# On every push to main, check meilisearch-openapi-mintlify.json for code samples:
+# On every push to main, check meilisearch-openapi-mintlify.json:
 # - Job 1: Ensure every route that has x-codeSamples includes a cURL sample (can fail).
 # - Job 2: Informational only – list routes and all missing code sample languages (never fails).
+# - Job 3: Ensure every OpenAPI route is mapped in docs.json (can fail).
 name: Check OpenAPI code samples
 
 on:
@@ -48,3 +49,22 @@ jobs:
       - name: List routes and missing code samples (informational, never fails)
         run: |
           npm run check-openapi-code-samples -- info assets/open-api/meilisearch-openapi-mintlify.json || true
+
+  # Fails if any OpenAPI route is not mapped in docs.json API Routes pages.
+  require-routes-coverage:
+    name: Require all OpenAPI routes in docs.json
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Check all OpenAPI routes are covered in docs.json
+        run: |
+          npm run check-openapi-routes-coverage
