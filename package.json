@@ -18,6 +18,7 @@
     "check-unused-sdk-samples": "node scripts/check-unused-sdk-samples.mjs",
     "check-openapi-code-samples": "node scripts/check-openapi-code-samples.mjs",
     "check-missing-sdk-samples": "node scripts/check-missing-sdk-samples.mjs",
-    "check-code-samples-usage": "node scripts/check-code-samples-usage.mjs"
+    "check-code-samples-usage": "node scripts/check-code-samples-usage.mjs",
+    "check-openapi-routes-coverage": "node scripts/check-openapi-routes-coverage.mjs"
   }
 }
