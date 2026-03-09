@@ -421,436 +421,35 @@
               "*"
             ]
           }
-        ]
-      }
-    },
-    "/chats": {
-      "get": {
-        "tags": [
-          "Chats"
         ],
-        "summary": "List chat workspaces",
-        "operationId": "list_workspaces",
-        "responses": {
-          "401": {
-            "description": "The authorization header is missing.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseError"
-                },
-                "example": {
-                  "message": "The Authorization header is missing. It must use the bearer authorization method.",
-                  "code": "missing_authorization_header",
-                  "type": "auth",
-                  "link": "https://docs.meilisearch.com/errors#missing_authorization_header"
-                }
-              }
-            }
-          }
-        },
-        "security": [
+        "x-codeSamples": [
           {
-            "Bearer": [
-              "chats.get",
-              "*"
-            ]
-          }
-        ]
-      }
-    },
-    "/chats/{workspace_uid}": {
-      "get": {
-        "tags": [
-          "Chats"
-        ],
-        "summary": "Get a chat workspace",
-        "operationId": "get_chat",
-        "parameters": [
-          {
-            "name": "workspaceUid",
-            "in": "path",
-            "description": "The unique identifier of the chat workspace.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "example": "my-workspace"
-          }
-        ],
-        "responses": {
-          "401": {
-            "description": "The authorization header is missing.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseError"
-                },
-                "example": {
-                  "message": "The Authorization header is missing. It must use the bearer authorization method.",
-                  "code": "missing_authorization_header",
-                  "type": "auth",
-                  "link": "https://docs.meilisearch.com/errors#missing_authorization_header"
-                }
-              }
-            }
+            "lang": "cURL",
+            "source": "curl \\\n  -X GET 'http://MEILISEARCH_URL/batches/BATCH_UID'"
           },
-          "404": {
-            "description": "Chat not found.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseError"
-                },
-                "example": {
-                  "message": "Chat :workspaceUid not found.",
-                  "code": "chat_not_found",
-                  "type": "invalid_request",
-                  "link": "https://docs.meilisearch.com/errors#chat_not_found"
-                }
-              }
-            }
-          }
-        },
-        "security": [
           {
-            "Bearer": [
-              "chats.get",
-              "*"
-            ]
-          }
-        ]
-      },
-      "delete": {
-        "tags": [
-          "Chats"
-        ],
-        "summary": "Delete a chat workspace",
-        "operationId": "delete_chat",
-        "parameters": [
-          {
-            "name": "workspaceUid",
-            "in": "path",
-            "description": "The unique identifier of the chat workspace.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "example": "my-workspace"
-          }
-        ],
-        "responses": {
-          "401": {
-            "description": "The authorization header is missing.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseError"
-                },
-                "example": {
-                  "message": "The Authorization header is missing. It must use the bearer authorization method.",
-                  "code": "missing_authorization_header",
-                  "type": "auth",
-                  "link": "https://docs.meilisearch.com/errors#missing_authorization_header"
-                }
-              }
-            }
+            "lang": "JS",
+            "source": "client.batches.getBatch(BATCH_UID);"
           },
-          "404": {
-            "description": "Chat not found.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseError"
-                },
-                "example": {
-                  "message": "Chat :workspaceUid not found.",
-                  "code": "chat_not_found",
-                  "type": "invalid_request",
-                  "link": "https://docs.meilisearch.com/errors#chat_not_found"
-                }
-              }
-            }
-          }
-        },
-        "security": [
           {
-            "Bearer": [
-              "chats.delete",
-              "*"
-            ]
-          }
-        ]
-      }
-    },
-    "/chats/{workspace_uid}/chat/completions": {
-      "post": {
-        "tags": [
-          "Chats"
-        ],
-        "summary": "Request a chat completion",
-        "operationId": "chat",
-        "parameters": [
-          {
-            "name": "workspaceUid",
-            "in": "path",
-            "description": "The unique identifier of the chat workspace.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "example": "my-workspace"
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "additionalProperties": {},
-                "propertyNames": {
-                  "type": "string"
-                }
-              }
-            }
+            "lang": "PHP",
+            "source": "$client->getBatch(BATCH_UID);"
           },
-          "required": true
-        },
-        "responses": {
-          "401": {
-            "description": "The authorization header is missing.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseError"
-                },
-                "example": {
-                  "message": "The Authorization header is missing. It must use the bearer authorization method.",
-                  "code": "missing_authorization_header",
-                  "type": "auth",
-                  "link": "https://docs.meilisearch.com/errors#missing_authorization_header"
-                }
-              }
-            }
+          {
+            "lang": "Python",
+            "source": "client.get_batch(BATCH_UID)"
           },
-          "404": {
-            "description": "Chat not found.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseError"
-                },
-                "example": {
-                  "message": "Chat :workspaceUid not found.",
-                  "code": "chat_not_found",
-                  "type": "invalid_request",
-                  "link": "https://docs.meilisearch.com/errors#chat_not_found"
-                }
-              }
-            }
-          }
-        },
-        "security": [
           {
-            "Bearer": [
-              "chats.completions",
-              "*"
-            ]
-          }
-        ]
-      }
-    },
-    "/chats/{workspace_uid}/settings": {
-      "get": {
-        "tags": [
-          "Chats"
-        ],
-        "summary": "Get settings of a chat workspace",
-        "operationId": "get_settings",
-        "parameters": [
-          {
-            "name": "workspaceUid",
-            "in": "path",
-            "description": "The unique identifier of the chat workspace.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "example": "my-workspace"
-          }
-        ],
-        "responses": {
-          "401": {
-            "description": "The authorization header is missing.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseError"
-                },
-                "example": {
-                  "message": "The Authorization header is missing. It must use the bearer authorization method.",
-                  "code": "missing_authorization_header",
-                  "type": "auth",
-                  "link": "https://docs.meilisearch.com/errors#missing_authorization_header"
-                }
-              }
-            }
+            "lang": "Ruby",
+            "source": "client.batch(BATCH_UID)"
           },
-          "404": {
-            "description": "Chat not found.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseError"
-                },
-                "example": {
-                  "message": "Chat :workspaceUid not found.",
-                  "code": "chat_not_found",
-                  "type": "invalid_request",
-                  "link": "https://docs.meilisearch.com/errors#chat_not_found"
-                }
-              }
-            }
-          }
-        },
-        "security": [
           {
-            "Bearer": [
-              "chats.settings.get",
-              "*"
-            ]
-          }
-        ]
-      },
-      "delete": {
-        "tags": [
-          "Chats"
-        ],
-        "summary": "Reset the settings of a chat workspace",
-        "operationId": "reset_settings",
-        "parameters": [
-          {
-            "name": "workspaceUid",
-            "in": "path",
-            "description": "The unique identifier of the chat workspace.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "example": "my-workspace"
-          }
-        ],
-        "responses": {
-          "401": {
-            "description": "The authorization header is missing.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseError"
-                },
-                "example": {
-                  "message": "The Authorization header is missing. It must use the bearer authorization method.",
-                  "code": "missing_authorization_header",
-                  "type": "auth",
-                  "link": "https://docs.meilisearch.com/errors#missing_authorization_header"
-                }
-              }
-            }
+            "lang": "Go",
+            "source": "client.GetBatch(BATCH_UID);"
           },
-          "404": {
-            "description": "Chat not found.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseError"
-                },
-                "example": {
-                  "message": "Chat :workspaceUid not found.",
-                  "code": "chat_not_found",
-                  "type": "invalid_request",
-                  "link": "https://docs.meilisearch.com/errors#chat_not_found"
-                }
-              }
-            }
-          }
-        },
-        "security": [
           {
-            "Bearer": [
-              "chats.settings.update",
-              "*"
-            ]
-          }
-        ]
-      },
-      "patch": {
-        "tags": [
-          "Chats"
-        ],
-        "summary": "Update settings of a chat workspace",
-        "operationId": "patch_settings",
-        "parameters": [
-          {
-            "name": "workspaceUid",
-            "in": "path",
-            "description": "The unique identifier of the chat workspace.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "example": "my-workspace"
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ChatWorkspaceSettings"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "401": {
-            "description": "The authorization header is missing.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseError"
-                },
-                "example": {
-                  "message": "The Authorization header is missing. It must use the bearer authorization method.",
-                  "code": "missing_authorization_header",
-                  "type": "auth",
-                  "link": "https://docs.meilisearch.com/errors#missing_authorization_header"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Chat not found.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseError"
-                },
-                "example": {
-                  "message": "Chat :workspaceUid not found.",
-                  "code": "chat_not_found",
-                  "type": "invalid_request",
-                  "link": "https://docs.meilisearch.com/errors#chat_not_found"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "Bearer": [
-              "chats.settings.update",
-              "*"
-            ]
+            "lang": "Rust",
+            "source": "let uid: u32 = 42;\nlet batch: meilisearch_sdk::batches::Batch = client\n  .get_batch(uid)\n  .await\n  .unwrap();"
           }
         ]
       }
@@ -13890,6 +13489,52 @@
               "*"
             ]
           }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "cURL",
+            "source": "curl \\\n  -X GET 'MEILISEARCH_URL/keys/6062abda-a5aa-4414-ac91-ecd7944c0f8d' \\\n  -H 'Authorization: Bearer MASTER_KEY'"
+          },
+          {
+            "lang": "JS",
+            "source": "client.getKey('6062abda-a5aa-4414-ac91-ecd7944c0f8d')"
+          },
+          {
+            "lang": "PHP",
+            "source": "$client->getKey('6062abda-a5aa-4414-ac91-ecd7944c0f8d');"
+          },
+          {
+            "lang": "Python",
+            "source": "client.get_key('6062abda-a5aa-4414-ac91-ecd7944c0f8d')"
+          },
+          {
+            "lang": "Java",
+            "source": "client.getKey(\"6062abda-a5aa-4414-ac91-ecd7944c0f8d\");"
+          },
+          {
+            "lang": "Ruby",
+            "source": "client.key('6062abda-a5aa-4414-ac91-ecd7944c0f8d')"
+          },
+          {
+            "lang": "Go",
+            "source": "client.GetKey(\"6062abda-a5aa-4414-ac91-ecd7944c0f8d\")"
+          },
+          {
+            "lang": "C#",
+            "source": "Key key = await client.GetKeyAsync(\"d0552b41536279a0ad88bd595327b96f01176a60c2243e906c52ac02375f9bc4\");"
+          },
+          {
+            "lang": "Rust",
+            "source": "let key = client\n  .get_key(\"6062abda-a5aa-4414-ac91-ecd7944c0f8d\")\n  .await\n  .unwrap();"
+          },
+          {
+            "lang": "Dart",
+            "source": "await client.getKey('6062abda-a5aa-4414-ac91-ecd7944c0f8d');"
+          },
+          {
+            "lang": "Swift",
+            "source": "client.getKey(keyOrUid: \"6062abda-a5aa-4414-ac91-ecd7944c0f8d\") { result in\n    switch result {\n    case .success(let key):\n        print(key)\n    case .failure(let error):\n        print(error)\n    }\n}"
+          }
         ]
       },
       "delete": {
@@ -13956,6 +13601,52 @@
               "keys.*",
               "*"
             ]
+          }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "cURL",
+            "source": "curl \\\n  -X DELETE 'MEILISEARCH_URL/keys/6062abda-a5aa-4414-ac91-ecd7944c0f8d' \\\n  -H 'Authorization: Bearer MASTER_KEY'"
+          },
+          {
+            "lang": "JS",
+            "source": "client.deleteKey('6062abda-a5aa-4414-ac91-ecd7944c0f8d')"
+          },
+          {
+            "lang": "PHP",
+            "source": "$client->deleteKey('6062abda-a5aa-4414-ac91-ecd7944c0f8d');"
+          },
+          {
+            "lang": "Python",
+            "source": "client.delete_key('6062abda-a5aa-4414-ac91-ecd7944c0f8d')"
+          },
+          {
+            "lang": "Java",
+            "source": "client.deleteKey(\"6062abda-a5aa-4414-ac91-ecd7944c0f8d\")"
+          },
+          {
+            "lang": "Ruby",
+            "source": "client.delete_key('6062abda-a5aa-4414-ac91-ecd7944c0f8d')"
+          },
+          {
+            "lang": "Go",
+            "source": "client.DeleteKey(\"6062abda-a5aa-4414-ac91-ecd7944c0f8d\")"
+          },
+          {
+            "lang": "C#",
+            "source": "client.DeleteKeyAsync(\"6062abda-a5aa-4414-ac91-ecd7944c0f8d\")"
+          },
+          {
+            "lang": "Rust",
+            "source": "let key = client\n  .get_key(\"6062abda-a5aa-4414-ac91-ecd7944c0f8d\")\n  .await\n  .unwrap();\nclient\n  .delete_key(&key)\n  .await?;"
+          },
+          {
+            "lang": "Dart",
+            "source": "await client.deleteKey('6062abda-a5aa-4414-ac91-ecd7944c0f8d');"
+          },
+          {
+            "lang": "Swift",
+            "source": "client.deleteKey(keyOrUid: \"6062abda-a5aa-4414-ac91-ecd7944c0f8d\") { result in\n    switch result {\n    case .success:\n        print(\"success\")\n    case .failure(let error):\n        print(error)\n    }\n}"
           }
         ]
       },
@@ -14055,6 +13746,52 @@
               "keys.*",
               "*"
             ]
+          }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "cURL",
+            "source": "curl \\\n  -X PATCH 'MEILISEARCH_URL/keys/6062abda-a5aa-4414-ac91-ecd7944c0f8d' \\\n  -H 'Authorization: Bearer MASTER_KEY' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '{\n    \"name\": \"Products/Reviews API key\",\n    \"description\": \"Manage documents: Products/Reviews API key\"\n  }'"
+          },
+          {
+            "lang": "JS",
+            "source": "client.updateKey('6062abda-a5aa-4414-ac91-ecd7944c0f8d', {\n    name: 'Products/Reviews API key',\n    description: 'Manage documents: Products/Reviews API key',\n})"
+          },
+          {
+            "lang": "PHP",
+            "source": "$client->updateKey('6062abda-a5aa-4414-ac91-ecd7944c0f8d',\n  [\n    'name' => 'Products/Reviews API key',\n    'description' => 'Manage documents: Products/Reviews API key'\n  ]);"
+          },
+          {
+            "lang": "Python",
+            "source": "client.update_key(key_or_uid='6062abda-a5aa-4414-ac91-ecd7944c0f8d',\n  options={\n    'name': 'Products/Reviews API key',\n    'description': 'Manage documents: Products/Reviews API key'\n})"
+          },
+          {
+            "lang": "Java",
+            "source": "KeyUpdate keyChanges = new KeyUpdate();\nkeyChanges.setName(\"Products/Reviews API key\");\nkeyChanges.setDescription(\"Manage documents: Products/Reviews API key\");\n\nclient.updateKey(\"6062abda-a5aa-4414-ac91-ecd7944c0f8d\", keyChanges);"
+          },
+          {
+            "lang": "Ruby",
+            "source": "client.update_key(\n  '6062abda-a5aa-4414-ac91-ecd7944c0f8d',\n  {\n    description: 'Manage documents: Products/Reviews API key',\n    name: 'Products/Reviews API key'\n  }\n)"
+          },
+          {
+            "lang": "Go",
+            "source": "client.UpdateKey(\"6062abda-a5aa-4414-ac91-ecd7944c0f8d\", &meilisearch.Key{\n  Description: \"Manage documents: Products/Reviews API key\",\n  Actions: []string{\"documents.add\", \"document.delete\"},\n  Indexes: []string{\"products\", \"reviews\"},\n  ExpiresAt: time.Date(2042, time.April, 02, 0, 42, 42, 0, time.UTC),\n})"
+          },
+          {
+            "lang": "C#",
+            "source": "await client.UpdateKeyAsync(\n  \"6062abda-a5aa-4414-ac91-ecd7944c0f8d\",\n  description: \"Manage documents: Products/Reviews API key\",\n  name: \"Products/Reviews API key\"\n)"
+          },
+          {
+            "lang": "Rust",
+            "source": "let mut key = client\n  .get_key(\"6062abda-a5aa-4414-ac91-ecd7944c0f8d\")\n  .await\n  .unwrap();\nkey\n    .with_description(\"Manage documents: Products/Reviews API key\".to_string())\n    .with_name(\"Products/Reviews API key\".to_string())\n    .update(&client)\n    .await\n    .unwrap();"
+          },
+          {
+            "lang": "Dart",
+            "source": "await client.updateKey(\n  '6062abda-a5aa-4414-ac91-ecd7944c0f8d',\n  description: 'Manage documents: Products/Reviews API key',\n  name: 'Products/Reviews API key',\n);"
+          },
+          {
+            "lang": "Swift",
+            "source": "let keyParams = KeyUpdateParams(\n  description: \"Manage documents: Products/Reviews API key\",\n  name: \"Products/Reviews API key\"\n)\n\nclient.updateKey(keyOrUid: \"6062abda-a5aa-4414-ac91-ecd7944c0f8d\", keyParams: keyParams) { result in\n  switch result {\n  case .success(let key):\n      print(key)\n  case .failure(let error):\n      print(error)\n  }\n}"
           }
         ]
       }
@@ -15942,80 +15679,51 @@
               "*"
             ]
           }
-        ]
-      }
-    },
-    "/tasks/{task_id}/documents": {
-      "get": {
-        "tags": [
-          "Async task management"
         ],
-        "summary": "Get task's documents",
-        "description": "Retrieve the list of documents that were processed or affected by a given [task](https://www.meilisearch.com/docs/learn/async/asynchronous_operations). Only available for document-related tasks.",
-        "operationId": "get_task_documents_file",
-        "parameters": [
+        "x-codeSamples": [
           {
-            "name": "taskUid",
-            "in": "path",
-            "description": "The task identifier.",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "u-int32",
-              "minimum": 0
-            },
-            "example": 0
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "The content of the task update.",
-            "content": {
-              "application/x-ndjson": {
-                "schema": {}
-              }
-            }
+            "lang": "cURL",
+            "source": "curl \\\n  -X GET 'MEILISEARCH_URL/tasks/1'"
           },
-          "401": {
-            "description": "The authorization header is missing.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseError"
-                },
-                "example": {
-                  "message": "The Authorization header is missing. It must use the bearer authorization method.",
-                  "code": "missing_authorization_header",
-                  "type": "auth",
-                  "link": "https://docs.meilisearch.com/errors#missing_authorization_header"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "The task uid does not exist.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseError"
-                },
-                "example": {
-                  "message": "Task :taskUid not found.",
-                  "code": "task_not_found",
-                  "type": "invalid_request",
-                  "link": "https://docs.meilisearch.com/errors/#task_not_found"
-                }
-              }
-            }
-          }
-        },
-        "security": [
           {
-            "Bearer": [
-              "tasks.get",
-              "tasks.*",
-              "*"
-            ]
+            "lang": "JS",
+            "source": "client.tasks.getTask(1)"
+          },
+          {
+            "lang": "PHP",
+            "source": "$client->getTask(1);"
+          },
+          {
+            "lang": "Python",
+            "source": "client.get_task(1)"
+          },
+          {
+            "lang": "Java",
+            "source": "client.getTask(1);"
+          },
+          {
+            "lang": "Ruby",
+            "source": "client.task(1)"
+          },
+          {
+            "lang": "Go",
+            "source": "client.GetTask(1);"
+          },
+          {
+            "lang": "C#",
+            "source": "TaskInfo task = await client.GetTaskAsync(1);"
+          },
+          {
+            "lang": "Rust",
+            "source": "let task: Task = client\n  .get_task(1)\n  .await\n  .unwrap();"
+          },
+          {
+            "lang": "Dart",
+            "source": "await client.getTask(1);"
+          },
+          {
+            "lang": "Swift",
+            "source": "client.getTask(taskUid: 1) { (result) in\n      switch result {\n      case .success(let task):\n          print(task)\n      case .failure(let error):\n          print(error)\n      }\n  }"
           }
         ]
       }
