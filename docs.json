@@ -1703,7 +1703,7 @@
     },
     {
       "source": "/reference/api/chat_completions",
-      "destination": "/learn/chat/getting_started_with_chat"
+      "destination": "/reference/api"
     },
     {
       "source": "/reference/api/compact",
@@ -1815,7 +1815,7 @@
     },
     {
       "source": "/reference/api/settings/list-all-indexes",
-      "destination": "/reference/api/settings/list-all-settings"
+      "destination": "/reference/api/settings/list-indexes"
     },
     {
       "source": "/reference/api/sortable_attributes",
