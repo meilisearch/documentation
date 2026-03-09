@@ -5,11 +5,15 @@
   "repository": "meilisearch/documentation",
   "bugs": "https://github.com/meilisearch/documentation/issues",
   "dependencies": {
+    "@octokit/rest": "^22.0.1",
     "js-yaml": "^4.1.1",
-    "node-fetch": "^2.7.0"
+    "node-fetch": "^2.7.0",
+    "openai": "^4.0.0"
   },
   "devDependencies": {
-    "mint": "^4.2.108"
+    "@types/node": "^20.0.0",
+    "mint": "^4.2.108",
+    "typescript": "^5.0.0"
   },
   "scripts": {
     "generate-mintlify-openapi-file": "node scripts/generate-mintlify-openapi.mjs",
@@ -19,6 +23,7 @@
     "check-openapi-code-samples": "node scripts/check-openapi-code-samples.mjs",
     "check-missing-sdk-samples": "node scripts/check-missing-sdk-samples.mjs",
     "check-code-samples-usage": "node scripts/check-code-samples-usage.mjs",
-    "check-openapi-routes-coverage": "node scripts/check-openapi-routes-coverage.mjs"
+    "check-openapi-routes-coverage": "node scripts/check-openapi-routes-coverage.mjs",
+    "generate-changelog": "npx tsx scripts/generate-changelog.ts"
   }
 }

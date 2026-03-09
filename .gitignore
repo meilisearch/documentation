@@ -136,3 +136,6 @@ yarn-error.log
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+# Changelog generation cache
+changelog/.cache.json
