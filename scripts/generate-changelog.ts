@@ -1,5 +1,5 @@
 import { Octokit } from "@octokit/rest";
-import OpenAI from "openai";
+import Anthropic from "@anthropic-ai/sdk";
 import * as fs from "fs";
 import * as path from "path";
 
@@ -7,7 +7,7 @@ const GITHUB_OWNER = "meilisearch";
 const GITHUB_REPO = "meilisearch";
 
 const octokit = new Octokit();
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
 // Paths relative to project root (documentation/)
 const SCRIPT_DIR = path.dirname(new URL(import.meta.url).pathname);
@@ -194,12 +194,10 @@ async function fetchAllReleases(): Promise<Release[]> {
 async function extractChangelogOnly(body: string): Promise<string> {
   if (!body.trim()) return "";
 
-  const response = await openai.chat.completions.create({
-    model: "gpt-4o-mini",
-    messages: [
-      {
-        role: "system",
-        content: `You are a changelog writer for end users. Transform release notes into a clean, user-friendly changelog.
+  const response = await anthropic.messages.create({
+    model: "claude-haiku-4-5-20251001",
+    max_tokens: 4096,
+    system: `You are a changelog writer for end users. Transform release notes into a clean, user-friendly changelog.
 
 OUTPUT FORMAT:
 Use exactly these section headers IN THIS EXACT ORDER (only include sections that have content):
@@ -312,27 +310,25 @@ Sample task response:
 Indexing large datasets is now up to 2x faster thanks to optimized batch processing. Set the \`MEILI_MAX_INDEXING_MEMORY\` environment variable to control memory usage.
 
 If there's no relevant changelog content (only bug fixes, maintenance, etc.), return an empty string.`,
-      },
+    messages: [
       {
         role: "user",
         content: body,
       },
     ],
-    temperature: 0,
   });
 
-  return response.choices[0]?.message?.content || "";
+  const textBlock = response.content.find((block) => block.type === "text");
+  return textBlock?.text || "";
 }
 
 async function extractFeatures(body: string, version: string, date: string): Promise<FeatureEntry[]> {
   if (!body.trim()) return [];
 
-  const response = await openai.chat.completions.create({
-    model: "gpt-4o-mini",
-    messages: [
-      {
-        role: "system",
-        content: `You are a feature extractor. Given release notes, extract individual features as a JSON array.
+  const response = await anthropic.messages.create({
+    model: "claude-haiku-4-5-20251001",
+    max_tokens: 1024,
+    system: `You are a feature extractor. Given release notes, extract individual features as a JSON array.
 Each feature should be a short, descriptive string that could be used to determine what UI to show based on API version.
 
 Focus on:
@@ -347,16 +343,16 @@ Example: ["vector search", "hybrid search", "facet search", "geosearch radius fi
 
 If no features found, return an empty array: []
 Return ONLY the JSON array, nothing else.`,
-      },
+    messages: [
       {
         role: "user",
         content: body,
       },
     ],
-    temperature: 0,
   });
 
-  const content = response.choices[0]?.message?.content || "[]";
+  const textBlock = response.content.find((block) => block.type === "text");
+  const content = textBlock?.text || "[]";
   try {
     const features = JSON.parse(content);
     return features.map((feature: string) => ({
@@ -462,7 +458,7 @@ async function main() {
       .map((r) => `## ${r.tag_name}\n\n${r.body}`)
       .join("\n\n---\n\n");
 
-    // Extract changelog only using ChatGPT
+    // Extract changelog using Claude
     console.log(`  Extracting changelog content...`);
     const rawChangelogContent = await extractChangelogOnly(mergedBody);
     const changelogContent = cleanContent(rawChangelogContent);

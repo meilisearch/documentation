@@ -214,7 +214,7 @@ jobs:
       - name: Generate changelog
         if: steps.check_release.outputs.has_new_release == 'true'
         env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: npm run generate-changelog
 
       - name: Commit changes
