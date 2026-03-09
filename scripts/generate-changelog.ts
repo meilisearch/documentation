@@ -9,12 +9,10 @@ const GITHUB_REPO = "meilisearch";
 const octokit = new Octokit();
 const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
-// Paths relative to project root (documentation/)
 const SCRIPT_DIR = path.dirname(new URL(import.meta.url).pathname);
 const PROJECT_ROOT = path.dirname(SCRIPT_DIR);
 const RELEASES_DIR = path.join(PROJECT_ROOT, "changelog", "releases");
 const CHANGELOG_MDX = path.join(PROJECT_ROOT, "changelog", "changelog.mdx");
-const CACHE_PATH = path.join(PROJECT_ROOT, "changelog", ".cache.json");
 
 const CHANGELOG_HEADER = `---
 title: "Changelog"
@@ -39,9 +37,6 @@ interface ParsedVersion {
   raw: string;
 }
 
-// Cache only tracks which minor versions have already been processed
-type CacheData = Record<string, boolean>;
-
 function parseVersion(tag: string): ParsedVersion | null {
   const match = tag.match(/^v?(\d+)\.(\d+)\.(\d+)/);
   if (!match) return null;
@@ -55,6 +50,18 @@ function parseVersion(tag: string): ParsedVersion | null {
 
 function getMinorVersion(version: ParsedVersion): string {
   return `v${version.major}.${version.minor}`;
+}
+
+function getVersionsFromChangelog(): Set<string> {
+  const versions = new Set<string>();
+  if (!fs.existsSync(CHANGELOG_MDX)) return versions;
+
+  const content = fs.readFileSync(CHANGELOG_MDX, "utf-8");
+  const matches = content.matchAll(/<Update\s+label="([^"]+)"/g);
+  for (const match of matches) {
+    versions.add(match[1]);
+  }
+  return versions;
 }
 
 function formatJsonBlocks(content: string): string {
@@ -116,33 +123,6 @@ function cleanContent(content: string): string {
   return cleaned;
 }
 
-function loadCache(): CacheData {
-  if (fs.existsSync(CACHE_PATH)) {
-    try {
-      const raw = JSON.parse(fs.readFileSync(CACHE_PATH, "utf-8"));
-      // Support old cache format: migrate to simple record
-      if (raw && typeof raw === "object" && !Array.isArray(raw)) {
-        if ("changelogs" in raw) {
-          // Old format had { releases, changelogs, features }
-          const migrated: CacheData = {};
-          for (const key of Object.keys(raw.changelogs || {})) {
-            migrated[key] = true;
-          }
-          return migrated;
-        }
-        return raw as CacheData;
-      }
-    } catch {
-      console.log("Cache file corrupted, starting fresh");
-    }
-  }
-  return {};
-}
-
-function saveCache(cache: CacheData): void {
-  fs.writeFileSync(CACHE_PATH, JSON.stringify(cache, null, 2));
-}
-
 function buildUpdateBlock(version: string, date: string, content: string): string {
   return `<Update label="${version}" description="${date}">
 
@@ -153,7 +133,7 @@ ${content}
 `;
 }
 
-async function fetchAllReleases(): Promise<Release[]> {
+async function fetchNewReleases(existingFiles: Set<string>): Promise<Release[]> {
   console.log("Fetching releases from GitHub...");
   const releases: Release[] = [];
   let page = 1;
@@ -168,23 +148,31 @@ async function fetchAllReleases(): Promise<Release[]> {
 
     if (data.length === 0) break;
 
+    let allExist = true;
     for (const release of data) {
-      if (!release.draft && !release.prerelease) {
-        releases.push({
-          tag_name: release.tag_name,
-          name: release.name || release.tag_name,
-          body: release.body || "",
-          published_at: release.published_at || "",
-          prerelease: release.prerelease,
-          draft: release.draft,
-        });
-      }
+      if (release.draft || release.prerelease) continue;
+
+      const filename = `${release.tag_name.replace(/^v/, "")}.md`;
+      if (existingFiles.has(filename)) continue;
+
+      allExist = false;
+      releases.push({
+        tag_name: release.tag_name,
+        name: release.name || release.tag_name,
+        body: release.body || "",
+        published_at: release.published_at || "",
+        prerelease: release.prerelease,
+        draft: release.draft,
+      });
     }
+
+    // If all releases on this page already have files, older pages will too
+    if (allExist && data.length > 0) break;
 
     page++;
   }
 
-  console.log(`Found ${releases.length} releases`);
+  console.log(`Found ${releases.length} new release(s)`);
   return releases;
 }
 
@@ -255,42 +243,56 @@ If there's no relevant changelog content (only bug fixes, maintenance, etc.), re
 async function main() {
   fs.mkdirSync(RELEASES_DIR, { recursive: true });
 
-  const cache = loadCache();
-  const releases = await fetchAllReleases();
+  // Get existing release files to skip re-downloading
+  const existingFiles = new Set(fs.readdirSync(RELEASES_DIR));
 
-  // Save individual release files
-  console.log("\n--- Saving individual release files ---");
-  for (const release of releases) {
-    const version = parseVersion(release.tag_name);
-    if (!version) continue;
+  // Get versions already in changelog.mdx
+  const existingVersions = getVersionsFromChangelog();
+  console.log(`Changelog already has ${existingVersions.size} version(s)`);
 
+  // Only fetch releases we don't already have on disk
+  const newReleases = await fetchNewReleases(existingFiles);
+
+  // Save new release files
+  for (const release of newReleases) {
     const filename = `${release.tag_name.replace(/^v/, "")}.md`;
     const filepath = path.join(RELEASES_DIR, filename);
-
-    if (fs.existsSync(filepath)) {
-      continue;
-    }
-
     const content = `# ${release.name}\n\nReleased: ${release.published_at?.split("T")[0] || "Unknown"}\n\n${release.body}`;
     fs.writeFileSync(filepath, content);
     console.log(`  Saved: ${filename}`);
   }
 
-  // Group releases by minor version
-  const minorVersions = new Map<string, Release[]>();
-  for (const release of releases) {
-    const version = parseVersion(release.tag_name);
+  // Read all release files from disk to group by minor version
+  const allFiles = fs.readdirSync(RELEASES_DIR);
+  const releasesByMinor = new Map<string, { tag: string; body: string; date: string }[]>();
+
+  for (const filename of allFiles) {
+    const version = parseVersion(filename.replace(/\.md$/, ""));
     if (!version) continue;
 
     const minorKey = getMinorVersion(version);
-    if (!minorVersions.has(minorKey)) {
-      minorVersions.set(minorKey, []);
+    if (existingVersions.has(minorKey)) continue; // already in changelog
+
+    if (!releasesByMinor.has(minorKey)) {
+      releasesByMinor.set(minorKey, []);
     }
-    minorVersions.get(minorKey)!.push(release);
+
+    const content = fs.readFileSync(path.join(RELEASES_DIR, filename), "utf-8");
+    const dateMatch = content.match(/Released: (\d{4}-\d{2}-\d{2})/);
+    releasesByMinor.get(minorKey)!.push({
+      tag: `v${filename.replace(/\.md$/, "")}`,
+      body: content,
+      date: dateMatch?.[1] || "Unknown",
+    });
+  }
+
+  if (releasesByMinor.size === 0) {
+    console.log("\nNo new versions to process.");
+    return;
   }
 
   // Sort minor versions newest first
-  const sortedMinorVersions = [...minorVersions.entries()].sort((a, b) => {
+  const sortedMinors = [...releasesByMinor.entries()].sort((a, b) => {
     const vA = parseVersion(a[0] + ".0");
     const vB = parseVersion(b[0] + ".0");
     if (!vA || !vB) return 0;
@@ -298,51 +300,33 @@ async function main() {
     return vB.minor - vA.minor;
   });
 
-  // Find new minor versions that aren't in the cache
-  const newVersions: { version: string; date: string; releases: Release[] }[] = [];
-  for (const [minorVersion, minorReleases] of sortedMinorVersions) {
-    if (cache[minorVersion]) continue;
+  console.log(`\n--- Processing ${sortedMinors.length} new version(s) ---`);
 
-    // Sort patches (oldest first to get the first release date)
-    minorReleases.sort((a, b) => {
-      const vA = parseVersion(a.tag_name);
-      const vB = parseVersion(b.tag_name);
+  const newBlocks: string[] = [];
+  for (const [minorVersion, patches] of sortedMinors) {
+    console.log(`\nProcessing ${minorVersion}...`);
+
+    // Sort patches oldest first to get first release date
+    patches.sort((a, b) => {
+      const vA = parseVersion(a.tag);
+      const vB = parseVersion(b.tag);
       if (!vA || !vB) return 0;
       return vA.patch - vB.patch;
     });
 
-    const releaseDate = minorReleases[0].published_at?.split("T")[0] || "Unknown";
-    newVersions.push({ version: minorVersion, date: releaseDate, releases: minorReleases });
-  }
-
-  if (newVersions.length === 0) {
-    console.log("\nNo new versions to process.");
-    return;
-  }
-
-  console.log(`\n--- Processing ${newVersions.length} new version(s) ---`);
-
-  // Process new versions and build Update blocks
-  const newBlocks: string[] = [];
-  for (const { version, date, releases: minorReleases } of newVersions) {
-    console.log(`\nProcessing ${version}...`);
-
-    const mergedBody = minorReleases
-      .map((r) => `## ${r.tag_name}\n\n${r.body}`)
+    const releaseDate = patches[0].date;
+    const mergedBody = patches
+      .map((p) => `## ${p.tag}\n\n${p.body}`)
       .join("\n\n---\n\n");
 
     const rawContent = await extractChangelog(mergedBody);
     const content = cleanContent(rawContent);
 
     if (content.trim()) {
-      newBlocks.push(buildUpdateBlock(version, date, content));
-      cache[version] = true;
-      saveCache(cache);
-      console.log(`  Done: ${version}`);
+      newBlocks.push(buildUpdateBlock(minorVersion, releaseDate, content));
+      console.log(`  Done: ${minorVersion}`);
     } else {
-      console.log(`  Skipped (no notable changes): ${version}`);
-      cache[version] = true;
-      saveCache(cache);
+      console.log(`  Skipped (no notable changes): ${minorVersion}`);
     }
   }
 
@@ -351,56 +335,21 @@ async function main() {
     return;
   }
 
-  // Insert new blocks into existing changelog.mdx (right after the header)
+  // Insert new blocks into existing changelog.mdx right after the header
   if (fs.existsSync(CHANGELOG_MDX)) {
     const existing = fs.readFileSync(CHANGELOG_MDX, "utf-8");
-    // Find the end of the frontmatter + first blank line
     const headerEnd = existing.indexOf("---", existing.indexOf("---") + 3);
     if (headerEnd !== -1) {
-      // Find the next newline after closing ---
       let insertPos = existing.indexOf("\n", headerEnd) + 1;
-      // Skip blank lines after frontmatter
       while (insertPos < existing.length && existing[insertPos] === "\n") {
         insertPos++;
       }
       const before = existing.slice(0, insertPos);
       const after = existing.slice(insertPos);
       fs.writeFileSync(CHANGELOG_MDX, before + newBlocks.join("") + after);
-    } else {
-      // No frontmatter found, prepend after header
-      fs.writeFileSync(CHANGELOG_MDX, CHANGELOG_HEADER + newBlocks.join("") + existing);
     }
   } else {
-    // Create new file from scratch — process all versions
-    console.log("\nNo existing changelog.mdx, generating full file...");
-    const allBlocks: string[] = [];
-    for (const [minorVersion, minorReleases] of sortedMinorVersions) {
-      if (newBlocks.length > 0 && newVersions.some((v) => v.version === minorVersion)) {
-        // Already processed above
-        continue;
-      }
-      // For existing cached versions, we need to regenerate their blocks
-      // This only happens on first run when there's no changelog.mdx
-      minorReleases.sort((a, b) => {
-        const vA = parseVersion(a.tag_name);
-        const vB = parseVersion(b.tag_name);
-        if (!vA || !vB) return 0;
-        return vA.patch - vB.patch;
-      });
-      const releaseDate = minorReleases[0].published_at?.split("T")[0] || "Unknown";
-      const mergedBody = minorReleases
-        .map((r) => `## ${r.tag_name}\n\n${r.body}`)
-        .join("\n\n---\n\n");
-
-      const rawContent = await extractChangelog(mergedBody);
-      const content = cleanContent(rawContent);
-      if (content.trim()) {
-        allBlocks.push(buildUpdateBlock(minorVersion, releaseDate, content));
-      }
-      cache[minorVersion] = true;
-      saveCache(cache);
-    }
-    fs.writeFileSync(CHANGELOG_MDX, CHANGELOG_HEADER + newBlocks.join("") + allBlocks.join(""));
+    fs.writeFileSync(CHANGELOG_MDX, CHANGELOG_HEADER + newBlocks.join(""));
   }
 
   console.log(`\nUpdated: ${CHANGELOG_MDX}`);
