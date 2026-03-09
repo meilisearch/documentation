@@ -97,7 +97,7 @@ search_get_1: |-
 get_all_tasks_1: |-
   curl \
     -X GET 'MEILISEARCH_URL/tasks'
-# get_tasks_taskUid
+# get_tasks_taskId
 get_task_1: |-
   curl \
     -X GET 'MEILISEARCH_URL/tasks/1'
@@ -107,7 +107,7 @@ get_all_tasks_paginating_1: |-
 get_all_tasks_paginating_2: |-
   curl \
     -X GET 'MEILISEARCH_URL/tasks?limit=2&from=8
-# get_keys_uidOrKey
+# get_keys_key
 get_one_key_1: |-
   curl \
     -X GET 'MEILISEARCH_URL/keys/6062abda-a5aa-4414-ac91-ecd7944c0f8d' \
@@ -129,7 +129,7 @@ create_a_key_1: |-
       "indexes": ["products"],
       "expiresAt": "2042-04-02T00:42:42Z"
     }'
-# patch_keys_uidOrKey
+# patch_keys_key
 update_a_key_1: |-
   curl \
     -X PATCH 'MEILISEARCH_URL/keys/6062abda-a5aa-4414-ac91-ecd7944c0f8d' \
@@ -139,7 +139,7 @@ update_a_key_1: |-
       "name": "Products/Reviews API key",
       "description": "Manage documents: Products/Reviews API key"
     }'
-# delete_keys_uidOrKey
+# delete_keys_key
 delete_a_key_1: |-
   curl \
     -X DELETE 'MEILISEARCH_URL/keys/6062abda-a5aa-4414-ac91-ecd7944c0f8d' \
@@ -578,20 +578,6 @@ update_embedders_1: |-
 reset_embedders_1: |-
   curl \
     -X DELETE 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/embedders'
-# get_indexes_indexUid_settings_vector_store
-get_vector_store_settings_1: |-
-  curl \
-    -X GET 'MEILISEARCH_URL/indexes/INDEX_UID/settings/vector-store'
-# patch_indexes_indexUid_settings_vector_store
-update_vector_store_settings_1: |-
-  curl \
-    -X PATCH 'MEILISEARCH_URL/indexes/INDEX_UID/settings/vector-store' \
-    -H 'Content-Type: application/json' \
-    --data-binary '"experimental"'
-# delete_indexes_indexUid_settings_vector_store
-reset_vector_store_settings_1: |-
-  curl \
-    -X DELETE 'MEILISEARCH_URL/indexes/INDEX_UID/settings/vector-store'
 # get_indexes_indexUid_settings_chat
 get_chat_settings_1: |-
   curl \
@@ -726,7 +712,7 @@ create_snapshot_1: |-
 get_all_batches_1: |-
   curl \
     -X GET 'http://MEILISEARCH_URL/batches'
-# get_batches_batchUid
+# get_batches_batchId
 get_batch_1: |-
   curl \
     -X GET 'http://MEILISEARCH_URL/batches/BATCH_UID'

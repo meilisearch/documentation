@@ -86,12 +86,23 @@ const openapi = JSON.parse(fs.readFileSync(OPENAPI_PATH, 'utf-8'));
  *   ("get", "/indexes/{indexUid}/settings/stop-words")
  *   → "get_indexes_indexUid_settings_stop_words"
  */
+function toCamelCase(s) {
+  return s.replace(/_([a-z])/g, (_, c) => c.toUpperCase());
+}
+
 function routeId(method, pathStr) {
-  const normalized = pathStr
-    .replace(/^\//, '') // strip leading /
-    .replace(/[{}]/g, '') // {indexUid} → indexUid
-    .replace(/[/-]/g, '_'); // / and - → _
-  return `${method}_${normalized}`;
+  const segments = pathStr
+    .replace(/^\//, '')
+    .split('/')
+    .map((seg) => {
+      if (seg.startsWith('{') && seg.endsWith('}')) {
+        const param = seg.slice(1, -1);
+        return toCamelCase(param);
+      }
+      return seg.replace(/-/g, '_');
+    });
+  const pathPart = segments.join('_');
+  return pathPart ? `${method}_${pathPart}` : method;
 }
 
 const routeIds = new Set();

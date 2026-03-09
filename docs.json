@@ -435,10 +435,23 @@
                     ]
                   },
                   {
+                    "group": "Chats",
+                    "pages": [
+                      "GET /chats",
+                      "GET /chats/{workspace_uid}",
+                      "DELETE /chats/{workspace_uid}",
+                      "POST /chats/{workspace_uid}/chat/completions",
+                      "GET /chats/{workspace_uid}/settings",
+                      "PATCH /chats/{workspace_uid}/settings",
+                      "DELETE /chats/{workspace_uid}/settings"
+                    ]
+                  },
+                  {
                     "group": "Tasks",
                     "pages": [
                       "GET /tasks",
-                      "GET /tasks/{taskUid}",
+                      "GET /tasks/{task_id}",
+                      "GET /tasks/{task_id}/documents",
                       "POST /tasks/cancel",
                       "DELETE /tasks"
                     ]
@@ -447,7 +460,7 @@
                     "group": "Batches",
                     "pages": [
                       "GET /batches",
-                      "GET /batches/{batchUid}"
+                      "GET /batches/{batch_id}"
                     ]
                   },
                   {
@@ -455,9 +468,9 @@
                     "pages": [
                       "GET /keys",
                       "POST /keys",
-                      "GET /keys/{uidOrKey}",
-                      "PATCH /keys/{uidOrKey}",
-                      "DELETE /keys/{uidOrKey}"
+                      "GET /keys/{key}",
+                      "PATCH /keys/{key}",
+                      "DELETE /keys/{key}"
                     ]
                   },
                   {
@@ -700,7 +713,8 @@
                         "group": "Network",
                         "pages": [
                           "GET /network",
-                          "PATCH /network"
+                          "PATCH /network",
+                          "POST /network/control"
                         ]
                       },
                       {
