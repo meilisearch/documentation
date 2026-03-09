@@ -15,7 +15,6 @@ const PROJECT_ROOT = path.dirname(SCRIPT_DIR);
 const RELEASES_DIR = path.join(PROJECT_ROOT, "changelog", "releases");
 const MINOR_DIR = path.join(PROJECT_ROOT, "changelog", "minor");
 const CHANGELOG_MDX = path.join(PROJECT_ROOT, "changelog", "changelog.mdx");
-const CHANGELOG_JSON = path.join(PROJECT_ROOT, "changelog", "changelog.json");
 const CACHE_PATH = path.join(PROJECT_ROOT, "changelog", ".cache.json");
 
 interface Release {
@@ -34,16 +33,9 @@ interface ParsedVersion {
   raw: string;
 }
 
-interface FeatureEntry {
-  feature: string;
-  version: string;
-  date: string;
-}
-
 interface CacheData {
   releases: Record<string, boolean>;
   changelogs: Record<string, { content: string; date: string }>;
-  features: FeatureEntry[];
 }
 
 function parseVersion(tag: string): ParsedVersion | null {
@@ -149,7 +141,7 @@ function loadCache(): CacheData {
       console.log("Cache file corrupted, starting fresh");
     }
   }
-  return { releases: {}, changelogs: {}, features: [] };
+  return { releases: {}, changelogs: {} };
 }
 
 function saveCache(cache: CacheData): void {
@@ -322,61 +314,6 @@ If there's no relevant changelog content (only bug fixes, maintenance, etc.), re
   return textBlock?.text || "";
 }
 
-async function extractFeatures(body: string, version: string, date: string): Promise<FeatureEntry[]> {
-  if (!body.trim()) return [];
-
-  const response = await anthropic.messages.create({
-    model: "claude-haiku-4-5-20251001",
-    max_tokens: 1024,
-    system: `You are a feature extractor. Given release notes, extract individual features as a JSON array.
-Each feature should be a short, descriptive string that could be used to determine what UI to show based on API version.
-
-Focus on:
-- New API endpoints
-- New search features
-- New configuration options
-- New capabilities
-- Breaking changes that affect functionality
-
-Return a JSON array of strings, each being a feature name/description.
-Example: ["vector search", "hybrid search", "facet search", "geosearch radius filter", "sortable attributes"]
-
-If no features found, return an empty array: []
-Return ONLY the JSON array, nothing else.`,
-    messages: [
-      {
-        role: "user",
-        content: body,
-      },
-    ],
-  });
-
-  const textBlock = response.content.find((block) => block.type === "text");
-  let content = textBlock?.text || "[]";
-  // Strip markdown code fences if present (e.g. ```json [...] ```)
-  const jsonMatch = content.match(/```(?:json)?\s*([\s\S]*?)```/);
-  if (jsonMatch) {
-    content = jsonMatch[1].trim();
-  } else {
-    // Try to extract a JSON array from the response
-    const arrayMatch = content.match(/\[[\s\S]*\]/);
-    if (arrayMatch) {
-      content = arrayMatch[0];
-    }
-  }
-  try {
-    const features = JSON.parse(content);
-    return features.map((feature: string) => ({
-      feature,
-      version,
-      date,
-    }));
-  } catch {
-    console.warn(`Failed to parse features for ${version}: ${content.slice(0, 200)}`);
-    return [];
-  }
-}
-
 async function main() {
   // Create directories
   fs.mkdirSync(RELEASES_DIR, { recursive: true });
@@ -435,7 +372,6 @@ async function main() {
   }
 
   // Process each minor version
-  const allFeatures: FeatureEntry[] = [...cache.features];
   const mintlifyEntries: { version: string; date: string; content: string }[] = [];
 
   for (const [minorVersion, minorReleases] of minorVersions) {
@@ -493,13 +429,7 @@ async function main() {
         content: changelogContent,
       });
 
-      // Extract features for JSON
-      console.log(`  Extracting features...`);
-      const features = await extractFeatures(changelogContent, minorVersion, releaseDate);
-      allFeatures.push(...features);
-
       // Save cache after each version (in case of interruption)
-      cache.features = allFeatures;
       saveCache(cache);
     }
   }
@@ -530,48 +460,12 @@ ${entry.content}
   fs.writeFileSync(CHANGELOG_MDX, mintlifyContent);
   console.log(`Saved: ${CHANGELOG_MDX}`);
 
-  // Step 4: Generate changelog.json
-  console.log("\n--- Generating changelog.json ---");
-
-  // Group features by feature name, keeping the earliest version
-  const featureMap = new Map<string, { version: string; date: string }>();
-
-  // Sort all features by version (oldest first) so we get the first introduction
-  allFeatures.sort((a, b) => {
-    const vA = parseVersion(a.version);
-    const vB = parseVersion(b.version);
-    if (!vA || !vB) return 0;
-    if (vA.major !== vB.major) return vA.major - vB.major;
-    if (vA.minor !== vB.minor) return vA.minor - vB.minor;
-    return 0;
-  });
-
-  for (const feature of allFeatures) {
-    const key = feature.feature.toLowerCase();
-    if (!featureMap.has(key)) {
-      featureMap.set(key, { version: feature.version, date: feature.date });
-    }
-  }
-
-  const changelogJson = {
-    generated_at: new Date().toISOString(),
-    features: Array.from(featureMap.entries()).map(([feature, data]) => ({
-      feature,
-      introduced_in: data.version,
-      release_date: data.date,
-    })),
-  };
-
-  fs.writeFileSync(CHANGELOG_JSON, JSON.stringify(changelogJson, null, 2));
-  console.log(`Saved: ${CHANGELOG_JSON}`);
-
   // Final cache save
   saveCache(cache);
 
   console.log("\n--- Done! ---");
   console.log(`Total releases processed: ${releases.length}`);
   console.log(`Minor versions: ${minorVersions.size}`);
-  console.log(`Features extracted: ${featureMap.size}`);
 }
 
 main().catch(console.error);
