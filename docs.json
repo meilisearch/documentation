@@ -813,17 +813,7 @@
                 "group": "Front end",
                 "pages": [
                   "guides/front_end/front_end_integration",
-                  "guides/front_end/react_quick_start",
-                  "guides/front_end/vue_quick_start",
                   "guides/front_end/pagination"
-                ]
-              },
-              {
-                "group": "Back end",
-                "pages": [
-                  "guides/laravel_scout",
-                  "guides/strapi_v4",
-                  "guides/ruby_on_rails_quick_start"
                 ]
               },
               {
@@ -868,12 +858,6 @@
                 "group": "Deployment",
                 "pages": [
                   "guides/running_production"
-                ]
-              },
-              {
-                "group": "Integrations",
-                "pages": [
-                  "guides/vercel"
                 ]
               },
               {
@@ -1110,7 +1094,7 @@
     },
     {
       "source": "/learn/cookbooks/laravel_scout",
-      "destination": "/guides/back_end/laravel_scout"
+      "destination": "/getting_started/frameworks/laravel"
     },
     {
       "source": "/learn/cookbooks/large_documents",
@@ -1146,11 +1130,11 @@
     },
     {
       "source": "/learn/cookbooks/strapi_v4",
-      "destination": "/guides/back_end/strapi_v4"
+      "destination": "/getting_started/frameworks/strapi"
     },
     {
       "source": "/learn/cookbooks/vercel",
-      "destination": "/guides/integrations/vercel"
+      "destination": "/getting_started/integrations/vercel"
     },
     {
       "source": "/learn/core_concepts/documents",
@@ -1238,7 +1222,7 @@
     },
     {
       "source": "/learn/front_end/react_instantsearch",
-      "destination": "/guides/front_end/react_quick_start"
+      "destination": "/getting_started/instant_meilisearch/react"
     },
     {
       "source": "/learn/getting_started/a",
@@ -1730,7 +1714,7 @@
     },
     {
       "source": "/guides/back_end/laravel_scout",
-      "destination": "/guides/laravel_scout"
+      "destination": "/getting_started/frameworks/laravel"
     },
     {
       "source": "/guides/database/meilisync_mysql",
@@ -1746,7 +1730,7 @@
     },
     {
       "source": "/guides/front_end/react_instantsearch",
-      "destination": "/guides/front_end/react_quick_start"
+      "destination": "/getting_started/instant_meilisearch/react"
     },
     {
       "source": "/guides/front_end/search_bar_for_docs",
@@ -1754,7 +1738,7 @@
     },
     {
       "source": "/guides/integrations/vercel",
-      "destination": "/guides/vercel"
+      "destination": "/getting_started/integrations/vercel"
     },
     {
       "source": "/guides/performance/indexing_best_practices",
@@ -1899,6 +1883,30 @@
     {
       "source": "/reference/api/tokenize",
       "destination": "/reference/api/authorization"
+    },
+    {
+      "source": "/guides/laravel_scout",
+      "destination": "/getting_started/frameworks/laravel"
+    },
+    {
+      "source": "/guides/strapi_v4",
+      "destination": "/getting_started/frameworks/strapi"
+    },
+    {
+      "source": "/guides/ruby_on_rails_quick_start",
+      "destination": "/getting_started/frameworks/rails"
+    },
+    {
+      "source": "/guides/front_end/react_quick_start",
+      "destination": "/getting_started/instant_meilisearch/react"
+    },
+    {
+      "source": "/guides/front_end/vue_quick_start",
+      "destination": "/getting_started/instant_meilisearch/vue"
+    },
+    {
+      "source": "/guides/vercel",
+      "destination": "/getting_started/integrations/vercel"
     }
   ]
 }
