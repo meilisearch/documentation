@@ -154,10 +154,9 @@
     "versions": [
       {
         "version": "latest",
-        "anchors": [
+        "tabs": [
           {
-            "anchor": "Learn",
-            "icon": "book",
+            "tab": "Learn",
             "groups": [
               {
                 "group": "Getting started",
@@ -344,8 +343,7 @@
             ]
           },
           {
-            "anchor": "API Reference",
-            "icon": "code",
+            "tab": "Reference",
             "groups": [
               {
                 "group": "Overview",
@@ -753,8 +751,7 @@
             ]
           },
           {
-            "anchor": "Guides",
-            "icon": "file-lines",
+            "tab": "Guides",
             "groups": [
               {
                 "group": "Front end",
