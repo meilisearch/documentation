@@ -119,9 +119,13 @@ function cleanContent(content: string): string {
 }
 
 function buildUpdateBlock(version: string, date: string, content: string): string {
+  const tag = `${version}.0`;
+  const githubUrl = `https://github.com/${GITHUB_OWNER}/${GITHUB_REPO}/releases/tag/${tag}`;
   return `<Update label="${version}" description="${date}">
 
 ${content}
+
+[Find more information on GitHub](${githubUrl})
 
 </Update>
 
