@@ -11,7 +11,6 @@ const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
 const SCRIPT_DIR = path.dirname(new URL(import.meta.url).pathname);
 const PROJECT_ROOT = path.dirname(SCRIPT_DIR);
-const RELEASES_DIR = path.join(PROJECT_ROOT, "changelog", "releases");
 const CHANGELOG_MDX = path.join(PROJECT_ROOT, "changelog", "changelog.mdx");
 
 const CHANGELOG_HEADER = `---
@@ -26,15 +25,12 @@ interface Release {
   name: string;
   body: string;
   published_at: string;
-  prerelease: boolean;
-  draft: boolean;
 }
 
 interface ParsedVersion {
   major: number;
   minor: number;
   patch: number;
-  raw: string;
 }
 
 function parseVersion(tag: string): ParsedVersion | null {
@@ -44,7 +40,6 @@ function parseVersion(tag: string): ParsedVersion | null {
     major: parseInt(match[1]),
     minor: parseInt(match[2]),
     patch: parseInt(match[3]),
-    raw: tag,
   };
 }
 
@@ -133,7 +128,7 @@ ${content}
 `;
 }
 
-async function fetchNewReleases(existingFiles: Set<string>): Promise<Release[]> {
+async function fetchNewReleases(existingVersions: Set<string>): Promise<Release[]> {
   console.log("Fetching releases from GitHub...");
   const releases: Release[] = [];
   let page = 1;
@@ -148,26 +143,28 @@ async function fetchNewReleases(existingFiles: Set<string>): Promise<Release[]> 
 
     if (data.length === 0) break;
 
-    let allExist = true;
+    let allKnown = true;
     for (const release of data) {
       if (release.draft || release.prerelease) continue;
 
-      const filename = `${release.tag_name.replace(/^v/, "")}.md`;
-      if (existingFiles.has(filename)) continue;
+      const version = parseVersion(release.tag_name);
+      if (!version) continue;
 
-      allExist = false;
+      const minorKey = getMinorVersion(version);
+      if (existingVersions.has(minorKey)) continue;
+
+      allKnown = false;
       releases.push({
         tag_name: release.tag_name,
         name: release.name || release.tag_name,
         body: release.body || "",
         published_at: release.published_at || "",
-        prerelease: release.prerelease,
-        draft: release.draft,
       });
     }
 
-    // If all releases on this page already have files, older pages will too
-    if (allExist && data.length > 0) break;
+    // GitHub returns releases newest first — if every release on this page
+    // belongs to a minor version already in the changelog, older pages will too
+    if (allKnown) break;
 
     page++;
   }
@@ -241,49 +238,23 @@ If there's no relevant changelog content (only bug fixes, maintenance, etc.), re
 }
 
 async function main() {
-  fs.mkdirSync(RELEASES_DIR, { recursive: true });
-
-  // Get existing release files to skip re-downloading
-  const existingFiles = new Set(fs.readdirSync(RELEASES_DIR));
-
   // Get versions already in changelog.mdx
   const existingVersions = getVersionsFromChangelog();
   console.log(`Changelog already has ${existingVersions.size} version(s)`);
 
-  // Only fetch releases we don't already have on disk
-  const newReleases = await fetchNewReleases(existingFiles);
+  // Fetch only releases for minor versions not yet in the changelog
+  const releases = await fetchNewReleases(existingVersions);
+  const releasesByMinor = new Map<string, Release[]>();
 
-  // Save new release files
-  for (const release of newReleases) {
-    const filename = `${release.tag_name.replace(/^v/, "")}.md`;
-    const filepath = path.join(RELEASES_DIR, filename);
-    const content = `# ${release.name}\n\nReleased: ${release.published_at?.split("T")[0] || "Unknown"}\n\n${release.body}`;
-    fs.writeFileSync(filepath, content);
-    console.log(`  Saved: ${filename}`);
-  }
-
-  // Read all release files from disk to group by minor version
-  const allFiles = fs.readdirSync(RELEASES_DIR);
-  const releasesByMinor = new Map<string, { tag: string; body: string; date: string }[]>();
-
-  for (const filename of allFiles) {
-    const version = parseVersion(filename.replace(/\.md$/, ""));
+  for (const release of releases) {
+    const version = parseVersion(release.tag_name);
     if (!version) continue;
 
     const minorKey = getMinorVersion(version);
-    if (existingVersions.has(minorKey)) continue; // already in changelog
-
     if (!releasesByMinor.has(minorKey)) {
       releasesByMinor.set(minorKey, []);
     }
-
-    const content = fs.readFileSync(path.join(RELEASES_DIR, filename), "utf-8");
-    const dateMatch = content.match(/Released: (\d{4}-\d{2}-\d{2})/);
-    releasesByMinor.get(minorKey)!.push({
-      tag: `v${filename.replace(/\.md$/, "")}`,
-      body: content,
-      date: dateMatch?.[1] || "Unknown",
-    });
+    releasesByMinor.get(minorKey)!.push(release);
   }
 
   if (releasesByMinor.size === 0) {
@@ -308,15 +279,15 @@ async function main() {
 
     // Sort patches oldest first to get first release date
     patches.sort((a, b) => {
-      const vA = parseVersion(a.tag);
-      const vB = parseVersion(b.tag);
+      const vA = parseVersion(a.tag_name);
+      const vB = parseVersion(b.tag_name);
       if (!vA || !vB) return 0;
       return vA.patch - vB.patch;
     });
 
-    const releaseDate = patches[0].date;
+    const releaseDate = patches[0].published_at?.split("T")[0] || "Unknown";
     const mergedBody = patches
-      .map((p) => `## ${p.tag}\n\n${p.body}`)
+      .map((p) => `## ${p.tag_name}\n\n${p.body}`)
       .join("\n\n---\n\n");
 
     const rawContent = await extractChangelog(mergedBody);
@@ -349,6 +320,7 @@ async function main() {
       fs.writeFileSync(CHANGELOG_MDX, before + newBlocks.join("") + after);
     }
   } else {
+    fs.mkdirSync(path.dirname(CHANGELOG_MDX), { recursive: true });
     fs.writeFileSync(CHANGELOG_MDX, CHANGELOG_HEADER + newBlocks.join(""));
   }
 
