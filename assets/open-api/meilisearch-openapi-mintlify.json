@@ -11,7 +11,7 @@
       "name": "MIT",
       "identifier": "MIT"
     },
-    "version": "1.38.0"
+    "version": "1.38.2"
   },
   "servers": [
     {
@@ -3122,7 +3122,7 @@
         },
         "responses": {
           "200": {
-            "description": "Documents returned.",
+            "description": "The documents are returned.",
             "content": {
               "application/json": {
                 "schema": {
@@ -14319,6 +14319,10 @@
           {
             "lang": "cURL",
             "source": "curl \\\n  -X PATCH 'MEILISEARCH_URL/network' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '{\n    \"self\": \"ms-00\",\n    \"remotes\": {\n      \"ms-00\": {\n        \"url\": \"http://INSTANCE_URL\",\n        \"searchApiKey\": \"INSTANCE_API_KEY\"\n      },\n      \"ms-01\": {\n        \"url\": \"http://ANOTHER_INSTANCE_URL\",\n        \"searchApiKey\": \"ANOTHER_INSTANCE_API_KEY\"\n      }\n    }\n  }'"
+          },
+          {
+            "lang": "JS",
+            "source": "client.initializeNetwork({\n  self: 'leader-1',\n  remotes: {\n    'leader-1': {\n      url: 'http://127.0.0.1:7700',\n      searchApiKey: 'searchKey',\n      writeApiKey: 'masterKey',\n    },\n    'remote-paris': {\n      url: 'http://192.168.1.11:7700',\n      searchApiKey: 'searchKeyRemote',\n      writeApiKey: 'masterKey',\n    },\n  },\n  shards: {\n    movies: {\n      remotes: ['leader-1', 'remote-paris'],\n    },\n  },\n});"
           },
           {
             "lang": "PHP",
