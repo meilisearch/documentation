@@ -11,7 +11,7 @@
       "name": "MIT",
       "identifier": "MIT"
     },
-    "version": "1.38.0"
+    "version": "1.38.2"
   },
   "servers": [
     {
@@ -2374,7 +2374,7 @@
         },
         "responses": {
           "200": {
-            "description": "Documents returned.",
+            "description": "The documents are returned.",
             "content": {
               "application/json": {
                 "schema": {
