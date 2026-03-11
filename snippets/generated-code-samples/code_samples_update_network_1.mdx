@@ -19,6 +19,29 @@ curl \
   }'
 ```
 
+```javascript JS
+client.initializeNetwork({
+  self: 'leader-1',
+  remotes: {
+    'leader-1': {
+      url: 'http://127.0.0.1:7700',
+      searchApiKey: 'searchKey',
+      writeApiKey: 'masterKey',
+    },
+    'remote-paris': {
+      url: 'http://192.168.1.11:7700',
+      searchApiKey: 'searchKeyRemote',
+      writeApiKey: 'masterKey',
+    },
+  },
+  shards: {
+    movies: {
+      remotes: ['leader-1', 'remote-paris'],
+    },
+  },
+});
+```
+
 ```python Python
 client.add_or_update_networks({
     "remotes": {
