@@ -1458,7 +1458,7 @@
     },
     {
       "source": "/reference/api/multi_search",
-      "destination": "/reference/api/search/perform-a-multi-search"
+      "destination": "/reference/api/multi-search/perform-a-multi-search"
     },
     {
       "source": "/reference/api/network",
