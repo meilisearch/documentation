@@ -4,9 +4,9 @@ sidebarTitle: Known limitations
 description: Meilisearch has a number of known limitations. These are hard limits you cannot change and should take into account when designing your application.
 ---
 
-Meilisearch has a number of known limitations. Some of these limitations are the result of intentional design trade-offs, while others can be attributed to [LMDB](/learn/engine/storage), the key-value store that Meilisearch uses under the hood.
+Meilisearch has a number of known limitations. Some of these limitations are the result of intentional design trade-offs, while others can be attributed to [LMDB](/resources/internals/storage), the key-value store that Meilisearch uses under the hood.
 
-This article covers hard limits that cannot be altered. Meilisearch also has some default limits that _can_ be changed, such as a [default payload limit of 100MB](/learn/self_hosted/configure_meilisearch_at_launch#payload-limit-size) and a [default search limit of 20 hits](/reference/api/search/search-with-post#body-limit).
+This article covers hard limits that cannot be altered. Meilisearch also has some default limits that _can_ be changed, such as a [default payload limit of 100MB](/resources/self_hosting/configuration#payload-limit-size) and a [default search limit of 20 hits](/reference/api/search/search-with-post#body-limit).
 
 ## Maximum Meilisearch Cloud upload size
 
@@ -42,7 +42,7 @@ If your query is `Hello, World`:
 - `World` takes the position `9` of the attribute
 
 <Note>
-`,` takes 8 positions as it is a hard separator. You can read more about word separators in our [article about data types](/learn/engine/datatypes#string).
+`,` takes 8 positions as it is a hard separator. You can read more about word separators in our [article about data types](/resources/internals/datatypes#string).
 </Note>
 
 If your query is `Hello - World`:
@@ -52,7 +52,7 @@ If your query is `Hello - World`:
 - `World` takes the position `2` of the attribute
 
 <Note>
-`-` takes 1 position as it is a soft separator. You can read more about word separators in our [article about data types](/learn/engine/datatypes#string).
+`-` takes 1 position as it is a soft separator. You can read more about word separators in our [article about data types](/resources/internals/datatypes#string).
 </Note>
 
 ## Maximum number of attributes per document
@@ -71,7 +71,7 @@ If your query is `Hello - World`:
 
 **Limitation:** Meilisearch handles a maximum of 1000 concurrent search requests.
 
-**Explanation:** This limit exists to prevent Meilisearch from queueing an unlimited number of requests and potentially consuming an unbounded amount of memory. If Meilisearch receives a new request when the queue is already full, it drops a random search request and returns a 503 `too_many_search_requests` error with a `Retry-After` header set to 10 seconds. Configure this limit with [`--experimental-search-queue-size`](/learn/self_hosted/configure_meilisearch_at_launch).
+**Explanation:** This limit exists to prevent Meilisearch from queueing an unlimited number of requests and potentially consuming an unbounded amount of memory. If Meilisearch receives a new request when the queue is already full, it drops a random search request and returns a 503 `too_many_search_requests` error with a `Retry-After` header set to 10 seconds. Configure this limit with [`--experimental-search-queue-size`](/resources/self_hosting/configuration).
 
 ## Length of primary key values
 
@@ -83,11 +83,11 @@ If your query is `Hello - World`:
 
 **Limitation:** Individual `filterableAttributes` values are limited to 468 bytes.
 
-**Explanation:** Meilisearch stores `filterableAttributes` values as keys in LMDB, a data type whose size is limited to 511 bytes, to which Meilisearch adds a margin of 44 bytes. Note that this only applies to individual values—for example, a `genres` attribute can contain any number of values such as `horror`, `comedy`, or `cyberpunk` as long as each one of them is smaller than 468 bytes.
+**Explanation:** Meilisearch stores `filterableAttributes` values as keys in LMDB. Meilisearch uses an internal key length limit of 500 bytes with a 32-byte margin reserved for metadata, resulting in a maximum facet value length of 468 bytes. Note that this only applies to individual values—for example, a `genres` attribute can contain any number of values such as `horror`, `comedy`, or `cyberpunk` as long as each one of them is smaller than 468 bytes.
 
 ## Maximum filter depth
 
-**Limitation:** searches using the [`filter` search parameter](/reference/api/search/search-with-post#body-filter) may have a maximum filtering depth of 2000.
+**Limitation:** searches using the [`filter` search parameter](/reference/api/search/search-with-post#body-filter) may have a maximum filtering depth of 200.
 
 **Explanation:** mixing and alternating `AND` and `OR` operators filters creates nested logic structures. Excessive nesting can lead to stack overflow.
 
@@ -151,9 +151,9 @@ user = 1 OR (user = 2 AND user = 3) OR (user = 4 AND user = 5) OR user = 6
 
 ## Maximum task database size
 
-**Limitation:** Meilisearch supports a maximum task database size of 10GiB.
+**Limitation:** Meilisearch supports a maximum task database size of 20GiB.
 
-**Explanation:** Depending on your setup, 10GiB should correspond to 5M to 15M tasks. Once the task database contains over 1M entries (roughly 1GiB on average), Meilisearch tries to automatically delete finished tasks while continuing to enqueue new tasks as usual. This ensures the task database does not use an excessive amount of resources. If your database reaches the 10GiB limit, Meilisearch will log a warning indicating the engine is not working properly and refuse to enqueue new tasks.
+**Explanation:** Depending on your setup, 20GiB should correspond to 10M to 30M tasks. Once the task database contains over 1M entries (roughly 1GiB on average), Meilisearch tries to automatically delete finished tasks while continuing to enqueue new tasks as usual. This ensures the task database does not use an excessive amount of resources. If your database reaches the 20GiB limit, Meilisearch will log a warning indicating the engine is not working properly and refuse to enqueue new tasks.
 
 ## Maximum number of indexes in an instance
 

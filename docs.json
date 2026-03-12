@@ -200,16 +200,6 @@
                 ]
               },
               {
-                "group": "Self-hosted",
-                "pages": [
-                  "learn/self_hosted/getting_started_with_self_hosted_meilisearch",
-                  "learn/self_hosted/configure_meilisearch_at_launch",
-                  "learn/self_hosted/install_meilisearch_locally",
-                  "learn/self_hosted/supported_os",
-                  "learn/self_hosted/enterprise_edition"
-                ]
-              },
-              {
                 "group": "Analytics",
                 "pages": [
                   "learn/analytics/configure_analytics_events",
@@ -231,7 +221,6 @@
                   "learn/async/working_with_tasks",
                   "learn/async/filtering_tasks",
                   "learn/async/paginating_tasks",
-                  "learn/async/task_webhook",
                   "learn/async/asynchronous_operations"
                 ]
               },
@@ -276,39 +265,13 @@
                 ]
               },
               {
-                "group": "Update and migration",
-                "pages": [
-                  "learn/update_and_migration/migrating_cloud",
-                  "learn/update_and_migration/updating",
-                  "learn/update_and_migration/algolia_migration"
-                ]
-              },
-              {
-                "group": "Data backup",
-                "pages": [
-                  "learn/data_backup/dumps",
-                  "learn/data_backup/snapshots",
-                  "learn/data_backup/snapshots_vs_dumps"
-                ]
-              },
-              {
                 "group": "Indexing",
                 "pages": [
                   "learn/indexing/rename_an_index",
                   "learn/indexing/indexing_best_practices",
-                  "learn/indexing/ram_multithreading_performance",
                   "learn/indexing/tokenization",
                   "learn/indexing/multilingual-datasets",
                   "learn/indexing/optimize_indexing_performance"
-                ]
-              },
-              {
-                "group": "Engine",
-                "pages": [
-                  "learn/engine/concat",
-                  "learn/engine/datatypes",
-                  "learn/engine/prefix",
-                  "learn/engine/storage"
                 ]
               },
               {
@@ -324,20 +287,6 @@
                   "learn/relevancy/distinct_attribute",
                   "learn/relevancy/displayed_searchable_attributes",
                   "learn/relevancy/synonyms"
-                ]
-              },
-              {
-                "group": "Resources",
-                "pages": [
-                  "learn/resources/known_limitations",
-                  "learn/resources/experimental_features_overview",
-                  "learn/resources/faq",
-                  "learn/resources/sdks",
-                  "learn/resources/comparison_to_alternatives",
-                  "learn/resources/telemetry",
-                  "learn/resources/language",
-                  "learn/resources/versioning",
-                  "learn/resources/contributing_docs"
                 ]
               }
             ]
@@ -783,8 +732,7 @@
                   "guides/embedders/cohere",
                   "guides/embedders/mistral",
                   "guides/embedders/voyage",
-                  "guides/embedders/gemini",
-                  "guides/computing_hugging_face_embeddings_gpu"
+                  "guides/embedders/gemini"
                 ]
               },
               {
@@ -796,7 +744,6 @@
               {
                 "group": "Security",
                 "pages": [
-                  "guides/http2_ssl",
                   "guides/laravel_multitenancy",
                   "guides/multitenancy_nodejs"
                 ]
@@ -829,6 +776,64 @@
             ]
           },
           {
+            "tab": "Resources",
+            "groups": [
+              {
+                "group": "Self-hosting",
+                "pages": [
+                  "resources/self_hosting/getting_started",
+                  "resources/self_hosting/configuration",
+                  "resources/self_hosting/install_meilisearch_locally",
+                  "resources/self_hosting/supported_os",
+                  "resources/self_hosting/enterprise_edition",
+                  "resources/self_hosting/webhooks",
+                  "resources/self_hosting/http2_ssl",
+                  "resources/self_hosting/huggingface_gpu",
+                  "resources/self_hosting/ram_multithreading_performance",
+                  {
+                    "group": "Data backup",
+                    "pages": [
+                      "resources/self_hosting/data_backup/dumps",
+                      "resources/self_hosting/data_backup/snapshots",
+                      "resources/self_hosting/data_backup/snapshots_vs_dumps"
+                    ]
+                  }
+                ]
+              },
+              {
+                "group": "Migration",
+                "pages": [
+                  "resources/migration/migrating_cloud",
+                  "resources/migration/updating",
+                  "resources/migration/algolia_migration"
+                ]
+              },
+              {
+                "group": "Help",
+                "pages": [
+                  "resources/help/known_limitations",
+                  "resources/help/experimental_features_overview",
+                  "resources/help/faq",
+                  "resources/help/sdks",
+                  "resources/help/comparison_to_alternatives",
+                  "resources/help/telemetry",
+                  "resources/help/language",
+                  "resources/help/versioning",
+                  "resources/help/contributing_docs"
+                ]
+              },
+              {
+                "group": "Internals",
+                "pages": [
+                  "resources/internals/concat",
+                  "resources/internals/datatypes",
+                  "resources/internals/prefix",
+                  "resources/internals/storage"
+                ]
+              }
+            ]
+          },
+          {
             "tab": "Changelog",
             "pages": [
               "changelog/changelog"
@@ -856,7 +861,7 @@
     },
     {
       "source": "/faq",
-      "destination": "/learn/resources/faq"
+      "destination": "/resources/help/faq"
     },
     {
       "source": "/reference",
@@ -868,11 +873,11 @@
     },
     {
       "source": "/reference/features/installation#download-and-launch",
-      "destination": "docs/learn/self_hosted/install_meilisearch_locally"
+      "destination": "/resources/self_hosting/install_meilisearch_locally"
     },
     {
       "source": "/reference/features/installation.html#download-and-launch",
-      "destination": "docs/learn/self_hosted/install_meilisearch_locally"
+      "destination": "/resources/self_hosting/install_meilisearch_locally"
     },
     {
       "source": "/learn/advanced/asynchronous_operations",
@@ -916,11 +921,11 @@
     },
     {
       "source": "/learn/advanced/concat",
-      "destination": "/learn/engine/concat"
+      "destination": "/resources/internals/concat"
     },
     {
       "source": "/learn/advanced/datatypes",
-      "destination": "/learn/engine/datatypes"
+      "destination": "/resources/internals/datatypes"
     },
     {
       "source": "/learn/advanced/faceted_search",
@@ -940,7 +945,7 @@
     },
     {
       "source": "/learn/advanced/known_limitations",
-      "destination": "/learn/resources/known_limitations"
+      "destination": "/resources/help/known_limitations"
     },
     {
       "source": "/learn/advanced/pagination",
@@ -948,7 +953,7 @@
     },
     {
       "source": "/learn/advanced/prefix",
-      "destination": "/learn/engine/prefix"
+      "destination": "/resources/internals/prefix"
     },
     {
       "source": "/learn/advanced/sorting",
@@ -956,7 +961,7 @@
     },
     {
       "source": "/learn/advanced/storage",
-      "destination": "/learn/engine/storage"
+      "destination": "/resources/internals/storage"
     },
     {
       "source": "/learn/advanced/tokenization",
@@ -1004,7 +1009,7 @@
     },
     {
       "source": "/learn/configuration/instance_options",
-      "destination": "/learn/self_hosted/configure_meilisearch_at_launch"
+      "destination": "/resources/self_hosting/configuration"
     },
     {
       "source": "/learn/configuration/settings",
@@ -1012,11 +1017,11 @@
     },
     {
       "source": "/learn/contributing/contributing_docs",
-      "destination": "/learn/resources/contributing_docs"
+      "destination": "/resources/help/contributing_docs"
     },
     {
       "source": "/learn/contributing/overview",
-      "destination": "/learn/contributing/contributing_docs#contributing-to-meilisearch"
+      "destination": "/resources/help/contributing_docs#contributing-to-meilisearch"
     },
     {
       "source": "/learn/cookbooks/aws",
@@ -1028,7 +1033,7 @@
     },
     {
       "source": "/learn/cookbooks/computing_hugging_face_embeddings_gpu",
-      "destination": "/guides/ai/computing_hugging_face_embeddings_gpu"
+      "destination": "/resources/self_hosting/huggingface_gpu"
     },
     {
       "source": "/learn/cookbooks/docker",
@@ -1040,7 +1045,7 @@
     },
     {
       "source": "/learn/cookbooks/http2_ssl",
-      "destination": "/guides/security/http2_ssl"
+      "destination": "/resources/self_hosting/http2_ssl"
     },
     {
       "source": "/learn/cookbooks/indexing_best_practices",
@@ -1124,7 +1129,7 @@
     },
     {
       "source": "/learn/experimental/max_number_of_batched_tasks",
-      "destination": "/learn/self_hosted/configure_meilisearch_at_launch"
+      "destination": "/resources/self_hosting/configuration"
     },
     {
       "source": "/learn/experimental/metrics",
@@ -1132,7 +1137,7 @@
     },
     {
       "source": "/learn/experimental/overview",
-      "destination": "/learn/resources/experimental_features_overview"
+      "destination": "/resources/help/experimental_features_overview"
     },
     {
       "source": "/learn/experimental/puffin_reports",
@@ -1144,15 +1149,15 @@
     },
     {
       "source": "/learn/experimental/reduce-indexing-memory-usage",
-      "destination": "/learn/self_hosted/configure_meilisearch_at_launch"
+      "destination": "/resources/self_hosting/configuration"
     },
     {
       "source": "/learn/experimental/replication_parameter",
-      "destination": "/learn/self_hosted/configure_meilisearch_at_launch"
+      "destination": "/resources/self_hosting/configuration"
     },
     {
       "source": "/learn/experimental/search_queue_size",
-      "destination": "/learn/self_hosted/configure_meilisearch_at_launch"
+      "destination": "/resources/self_hosting/configuration"
     },
     {
       "source": "/learn/experimental/vector_search",
@@ -1208,7 +1213,7 @@
     },
     {
       "source": "/learn/getting_started/installation",
-      "destination": "/learn/self_hosted/install_meilisearch_locally"
+      "destination": "/resources/self_hosting/install_meilisearch_locally"
     },
     {
       "source": "/learn/getting_started/quick_start#front-end-integration",
@@ -1216,11 +1221,11 @@
     },
     {
       "source": "/learn/getting_started/quick_start",
-      "destination": "/learn/self_hosted/getting_started_with_self_hosted_meilisearch"
+      "destination": "/resources/self_hosting/getting_started"
     },
     {
       "source": "/learn/getting_started/supported_os",
-      "destination": "/learn/self_hosted/supported_os"
+      "destination": "/resources/self_hosting/supported_os"
     },
     {
       "source": "/learn/index_settings/displayed_searchable_attributes",
@@ -1252,11 +1257,11 @@
     },
     {
       "source": "/learn/update_and_migration/versioning",
-      "destination": "/learn/resources/versioning"
+      "destination": "/resources/help/versioning"
     },
     {
       "source": "/learn/what_is_meilisearch/comparison_to_alternatives",
-      "destination": "/learn/resources/comparison_to_alternatives"
+      "destination": "/resources/help/comparison_to_alternatives"
     },
     {
       "source": "/learn/what_is_meilisearch/contact",
@@ -1272,7 +1277,7 @@
     },
     {
       "source": "/learn/what_is_meilisearch/language",
-      "destination": "/learn/resources/language"
+      "destination": "/resources/help/language"
     },
     {
       "source": "/learn/what_is_meilisearch/overview#sdks-and-integrations",
@@ -1292,11 +1297,11 @@
     },
     {
       "source": "/learn/what_is_meilisearch/sdks",
-      "destination": "/learn/resources/sdks"
+      "destination": "/resources/help/sdks"
     },
     {
       "source": "/learn/what_is_meilisearch/sdks.html",
-      "destination": "/learn/resources/sdks"
+      "destination": "/resources/help/sdks"
     },
     {
       "source": "/learn/what_is_meilisearch/search_preview",
@@ -1304,7 +1309,7 @@
     },
     {
       "source": "/learn/what_is_meilisearch/telemetry",
-      "destination": "/learn/resources/telemetry"
+      "destination": "/resources/help/telemetry"
     },
     {
       "source": "/reference/api/batches",
@@ -1853,6 +1858,118 @@
     {
       "source": "/reference/api/chats/update-chat",
       "destination": "/reference/api/chats/update-settings-of-a-chat-workspace"
+    },
+    {
+      "source": "/learn/self_hosted/getting_started_with_self_hosted_meilisearch",
+      "destination": "/resources/self_hosting/getting_started"
+    },
+    {
+      "source": "/learn/self_hosted/configure_meilisearch_at_launch",
+      "destination": "/resources/self_hosting/configuration"
+    },
+    {
+      "source": "/learn/self_hosted/install_meilisearch_locally",
+      "destination": "/resources/self_hosting/install_meilisearch_locally"
+    },
+    {
+      "source": "/learn/self_hosted/supported_os",
+      "destination": "/resources/self_hosting/supported_os"
+    },
+    {
+      "source": "/learn/self_hosted/enterprise_edition",
+      "destination": "/resources/self_hosting/enterprise_edition"
+    },
+    {
+      "source": "/learn/async/task_webhook",
+      "destination": "/resources/self_hosting/webhooks"
+    },
+    {
+      "source": "/guides/http2_ssl",
+      "destination": "/resources/self_hosting/http2_ssl"
+    },
+    {
+      "source": "/guides/computing_hugging_face_embeddings_gpu",
+      "destination": "/resources/self_hosting/huggingface_gpu"
+    },
+    {
+      "source": "/learn/indexing/ram_multithreading_performance",
+      "destination": "/resources/self_hosting/ram_multithreading_performance"
+    },
+    {
+      "source": "/learn/data_backup/dumps",
+      "destination": "/resources/self_hosting/data_backup/dumps"
+    },
+    {
+      "source": "/learn/data_backup/snapshots",
+      "destination": "/resources/self_hosting/data_backup/snapshots"
+    },
+    {
+      "source": "/learn/data_backup/snapshots_vs_dumps",
+      "destination": "/resources/self_hosting/data_backup/snapshots_vs_dumps"
+    },
+    {
+      "source": "/learn/update_and_migration/migrating_cloud",
+      "destination": "/resources/migration/migrating_cloud"
+    },
+    {
+      "source": "/learn/update_and_migration/updating",
+      "destination": "/resources/migration/updating"
+    },
+    {
+      "source": "/learn/update_and_migration/algolia_migration",
+      "destination": "/resources/migration/algolia_migration"
+    },
+    {
+      "source": "/learn/resources/known_limitations",
+      "destination": "/resources/help/known_limitations"
+    },
+    {
+      "source": "/learn/resources/experimental_features_overview",
+      "destination": "/resources/help/experimental_features_overview"
+    },
+    {
+      "source": "/learn/resources/faq",
+      "destination": "/resources/help/faq"
+    },
+    {
+      "source": "/learn/resources/sdks",
+      "destination": "/resources/help/sdks"
+    },
+    {
+      "source": "/learn/resources/comparison_to_alternatives",
+      "destination": "/resources/help/comparison_to_alternatives"
+    },
+    {
+      "source": "/learn/resources/telemetry",
+      "destination": "/resources/help/telemetry"
+    },
+    {
+      "source": "/learn/resources/language",
+      "destination": "/resources/help/language"
+    },
+    {
+      "source": "/learn/resources/versioning",
+      "destination": "/resources/help/versioning"
+    },
+    {
+      "source": "/learn/resources/contributing_docs",
+      "destination": "/resources/help/contributing_docs"
+    },
+    {
+      "source": "/learn/engine/concat",
+      "destination": "/resources/internals/concat"
+    },
+    {
+      "source": "/learn/engine/datatypes",
+      "destination": "/resources/internals/datatypes"
+    },
+    {
+      "source": "/learn/engine/prefix",
+      "destination": "/resources/internals/prefix"
+    },
+    {
+      "source": "/learn/engine/storage",
+      "destination": "/resources/internals/storage"
     }
   ]
 }

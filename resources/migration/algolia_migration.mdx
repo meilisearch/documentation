@@ -7,7 +7,7 @@ sidebarDepth: 3
 
 This page aims to help current users of Algolia make the transition to Meilisearch.
 
-For a high-level comparison of the two search companies and their products, see [our analysis of the search market](/learn/resources/comparison_to_alternatives#meilisearch-vs-algolia).
+For a high-level comparison of the two search companies and their products, see [our analysis of the search market](/resources/help/comparison_to_alternatives#meilisearch-vs-algolia).
 
 ## Overview
 
@@ -21,7 +21,7 @@ The migration process consists of three steps:
 
 To help with the transition, we have also included a comparison of Meilisearch and Algolia's [API methods](#api-methods) and [front-end components](#front-end-components).
 
-Before continuing, make sure you have both Meilisearch and Node.js installed and have access to a command-line terminal. If you're unsure how to install Meilisearch, see our [quick start](/learn/self_hosted/getting_started_with_self_hosted_meilisearch).
+Before continuing, make sure you have both Meilisearch and Node.js installed and have access to a command-line terminal. If you're unsure how to install Meilisearch, see our [quick start](/resources/self_hosting/getting_started).
 
 <Note>
 This guide was tested with the following package versions:
@@ -59,7 +59,7 @@ This file will contain our migration script.
 To get started, you'll need two different packages. The first is `algoliasearch`, the JavaScript client for the Algolia API, and the second is `meilisearch`, the JavaScript client for the Meilisearch API.
 
 ```bash
-npm install -s algoliasearch@4.13 meilisearch
+npm install -s algoliasearch meilisearch
 ```
 
 ### Create Algolia client
@@ -136,7 +136,7 @@ node script.js
 const algoliaSearch = require("algoliasearch");
 const { MeiliSearch } = require("meilisearch");
 
-const BATCH_SIZE = 1000;
+const BATCH_SIZE = 100000;
 
 (async () => {
   const algoliaClient = algoliaSearch("APPLICATION_ID", "ADMIN_API_KEY");
@@ -184,7 +184,7 @@ The below table compares Algolia's **API parameters** with the equivalent Meilis
 | `query`                             | `q`                                                                              |
 | `attributesToRetrieve`              | `attributesToRetrieve`                                                           |
 | `filters`                           | `filter`                                                                         |
-| `facets`                            | `facetDistribution`                                                              |
+| `facets`                            | `facets`                                                                         |
 | `attributesToHighlight`             | `attributesToHighlight`                                                          |
 | `offset`                            | `offset`                                                                         |
 | `length`                            | `limit`                                                                          |
@@ -202,7 +202,7 @@ The below table compares Algolia's **API parameters** with the equivalent Meilis
 | Sorting(using replicas)             | `sortableAttributes` (no replicas required)                                      |
 | `removeWordsIfNoResults`            | Automatically supported, but not customizable                                    |
 | `disableTypoToleranceOnAttributes`  | `typoTolerance.disableOnAttributes`                                              |
-| `separatorsToIndex`                 | Not Supported                                                                    |
+| `separatorsToIndex`                 | [`separatorTokens`](/reference/api/settings/get-separatortokens) / [`nonSeparatorTokens`](/reference/api/settings/get-nonseparatortokens) |
 | `disablePrefixOnAttributes`         | Not Supported                                                                    |
 | `relevancyStrictness`               | Not Supported                                                                    |
 | `maxValuesPerFacet`                 | `maxValuesPerFacet`                                                                    |

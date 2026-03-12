@@ -38,6 +38,10 @@ response:
 
 Meilisearch also handles typos while performing the prefix search. You can [read more about the typo rules on the dedicated page](/learn/relevancy/typo_tolerance_settings).
 
+### Disabling prefix search
+
+You can disable prefix search entirely using the [`prefixSearch` index setting](/reference/api/settings/get-prefix-search). Set it to `disabled` to turn off prefix search for an index. The default value is `indexingTime`, which enables prefix search.
+
 <Tip>
-We also [apply splitting and concatenating on search queries](/learn/engine/concat).
+We also [apply splitting and concatenating on search queries](/resources/internals/concat).
 </Tip>

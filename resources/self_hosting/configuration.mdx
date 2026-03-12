@@ -234,9 +234,9 @@ If you do not supply a master key in `production` or `development` environments 
 
 Deactivates Meilisearch's built-in telemetry when provided.
 
-Meilisearch automatically collects data from all instances that do not opt out using this flag. All gathered data is used solely for the purpose of improving Meilisearch, and can be [deleted at any time](/learn/resources/telemetry#how-to-delete-all-collected-data).
+Meilisearch automatically collects data from all instances that do not opt out using this flag. All gathered data is used solely for the purpose of improving Meilisearch, and can be [deleted at any time](/resources/help/telemetry#how-to-delete-all-collected-data).
 
-[Read more about our policy on data collection](/learn/resources/telemetry), or take a look at [the comprehensive list of all data points we collect](/learn/resources/telemetry#exhaustive-list-of-all-collected-data).
+[Read more about our policy on data collection](/resources/help/telemetry), or take a look at [the comprehensive list of all data points we collect](/resources/help/telemetry#exhaustive-list-of-all-collected-data).
 
 ### Dumpless upgrade <NoticeTag type="experimental" label="experimental" />
 
@@ -247,7 +247,7 @@ Meilisearch automatically collects data from all instances that do not opt out u
 
 Migrates the database to a new Meilisearch version after you have manually updated the binary.
 
-[Learn more about updating Meilisearch to a new release](/learn/update_and_migration/updating).
+[Learn more about updating Meilisearch to a new release](/resources/migration/updating).
 
 <Warning>
 #### Create a snapshot before a dumpless upgrade
@@ -382,10 +382,10 @@ Avoid setting `--max-indexing-threads` to the total of your machine's processor 
 
 **Environment variable**: `MEILI_HTTP_PAYLOAD_SIZE_LIMIT`<br />
 **CLI option**: `--http-payload-size-limit`<br />
-**Default value**: `104857600` (~100MB)<br />
+**Default value**: `100000000` (~100MB)<br />
 **Expected value**: an integer
 
-Sets the maximum size of [accepted payloads](/learn/getting_started/documents#dataset-format). Value must be given in bytes or explicitly stating a base unit. For example, the default value can be written as `107374182400`, `'107.7Gb'`, or `'107374 Mb'`.
+Sets the maximum size of [accepted payloads](/learn/getting_started/documents#dataset-format). Value must be given in bytes or explicitly stating a base unit. For example, the default value can be written as `100000000`, `'100Mb'`, or `'100 MB'`.
 
 ### Search queue size <NoticeTag type="experimental" label="experimental" />
 
@@ -424,7 +424,7 @@ For more control over snapshot scheduling, pass an integer representing the inte
 When using the configuration file, it is also possible to explicitly pass a boolean value to `schedule_snapshot`. Meilisearch takes a new snapshot every 24 hours when `schedule_snapshot=true`, and takes no snapshots when `schedule_snapshot=false`.
 </Note>
 
-[Learn more about snapshots](/learn/data_backup/snapshots).
+[Learn more about snapshots](/resources/self_hosting/data_backup/snapshots).
 
 ### Snapshot destination
 
@@ -493,7 +493,7 @@ This command will throw an error if `--import-snapshot` is not defined.
 
 Notifies the configured URL whenever Meilisearch [finishes processing a task](/learn/async/asynchronous_operations#task-status) or batch of tasks. Meilisearch uses the URL as given, retaining any specified query parameters.
 
-The webhook payload contains the list of finished tasks in [ndjson](https://github.com/ndjson/ndjson-spec). For more information, [consult the dedicated task webhook guide](/learn/async/task_webhook).
+The webhook payload contains the list of finished tasks in [ndjson](https://github.com/ndjson/ndjson-spec). For more information, [consult the dedicated task webhook guide](/resources/self_hosting/webhooks).
 
 The task webhook option requires having access to a command-line interface. If you are using Meilisearch Cloud, use the [`/webhooks` API route](/reference/api/webhooks/list-webhooks) instead.
 
@@ -510,7 +510,7 @@ Includes an authentication token in the authorization header when notifying the 
 
 **Environment variable**: `MEILI_EXPERIMENTAL_MAX_NUMBER_OF_BATCHED_TASKS`<br />
 **CLI option**: `--experimental-max-number-of-batched-tasks`<br />
-**Default value**: `None`<br />
+**Default value**: unlimited<br />
 **Expected value**: an integer
 
 Limit the number of tasks Meilisearch performs in a single batch. May improve stability in systems handling a large queue of resource-intensive tasks.
@@ -551,6 +551,81 @@ Helps running Meilisearch in cluster environments. It does this by modifying tas
 **Default value**: `None`<br />
 
 Falls back to previous settings indexer.
+
+### Disable new indexer for dumps <NoticeTag type="experimental" label="experimental" />
+
+<Warning>
+🚩 This option does not take any values. Assigning a value will throw an error. 🚩
+</Warning>
+
+**Environment variable**: `MEILI_EXPERIMENTAL_NO_EDITION_2024_FOR_DUMPS`<br />
+**CLI option**: `--experimental-no-edition-2024-for-dumps`<br />
+**Default value**: `None`<br />
+
+Falls back to previous indexer when importing dumps.
+
+### Enable logs route <NoticeTag type="experimental" label="experimental" />
+
+<Warning>
+🚩 This option does not take any values. Assigning a value will throw an error. 🚩
+</Warning>
+
+**Environment variable**: `MEILI_EXPERIMENTAL_ENABLE_LOGS_ROUTE`<br />
+**CLI option**: `--experimental-enable-logs-route`<br />
+**Default value**: `None`<br />
+
+Enables the `/logs/stream`, `/logs/stderr` and `DELETE /logs/stream` routes for log streaming and configuration.
+
+### Enable metrics <NoticeTag type="experimental" label="experimental" />
+
+<Warning>
+🚩 This option does not take any values. Assigning a value will throw an error. 🚩
+</Warning>
+
+**Environment variable**: `MEILI_EXPERIMENTAL_ENABLE_METRICS`<br />
+**CLI option**: `--experimental-enable-metrics`<br />
+**Default value**: `None`<br />
+
+Enables the Prometheus `/metrics` endpoint for monitoring.
+
+### CONTAINS filter operator <NoticeTag type="experimental" label="experimental" />
+
+<Warning>
+🚩 This option does not take any values. Assigning a value will throw an error. 🚩
+</Warning>
+
+**Environment variable**: `MEILI_EXPERIMENTAL_CONTAINS_FILTER`<br />
+**CLI option**: `--experimental-contains-filter`<br />
+**Default value**: `None`<br />
+
+Enables the `CONTAINS` filter operator at launch. Can also be toggled at runtime via the `/experimental-features` API route.
+
+### Drop search after <NoticeTag type="experimental" label="experimental" />
+
+**Environment variable**: `MEILI_EXPERIMENTAL_DROP_SEARCH_AFTER`<br />
+**CLI option**: `--experimental-drop-search-after`<br />
+**Default value**: `60`<br />
+**Expected value**: an integer (seconds)
+
+Sets the maximum time in seconds a search request can take before being dropped. Helps prevent slow searches from blocking resources.
+
+### Searches per core <NoticeTag type="experimental" label="experimental" />
+
+**Environment variable**: `MEILI_EXPERIMENTAL_NB_SEARCHES_PER_CORE`<br />
+**CLI option**: `--experimental-nb-searches-per-core`<br />
+**Default value**: `4`<br />
+**Expected value**: an integer
+
+Configure the number of concurrent search requests each CPU core can handle.
+
+### Allowed IP networks <NoticeTag type="experimental" label="experimental" />
+
+**Environment variable**: `MEILI_EXPERIMENTAL_ALLOWED_IP_NETWORKS`<br />
+**CLI option**: `--experimental-allowed-ip-networks`<br />
+**Default value**: `None`<br />
+**Expected value**: comma-separated list of CIDR ranges
+
+Override the default IP policy. Restricts access to Meilisearch to the specified IP networks.
 
 ### Search personalization <NoticeTag type="experimental" label="experimental" />
 
@@ -610,6 +685,22 @@ Your S3 bucket's access key.
 **Default value**: `None`<br />
 
 Your S3 bucket's secret key.
+
+#### Role ARN <NoticeTag type="experimental" label="experimental" />
+
+**Environment variable**: `MEILI_EXPERIMENTAL_S3_ROLE_ARN`<br />
+**CLI option**: `--experimental-s3-role-arn`<br />
+**Default value**: `None`<br />
+
+IAM role ARN for web identity federation. Use this instead of access key and secret key for authentication. Cannot be combined with `--s3-access-key` and `--s3-secret-key`.
+
+#### Web identity token file <NoticeTag type="experimental" label="experimental" />
+
+**Environment variable**: `MEILI_EXPERIMENTAL_S3_WEB_IDENTITY_TOKEN_FILE`<br />
+**CLI option**: `--experimental-s3-web-identity-token-file`<br />
+**Default value**: `None`<br />
+
+Path to the web identity token file for S3 authentication via web identity federation. Cannot be combined with `--s3-access-key` and `--s3-secret-key`.
 
 #### Maximum parallel in-flight requests <NoticeTag type="experimental" label="experimental" />
 

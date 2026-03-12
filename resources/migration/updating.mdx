@@ -11,7 +11,7 @@ import CodeSamplesUpdatingGuideCheckVersionNewAuthorizationHeader from '/snippet
 import CodeSamplesUpdatingGuideCreateDump from '/snippets/generated-code-samples/code_samples_updating_guide_create_dump.mdx';
 import CodeSamplesCreateSnapshot1 from '/snippets/generated-code-samples/code_samples_create_snapshot_1.mdx';
 
-Currently, Meilisearch databases are only compatible with the version of Meilisearch used to create them. The following guide will walk you through using a [dump](/learn/data_backup/dumps) to migrate an existing database from an older version of Meilisearch to the most recent one.
+Currently, Meilisearch databases are only compatible with the version of Meilisearch used to create them. The following guide will walk you through using a [dump](/resources/self_hosting/data_backup/dumps) to migrate an existing database from an older version of Meilisearch to the most recent one.
 
 If you're updating your Meilisearch instance on cloud platforms like DigitalOcean or AWS, ensure that you can connect to your cloud instance via SSH. Depending on the user you are connecting with (root, admin, etc.), you may need to prefix some commands with `sudo`.
 
@@ -55,7 +55,7 @@ Dumpless upgrades are an experimental feature. Because of that, it may in rare o
 
 Meilisearch will respond with a partial task object. Use its `taskUid` to monitor the snapshot creation status. Once the task is completed, proceed to the next step.
 
-### Step 2: Stop the Meilisearch instance
+#### Step 2: Stop the Meilisearch instance
 
 Next, stop your Meilisearch instance.
 
@@ -157,7 +157,7 @@ After launching Meilisearch with `--experimental-dumpless-upgrade` flag:
 4. Replace the new binary with the binary of the previous version
 5. Relaunch Meilisearch
 
-If you are upgrading Meilisearch to \<= v1.14, you must instead [restart your instance from the snapshot](/learn/data_backup/snapshots#starting-from-a-snapshot) you generated during step 1. You may then retry the upgrade, or upgrade using a dump. You are also welcome to open an issue on the [Meilisearch repository](https://github.com/meilisearch/meilisearch).
+If you are upgrading Meilisearch to \<= v1.14, you must instead [restart your instance from the snapshot](/resources/self_hosting/data_backup/snapshots#starting-from-a-snapshot) you generated during step 1. You may then retry the upgrade, or upgrade using a dump. You are also welcome to open an issue on the [Meilisearch repository](https://github.com/meilisearch/meilisearch).
 
 ### Using a dump
 
@@ -183,7 +183,7 @@ Proceed to [creating the dump](/reference/api/backups/create-dump).
 
 ##### Create the dump
 
-Before creating your dump, make sure that your [dump directory](/learn/self_hosted/configure_meilisearch_at_launch#dump-directory) is somewhere accessible. By default, dumps are created in a folder called `dumps` at the root of your Meilisearch directory.
+Before creating your dump, make sure that your [dump directory](/resources/self_hosting/configuration#dump-directory) is somewhere accessible. By default, dumps are created in a folder called `dumps` at the root of your Meilisearch directory.
 
 **Cloud platforms** like DigitalOcean and AWS are configured to store dumps in the `/var/opt/meilisearch/dumps` directory.
 
@@ -283,7 +283,7 @@ You may need to prefix the above command with `sudo` if you are not connected as
 
 ##### Create a backup
 
-Instead of deleting `data.ms`, we suggest creating a backup in case something goes wrong. `data.ms` should be at the root of the Meilisearch binary unless you chose [another location](/learn/self_hosted/configure_meilisearch_at_launch#database-path).
+Instead of deleting `data.ms`, we suggest creating a backup in case something goes wrong. `data.ms` should be at the root of the Meilisearch binary unless you chose [another location](/resources/self_hosting/configuration#database-path).
 
 On **cloud platforms**, you will find the `data.ms` folder at `/var/lib/meilisearch/data.ms`.
 
