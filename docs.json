@@ -787,15 +787,63 @@
                   "resources/self_hosting/supported_os",
                   "resources/self_hosting/enterprise_edition",
                   "resources/self_hosting/webhooks",
-                  "resources/self_hosting/http2_ssl",
                   "resources/self_hosting/huggingface_gpu",
-                  "resources/self_hosting/ram_multithreading_performance",
+                  {
+                    "group": "Deployment",
+                    "pages": [
+                      "resources/self_hosting/deployment/aws",
+                      "resources/self_hosting/deployment/gcp",
+                      "resources/self_hosting/deployment/azure",
+                      "resources/self_hosting/deployment/digitalocean"
+                    ]
+                  },
+                  {
+                    "group": "Security",
+                    "pages": [
+                      "resources/self_hosting/security/master_api_keys",
+                      "resources/self_hosting/security/http2_ssl"
+                    ]
+                  },
                   {
                     "group": "Data backup",
                     "pages": [
                       "resources/self_hosting/data_backup/dumps",
                       "resources/self_hosting/data_backup/snapshots",
                       "resources/self_hosting/data_backup/snapshots_vs_dumps"
+                    ]
+                  },
+                  {
+                    "group": "Performance",
+                    "pages": [
+                      "resources/self_hosting/performance/ram_multithreading"
+                    ]
+                  }
+                ]
+              },
+              {
+                "group": "Demos",
+                "pages": [
+                  "resources/demos/overview",
+                  {
+                    "group": "Use cases",
+                    "pages": [
+                      "resources/demos/where_to_watch",
+                      "resources/demos/ecommerce",
+                      "resources/demos/saas"
+                    ]
+                  },
+                  {
+                    "group": "Feature showcases",
+                    "pages": [
+                      "resources/demos/flickr",
+                      "resources/demos/music",
+                      "resources/demos/moma",
+                      "resources/demos/nobel_prizes",
+                      "resources/demos/geosearch",
+                      "resources/demos/tenant_tokens",
+                      "resources/demos/typo_tolerance",
+                      "resources/demos/voice_search",
+                      "resources/demos/rubygems"
                     ]
                   }
                 ]
@@ -805,30 +853,47 @@
                 "pages": [
                   "resources/migration/migrating_cloud",
                   "resources/migration/updating",
-                  "resources/migration/algolia_migration"
+                  "resources/migration/algolia_migration",
+                  "resources/migration/previous_docs_version"
+                ]
+              },
+              {
+                "group": "Comparisons",
+                "pages": [
+                  "resources/comparisons/alternatives",
+                  "resources/comparisons/elasticsearch",
+                  "resources/comparisons/algolia",
+                  "resources/comparisons/typesense",
+                  "resources/comparisons/postgresql",
+                  "resources/comparisons/pinecone",
+                  "resources/comparisons/qdrant",
+                  "resources/comparisons/opensearch",
+                  "resources/comparisons/mongodb"
+                ]
+              },
+              {
+                "group": "Internals",
+                "pages": [
+                  "resources/internals/storage",
+                  "resources/internals/datatypes",
+                  "resources/internals/bucket_sort",
+                  "resources/internals/hannoy",
+                  "resources/internals/concat",
+                  "resources/internals/prefix"
                 ]
               },
               {
                 "group": "Help",
                 "pages": [
+                  "resources/help/faq",
                   "resources/help/known_limitations",
                   "resources/help/experimental_features_overview",
-                  "resources/help/faq",
                   "resources/help/sdks",
                   "resources/help/comparison_to_alternatives",
                   "resources/help/telemetry",
                   "resources/help/language",
                   "resources/help/versioning",
                   "resources/help/contributing_docs"
-                ]
-              },
-              {
-                "group": "Internals",
-                "pages": [
-                  "resources/internals/concat",
-                  "resources/internals/datatypes",
-                  "resources/internals/prefix",
-                  "resources/internals/storage"
                 ]
               }
             ]
@@ -1045,7 +1110,7 @@
     },
     {
       "source": "/learn/cookbooks/http2_ssl",
-      "destination": "/resources/self_hosting/http2_ssl"
+      "destination": "/resources/self_hosting/security/http2_ssl"
     },
     {
       "source": "/learn/cookbooks/indexing_best_practices",
@@ -1885,7 +1950,7 @@
     },
     {
       "source": "/guides/http2_ssl",
-      "destination": "/resources/self_hosting/http2_ssl"
+      "destination": "/resources/self_hosting/security/http2_ssl"
     },
     {
       "source": "/guides/computing_hugging_face_embeddings_gpu",
@@ -1893,7 +1958,7 @@
     },
     {
       "source": "/learn/indexing/ram_multithreading_performance",
-      "destination": "/resources/self_hosting/ram_multithreading_performance"
+      "destination": "/resources/self_hosting/performance/ram_multithreading"
     },
     {
       "source": "/learn/data_backup/dumps",
@@ -1970,6 +2035,14 @@
     {
       "source": "/learn/engine/storage",
       "destination": "/resources/internals/storage"
+    },
+    {
+      "source": "/resources/self_hosting/http2_ssl",
+      "destination": "/resources/self_hosting/security/http2_ssl"
+    },
+    {
+      "source": "/resources/self_hosting/ram_multithreading_performance",
+      "destination": "/resources/self_hosting/performance/ram_multithreading"
     }
   ]
 }
