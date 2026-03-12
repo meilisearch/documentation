@@ -169,3 +169,45 @@ jobs:
           else
             echo "No changes in the Mintlify OpenAPI file."
           fi
+
+  # Runs alongside the OpenAPI automation. A new Meilisearch release triggers both
+  # the OpenAPI update and the changelog update at the same time.
+  # Only runs when docs.json has "internal-meili-fetch-automation": true.
+  update-changelog:
+    name: Update changelog if new release exists
+    runs-on: ubuntu-latest
+    needs: [build-code-samples]
+    if: needs.build-code-samples.outputs.run_openapi_automation == 'true'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          ref: main
+          token: ${{ secrets.GH_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Generate changelog
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: npm run generate-changelog
+
+      - name: Commit changes
+        run: |
+          if git diff --quiet changelog/; then
+            echo "No changelog changes detected."
+          else
+            git config user.name "meili-bot"
+            git config user.email "robot@meilisearch.com"
+            git add changelog/
+            git commit -m "[AUTOMATION POST DEPLOYMENT] Update changelog with latest Meilisearch release"
+            git push origin main
+          fi
