@@ -1,0 +1,124 @@
+---
+title: Instant-meilisearch
+sidebarTitle: JavaScript
+description: Build search interfaces with instant-meilisearch and InstantSearch.
+---
+
+[instant-meilisearch](https://github.com/meilisearch/instant-meilisearch) is the easiest way to add a search interface to your front-end. It connects Meilisearch to [InstantSearch](https://www.algolia.com/doc/guides/building-search-ui/what-is-instantsearch/js/), an open-source library by Algolia that provides pre-built UI components for search.
+
+## Why instant-meilisearch?
+
+- **Pre-built components**: Search boxes, hit lists, facet filters, pagination, and more
+- **Framework support**: Works with React, Vue, Angular, and vanilla JavaScript
+- **Customizable**: Full control over styling and behavior
+- **Search-as-you-type**: Real-time results as users type
+
+## Quick example
+
+Create an `index.html` file with the following code:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@meilisearch/instant-meilisearch/templates/basic_search.css" />
+  </head>
+  <body>
+    <div class="wrapper">
+      <div id="searchbox"></div>
+      <div id="hits"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@meilisearch/instant-meilisearch/dist/instant-meilisearch.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4"></script>
+    <script>
+      const { searchClient } = instantMeiliSearch(
+        'https://ms-adf78ae33284-106.lon.meilisearch.io',
+        'a63da4928426f12639e19d62886f621130f3fa9ff3c7534c5d179f0f51c4f303'
+      );
+
+      const search = instantsearch({
+        indexName: 'steam-videogames',
+        searchClient
+      });
+
+      search.addWidgets([
+        instantsearch.widgets.searchBox({
+          container: '#searchbox'
+        }),
+        instantsearch.widgets.hits({
+          container: '#hits',
+          templates: {
+            item: (hit, { html, components }) => html`
+              <div>
+                <h2>${components.Highlight({ hit, attribute: 'name' })}</h2>
+                <p>${hit.description}</p>
+              </div>
+            `
+          }
+        })
+      ]);
+
+      search.start();
+    </script>
+  </body>
+</html>
+```
+
+Open this file in your browser to see a working search interface.
+
+## Framework guides
+
+<CardGroup cols={2}>
+  <Card title="React" icon="react" href="/getting_started/instant_meilisearch/react">
+    Build search UIs with React InstantSearch
+  </Card>
+  <Card title="Vue" icon="vuejs" href="/getting_started/instant_meilisearch/vue">
+    Build search UIs with Vue InstantSearch
+  </Card>
+</CardGroup>
+
+## Available widgets
+
+InstantSearch provides many pre-built widgets:
+
+| Widget | Description |
+|--------|-------------|
+| `searchBox` | Text input for search queries |
+| `hits` | Display search results |
+| `infiniteHits` | Infinite scroll results |
+| `pagination` | Page navigation |
+| `refinementList` | Facet filter checkboxes |
+| `menu` | Single-select facet filter |
+| `rangeSlider` | Numeric range filter |
+| `sortBy` | Sort results dropdown |
+| `stats` | Search statistics |
+
+[See all InstantSearch widgets](https://www.algolia.com/doc/api-reference/widgets/js/)
+
+## Using your own data
+
+The example above uses a public demo instance. To use your own Meilisearch instance:
+
+```javascript
+const { searchClient } = instantMeiliSearch(
+  process.env.MEILISEARCH_URL,      // Your instance URL
+  process.env.MEILISEARCH_API_KEY   // Your search API key
+);
+```
+
+<Note>
+**Set up your environment:**
+```bash
+export MEILISEARCH_URL="https://your-instance.meilisearch.io"
+export MEILISEARCH_API_KEY="your_search_api_key"
+```
+[Get a free Cloud instance](https://cloud.meilisearch.com)
+</Note>
+
+## Resources
+
+- [instant-meilisearch on GitHub](https://github.com/meilisearch/instant-meilisearch)
+- [InstantSearch documentation](https://www.algolia.com/doc/guides/building-search-ui/what-is-instantsearch/js/)
+- [Live demo](https://codesandbox.io/p/sandbox/eager-dust-f98w2w)

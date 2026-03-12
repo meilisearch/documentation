@@ -1,5 +1,6 @@
 ---
 title: Strapi v4 guide
+sidebarTitle: Strapi
 description: Learn how to use Meilisearch with Strapi v4.
 ---
 
@@ -9,7 +10,7 @@ This tutorial will show you how to integrate Meilisearch with [Strapi](https://s
 
 - [Node.js](https://nodejs.org/): active LTS or maintenance LTS versions, currently Node.js >=18.0.0 \<=20.x.x
 - npm >=6.0.0 (installed with Node.js)
-- A running instance of Meilisearch (v >= 1.x). If you need help with this part, you can consult the [Installation section](/learn/self_hosted/install_meilisearch_locally).
+- A running instance of Meilisearch (v >= 1.x). If you need help with this part, you can consult the [Installation section](/learn/self_hosted/getting_started_with_self_hosted_meilisearch).
 
 ## Create a back end using Strapi
 
@@ -60,7 +61,7 @@ Add the following three restaurants, one by one. For each restaurant, you need t
 Next, add the `French food` category on the bottom right corner of the page.
 
 <Frame>
-  <img src="/assets/images/strapi-v4/strapi-add-category.png" alt="Strapi dashboard: create an entry form, arrow indicating the location of the categorie's location in the right side menu" />
+  <img src="/assets/images/strapi-v4/strapi-add-category.png" alt="Strapi dashboard: create an entry form, arrow indicating the category's location in the right side menu" />
 </Frame>
 
 - Name: `The Slimy Snail`
@@ -116,7 +117,7 @@ By clicking on the checkbox next to `restaurant`, the content-type is automatica
 
 The word “Hooked” appears when you click on the `restaurant`'s checkbox in the `Collections` tab. This means that each time you add, update or delete an entry in your restaurant content-types, Meilisearch is automatically updated.
 
-Once the indexing finishes, your restaurants are in Meilisearch. Access the [search preview](/learn/getting_started/search_preview) confirm everything is working correctly by searching for “butter”.
+Once the indexing finishes, your restaurants are in Meilisearch. Access the [search preview](/getting_started/overview) confirm everything is working correctly by searching for “butter”.
 
 <Frame>
   <img src="/assets/images/strapi-v4/strapi-search-preview.gif" alt="GIF showing the word 'butter' being typed in the search bar and search results appearing instantly" />
@@ -124,8 +125,8 @@ Once the indexing finishes, your restaurants are in Meilisearch. Access the [sea
 
 Your Strapi entries are sent to Meilisearch as is. You can modify the data before sending it to Meilisearch, for instance by removing a field. Check out all the customization options on the [strapi-plugin-meilisearch page](https://github.com/meilisearch/strapi-plugin-meilisearch/#-customization).
 
-## What's next
+## Next steps
 
 This tutorial showed you how to add your Strapi collections to Meilisearch.
 
-In most real-life scenarios, you'll typically build a custom search interface and fetch results using Meilisearch's API. To learn how to quickly build a front-end interface of your own, check out the [Front-end integration page](/guides/front_end/front_end_integration) guide.
+In most real-life scenarios, you'll typically build a custom search interface and fetch results using Meilisearch's API. To learn how to quickly build a front-end interface of your own, check out the [Front-end integration page](/getting_started/instant_meilisearch/javascript) guide.
