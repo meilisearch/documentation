@@ -154,6 +154,9 @@ async function fetchNewReleases(existingVersions: Set<string>): Promise<Release[
       const version = parseVersion(release.tag_name);
       if (!version) continue;
 
+      // Skip pre-v1.0 releases
+      if (version.major < 1) continue;
+
       const minorKey = getMinorVersion(version);
       if (existingVersions.has(minorKey)) continue;
 
