@@ -867,6 +867,12 @@
                 ]
               }
             ]
+          },
+          {
+            "tab": "Changelog",
+            "pages": [
+              "changelog/changelog"
+            ]
           }
         ]
       }
@@ -1883,6 +1889,10 @@
     {
       "source": "/reference/api/tokenize",
       "destination": "/reference/api/authorization"
+    },
+    {
+      "source": "/reference/api/chats/update-chat",
+      "destination": "/reference/api/chats/update-settings-of-a-chat-workspace"
     },
     {
       "source": "/guides/laravel_scout",

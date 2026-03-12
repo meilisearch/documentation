@@ -1,0 +1,3602 @@
+---
+title: "Changelog"
+description: "New features and improvements in Meilisearch"
+rss: true
+---
+
+<Update label="v1.38" description="2026-03-09">
+
+## New Features
+
+## Improvements
+
+Embeddings indexing performance significantly improved by upgrading to the latest version of Hannoy. The indexing process no longer requires full database scans, making it much more efficient to add embeddings to large databases.
+
+Task deletion has been optimized and fixed to properly clean up orphan tasks and batches from the task queue.
+
+Connection reliability improved when using remote embedders like OpenAI or VoyageAI. Fixed intermittent "connection reset by peer" errors that could occur when embedding documents or search queries.
+
+## Other
+
+Routes in the codebase must now be declared using the `routes::routes` and `routes::path` macros to ensure they appear in the API reference documentation. This is now a mandatory requirement for new routes.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.38.0)
+
+</Update>
+
+<Update label="v1.37" description="2026-03-02">
+
+## New Features
+
+### Replicated sharding
+
+Replicated sharding is now available in Meilisearch Enterprise Edition, allowing you to configure multiple remotes to own the same shards for data redundancy.
+
+The `network` object now includes a new `shards` field that defines how documents are distributed across remotes:
+
+```json
+{
+  "leader": "ms-00",
+  "self": "ms-01",
+  "remotes": {
+    "ms-00": {},
+    "ms-01": {},
+    "ms-02": {}
+  },
+  "shards": {
+    "shard-a": {
+      "remotes": [
+        "ms-00",
+        "ms-01"
+      ]
+    },
+    "shard-b": {
+      "remotes": [
+        "ms-01",
+        "ms-02"
+      ]
+    },
+    "shard-c": {
+      "remotes": [
+        "ms-02",
+        "ms-00"
+      ]
+    }
+  }
+}
+```
+
+Each shard can be owned by multiple remotes, enabling full or partial replication across your network.
+
+#### Managing shards with convenience fields
+
+When updating the network configuration via `PATCH /network`, use `addRemotes` and `removeRemotes` for easier shard management:
+
+```json
+{
+  "shards": {
+    "shard-a": {
+      "addRemotes": [
+        "ms-00"
+      ]
+    }
+  }
+}
+```
+
+```json
+{
+  "shards": {
+    "shard-a": {
+      "removeRemotes": [
+        "ms-02"
+      ]
+    }
+  }
+}
+```
+
+#### Filtering by shard
+
+When the network feature is enabled, you can now filter documents by their shard assignment using the `_shard` filter:
+
+```text
+_shard = "shard-a"
+_shard != "shard-a"
+_shard IN ["shard-a", "shard-b"]
+```
+
+This is useful for manual federated search queries across specific shards in your network.
+
+### Shard-aware federated search with `useNetwork`
+
+When you use `useNetwork: true` in search queries, Meilisearch automatically expands the query to ensure each shard in your network configuration is queried exactly once, preventing duplicate or missing results in replicated sharding setups.
+
+## Improvements
+
+### Stabilized new vector store
+
+The hannoy HNSW vector store is now the default and only supported vector store. All existing indexes using the legacy arroy vector store are automatically migrated during upgrade.
+
+### Faster embedding indexing
+
+Vector indexing performance has been significantly improved. On databases with 20M documents, indexing batches of 1100 documents now complete 300 seconds faster.
+
+### Enhanced mini-dashboard security
+
+The local web interface (mini-dashboard) now stores API keys in RAM instead of browser storage, and dependencies with potential security vulnerabilities have been updated.
+
+## Other
+
+### Breaking changes for network feature
+
+If you are using the `network` experimental feature, the following changes apply:
+
+- The `network` object structure has changed. When `leader` is not `null`, you must now include at least one `shard` object with at least one remote in the `shards` field.
+
+- Existing databases are automatically migrated when upgraded with `--experimental-dumpless-upgrade`. The migration creates shards with the same names as existing remotes, mapping each remote to its corresponding shard. This migration does not reshard any documents.
+
+- When updating a network using dumpless upgrade, follow these guidelines:
+ - Wait for all remotes to finish updating before calling `PATCH /network`
+ - If using `useNetwork: true` search queries, call them on non-updated remotes first, as updated remotes will reject search requests from remotes that don't yet support the new `_shard` filters
+
+### Removed `vectorStoreSetting` experimental feature
+
+The `vectorStoreSetting` experimental feature has been removed since the new hannoy vector store is now the only supported option.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.37.0)
+
+</Update>
+
+<Update label="v1.36" description="2026-02-23">
+
+## New Features
+
+### New Ranking Rules: `attributeRank` and `wordPosition`
+
+Meilisearch now includes two new ranking rules that improve search relevance:
+
+- `attributeRank`: Documents rank higher when query words match in higher-priority searchable attributes, regardless of word position within those attributes.
+- `wordPosition`: Documents rank higher when query words appear closer to the beginning of an attribute.
+
+These rules were previously used internally as part of the `attribute` ranking rule. Now you can use them independently for more fine-grained control over search relevance. This is the first significant update to ranking rules since v1.0.
+
+### Automatic Vector Store Migration
+
+When upgrading to v1.36.0, Meilisearch automatically migrates indexes from the old Annoy vector store to the new Hannoy vector store. This migration happens without requiring a data dump and restore, though it may take a couple of minutes for indexes with large numbers of embeddings.
+
+To have more control over the migration timing, you can manually change the vector store backend beforehand by enabling the `vectorStoreSetting` experimental feature and setting the `vectorStore` root setting to `experimental`.
+
+Note: This vector store change affects ranking scores for vector search results.
+
+## Other
+
+### Breaking Change: OpenAPI Documentation File Relocation
+
+The `meilisearch-openapi-mintlify.json` file is no longer included in release assets. If you were using this file, you can now find it in the [public documentation repository](https://github.com/meilisearch/documentation/blob/main/assets/open-api/meilisearch-openapi-mintlify.json).
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.36.0)
+
+</Update>
+
+<Update label="v1.35" description="2026-02-02">
+
+## New Features
+
+### Search Performance Observability
+
+All search routes now support a `showPerformanceDetails` parameter that returns detailed performance metrics for your searches. When enabled, the response includes a `performanceDetails` field with timing information for each stage of the search pipeline.
+
+**Affected routes:**
+- `POST /indexes/<index_uid>/search`
+- `GET /indexes/<index_uid>/search`
+- `POST /multi-search`
+- `POST /indexes/<index_uid>/similar`
+- `GET /indexes/<index_uid>/similar`
+
+#### Search Example
+
+Request:
+```json
+{
+  "q": "glass",
+  "showPerformanceDetails": true
+}
+```
+
+Response:
+```json
+{
+ "hits": ,
+ "query": "glass",
+ "processingTimeMs": 5,
+ "limit": 20,
+ "offset": 0,
+ "estimatedTotalHits": 1,
+ "requestUid": "<uuid>",
+ "performanceDetails": {
+ "wait for permit": "295.29µs",
+ "search > tokenize": "436.67µs",
+ "search > resolve universe": "649.00µs",
+ "search > keyword search": "515.71µs",
+ "search > format": "288.54µs",
+ "search": "3.56ms"
+ }
+}
+```
+
+#### Multi-search Example
+
+Request:
+```json
+{
+  "queries": [
+    {
+      "indexUid": "<index_uid>",
+      "q": "glass",
+      "showPerformanceDetails": true
+    }
+  ]
+}
+```
+
+#### Federated Search Example
+
+Request:
+```json
+{
+  "federation": {
+    "showPerformanceDetails": true
+  },
+  "queries": [
+    {
+      "indexUid": "<index_uid>",
+      "q": "glass"
+    }
+  ]
+}
+```
+
+#### Similar Documents Example
+
+Request:
+```json
+{
+  "id": 143,
+  "embedder": "manual",
+  "showPerformanceDetails": true
+}
+```
+
+## Improvements
+
+### Multithreaded Post-processing Now Always Enabled
+
+Multithreaded post-processing of facets and prefixes is now permanently enabled, removing the experimental feature flag. This results in faster indexing on multi-core machines.
+
+## Other
+
+### Breaking Change: Fields Endpoint Response Format
+
+The `POST /indexes/<index_uid>/fields` route now returns a paginated object instead of a direct array. This allows you to see how many fields match a given filter.
+
+Before:
+```json
+[
+  {}
+]
+```
+
+After:
+```json
+{
+  "results": [
+    {}
+  ],
+  "offset": 0,
+  "limit": 20,
+  "total": 0
+}
+```
+
+### Fields Endpoint Pattern Filtering Fix
+
+Fixed incorrect pattern matching where parent fields were incorrectly matching child field patterns. For example, a `title` field will no longer match the pattern `title.en`.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.35.0)
+
+</Update>
+
+<Update label="v1.34" description="2026-01-26">
+
+## New Features
+
+### Network-wide search with `useNetwork` parameter
+
+You can now search across your entire network of Meilisearch machines with a single request using the new `useNetwork` parameter. This simplifies distributed search by automatically querying all remotes in your network without manually setting up federated queries.
+
+The `useNetwork` parameter is available in three ways:
+
+**In regular search requests:**
+
+```http
+POST /indexes/{indexUid}/search
+```
+
+```json
+{
+  "q": "Batman dark knight returns 1",
+  "filter": "genres IN [Action, Adventure]",
+  "facets": [
+    "genres"
+  ],
+  "useNetwork": true,
+  "limit": 5
+}
+```
+
+Or as a query parameter:
+
+```http
+GET /indexes/{indexUid}/search?useNetwork=true&q=Batman
+```
+
+**In multi-search requests:**
+
+Add `useNetwork` to individual queries within a federated search:
+
+```json
+{
+  "federation": {
+    "limit": 5
+  },
+  "queries": [
+    {
+      "q": "Batman returns",
+      "indexUid": "movies",
+      "useNetwork": true
+    },
+    {
+      "q": "Superman returns",
+      "indexUid": "movies",
+      "useNetwork": true
+    }
+  ]
+}
+```
+
+When `useNetwork: true` is set, Meilisearch automatically queries all remotes in your network and merges the results. The response includes `_federation` metadata showing which remote each result came from. This feature requires the `network` experimental feature to be enabled.
+
+**Limitations:** Facet search and chat routes do not currently support `useNetwork`.
+
+### Federated search pagination
+
+Federated searches now support exhaustive pagination with `federation.page` and `federation.hitsPerPage` parameters, allowing you to paginate through aggregated results from all remotes in the same way as regular searches.
+
+## Improvements
+
+### Faster settings updates when removing searchable attributes
+
+Settings changes are now processed more efficiently when you remove searchable attributes from your index configuration.
+
+## Other
+
+### Security fix: Restrict outbound requests to non-global IP networks
+
+Meilisearch now prevents outbound web requests (webhooks, embedders, and network machine connections) from reaching non-global IP addresses by default. This blocks requests to private networks like `192.168.x.x`, `10.x.x.x`, and localhost, preventing potential firewall bypasses.
+
+**If you need to allow requests to private networks**, use the `--experimental-allowed-ip-networks` CLI flag or `MEILI_EXPERIMENTAL_ALLOWED_IP_NETWORKS` environment variable:
+
+- **Default (not set):** All requests to non-global IPs are blocked
+- **Comma-separated CIDR networks:** Allow requests only to specified networks, e.g. `192.168.0.0/16,10.0.0.0/8`
+- **`any`:** Allow all requests regardless of target IP (use only in controlled environments)
+
+Example:
+
+```bash
+meilisearch --experimental-allowed-ip-networks "192.168.0.0/16,10.0.0.0/8"
+```
+
+This is a breaking change made for security reasons. Users with API keys that have write permissions to instance configuration could previously configure Meilisearch to send requests to private network addresses, bypassing firewalls.
+
+### Database size increase for authentication
+
+The authentication store database size has been increased to 2 GiB to support indexing more API keys.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.34.0)
+
+</Update>
+
+<Update label="v1.33" description="2026-01-19">
+
+## New Features
+
+### Fields endpoint
+A new POST `/indexes/{indexUid}/fields` endpoint returns detailed metadata about all fields in an index. This provides comprehensive information about each field's configuration, including display, search, filtering, and localization settings.
+
+## Improvements
+
+### Faster dumpless upgrades
+The dumpless upgrade process for instances before v1.32.0 is now significantly faster. By multi-threading database fetches during parallel cleanup of old field IDs, upgrade times have improved from approximately 2 hours 50 minutes to less than 7 minutes.
+
+### Enhanced vector search quality
+The vector store has been updated to improve search performance and result quality on larger databases. Linear scanning now triggers more intelligently, particularly when the number of filtered candidates is small relative to the total documents in the index.
+
+### Better ranking with vector search and sorting
+Fixed a bug where only the first non-blocking buckets were considered for non-final ranking rules. Search results are now higher quality when vector search and sorting are combined, especially when the search cutoff is triggered.
+
+## Other
+
+### Security fix: Dump import vulnerability
+All versions of Meilisearch before v1.33.0 are vulnerable to a path traversal vulnerability in the dump import functionality. Importing a specially crafted dump could grant access to arbitrary files on the file system of the Meilisearch instance.
+
+If you allow importing dumps from untrusted sources, update to v1.33.1 or later. Cloud users require no action as there is no evidence of exploitation on Meilisearch Cloud.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.33.0)
+
+</Update>
+
+<Update label="v1.32" description="2026-01-12">
+
+## New Features
+
+### Skip field-ID-based database cleanup during upgrades
+Introduces a `MEILI_EXPERIMENTAL_DISABLE_FID_BASED_DATABASES_CLEANUP` environment variable that allows you to opt out of the field ID-based database cleanup when upgrading from Meilisearch versions prior to 1.32.0. This provides flexibility for users who need to control the upgrade process.
+
+## Improvements
+
+### Enhanced search performance visibility with detailed logging
+Adds comprehensive progress tracking and logging for search operations, including detailed timing information for each step of the search process. This enables better observability and performance analysis for your search queries.
+
+### Parallel document operation extraction for faster indexing
+Accelerates document indexing by processing document operations in parallel during the payload preparation phase. This includes parallel extraction of changes and internal ID assignment. Performance improvements scale with CPU availability - testing shows approximately 7x speedup on four-million-document insertions using four CPUs.
+
+Note: The `indexedDocuments` field in tasks using skipCreation may report higher counts than the actual number of operations for `POST` and `PUT` requests. The documents are indexed correctly; only the reported count may be impacted as speed is prioritized over perfect accuracy in this optimization.
+
+## Other
+
+### Vector sort bucketing fix
+Fixed vector sort to properly group documents with identical similarity scores, ensuring subsequent ranking rules are applied correctly to bucketed results.
+
+### Document deletion from field-ID-based databases
+Resolved a bug where changing `searchableAttributes` from `["*"]` to a subset of fields left orphaned data in field-ID-based databases, causing corruption and warnings during search operations.
+
+### Graph link rebuilding for dumpless upgrades
+Updated hannoy to v0.1.3-nested-rtxns, which fixes graph-related recall issues and adds functionality to rebuild graph links for recovering previously malformed graphs. Also fixed a minor issue in the dumpless upgrade flow where upgrade descriptions were not displayed correctly.
+
+### Fixed panic on dumpless upgrade with empty indexes
+Resolved a panic that occurred when performing dumpless upgrades on empty indexes with configured embeddings.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.32.0)
+
+</Update>
+
+<Update label="v1.31" description="2025-12-22">
+
+## New Features
+
+### Allow strict document update without creating missing documents
+
+Added an optional `skipCreation` query parameter to document update endpoints. When set to `true` on `POST` or `PUT` requests to `/indexes/{index}/documents`, documents that don't exist in the index are silently ignored rather than created. The default value is `false`, which preserves the existing behavior of creating new documents.
+
+Example usage:
+
+```http
+POST /indexes/my-index/documents?skipCreation=true
+```
+
+## Improvements
+
+### S3-streaming snapshots now available as Enterprise Edition feature
+
+S3-streaming snapshots functionality is now exclusively available in the Enterprise Edition. This requires a license for self-hosted deployments. On-disk snapshots remain available in all editions. If you're using the Community Edition between versions 1.25 and 1.30, you can continue using S3 Streaming without a license.
+
+### AWS IRSA authentication support for S3 snapshots
+
+Added support for AWS IRSA (IAM Roles for Service Accounts) authentication when performing snapshots to S3. This allows the use of short-lived access and secret keys for more secure snapshot uploads. This feature is available in the Enterprise Edition and can be configured through new experimental CLI parameters.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.31.0)
+
+</Update>
+
+<Update label="v1.30" description="2025-12-15">
+
+## Improvements
+
+### Network scaling with dynamic topology changes
+
+Meilisearch Enterprise Edition now supports modifying the number of participants in a sharded network without restarting or migrating to a new cluster. You can scale up by adding new remotes or scale down by removing existing ones.
+
+**Setting up the initial network:**
+
+1. Designate a leader machine that will receive all write operations. Any write request to a non-leader machine will return a `not_a_leader` error.
+
+2. Configure your network topology by calling `PATCH /network` on the leader:
+
+```json
+{
+  "self": "ms0",
+  "leader": "ms0",
+  "remotes": {
+    "ms0": {
+      "url": "URL_OF_MS0",
+      "searchApiKey": "SEARCH_API_KEY_OF_MS0",
+      "writeApiKey": "WRITE_API_KEY_OF_MS0"
+    },
+    "ms1": {
+      "url": "URL_OF_MS1",
+      "searchApiKey": "SEARCH_API_KEY_OF_MS1",
+      "writeApiKey": "WRITE_API_KEY_OF_MS1"
+    }
+  }
+}
+```
+
+3. The network configuration is automatically propagated to all members.
+
+4. Send documents and settings only to the leader—they will be distributed across all network participants with automatic sharding.
+
+**Adding a new remote:**
+
+Call `PATCH /network` on the leader with the new remote's information:
+
+```json
+{
+  "remotes": {
+    "ms2": {
+      "url": "URL_OF_MS2",
+      "searchApiKey": "SEARCH_API_KEY_OF_MS2",
+      "writeApiKey": "WRITE_API_KEY_OF_MS2"
+    }
+  }
+}
+```
+
+A `networkTopologyChange` task will automatically rebalance documents across all remotes, including the new one.
+
+**Removing a remote:**
+
+Call `PATCH /network` on the leader and set the remote to `null`:
+
+```json
+{
+  "remotes": {
+    "ms2": null
+  }
+}
+```
+
+A `networkTopologyChange` task will automatically redistribute documents from the removed remote to the remaining participants.
+
+### macOS binary availability restored
+
+The `meilisearch-enterprise-macos-amd64` and `meilisearch-macos-amd64` binaries are now available again after being unavailable in v1.29.
+
+### Improved task handling during index operations
+
+Tasks are now properly attributed during index swaps to prevent cross-index task loss.
+
+### Search stability improvement
+
+Fixed an issue that could cause search requests to fail with an internal error about missing field weights. The system now logs a warning instead of crashing when encountering incomplete field weight mappings.
+
+## Other
+
+### Breaking changes for network sharding users
+
+These changes only affect Enterprise Edition users with automatic sharding enabled (`network.leader` set). Standard feature users are not affected.
+
+**Network object structure changes:**
+- The `sharding` boolean field has been removed
+- A new `leader` field (optional string) has been added to designate the cluster leader
+- A new `version` field (UUID) has been added to track network state
+
+**Write operation restrictions:**
+The following routes now return a `not_a_leader` error when called on non-leader machines:
+- `POST /indexes`
+- `PATCH` or `DELETE /indexes/{indexUid}`
+- `POST`, `PUT`, or `DELETE /indexes/{indexUid}/documents`
+- `POST /indexes/{indexUid}/documents/delete`
+- `POST /indexes/{indexUid}/documents/delete-batch`
+- `POST /indexes/{indexUid}/documents/edit`
+- `PATCH` or `DELETE /indexes/{indexUid}/settings` and related settings routes
+- `PATCH /network` (when changing the leader)
+- `POST /swap-indexes`
+
+**PATCH /network response change:**
+When a leader is configured, `PATCH /network` now returns a `NetworkTopologyChange` task summary instead of the network object itself.
+
+**Dump import behavior:**
+When importing dumps, the `self` and `leader` fields are dropped from the network configuration.
+
+**Network topology change task cancellation:**
+`NetworkTopologyChange` tasks can be cancelled. When cancelled, documents that have already been moved remain in their new locations, while the network topology reverts to its previous state.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.30.0)
+
+</Update>
+
+<Update label="v1.29" description="2025-12-08">
+
+## Improvements
+
+### New settings indexer supports searchable and exact attributes
+
+The improved settings indexer now handles changes to `searchableAttributes`, `exactAttributes`, `proximityPrecision`, and `embedders` settings. This indexer provides better scalability, near-instant cancellations, and displays indexing progress.
+
+The new indexer is enabled automatically when a settings batch contains only changes to these fields. Any other settings changes will use the legacy indexer. For OSS users, you can disable the new settings indexer by setting the `MEILI_EXPERIMENTAL_NO_EDITION_2024_FOR_SETTINGS` environment variable to `true`.
+
+### New vector store enabled by default for new indexes
+
+Starting with v1.29.0, newly created indexes will automatically use the improved vector store backend introduced in v1.21.0, which provides better performance and relevancy. Existing indexes remain unchanged and continue using their current backend.
+
+### Additional HuggingFace embedder models supported
+
+The `huggingFace` embedder now supports models with XLM Roberta architecture, giving you more options for local CPU and GPU-based embeddings.
+
+## Other
+
+### Build requirement change
+
+The git binary must now be present at build time to populate the `commitSha1` field in the `/version` endpoint response. This change was made to improve build performance.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.29.0)
+
+</Update>
+
+<Update label="v1.28" description="2025-12-01">
+
+## New Features
+
+### Better language support for Thai, Khmer, and German
+Improved word segmentation for Thai, Khmer, and German languages through an upgrade to Charabia v0.9.9. This provides more accurate text processing and search results for these languages.
+
+### Batch progress traces on metrics route
+Batch progress information is now exposed on the metrics route, improving the debugging experience when monitoring indexing operations.
+
+## Improvements
+
+### Separated Community and Enterprise editions
+Meilisearch now offers separate binary editions. Community Edition binaries retain their original names and remain under the MIT license. Enterprise Edition binaries are identified by "enterprise" in their names and are available under the BUSL-1.1 license. Docker images for the Enterprise Edition are available in the [`getmeili/meilisearch-enterprise`](https://hub.docker.com/r/getmeili/meilisearch-enterprise) repository.
+
+## Other
+
+### Document sorting fix
+Fixed an issue where documents without a sortable attribute were incorrectly handled when using the sort parameter on the `/documents` endpoint. Documents without the sortable attribute are now correctly returned after those that have the attribute.
+
+### Metrics route memory usage fix
+Fixed a critical bug in the Prometheus metrics route (`/metrics`) that could cause high memory usage and out-of-memory errors when an instance has too many tasks. If you are using the metrics route, upgrade to v1.28.2 or later, or clean up succeeded or failed tasks using the task management API.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.28.0)
+
+</Update>
+
+<Update label="v1.27" description="2025-11-24">
+
+## New Features
+
+None in this release.
+
+## Improvements
+
+### Better error messages for S3 snapshot uploads
+Errors that occur during S3 snapshot uploads are now displayed in the task queue, making it easier to debug snapshot upload issues.
+
+### Improved task ingestion performance
+The default batch size for batched tasks now defaults to half of the max indexing memory, providing better performance during task ingestion.
+
+## Other
+
+### Fixed embedding operation skipping documents
+A bug has been fixed that could cause Meilisearch to skip documents during embedding operations:
+- When using a Hugging Face embedder, every `available_parallelism`th document in a batch was ignored
+- When using a REST embedder with only one embedding per request, every 40th document in a batch was ignored
+
+To verify if documents in your database have been affected:
+1. Enable the `multimodal` experimental feature
+2. Search or fetch with filter: `NOT _vectors EXISTS` to find documents without vectors
+
+### Fixed document pagination bug
+The `/documents/fetch` endpoint no longer returns duplicated results when paginating through sorted documents.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.27.0)
+
+</Update>
+
+<Update label="v1.26" description="2025-11-17">
+
+## New Features
+
+### Custom metadata for document tasks
+
+You can now attach custom metadata to document-related tasks to easily track which documents were processed by Meilisearch. When you create or update documents, add the `customMetadata` query parameter to any supported route:
+
+```bash
+POST /indexes/{indexUid}/documents?customMetadata=my-metadata-for-the-task
+```
+
+The metadata value must be URL-encoded. The custom metadata will appear in task responses from the tasks route and in webhooks.
+
+Supported routes:
+- `POST /indexes/{indexUid}/documents`
+- `PUT /indexes/{indexUid}/documents`
+- `DELETE /indexes/{indexUid}/documents/{documentId}`
+- `POST /indexes/{indexUid}/documents/delete-batch`
+- `POST /indexes/{indexUid}/documents/delete`
+- `POST /indexes/{indexUid}/documents/edit`
+- `DELETE /indexes/{indexUid}/documents`
+
+Example task response with metadata:
+
+```json
+{
+  "results": [
+    {
+      "uid": 37,
+      "batchUid": 37,
+      "indexUid": "mieli",
+      "status": "succeeded",
+      "type": "documentDeletion",
+      "canceledBy": null,
+      "details": {
+        "deletedDocuments": 31944
+      },
+      "error": null,
+      "duration": "PT0.511099S",
+      "enqueuedAt": "2025-11-06T16:33:37.816237Z",
+      "startedAt": "2025-11-06T16:33:37.821591Z",
+      "finishedAt": "2025-11-06T16:33:38.33269Z",
+      "customMetadata": "removeall"
+    }
+  ],
+  "total": 38,
+  "limit": 2,
+  "from": 36,
+  "next": 35
+}
+```
+
+### More models for HuggingFace embedder
+
+The HuggingFace embedder now supports models with the `modernBERT` architecture for local CPU or GPU embeddings. This includes models like [Ruri v3](https://huggingface.co/cl-nagoya/ruri-v3-30m) and other `modernBERT` models available on HuggingFace.
+
+## Improvements
+
+### Embedder failure modes (Experimental)
+
+You can now configure how Meilisearch handles embedder-related errors. Choose to ignore:
+
+1. Document template rendering failures
+2. Embedder request failures (including missing vectors in `userProvided` embedders)
+3. Both types of errors
+
+When errors are ignored, documents without embeddings will not cause the task batch to fail. Use this feature carefully, as ignoring errors makes it harder to detect embedder issues.
+
+To enable this experimental feature:
+
+- **Cloud customers:** Contact support
+- **OSS users:** Set the `MEILI_EXPERIMENTAL_CONFIG_EMBEDDER_FAILURE_MODES` environment variable to a comma-separated list of error types to ignore:
+ - `ignore_document_template_failures`
+ - `ignore_embedder_failures`
+ 
+Example:
+```bash
+export MEILI_EXPERIMENTAL_CONFIG_EMBEDDER_FAILURE_MODES=ignore_document_template_failures,ignore_embedder_failures
+```
+
+### REST embedder timeout control (Experimental)
+
+You can now configure the timeout duration for REST embedder requests.
+
+To enable this experimental feature:
+
+- **Cloud customers:** Contact support
+- **OSS users:** Set the `MEILI_EXPERIMENTAL_REST_EMBEDDER_TIMEOUT_SECONDS` environment variable to a positive integer representing seconds
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.26.0)
+
+</Update>
+
+<Update label="v1.25" description="2025-11-10">
+
+## New Features
+
+### Search personalization
+
+Add the ability to dynamically rerank search results using Cohere with a personalized prompt. This experimental feature allows you to customize result ordering based on user preferences and context.
+
+### Upload snapshot tarballs to S3
+
+Add the ability to upload snapshots directly to S3. This experimental feature streams the entire snapshot process and utilizes multipart technology to send chunks of data in parallel, making snapshot uploads more efficient.
+
+## Improvements
+
+### German word segmentation
+
+Improved German text segmentation to skip segmenting unknown words instead of breaking them into bigrams. This ensures that German words not in the dictionary remain intact during indexing.
+
+**Note:** If you have a Meilisearch database containing German words, you must reindex your data manually.
+
+### Chinese text segmentation with numbers and English
+
+Enhanced Chinese text segmentation to prevent splitting of numbers and English words that appear alongside Chinese characters. Numbers and English text are now segmented consistently.
+
+**Note:** If you have a Meilisearch database containing Chinese words, you must reindex your data manually.
+
+## Other
+
+### Breaking change: Authorization header redaction in webhooks
+
+The value of the `Authorization` header is now redacted when getting webhooks or in responses from posting a new webhook or deleting a webhook. Previously, the header value was returned in these responses, which posed a security risk. If you were relying on retrieving the `Authorization` header value through the API, this will no longer be possible.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.25.0)
+
+</Update>
+
+<Update label="v1.24" description="2025-10-20">
+
+## New Features
+
+### Search Metadata Header
+A new `Meili-Include-Metadata` header is now available on search requests. When included, the response will contain a metadata field with information about each query, including a unique identifier (uid), the `indexUid`, and the index's primary key.
+
+## Improvements
+
+### Vector Store Search Cutoff
+Improved the interaction between the vector store and the `searchCutoffMs` parameter when using the `"vectorStore": "experimental"` index setting. This provides better control over search performance and timeout behavior when working with vector-based searches.
+
+### Compaction Behavior
+Enhanced compaction interactions with task cancellation, resulting in more reliable behavior when managing background indexing tasks.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.24.0)
+
+</Update>
+
+<Update label="v1.23" description="2025-10-13">
+
+## New Features
+
+### Index Compaction Task
+
+A new compaction endpoint is now available for indexes. This task defragments the LMDB environment used by each index, which reduces fragmentation that accumulates over time. Indexes typically experience around 30% fragmentation, and compaction can provide significant performance improvements—2-4x speed-ups in search and indexation operations. This is achieved by reordering LMDB internal pages and removing scattered free pages throughout the file, relocating content to the beginning for better cache efficiency.
+
+## Improvements
+
+### Parallelized Facet Post-Processing
+
+Facet post-processing during indexation is now multi-threaded. Previously, iterating over index prefixes was done in a single-threaded loop, which was a bottleneck. This redesign delivers 4-6x performance improvements for facet-related operations.
+
+### Request UID Added to Search Routes
+
+Search routes now include the request UID in responses, making it easier to track and correlate requests across your system.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.23.0)
+
+</Update>
+
+<Update label="v1.22" description="2025-09-24">
+
+## New Features
+
+### Geojson Filtering Support
+
+A new geo backend has been introduced to store and filter geojson data. You can now:
+
+1. Make the `_geojson` field filterable in your index settings
+2. Send documents with a `_geojson` field containing valid [geojson](https://datatracker.ietf.org/doc/html/rfc7946)
+3. Filter your documents using the new `_geoPolygon` filter, or continue using the existing `_geoBoundingBox` and `_geoPoints` filters
+
+## Improvements
+
+### Remote Federated Search Timeout Configuration
+
+The timeout for remote federated search has been made configurable. Previously set to a fixed 30 seconds, you can now customize this value by setting the `MEILI_EXPERIMENTAL_REMOTE_SEARCH_TIMEOUT_SECONDS` environment variable to a positive integer. This allows you to better accommodate different search configurations and network conditions.
+
+Note: This configuration is only available via environment variable; no CLI flag or configuration file entry is available at this time.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.22.0)
+
+</Update>
+
+<Update label="v1.21" description="2025-09-15">
+
+## New Features
+
+### Vector Store Backend
+A new vector store backend is now available for improved performance, especially when using binary quantization. To use it:
+
+1. Enable the `vectorStoreSetting` experimental feature
+2. Change the `vectorSetting` index setting to `"experimental"` for the indexes where you want to try the new vector store
+
+### Persian Language Support
+Added support for Persian language through an update to the character analysis library.
+
+## Improvements
+
+### Indexing Progress Trace
+Fixed an issue where observing the progress trace during indexing could cause parts of the trace to be lost.
+
+## Other
+
+### Dumpless Upgrade Fix
+If you encountered a decoding error when upgrading with a `rest` embedder, use the dumpless upgrade to v1.21 to fix this issue.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.21.0)
+
+</Update>
+
+<Update label="v1.20" description="2025-09-08">
+
+## Improvements
+
+**Display progress trace in in-progress batches**
+
+In-progress batches now display the `progressTrace` field, giving you better visibility into the execution progress of your batch operations.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.20.0)
+
+</Update>
+
+<Update label="v1.19" description="2025-08-25">
+
+## New Features
+
+### Automatically shard documents to scale horizontally
+
+Meilisearch can now automatically distribute documents between multiple instances using the new sharding feature. This allows you to scale Meilisearch horizontally by spreading your data across multiple instances.
+
+**Note:** Sharding is available exclusively in Meilisearch Enterprise Edition (EE). The EE features are governed by the Business Source License 1.1, which allows you to use, test, and develop with sharding for free in non-production environments. Please contact sales before using it in production.
+
+## Improvements
+
+### Enhance hybrid search with filter performance
+
+Hybrid search combined with filters has been optimized. In previous versions, mixing hybrid search with filters could significantly increase search time:
+
+```json
+{
+  "q": "hello world",
+  "limit": 100,
+  "filter": "tag=science",
+  "hybrid": {
+    "semanticRatio": 0.5,
+    "embedder": "default"
+  }
+}
+```
+
+Meilisearch now directly computes semantic distance with filtered candidates when only a few candidates match the filter, instead of searching for the closest embeddings in the vector database. This results in substantially faster search times when combining hybrid search with filters.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.19.0)
+
+</Update>
+
+<Update label="v1.18" description="2025-08-18">
+
+## New Features
+
+### Query vector in search response
+The search response now includes the `queryVector` when using the `retrieveVectors` parameter, making it easier to understand which vector was used for your search.
+
+### Retrieve vectors from specific embedders
+You can now retrieve documents with vectors from specific embedders, giving you more control over which embeddings are returned in search results.
+
+### Rename indexes via API
+Indexes can now be renamed using the API, providing a programmatic way to manage your index lifecycle.
+
+## Improvements
+
+Performance and usability improvements to vector handling and index management.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.18.0)
+
+</Update>
+
+<Update label="v1.17" description="2025-08-12">
+
+## New Features
+
+**Webhook API support**
+A new Webhook API is now available, allowing you to set up webhooks for various events in Meilisearch.
+
+**Chat completions route**
+A new chat completions endpoint enables you to turn search queries into conversations. This works with your favorite LLMs and is easy to integrate into your applications.
+
+## Improvements
+
+**STARTS_WITH filter optimization**
+The `STARTS_WITH` filter has been optimized and stabilized for better performance. You no longer need to activate the experimental feature to use this operator.
+
+**OpenAPI file publishing**
+The OpenAPI specification file is now published with each release as a release asset for easier integration with tools and SDKs.
+
+## Other
+
+**Chat settings endpoint change**
+The chat settings endpoint has changed from `PUT` to `PATCH`. If you have integrations or custom implementations using the old `PUT` method, you'll need to update them to use `PATCH` instead.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.17.0)
+
+</Update>
+
+<Update label="v1.16" description="2025-08-04">
+
+## New Features
+
+### Multimodal Embeddings
+
+Index and search images alongside text documents using AI-powered multimodal embedders. This experimental feature allows you to create a common semantic representation for images, texts, and other data types, enabling searches with image queries.
+
+Enable the feature:
+
+```bash
+curl \
+ -X PATCH 'MEILISEARCH_URL/experimental-features/' \
+ -H 'Content-Type: application/json' \
+ --data-binary '{
+ "multimodal": true
+ }'
+```
+
+Configure a multimodal embedder (example using VoyageAI):
+
+```bash
+curl \
+ -X PATCH 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/embedders' \
+ -H 'Content-Type: application/json' \
+ --data-binary '{
+ "voyage": {
+ "source": "rest",
+ "url": "https://api.voyageai.com/v1/multimodalembeddings",
+ "apiKey": "VOYAGE_API_KEY",
+ "indexingFragments": {
+ "text": {
+ "value": {
+ "content": [
+ {
+ "type": "text",
+ "text": "A movie titled {{doc.title}} whose description starts with {{doc.overview|truncateWords:20}}."
+ }
+ ]
+ }
+ },
+ "poster": {
+ "value": {
+ "content": [
+ {
+ "type": "image_url",
+ "image_url": "{{doc.poster}}"
+ }
+ ]
+ }
+ }
+ },
+ "searchFragments": {
+ "poster": {
+ "value": {
+ "content": [
+ {
+ "type": "image_url",
+ "image_url": "{{media.poster}}"
+ }
+ ]
+ }
+ },
+ "image": {
+ "value": {
+ "content": [
+ {
+ "type": "image_base64",
+ "image_base64": "data:{{media.image.mime}};base64,{{media.image.data}}"
+ }
+ ]
+ }
+ },
+ "text": {
+ "value": {
+ "content": [
+ {
+ "type": "text",
+ "text": "{{q}}"
+ }
+ ]
+ }
+ }
+ },
+ "request": {
+ "inputs": [
+ "{{fragment}}",
+ "{{..}}"
+ ],
+ "model": "voyage-multimodal-3"
+ },
+ "response": {
+ "data": [
+ {
+ "embedding": "{{embedding}}"
+ },
+ "{{..}}"
+ ]
+ }
+ }
+ }'
+```
+
+Search using an image URL:
+
+```bash
+curl -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
+ -H 'content-type: application/json' \
+ --data-binary '{
+ "media": {
+ "poster": "https://image.tmdb.org/t/p/w500/pgqj7QoBPWFLLKtLEpPmFYFRMgB.jpg"
+ },
+ "hybrid": {
+ "embedder": "voyage"
+ }
+ }'
+```
+
+Or perform a hybrid text search:
+
+```bash
+curl -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
+ -H 'content-type: application/json' \
+ --data-binary '{
+ "q": "A movie with lightsabers in space",
+ "hybrid": {
+ "embedder": "voyage",
+ "semanticRatio": 0.5
+ }
+ }'
+```
+
+### Export Route for Data Migration
+
+Transfer documents between Meilisearch instances without creating dumps or snapshots. This is particularly useful when migrating from a local machine to Meilisearch Cloud.
+
+```bash
+curl \
+ -X POST 'MEILISEARCH_URL/export' \
+ -H 'Content-Type: application/json' \
+ --data-binary '{
+ "url": "http://localhost:7711"
+ }'
+```
+
+You may optionally supply an API key if the target instance requires authentication:
+
+```json
+{
+  "url": "http://localhost:7711",
+  "apiKey": "target-instance-api-key"
+}
+```
+
+The export will generate a task that begins migrating data between instances. If the request fails, Meilisearch will retry automatically. You can also cancel an export task manually, though this will only interrupt the task locally.
+
+## Improvements
+
+### Better Nested Wildcard Support
+
+Added support for nested wildcards in `attributes_to_search_on`, allowing more flexible search field configurations.
+
+### Improved Geo Field Extraction
+
+Enhanced the extraction of geographic fields from documents for more accurate geo-based filtering and search.
+
+### CPU Utilization During Dump Import
+
+Dump imports now use all available CPUs for faster processing.
+
+### Live Embedder Error Display
+
+The last embedder error is now displayed live in batches, making it easier to diagnose embedding issues.
+
+### Fallback Instance Option
+
+Added the ability to revert to the old indexer using a fallback instance option for compatibility purposes.
+
+### Filters in Chat Completions
+
+Chat completions now support filters, enabling more precise control over the results used in completions.
+
+### Document Route Sorting
+
+The `/documents` route now supports sorting, giving you more control over how documents are retrieved.
+
+### Read-Only Admin Key for New Databases
+
+New empty databases now automatically create a Read-Only Admin key to prevent accidental writes while investigating your database.
+
+### Edition 2024 Indexer in Dumps
+
+Dumps now use the updated edition 2024 documents indexer for better compatibility.
+
+## Other
+
+### Experimental Features and Configuration Changes
+
+- A fallback instance option is available to revert to the old indexer if needed
+- The `--experimental-limit-batched-tasks-total-size` environment variable now works correctly
+- The `disableOnNumbers` setting is now properly affected by typo tolerance resets
+- New databases include a Read-Only Admin key for safer exploration
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.16.0)
+
+</Update>
+
+<Update label="v1.15" description="2025-06-09">
+
+## New Features
+
+### Disable typo tolerance for numbers
+
+Set `typoTolerance.disableOnNumbers` to `true` to disable typo tolerance for numbers:
+
+```bash
+curl -X POST 'http://localhost:7700/indexes/movies/settings' \
+ -H 'Content-Type: application/json' \
+ -d '{
+ "typoTolerance": {"disableOnNumbers": true}
+ }'
+```
+
+Deactivating typo tolerance on numbers can reduce false positives, such as a query term `2024` returning results that include `2025` and `2004`. It may also improve indexing performance.
+
+### Lexicographic string filters
+
+You can now filter strings lexicographically using comparison operators (`<`, `<=`, `>`, `>=`, `TO`) on string values:
+
+```bash
+curl -X POST 'http://localhost:7700/indexes/movies/search' \
+ -H 'Content-Type: application/json' \
+ -d '{
+ "filter": "release_date >= '2024-06'"
+ }'
+```
+
+This is particularly useful when filtering human-readable dates.
+
+### Chat with your indexes
+
+Create a chat workspace with the appropriate settings to enable conversational features:
+
+```bash
+curl -X POST 'http://localhost:7700/chats/my-assistant/settings' \
+ -H 'Content-Type: application/json' \
+ -d '{
+ "source": "openAi",
+ "apiKey": "sk-abc..."
+ }'
+```
+
+Then use the official OpenAI SDK to chat with your indexes:
+
+```javascript
+import OpenAI from 'openai';
+
+const client = new OpenAI({
+ baseURL: 'http://localhost:7700/chats/my-assistant',
+ apiKey: 'YOUR_MEILISEARCH_CHAT_API_KEY',
+});
+
+const completion = await client.chat.completions.create({
+ model: 'gpt-3.5-turbo',
+ messages: [{ role: 'user', content: 'What is Meilisearch?' }],
+ stream: true,
+});
+
+for await (const chunk of completion) {
+ console.log(chunk.choices[0]?.delta?.content || '');
+}
+```
+
+A guide is available for setting up a good chat interface for your indexes.
+
+## Improvements
+
+* Allow cancelling an upgrade to a new Meilisearch version by rolling back all upgraded indexes
+* Support EC private key as SSL certificate
+* Stop compacting snapshots when passing the relevant CLI option, speeding up snapshot generation
+* Add new `batchStrategy` field in the batches stats
+* Add log field tracking time spent searching in the vector store
+* Improve filterable error messages
+* Improve error messages on embeddings dimension mismatch
+* Update `/network` URL validation error message format
+* Expose the task queue's status size in Prometheus metrics
+* Fix `_matchesPosition` length calculation to improve client-side cropping
+* Fix `_geo` ranking rule
+
+## Other
+
+* Fix a panic in search that could occur when looking for typos with a search prefix having more than 65k possible hits
+* Ensure that passing `MEILI_EXPERIMENTAL_MAX_NUMBER_OF_BATCHED_TASKS` set to 0 results in Meilisearch never processing any tasks
+* Forbid value `0` for `maxTotalHits` in index settings
+* Allow `documentTemplate`s to use array filters on documents (e.g., `join`)
+* Fix searchable attributes database bug where some searchable fields were removed from the searchable databases when removed from `filterableAttributes` setting
+* Fix chat route missing base URL and Mistral error handling
+* Fix various issues with embedding regeneration
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.15.0)
+
+</Update>
+
+<Update label="v1.14" description="2025-04-14">
+
+## New Features
+
+### Granular filterable attribute settings
+
+Control which types of filters you want to enable for each attribute in your documents. Use `PATCH /indexes/INDEX_NAME/settings` to specify filter features like equality, comparison, and facet search on a per-attribute basis:
+
+```json
+{
+  "filterableAttributes": [
+    {
+      "attributePatterns": [
+        "genre",
+        "artist"
+      ],
+      "features": {
+        "facetSearch": true,
+        "filter": {
+          "equality": true,
+          "comparison": false
+        }
+      }
+    },
+    {
+      "attributePatterns": [
+        "rank"
+      ],
+      "features": {
+        "facetSearch": false,
+        "filter": {
+          "equality": true,
+          "comparison": true
+        }
+      }
+    }
+  ]
+}
+```
+
+This allows you to further optimize indexing speeds by enabling only the filter features you need for each attribute.
+
+### Composite embedders
+
+Use different embedders at search and indexing time to optimize AI-powered search performance. For example, use a remote embedder during indexing (higher bandwidth) and a local embedder during search queries (lower latency).
+
+To use composite embedders:
+
+1. Enable the feature with the `/experimental-features` route:
+
+```bash
+curl MEILISEARCH_URL/experimental-features \
+ -H 'Content-Type: application/json' \
+ -d '{"compositeEmbedders": true}'
+```
+
+2. Create an embedder with `source` set to `"composite"`, defining both `searchEmbedder` and `indexingEmbedder`:
+
+```json
+{
+  "embedders": {
+    "text": {
+      "source": "composite",
+      "searchEmbedder": {
+        "source": "huggingFace",
+        "model": "baai/bge-base-en-v1.5",
+        "revision": "a5beb1e3e68b9ab74eb54cfd186867f64f240e1a"
+      },
+      "indexingEmbedder": {
+        "source": "rest",
+        "url": "https://URL.endpoints.huggingface.cloud",
+        "apiKey": "hf_XXXXXXX",
+        "documentTemplate": "Your {{doc.template}}",
+        "request": {
+          "inputs": [
+            "{{text}}",
+            "{{..}}"
+          ]
+        },
+        "response": [
+          "{{embedding}}",
+          "{{..}}"
+        ]
+      }
+    }
+  }
+}
+```
+
+Meilisearch will use the `indexingEmbedder` during indexing and the `searchEmbedder` when responding to search queries.
+
+### Retrieve multiple documents by ID
+
+Fetch multiple documents at once by providing their IDs:
+
+```bash
+curl -H 'Content-Type: application/json' MEILISEARCH_URL/indexes/INDEX_UID/documents -d '{ "ids": ["cody", "finn", "brandy", "gambit"] }'
+```
+
+```json
+{
+  "results": [
+    {
+      "id": "brandy",
+      "info": 13765493
+    },
+    {
+      "id": "finn",
+      "info": 35863
+    },
+    {
+      "id": "cody",
+      "info": 122263
+    },
+    {
+      "id": "gambit",
+      "info": 22222
+    }
+  ],
+  "offset": 0,
+  "limit": 20,
+  "total": 4
+}
+```
+
+Note: Documents are not returned in the queried order, and non-existent documents are ignored.
+
+## Improvements
+
+### Batch document requests
+
+You can now batch together `/documents` requests using either `PUT` or `POST` methods, improving efficiency when working with multiple documents.
+
+### Enhanced batch progress tracking
+
+The `/batches` route now displays timestamped internal indexing steps, giving you better visibility into the indexing process. Batch progress view has also been extended to include indexing of vectors.
+
+### Exhaustive facet count parameter
+
+The `/facet-search` route now supports an `exhaustiveFacetCount` parameter to retrieve an exact facet count instead of estimates.
+
+### Reduced memory consumption
+
+Arroy (the vector storage component) now uses less RAM, improving overall memory efficiency for vector operations.
+
+### Experimental embedding cache
+
+An experimental feature to cache embeddings during search is now available, potentially improving search performance for repeated queries.
+
+### Armenian character handling
+
+Armenian characters are no longer case-sensitive in searches, improving search accuracy for Armenian language content.
+
+### Optimized reindexing
+
+Searchable attributes no longer trigger reindexing when only their order changes, reducing unnecessary processing.
+
+### Improved task handling
+
+Cancellation tasks can now be accepted even when the disk is full, ensuring better reliability of task management.
+
+## Other
+
+### Breaking behavior change
+
+Enabling `rankingScoreThreshold` no longer causes `_rankingScore` to be miscalculated, fixing a significant issue with ranking score accuracy when using threshold filters.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.14.0)
+
+</Update>
+
+<Update label="v1.13" description="2025-02-17">
+
+## New Features
+
+### AI-powered search is now stable and enabled by default
+
+AI-powered search is available to all users by default and no longer requires manual activation. Vector search, semantic search, and hybrid search capabilities are now production-ready.
+
+### Dumpless upgrades
+
+Upgrade to new Meilisearch releases without generating a dump file. Use the `--experimental-dumpless-upgrade` flag when starting Meilisearch after updating the binary:
+
+```bash
+./meilisearch --experimental-dumpless-upgrade
+```
+
+This faster and more efficient process replaces the traditional dump-based upgrade method.
+
+> **Warning**: Meilisearch recommends generating a backup snapshot before upgrading. This is an experimental feature, and failed upgrades may lead to database corruption.
+
+### Remote federated search requests
+
+Query multiple Meilisearch instances simultaneously using the `/multi-search` route. This is particularly useful when handling very large databases.
+
+First, enable the `network` experimental feature:
+
+```bash
+curl \
+ -X PATCH 'MEILISEARCH_URL/experimental-features/' \
+ -H 'Content-Type: application/json' \
+ --data-binary '{"network": true}'
+```
+
+Next, configure your network by setting up one `self` instance and multiple `remotes` using the `/network` endpoint:
+
+```bash
+curl \
+ -X PATCH 'MEILISEARCH_URL/network/' \
+ -H 'Content-Type: application/json' \
+ --data-binary <<'EOF'
+{
+ "remotes": {
+ "ms-0": {
+ "url": "http://ms-1235.example.meilisearch.io",
+ "searchApiKey": "Ecd1SDDi4pqdJD6qYLxD3y7VZAEb4d9j6LJgt4d6xas"
+ },
+ "ms-1": {
+ "url": "http://ms-4242.example.meilisearch.io",
+ "searchApiKey": "hrVu-OMcjPGElK7692K7bwriBoGyHXTMvB5NmZkMKqQ"
+ }
+ },
+ "self": "ms-0"
+}
+EOF
+```
+
+Repeat this process with every instance in your network. Do not send the same documents to different instances.
+
+Finally, make a `/multi-search` query with the new `federationOptions.remote` parameter:
+
+```bash
+curl \
+ -X PATCH 'MEILISEARCH_URL/multi-search/' \
+ -H 'Content-Type: application/json' \
+ --data-binary <<'EOF'
+{
+ "federation": {},
+ "queries": [
+ {
+ "q": "Batman returns dark",
+ "indexUid": "movies",
+ "federationOptions": {
+ "remote": "ms-0"
+ }
+ },
+ {
+ "q": "Batman returns dark",
+ "indexUid": "movies",
+ "federationOptions": {
+ "remote": "ms-1"
+ }
+ }
+ ]
+}
+EOF
+```
+
+## Improvements
+
+### Enhanced monitoring and performance insights
+
+- New `usedDatabaseSize` field on the `/stats` route to track actual database usage
+- Embeddings information now exposed on the `/stats` route
+- Prometheus metrics added to measure task queue latency
+- Faster listing of indexes
+- Improved task auto-batching with ability to limit total batch size
+
+### Better error messages
+
+Improved error message when an attribute is not filterable, making it easier to debug search configuration issues.
+
+## Other
+
+### Breaking changes
+
+- `vectorStore` is no longer an accepted value for the `/experimental-features` route
+- Ollama URLs must end with either `/api/embed` or `/api/embeddings`
+- Error codes have been refined:
+ - `invalid_embedder` has been split into `invalid_search_embedder` and `invalid_similar_embedder` for search and similar endpoints
+ - `invalid_hybrid_query` has been renamed to `invalid_search_hybrid_query`
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.13.0)
+
+</Update>
+
+<Update label="v1.12" description="2024-12-23">
+
+## New Features
+
+### Significant indexing speed improvements
+
+Meilisearch v1.12 introduces major performance improvements for indexing:
+
+- More than twice as fast for raw document insertion tasks
+- More than 4x faster for incrementally updating documents in large databases
+- Embeddings generation improved up to 1.5x for some workloads
+- Performance is maintained or improved on smaller machines
+- Task cancellation is also faster
+
+### New index settings: `facetSearch` and `prefixSearch`
+
+Two new index settings allow you to skip parts of the indexing process for additional speed improvements, though this may impact search experience in some use cases.
+
+**`facetSearch`** toggles facet search for all filterable attributes. Default is `true`:
+
+```bash
+curl \
+ -X PUT 'http://localhost:7700/indexes/books/settings/facet-search' \
+ -H 'Content-Type: application/json' \
+ --data-binary 'true'
+```
+
+**`prefixSearch`** configures prefix search capability. Accepts:
+- `"indexingTime"`: enables prefix processing during indexing (default)
+- `"disabled"`: deactivates prefix search completely
+
+```bash
+curl \
+ -X PUT 'http://localhost:7700/indexes/books/settings/prefix-search' \
+ -H 'Content-Type: application/json' \
+ --data-binary 'disabled'
+```
+
+When `prefixSearch` is disabled, queries like `he` will no longer match `hello`, but indexing is significantly faster.
+
+### New API route: `/batches`
+
+Query information about task batches with the new `/batches` endpoint.
+
+`GET /batches` returns a list of batch objects with the same query parameters as `GET /tasks`:
+
+```bash
+curl -X GET 'http://localhost:7700/batches'
+```
+
+`GET /batches/:uid` retrieves information about a single batch:
+
+```bash
+curl -X GET 'http://localhost:7700/batches/BATCH_UID'
+```
+
+Batch objects include progress tracking, statistics, and task information:
+
+```json
+{
+  "uid": 160,
+  "progress": {
+    "steps": [
+      {
+        "currentStep": "processing tasks",
+        "finished": 0,
+        "total": 2
+      },
+      {
+        "currentStep": "indexing",
+        "finished": 2,
+        "total": 3
+      },
+      {
+        "currentStep": "extracting words",
+        "finished": 3,
+        "total": 13
+      },
+      {
+        "currentStep": "document",
+        "finished": 12300,
+        "total": 19546
+      }
+    ],
+    "percentage": 37.986263
+  },
+  "details": {
+    "receivedDocuments": 19547,
+    "indexedDocuments": null
+  },
+  "stats": {
+    "totalNbTasks": 1,
+    "status": {
+      "processing": 1
+    },
+    "types": {
+      "documentAdditionOrUpdate": 1
+    },
+    "indexUids": {
+      "mieli": 1
+    }
+  },
+  "duration": null,
+  "startedAt": "2024-12-12T09:44:34.124726733Z",
+  "finishedAt": null
+}
+```
+
+Task objects now include a `batchUid` field to link tasks to their batch:
+
+```json
+{
+  "uid": 154,
+  "batchUid": 142,
+  "indexUid": "movies_test2",
+  "status": "succeeded",
+  "type": "documentAdditionOrUpdate",
+  "canceledBy": null,
+  "details": {
+    "receivedDocuments": 1,
+    "indexedDocuments": 1
+  },
+  "error": null,
+  "duration": "PT0.027766819S",
+  "enqueuedAt": "2024-12-02T14:07:34.974430765Z",
+  "startedAt": "2024-12-02T14:07:34.99021667Z",
+  "finishedAt": "2024-12-02T14:07:35.017983489Z"
+}
+```
+
+## Improvements
+
+### Phrase search with `showMatchesPosition`
+
+Phrase searches with `showMatchesPosition` set to `true` now return a single location for the whole phrase instead of individual term locations.
+
+### Array field match positions
+
+When a query finds matching terms in document fields with array values, Meilisearch now includes an `indices` field in `_matchesPosition` specifying which array elements contain the matches.
+
+### New query parameter for `/tasks`
+
+The `GET /tasks` endpoint now accepts a `reverse` parameter. When set to `true`, tasks are returned in reversed order from oldest to newest.
+
+### New Prometheus metrics
+
+Additional Prometheus metrics have been added for better monitoring and observability.
+
+### Better error messages
+
+Error messages now include the index name for improved clarity when debugging issues.
+
+## Other
+
+### Breaking change: `vectorStore` field distribution
+
+The `vectorStore` field in field distribution no longer contains `_vectors`. The previous value was incorrect, and there is no current use case for the fixed value.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.12.0)
+
+</Update>
+
+<Update label="v1.11" description="2024-10-28">
+
+## New Features
+
+### AI-powered search improvements
+
+Meilisearch v1.11 introduces several changes to AI-powered search as part of stabilization efforts:
+
+- **Binary quantization for embeddings**: Enable the new `binaryQuantized` option to convert floating-point embeddings into boolean values. This significantly improves performance and reduces database size (up to 10x reduction and 6x faster indexing) but impacts relevancy. This option cannot be reverted once enabled.
+
+```bash
+curl \
+ -X PATCH 'http://localhost:7700/indexes/movies/settings' \
+ -H 'Content-Type: application/json' \
+ --data-binary '{
+ "embedders": {
+ "image2text": {
+ "binaryQuantized": true
+ }
+ }
+ }'
+```
+
+- **Document template improvements**: The `documentTemplate` field now includes a new `field.is_searchable` property. The default template now filters out empty fields and non-searchable attributes for better embedding quality.
+
+- **New embedder option**: `documentTemplateMaxBytes` allows you to truncate document template text when it exceeds a specified byte limit.
+
+- **Updated default OpenAI model**: The default embedding model is now `text-embedding-3-small` instead of `text-embedding-ada-002`.
+
+### Federated search enhancements
+
+Two new federated search options have been added to support facet queries:
+
+- **`facetsByIndex`**: Request facet distribution and stats for each index separately in federated searches
+
+```json
+POST /multi-search
+{
+ "federation": {
+ "limit": 20,
+ "offset": 0,
+ "facetsByIndex": {
+ "movies": ["title", "id"],
+ "comics": ["title"]
+ }
+ },
+ "queries": [
+ {
+ "q": "Batman",
+ "indexUid": "movies"
+ },
+ {
+ "q": "Batman",
+ "indexUid": "comics"
+ }
+ ]
+}
+```
+
+- **`mergeFacets`**: Merge facet data from multiple indexes into a single result set
+
+```json
+POST /multi-search
+{
+ "federation": {
+ "limit": 20,
+ "offset": 0,
+ "facetsByIndex": {
+ "movies": ["title", "id"],
+ "comics": ["title"]
+ },
+ "mergeFacets": {
+ "maxValuesPerFacet": 10
+ }
+ },
+ "queries": [
+ {
+ "q": "Batman",
+ "indexUid": "movies"
+ },
+ {
+ "q": "Batman",
+ "indexUid": "comics"
+ }
+ ]
+}
+```
+
+### Experimental STARTS WITH filter operator
+
+A new experimental `STARTS WITH` filter operator is available. Enable it through experimental features:
+
+```bash
+curl \
+ -X PATCH 'http://localhost:7700/experimental-features/' \
+ -H 'Content-Type: application/json' \
+ --data-binary '{
+ "containsFilter": true
+ }'
+```
+
+Then use it in search filters:
+
+```json
+{
+  "filter": "hero STARTS WITH spider"
+}
+```
+
+### Language support improvements
+
+- Added ISO-639-1 language variants and automatic conversion to ISO-639-3
+- New German language tokenizer
+- Improved Turkish language support
+- Fixed Swedish character normalization so `å`, `ä`, and `ö` are no longer normalized
+
+## Improvements
+
+- Improved error handling when using `query.facets` with federated search (now returns appropriate error instead of silently ignoring the parameter)
+- Fixed facet value truncation to correctly apply `maxValuesPerFacet` limits
+- Improved task cancellation when vectors are used
+- Better timeout handling for embedding requests during search (3s timeout added)
+- Added timeouts to read and write operations
+- Retry logic added for deserialization failures in remote embedding providers (REST/OpenAI/ollama)
+- Improved vector display when no custom vectors were provided
+- Updated Rhai to fix errors when updating documents with functions
+- Batch failed logs now appear at error level
+- Removed forced capitalization in search UI fields
+
+## Other
+
+### Breaking changes
+
+- When performing AI-powered searches, `hybrid.embedder` is now **mandatory** in `GET` and `POST` `/indexes/{:indexUid}/search`
+- `hybrid` must now be passed even for pure semantic searches
+- `embedder` is now **mandatory** in `GET` and `POST` `/indexes/{:indexUid}/similar`
+- `semanticRatio` is ignored for queries that include `vector` but not `q` (performs pure semantic search instead)
+- When using federated search, `query.facets` at the query level now returns an error instead of being silently ignored. Use `federation.facetsByIndex` instead.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.11.0)
+
+</Update>
+
+<Update label="v1.10" description="2024-08-26">
+
+## New Features
+
+### Federated search
+
+Use the new `federation` setting of the `/multi-search` route to return a single search result object combining results from multiple indexes:
+
+```bash
+curl \
+ -X POST 'http://localhost:7700/multi-search' \
+ -H 'Content-Type: application/json' \
+ --data-binary << 'EOF'
+{
+ "federation": {
+ "offset": 5,
+ "limit": 10
+ },
+ "queries": [
+ {
+ "q": "Batman",
+ "indexUid": "movies"
+ },
+ {
+ "q": "Batman",
+ "indexUid": "comics"
+ }
+ ]
+}
+EOF
+```
+
+Response includes results merged in descending ranking score order with federation metadata:
+
+```json
+{
+  "hits": [
+    {
+      "id": 42,
+      "title": "Batman returns",
+      "overview": "..",
+      "_federation": {
+        "indexUid": "movies",
+        "queriesPosition": 0
+      }
+    }
+  ],
+  "processingTimeMs": 0,
+  "limit": 20,
+  "offset": 0,
+  "estimatedTotalHits": 2,
+  "semanticHitCount": 0
+}
+```
+
+Control the relevancy weight of each index using `federationOptions` in each query:
+
+```bash
+curl \
+ -X POST 'http://localhost:7700/multi-search' \
+ -H 'Content-Type: application/json' \
+ --data-binary << 'EOF'
+{
+ "federation": {},
+ "queries": [
+ {
+ "q": "apple red",
+ "indexUid": "fruits",
+ "federationOptions": {
+ "weight": 3.0
+ }
+ },
+ {
+ "q": "apple red",
+ "indexUid": "fruits",
+ "federationOptions": {
+ "weight": 0.5
+ }
+ }
+ ]
+}
+EOF
+```
+
+The `weight` parameter controls how likely results from each index appear in the final results. Values less than 1.0 make results less likely to appear, while values greater than 1.0 make them more likely. Default is 1.0.
+
+### Language settings
+
+Explicitly define which languages are used in your documents for better search accuracy, particularly helpful for datasets with multiple languages or those that previously required workarounds.
+
+Set languages during indexing with `localizedAttributes`:
+
+```bash
+curl \
+ -X PATCH 'http://localhost:7700/indexes/movies/settings' \
+ -H 'Content-Type: application/json' \
+ --data-binary << 'EOF'
+{
+ "localizedAttributes": [
+ {
+ "locales": ["jpn"],
+ "attributePatterns": ["*_ja"]
+ },
+ {
+ "locales": ["eng"],
+ "attributePatterns": ["*_en"]
+ },
+ {
+ "locales": ["cmn"],
+ "attributePatterns": ["*_zh"]
+ },
+ {
+ "locales": ["fra", "ita"],
+ "attributePatterns": ["latin.*"]
+ },
+ {
+ "locales": ,
+ "attributePatterns": ["*"]
+ }
+ ]
+}
+EOF
+```
+
+Supported language codes include: `epo`, `eng`, `rus`, `cmn`, `spa`, `por`, `ita`, `ben`, `fra`, `deu`, `ukr`, `kat`, `ara`, `hin`, `jpn`, `heb`, `yid`, `pol`, `amh`, `jav`, `kor`, `nob`, `dan`, `swe`, `fin`, `tur`, `nld`, `hun`, `ces`, `ell`, `bul`, `bel`, `mar`, `kan`, `ron`, `slv`, `hrv`, `srp`, `mkd`, `lit`, `lav`, `est`, `tam`, `vie`, `urd`, `tha`, `guj`, `uzb`, `pan`, `aze`, `ind`, `tel`, `pes`, `mal`, `ori`, `mya`, `nep`, `sin`, `khm`, `tuk`, `aka`, `zul`, `sna`, `afr`, `lat`, `slk`, `cat`, `tgl`, `hye`.
+
+Set language at search time with the `locales` parameter:
+
+```bash
+curl \
+ -X POST http://localhost:7700/indexes/movies/search \
+ -H 'Content-Type: application/json' \
+ --data-binary '{"q": "進撃の巨人", "locales": ["jpn"]}'
+```
+
+### Experimental: CONTAINS filter operator
+
+Enable the `containsFilter` experimental feature to filter results containing partial string matches:
+
+```bash
+curl \
+ -X PATCH 'http://localhost:7700/experimental-features/' \
+ -H 'Content-Type: application/json' \
+ --data-binary '{"containsFilter": true}'
+```
+
+Use the `CONTAINS` operator in filter expressions:
+
+```bash
+curl \
+ -X POST http://localhost:7700/indexes/movies/search \
+ -H 'Content-Type: application/json' \
+ --data-binary '{"q": "super hero", "filter": "synopsis CONTAINS spider"}'
+```
+
+### Experimental: Edit documents with a Rhai function
+
+Update a subset of your documents using a function directly from Meilisearch without needing to fetch, modify, and reindex them.
+
+First, enable the experimental feature:
+
+```bash
+curl \
+ -X PATCH 'http://localhost:7700/experimental-features/' \
+ -H 'Content-Type: application/json' \
+ --data-binary '{"editDocumentsByFunction": true}'
+```
+
+Then use the `/documents/edit` route:
+
+```bash
+curl http://localhost:7700/indexes/movies/documents/edit \
+ -H 'content-type: application/json' \
+ --data-binary '{"function": "doc.title = `✨ ${doc.title.to_upper} ✨`", "filter": "id > 3000"}'
+```
+
+The `function` parameter accepts Rhai code that can modify document fields. Use the `filter` parameter to target specific documents and `context` to pass data to your function.
+
+## Improvements
+
+### Search performance
+
+Implemented intersection at the end of the search pipeline for faster search operations.
+
+### Indexing performance
+
+Stopped opening indexes just to check if they exist, reducing unnecessary overhead during indexing operations.
+
+### AI-powered search enhancements
+
+Several quality-of-life improvements for REST embedders and remote embedding services:
+
+- Add custom headers to REST embedders using the optional `headers` parameter to include additional headers in requests to remote embedders
+- Add optional `url` parameter to OpenAI embedder to specify a custom embedding endpoint
+- `dimensions` parameter now available for Ollama embedders
+- Improved error messages when embeddings are missing or model configurations cannot be loaded
+- Exponential backoff duration is now randomized when REST embedder requests fail
+- OpenAI embeddings that exceed max tokens are now truncated rather than embedded by chunk
+
+### Error handling and messaging
+
+- Improved tenant token error messages for better debugging
+- Wrong HTTP status and confusing error messages on incorrect payloads have been fixed
+- Errors at the main Meilisearch binary level are now logged with `ERROR` level for better visibility
+
+### Improved documentation of natural language processing
+
+Added null byte as hard context separator and included all math symbols in the default separator list for better text processing across languages.
+
+### Heavy load handling
+
+- Optimized search queue handling to spawn only one search queue in actix-web
+- Improved index scheduler reliability to prevent stopping during heavy loads
+- Explicitly drop search permits to free resources more efficiently
+- Stop processing searches that take longer than one minute to prevent resource exhaustion
+
+### Document operations
+
+Made autobatching of document deletions with document deletions by filter possible, unclogging the task queue for users performing these operations heavily.
+
+### Search configuration
+
+Added experimental CLI flags to fine-tune search behavior:
+
+- `--experimental-nb-searches-per-core`: Configure how many searches Meilisearch can process concurrently per core
+- `--experimental-drop-search-after`: Set how many seconds before Meilisearch considers a search irrelevant and drops it without processing
+
+## Other
+
+### Breaking changes
+
+#### REST embedder configuration
+
+The REST embedder configuration has been simplified and changed in v1.10:
+
+Old v1.9 format:
+```json
+{
+  "source": "rest",
+  "url": "https://localhost:10006",
+  "query": {
+    "model": "minillm"
+  },
+  "inputField": [
+    "prompt"
+  ],
+  "inputType": "text",
+  "embeddingObject": [
+    "embedding"
+  ]
+}
+```
+
+New v1.10 format:
+```json
+{
+  "source": "rest",
+  "url": "https://localhost:10006",
+  "request": {
+    "model": "minillm",
+    "prompt": "{{text}}"
+  },
+  "response": {
+    "embedding": "{{embedding}}"
+  }
+}
+```
+
+The `request` object represents the request sent to the remote embedder, with `{{text}}` as a placeholder for the text to embed. The `response` object represents the response structure, with `{{embedding}}` as a placeholder for the embedding vector.
+
+If you have dumps with REST embedder configurations from v1.9, you must remove embedders with source `"rest"` before importing into v1.10. Attempting to import will result in an error about unknown fields.
+
+### Minimum Ubuntu version requirement
+
+Meilisearch now requires Ubuntu 20.04 or later. Ubuntu 18.04 is no longer supported due to GitHub Actions runner requirements.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.10.0)
+
+</Update>
+
+<Update label="v1.9" description="2024-07-01">
+
+## New Features
+
+### Hybrid search updates
+
+Meilisearch v1.9 introduces multiple enhancements to hybrid search functionality:
+
+- The `_vectors` field now accepts object values in addition to embedding arrays, allowing you to specify embeddings with additional metadata:
+
+```json
+{
+  "id": 42,
+  "_vectors": {
+    "default": [
+      0.1,
+      0.2
+    ],
+    "text": {
+      "embeddings": [
+        [
+          0.1,
+          0.2,
+          0.3
+        ],
+        [
+          0.4,
+          0.5,
+          0.6
+        ]
+      ],
+      "regenerate": false
+    },
+    "translation": {
+      "embeddings": [
+        0.1,
+        0.2,
+        0.3,
+        0.4
+      ],
+      "regenerate": true
+    }
+  }
+}
+```
+
+The `embeddings` field replaces a document's embeddings, while `regenerate` controls whether embeddings are regenerated on future document updates. Set `regenerate: true` to import embeddings as a one-shot process, or `regenerate: false` to preserve embeddings through document updates.
+
+- Use the new `retrieveVectors` search parameter to include the `_vectors` field in search results (performance improvement makes this opt-in by default):
+
+```bash
+curl \
+ -X POST 'http://localhost:7700/indexes/INDEX_NAME/search' \
+ -H 'Content-Type: application/json' \
+ --data-binary '{
+ "q": "SEARCH QUERY",
+ "retrieveVectors": true
+ }'
+```
+
+### Ranking score threshold
+
+Filter search results by minimum quality using the `rankingScoreThreshold` parameter:
+
+```bash
+curl \
+ -X POST 'http://localhost:7700/indexes/movies/search' \
+ -H 'Content-Type: application/json' \
+ --data-binary '{
+ "q": "Badman dark returns 1",
+ "showRankingScore": true,
+ "limit": 5,
+ "rankingScoreThreshold": 0.2
+ }'
+```
+
+Documents below the threshold are excluded from results and do not count towards `estimatedTotalHits` or `totalHits`.
+
+### Get similar documents endpoint
+
+Find documents similar to a given document using the new `/indexes/{indexUid}/similar` endpoint:
+
+```bash
+curl \
+ -X POST 'http://localhost:7700/indexes/:indexUid/similar' \
+ -H 'Content-Type: application/json' \
+ --data-binary '{
+ "id": "23",
+ "offset": 0,
+ "limit": 2,
+ "filter": "release_date > 1521763199",
+ "embedder": "default",
+ "attributesToRetrieve": ["*"],
+ "showRankingScore": false,
+ "showRankingScoreDetails": false
+ }'
+```
+
+Parameters:
+- `id`: Document ID to find similar results for (required)
+- `offset`: Number of results to skip (optional, defaults to `0`)
+- `limit`: Number of results to return (optional, defaults to `20`)
+- `filter`: Filter expression to apply to results (optional)
+- `embedder`: Embedder to use for similarity matching (optional, defaults to `"default"`)
+- `attributesToRetrieve`: Fields to include in results (optional, defaults to all)
+- `showRankingScore`: Include ranking scores (optional, defaults to `false`)
+- `showRankingScoreDetails`: Include detailed ranking scores (optional, defaults to `false`)
+- `rankingScoreThreshold`: Minimum ranking score threshold (optional)
+
+Supports both `GET` (URL parameters) and `POST` (request body) routes.
+
+### `frequency` matching strategy
+
+Prioritize results containing less frequent query terms using the new `frequency` matching strategy:
+
+```bash
+curl \
+ -X POST 'http://localhost:7700/indexes/{index_uid}/search' \
+ -H 'Content-Type: application/json' \
+ --data-binary '{
+ "q": "cheval blanc",
+ "matchingStrategy": "frequency"
+ }'
+```
+
+### Set distinct attribute at search time
+
+Specify the distinct attribute for a search without modifying index settings using the `distinct` parameter:
+
+```bash
+curl \
+ -X POST 'http://localhost:7700/indexes/{index_uid}/search' \
+ -H 'Content-Type: application/json' \
+ --data-binary '{
+ "q": "kefir le double poney",
+ "distinct": "book.isbn"
+ }'
+```
+
+A search-time `distinct` attribute takes precedence over the index settings.
+
+## Improvements
+
+### Indexing performance
+
+Settings updates are now significantly faster with reduced disk usage. When changing embedding settings, only embedders with modified settings regenerate their embeddings. When only the `documentTemplate` is modified, embeddings regenerate only for documents where the modification affects the text to embed.
+
+### Search performance
+
+- Filter AND operations are now faster during search
+- Facet distribution calculations are optimized for improved performance
+
+### Language support
+
+- Added new normalizer to normalize œ to oe and æ to ae
+- Fixed `chinese-normalization-pinyin` feature flag compilation
+
+### Relevancy improvements
+
+All fields now have the same impact on relevancy when `searchableAttributes: ["*"]`. Fixed `searchableAttributes` behavior when handling nested fields.
+
+### Prometheus metrics (experimental)
+
+Use HTTP path patterns instead of full paths in metrics for better grouping and analysis.
+
+## Other
+
+### Breaking changes
+
+- Empty `_vectors.embedder` arrays are now interpreted as having no vector embedding (previously interpreted as a single embedding of dimension 0)
+- The `_vectors` field is no longer included in search results by default when the experimental `vectorStore` feature is enabled (use `retrieveVectors: true` to opt-in)
+- Meilisearch no longer preserves the exact representation of embeddings in `_vectors`. Vectors are stored in a canonicalized float representation (e.g., `3` may be represented as `3.0`)
+
+### Deprecations
+
+The `exportPuffinReport` experimental feature has been removed. Use logs routes and logs modes instead.
+
+### Bug fixes
+
+- Fixed security issue in Rustls dependency
+- Fixed embedding settings reset when changing the `source` of an embedder, preventing misleading error messages
+- Fixed panic in hybrid search when removing all embedders
+- Fixed hybrid search to respect `offset` and `limit` parameters when returning keyword results early
+- Fixed issue where dumps with user-provided embedders and documents opting out of vectors would fail to import correctly (v1.9.1)
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.9.0)
+
+</Update>
+
+<Update label="v1.8" description="2024-05-06">
+
+## New Features
+
+### Hybrid search enhancements
+
+Meilisearch now supports two new embedder sources for hybrid search:
+
+**Ollama model** - Run language models locally using the Ollama framework:
+
+```json
+{
+  "default": {
+    "source": "ollama",
+    "url": "http://localhost:11434/api/embeddings",
+    "apiKey": "<foobarbaz>",
+    "model": "nomic-embed-text",
+    "documentTemplate": "A document titled '{{doc.title}}' whose description starts with {{doc.overview|truncatewords: 20}}"
+  }
+}
+```
+
+**Generic REST embedder** - Connect to any embedder with a RESTful interface:
+
+```json
+{
+  "default": {
+    "source": "rest",
+    "url": "http://localhost:12345/api/v1/embed",
+    "apiKey": "187HFLDH97CNHN",
+    "dimensions": 512,
+    "documentTemplate": "A document titled '{{doc.title}}' whose description starts with {{doc.overview|truncatewords: 20}}",
+    "inputField": [
+      "data",
+      "text"
+    ],
+    "inputType": "text",
+    "query": {
+      "model": "MODEL_NAME",
+      "dimensions": 512
+    },
+    "pathToEmbeddings": [
+      "data"
+    ],
+    "embeddingObject": [
+      "embedding"
+    ]
+  }
+}
+```
+
+**Distribution setting** - Apply affine transformations to semantic search ranking scores to improve result ranking when combining semantic and keyword search:
+
+```json
+{
+  "default": {
+    "source": "huggingFace",
+    "model": "MODEL_NAME",
+    "distribution": {
+      "mean": 0.7,
+      "sigma": 0.3
+    }
+  }
+}
+```
+
+### Negative keywords
+
+Exclude specific terms from search results using the `-` operator:
+
+```bash
+curl \
+ -X POST 'http://localhost:7700/indexes/places/search' \
+ -H 'Content-Type: application/json' \
+ --data-binary '{"q": "-escape room"}'
+```
+
+- `-escape` returns documents that do not contain "escape"
+- `-escape room` returns documents containing "room" but not "escape"
+- `-"on demand"` returns documents that do not contain the phrase "on demand"
+
+### Search cutoff timeout
+
+Configure a timeout for search requests to prevent crashes and performance issues. Set a custom timeout value using the `/settings` endpoint:
+
+```bash
+curl \
+ -X PATCH 'http://localhost:7700/indexes/movies/settings' \
+ -H 'Content-Type: application/json' \
+ --data-binary '{"searchCutoffMs": 150}'
+```
+
+The default timeout is 1500ms. Set to `null` to disable the cutoff.
+
+## Improvements
+
+### Indexing performance
+
+Increased indexing speed when updating settings.
+
+### Search stability
+
+Added a limit for concurrent search requests to prevent unbounded RAM consumption. Launch your instance with a custom limit:
+
+```bash
+./meilisearch --experimental-search-queue-size 100
+```
+
+The default limit is 1000 enqueued requests. This limit does not impact search performance, only prevents security issues from excessive queueing.
+
+### Facet sorting
+
+The `sortFacetValuesBy` setting now impacts the `/facet-search` route for consistent facet value ordering.
+
+### Hybrid search improvements
+
+- Return keyword search results even if embedding generation fails during hybrid searches
+- Added `semanticHitCount` field to search responses indicating the number of hits from semantic search
+- Improved search logs to exclude `hits` from DEBUG log level output
+
+### Tokenizer improvements
+
+Enhanced tokenization with support for:
+- Markdown formatted code blocks
+- Improved Korean segmentation
+- Tab character (`\t`) recognition as a separator
+- Optional pinyin normalization for Chinese text
+
+### Vector embeddings in dumps
+
+Vectors are now included in database dumps, providing an upgrade path to future versions without requiring regeneration of embeddings for auto-generating embedders.
+
+## Other
+
+### Breaking changes: Semantic search scoring
+
+To improve search response times and reduce bandwidth:
+
+- `_semanticScore` is no longer returned in search responses; use `_rankingScore` instead
+- The `vector` field is no longer included in search responses
+- Query vectors are no longer displayed when `"showRankingScoreDetails": true` is set
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.8.0)
+
+</Update>
+
+<Update label="v1.7" description="2024-03-11">
+
+## New Features
+
+### New OpenAI embedding models
+
+When configuring OpenAI embedders, you can now specify two new models:
+- `text-embedding-3-small` with a default dimension of 1536
+- `text-embedding-3-large` with a default dimension of 3072
+
+These new models are cheaper and improve search result relevancy.
+
+### Custom OpenAI model dimensions
+
+You can configure `dimensions` for sources using the new OpenAI models: `text-embedding-3-small` and `text-embedding-3-large`. Dimensions must be greater than 0 and smaller than the model size:
+
+```json
+{
+  "embedders": {
+    "new_model": {
+      "source": "openAi",
+      "model": "text-embedding-3-large",
+      "dimensions": 512
+    },
+    "legacy_model": {
+      "source": "openAi",
+      "model": "text-embedding-ada-002"
+    }
+  }
+}
+```
+
+You cannot customize dimensions for older OpenAI models such as `text-embedding-ada-002`. Setting `dimensions` to any value except the default size of these models will result in an error.
+
+### GPU support for Hugging Face embeddings
+
+Activate CUDA to use Nvidia GPUs when computing Hugging Face embeddings. This can significantly improve embedding generation speeds.
+
+To enable GPU support through CUDA:
+
+1. Install CUDA dependencies
+2. Clone and compile Meilisearch with the `cuda` feature: `cargo build --release --package meilisearch --features cuda`
+3. Launch your freshly compiled Meilisearch binary
+4. Activate vector search
+5. Add a Hugging Face embedder
+
+### Stabilized `showRankingScoreDetails`
+
+The `showRankingScoreDetails` search parameter is now a stable feature. Use it with the `/search` endpoint to view detailed scores per ranking rule for each returned document:
+
+```bash
+curl \
+ -X POST 'http://localhost:7700/indexes/movies/search' \
+ -H 'Content-Type: application/json' \
+ --data-binary '{"q": "Batman Returns", "showRankingScoreDetails": true}'
+```
+
+When `showRankingScoreDetails` is set to `true`, returned documents include a `_rankingScoreDetails` field with detailed scoring information for each ranking rule.
+
+### Experimental JSON log output
+
+Configure Meilisearch to output logs in JSON format by passing `json` to the `--experimental-logs-mode` command-line option:
+
+```bash
+./meilisearch --experimental-logs-mode json
+```
+
+The `--experimental-logs-mode` option accepts two values:
+
+- `human`: default human-readable output
+- `json`: JSON structured logs
+
+### Experimental `/logs/stream` and `/logs/stderr` routes
+
+Two new experimental API routes allow you to manage log output:
+
+**Activate the routes** using the `/experimental-features` endpoint:
+
+```bash
+curl \
+ -X PATCH 'http://localhost:7700/experimental-features/' \
+ -H 'Content-Type: application/json' \
+ --data-binary '{"logsRoute": true}'
+```
+
+**`/logs/stream`** - Stream logs in real-time:
+
+```bash
+curl \
+ -X POST http://localhost:7700/logs/stream \
+ -H 'Content-Type: application/json' \
+ --data-binary '{"mode": "human", "target": "actix=off,debug"}'
+```
+
+Parameters:
+- `target`: Defines log level and which part of the engine to apply it to. Format: `code_part=log_level`. Valid log levels: `trace`, `debug`, `info`, `warn`, `error`, or `off`
+- `mode`: Accepts `fmt` (basic) or `profile` (verbose trace)
+
+Stop streaming with:
+
+```bash
+curl -X DELETE http://localhost:7700/logs/stream
+```
+
+You may only have one listener at a time.
+
+**`/logs/stderr`** - Configure default log output:
+
+```bash
+curl \
+ -X POST http://localhost:7700/logs/stderr \
+ -H 'Content-Type: application/json' \
+ --data-binary '{"target": "debug"}'
+```
+
+Parameters:
+- `target`: Defines log level and which part of the engine to apply it to. Format: `code_part=log_level`. Valid log levels: `trace`, `debug`, `info`, `warn`, `error`, or `off`
+
+### Experimental cluster mode
+
+New experimental feature to change the behavior of Meilisearch to run in a cluster by externalizing the task queue.
+
+## Improvements
+
+### Improved indexing speed and reduced memory usage
+
+- Auto-batch task deletion reduces indexing time
+- Hybrid search experimental feature indexing is now more than 10 times faster
+- Capped the maximum memory of grenade sorters to reduce memory usage
+- Multiple technical improvements to indexing pipeline
+- Enhanced facet incremental indexing
+- Improved threshold triggering incremental indexing
+
+### Improved logging
+
+Log messages now follow a new pattern:
+
+```text
+2024-02-06T14:54:11Z INFO actix_server::builder: 200: starting 10 workers
+```
+
+This replaces the previous format:
+
+```text
+[2024-02-06T14:54:11Z INFO actix_server::builder] starting 10 workers
+```
+
+### Multiple language support improvements
+
+Expanded support for multiple languages, including improved Vietnamese normalization (Ð and Đ are now normalized to d). Updated to Charabia v0.8.7.
+
+### Additional improvements
+
+- Added content type to webhook requests
+- Skip reindexing when modifying unknown faceted fields
+- Added timeout to webhook requests
+- Enhanced Prometheus experimental feature with job variable in Grafana dashboard
+
+## Other
+
+### Breaking changes - Log output format
+
+Log messages now follow a different pattern. If you have automated tasks based on log output parsing, you may need to update them to work with the new format.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.7.0)
+
+</Update>
+
+<Update label="v1.6" description="2024-01-15">
+
+## New Features
+
+### Automated embeddings generation for vector search
+
+Meilisearch can now automatically generate embeddings using OpenAI, HuggingFace, or your own pre-computed vectors. Configure embedders in your index settings:
+
+```bash
+curl \
+ -X PATCH 'http://localhost:7700/indexes/movies/settings' \
+ -H 'Content-Type: application/json' \
+ --data-binary << 'EOF'
+{
+ "embedders": {
+ "default": {
+ "source": "openAi",
+ "apiKey": "<your-OpenAI-API-key>",
+ "model": "text-embedding-ada-002",
+ "documentTemplate": "A movie titled '{{doc.title}}' whose description starts with {{doc.overview|truncatewords: 20}}"
+ },
+ "image": {
+ "source": "userProvided",
+ "dimensions": 512
+ },
+ "translation": {
+ "source": "huggingFace",
+ "model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+ "documentTemplate": "A movie titled '{{doc.title}}' whose description starts with {{doc.overview|truncatewords: 20}}"
+ }
+ }
+}
+EOF
+```
+
+The `documentTemplate` field uses Liquid format to define what content gets embedded. The `model` parameter specifies which OpenAI or HuggingFace model to use.
+
+### Hybrid search
+
+Combine keyword and semantic search in a single query using the new `hybrid` parameter:
+
+```bash
+curl \
+ -X POST 'http://localhost:7700/indexes/movies/search' \
+ -H 'Content-Type: application/json' \
+ --data-binary '{
+ "q": "Plumbers and dinosaurs",
+ "hybrid": {
+ "semanticRatio": 0.9,
+ "embedder": "default"
+ }
+ }'
+```
+
+The `semanticRatio` controls the balance between semantic and keyword search (0 = pure keyword search, 1 = pure semantic search, default = 0.5).
+
+### Task queue webhook
+
+Receive notifications when Meilisearch finishes processing tasks by configuring a webhook:
+
+```bash
+./meilisearch \
+ --task-webhook-url=https://example.com/example-webhook?foo=bar&number=8 \
+ --task-webhook-authorization-header=Bearer aSampleAPISearchKey
+```
+
+You can also set these via `MEILI_TASK_WEBHOOK_URL` and `MEILI_TASK_WEBHOOK_AUTHORIZATION_HEADER` environment variables or in your configuration file.
+
+### Experimental: Limit batched tasks
+
+Control how many tasks Meilisearch batches together to improve system stability:
+
+```bash
+./meilisearch --experimental-max-number-of-batched-tasks 100
+```
+
+Configure via `MEILI_EXPERIMENTAL_MAX_NUMBER_OF_BATCHED_TASKS` environment variable or in your configuration file.
+
+## Improvements
+
+### Indexing performance
+
+Meilisearch v1.6 significantly improves indexing speed by storing less internal data and only re-indexing the specific fields you update. On a 2.5GB e-commerce dataset, initial document addition is over 50% faster. Partial document updates show 50-75% performance improvements depending on your dataset and indexing patterns.
+
+### Disk space reduction
+
+Database disk usage is now 40-50% smaller on typical datasets due to reduced internal data storage. Database growth is also more stable with new document additions.
+
+### Proximity ranking rule precision
+
+Control the accuracy and performance of proximity-based ranking:
+
+```bash
+curl \
+ -X PATCH 'http://localhost:7700/indexes/books/settings/proximity-precision' \
+ -H 'Content-Type: application/json' \
+ --data-binary '{
+ "proximityPrecision": "byAttribute"
+ }'
+```
+
+Choose between `byWord` (exact distance, default) or `byAttribute` (faster but less precise, checks only if words appear in the same field).
+
+## Other
+
+### Vector search breaking changes
+
+If you've used vector search in v1.3.0 through v1.5.0, update your implementation:
+
+- When using both `q` and `vector` parameters together, you must now include the `hybrid` parameter
+- Vectors must be JSON objects instead of arrays:
+
+```json
+{
+  "_vectors": {
+    "image2text": [
+      0,
+      0.1,
+      0.2
+    ]
+  }
+}
+```
+
+- Define a model in your embedder settings (previously optional for user-provided embeddings):
+
+```json
+{
+  "embedders": {
+    "default": {
+      "source": "userProvided",
+      "dimensions": 512
+    }
+  }
+}
+```
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.6.0)
+
+</Update>
+
+<Update label="v1.5" description="2023-11-20">
+
+## New Features
+
+### Snapshots on-demand
+
+A new `/snapshots` API route allows you to create snapshots manually whenever needed:
+
+```bash
+curl -X POST http://localhost:7700/snapshots
+```
+
+This route returns a summarized task object. By default, snapshots are created in the `/snapshots` directory, which you can customize using the `--snapshot-dir` configuration option.
+
+### Experimental feature: Export Puffin reports
+
+Meilisearch can now automatically export `.puffin` reports to help diagnose performance issues. Enable this experimental feature using the `/experimental-features` endpoint:
+
+```bash
+curl \
+ -X PATCH 'http://localhost:7700/experimental-features/' \
+ -H 'Content-Type: application/json' \
+ --data-binary '{"exportPuffinReports": true}'
+```
+
+## Improvements
+
+### Indexing speed improvements
+
+Indexing speed has been improved for text-heavy datasets. Datasets with fields containing more than 100 words should see a 5% to 20% reduction in indexing times. Gains are proportional to the amount of words in a document. Note: indexing speed improvements may not be visible in datasets with fewer than 20 words per field.
+
+Please be aware that this optimization might result in minor impact to search result relevancy for queries containing 4 words or more. Contact the Meilisearch team if this significantly affects your application.
+
+### Additional improvements
+
+* The experimental `/metrics` route can now be activated via HTTP in addition to CLI flags
+* Added Khmer language support
+* The `meilitool` command-line interface is now integrated into the Meilisearch Docker image, providing commands to enforce task cancellation and dump creation for stuck instances. Use `meilitool --help` in the running container for usage information
+
+## Other
+
+### Breaking changes and fixes
+
+* Vector size validation: The API now throws an error when a vector in a search query does not match the size of already indexed vectors
+* Fixed search operations on the processing index from hanging
+* Fixed search on exact attributes using `attributeToSearchOn`
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.5.0)
+
+</Update>
+
+<Update label="v1.4" description="2023-09-25">
+
+## New Features
+
+### Customize text separators
+
+Meilisearch word segmentation now supports customization through two new index settings: `separatorTokens` and `nonSeparatorTokens`.
+
+Add a character to the `separatorTokens` list to use it as a word separator:
+
+```bash
+curl \
+ -X PUT 'http://localhost:7700/indexes/articles/settings/separator-tokens' \
+ -H 'Content-Type: application/json' \
+ --data-binary '["&sect;", "&sep"]'
+```
+
+Add a character to the `nonSeparatorTokens` list when you don't want Meilisearch to use it to separate words:
+
+```bash
+curl \
+ -X PUT 'http://localhost:7700/indexes/articles/settings/non-separator-tokens' \
+ -H 'Content-Type: application/json' \
+ --data-binary '["@", "#", "&"]'
+```
+
+### Load user-defined dictionaries
+
+Expand Meilisearch's default language-based dictionaries with domain-specific terms using the new `dictionary` index setting. This improves word segmentation accuracy for specialized vocabularies:
+
+```bash
+curl \
+ -X PUT 'http://localhost:7700/indexes/articles/settings/dictionary' \
+ -H 'Content-Type: application/json' \
+ --data-binary '["J. R. R.", "J.R.R."]'
+```
+
+The `dictionary` setting works alongside existing `stopWords` and `synonyms` settings:
+
+```json
+{
+  "dictionary": [
+    "J. R. R.",
+    "J.R.R."
+  ],
+  "synonyms": {
+    "J.R.R.": [
+      "jrr",
+      "J. R. R."
+    ],
+    "J. R. R.": [
+      "jrr",
+      "J.R.R."
+    ],
+    "jrr": [
+      "J.R.R.",
+      "J. R. R."
+    ]
+  }
+}
+```
+
+## Improvements
+
+### Enhanced data privacy in error messages
+
+Hidden document fields are no longer displayed in error messages. When attempting to sort by a non-sortable field while other non-displayed sortable fields exist, you'll see a message like:
+
+```text
+Available sortable attributes are: price, stock, <..hidden-attributes>.
+```
+
+### Improved filter parameter handling with backslashes
+
+Fixed a bug preventing proper use of backslash characters in `filter` search parameter expressions. This change requires updating how backslashes are escaped in filters.
+
+If you use backslashes in filter expressions, you must now escape them. For example:
+- Before v1.4.0: `path = "my\\test\\path"`
+- From v1.4.0: `path = "my\\\\test\\\\path"`
+
+The JSON layer unescapes `\\\\` to `\\`, and then Meilisearch unescapes `\\` to a single `\`.
+
+### Search performance improvements
+
+Improved indexing speed when importing dumps by using buffered readers and writers.
+
+## Other
+
+### Breaking change: Backslash escaping in filter expressions
+
+Users with backslash characters in `filter` search parameters must update their filter expressions. All backslashes now require escaping at the Meilisearch filter level (in addition to any JSON escaping).
+
+For a document with `path: "my\test\path"` stored as `"my\\test\\path"` in JSON, the filter syntax changed:
+- Previously: `path = "my\\test\\path"` (only JSON escaping)
+- Now: `path = "my\\\\test\\\\path"` (JSON + Meilisearch filter escaping)
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.4.0)
+
+</Update>
+
+<Update label="v1.3" description="2023-07-31">
+
+## New Features
+
+### Vector Search (Experimental)
+
+Meilisearch now supports vector search, allowing you to use it as a vector store. You can add vector embeddings generated by third-party tools (such as Hugging Face, Cohere, or OpenAI) and search using vector similarity.
+
+Enable vector search via the experimental features endpoint:
+
+```bash
+curl \
+ -X PATCH 'http://localhost:7700/experimental-features/' \
+ -H 'Content-Type: application/json' \
+ --data-binary '{"vectorStore": true}'
+```
+
+Add documents with vector embeddings using the `_vectors` field:
+
+```bash
+curl -X POST -H 'content-type: application/json' \
+ 'localhost:7700/indexes/songs/documents' \
+ --data-binary '[
+ {"id": 0, "_vectors": [0, 0.8, -0.2], "title": "Across The Universe"},
+ {"id": 1, "_vectors": [1, -0.2, 0], "title": "All Things Must Pass"},
+ {"id": 2, "_vectors": [[0.5, 3, 1], [-0.2, 4, 6]], "title": "And Your Bird Can Sing"}
+ ]'
+```
+
+Query using vectors with the `/search` or `/multi-search` endpoints:
+
+```bash
+curl -X POST -H 'content-type: application/json' \
+ 'localhost:7700/indexes/songs/search' \
+ --data-binary '{"vector": [0, 1, 2]}'
+```
+
+Vector search results include a `_semanticScore` field (0 to 1) indicating relevance:
+
+```json
+{
+  "hits": [
+    {
+      "id": 0,
+      "_vectors": [
+        0,
+        0.8,
+        -0.2
+      ],
+      "title": "Across The Universe",
+      "_semanticScore": 0.6754
+    }
+  ]
+}
+```
+
+Note: Vector size must be consistent across all documents in an index.
+
+### Ranking Score Visibility
+
+Use the `showRankingScore` search parameter to see how relevant each document is to your query:
+
+```bash
+curl \
+ -X POST 'http://localhost:7700/indexes/movies/search' \
+ -H 'Content-Type: application/json' \
+ --data-binary '{"q": "Batman Returns", "showRankingScore": true}'
+```
+
+Each document includes a `_rankingScore` field (0 to 1, higher is more relevant).
+
+### Ranking Score Details (Experimental)
+
+Get detailed scoring breakdowns per ranking rule using the experimental `showRankingScoreDetails` parameter:
+
+```bash
+curl \
+ -X PATCH 'http://localhost:7700/experimental-features/' \
+ -H 'Content-Type: application/json' \
+ --data-binary '{"scoreDetails": true}'
+```
+
+Then use it in searches:
+
+```bash
+curl \
+ -X POST 'http://localhost:7700/indexes/movies/search' \
+ -H 'Content-Type: application/json' \
+ --data-binary '{"q": "Batman Returns", "showRankingScoreDetails": true}'
+```
+
+Results include a `_rankingScoreDetails` object showing scores for each ranking rule (words, typo, proximity, attribute, exactness).
+
+### Define Searchable Fields at Query Time
+
+The new `attributesToSearchOn` search parameter restricts searches to specific attributes:
+
+```json
+{
+  "q": "adventure",
+  "attributesToSearchOn": [
+    "genre"
+  ]
+}
+```
+
+Attributes must be in the searchable attributes list. Given a dataset with documents containing "adventure" in both `name` and `genre` fields, this query returns only documents with "adventure" in the `genre` field.
+
+### Search Facet Values
+
+The new `POST /indexes/{index}/facet-search` endpoint searches within facet values (fields defined as `filterableAttributes`). It supports prefix search and typo tolerance:
+
+```bash
+curl \
+ -X POST 'http://localhost:7700/indexes/movies/facet-search' \
+ -H 'Content-Type: application/json' \
+ --data-binary '{"facetName": "genres", "facetQuery": "a"}'
+```
+
+### Sort Facets by Count
+
+Use the `sortFacetValuesBy` setting to order facet values by frequency. Sort all facets by count:
+
+```bash
+curl \
+ -X PATCH 'http://localhost:7700/indexes/movies/settings/faceting' \
+ -H 'Content-Type: application/json' \
+ --data-binary '{"sortFacetValuesBy": {"*": "count"}}'
+```
+
+Or sort individual facets while keeping others alphabetical:
+
+```bash
+curl \
+ -X PATCH 'http://localhost:7700/indexes/movies/settings/faceting' \
+ -H 'Content-Type: application/json' \
+ --data-binary '{"sortFacetValuesBy": {"*": "alpha", "genre": "count"}}'
+```
+
+### Task Queue Visibility
+
+The `/tasks` route now includes a `total` property showing the total number of tasks in the queue. You can filter this count, for example `/tasks?statuses=succeeded` shows the total number of successfully processed tasks.
+
+## Improvements
+
+### Attribute Ranking Rule Refinement
+
+The `attribute` ranking rule now calculates relevance based on how close a matching word is to that word's position in the query, rather than its absolute distance from the beginning of the attribute. This provides more intuitive ranking when search terms appear at different positions in document fields.
+
+### Language Support Enhancements
+
+- Improved Japanese word segmentation
+- Enhanced separator-based tokenization: words containing underscores (`_`) are now properly segmented into separate words, and brackets `{()}` are no longer treated as context separators for the proximity ranking rule
+
+### Performance and Size Improvements
+
+- Reduced index size by approximately 15% through internal database optimization
+- Improved deserialization performance
+- Re-enabled task autobatching for addition and deletion operations
+- Fixed performance issue on `/stats` endpoint
+
+### Metrics Improvements
+
+The experimental Prometheus `/metrics` endpoint now provides:
+- Task queue metrics including number of queued and processing tasks
+- Real database size used by Meilisearch
+- "meilisearch" prefix on all metrics
+- `lastUpdate` and `isIndexing` fields in `/stats` endpoint
+
+### Web Interface Update
+
+Updated the local search preview web interface and mini-dashboard to version v0.2.11.
+
+## Other
+
+### Case-Sensitive Search Fix
+
+Fixed case-sensitive search issues with camelCase words. Searches for `dellonghi` now properly match documents containing `DeLonghi`.
+
+### Vector and Geo Fixes
+
+- Fixed geo bounding box queries with string coordinates (requires re-indexing documents with `lat` and `lng` fields)
+- Fixed handling of null JSON values in the `_vectors` field
+- Fixed panic when using multiple vectors with different dimensions
+- Fixed panic when sorting geo fields represented as strings
+
+### Filter Improvements
+
+Fixed filter escaping to properly handle the backslash character at the end of filter values.
+
+### Other Notable Changes
+
+- Fixed highlighting document issues by properly remapping char map when lowercasing strings
+- Fixed panic in ranking rule bucket sort algorithm
+- Added new `/experimental-features` endpoint for managing experimental features like `scoreDetails` and `vectorStore`
+- Fixed document deletion statistics when using filters
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.3.0)
+
+</Update>
+
+<Update label="v1.2" description="2023-06-05">
+
+## New Features
+
+### Delete documents by filter
+
+You can now delete documents using filters with the new `/documents/delete` route:
+
+```bash
+curl -X POST http://localhost:7700/indexes/dogs/documents/delete \
+ -H 'Content-Type: application/json' \
+ --data-binary '{ "filter": ["doggo = 'bernese mountain'", "face = cute"] }'
+```
+
+Fields must be set as filterable before you can use them as filters.
+
+Meilisearch returns a task object:
+
+```json
+{
+  "taskUid": 242,
+  "indexUid": "dogs",
+  "status": "enqueued",
+  "type": "documentDeletion",
+  "enqueuedAt": "2023-05-03T11:01:58.721841Z"
+}
+```
+
+Use the returned `taskUid` to check the task status.
+
+### Get documents by filter
+
+You can now use filters in the `GET` endpoint of the `/documents` route:
+
+```bash
+curl -X GET 'http://localhost:7700/indexes/dogs/documents?limit=1&filter=doggo=bernese'
+```
+
+You can also use the new `/documents/fetch` route to handle complex filters:
+
+```bash
+curl -X POST http://localhost:7700/indexes/dogs/documents/fetch \
+ -H 'Content-Type: application/json' \
+ --data-binary '{ "limit": 1, "filter": "doggo = bernese" }'
+```
+
+The `/documents/fetch` route accepts: `limit`, `offset`, `fields`, and `filter`.
+
+Fields must be set as filterable before you can use them as filters.
+
+### New filter operators: `IS EMPTY` and `IS NULL`
+
+Two new filter operators have been added:
+
+- `IS EMPTY` matches existing fields with a valid, but empty value
+- `IS NULL` matches existing fields with an explicit `null` value
+
+Given the following documents:
+
+```json
+[
+ {
+ "id": 0,
+ "color": 
+ },
+ {
+ "id": 1,
+ "color": null
+ },
+ {
+ "id": 2
+ }
+]
+```
+
+`color IS EMPTY` matches document `0`.
+
+`color IS NULL` matches document `1`.
+
+Both operators work with the `NOT` operator: `color IS NOT EMPTY` and `NOT color IS EMPTY` match document `1`. `color IS NOT NULL` and `NOT color IS NULL` match document `0`.
+
+Neither operator matches documents missing the specified field.
+
+## Improvements
+
+### Search performance and relevancy
+
+The search engine has been significantly refactored to improve performance and relevancy:
+
+**Performance improvements:**
+
+- The fastest 75 percent of queries now consistently answer below 50ms
+- Single terms are limited to 150 possible typo matches for queries with 1 typo, and 50 for queries with 2 typos
+- Both single word and multi-word queries consider a maximum of 50 synonyms
+- The total number of words for all synonyms of a single term cannot exceed 100
+- Queries can now contain a maximum of 1000 words
+- Geo search performance improvements: faster sorting of small document sets, and descending sort is now as performant as ascending sort
+
+**Relevancy improvements:**
+
+- The `exactness` ranking rule no longer treats synonyms as exact matches, boosting documents containing the query exactly as typed
+- Results are always sorted as if the `words` ranking rule has higher priority than `attributes`, `exactness`, `typo`, and `proximity` ranking rules
+- Split words are now treated as possible digrams, so `whit ehorse` may match `white horse`
+- N-grams and split words are ranked lower than exact words in the `typo` ranking rule
+- Ranking rule behavior is now consistent regardless of the number of ranked documents
+
+### Automated task deletion
+
+The task queue now has a maximum limit of 1M tasks. When the limit is reached, Meilisearch automatically deletes the oldest 100k tasks (if they are finished). This prevents database issues when the task queue becomes full.
+
+A hard limit of 10GiB of tasks has been added. When this is reached, Meilisearch will attempt to delete unfinished tasks automatically before rejecting new tasks.
+
+### Language support improvements
+
+- Split camelCase in Latin segmenter
+- Improved Arabic normalization and segmentation
+
+### CSV boolean support
+
+CSV documents now support boolean values.
+
+### Other improvements
+
+- Add experimental feature to reduce RAM usage
+- Improve geosort error messages
+- Improve error message when payload is too large
+- Improve the `GET /health` route by ensuring the internal database is accessible
+
+## Other
+
+### Breaking changes in v1.2.1
+
+After upgrading to v1.2.1, you must re-index your dataset. The easiest way is to create a dump and import it into v1.2.1 when starting Meilisearch. This is necessary due to changes in how document deletion statistics are calculated.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.2.0)
+
+</Update>
+
+<Update label="v1.1" description="2023-04-03">
+
+## New Features
+
+### Multi-index search
+
+Perform searches across multiple indexes in a single HTTP request using the new `/multi-search` endpoint:
+
+```bash
+curl \
+ -X POST 'http://localhost:7700/multi-search' \
+ -H 'Content-Type: application/json' \
+ --data-binary '{
+ "queries": [
+ {
+ "indexUid": "products",
+ "q": "Nike",
+ "limit": 1
+ },
+ {
+ "indexUid": "brands",
+ "q": "Nike",
+ "limit": 1
+ }
+ ]
+ }'
+```
+
+The endpoint returns an array of results for each queried index:
+
+```json
+{
+ "results": [
+ {
+ "indexUid": "products",
+ "hits": ,
+ "query": "Nike",
+ "processingTimeMs": 1,
+ "limit": 1,
+ "offset": 0,
+ "estimatedTotalHits": 17
+ },
+ {
+ "indexUid": "brands",
+ "hits": ,
+ "query": "Nike",
+ "processingTimeMs": 0,
+ "limit": 1,
+ "offset": 0,
+ "estimatedTotalHits": 7
+ }
+ ]
+}
+```
+
+### facetStats for numerical facets
+
+Queries using the `facets` parameter now automatically include a `facetStats` object containing the minimum and maximum values for each numerical facet:
+
+```bash
+curl \
+ -X POST 'http://localhost:7700/indexes/movies/search' \
+ -H 'Content-Type: application/json' \
+ --data-binary '{
+ "facets": ["price"]
+ }'
+```
+
+Response:
+
+```json
+{
+ "hits": ,
+ "facetDistribution": {
+ "price": {}
+ },
+ "facetStats": {
+ "price": {
+ "min": 2,
+ "max": 60
+ }
+ }
+}
+```
+
+### Geosearch with bounding box
+
+Use the new `_geoBoundingBox` filter to search for results within a specific geographic area:
+
+```bash
+curl \
+ -X POST 'http://localhost:7700/indexes/restaurants/search' \
+ -H 'Content-type: application/json' \
+ --data-binary '{
+ "filter": "_geoBoundingBox([45.472735, 9.184019], [45.473711, 9.185613])"
+ }'
+```
+
+The `_geoBoundingBox` filter accepts two coordinate arrays: the top right corner and the bottom left corner of your search area.
+
+### Prometheus metrics monitoring (experimental)
+
+An experimental feature for monitoring Meilisearch with Prometheus is now available. Launch Meilisearch with the `--experimental-enable-metrics` flag to enable it:
+
+```bash
+meilisearch --experimental-enable-metrics
+```
+
+Metrics will be available at the `/metrics` endpoint in Prometheus-compatible format. This feature is experimental and its API may change between versions.
+
+## Improvements
+
+### Unlimited indexes and index size
+
+Meilisearch no longer enforces limits on the number of indexes or their individual size. You can now create unlimited indexes, with the maximum size determined only by your operating system's memory address space (approximately 80TiB under Linux).
+
+### Customizable CSV delimiters
+
+When adding or updating documents, you can now customize the CSV delimiter using the `csvDelimiter` parameter. The default delimiter remains a comma (`,`).
+
+### Improved language support
+
+- Enhanced Greek support with diacritics normalization and final sigma handling
+- Enhanced Arabic support by ignoring Tatweel characters
+- Improved language detection during indexing, reducing incorrect language recognition during search
+
+### Better error messages
+
+Meilisearch now provides "did you mean...?" suggestions when you make typos in search parameters, making it easier to identify and correct mistakes.
+
+### Faster indexing with automatic task batching
+
+Addition and deletion tasks are now automatically batched together to improve indexing performance.
+
+### API key and tenant token wildcards
+
+Wildcards (`*`) can now be used at the end of index names when creating API keys or tenant tokens.
+
+### Enhanced geo field handling
+
+The `_geo` field now accepts `null` as a valid value when importing or updating documents.
+
+### Reduced crate size
+
+The Meilisearch crate size has been significantly reduced from approximately 200MB to 50MB through dictionary compression.
+
+### Cached index statistics
+
+Index statistics are now cached to improve performance.
+
+## Other
+
+### Database corruption issue in v1.1.0
+
+v1.1.1 disables the auto-batching feature introduced in v1.1.0 due to a critical bug that could corrupt databases. If your database was affected, the only recovery option is to reindex your documents in a fresh index.
+
+### Task queue overflow protection
+
+Meilisearch now stops receiving new tasks once the task queue reaches capacity, preventing potential issues from task queue overflow.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.1.0)
+
+</Update>
+
+<Update label="v1.0" description="2023-02-06">
+
+## New Features
+
+### Language Support Enhancements
+Korean language support has been added to Meilisearch. Chinese language support has been significantly improved with character normalization into Pinyin, optimized segmentation algorithm, and unified character variants handling. Hebrew, Thai, Arabic, and Latin language support has also been enhanced with improved diacritics and non-spacing marks normalization.
+
+### Improved Primary Key Inference
+When documents are added to an index without a specified primary key, Meilisearch now intelligently searches for attributes ending with `id` (such as `puid` or `_id`). If exactly one such attribute is found, it becomes the primary key. If multiple candidates are detected, you must explicitly specify the primary key instead of Meilisearch choosing one automatically. This provides better control and prevents unexpected behavior.
+
+### Multi-Version Dump Migration
+You can now migrate from any old version of Meilisearch that supports dumps directly to the latest version using a single dump file, making upgrades to v1.0.0 smoother and more straightforward.
+
+## Improvements
+
+### Search and Indexing Performance
+Memory usage for search requests containing multiple long words has been significantly improved. The `exactness` ranking rule now performs much better for search requests with many words. Multi-word synonyms are now translated into phrases during query interpretation, which improves result relevancy and stabilizes search latency, particularly for queries with many multi-word synonyms. The `proximity` ranking rule performance has been improved for searches ending with short words. Incremental indexing time for the proximity ranking rule has been reduced. Soft-deletion computation has been improved.
+
+### Configuration and Settings
+Settings updates that don't require reindexing no longer trigger unnecessary reindexing, reducing processing time. The `--schedule-snapshot` option now accepts an optional integer value specifying the interval in seconds, consolidating snapshot configuration.
+
+### Error Messages
+Error messages have been clarified, particularly when database and engine versions are incompatible, making troubleshooting easier.
+
+### Installation
+The `download-latest.sh` script now includes support for Apple Silicon binaries.
+
+## Other
+
+### Security Changes
+Master keys in production environments must now be at least 16 bytes long. Keys shorter than this will be rejected as a security measure.
+
+### CLI Configuration Changes
+The `--max-index-size` and `--max-task-db` configuration options have been removed. These options were not effectively limiting disk space usage. If these limits impact your usage, please reach out to the Meilisearch team.
+
+The `--disable-auto-batching` CLI option and `MEILI_DISABLE_AUTO_BATCHING` environment variable have been removed. This option was introduced as a temporary workaround and is no longer necessary.
+
+The `--dumps-dir` option has been renamed to `--dump-dir` for consistency.
+
+The `--snapshot-interval-sec` option has been removed. Use `--schedule-snapshot` with an optional integer value instead.
+
+The `--log-level` option and `MEILI_LOG_LEVEL` environment variable now only accept these values: `ERROR`, `WARN`, `INFO`, `DEBUG`, `TRACE`, and `OFF`.
+
+Hidden CLI arguments `--nb-max-chunks` and `--log-every-n` have been removed.
+
+### Binary Package Name
+When installing Meilisearch with `apt`, the command is now `apt install meilisearch` instead of `apt install meilisearch-http`. To install versions before v1.0.0, use `apt install meilisearch-http`.
+
+### Error Code Changes
+All task error responses now consistently include an `error` field with a JSON-formatted response containing an error `code` and `type`. Many error codes have been updated for clarity:
+
+**Index Operations** (`POST /indexes`, `PUT /indexes/:uid`, `GET /indexes`):
+- `missing_index_uid` replaces `bad_request` when `uid` is missing
+- `invalid_index_primary_key` replaces `bad_request` for invalid `primaryKey`
+- `invalid_index_limit` and `invalid_index_offset` replace `bad_request` for pagination errors
+
+**Document Operations** (`GET /indexes/:uid/documents`, `POST /indexes/:uid/documents`):
+- `invalid_document_fields`, `invalid_document_limit`, and `invalid_document_offset` replace `bad_request`
+- `invalid_geo_field` replaces `invalid_document_geo_field`
+- Attempting to update the primary key when adding documents now returns an error
+
+**Search Parameters** (`GET /indexes/:uid/search`, `POST /indexes/:uid/search`):
+- `invalid_search_q`, `invalid_search_offset`, `invalid_search_limit`, `invalid_search_page`, `invalid_search_hits_per_page` replace `bad_request`
+- `invalid_search_attributes_to_retrieve`, `invalid_search_attributes_to_crop`, `invalid_search_show_matches_position` replace `bad_request`
+- `invalid_search_filter` replaces `invalid_filter`
+- `invalid_search_sort` replaces `invalid_sort`
+- `invalid_search_facets`, `invalid_search_highlight_pre_tag`, `invalid_search_highlight_post_tag`, `invalid_search_matching_strategy` replace `bad_request`
+
+**Index Swap** (`POST /indexes/swap-indexes`):
+- `invalid_swap_duplicate_index_found` replaces `duplicate_index_found`
+- `invalid_swap_indexes` replaces `bad_request` when swap array doesn't contain exactly 2 indexes
+- `missing_swap_indexes` replaces `missing_parameter` when `indexes` field is missing
+
+**Settings Routes** (all `/settings` and sub-routes):
+- `invalid_settings_displayed_attributes`, `invalid_settings_searchable_attributes`, `invalid_settings_filterable_attributes`, `invalid_settings_sortable_attributes` replace `bad_request`
+- `invalid_settings_ranking_rules` replaces `bad_request`
+- `invalid_settings_stop_words`, `invalid_settings_synonyms` replace `bad_request`
+- `invalid_settings_distinct_attribute` replaces `bad_request`
+- `invalid_settings_typo_tolerance` replaces `invalid_typo_tolerance_min_word_size_for_typos` and `bad_request`
+- `invalid_settings_faceting`, `invalid_settings_pagination` replace `bad_request`
+
+**Task Filters** (`GET /tasks`):
+- `invalid_task_uids` replaces `invalid_task_uids_filter`
+- `invalid_task_types` replaces `invalid_task_types_filter`
+- `invalid_task_statuses` replaces `invalid_task_statuses_filter`
+- `invalid_task_cancel_by` replaces `invalid_task_canceled_by_filter`
+- `invalid_task_before_enqueued_at`, `invalid_task_after_enqueued_at`, `invalid_task_before_started_at`, `invalid_task_after_started_at`, `invalid_task_before_finished_at`, `invalid_task_after_finished_at` replace `invalid_task_date_filter`
+
+**API Key Operations** (`GET /keys`, `POST /keys`, `PATCH /keys`):
+- `invalid_api_key_limit`, `invalid_api_key_offset` replace `bad_request`
+- `missing_api_key_actions`, `missing_api_key_indexes`, `missing_api_key_expire_at` replace `missing_parameter`
+- `immutable_api_key_uid`, `immutable_api_key_actions`, `immutable_api_key_indexes`, `immutable_api_key_expires_at`, `immutable_api_key_created_at`, `immutable_api_key_updated_at` replace `immutable_field`
+
+**System Errors**:
+- `no_space_left_on_device` replaces `internal` when disk space is exhausted
+- `io_error` replaces `internal` for I/O errors
+- `too_many_open_files` replaces `internal` when the open files limit is exceeded
+- All errors of type `system` now return HTTP status code `500`
+
+**Synchronous Error Validation**:
+The following errors are now returned synchronously instead of as failed tasks:
+- `invalid_index_uid`
+- `invalid_settings_ranking_rules`
+- `invalid_settings_typo_tolerance` when `oneTypo` and `twoTypos` are filled but invalid for `minWordSizeForTypos`
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.0.0)
+
+</Update>
+
