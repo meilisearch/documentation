@@ -779,6 +779,37 @@
             "tab": "Resources",
             "groups": [
               {
+                "group": "Getting started",
+                "pages": [
+                  "resources/help/sdks",
+                  "resources/help/faq",
+                  "resources/help/language"
+                ]
+              },
+              {
+                "group": "Migration",
+                "pages": [
+                  "resources/migration/migrating_cloud",
+                  "resources/migration/updating",
+                  "resources/migration/algolia_migration",
+                  "resources/migration/previous_docs_version"
+                ]
+              },
+              {
+                "group": "Comparisons",
+                "pages": [
+                  "resources/comparisons/alternatives",
+                  "resources/comparisons/elasticsearch",
+                  "resources/comparisons/algolia",
+                  "resources/comparisons/typesense",
+                  "resources/comparisons/postgresql",
+                  "resources/comparisons/pinecone",
+                  "resources/comparisons/qdrant",
+                  "resources/comparisons/opensearch",
+                  "resources/comparisons/mongodb"
+                ]
+              },
+              {
                 "group": "Self-hosting",
                 "pages": [
                   "resources/self_hosting/getting_started",
@@ -824,55 +855,22 @@
                 "group": "Demos",
                 "pages": [
                   "resources/demos/overview",
-                  {
-                    "group": "Use cases",
-                    "pages": [
-                      "resources/demos/where_to_watch",
-                      "resources/demos/ecommerce",
-                      "resources/demos/saas"
-                    ]
-                  },
-                  {
-                    "group": "Feature showcases",
-                    "pages": [
-                      "resources/demos/flickr",
-                      "resources/demos/music",
-                      "resources/demos/moma",
-                      "resources/demos/nobel_prizes",
-                      "resources/demos/geosearch",
-                      "resources/demos/tenant_tokens",
-                      "resources/demos/typo_tolerance",
-                      "resources/demos/voice_search",
-                      "resources/demos/rubygems"
-                    ]
-                  }
+                  "resources/demos/where_to_watch",
+                  "resources/demos/ecommerce",
+                  "resources/demos/saas",
+                  "resources/demos/flickr",
+                  "resources/demos/music",
+                  "resources/demos/moma",
+                  "resources/demos/nobel_prizes",
+                  "resources/demos/geosearch",
+                  "resources/demos/tenant_tokens",
+                  "resources/demos/typo_tolerance",
+                  "resources/demos/voice_search",
+                  "resources/demos/rubygems"
                 ]
               },
               {
-                "group": "Migration",
-                "pages": [
-                  "resources/migration/migrating_cloud",
-                  "resources/migration/updating",
-                  "resources/migration/algolia_migration",
-                  "resources/migration/previous_docs_version"
-                ]
-              },
-              {
-                "group": "Comparisons",
-                "pages": [
-                  "resources/comparisons/alternatives",
-                  "resources/comparisons/elasticsearch",
-                  "resources/comparisons/algolia",
-                  "resources/comparisons/typesense",
-                  "resources/comparisons/postgresql",
-                  "resources/comparisons/pinecone",
-                  "resources/comparisons/qdrant",
-                  "resources/comparisons/opensearch",
-                  "resources/comparisons/mongodb"
-                ]
-              },
-              {
-                "group": "Internals",
+                "group": "Under the hood",
                 "pages": [
                   "resources/internals/storage",
                   "resources/internals/datatypes",
@@ -883,15 +881,11 @@
                 ]
               },
               {
-                "group": "Help",
+                "group": "Project info",
                 "pages": [
-                  "resources/help/faq",
                   "resources/help/known_limitations",
                   "resources/help/experimental_features_overview",
-                  "resources/help/sdks",
-                  "resources/help/comparison_to_alternatives",
                   "resources/help/telemetry",
-                  "resources/help/language",
                   "resources/help/versioning",
                   "resources/help/contributing_docs"
                 ]
@@ -1326,7 +1320,7 @@
     },
     {
       "source": "/learn/what_is_meilisearch/comparison_to_alternatives",
-      "destination": "/resources/help/comparison_to_alternatives"
+      "destination": "/resources/comparisons/alternatives"
     },
     {
       "source": "/learn/what_is_meilisearch/contact",
@@ -2002,7 +1996,7 @@
     },
     {
       "source": "/learn/resources/comparison_to_alternatives",
-      "destination": "/resources/help/comparison_to_alternatives"
+      "destination": "/resources/comparisons/alternatives"
     },
     {
       "source": "/learn/resources/telemetry",
@@ -2043,6 +2037,10 @@
     {
       "source": "/resources/self_hosting/ram_multithreading_performance",
       "destination": "/resources/self_hosting/performance/ram_multithreading"
+    },
+    {
+      "source": "/resources/help/comparison_to_alternatives",
+      "destination": "/resources/comparisons/alternatives"
     }
   ]
 }
