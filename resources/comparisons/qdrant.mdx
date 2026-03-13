@@ -14,7 +14,7 @@ Qdrant is an open-source vector database written in Rust, designed specifically 
 | **Full-text search** | Native, optimized | Via sparse vectors |
 | **License** | MIT | Apache 2.0 |
 | **Self-hosting** | Yes | Yes |
-| **Embedding generation** | Built-in | External required |
+| **Embedding generation** | Built-in | Built-in (Cloud Inference) or external |
 | **Typo tolerance** | Built-in | Not applicable |
 | **Cloud pricing** | From $30/month | Free 1GB tier, then usage-based |
 
@@ -50,9 +50,9 @@ Meilisearch handles misspellings automatically with configurable tolerance. Vect
 
 Meilisearch combines keyword and semantic search in a single API with adjustable balance. With Qdrant, you'd need to implement hybrid search logic yourself or use their sparse vector support.
 
-### You prefer built-in embedding generation
+### You prefer flexible embedding generation
 
-Meilisearch can generate embeddings automatically through integrations with OpenAI, HuggingFace, and other providers. Qdrant requires external embedding generation before indexing and querying.
+Meilisearch can generate embeddings automatically through integrations with OpenAI, HuggingFace, Ollama, and any REST-compatible provider. Qdrant Cloud now offers built-in embedding via Cloud Inference, but self-hosted Qdrant still requires external embedding generation.
 
 ### Search relevancy tuning matters
 
