@@ -129,6 +129,7 @@ EOF
 With your service file now ready to go, activate the service using `systemctl`:
 
 ```bash
+systemctl daemon-reload
 systemctl enable meilisearch
 systemctl start meilisearch
 ```
@@ -178,14 +179,14 @@ rm -f /etc/nginx/sites-enabled/default
 
 Nginx comes with a set of default settings, such as its default HTTP port, that might conflict with Meilisearch.
 
-Create a new configuration file specifying the reverse proxy settings:
+Create a new configuration file specifying the reverse proxy settings. Replace `your_domain` with your actual domain name (or use `_` as a catch-all if you don't have one yet):
 
 ```sh
 cat << EOF > /etc/nginx/sites-enabled/meilisearch
 server {
     listen 80 default_server;
     listen [::]:80 default_server;
-    server_name _;
+    server_name your_domain;
     location / {
         proxy_pass  http://localhost:7700;
     }

@@ -25,12 +25,12 @@ The first ranking rule (`words`) sorts documents by how many query words they co
 
 **Step 2: Apply the `typo` rule within buckets**
 
-If a bucket contains multiple documents, the next rule (`typo`) breaks ties:
+If a bucket contains multiple documents, the next rule (`typo`) breaks ties. For example, in the 1-word bucket where "Badman" appears:
 
 | Bucket | Typos | Documents |
 |--------|-------|-----------|
-| 1.1 | 0 typos | Documents matching "Batman" exactly |
-| 1.2 | 1 typo | Documents matching "Badman" -> "Batman" |
+| 4.1 | 0 typos | Documents containing "Badman" exactly |
+| 4.2 | 1 typo | Documents corrected "Badman" → "Batman" |
 
 This continues recursively until all buckets contain single documents or all ranking rules are exhausted.
 
@@ -56,24 +56,26 @@ Meilisearch applies these rules in order:
 1. **words**: Documents containing more query words rank higher
 2. **typo**: Documents with fewer typos rank higher
 3. **proximity**: Documents where query words appear closer together rank higher
-4. **attribute**: Documents matching in more important attributes rank higher
+4. **attributeRank**: Documents matching in more important attributes rank higher
 5. **sort**: User-defined sort order (if specified)
-6. **exactness**: Documents with exact matches rank higher
+6. **wordPosition**: Documents with matches closer to the beginning of an attribute rank higher
+7. **exactness**: Documents with exact matches rank higher
 
 ## Customizing ranking rules
 
 You can reorder, add, or remove ranking rules:
 
 ```bash
-curl -X PATCH "${MEILISEARCH_URL}/indexes/movies/settings/ranking-rules" \
+curl -X PUT "${MEILISEARCH_URL}/indexes/movies/settings/ranking-rules" \
   -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
   -H "Content-Type: application/json" \
   --data-binary '[
     "words",
     "typo",
     "proximity",
-    "attribute",
+    "attributeRank",
     "sort",
+    "wordPosition",
     "exactness",
     "release_date:desc"
   ]'
