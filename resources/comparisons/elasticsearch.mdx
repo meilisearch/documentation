@@ -14,8 +14,8 @@ Elasticsearch is a distributed search and analytics engine built on Apache Lucen
 | **Setup complexity** | Ready in minutes | Steep learning curve |
 | **Performance** | Under 50ms out-of-the-box | Fast with proper tuning |
 | **Resource usage** | Lightweight | Memory-intensive |
-| **Pricing** | Free OSS, cloud from $30/month | From $99/month (cloud) |
-| **Open source** | MIT license | AGPL (with limitations) |
+| **Pricing** | Free OSS, affordable cloud plans | Free OSS, paid cloud tiers |
+| **Open source** | MIT license | AGPL / SSPL (source-available) |
 | **Best for** | App/site search | Large-scale analytics |
 
 ## What Elasticsearch does well
@@ -54,9 +54,9 @@ Elasticsearch's Query DSL has a steep learning curve. Simple tasks often require
 
 Elasticsearch's resource requirements can lead to infrastructure costs of thousands per month for production workloads. Meilisearch's efficient single-node architecture reduces hosting costs significantly.
 
-### Your dataset is under 500 million documents
+### Your dataset fits on a single node
 
-For most application search use cases, Elasticsearch's distributed architecture is overkill. Meilisearch handles datasets up to hundreds of millions of documents on a single server with consistent sub-50ms response times.
+For most application search use cases, Elasticsearch's distributed architecture is overkill. Meilisearch handles datasets of hundreds of millions of documents on a single server with consistent sub-50ms response times, though the exact limit depends on document size, ranking rules, and hardware.
 
 ## When to choose Elasticsearch
 

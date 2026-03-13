@@ -93,7 +93,7 @@ Remember to choose a [safe master key](/learn/security/basic_security#creating-t
 Create a systemd service file:
 
 ```bash
-sudo cat << EOF > /etc/systemd/system/meilisearch.service
+sudo tee /etc/systemd/system/meilisearch.service > /dev/null << EOF
 [Unit]
 Description=Meilisearch
 After=systemd-user-sessions.service
@@ -152,7 +152,7 @@ Remove the default configuration and create one for Meilisearch:
 
 ```bash
 sudo rm -f /etc/nginx/sites-enabled/default
-sudo cat << EOF > /etc/nginx/sites-enabled/meilisearch
+sudo tee /etc/nginx/sites-enabled/meilisearch > /dev/null << EOF
 server {
     listen 80 default_server;
     listen [::]:80 default_server;
