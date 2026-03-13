@@ -11,11 +11,11 @@ OpenSearch is an open-source search and analytics suite derived from Elasticsear
 |  | Meilisearch | OpenSearch |
 |---|:---:|:---:|
 | **Primary focus** | Fast, relevant search | Search & analytics platform |
-| **License** | MIT | Apache 2.0 |
+| **License** | MIT (CE) / BUSL-1.1 (EE) | Apache 2.0 |
 | **Setup complexity** | Ready in minutes | Steep learning curve |
 | **Performance** | Under 50ms out-of-the-box | Requires tuning |
 | **Resource usage** | Lightweight | Memory-intensive |
-| **Architecture** | Single-node (enterprise clustering) | Distributed clusters |
+| **Architecture** | Single-node or distributed (sharding & replication) | Distributed clusters |
 | **Best for** | App/site search | Large-scale analytics |
 
 ## What OpenSearch does well
@@ -48,7 +48,7 @@ Meilisearch delivers relevant, typo-tolerant search results without configuratio
 
 ### You want minimal operational overhead
 
-OpenSearch cluster management requires expertise in shards, replicas, and distributed systems. Meilisearch runs as a single binary with no external dependencies.
+OpenSearch cluster management requires expertise in shards, replicas, and distributed systems. Meilisearch now supports sharding and replication, but can also run as a single binary with no external dependencies, making it simpler to get started.
 
 ### Your team lacks search expertise
 
@@ -58,9 +58,9 @@ OpenSearch inherits Elasticsearch's complexity. The Query DSL has a steep learni
 
 OpenSearch is memory-intensive and requires careful capacity planning. Meilisearch's efficient architecture provides consistent performance with lower resource requirements.
 
-### Your dataset is under 500 million documents
+### You want simpler distributed search
 
-For typical application search, OpenSearch's distributed architecture adds unnecessary complexity. Meilisearch handles most use cases on a single server with consistent sub-50ms responses.
+Meilisearch now supports sharding and replication while remaining simpler to operate than OpenSearch. For most application search use cases, Meilisearch handles datasets with consistent sub-50ms responses without the operational overhead of OpenSearch clusters.
 
 ### You're building end-user search
 

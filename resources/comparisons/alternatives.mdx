@@ -54,7 +54,7 @@ For in-depth comparisons with specific alternatives, see our dedicated guides:
 
 |   | Meilisearch | Algolia | Typesense | Elasticsearch |
 |---|:----:|:----:|:-----:|:----:|
-| Source code licensing | [MIT](https://choosealicense.com/licenses/mit/) <br /> (Fully open-source) |  Closed-source  | [GPL-3](https://choosealicense.com/licenses/gpl-3.0/) <br /> (Fully open-source) | [AGPLv3](https://choosealicense.com/licenses/agpl-3.0/) <br /> (open-source) |
+| Source code licensing | [MIT](https://choosealicense.com/licenses/mit/) (CE) / [BUSL-1.1](https://mariadb.com/bsl11/) (EE) |  Closed-source  | [GPL-3](https://choosealicense.com/licenses/gpl-3.0/) <br /> (Fully open-source) | [AGPLv3](https://choosealicense.com/licenses/agpl-3.0/) / SSPL / ELv2 <br /> (open-source) |
 | Built with | Rust <br /> [Check out why we believe in Rust](https://www.abetterinternet.org/docs/memory-safety/). | C++ | C++ | Java |
 | Data storage | Disk with Memory Mapping -- Not limited by RAM | Limited by RAM | Limited by RAM | Disk with RAM cache |
 
@@ -112,7 +112,7 @@ Can't find a client you'd like us to support? [Submit your idea here](https://gi
 | Custom ranking rules | ✅ | ✅ | ✅ | 🔶 <br />Function score query |
 | Query field weights | ✅ | ✅ | ✅ | ✅ |
 | Synonyms | ✅ | ✅ | ✅ | ✅ |
-| Stop words | ✅ | ✅ | ❌ | ✅ |
+| Stop words | ✅ | ✅ | ✅ | ✅ |
 | Automatic language detection | ✅ | ✅ | ❌ | ❌ |
 | All language supports | ✅ | ✅ | ✅ | ✅ |
 | Ranking Score Details | ✅ | ✅ | ❌ | ✅ |
@@ -137,7 +137,7 @@ Can't find a client you'd like us to support? [Submit your idea here](https://gi
 | Filtering |  ✅ <br /> Support complex filter queries with an SQL-like syntax.  | 🔶 <br /> Does not support `OR` operation across multiple fields | ✅ | ✅ |
 | Faceted search |  ✅ | ✅ | ✅ <br /> Faceted fields must be searchable <br /> Faceting can take several seconds when >10 million facet values must be returned | ✅ |
 | Distinct attributes <br /><div style={{color: "#A9A9A9", fontSize: "0.9em"}}>De-duplicate documents by a field value</div>| ✅ | ✅ | ✅  | ✅ |
-| Grouping <br /><div style={{color: "#A9A9A9", fontSize: "0.9em"}}>Bucket documents by field values</div> | ❌ | ✅ | ✅  | ✅ |
+| Grouping <br /><div style={{color: "#A9A9A9", fontSize: "0.9em"}}>Bucket documents by field values</div> | 🔶 <br /> Via `distinct` parameter | ✅ | ✅  | ✅ |
 
 ##### AI-powered search
 
@@ -145,11 +145,11 @@ Can't find a client you'd like us to support? [Submit your idea here](https://gi
 |---|:---:|:----:|:---:|:---:|
 | Semantic Search | ✅ | 🔶 <br /> Under Premium plan | ✅ | ✅ |
 | Hybrid Search | ✅ | 🔶 <br /> Under Premium plan | ✅ | ✅ |
-| Embedding Generation | ✅  <br /> OpenAI <br /> HuggingFace <br /> REST embedders <br /> | Undisclosed | <br/> OpenAI <br /> GCP Vertex AI | ✅  <br /> ELSER <br/> E5 <br/> Cohere <br/> OpenAI <br/> Azure <br/> Google AI Studio <br/> Hugging Face <br/> |
+| Embedding Generation | ✅  <br /> OpenAI <br /> HuggingFace <br /> Ollama <br /> REST embedders <br /> | Undisclosed | ✅ <br/> Built-in ONNX models <br/> OpenAI <br /> Azure OpenAI <br /> GCP Vertex AI | ✅  <br /> ELSER <br/> E5 <br/> Cohere <br/> OpenAI <br/> Azure <br/> Google AI Studio <br/> Hugging Face <br/> |
 | Prompt Templates | ✅ | Undisclosed | ❌ | ❌ |
 | Vector Store | ✅ | Undisclosed | ✅ | ✅ |
 | Langchain Integration | ✅ | ❌ | ✅ | ✅ |
-| GPU support | ✅ <br /> CUDA | Undisclosed | ✅ <br /> CUDA | ❌ |
+| GPU support | ✅ <br /> CUDA | Undisclosed | ✅ <br /> CUDA | ✅ <br /> Elastic Inference Service |
 
 ##### Visualize
 
@@ -167,7 +167,7 @@ Can't find a client you'd like us to support? [Submit your idea here](https://gi
 | Platform Support | ARM <br /> x86 <br /> x64 | n/a | 🔶 ARM (requires Docker on macOS) <br /> x86 <br /> x64 | ARM <br /> x86 <br /> x64 |
 | Official 1-click deploy | ✅ <br /> [DigitalOcean](https://marketplace.digitalocean.com/apps/meilisearch) <br /> [Platform.sh](https://console.platform.sh/projects/create-project?template=https://raw.githubusercontent.com/platformsh/template-builder/master/templates/meilisearch/.platform.template.yaml) <br /> [Azure](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fcmaneu%2Fmeilisearch-on-azure%2Fmain%2Fmain.json) <br /> [Railway](https://railway.app/new/template/TXxa09?referralCode=YltNo3) <br /> [Koyeb](https://app.koyeb.com/deploy?type=docker&image=getmeili/meilisearch&name=meilisearch-on-koyeb&ports=7700;http;/&env%5BMEILI_MASTER_KEY%5D=REPLACE_ME_WITH_A_STRONG_KEY) | ❌ | 🔶 <br />Only for the cloud-hosted solution | ❌ |
 | Official cloud-hosted solution | [Meilisearch Cloud](https://www.meilisearch.com/cloud?utm_campaign=oss&utm_source=docs&utm_medium=comparison-table) | ✅ | ✅ | ✅ |
-| High availability | Available with [Meilisearch Cloud](https://www.meilisearch.com/cloud?utm_campaign=oss&utm_source=docs&utm_medium=comparison-table) | ✅ | ✅ | ✅ |
+| High availability | ✅ <br /> Sharding & replication (Cloud and self-hosted) | ✅ | ✅ | ✅ |
 | Run-time dependencies | None | N/A | None | None |
 | Backward compatibility | ✅ | N/A | ✅ | ✅ |
 | Upgrade path | Documents are automatically reindexed on upgrade | N/A  | Documents are automatically reindexed on upgrade  | Documents are automatically reindexed on upgrade, up to 1 major version |
@@ -184,9 +184,9 @@ Can't find a client you'd like us to support? [Submit your idea here](https://gi
 
 |  | Meilisearch | Algolia | Typesense | Elasticsearch |
 |---|:---:|:----:|:---:|:---:|
-| GitHub stars of the main project | 42K | N/A | 17K | 66K |
-| Number of contributors on the main project | 179 | N/A | 38 | 1,900 |
-| Public Discord/Slack community size | 2,100 | N/A | 2,000 | 16K |
+| GitHub stars of the main project | 56K | N/A | 25K | 76K |
+| Number of contributors on the main project | 200+ | N/A | 38 | 1,900+ |
+| Public Discord/Slack community size | 3,000+ | N/A | 2,000 | 16K |
 
 ### Support
 
@@ -282,11 +282,11 @@ Due to its extensible plugin architecture and customizable features, Solr is a s
 
 Bleve and Tantivy are search engine projects, respectively written in Golang and Rust, inspired by Apache Lucene and its algorithms (for example, tf-idf, short for term frequency-inverse document frequency). Such as Lucene, both are libraries to be used for any search project; however they are not ready-to-use APIs.
 
-### Source available
+### Open source (Elasticsearch)
 
 #### Elasticsearch
 
-Elasticsearch is a search engine based on the Lucene library and is most popular for full-text search. It provides a REST API accessed by JSON over HTTP. One of its key options, called index sharding, gives you the ability to divide indexes into physical spaces in order to increase performance and ensure high availability. Both Lucene and Elasticsearch have been designed for processing high-volume data streams, analyzing logs, and running complex queries. You can perform operations and analysis (for example, calculate the average age of all users named "Thomas") on documents that match a specified query.
+Elasticsearch is a search engine based on the Lucene library and is most popular for full-text search. It provides a REST API accessed by JSON over HTTP. Since August 2024, Elasticsearch is available under a triple license (AGPLv3 / SSPL / ELv2), making it open source again. One of its key options, called index sharding, gives you the ability to divide indexes into physical spaces in order to increase performance and ensure high availability. Both Lucene and Elasticsearch have been designed for processing high-volume data streams, analyzing logs, and running complex queries. You can perform operations and analysis (for example, calculate the average age of all users named "Thomas") on documents that match a specified query.
 
 Today, Lucene and Elasticsearch are dominant players in the search engine landscape. They both are solid solutions for a lot of different use cases in search, and also for building your own recommendation engine. They are good general products, but they require to be configured properly to get similar results to those of Meilisearch or Algolia.
 

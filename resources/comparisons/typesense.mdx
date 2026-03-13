@@ -4,7 +4,7 @@ sidebarTitle: Typesense
 description: Compare Meilisearch and Typesense, two open-source search engines focused on speed and simplicity. Learn key differences and when to choose each.
 ---
 
-Typesense is an open-source search engine first released in 2015, built in C++ and focused on speed and ease of use. Like Meilisearch, it prioritizes developer experience and typo-tolerant instant search.
+Typesense is an open-source search engine started in 2015 and first publicly released in 2018, built in C++ and focused on speed and ease of use. Like Meilisearch, it prioritizes developer experience and typo-tolerant instant search.
 
 ## Quick comparison
 
@@ -16,14 +16,14 @@ Typesense is an open-source search engine first released in 2015, built in C++ a
 | **Language support** | Optimized for CJK, Arabic, Hebrew | Unicode-based (limited CJK) |
 | **Auto language detection** | Yes | No |
 | **Built-in analytics** | Yes (Cloud and self-hosted) | Basic query popularity |
-| **Embedding generation** | Yes | No |
-| **Stop words** | Built-in | Manual client-side |
+| **Embedding generation** | Yes (OpenAI, HuggingFace, Ollama, REST) | Yes (built-in ONNX models, OpenAI, Azure OpenAI, GCP Vertex AI) |
+| **Stop words** | Built-in | Built-in (Stopwords API) |
 
 ## What Typesense does well
 
 ### Field weighting
 
-Typesense allows boosting specific fields for increased relevancy. You can ensure matches in product titles rank higher than description matches. Meilisearch offers similar capabilities through searchable attributes ordering and is adding field boosting support.
+Typesense allows boosting specific fields at query time for increased relevancy. You can ensure matches in product titles rank higher than description matches. Meilisearch offers similar capabilities through searchable attributes ordering.
 
 ### Grouping results
 
@@ -51,17 +51,17 @@ Meilisearch automatically detects document language and applies appropriate toke
 
 Meilisearch uses disk storage with memory mapping, meaning your dataset size isn't limited by RAM. Typesense stores indexes entirely in memory, which can become costly or impractical for large datasets.
 
-### You want built-in AI search
+### You want more embedding provider options
 
-Meilisearch handles embedding generation through integrations with OpenAI, HuggingFace, and other providers. Typesense requires you to generate and manage embeddings externally.
+Both Meilisearch and Typesense support built-in embedding generation. Meilisearch integrates with OpenAI, HuggingFace, Ollama, and any REST-compatible provider. Typesense supports built-in ONNX models, OpenAI, Azure OpenAI, and GCP Vertex AI.
 
 ### You prefer MIT licensing
 
-Meilisearch uses the permissive MIT license. Typesense uses GPL-3, which has more restrictions for commercial use and derivative works.
+Meilisearch's Community Edition uses the permissive MIT license. Typesense uses GPL-3, which has more restrictions for commercial use and derivative works.
 
 ### You need comprehensive analytics
 
-Meilisearch Cloud provides detailed search analytics including no-result rates, popular queries, and geographic distribution. Typesense offers basic query popularity tracking.
+Meilisearch provides detailed search analytics including no-result rates, popular queries, and geographic distribution both on Cloud and self-hosted. Typesense offers basic query popularity tracking.
 
 ## When to choose Typesense
 

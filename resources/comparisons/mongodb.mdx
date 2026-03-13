@@ -13,7 +13,7 @@ MongoDB Atlas Search integrates Apache Lucene-based full-text search directly in
 | **Primary purpose** | Search engine | Database with search |
 | **Typo tolerance** | Built-in | Via fuzzy matching config |
 | **Search-as-you-type** | Optimized (under 50ms) | Possible but not optimized |
-| **Self-hosting** | Yes | Atlas only (managed) |
+| **Self-hosting** | Yes | Atlas (managed) or Community Edition 8.2+ (preview) |
 | **Faceted search** | Native, optimized | Via aggregation pipeline |
 | **Relevancy tuning** | Configurable ranking rules | Score modifiers |
 | **Frontend libraries** | InstantSearch compatible | None |
@@ -30,7 +30,7 @@ If you're already using MongoDB, Atlas Search uses the same aggregation pipeline
 
 ### Vector search support
 
-Atlas Vector Search enables semantic search and RAG applications using vector embeddings alongside traditional search.
+Atlas Vector Search enables semantic search and RAG applications using vector embeddings alongside traditional search. MongoDB also offers Automated Embedding with Voyage AI integration, generating embeddings natively on insert, update, and query.
 
 ### Managed infrastructure
 
@@ -54,9 +54,9 @@ Meilisearch's ranking rules provide relevant results without configuration. Atla
 
 Meilisearch works with InstantSearch libraries, providing pre-built UI components for search bars, facets, and pagination. Atlas Search has no equivalent frontend ecosystem.
 
-### Self-hosting is required
+### Self-hosting flexibility
 
-Meilisearch can be self-hosted anywhere. Atlas Search is only available on MongoDB Atlas (managed cloud), which may not meet all data sovereignty or infrastructure requirements.
+Meilisearch can be self-hosted anywhere with full feature access. MongoDB has extended search and vector search to Community Edition 8.2+ and Enterprise Server (public preview since September 2025), but these self-managed capabilities are still maturing compared to Atlas Search.
 
 ### You use a different database
 
@@ -68,7 +68,7 @@ Meilisearch provides optimized APIs for facet filtering and counting. Atlas Sear
 
 ### You're not on Atlas
 
-Atlas Search requires MongoDB Atlas. If you're using self-hosted MongoDB or a different MongoDB hosting provider, Atlas Search isn't available.
+While MongoDB has extended search capabilities to self-managed deployments (Community Edition 8.2+, public preview), the most mature search experience remains on Atlas. If you're using an older self-hosted MongoDB version, search capabilities are limited.
 
 ## When to choose MongoDB Atlas Search
 
