@@ -4,19 +4,23 @@ sidebarTitle: Ranking vs BM25
 description: How Meilisearch's multi-criteria ranking system works, why it produces better results than BM25 for user-facing search, and the technical trade-offs involved.
 ---
 
-Most search engines rank results using a single relevancy score computed from a formula like BM25. Meilisearch takes a fundamentally different approach: it evaluates multiple ranking criteria sequentially, giving you transparent control over what matters most and delivering results that feel right to end users.
+Most search engines rank results using a single relevancy score computed from a formula like BM25 or term frequency. Meilisearch takes a fundamentally different approach: it evaluates multiple ranking criteria sequentially, giving you transparent control over what matters most and delivering results that feel right to end users.
 
 ## How traditional search ranking works
 
-### BM25: the industry default
+### Single-score ranking models
 
-[BM25](https://en.wikipedia.org/wiki/Okapi_BM25) (Best Matching 25) is the ranking function used by Elasticsearch, OpenSearch, Lucene, PostgreSQL full-text search, and most traditional search engines. It computes a single numeric score per document based on:
+Traditional search engines compute a single numeric score per document, then sort by that number. The two most common approaches are:
+
+**BM25** (Elasticsearch, OpenSearch, Lucene, MongoDB Atlas Search) — the industry standard for full-text search. It scores documents based on:
 
 - **Term frequency (TF)**: How often the query term appears in the document
 - **Inverse document frequency (IDF)**: How rare the term is across all documents
 - **Document length normalization**: Shorter documents get a slight boost
 
-The formula produces a score like `8.72` or `3.14`, and results are sorted by this number in descending order.
+**PostgreSQL `ts_rank`** — a simpler model used by PostgreSQL full-text search (and Supabase). It uses term frequency with optional document length normalization, but does **not** consider inverse document frequency. PostgreSQL also offers `ts_rank_cd` (cover density), which factors in proximity of matched terms. Both are less sophisticated than BM25.
+
+In all cases, the engine produces a score like `8.72` or `3.14`, and results are sorted by this number in descending order.
 
 ### The problem with single-score ranking
 
@@ -178,16 +182,16 @@ The `semanticRatio` controls the blend: `0.0` uses only the multi-criteria ranki
 
 ## Summary
 
-| | BM25 (Elasticsearch, PostgreSQL, etc.) | Meilisearch multi-criteria ranking |
+| | BM25 / ts_rank (Elasticsearch, PostgreSQL, etc.) | Meilisearch multi-criteria ranking |
 | :--- | :--- | :--- |
 | **Approach** | Single numeric score per document | Sequential bucket sort through multiple rules |
 | **Typo handling** | None (or via fuzzy query, separate step) | Built-in, ranked by typo count |
-| **Word proximity** | Not a scoring factor | Dedicated ranking rule |
+| **Word proximity** | Not a factor in BM25; basic in PostgreSQL `ts_rank_cd` | Dedicated ranking rule |
 | **Field importance** | Numeric boosts with complex interactions | Ordered list, first field always wins |
-| **Prefix search** | Requires analyzer configuration | Automatic on last query word |
+| **Prefix search** | Requires analyzer config (BM25) or `:*` syntax (PostgreSQL) | Automatic on last query word |
 | **Debuggability** | Opaque score | Per-rule breakdown via `showRankingScoreDetails` |
 | **Configuration** | Per-query function scores and boosts | Per-index rules, consistent across queries |
-| **Semantic search** | Separate system (kNN, vector DB) | Integrated via `hybrid` parameter |
+| **Semantic search** | Separate system (kNN, vector DB, pgvector) | Integrated via `hybrid` parameter |
 | **Best for** | Log analytics, research, large corpora | Application search, e-commerce, media catalogs |
 
 ## Learn more
