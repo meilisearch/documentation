@@ -1,0 +1,942 @@
+---
+title: Migrating from PostgreSQL full-text search to Meilisearch
+sidebarTitle: Migrating from PostgreSQL
+description: A step-by-step guide to moving search from PostgreSQL (tsvector/tsquery and pgvector) to Meilisearch, with a comparison of settings, queries, and search features.
+sidebarDepth: 3
+---
+
+This page aims to help PostgreSQL users who rely on built-in full-text search (`tsvector`/`tsquery`) and/or the pgvector extension move their search workload to Meilisearch.
+
+For a high-level comparison of the two, see [Meilisearch vs PostgreSQL](/resources/comparisons/postgresql).
+
+## Overview
+
+Meilisearch is not a database replacement. It is a dedicated search engine designed to sit alongside PostgreSQL. The recommended pattern is to keep PostgreSQL as your source of truth and sync data to Meilisearch for search.
+
+This guide walks you through exporting rows from a PostgreSQL table and importing them into Meilisearch using a script in JavaScript, Python, or Ruby. [You can also skip directly to the finished script](#finished-script).
+
+The migration process consists of four steps:
+
+1. [Export your data from PostgreSQL](#export-your-postgresql-data)
+2. [Prepare your data for Meilisearch](#prepare-your-data)
+3. [Import your data into Meilisearch](#import-your-data-into-meilisearch)
+4. [Configure your Meilisearch index settings (optional)](#configure-your-index-settings)
+
+To help with the transition, this guide also includes a comparison of [settings and parameters](#settings-and-parameters-comparison), [query types](#query-comparison), and practical advice for [keeping data in sync](#keeping-data-in-sync).
+
+Before continuing, make sure you have Meilisearch installed and have access to a command-line terminal. If you're unsure how to install Meilisearch, see our [quick start](/resources/self_hosting/getting_started).
+
+<Note>
+This guide includes examples in JavaScript, Python, and Ruby. The packages used:
+
+- **JavaScript**: [`pg`](https://www.npmjs.com/package/pg) (node-postgres), [`meilisearch`](https://www.npmjs.com/package/meilisearch) (compatible with Meilisearch v1.0+)
+- **Python**: [`psycopg2`](https://pypi.org/project/psycopg2/), [`meilisearch`](https://pypi.org/project/meilisearch/)
+- **Ruby**: [`pg`](https://rubygems.org/gems/pg), [`meilisearch`](https://rubygems.org/gems/meilisearch)
+</Note>
+
+## Export your PostgreSQL data
+
+### Initialize project
+
+<CodeGroup>
+
+```bash JavaScript
+mkdir pg-meilisearch-migration
+cd pg-meilisearch-migration
+npm init -y
+touch script.js
+```
+
+```bash Python
+mkdir pg-meilisearch-migration
+cd pg-meilisearch-migration
+touch script.py
+```
+
+```bash Ruby
+mkdir pg-meilisearch-migration
+cd pg-meilisearch-migration
+touch script.rb
+```
+
+</CodeGroup>
+
+### Install dependencies
+
+<CodeGroup>
+
+```bash JavaScript
+npm install -s pg meilisearch
+```
+
+```bash Python
+pip install psycopg2-binary meilisearch
+```
+
+```bash Ruby
+gem install pg meilisearch
+```
+
+</CodeGroup>
+
+### Create PostgreSQL client
+
+You need your PostgreSQL **connection string** or individual connection parameters (host, database, user, password). Paste the below code in your script:
+
+<CodeGroup>
+
+```javascript JavaScript
+const { Pool } = require("pg");
+
+const pool = new Pool({
+  host: "PG_HOST",
+  port: 5432,
+  database: "PG_DATABASE",
+  user: "PG_USER",
+  password: "PG_PASSWORD",
+});
+```
+
+```python Python
+import psycopg2
+
+pg_conn = psycopg2.connect(
+    host="PG_HOST",
+    port=5432,
+    dbname="PG_DATABASE",
+    user="PG_USER",
+    password="PG_PASSWORD",
+)
+```
+
+```ruby Ruby
+require 'pg'
+
+pg_conn = PG.connect(
+  host: 'PG_HOST',
+  port: 5432,
+  dbname: 'PG_DATABASE',
+  user: 'PG_USER',
+  password: 'PG_PASSWORD'
+)
+```
+
+</CodeGroup>
+
+Replace the placeholder values with your PostgreSQL connection details.
+
+### Fetch data from PostgreSQL
+
+Query your table to retrieve all rows. For large tables, use cursor-based pagination to avoid loading everything into memory at once.
+
+<CodeGroup>
+
+```javascript JavaScript
+const TABLE_NAME = "YOUR_TABLE_NAME";
+const BATCH_SIZE = 10000;
+
+async function fetchAllRows() {
+  const records = [];
+  let offset = 0;
+
+  while (true) {
+    const result = await pool.query(
+      `SELECT * FROM ${TABLE_NAME} ORDER BY id LIMIT $1 OFFSET $2`,
+      [BATCH_SIZE, offset]
+    );
+
+    if (result.rows.length === 0) break;
+
+    records.push(...result.rows);
+    offset += result.rows.length;
+  }
+
+  return records;
+}
+```
+
+```python Python
+TABLE_NAME = "YOUR_TABLE_NAME"
+BATCH_SIZE = 10000
+
+def fetch_all_rows():
+    records = []
+    offset = 0
+
+    cursor = pg_conn.cursor()
+
+    while True:
+        cursor.execute(
+            f"SELECT * FROM {TABLE_NAME} ORDER BY id LIMIT %s OFFSET %s",
+            (BATCH_SIZE, offset),
+        )
+        rows = cursor.fetchall()
+
+        if not rows:
+            break
+
+        # Get column names from cursor description
+        columns = [desc[0] for desc in cursor.description]
+        for row in rows:
+            records.append(dict(zip(columns, row)))
+
+        offset += len(rows)
+
+    cursor.close()
+    return records
+```
+
+```ruby Ruby
+TABLE_NAME = 'YOUR_TABLE_NAME'
+BATCH_SIZE = 10_000
+
+def fetch_all_rows(pg_conn)
+  records = []
+  offset = 0
+
+  loop do
+    result = pg_conn.exec_params(
+      "SELECT * FROM #{TABLE_NAME} ORDER BY id LIMIT $1 OFFSET $2",
+      [BATCH_SIZE, offset]
+    )
+
+    break if result.ntuples.zero?
+
+    result.each do |row|
+      records << row
+    end
+
+    offset += result.ntuples
+  end
+
+  records
+end
+```
+
+</CodeGroup>
+
+Replace `YOUR_TABLE_NAME` with the name of the table you want to migrate. If your table does not have an `id` column, replace it with your primary key column name.
+
+<Note>
+For very large tables (millions of rows), consider using a server-side cursor or `COPY` command to export data to a JSON file, then import that file into Meilisearch.
+</Note>
+
+## Prepare your data
+
+PostgreSQL rows are already flat key-value pairs, so they map naturally to Meilisearch documents. You mainly need to ensure a primary key field exists and convert any PostgreSQL-specific types.
+
+<CodeGroup>
+
+```javascript JavaScript
+function prepareDocuments(rows) {
+  return rows.map((row) => {
+    const doc = { ...row };
+
+    // Ensure the primary key is a string named "id"
+    if (doc.id === undefined && doc.your_pk_column !== undefined) {
+      doc.id = String(doc.your_pk_column);
+    } else {
+      doc.id = String(doc.id);
+    }
+
+    // Convert Date objects to ISO strings
+    for (const [key, value] of Object.entries(doc)) {
+      if (value instanceof Date) {
+        doc[key] = value.toISOString();
+      }
+    }
+
+    return doc;
+  });
+}
+```
+
+```python Python
+from datetime import date, datetime
+from decimal import Decimal
+
+def prepare_documents(rows):
+    documents = []
+    for row in rows:
+        doc = {**row}
+
+        # Ensure the primary key is a string named "id"
+        if "id" not in doc and "your_pk_column" in doc:
+            doc["id"] = str(doc["your_pk_column"])
+        else:
+            doc["id"] = str(doc["id"])
+
+        # Convert Python types to JSON-compatible types
+        for key, value in doc.items():
+            if isinstance(value, (date, datetime)):
+                doc[key] = value.isoformat()
+            elif isinstance(value, Decimal):
+                doc[key] = float(value)
+
+        documents.append(doc)
+    return documents
+```
+
+```ruby Ruby
+require 'json'
+
+def prepare_documents(rows)
+  rows.map do |row|
+    doc = row.dup
+
+    # Ensure the primary key is a string named "id"
+    if doc['id'].nil? && doc['your_pk_column']
+      doc['id'] = doc['your_pk_column'].to_s
+    else
+      doc['id'] = doc['id'].to_s
+    end
+
+    doc
+  end
+end
+```
+
+</CodeGroup>
+
+<Note>
+If your primary key column is not called `id`, you can either rename it in the preparation step (as shown above) or tell Meilisearch which field to use as the primary key when creating the index. Replace `your_pk_column` with the actual column name.
+</Note>
+
+### Handle PostGIS geo data
+
+If your table uses PostGIS geography or geometry columns, convert them to Meilisearch's `_geo` format. Export the coordinates from PostgreSQL using `ST_Y()` (latitude) and `ST_X()` (longitude):
+
+<CodeGroup>
+
+```javascript JavaScript
+// When querying, extract lat/lng from PostGIS:
+// SELECT *, ST_Y(location::geometry) AS lat, ST_X(location::geometry) AS lng FROM your_table
+
+function convertGeoFields(doc) {
+  if (doc.lat !== undefined && doc.lng !== undefined) {
+    doc._geo = {
+      lat: parseFloat(doc.lat),
+      lng: parseFloat(doc.lng),
+    };
+    delete doc.lat;
+    delete doc.lng;
+  }
+  // Remove the original PostGIS column if present
+  delete doc.location;
+  return doc;
+}
+```
+
+```python Python
+# When querying, extract lat/lng from PostGIS:
+# SELECT *, ST_Y(location::geometry) AS lat, ST_X(location::geometry) AS lng FROM your_table
+
+def convert_geo_fields(doc):
+    if "lat" in doc and "lng" in doc:
+        doc["_geo"] = {
+            "lat": float(doc["lat"]),
+            "lng": float(doc["lng"]),
+        }
+        del doc["lat"]
+        del doc["lng"]
+    # Remove the original PostGIS column if present
+    doc.pop("location", None)
+    return doc
+```
+
+```ruby Ruby
+# When querying, extract lat/lng from PostGIS:
+# SELECT *, ST_Y(location::geometry) AS lat, ST_X(location::geometry) AS lng FROM your_table
+
+def convert_geo_fields(doc)
+  if doc['lat'] && doc['lng']
+    doc['_geo'] = {
+      'lat' => doc['lat'].to_f,
+      'lng' => doc['lng'].to_f
+    }
+    doc.delete('lat')
+    doc.delete('lng')
+  end
+  # Remove the original PostGIS column if present
+  doc.delete('location')
+  doc
+end
+```
+
+</CodeGroup>
+
+## Import your data into Meilisearch
+
+### Create Meilisearch client
+
+Create a Meilisearch client by passing the host URL and API key of your Meilisearch instance. The easiest option is to use the automatically generated [admin API key](/learn/security/basic_security).
+
+<CodeGroup>
+
+```javascript JavaScript
+const { MeiliSearch } = require("meilisearch");
+
+const meiliClient = new MeiliSearch({
+  host: "MEILI_HOST",
+  apiKey: "MEILI_API_KEY",
+});
+const meiliIndex = meiliClient.index("MEILI_INDEX_NAME");
+```
+
+```python Python
+import meilisearch
+
+meili_client = meilisearch.Client("MEILI_HOST", "MEILI_API_KEY")
+meili_index = meili_client.index("MEILI_INDEX_NAME")
+```
+
+```ruby Ruby
+require 'meilisearch'
+
+meili_client = MeiliSearch::Client.new('MEILI_HOST', 'MEILI_API_KEY')
+meili_index = meili_client.index('MEILI_INDEX_NAME')
+```
+
+</CodeGroup>
+
+Replace `MEILI_HOST`, `MEILI_API_KEY`, and `MEILI_INDEX_NAME` with your Meilisearch host URL, API key, and target index name. Meilisearch will create the index if it doesn't already exist.
+
+### Upload data to Meilisearch
+
+Use the Meilisearch client method `addDocumentsInBatches` to upload all records in batches of 100,000.
+
+<CodeGroup>
+
+```javascript JavaScript
+const UPLOAD_BATCH_SIZE = 100000;
+await meiliIndex.addDocumentsInBatches(documents, UPLOAD_BATCH_SIZE);
+```
+
+```python Python
+UPLOAD_BATCH_SIZE = 100000
+meili_index.add_documents_in_batches(documents, batch_size=UPLOAD_BATCH_SIZE)
+```
+
+```ruby Ruby
+UPLOAD_BATCH_SIZE = 100_000
+meili_index.add_documents_in_batches(documents, UPLOAD_BATCH_SIZE)
+```
+
+</CodeGroup>
+
+When you're ready, run the script:
+
+<CodeGroup>
+
+```bash JavaScript
+node script.js
+```
+
+```bash Python
+python script.py
+```
+
+```bash Ruby
+ruby script.rb
+```
+
+</CodeGroup>
+
+### Finished script
+
+<CodeGroup>
+
+```javascript JavaScript
+const { Pool } = require("pg");
+const { MeiliSearch } = require("meilisearch");
+
+const TABLE_NAME = "YOUR_TABLE_NAME";
+const FETCH_BATCH_SIZE = 10000;
+const UPLOAD_BATCH_SIZE = 100000;
+
+(async () => {
+  // Connect to PostgreSQL
+  const pool = new Pool({
+    host: "PG_HOST",
+    port: 5432,
+    database: "PG_DATABASE",
+    user: "PG_USER",
+    password: "PG_PASSWORD",
+  });
+
+  // Fetch all rows
+  const records = [];
+  let offset = 0;
+
+  while (true) {
+    const result = await pool.query(
+      `SELECT * FROM ${TABLE_NAME} ORDER BY id LIMIT $1 OFFSET $2`,
+      [FETCH_BATCH_SIZE, offset]
+    );
+
+    if (result.rows.length === 0) break;
+
+    records.push(...result.rows);
+    offset += result.rows.length;
+  }
+
+  await pool.end();
+
+  // Prepare documents for Meilisearch
+  const documents = records.map((row) => {
+    const doc = { ...row };
+    doc.id = String(doc.id);
+
+    for (const [key, value] of Object.entries(doc)) {
+      if (value instanceof Date) {
+        doc[key] = value.toISOString();
+      }
+    }
+
+    return doc;
+  });
+
+  console.log(`Fetched ${documents.length} rows from PostgreSQL`);
+
+  // Upload to Meilisearch
+  const meiliClient = new MeiliSearch({
+    host: "MEILI_HOST",
+    apiKey: "MEILI_API_KEY",
+  });
+  const meiliIndex = meiliClient.index("MEILI_INDEX_NAME");
+
+  await meiliIndex.addDocumentsInBatches(documents, UPLOAD_BATCH_SIZE);
+  console.log("Migration complete");
+})();
+```
+
+```python Python
+import psycopg2
+import meilisearch
+from datetime import date, datetime
+from decimal import Decimal
+
+TABLE_NAME = "YOUR_TABLE_NAME"
+FETCH_BATCH_SIZE = 10000
+UPLOAD_BATCH_SIZE = 100000
+
+# Connect to PostgreSQL
+pg_conn = psycopg2.connect(
+    host="PG_HOST",
+    port=5432,
+    dbname="PG_DATABASE",
+    user="PG_USER",
+    password="PG_PASSWORD",
+)
+
+# Fetch all rows
+records = []
+offset = 0
+cursor = pg_conn.cursor()
+
+while True:
+    cursor.execute(
+        f"SELECT * FROM {TABLE_NAME} ORDER BY id LIMIT %s OFFSET %s",
+        (FETCH_BATCH_SIZE, offset),
+    )
+    rows = cursor.fetchall()
+
+    if not rows:
+        break
+
+    columns = [desc[0] for desc in cursor.description]
+    for row in rows:
+        records.append(dict(zip(columns, row)))
+
+    offset += len(rows)
+
+cursor.close()
+pg_conn.close()
+
+# Prepare documents for Meilisearch
+documents = []
+for row in records:
+    doc = {**row}
+    doc["id"] = str(doc["id"])
+
+    for key, value in doc.items():
+        if isinstance(value, (date, datetime)):
+            doc[key] = value.isoformat()
+        elif isinstance(value, Decimal):
+            doc[key] = float(value)
+
+    documents.append(doc)
+
+print(f"Fetched {len(documents)} rows from PostgreSQL")
+
+# Upload to Meilisearch
+meili_client = meilisearch.Client("MEILI_HOST", "MEILI_API_KEY")
+meili_index = meili_client.index("MEILI_INDEX_NAME")
+
+meili_index.add_documents_in_batches(documents, batch_size=UPLOAD_BATCH_SIZE)
+print("Migration complete")
+```
+
+```ruby Ruby
+require 'pg'
+require 'meilisearch'
+
+TABLE_NAME = 'YOUR_TABLE_NAME'
+FETCH_BATCH_SIZE = 10_000
+UPLOAD_BATCH_SIZE = 100_000
+
+# Connect to PostgreSQL
+pg_conn = PG.connect(
+  host: 'PG_HOST',
+  port: 5432,
+  dbname: 'PG_DATABASE',
+  user: 'PG_USER',
+  password: 'PG_PASSWORD'
+)
+
+# Fetch all rows
+records = []
+offset = 0
+
+loop do
+  result = pg_conn.exec_params(
+    "SELECT * FROM #{TABLE_NAME} ORDER BY id LIMIT $1 OFFSET $2",
+    [FETCH_BATCH_SIZE, offset]
+  )
+
+  break if result.ntuples.zero?
+
+  result.each { |row| records << row }
+  offset += result.ntuples
+end
+
+pg_conn.close
+
+# Prepare documents for Meilisearch
+documents = records.map do |row|
+  doc = row.dup
+  doc['id'] = doc['id'].to_s
+  doc
+end
+
+puts "Fetched #{documents.length} rows from PostgreSQL"
+
+# Upload to Meilisearch
+meili_client = MeiliSearch::Client.new('MEILI_HOST', 'MEILI_API_KEY')
+meili_index = meili_client.index('MEILI_INDEX_NAME')
+
+meili_index.add_documents_in_batches(documents, UPLOAD_BATCH_SIZE)
+puts 'Migration complete'
+```
+
+</CodeGroup>
+
+## Configure your index settings
+
+Meilisearch's default settings deliver relevant, typo-tolerant search out of the box. Unlike PostgreSQL, where you must create `tsvector` columns, build GIN indexes, and construct queries with `to_tsquery()`, Meilisearch indexes all fields automatically and handles tokenization, stemming, and typo tolerance without any configuration.
+
+To customize your index settings, see [configuring index settings](/learn/getting_started/indexes#index-settings). To understand the differences between PostgreSQL full-text search and Meilisearch, read on.
+
+### Key conceptual differences
+
+**PostgreSQL full-text search** requires you to manage every aspect of the search pipeline manually. You must create `tsvector` columns (or expressions), build GIN indexes for performance, choose language configurations for stemming and stop words, construct queries with `to_tsquery()` or `plainto_tsquery()`, and rank results with `ts_rank()`. Search is tightly coupled to your database, competing for the same resources as your transactional queries.
+
+**Meilisearch** is a dedicated search engine. You send documents and search queries — everything else is automatic. Tokenization, stemming, typo tolerance, prefix search, and ranking all work out of the box. Because Meilisearch runs as a separate service, search queries never impact your database performance.
+
+The most important difference: **PostgreSQL has no typo tolerance**. A search for "reciepe" returns zero results even if your table contains hundreds of recipes. Meilisearch handles typos automatically, making it dramatically more forgiving for end users.
+
+### Configure embedders for hybrid search
+
+If you currently use pgvector for semantic similarity search, you can replace it with Meilisearch's built-in hybrid search. Configure an [embedder](/learn/ai_powered_search/getting_started_with_ai_search) and Meilisearch handles all vectorization automatically — both at indexing time and at search time. No more managing embeddings in your application code.
+
+```bash
+curl -X PATCH 'MEILI_HOST/indexes/MEILI_INDEX_NAME/settings' \
+  -H 'Authorization: Bearer MEILI_API_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "embedders": {
+      "default": {
+        "source": "openAi",
+        "apiKey": "OPENAI_API_KEY",
+        "model": "text-embedding-3-small",
+        "documentTemplate": "A document titled {{doc.title}}: {{doc.description}}"
+      }
+    }
+  }'
+```
+
+The `documentTemplate` controls what text is sent to the embedding model. Adjust it to match the fields in your documents. For more options including HuggingFace models, Ollama, and custom REST endpoints, see [configuring embedders](/learn/ai_powered_search/getting_started_with_ai_search).
+
+<Accordion title="Alternative: use existing pgvector embeddings">
+If you already have embeddings stored in a pgvector `vector` column and prefer not to re-embed, export them from PostgreSQL and include them in the `_vectors` field of each document. Then configure a `userProvided` embedder:
+
+```bash
+curl -X PATCH 'MEILI_HOST/indexes/MEILI_INDEX_NAME/settings' \
+  -H 'Authorization: Bearer MEILI_API_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "embedders": {
+      "default": {
+        "source": "userProvided",
+        "dimensions": 1536
+      }
+    }
+  }'
+```
+
+Replace `1536` with the dimension of your pgvector embeddings. With this approach, you remain responsible for computing and providing vectors when adding or updating documents, and for computing query vectors client-side when searching.
+</Accordion>
+
+### Configure filterable and sortable attributes
+
+In PostgreSQL, any column can be used in `WHERE` and `ORDER BY` clauses. In Meilisearch, you must declare which fields are [`filterableAttributes`](/reference/api/settings/update-filterableattributes) and [`sortableAttributes`](/reference/api/settings/update-sortableattributes):
+
+```bash
+curl -X PATCH 'MEILI_HOST/indexes/MEILI_INDEX_NAME/settings' \
+  -H 'Authorization: Bearer MEILI_API_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "filterableAttributes": ["category", "status", "price", "_geo"],
+    "sortableAttributes": ["price", "created_at", "_geo"]
+  }'
+```
+
+### What you gain
+
+Migrating your search layer from PostgreSQL to Meilisearch gives you several features that work out of the box:
+
+- **Typo tolerance** — PostgreSQL full-text search has none. A single typo returns zero results. Meilisearch handles typos automatically, so "reciepe" finds "recipe"
+- **Prefix search** — Users see results as they type, without needing `LIKE 'term%'` queries or trigram indexes
+- **Instant results** — Sub-50ms search responses regardless of dataset complexity, with no GIN index tuning or query plan optimization
+- **Highlighting** of matching terms in results, without manually calling `ts_headline()`
+- **Faceted search** with value distributions for building filter UIs — no `GROUP BY` queries needed
+- **Hybrid search** combining keyword relevancy and semantic similarity in a single query, replacing separate pgvector and `tsvector` pipelines
+- **No search infrastructure in your database** — Remove `tsvector` columns, GIN indexes, triggers, and ranking functions. Your PostgreSQL database handles what it does best (transactions and relational data), while Meilisearch handles search
+
+## Settings and parameters comparison
+
+### Text search configuration
+
+| PostgreSQL | Meilisearch | Notes |
+| :--- | :--- | :--- |
+| `tsvector` column + GIN index | Automatic | Meilisearch indexes all fields automatically — no columns or indexes to create |
+| `to_tsvector(config, text)` | Automatic tokenization | No text processing functions needed |
+| `ts_rank()` / `ts_rank_cd()` | Built-in [ranking rules](/reference/api/settings/update-ranking-rules) | Relevancy ranking is automatic and configurable |
+| Language configurations (`english`, `french`, etc.) | [`localizedAttributes`](/reference/api/settings/update-localizedattributes) | Assign languages to specific fields |
+| `setweight()` (A, B, C, D) | [`searchableAttributes`](/reference/api/settings/update-searchableattributes) | Ordered list — fields listed first have higher priority |
+| Custom dictionaries | [`synonyms`](/reference/api/settings/update-synonyms) / [`stopWords`](/reference/api/settings/update-stopwords) | Configure equivalent terms and ignored words |
+| `tsvector` update triggers | Automatic | Meilisearch re-indexes on every document update |
+
+### Search queries
+
+| PostgreSQL | Meilisearch | Notes |
+| :--- | :--- | :--- |
+| `to_tsquery()` / `plainto_tsquery()` / `websearch_to_tsquery()` | `q` search param | Just send the user's text — no query construction needed |
+| `@@` operator | Automatic | No matching operator — `q` handles it |
+| `WHERE column = value` | `filter` search param | Requires [`filterableAttributes`](/reference/api/settings/update-filterableattributes) |
+| `ORDER BY column` | `sort` search param | Requires [`sortableAttributes`](/reference/api/settings/update-sortableattributes) |
+| `LIMIT` / `OFFSET` | `limit` / `offset` or `page` / `hitsPerPage` | Search params |
+| `ts_headline()` | `attributesToHighlight` | Search param — returns highlighted snippets automatically |
+| `COUNT(*)` | `estimatedTotalHits` / `totalHits` | Returned in every search response |
+| `ILIKE '%term%'` | `q` with prefix search | Automatic prefix matching on the last word |
+| No typo tolerance | Automatic [typo tolerance](/reference/api/settings/update-typotolerance) | Configurable per index |
+
+### Vector search (pgvector)
+
+| PostgreSQL (pgvector) | Meilisearch | Notes |
+| :--- | :--- | :--- |
+| `ORDER BY embedding <=> query_vector` (cosine) | `hybrid` + auto-embedder | Meilisearch embeds queries for you — no client-side vector computation |
+| `ORDER BY embedding <-> query_vector` (L2) | `hybrid` + auto-embedder | Distance metric is handled automatically |
+| `vector` type + `ivfflat` / `hnsw` index | [`embedders`](/reference/api/settings/update-embedders) setting | Automatic indexing (DiskANN-based) — no index type selection needed |
+| Manual embedding generation in application code | Automatic via configured embedder | Meilisearch embeds documents and queries for you |
+| Separate keyword + vector queries | Single `hybrid` query | Combines keyword and semantic search in one request |
+
+### Geo search (PostGIS)
+
+| PostgreSQL (PostGIS) | Meilisearch | Notes |
+| :--- | :--- | :--- |
+| `ST_DWithin(geog, ST_MakePoint(lng, lat), distance)` | `_geoRadius(lat, lng, distance)` in `filter` | Requires `_geo` in `filterableAttributes` |
+| `ST_MakeEnvelope(xmin, ymin, xmax, ymax)` | `_geoBoundingBox([lat, lng], [lat, lng])` in `filter` | Requires `_geo` in `filterableAttributes` |
+| `ORDER BY ST_Distance(geog, point)` | `_geoPoint(lat, lng):asc` in `sort` | Requires `_geo` in `sortableAttributes` |
+| `geography` / `geometry` types | `_geo` field with `lat` / `lng` | Simple JSON object |
+
+## Query comparison
+
+This section shows how common PostgreSQL search queries translate to Meilisearch.
+
+### Full-text search
+
+**PostgreSQL:**
+```sql
+SELECT * FROM products
+WHERE to_tsvector('english', title || ' ' || description) @@ plainto_tsquery('english', 'running shoes')
+ORDER BY ts_rank(to_tsvector('english', title || ' ' || description), plainto_tsquery('english', 'running shoes')) DESC
+LIMIT 20;
+```
+
+**Meilisearch:**
+```json
+POST /indexes/products/search
+{
+  "q": "running shoes",
+  "limit": 20
+}
+```
+
+No `tsvector` columns, no `@@` operator, no `ts_rank()` function. Just send the text.
+
+### Filtered search
+
+**PostgreSQL:**
+```sql
+SELECT * FROM products
+WHERE to_tsvector('english', title) @@ plainto_tsquery('english', 'laptop')
+  AND category = 'electronics'
+  AND price BETWEEN 500 AND 1500
+ORDER BY ts_rank(to_tsvector('english', title), plainto_tsquery('english', 'laptop')) DESC;
+```
+
+**Meilisearch:**
+```json
+POST /indexes/products/search
+{
+  "q": "laptop",
+  "filter": "category = electronics AND price >= 500 AND price <= 1500"
+}
+```
+
+<Note>
+Attributes used in `filter` must first be added to [`filterableAttributes`](/reference/api/settings/update-filterableattributes).
+</Note>
+
+### Sorting
+
+**PostgreSQL:**
+```sql
+SELECT * FROM products
+WHERE to_tsvector('english', title) @@ plainto_tsquery('english', 'shoes')
+ORDER BY price ASC, created_at DESC;
+```
+
+**Meilisearch:**
+```json
+POST /indexes/products/search
+{
+  "q": "shoes",
+  "sort": ["price:asc", "created_at:desc"]
+}
+```
+
+<Note>
+Attributes used in `sort` must first be added to [`sortableAttributes`](/reference/api/settings/update-sortableattributes).
+</Note>
+
+### Highlighting
+
+**PostgreSQL:**
+```sql
+SELECT id, ts_headline('english', description, plainto_tsquery('english', 'chocolate cake'),
+  'StartSel=<mark>, StopSel=</mark>, MaxFragments=2')
+FROM recipes
+WHERE to_tsvector('english', description) @@ plainto_tsquery('english', 'chocolate cake');
+```
+
+**Meilisearch:**
+```json
+POST /indexes/recipes/search
+{
+  "q": "chocolate cake",
+  "attributesToHighlight": ["description"],
+  "highlightPreTag": "<mark>",
+  "highlightPostTag": "</mark>"
+}
+```
+
+### Geo search
+
+**PostgreSQL (PostGIS):**
+```sql
+SELECT *, ST_Distance(location, ST_MakePoint(2.3522, 48.8566)::geography) AS distance
+FROM restaurants
+WHERE ST_DWithin(location, ST_MakePoint(2.3522, 48.8566)::geography, 5000)
+ORDER BY distance ASC;
+```
+
+**Meilisearch:**
+```json
+POST /indexes/restaurants/search
+{
+  "filter": "_geoRadius(48.8566, 2.3522, 5000)",
+  "sort": ["_geoPoint(48.8566, 2.3522):asc"]
+}
+```
+
+<Note>
+The `_geo` attribute must be added to both [`filterableAttributes`](/reference/api/settings/update-filterableattributes) and [`sortableAttributes`](/reference/api/settings/update-sortableattributes).
+</Note>
+
+### Semantic search
+
+**PostgreSQL (pgvector):**
+```sql
+-- Application must first compute the query embedding
+-- query_embedding = openai.embed("comfortable running shoes")
+
+SELECT * FROM products
+ORDER BY embedding <=> '[0.1, 0.2, 0.3, ...]'::vector
+LIMIT 10;
+```
+
+**Meilisearch:**
+```json
+POST /indexes/products/search
+{
+  "q": "comfortable running shoes",
+  "hybrid": {
+    "semanticRatio": 1.0,
+    "embedder": "default"
+  },
+  "limit": 10
+}
+```
+
+With an auto-embedder configured, Meilisearch embeds the `q` text for you. No client-side vector computation. Setting `semanticRatio` to `1.0` performs pure semantic search. Use a value like `0.5` to combine keyword and semantic results in a single hybrid query.
+
+### Faceted search
+
+**PostgreSQL:**
+```sql
+SELECT category, COUNT(*) as count
+FROM products
+WHERE to_tsvector('english', title) @@ plainto_tsquery('english', 'shoes')
+GROUP BY category
+ORDER BY count DESC;
+```
+
+**Meilisearch:**
+```json
+POST /indexes/products/search
+{
+  "q": "shoes",
+  "facets": ["category", "brand", "color"]
+}
+```
+
+Meilisearch returns search results and value distributions for all requested facets in a single response — no separate `GROUP BY` queries needed.
+
+## Keeping data in sync
+
+Since PostgreSQL remains your source of truth, you need a strategy to keep Meilisearch in sync when data changes. Common approaches:
+
+- **Application-level sync** — After every INSERT, UPDATE, or DELETE in your application code, send the corresponding change to Meilisearch. This is the simplest approach and works well for most applications
+- **Database triggers with notifications** — Use PostgreSQL `LISTEN`/`NOTIFY` to broadcast changes, then have a worker process consume notifications and update Meilisearch
+- **Periodic batch sync** — Run a scheduled job (every few minutes) that queries PostgreSQL for recently modified rows (using an `updated_at` timestamp) and sends them to Meilisearch
+- **Change data capture (CDC)** — Use tools like Debezium to stream PostgreSQL WAL changes to Meilisearch in near real-time
+
+For most applications, application-level sync provides the best balance of simplicity and freshness. Meilisearch's `addDocuments` method is an upsert — sending an existing document with the same primary key updates it automatically.
+
+## Front-end components
+
+PostgreSQL does not include front-end search components. Meilisearch is compatible with Algolia's [InstantSearch](https://github.com/algolia/instantsearch.js) libraries through [Instant Meilisearch](https://github.com/meilisearch/meilisearch-js-plugins/tree/main/packages/instant-meilisearch), giving you pre-built widgets for search boxes, hit displays, facet filters, pagination, and more.
+
+You can find an up-to-date list of [the components supported by Instant Meilisearch](https://github.com/meilisearch/meilisearch-js-plugins/tree/main/packages/instant-meilisearch#-api-resources) in the GitHub project's README.

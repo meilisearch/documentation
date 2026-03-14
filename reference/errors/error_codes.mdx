@@ -28,7 +28,7 @@ The requested database has reached its maximum size.
 
 ## `document_fields_limit_reached`
 
-A document exceeds the [maximum limit of 65,535 fields](/learn/resources/known_limitations#maximum-number-of-attributes-per-document).
+A document exceeds the [maximum limit of 65,536 attributes](/resources/help/known_limitations#maximum-number-of-attributes-per-document).
 
 ## `document_not_found`
 
@@ -44,7 +44,7 @@ The [`/facet-search`](/reference/api/facet-search/search-in-facets) route has be
 
 ## `feature_not_enabled`
 
-You have tried using an [experimental feature](/learn/resources/experimental_features_overview) without activating it.
+You have tried using an [experimental feature](/resources/help/experimental_features_overview) without activating it.
 
 ## `immutable_api_key_actions`
 
@@ -246,11 +246,11 @@ The provided value for `facetQuery` is invalid. It should either be a string or 
 
 ## `invalid_index_limit`
 
-The [`limit`](/reference/api/indexes/list-indexes) parameter is invalid. It should be an integer.
+The [`limit`](/reference/api/indexes/list-all-indexes) parameter is invalid. It should be an integer.
 
 ## `invalid_index_offset`
 
-The [`offset`](/reference/api/indexes/list-indexes) parameter is invalid. It should be an integer.
+The [`offset`](/reference/api/indexes/list-all-indexes) parameter is invalid. It should be an integer.
 
 ## `invalid_index_uid`
 
@@ -401,7 +401,7 @@ The [`facetSearch`](/reference/api/settings/get-facetsearch) index setting value
 
 ## `invalid_settings_localized_attributes`
 
-The [`localizedAttributes`](/reference/api/settings/get-localized-attributes) index setting value is invalid.
+The [`localizedAttributes`](/reference/api/settings/get-localizedattributes) index setting value is invalid.
 
 ## `invalid_search_matching_strategy`
 
@@ -413,7 +413,7 @@ The [`offset`](/reference/api/search/search-with-post#body-offset) parameter is 
 
 ## `invalid_settings_prefix_search`
 
-The [`prefixSearch`](/reference/api/settings/get-prefix-search) index setting value is invalid.
+The [`prefixSearch`](/reference/api/settings/get-prefixsearch) index setting value is invalid.
 
 ## `invalid_search_page`
 
@@ -710,7 +710,7 @@ The requested resources could not be found.
 
 ## `payload_too_large`
 
-The payload sent to the server was too large. Check out this [guide](/learn/self_hosted/configure_meilisearch_at_launch#payload-limit-size) to customize the maximum payload size accepted by Meilisearch.
+The payload sent to the server was too large. Check out this [guide](/resources/self_hosting/configuration#payload-limit-size) to customize the maximum payload size accepted by Meilisearch.
 
 ## `task_not_found`
 
@@ -722,7 +722,7 @@ Indexing a large batch of documents, such as a JSON file over 3.5GB in size, can
 
 ## `too_many_search_requests`
 
-You have reached the limit of concurrent search requests. You may configure it by relaunching your instance and setting a higher value to [`--experimental-search-queue-size`](/learn/self_hosted/configure_meilisearch_at_launch).
+You have reached the limit of concurrent search requests. You may configure it by relaunching your instance and setting a higher value to [`--experimental-search-queue-size`](/resources/self_hosting/configuration).
 
 ## `unretrievable_document`
 
