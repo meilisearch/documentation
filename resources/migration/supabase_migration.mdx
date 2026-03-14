@@ -1,0 +1,1008 @@
+---
+title: Migrating from Supabase full-text search to Meilisearch
+sidebarTitle: Migrating from Supabase
+description: A step-by-step guide to moving search from Supabase (tsvector/tsquery and pgvector via Supabase Vector) to Meilisearch, with a comparison of settings, queries, and search features.
+sidebarDepth: 3
+---
+
+This page aims to help Supabase users who rely on built-in full-text search (`.textSearch()`) and/or Supabase Vector move their search workload to Meilisearch.
+
+For a high-level comparison with PostgreSQL-based search, see [Meilisearch vs PostgreSQL](/resources/comparisons/postgresql).
+
+## Overview
+
+Meilisearch is not a replacement for Supabase. It is a dedicated search engine designed to sit alongside your Supabase database. The recommended pattern is to keep Supabase as your source of truth and sync data to Meilisearch for search.
+
+Supabase exposes PostgreSQL's built-in `tsvector`/`tsquery` full-text search through its client libraries (`.textSearch()` method) and uses the pgvector extension for vector similarity search (Supabase Vector). While convenient, these inherit all of PostgreSQL's search limitations: no typo tolerance, no prefix search by default, no built-in relevancy ranking, and manual configuration of `tsvector` columns and GIN indexes.
+
+This guide walks you through exporting rows from Supabase and importing them into Meilisearch using a script in JavaScript, Python, or Ruby. [You can also skip directly to the finished script](#finished-script).
+
+The migration process consists of four steps:
+
+1. [Export your data from Supabase](#export-your-supabase-data)
+2. [Prepare your data for Meilisearch](#prepare-your-data)
+3. [Import your data into Meilisearch](#import-your-data-into-meilisearch)
+4. [Configure your Meilisearch index settings (optional)](#configure-your-index-settings)
+
+To help with the transition, this guide also includes a comparison of [settings and parameters](#settings-and-parameters-comparison), [query types](#query-comparison), and practical advice for [keeping data in sync](#keeping-data-in-sync).
+
+Before continuing, make sure you have Meilisearch installed and have access to a command-line terminal. If you're unsure how to install Meilisearch, see our [quick start](/resources/self_hosting/getting_started).
+
+<Note>
+This guide includes examples in JavaScript, Python, and Ruby. The packages used:
+
+- **JavaScript**: [`@supabase/supabase-js`](https://www.npmjs.com/package/@supabase/supabase-js), [`meilisearch`](https://www.npmjs.com/package/meilisearch) (compatible with Meilisearch v1.0+)
+- **Python**: [`supabase`](https://pypi.org/project/supabase/), [`meilisearch`](https://pypi.org/project/meilisearch/)
+- **Ruby**: [`pg`](https://rubygems.org/gems/pg), [`meilisearch`](https://rubygems.org/gems/meilisearch) (there is no official Supabase Ruby client — connect directly to PostgreSQL using your Supabase connection string)
+</Note>
+
+## Export your Supabase data
+
+### Initialize project
+
+<CodeGroup>
+
+```bash JavaScript
+mkdir supabase-meilisearch-migration
+cd supabase-meilisearch-migration
+npm init -y
+touch script.js
+```
+
+```bash Python
+mkdir supabase-meilisearch-migration
+cd supabase-meilisearch-migration
+touch script.py
+```
+
+```bash Ruby
+mkdir supabase-meilisearch-migration
+cd supabase-meilisearch-migration
+touch script.rb
+```
+
+</CodeGroup>
+
+### Install dependencies
+
+<CodeGroup>
+
+```bash JavaScript
+npm install -s @supabase/supabase-js meilisearch
+```
+
+```bash Python
+pip install supabase meilisearch
+```
+
+```bash Ruby
+gem install pg meilisearch
+```
+
+</CodeGroup>
+
+### Create Supabase client
+
+You need your Supabase **project URL** and **service role key** (not the anon key, since the service role key bypasses Row Level Security and can read all rows). For Ruby, use the **direct database connection string** from your Supabase project settings.
+
+<CodeGroup>
+
+```javascript JavaScript
+const { createClient } = require("@supabase/supabase-js");
+
+const supabase = createClient(
+  "SUPABASE_URL",        // e.g. https://xxxxx.supabase.co
+  "SUPABASE_SERVICE_KEY"  // service_role key from Settings > API
+);
+```
+
+```python Python
+from supabase import create_client
+
+supabase = create_client(
+    "SUPABASE_URL",         # e.g. https://xxxxx.supabase.co
+    "SUPABASE_SERVICE_KEY"  # service_role key from Settings > API
+)
+```
+
+```ruby Ruby
+require 'pg'
+
+# Use the direct connection string from Supabase > Settings > Database
+pg_conn = PG.connect(
+  host: 'db.xxxxx.supabase.co',
+  port: 5432,
+  dbname: 'postgres',
+  user: 'postgres',
+  password: 'SUPABASE_DB_PASSWORD'
+)
+```
+
+</CodeGroup>
+
+Replace the placeholder values with your Supabase project credentials. You can find these in your Supabase dashboard under **Settings > API** (for URL and keys) or **Settings > Database** (for the direct connection string used by Ruby).
+
+### Fetch data from Supabase
+
+Use range-based pagination to retrieve all rows. The Supabase client's `.range(from, to)` method returns up to 1,000 rows per request by default.
+
+<CodeGroup>
+
+```javascript JavaScript
+const TABLE_NAME = "YOUR_TABLE_NAME";
+const BATCH_SIZE = 1000;
+
+async function fetchAllRows() {
+  const records = [];
+  let from = 0;
+
+  while (true) {
+    const { data, error } = await supabase
+      .from(TABLE_NAME)
+      .select("*")
+      .range(from, from + BATCH_SIZE - 1);
+
+    if (error) throw error;
+    if (!data || data.length === 0) break;
+
+    records.push(...data);
+    from += data.length;
+
+    // If we got fewer rows than the batch size, we've reached the end
+    if (data.length < BATCH_SIZE) break;
+  }
+
+  return records;
+}
+```
+
+```python Python
+TABLE_NAME = "YOUR_TABLE_NAME"
+BATCH_SIZE = 1000
+
+def fetch_all_rows():
+    records = []
+    start = 0
+
+    while True:
+        response = (
+            supabase.table(TABLE_NAME)
+            .select("*")
+            .range(start, start + BATCH_SIZE - 1)
+            .execute()
+        )
+
+        rows = response.data
+        if not rows:
+            break
+
+        records.extend(rows)
+        start += len(rows)
+
+        # If we got fewer rows than the batch size, we've reached the end
+        if len(rows) < BATCH_SIZE:
+            break
+
+    return records
+```
+
+```ruby Ruby
+TABLE_NAME = 'YOUR_TABLE_NAME'
+BATCH_SIZE = 10_000
+
+def fetch_all_rows(pg_conn)
+  records = []
+  offset = 0
+
+  loop do
+    result = pg_conn.exec_params(
+      "SELECT * FROM #{TABLE_NAME} ORDER BY id LIMIT $1 OFFSET $2",
+      [BATCH_SIZE, offset]
+    )
+
+    break if result.ntuples.zero?
+
+    result.each { |row| records << row }
+    offset += result.ntuples
+  end
+
+  records
+end
+```
+
+</CodeGroup>
+
+Replace `YOUR_TABLE_NAME` with the name of the table you want to migrate. If your table does not have an `id` column, replace it with your primary key column name in the Ruby example.
+
+<Note>
+For very large tables (millions of rows), consider exporting data using the Supabase CLI (`supabase db dump`) or connecting directly to PostgreSQL to use the `COPY` command.
+</Note>
+
+## Prepare your data
+
+Supabase rows returned by the JavaScript and Python clients are already JSON objects, so they map naturally to Meilisearch documents. You mainly need to ensure a primary key field exists, remove any derived `tsvector` columns (they cannot be serialized), and handle any `embedding` vector columns from Supabase Vector.
+
+<CodeGroup>
+
+```javascript JavaScript
+function prepareDocuments(rows) {
+  return rows.map((row) => {
+    const doc = { ...row };
+
+    // Ensure the primary key is a string named "id"
+    if (doc.id === undefined && doc.your_pk_column !== undefined) {
+      doc.id = String(doc.your_pk_column);
+    } else {
+      doc.id = String(doc.id);
+    }
+
+    // Remove tsvector columns (they are derived and not needed)
+    delete doc.fts;  // common Supabase convention for tsvector columns
+
+    // Remove embedding columns (Meilisearch auto-embedder replaces these)
+    delete doc.embedding;
+
+    return doc;
+  });
+}
+```
+
+```python Python
+def prepare_documents(rows):
+    documents = []
+    for row in rows:
+        doc = {**row}
+
+        # Ensure the primary key is a string named "id"
+        if "id" not in doc and "your_pk_column" in doc:
+            doc["id"] = str(doc["your_pk_column"])
+        else:
+            doc["id"] = str(doc["id"])
+
+        # Remove tsvector columns (they are derived and not needed)
+        doc.pop("fts", None)  # common Supabase convention for tsvector columns
+
+        # Remove embedding columns (Meilisearch auto-embedder replaces these)
+        doc.pop("embedding", None)
+
+        documents.append(doc)
+    return documents
+```
+
+```ruby Ruby
+require 'json'
+
+def prepare_documents(rows)
+  rows.map do |row|
+    doc = row.dup
+
+    # Ensure the primary key is a string named "id"
+    if doc['id'].nil? && doc['your_pk_column']
+      doc['id'] = doc['your_pk_column'].to_s
+    else
+      doc['id'] = doc['id'].to_s
+    end
+
+    # Remove tsvector columns (they are derived and not needed)
+    doc.delete('fts')  # common Supabase convention for tsvector columns
+
+    # Remove embedding columns (Meilisearch auto-embedder replaces these)
+    doc.delete('embedding')
+
+    doc
+  end
+end
+```
+
+</CodeGroup>
+
+<Note>
+If your primary key column is not called `id`, you can either rename it in the preparation step (as shown above) or tell Meilisearch which field to use as the primary key when creating the index. Replace `your_pk_column` with the actual column name.
+</Note>
+
+### Handle PostGIS geo data
+
+If your Supabase table uses PostGIS geography or geometry columns, convert them to Meilisearch's `_geo` format. You need to extract coordinates from PostGIS. For JavaScript and Python, add a database function or use the direct PostgreSQL connection. For Ruby, modify the SQL query:
+
+<CodeGroup>
+
+```javascript JavaScript
+// If your table has a PostGIS "location" column, create a Supabase database
+// function that returns lat/lng, or query via the PostgreSQL connection directly.
+// Alternatively, if you store lat/lng as separate columns:
+function convertGeoFields(doc) {
+  if (doc.lat !== undefined && doc.lng !== undefined) {
+    doc._geo = {
+      lat: parseFloat(doc.lat),
+      lng: parseFloat(doc.lng),
+    };
+    delete doc.lat;
+    delete doc.lng;
+  }
+  delete doc.location;
+  return doc;
+}
+```
+
+```python Python
+# If your table has a PostGIS "location" column, create a Supabase database
+# function that returns lat/lng, or query via the PostgreSQL connection directly.
+# Alternatively, if you store lat/lng as separate columns:
+def convert_geo_fields(doc):
+    if "lat" in doc and "lng" in doc:
+        doc["_geo"] = {
+            "lat": float(doc["lat"]),
+            "lng": float(doc["lng"]),
+        }
+        del doc["lat"]
+        del doc["lng"]
+    doc.pop("location", None)
+    return doc
+```
+
+```ruby Ruby
+# When querying, extract lat/lng from PostGIS:
+# SELECT *, ST_Y(location::geometry) AS lat, ST_X(location::geometry) AS lng FROM your_table
+
+def convert_geo_fields(doc)
+  if doc['lat'] && doc['lng']
+    doc['_geo'] = {
+      'lat' => doc['lat'].to_f,
+      'lng' => doc['lng'].to_f
+    }
+    doc.delete('lat')
+    doc.delete('lng')
+  end
+  doc.delete('location')
+  doc
+end
+```
+
+</CodeGroup>
+
+## Import your data into Meilisearch
+
+### Create Meilisearch client
+
+Create a Meilisearch client by passing the host URL and API key of your Meilisearch instance. The easiest option is to use the automatically generated [admin API key](/learn/security/basic_security).
+
+<CodeGroup>
+
+```javascript JavaScript
+const { MeiliSearch } = require("meilisearch");
+
+const meiliClient = new MeiliSearch({
+  host: "MEILI_HOST",
+  apiKey: "MEILI_API_KEY",
+});
+const meiliIndex = meiliClient.index("MEILI_INDEX_NAME");
+```
+
+```python Python
+import meilisearch
+
+meili_client = meilisearch.Client("MEILI_HOST", "MEILI_API_KEY")
+meili_index = meili_client.index("MEILI_INDEX_NAME")
+```
+
+```ruby Ruby
+require 'meilisearch'
+
+meili_client = MeiliSearch::Client.new('MEILI_HOST', 'MEILI_API_KEY')
+meili_index = meili_client.index('MEILI_INDEX_NAME')
+```
+
+</CodeGroup>
+
+Replace `MEILI_HOST`, `MEILI_API_KEY`, and `MEILI_INDEX_NAME` with your Meilisearch host URL, API key, and target index name. Meilisearch will create the index if it doesn't already exist.
+
+### Upload data to Meilisearch
+
+Use the Meilisearch client method `addDocumentsInBatches` to upload all records in batches of 100,000.
+
+<CodeGroup>
+
+```javascript JavaScript
+const UPLOAD_BATCH_SIZE = 100000;
+await meiliIndex.addDocumentsInBatches(documents, UPLOAD_BATCH_SIZE);
+```
+
+```python Python
+UPLOAD_BATCH_SIZE = 100000
+meili_index.add_documents_in_batches(documents, batch_size=UPLOAD_BATCH_SIZE)
+```
+
+```ruby Ruby
+UPLOAD_BATCH_SIZE = 100_000
+meili_index.add_documents_in_batches(documents, UPLOAD_BATCH_SIZE)
+```
+
+</CodeGroup>
+
+When you're ready, run the script:
+
+<CodeGroup>
+
+```bash JavaScript
+node script.js
+```
+
+```bash Python
+python script.py
+```
+
+```bash Ruby
+ruby script.rb
+```
+
+</CodeGroup>
+
+### Finished script
+
+<CodeGroup>
+
+```javascript JavaScript
+const { createClient } = require("@supabase/supabase-js");
+const { MeiliSearch } = require("meilisearch");
+
+const TABLE_NAME = "YOUR_TABLE_NAME";
+const FETCH_BATCH_SIZE = 1000;
+const UPLOAD_BATCH_SIZE = 100000;
+
+(async () => {
+  // Connect to Supabase
+  const supabase = createClient(
+    "SUPABASE_URL",
+    "SUPABASE_SERVICE_KEY"
+  );
+
+  // Fetch all rows using range-based pagination
+  const records = [];
+  let from = 0;
+
+  while (true) {
+    const { data, error } = await supabase
+      .from(TABLE_NAME)
+      .select("*")
+      .range(from, from + FETCH_BATCH_SIZE - 1);
+
+    if (error) throw error;
+    if (!data || data.length === 0) break;
+
+    records.push(...data);
+    from += data.length;
+
+    if (data.length < FETCH_BATCH_SIZE) break;
+  }
+
+  // Prepare documents for Meilisearch
+  const documents = records.map((row) => {
+    const doc = { ...row };
+    doc.id = String(doc.id);
+
+    // Remove derived columns that Meilisearch doesn't need
+    delete doc.fts;
+    delete doc.embedding;
+
+    return doc;
+  });
+
+  console.log(`Fetched ${documents.length} rows from Supabase`);
+
+  // Upload to Meilisearch
+  const meiliClient = new MeiliSearch({
+    host: "MEILI_HOST",
+    apiKey: "MEILI_API_KEY",
+  });
+  const meiliIndex = meiliClient.index("MEILI_INDEX_NAME");
+
+  await meiliIndex.addDocumentsInBatches(documents, UPLOAD_BATCH_SIZE);
+  console.log("Migration complete");
+})();
+```
+
+```python Python
+from supabase import create_client
+import meilisearch
+
+TABLE_NAME = "YOUR_TABLE_NAME"
+FETCH_BATCH_SIZE = 1000
+UPLOAD_BATCH_SIZE = 100000
+
+# Connect to Supabase
+supabase = create_client("SUPABASE_URL", "SUPABASE_SERVICE_KEY")
+
+# Fetch all rows using range-based pagination
+records = []
+start = 0
+
+while True:
+    response = (
+        supabase.table(TABLE_NAME)
+        .select("*")
+        .range(start, start + FETCH_BATCH_SIZE - 1)
+        .execute()
+    )
+
+    rows = response.data
+    if not rows:
+        break
+
+    records.extend(rows)
+    start += len(rows)
+
+    if len(rows) < FETCH_BATCH_SIZE:
+        break
+
+# Prepare documents for Meilisearch
+documents = []
+for row in records:
+    doc = {**row}
+    doc["id"] = str(doc["id"])
+
+    # Remove derived columns that Meilisearch doesn't need
+    doc.pop("fts", None)
+    doc.pop("embedding", None)
+
+    documents.append(doc)
+
+print(f"Fetched {len(documents)} rows from Supabase")
+
+# Upload to Meilisearch
+meili_client = meilisearch.Client("MEILI_HOST", "MEILI_API_KEY")
+meili_index = meili_client.index("MEILI_INDEX_NAME")
+
+meili_index.add_documents_in_batches(documents, batch_size=UPLOAD_BATCH_SIZE)
+print("Migration complete")
+```
+
+```ruby Ruby
+require 'pg'
+require 'meilisearch'
+
+TABLE_NAME = 'YOUR_TABLE_NAME'
+FETCH_BATCH_SIZE = 10_000
+UPLOAD_BATCH_SIZE = 100_000
+
+# Connect directly to Supabase PostgreSQL
+pg_conn = PG.connect(
+  host: 'db.xxxxx.supabase.co',
+  port: 5432,
+  dbname: 'postgres',
+  user: 'postgres',
+  password: 'SUPABASE_DB_PASSWORD'
+)
+
+# Fetch all rows
+records = []
+offset = 0
+
+loop do
+  result = pg_conn.exec_params(
+    "SELECT * FROM #{TABLE_NAME} ORDER BY id LIMIT $1 OFFSET $2",
+    [FETCH_BATCH_SIZE, offset]
+  )
+
+  break if result.ntuples.zero?
+
+  result.each { |row| records << row }
+  offset += result.ntuples
+end
+
+pg_conn.close
+
+# Prepare documents for Meilisearch
+documents = records.map do |row|
+  doc = row.dup
+  doc['id'] = doc['id'].to_s
+
+  # Remove derived columns that Meilisearch doesn't need
+  doc.delete('fts')
+  doc.delete('embedding')
+
+  doc
+end
+
+puts "Fetched #{documents.length} rows from Supabase"
+
+# Upload to Meilisearch
+meili_client = MeiliSearch::Client.new('MEILI_HOST', 'MEILI_API_KEY')
+meili_index = meili_client.index('MEILI_INDEX_NAME')
+
+meili_index.add_documents_in_batches(documents, UPLOAD_BATCH_SIZE)
+puts 'Migration complete'
+```
+
+</CodeGroup>
+
+## Configure your index settings
+
+Meilisearch's default settings deliver relevant, typo-tolerant search out of the box. Unlike Supabase, where `.textSearch()` is syntactic sugar over PostgreSQL's `to_tsquery()` and requires `tsvector` columns and GIN indexes, Meilisearch indexes all fields automatically and handles tokenization, stemming, and typo tolerance without any configuration.
+
+To customize your index settings, see [configuring index settings](/learn/getting_started/indexes#index-settings). To understand the differences between Supabase search and Meilisearch, read on.
+
+### Key conceptual differences
+
+**Supabase full-text search** is a convenience layer over PostgreSQL's built-in search. The `.textSearch()` client method translates to `to_tsquery()` under the hood. You still need `tsvector` columns, GIN indexes, and language configurations. There is no typo tolerance, no prefix search by default, and relevancy ranking requires manual `ts_rank()` calls.
+
+**Supabase Vector** uses the pgvector extension to store and query vector embeddings. You must generate embeddings in your application code or Supabase Edge Functions, store them in a `vector` column, and write RPC functions like `match_documents()` to perform similarity search. This adds significant complexity to your stack.
+
+**Meilisearch** is a dedicated search engine. You send documents and search queries — everything else is automatic. Tokenization, stemming, typo tolerance, prefix search, and ranking all work out of the box. Because Meilisearch runs as a separate service, search queries never impact your Supabase database performance.
+
+### Configure embedders for hybrid search
+
+If you currently use Supabase Vector for semantic similarity search, you can replace the entire pipeline — embedding generation in Edge Functions, vector columns, RPC functions, pgvector indexes — with Meilisearch's built-in hybrid search. Configure an [embedder](/learn/ai_powered_search/getting_started_with_ai_search) and Meilisearch handles all vectorization automatically, both at indexing time and at search time.
+
+```bash
+curl -X PATCH 'MEILI_HOST/indexes/MEILI_INDEX_NAME/settings' \
+  -H 'Authorization: Bearer MEILI_API_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "embedders": {
+      "default": {
+        "source": "openAi",
+        "apiKey": "OPENAI_API_KEY",
+        "model": "text-embedding-3-small",
+        "documentTemplate": "A document titled {{doc.title}}: {{doc.description}}"
+      }
+    }
+  }'
+```
+
+The `documentTemplate` controls what text is sent to the embedding model. Adjust it to match the fields in your documents. With this single configuration, you can remove:
+
+- Supabase Edge Functions that generate embeddings
+- The `embedding` vector column from your table
+- The `match_documents()` RPC function
+- Any pgvector indexes (ivfflat or hnsw)
+- Client-side embedding generation code
+
+For more options including HuggingFace models, Ollama, and custom REST endpoints, see [configuring embedders](/learn/ai_powered_search/getting_started_with_ai_search).
+
+<Accordion title="Alternative: use existing pgvector embeddings">
+If you already have embeddings stored in a pgvector `vector` column and prefer not to re-embed, export them from Supabase and include them in the `_vectors` field of each document. Then configure a `userProvided` embedder:
+
+```bash
+curl -X PATCH 'MEILI_HOST/indexes/MEILI_INDEX_NAME/settings' \
+  -H 'Authorization: Bearer MEILI_API_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "embedders": {
+      "default": {
+        "source": "userProvided",
+        "dimensions": 1536
+      }
+    }
+  }'
+```
+
+Replace `1536` with the dimension of your pgvector embeddings. With this approach, you remain responsible for computing and providing vectors when adding or updating documents, and for computing query vectors client-side when searching.
+</Accordion>
+
+### Configure filterable and sortable attributes
+
+In Supabase, any column can be used with `.eq()`, `.gt()`, `.lt()`, and `.order()`. In Meilisearch, you must declare which fields are [`filterableAttributes`](/reference/api/settings/update-filterableattributes) and [`sortableAttributes`](/reference/api/settings/update-sortableattributes):
+
+```bash
+curl -X PATCH 'MEILI_HOST/indexes/MEILI_INDEX_NAME/settings' \
+  -H 'Authorization: Bearer MEILI_API_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "filterableAttributes": ["category", "status", "price", "_geo"],
+    "sortableAttributes": ["price", "created_at", "_geo"]
+  }'
+```
+
+### What you gain
+
+Migrating your search layer from Supabase to Meilisearch gives you several features that work out of the box:
+
+- **Typo tolerance** — Supabase's `.textSearch()` inherits PostgreSQL's zero typo tolerance. A single typo returns zero results. Meilisearch handles typos automatically, so "reciepe" finds "recipe"
+- **Prefix search** — Users see results as they type, without needing trigram indexes or `LIKE` queries
+- **Instant results** — Sub-50ms search responses regardless of dataset complexity, with no GIN index tuning
+- **Highlighting** of matching terms in results, without manually calling `ts_headline()` via RPC
+- **Faceted search** with value distributions for building filter UIs — no `GROUP BY` queries or RPC functions needed
+- **Hybrid search** combining keyword relevancy and semantic similarity in a single query, replacing separate `.textSearch()` and `match_documents()` pipelines
+- **No search infrastructure in your database** — Remove `tsvector` columns, GIN indexes, embedding columns, pgvector indexes, RPC functions, and Edge Functions for embedding generation. Your Supabase database handles what it does best (transactions and relational data), while Meilisearch handles search
+
+## Settings and parameters comparison
+
+### Supabase client methods
+
+| Supabase client | Meilisearch | Notes |
+| :--- | :--- | :--- |
+| `.textSearch(column, query)` | `q` search param | Just send the user's text — no tsquery construction needed |
+| `.eq(column, value)` | `filter` with `=` | Requires [`filterableAttributes`](/reference/api/settings/update-filterableattributes) |
+| `.gt()` / `.gte()` / `.lt()` / `.lte()` | `filter` with `>`, `>=`, `<`, `<=` | Requires [`filterableAttributes`](/reference/api/settings/update-filterableattributes) |
+| `.in(column, values)` | `filter` with `IN [v1, v2]` | Requires [`filterableAttributes`](/reference/api/settings/update-filterableattributes) |
+| `.order(column, { ascending })` | `sort` search param | Requires [`sortableAttributes`](/reference/api/settings/update-sortableattributes) |
+| `.range(from, to)` | `offset` / `limit` or `page` / `hitsPerPage` | Search params |
+| `.select(columns)` | `attributesToRetrieve` | Search param |
+| `.limit(count)` | `limit` | Search param |
+| No equivalent | `attributesToHighlight` | Highlight matching terms in results |
+| No equivalent | `facets` | Get value distributions for fields |
+| No equivalent | `hybrid` | Combined keyword + semantic search |
+
+### Supabase Vector (pgvector)
+
+| Supabase Vector | Meilisearch | Notes |
+| :--- | :--- | :--- |
+| `match_documents()` RPC function | `hybrid` + auto-embedder | No RPC functions needed — just send a text query |
+| pgvector `<=>` cosine operator | Automatic via configured embedder | Distance metric handled internally |
+| `embedding` vector column | Not needed with auto-embedder | Meilisearch generates and stores vectors automatically |
+| Embedding generation in Edge Functions | Automatic via configured embedder | Remove all embedding generation code |
+| `vecs` Python library | `meilisearch` Python SDK with `hybrid` | Single SDK for all search types |
+| hnsw / ivfflat index on vector column | Automatic (DiskANN-based) | No index type selection needed |
+| `match_count` parameter | `limit` search param | Search param |
+
+### PostgreSQL concepts (underlying Supabase)
+
+| PostgreSQL concept | Meilisearch | Notes |
+| :--- | :--- | :--- |
+| `to_tsvector(config, text)` | Automatic tokenization | No text processing functions needed |
+| `to_tsquery()` / `plainto_tsquery()` | `q` search param | Just send the user's text |
+| `ts_rank()` / `ts_rank_cd()` | Built-in [ranking rules](/reference/api/settings/update-ranking-rules) | Relevancy ranking is automatic and configurable |
+| `tsvector` column + GIN index | Automatic | Meilisearch indexes all fields automatically |
+| Language configurations (`english`, `french`) | [`localizedAttributes`](/reference/api/settings/update-localizedattributes) | Assign languages to specific fields |
+| `setweight()` (A, B, C, D) | [`searchableAttributes`](/reference/api/settings/update-searchableattributes) | Ordered list — fields listed first have higher priority |
+| `tsvector` update triggers | Automatic | Meilisearch re-indexes on every document update |
+| No typo tolerance | Automatic [typo tolerance](/reference/api/settings/update-typotolerance) | Configurable per index |
+
+## Query comparison
+
+This section shows how common Supabase search operations translate to Meilisearch. All Supabase examples use the JavaScript client syntax (the most widely used). Meilisearch examples are shown as JSON POST requests.
+
+### Full-text search
+
+**Supabase:**
+```javascript
+const { data } = await supabase
+  .from('products')
+  .select()
+  .textSearch('name', 'running shoes')
+  .limit(20)
+```
+
+**Meilisearch:**
+```json
+POST /indexes/products/search
+{
+  "q": "running shoes",
+  "limit": 20
+}
+```
+
+No `tsvector` columns, no `@@` operator, no `ts_rank()` function. Just send the text. Meilisearch also handles typos — searching for "runnign shoes" still returns the right results.
+
+### Filtered search
+
+**Supabase:**
+```javascript
+const { data } = await supabase
+  .from('products')
+  .select()
+  .textSearch('name', 'laptop')
+  .eq('category', 'electronics')
+  .gte('price', 500)
+  .lte('price', 1500)
+```
+
+**Meilisearch:**
+```json
+POST /indexes/products/search
+{
+  "q": "laptop",
+  "filter": "category = electronics AND price >= 500 AND price <= 1500"
+}
+```
+
+<Note>
+Attributes used in `filter` must first be added to [`filterableAttributes`](/reference/api/settings/update-filterableattributes).
+</Note>
+
+### Sorting
+
+**Supabase:**
+```javascript
+const { data } = await supabase
+  .from('products')
+  .select()
+  .textSearch('name', 'shoes')
+  .order('price', { ascending: true })
+```
+
+**Meilisearch:**
+```json
+POST /indexes/products/search
+{
+  "q": "shoes",
+  "sort": ["price:asc"]
+}
+```
+
+<Note>
+Attributes used in `sort` must first be added to [`sortableAttributes`](/reference/api/settings/update-sortableattributes).
+</Note>
+
+### Vector / semantic search
+
+**Supabase (requires Edge Function for embedding + RPC function):**
+```javascript
+// First, generate the embedding (typically in an Edge Function)
+const embeddingResponse = await openai.embeddings.create({
+  model: 'text-embedding-3-small',
+  input: 'comfortable running shoes',
+})
+const queryEmbedding = embeddingResponse.data[0].embedding
+
+// Then call the RPC function
+const { data } = await supabase.rpc('match_documents', {
+  query_embedding: queryEmbedding,
+  match_count: 10,
+})
+```
+
+**Meilisearch:**
+```json
+POST /indexes/products/search
+{
+  "q": "comfortable running shoes",
+  "hybrid": {
+    "semanticRatio": 1.0,
+    "embedder": "default"
+  },
+  "limit": 10
+}
+```
+
+With an auto-embedder configured, Meilisearch embeds the `q` text for you. No client-side embedding generation, no Edge Functions, no RPC functions. Setting `semanticRatio` to `1.0` performs pure semantic search. Use a value like `0.5` to combine keyword and semantic results in a single hybrid query.
+
+### Faceted search
+
+**Supabase (requires a custom RPC function):**
+```javascript
+// Must create a PostgreSQL function first:
+// CREATE FUNCTION get_category_counts(search_query text)
+// RETURNS TABLE(category text, count bigint) AS $$
+//   SELECT category, COUNT(*)
+//   FROM products
+//   WHERE to_tsvector('english', name) @@ plainto_tsquery('english', search_query)
+//   GROUP BY category ORDER BY count DESC
+// $$ LANGUAGE sql;
+
+const { data } = await supabase.rpc('get_category_counts', {
+  search_query: 'shoes',
+})
+```
+
+**Meilisearch:**
+```json
+POST /indexes/products/search
+{
+  "q": "shoes",
+  "facets": ["category", "brand", "color"]
+}
+```
+
+Meilisearch returns search results and value distributions for all requested facets in a single response — no custom RPC functions or `GROUP BY` queries needed.
+
+### Geo search
+
+**Supabase (requires PostGIS + RPC function):**
+```javascript
+// Must create a PostgreSQL function using PostGIS:
+// CREATE FUNCTION nearby_restaurants(lat float, lng float, radius_m float)
+// RETURNS SETOF restaurants AS $$
+//   SELECT * FROM restaurants
+//   WHERE ST_DWithin(location, ST_MakePoint(lng, lat)::geography, radius_m)
+//   ORDER BY ST_Distance(location, ST_MakePoint(lng, lat)::geography)
+// $$ LANGUAGE sql;
+
+const { data } = await supabase.rpc('nearby_restaurants', {
+  lat: 48.8566,
+  lng: 2.3522,
+  radius_m: 5000,
+})
+```
+
+**Meilisearch:**
+```json
+POST /indexes/restaurants/search
+{
+  "filter": "_geoRadius(48.8566, 2.3522, 5000)",
+  "sort": ["_geoPoint(48.8566, 2.3522):asc"]
+}
+```
+
+<Note>
+The `_geo` attribute must be added to both [`filterableAttributes`](/reference/api/settings/update-filterableattributes) and [`sortableAttributes`](/reference/api/settings/update-sortableattributes).
+</Note>
+
+## Keeping data in sync
+
+Since Supabase remains your source of truth, you need a strategy to keep Meilisearch in sync when data changes. Supabase offers several built-in mechanisms that make this straightforward.
+
+### Database Webhooks
+
+Supabase Database Webhooks trigger an HTTP request on INSERT, UPDATE, or DELETE events. Point them at a serverless function that updates Meilisearch:
+
+1. Go to **Supabase Dashboard > Database > Webhooks**
+2. Create a webhook for your table, selecting the events you want to track
+3. Set the URL to a serverless function (Supabase Edge Function, Vercel, etc.) that forwards the change to Meilisearch
+
+### Supabase Edge Functions
+
+Create an Edge Function that receives webhook payloads and syncs changes to Meilisearch:
+
+```typescript
+// supabase/functions/sync-to-meilisearch/index.ts
+import { MeiliSearch } from "npm:meilisearch";
+
+const meili = new MeiliSearch({
+  host: Deno.env.get("MEILI_HOST")!,
+  apiKey: Deno.env.get("MEILI_API_KEY")!,
+});
+
+Deno.serve(async (req) => {
+  const payload = await req.json();
+  const { type, record, old_record } = payload;
+  const index = meili.index("your_index");
+
+  if (type === "INSERT" || type === "UPDATE") {
+    await index.addDocuments([{ ...record, id: String(record.id) }]);
+  } else if (type === "DELETE") {
+    await index.deleteDocument(String(old_record.id));
+  }
+
+  return new Response("ok");
+});
+```
+
+### Supabase Realtime
+
+Subscribe to database changes from your application and sync them as they happen:
+
+```javascript
+supabase
+  .channel('meilisearch-sync')
+  .on('postgres_changes', { event: '*', schema: 'public', table: 'products' },
+    async (payload) => {
+      const index = meiliClient.index('products')
+
+      if (payload.eventType === 'DELETE') {
+        await index.deleteDocument(String(payload.old.id))
+      } else {
+        await index.addDocuments([{ ...payload.new, id: String(payload.new.id) }])
+      }
+    }
+  )
+  .subscribe()
+```
+
+### Periodic batch sync
+
+Run a scheduled job that queries Supabase for recently modified rows:
+
+```javascript
+const since = new Date(Date.now() - 5 * 60 * 1000).toISOString() // last 5 minutes
+
+const { data } = await supabase
+  .from('products')
+  .select('*')
+  .gte('updated_at', since)
+
+if (data && data.length > 0) {
+  await meiliIndex.addDocuments(data.map(row => ({
+    ...row,
+    id: String(row.id),
+  })))
+}
+```
+
+For most applications, Database Webhooks with an Edge Function provide the best balance of simplicity and freshness. Meilisearch's `addDocuments` method is an upsert — sending an existing document with the same primary key updates it automatically.
+
+## Front-end components
+
+Supabase does not include front-end search components. Meilisearch is compatible with Algolia's [InstantSearch](https://github.com/algolia/instantsearch.js) libraries through [Instant Meilisearch](https://github.com/meilisearch/meilisearch-js-plugins/tree/main/packages/instant-meilisearch), giving you pre-built widgets for search boxes, hit displays, facet filters, pagination, and more.
+
+You can find an up-to-date list of [the components supported by Instant Meilisearch](https://github.com/meilisearch/meilisearch-js-plugins/tree/main/packages/instant-meilisearch#-api-resources) in the GitHub project's README.
