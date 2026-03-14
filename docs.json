@@ -796,8 +796,7 @@
                   "resources/migration/qdrant_migration",
                   "resources/migration/mongodb_migration",
                   "resources/migration/postgresql_migration",
-                  "resources/migration/supabase_migration",
-                  "resources/migration/previous_docs_version"
+                  "resources/migration/supabase_migration"
                 ]
               },
               {
@@ -892,7 +891,8 @@
                   "resources/help/experimental_features_overview",
                   "resources/help/telemetry",
                   "resources/help/versioning",
-                  "resources/help/contributing_docs"
+                  "resources/help/contributing_docs",
+                  "resources/migration/previous_docs_version"
                 ]
               }
             ]
