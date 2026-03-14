@@ -1,0 +1,199 @@
+---
+title: "Meilisearch ranking: a multi-criteria system beyond BM25"
+sidebarTitle: Ranking vs BM25
+description: How Meilisearch's multi-criteria ranking system works, why it produces better results than BM25 for user-facing search, and the technical trade-offs involved.
+---
+
+Most search engines rank results using a single relevancy score computed from a formula like BM25. Meilisearch takes a fundamentally different approach: it evaluates multiple ranking criteria sequentially, giving you transparent control over what matters most and delivering results that feel right to end users.
+
+## How traditional search ranking works
+
+### BM25: the industry default
+
+[BM25](https://en.wikipedia.org/wiki/Okapi_BM25) (Best Matching 25) is the ranking function used by Elasticsearch, OpenSearch, Lucene, PostgreSQL full-text search, and most traditional search engines. It computes a single numeric score per document based on:
+
+- **Term frequency (TF)**: How often the query term appears in the document
+- **Inverse document frequency (IDF)**: How rare the term is across all documents
+- **Document length normalization**: Shorter documents get a slight boost
+
+The formula produces a score like `8.72` or `3.14`, and results are sorted by this number in descending order.
+
+### The problem with single-score ranking
+
+BM25 was designed for **information retrieval** — finding research papers, legal documents, or web pages where term frequency genuinely signals relevance. But for **application search** — e-commerce, media catalogs, SaaS dashboards — this model breaks down:
+
+- **Typos are invisible**: BM25 treats "iPhone" and "iPhoone" as completely different terms. The misspelled query returns zero results
+- **Word order is ignored**: Searching "dark knight" and "knight dark" produce identical scores, even though user intent clearly favors the first ordering
+- **Field importance is flattened**: A match in a product title should matter more than a match in a review comment, but BM25 requires manual field boosting that's fragile and hard to tune
+- **Scoring is opaque**: A score of `8.72` means nothing to a developer debugging why result A appears before result B
+- **Prefix matching requires workarounds**: A user typing "prog" expects to see "programming" — BM25 doesn't do this without additional analyzers
+
+## How Meilisearch ranks results
+
+Meilisearch replaces the single-score model with a **multi-criteria [bucket sort](/resources/internals/bucket_sort)** system. Instead of computing one number, it evaluates documents through a sequence of ranking rules, each acting as a successive filter.
+
+### The ranking pipeline
+
+When a user searches for `"badman dark knight returns"`, Meilisearch applies ranking rules in order:
+
+```
+All matching documents
+  │
+  ├─ 1. words ──────────── How many query words match?
+  │     ├─ 4/4 words → Bucket A
+  │     ├─ 3/4 words → Bucket B
+  │     └─ 1/4 words → Bucket C
+  │
+  ├─ 2. typo ───────────── How many typos were needed?
+  │     ├─ 0 typos → Sub-bucket A.1
+  │     └─ 1 typo (badman→batman) → Sub-bucket A.2
+  │
+  ├─ 3. proximity ──────── How close are matched words?
+  │     ├─ Adjacent → Sub-bucket A.1.1
+  │     └─ 3 words apart → Sub-bucket A.1.2
+  │
+  ├─ 4. attributeRank ──── Which field matched?
+  │     ├─ Title → higher
+  │     └─ Overview → lower
+  │
+  ├─ 5. sort ───────────── User-defined sort (if any)
+  │
+  ├─ 6. wordPosition ───── Where in the field did it match?
+  │     ├─ Start of field → higher
+  │     └─ End of field → lower
+  │
+  └─ 7. exactness ──────── Exact match or partial?
+        ├─ Exact → higher
+        └─ Prefix/partial → lower
+```
+
+Each rule only operates on documents that **tied** in all previous rules. This means:
+
+- A document matching 4/4 words with 2 typos **always** ranks above a document matching 3/4 words with 0 typos
+- The `words` rule has absolute priority over `typo`, which has absolute priority over `proximity`, and so on
+- There is no way for a high score in one dimension to compensate for a low score in another
+
+This is called **lexicographic ordering** — the same logic humans use to sort words in a dictionary, applied to search ranking.
+
+### The seven default ranking rules
+
+| Order | Rule | What it measures | Why it matters |
+| :--- | :--- | :--- | :--- |
+| 1 | **words** | Number of query terms matched | Documents matching more of what the user typed are more relevant |
+| 2 | **typo** | Number of typos corrected | Exact matches are preferred, but typos still return results |
+| 3 | **proximity** | Distance between matched terms | "dark knight" in sequence beats "dark ... knight" far apart |
+| 4 | **attributeRank** | Which attribute matched | A title match is more important than a description match |
+| 5 | **sort** | User-defined sort order | Only active when the query includes a `sort` parameter |
+| 6 | **wordPosition** | Position of match within the attribute | Matching at the start of a title beats matching at the end |
+| 7 | **exactness** | Exact match vs prefix/typo match | "knight" exactly beats "knights" (prefix) |
+
+You can [reorder, add, or remove](/learn/relevancy/ranking_rules) any of these rules. You can also add [custom ranking rules](/learn/relevancy/custom_ranking_rules) that incorporate business logic — like boosting newer products or higher-rated items.
+
+## Why this is better for application search
+
+### 1. Typo tolerance is built in
+
+BM25 either matches a term or it doesn't. Meilisearch's `typo` rule is a first-class ranking criterion: documents matching with fewer typos rank higher than those requiring more corrections, but all of them appear in results.
+
+| Query | BM25 | Meilisearch |
+| :--- | :--- | :--- |
+| `"iphone"` | Returns iPhone results | Returns iPhone results |
+| `"iphoen"` | **0 results** | Returns iPhone results (1 typo) |
+| `"ipohne"` | **0 results** | Returns iPhone results (2 typos) |
+
+### 2. Word order and proximity matter
+
+BM25 treats a document as a bag of words — the position and distance between terms don't affect the score. Meilisearch's `proximity` rule ensures that documents where query terms appear close together and in order rank higher.
+
+| Query: `"new york pizza"` | BM25 | Meilisearch |
+| :--- | :--- | :--- |
+| "Best **New York pizza** places" | Same score as below | Ranks **1st** (adjacent, in order) |
+| "**New** restaurant in **York** with great **pizza**" | Same score as above | Ranks **2nd** (words spread apart) |
+
+### 3. Field importance is explicit and predictable
+
+With BM25, field boosting requires numeric weights (`title^3 description^1`) that interact unpredictably with term frequency and document length. In Meilisearch, the `attributeRank` rule uses the order of [`searchableAttributes`](/reference/api/settings/update-searchableattributes) — the first field always wins over the second, no math involved.
+
+```json
+// searchableAttributes setting
+["title", "brand", "description"]
+```
+
+A match in `title` **always** outranks a match in `description` (assuming previous rules tied). No weights to tune, no interactions to debug.
+
+### 4. Ranking is transparent and debuggable
+
+BM25 produces opaque scores. Meilisearch lets you inspect exactly why a document ranks where it does using [`showRankingScoreDetails`](/learn/relevancy/ranking_score):
+
+```json
+{
+  "title": "Batman: The Dark Knight",
+  "_rankingScoreDetails": {
+    "words": { "order": 0, "matchingWords": 3, "maxMatchingWords": 3 },
+    "typo": { "order": 1, "typoCount": 0, "maxTypoCount": 3 },
+    "proximity": { "order": 2, "score": 0.98 },
+    "attributeRank": { "order": 3, "score": 1.0, "attributeRankingOrderScore": 1.0 },
+    "exactness": { "order": 6, "score": 0.67 }
+  }
+}
+```
+
+You can see that this result matched 3/3 words, with 0 typos, high proximity, in the highest-ranked attribute. If a result appears in the wrong position, you can identify which rule caused it and adjust.
+
+### 5. Prefix search works natively
+
+When a user types `"prog"` in a search bar, they expect to see "programming", "progress", "program". BM25 requires n-gram tokenizers or edge-gram analyzers to achieve this. Meilisearch handles it automatically — the last word in a query is always treated as a prefix.
+
+### 6. No per-query tuning required
+
+BM25 deployments often require extensive per-query tuning: function scores, field boosts, decay functions, script scores. Meilisearch's ranking rules are configured once at the index level and work consistently across all queries. The same rules that rank "batman" well also rank "comfortable running shoes" well.
+
+## Trade-offs to be aware of
+
+Meilisearch's approach is optimized for application and site search. There are scenarios where BM25 may be more appropriate:
+
+| Scenario | BM25 | Meilisearch |
+| :--- | :--- | :--- |
+| **Log analytics** | Better — term frequency matters for finding error patterns | Not designed for this use case |
+| **Academic paper search** | Better — TF-IDF identifies topically relevant papers | Optimized for short, user-facing queries |
+| **Documents > 10KB** | Handles naturally | Best with documents [split into smaller chunks](/guides/improve_relevancy_large_documents) |
+| **Custom scoring formulas** | Fully customizable via script scores | Fixed rule set with configurable order |
+| **Billions of documents** | Horizontally scalable | Designed for millions of documents per index |
+
+## Combining ranking with semantic search
+
+Meilisearch's ranking system works alongside [hybrid search](/learn/ai_powered_search/hybrid_search/overview). When you enable an [embedder](/learn/ai_powered_search/getting_started_with_ai_search), Meilisearch combines keyword-based ranking (the rules above) with vector similarity in a single query:
+
+```json
+{
+  "q": "comfortable running shoes",
+  "hybrid": {
+    "semanticRatio": 0.5,
+    "embedder": "default"
+  }
+}
+```
+
+The `semanticRatio` controls the blend: `0.0` uses only the multi-criteria ranking rules, `1.0` uses only vector similarity, and values in between merge both result sets. This gives you the best of both worlds — BM25-beating keyword relevancy plus semantic understanding — without managing two separate search systems.
+
+## Summary
+
+| | BM25 (Elasticsearch, PostgreSQL, etc.) | Meilisearch multi-criteria ranking |
+| :--- | :--- | :--- |
+| **Approach** | Single numeric score per document | Sequential bucket sort through multiple rules |
+| **Typo handling** | None (or via fuzzy query, separate step) | Built-in, ranked by typo count |
+| **Word proximity** | Not a scoring factor | Dedicated ranking rule |
+| **Field importance** | Numeric boosts with complex interactions | Ordered list, first field always wins |
+| **Prefix search** | Requires analyzer configuration | Automatic on last query word |
+| **Debuggability** | Opaque score | Per-rule breakdown via `showRankingScoreDetails` |
+| **Configuration** | Per-query function scores and boosts | Per-index rules, consistent across queries |
+| **Semantic search** | Separate system (kNN, vector DB) | Integrated via `hybrid` parameter |
+| **Best for** | Log analytics, research, large corpora | Application search, e-commerce, media catalogs |
+
+## Learn more
+
+- [Ranking rules](/learn/relevancy/ranking_rules) — Configure and reorder the seven built-in rules
+- [Bucket sort](/resources/internals/bucket_sort) — How the bucket sort algorithm works
+- [Ranking score](/learn/relevancy/ranking_score) — Understanding the 0.0–1.0 ranking score
+- [Custom ranking rules](/learn/relevancy/custom_ranking_rules) — Add business logic to ranking
+- [Ordering ranking rules](/guides/relevancy/ordering_ranking_rules) — Best practices for rule ordering

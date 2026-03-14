@@ -878,6 +878,7 @@
                 "pages": [
                   "resources/internals/storage",
                   "resources/internals/datatypes",
+                  "resources/internals/ranking",
                   "resources/internals/bucket_sort",
                   "resources/internals/hannoy",
                   "resources/internals/concat",
