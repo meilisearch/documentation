@@ -842,6 +842,7 @@
                   "resources/migration/qdrant_migration",
                   "resources/migration/mongodb_migration",
                   "resources/migration/postgresql_migration",
+                  "resources/migration/supabase_migration",
                   "resources/migration/previous_docs_version"
                 ]
               },
