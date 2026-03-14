@@ -793,6 +793,7 @@
                   "resources/migration/updating",
                   "resources/migration/algolia_migration",
                   "resources/migration/elasticsearch_migration",
+                  "resources/migration/qdrant_migration",
                   "resources/migration/previous_docs_version"
                 ]
               },
