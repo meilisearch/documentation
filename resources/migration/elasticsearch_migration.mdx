@@ -11,7 +11,7 @@ For a high-level comparison of the two search engines, see [Meilisearch vs Elast
 
 ## Overview
 
-This guide walks you through exporting documents from an Elasticsearch index and importing them into Meilisearch using a [Node.js](https://nodejs.org/en/) script. [You can also skip directly to the finished script](#finished-script).
+This guide walks you through exporting documents from an Elasticsearch index and importing them into Meilisearch using a script in JavaScript, Python, or Ruby. [You can also skip directly to the finished script](#finished-script).
 
 The migration process consists of four steps:
 
@@ -22,49 +22,68 @@ The migration process consists of four steps:
 
 To help with the transition, this guide also includes a comparison of [settings and parameters](#settings-and-parameters-comparison), [query types](#query-comparison), and [API methods](#api-methods).
 
-Before continuing, make sure you have both Meilisearch and Node.js installed and have access to a command-line terminal. If you're unsure how to install Meilisearch, see our [quick start](/resources/self_hosting/getting_started).
+Before continuing, make sure you have Meilisearch installed and have access to a command-line terminal. If you're unsure how to install Meilisearch, see our [quick start](/resources/self_hosting/getting_started).
 
 <Note>
-This guide was tested with the following package versions:
+This guide includes examples in JavaScript, Python, and Ruby. The packages used:
 
-- [`node.js`](https://nodejs.org/en/): `18` or later
-- [`@elastic/elasticsearch`](https://www.npmjs.com/package/@elastic/elasticsearch): `8.x`
-- [`meilisearch`](https://www.npmjs.com/package/meilisearch): compatible with Meilisearch v1.0 and above
+- **JavaScript**: [`@elastic/elasticsearch`](https://www.npmjs.com/package/@elastic/elasticsearch) `8.x`, [`meilisearch`](https://www.npmjs.com/package/meilisearch) (compatible with Meilisearch v1.0+)
+- **Python**: [`elasticsearch`](https://pypi.org/project/elasticsearch/) `8.x`, [`meilisearch`](https://pypi.org/project/meilisearch/)
+- **Ruby**: [`elasticsearch`](https://rubygems.org/gems/elasticsearch) `8.x`, [`meilisearch`](https://rubygems.org/gems/meilisearch)
 </Note>
 
 ## Export your Elasticsearch data
 
 ### Initialize project
 
-Start by creating a directory and generating a `package.json` file with `npm`:
+<CodeGroup>
 
-```bash
+```bash JavaScript
 mkdir elastic-meilisearch-migration
 cd elastic-meilisearch-migration
 npm init -y
-```
-
-Next, create a `script.js` file:
-
-```bash
 touch script.js
 ```
 
-This file will contain the migration script.
+```bash Python
+mkdir elastic-meilisearch-migration
+cd elastic-meilisearch-migration
+touch script.py
+```
+
+```bash Ruby
+mkdir elastic-meilisearch-migration
+cd elastic-meilisearch-migration
+touch script.rb
+```
+
+</CodeGroup>
 
 ### Install dependencies
 
-You need two packages: `@elastic/elasticsearch`, the official Elasticsearch JavaScript client, and `meilisearch`, the Meilisearch JavaScript client.
+<CodeGroup>
 
-```bash
+```bash JavaScript
 npm install -s @elastic/elasticsearch meilisearch
 ```
 
+```bash Python
+pip install elasticsearch meilisearch
+```
+
+```bash Ruby
+gem install elasticsearch meilisearch
+```
+
+</CodeGroup>
+
 ### Create Elasticsearch client
 
-You need your Elasticsearch **host URL** and authentication credentials. Paste the below code in `script.js`:
+You need your Elasticsearch **host URL** and authentication credentials. Paste the below code in your script:
 
-```js
+<CodeGroup>
+
+```javascript JavaScript
 const { Client } = require("@elastic/elasticsearch");
 
 const esClient = new Client({
@@ -79,13 +98,42 @@ const esClient = new Client({
 });
 ```
 
+```python Python
+from elasticsearch import Elasticsearch
+
+es_client = Elasticsearch(
+    "ELASTICSEARCH_URL",
+    # Use API key authentication:
+    api_key="ELASTICSEARCH_API_KEY",
+    # Or use basic authentication:
+    # basic_auth=("USERNAME", "PASSWORD"),
+)
+```
+
+```ruby Ruby
+require 'elasticsearch'
+
+es_client = Elasticsearch::Client.new(
+  url: 'ELASTICSEARCH_URL',
+  # Use API key authentication:
+  api_key: 'ELASTICSEARCH_API_KEY'
+  # Or use basic authentication:
+  # user: 'USERNAME',
+  # password: 'PASSWORD'
+)
+```
+
+</CodeGroup>
+
 Replace `ELASTICSEARCH_URL` with your Elasticsearch cluster URL (for example, `https://localhost:9200`) and provide your authentication credentials.
 
 ### Fetch data from Elasticsearch
 
 Use the [Point in Time API](https://www.elastic.co/guide/en/elasticsearch/reference/current/point-in-time-api.html) with `search_after` to paginate through all documents in the index. This approach is recommended over the deprecated Scroll API.
 
-```js
+<CodeGroup>
+
+```javascript JavaScript
 const INDEX_NAME = "YOUR_INDEX_NAME";
 const BATCH_SIZE = 10000;
 
@@ -123,24 +171,123 @@ async function fetchAllDocuments() {
 }
 ```
 
+```python Python
+INDEX_NAME = "YOUR_INDEX_NAME"
+BATCH_SIZE = 10000
+
+def fetch_all_documents():
+    records = []
+
+    # Open a Point in Time
+    pit = es_client.open_point_in_time(
+        index=INDEX_NAME,
+        keep_alive="5m"
+    )
+
+    search_after = None
+    while True:
+        body = {
+            "size": BATCH_SIZE,
+            "query": {"match_all": {}},
+            "pit": {"id": pit["id"], "keep_alive": "5m"},
+            "sort": [{"_doc": "asc"}],
+        }
+        if search_after:
+            body["search_after"] = search_after
+
+        response = es_client.search(body=body)
+
+        hits = response["hits"]["hits"]
+        if not hits:
+            break
+
+        records.extend(hits)
+        search_after = hits[-1]["sort"]
+
+    # Close the Point in Time
+    es_client.close_point_in_time(id=pit["id"])
+    return records
+```
+
+```ruby Ruby
+INDEX_NAME = 'YOUR_INDEX_NAME'
+BATCH_SIZE = 10_000
+
+def fetch_all_documents(es_client)
+  records = []
+
+  # Open a Point in Time
+  pit = es_client.open_point_in_time(
+    index: INDEX_NAME,
+    keep_alive: '5m'
+  )
+
+  search_after = nil
+  loop do
+    body = {
+      size: BATCH_SIZE,
+      query: { match_all: {} },
+      pit: { id: pit['id'], keep_alive: '5m' },
+      sort: [{ _doc: 'asc' }]
+    }
+    body[:search_after] = search_after if search_after
+
+    response = es_client.search(body: body)
+
+    hits = response['hits']['hits']
+    break if hits.empty?
+
+    records.concat(hits)
+    search_after = hits.last['sort']
+  end
+
+  # Close the Point in Time
+  es_client.close_point_in_time(body: { id: pit['id'] })
+  records
+end
+```
+
+</CodeGroup>
+
 Replace `YOUR_INDEX_NAME` with the name of the Elasticsearch index you want to migrate.
 
 ## Prepare your data
 
 Elasticsearch documents are wrapped in metadata (`_id`, `_index`, `_source`). You need to extract the document data from `_source` and ensure each document has a valid primary key for Meilisearch.
 
-```js
+<CodeGroup>
+
+```javascript JavaScript
 function prepareDocuments(hits) {
   return hits.map((hit) => {
     const doc = hit._source;
-    // Use Elasticsearch's _id as the Meilisearch primary key
-    // Meilisearch primary keys must only contain alphanumeric
-    // characters, hyphens, and underscores
     doc.id = hit._id;
     return doc;
   });
 }
 ```
+
+```python Python
+def prepare_documents(hits):
+    documents = []
+    for hit in hits:
+        doc = hit["_source"]
+        doc["id"] = hit["_id"]
+        documents.append(doc)
+    return documents
+```
+
+```ruby Ruby
+def prepare_documents(hits)
+  hits.map do |hit|
+    doc = hit['_source']
+    doc['id'] = hit['_id']
+    doc
+  end
+end
+```
+
+</CodeGroup>
 
 <Note>
 Meilisearch stores documents as flat JSON objects. If your Elasticsearch documents use nested objects or the `nested` mapping type, you must flatten them before indexing. For example, `{ "author": { "name": "John" } }` should become `{ "author_name": "John" }` or kept as-is if you only need it for display purposes. Only top-level fields can be used for filtering, sorting, and searching.
@@ -150,7 +297,9 @@ Meilisearch stores documents as flat JSON objects. If your Elasticsearch documen
 
 If your Elasticsearch documents use `geo_point` fields, convert them to Meilisearch's `_geo` format:
 
-```js
+<CodeGroup>
+
+```javascript JavaScript
 function convertGeoFields(doc, geoFieldName) {
   if (doc[geoFieldName]) {
     const geo = doc[geoFieldName];
@@ -164,13 +313,43 @@ function convertGeoFields(doc, geoFieldName) {
 }
 ```
 
+```python Python
+def convert_geo_fields(doc, geo_field_name):
+    if geo_field_name in doc:
+        geo = doc[geo_field_name]
+        doc["_geo"] = {
+            "lat": geo["lat"],
+            "lng": geo["lon"],  # Elasticsearch uses "lon", Meilisearch uses "lng"
+        }
+        del doc[geo_field_name]
+    return doc
+```
+
+```ruby Ruby
+def convert_geo_fields(doc, geo_field_name)
+  if doc[geo_field_name]
+    geo = doc[geo_field_name]
+    doc['_geo'] = {
+      'lat' => geo['lat'],
+      'lng' => geo['lon'] # Elasticsearch uses "lon", Meilisearch uses "lng"
+    }
+    doc.delete(geo_field_name)
+  end
+  doc
+end
+```
+
+</CodeGroup>
+
 ## Import your data into Meilisearch
 
 ### Create Meilisearch client
 
 Create a Meilisearch client by passing the host URL and API key of your Meilisearch instance. The easiest option is to use the automatically generated [admin API key](/learn/security/basic_security).
 
-```js
+<CodeGroup>
+
+```javascript JavaScript
 const { MeiliSearch } = require("meilisearch");
 
 const meiliClient = new MeiliSearch({
@@ -180,26 +359,70 @@ const meiliClient = new MeiliSearch({
 const meiliIndex = meiliClient.index("MEILI_INDEX_NAME");
 ```
 
+```python Python
+import meilisearch
+
+meili_client = meilisearch.Client("MEILI_HOST", "MEILI_API_KEY")
+meili_index = meili_client.index("MEILI_INDEX_NAME")
+```
+
+```ruby Ruby
+require 'meilisearch'
+
+meili_client = MeiliSearch::Client.new('MEILI_HOST', 'MEILI_API_KEY')
+meili_index = meili_client.index('MEILI_INDEX_NAME')
+```
+
+</CodeGroup>
+
 Replace `MEILI_HOST`, `MEILI_API_KEY`, and `MEILI_INDEX_NAME` with your Meilisearch host URL, API key, and target index name. Meilisearch will create the index if it doesn't already exist.
 
 ### Upload data to Meilisearch
 
-Use the Meilisearch JavaScript method [`addDocumentsInBatches`](https://github.com/meilisearch/meilisearch-js#documents-) to upload all records in batches of 100,000.
+Use the Meilisearch client method `addDocumentsInBatches` to upload all records in batches of 100,000.
 
-```js
+<CodeGroup>
+
+```javascript JavaScript
 const UPLOAD_BATCH_SIZE = 100000;
 await meiliIndex.addDocumentsInBatches(documents, UPLOAD_BATCH_SIZE);
 ```
 
+```python Python
+UPLOAD_BATCH_SIZE = 100000
+meili_index.add_documents_in_batches(documents, batch_size=UPLOAD_BATCH_SIZE)
+```
+
+```ruby Ruby
+UPLOAD_BATCH_SIZE = 100000
+meili_index.add_documents_in_batches(documents, UPLOAD_BATCH_SIZE)
+```
+
+</CodeGroup>
+
 When you're ready, run the script:
 
-```bash
+<CodeGroup>
+
+```bash JavaScript
 node script.js
 ```
 
+```bash Python
+python script.py
+```
+
+```bash Ruby
+ruby script.rb
+```
+
+</CodeGroup>
+
 ### Finished script
 
-```js
+<CodeGroup>
+
+```javascript JavaScript
 const { Client } = require("@elastic/elasticsearch");
 const { MeiliSearch } = require("meilisearch");
 
@@ -264,6 +487,121 @@ const UPLOAD_BATCH_SIZE = 100000;
   console.log("Migration complete");
 })();
 ```
+
+```python Python
+from elasticsearch import Elasticsearch
+import meilisearch
+
+ES_INDEX = "YOUR_INDEX_NAME"
+FETCH_BATCH_SIZE = 10000
+UPLOAD_BATCH_SIZE = 100000
+
+# Connect to Elasticsearch
+es_client = Elasticsearch(
+    "ELASTICSEARCH_URL",
+    api_key="ELASTICSEARCH_API_KEY",
+)
+
+# Fetch all documents using Point in Time
+records = []
+pit = es_client.open_point_in_time(index=ES_INDEX, keep_alive="5m")
+
+search_after = None
+while True:
+    body = {
+        "size": FETCH_BATCH_SIZE,
+        "query": {"match_all": {}},
+        "pit": {"id": pit["id"], "keep_alive": "5m"},
+        "sort": [{"_doc": "asc"}],
+    }
+    if search_after:
+        body["search_after"] = search_after
+
+    response = es_client.search(body=body)
+
+    hits = response["hits"]["hits"]
+    if not hits:
+        break
+
+    records.extend(hits)
+    search_after = hits[-1]["sort"]
+
+es_client.close_point_in_time(id=pit["id"])
+
+# Prepare documents for Meilisearch
+documents = []
+for hit in records:
+    doc = hit["_source"]
+    doc["id"] = hit["_id"]
+    documents.append(doc)
+
+print(f"Fetched {len(documents)} documents from Elasticsearch")
+
+# Upload to Meilisearch
+meili_client = meilisearch.Client("MEILI_HOST", "MEILI_API_KEY")
+meili_index = meili_client.index("MEILI_INDEX_NAME")
+
+meili_index.add_documents_in_batches(documents, batch_size=UPLOAD_BATCH_SIZE)
+print("Migration complete")
+```
+
+```ruby Ruby
+require 'elasticsearch'
+require 'meilisearch'
+
+ES_INDEX = 'YOUR_INDEX_NAME'
+FETCH_BATCH_SIZE = 10_000
+UPLOAD_BATCH_SIZE = 100_000
+
+# Connect to Elasticsearch
+es_client = Elasticsearch::Client.new(
+  url: 'ELASTICSEARCH_URL',
+  api_key: 'ELASTICSEARCH_API_KEY'
+)
+
+# Fetch all documents using Point in Time
+records = []
+pit = es_client.open_point_in_time(index: ES_INDEX, keep_alive: '5m')
+
+search_after = nil
+loop do
+  body = {
+    size: FETCH_BATCH_SIZE,
+    query: { match_all: {} },
+    pit: { id: pit['id'], keep_alive: '5m' },
+    sort: [{ _doc: 'asc' }]
+  }
+  body[:search_after] = search_after if search_after
+
+  response = es_client.search(body: body)
+
+  hits = response['hits']['hits']
+  break if hits.empty?
+
+  records.concat(hits)
+  search_after = hits.last['sort']
+end
+
+es_client.close_point_in_time(body: { id: pit['id'] })
+
+# Prepare documents for Meilisearch
+documents = records.map do |hit|
+  doc = hit['_source']
+  doc['id'] = hit['_id']
+  doc
+end
+
+puts "Fetched #{documents.length} documents from Elasticsearch"
+
+# Upload to Meilisearch
+meili_client = MeiliSearch::Client.new('MEILI_HOST', 'MEILI_API_KEY')
+meili_index = meili_client.index('MEILI_INDEX_NAME')
+
+meili_index.add_documents_in_batches(documents, UPLOAD_BATCH_SIZE)
+puts 'Migration complete'
+```
+
+</CodeGroup>
 
 ## Configure your index settings
 
