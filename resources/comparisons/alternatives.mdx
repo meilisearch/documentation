@@ -147,7 +147,7 @@ Can't find a client you'd like us to support? [Submit your idea here](https://gi
 | Hybrid Search | ✅ | 🔶 <br /> Under Premium plan | ✅ | ✅ |
 | Embedding Generation | ✅  <br /> OpenAI <br /> HuggingFace <br /> Ollama <br /> REST embedders <br /> | Undisclosed | ✅ <br/> Built-in ONNX models <br/> OpenAI <br /> Azure OpenAI <br /> GCP Vertex AI | ✅  <br /> ELSER <br/> E5 <br/> Cohere <br/> OpenAI <br/> Azure <br/> Google AI Studio <br/> Hugging Face <br/> |
 | Prompt Templates | ✅ | Undisclosed | ❌ | ❌ |
-| Vector Store | ✅ | Undisclosed | ✅ | ✅ |
+| Vector Store | ✅ <br /> Built-in DiskANN | Undisclosed | ✅ | ✅ |
 | Langchain Integration | ✅ | ❌ | ✅ | ✅ |
 | GPU support | ✅ <br /> CUDA | Undisclosed | ✅ <br /> CUDA | ✅ <br /> Elastic Inference Service |
 
@@ -157,7 +157,7 @@ Can't find a client you'd like us to support? [Submit your idea here](https://gi
 |---|:---:|:----:|:---:|:---:|
 | [Mini Dashboard](https://github.com/meilisearch/mini-dashboard) | ✅ | 🔶 <br /> Cloud product | 🔶 <br /> Cloud product | ✅ |
 | Search Analytics | ✅ <br /> [Cloud product](https://www.meilisearch.com/cloud) | ✅ <br /> Cloud Product | ❌ | ✅ <br /> Cloud Product |
-| Monitoring Dashboard | ✅ <br /> [Cloud product](/learn/analytics/configure_analytics_events) | ✅ <br /> Cloud Product | ✅ <br /> Cloud Product | ✅ <br /> Cloud Product |
+| Monitoring Dashboard | ✅ <br /> [Cloud product](/learn/analytics/configure_analytics_events) <br /> [Prometheus metrics endpoint](/reference/api/metrics) for Grafana | ✅ <br /> Cloud Product | ✅ <br /> Cloud Product | ✅ <br /> Cloud Product |
 
 #### Deployment
 
@@ -170,7 +170,8 @@ Can't find a client you'd like us to support? [Submit your idea here](https://gi
 | High availability | ✅ <br /> Sharding & replication (Cloud and self-hosted) | ✅ | ✅ | ✅ |
 | Run-time dependencies | None | N/A | None | None |
 | Backward compatibility | ✅ | N/A | ✅ | ✅ |
-| Upgrade path | Documents are automatically reindexed on upgrade | N/A  | Documents are automatically reindexed on upgrade  | Documents are automatically reindexed on upgrade, up to 1 major version |
+| Upgrade path | Only changed data is reindexed on upgrade | N/A  | Documents are automatically reindexed on upgrade  | Documents are automatically reindexed on upgrade, up to 1 major version |
+| Boot time | Instant | N/A | Reindexes data on every boot | Instant |
 
 ### Limits
 
