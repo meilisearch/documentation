@@ -121,9 +121,10 @@ WantedBy=multi-user.target
 EOF
 ```
 
-Enable and start the service:
+Reload systemd, then enable and start the service:
 
 ```bash
+sudo systemctl daemon-reload
 sudo systemctl enable meilisearch
 sudo systemctl start meilisearch
 ```
@@ -168,17 +169,19 @@ Remove the default configuration and create a new one for Meilisearch:
 
 ```bash
 sudo rm -f /etc/nginx/sites-enabled/default 2>/dev/null || true
-sudo cat << EOF > /etc/nginx/conf.d/meilisearch.conf
+sudo tee /etc/nginx/conf.d/meilisearch.conf > /dev/null << EOF
 server {
     listen 80 default_server;
     listen [::]:80 default_server;
-    server_name _;
+    server_name your_domain;
     location / {
         proxy_pass  http://localhost:7700;
     }
 }
 EOF
 ```
+
+Replace `your_domain` with your actual domain name (or use `_` as a catch-all if you don't have one yet).
 
 Enable and restart Nginx:
 
