@@ -1,0 +1,522 @@
+---
+title: Migrating from Elasticsearch to Meilisearch
+sidebarTitle: Migrating from Elasticsearch
+description: A step-by-step guide to exporting data from Elasticsearch and importing it into Meilisearch, with a comparison of settings, queries, and API methods.
+sidebarDepth: 3
+---
+
+This page aims to help current users of Elasticsearch make the transition to Meilisearch.
+
+For a high-level comparison of the two search engines, see [Meilisearch vs Elasticsearch](/resources/comparisons/elasticsearch).
+
+## Overview
+
+This guide walks you through exporting documents from an Elasticsearch index and importing them into Meilisearch using a [Node.js](https://nodejs.org/en/) script. [You can also skip directly to the finished script](#finished-script).
+
+The migration process consists of four steps:
+
+1. [Export your data from Elasticsearch](#export-your-elasticsearch-data)
+2. [Prepare your data for Meilisearch](#prepare-your-data)
+3. [Import your data into Meilisearch](#import-your-data-into-meilisearch)
+4. [Configure your Meilisearch index settings (optional)](#configure-your-index-settings)
+
+To help with the transition, this guide also includes a comparison of [settings and parameters](#settings-and-parameters-comparison), [query types](#query-comparison), and [API methods](#api-methods).
+
+Before continuing, make sure you have both Meilisearch and Node.js installed and have access to a command-line terminal. If you're unsure how to install Meilisearch, see our [quick start](/resources/self_hosting/getting_started).
+
+<Note>
+This guide was tested with the following package versions:
+
+- [`node.js`](https://nodejs.org/en/): `18` or later
+- [`@elastic/elasticsearch`](https://www.npmjs.com/package/@elastic/elasticsearch): `8.x`
+- [`meilisearch`](https://www.npmjs.com/package/meilisearch): compatible with Meilisearch v1.0 and above
+</Note>
+
+## Export your Elasticsearch data
+
+### Initialize project
+
+Start by creating a directory and generating a `package.json` file with `npm`:
+
+```bash
+mkdir elastic-meilisearch-migration
+cd elastic-meilisearch-migration
+npm init -y
+```
+
+Next, create a `script.js` file:
+
+```bash
+touch script.js
+```
+
+This file will contain the migration script.
+
+### Install dependencies
+
+You need two packages: `@elastic/elasticsearch`, the official Elasticsearch JavaScript client, and `meilisearch`, the Meilisearch JavaScript client.
+
+```bash
+npm install -s @elastic/elasticsearch meilisearch
+```
+
+### Create Elasticsearch client
+
+You need your Elasticsearch **host URL** and authentication credentials. Paste the below code in `script.js`:
+
+```js
+const { Client } = require("@elastic/elasticsearch");
+
+const esClient = new Client({
+  node: "ELASTICSEARCH_URL",
+  auth: {
+    // Use API key authentication:
+    apiKey: "ELASTICSEARCH_API_KEY",
+    // Or use basic authentication:
+    // username: "USERNAME",
+    // password: "PASSWORD",
+  },
+});
+```
+
+Replace `ELASTICSEARCH_URL` with your Elasticsearch cluster URL (for example, `https://localhost:9200`) and provide your authentication credentials.
+
+### Fetch data from Elasticsearch
+
+Use the [Point in Time API](https://www.elastic.co/guide/en/elasticsearch/reference/current/point-in-time-api.html) with `search_after` to paginate through all documents in the index. This approach is recommended over the deprecated Scroll API.
+
+```js
+const INDEX_NAME = "YOUR_INDEX_NAME";
+const BATCH_SIZE = 10000;
+
+async function fetchAllDocuments() {
+  const records = [];
+
+  // Open a Point in Time
+  const pit = await esClient.openPointInTime({
+    index: INDEX_NAME,
+    keep_alive: "5m",
+  });
+
+  let searchAfter;
+  while (true) {
+    const response = await esClient.search({
+      body: {
+        size: BATCH_SIZE,
+        query: { match_all: {} },
+        pit: { id: pit.id, keep_alive: "5m" },
+        sort: [{ _doc: "asc" }],
+        ...(searchAfter && { search_after: searchAfter }),
+      },
+    });
+
+    const hits = response.hits.hits;
+    if (hits.length === 0) break;
+
+    records.push(...hits);
+    searchAfter = hits[hits.length - 1].sort;
+  }
+
+  // Close the Point in Time
+  await esClient.closePointInTime({ id: pit.id });
+  return records;
+}
+```
+
+Replace `YOUR_INDEX_NAME` with the name of the Elasticsearch index you want to migrate.
+
+## Prepare your data
+
+Elasticsearch documents are wrapped in metadata (`_id`, `_index`, `_source`). You need to extract the document data from `_source` and ensure each document has a valid primary key for Meilisearch.
+
+```js
+function prepareDocuments(hits) {
+  return hits.map((hit) => {
+    const doc = hit._source;
+    // Use Elasticsearch's _id as the Meilisearch primary key
+    // Meilisearch primary keys must only contain alphanumeric
+    // characters, hyphens, and underscores
+    doc.id = hit._id;
+    return doc;
+  });
+}
+```
+
+<Note>
+Meilisearch stores documents as flat JSON objects. If your Elasticsearch documents use nested objects or the `nested` mapping type, you must flatten them before indexing. For example, `{ "author": { "name": "John" } }` should become `{ "author_name": "John" }` or kept as-is if you only need it for display purposes. Only top-level fields can be used for filtering, sorting, and searching.
+</Note>
+
+### Handle geo data
+
+If your Elasticsearch documents use `geo_point` fields, convert them to Meilisearch's `_geo` format:
+
+```js
+function convertGeoFields(doc, geoFieldName) {
+  if (doc[geoFieldName]) {
+    const geo = doc[geoFieldName];
+    doc._geo = {
+      lat: geo.lat,
+      lng: geo.lon, // Elasticsearch uses "lon", Meilisearch uses "lng"
+    };
+    delete doc[geoFieldName];
+  }
+  return doc;
+}
+```
+
+## Import your data into Meilisearch
+
+### Create Meilisearch client
+
+Create a Meilisearch client by passing the host URL and API key of your Meilisearch instance. The easiest option is to use the automatically generated [admin API key](/learn/security/basic_security).
+
+```js
+const { MeiliSearch } = require("meilisearch");
+
+const meiliClient = new MeiliSearch({
+  host: "MEILI_HOST",
+  apiKey: "MEILI_API_KEY",
+});
+const meiliIndex = meiliClient.index("MEILI_INDEX_NAME");
+```
+
+Replace `MEILI_HOST`, `MEILI_API_KEY`, and `MEILI_INDEX_NAME` with your Meilisearch host URL, API key, and target index name. Meilisearch will create the index if it doesn't already exist.
+
+### Upload data to Meilisearch
+
+Use the Meilisearch JavaScript method [`addDocumentsInBatches`](https://github.com/meilisearch/meilisearch-js#documents-) to upload all records in batches of 100,000.
+
+```js
+const UPLOAD_BATCH_SIZE = 100000;
+await meiliIndex.addDocumentsInBatches(documents, UPLOAD_BATCH_SIZE);
+```
+
+When you're ready, run the script:
+
+```bash
+node script.js
+```
+
+### Finished script
+
+```js
+const { Client } = require("@elastic/elasticsearch");
+const { MeiliSearch } = require("meilisearch");
+
+const ES_INDEX = "YOUR_INDEX_NAME";
+const FETCH_BATCH_SIZE = 10000;
+const UPLOAD_BATCH_SIZE = 100000;
+
+(async () => {
+  // Connect to Elasticsearch
+  const esClient = new Client({
+    node: "ELASTICSEARCH_URL",
+    auth: {
+      apiKey: "ELASTICSEARCH_API_KEY",
+    },
+  });
+
+  // Fetch all documents using Point in Time
+  const records = [];
+  const pit = await esClient.openPointInTime({
+    index: ES_INDEX,
+    keep_alive: "5m",
+  });
+
+  let searchAfter;
+  while (true) {
+    const response = await esClient.search({
+      body: {
+        size: FETCH_BATCH_SIZE,
+        query: { match_all: {} },
+        pit: { id: pit.id, keep_alive: "5m" },
+        sort: [{ _doc: "asc" }],
+        ...(searchAfter && { search_after: searchAfter }),
+      },
+    });
+
+    const hits = response.hits.hits;
+    if (hits.length === 0) break;
+
+    records.push(...hits);
+    searchAfter = hits[hits.length - 1].sort;
+  }
+
+  await esClient.closePointInTime({ id: pit.id });
+
+  // Prepare documents for Meilisearch
+  const documents = records.map((hit) => {
+    const doc = hit._source;
+    doc.id = hit._id;
+    return doc;
+  });
+
+  console.log(`Fetched ${documents.length} documents from Elasticsearch`);
+
+  // Upload to Meilisearch
+  const meiliClient = new MeiliSearch({
+    host: "MEILI_HOST",
+    apiKey: "MEILI_API_KEY",
+  });
+  const meiliIndex = meiliClient.index("MEILI_INDEX_NAME");
+
+  await meiliIndex.addDocumentsInBatches(documents, UPLOAD_BATCH_SIZE);
+  console.log("Migration complete");
+})();
+```
+
+## Configure your index settings
+
+Meilisearch's default settings deliver relevant, typo-tolerant search out of the box. However, if your Elasticsearch index relies on specific mappings or analyzers, you may want to configure equivalent Meilisearch settings.
+
+To customize your index settings, see [configuring index settings](/learn/getting_started/indexes#index-settings). To understand the differences between Elasticsearch and Meilisearch settings, read on.
+
+### Key conceptual differences
+
+**Elasticsearch** uses explicit [mappings](https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping.html) to define how each field is indexed, analyzed, and stored. You must configure analyzers, tokenizers, and field types before indexing data. Search behavior is controlled through a complex [Query DSL](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html).
+
+**Meilisearch** takes a different approach: all fields are automatically indexed and searchable by default. You refine behavior through [index settings](/reference/api/settings/list-all-settings) (which affect all searches) and [search parameters](/reference/api/search/search-with-post) (which affect a single query). Features like typo tolerance, prefix search, and ranking work out of the box without configuration.
+
+This means many Elasticsearch configurations have no direct equivalent in Meilisearch because the behavior is automatic. For example, you don't need to configure analyzers for typo tolerance, prefix matching, or stop words — Meilisearch handles these by default.
+
+### Settings and parameters comparison
+
+The below tables compare Elasticsearch **mappings**, **settings**, and **query parameters** with the equivalent Meilisearch features.
+
+#### Index mappings and field configuration
+
+| Elasticsearch | Meilisearch | Notes |
+| :--- | :--- | :--- |
+| `mappings.properties` (field types) | Automatic | Meilisearch infers field types automatically |
+| `properties.*.type: "text"` | [`searchableAttributes`](/reference/api/settings/update-searchableattributes) | All fields are searchable by default; use this setting to restrict or reorder |
+| `properties.*.type: "keyword"` | [`filterableAttributes`](/reference/api/settings/update-filterableattributes) | Add fields you want to filter or facet on |
+| `properties.*.index: false` | [`displayedAttributes`](/reference/api/settings/update-displayedattributes) | Control which fields appear in results |
+| `properties.*.type: "geo_point"` | `_geo` field with `lat`/`lng` | Add `_geo` to `filterableAttributes` and `sortableAttributes` |
+| `properties.*.type: "nested"` | Flatten to top-level fields | Meilisearch does not support nested object queries |
+| `_source.excludes` | [`displayedAttributes`](/reference/api/settings/update-displayedattributes) | Only list the fields you want returned |
+| `enabled: false` | Omit from `searchableAttributes` | Fields are still stored but not searched |
+
+#### Analysis and text processing
+
+| Elasticsearch | Meilisearch | Notes |
+| :--- | :--- | :--- |
+| `analysis.analyzer` | Automatic | Meilisearch uses a built-in language-aware analyzer |
+| `analysis.tokenizer` | [`separatorTokens`](/reference/api/settings/get-separatortokens) / [`nonSeparatorTokens`](/reference/api/settings/get-nonseparatortokens) | Customize word boundary behavior |
+| `analysis.filter.stop` | [`stopWords`](/reference/api/settings/update-stopwords) | Define words to ignore during search |
+| `analysis.filter.synonym` | [`synonyms`](/reference/api/settings/update-synonyms) | Define equivalent terms |
+| `analysis.filter.stemmer` | Automatic | Built-in stemming via [language detection](/reference/api/settings/update-localizedattributes) |
+| `settings.index.analysis.normalizer` | Automatic | Meilisearch normalizes Unicode, casing, and diacritics automatically |
+| Language-specific analyzers | [`localizedAttributes`](/reference/api/settings/update-localizedattributes) | Assign languages to specific fields |
+
+#### Search query parameters
+
+| Elasticsearch | Meilisearch | Notes |
+| :--- | :--- | :--- |
+| `query.match` / `query.multi_match` | `q` search param | Meilisearch searches all `searchableAttributes` by default |
+| `query.term` / `query.terms` | `filter` search param | Use filter expressions for exact matches |
+| `query.bool.filter` | `filter` search param | Supports `AND`, `OR`, `NOT`, `()` operators |
+| `query.bool.must` / `should` / `must_not` | `filter` + `q` | Combine search query with filter expressions |
+| `query.range` | `filter` search param | Use operators like `field > value` or `field value1 TO value2` |
+| `query.fuzzy` / `fuzziness` | Automatic | Built-in [typo tolerance](/reference/api/settings/update-typotolerance), configurable per index |
+| `query.prefix` | Automatic | Built-in [prefix search](/reference/api/settings/update-prefixsearch) on the last query word |
+| `query.knn` | `hybrid` + `vector` search params | Requires [`embedders`](/reference/api/settings/update-embedders) setting |
+| `query.geo_distance` | `_geoRadius(lat, lng, radius)` in `filter` | Requires `_geo` in `filterableAttributes` |
+| `query.geo_bounding_box` | `_geoBoundingBox([lat, lng], [lat, lng])` in `filter` | Requires `_geo` in `filterableAttributes` |
+| `highlight` | `attributesToHighlight` + `highlightPreTag` + `highlightPostTag` | Search params |
+| `_source` | `attributesToRetrieve` | Search param |
+| `from` / `size` | `offset` / `limit` or `page` / `hitsPerPage` | Search params |
+| `sort` | `sort` search param | Requires [`sortableAttributes`](/reference/api/settings/update-sortableattributes) setting |
+| `search_after` | `offset` / `limit` or `page` / `hitsPerPage` | Meilisearch uses simpler pagination |
+| `aggs` (aggregations) | `facets` search param | Returns value counts; complex aggregations are not supported |
+| `explain` | `showRankingScore` / `showRankingScoreDetails` | Search params |
+| `collapse` | `distinct` search param or [`distinctAttribute`](/reference/api/settings/update-distinctattribute) setting | Field-level deduplication |
+| `min_score` | `rankingScoreThreshold` | Search param |
+
+#### Index settings
+
+| Elasticsearch | Meilisearch | Notes |
+| :--- | :--- | :--- |
+| `index.number_of_replicas` | Automatic (Meilisearch Cloud) | [Meilisearch Cloud](https://www.meilisearch.com/cloud) handles replication |
+| `index.number_of_shards` | Automatic (Meilisearch Cloud) | [Meilisearch Cloud](https://www.meilisearch.com/cloud) handles sharding |
+| `index.max_result_window` | [`pagination.maxTotalHits`](/reference/api/settings/update-pagination) | Default is 1000 in Meilisearch |
+| `index.refresh_interval` | Automatic | Meilisearch indexes asynchronously via [tasks](/reference/api/tasks/list-all-tasks) |
+
+### What you can simplify
+
+Many Elasticsearch configurations become unnecessary when migrating to Meilisearch:
+
+- **Analyzers and tokenizers** — Meilisearch's built-in text processing handles tokenization, normalization, stemming, and language detection automatically.
+- **Mapping definitions** — Field types are inferred. You don't need to define mappings before indexing documents.
+- **Replicas and shards** — Meilisearch Cloud manages these automatically. Self-hosted instances run as a single process.
+- **Index lifecycle management** — Meilisearch doesn't require index rotation, rollover policies, or shard management.
+- **Query complexity** — Most Elasticsearch `bool` queries with nested `must`, `should`, and `filter` clauses translate to a simple `q` parameter combined with a `filter` string.
+
+## Query comparison
+
+This section shows how common Elasticsearch queries translate to Meilisearch.
+
+### Full-text search
+
+**Elasticsearch:**
+```json
+{
+  "query": {
+    "match": {
+      "title": "search engine"
+    }
+  }
+}
+```
+
+**Meilisearch:**
+```json
+{
+  "q": "search engine"
+}
+```
+
+Meilisearch searches all `searchableAttributes` by default. To restrict to a specific field, use the `attributesToSearchOn` search parameter.
+
+### Filtering
+
+**Elasticsearch:**
+```json
+{
+  "query": {
+    "bool": {
+      "must": { "match": { "title": "search" } },
+      "filter": [
+        { "term": { "status": "published" } },
+        { "range": { "price": { "gte": 10, "lte": 50 } } }
+      ]
+    }
+  }
+}
+```
+
+**Meilisearch:**
+```json
+{
+  "q": "search",
+  "filter": "status = published AND price >= 10 AND price <= 50"
+}
+```
+
+<Note>
+Attributes used in `filter` must first be added to [`filterableAttributes`](/reference/api/settings/update-filterableattributes).
+</Note>
+
+### Sorting
+
+**Elasticsearch:**
+```json
+{
+  "query": { "match_all": {} },
+  "sort": [
+    { "price": "asc" },
+    { "date": "desc" }
+  ]
+}
+```
+
+**Meilisearch:**
+```json
+{
+  "q": "",
+  "sort": ["price:asc", "date:desc"]
+}
+```
+
+<Note>
+Attributes used in `sort` must first be added to [`sortableAttributes`](/reference/api/settings/update-sortableattributes).
+</Note>
+
+### Faceted search
+
+**Elasticsearch:**
+```json
+{
+  "query": { "match": { "title": "shoes" } },
+  "aggs": {
+    "colors": { "terms": { "field": "color" } },
+    "price_ranges": {
+      "range": {
+        "field": "price",
+        "ranges": [
+          { "to": 50 },
+          { "from": 50, "to": 100 },
+          { "from": 100 }
+        ]
+      }
+    }
+  }
+}
+```
+
+**Meilisearch:**
+```json
+{
+  "q": "shoes",
+  "facets": ["color", "price"]
+}
+```
+
+Meilisearch returns value distributions for each facet. Range aggregations are not supported — use `filter` to narrow results by range.
+
+### Geo search
+
+**Elasticsearch:**
+```json
+{
+  "query": {
+    "geo_distance": {
+      "distance": "10km",
+      "location": { "lat": 48.8566, "lon": 2.3522 }
+    }
+  },
+  "sort": [
+    { "_geo_distance": { "location": { "lat": 48.8566, "lon": 2.3522 }, "order": "asc" } }
+  ]
+}
+```
+
+**Meilisearch:**
+```json
+{
+  "filter": "_geoRadius(48.8566, 2.3522, 10000)",
+  "sort": ["_geoPoint(48.8566, 2.3522):asc"]
+}
+```
+
+<Note>
+The `_geo` attribute must be added to both [`filterableAttributes`](/reference/api/settings/update-filterableattributes) and [`sortableAttributes`](/reference/api/settings/update-sortableattributes).
+</Note>
+
+## API methods
+
+This section compares Elasticsearch and Meilisearch API operations.
+
+| Operation | Elasticsearch | Meilisearch |
+| :--- | :--- | :--- |
+| Create index | `PUT /my-index` | `POST /indexes` |
+| Delete index | `DELETE /my-index` | `DELETE /indexes/{index_uid}` |
+| Get index info | `GET /my-index` | `GET /indexes/{index_uid}` |
+| List indexes | `GET /_cat/indices` | `GET /indexes` |
+| Index document | `POST /my-index/_doc` | `POST /indexes/{index_uid}/documents` |
+| Bulk index | `POST /_bulk` | `POST /indexes/{index_uid}/documents` (accepts arrays) |
+| Get document | `GET /my-index/_doc/{id}` | `GET /indexes/{index_uid}/documents/{id}` |
+| Delete document | `DELETE /my-index/_doc/{id}` | `DELETE /indexes/{index_uid}/documents/{id}` |
+| Delete by query | `POST /my-index/_delete_by_query` | `POST /indexes/{index_uid}/documents/delete` |
+| Search | `POST /my-index/_search` | `POST /indexes/{index_uid}/search` |
+| Multi-search | `POST /_msearch` | `POST /multi-search` |
+| Get settings | `GET /my-index/_settings` | `GET /indexes/{index_uid}/settings` |
+| Update settings | `PUT /my-index/_settings` | `PATCH /indexes/{index_uid}/settings` |
+| Create API key | `POST /_security/api_key` | `POST /keys` |
+| Get cluster health | `GET /_cluster/health` | `GET /health` |
+| Get task status | `GET /_tasks/{task_id}` | `GET /tasks/{task_uid}` |
+
+## Front-end components
+
+Elasticsearch offers [Search UI](https://github.com/elastic/search-ui), a React component library for building search interfaces. Meilisearch is compatible with Algolia's [InstantSearch](https://github.com/algolia/instantsearch.js) libraries through [Instant Meilisearch](https://github.com/meilisearch/meilisearch-js-plugins/tree/main/packages/instant-meilisearch).
+
+InstantSearch provides a rich set of pre-built widgets for search boxes, hits, facets, pagination, and more. You can find an up-to-date list of [the components supported by Instant Meilisearch](https://github.com/meilisearch/meilisearch-js-plugins/tree/main/packages/instant-meilisearch#-api-resources) in the GitHub project's README.
