@@ -177,37 +177,93 @@ Some Meilisearch parameters require index settings to be configured beforehand. 
 
 ### Settings and parameters comparison
 
-The below table compares Algolia's **API parameters** with the equivalent Meilisearch **setting** or **search parameter**.
+The below table compares Algolia's **API parameters** with the equivalent Meilisearch **setting** or **search parameter**. The **Type** column indicates whether the Meilisearch equivalent is a search parameter (param), an index setting (setting), or both.
 
-| Algolia                             | Meilisearch                                                                      |
-| :---------------------------------- | :------------------------------------------------------------------------------- |
-| `query`                             | `q`                                                                              |
-| `attributesToRetrieve`              | `attributesToRetrieve`                                                           |
-| `filters`                           | `filter`                                                                         |
-| `facets`                            | `facets`                                                                         |
-| `attributesToHighlight`             | `attributesToHighlight`                                                          |
-| `offset`                            | `offset`                                                                         |
-| `length`                            | `limit`                                                                          |
-| `typoTolerance`                     | `typoTolerance`                                                                  |
-| `snippetEllipsisText`               | `cropMarker`                                                                     |
-| `searchableAttributes`              | `searchableAttributes`                                                           |
-| `attributesForFaceting`             | `filterableAttributes`                                                           |
-| `unretrievableAttributes`           | No direct equivalent; achieved by removing attributes from `displayedAttributes` |
-| `attributesToRetrieve`              | `displayedAttributes`                                                            |
-| `attributeForDistinct`              | `distinctAttribute`                                                              |
-| `ranking`                           | `rankingRules`                                                                   |
-| `customRanking`                     | Integrated within `rankingRules`                                                 |
-| `removeStopWords`                   | `stopWords`                                                                      |
-| `synonyms`                          | `synonyms`                                                                       |
-| Sorting(using replicas)             | `sortableAttributes` (no replicas required)                                      |
-| `removeWordsIfNoResults`            | Automatically supported, but not customizable                                    |
-| `disableTypoToleranceOnAttributes`  | `typoTolerance.disableOnAttributes`                                              |
-| `separatorsToIndex`                 | [`separatorTokens`](/reference/api/settings/get-separatortokens) / [`nonSeparatorTokens`](/reference/api/settings/get-nonseparatortokens) |
-| `disablePrefixOnAttributes`         | Not Supported                                                                    |
-| `relevancyStrictness`               | Not Supported                                                                    |
-| `maxValuesPerFacet`                 | `maxValuesPerFacet`                                                                    |
-| `sortFacetValuesBy`                 | `sortFacetValuesBy`                                                                  |
-| `restrictHighlightAndSnippetArrays` | Not Supported                                                                    |
+#### Query and pagination
+
+| Algolia | Meilisearch | Type |
+| :--- | :--- | :--- |
+| `query` | `q` | param |
+| `offset` | `offset` | param |
+| `length` | `limit` | param |
+| `page` | `page` | param |
+| `hitsPerPage` | `hitsPerPage` | param |
+| `paginatedHits` limit | [`pagination.maxTotalHits`](/reference/api/settings/update-pagination) | setting |
+
+#### Filtering and sorting
+
+| Algolia | Meilisearch | Type |
+| :--- | :--- | :--- |
+| `filters` | `filter` | param |
+| `facets` | `facets` | param |
+| `attributesForFaceting` | [`filterableAttributes`](/reference/api/settings/update-filterableattributes) | setting |
+| `maxValuesPerFacet` | [`faceting.maxValuesPerFacet`](/reference/api/settings/update-faceting) | setting |
+| `sortFacetValuesBy` | [`faceting.sortFacetValuesBy`](/reference/api/settings/update-faceting) | setting |
+| `maxFacetHits` | [`facetSearch`](/reference/api/settings/update-facetsearch) | setting |
+| Sorting (using replicas) | [`sortableAttributes`](/reference/api/settings/update-sortableattributes) + `sort` param (no replicas required) | setting + param |
+| `distinct` | `distinct` (per-query) or [`distinctAttribute`](/reference/api/settings/update-distinctattribute) (index-wide) | param + setting |
+| `attributeForDistinct` | [`distinctAttribute`](/reference/api/settings/update-distinctattribute) | setting |
+
+#### Geo search
+
+| Algolia | Meilisearch | Type |
+| :--- | :--- | :--- |
+| `aroundLatLng` / `aroundRadius` | `_geoRadius(lat, lng, radius)` in `filter` | param |
+| `insideBoundingBox` | `_geoBoundingBox([lat, lng], [lat, lng])` in `filter` | param |
+| `insidePolygon` | `_geoPolygon([lat, lng], [lat, lng], ...)` in `filter` | param |
+| `aroundPrecision` | No direct equivalent | — |
+
+#### Highlighting and snippets
+
+| Algolia | Meilisearch | Type |
+| :--- | :--- | :--- |
+| `attributesToHighlight` | `attributesToHighlight` | param |
+| `highlightPreTag` | `highlightPreTag` | param |
+| `highlightPostTag` | `highlightPostTag` | param |
+| `attributesToSnippet` | `attributesToCrop` + `cropLength` | param |
+| `snippetEllipsisText` | `cropMarker` | param |
+| `restrictHighlightAndSnippetArrays` | Not supported | — |
+
+#### Attributes and ranking
+
+| Algolia | Meilisearch | Type |
+| :--- | :--- | :--- |
+| `searchableAttributes` | [`searchableAttributes`](/reference/api/settings/update-searchableattributes) | setting |
+| `restrictSearchableAttributes` | `attributesToSearchOn` | param |
+| `attributesToRetrieve` | `attributesToRetrieve` | param |
+| `unretrievableAttributes` | No direct equivalent; achieved by removing attributes from [`displayedAttributes`](/reference/api/settings/update-displayedattributes) | setting |
+| `ranking` | [`rankingRules`](/reference/api/settings/update-rankingrules) | setting |
+| `customRanking` | Integrated within [`rankingRules`](/reference/api/settings/update-rankingrules) | setting |
+| `getRankingInfo` | `showRankingScore` / `showRankingScoreDetails` | param |
+
+#### Typo tolerance and language
+
+| Algolia | Meilisearch | Type |
+| :--- | :--- | :--- |
+| `typoTolerance` | [`typoTolerance`](/reference/api/settings/update-typotolerance) | setting |
+| `disableTypoToleranceOnAttributes` | `typoTolerance.disableOnAttributes` | setting |
+| `removeStopWords` | [`stopWords`](/reference/api/settings/update-stopwords) | setting |
+| `synonyms` | [`synonyms`](/reference/api/settings/update-synonyms) | setting |
+| `separatorsToIndex` | [`separatorTokens`](/reference/api/settings/get-separatortokens) / [`nonSeparatorTokens`](/reference/api/settings/get-nonseparatortokens) | setting |
+| `naturalLanguages` | [`localizedAttributes`](/reference/api/settings/update-localizedattributes) setting + `locales` param | setting + param |
+| `queryType` (prefix matching) | [`prefixSearch`](/reference/api/settings/update-prefixsearch) | setting |
+| `removeWordsIfNoResults` | Automatically supported via `matchingStrategy` param | param |
+
+#### AI and vector search
+
+| Algolia | Meilisearch | Type |
+| :--- | :--- | :--- |
+| NeuralSearch `mode` | `hybrid` param + [`embedders`](/reference/api/settings/update-embedders) setting | setting + param |
+| `enableReRanking` | Integrated in `hybrid` search | param |
+| AI personalization | `personalize` | param |
+
+#### Other
+
+| Algolia | Meilisearch | Type |
+| :--- | :--- | :--- |
+| `analytics` / `clickAnalytics` | Separate [Analytics API](/learn/analytics/events_endpoint) | — |
+| `disablePrefixOnAttributes` | Not supported | — |
+| `relevancyStrictness` | `rankingScoreThreshold` | param |
 
 ## API methods
 
