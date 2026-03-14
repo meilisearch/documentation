@@ -694,9 +694,9 @@ The below tables compare Qdrant concepts with their Meilisearch equivalents.
 | Qdrant | Meilisearch | Notes |
 | :--- | :--- | :--- |
 | Collection | Index | — |
-| Point | Document | — |
+| Point | Document | A Point is vector-first (vector + metadata payload). A Document is content-first (fields + optional vectors) |
 | Payload | Document fields | Payload fields become top-level document fields |
-| Vector | `_vectors` field or auto-generated via [`embedders`](/reference/api/settings/update-embedders) | — |
+| Vector | `_vectors` field or auto-generated via [`embedders`](/reference/api/settings/update-embedders) | Meilisearch can auto-generate vectors from document content, so importing vectors is optional |
 | Point ID (uuid or integer) | Document `id` (string) | Must convert to string |
 | Named vectors | Multiple [`embedders`](/reference/api/settings/update-embedders) | One embedder per vector name |
 | Collection aliases | [Index swap](/reference/api/indexes/swap-indexes) | Atomic swap of two indexes |
