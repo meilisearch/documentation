@@ -1,23 +1,64 @@
 ---
 title: Language
 sidebarTitle: Language
-description: Meilisearch is compatible with datasets in any language. Additionally, it features optimized support for languages using whitespace to separate words, Chinese, Hebrew, Japanese,  Korean, and Thai.
+description: Meilisearch is compatible with datasets in any language. It features optimized tokenization for many language families and supports multilingual semantic search through embedding models.
 ---
 
-Meilisearch is multilingual, featuring optimized support for:
+Meilisearch is multilingual and works with datasets in any language. Its tokenizer, [Charabia](https://github.com/meilisearch/charabia), provides optimized segmentation and normalization for a wide range of languages and scripts.
 
-- Any language that uses whitespace to separate words
-- Chinese
-- Hebrew
-- Japanese
-- Khmer
-- Korean
-- Swedish
-- Thai
+## Supported languages
+
+The following table lists all languages and scripts with dedicated tokenization support in Charabia:
+
+| Language / Script | Segmentation | Normalization |
+|---|---|---|
+| **Latin** (English, French, Spanish, Italian, Portuguese, etc.) | CamelCase segmentation | Decomposition, lowercase, nonspacing-marks removal |
+| **German** | CamelCase + compound word decomposition | Same as Latin |
+| **Swedish** | Specialized normalization | Decomposition, lowercase |
+| **Greek** | Default | Decomposition, lowercase, final sigma handling |
+| **Cyrillic / Georgian** (Russian, Ukrainian, Bulgarian, etc.) | Default | Decomposition, lowercase |
+| **Armenian** | Default | Decomposition, lowercase |
+| **Arabic** | Article (ال) segmentation | Decomposition, digit conversion, nonspacing-marks removal |
+| **Persian** | Specialized segmentation | Decomposition, normalization |
+| **Hebrew** | Default | Decomposition, nonspacing-marks removal |
+| **Turkish** | Default | Specialized case folding (dotted/dotless i) |
+| **Chinese (CMN)** | jieba-based dictionary segmentation | Decomposition, kvariant conversion |
+| **Japanese** | lindera IPA dictionary segmentation | Decomposition |
+| **Korean** | lindera KO dictionary segmentation | Decomposition |
+| **Thai** | Dictionary-based segmentation | Decomposition, nonspacing-marks removal |
+| **Khmer** | Dictionary-based segmentation | Decomposition |
+
+Languages not listed above still work with Meilisearch. Any language that uses whitespace to separate words benefits from the default Latin pipeline. Results may be less relevant for unlisted languages that do not use spaces between words.
 
 We aim to provide global language support, and your feedback helps us move closer to that goal. If you notice inconsistencies in your search results or the way your documents are processed, please [open an issue in the Meilisearch repository](https://github.com/meilisearch/meilisearch/issues/new/choose).
 
 [Read more about our tokenizer](/learn/indexing/tokenization)
+
+## Multilingual hybrid search
+
+Meilisearch's keyword-based search relies on Charabia for tokenization, but [hybrid search](/learn/search/hybrid_search) and [semantic search](/learn/search/semantic_search) use embedding models that can handle languages independently of the tokenizer.
+
+Many embedding providers offer multilingual models that work across 100+ languages out of the box:
+
+| Provider | Multilingual model | Dimensions |
+|---|---|---|
+| [Cohere](/guides/embedders/cohere) | `embed-multilingual-v3.0` | 1024 |
+| [Cohere](/guides/embedders/cohere) | `embed-multilingual-light-v3.0` | 384 |
+| [Voyage AI](/guides/embedders/voyage) | `voyage-multilingual-2` | 1024 |
+| [AWS Bedrock](/guides/embedders/bedrock) | `cohere.embed-multilingual-v3` | 1024 |
+| [Hugging Face](/guides/embedders/huggingface) | `sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2` | 384 |
+
+Using a multilingual embedding model allows you to:
+
+- **Search across languages**: a query in English can match documents written in French, German, or Japanese.
+- **Simplify multilingual indexing**: instead of creating one index per language, a single index with a multilingual embedder can serve multiple languages.
+- **Complement keyword search**: combine Charabia's keyword tokenization with semantic embeddings in hybrid search for the best of both approaches.
+
+For multilingual datasets, consider using [hybrid search](/learn/search/hybrid_search) with a multilingual embedder alongside [localized attributes](/reference/api/settings/get-localizedattributes) for keyword matching. This gives you accurate tokenization per language for keyword search and cross-language understanding for semantic search.
+
+<Note>
+For guidance on structuring multilingual datasets, see [Handling multilingual datasets](/learn/indexing/multilingual-datasets).
+</Note>
 
 ## Improving our language support
 
@@ -31,15 +72,15 @@ If you'd like to help by developing a tokenizer pipeline yourself: first of all,
 
 ### What do you mean when you say Meilisearch offers _optimized_ support for a language?
 
-Optimized support for a language means Meilisearch has implemented internal processes specifically tailored to parsing that language, leading to more relevant results.
+Optimized support for a language means Meilisearch has implemented internal processes specifically tailored to parsing that language, leading to more relevant results. This includes specialized segmentation (how text is split into words) and normalization (how characters are standardized for matching).
 
 ### My language does not use whitespace to separate words. Can I still use Meilisearch?
 
-Yes, but search results might be less relevant than in one of the fully optimized languages.
+Yes. For keyword search, results may be less relevant than for fully optimized languages. However, you can use [hybrid search](/learn/search/hybrid_search) with a multilingual embedding model to get strong semantic results regardless of tokenization support.
 
 ### My language does not use the Roman alphabet. Can I still use Meilisearch?
 
-Yes—our users work with many different alphabets and writing systems, such as Cyrillic, Thai, and Japanese.
+Yes. Charabia supports many non-Latin scripts including Cyrillic, Greek, Arabic, Hebrew, Armenian, Thai, Chinese, Japanese, and Korean. Multilingual embedding models also work across all writing systems.
 
 ### Does Meilisearch plan to support additional languages in the future?
 
