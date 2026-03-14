@@ -1,7 +1,7 @@
 ---
 title: Migrating from Algolia to Meilisearch
 sidebarTitle: Migrating from Algolia
-description: This guide will take you step-by-step through the creation of a Node.js script to upload data indexed by Algolia to Meilisearch.
+description: This guide will take you step-by-step through the creation of a script to upload data indexed by Algolia to Meilisearch.
 sidebarDepth: 3
 ---
 
@@ -11,7 +11,7 @@ For a high-level comparison of the two search companies and their products, see 
 
 ## Overview
 
-This guide will take you step-by-step through the creation of a [Node.js](https://nodejs.org/en/) script to upload Algolia index data to Meilisearch. [You can also skip directly to the finished script](#finished-script).
+This guide will take you step-by-step through the creation of a script to upload Algolia index data to Meilisearch. Examples are provided in JavaScript, Python, and Ruby. [You can also skip directly to the finished script](#finished-script).
 
 The migration process consists of three steps:
 
@@ -21,54 +21,70 @@ The migration process consists of three steps:
 
 To help with the transition, we have also included a comparison of Meilisearch and Algolia's [API methods](#api-methods) and [front-end components](#front-end-components).
 
-Before continuing, make sure you have both Meilisearch and Node.js installed and have access to a command-line terminal. If you're unsure how to install Meilisearch, see our [quick start](/resources/self_hosting/getting_started).
+Before continuing, make sure you have Meilisearch installed and have access to a command-line terminal. If you're unsure how to install Meilisearch, see our [quick start](/resources/self_hosting/getting_started).
 
 <Note>
-This guide was tested with the following package versions:
+This guide includes examples in JavaScript, Python, and Ruby. The packages used:
 
-- [`node.js`](https://nodejs.org/en/): `16.16` or later
-- [`algoliasearch`](https://www.npmjs.com/package/algoliasearch): `4.13`
-- [`meilisearch-js`](https://www.npmjs.com/package/meilisearch): compatible with Meilisearch v1.0 and above
-- [`meilisearch`](https://github.com/meilisearch/meilisearch): v1.0 or later
+- **JavaScript**: [`algoliasearch`](https://www.npmjs.com/package/algoliasearch) `4.x`, [`meilisearch`](https://www.npmjs.com/package/meilisearch) (compatible with Meilisearch v1.0+)
+- **Python**: [`algoliasearch`](https://pypi.org/project/algoliasearch/) `3.x`, [`meilisearch`](https://pypi.org/project/meilisearch/)
+- **Ruby**: [`algolia`](https://rubygems.org/gems/algolia) `3.x`, [`meilisearch`](https://rubygems.org/gems/meilisearch)
 </Note>
 
 ## Export your Algolia data
 
 ### Initialize project
 
-Start by creating a directory `algolia-meilisearch-migration` and generating a `package.json` file with `npm`:
+<CodeGroup>
 
-```bash
+```bash JavaScript
 mkdir algolia-meilisearch-migration
 cd algolia-meilisearch-migration
 npm init -y
-```
-
-This will set up the environment we need to install dependencies.
-
-Next, create a `script.js` file:
-
-```bash
 touch script.js
 ```
 
-This file will contain our migration script.
+```bash Python
+mkdir algolia-meilisearch-migration
+cd algolia-meilisearch-migration
+touch script.py
+```
+
+```bash Ruby
+mkdir algolia-meilisearch-migration
+cd algolia-meilisearch-migration
+touch script.rb
+```
+
+</CodeGroup>
 
 ### Install dependencies
 
-To get started, you'll need two different packages. The first is `algoliasearch`, the JavaScript client for the Algolia API, and the second is `meilisearch`, the JavaScript client for the Meilisearch API.
+<CodeGroup>
 
-```bash
+```bash JavaScript
 npm install -s algoliasearch@4 meilisearch
 ```
+
+```bash Python
+pip install algoliasearch meilisearch
+```
+
+```bash Ruby
+gem install algolia meilisearch
+```
+
+</CodeGroup>
 
 ### Create Algolia client
 
 You'll need your **Application ID** and **Admin API Key** to start the Algolia client. Both can be found in your [Algolia account](https://www.algolia.com/account/api-keys).
 
-Paste the below code in `script.js`:
+Paste the below code in your script file:
 
-```js
+<CodeGroup>
+
+```javascript JavaScript
 const algoliaSearch = require("algoliasearch");
 
 const algoliaClient = algoliaSearch(
@@ -78,6 +94,23 @@ const algoliaClient = algoliaSearch(
 const algoliaIndex = algoliaClient.initIndex("INDEX_NAME");
 ```
 
+```python Python
+from algoliasearch.search.client import SearchClientSync
+
+algolia_client = SearchClientSync("APPLICATION_ID", "ADMIN_API_KEY")
+```
+
+```ruby Ruby
+require 'algolia'
+
+algolia_client = Algolia::SearchClient.create(
+  'APPLICATION_ID',
+  'ADMIN_API_KEY'
+)
+```
+
+</CodeGroup>
+
 Replace `APPLICATION_ID` and `ADMIN_API_KEY` with your Algolia application ID and admin API key respectively.
 
 Replace `INDEX_NAME` with the name of the Algolia index you would like to migrate to Meilisearch.
@@ -86,7 +119,9 @@ Replace `INDEX_NAME` with the name of the Algolia index you would like to migrat
 
 To fetch all Algolia index data at once, use Algolia's [`browseObjects`](https://www.algolia.com/doc/api-reference/api-methods/browse/) method.
 
-```js
+<CodeGroup>
+
+```javascript JavaScript
 let records = [];
 await algoliaIndex.browseObjects({
     batch: (hits) => {
@@ -95,7 +130,22 @@ await algoliaIndex.browseObjects({
   });
 ```
 
-The `batch` callback method is invoked on each batch of hits and the content is concatenated in the `records` array. We will use `records` again later in the upload process.
+```python Python
+records = []
+for hit in algolia_client.browse_objects(index_name="INDEX_NAME"):
+    records.append(hit)
+```
+
+```ruby Ruby
+records = []
+algolia_client.browse_objects('INDEX_NAME') do |hit|
+  records << hit
+end
+```
+
+</CodeGroup>
+
+The records array will contain all documents from your Algolia index. We will use `records` again later in the upload process.
 
 ## Import your data into Meilisearch
 
@@ -103,7 +153,9 @@ The `batch` callback method is invoked on each batch of hits and the content is 
 
 Create a Meilisearch client by passing the host URL and API key of your Meilisearch instance. The easiest option is to use the automatically generated [admin API key](/learn/security/basic_security).
 
-```js
+<CodeGroup>
+
+```javascript JavaScript
 const { MeiliSearch } = require("meilisearch");
 
 const meiliClient = new MeiliSearch({
@@ -113,26 +165,73 @@ const meiliClient = new MeiliSearch({
 const meiliIndex = meiliClient.index("MEILI_INDEX_NAME");
 ```
 
+```python Python
+import meilisearch
+
+meili_client = meilisearch.Client("MEILI_HOST", "MEILI_API_KEY")
+meili_index = meili_client.index("MEILI_INDEX_NAME")
+```
+
+```ruby Ruby
+require 'meilisearch'
+
+meili_client = MeiliSearch::Client.new(
+  'MEILI_HOST',
+  'MEILI_API_KEY'
+)
+meili_index = meili_client.index('MEILI_INDEX_NAME')
+```
+
+</CodeGroup>
+
 Replace `MEILI_HOST`,`MEILI_API_KEY`, and `MEILI_INDEX_NAME` with your Meilisearch host URL, Meilisearch API key, and the index name where you would like to add documents. Meilisearch will create the index if it doesn't already exist.
 
 ### Upload data to Meilisearch
 
-Next, use the Meilisearch JavaScript method [`addDocumentsInBatches`](https://github.com/meilisearch/meilisearch-js#documents-) to upload all your records in batches of 100,000.
+Next, use `addDocumentsInBatches` to upload all your records in batches of 100,000.
 
-```js
+<CodeGroup>
+
+```javascript JavaScript
 const BATCH_SIZE = 100000;
 await meiliIndex.addDocumentsInBatches(records, BATCH_SIZE);
 ```
 
+```python Python
+BATCH_SIZE = 100000
+meili_index.add_documents_in_batches(records, batch_size=BATCH_SIZE)
+```
+
+```ruby Ruby
+BATCH_SIZE = 100000
+meili_index.add_documents_in_batches(records, BATCH_SIZE)
+```
+
+</CodeGroup>
+
 That's all! When you're ready to run the script, enter the below command:
 
-```bash
+<CodeGroup>
+
+```bash JavaScript
 node script.js
 ```
 
+```bash Python
+python script.py
+```
+
+```bash Ruby
+ruby script.rb
+```
+
+</CodeGroup>
+
 ### Finished script
 
-```js
+<CodeGroup>
+
+```javascript JavaScript
 const algoliaSearch = require("algoliasearch");
 const { MeiliSearch } = require("meilisearch");
 
@@ -158,6 +257,58 @@ const BATCH_SIZE = 100000;
   await meiliIndex.addDocumentsInBatches(records, BATCH_SIZE);
 })();
 ```
+
+```python Python
+from algoliasearch.search.client import SearchClientSync
+import meilisearch
+
+BATCH_SIZE = 100000
+
+# Fetch all documents from Algolia
+algolia_client = SearchClientSync("APPLICATION_ID", "ADMIN_API_KEY")
+
+records = []
+for hit in algolia_client.browse_objects(index_name="INDEX_NAME"):
+    records.append(hit)
+
+print(f"Fetched {len(records)} documents from Algolia")
+
+# Upload to Meilisearch
+meili_client = meilisearch.Client("MEILI_HOST", "MEILI_API_KEY")
+meili_index = meili_client.index("MEILI_INDEX_NAME")
+
+meili_index.add_documents_in_batches(records, batch_size=BATCH_SIZE)
+print("Migration complete")
+```
+
+```ruby Ruby
+require 'algolia'
+require 'meilisearch'
+
+BATCH_SIZE = 100000
+
+# Fetch all documents from Algolia
+algolia_client = Algolia::SearchClient.create(
+  'APPLICATION_ID',
+  'ADMIN_API_KEY'
+)
+
+records = []
+algolia_client.browse_objects('INDEX_NAME') do |hit|
+  records << hit
+end
+
+puts "Fetched #{records.length} documents from Algolia"
+
+# Upload to Meilisearch
+meili_client = MeiliSearch::Client.new('MEILI_HOST', 'MEILI_API_KEY')
+meili_index = meili_client.index('MEILI_INDEX_NAME')
+
+meili_index.add_documents_in_batches(records, BATCH_SIZE)
+puts 'Migration complete'
+```
+
+</CodeGroup>
 
 ## Configure your index settings
 
