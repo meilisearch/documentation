@@ -547,6 +547,14 @@
                         ]
                       },
                       {
+                        "group": "Foreign keys",
+                        "pages": [
+                          "GET /indexes/{index_uid}/settings/foreign-keys",
+                          "PUT /indexes/{index_uid}/settings/foreign-keys",
+                          "DELETE /indexes/{index_uid}/settings/foreign-keys"
+                        ]
+                      },
+                      {
                         "group": "Localized attributes",
                         "pages": [
                           "GET /indexes/{index_uid}/settings/localized-attributes",
