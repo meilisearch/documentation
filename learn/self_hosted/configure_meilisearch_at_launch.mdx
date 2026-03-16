@@ -561,6 +561,24 @@ Falls back to previous settings indexer.
 
 Enables search personalization. Must be a valid Cohere API key in string format.
 
+### Allow requests to private networks <NoticeTag type="experimental" label="experimental" />
+
+**Environment variable**: `MEILI_EXPERIMENTAL_ALLOWED_IP_NETWORKS`<br />
+**CLI option**: `--experimental-allowed-ip-networks`<br />
+**Default value**: `None`<br />
+**Expected value**: a list of comma-separated CIDR networks
+
+Allow Meilisearch to query services running on private networks.
+
+By default, Meilisearch will prevent any requests to a host resolving to a non-global IP, in the sense of
+the [IANA IPv4 Special-Purpose Address Registry](https://www.iana.org/assignments/iana-ipv4-special-registry/iana-ipv4-special-registry.xhtml)
+or the [IANA IPv6 Special-Purpose Address Registry](https://www.iana.org/assignments/iana-ipv6-special-registry/iana-ipv6-special-registry.xhtml).
+This is done to prevent potential firewall bypasses (see our [blog post](https://www.meilisearch.com/blog/CVE-update-Jan-2026) on SSRF vulnerability).
+
+You may want to allow requests to private networks to query internal services during webhooks or use local embedding services.
+To do so, specify a list of comma-separated CIDR networks (e.g. `192.168.0.0/16,10.0.0.0/8`). You may specify `any` to allow all
+requests regardless of target IP (use only in controlled environments, this is not recommended for production).
+
 ### S3 options
 
 #### Bucket URL

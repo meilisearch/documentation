@@ -21,6 +21,10 @@ If you are using Meilisearch Cloud or need to configure multiple webhooks, use t
 
 ## Configure the webhook URL
 
+<Warning>
+🚩 To be able to configure a webhook to notify internal services (such as `localhost`), you will need to [allow requests on private networks](/learn/self_hosted/configure_meilisearch_at_launch#allow-requests-to-private-networks). 🚩
+</Warning>
+
 Restart your Meilisearch instance and provide the webhook URL to `--task-webhook-URL`:
 
 ```sh
@@ -29,14 +33,16 @@ meilisearch --task-webhook-url http://localhost:8000
 
 You may also define the webhook URL with environment variables or in the configuration file with `MEILI_TASK_WEBHOOK_URL`.
 
-## Optional: configure an authorization header
+## Optional: configure an authorization header and allow requests on private networks
 
-Depending on your setup, you may need to provide an authorization header. Provide it to `task-webhook-authorization-header`:
+Depending on your setup, you may need to provide an authorization header and allow requests on private networks.
+Provide these using `task-webhook-authorization-header` and `experimental-allowed-ip-networks`:
 
 ```sh
 meilisearch \
   --task-webhook-url http://localhost:8000 \
-  --task-webhook-authorization-header Bearer aSampleMasterKey
+  --task-webhook-authorization-header Bearer aSampleMasterKey \
+  --experimental-allowed-ip-networks 127.0.0.0/8
 ```
 
 ## Test the webhook
