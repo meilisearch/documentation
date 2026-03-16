@@ -4,6 +4,82 @@ description: "New features and improvements in Meilisearch"
 rss: true
 ---
 
+<Update label="v1.39" description="2026-03-16">
+
+## New Features
+
+### Cross-index document hydration with Foreign Keys
+
+A new experimental `foreignKeys` feature allows you to hydrate documents with data from other indexes, enabling you to create relationships between indexes.
+
+First, enable the experimental feature:
+
+```bash
+curl -X PATCH 'http://127.0.0.1:7700/experimental-features' \
+ -H 'Content-Type: application/json' \
+ --data-binary '{"foreignKeys": true}'
+```
+
+Then configure foreign keys in your index settings at `/indexes/{index_uid}/settings`:
+
+```json
+{
+  "foreignKeys": [
+    {
+      "fieldName": "actors",
+      "foreignIndexUid": "actors"
+    }
+  ]
+}
+```
+
+When you have a document with foreign document IDs:
+
+```json
+{
+  "id": 1,
+  "title": "Forrest Gump",
+  "actors": [
+    1
+  ]
+}
+```
+
+The search response will automatically hydrate it with the related documents:
+
+```json
+{
+  "id": 1,
+  "title": "Forrest Gump",
+  "actors": [
+    {
+      "id": 1,
+      "name": "Tom",
+      "familyName": "Hanks",
+      "birthDate": "1956-07-09"
+    }
+  ]
+}
+```
+
+Note: This feature does not yet support remote sharding environments.
+
+### Server-Sent Events (SSE) streaming improvements
+
+Added the `X-Accel-Buffering: no` header to the `POST /chats/{workspace_uid}/chat/completions` endpoint when streaming mode is enabled. This prevents proxy response buffering for real-time chat completions.
+
+## Improvements
+
+### Performance
+
+Fixed a significant memory leak in the indexation pipeline that was introduced in v1.12. If you've observed Meilisearch using progressively more memory over time, this issue has been resolved.
+
+Restored task deletion performance to v1.38.0 levels after a regression introduced in v1.38.1, while ensuring no race conditions occur during updates.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.39.0)
+
+</Update>
+
 <Update label="v1.38" description="2026-03-09">
 
 ## New Features

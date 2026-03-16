@@ -11,7 +11,7 @@
       "name": "MIT",
       "identifier": "MIT"
     },
-    "version": "1.38.2"
+    "version": "1.39.0"
   },
   "servers": [
     {
@@ -305,7 +305,7 @@
         "operationId": "get_batch",
         "parameters": [
           {
-            "name": "batchUid",
+            "name": "batch_id",
             "in": "path",
             "description": "The unique batch identifier.",
             "required": true,
@@ -402,6 +402,23 @@
         "summary": "List chat workspaces",
         "operationId": "list_workspaces",
         "responses": {
+          "200": {
+            "description": "Chat workspaces retrieved.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "results": [
+                    {
+                      "uid": "my-workspace"
+                    }
+                  ],
+                  "offset": 0,
+                  "limit": 20,
+                  "total": 1
+                }
+              }
+            }
+          },
           "401": {
             "description": "The authorization header is missing.",
             "content": {
@@ -438,7 +455,7 @@
         "operationId": "get_chat",
         "parameters": [
           {
-            "name": "workspaceUid",
+            "name": "workspace_uid",
             "in": "path",
             "description": "The unique identifier of the chat workspace.",
             "required": true,
@@ -449,6 +466,16 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "Chat workspace retrieved.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "uid": "my-workspace"
+                }
+              }
+            }
+          },
           "401": {
             "description": "The authorization header is missing.",
             "content": {
@@ -499,7 +526,7 @@
         "operationId": "delete_chat",
         "parameters": [
           {
-            "name": "workspaceUid",
+            "name": "workspace_uid",
             "in": "path",
             "description": "The unique identifier of the chat workspace.",
             "required": true,
@@ -510,6 +537,9 @@
           }
         ],
         "responses": {
+          "204": {
+            "description": "Chat workspace deleted."
+          },
           "401": {
             "description": "The authorization header is missing.",
             "content": {
@@ -562,7 +592,7 @@
         "operationId": "chat",
         "parameters": [
           {
-            "name": "workspaceUid",
+            "name": "workspace_uid",
             "in": "path",
             "description": "The unique identifier of the chat workspace.",
             "required": true,
@@ -587,6 +617,51 @@
           "required": true
         },
         "responses": {
+          "200": {
+            "description": "Start a conversation.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": "chatcmpl-abc123",
+                  "choices": [
+                    {
+                      "index": 0,
+                      "message": {
+                        "content": "After searching the Steam database, here are some game recommendations related to your query:\n\n1. **Game Dev Tycoon**: This game might interest you, as it involves developing games, which could resonate with your work as a developer working on selling a search engine. It is a casual, strategy, and simulation game where you simulate a game development studio.\n\n2. **Mad Games Tycoon**: Another game that could be relevant is Mad Games Tycoon. In this game, you build up your own games, similar to the process of creating and selling software, which could provide insights and inspiration for your work.\n\n3. **Airline Tycoon 2**: While not directly related to search engines, Airline Tycoon 2 involves strategic decision-making and business management, which could offer valuable lessons for selling a product like a search engine.\n\nThese games provide a mix of strategic thinking, simulation, and development aspects that might appeal to you as a developer working on selling a search engine.",
+                        "refusal": null,
+                        "tool_calls": null,
+                        "role": "assistant",
+                        "function_call": null,
+                        "audio": null
+                      },
+                      "finish_reason": "stop",
+                      "logprobs": null
+                    }
+                  ],
+                  "created": 1747922647,
+                  "model": "gpt-3.5-turbo-0125",
+                  "service_tier": "default",
+                  "system_fingerprint": null,
+                  "object": "chat.completion",
+                  "usage": {
+                    "prompt_tokens": 1515,
+                    "completion_tokens": 197,
+                    "total_tokens": 1712,
+                    "prompt_tokens_details": {
+                      "audio_tokens": 0,
+                      "cached_tokens": 0
+                    },
+                    "completion_tokens_details": {
+                      "accepted_prediction_tokens": 0,
+                      "audio_tokens": 0,
+                      "reasoning_tokens": 0,
+                      "rejected_prediction_tokens": 0
+                    }
+                  }
+                }
+              }
+            }
+          },
           "401": {
             "description": "The authorization header is missing.",
             "content": {
@@ -639,7 +714,7 @@
         "operationId": "get_settings",
         "parameters": [
           {
-            "name": "workspaceUid",
+            "name": "workspace_uid",
             "in": "path",
             "description": "The unique identifier of the chat workspace.",
             "required": true,
@@ -650,6 +725,24 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "Chat settings retrieved.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "source": "openAi",
+                  "baseUrl": null,
+                  "apiKey": "$LLM_API_KEY",
+                  "prompts": {
+                    "system": "My super system prompt",
+                    "searchDescription": "My super search tool description",
+                    "searchQParam": "My awesome q search parameter description",
+                    "searchIndexUidParam": "My incredible index uid param description"
+                  }
+                }
+              }
+            }
+          },
           "401": {
             "description": "The authorization header is missing.",
             "content": {
@@ -700,7 +793,7 @@
         "operationId": "reset_settings",
         "parameters": [
           {
-            "name": "workspaceUid",
+            "name": "workspace_uid",
             "in": "path",
             "description": "The unique identifier of the chat workspace.",
             "required": true,
@@ -711,6 +804,24 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "Chat settings retrieved.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "source": "openAi",
+                  "baseUrl": null,
+                  "apiKey": "$LLM_API_KEY",
+                  "prompts": {
+                    "system": "default system prompt",
+                    "searchDescription": "default search tool description",
+                    "searchQParam": "default q search parameter description",
+                    "searchIndexUidParam": "default index uid param description"
+                  }
+                }
+              }
+            }
+          },
           "401": {
             "description": "The authorization header is missing.",
             "content": {
@@ -761,7 +872,7 @@
         "operationId": "patch_settings",
         "parameters": [
           {
-            "name": "workspaceUid",
+            "name": "workspace_uid",
             "in": "path",
             "description": "The unique identifier of the chat workspace.",
             "required": true,
@@ -782,6 +893,24 @@
           "required": true
         },
         "responses": {
+          "200": {
+            "description": "Chat settings retrieved.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "source": "openAi",
+                  "baseUrl": null,
+                  "apiKey": "$LLM_API_KEY",
+                  "prompts": {
+                    "system": "My super system prompt",
+                    "searchDescription": "My super search tool description",
+                    "searchQParam": "My awesome q search parameter description",
+                    "searchIndexUidParam": "My incredible index uid param description"
+                  }
+                }
+              }
+            }
+          },
           "401": {
             "description": "The authorization header is missing.",
             "content": {
@@ -904,7 +1033,8 @@
                   "getTaskDocumentsRoute": false,
                   "compositeEmbedders": false,
                   "chatCompletions": false,
-                  "multimodal": false
+                  "multimodal": false,
+                  "foreignKeys": false
                 }
               }
             }
@@ -960,7 +1090,8 @@
                   "getTaskDocumentsRoute": false,
                   "compositeEmbedders": false,
                   "chatCompletions": false,
-                  "multimodal": false
+                  "multimodal": false,
+                  "foreignKeys": false
                 }
               }
             }
@@ -1238,7 +1369,7 @@
         "operationId": "get_index",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -1317,7 +1448,7 @@
         "operationId": "delete_index",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -1397,7 +1528,7 @@
         "operationId": "update_index",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -1489,7 +1620,7 @@
         "operationId": "compact",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -1570,7 +1701,7 @@
         "operationId": "get_documents",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -1736,7 +1867,7 @@
         "operationId": "update_documents",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -1865,7 +1996,7 @@
         "operationId": "replace_documents",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -1994,7 +2125,7 @@
         "operationId": "clear_all_documents",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -2076,7 +2207,7 @@
         "operationId": "delete_documents_by_filter",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -2168,7 +2299,7 @@
         "operationId": "delete_documents_batch",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -2261,7 +2392,7 @@
         "operationId": "edit_documents_by_function",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -2352,7 +2483,7 @@
         "operationId": "documents_by_query_post",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -2374,7 +2505,7 @@
         },
         "responses": {
           "200": {
-            "description": "The documents are returned.",
+            "description": "Documents returned.",
             "content": {
               "application/json": {
                 "schema": {
@@ -2464,7 +2595,7 @@
         "operationId": "get_document",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -2474,7 +2605,7 @@
             "example": "movies"
           },
           {
-            "name": "documentId",
+            "name": "document_id",
             "in": "path",
             "description": "The document identifier.",
             "required": true,
@@ -2573,7 +2704,7 @@
         "operationId": "delete_document",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -2583,7 +2714,7 @@
             "example": "movies"
           },
           {
-            "name": "documentId",
+            "name": "document_id",
             "in": "path",
             "description": "Document identifier.",
             "required": true,
@@ -2665,7 +2796,7 @@
         "operationId": "search",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -2772,7 +2903,7 @@
         "operationId": "post_index_fields",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index whose fields to list.",
             "required": true,
@@ -2922,7 +3053,7 @@
         "operationId": "search_with_url_query",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -3329,7 +3460,7 @@
         "operationId": "search_with_post",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -3436,7 +3567,7 @@
         "operationId": "get_all",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -3606,7 +3737,7 @@
         "operationId": "delete_all",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -3686,7 +3817,7 @@
         "operationId": "update_all",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -3778,7 +3909,7 @@
         "operationId": "getchat",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -3852,7 +3983,7 @@
         "operationId": "deletechat",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -3932,7 +4063,7 @@
         "operationId": "patchchat",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -4024,7 +4155,7 @@
         "operationId": "getdictionary",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -4102,7 +4233,7 @@
         "operationId": "putdictionary",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -4196,7 +4327,7 @@
         "operationId": "deletedictionary",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -4278,7 +4409,7 @@
         "operationId": "getdisplayedAttributes",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -4355,7 +4486,7 @@
         "operationId": "putdisplayedAttributes",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -4448,7 +4579,7 @@
         "operationId": "deletedisplayedAttributes",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -4530,7 +4661,7 @@
         "operationId": "getdistinctAttribute",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -4604,7 +4735,7 @@
         "operationId": "putdistinctAttribute",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -4694,7 +4825,7 @@
         "operationId": "deletedistinctAttribute",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -4776,7 +4907,7 @@
         "operationId": "getembedders",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -4856,7 +4987,7 @@
         "operationId": "deleteembedders",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -4936,7 +5067,7 @@
         "operationId": "patchembedders",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -5034,7 +5165,7 @@
         "operationId": "getfacetSearch",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -5108,7 +5239,7 @@
         "operationId": "putfacetSearch",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -5198,7 +5329,7 @@
         "operationId": "deletefacetSearch",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -5280,7 +5411,7 @@
         "operationId": "getfaceting",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -5354,7 +5485,7 @@
         "operationId": "deletefaceting",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -5434,7 +5565,7 @@
         "operationId": "patchfaceting",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -5526,7 +5657,7 @@
         "operationId": "getfilterableAttributes",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -5603,7 +5734,7 @@
         "operationId": "putfilterableAttributes",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -5696,7 +5827,259 @@
         "operationId": "deletefilterableAttributes",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
+            "in": "path",
+            "description": "Unique identifier of the index.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "movies"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Task successfully enqueued.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SummarizedTaskView"
+                },
+                "example": {
+                  "taskUid": 147,
+                  "indexUid": "movies",
+                  "status": "enqueued",
+                  "type": "settingsUpdate",
+                  "enqueuedAt": "2024-08-08T17:05:55.791772Z"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The authorization header is missing.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "example": {
+                  "message": "The Authorization header is missing. It must use the bearer authorization method.",
+                  "code": "missing_authorization_header",
+                  "type": "auth",
+                  "link": "https://docs.meilisearch.com/errors#missing_authorization_header"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Index not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "example": {
+                  "message": "Index `movies` not found.",
+                  "code": "index_not_found",
+                  "type": "invalid_request",
+                  "link": "https://docs.meilisearch.com/errors#index_not_found"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": [
+              "settings.update",
+              "settings.*",
+              "*"
+            ]
+          }
+        ]
+      }
+    },
+    "/indexes/{index_uid}/settings/foreign-keys": {
+      "get": {
+        "tags": [
+          "Settings"
+        ],
+        "summary": "Get foreignKeys",
+        "description": "Returns the current value of the `foreignKeys` setting for the index.",
+        "operationId": "getforeignKeys",
+        "parameters": [
+          {
+            "name": "index_uid",
+            "in": "path",
+            "description": "Unique identifier of the index.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "movies"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the current value of the `foreignKeys` setting.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ForeignKey"
+                  }
+                },
+                "example": []
+              }
+            }
+          },
+          "401": {
+            "description": "The authorization header is missing.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "example": {
+                  "message": "The Authorization header is missing. It must use the bearer authorization method.",
+                  "code": "missing_authorization_header",
+                  "type": "auth",
+                  "link": "https://docs.meilisearch.com/errors#missing_authorization_header"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Index not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "example": {
+                  "message": "Index `movies` not found.",
+                  "code": "index_not_found",
+                  "type": "invalid_request",
+                  "link": "https://docs.meilisearch.com/errors#index_not_found"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": [
+              "settings.get",
+              "settings.*",
+              "*"
+            ]
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Settings"
+        ],
+        "summary": "Update foreignKeys",
+        "description": "Updates the `foreignKeys` setting for the index. Send the new value in the request body; send null to reset to default.",
+        "operationId": "putforeignKeys",
+        "parameters": [
+          {
+            "name": "index_uid",
+            "in": "path",
+            "description": "Unique identifier of the index.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "movies"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ForeignKey"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "description": "Task successfully enqueued.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SummarizedTaskView"
+                },
+                "example": {
+                  "taskUid": 147,
+                  "indexUid": "movies",
+                  "status": "enqueued",
+                  "type": "settingsUpdate",
+                  "enqueuedAt": "2024-08-08T17:05:55.791772Z"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The authorization header is missing.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "example": {
+                  "message": "The Authorization header is missing. It must use the bearer authorization method.",
+                  "code": "missing_authorization_header",
+                  "type": "auth",
+                  "link": "https://docs.meilisearch.com/errors#missing_authorization_header"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Index not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "example": {
+                  "message": "Index `movies` not found.",
+                  "code": "index_not_found",
+                  "type": "invalid_request",
+                  "link": "https://docs.meilisearch.com/errors#index_not_found"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": [
+              "settings.update",
+              "settings.*",
+              "*"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Settings"
+        ],
+        "summary": "Reset foreignKeys",
+        "description": "Resets the `foreignKeys` setting to its default value.",
+        "operationId": "deleteforeignKeys",
+        "parameters": [
+          {
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -5778,7 +6161,7 @@
         "operationId": "getlocalizedAttributes",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -5855,7 +6238,7 @@
         "operationId": "putlocalizedAttributes",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -5948,7 +6331,7 @@
         "operationId": "deletelocalizedAttributes",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -6030,7 +6413,7 @@
         "operationId": "getnonSeparatorTokens",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -6108,7 +6491,7 @@
         "operationId": "putnonSeparatorTokens",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -6202,7 +6585,7 @@
         "operationId": "deletenonSeparatorTokens",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -6284,7 +6667,7 @@
         "operationId": "getpagination",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -6358,7 +6741,7 @@
         "operationId": "deletepagination",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -6438,7 +6821,7 @@
         "operationId": "patchpagination",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -6530,7 +6913,7 @@
         "operationId": "getprefixSearch",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -6604,7 +6987,7 @@
         "operationId": "putprefixSearch",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -6694,7 +7077,7 @@
         "operationId": "deleteprefixSearch",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -6776,7 +7159,7 @@
         "operationId": "getproximityPrecision",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -6850,7 +7233,7 @@
         "operationId": "putproximityPrecision",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -6940,7 +7323,7 @@
         "operationId": "deleteproximityPrecision",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -7022,7 +7405,7 @@
         "operationId": "getrankingRules",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -7099,7 +7482,7 @@
         "operationId": "putrankingRules",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -7192,7 +7575,7 @@
         "operationId": "deleterankingRules",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -7274,7 +7657,7 @@
         "operationId": "getsearchCutoffMs",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -7350,7 +7733,7 @@
         "operationId": "putsearchCutoffMs",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -7442,7 +7825,7 @@
         "operationId": "deletesearchCutoffMs",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -7524,7 +7907,7 @@
         "operationId": "getsearchableAttributes",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -7601,7 +7984,7 @@
         "operationId": "putsearchableAttributes",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -7694,7 +8077,7 @@
         "operationId": "deletesearchableAttributes",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -7776,7 +8159,7 @@
         "operationId": "getseparatorTokens",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -7854,7 +8237,7 @@
         "operationId": "putseparatorTokens",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -7948,7 +8331,7 @@
         "operationId": "deleteseparatorTokens",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -8030,7 +8413,7 @@
         "operationId": "getsortableAttributes",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -8108,7 +8491,7 @@
         "operationId": "putsortableAttributes",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -8202,7 +8585,7 @@
         "operationId": "deletesortableAttributes",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -8284,7 +8667,7 @@
         "operationId": "getstopWords",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -8362,7 +8745,7 @@
         "operationId": "putstopWords",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -8456,7 +8839,7 @@
         "operationId": "deletestopWords",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -8538,7 +8921,7 @@
         "operationId": "getsynonyms",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -8621,7 +9004,7 @@
         "operationId": "putsynonyms",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -8720,7 +9103,7 @@
         "operationId": "deletesynonyms",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -8802,7 +9185,7 @@
         "operationId": "gettypoTolerance",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -8876,7 +9259,7 @@
         "operationId": "deletetypoTolerance",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -8956,7 +9339,7 @@
         "operationId": "patchtypoTolerance",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -9048,7 +9431,7 @@
         "operationId": "similar_get",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -9250,7 +9633,7 @@
         "operationId": "similar_post",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -9357,7 +9740,7 @@
         "operationId": "get_index_stats",
         "parameters": [
           {
-            "name": "indexUid",
+            "name": "index_uid",
             "in": "path",
             "description": "Unique identifier of the index.",
             "required": true,
@@ -9607,7 +9990,7 @@
         "operationId": "get_api_key",
         "parameters": [
           {
-            "name": "uidOrKey",
+            "name": "key",
             "in": "path",
             "description": "The `uid` or `key` field of an existing API key.",
             "required": true,
@@ -9696,7 +10079,7 @@
         "operationId": "delete_api_key",
         "parameters": [
           {
-            "name": "uidOrKey",
+            "name": "key",
             "in": "path",
             "description": "The `uid` or `key` field of an existing API key.",
             "required": true,
@@ -9763,7 +10146,7 @@
         "operationId": "patch_api_key",
         "parameters": [
           {
-            "name": "uidOrKey",
+            "name": "key",
             "in": "path",
             "description": "The `uid` or `key` field of an existing API key.",
             "required": true,
@@ -11278,7 +11661,7 @@
         "operationId": "get_task",
         "parameters": [
           {
-            "name": "taskUid",
+            "name": "task_id",
             "in": "path",
             "description": "The task identifier.",
             "required": true,
@@ -11368,7 +11751,7 @@
         "operationId": "get_task_documents_file",
         "parameters": [
           {
-            "name": "taskUid",
+            "name": "task_id",
             "in": "path",
             "description": "The task identifier.",
             "required": true,
@@ -12722,6 +13105,7 @@
           "invalid_settings_prefix_search",
           "invalid_settings_faceting",
           "invalid_settings_filterable_attributes",
+          "invalid_settings_foreign_keys",
           "invalid_settings_pagination",
           "invalid_settings_search_cutoff_ms",
           "invalid_settings_embedders",
@@ -14200,6 +14584,22 @@
             "$ref": "#/components/schemas/FilterableAttributesPatterns"
           }
         ]
+      },
+      "ForeignKey": {
+        "type": "object",
+        "required": [
+          "foreignIndexUid",
+          "fieldName"
+        ],
+        "properties": {
+          "foreignIndexUid": {
+            "type": "string"
+          },
+          "fieldName": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
       },
       "GetLogs": {
         "type": "object",
@@ -15765,6 +16165,13 @@
               "null"
             ],
             "description": "Enable multimodal search with images and other media"
+          },
+          "foreignKeys": {
+            "type": [
+              "boolean",
+              "null"
+            ],
+            "description": "Enable foreign key support for document hydration"
           }
         }
       },
@@ -16710,6 +17117,22 @@
             ],
             "default": []
           },
+          "foreignKeys": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "$ref": "#/components/schemas/ForeignKey"
+            },
+            "description": "Foreign keys to use for cross-index filtering search.",
+            "example": [
+              {
+                "foreignIndexUid": "products",
+                "fieldName": "productId"
+              }
+            ]
+          },
           "rankingRules": {
             "type": [
               "array",
@@ -17042,6 +17465,22 @@
               "release_date"
             ],
             "default": []
+          },
+          "foreignKeys": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "$ref": "#/components/schemas/ForeignKey"
+            },
+            "description": "Foreign keys to use for cross-index filtering search.",
+            "example": [
+              {
+                "foreignIndexUid": "products",
+                "fieldName": "productId"
+              }
+            ]
           },
           "rankingRules": {
             "type": [
