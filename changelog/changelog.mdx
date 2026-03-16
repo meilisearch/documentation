@@ -4,6 +4,84 @@ description: "New features and improvements in Meilisearch"
 rss: true
 ---
 
+<Update label="v1.39" description="2026-03-16">
+
+## New Features
+
+### Cross-index document hydration with Foreign Keys
+
+A new experimental `foreignKeys` feature allows you to hydrate documents with related documents from other indexes.
+
+First, enable the feature via the experimental features endpoint:
+
+```bash
+curl -X PATCH 'http://127.0.0.1:7700/experimental-features' \
+ -H 'Content-Type: application/json' \
+ --data-binary '{"foreignKeys": true}'
+```
+
+Then configure foreign key relationships in your index settings using the `foreignKeys` setting:
+
+```json
+{
+  "foreignKeys": [
+    {
+      "fieldName": "actors",
+      "foreignIndexUid": "actors"
+    }
+  ]
+}
+```
+
+With this configuration, documents containing foreign document IDs will be automatically hydrated with the full documents from the referenced index. For example, a document like:
+
+```json
+{
+  "id": 1,
+  "title": "Forrest Gump",
+  "actors": [
+    1
+  ]
+}
+```
+
+Will be returned in search results as:
+
+```json
+{
+  "id": 1,
+  "title": "Forrest Gump",
+  "actors": [
+    {
+      "id": 1,
+      "name": "Tom",
+      "familyName": "Hanks",
+      "birthDate": "1956-07-09"
+    }
+  ]
+}
+```
+
+Note: This feature does not support remote sharding environments.
+
+## Improvements
+
+### Improved Server-Sent Events (SSE) streaming
+
+Added `X-Accel-Buffering: no` header to the `POST /chats/{workspace_uid}/chat/completions` endpoint when streaming mode is activated. This ensures that proxy response buffering is disabled for real-time streaming chat responses.
+
+### Fixed memory leak in indexation pipeline
+
+Resolved a significant memory leak that has been present since v1.12. If you noticed Meilisearch consuming increasing amounts of memory over time, this issue is now fixed.
+
+### Restored task deletion performance
+
+Fixed a performance regression in v1.38.1 that affected task deletion operations. Task deletion performance has been restored to v1.38.0 levels while maintaining data consistency.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.39.0)
+
+</Update>
+
 <Update label="v1.38" description="2026-03-09">
 
 ## New Features
