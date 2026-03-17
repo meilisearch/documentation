@@ -7,6 +7,10 @@ curl \
   --data-binary '{ "uid": "INDEX_B" }'
 ```
 
+```javascript JS
+client.updateIndex('movies', { uid: 'films' })
+```
+
 ```python Python
 client.index("INDEX_A").update(new_uid="INDEX_B")
 ```

@@ -21,25 +21,15 @@ curl \
 
 ```javascript JS
 client.initializeNetwork({
-  self: 'leader-1',
+  self: 'https://instance1.meilisearch.com',
   remotes: {
-    'leader-1': {
-      url: 'http://127.0.0.1:7700',
-      searchApiKey: 'searchKey',
-      writeApiKey: 'masterKey',
-    },
-    'remote-paris': {
-      url: 'http://192.168.1.11:7700',
-      searchApiKey: 'searchKeyRemote',
-      writeApiKey: 'masterKey',
-    },
-  },
-  shards: {
-    movies: {
-      remotes: ['leader-1', 'remote-paris'],
-    },
-  },
-});
+    instance2: {
+      url: 'https://instance2.meilisearch.com',
+      searchApiKey: 'SEARCH_API_KEY',
+      writeApiKey: 'WRITE_API_KEY'
+    }
+  }
+})
 ```
 
 ```python Python
