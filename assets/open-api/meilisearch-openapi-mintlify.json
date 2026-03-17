@@ -2513,7 +2513,7 @@
           },
           {
             "lang": "JS",
-            "source": "client.index('movies').updateDocuments([{\n    id: 287947,\n    title: 'Shazam ⚡️',\n    genres: 'comedy'\n}])"
+            "source": "client.index('movies').updateDocuments([{\n    id: 287947,\n    title: 'Shazam ⚡️',\n    genres: 'comedy'\n}], { skipCreation: true })"
           },
           {
             "lang": "PHP",
@@ -2688,7 +2688,7 @@
           },
           {
             "lang": "JS",
-            "source": "client.index('movies').addDocuments([{\n    id: 287947,\n    title: 'Shazam',\n    poster: 'https://image.tmdb.org/t/p/w1280/xnopI5Xtky18MPhK40cZAGAOVeV.jpg',\n    overview: 'A boy is given the ability to become an adult superhero in times of need with a single magic word.',\n    release_date: '2019-03-23'\n}])"
+            "source": "client.index('movies').addDocuments([{\n    id: 287947,\n    title: 'Shazam',\n    poster: 'https://image.tmdb.org/t/p/w1280/xnopI5Xtky18MPhK40cZAGAOVeV.jpg',\n    overview: 'A boy is given the ability to become an adult superhero in times of need with a single magic word.',\n    release_date: '2019-03-23'\n}], { skipCreation: true })"
           },
           {
             "lang": "PHP",
@@ -14608,6 +14608,10 @@
             "source": "curl \\\n  -X GET 'MEILISEARCH_URL/network'"
           },
           {
+            "lang": "JS",
+            "source": "client.getNetwork()"
+          },
+          {
             "lang": "PHP",
             "source": "$client->getNetwork();"
           },
@@ -14705,7 +14709,7 @@
           },
           {
             "lang": "JS",
-            "source": "client.initializeNetwork({\n  self: 'leader-1',\n  remotes: {\n    'leader-1': {\n      url: 'http://127.0.0.1:7700',\n      searchApiKey: 'searchKey',\n      writeApiKey: 'masterKey',\n    },\n    'remote-paris': {\n      url: 'http://192.168.1.11:7700',\n      searchApiKey: 'searchKeyRemote',\n      writeApiKey: 'masterKey',\n    },\n  },\n  shards: {\n    movies: {\n      remotes: ['leader-1', 'remote-paris'],\n    },\n  },\n});"
+            "source": "client.initializeNetwork({\n  self: 'https://instance1.meilisearch.com',\n  remotes: {\n    instance2: {\n      url: 'https://instance2.meilisearch.com',\n      searchApiKey: 'SEARCH_API_KEY',\n      writeApiKey: 'WRITE_API_KEY'\n    }\n  }\n})"
           },
           {
             "lang": "PHP",
