@@ -12,8 +12,9 @@ Follow these guidelines to get the most out of Meilisearch, whether you're index
 
 Meilisearch can handle complex nested JSON, so you don't need to flatten everything. However, simpler structures are easier to configure and search through. The key rule is: **never use dynamic field names**. Every document in an index should share the same field names. If field names change from one document to the next, Meilisearch cannot index them properly.
 
+Good: consistent field names, nested objects are fine:
+
 ```json
-// Good: consistent field names, nested objects are fine
 {
   "id": 1,
   "title": "Running shoes",
@@ -24,14 +25,21 @@ Meilisearch can handle complex nested JSON, so you don't need to flatten everyth
     "size": 42
   }
 }
+```
 
-// Bad: dynamic field names (keys change per document)
-{
-  "id": 1,
-  "Nike": { "price": 120 },
-  "id": 2,
-  "Adidas": { "price": 95 }
-}
+Bad: dynamic field names (keys change per document):
+
+```json
+[
+  {
+    "id": 1,
+    "Nike": { "price": 120 }
+  },
+  {
+    "id": 2,
+    "Adidas": { "price": 95 }
+  }
+]
 ```
 
 ### Use meaningful primary keys

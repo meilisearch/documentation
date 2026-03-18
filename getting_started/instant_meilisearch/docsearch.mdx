@@ -87,8 +87,8 @@ You can run the scraper with Docker:
 ```bash
 docker run -t --rm \
   --network=host \
-  -e MEILISEARCH_HOST_URL='MEILISEARCH_URL' \
-  -e MEILISEARCH_API_KEY='MASTER_KEY' \
+  -e MEILISEARCH_HOST_URL='<MEILISEARCH_URL>' \
+  -e MEILISEARCH_API_KEY='<MASTER_KEY>' \
   -v <absolute-path-to-your-config-file>:/docs-scraper/config.json \
   getmeili/docs-scraper:latest pipenv run ./docs_scraper config.json
 ```
@@ -151,7 +151,7 @@ module.exports = {
 }
 ```
 
-The `hostUrl` and the `apiKey` fields are the credentials of the Meilisearch instance. Following on from this tutorial, they are respectively `MEILISEARCH_URL` and `MASTER_KEY`.
+The `hostUrl` and the `apiKey` fields are the credentials of the Meilisearch instance. Following on from this tutorial, they are respectively `MEILISEARCH_URL` and your `Default Search API Key`.
 
 `indexUid` is the index identifier in your Meilisearch instance in which your website content is stored. It has been defined in the [config file](#configuration-file).
 
@@ -196,7 +196,7 @@ _[Docxtemplater](https://docxtemplater.com/) search bar demo_
 Replace `{version}` in the CDN URLs above with the actual docs-searchbar.js version number, for example `2.0.5`. Check the [docs-searchbar.js releases page](https://github.com/meilisearch/docs-searchbar.js/releases) for the latest version.
 </Note>
 
-The `hostUrl` and the `apiKey` fields are the credentials of the Meilisearch instance. Following on from this tutorial, they are respectively `MEILISEARCH_URL` and `MASTER_KEY`.
+The `hostUrl` and the `apiKey` fields are the credentials of the Meilisearch instance. Following on from this tutorial, they are respectively `MEILISEARCH_URL` and your `Default Search API Key`.
 
 `indexUid` is the index identifier in your Meilisearch instance in which your website content is stored. It has been defined in the [config file](#configuration-file).
 `inputSelector` is the `id` attribute of the HTML search input tag.
