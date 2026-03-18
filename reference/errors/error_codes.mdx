@@ -20,7 +20,7 @@ The request is invalid, check the error message for more information.
 
 ## `batch_not_found`
 
-The requested batch does not exist. Please ensure that you are using the correct [`uid`](/reference/api/async-task-management/list-batches).
+The requested batch does not exist. Please ensure that you are using the correct [`uid`](/reference/api/batches/list-batches).
 
 ## `database_size_limit_reached`
 
@@ -84,7 +84,7 @@ The [`updatedAt`](/reference/api/indexes/get-index) field of an index cannot be 
 
 ## `immutable_webhook`
 
-You tried to modify a reserved [webhook](/reference/api/webhooks/list-webhooks). Reserved webhooks are configured by Meilisearch Cloud and have `isEditable` set to `true`. Webhooks created with an instance option are also immutable.
+You tried to modify a reserved [webhook](/reference/api/management/list-webhooks). Reserved webhooks are configured by Meilisearch Cloud and have `isEditable` set to `true`. Webhooks created with an instance option are also immutable.
 
 ## `immutable_webhook_uuid`
 
@@ -246,11 +246,11 @@ The provided value for `facetQuery` is invalid. It should either be a string or 
 
 ## `invalid_index_limit`
 
-The [`limit`](/reference/api/indexes/list-indexes) parameter is invalid. It should be an integer.
+The [`limit`](/reference/api/indexes/list-all-indexes) parameter is invalid. It should be an integer.
 
 ## `invalid_index_offset`
 
-The [`offset`](/reference/api/indexes/list-indexes) parameter is invalid. It should be an integer.
+The [`offset`](/reference/api/indexes/list-all-indexes) parameter is invalid. It should be an integer.
 
 ## `invalid_index_uid`
 
@@ -401,7 +401,7 @@ The [`facetSearch`](/reference/api/settings/get-facetsearch) index setting value
 
 ## `invalid_settings_localized_attributes`
 
-The [`localizedAttributes`](/reference/api/settings/get-localized-attributes) index setting value is invalid.
+The [`localizedAttributes`](/reference/api/settings/get-localizedattributes) index setting value is invalid.
 
 ## `invalid_search_matching_strategy`
 
@@ -413,7 +413,7 @@ The [`offset`](/reference/api/search/search-with-post#body-offset) parameter is 
 
 ## `invalid_settings_prefix_search`
 
-The [`prefixSearch`](/reference/api/settings/get-prefix-search) index setting value is invalid.
+The [`prefixSearch`](/reference/api/settings/get-prefixsearch) index setting value is invalid.
 
 ## `invalid_search_page`
 
@@ -565,51 +565,51 @@ This error happens if:
 
 ## `invalid_task_after_enqueued_at`
 
-The [`afterEnqueuedAt`](/reference/api/async-task-management/list-tasks) query parameter is invalid.
+The [`afterEnqueuedAt`](/reference/api/tasks/list-tasks) query parameter is invalid.
 
 ## `invalid_task_after_finished_at`
 
-The [`afterFinishedAt`](/reference/api/async-task-management/list-tasks) query parameter is invalid.
+The [`afterFinishedAt`](/reference/api/tasks/list-tasks) query parameter is invalid.
 
 ## `invalid_task_after_started_at`
 
-The [`afterStartedAt`](/reference/api/async-task-management/list-tasks) query parameter is invalid.
+The [`afterStartedAt`](/reference/api/tasks/list-tasks) query parameter is invalid.
 
 ## `invalid_task_before_enqueued_at`
 
-The [`beforeEnqueuedAt`](/reference/api/async-task-management/list-tasks) query parameter is invalid.
+The [`beforeEnqueuedAt`](/reference/api/tasks/list-tasks) query parameter is invalid.
 
 ## `invalid_task_before_finished_at`
 
-The [`beforeFinishedAt`](/reference/api/async-task-management/list-tasks) query parameter is invalid.
+The [`beforeFinishedAt`](/reference/api/tasks/list-tasks) query parameter is invalid.
 
 ## `invalid_task_before_started_at`
 
-The [`beforeStartedAt`](/reference/api/async-task-management/list-tasks) query parameter is invalid.
+The [`beforeStartedAt`](/reference/api/tasks/list-tasks) query parameter is invalid.
 
 ## `invalid_task_canceled_by`
 
-The [`canceledBy`](/reference/api/async-task-management/list-tasks) query parameter is invalid. It should be an integer. Multiple `uid`s should be separated by commas (`,`).
+The [`canceledBy`](/reference/api/tasks/list-tasks) query parameter is invalid. It should be an integer. Multiple `uid`s should be separated by commas (`,`).
 
 ## `invalid_task_index_uids`
 
-The [`indexUids`](/reference/api/async-task-management/list-tasks) query parameter contains an invalid index uid.
+The [`indexUids`](/reference/api/tasks/list-tasks) query parameter contains an invalid index uid.
 
 ## `invalid_task_limit`
 
-The [`limit`](/reference/api/async-task-management/list-tasks) parameter is invalid. It must be an integer.
+The [`limit`](/reference/api/tasks/list-tasks) parameter is invalid. It must be an integer.
 
 ## `invalid_task_statuses`
 
-The requested task status is invalid. Please use one of the [possible values](/reference/api/async-task-management/get-task).
+The requested task status is invalid. Please use one of the [possible values](/reference/api/tasks/get-task).
 
 ## `invalid_task_types`
 
-The requested task type is invalid. Please use one of the [possible values](/reference/api/async-task-management/get-task).
+The requested task type is invalid. Please use one of the [possible values](/reference/api/tasks/get-task).
 
 ## `invalid_task_uids`
 
-The [`uids`](/reference/api/async-task-management/list-tasks) query parameter is invalid.
+The [`uids`](/reference/api/tasks/list-tasks) query parameter is invalid.
 
 ## `invalid_webhooks`
 
@@ -695,14 +695,14 @@ The index swap payload is missing the [`indexes`](/reference/api/indexes/swap-in
 
 ## `missing_task_filters`
 
-The [cancel tasks](/reference/api/async-task-management/cancel-tasks) and [delete tasks](/reference/api/async-task-management/delete-tasks) endpoints require one of the available query parameters.
+The [cancel tasks](/reference/api/tasks/cancel-tasks) and [delete tasks](/reference/api/tasks/delete-tasks) endpoints require one of the available query parameters.
 
 ## `no_space_left_on_device`
 
 This error occurs if:
 
 - The host system partition reaches its maximum capacity and can no longer accept writes
-- The tasks queue reaches its limit and can no longer accept writes. You can delete tasks using the [delete tasks endpoint](/reference/api/async-task-management/delete-tasks) to continue write operations
+- The tasks queue reaches its limit and can no longer accept writes. You can delete tasks using the [delete tasks endpoint](/reference/api/tasks/delete-tasks) to continue write operations
 
 ## `not_found`
 
@@ -714,7 +714,7 @@ The payload sent to the server was too large. Check out this [guide](/learn/self
 
 ## `task_not_found`
 
-The requested task does not exist. Please ensure that you are using the correct [`uid`](/reference/api/async-task-management/get-task).
+The requested task does not exist. Please ensure that you are using the correct [`uid`](/reference/api/tasks/get-task).
 
 ## `too_many_open_files`
 

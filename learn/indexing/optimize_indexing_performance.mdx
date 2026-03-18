@@ -7,7 +7,7 @@ import CodeSamplesUpdateFacetSearchSettings1 from '/snippets/generated-code-samp
 
 # Optimize indexing performance by analyzing batch statistics
 
-Indexing performance can vary significantly depending on your dataset, index settings, and hardware. The [batch object](/reference/api/async-task-management/list-batches) provides information about the progress of asynchronous indexing operations.
+Indexing performance can vary significantly depending on your dataset, index settings, and hardware. The [batch object](/reference/api/batches/list-batches) provides information about the progress of asynchronous indexing operations.
 
 The `progressTrace` field within the batch object offers a detailed breakdown of where time is spent during the indexing process. Use this data to identify bottlenecks and improve indexing speed.
 
@@ -89,7 +89,7 @@ Focus on the **longest-running steps** and investigate which index settings or d
 
 | Description | Optimization |
 |--------------|--------------|
-| | Builds prefix data for autocomplete. Allows matching documents that begin with a specific query term, instead of only exact matches.| Disable [**prefix search**](/reference/api/settings/get-prefix-search) (`prefixSearch: disabled`). _This can severely impact search result relevancy._ |
+| | Builds prefix data for autocomplete. Allows matching documents that begin with a specific query term, instead of only exact matches.| Disable [**prefix search**](/reference/api/settings/get-prefixsearch) (`prefixSearch: disabled`). _This can severely impact search result relevancy._ |
 
 ### `post processing words > word fst`
 
