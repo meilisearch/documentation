@@ -89,7 +89,7 @@ By default, Meilisearch accepts payloads up to 100MB. Enterprise accounts can re
 
 Compress your HTTP payloads using `gzip`, `deflate`, or `br` encoding to reduce transfer time and bandwidth. Meilisearch accepts all standard [encoding formats](/reference/api/headers).
 
-### Wait for task completion between large batches
+### Monitor task completion during large imports
 
 When sending multiple batches, you don't need to wait for each task to complete before sending the next one. Meilisearch queues all tasks and processes them in order. However, monitoring [task status](/learn/async/working_with_tasks) helps you detect errors early.
 
@@ -123,7 +123,7 @@ By default, all fields are searchable. Limit searchable attributes to only the f
 
 ### Use separate indexes for separate languages
 
-If your dataset contains content in multiple languages, create a separate index for each language. Meilisearch's tokenizer and relevancy algorithms work best with a single language per index.
+If your dataset contains content in multiple languages, create a separate index for each language. Meilisearch's tokenizer, stop words, and ranking algorithms are language-specific, so mixing languages in a single index degrades relevancy for all of them.
 
 ### Avoid creating too many indexes
 

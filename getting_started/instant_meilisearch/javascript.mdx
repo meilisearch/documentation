@@ -103,17 +103,14 @@ The example above uses a public demo instance. To use your own Meilisearch insta
 
 ```javascript
 const { searchClient } = instantMeiliSearch(
-  process.env.MEILISEARCH_URL,      // Your instance URL
-  process.env.MEILISEARCH_API_KEY   // Your search API key
+  'https://your-instance.meilisearch.io',  // Your instance URL
+  'your_search_api_key'                     // Your search API key
 );
 ```
 
 <Note>
-**Set up your environment:**
-```bash
-export MEILISEARCH_URL="https://your-instance.meilisearch.io"
-export MEILISEARCH_API_KEY="your_search_api_key"
-```
+If you are using a bundler (Vite, Next.js, Webpack), you can use environment variables instead of hardcoded strings. Refer to your bundler's documentation for how to inject environment variables.
+
 [Get a free Cloud instance](https://cloud.meilisearch.com)
 </Note>
 
