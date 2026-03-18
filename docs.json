@@ -162,7 +162,9 @@
                 "group": "Introduction",
                 "pages": [
                   "getting_started/overview",
-                  "getting_started/features"
+                  "getting_started/features",
+                  "getting_started/glossary",
+                  "getting_started/good_practices"
                 ]
               },
               {
@@ -181,7 +183,7 @@
                 ]
               },
               {
-                "group": "Instant-meilisearch",
+                "group": "Frontend SDKs",
                 "pages": [
                   "getting_started/instant_meilisearch/javascript",
                   "getting_started/instant_meilisearch/react",
@@ -202,11 +204,9 @@
                 "group": "Integrations",
                 "pages": [
                   "getting_started/integrations/firebase",
-                  "getting_started/integrations/gatsby",
                   "getting_started/integrations/vercel",
                   "getting_started/integrations/postman",
-                  "getting_started/integrations/meilisearch_importer",
-                  "getting_started/integrations/meilisync"
+                  "getting_started/integrations/meilisearch_importer"
                 ]
               }
             ]
@@ -351,7 +351,6 @@
                 "group": "Indexing",
                 "pages": [
                   "learn/indexing/rename_an_index",
-                  "learn/indexing/indexing_best_practices",
                   "learn/indexing/ram_multithreading_performance",
                   "learn/indexing/tokenization",
                   "learn/indexing/multilingual-datasets",
@@ -890,6 +889,18 @@
     }
   },
   "redirects": [
+    {
+      "source": "/getting_started/integrations/gatsby",
+      "destination": "https://github.com/meilisearch/gatsby-plugin-meilisearch"
+    },
+    {
+      "source": "/getting_started/integrations/meilisync",
+      "destination": "https://github.com/long2ice/meilisync"
+    },
+    {
+      "source": "/learn/indexing/indexing_best_practices",
+      "destination": "/getting_started/good_practices"
+    },
     {
       "source": "/errors",
       "destination": "/reference/errors/error_codes"

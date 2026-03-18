@@ -4,7 +4,7 @@ sidebarTitle: Docsearch
 description: Use Meilisearch to index content in a text-heavy website. Covers installing Meilisearch, configuring a text scraper, and creating a simple front end.
 ---
 
-This tutorial will guide you through the steps of building a relevant and powerful search bar for your documentation 🚀
+This tutorial will guide you through the steps of building a relevant and powerful search bar for your documentation.
 
 - [Run a Meilisearch instance](#run-a-meilisearch-instance)
 - [Scrape your content](#scrape-your-content)
@@ -25,7 +25,11 @@ The host URL and the API key you will provide in the next steps correspond to th
 
 ## Scrape your content
 
-The Meilisearch team provides and maintains a [scraper tool](https://github.com/meilisearch/docs-scraper) to automatically read the content of your website and store it into an index in Meilisearch.
+[meilisearch-docsearch](https://github.com/tauri-apps/meilisearch-docsearch) is a community-maintained scraper tool that automatically reads the content of your website and stores it into a Meilisearch index.
+
+<Note>
+`meilisearch-docsearch` is maintained by the community, not by the Meilisearch team. For issues and feature requests, visit the [GitHub repository](https://github.com/tauri-apps/meilisearch-docsearch).
+</Note>
 
 ### Configuration file
 
@@ -72,16 +76,13 @@ The `docs-content` class is the main container of the textual content in this ex
 
 All searchable `lvl` elements outside this main documentation container (for instance, in a sidebar) must be `global` selectors. They will be globally picked up and injected to every document built from your page.
 
-If you use VuePress for your documentation, you can check out the [configuration file](https://github.com/meilisearch/documentation/blob/main/docs-scraper.config.json) we use in production.
-In our case, the main container is `theme-default-content` and the selector titles and subtitles are `h1`, `h2`...
-
 <Tip>
-More [optional fields are available](https://github.com/meilisearch/docs-scraper#all-the-config-file-settings) to fit your needs.
+Check the [meilisearch-docsearch documentation](https://github.com/tauri-apps/meilisearch-docsearch#readme) for the full list of configuration options.
 </Tip>
 
 ### Run the scraper
 
-You can run the scraper with Docker. With our local Meilisearch instance set up at [the first step](#run-a-meilisearch-instance), we run:
+You can run the scraper with Docker:
 
 ```bash
 docker run -t --rm \
@@ -93,7 +94,7 @@ docker run -t --rm \
 ```
 
 <Note>
-If you don't want to use Docker, here are [other ways to run the scraper](https://github.com/meilisearch/docs-scraper#installation-and-usage).
+For other installation methods, refer to the [meilisearch-docsearch repository](https://github.com/tauri-apps/meilisearch-docsearch#installation-and-usage).
 </Note>
 
 `<absolute-path-to-your-config-file>` should be the **absolute** path of your configuration file defined at [the previous step](#configuration-file).
@@ -102,7 +103,7 @@ The API key should have the permissions to add documents into your Meilisearch i
 _More about [Meilisearch security](/learn/security/basic_security)._
 
 <Tip>
-We recommend running the scraper at each new deployment of your documentation, [as we do for the Meilisearch's one](https://github.com/meilisearch/documentation/blob/main/.github/workflows/scraper.yml).
+We recommend running the scraper at each new deployment of your documentation using a CI/CD pipeline.
 </Tip>
 
 ## Integrate the search bar
@@ -214,5 +215,5 @@ For more concrete examples, you can check out this [basic HTML file](https://git
 
 ## Next steps
 
-At this point, you should have a working search engine on your website, congrats! 🎉
+At this point, you should have a working search engine on your website, congrats!
 You can check [this tutorial](/learn/self_hosted/getting_started_with_self_hosted_meilisearch) if you now want to run Meilisearch in production!
