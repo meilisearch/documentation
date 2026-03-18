@@ -27,7 +27,7 @@ Before continuing, make sure you have Meilisearch installed and have access to a
 This guide includes examples in JavaScript, Python, and Ruby. The packages used:
 
 - **JavaScript**: [`algoliasearch`](https://www.npmjs.com/package/algoliasearch) `4.x`, [`meilisearch`](https://www.npmjs.com/package/meilisearch) (compatible with Meilisearch v1.0+)
-- **Python**: [`algoliasearch`](https://pypi.org/project/algoliasearch/) `3.x`, [`meilisearch`](https://pypi.org/project/meilisearch/)
+- **Python**: [`algoliasearch`](https://pypi.org/project/algoliasearch/) `4.x`, [`meilisearch`](https://pypi.org/project/meilisearch/)
 - **Ruby**: [`algolia`](https://rubygems.org/gems/algolia) `3.x`, [`meilisearch`](https://rubygems.org/gems/meilisearch)
 </Note>
 
@@ -427,8 +427,8 @@ This section compares Algolia and Meilisearch's respective API methods, using Ja
 | Get All Indexes       | `client.listIndices()`                                                              | `client.getIndexes()`                                                                                                  |
 | Get Single Index      | No method available                                                                 | `client.getIndex(string indexName)`                                                                                    |
 | Delete Index          | `index.delete()`                                                                    | `client.deleteIndex(string indexName)`                                                                                 |
-| Get Index Settings    | `index.getSettings()`                                                               | `index().getSettings()`                                                                                                |
-| Update Index Settings | `index.setSettings(object settings)`                                                | `index().updateSettings(object settings)`                                                                              |
+| Get Index Settings    | `index.getSettings()`                                                               | `index.getSettings()`                                                                                                |
+| Update Index Settings | `index.setSettings(object settings)`                                                | `index.updateSettings(object settings)`                                                                              |
 | Search Method         | `index.search(string query, { searchParameters, requestOptions })`                  | `index.search(string query, object searchParameters)`                                                                  |
 | Add Object            | `index.saveObjects(array objects)`                                                  | `index.addDocuments(array objects)`                                                                                    |
 | Partial Update Object | `index.partialUpdateObjects(array objects)`                                         | `index.updateDocuments(array objects)`                                                                                 |

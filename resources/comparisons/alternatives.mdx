@@ -115,7 +115,7 @@ Can't find a client you'd like us to support? [Submit your idea here](https://gi
 | Stop words | ✅ | ✅ | ✅ | ✅ |
 | Automatic language detection | ✅ | ✅ | ❌ | ❌ |
 | All language supports | ✅ | ✅ | ✅ | ✅ |
-| Ranking Score Details | ✅ | ✅ | ❌ | ✅ |
+| Ranking Score Details | ✅ | ✅ | 🔶 <br /> `_text_match_info` | ✅ |
 
 ##### Security
 
@@ -130,11 +130,11 @@ Can't find a client you'd like us to support? [Submit your idea here](https://gi
 |---|:---:|:----:|:---:|:---:|
 | Placeholder search | ✅ | ✅ | ✅ | ✅ |
 | Multi-index search | ✅ | ✅ | ✅ | ✅ |
-| Federated search | ✅ | ❌ | ❌ | ✅ |
+| Federated search | ✅ | 🔶 <br /> Multi-query returns separate result sets, not a merged ranked list | ❌ | ✅ |
 | Exact phrase search | ✅ | ✅ | ✅ | ✅ |
 | Geo search |  ✅  | ✅ | ✅ | ✅ |
 | Sort by  |  ✅  | 🔶 <br /> Limited to one `sort_by` rule per index. Indexes may have to be duplicated for each sort field and sort order | ✅ <br /> Up to 3 sort fields per search query | ✅ |
-| Filtering |  ✅ <br /> Support complex filter queries with an SQL-like syntax.  | 🔶 <br /> Does not support `OR` operation across multiple fields | ✅ | ✅ |
+| Filtering |  ✅ <br /> Support complex filter queries with an SQL-like syntax.  | ✅ <br /> Supports complex filters with disjunctive facets | ✅ | ✅ |
 | Faceted search |  ✅ | ✅ | ✅ <br /> Faceted fields must be searchable <br /> Faceting can take several seconds when >10 million facet values must be returned | ✅ |
 | Distinct attributes <br /><div style={{color: "#A9A9A9", fontSize: "0.9em"}}>De-duplicate documents by a field value</div>| ✅ | ✅ | ✅  | ✅ |
 | Grouping <br /><div style={{color: "#A9A9A9", fontSize: "0.9em"}}>Bucket documents by field values</div> | 🔶 <br /> Via `distinct` parameter | ✅ | ✅  | ✅ |
@@ -156,7 +156,7 @@ Can't find a client you'd like us to support? [Submit your idea here](https://gi
 |   | Meilisearch | Algolia | Typesense | Elasticsearch |
 |---|:---:|:----:|:---:|:---:|
 | [Mini Dashboard](https://github.com/meilisearch/mini-dashboard) | ✅ | 🔶 <br /> Cloud product | 🔶 <br /> Cloud product | ✅ |
-| Search Analytics | ✅ <br /> [Cloud product](https://www.meilisearch.com/cloud) | ✅ <br /> Cloud Product | ❌ | ✅ <br /> Cloud Product |
+| Search Analytics | ✅ <br /> [Cloud product](https://www.meilisearch.com/cloud) | ✅ <br /> Cloud Product | ✅ <br /> Query tracking, clicks, conversions | ✅ <br /> Cloud Product |
 | Monitoring Dashboard | ✅ <br /> [Cloud product](/learn/analytics/configure_analytics_events) <br /> [Prometheus metrics endpoint](/reference/api/metrics) for Grafana | ✅ <br /> Cloud Product | ✅ <br /> Cloud Product | ✅ <br /> Cloud Product |
 
 #### Deployment
@@ -165,20 +165,20 @@ Can't find a client you'd like us to support? [Submit your idea here](https://gi
 |---|:---:|:----:|:---:|:---:|
 | Self-hosted | ✅  | ❌  | ✅  | ✅ |
 | Platform Support | ARM <br /> x86 <br /> x64 | n/a | 🔶 ARM (requires Docker on macOS) <br /> x86 <br /> x64 | ARM <br /> x86 <br /> x64 |
-| Official 1-click deploy | ✅ <br /> [DigitalOcean](https://marketplace.digitalocean.com/apps/meilisearch) <br /> [Platform.sh](https://console.platform.sh/projects/create-project?template=https://raw.githubusercontent.com/platformsh/template-builder/master/templates/meilisearch/.platform.template.yaml) <br /> [Azure](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fcmaneu%2Fmeilisearch-on-azure%2Fmain%2Fmain.json) <br /> [Railway](https://railway.app/new/template/TXxa09?referralCode=YltNo3) <br /> [Koyeb](https://app.koyeb.com/deploy?type=docker&image=getmeili/meilisearch&name=meilisearch-on-koyeb&ports=7700;http;/&env%5BMEILI_MASTER_KEY%5D=REPLACE_ME_WITH_A_STRONG_KEY) | ❌ | 🔶 <br />Only for the cloud-hosted solution | ❌ |
+| Official 1-click deploy | ✅ <br /> [DigitalOcean](https://marketplace.digitalocean.com/apps/meilisearch) <br /> [Platform.sh](https://console.platform.sh/projects/create-project?template=https://raw.githubusercontent.com/platformsh/template-builder/master/templates/meilisearch/.platform.template.yaml) <br /> [Azure](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fcmaneu%2Fmeilisearch-on-azure%2Fmain%2Fmain.json) <br /> [Railway](https://railway.app/new/template/TXxa09?referralCode=YltNo3) <br /> [Koyeb](https://app.koyeb.com/deploy?type=docker&image=getmeili/meilisearch&name=meilisearch-on-koyeb&ports=7700;http;/&env%5BMEILI_MASTER_KEY%5D=REPLACE_ME_WITH_A_STRONG_KEY) | ❌ | ✅ <br /> DigitalOcean, AWS, GCP Marketplace | ❌ |
 | Official cloud-hosted solution | [Meilisearch Cloud](https://www.meilisearch.com/cloud?utm_campaign=oss&utm_source=docs&utm_medium=comparison-table) | ✅ | ✅ | ✅ |
 | High availability | ✅ <br /> Sharding & replication (Cloud and self-hosted) | ✅ | ✅ | ✅ |
 | Run-time dependencies | None | N/A | None | None |
 | Backward compatibility | ✅ | N/A | ✅ | ✅ |
 | Upgrade path | Only changed data is reindexed on upgrade | N/A  | Documents are automatically reindexed on upgrade  | Documents are automatically reindexed on upgrade, up to 1 major version |
-| Boot time | Instant | N/A | Reindexes data on every boot | Instant |
+| Boot time | Instant | N/A | Loads index from disk to RAM on boot | Instant |
 
 ### Limits
 
 |  | Meilisearch | Algolia | Typesense | Elasticsearch |
 |---|:---:|:----:|:---:|:---:|
 | Maximum number of indexes | No limitation | 1000, increasing limit possible by contacting support | No limitation | No limitation |
-| Maximum index size | 80TiB | 128GB | Constrained by RAM | No limitation |
+| Maximum index size | 80TiB | 100GB (plan-dependent) | Constrained by RAM | No limitation |
 | Maximum document size | No limitation | 100KB, configurable | No limitation | 100KB default, configurable  |
 
 ### Community
@@ -186,7 +186,7 @@ Can't find a client you'd like us to support? [Submit your idea here](https://gi
 |  | Meilisearch | Algolia | Typesense | Elasticsearch |
 |---|:---:|:----:|:---:|:---:|
 | GitHub stars of the main project | 56K | N/A | 25K | 76K |
-| Number of contributors on the main project | 200+ | N/A | 38 | 1,900+ |
+| Number of contributors on the main project | 200+ | N/A | 100+ | 1,900+ |
 | Public Discord/Slack community size | 3,000+ | N/A | 2,000 | 16K |
 
 ### Support

@@ -10,12 +10,12 @@ Typesense is an open-source search engine started in 2015 and first publicly rel
 
 |  | Meilisearch | Typesense |
 |---|:---:|:---:|
-| **License** | MIT | GPL-3 |
+| **License** | MIT (CE) / BUSL-1.1 (EE) | GPL-3 |
 | **Built with** | Rust | C++ |
 | **Data storage** | Disk (memory-mapped) | RAM-limited |
 | **Language support** | Optimized for CJK, Arabic, Hebrew | Unicode-based (limited CJK) |
 | **Auto language detection** | Yes | No |
-| **Built-in analytics** | Yes (Cloud and self-hosted) | Basic query popularity |
+| **Analytics** | Yes (Cloud dashboard with full analytics) | Query analytics and event tracking (clicks, conversions) |
 | **Embedding generation** | Yes (OpenAI, HuggingFace, Ollama, REST) | Yes (built-in ONNX models, OpenAI, Azure OpenAI, GCP Vertex AI) |
 | **Stop words** | Built-in | Built-in (Stopwords API) |
 
@@ -57,11 +57,11 @@ Both Meilisearch and Typesense support built-in embedding generation. Meilisearc
 
 ### You prefer MIT licensing
 
-Meilisearch's Community Edition uses the permissive MIT license. Typesense uses GPL-3, which has more restrictions for commercial use and derivative works.
+Meilisearch's Community Edition uses the permissive MIT license. Typesense uses GPL-3, which requires derivative works to be distributed under the same license (copyleft). While GPL-3 does not restrict commercial use itself, the copyleft requirement can be a concern for some organizations.
 
 ### You need comprehensive analytics
 
-Meilisearch provides detailed search analytics including no-result rates, popular queries, and geographic distribution both on Cloud and self-hosted. Typesense offers basic query popularity tracking.
+Meilisearch Cloud provides detailed search analytics including no-result rates, popular queries, and geographic distribution through a built-in dashboard. Typesense supports query analytics and event tracking (clicks, conversions), but does not offer a comparable hosted analytics dashboard.
 
 ## When to choose Typesense
 

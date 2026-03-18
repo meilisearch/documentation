@@ -825,41 +825,6 @@
             "tab": "Resources",
             "groups": [
               {
-                "group": "Getting started",
-                "pages": [
-                  "resources/help/sdks",
-                  "resources/help/faq",
-                  "resources/help/language"
-                ]
-              },
-              {
-                "group": "Migration",
-                "pages": [
-                  "resources/migration/migrating_cloud",
-                  "resources/migration/updating",
-                  "resources/migration/algolia_migration",
-                  "resources/migration/elasticsearch_migration",
-                  "resources/migration/qdrant_migration",
-                  "resources/migration/mongodb_migration",
-                  "resources/migration/postgresql_migration",
-                  "resources/migration/supabase_migration"
-                ]
-              },
-              {
-                "group": "Comparisons",
-                "pages": [
-                  "resources/comparisons/alternatives",
-                  "resources/comparisons/elasticsearch",
-                  "resources/comparisons/algolia",
-                  "resources/comparisons/typesense",
-                  "resources/comparisons/postgresql",
-                  "resources/comparisons/pinecone",
-                  "resources/comparisons/qdrant",
-                  "resources/comparisons/opensearch",
-                  "resources/comparisons/mongodb"
-                ]
-              },
-              {
                 "group": "Self-hosting",
                 "pages": [
                   "resources/self_hosting/getting_started",
@@ -902,6 +867,33 @@
                 ]
               },
               {
+                "group": "Comparisons",
+                "pages": [
+                  "resources/comparisons/alternatives",
+                  "resources/comparisons/elasticsearch",
+                  "resources/comparisons/algolia",
+                  "resources/comparisons/typesense",
+                  "resources/comparisons/postgresql",
+                  "resources/comparisons/pinecone",
+                  "resources/comparisons/qdrant",
+                  "resources/comparisons/opensearch",
+                  "resources/comparisons/mongodb"
+                ]
+              },
+              {
+                "group": "Migration",
+                "pages": [
+                  "resources/migration/migrating_cloud",
+                  "resources/migration/updating",
+                  "resources/migration/algolia_migration",
+                  "resources/migration/elasticsearch_migration",
+                  "resources/migration/qdrant_migration",
+                  "resources/migration/mongodb_migration",
+                  "resources/migration/postgresql_migration",
+                  "resources/migration/supabase_migration"
+                ]
+              },
+              {
                 "group": "Demos",
                 "pages": [
                   "resources/demos/overview",
@@ -928,12 +920,15 @@
                   "resources/internals/bucket_sort",
                   "resources/internals/hannoy",
                   "resources/internals/concat",
-                  "resources/internals/prefix"
+                  "resources/internals/prefix",
+                  "resources/help/language"
                 ]
               },
               {
-                "group": "Project info",
+                "group": "Other resources",
                 "pages": [
+                  "resources/help/sdks",
+                  "resources/help/faq",
                   "resources/help/known_limitations",
                   "resources/help/experimental_features_overview",
                   "resources/help/telemetry",
