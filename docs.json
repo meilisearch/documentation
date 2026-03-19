@@ -290,14 +290,10 @@
               {
                 "group": "Security and permissions",
                 "pages": [
-                  "learn/security/basic_security",
                   "learn/security/generate_tenant_token_sdk",
                   "learn/security/generate_tenant_token_third_party",
                   "learn/security/generate_tenant_token_scratch",
-                  "learn/security/resetting_master_key",
                   "learn/security/tenant_token_reference",
-                  "learn/security/differences_master_api_keys",
-                  "learn/security/protected_unprotected",
                   "learn/security/multitenancy_tenant_tokens"
                 ]
               },
@@ -838,7 +834,10 @@
                   {
                     "group": "Security",
                     "pages": [
+                      "resources/self_hosting/security/basic_security",
                       "resources/self_hosting/security/master_api_keys",
+                      "resources/self_hosting/security/resetting_master_key",
+                      "resources/self_hosting/security/protected_unprotected",
                       "resources/self_hosting/security/http2_ssl"
                     ]
                   },
@@ -987,6 +986,22 @@
       "destination": "/resources/self_hosting/search_preview"
     },
     {
+      "source": "/learn/security/basic_security",
+      "destination": "/resources/self_hosting/security/basic_security"
+    },
+    {
+      "source": "/learn/security/resetting_master_key",
+      "destination": "/resources/self_hosting/security/resetting_master_key"
+    },
+    {
+      "source": "/learn/security/protected_unprotected",
+      "destination": "/resources/self_hosting/security/protected_unprotected"
+    },
+    {
+      "source": "/learn/security/differences_master_api_keys",
+      "destination": "/resources/self_hosting/security/master_api_keys"
+    },
+    {
       "source": "/learn/indexing/indexing_best_practices",
       "destination": "/getting_started/good_practices"
     },
@@ -1004,7 +1019,7 @@
     },
     {
       "source": "/reference/features/authentication",
-      "destination": "/learn/security/master_api_keys"
+      "destination": "/resources/self_hosting/security/basic_security"
     },
     {
       "source": "/reference/features/installation#download-and-launch",
@@ -1384,7 +1399,7 @@
     },
     {
       "source": "/learn/security/master_api_keys",
-      "destination": "/learn/security/basic_security"
+      "destination": "/resources/self_hosting/security/basic_security"
     },
     {
       "source": "/learn/security/tenant_tokens",
