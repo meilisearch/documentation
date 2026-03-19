@@ -162,6 +162,7 @@
                 "group": "Introduction",
                 "pages": [
                   "getting_started/overview",
+                  "getting_started/first_project",
                   "getting_started/features",
                   "getting_started/glossary",
                   "getting_started/good_practices"
@@ -214,16 +215,6 @@
           {
             "tab": "Learn",
             "groups": [
-              {
-                "group": "Getting started",
-                "pages": [
-                  "learn/getting_started/cloud_quick_start",
-                  "learn/getting_started/documents",
-                  "learn/getting_started/indexes",
-                  "learn/getting_started/primary_key",
-                  "learn/getting_started/search_preview"
-                ]
-              },
               {
                 "group": "AI-powered search",
                 "pages": [
@@ -828,6 +819,7 @@
                 "group": "Self-hosting",
                 "pages": [
                   "resources/self_hosting/getting_started",
+                  "resources/self_hosting/search_preview",
                   "resources/self_hosting/configuration",
                   "resources/self_hosting/install_meilisearch_locally",
                   "resources/self_hosting/supported_os",
@@ -916,6 +908,9 @@
               {
                 "group": "Under the hood",
                 "pages": [
+                  "resources/internals/documents",
+                  "resources/internals/indexes",
+                  "resources/internals/primary_key",
                   "resources/internals/storage",
                   "resources/internals/datatypes",
                   "resources/internals/ranking",
@@ -970,6 +965,26 @@
     {
       "source": "/getting_started/integrations/meilisync",
       "destination": "https://github.com/long2ice/meilisync"
+    },
+    {
+      "source": "/learn/getting_started/cloud_quick_start",
+      "destination": "/getting_started/first_project"
+    },
+    {
+      "source": "/learn/getting_started/documents",
+      "destination": "/resources/internals/documents"
+    },
+    {
+      "source": "/learn/getting_started/indexes",
+      "destination": "/resources/internals/indexes"
+    },
+    {
+      "source": "/learn/getting_started/primary_key",
+      "destination": "/resources/internals/primary_key"
+    },
+    {
+      "source": "/learn/getting_started/search_preview",
+      "destination": "/resources/self_hosting/search_preview"
     },
     {
       "source": "/learn/indexing/indexing_best_practices",

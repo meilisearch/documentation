@@ -16,7 +16,7 @@ To follow this tutorial you need:
 - [cURL](https://curl.se)
 
 <Tip>
-Using Meilisearch Cloud? Check out the dedicated guide, [Getting started with Meilisearch Cloud](/learn/getting_started/cloud_quick_start).
+Using Meilisearch Cloud? Check out the dedicated guide, [Getting started with Meilisearch Cloud](/getting_started/first_project).
 </Tip>
 
 ## Setup and installation
@@ -83,7 +83,7 @@ Open a new terminal window and run the following command:
 
 <CodeSamplesGettingStartedAddDocuments />
 
-Meilisearch stores data in the form of discrete records, called [documents](/learn/getting_started/documents). Each document is an object composed of multiple fields, which are pairs of one attribute and one value:
+Meilisearch stores data in the form of discrete records, called [documents](/resources/internals/documents). Each document is an object composed of multiple fields, which are pairs of one attribute and one value:
 
 ```json
 {
@@ -91,14 +91,14 @@ Meilisearch stores data in the form of discrete records, called [documents](/lea
 }
 ```
 
-Documents are grouped into collections, called [indexes](/learn/getting_started/indexes).
+Documents are grouped into collections, called [indexes](/resources/internals/indexes).
 
 The previous command added documents from `movies.json` to a new index called `movies`. It also set `id` as the primary key.
 
 <Note>
-Every index must have a [primary key](/learn/getting_started/primary_key#primary-field), an attribute shared across all documents in that index. If you try adding documents to an index and even a single one is missing the primary key, none of the documents will be stored.
+Every index must have a [primary key](/resources/internals/primary_key#primary-field), an attribute shared across all documents in that index. If you try adding documents to an index and even a single one is missing the primary key, none of the documents will be stored.
 
-If you do not explicitly set the primary key, Meilisearch [infers](/learn/getting_started/primary_key#meilisearch-guesses-your-primary-key) it from your dataset.
+If you do not explicitly set the primary key, Meilisearch [infers](/resources/internals/primary_key#meilisearch-guesses-your-primary-key) it from your dataset.
 </Note>
 
 After adding documents, you should receive a response like this:
@@ -189,6 +189,6 @@ By default, Meilisearch only returns the first 20 results for a search query. Yo
 
 You now know how to install Meilisearch, create an index, add documents, check the status of an asynchronous task, and make a search request.
 
-If you'd like to search through the documents you just added using a clean browser interface rather than the terminal, you can do so with [our built-in search preview](/learn/getting_started/search_preview). You can also [learn how to quickly build a front-end interface](/guides/front_end/front_end_integration) of your own.
+If you'd like to search through the documents you just added using a clean browser interface rather than the terminal, you can do so with [our built-in search preview](/resources/self_hosting/search_preview). You can also [learn how to quickly build a front-end interface](/guides/front_end/front_end_integration) of your own.
 
 For a more advanced approach, consult the [API reference](/reference/api/requests).
