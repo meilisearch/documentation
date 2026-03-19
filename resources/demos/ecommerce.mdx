@@ -1,48 +1,25 @@
 ---
 title: E-commerce
 sidebarTitle: E-commerce
-description: Complete e-commerce search with advanced filtering and facets
+description: Product search with facets, filtering, sorting, image search, and infinite scroll
 ---
 
 <Info>
 **Live demo**: [ecommerce.meilisearch.com](https://ecommerce.meilisearch.com)
 </Info>
 
-This e-commerce demo showcases a production-ready search experience for online stores. It demonstrates advanced filtering capabilities including disjunctive facets, price range sliders, star ratings, and pagination.
+A complete e-commerce search experience showcasing Meilisearch's advanced filtering, sorting, and image search capabilities.
 
-## Features demonstrated
+![E-commerce demo showing faceted product search](/assets/images/demos/ecommerce-demo.png)
 
-- **Disjunctive facets**: Select multiple values within a category (e.g., multiple brands)
-- **Range filtering**: Price sliders for min/max filtering
-- **Star ratings**: Filter products by customer ratings
-- **Pagination**: Navigate through large result sets
-- **Category refinement**: Hierarchical category navigation
-- **Instant results**: Real-time search as you type
+## Key features
 
-## Use case
-
-E-commerce search requires sophisticated filtering that goes beyond simple text matching:
-
-- Customers search by product name, brand, or description
-- Multiple filters can be applied simultaneously
-- Price ranges help budget-conscious shoppers
-- Ratings help identify quality products
-- Facet counts show available options
-
-## Technical highlights
-
-| Feature | Implementation |
-|---------|----------------|
-| Facet type | Disjunctive (OR within category, AND between categories) |
-| Price filter | Numeric range filtering |
-| Sorting | By relevance, price (asc/desc), rating, newest |
-| Pagination | Offset-based with configurable page size |
-
-## Example filter expression
-
-```
-(brand = "Nike" OR brand = "Adidas") AND price 50 TO 200 AND rating >= 4
-```
+- **Rich faceting**: Multiple facet categories (gender, category, subcategory, color) with counts, letting users drill down into product catalogs.
+- **Search within facets**: Type in any facet panel to quickly find specific filter values across large facet lists.
+- **Sorting**: Switch between featured, price, and other sort orders from the dropdown.
+- **Filtering**: Combine multiple filters across categories for precise product discovery.
+- **Image search**: Click the image icon in the search bar to search products by uploading a picture.
+- **Infinite scroll**: Browse results seamlessly without pagination, loading more products as you scroll.
 
 ## Links
 
@@ -52,16 +29,5 @@ E-commerce search requires sophisticated filtering that goes beyond simple text 
   </Card>
   <Card title="Source code" icon="github" href="https://github.com/meilisearch/ecommerce-demo">
     View implementation on GitHub
-  </Card>
-</CardGroup>
-
-## Related resources
-
-<CardGroup cols={2}>
-  <Card title="Filter expressions" icon="code" href="/learn/filtering_and_sorting/filter_expression_reference">
-    Learn filter syntax for complex queries
-  </Card>
-  <Card title="Faceted search" icon="filter" href="/learn/filtering_and_sorting/search_with_facet_filters">
-    Understand facets and filtering
   </Card>
 </CardGroup>
