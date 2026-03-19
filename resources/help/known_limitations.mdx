@@ -6,7 +6,7 @@ description: Meilisearch has a number of known limitations. These are hard limit
 
 Meilisearch has a number of known limitations. Some of these limitations are the result of intentional design trade-offs, while others can be attributed to [LMDB](/resources/internals/storage), the key-value store that Meilisearch uses under the hood.
 
-This article covers hard limits that cannot be altered. Meilisearch also has some default limits that _can_ be changed, such as a [default payload limit of 100MB](/resources/self_hosting/configuration#payload-limit-size) and a [default search limit of 20 hits](/reference/api/search/search-with-post#body-limit).
+This article covers hard limits that cannot be altered. Meilisearch also has some default limits that _can_ be changed, such as a [default payload limit of 100MB](/resources/self_hosting/configuration/reference#payload-limit-size) and a [default search limit of 20 hits](/reference/api/search/search-with-post#body-limit).
 
 ## Maximum Meilisearch Cloud upload size
 
@@ -71,7 +71,7 @@ If your query is `Hello - World`:
 
 **Limitation:** Meilisearch handles a maximum of 1000 concurrent search requests.
 
-**Explanation:** This limit exists to prevent Meilisearch from queueing an unlimited number of requests and potentially consuming an unbounded amount of memory. If Meilisearch receives a new request when the queue is already full, it drops a random search request and returns a 503 `too_many_search_requests` error with a `Retry-After` header set to 10 seconds. Configure this limit with [`--experimental-search-queue-size`](/resources/self_hosting/configuration).
+**Explanation:** This limit exists to prevent Meilisearch from queueing an unlimited number of requests and potentially consuming an unbounded amount of memory. If Meilisearch receives a new request when the queue is already full, it drops a random search request and returns a 503 `too_many_search_requests` error with a `Retry-After` header set to 10 seconds. Configure this limit with [`--experimental-search-queue-size`](/resources/self_hosting/configuration/overview).
 
 ## Length of primary key values
 

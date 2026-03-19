@@ -4,7 +4,7 @@ sidebarTitle: Exporting and using Snapshots
 description: Snapshots are exact copies of Meilisearch databases. They are often useful for periodical backups.
 ---
 
-A [snapshot](/resources/self_hosting/data_backup/snapshots_vs_dumps#snapshots) is an exact copy of the Meilisearch database. Snapshots are useful as quick backups, but cannot be used to migrate to a new Meilisearch release.
+A [snapshot](/resources/self_hosting/data_backup/overview#snapshots) is an exact copy of the Meilisearch database. Snapshots are useful as quick backups, but cannot be used to migrate to a new Meilisearch release.
 
 This tutorial shows you how to schedule snapshot creation to ensure you always have a recent backup of your instance ready to use. You will also see how to start Meilisearch from this snapshot.
 
@@ -16,13 +16,13 @@ Meilisearch Cloud does not support snapshots.
 
 It is good practice to create regular backups of your Meilisearch data. This ensures that you can recover from critical failures quickly in case your Meilisearch instance becomes compromised.
 
-Use the [`--schedule-snapshot` configuration option](/resources/self_hosting/configuration#schedule-snapshot-creation) to create snapshots at regular time intervals:
+Use the [`--schedule-snapshot` configuration option](/resources/self_hosting/configuration/reference#schedule-snapshot-creation) to create snapshots at regular time intervals:
 
 ```bash
 meilisearch --schedule-snapshot
 ```
 
-After launch, Meilisearch waits for the configured interval before creating the first snapshot. You will find it in the [snapshot directory](/resources/self_hosting/configuration#snapshot-destination), `snapshots/`. Meilisearch will then create a new snapshot every 24 hours until you terminate your instance.
+After launch, Meilisearch waits for the configured interval before creating the first snapshot. You will find it in the [snapshot directory](/resources/self_hosting/configuration/reference#snapshot-destination), `snapshots/`. Meilisearch will then create a new snapshot every 24 hours until you terminate your instance.
 
 Meilisearch **automatically overwrites** old snapshots during snapshot creation. Only the most recent snapshot will be present in the folder at any given time.
 
@@ -51,5 +51,5 @@ Because snapshots are exact copies of your database, starting a Meilisearch inst
 <Warning>
 For security reasons, Meilisearch will never overwrite an existing database. By default, Meilisearch will throw an error when importing a snapshot if there is any data in your instance.
 
-You can change this behavior by specifying [`--ignore-snapshot-if-db-exists=true`](/resources/self_hosting/configuration#ignore-snapshot-if-db-exists). This will cause Meilisearch to launch with the existing database and ignore the snapshot without throwing an error.
+You can change this behavior by specifying [`--ignore-snapshot-if-db-exists=true`](/resources/self_hosting/configuration/reference#ignore-snapshot-if-db-exists). This will cause Meilisearch to launch with the existing database and ignore the snapshot without throwing an error.
 </Warning>

@@ -1,8 +1,22 @@
 ---
 title: Install Meilisearch locally
 sidebarTitle: Install Meilisearch locally
-description: Use Meilisearch with either Meilisearch Cloud, another cloud service, or install it locally.
+description: Install Meilisearch locally on Linux, macOS, or Windows using cURL, Docker, Homebrew, APT, or from source.
 ---
+
+## Supported operating systems
+
+Meilisearch officially supports the following operating systems. Binaries might work on other environments without official support.
+
+| OS | Requirements |
+|----|-------------|
+| **Linux** | `amd64/x86_64` or `aarch64/arm64` with glibc 2.35+. Check with `ldd --version`. |
+| **macOS** | macOS 14 Sonoma or later, `amd64` or `arm64`. |
+| **Windows** | Windows Server 2022 or later. Windows OS 10+ may work but is not officially supported. |
+
+<Tip>
+Use [Meilisearch Cloud](https://www.meilisearch.com/cloud) to integrate Meilisearch with applications hosted in unsupported operating systems.
+</Tip>
 
 ## Meilisearch Cloud
 
@@ -249,3 +263,7 @@ chmod +x meilisearch
 </Tab>
 
 </Tabs>
+
+## Troubleshooting
+
+If the provided [binaries](https://github.com/meilisearch/meilisearch/releases) do not work on your operating system, try [building Meilisearch from source](#local-installation). If compilation fails, Meilisearch is not compatible with your machine.

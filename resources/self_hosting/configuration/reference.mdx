@@ -1,154 +1,13 @@
 ---
-title: Configure Meilisearch at launch
-sidebarTitle: Configure Meilisearch at launch
-description: Configure Meilisearch at launch with command-line options, environment variables, or a configuration file.
+title: Configuration reference
+sidebarTitle: Configuration reference
+description: Complete reference of all Meilisearch instance configuration options, environment variables, and CLI flags.
 sidebarDepth: 3
 ---
 
 import { NoticeTag } from '/snippets/notice_tag.mdx';
 
-When self-hosting Meilisearch, you can configure your instance at launch with **command-line options**, **environment variables**, or a **configuration file**.
-
-These startup options affect your entire Meilisearch instance, not just a single index. For settings that affect search within a single index, see [index settings](/reference/api/settings/list-all-settings).
-
-## Command-line options and flags
-
-Pass **command-line options** and their respective values when launching a Meilisearch instance.
-
-```bash
-./meilisearch --db-path ./meilifiles --http-addr 'localhost:7700'
-```
-
-In the previous example, `./meilisearch` is the command that launches a Meilisearch instance, while `--db-path` and `--http-addr` are options that modify this instance's behavior.
-
-Meilisearch also has a number of **command-line flags.** Unlike command-line options, **flags don't take values**. If a flag is given, it is activated and changes Meilisearch's default behavior.
-
-```bash
-./meilisearch --no-analytics
-```
-
-The above flag disables analytics for the Meilisearch instance and does not accept a value.
-
-**Both command-line options and command-line flags take precedence over environment variables.** All command-line options and flags are prepended with `--`.
-
-## Environment variables
-
-To configure a Meilisearch instance using environment variables, set the environment variable prior to launching the instance. If you are unsure how to do this, read more about [setting and listing environment variables](https://linuxize.com/post/how-to-set-and-list-environment-variables-in-linux/), or [use a command-line option](#command-line-options-and-flags) instead.
-
-<Tabs>
-<Tab title="UNIX">
-
-```sh
-export MEILI_DB_PATH=./meilifiles
-export MEILI_HTTP_ADDR=localhost:7700
-./meilisearch
-```
-
-</Tab>
-
-<Tab title="Windows">
-
-```sh
-set MEILI_DB_PATH=./meilifiles
-set MEILI_HTTP_ADDR=127.0.0.1:7700
-./meilisearch
-```
-
-</Tab>
-</Tabs>
-
-In the previous example, `./meilisearch` is the command that launches a Meilisearch instance, while `MEILI_DB_PATH` and `MEILI_HTTP_ADDR` are environment variables that modify this instance's behavior.
-
-Environment variables for command-line flags accept `n`, `no`, `f`, `false`, `off`, and `0` as `false`. An absent environment variable will also be considered as `false`. Any other value is considered `true`.
-
-Environment variables are always identical to the corresponding command-line option, but prepended with `MEILI_` and written in all uppercase.
-
-## Configuration file
-
-Meilisearch accepts a configuration file in the `.toml` format as an alternative to command-line options and environment variables. Configuration files can be easily shared and versioned, and allow you to define multiple options.
-
-**When used simultaneously, environment variables override the configuration file, and command-line options override environment variables.**
-
-You can download a default configuration file using the following command:
-
-```sh
-curl https://raw.githubusercontent.com/meilisearch/meilisearch/latest/config.toml > config.toml
-```
-
-By default, Meilisearch will look for a `config.toml` file in the working directory. If it is present, it will be used as the configuration file. You can verify this when you launch Meilisearch:
-
-```
-888b     d888          d8b 888 d8b                                            888
-8888b   d8888          Y8P 888 Y8P                                            888
-88888b.d88888              888                                                888
-888Y88888P888  .d88b.  888 888 888 .d8888b   .d88b.   8888b.  888d888 .d8888b 88888b.
-888 Y888P 888 d8P  Y8b 888 888 888 88K      d8P  Y8b     "88b 888P"  d88P"    888 "88b
-888  Y8P  888 88888888 888 888 888 "Y8888b. 88888888 .d888888 888    888      888  888
-888   "   888 Y8b.     888 888 888      X88 Y8b.     888  888 888    Y88b.    888  888
-888       888  "Y8888  888 888 888  88888P'  "Y8888  "Y888888 888     "Y8888P 888  888
-
-Config file path:       "./config.toml"
-```
-
-If the `Config file path` is anything other than `"none"`, it means that a configuration file was successfully located and used to start Meilisearch.
-
-You can override the default location of the configuration file using the `MEILI_CONFIG_FILE_PATH` environment variable or the `--config-file-path` CLI option:
-
-<Tabs>
-<Tab title="CLI">
-
-```sh
-./meilisearch --config-file-path="./config.toml"
-```
-
-</Tab>
-
-<Tab title="Environment variable">
-
-UNIX:
-
-```sh
-export MEILI_CONFIG_FILE_PATH="./config.toml"
-./meilisearch
-```
-
-Windows:
-
-```sh
-set MEILI_CONFIG_FILE_PATH="./config.toml"
-./meilisearch
-```
-
-</Tab>
-</Tabs>
-
-### Configuration file formatting
-
-You can configure any environment variable or CLI option using a configuration file. In configuration files, options must be written in [snake case](https://en.wikipedia.org/wiki/Snake_case). For example, `--import-dump` would be written as `import_dump`.
-
-```toml
-import_dump = "./example.dump"
-```
-
-<Warning>
-Specifying the `config_file_path` option within the configuration file will throw an error. This is the only configuration option that cannot be set within a configuration file.
-</Warning>
-
-## Configuring cloud-hosted instances
-
-To configure Meilisearch with command-line options in a cloud-hosted instance, edit its [service file](/guides/running_production#step-4-run-meilisearch-as-a-service). The default location of the service file is `/etc/systemd/system/meilisearch.service`.
-
-To configure Meilisearch with environment variables in a cloud-hosted instance, modify Meilisearch's `env` file. Its default location is `/var/opt/meilisearch/env`.
-
-After editing your configuration options, relaunch the Meilisearch service:
-
-```sh
-systemctl restart meilisearch
-```
-
-<Tip>
-[Meilisearch Cloud](https://www.meilisearch.com/cloud?utm_campaign=oss&utm_source=docs&utm_medium=instance-options) offers an optimal pre-configured environment. You do not need to use any of the configuration options listed in this page when hosting your project on Meilisearch Cloud.
-</Tip>
+This page lists all available Meilisearch instance configuration options. For an introduction to configuration methods, see [Configuration overview](/resources/self_hosting/configuration/overview).
 
 ## All instance options
 
@@ -186,7 +45,7 @@ Configures the instance's environment. Value must be either `production` or `dev
 `production`:
 
 - Setting a [master key](/resources/self_hosting/security/basic_security) of at least 16 bytes is **mandatory**. If no master key is provided or if it is under 16 bytes, Meilisearch will suggest a secure autogenerated master key
-- The [search preview interface](/resources/self_hosting/search_preview) is disabled
+- The [search preview interface](/resources/self_hosting/getting_started/search_preview) is disabled
 
 `development`:
 

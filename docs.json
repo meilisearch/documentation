@@ -801,19 +801,28 @@
               {
                 "group": "Self-hosting",
                 "pages": [
-                  "resources/self_hosting/getting_started",
-                  "resources/self_hosting/search_preview",
-                  "resources/self_hosting/configuration",
-                  "resources/self_hosting/install_meilisearch_locally",
-                  "resources/self_hosting/docker",
-                  "resources/self_hosting/supported_os",
-                  "resources/self_hosting/enterprise_edition",
-                  "resources/self_hosting/webhooks",
-                  "resources/self_hosting/huggingface_gpu",
+                  "resources/self_hosting/overview",
+                  {
+                    "group": "Getting started",
+                    "pages": [
+                      "resources/self_hosting/getting_started/quick_start",
+                      "resources/self_hosting/getting_started/install_locally",
+                      "resources/self_hosting/getting_started/docker",
+                      "resources/self_hosting/getting_started/search_preview"
+                    ]
+                  },
+                  {
+                    "group": "Configuration",
+                    "pages": [
+                      "resources/self_hosting/configuration/overview",
+                      "resources/self_hosting/configuration/reference"
+                    ]
+                  },
                   {
                     "group": "Deployment",
                     "pages": [
-                      "resources/self_hosting/running_production",
+                      "resources/self_hosting/deployment/overview",
+                      "resources/self_hosting/deployment/running_production",
                       "resources/self_hosting/deployment/aws",
                       "resources/self_hosting/deployment/gcp",
                       "resources/self_hosting/deployment/azure",
@@ -823,8 +832,9 @@
                   {
                     "group": "Security",
                     "pages": [
-                      "resources/self_hosting/security/basic_security",
+                      "resources/self_hosting/security/overview",
                       "resources/self_hosting/security/master_api_keys",
+                      "resources/self_hosting/security/basic_security",
                       "resources/self_hosting/security/resetting_master_key",
                       "resources/self_hosting/security/protected_unprotected",
                       "resources/self_hosting/security/http2_ssl"
@@ -833,17 +843,20 @@
                   {
                     "group": "Data backup",
                     "pages": [
+                      "resources/self_hosting/data_backup/overview",
                       "resources/self_hosting/data_backup/dumps",
-                      "resources/self_hosting/data_backup/snapshots",
-                      "resources/self_hosting/data_backup/snapshots_vs_dumps"
+                      "resources/self_hosting/data_backup/snapshots"
                     ]
                   },
                   {
-                    "group": "Performance",
+                    "group": "Advanced",
                     "pages": [
-                      "resources/self_hosting/performance/ram_multithreading"
+                      "resources/self_hosting/performance/ram_multithreading",
+                      "resources/self_hosting/webhooks",
+                      "resources/self_hosting/huggingface_gpu"
                     ]
-                  }
+                  },
+                  "resources/self_hosting/enterprise_edition"
                 ]
               },
               {
@@ -947,6 +960,38 @@
   },
   "redirects": [
     {
+      "source": "/resources/self_hosting/getting_started",
+      "destination": "/resources/self_hosting/getting_started/quick_start"
+    },
+    {
+      "source": "/resources/self_hosting/install_meilisearch_locally",
+      "destination": "/resources/self_hosting/getting_started/install_locally"
+    },
+    {
+      "source": "/resources/self_hosting/docker",
+      "destination": "/resources/self_hosting/getting_started/docker"
+    },
+    {
+      "source": "/resources/self_hosting/search_preview",
+      "destination": "/resources/self_hosting/getting_started/search_preview"
+    },
+    {
+      "source": "/resources/self_hosting/configuration",
+      "destination": "/resources/self_hosting/configuration/overview"
+    },
+    {
+      "source": "/resources/self_hosting/running_production",
+      "destination": "/resources/self_hosting/deployment/running_production"
+    },
+    {
+      "source": "/resources/self_hosting/data_backup/snapshots_vs_dumps",
+      "destination": "/resources/self_hosting/data_backup/overview"
+    },
+    {
+      "source": "/resources/self_hosting/supported_os",
+      "destination": "/resources/self_hosting/getting_started/install_locally#supported-operating-systems"
+    },
+    {
       "source": "/getting_started/integrations/gatsby",
       "destination": "https://github.com/meilisearch/gatsby-plugin-meilisearch"
     },
@@ -972,7 +1017,7 @@
     },
     {
       "source": "/learn/getting_started/search_preview",
-      "destination": "/resources/self_hosting/search_preview"
+      "destination": "/resources/self_hosting/getting_started/search_preview"
     },
     {
       "source": "/learn/security/basic_security",
@@ -1012,11 +1057,11 @@
     },
     {
       "source": "/reference/features/installation#download-and-launch",
-      "destination": "/resources/self_hosting/install_meilisearch_locally"
+      "destination": "/resources/self_hosting/getting_started/install_locally"
     },
     {
       "source": "/reference/features/installation.html#download-and-launch",
-      "destination": "/resources/self_hosting/install_meilisearch_locally"
+      "destination": "/resources/self_hosting/getting_started/install_locally"
     },
     {
       "source": "/learn/advanced/asynchronous_operations",
@@ -1148,7 +1193,7 @@
     },
     {
       "source": "/learn/configuration/instance_options",
-      "destination": "/resources/self_hosting/configuration"
+      "destination": "/resources/self_hosting/configuration/overview"
     },
     {
       "source": "/learn/configuration/settings",
@@ -1268,7 +1313,7 @@
     },
     {
       "source": "/learn/experimental/max_number_of_batched_tasks",
-      "destination": "/resources/self_hosting/configuration"
+      "destination": "/resources/self_hosting/configuration/reference#maximum-number-of-batched-tasks"
     },
     {
       "source": "/learn/experimental/metrics",
@@ -1288,15 +1333,15 @@
     },
     {
       "source": "/learn/experimental/reduce-indexing-memory-usage",
-      "destination": "/resources/self_hosting/configuration"
+      "destination": "/resources/self_hosting/configuration/reference#reduce-indexing-memory-usage"
     },
     {
       "source": "/learn/experimental/replication_parameter",
-      "destination": "/resources/self_hosting/configuration"
+      "destination": "/resources/self_hosting/configuration/reference#replication-parameters"
     },
     {
       "source": "/learn/experimental/search_queue_size",
-      "destination": "/resources/self_hosting/configuration"
+      "destination": "/resources/self_hosting/configuration/reference#search-queue-size"
     },
     {
       "source": "/learn/experimental/vector_search",
@@ -1352,7 +1397,7 @@
     },
     {
       "source": "/learn/getting_started/installation",
-      "destination": "/resources/self_hosting/install_meilisearch_locally"
+      "destination": "/resources/self_hosting/getting_started/install_locally"
     },
     {
       "source": "/learn/getting_started/quick_start#front-end-integration",
@@ -1360,11 +1405,11 @@
     },
     {
       "source": "/learn/getting_started/quick_start",
-      "destination": "/resources/self_hosting/getting_started"
+      "destination": "/resources/self_hosting/getting_started/quick_start"
     },
     {
       "source": "/learn/getting_started/supported_os",
-      "destination": "/resources/self_hosting/supported_os"
+      "destination": "/resources/self_hosting/getting_started/install_locally#supported-operating-systems"
     },
     {
       "source": "/learn/index_settings/displayed_searchable_attributes",
@@ -2000,19 +2045,19 @@
     },
     {
       "source": "/learn/self_hosted/getting_started_with_self_hosted_meilisearch",
-      "destination": "/resources/self_hosting/getting_started"
+      "destination": "/resources/self_hosting/getting_started/quick_start"
     },
     {
       "source": "/learn/self_hosted/configure_meilisearch_at_launch",
-      "destination": "/resources/self_hosting/configuration"
+      "destination": "/resources/self_hosting/configuration/overview"
     },
     {
       "source": "/learn/self_hosted/install_meilisearch_locally",
-      "destination": "/resources/self_hosting/install_meilisearch_locally"
+      "destination": "/resources/self_hosting/getting_started/install_locally"
     },
     {
       "source": "/learn/self_hosted/supported_os",
-      "destination": "/resources/self_hosting/supported_os"
+      "destination": "/resources/self_hosting/getting_started/install_locally#supported-operating-systems"
     },
     {
       "source": "/learn/self_hosted/enterprise_edition",
@@ -2044,7 +2089,7 @@
     },
     {
       "source": "/learn/data_backup/snapshots_vs_dumps",
-      "destination": "/resources/self_hosting/data_backup/snapshots_vs_dumps"
+      "destination": "/resources/self_hosting/data_backup/overview"
     },
     {
       "source": "/learn/update_and_migration/migrating_cloud",
@@ -2124,11 +2169,11 @@
     },
     {
       "source": "/guides/running_production",
-      "destination": "/resources/self_hosting/running_production"
+      "destination": "/resources/self_hosting/deployment/running_production"
     },
     {
       "source": "/guides/docker",
-      "destination": "/resources/self_hosting/docker"
+      "destination": "/resources/self_hosting/getting_started/docker"
     },
     {
       "source": "/guides/front_end/front_end_integration",
