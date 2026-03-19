@@ -170,6 +170,88 @@ jobs:
             echo "No changes in the Mintlify OpenAPI file."
           fi
 
+  # After the Mintlify OpenAPI file is updated, check if any new routes are missing
+  # from docs.json. If so, open a GitHub issue (unless one is already open).
+  check-undocumented-routes:
+    name: Open issue for undocumented API routes
+    runs-on: ubuntu-latest
+    needs: [build-code-samples, generate-and-check-mintlify-openapi]
+    if: needs.build-code-samples.outputs.run_openapi_automation == 'true'
+    permissions:
+      issues: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          ref: main
+          token: ${{ secrets.GH_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Check for undocumented routes
+        id: coverage
+        run: |
+          set +e
+          output=$(npm run check-openapi-routes-coverage 2>&1)
+          status=$?
+          set -e
+          echo "$output"
+          missing=$(echo "$output" | grep '^\s*-' | sed 's/^\s*- //' || true)
+          if [ -n "$missing" ]; then
+            echo "has_missing=true" >> "$GITHUB_OUTPUT"
+            {
+              echo "missing_routes<<EOF"
+              echo "$missing"
+              echo "EOF"
+            } >> "$GITHUB_OUTPUT"
+          else
+            if [ "$status" -ne 0 ]; then
+              exit "$status"
+            fi
+            echo "has_missing=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Check for existing open issue
+        if: steps.coverage.outputs.has_missing == 'true'
+        id: existing
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          count=$(gh issue list --search "New API routes need documentation in:title" --state open --json number --jq 'length')
+          echo "open_issues=$count" >> "$GITHUB_OUTPUT"
+
+      - name: Create issue for undocumented routes
+        if: steps.coverage.outputs.has_missing == 'true' && steps.existing.outputs.open_issues == '0'
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          MISSING_ROUTES: ${{ steps.coverage.outputs.missing_routes }}
+        run: |
+          # Build the route list as markdown
+          route_list=""
+          while IFS= read -r route; do
+            route_list="${route_list}- \`${route}\`
+          "
+          done <<< "$MISSING_ROUTES"
+
+          gh issue create \
+            --title "New API routes need documentation" \
+            --body "The OpenAPI spec was updated and the following routes are not yet documented in \`docs.json\`:
+
+          ${route_list}
+          **Next steps:**
+          1. Add the missing route(s) to \`docs.json\` under the appropriate API reference group
+          2. Run \`npm run check-openapi-routes-coverage\` to verify
+
+          _This issue was created automatically by the post-deployment workflow._"
+
   # Runs alongside the OpenAPI automation. A new Meilisearch release triggers both
   # the OpenAPI update and the changelog update at the same time.
   # Only runs when docs.json has "internal-meili-fetch-automation": true.
