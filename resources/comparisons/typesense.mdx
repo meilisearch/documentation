@@ -51,6 +51,10 @@ Meilisearch Cloud provides a full analytics dashboard with no-result rates, popu
 
 Meilisearch takes an open approach to embeddings. It can generate embeddings locally using [Candle](https://github.com/huggingface/candle), a Rust-based ML framework, with no external dependencies required. On top of that, Meilisearch works with any model accessible through an HTTP API, whether that's OpenAI, Mistral, Cohere, a self-hosted Ollama instance, or any other provider. This means you can run fully local AI-powered search or mix and match providers as needed. Typesense is limited to built-in ONNX models and a fixed set of cloud providers (OpenAI, Azure OpenAI, GCP Vertex AI).
 
+### You value stability and memory safety
+
+Meilisearch is built in Rust, a language designed to prevent entire categories of bugs at compile time, including buffer overflows, use-after-free errors, and data races. These are the types of issues that commonly cause crashes and security vulnerabilities in C++ codebases. Typesense is written in C++, where memory management is manual and these bugs are harder to catch before they reach production. In practice, this means Meilisearch benefits from stronger reliability guarantees out of the box.
+
 ## What Typesense does well
 
 ### Field weighting at query time
