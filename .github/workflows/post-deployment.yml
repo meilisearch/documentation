@@ -199,7 +199,10 @@ jobs:
       - name: Check for undocumented routes
         id: coverage
         run: |
-          output=$(npm run check-openapi-routes-coverage 2>&1) || true
+          set +e
+          output=$(npm run check-openapi-routes-coverage 2>&1)
+          status=$?
+          set -e
           echo "$output"
           missing=$(echo "$output" | grep '^\s*-' | sed 's/^\s*- //' || true)
           if [ -n "$missing" ]; then
@@ -210,6 +213,9 @@ jobs:
               echo "EOF"
             } >> "$GITHUB_OUTPUT"
           else
+            if [ "$status" -ne 0 ]; then
+              exit "$status"
+            fi
             echo "has_missing=false" >> "$GITHUB_OUTPUT"
           fi
 
