@@ -754,7 +754,6 @@
               {
                 "group": "Front end",
                 "pages": [
-                  "guides/front_end/front_end_integration",
                   "guides/front_end/pagination"
                 ]
               },
@@ -793,18 +792,6 @@
                   "guides/relevancy/ordering_ranking_rules",
                   "guides/relevancy/interpreting_ranking_scores"
                 ]
-              },
-              {
-                "group": "Deployment",
-                "pages": [
-                  "guides/running_production"
-                ]
-              },
-              {
-                "group": "Miscellaneous",
-                "pages": [
-                  "guides/docker"
-                ]
               }
             ]
           },
@@ -818,6 +805,7 @@
                   "resources/self_hosting/search_preview",
                   "resources/self_hosting/configuration",
                   "resources/self_hosting/install_meilisearch_locally",
+                  "resources/self_hosting/docker",
                   "resources/self_hosting/supported_os",
                   "resources/self_hosting/enterprise_edition",
                   "resources/self_hosting/webhooks",
@@ -825,6 +813,7 @@
                   {
                     "group": "Deployment",
                     "pages": [
+                      "resources/self_hosting/running_production",
                       "resources/self_hosting/deployment/aws",
                       "resources/self_hosting/deployment/gcp",
                       "resources/self_hosting/deployment/azure",
@@ -2132,6 +2121,18 @@
     {
       "source": "/resources/help/comparison_to_alternatives",
       "destination": "/resources/comparisons/alternatives"
+    },
+    {
+      "source": "/guides/running_production",
+      "destination": "/resources/self_hosting/running_production"
+    },
+    {
+      "source": "/guides/docker",
+      "destination": "/resources/self_hosting/docker"
+    },
+    {
+      "source": "/guides/front_end/front_end_integration",
+      "destination": "/getting_started/instant_meilisearch/javascript"
     }
   ]
 }
