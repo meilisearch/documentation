@@ -1,0 +1,82 @@
+---
+title: Welcome to Meilisearch
+sidebarTitle: Overview
+description: Meilisearch indexes your content and makes it accessible to both humans and AI through search, conversational interfaces, and APIs.
+---
+
+Meilisearch **indexes your content and makes it accessible to both humans and AI**. It stores your documents and embeddings, then exposes them through fast full-text search, semantic search, and conversational interfaces, all from a single API.
+
+<CardGroup cols={2}>
+  <Card title="Start with Cloud" icon="cloud" href="/learn/getting_started/cloud_quick_start">
+    Get started in minutes with Meilisearch Cloud
+  </Card>
+  <Card title="Self-host" icon="server" href="/learn/self_hosted/getting_started_with_self_hosted_meilisearch">
+    Deploy on your own infrastructure
+  </Card>
+</CardGroup>
+
+## How it works
+
+**Index once, access everywhere.** You push your content to Meilisearch. It stores the documents, builds the search indexes, and when configured with an embedder, generates vector embeddings automatically. Your data becomes accessible to both end users and AI systems.
+
+<CardGroup cols={2}>
+  <Card title="For humans" icon="user">
+    Search-as-you-type interfaces, faceted navigation, filtering, sorting, and personalized results, all in under 50ms.
+  </Card>
+  <Card title="For AI" icon="brain">
+    Semantic search, RAG-powered conversational interfaces, and similar document retrieval so LLMs can answer questions grounded in your data.
+  </Card>
+</CardGroup>
+
+## What you can build
+
+- **Search interfaces**: instant, typo-tolerant search bars for websites, apps, and documentation.
+- **AI assistants**: connect LLMs to your content with built-in RAG. Users ask questions in natural language and get answers grounded in your data.
+- **Recommendation systems**: find similar documents and personalize results based on user preferences.
+- **Internal tools**: make company knowledge searchable across documents, databases, and APIs.
+
+## Why Meilisearch?
+
+Meilisearch is built on three pillars:
+
+### Performance
+
+Meilisearch is designed for speed at scale. Every query returns results in under 50 milliseconds, whether your index contains a thousand documents or tens of millions. The engine uses memory-mapped storage, multi-threaded indexing, and DiskANN-based vector search to maintain consistent performance as your data grows. Sharding and replication let you scale horizontally without sacrificing latency.
+
+### Relevancy
+
+Getting the right results means combining multiple signals. Meilisearch chains seven default ranking rules (words, typo, proximity, attributeRank, sort, wordPosition, and exactness) with support for custom rules tailored to your domain. Hybrid search merges keyword and semantic results so users find what they're looking for even when they don't use the exact right words. Conversational search goes further: RAG-powered responses are grounded in your indexed data, so AI answers are sourced and verifiable.
+
+### Developer experience
+
+Meilisearch is a single binary with a REST API. There is no cluster to configure, no schema to define, and no separate vector store to manage. Send your documents and Meilisearch handles tokenization, indexing, and vector generation through auto-embeddings. SDKs for 10+ languages, one-click deployment on Meilisearch Cloud, and sensible defaults mean you go from zero to production search in minutes, not weeks.
+
+## See it in action
+
+[![Search bar updating results](/assets/images/movies-demo-dark.gif)](https://where2watch.meilisearch.com/?utm_campaign=oss&utm_source=docs&utm_medium=overview)
+
+Try our live demos:
+- [E-commerce search](https://ecommerce.meilisearch.com/) - Browse millions of products
+- [Where to Watch](https://where2watch.meilisearch.com/) - Search the TMDB movie database
+- [SaaS search](https://saas.meilisearch.com/) - Multi-model search with Laravel
+
+## Get started with Meilisearch Cloud
+
+[Meilisearch Cloud](https://www.meilisearch.com/cloud?utm_campaign=oss&utm_source=docs&utm_medium=overview) gets you up and running in minutes with automatic scaling, updates, and maintenance. Start with a [14-day free trial](https://cloud.meilisearch.com).
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Explore features" icon="sparkles" href="/getting_started/features">
+    See all Meilisearch capabilities
+  </Card>
+  <Card title="Good practices" icon="check" href="/getting_started/good_practices">
+    Learn how to format, chunk, and index your data
+  </Card>
+  <Card title="Choose your SDK" icon="code" href="/getting_started/sdks/javascript">
+    Get started with your preferred language
+  </Card>
+  <Card title="Glossary" icon="book" href="/getting_started/glossary">
+    Key terms and concepts explained
+  </Card>
+</CardGroup>

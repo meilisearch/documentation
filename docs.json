@@ -81,7 +81,7 @@
           },
           {
             "label": "Comparisons",
-            "href": "https://www.meilisearch.com/docs/learn/what_is_meilisearch/comparison_to_alternatives"
+            "href": "https://www.meilisearch.com/docs/learn/resources/comparison_to_alternatives"
           },
           {
             "label": "Trust center",
@@ -156,14 +156,68 @@
         "version": "latest",
         "tabs": [
           {
+            "tab": "Getting started",
+            "groups": [
+              {
+                "group": "Introduction",
+                "pages": [
+                  "getting_started/overview",
+                  "getting_started/features",
+                  "getting_started/glossary",
+                  "getting_started/good_practices"
+                ]
+              },
+              {
+                "group": "Back-end SDKs",
+                "pages": [
+                  "getting_started/sdks/javascript",
+                  "getting_started/sdks/python",
+                  "getting_started/sdks/php",
+                  "getting_started/sdks/ruby",
+                  "getting_started/sdks/go",
+                  "getting_started/sdks/rust",
+                  "getting_started/sdks/java",
+                  "getting_started/sdks/dotnet",
+                  "getting_started/sdks/swift",
+                  "getting_started/sdks/dart"
+                ]
+              },
+              {
+                "group": "Frontend SDKs",
+                "pages": [
+                  "getting_started/instant_meilisearch/javascript",
+                  "getting_started/instant_meilisearch/react",
+                  "getting_started/instant_meilisearch/vue",
+                  "getting_started/instant_meilisearch/docsearch"
+                ]
+              },
+              {
+                "group": "Framework integrations",
+                "pages": [
+                  "getting_started/frameworks/laravel",
+                  "getting_started/frameworks/strapi",
+                  "getting_started/frameworks/rails",
+                  "getting_started/frameworks/symfony"
+                ]
+              },
+              {
+                "group": "Integrations",
+                "pages": [
+                  "getting_started/integrations/firebase",
+                  "getting_started/integrations/vercel",
+                  "getting_started/integrations/postman",
+                  "getting_started/integrations/meilisearch_importer"
+                ]
+              }
+            ]
+          },
+          {
             "tab": "Learn",
             "groups": [
               {
                 "group": "Getting started",
                 "pages": [
-                  "home",
                   "learn/getting_started/cloud_quick_start",
-                  "learn/getting_started/what_is_meilisearch",
                   "learn/getting_started/documents",
                   "learn/getting_started/indexes",
                   "learn/getting_started/primary_key",
@@ -295,7 +349,6 @@
                 "group": "Indexing",
                 "pages": [
                   "learn/indexing/rename_an_index",
-                  "learn/indexing/indexing_best_practices",
                   "learn/indexing/ram_multithreading_performance",
                   "learn/indexing/tokenization",
                   "learn/indexing/multilingual-datasets",
@@ -765,17 +818,7 @@
                 "group": "Front end",
                 "pages": [
                   "guides/front_end/front_end_integration",
-                  "guides/front_end/react_quick_start",
-                  "guides/front_end/vue_quick_start",
                   "guides/front_end/pagination"
-                ]
-              },
-              {
-                "group": "Back end",
-                "pages": [
-                  "guides/laravel_scout",
-                  "guides/strapi_v4",
-                  "guides/ruby_on_rails_quick_start"
                 ]
               },
               {
@@ -823,12 +866,6 @@
                 ]
               },
               {
-                "group": "Integrations",
-                "pages": [
-                  "guides/vercel"
-                ]
-              },
-              {
                 "group": "Miscellaneous",
                 "pages": [
                   "guides/docker"
@@ -858,6 +895,18 @@
     }
   },
   "redirects": [
+    {
+      "source": "/getting_started/integrations/gatsby",
+      "destination": "https://github.com/meilisearch/gatsby-plugin-meilisearch"
+    },
+    {
+      "source": "/getting_started/integrations/meilisync",
+      "destination": "https://github.com/long2ice/meilisync"
+    },
+    {
+      "source": "/learn/indexing/indexing_best_practices",
+      "destination": "/getting_started/good_practices"
+    },
     {
       "source": "/errors",
       "destination": "/reference/errors/error_codes"
@@ -1068,7 +1117,7 @@
     },
     {
       "source": "/learn/cookbooks/laravel_scout",
-      "destination": "/guides/back_end/laravel_scout"
+      "destination": "/getting_started/frameworks/laravel"
     },
     {
       "source": "/learn/cookbooks/large_documents",
@@ -1104,11 +1153,11 @@
     },
     {
       "source": "/learn/cookbooks/strapi_v4",
-      "destination": "/guides/back_end/strapi_v4"
+      "destination": "/getting_started/frameworks/strapi"
     },
     {
       "source": "/learn/cookbooks/vercel",
-      "destination": "/guides/integrations/vercel"
+      "destination": "/getting_started/integrations/vercel"
     },
     {
       "source": "/learn/core_concepts/documents",
@@ -1196,7 +1245,7 @@
     },
     {
       "source": "/learn/front_end/react_instantsearch",
-      "destination": "/guides/front_end/react_quick_start"
+      "destination": "/getting_started/instant_meilisearch/react"
     },
     {
       "source": "/learn/getting_started/a",
@@ -1276,7 +1325,7 @@
     },
     {
       "source": "/learn/what_is_meilisearch/features",
-      "destination": "/learn/what_is_meilisearch/overview#features"
+      "destination": "/getting_started/features"
     },
     {
       "source": "/learn/what_is_meilisearch/language",
@@ -1284,19 +1333,19 @@
     },
     {
       "source": "/learn/what_is_meilisearch/overview#sdks-and-integrations",
-      "destination": "/learn/what_is_meilisearch/sdks"
+      "destination": "/learn/resources/sdks"
     },
     {
       "source": "/learn/what_is_meilisearch/overview#alternatives",
-      "destination": "/learn/what_is_meilisearch/comparison_to_alternatives"
+      "destination": "/learn/resources/comparison_to_alternatives"
     },
     {
       "source": "/learn/what_is_meilisearch/overview",
-      "destination": "/learn/getting_started/what_is_meilisearch"
+      "destination": "/getting_started/overview"
     },
     {
       "source": "/learn/what_is_meilisearch/philosophy",
-      "destination": "/learn/what_is_meilisearch/overview#philosophy"
+      "destination": "/getting_started/overview"
     },
     {
       "source": "/learn/what_is_meilisearch/sdks",
@@ -1432,7 +1481,7 @@
     },
     {
       "source": "/reference/api/multi_search",
-      "destination": "/reference/api/search/perform-a-multi-search"
+      "destination": "/reference/api/multi-search/perform-a-multi-search"
     },
     {
       "source": "/reference/api/network",
@@ -1688,7 +1737,7 @@
     },
     {
       "source": "/guides/back_end/laravel_scout",
-      "destination": "/guides/laravel_scout"
+      "destination": "/getting_started/frameworks/laravel"
     },
     {
       "source": "/guides/database/meilisync_mysql",
@@ -1704,7 +1753,7 @@
     },
     {
       "source": "/guides/front_end/react_instantsearch",
-      "destination": "/guides/front_end/react_quick_start"
+      "destination": "/getting_started/instant_meilisearch/react"
     },
     {
       "source": "/guides/front_end/search_bar_for_docs",
@@ -1712,7 +1761,7 @@
     },
     {
       "source": "/guides/integrations/vercel",
-      "destination": "/guides/vercel"
+      "destination": "/getting_started/integrations/vercel"
     },
     {
       "source": "/guides/performance/indexing_best_practices",
@@ -1861,6 +1910,38 @@
     {
       "source": "/reference/api/chats/update-chat",
       "destination": "/reference/api/chats/update-settings-of-a-chat-workspace"
+    },
+    {
+      "source": "/guides/laravel_scout",
+      "destination": "/getting_started/frameworks/laravel"
+    },
+    {
+      "source": "/guides/strapi_v4",
+      "destination": "/getting_started/frameworks/strapi"
+    },
+    {
+      "source": "/guides/ruby_on_rails_quick_start",
+      "destination": "/getting_started/frameworks/rails"
+    },
+    {
+      "source": "/guides/front_end/react_quick_start",
+      "destination": "/getting_started/instant_meilisearch/react"
+    },
+    {
+      "source": "/guides/front_end/vue_quick_start",
+      "destination": "/getting_started/instant_meilisearch/vue"
+    },
+    {
+      "source": "/guides/vercel",
+      "destination": "/getting_started/integrations/vercel"
+    },
+    {
+      "source": "/learn/getting_started/what_is_meilisearch",
+      "destination": "/getting_started/overview"
+    },
+    {
+      "source": "/home",
+      "destination": "/getting_started/overview"
     }
   ]
 }

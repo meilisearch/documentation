@@ -179,7 +179,7 @@ The response should look something like this:
 }
 ```
 
-Proceed to [creating the dump](/reference/api/backups/create-dump).
+Proceed to [creating the dump](/reference/api/management/create-dump).
 
 ##### Create the dump
 
@@ -234,7 +234,7 @@ It should return something like this:
 </Tab>
 </Tabs>
 
-You can then create a dump of your database using the [create a dump endpoint](/reference/api/backups/create-dump):
+You can then create a dump of your database using the [create a dump endpoint](/reference/api/management/create-dump):
 
 <CodeSamplesUpdatingGuideCreateDump />
 
@@ -250,7 +250,7 @@ The server should return a response that looks like this:
 }
 ```
 
-Use the `taskUid` to [track the status](/reference/api/async-task-management/get-task) of your dump. Keep in mind that the process can take some time to complete.
+Use the `taskUid` to [track the status](/reference/api/tasks/get-task) of your dump. Keep in mind that the process can take some time to complete.
 
 Once the `dumpCreation` task shows `"status": "succeeded"`, you're ready to move on.
 

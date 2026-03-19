@@ -1,0 +1,167 @@
+---
+title: Good practices
+sidebarTitle: Good practices
+description: Best practices for formatting documents, chunking content, batching requests, and optimizing indexing performance in Meilisearch.
+---
+
+Follow these guidelines to get the most out of Meilisearch, whether you're indexing a few hundred documents or scaling to millions.
+
+## Document formatting
+
+### Use a simple, consistent structure
+
+Meilisearch can handle complex nested JSON, so you don't need to flatten everything. However, simpler structures are easier to configure and search through. The key rule is: **never use dynamic field names**. Every document in an index should share the same field names. If field names change from one document to the next, Meilisearch cannot index them properly.
+
+Good: consistent field names, nested objects are fine:
+
+```json
+{
+  "id": 1,
+  "title": "Running shoes",
+  "brand": "Nike",
+  "price": 120,
+  "details": {
+    "color": "black",
+    "size": 42
+  }
+}
+```
+
+Bad: dynamic field names (keys change per document):
+
+```json
+[
+  {
+    "id": 1,
+    "Nike": { "price": 120 }
+  },
+  {
+    "id": 2,
+    "Adidas": { "price": 95 }
+  }
+]
+```
+
+### Use meaningful primary keys
+
+Choose a primary key that uniquely identifies each document and is stable over time. If your documents come from a database, use the database's primary key. If Meilisearch doesn't find a primary key candidate, it will ask you to set one explicitly.
+
+### Remove unnecessary fields
+
+If a field is not searchable, filterable, sortable, or displayed, remove it from your documents before indexing. Smaller documents are indexed faster and consume less disk and memory.
+
+## Chunking content
+
+When indexing long-form content (articles, documentation pages, books), break it into smaller, meaningful chunks rather than indexing entire pages as single documents.
+
+### Why chunk
+
+- **Better relevancy**: a search for "installation guide" is more likely to match a specific section than an entire 5,000-word page.
+- **Better displayed results**: users see targeted excerpts instead of massive blocks of text.
+- **Faster indexing**: smaller documents are processed more quickly.
+
+### How to chunk
+
+Split content at logical boundaries like headings, sections, or paragraphs. Each chunk should be self-contained enough to make sense on its own.
+
+```json
+[
+  {
+    "id": "getting-started-install",
+    "page": "Getting started",
+    "section": "Installation",
+    "content": "Install Meilisearch using the following command...",
+    "url": "/docs/getting-started#installation"
+  },
+  {
+    "id": "getting-started-config",
+    "page": "Getting started",
+    "section": "Configuration",
+    "content": "Configure your instance by setting environment variables...",
+    "url": "/docs/getting-started#configuration"
+  }
+]
+```
+
+Include metadata fields (page title, section, URL) so users can navigate back to the original content.
+
+## Batching requests
+
+### Send documents in large batches
+
+A single large HTTP payload is processed more quickly than multiple smaller payloads. For example, indexing 100,000 documents in two batches of 50,000 is faster than four batches of 25,000.
+
+By default, Meilisearch accepts payloads up to 100MB. Enterprise accounts can request a higher limit.
+
+### Use compression
+
+Compress your HTTP payloads using `gzip`, `deflate`, or `br` encoding to reduce transfer time and bandwidth. Meilisearch accepts all standard [encoding formats](/reference/api/headers).
+
+### Monitor task completion during large imports
+
+When sending multiple batches, you don't need to wait for each task to complete before sending the next one. Meilisearch queues all tasks and processes them in order. However, monitoring [task status](/learn/async/working_with_tasks) helps you detect errors early.
+
+## Indexing performance
+
+### Configure settings before adding documents
+
+Always configure your index settings (ranking rules, filterable attributes, searchable attributes) **before** adding documents. Changing settings after indexing triggers a full reindex of all documents.
+
+```bash
+# 1. Create the index and configure settings
+curl -X PATCH 'MEILISEARCH_URL/indexes/movies/settings' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer API_KEY' \
+  --data-binary '{
+    "searchableAttributes": ["title", "overview"],
+    "filterableAttributes": ["genre", "release_year"],
+    "sortableAttributes": ["release_year", "rating"]
+  }'
+
+# 2. Then add documents
+curl -X POST 'MEILISEARCH_URL/indexes/movies/documents' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer API_KEY' \
+  --data-binary @movies.json
+```
+
+### Restrict searchable attributes
+
+By default, all fields are searchable. Limit searchable attributes to only the fields users should be able to search through. This improves both relevancy and indexing speed.
+
+### Use separate indexes for separate languages
+
+If your dataset contains content in multiple languages, create a separate index for each language. Meilisearch's tokenizer, stop words, and ranking algorithms are language-specific, so mixing languages in a single index degrades relevancy for all of them.
+
+### Avoid creating too many indexes
+
+Each index consumes resources. If you notice performance degradation with multi-index searches, consider consolidating indexes where possible.
+
+### Enable binary quantization for large AI search datasets
+
+If you use AI-powered search with more than 1 million documents and high-dimensional embeddings (1400+ dimensions), consider enabling [binary quantization](/reference/api/settings/update-embedders). This reduces semantic search precision slightly but greatly improves indexing and search performance.
+
+<Warning>
+Binary quantization is irreversible. Once enabled, the only way to recover original vector precision is to re-vectorize the entire index.
+</Warning>
+
+## Keep Meilisearch up to date
+
+Each release includes indexing and search performance improvements. Check the [changelog](/changelog/changelog) and [GitHub releases](https://github.com/meilisearch/meilisearch/releases?q=prerelease%3Afalse) regularly.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Configure index settings" icon="gear" href="/learn/configuration/configuring_index_settings">
+    Learn how to set up searchable, filterable, and sortable attributes
+  </Card>
+  <Card title="Relevancy and ranking" icon="ranking-star" href="/learn/relevancy/relevancy">
+    Understand how Meilisearch ranks search results
+  </Card>
+  <Card title="Working with tasks" icon="list-check" href="/learn/async/working_with_tasks">
+    Monitor indexing progress with the task API
+  </Card>
+  <Card title="Security" icon="lock" href="/learn/security/basic_security">
+    Secure your Meilisearch instance with API keys
+  </Card>
+</CardGroup>

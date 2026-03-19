@@ -1,0 +1,209 @@
+---
+title: Features
+sidebarTitle: Features
+description: Explore all Meilisearch capabilities - index your content and make it accessible to humans and AI through search, conversational interfaces, and APIs.
+---
+
+Meilisearch indexes your content and makes it accessible to both humans and AI. Here's everything it can do.
+
+## Search capabilities
+
+### Full-text search
+
+Lightning-fast keyword search with typo tolerance and customizable relevancy.
+
+| Feature | Description |
+|---------|-------------|
+| Sub-50ms responses | Fast search regardless of dataset size |
+| [Typo tolerance](/learn/relevancy/typo_tolerance_settings) | Get relevant results even with spelling mistakes |
+| [Ranking rules](/learn/relevancy/ranking_rules) | 6 default rules plus custom ranking |
+| [Ranking score](/learn/relevancy/ranking_score) | Relevancy scores with optional detailed breakdown |
+| [Synonyms](/learn/relevancy/synonyms) | Define equivalent terms for better recall |
+| [Stop words](/reference/api/settings/get-stopwords) | Ignore common words like "the" or "and" |
+| [Distinct attribute](/learn/relevancy/distinct_attribute) | Deduplicate results by a specific field |
+| [Prefix search](/learn/engine/prefix) | Results update as users type |
+| [Matching strategy](/reference/api/search/search-with-post#body-matching-strategy) | Control how query terms are matched: `last`, `all`, or `frequency` |
+| [Phrase search](/reference/api/search/search-with-post) | Use double quotes to search for an exact phrase |
+| [Negative search](/reference/api/search/search-with-post) | Exclude terms from results using the minus operator |
+| [Placeholder search](/reference/api/search/search-with-post) | Return all results when the query is empty |
+
+### Querying and result formatting
+
+| Feature | Description |
+|---------|-------------|
+| [Highlighting](/reference/api/search/search-with-post#highlight-tags) | Emphasize query matches in results with customizable tags |
+| [Cropping](/reference/api/search/search-with-post#body-attributes-to-crop) | Return only the relevant portion of long text fields |
+| [Matches position](/reference/api/search/search-with-post#body-show-matches-position) | Get byte positions and lengths of matched terms |
+| [Search cutoff](/reference/api/settings/get-searchcutoffms) | Set a maximum time limit for search queries |
+| [Tokenization](/learn/indexing/tokenization) | Customize how queries are broken into tokens, with custom separators and dictionaries |
+
+### AI-powered search
+
+Semantic and hybrid search using vector embeddings for meaning-based results.
+
+| Feature | Description |
+|---------|-------------|
+| [Hybrid search](/learn/ai_powered_search/getting_started_with_ai_search) | Combine keyword and semantic search |
+| [Embedders](/learn/ai_powered_search/choose_an_embedder) | OpenAI, Hugging Face, Cohere, Mistral, Voyage, Gemini, Cloudflare, Ollama, and custom REST |
+| [Similar documents](/learn/ai_powered_search/retrieve_related_search_results) | Find related content automatically |
+| [Image search](/learn/ai_powered_search/image_search_with_multimodal_embeddings) | Search images with multimodal embeddings |
+| [Multi-embedder](/reference/api/settings/get-embedders) | Multiple embedding models on the same document |
+| [User-provided vectors](/learn/ai_powered_search/search_with_user_provided_embeddings) | Bring your own pre-generated embeddings |
+
+### Conversational search
+
+Build chat interfaces powered by your search data with LLM integration.
+
+| Feature | Description |
+|---------|-------------|
+| [Chat completions](/learn/chat/getting_started_with_chat) | RAG-powered conversational search |
+| [LLM providers](/learn/chat/chat_tooling_reference) | OpenAI, Azure OpenAI, Mistral, Google Gemini, vLLM, and custom providers |
+| [Streaming responses](/reference/api/chats/request-a-chat-completion) | Stream chat responses in real time |
+| [Chat workspaces](/reference/api/chats/get-settings-of-a-chat-workspace) | Configure chat settings per index |
+
+### Personalization
+
+| Feature | Description |
+|---------|-------------|
+| [User preference ranking](/reference/api/search/search-with-post#body-personalize-one-of-1) | Re-rank results based on individual user preferences using AI embeddings |
+| Real-time adaptation | Adjust results as user preferences evolve |
+
+### Filtering and faceting
+
+Refine search results with powerful filters and build faceted navigation.
+
+| Feature | Description |
+|---------|-------------|
+| [Filters](/learn/filtering_and_sorting/filter_search_results) | Filter by any attribute with complex expressions (AND/OR) |
+| [Facets](/learn/filtering_and_sorting/search_with_facet_filters) | Build faceted navigation interfaces |
+| [Facet types](/learn/filtering_and_sorting/facet_types) | AND/OR operators, numeric, boolean, and date facets |
+| [Sorting](/learn/filtering_and_sorting/sort_search_results) | Sort results by any field |
+| [Geo search](/learn/filtering_and_sorting/geosearch) | Geo radius, bounding box, geo sorting, and distance calculation |
+
+### Multi-search and federation
+
+Query multiple indexes in a single request for complex search scenarios.
+
+| Feature | Description |
+|---------|-------------|
+| [Multi-search](/learn/multi_search/multi_search_vs_federated_search) | Query multiple indexes at once |
+| [Federated search](/learn/multi_search/performing_federated_search) | Merge results from multiple sources with configurable weights |
+
+## Scaling
+
+Scale Meilisearch horizontally across multiple instances or optimize resource usage on a single node.
+
+| Feature | Description |
+|---------|-------------|
+| [Sharding](/learn/multi_search/implement_sharding) | Distribute documents across multiple instances for horizontal scaling |
+| [Replication](/reference/api/management/get-network-topology) | Replicate data across multiple instances for high availability |
+| [Remote federation](/reference/api/management/get-network-topology) | Federate search across multiple Meilisearch instances |
+| Memory mapping | Efficient memory usage through memory-mapped storage |
+
+## Database
+
+### Document database
+
+| Feature | Description |
+|---------|-------------|
+| [Schemaless](/learn/getting_started/documents) | Index documents without a predefined schema |
+| [Documents](/learn/getting_started/documents) | Add, replace, update, and delete documents |
+| [Delete by filter](/reference/api/documents/delete-documents-by-filter) | Delete documents matching a filter expression |
+| [Update by function](/reference/api/documents/edit-documents-by-function) | Partial updates to documents using functions |
+| [Searchable attributes](/learn/relevancy/displayed_searchable_attributes) | Configure which fields are searchable and their priority |
+| [Displayed attributes](/learn/relevancy/displayed_searchable_attributes) | Control which fields are returned in results |
+| [Filterable attributes](/learn/filtering_and_sorting/filter_search_results) | Define which fields can be used in filters |
+| [Sortable attributes](/learn/filtering_and_sorting/sort_search_results) | Define which fields can be used for sorting |
+| [Index swap](/reference/api/indexes/swap-indexes) | Swap indexes to perform updates without downtime |
+
+### Vector database
+
+| Feature | Description |
+|---------|-------------|
+| [Similar documents](/learn/ai_powered_search/retrieve_related_search_results) | Find semantically similar documents using vector embeddings |
+| [Binary quantization](/reference/api/settings/get-embedders) | Compress vectors to save storage |
+| DiskANN | Disk-based approximate nearest neighbors for large datasets |
+| [Auto embedding](/reference/api/settings/get-embedders) | Automatically generate embeddings without manual input |
+
+## Platform features
+
+### Security
+
+Protect your data with API keys and multi-tenant access control.
+
+| Feature | Description |
+|---------|-------------|
+| [API keys](/learn/security/basic_security) | Admin, search, and chat key types for different access levels |
+| [Tenant tokens](/learn/security/multitenancy_tenant_tokens) | Secure multi-tenant applications with document-level access control |
+| [Search rules](/learn/security/tenant_token_reference) | Restrict which documents users can access |
+
+### Tasks and monitoring
+
+Monitor indexing operations and receive notifications.
+
+| Feature | Description |
+|---------|-------------|
+| [Task management](/learn/async/working_with_tasks) | Track and manage async operations |
+| [Batches](/learn/async/asynchronous_operations#task-batches) | Automatic task batching for efficient processing |
+| [Webhooks](/learn/async/task_webhook) | Get notified when tasks complete |
+| Diff indexing | Only index differences between datasets |
+
+### Analytics (Cloud)
+
+Track search behavior and optimize relevancy with built-in analytics.
+
+| Feature | Description |
+|---------|-------------|
+| [Search analytics](/learn/analytics/configure_analytics_events) | Monitor search patterns, no-result rates, and top queries |
+| [Click tracking](/learn/analytics/bind_events_user) | Track which results users engage with |
+| [Metrics reference](/learn/analytics/analytics_metrics_reference) | Click-through rate, conversion rate, average click position |
+| Monitoring | Search latency, indexing latency, bandwidth, and API health |
+
+### Pagination
+
+| Feature | Description |
+|---------|-------------|
+| [Pagination](/guides/front_end/pagination) | Offset/limit and cursor-based pagination |
+
+## Language support
+
+Meilisearch provides optimized support for many languages:
+
+- **Latin-based languages**: English, French, Spanish, German, Italian, Portuguese, etc.
+- **CJK**: Chinese, Japanese, Korean with specialized tokenization
+- **RTL languages**: Hebrew, Arabic
+- **Others**: Thai, Greek, and more
+
+[See full language support →](/learn/resources/language)
+
+## Cloud features
+
+These features are available exclusively on Meilisearch Cloud.
+
+| Feature | Description |
+|---------|-------------|
+| Crawler | Crawl web pages with JS rendering, DocSearch mode, and schema extraction |
+| [Search preview](/learn/getting_started/search_preview) | Visual search interface with filtering, sorting, and document CRUD |
+| [Teams](/learn/teams/teams) | Organize projects and members into team workspaces |
+| [Enterprise SSO/SCIM](/learn/self_hosted/enterprise_edition) | SAML 2.0 SSO and automated user provisioning |
+| Autoscale disk | Automatically scale storage as data grows |
+| Automatic backups | Scheduled backups for data safety |
+| One-click upgrade | Upgrade Meilisearch version with a single click |
+| Up to 99.999% SLA | Industry-leading service level agreement |
+
+## Self-hosting
+
+| Feature | Description |
+|---------|-------------|
+| [Configuration](/learn/self_hosted/configure_meilisearch_at_launch) | CLI flags and environment variables |
+| [Snapshots](/learn/data_backup/snapshots) | Full binary copies for fast restoration |
+| [Dumps](/learn/data_backup/dumps) | Portable JSON exports for migration |
+| [Master key](/learn/security/basic_security) | Secure your instance with a master key |
+
+## Integration options
+
+| Option | Description |
+|--------|-------------|
+| [REST API](/reference/api/openapi) | Direct HTTP integration |
+| [Official SDKs](/learn/resources/sdks) | 10+ language SDKs |
+| [Frameworks](/learn/resources/sdks#framework-integrations) | Laravel, Rails, Strapi, Symfony |
