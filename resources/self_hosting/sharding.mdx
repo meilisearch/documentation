@@ -1,0 +1,210 @@
+---
+title: Sharding and distributed search
+sidebarTitle: Sharding and distributed search
+description: Scale Meilisearch horizontally by distributing documents across multiple instances using sharding and the network feature.
+---
+
+Sharding splits a large index across multiple Meilisearch instances, called "remotes." Each remote holds a subset of your documents in one or more named shards. When you search, Meilisearch queries all remotes in your network and merges results into a single response.
+
+<Note>
+Sharding requires the Meilisearch Enterprise Edition. See [Enterprise and Community editions](/resources/self_hosting/enterprise_edition) for details.
+</Note>
+
+## When to use sharding
+
+Consider sharding when:
+
+- **Your dataset is too large for a single instance.** Splitting documents across remotes lets each instance handle a smaller portion of the data.
+- **You need high availability.** Replicated sharding assigns the same shard to multiple remotes, so your search stays operational if one instance goes down.
+- **You want geographic distribution.** Place remotes closer to your users to reduce latency.
+
+## Prerequisites
+
+- Meilisearch Enterprise Edition v1.37 or later
+- Two or more Meilisearch instances accessible over the network
+- A master key configured on each instance
+
+## Enable the network feature
+
+The network feature is experimental and must be enabled before use. Send a `PATCH` request to `/experimental-features` on each instance:
+
+```bash
+curl \
+  -X PATCH 'MEILISEARCH_URL/experimental-features' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MASTER_KEY' \
+  --data-binary '{
+    "network": true
+  }'
+```
+
+## Configure the network topology
+
+Once the network feature is enabled, configure the topology by sending a `PATCH` request to `/network`. The configuration defines:
+
+- **`self`**: the name of the current instance
+- **`leader`**: the instance responsible for coordinating writes
+- **`remotes`**: all instances in the network, each with a URL and search API key
+
+Each instance in the network must know about all other instances. Send the following request to each instance, changing only the `self` field to match that instance's name:
+
+```bash
+curl \
+  -X PATCH 'MEILISEARCH_URL/network' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MASTER_KEY' \
+  --data-binary '{
+    "leader": "ms-00",
+    "self": "ms-00",
+    "remotes": {
+      "ms-00": {
+        "url": "http://ms-00.example.com",
+        "searchApiKey": "apiKeyFor00"
+      },
+      "ms-01": {
+        "url": "http://ms-01.example.com",
+        "searchApiKey": "apiKeyFor01"
+      },
+      "ms-02": {
+        "url": "http://ms-02.example.com",
+        "searchApiKey": "apiKeyFor02"
+      }
+    }
+  }'
+```
+
+You can verify the current topology at any time with `GET /network`.
+
+## Configure shards
+
+The `shards` field in the network configuration defines how documents are distributed across remotes. Each shard is a named group assigned to one or more remotes:
+
+```bash
+curl \
+  -X PATCH 'MEILISEARCH_URL/network' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MASTER_KEY' \
+  --data-binary '{
+    "shards": {
+      "shard-a": { "remotes": ["ms-00", "ms-01"] },
+      "shard-b": { "remotes": ["ms-01", "ms-02"] },
+      "shard-c": { "remotes": ["ms-02", "ms-00"] }
+    }
+  }'
+```
+
+In this example, each shard is assigned to two remotes, providing redundancy. You can assign a shard to a single remote if redundancy is not needed.
+
+## Replicated sharding
+
+Replicated sharding assigns the same shard to multiple remotes. This provides data redundancy: if one remote becomes unavailable, another remote holding the same shard can still serve results.
+
+In the example above, `shard-a` lives on both `ms-00` and `ms-01`. If `ms-00` goes down, `ms-01` still has the data for `shard-a`. When using `useNetwork: true` in a search, Meilisearch ensures each shard is queried exactly once, avoiding duplicate results even when shards are replicated.
+
+## Manage remotes dynamically
+
+Instead of rewriting the entire `remotes` object, you can use the `addRemotes` and `removeRemotes` convenience fields in a `PATCH /network` request.
+
+Add a new remote:
+
+```bash
+curl \
+  -X PATCH 'MEILISEARCH_URL/network' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MASTER_KEY' \
+  --data-binary '{
+    "addRemotes": {
+      "ms-03": {
+        "url": "http://ms-03.example.com",
+        "searchApiKey": "apiKeyFor03"
+      }
+    }
+  }'
+```
+
+Remove an existing remote:
+
+```bash
+curl \
+  -X PATCH 'MEILISEARCH_URL/network' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MASTER_KEY' \
+  --data-binary '{
+    "removeRemotes": ["ms-03"]
+  }'
+```
+
+## Search across shards
+
+To search across all instances in your network, use the `useNetwork` parameter:
+
+```bash
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/movies/search' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer API_KEY' \
+  --data-binary '{
+    "q": "batman",
+    "useNetwork": true
+  }'
+```
+
+Meilisearch queries all remotes, gathers results from each shard, and merges them into a single ranked response. For more details and advanced examples, see [Search across a network of instances](/capabilities/multi_search/how_to/use_network_search).
+
+## Filter by shard
+
+When the network feature is enabled, you can use the `_shard` filter to target specific shards:
+
+```bash
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/movies/search' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer API_KEY' \
+  --data-binary '{
+    "q": "batman",
+    "useNetwork": true,
+    "filter": "_shard = \"shard-a\""
+  }'
+```
+
+The `_shard` filter supports the following operators:
+
+| Syntax | Behavior |
+|--------|----------|
+| `_shard = "shard-a"` | Results from `shard-a` only |
+| `_shard != "shard-a"` | Results from all shards except `shard-a` |
+| `_shard IN ["shard-a", "shard-b"]` | Results from both `shard-a` and `shard-b` |
+
+## Security: private network restrictions
+
+By default, Meilisearch prevents outbound requests to non-global IP addresses. If your instances communicate over a private network (for example, `10.x.x.x` or `192.168.x.x`), you must explicitly allow those IP ranges using the `--experimental-allowed-ip-networks` flag:
+
+```bash
+meilisearch --experimental-allowed-ip-networks 10.0.0.0/8,192.168.0.0/16
+```
+
+This flag accepts a comma-separated list of CIDR ranges. Only add the ranges your instances actually use.
+
+## Upgrading considerations
+
+The network feature has evolved across releases. If you are upgrading from an earlier version:
+
+- **v1.37** introduced replicated sharding with the `shards` field and `addRemotes`/`removeRemotes` convenience fields
+- The network configuration format may change between experimental releases. Check the [changelog](/changelog) for breaking changes before upgrading
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Search across a network" href="/capabilities/multi_search/how_to/use_network_search">
+    Use the useNetwork parameter to search all instances and merge results.
+  </Card>
+  <Card title="Deployment overview" href="/resources/self_hosting/deployment/overview">
+    Deploy Meilisearch to production on various cloud providers.
+  </Card>
+  <Card title="Enterprise Edition" href="/resources/self_hosting/enterprise_edition">
+    Learn about the differences between Community and Enterprise editions.
+  </Card>
+  <Card title="Data backup" href="/resources/self_hosting/data_backup/overview">
+    Configure snapshots and dumps for your Meilisearch instances.
+  </Card>
+</CardGroup>

@@ -43,6 +43,14 @@ Every document in a Meilisearch index must have a unique **primary key** field. 
 
 Foreign keys allow you to link documents across indexes. Instead of duplicating data, you store related information in a separate index and reference it by ID. At search time, Meilisearch automatically hydrates results with the full referenced documents. See [Use foreign keys](/capabilities/indexing/how_to/use_foreign_keys) for a step-by-step guide.
 
+## Operational tools
+
+Meilisearch includes several endpoints for managing indexes and migrating data:
+
+- **Export**: Transfer data directly from one instance to another over the network, without creating intermediate files. See [Export data to another instance](/capabilities/indexing/how_to/export_data).
+- **Compact**: Reclaim disk space by reorganizing an index's internal data structures after bulk updates or deletions. See [Compact an index](/capabilities/indexing/how_to/compact_an_index).
+- **Field inspection**: Retrieve detailed metadata about every field in an index, including its search, filter, and display settings. See [Inspect index fields](/capabilities/indexing/how_to/inspect_index_fields).
+
 ## Next steps
 
 <CardGroup cols={2}>
