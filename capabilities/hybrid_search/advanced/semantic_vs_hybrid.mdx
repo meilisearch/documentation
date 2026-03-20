@@ -1,0 +1,119 @@
+---
+title: Semantic vs hybrid search
+description: When to use pure semantic search vs hybrid search, and how to tune the balance between keyword and vector results.
+---
+
+Meilisearch supports three search modes controlled by the `semanticRatio` parameter: pure keyword search, pure semantic search, and hybrid search. Each mode has strengths and weaknesses depending on your data and how your users search.
+
+This page helps you understand the tradeoffs and pick the right approach for your use case.
+
+## The three search modes
+
+The `semanticRatio` parameter controls how Meilisearch blends keyword and semantic results:
+
+| Mode | `semanticRatio` | How it works |
+|------|-----------------|-------------|
+| Pure keyword | `0.0` | Meilisearch uses only full-text matching. Results must contain the query terms (or close variants). No embedder is queried. |
+| Hybrid | `0.0 < ratio < 1.0` | Meilisearch runs both keyword and semantic search, then merges the results. Lower values favor keyword matches, higher values favor semantic matches. |
+| Pure semantic | `1.0` | Meilisearch uses only vector similarity. Results are ranked by how close their embeddings are to the query embedding. |
+
+## When to use each mode
+
+### Pure keyword search (semanticRatio = 0)
+
+Best when:
+
+- Users search for exact product names, SKUs, or identifiers
+- Your dataset contains structured data with specific terminology (legal documents, medical records)
+- You need deterministic, explainable results
+- You want to avoid the latency cost of generating query embeddings
+
+Example queries that work well with keyword search:
+- `"iPhone 15 Pro Max 256GB"`
+- `"error code 0x80070005"`
+- `"Moby Dick Herman Melville"`
+
+### Pure semantic search (semanticRatio = 1)
+
+Best when:
+
+- Users describe what they need in natural language rather than using specific terms
+- Your content is homogeneous (all product descriptions, all articles, all Q&A pairs)
+- Vocabulary mismatch is common (users say "laptop" but documents say "notebook computer")
+- You are building conversational search or Q&A features
+
+Example queries that work well with semantic search:
+- `"something to keep my coffee warm at my desk"`
+- `"how do I fix a leaky kitchen faucet"`
+- `"comfortable shoes for standing all day"`
+
+### Hybrid search (0 < semanticRatio < 1)
+
+Best when:
+
+- Your users mix specific terms with natural language descriptions
+- Your dataset contains diverse content types
+- You want to catch both exact matches and conceptually relevant results
+- You are building ecommerce search, documentation search, or knowledge bases
+
+Example queries that benefit from hybrid search:
+- `"wireless ergonomic keyboard"` (keyword "wireless" + semantic "ergonomic")
+- `"python async database connection"` (technical terms + conceptual meaning)
+- `"red summer dress under $50"` (product attributes + style description)
+
+## Tradeoffs
+
+### Relevancy
+
+Hybrid search typically delivers the best overall relevancy for general-purpose applications. Pure keyword search excels for exact-match queries but misses conceptually similar results. Pure semantic search handles vocabulary mismatch well but may miss results that contain the exact query terms.
+
+### Latency
+
+| Mode | Relative latency | Notes |
+|------|------------------|-------|
+| Pure keyword | Fastest | No embedding generation needed |
+| Pure semantic | Moderate | Requires generating a query embedding |
+| Hybrid | Slowest | Runs both keyword and semantic search, then merges results |
+
+The latency difference depends on your embedder. Cloud-based embedders (OpenAI, Cohere) add network overhead for query embedding generation. Local embedders (HuggingFace) avoid network calls but use server CPU.
+
+### Vocabulary mismatch handling
+
+This is where semantic search provides the most value. Consider a kitchenware dataset:
+
+| Query | Keyword results | Semantic results |
+|-------|----------------|-----------------|
+| `"spatula"` | Documents containing "spatula" | Documents about spatulas, turners, flippers |
+| `"something to flip pancakes"` | Few or no results | Spatulas, turners, griddle tools |
+| `"KitchenAid KFE5T"` | Exact product match | May return similar products instead |
+
+Hybrid search balances these scenarios. It returns the exact "KitchenAid KFE5T" match from keyword search while also surfacing conceptually relevant "pancake flipper" results from semantic search.
+
+## Decision guide
+
+Use the following table to choose your starting `semanticRatio`:
+
+| Use case | Recommended ratio | Reasoning |
+|----------|------------------|-----------|
+| Ecommerce product search | `0.5` to `0.7` | Users mix product names with descriptive queries |
+| Documentation or knowledge base | `0.5` to `0.8` | Natural language questions benefit from semantic matching |
+| Code search | `0.0` to `0.3` | Exact token matching is critical for code |
+| Q&A or support tickets | `0.7` to `1.0` | Users describe problems in varied language |
+| Catalog with SKUs and part numbers | `0.0` to `0.3` | Exact identifiers must match precisely |
+| Blog or article search | `0.5` to `0.7` | Mix of topic searches and specific queries |
+
+These are starting points. Test with real queries from your users and adjust based on the results you observe.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Custom hybrid ranking" href="/capabilities/hybrid_search/advanced/custom_hybrid_ranking">
+    Fine-tune semanticRatio and test different configurations
+  </Card>
+  <Card title="Full-text search" href="/capabilities/full_text_search/overview">
+    Learn more about Meilisearch's keyword search capabilities
+  </Card>
+  <Card title="Hybrid search overview" href="/capabilities/hybrid_search/overview">
+    Overview of hybrid and semantic search in Meilisearch
+  </Card>
+</CardGroup>

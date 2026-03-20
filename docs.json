@@ -81,7 +81,7 @@
           },
           {
             "label": "Comparisons",
-            "href": "https://www.meilisearch.com/docs/learn/resources/comparison_to_alternatives"
+            "href": "https://www.meilisearch.com/docs/resources/comparisons/alternatives"
           },
           {
             "label": "Trust center",
@@ -213,121 +213,259 @@
             ]
           },
           {
-            "tab": "Learn",
+            "tab": "Capabilities",
             "groups": [
               {
-                "group": "AI-powered search",
+                "group": "Full-text search",
                 "pages": [
-                  "learn/ai_powered_search/getting_started_with_ai_search",
-                  "learn/ai_powered_search/configure_rest_embedder",
-                  "learn/ai_powered_search/document_template_best_practices",
-                  "learn/ai_powered_search/image_search_with_multimodal_embeddings",
-                  "learn/ai_powered_search/image_search_with_user_provided_embeddings",
-                  "learn/ai_powered_search/search_with_user_provided_embeddings",
-                  "learn/ai_powered_search/retrieve_related_search_results",
-                  "learn/ai_powered_search/choose_an_embedder",
-                  "learn/ai_powered_search/difference_full_text_ai_search"
+                  "capabilities/full_text_search/overview",
+                  {
+                    "group": "Getting started",
+                    "pages": [
+                      "capabilities/full_text_search/getting_started/placeholder_search",
+                      "capabilities/full_text_search/getting_started/search_with_snippets",
+                      "capabilities/full_text_search/getting_started/phrase_search"
+                    ]
+                  },
+                  {
+                    "group": "How to",
+                    "pages": [
+                      "capabilities/full_text_search/how_to/configure_searchable_attributes",
+                      "capabilities/full_text_search/how_to/configure_stop_words",
+                      "capabilities/full_text_search/how_to/configure_prefix_search",
+                      "capabilities/full_text_search/how_to/highlight_search_results",
+                      "capabilities/full_text_search/how_to/use_matching_strategy",
+                      "capabilities/full_text_search/how_to/configure_search_cutoff"
+                    ]
+                  },
+                  {
+                    "group": "Advanced",
+                    "pages": [
+                      "capabilities/full_text_search/advanced/ranking_pipeline",
+                      "capabilities/full_text_search/advanced/performance_tuning"
+                    ]
+                  },
+                  {
+                    "group": "Relevancy",
+                    "pages": [
+                      "capabilities/full_text_search/relevancy/relevancy",
+                      "capabilities/full_text_search/relevancy/ranking_rules",
+                      "capabilities/full_text_search/relevancy/custom_ranking_rules",
+                      "capabilities/full_text_search/relevancy/ranking_score",
+                      "capabilities/full_text_search/relevancy/attribute_ranking_order",
+                      "capabilities/full_text_search/relevancy/typo_tolerance_settings",
+                      "capabilities/full_text_search/relevancy/typo_tolerance_calculations",
+                      "capabilities/full_text_search/relevancy/distinct_attribute",
+                      "capabilities/full_text_search/relevancy/displayed_searchable_attributes",
+                      "capabilities/full_text_search/relevancy/synonyms"
+                    ]
+                  }
+                ]
+              },
+              {
+                "group": "Hybrid and semantic search",
+                "pages": [
+                  "capabilities/hybrid_search/overview",
+                  "capabilities/hybrid_search/getting_started",
+                  {
+                    "group": "How to",
+                    "pages": [
+                      "capabilities/hybrid_search/how_to/choose_an_embedder",
+                      "capabilities/hybrid_search/how_to/configure_rest_embedder",
+                      "capabilities/hybrid_search/how_to/configure_openai_embedder",
+                      "capabilities/hybrid_search/how_to/configure_cohere_embedder",
+                      "capabilities/hybrid_search/how_to/configure_huggingface_embedder",
+                      "capabilities/hybrid_search/how_to/search_with_user_provided_embeddings",
+                      "capabilities/hybrid_search/how_to/image_search_with_multimodal",
+                      "capabilities/hybrid_search/how_to/image_search_with_user_embeddings",
+                      "capabilities/hybrid_search/how_to/retrieve_similar_documents"
+                    ]
+                  },
+                  {
+                    "group": "Advanced",
+                    "pages": [
+                      "capabilities/hybrid_search/advanced/semantic_vs_hybrid",
+                      "capabilities/hybrid_search/advanced/document_template_best_practices",
+                      "capabilities/hybrid_search/advanced/custom_hybrid_ranking"
+                    ]
+                  }
+                ]
+              },
+              {
+                "group": "Geo search",
+                "pages": [
+                  "capabilities/geo_search/overview",
+                  "capabilities/geo_search/getting_started",
+                  {
+                    "group": "How to",
+                    "pages": [
+                      "capabilities/geo_search/how_to/filter_by_geo_radius",
+                      "capabilities/geo_search/how_to/filter_by_geo_bounding_box",
+                      "capabilities/geo_search/how_to/filter_by_geo_polygon",
+                      "capabilities/geo_search/how_to/sort_by_geo_point",
+                      "capabilities/geo_search/how_to/use_geojson_format"
+                    ]
+                  }
                 ]
               },
               {
                 "group": "Conversational search",
                 "pages": [
-                  "learn/chat/getting_started_with_chat",
-                  "learn/chat/chat_tooling_reference",
-                  "learn/chat/conversational_search"
-                ]
-              },
-              {
-                "group": "Personalization",
-                "pages": [
-                  "learn/personalization/making_personalized_search_queries",
-                  "learn/personalization/search_personalization"
-                ]
-              },
-              {
-                "group": "Analytics",
-                "pages": [
-                  "learn/analytics/configure_analytics_events",
-                  "learn/analytics/bind_events_user",
-                  "learn/analytics/migrate_analytics_monitoring",
-                  "learn/analytics/events_endpoint",
-                  "learn/analytics/analytics_metrics_reference"
-                ]
-              },
-              {
-                "group": "Teams",
-                "pages": [
-                  "learn/teams/teams"
-                ]
-              },
-              {
-                "group": "Tasks and asynchronous operations",
-                "pages": [
-                  "learn/async/working_with_tasks",
-                  "learn/async/filtering_tasks",
-                  "learn/async/paginating_tasks",
-                  "learn/async/asynchronous_operations"
-                ]
-              },
-              {
-                "group": "Configuration",
-                "pages": [
-                  "learn/configuration/configuring_index_settings",
-                  "learn/configuration/configuring_index_settings_api"
-                ]
-              },
-              {
-                "group": "Filtering and sorting",
-                "pages": [
-                  "learn/filtering_and_sorting/filter_search_results",
-                  "learn/filtering_and_sorting/search_with_facet_filters",
-                  "learn/filtering_and_sorting/working_with_dates",
-                  "learn/filtering_and_sorting/sort_search_results",
-                  "learn/filtering_and_sorting/geosearch",
-                  "learn/filtering_and_sorting/filter_expression_reference"
-                ]
-              },
-              {
-                "group": "Security and permissions",
-                "pages": [
-                  "learn/security/generate_tenant_token_sdk",
-                  "learn/security/generate_tenant_token_third_party",
-                  "learn/security/generate_tenant_token_scratch",
-                  "learn/security/tenant_token_reference",
-                  "learn/security/multitenancy_tenant_tokens"
+                  "capabilities/conversational_search/overview",
+                  "capabilities/conversational_search/getting_started",
+                  {
+                    "group": "How to",
+                    "pages": [
+                      "capabilities/conversational_search/how_to/configure_chat_workspace",
+                      "capabilities/conversational_search/how_to/stream_chat_responses",
+                      "capabilities/conversational_search/how_to/configure_guardrails",
+                      "capabilities/conversational_search/how_to/display_source_documents",
+                      "capabilities/conversational_search/how_to/chat_tooling_reference"
+                    ]
+                  }
                 ]
               },
               {
                 "group": "Multi-search",
                 "pages": [
-                  "learn/multi_search/performing_federated_search",
-                  "learn/multi_search/implement_sharding",
-                  "learn/multi_search/multi_search_vs_federated_search"
+                  "capabilities/multi_search/overview",
+                  {
+                    "group": "Getting started",
+                    "pages": [
+                      "capabilities/multi_search/getting_started/multi_search",
+                      "capabilities/multi_search/getting_started/federated_search"
+                    ]
+                  },
+                  {
+                    "group": "How to",
+                    "pages": [
+                      "capabilities/multi_search/how_to/boost_results_across_indexes",
+                      "capabilities/multi_search/how_to/search_with_different_filters",
+                      "capabilities/multi_search/how_to/build_unified_search_bar"
+                    ]
+                  }
+                ]
+              },
+              {
+                "group": "Filtering, sorting, and faceting",
+                "pages": [
+                  "capabilities/filtering_sorting_faceting/overview",
+                  "capabilities/filtering_sorting_faceting/getting_started",
+                  {
+                    "group": "How to",
+                    "pages": [
+                      "capabilities/filtering_sorting_faceting/how_to/filter_with_facets",
+                      "capabilities/filtering_sorting_faceting/how_to/sort_results",
+                      "capabilities/filtering_sorting_faceting/how_to/filter_and_sort_by_date",
+                      "capabilities/filtering_sorting_faceting/how_to/combine_filters_and_sort",
+                      "capabilities/filtering_sorting_faceting/how_to/build_faceted_navigation"
+                    ]
+                  },
+                  {
+                    "group": "Advanced",
+                    "pages": [
+                      "capabilities/filtering_sorting_faceting/advanced/filter_expression_syntax"
+                    ]
+                  }
+                ]
+              },
+              {
+                "group": "Personalization",
+                "pages": [
+                  "capabilities/personalization/overview",
+                  "capabilities/personalization/getting_started",
+                  {
+                    "group": "How to",
+                    "pages": [
+                      "capabilities/personalization/how_to/generate_user_context",
+                      "capabilities/personalization/how_to/personalize_ecommerce_search"
+                    ]
+                  }
+                ]
+              },
+              {
+                "group": "Analytics",
+                "pages": [
+                  "capabilities/analytics/overview",
+                  "capabilities/analytics/getting_started",
+                  {
+                    "group": "How to",
+                    "pages": [
+                      "capabilities/analytics/how_to/bind_events_to_user",
+                      "capabilities/analytics/how_to/track_click_events",
+                      "capabilities/analytics/how_to/track_conversion_events"
+                    ]
+                  },
+                  {
+                    "group": "Advanced",
+                    "pages": [
+                      "capabilities/analytics/advanced/analytics_metrics",
+                      "capabilities/analytics/advanced/events_endpoint",
+                      "capabilities/analytics/advanced/migrate_analytics"
+                    ]
+                  }
+                ]
+              },
+              {
+                "group": "Security and tenant tokens",
+                "pages": [
+                  "capabilities/security/overview",
+                  "capabilities/security/getting_started",
+                  {
+                    "group": "How to",
+                    "pages": [
+                      "capabilities/security/how_to/generate_token_third_party",
+                      "capabilities/security/how_to/generate_token_from_scratch",
+                      "capabilities/security/how_to/configure_sso",
+                      "capabilities/security/how_to/manage_api_keys"
+                    ]
+                  },
+                  {
+                    "group": "Advanced",
+                    "pages": [
+                      "capabilities/security/advanced/tenant_token_payload"
+                    ]
+                  }
+                ]
+              },
+              {
+                "group": "Teams",
+                "pages": [
+                  "capabilities/teams/overview",
+                  "capabilities/teams/getting_started",
+                  {
+                    "group": "How to",
+                    "pages": [
+                      "capabilities/teams/how_to/manage_team_roles",
+                      "capabilities/teams/how_to/configure_sso_for_team"
+                    ]
+                  }
                 ]
               },
               {
                 "group": "Indexing",
                 "pages": [
-                  "learn/indexing/rename_an_index",
-                  "learn/indexing/indexing_best_practices",
-                  "learn/indexing/tokenization",
-                  "learn/indexing/multilingual-datasets",
-                  "learn/indexing/optimize_indexing_performance"
-                ]
-              },
-              {
-                "group": "Relevancy",
-                "pages": [
-                  "learn/relevancy/relevancy",
-                  "learn/relevancy/ranking_rules",
-                  "learn/relevancy/custom_ranking_rules",
-                  "learn/relevancy/ranking_score",
-                  "learn/relevancy/attribute_ranking_order",
-                  "learn/relevancy/typo_tolerance_settings",
-                  "learn/relevancy/typo_tolerance_calculations",
-                  "learn/relevancy/distinct_attribute",
-                  "learn/relevancy/displayed_searchable_attributes",
-                  "learn/relevancy/synonyms"
+                  "capabilities/indexing/overview",
+                  "capabilities/indexing/getting_started",
+                  {
+                    "group": "How to",
+                    "pages": [
+                      "capabilities/indexing/how_to/add_and_update_documents",
+                      "capabilities/indexing/how_to/handle_multilingual_data",
+                      "capabilities/indexing/how_to/monitor_tasks",
+                      "capabilities/indexing/how_to/filter_tasks",
+                      "capabilities/indexing/how_to/manage_task_database",
+                      "capabilities/indexing/how_to/optimize_batch_performance"
+                    ]
+                  },
+                  {
+                    "group": "Advanced",
+                    "pages": [
+                      "capabilities/indexing/advanced/indexing_best_practices",
+                      "capabilities/indexing/advanced/tokenization",
+                      "capabilities/indexing/advanced/async_operations"
+                    ]
+                  }
                 ]
               }
             ]
@@ -1013,7 +1151,7 @@
     },
     {
       "source": "/learn/cookbooks/multitenancy_nodejs",
-      "destination": "/guides/security/multitenancy_nodejs"
+      "destination": "/guides/multitenancy_nodejs"
     },
     {
       "source": "/reference/api/batches",
@@ -1021,7 +1159,7 @@
     },
     {
       "source": "/reference/api/chats",
-      "destination": "/reference/api/chats/update-chat"
+      "destination": "/reference/api/chats/update-settings-of-a-chat-workspace"
     },
     {
       "source": "/reference/api/documents",
@@ -1045,7 +1183,7 @@
     },
     {
       "source": "/reference/api/indexes",
-      "destination": "/reference/api/settings/list-all-indexes"
+      "destination": "/reference/api/settings/list-all-settings"
     },
     {
       "source": "/reference/api/keys",
@@ -1057,7 +1195,7 @@
     },
     {
       "source": "/reference/api/network",
-      "destination": "/reference/api/network/get-network"
+      "destination": "/reference/api/experimental-features/get-network-topology"
     },
     {
       "source": "/reference/api/search",
@@ -1089,7 +1227,7 @@
     },
     {
       "source": "/guides/front_end/search_bar_for_docs",
-      "destination": "/guides/front_end/front_end_integration"
+      "destination": "/getting_started/instant_meilisearch/javascript"
     },
     {
       "source": "/reference/api/analyze",
@@ -1161,7 +1299,7 @@
     },
     {
       "source": "/reference/api/logs",
-      "destination": "/reference/api/experimental-features/retrieve-logs"
+      "destination": "/reference/api/logs/retrieve-logs"
     },
     {
       "source": "/reference/api/metrics",
@@ -1209,7 +1347,7 @@
     },
     {
       "source": "/reference/api/settings/list-all-indexes",
-      "destination": "/reference/api/settings/list-indexes"
+      "destination": "/reference/api/settings/list-all-settings"
     },
     {
       "source": "/reference/api/sortable_attributes",
@@ -1421,7 +1559,7 @@
     },
     {
       "source": "/learn/advanced/filtering_and_faceted_search",
-      "destination": "/learn/filtering_and_sorting/filter_search_results"
+      "destination": "/capabilities/filtering_sorting_faceting/getting_started"
     },
     {
       "source": "/reference/features/search_parameters",
@@ -1429,7 +1567,7 @@
     },
     {
       "source": "/learn/analytics/configure_analytics",
-      "destination": "/learn/analytics/configure_analytics_events"
+      "destination": "/capabilities/analytics/getting_started"
     },
     {
       "source": "/reference/features/configuration",
@@ -1437,19 +1575,19 @@
     },
     {
       "source": "/learn/configuration/typo_tolerance",
-      "destination": "/learn/relevancy/typo_tolerance_settings"
+      "destination": "/capabilities/full_text_search/relevancy/typo_tolerance_settings"
     },
     {
       "source": "/learn/configuration/synonyms",
-      "destination": "/learn/relevancy/synonyms"
+      "destination": "/capabilities/full_text_search/relevancy/synonyms"
     },
     {
       "source": "/learn/security/api_keys",
-      "destination": "/learn/security/generate_tenant_token_sdk"
+      "destination": "/capabilities/security/getting_started"
     },
     {
       "source": "/learn/advanced/hybrid_search",
-      "destination": "/learn/ai_powered_search/getting_started_with_ai_search"
+      "destination": "/capabilities/hybrid_search/getting_started"
     },
     {
       "source": "/learn/tutorials/getting_started",
@@ -1473,19 +1611,19 @@
     },
     {
       "source": "/learn/configuration/displayed_searchable_attributes",
-      "destination": "/learn/relevancy/displayed_searchable_attributes"
+      "destination": "/capabilities/full_text_search/relevancy/displayed_searchable_attributes"
     },
     {
       "source": "/learn/ai_powered_search/vector_search",
-      "destination": "/learn/ai_powered_search/getting_started_with_ai_search"
+      "destination": "/capabilities/hybrid_search/getting_started"
     },
     {
       "source": "/learn/ai_powered_search/hybrid_search",
-      "destination": "/learn/ai_powered_search/getting_started_with_ai_search"
+      "destination": "/capabilities/hybrid_search/getting_started"
     },
     {
       "source": "/learn/fine_tuning_results/typo_tolerance",
-      "destination": "/learn/relevancy/typo_tolerance_settings"
+      "destination": "/capabilities/full_text_search/relevancy/typo_tolerance_settings"
     },
     {
       "source": "/guides/deployment/azure",
@@ -1501,11 +1639,11 @@
     },
     {
       "source": "/learn/experimental/hybrid_search",
-      "destination": "/learn/ai_powered_search/getting_started_with_ai_search"
+      "destination": "/capabilities/hybrid_search/getting_started"
     },
     {
       "source": "/learn/relevancy/typo_tolerance",
-      "destination": "/learn/relevancy/typo_tolerance_settings"
+      "destination": "/capabilities/full_text_search/relevancy/typo_tolerance_settings"
     },
     {
       "source": "/learn/tutorials/getting_started/search_bar_for_docs",
@@ -1513,7 +1651,7 @@
     },
     {
       "source": "/learn/advanced/sharding",
-      "destination": "/learn/multi_search/implement_sharding"
+      "destination": "/resources/self_hosting/deployment/overview"
     },
     {
       "source": "/reference/api/stats",
@@ -1550,6 +1688,234 @@
     {
       "source": "/reference/api/chat-completions",
       "destination": "/reference/api/chats/request-a-chat-completion"
+    },
+    {
+      "source": "/learn/ai_powered_search/getting_started_with_ai_search",
+      "destination": "/capabilities/hybrid_search/getting_started"
+    },
+    {
+      "source": "/learn/ai_powered_search/configure_rest_embedder",
+      "destination": "/capabilities/hybrid_search/how_to/configure_rest_embedder"
+    },
+    {
+      "source": "/learn/ai_powered_search/document_template_best_practices",
+      "destination": "/capabilities/hybrid_search/advanced/document_template_best_practices"
+    },
+    {
+      "source": "/learn/ai_powered_search/image_search_with_multimodal_embeddings",
+      "destination": "/capabilities/hybrid_search/how_to/image_search_with_multimodal"
+    },
+    {
+      "source": "/learn/ai_powered_search/image_search_with_user_provided_embeddings",
+      "destination": "/capabilities/hybrid_search/how_to/image_search_with_user_embeddings"
+    },
+    {
+      "source": "/learn/ai_powered_search/search_with_user_provided_embeddings",
+      "destination": "/capabilities/hybrid_search/how_to/search_with_user_provided_embeddings"
+    },
+    {
+      "source": "/learn/ai_powered_search/retrieve_related_search_results",
+      "destination": "/capabilities/hybrid_search/how_to/retrieve_similar_documents"
+    },
+    {
+      "source": "/learn/ai_powered_search/choose_an_embedder",
+      "destination": "/capabilities/hybrid_search/how_to/choose_an_embedder"
+    },
+    {
+      "source": "/learn/ai_powered_search/difference_full_text_ai_search",
+      "destination": "/capabilities/hybrid_search/overview"
+    },
+    {
+      "source": "/learn/chat/getting_started_with_chat",
+      "destination": "/capabilities/conversational_search/getting_started"
+    },
+    {
+      "source": "/learn/chat/chat_tooling_reference",
+      "destination": "/capabilities/conversational_search/how_to/chat_tooling_reference"
+    },
+    {
+      "source": "/learn/chat/conversational_search",
+      "destination": "/capabilities/conversational_search/overview"
+    },
+    {
+      "source": "/learn/personalization/making_personalized_search_queries",
+      "destination": "/capabilities/personalization/getting_started"
+    },
+    {
+      "source": "/learn/personalization/search_personalization",
+      "destination": "/capabilities/personalization/overview"
+    },
+    {
+      "source": "/learn/analytics/configure_analytics_events",
+      "destination": "/capabilities/analytics/getting_started"
+    },
+    {
+      "source": "/learn/analytics/bind_events_user",
+      "destination": "/capabilities/analytics/how_to/bind_events_to_user"
+    },
+    {
+      "source": "/learn/analytics/migrate_analytics_monitoring",
+      "destination": "/capabilities/analytics/advanced/migrate_analytics"
+    },
+    {
+      "source": "/learn/analytics/events_endpoint",
+      "destination": "/capabilities/analytics/advanced/events_endpoint"
+    },
+    {
+      "source": "/learn/analytics/analytics_metrics_reference",
+      "destination": "/capabilities/analytics/advanced/analytics_metrics"
+    },
+    {
+      "source": "/learn/teams/teams",
+      "destination": "/capabilities/teams/overview"
+    },
+    {
+      "source": "/learn/async/working_with_tasks",
+      "destination": "/capabilities/indexing/how_to/monitor_tasks"
+    },
+    {
+      "source": "/learn/async/filtering_tasks",
+      "destination": "/capabilities/indexing/how_to/filter_tasks"
+    },
+    {
+      "source": "/learn/async/paginating_tasks",
+      "destination": "/capabilities/indexing/how_to/manage_task_database"
+    },
+    {
+      "source": "/learn/async/asynchronous_operations",
+      "destination": "/capabilities/indexing/advanced/async_operations"
+    },
+    {
+      "source": "/learn/configuration/configuring_index_settings",
+      "destination": "/capabilities/indexing/overview"
+    },
+    {
+      "source": "/learn/configuration/configuring_index_settings_api",
+      "destination": "/capabilities/indexing/overview"
+    },
+    {
+      "source": "/learn/filtering_and_sorting/filter_search_results",
+      "destination": "/capabilities/filtering_sorting_faceting/getting_started"
+    },
+    {
+      "source": "/learn/filtering_and_sorting/search_with_facet_filters",
+      "destination": "/capabilities/filtering_sorting_faceting/how_to/filter_with_facets"
+    },
+    {
+      "source": "/learn/filtering_and_sorting/working_with_dates",
+      "destination": "/capabilities/filtering_sorting_faceting/how_to/filter_and_sort_by_date"
+    },
+    {
+      "source": "/learn/filtering_and_sorting/sort_search_results",
+      "destination": "/capabilities/filtering_sorting_faceting/how_to/sort_results"
+    },
+    {
+      "source": "/learn/filtering_and_sorting/geosearch",
+      "destination": "/capabilities/geo_search/getting_started"
+    },
+    {
+      "source": "/learn/filtering_and_sorting/filter_expression_reference",
+      "destination": "/capabilities/filtering_sorting_faceting/advanced/filter_expression_syntax"
+    },
+    {
+      "source": "/learn/filtering_and_sorting/facet_types",
+      "destination": "/capabilities/filtering_sorting_faceting/overview"
+    },
+    {
+      "source": "/learn/filtering_and_sorting/facets_vs_filters",
+      "destination": "/capabilities/filtering_sorting_faceting/overview"
+    },
+    {
+      "source": "/learn/security/generate_tenant_token_sdk",
+      "destination": "/capabilities/security/getting_started"
+    },
+    {
+      "source": "/learn/security/generate_tenant_token_third_party",
+      "destination": "/capabilities/security/how_to/generate_token_third_party"
+    },
+    {
+      "source": "/learn/security/generate_tenant_token_scratch",
+      "destination": "/capabilities/security/how_to/generate_token_from_scratch"
+    },
+    {
+      "source": "/learn/security/tenant_token_reference",
+      "destination": "/capabilities/security/advanced/tenant_token_payload"
+    },
+    {
+      "source": "/learn/security/multitenancy_tenant_tokens",
+      "destination": "/capabilities/security/overview"
+    },
+    {
+      "source": "/learn/security/tenant_tokens",
+      "destination": "/capabilities/security/overview"
+    },
+    {
+      "source": "/learn/multi_search/performing_federated_search",
+      "destination": "/capabilities/multi_search/getting_started/federated_search"
+    },
+    {
+      "source": "/learn/multi_search/implement_sharding",
+      "destination": "/resources/self_hosting/deployment/overview"
+    },
+    {
+      "source": "/learn/multi_search/multi_search_vs_federated_search",
+      "destination": "/capabilities/multi_search/overview"
+    },
+    {
+      "source": "/learn/indexing/tokenization",
+      "destination": "/capabilities/indexing/advanced/tokenization"
+    },
+    {
+      "source": "/learn/indexing/multilingual-datasets",
+      "destination": "/capabilities/indexing/how_to/handle_multilingual_data"
+    },
+    {
+      "source": "/learn/indexing/optimize_indexing_performance",
+      "destination": "/capabilities/indexing/how_to/optimize_batch_performance"
+    },
+    {
+      "source": "/learn/relevancy/relevancy",
+      "destination": "/capabilities/full_text_search/relevancy/relevancy"
+    },
+    {
+      "source": "/learn/relevancy/ranking_rules",
+      "destination": "/capabilities/full_text_search/relevancy/ranking_rules"
+    },
+    {
+      "source": "/learn/relevancy/custom_ranking_rules",
+      "destination": "/capabilities/full_text_search/relevancy/custom_ranking_rules"
+    },
+    {
+      "source": "/learn/relevancy/ranking_score",
+      "destination": "/capabilities/full_text_search/relevancy/ranking_score"
+    },
+    {
+      "source": "/learn/relevancy/attribute_ranking_order",
+      "destination": "/capabilities/full_text_search/relevancy/attribute_ranking_order"
+    },
+    {
+      "source": "/learn/relevancy/typo_tolerance_settings",
+      "destination": "/capabilities/full_text_search/relevancy/typo_tolerance_settings"
+    },
+    {
+      "source": "/learn/relevancy/typo_tolerance_calculations",
+      "destination": "/capabilities/full_text_search/relevancy/typo_tolerance_calculations"
+    },
+    {
+      "source": "/learn/relevancy/distinct_attribute",
+      "destination": "/capabilities/full_text_search/relevancy/distinct_attribute"
+    },
+    {
+      "source": "/learn/relevancy/displayed_searchable_attributes",
+      "destination": "/capabilities/full_text_search/relevancy/displayed_searchable_attributes"
+    },
+    {
+      "source": "/learn/relevancy/synonyms",
+      "destination": "/capabilities/full_text_search/relevancy/synonyms"
+    },
+    {
+      "source": "/learn/getting_started/what_is_meilisearch",
+      "destination": "/getting_started/overview"
     }
   ]
 }

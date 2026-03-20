@@ -1,0 +1,187 @@
+---
+title: Custom hybrid ranking
+description: Tune semanticRatio and embedder weights to control how keyword and vector results are merged in hybrid search.
+---
+
+The default hybrid search uses a `semanticRatio` of `0.5`, giving equal weight to keyword and semantic results. Adjusting this parameter lets you control the balance between these two strategies to better match your users' expectations.
+
+This page covers how to tune `semanticRatio`, work with multiple embedders, and test configurations systematically.
+
+## Understanding semanticRatio
+
+The `semanticRatio` parameter accepts a floating-point value between `0.0` and `1.0`:
+
+- **`0.0`**: only keyword (full-text) results
+- **`0.5`**: equal blend of keyword and semantic results (default)
+- **`1.0`**: only semantic (vector) results
+
+Values in between shift the balance. For example, `0.7` returns more semantic results than keyword results, while `0.3` favors keyword matches.
+
+You set `semanticRatio` at search time as part of the `hybrid` parameter:
+
+```json
+{
+  "q": "comfortable running shoes",
+  "hybrid": {
+    "semanticRatio": 0.7,
+    "embedder": "my-embedder"
+  }
+}
+```
+
+This means you can use different ratios for different search contexts within the same application.
+
+## Tuning semanticRatio
+
+### Start with the default
+
+Begin with `semanticRatio: 0.5` and evaluate the results with a representative set of queries. This gives you a baseline for comparison.
+
+### Identify problem queries
+
+Collect queries where the results are not satisfactory. Classify them into two categories:
+
+- **Missing exact matches**: users search for a specific term, but semantic results push it down. This suggests the ratio is too high.
+- **Missing conceptual matches**: users describe what they want, but only exact keyword matches appear. This suggests the ratio is too low.
+
+### Adjust incrementally
+
+Change `semanticRatio` in increments of `0.1`. Test each adjustment against your problem queries and verify that it does not degrade results for queries that were already working well.
+
+### Example: ecommerce product search
+
+Consider these three queries against a kitchenware dataset:
+
+**With `semanticRatio: 0.3`** (favoring keywords):
+
+```json
+{
+  "q": "KitchenAid mixer",
+  "hybrid": { "semanticRatio": 0.3, "embedder": "products" }
+}
+```
+
+Returns the exact KitchenAid mixer product at the top. Good for brand-specific searches.
+
+**With `semanticRatio: 0.7`** (favoring semantics):
+
+```json
+{
+  "q": "something to mix cake batter",
+  "hybrid": { "semanticRatio": 0.7, "embedder": "products" }
+}
+```
+
+Returns stand mixers, hand mixers, and mixing bowls. Good for descriptive queries where users do not know the exact product name.
+
+**With `semanticRatio: 0.5`** (balanced):
+
+```json
+{
+  "q": "stand mixer for baking",
+  "hybrid": { "semanticRatio": 0.5, "embedder": "products" }
+}
+```
+
+Returns a mix of exact "stand mixer" keyword matches and semantically related baking equipment. Good as a general default.
+
+## Using multiple embedders
+
+Meilisearch supports configuring multiple embedders on the same index. Each embedder can use a different model, provider, or document template. At search time, you choose which embedder to use.
+
+This is useful when different types of queries benefit from different embedding models:
+
+```json
+{
+  "embedders": {
+    "general": {
+      "source": "openAi",
+      "model": "text-embedding-3-small",
+      "apiKey": "OPEN_AI_API_KEY",
+      "documentTemplate": "{{doc.name}}: {{doc.description}}"
+    },
+    "technical": {
+      "source": "openAi",
+      "model": "text-embedding-3-large",
+      "apiKey": "OPEN_AI_API_KEY",
+      "documentTemplate": "{{doc.name}} - specifications: {{doc.specs}}"
+    }
+  }
+}
+```
+
+At search time, select the embedder that best fits the query context:
+
+```json
+{
+  "q": "high-performance blender with 1500W motor",
+  "hybrid": {
+    "semanticRatio": 0.6,
+    "embedder": "technical"
+  }
+}
+```
+
+### When to use multiple embedders
+
+- **Different query types**: use one embedder for general product searches and another optimized for technical specification queries
+- **Different document fields**: create embedders with different `documentTemplate` values that emphasize different aspects of your documents
+- **A/B testing models**: compare the quality of results from different models or providers before committing to one
+
+## A/B testing approach
+
+To find the optimal configuration for your application, run systematic tests:
+
+### 1. Build a test query set
+
+Collect 50 to 100 representative queries from your users. Include a mix of:
+- Exact-match queries (product names, IDs)
+- Descriptive queries (natural language descriptions)
+- Mixed queries (brand names combined with descriptions)
+
+### 2. Define relevancy criteria
+
+For each test query, identify the expected top results. This creates a ground truth you can evaluate against.
+
+### 3. Test different configurations
+
+Run your query set against multiple `semanticRatio` values:
+
+```json
+// Configuration A
+{ "q": "test query", "hybrid": { "semanticRatio": 0.3, "embedder": "my-embedder" } }
+
+// Configuration B
+{ "q": "test query", "hybrid": { "semanticRatio": 0.5, "embedder": "my-embedder" } }
+
+// Configuration C
+{ "q": "test query", "hybrid": { "semanticRatio": 0.7, "embedder": "my-embedder" } }
+```
+
+### 4. Measure and compare
+
+For each configuration, count how many test queries return the expected results in the top positions. The configuration with the highest hit rate across your full query set is typically the best choice.
+
+### 5. Per-context ratios
+
+Consider using different `semanticRatio` values for different parts of your application. For example:
+
+- Search bar autocomplete: `0.2` (favor exact prefix matches)
+- Main search results page: `0.5` (balanced)
+- "Related items" section: `0.8` (favor conceptual similarity)
+
+Since `semanticRatio` is a search-time parameter, you can set it differently for each request without changing your index configuration.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Getting started with AI-powered search" href="/capabilities/hybrid_search/getting_started">
+    Set up your first embedder and perform a hybrid search
+  </Card>
+  <Card title="Search API reference" href="/reference/api/search/search-with-post">
+    Full reference for the hybrid search parameter
+  </Card>
+  <Card title="Semantic vs hybrid search" href="/capabilities/hybrid_search/advanced/semantic_vs_hybrid">
+    When to use pure semantic, hybrid, or keyword search
+  </Card>
+</CardGroup>

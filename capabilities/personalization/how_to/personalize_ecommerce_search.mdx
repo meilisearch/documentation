@@ -1,0 +1,167 @@
+---
+title: Personalize ecommerce search
+description: End-to-end example of implementing personalized search for an ecommerce store.
+---
+
+This guide walks through a complete ecommerce personalization implementation. You will set up an embedder with personalization, collect user signals, build user profiles, and send personalized search requests that return different results for different shoppers.
+
+## Requirements
+
+- A Meilisearch project with [search personalization enabled](/capabilities/personalization/getting_started)
+- An ecommerce product index with documents containing fields like `title`, `category`, `brand`, and `price`
+- A backend service to track user behavior
+
+## Step 1: Set up your product index
+
+Make sure your product index contains rich, descriptive documents. The more relevant fields your documents have, the better personalization can re-rank results:
+
+```json
+[
+  {
+    "id": 1001,
+    "title": "Samsung Galaxy Buds Pro",
+    "category": "Electronics",
+    "brand": "Samsung",
+    "price": 149.99,
+    "description": "Premium wireless earbuds with active noise cancellation."
+  },
+  {
+    "id": 1002,
+    "title": "Sony WH-1000XM5",
+    "category": "Electronics",
+    "brand": "Sony",
+    "price": 349.99,
+    "description": "Industry-leading noise canceling over-ear headphones."
+  },
+  {
+    "id": 1003,
+    "title": "JBL Go 3",
+    "category": "Electronics",
+    "brand": "JBL",
+    "price": 39.99,
+    "description": "Compact portable Bluetooth speaker with bold sound."
+  }
+]
+```
+
+## Step 2: Collect user signals
+
+Track user interactions on your ecommerce site. The most useful signals for personalization include:
+
+| Signal | Example | Weight |
+|--------|---------|--------|
+| Purchases | Bought 3 Samsung products | High |
+| Cart additions | Added Sony headphones to cart | Medium |
+| Product views | Viewed 15 electronics items this week | Medium |
+| Category browsing | Spent 10 minutes in "Audio" category | Low |
+| Search history | Searched for "wireless earbuds" 3 times | Low |
+
+Store these signals in your user database. You do not need to send raw event data to Meilisearch. Instead, you aggregate these signals into a profile string on your backend.
+
+<Tip>
+If you use Meilisearch analytics, you can track clicks and conversions with the [events API](/capabilities/analytics/how_to/track_click_events) and use that data to build richer user profiles.
+</Tip>
+
+## Step 3: Build a user profile string
+
+Transform aggregated signals into a plain-text description. Focus on positive, affirmative statements:
+
+```javascript
+function buildShopperProfile(user) {
+  const parts = [];
+
+  // Purchase patterns
+  if (user.topCategories?.length > 0) {
+    parts.push(`Frequently buys ${user.topCategories.join(' and ')}.`);
+  }
+
+  // Brand preferences
+  if (user.favoriteBrands?.length > 0) {
+    parts.push(`Prefers ${user.favoriteBrands.join(', ')}.`);
+  }
+
+  // Price sensitivity
+  if (user.avgOrderValue < 50) {
+    parts.push('Budget-conscious shopper.');
+  } else if (user.avgOrderValue < 200) {
+    parts.push('Mid-range budget.');
+  } else {
+    parts.push('Prefers premium products.');
+  }
+
+  // Recent activity
+  if (user.recentSearches?.length > 0) {
+    parts.push(
+      `Recently searched for ${user.recentSearches.slice(0, 3).join(', ')}.`
+    );
+  }
+
+  return parts.join(' ');
+}
+```
+
+Example output: `"Frequently buys electronics. Prefers Samsung, Sony. Budget-conscious shopper. Recently searched for wireless earbuds, portable speakers."`
+
+## Step 4: Send personalized search requests
+
+Pass the user profile string in the `personalize` search parameter:
+
+```bash
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/products/search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "q": "headphones",
+    "personalize": {
+      "userContext": "Frequently buys electronics. Prefers Samsung, Sony. Budget-conscious shopper. Recently searched for wireless earbuds, portable speakers."
+    }
+  }'
+```
+
+## Step 5: Compare results for different profiles
+
+The same search query returns different result rankings for different user profiles. Here is how results for "headphones" might differ:
+
+### Budget-conscious electronics buyer
+
+**Profile**: `"Frequently buys electronics. Prefers Samsung. Budget-conscious shopper."`
+
+| Rank | Product | Price |
+|------|---------|-------|
+| 1 | Samsung Galaxy Buds Pro | $149.99 |
+| 2 | JBL Go 3 | $39.99 |
+| 3 | Sony WH-1000XM5 | $349.99 |
+
+### Premium audio enthusiast
+
+**Profile**: `"Prefers premium products. Audiophile, values sound quality above all. Prefers Sony and Bose."`
+
+| Rank | Product | Price |
+|------|---------|-------|
+| 1 | Sony WH-1000XM5 | $349.99 |
+| 2 | Samsung Galaxy Buds Pro | $149.99 |
+| 3 | JBL Go 3 | $39.99 |
+
+The underlying search results are the same, but personalization re-ranks them based on relevance to each user's profile.
+
+## Tips for effective ecommerce personalization
+
+- **Update profiles regularly.** Recalculate the user context string after each session or purchase to keep it current.
+- **Use affirmative language.** Write "prefers budget options" instead of "avoids expensive products." The re-ranking model responds better to positive signals.
+- **Keep context concise.** One to three sentences is ideal. Long descriptions dilute the strongest signals.
+- **Test with real users.** Compare click-through rates and conversion rates between personalized and non-personalized search to measure impact.
+- **Start with high-confidence signals.** Purchases and cart additions are stronger indicators than page views or browse time.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Getting started with personalization" href="/capabilities/personalization/getting_started">
+    Enable personalization and perform your first personalized search
+  </Card>
+  <Card title="Track click events" href="/capabilities/analytics/how_to/track_click_events">
+    Use analytics events to collect user signals for personalization
+  </Card>
+  <Card title="Generate user context" href="/capabilities/personalization/how_to/generate_user_context">
+    Strategies for building user context from different data sources
+  </Card>
+</CardGroup>

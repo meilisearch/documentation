@@ -1,0 +1,36 @@
+---
+title: Multi-search
+description: Query multiple indexes in a single API request, with options to receive separate result lists or a single merged (federated) result set.
+---
+
+Multi-search lets you query multiple indexes in one HTTP request. This is faster and more efficient than sending separate requests for each index.
+
+## Two modes of multi-search
+
+| Mode | Description | Use case |
+|------|-------------|----------|
+| **Multi-index search** | Returns a separate result list for each queried index | Search bar with categorized sections (products, articles, users) |
+| **Federated search** | Merges results from all indexes into one ranked list | Unified search across content types |
+
+## How multi-search works
+
+Send an array of search queries to the `/multi-search` endpoint. Each query can target a different index with its own filters, sorting, and parameters.
+
+In federated mode, Meilisearch merges and re-ranks results from all indexes using configurable weights, giving you control over which index's results appear higher.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Multi-index search" href="/capabilities/multi_search/getting_started/multi_search">
+    Query multiple indexes with separate result lists
+  </Card>
+  <Card title="Federated search" href="/capabilities/multi_search/getting_started/federated_search">
+    Merge results from multiple indexes into one list
+  </Card>
+  <Card title="Boost results" href="/capabilities/multi_search/how_to/boost_results_across_indexes">
+    Use federation weights to prioritize one index over another
+  </Card>
+  <Card title="Unified search bar" href="/capabilities/multi_search/how_to/build_unified_search_bar">
+    Build a single search bar across content types
+  </Card>
+</CardGroup>

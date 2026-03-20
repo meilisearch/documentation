@@ -1,0 +1,157 @@
+---
+title: Search with different filters per index
+sidebarTitle: Search with different filters per index
+description: Apply different filters, sorting, and parameters to each index in a multi-search request.
+---
+
+Each query in a multi-search request is independent. This means you can apply different filters, sorting rules, and search parameters to each index in the same request. This is useful when your indexes have different structures or when each content type requires different filtering logic.
+
+## Requirements
+
+- A running Meilisearch project with multiple indexes
+- Filterable and sortable attributes configured on each index as needed
+- A command-line console
+
+## Configure index settings
+
+Before filtering, make sure the relevant attributes are marked as filterable on each index. For example, configure three indexes with different filterable attributes:
+
+```bash
+# Products: filter by category and price
+curl \
+  -X PATCH 'MEILISEARCH_URL/indexes/products/settings' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "filterableAttributes": ["category", "price", "in_stock"],
+    "sortableAttributes": ["price"]
+  }'
+
+# Articles: filter by published date and topic
+curl \
+  -X PATCH 'MEILISEARCH_URL/indexes/articles/settings' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "filterableAttributes": ["published_at", "topic"]
+  }'
+
+# Users: no filters needed
+```
+
+## Send a multi-search request with different filters
+
+Once your index settings are configured, send a multi-search request where each query uses its own filter and parameters:
+
+```bash
+curl \
+  -X POST 'MEILISEARCH_URL/multi-search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "queries": [
+      {
+        "indexUid": "products",
+        "q": "keyboard",
+        "filter": "category = electronics AND in_stock = true",
+        "sort": ["price:asc"],
+        "limit": 5
+      },
+      {
+        "indexUid": "articles",
+        "q": "keyboard",
+        "filter": "published_at > 1704067200",
+        "limit": 3
+      },
+      {
+        "indexUid": "users",
+        "q": "keyboard",
+        "limit": 3
+      }
+    ]
+  }'
+```
+
+In this example:
+
+- The `products` query filters by category and stock availability, sorts by price, and returns up to 5 results
+- The `articles` query filters to only show articles published after a specific date and returns up to 3 results
+- The `users` query has no filter and returns up to 3 results
+
+## Understand the response
+
+The response contains one result set for each query, in the same order:
+
+```json
+{
+  "results": [
+    {
+      "indexUid": "products",
+      "hits": [
+        { "id": 42, "name": "Mechanical Keyboard", "category": "electronics", "price": 79.99 }
+      ],
+      "query": "keyboard",
+      "limit": 5,
+      "estimatedTotalHits": 12
+    },
+    {
+      "indexUid": "articles",
+      "hits": [
+        { "id": 7, "title": "Best Keyboards of 2025", "topic": "reviews" }
+      ],
+      "query": "keyboard",
+      "limit": 3,
+      "estimatedTotalHits": 4
+    },
+    {
+      "indexUid": "users",
+      "hits": [
+        { "id": 101, "name": "KeyboardEnthusiast99" }
+      ],
+      "query": "keyboard",
+      "limit": 3,
+      "estimatedTotalHits": 1
+    }
+  ]
+}
+```
+
+## Combine with federated mode
+
+You can also use different filters per query in federated mode by adding the `federation` parameter. Each query retains its own filter, and results are merged into a single ranked list:
+
+```bash
+curl \
+  -X POST 'MEILISEARCH_URL/multi-search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "federation": {},
+    "queries": [
+      {
+        "indexUid": "products",
+        "q": "keyboard",
+        "filter": "category = electronics"
+      },
+      {
+        "indexUid": "articles",
+        "q": "keyboard",
+        "filter": "published_at > 1704067200"
+      }
+    ]
+  }'
+```
+
+## Key points
+
+- Each query's `filter`, `sort`, `limit`, `offset`, `attributesToRetrieve`, and other parameters are scoped to that query only
+- A filter on one query does not affect results from other queries
+- You must configure `filterableAttributes` and `sortableAttributes` separately on each index before using them in queries
+- Queries without filters are valid and return unfiltered results for that index
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Multi-search overview" href="/capabilities/multi_search/overview">
+    Learn about both modes of multi-search
+  </Card>
+  <Card title="Filter search results" href="/capabilities/filtering_sorting_faceting/getting_started">
+    Learn how to configure and use filters
+  </Card>
+</CardGroup>

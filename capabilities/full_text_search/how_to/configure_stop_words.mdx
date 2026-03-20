@@ -1,0 +1,75 @@
+---
+title: Configure stop words
+description: Set up stop words to ignore common terms like "the", "a", and "is" during search, improving both performance and relevance.
+---
+
+import CodeSamplesGetStopWords1 from '/snippets/generated-code-samples/code_samples_get_stop_words_1.mdx';
+import CodeSamplesUpdateStopWords1 from '/snippets/generated-code-samples/code_samples_update_stop_words_1.mdx';
+import CodeSamplesResetStopWords1 from '/snippets/generated-code-samples/code_samples_reset_stop_words_1.mdx';
+
+Stop words are common terms that appear in nearly every document and add little value to search relevancy. Words like "the", "is", "at", and "of" are typical examples. Configuring stop words tells Meilisearch to ignore these terms during indexing and searching, which improves both query speed and result quality.
+
+## Requirements
+
+- An existing Meilisearch index with documents
+
+## Why configure stop words
+
+Without stop words, a search for `the lord of the rings` treats every word equally. The words "the" and "of" match nearly every document, diluting the relevancy of the more meaningful terms "lord" and "rings". By marking "the" and "of" as stop words, Meilisearch focuses on the terms that actually matter.
+
+Stop words also improve search performance. Since these common words appear in many documents, ignoring them reduces the number of comparisons Meilisearch needs to make during each query.
+
+## Check current stop words
+
+Retrieve the current stop words for an index:
+
+<CodeSamplesGetStopWords1 />
+
+By default, the response is an empty array `[]`, meaning no stop words are configured.
+
+## Update stop words
+
+Set a list of stop words for an index. Here is an example with common English stop words:
+
+<CodeSamplesUpdateStopWords1 />
+
+<Warning>
+Updating stop words triggers a re-indexing of all documents in the index. This is an asynchronous operation. Use the [task API](/reference/api/tasks/get-all-tasks) to monitor progress.
+</Warning>
+
+### Common English stop words
+
+Here is a more comprehensive list you can use as a starting point for English-language datasets:
+
+```json
+[
+  "a", "an", "and", "are", "as", "at", "be", "but", "by",
+  "for", "if", "in", "into", "is", "it", "no", "not", "of",
+  "on", "or", "such", "that", "the", "their", "then", "there",
+  "these", "they", "this", "to", "was", "will", "with"
+]
+```
+
+Adapt this list to your dataset and language. For example, French datasets might include words like "le", "la", "les", "de", "du", "des".
+
+### Important considerations
+
+- **Stop words are index-specific.** Each index has its own stop word list. If you have multiple indexes with different languages, configure appropriate stop words for each one.
+- **Stop words are case-insensitive.** Adding `"The"` is equivalent to adding `"the"`.
+- **Stop words affect indexing.** Meilisearch removes stop words from the index, so changing this setting requires re-indexing.
+
+## Reset stop words
+
+Remove all stop words and return to the default behavior:
+
+<CodeSamplesResetStopWords1 />
+
+After resetting, Meilisearch treats all words as meaningful during indexing and searching.
+
+## Effect on phrase search
+
+Stop words are also ignored inside [phrase searches](/capabilities/full_text_search/getting_started/phrase_search). If "the" is a stop word, searching for `"the great gatsby"` effectively matches the same documents as searching for `"great gatsby"`, because "the" is removed from the query.
+
+<Info>
+For the full API reference, see [get stop words](/reference/api/settings/get-stopwords).
+</Info>

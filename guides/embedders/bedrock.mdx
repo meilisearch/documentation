@@ -127,7 +127,7 @@ In these configurations:
 - `url`: The Bedrock Runtime API endpoint. Replace `<region>` with your AWS region (e.g., `us-east-1`, `us-west-2`, `eu-west-3`). Note: Nova is currently only available in `us-east-1`.
 - `apiKey`: Replace `<Your Bedrock API Key>` with your actual Bedrock API key.
 - `dimensions`: Specifies the dimensions of the embeddings. Titan V2 supports 256, 512, or 1024. Nova supports 256, 384, 1024, or 3072. Cohere v3 outputs 1024 dimensions. Cohere v4 defaults to 1536 dimensions (also supports 256, 512, or 1024 via `output_dimension` parameter).
-- `documentTemplate`: Optionally, you can provide a [custom template](/learn/ai_powered_search/getting_started_with_ai_search) for generating embeddings from your documents.
+- `documentTemplate`: Optionally, you can provide a [custom template](/capabilities/hybrid_search/getting_started) for generating embeddings from your documents.
 - `request`: Defines the request structure for the Bedrock API. Titan V2 uses `inputText` with optional `dimensions` and `normalize` parameters. Nova uses `taskType`, `singleEmbeddingParams` with `embeddingPurpose`, `embeddingDimension`, and `text` object. Cohere v3 uses `texts` array and `input_type`.
 - `response`: Defines the expected response structure from the Bedrock API.
 

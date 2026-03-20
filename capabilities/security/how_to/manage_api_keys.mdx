@@ -1,0 +1,174 @@
+---
+title: Manage API keys
+sidebarTitle: Manage API keys
+description: Create, rotate, and scope API keys to control access to your Meilisearch instance.
+---
+
+API keys control who can access your Meilisearch instance and what actions they can perform. Each key has specific permissions and can be scoped to specific indexes.
+
+## Master key vs. API keys
+
+The master key and API keys serve different purposes:
+
+| Key type | Purpose | Usage |
+|:---------|:--------|:------|
+| Master key | Protects the instance, grants full access | Set at launch, used only to manage API keys |
+| Default admin key | Full API access | Day-to-day admin operations |
+| Default search key | Search-only access | Client-side search requests |
+| Custom API keys | Scoped permissions | Fine-grained access control |
+
+<Warning>
+Never expose the master key in client-side code or public repositories. Use it only to manage API keys through the `/keys` endpoint, then use those API keys for all other operations.
+</Warning>
+
+## List all API keys
+
+Retrieve all existing API keys. This endpoint requires the master key.
+
+```bash
+curl \
+  -X GET 'http://localhost:7700/keys' \
+  -H 'Authorization: Bearer MASTER_KEY'
+```
+
+The response includes each key's `uid`, `key`, `actions`, `indexes`, `expiresAt`, and timestamps.
+
+## Create an API key
+
+Create a new key with specific permissions. Specify which `actions` the key can perform and which `indexes` it can access.
+
+```bash
+curl \
+  -X POST 'http://localhost:7700/keys' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MASTER_KEY' \
+  --data-binary '{
+    "description": "Search-only key for products index",
+    "actions": ["search"],
+    "indexes": ["products"],
+    "expiresAt": "2026-12-31T00:00:00Z"
+  }'
+```
+
+### Available actions
+
+Actions define what operations a key can perform:
+
+| Action | Description |
+|:-------|:------------|
+| `*` | All operations (admin-level access) |
+| `search` | Search within allowed indexes |
+| `documents.add` | Add or replace documents |
+| `documents.get` | Retrieve documents |
+| `documents.delete` | Delete documents |
+| `indexes.create` | Create new indexes |
+| `indexes.get` | Retrieve index information |
+| `indexes.update` | Update index settings |
+| `indexes.delete` | Delete indexes |
+| `indexes.swap` | Swap two indexes |
+| `tasks.get` | Retrieve task information |
+| `tasks.cancel` | Cancel pending tasks |
+| `tasks.delete` | Delete finished tasks |
+| `settings.get` | Retrieve index settings |
+| `settings.update` | Update index settings |
+| `stats.get` | Retrieve instance statistics |
+| `dumps.create` | Create database dumps |
+| `snapshots.create` | Create database snapshots |
+| `version` | Retrieve version information |
+| `keys.get` | Retrieve API key information |
+| `keys.create` | Create new API keys |
+| `keys.update` | Update existing API keys |
+| `keys.delete` | Delete API keys |
+
+### Scope keys to specific indexes
+
+The `indexes` field accepts an array of index UIDs. Use `["*"]` to grant access to all indexes, or specify individual ones:
+
+```bash
+curl \
+  -X POST 'http://localhost:7700/keys' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MASTER_KEY' \
+  --data-binary '{
+    "description": "Documents admin for products and reviews",
+    "actions": ["documents.add", "documents.get", "documents.delete"],
+    "indexes": ["products", "reviews"],
+    "expiresAt": null
+  }'
+```
+
+Setting `expiresAt` to `null` creates a key that never expires.
+
+## Update an API key
+
+You can update a key's `name` and `description`. The `actions`, `indexes`, and `expiresAt` fields cannot be modified after creation. If you need different permissions, create a new key instead.
+
+```bash
+curl \
+  -X PATCH 'http://localhost:7700/keys/API_KEY_UID' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MASTER_KEY' \
+  --data-binary '{
+    "name": "Products search key",
+    "description": "Updated description for the products search key"
+  }'
+```
+
+Replace `API_KEY_UID` with the key's `uid` value (not the key itself).
+
+## Delete an API key
+
+Permanently revoke a key by deleting it. Any requests using this key will be rejected immediately.
+
+```bash
+curl \
+  -X DELETE 'http://localhost:7700/keys/API_KEY_UID' \
+  -H 'Authorization: Bearer MASTER_KEY'
+```
+
+## Key rotation
+
+Regularly rotating API keys reduces the risk of compromised credentials. To rotate a key:
+
+1. Create a new key with the same `actions` and `indexes` as the old one
+2. Update your application to use the new key
+3. Verify that the application works correctly with the new key
+4. Delete the old key
+
+Use the `expiresAt` field to enforce automatic expiration. When a key expires, all requests using it will return a `403` error.
+
+```bash
+curl \
+  -X POST 'http://localhost:7700/keys' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MASTER_KEY' \
+  --data-binary '{
+    "description": "Rotating search key - Q1 2026",
+    "actions": ["search"],
+    "indexes": ["*"],
+    "expiresAt": "2026-04-01T00:00:00Z"
+  }'
+```
+
+<Tip>
+Set `expiresAt` to a date in the near future (for example, 90 days) and schedule key rotation before expiration. This limits the window of exposure if a key is compromised.
+</Tip>
+
+## Best practices
+
+- **Use the principle of least privilege.** Give each key only the permissions it needs. A front-end search client should only have the `search` action.
+- **Scope keys to specific indexes.** Avoid using `["*"]` for indexes unless the key genuinely needs access to all of them.
+- **Set expiration dates.** Keys without expiration dates remain valid indefinitely, which increases security risk.
+- **Never expose the master key.** Only use it server-side to manage API keys. Use generated API keys for all other operations.
+- **Rotate keys regularly.** Create new keys before old ones expire and update your applications accordingly.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Security overview" href="/capabilities/security/overview">
+    Learn about tenant tokens and multi-tenancy
+  </Card>
+  <Card title="Keys API reference" href="/reference/api/keys">
+    Full API reference for the `/keys` endpoint
+  </Card>
+</CardGroup>

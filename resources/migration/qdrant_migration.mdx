@@ -9,7 +9,7 @@ This page aims to help current users of Qdrant make the transition to Meilisearc
 
 ## Overview
 
-Qdrant is a vector similarity search engine. Meilisearch combines full-text search with vector search through its [hybrid search](/learn/ai_powered_search/getting_started_with_ai_search) feature, letting you replace a separate keyword search engine and vector database with a single system.
+Qdrant is a vector similarity search engine. Meilisearch combines full-text search with vector search through its [hybrid search](/capabilities/hybrid_search/getting_started) feature, letting you replace a separate keyword search engine and vector database with a single system.
 
 This guide walks you through exporting points from a Qdrant collection and importing them into Meilisearch using a script in JavaScript, Python, or Ruby. [You can also skip directly to the finished script](#finished-script).
 
@@ -218,7 +218,7 @@ Qdrant points contain an `id`, a `payload` (key-value data), and one or more `ve
 
 Before preparing your data, decide how you want to handle vectors:
 
-- **Option A: Let Meilisearch re-embed** (recommended) — Configure an [embedder](/learn/ai_powered_search/getting_started_with_ai_search) in Meilisearch and let it generate vectors automatically from your document content. This is simpler and keeps your vectors in sync with your data.
+- **Option A: Let Meilisearch re-embed** (recommended) — Configure an [embedder](/capabilities/hybrid_search/getting_started) in Meilisearch and let it generate vectors automatically from your document content. This is simpler and keeps your vectors in sync with your data.
 - **Option B: Keep existing vectors** — Include your Qdrant vectors in the `_vectors` field of each document using a `userProvided` embedder. This avoids re-embedding costs but requires you to manage vector updates yourself.
 
 ### Transform documents
@@ -616,7 +616,7 @@ One of the biggest differences between Qdrant and Meilisearch is how they handle
 
 This means you can **remove all embedding logic from your application code**. Instead of calling an embedding API, computing vectors, and sending them to your search engine, you simply send documents and text queries to Meilisearch.
 
-Configure an [embedder](/learn/ai_powered_search/getting_started_with_ai_search) source such as OpenAI, HuggingFace, or a custom REST endpoint:
+Configure an [embedder](/capabilities/hybrid_search/getting_started) source such as OpenAI, HuggingFace, or a custom REST endpoint:
 
 ```bash
 curl -X PATCH 'MEILI_HOST/indexes/MEILI_INDEX_NAME/settings' \
@@ -636,7 +636,7 @@ curl -X PATCH 'MEILI_HOST/indexes/MEILI_INDEX_NAME/settings' \
 
 The `documentTemplate` controls what text is sent to the embedding model. Adjust it to match the fields in your documents. Meilisearch will automatically embed all existing documents and keep vectors up to date as you add, update, or delete documents.
 
-For more options including HuggingFace models, Ollama, and custom REST endpoints, see [configuring embedders](/learn/ai_powered_search/getting_started_with_ai_search).
+For more options including HuggingFace models, Ollama, and custom REST endpoints, see [configuring embedders](/capabilities/hybrid_search/getting_started).
 
 <Accordion title="Alternative: use existing vectors from Qdrant">
 If you prefer to keep your existing Qdrant vectors instead of re-embedding, you can export them (set `with_vectors: true` in the migration script) and configure a `userProvided` embedder:

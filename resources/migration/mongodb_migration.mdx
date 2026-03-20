@@ -492,7 +492,7 @@ If you used MongoDB Atlas Vector Search (`$vectorSearch`), you can replace it wi
 
 This means you can **remove all embedding logic from your application code**. Instead of calling an embedding API, computing vectors, and sending them alongside your aggregation pipeline, you simply send documents and text queries to Meilisearch.
 
-Configure an [embedder](/learn/ai_powered_search/getting_started_with_ai_search) source such as OpenAI, HuggingFace, or a custom REST endpoint:
+Configure an [embedder](/capabilities/hybrid_search/getting_started) source such as OpenAI, HuggingFace, or a custom REST endpoint:
 
 ```bash
 curl -X PATCH 'MEILI_HOST/indexes/MEILI_INDEX_NAME/settings' \
@@ -512,7 +512,7 @@ curl -X PATCH 'MEILI_HOST/indexes/MEILI_INDEX_NAME/settings' \
 
 The `documentTemplate` controls what text is sent to the embedding model. Adjust it to match the fields in your documents. Meilisearch will automatically embed all existing documents and keep vectors up to date as you add, update, or delete documents.
 
-For more options including HuggingFace models, Ollama, and custom REST endpoints, see [configuring embedders](/learn/ai_powered_search/getting_started_with_ai_search).
+For more options including HuggingFace models, Ollama, and custom REST endpoints, see [configuring embedders](/capabilities/hybrid_search/getting_started).
 
 <Accordion title="Alternative: use existing vectors with userProvided embedder">
 If you already have precomputed vectors stored alongside your MongoDB documents and want to keep them, you can include them in the `_vectors` field during migration and configure a `userProvided` embedder:

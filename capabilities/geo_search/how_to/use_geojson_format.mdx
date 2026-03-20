@@ -1,0 +1,178 @@
+---
+title: Use GeoJSON format
+description: Index complex geometries like polygons and multi-polygons using the GeoJSON standard format.
+---
+
+GeoJSON is a standardized format for encoding geographic data structures. Meilisearch supports GeoJSON through the `_geojson` field, allowing you to index complex shapes like polygons and multi-polygons in addition to simple point coordinates.
+
+Use GeoJSON when your documents represent areas (neighborhoods, properties, delivery zones) rather than single points.
+
+## The `_geojson` field
+
+To use GeoJSON, add a `_geojson` field to your documents. The value must follow the [GeoJSON specification](https://geojson.org/).
+
+### Point geometry
+
+For simple point locations, you can use either the `_geo` field or a GeoJSON `Point`:
+
+```json
+{
+  "id": 1,
+  "name": "Nàpiz' Milano",
+  "address": "Viale Vittorio Veneto, 30, 20124, Milan, Italy",
+  "_geojson": {
+    "type": "Feature",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [9.1967508, 45.4777599]
+    }
+  }
+}
+```
+
+<Warning>
+GeoJSON uses **longitude first, latitude second** (`[lng, lat]`). This is the opposite order from the `_geo` field, which uses `lat` and `lng` as named keys.
+</Warning>
+
+### Polygon geometry
+
+Use a Polygon to represent an area like a neighborhood, a property boundary, or a delivery zone:
+
+```json
+{
+  "id": 10,
+  "name": "Quartiere Brera",
+  "type": "neighborhood",
+  "_geojson": {
+    "type": "Feature",
+    "geometry": {
+      "type": "Polygon",
+      "coordinates": [[
+        [9.1850, 45.4730],
+        [9.1920, 45.4730],
+        [9.1920, 45.4780],
+        [9.1850, 45.4780],
+        [9.1850, 45.4730]
+      ]]
+    }
+  }
+}
+```
+
+In GeoJSON Polygon format, the coordinates array contains one or more linear rings. The first ring defines the outer boundary, and the last coordinate must repeat the first to close the ring.
+
+<Note>
+Meilisearch does not support polygons with holes. If your polygon includes an inner ring (a hole), Meilisearch ignores the hole and treats the polygon as a solid shape.
+</Note>
+
+### MultiPolygon geometry
+
+Use a MultiPolygon when a single document covers multiple separate areas:
+
+```json
+{
+  "id": 20,
+  "name": "Downtown delivery zone",
+  "type": "delivery_area",
+  "_geojson": {
+    "type": "Feature",
+    "geometry": {
+      "type": "MultiPolygon",
+      "coordinates": [
+        [[
+          [9.1800, 45.4600],
+          [9.1900, 45.4600],
+          [9.1900, 45.4700],
+          [9.1800, 45.4700],
+          [9.1800, 45.4600]
+        ]],
+        [[
+          [9.2000, 45.4650],
+          [9.2100, 45.4650],
+          [9.2100, 45.4750],
+          [9.2000, 45.4750],
+          [9.2000, 45.4650]
+        ]]
+      ]
+    }
+  }
+}
+```
+
+## Filtering and sorting with GeoJSON documents
+
+Filtering works the same way with GeoJSON documents as with `_geo` documents. Add `_geo` to `filterableAttributes`, then use `_geoRadius`, `_geoBoundingBox`, or `_geoPolygon` in your search queries.
+
+```bash
+curl \
+  -X PUT 'MEILISEARCH_URL/indexes/neighborhoods/settings/filterable-attributes' \
+  -H 'Content-type:application/json' \
+  --data-binary '["_geo"]'
+```
+
+Then search as usual:
+
+```bash
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/neighborhoods/search' \
+  -H 'Content-type:application/json' \
+  --data-binary '{
+    "filter": "_geoRadius(45.4700, 9.1880, 1000)"
+  }'
+```
+
+When a document has a `_geojson` Polygon or MultiPolygon, Meilisearch checks whether the filter area intersects with the document's geometry.
+
+<Warning>
+Sorting with `_geoPoint` only works with the `_geo` field. It is not possible to sort documents based on `_geojson` data.
+</Warning>
+
+## Using `_geo` and `_geojson` together
+
+If your application needs both distance-based sorting and polygon-based filtering, add both fields to your documents:
+
+```json
+{
+  "id": 10,
+  "name": "Quartiere Brera",
+  "type": "neighborhood",
+  "_geo": {
+    "lat": 45.4755,
+    "lng": 9.1885
+  },
+  "_geojson": {
+    "type": "Feature",
+    "geometry": {
+      "type": "Polygon",
+      "coordinates": [[
+        [9.1850, 45.4730],
+        [9.1920, 45.4730],
+        [9.1920, 45.4780],
+        [9.1850, 45.4780],
+        [9.1850, 45.4730]
+      ]]
+    }
+  }
+}
+```
+
+When a document contains both fields, Meilisearch:
+
+- Uses `_geo` for sorting with `_geoPoint`
+- Uses `_geojson` for filtering with `_geoPolygon`
+- Matches both `_geo` and `_geojson` values when filtering with `_geoRadius` and `_geoBoundingBox`
+
+## Limitations
+
+- **Transmeridian shapes are not supported.** If your shape crosses the 180th meridian, split it into two separate shapes grouped as a `MultiPolygon` or `MultiLine`.
+- **Polygons with holes are not supported.** Meilisearch ignores inner rings and treats polygons as solid shapes.
+- **CSV files do not support `_geojson`.** Use JSON or NDJSON format for documents with GeoJSON data.
+
+<CardGroup cols={2}>
+  <Card title="Geo search overview" icon="globe" href="/capabilities/geo_search/getting_started">
+    Learn about all geo search capabilities, including `_geo` and `_geojson`.
+  </Card>
+  <Card title="GeoJSON specification" icon="map" href="https://geojson.org/">
+    Official GeoJSON format documentation.
+  </Card>
+</CardGroup>

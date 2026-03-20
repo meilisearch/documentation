@@ -1,0 +1,88 @@
+---
+title: Placeholder search
+description: Placeholder search returns results when users submit an empty query, allowing you to display default or trending content before the user types anything.
+---
+
+Placeholder search is a search request where the query string `q` is empty or missing. Instead of returning no results, Meilisearch returns documents from the index, respecting all other search parameters such as filters, sorting, and facets.
+
+This is useful when you want to display default content on a landing page, show trending items, or let users browse results before they start typing.
+
+## How it works
+
+When Meilisearch receives a search request with an empty query, it skips the text-matching phase entirely. Documents are returned in the order determined by the active [ranking rules](/capabilities/full_text_search/relevancy/ranking_rules), with custom ranking rules and the `sort` parameter playing the most significant role.
+
+Since no query terms are involved, text-based ranking rules like `words`, `typo`, `proximity`, and `exactness` have no effect. Only `sort` and custom ranking rules influence the order of results.
+
+## Basic example
+
+Send a search request with an empty query string:
+
+```bash
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/movies/search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "q": ""
+  }'
+```
+
+Meilisearch returns documents from the `movies` index in the default order.
+
+## Placeholder search with filters and sorting
+
+Placeholder search becomes more powerful when combined with filters and sorting. For example, you can show the highest-rated movies in a specific genre:
+
+```bash
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/movies/search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "q": "",
+    "filter": "genres = Action",
+    "sort": ["rating:desc"]
+  }'
+```
+
+This returns all action movies sorted by rating, without requiring the user to type anything.
+
+## Placeholder search with facets
+
+You can also request facet distributions alongside a placeholder search to build category navigation:
+
+```bash
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/movies/search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "q": "",
+    "facets": ["genres", "release_year"]
+  }'
+```
+
+The response includes a `facetDistribution` object showing the count of documents for each facet value.
+
+## Common use cases
+
+- **Landing pages**: Show popular or recent items when a user first visits your search page
+- **Category browsing**: Combine an empty query with filters to let users explore content by category
+- **Default recommendations**: Sort by a custom ranking attribute like `popularity` to surface trending content
+- **Faceted navigation**: Display facet counts to help users narrow down results before searching
+
+## Pagination
+
+Placeholder search supports the same pagination parameters as regular search. Use `offset` and `limit` (or `page` and `hitsPerPage`) to paginate through results:
+
+```bash
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/movies/search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "q": "",
+    "limit": 20,
+    "offset": 40
+  }'
+```
+
+<Info>
+For a complete list of search parameters, see the [search API reference](/reference/api/search/search-with-post).
+</Info>
