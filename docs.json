@@ -968,36 +968,8 @@
       "destination": "/resources/self_hosting/getting_started/install_locally"
     },
     {
-      "source": "/resources/self_hosting/docker",
-      "destination": "/resources/self_hosting/getting_started/docker"
-    },
-    {
-      "source": "/resources/self_hosting/search_preview",
-      "destination": "/resources/self_hosting/getting_started/search_preview"
-    },
-    {
       "source": "/resources/self_hosting/configuration",
       "destination": "/resources/self_hosting/configuration/overview"
-    },
-    {
-      "source": "/resources/self_hosting/running_production",
-      "destination": "/resources/self_hosting/deployment/running_production"
-    },
-    {
-      "source": "/resources/self_hosting/data_backup/snapshots_vs_dumps",
-      "destination": "/resources/self_hosting/data_backup/overview"
-    },
-    {
-      "source": "/resources/self_hosting/supported_os",
-      "destination": "/resources/self_hosting/getting_started/install_locally#supported-operating-systems"
-    },
-    {
-      "source": "/getting_started/integrations/gatsby",
-      "destination": "https://github.com/meilisearch/gatsby-plugin-meilisearch"
-    },
-    {
-      "source": "/getting_started/integrations/meilisync",
-      "destination": "https://github.com/long2ice/meilisync"
     },
     {
       "source": "/learn/getting_started/cloud_quick_start",
@@ -1040,460 +1012,8 @@
       "destination": "/getting_started/good_practices"
     },
     {
-      "source": "/errors",
-      "destination": "/reference/errors/error_codes"
-    },
-    {
-      "source": "/faq",
-      "destination": "/resources/help/faq"
-    },
-    {
-      "source": "/reference",
-      "destination": "/reference/api/authorization"
-    },
-    {
-      "source": "/reference/features/authentication",
-      "destination": "/resources/self_hosting/security/basic_security"
-    },
-    {
-      "source": "/reference/features/installation#download-and-launch",
-      "destination": "/resources/self_hosting/getting_started/install_locally"
-    },
-    {
-      "source": "/reference/features/installation.html#download-and-launch",
-      "destination": "/resources/self_hosting/getting_started/install_locally"
-    },
-    {
-      "source": "/learn/advanced/asynchronous_operations",
-      "destination": "/learn/async/asynchronous_operations"
-    },
-    {
-      "source": "/learn/advanced/asynchronous_operations#filtering-tasks",
-      "destination": "/learn/async/managing_tasks#filtering-tasks"
-    },
-    {
-      "source": "/learn/advanced/asynchronous_operations#paginating-tasks",
-      "destination": "/learn/async/managing_tasks#paginating-tasks"
-    },
-    {
-      "source": "/learn/advanced/asynchronous_operations#filter-by-uid",
-      "destination": "/learn/async/managing_tasks#filter-by-uid"
-    },
-    {
-      "source": "/learn/advanced/asynchronous_operations#filter-by-status",
-      "destination": "/learn/async/managing_tasks#filter-by-status"
-    },
-    {
-      "source": "/learn/advanced/asynchronous_operations#filter-by-type",
-      "destination": "/learn/async/managing_tasks#filter-by-type"
-    },
-    {
-      "source": "/learn/advanced/asynchronous_operations#filter-by-indexuid",
-      "destination": "/learn/async/managing_tasks#filter-by-indexuid"
-    },
-    {
-      "source": "/learn/advanced/asynchronous_operations#filter-by-canceledby",
-      "destination": "/learn/async/managing_tasks#filter-by-canceledby"
-    },
-    {
-      "source": "/learn/advanced/asynchronous_operations#filter-by-date",
-      "destination": "/learn/async/managing_tasks#filter-by-date"
-    },
-    {
-      "source": "/learn/advanced/asynchronous_operations#combine-filters",
-      "destination": "/learn/async/managing_tasks#combine-filters"
-    },
-    {
-      "source": "/learn/advanced/concat",
-      "destination": "/resources/internals/concat"
-    },
-    {
-      "source": "/learn/advanced/datatypes",
-      "destination": "/resources/internals/datatypes"
-    },
-    {
-      "source": "/learn/advanced/faceted_search",
-      "destination": "/learn/fine_tuning_results/faceted_search"
-    },
-    {
-      "source": "/learn/advanced/filtering",
-      "destination": "docs/learn/filtering_and_sorting/filter_search_results"
-    },
-    {
-      "source": "/learn/advanced/geosearch",
-      "destination": "/learn/filtering_and_sorting/geosearch"
-    },
-    {
-      "source": "/learn/advanced/indexing",
-      "destination": "/learn/indexing/indexing_best_practices"
-    },
-    {
-      "source": "/learn/advanced/known_limitations",
-      "destination": "/resources/help/known_limitations"
-    },
-    {
-      "source": "/learn/advanced/pagination",
-      "destination": "/learn/front_end/pagination"
-    },
-    {
-      "source": "/learn/advanced/prefix",
-      "destination": "/resources/internals/prefix"
-    },
-    {
-      "source": "/learn/advanced/sorting",
-      "destination": "/learn/filtering_and_sorting/sort_search_results"
-    },
-    {
-      "source": "/learn/advanced/storage",
-      "destination": "/resources/internals/storage"
-    },
-    {
-      "source": "/learn/advanced/tokenization",
-      "destination": "/learn/indexing/tokenization"
-    },
-    {
-      "source": "/learn/advanced/working_with_dates",
-      "destination": "/learn/filtering_and_sorting/working_with_dates"
-    },
-    {
-      "source": "/learn/ai-powered-search/deactivate_ai_powered_search",
-      "destination": "/learn/ai_powered_search/deactivate_ai_powered_search"
-    },
-    {
-      "source": "/learn/ai-powered-search/difference_full_text_ai_search",
-      "destination": "/learn/ai_powered_search/difference_full_text_ai_search"
-    },
-    {
-      "source": "/learn/ai-powered-search/getting_started_with_ai_search",
-      "destination": "/learn/ai_powered_search/getting_started_with_ai_search"
-    },
-    {
-      "source": "/learn/ai-powered-search/search_with_user_provided_embeddings",
-      "destination": "/learn/ai_powered_search/search_with_user_provided_embeddings"
-    },
-    {
-      "source": "/learn/ai_powered_search/conversational_search_with_chat",
-      "destination": "/learn/chat/conversational_search"
-    },
-    {
-      "source": "/learn/analytics/deactivate_analytics_monitoring",
-      "destination": "/learn/analytics/migrate_analytics_monitoring"
-    },
-    {
-      "source": "/learn/async/managing_tasks",
-      "destination": "/learn/async/working_with_tasks"
-    },
-    {
-      "source": "/learn/cloud/analytics",
-      "destination": "/learn/analytics/configure_analytics"
-    },
-    {
-      "source": "/learn/cloud/teams",
-      "destination": "/learn/teams/teams"
-    },
-    {
-      "source": "/learn/configuration/instance_options",
-      "destination": "/resources/self_hosting/configuration/overview"
-    },
-    {
-      "source": "/learn/configuration/settings",
-      "destination": "/reference/api/settings"
-    },
-    {
-      "source": "/learn/contributing/contributing_docs",
-      "destination": "/resources/help/contributing_docs"
-    },
-    {
-      "source": "/learn/contributing/overview",
-      "destination": "/resources/help/contributing_docs#contributing-to-meilisearch"
-    },
-    {
-      "source": "/learn/cookbooks/aws",
-      "destination": "/guides/deployment/aws"
-    },
-    {
-      "source": "/learn/cookbooks/azure",
-      "destination": "/guides/deployment/azure"
-    },
-    {
-      "source": "/learn/cookbooks/computing_hugging_face_embeddings_gpu",
-      "destination": "/resources/self_hosting/huggingface_gpu"
-    },
-    {
-      "source": "/learn/cookbooks/docker",
-      "destination": "/guides/misc/docker"
-    },
-    {
-      "source": "/learn/cookbooks/gcp",
-      "destination": "/guides/deployment/gcp"
-    },
-    {
-      "source": "/learn/cookbooks/http2_ssl",
-      "destination": "/resources/self_hosting/security/http2_ssl"
-    },
-    {
-      "source": "/learn/cookbooks/indexing_best_practices",
-      "destination": "/guides/performance/indexing_best_practices"
-    },
-    {
-      "source": "/learn/cookbooks/koyeb",
-      "destination": "/guides/deployment/koyeb"
-    },
-    {
-      "source": "/learn/cookbooks/langchain",
-      "destination": "/guides/ai/langchain"
-    },
-    {
-      "source": "/learn/cookbooks/laravel_multitenancy",
-      "destination": "/guides/security/laravel_multitenancy"
-    },
-    {
-      "source": "/learn/cookbooks/laravel_scout",
-      "destination": "/getting_started/frameworks/laravel"
-    },
-    {
-      "source": "/learn/cookbooks/large_documents",
-      "destination": "/guides/performance/large_documents"
-    },
-    {
-      "source": "/learn/cookbooks/meilisync_mysql",
-      "destination": "/guides/database/meilisync_mysql"
-    },
-    {
-      "source": "/learn/cookbooks/meilisync_postgresql",
-      "destination": "/guides/database/meilisync_postgresql"
-    },
-    {
       "source": "/learn/cookbooks/multitenancy_nodejs",
       "destination": "/guides/security/multitenancy_nodejs"
-    },
-    {
-      "source": "/learn/cookbooks/qovery",
-      "destination": "/guides/deployment/qovery"
-    },
-    {
-      "source": "/learn/cookbooks/railway",
-      "destination": "/guides/deployment/railway"
-    },
-    {
-      "source": "/learn/cookbooks/running_production",
-      "destination": "/guides/deployment/running_production"
-    },
-    {
-      "source": "/learn/cookbooks/search_bar_for_docs",
-      "destination": "/guides/front_end/front_end_integration"
-    },
-    {
-      "source": "/learn/cookbooks/strapi_v4",
-      "destination": "/getting_started/frameworks/strapi"
-    },
-    {
-      "source": "/learn/cookbooks/vercel",
-      "destination": "/getting_started/integrations/vercel"
-    },
-    {
-      "source": "/learn/core_concepts/documents",
-      "destination": "/learn/getting_started/documents"
-    },
-    {
-      "source": "/learn/core_concepts/indexes",
-      "destination": "/learn/getting_started/indexes"
-    },
-    {
-      "source": "/learn/core_concepts/primary_key",
-      "destination": "/learn/getting_started/primary_key"
-    },
-    {
-      "source": "/learn/core_concepts/relevancy",
-      "destination": "/learn/relevancy/relevancy"
-    },
-    {
-      "source": "/learn/experimental/log_customization",
-      "destination": "/reference/api/logs"
-    },
-    {
-      "source": "/learn/experimental/max_number_of_batched_tasks",
-      "destination": "/resources/self_hosting/configuration/reference#maximum-number-of-batched-tasks"
-    },
-    {
-      "source": "/learn/experimental/metrics",
-      "destination": "/reference/api/metrics"
-    },
-    {
-      "source": "/learn/experimental/overview",
-      "destination": "/resources/help/experimental_features_overview"
-    },
-    {
-      "source": "/learn/experimental/puffin_reports",
-      "destination": "/learn/experimental/log_customization"
-    },
-    {
-      "source": "/learn/experimental/ranking_rule_score_details",
-      "destination": "/reference/api/search#ranking_score_details"
-    },
-    {
-      "source": "/learn/experimental/reduce-indexing-memory-usage",
-      "destination": "/resources/self_hosting/configuration/reference#reduce-indexing-memory-usage"
-    },
-    {
-      "source": "/learn/experimental/replication_parameter",
-      "destination": "/resources/self_hosting/configuration/reference#replication-parameters"
-    },
-    {
-      "source": "/learn/experimental/search_queue_size",
-      "destination": "/resources/self_hosting/configuration/reference#search-queue-size"
-    },
-    {
-      "source": "/learn/experimental/vector_search",
-      "destination": "/learn/ai_powered_search/getting_started_with_ai_search"
-    },
-    {
-      "source": "/learn/fine_tuning_results/faceted_search",
-      "destination": "/learn/filtering_and_sorting/search_with_facet_filters"
-    },
-    {
-      "source": "/learn/fine_tuning_results/filtering",
-      "destination": "/learn/filtering_and_sorting/filter_search_results"
-    },
-    {
-      "source": "/learn/fine_tuning_results/geosearch",
-      "destination": "/learn/filtering_and_sorting/geosearch"
-    },
-    {
-      "source": "/learn/fine_tuning_results/sorting",
-      "destination": "/learn/filtering_and_sorting/sort_search_results"
-    },
-    {
-      "source": "/learn/fine_tuning_results/working_with_dates",
-      "destination": "/learn/filtering_and_sorting/working_with_dates"
-    },
-    {
-      "source": "/learn/front_end/front_end_integration",
-      "destination": "/guides/front_end/front_end_integration"
-    },
-    {
-      "source": "/learn/front_end/pagination",
-      "destination": "/guides/front_end/pagination"
-    },
-    {
-      "source": "/learn/front_end/react_instantsearch",
-      "destination": "/getting_started/instant_meilisearch/react"
-    },
-    {
-      "source": "/learn/getting_started/a",
-      "destination": "/learn/getting_started/cloud_quick_start"
-    },
-    {
-      "source": "/learn/getting_started/customizing_relevancy",
-      "destination": "/learn/configuration/settings"
-    },
-    {
-      "source": "/learn/getting_started/filtering_and_sorting",
-      "destination": "/learn/fine_tuning_results/filtering"
-    },
-    {
-      "source": "/learn/getting_started/getting_ready_for_production",
-      "destination": "/learn/getting_started/cloud_quick_start"
-    },
-    {
-      "source": "/learn/getting_started/installation",
-      "destination": "/resources/self_hosting/getting_started/install_locally"
-    },
-    {
-      "source": "/learn/getting_started/quick_start#front-end-integration",
-      "destination": "/learn/front_end/front_end_integration"
-    },
-    {
-      "source": "/learn/getting_started/quick_start",
-      "destination": "/resources/self_hosting/getting_started/quick_start"
-    },
-    {
-      "source": "/learn/getting_started/supported_os",
-      "destination": "/resources/self_hosting/getting_started/install_locally#supported-operating-systems"
-    },
-    {
-      "source": "/learn/index_settings/displayed_searchable_attributes",
-      "destination": "/learn/relevancy/displayed_searchable_attributes"
-    },
-    {
-      "source": "/learn/index_settings/distinct",
-      "destination": "/learn/relevancy/distinct_attribute"
-    },
-    {
-      "source": "/learn/index_settings/synonyms",
-      "destination": "/learn/relevancy/synonyms"
-    },
-    {
-      "source": "/learn/index_settings/typo_tolerance",
-      "destination": "/learn/relevancy/typo_tolerance_settings"
-    },
-    {
-      "source": "/learn/security/managing_api_keys",
-      "destination": "/reference/api/keys"
-    },
-    {
-      "source": "/learn/security/master_api_keys",
-      "destination": "/resources/self_hosting/security/basic_security"
-    },
-    {
-      "source": "/learn/security/tenant_tokens",
-      "destination": "/learn/security/generate_tenant_token_sdk"
-    },
-    {
-      "source": "/learn/update_and_migration/versioning",
-      "destination": "/resources/help/versioning"
-    },
-    {
-      "source": "/learn/what_is_meilisearch/comparison_to_alternatives",
-      "destination": "/resources/comparisons/alternatives"
-    },
-    {
-      "source": "/learn/what_is_meilisearch/contact",
-      "destination": "https://www.meilisearch.com/#homepage-community"
-    },
-    {
-      "source": "/learn/what_is_meilisearch/contact.html",
-      "destination": "https://www.meilisearch.com/#homepage-community"
-    },
-    {
-      "source": "/learn/what_is_meilisearch/features",
-      "destination": "/getting_started/features"
-    },
-    {
-      "source": "/learn/what_is_meilisearch/language",
-      "destination": "/resources/help/language"
-    },
-    {
-      "source": "/learn/what_is_meilisearch/overview#sdks-and-integrations",
-      "destination": "/learn/resources/sdks"
-    },
-    {
-      "source": "/learn/what_is_meilisearch/overview#alternatives",
-      "destination": "/learn/resources/comparison_to_alternatives"
-    },
-    {
-      "source": "/learn/what_is_meilisearch/overview",
-      "destination": "/getting_started/overview"
-    },
-    {
-      "source": "/learn/what_is_meilisearch/philosophy",
-      "destination": "/getting_started/overview"
-    },
-    {
-      "source": "/learn/what_is_meilisearch/sdks",
-      "destination": "/resources/help/sdks"
-    },
-    {
-      "source": "/learn/what_is_meilisearch/sdks.html",
-      "destination": "/resources/help/sdks"
-    },
-    {
-      "source": "/learn/what_is_meilisearch/search_preview",
-      "destination": "/learn/getting_started/search_preview"
-    },
-    {
-      "source": "/learn/what_is_meilisearch/telemetry",
-      "destination": "/resources/help/telemetry"
     },
     {
       "source": "/reference/api/batches",
@@ -1504,60 +1024,8 @@
       "destination": "/reference/api/chats/update-chat"
     },
     {
-      "source": "/reference/api/chats#prompts",
-      "destination": "/reference/api/chats/update-chat"
-    },
-    {
-      "source": "/reference/api/documents#get-documents",
-      "destination": "/reference/api/documents/list-documents-with-get"
-    },
-    {
-      "source": "/reference/api/documents#add-or-replace-documents",
-      "destination": "/reference/api/documents/add-or-replace-documents"
-    },
-    {
-      "source": "/reference/api/documents#add-or-update-documents",
-      "destination": "/reference/api/documents/add-or-update-documents"
-    },
-    {
-      "source": "/reference/api/documents#get-documents-with-post",
-      "destination": "/reference/api/documents/list-documents-with-post"
-    },
-    {
-      "source": "/reference/api/documents#delete-all-documents",
-      "destination": "/reference/api/documents/delete-all-documents"
-    },
-    {
-      "source": "/reference/api/documents#delete-documents-by-filter",
-      "destination": "/reference/api/documents/delete-documents-by-filter"
-    },
-    {
-      "source": "/reference/api/documents#delete-documents-by-batch",
-      "destination": "/reference/api/documents/delete-documents-by-batch"
-    },
-    {
-      "source": "/reference/api/documents#edit-documents-by-function",
-      "destination": "/reference/api/documents/edit-documents-by-function"
-    },
-    {
-      "source": "/reference/api/documents#get-document",
-      "destination": "/reference/api/documents/get-document"
-    },
-    {
-      "source": "/reference/api/documents#delete-document",
-      "destination": "/reference/api/documents/delete-document"
-    },
-    {
       "source": "/reference/api/documents",
       "destination": "/reference/api/documents/list-documents-with-get"
-    },
-    {
-      "source": "/reference/api/documents#update-documents-with-function",
-      "destination": "/reference/api/documents/edit-documents-by-function"
-    },
-    {
-      "source": "/reference/api/documents/clear-all-documents",
-      "destination": "/reference/api/documents/delete-all-documents"
     },
     {
       "source": "/reference/api/dump",
@@ -1572,18 +1040,6 @@
       "destination": "/reference/api/facet-search/search-in-facets"
     },
     {
-      "source": "/reference/api/facet_search#body",
-      "destination": "/reference/api/facet-search/search-in-facets"
-    },
-    {
-      "source": "/reference/api/headers#content-type",
-      "destination": "/reference/api/headers"
-    },
-    {
-      "source": "/reference/api/headers#search-metadata",
-      "destination": "/reference/api/headers"
-    },
-    {
       "source": "/reference/api/health",
       "destination": "/reference/api/health/get-health"
     },
@@ -1596,36 +1052,12 @@
       "destination": "/reference/api/keys/list-api-keys"
     },
     {
-      "source": "/reference/api/keys#get-one-key",
-      "destination": "/reference/api/keys/get-api-key"
-    },
-    {
-      "source": "/reference/api/keys#actions",
-      "destination": "/reference/api/keys/create-api-key#body-actions"
-    },
-    {
-      "source": "/reference/api/keys#create-a-key",
-      "destination": "/reference/api/keys/create-api-key"
-    },
-    {
-      "source": "/reference/api/keys#delete-a-key",
-      "destination": "/reference/api/keys/delete-api-key"
-    },
-    {
       "source": "/reference/api/multi_search",
       "destination": "/reference/api/multi-search/perform-a-multi-search"
     },
     {
       "source": "/reference/api/network",
       "destination": "/reference/api/network/get-network"
-    },
-    {
-      "source": "/reference/api/search#search-in-an-index-with-post-route",
-      "destination": "/reference/api/search/search-with-post"
-    },
-    {
-      "source": "/reference/api/search#search-in-an-index-with-get-route",
-      "destination": "/reference/api/search/search-with-get"
     },
     {
       "source": "/reference/api/search",
@@ -1636,134 +1068,6 @@
       "destination": "/reference/api/settings/list-all-settings"
     },
     {
-      "source": "/reference/api/settings#update-searchable-attributes",
-      "destination": "/reference/api/settings/update-searchableattributes"
-    },
-    {
-      "source": "/reference/api/settings#filterable-attributes",
-      "destination": "/reference/api/settings/get-filterableattributes"
-    },
-    {
-      "source": "/reference/api/settings#stop-words",
-      "destination": "/reference/api/settings/get-stopwords"
-    },
-    {
-      "source": "/reference/api/settings#update-typo-tolerance-settings",
-      "destination": "/reference/api/settings/update-typotolerance"
-    },
-    {
-      "source": "/reference/api/settings#reset-searchable-attributes",
-      "destination": "/reference/api/settings/delete-searchableattributes"
-    },
-    {
-      "source": "/reference/api/settings#composite-embedders",
-      "destination": "/reference/api/settings/get-embedders"
-    },
-    {
-      "source": "/reference/api/settings#searchable-attributes",
-      "destination": "/reference/api/settings/get-searchableattributes"
-    },
-    {
-      "source": "/reference/api/settings#displayed-attributes",
-      "destination": "/reference/api/settings/get-displayedattributes"
-    },
-    {
-      "source": "/reference/api/settings#sortable-attributes",
-      "destination": "/reference/api/settings/get-sortableattributes"
-    },
-    {
-      "source": "/reference/api/settings#update-displayed-attributes",
-      "destination": "/reference/api/settings/update-displayedattributes"
-    },
-    {
-      "source": "/reference/api/settings#update-filterable-attributes",
-      "destination": "/reference/api/settings/update-filterableattributes"
-    },
-    {
-      "source": "/reference/api/settings#update-sortable-attributes",
-      "destination": "/reference/api/settings/update-sortableattributes"
-    },
-    {
-      "source": "/reference/api/settings#update-ranking-rules",
-      "destination": "/reference/api/settings/update-rankingrules"
-    },
-    {
-      "source": "/reference/api/settings#synonyms",
-      "destination": "/reference/api/settings/get-synonyms"
-    },
-    {
-      "source": "/reference/api/settings#update-synonyms",
-      "destination": "/reference/api/settings/update-synonyms"
-    },
-    {
-      "source": "/reference/api/settings#dictionary",
-      "destination": "/reference/api/settings/get-dictionary"
-    },
-    {
-      "source": "/reference/api/settings#faceting",
-      "destination": "/reference/api/settings/get-faceting"
-    },
-    {
-      "source": "/reference/api/settings#update-faceting-settings",
-      "destination": "/reference/api/settings/update-facetsearch"
-    },
-    {
-      "source": "/reference/api/settings#pagination",
-      "destination": "/reference/api/settings/update-pagination"
-    },
-    {
-      "source": "/reference/api/settings#pagination-object",
-      "destination": "/reference/api/settings/update-pagination"
-    },
-    {
-      "source": "/reference/api/settings#typo-tolerance",
-      "destination": "/reference/api/settings/get-typotolerance"
-    },
-    {
-      "source": "/reference/api/settings#typo-tolerance-object",
-      "destination": "/reference/api/settings/get-typotolerance"
-    },
-    {
-      "source": "/reference/api/settings#update-settings",
-      "destination": "/reference/api/settings/update-all-settings"
-    },
-    {
-      "source": "/reference/api/settings#update-typo-tolerance",
-      "destination": "/reference/api/settings/update-typotolerance"
-    },
-    {
-      "source": "/reference/api/settings#distinct-attribute",
-      "destination": "/reference/api/settings/get-distinctattribute"
-    },
-    {
-      "source": "/reference/api/settings#update-distinct-attribute",
-      "destination": "/reference/api/settings/update-distinctattribute"
-    },
-    {
-      "source": "/reference/api/settings#facet-search",
-      "destination": "/reference/api/settings/get-facetsearch"
-    },
-    {
-      "source": "/reference/api/settings#prefix-search",
-      "destination": "/reference/api/settings/get-prefix-search"
-    },
-    {
-      "source": "/reference/api/settings#localized-attributes",
-      "destination": "/reference/api/settings/get-localized-attributes"
-    },
-    {
-      "source": "/reference/api/settings#separator-tokens",
-      "destination": "/reference/api/settings/get-separatortokens"
-    },
-    {
-      "source": "/reference/api/settings#body",
-      "destination": "/reference/api/settings/update-all-settings"
-    },
-    {
-      "source": "/reference/api/settings/update-all",
-      "destination": "/reference/api/settings/update-all-settings"
-    },
-    {
       "source": "/reference/api/similar",
       "destination": "/reference/api/similar-documents/get-similar-documents-with-post"
     },
@@ -1772,132 +1076,20 @@
       "destination": "/reference/api/backups/create-snapshot"
     },
     {
-      "source": "/reference/api/snapshots/create-snapshot",
-      "destination": "/reference/api/backups/create-snapshot"
-    },
-    {
-      "source": "/reference/api/tasks#delete-task",
-      "destination": "/reference/api/async-task-management/delete-tasks"
-    },
-    {
       "source": "/reference/api/tasks",
       "destination": "/reference/api/async-task-management/list-tasks"
-    },
-    {
-      "source": "/reference/api/tasks#get-one-task",
-      "destination": "/reference/api/async-task-management/get-task"
-    },
-    {
-      "source": "/reference/api/tasks#delete-tasks",
-      "destination": "/reference/api/async-task-management/delete-tasks"
-    },
-    {
-      "source": "/reference/api/tasks#response",
-      "destination": "/reference/api/async-task-management/list-tasks"
-    },
-    {
-      "source": "/reference/api/tasks#cancel-tasks",
-      "destination": "/reference/api/async-task-management/cancel-tasks"
-    },
-    {
-      "source": "/reference/api/tasks#query-parameters",
-      "destination": "/reference/api/async-task-management/list-tasks"
-    },
-    {
-      "source": "/reference/api/tasks#status",
-      "destination": "/reference/api/async-task-management/get-task"
-    },
-    {
-      "source": "/reference/api/tasks#type",
-      "destination": "/reference/api/async-task-management/get-task"
-    },
-    {
-      "source": "/reference/api/tasks#canceledby",
-      "destination": "/reference/api/async-task-management/list-tasks"
-    },
-    {
-      "source": "/reference/api/tasks#uid",
-      "destination": "/reference/api/async-task-management/get-task"
-    },
-    {
-      "source": "/reference/api/tasks.html#delete-task",
-      "destination": "/reference/api/async-task-management/delete-tasks"
     },
     {
       "source": "/reference/api/version",
       "destination": "/reference/api/version/get-version"
     },
     {
-      "source": "/reference/api/webhook",
-      "destination": "/reference/api/webhooks/get-webhook"
-    },
-    {
       "source": "/reference/api/webhooks",
       "destination": "/reference/api/webhooks/list-webhooks"
     },
     {
-      "source": "/guides/ai/cloudflare",
-      "destination": "/guides/embedders/cloudflare"
-    },
-    {
-      "source": "/guides/ai/cohere",
-      "destination": "/guides/embedders/cohere"
-    },
-    {
-      "source": "/guides/ai/getting_started_with_chat",
-      "destination": "/learn/chat/getting_started_with_chat"
-    },
-    {
-      "source": "/guides/ai/huggingface",
-      "destination": "/guides/embedders/huggingface"
-    },
-    {
-      "source": "/guides/ai/langchain",
-      "destination": "/guides/langchain"
-    },
-    {
-      "source": "/guides/ai/mistral",
-      "destination": "/guides/embedders/mistral"
-    },
-    {
-      "source": "/guides/ai/openai",
-      "destination": "/guides/embedders/openai"
-    },
-    {
-      "source": "/guides/ai/voyage",
-      "destination": "/guides/embedders/voyage"
-    },
-    {
-      "source": "/guides/back_end/laravel_scout",
-      "destination": "/getting_started/frameworks/laravel"
-    },
-    {
-      "source": "/guides/database/meilisync_mysql",
-      "destination": "https://github.com/long2ice/meilisync"
-    },
-    {
-      "source": "/guides/database/meilisync_postgresql",
-      "destination": "https://github.com/long2ice/meilisync"
-    },
-    {
-      "source": "/guides/deployment/gcp",
-      "destination": "/guides/running_production"
-    },
-    {
-      "source": "/guides/front_end/react_instantsearch",
-      "destination": "/getting_started/instant_meilisearch/react"
-    },
-    {
       "source": "/guides/front_end/search_bar_for_docs",
       "destination": "/guides/front_end/front_end_integration"
-    },
-    {
-      "source": "/guides/integrations/vercel",
-      "destination": "/getting_started/integrations/vercel"
-    },
-    {
-      "source": "/guides/performance/indexing_best_practices",
-      "destination": "/learn/indexing/indexing_best_practices"
     },
     {
       "source": "/reference/api/analyze",
@@ -1946,10 +1138,6 @@
     {
       "source": "/reference/api/errors",
       "destination": "/reference/errors/overview"
-    },
-    {
-      "source": "/reference/api/experimental",
-      "destination": "/reference/api/experimental-features/list-experimental-features"
     },
     {
       "source": "/reference/api/fields",
@@ -2156,18 +1344,6 @@
       "destination": "/resources/internals/storage"
     },
     {
-      "source": "/resources/self_hosting/http2_ssl",
-      "destination": "/resources/self_hosting/security/http2_ssl"
-    },
-    {
-      "source": "/resources/self_hosting/ram_multithreading_performance",
-      "destination": "/resources/self_hosting/performance/ram_multithreading"
-    },
-    {
-      "source": "/resources/help/comparison_to_alternatives",
-      "destination": "/resources/comparisons/alternatives"
-    },
-    {
       "source": "/guides/running_production",
       "destination": "/resources/self_hosting/deployment/running_production"
     },
@@ -2178,6 +1354,202 @@
     {
       "source": "/guides/front_end/front_end_integration",
       "destination": "/getting_started/instant_meilisearch/javascript"
+    },
+    {
+      "source": "/guides/laravel_scout",
+      "destination": "/getting_started/frameworks/laravel"
+    },
+    {
+      "source": "/guides/front_end/react_quick_start",
+      "destination": "/getting_started/instant_meilisearch/react"
+    },
+    {
+      "source": "/guides/front_end/vue_quick_start",
+      "destination": "/getting_started/instant_meilisearch/vue"
+    },
+    {
+      "source": "/guides/strapi_v4",
+      "destination": "/getting_started/frameworks/strapi"
+    },
+    {
+      "source": "/guides/postman_collection",
+      "destination": "/getting_started/integrations/postman"
+    },
+    {
+      "source": "/learn/indexing/rename_an_index",
+      "destination": "/resources/internals/indexes"
+    },
+    {
+      "source": "/guides/ruby_on_rails_quick_start",
+      "destination": "/getting_started/frameworks/rails"
+    },
+    {
+      "source": "/guides/deployment/running_production",
+      "destination": "/resources/self_hosting/deployment/running_production"
+    },
+    {
+      "source": "/guides/vercel",
+      "destination": "/getting_started/integrations/vercel"
+    },
+    {
+      "source": "/learn/update_and_migration/previous_docs_version",
+      "destination": "/resources/migration/previous_docs_version"
+    },
+    {
+      "source": "/guides/security/laravel_multitenancy",
+      "destination": "/guides/laravel_multitenancy"
+    },
+    {
+      "source": "/guides/misc/docker",
+      "destination": "/resources/self_hosting/getting_started/docker"
+    },
+    {
+      "source": "/guides/deployment/aws",
+      "destination": "/resources/self_hosting/deployment/aws"
+    },
+    {
+      "source": "/learn/security/master_keys",
+      "destination": "/resources/self_hosting/security/master_api_keys"
+    },
+    {
+      "source": "/learn/advanced/dumps",
+      "destination": "/resources/self_hosting/data_backup/dumps"
+    },
+    {
+      "source": "/guides/advanced_guides/installation",
+      "destination": "/resources/self_hosting/getting_started/install_locally"
+    },
+    {
+      "source": "/learn/advanced/filtering_and_faceted_search",
+      "destination": "/learn/filtering_and_sorting/filter_search_results"
+    },
+    {
+      "source": "/reference/features/search_parameters",
+      "destination": "/reference/api/search/search-with-post"
+    },
+    {
+      "source": "/learn/analytics/configure_analytics",
+      "destination": "/learn/analytics/configure_analytics_events"
+    },
+    {
+      "source": "/reference/features/configuration",
+      "destination": "/resources/self_hosting/configuration/overview"
+    },
+    {
+      "source": "/learn/configuration/typo_tolerance",
+      "destination": "/learn/relevancy/typo_tolerance_settings"
+    },
+    {
+      "source": "/learn/configuration/synonyms",
+      "destination": "/learn/relevancy/synonyms"
+    },
+    {
+      "source": "/learn/security/api_keys",
+      "destination": "/learn/security/generate_tenant_token_sdk"
+    },
+    {
+      "source": "/learn/advanced/hybrid_search",
+      "destination": "/learn/ai_powered_search/getting_started_with_ai_search"
+    },
+    {
+      "source": "/learn/tutorials/getting_started",
+      "destination": "/getting_started/first_project"
+    },
+    {
+      "source": "/learn/what_is_meilisearch",
+      "destination": "/getting_started/overview"
+    },
+    {
+      "source": "/learn/self_hosted/docker",
+      "destination": "/resources/self_hosting/getting_started/docker"
+    },
+    {
+      "source": "/reference/features/authentication.html",
+      "destination": "/resources/self_hosting/security/basic_security"
+    },
+    {
+      "source": "/learn/cookbooks/digitalocean",
+      "destination": "/resources/self_hosting/deployment/digitalocean"
+    },
+    {
+      "source": "/learn/configuration/displayed_searchable_attributes",
+      "destination": "/learn/relevancy/displayed_searchable_attributes"
+    },
+    {
+      "source": "/learn/ai_powered_search/vector_search",
+      "destination": "/learn/ai_powered_search/getting_started_with_ai_search"
+    },
+    {
+      "source": "/learn/ai_powered_search/hybrid_search",
+      "destination": "/learn/ai_powered_search/getting_started_with_ai_search"
+    },
+    {
+      "source": "/learn/fine_tuning_results/typo_tolerance",
+      "destination": "/learn/relevancy/typo_tolerance_settings"
+    },
+    {
+      "source": "/guides/deployment/azure",
+      "destination": "/resources/self_hosting/deployment/azure"
+    },
+    {
+      "source": "/learn/cloud/meilisearch_cloud",
+      "destination": "/getting_started/overview"
+    },
+    {
+      "source": "/learn/advanced/performance",
+      "destination": "/resources/self_hosting/performance/ram_multithreading"
+    },
+    {
+      "source": "/learn/experimental/hybrid_search",
+      "destination": "/learn/ai_powered_search/getting_started_with_ai_search"
+    },
+    {
+      "source": "/learn/relevancy/typo_tolerance",
+      "destination": "/learn/relevancy/typo_tolerance_settings"
+    },
+    {
+      "source": "/learn/tutorials/getting_started/search_bar_for_docs",
+      "destination": "/guides/front_end/pagination"
+    },
+    {
+      "source": "/learn/advanced/sharding",
+      "destination": "/learn/multi_search/implement_sharding"
+    },
+    {
+      "source": "/reference/api/stats",
+      "destination": "/reference/api/stats/get-stats-of-all-indexes"
+    },
+    {
+      "source": "/reference/api/indexes/list-indexes",
+      "destination": "/reference/api/indexes/list-all-indexes"
+    },
+    {
+      "source": "/reference/api/search/perform-a-multi-search",
+      "destination": "/reference/api/multi-search/perform-a-multi-search"
+    },
+    {
+      "source": "/reference/api/export",
+      "destination": "/reference/api/export/export-to-a-remote-meilisearch"
+    },
+    {
+      "source": "/reference/api/stats/get-stats-of-index",
+      "destination": "/reference/api/stats/get-stats-of-all-indexes"
+    },
+    {
+      "source": "/reference/api/settings/list-indexes",
+      "destination": "/reference/api/settings/list-all-settings"
+    },
+    {
+      "source": "/reference/api/experimental-features/retrieve-logs",
+      "destination": "/reference/api/logs/retrieve-logs"
+    },
+    {
+      "source": "/reference/api/settings/get-localized-attributes",
+      "destination": "/reference/api/settings/get-localizedattributes"
+    },
+    {
+      "source": "/reference/api/chat-completions",
+      "destination": "/reference/api/chats/request-a-chat-completion"
     }
   ]
 }
