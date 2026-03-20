@@ -1,0 +1,67 @@
+---
+title: Configure prefix search
+description: Enable or disable prefix matching to control whether Meilisearch matches partial words as the user types.
+---
+
+import CodeSamplesGetPrefixSearchSettings1 from '/snippets/generated-code-samples/code_samples_get_prefix_search_settings_1.mdx';
+import CodeSamplesUpdatePrefixSearchSettings1 from '/snippets/generated-code-samples/code_samples_update_prefix_search_settings_1.mdx';
+import CodeSamplesResetPrefixSearchSettings1 from '/snippets/generated-code-samples/code_samples_reset_prefix_search_settings_1.mdx';
+
+Prefix search allows Meilisearch to match documents based on the beginning of the last word in a query. For example, typing `adv` matches "adventure", "adventure", and "advanced". This is the feature that powers the "search as you type" experience.
+
+The `prefixSearch` index setting controls how Meilisearch handles prefix matching.
+
+## Requirements
+
+- An existing Meilisearch index with documents
+
+## Available modes
+
+| Mode | Description |
+|------|-------------|
+| `indexingTime` | **Default.** Prefix data structures are built during indexing. This enables fast prefix search at query time but increases index size and indexing duration. |
+| `disabled` | Prefix search is turned off. Only exact word matches are returned. This reduces index size and speeds up indexing, but users must type complete words to find results. |
+
+## Check current prefix search setting
+
+Retrieve the current `prefixSearch` setting for an index:
+
+<CodeSamplesGetPrefixSearchSettings1 />
+
+By default, the response is `"indexingTime"`.
+
+## Disable prefix search
+
+If your use case does not require search-as-you-type (for example, users submit complete queries via a search button), disabling prefix search can reduce index size and improve indexing performance:
+
+<CodeSamplesUpdatePrefixSearchSettings1 />
+
+<Warning>
+Updating the prefix search setting triggers a re-indexing of all documents in the index. This is an asynchronous operation. Use the [task API](/reference/api/tasks/get-all-tasks) to monitor progress.
+</Warning>
+
+## Reset prefix search
+
+Restore the default `indexingTime` behavior:
+
+<CodeSamplesResetPrefixSearchSettings1 />
+
+## When to disable prefix search
+
+- **Form-based search**: Users type a full query and press a search button rather than seeing results as they type
+- **Large datasets with performance constraints**: Disabling prefix search reduces index size and speeds up both indexing and queries
+- **Exact matching requirements**: When partial word matches would return too many irrelevant results
+
+## When to keep prefix search enabled
+
+- **Search-as-you-type interfaces**: Users expect results to update instantly as they type each character
+- **Autocomplete experiences**: Prefix matching is essential for suggesting completions
+- **Discovery-oriented search**: Partial matches help users explore content they might not find with exact queries
+
+<Note>
+Prefix search only applies to the **last word** in a multi-word query. Earlier words in the query must match completely (or within typo tolerance). For example, searching for `harry pot` matches "Harry Potter" because "harry" matches exactly and "pot" is a prefix match for "Potter".
+</Note>
+
+<Info>
+For the full API reference, see [get prefix search](/reference/api/settings/get-prefixsearch).
+</Info>

@@ -1,0 +1,72 @@
+---
+title: Configure SSO for teams
+description: Enable Single Sign-On for your team to streamline authentication through your identity provider.
+---
+
+Single Sign-On (SSO) allows all team members to authenticate through your organization's identity provider (IdP) instead of using individual email and password credentials. This is an enterprise feature available on Meilisearch Cloud enterprise plans.
+
+## Requirements
+
+- A Meilisearch Cloud enterprise plan
+- An identity provider (IdP) such as Okta, Auth0, Azure AD, or Google Workspace
+- Administrative access to your IdP
+
+## How SSO works for teams
+
+Once SSO is enabled for your team, all authentication goes through your IdP. Team members no longer use email and password to log in. Instead, they are redirected to your IdP's login page and authenticated there.
+
+New members added through your IdP are automatically provisioned in your Meilisearch Cloud team. When you remove a member from your IdP, they lose access to Meilisearch Cloud as well.
+
+## Request SSO activation
+
+SSO configuration requires assistance from the Meilisearch team:
+
+1. Contact Meilisearch support through the Cloud dashboard or by emailing [support@meilisearch.com](mailto:support@meilisearch.com)
+2. Provide your team name and the IdP you plan to use
+3. The Meilisearch team will provide the necessary configuration details (such as the SSO callback URL and entity ID)
+
+## Configure your identity provider
+
+After receiving the configuration details from Meilisearch:
+
+1. Log in to your IdP's admin console
+2. Create a new SAML or OIDC application (depending on your IdP)
+3. Enter the callback URL and entity ID provided by Meilisearch
+4. Configure the required attribute mappings:
+   - **Email** (required): the user's email address
+   - **Name** (optional): the user's display name
+5. Assign the application to the users or groups that should have access
+
+Send the IdP metadata URL (or metadata XML file) back to Meilisearch support to complete the setup.
+
+## Test the SSO flow
+
+Before rolling out SSO to your entire team:
+
+1. Assign the Meilisearch application in your IdP to a test user
+2. Have the test user log in to Meilisearch Cloud using the SSO option
+3. Verify they appear in your team members list
+4. Confirm they have the correct access level
+
+## Manage team membership through your IdP
+
+Once SSO is active, you can manage team access directly from your IdP:
+
+- **Add members**: assign the Meilisearch application to new users or groups in your IdP. They are provisioned automatically on their first login.
+- **Remove members**: unassign the application from users in your IdP. They will no longer be able to authenticate.
+- **Group-based access**: use IdP groups to manage access at scale. All members of an assigned group gain access to your Meilisearch Cloud team.
+
+<Note>
+Role assignment (Owner vs. Member) is still managed within the Meilisearch Cloud dashboard. Your IdP controls who can authenticate, but the Meilisearch dashboard controls their permissions.
+</Note>
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Configure SSO" href="/capabilities/security/how_to/configure_sso">
+    General SSO configuration guide for Meilisearch Cloud
+  </Card>
+  <Card title="Teams overview" href="/capabilities/teams/overview">
+    Learn more about teams and team roles
+  </Card>
+</CardGroup>

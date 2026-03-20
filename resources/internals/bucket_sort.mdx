@@ -8,7 +8,7 @@ Meilisearch uses **bucket sort** to rank search results. This algorithm distribu
 
 ## How bucket sort works in Meilisearch
 
-When you search, Meilisearch doesn't score documents with a single number. Instead, it applies [ranking rules](/learn/relevancy/ranking_rules) sequentially, sorting documents into buckets at each step.
+When you search, Meilisearch doesn't score documents with a single number. Instead, it applies [ranking rules](/capabilities/full_text_search/relevancy/ranking_rules) sequentially, sorting documents into buckets at each step.
 
 ### Example: Searching for "Badman dark knight returns"
 
@@ -85,6 +85,6 @@ Adding `release_date:desc` as a custom rule means newer movies rank higher when 
 
 ## Related concepts
 
-- [Ranking rules](/learn/relevancy/ranking_rules): Configure ranking behavior
-- [Ranking score](/learn/relevancy/ranking_score): Understanding search relevance scores
-- [Custom ranking rules](/learn/relevancy/custom_ranking_rules): Add business logic to ranking
+- [Ranking rules](/capabilities/full_text_search/relevancy/ranking_rules): Configure ranking behavior
+- [Ranking score](/capabilities/full_text_search/relevancy/ranking_score): Understanding search relevance scores
+- [Custom ranking rules](/capabilities/full_text_search/relevancy/custom_ranking_rules): Add business logic to ranking

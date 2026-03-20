@@ -1,0 +1,216 @@
+---
+title: Stream chat responses
+description: Implement streaming for real-time conversational search, delivering AI responses token by token as they are generated.
+---
+
+import CodeSamplesChatCompletions1 from '/snippets/generated-code-samples/code_samples_chat_completions_1.mdx';
+
+Streaming delivers chat responses incrementally, giving users immediate feedback instead of waiting for the full response to generate. Meilisearch uses Server-Sent Events (SSE) to stream responses from the chat completions endpoint.
+
+## Prerequisites
+
+Before implementing streaming, make sure you have:
+
+- A [configured chat workspace](/capabilities/conversational_search/how_to/configure_chat_workspace)
+- A valid Meilisearch API key with chat permissions
+
+## Send a streaming request
+
+Send a `POST` request to the chat completions endpoint. The response is streamed by default:
+
+<CodeSamplesChatCompletions1 />
+
+The `-N` flag in `curl` disables output buffering, so you see each chunk as it arrives.
+
+## Understand the SSE response format
+
+Meilisearch streams responses as Server-Sent Events. Each event is a line prefixed with `data: ` followed by a JSON object. The stream ends with a `data: [DONE]` message.
+
+### Content chunks
+
+Regular content chunks contain the AI-generated text. Each chunk includes a small piece of the response in `choices[0].delta.content`:
+
+```
+data: {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1677652288,"model":"gpt-4o","choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null}]}
+
+data: {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1677652288,"model":"gpt-4o","choices":[{"index":0,"delta":{"content":"Meilisearch"},"finish_reason":null}]}
+
+data: {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1677652288,"model":"gpt-4o","choices":[{"index":0,"delta":{"content":" is"},"finish_reason":null}]}
+
+data: {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1677652288,"model":"gpt-4o","choices":[{"index":0,"delta":{"content":" a"},"finish_reason":null}]}
+```
+
+### Tool call chunks
+
+When you include Meilisearch tools in your request, the stream also contains tool call chunks. These appear in `choices[0].delta.tool_calls` and carry search progress and source information:
+
+```
+data: {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1677652288,"model":"gpt-4o","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"id":"call_abc123","type":"function","function":{"name":"_meiliSearchProgress","arguments":""}}]},"finish_reason":null}]}
+
+data: {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1677652288,"model":"gpt-4o","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"{\"call_id\":\"abc\",\"function_name\":\"_meiliSearchInIndex\",\"function_parameters\":\"{\\\"index_uid\\\":\\\"movies\\\",\\\"q\\\":\\\"search engine\\\"}\"}"}}]},"finish_reason":null}]}
+```
+
+### End of stream
+
+The stream ends with a `finish_reason` of `"stop"` followed by the `[DONE]` marker:
+
+```
+data: {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1677652288,"model":"gpt-4o","choices":[{"index":0,"delta":{},"finish_reason":"stop"}]}
+
+data: [DONE]
+```
+
+## Handle streaming in JavaScript
+
+Use the Fetch API to process the SSE stream in a browser or Node.js application:
+
+```javascript
+async function streamChat(query) {
+  const response = await fetch(
+    'MEILISEARCH_URL/chats/WORKSPACE_NAME/chat/completions',
+    {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer MEILISEARCH_API_KEY',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'gpt-4o',
+        messages: [{ role: 'user', content: query }],
+        tools: [
+          {
+            type: 'function',
+            function: {
+              name: '_meiliSearchProgress',
+              description: 'Reports real-time search progress',
+            },
+          },
+          {
+            type: 'function',
+            function: {
+              name: '_meiliSearchSources',
+              description: 'Provides source documents',
+            },
+          },
+        ],
+      }),
+    }
+  );
+
+  const reader = response.body.getReader();
+  const decoder = new TextDecoder();
+  let buffer = '';
+
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+
+    buffer += decoder.decode(value, { stream: true });
+    const lines = buffer.split('\n');
+    buffer = lines.pop(); // Keep incomplete line in buffer
+
+    for (const line of lines) {
+      if (!line.startsWith('data: ')) continue;
+
+      const data = line.slice(6);
+      if (data === '[DONE]') return;
+
+      const chunk = JSON.parse(data);
+      const delta = chunk.choices[0]?.delta;
+
+      if (delta?.content) {
+        // Append text content to your UI
+        process.stdout.write(delta.content);
+      }
+
+      if (delta?.tool_calls) {
+        // Handle tool calls (search progress, sources)
+        for (const toolCall of delta.tool_calls) {
+          handleToolCall(toolCall);
+        }
+      }
+    }
+  }
+}
+```
+
+## Use the OpenAI SDK
+
+Since Meilisearch's chat endpoint is OpenAI-compatible, you can use the official OpenAI SDK for a simpler streaming implementation:
+
+```javascript
+import OpenAI from 'openai';
+
+const client = new OpenAI({
+  baseURL: 'MEILISEARCH_URL/chats/WORKSPACE_NAME',
+  apiKey: 'MEILISEARCH_API_KEY',
+});
+
+const stream = await client.chat.completions.create({
+  model: 'gpt-4o',
+  stream: true,
+  messages: [{ role: 'user', content: 'What is Meilisearch?' }],
+  tools: [
+    {
+      type: 'function',
+      function: {
+        name: '_meiliSearchProgress',
+        description: 'Reports real-time search progress',
+      },
+    },
+    {
+      type: 'function',
+      function: {
+        name: '_meiliSearchSources',
+        description: 'Provides source documents',
+      },
+    },
+  ],
+});
+
+for await (const chunk of stream) {
+  const content = chunk.choices[0]?.delta?.content;
+  if (content) {
+    process.stdout.write(content);
+  }
+}
+```
+
+## Maintain conversation context
+
+The chat completions endpoint is stateless. To maintain conversation history across multiple exchanges, append each response to the `messages` array in subsequent requests:
+
+```javascript
+const messages = [];
+
+async function sendMessage(userMessage) {
+  messages.push({ role: 'user', content: userMessage });
+
+  let assistantMessage = '';
+
+  // Stream the response (using the OpenAI SDK approach above)
+  const stream = await client.chat.completions.create({
+    model: 'gpt-4o',
+    stream: true,
+    messages: messages,
+  });
+
+  for await (const chunk of stream) {
+    const content = chunk.choices[0]?.delta?.content;
+    if (content) {
+      assistantMessage += content;
+    }
+  }
+
+  // Append the assistant's full response to the conversation
+  messages.push({ role: 'assistant', content: assistantMessage });
+}
+```
+
+When using Meilisearch tools, also handle `_meiliAppendConversationMessage` tool calls by appending the provided messages to your conversation history. See the [chat tooling reference](/capabilities/conversational_search/how_to/chat_tooling_reference#_meiliappendconversationmessage) for details.
+
+## Next steps
+
+- [Display source documents](/capabilities/conversational_search/how_to/display_source_documents) to show users where answers come from
+- [Configure guardrails](/capabilities/conversational_search/how_to/configure_guardrails) to control response quality
+- Consult the [chat completions API reference](/reference/api/chats/request-a-chat-completion) for all available request parameters

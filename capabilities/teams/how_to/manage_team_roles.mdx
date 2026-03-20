@@ -1,0 +1,69 @@
+---
+title: Manage team roles
+description: Assign and change team member roles to control permissions within your Meilisearch Cloud projects.
+---
+
+Team roles determine what each member can do within your Meilisearch Cloud projects. This guide covers the available roles, their permissions, and how to change a member's role.
+
+## Available roles
+
+### Owner
+
+The team owner has full administrative control:
+
+- Create, configure, and delete projects
+- Access and modify billing information and plans
+- Invite and remove team members
+- Change team member roles
+- Rename the team
+- Transfer team ownership
+
+A team may only have one owner at a time.
+
+### Member
+
+Team members have operational access:
+
+- View all projects in the team
+- Perform search queries
+- View project settings and API keys
+- Access project metrics and logs
+
+Members cannot modify billing information, delete projects, or manage team membership.
+
+## Change a member's role
+
+1. Log in to the [Meilisearch Cloud dashboard](https://cloud.meilisearch.com)
+2. Navigate to **Team settings**
+3. Find the member whose role you want to change
+4. Click the role dropdown next to their name
+5. Select the new role
+
+Only the team owner can change member roles.
+
+## Transfer team ownership
+
+To transfer ownership to another team member:
+
+1. Navigate to **Team settings**
+2. Find the member you want to promote to owner
+3. Click the role dropdown and select **Owner**
+
+This action transfers your owner privileges to the selected member. You become a regular member of the team. This action cannot be undone without the new owner's cooperation.
+
+## Role inheritance for projects
+
+Roles apply at the team level and affect all projects within that team. There is no per-project role assignment. If you need different access levels for different projects, consider creating separate teams for each project or group of projects.
+
+Since there are no costs associated with creating teams, you can freely organize your projects across multiple teams to match your access control needs.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Teams overview" href="/capabilities/teams/overview">
+    Learn more about teams, multiple teams, and team structure
+  </Card>
+  <Card title="Configure SSO" href="/capabilities/teams/how_to/configure_sso_for_team">
+    Enable Single Sign-On for your team
+  </Card>
+</CardGroup>

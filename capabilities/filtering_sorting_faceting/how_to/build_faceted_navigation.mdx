@@ -1,0 +1,243 @@
+---
+title: Build faceted navigation
+sidebarTitle: Build faceted navigation
+description: Build an ecommerce-style faceted sidebar that shows available options with document counts.
+---
+
+import CodeSamplesFacetedSearchUpdateSettings1 from '/snippets/generated-code-samples/code_samples_faceted_search_update_settings_1.mdx';
+import CodeSamplesFacetedSearch1 from '/snippets/generated-code-samples/code_samples_faceted_search_1.mdx';
+
+Faceted navigation displays filter options alongside the number of matching documents, letting users progressively refine their search. This is the pattern behind product sidebars on ecommerce sites, where users can click "Electronics (42)" or "Books (18)" to narrow results.
+
+This guide walks through the full pattern: configuring filterable attributes, requesting facet distributions, and building an interactive UI.
+
+## Requirements
+
+- A running Meilisearch project
+- A command-line console
+
+## Step 1: configure filterable attributes
+
+Only attributes listed in `filterableAttributes` can be used as facets. Suppose you have a `books` index with documents like this:
+
+```json
+{
+  "id": 5,
+  "title": "Hard Times",
+  "genres": ["Classics", "Fiction"],
+  "publisher": "Penguin Classics",
+  "language": "English",
+  "author": "Charles Dickens",
+  "rating": 3
+}
+```
+
+Add the attributes you want as facets to `filterableAttributes`:
+
+<CodeSamplesFacetedSearchUpdateSettings1 />
+
+Wait for the settings task to complete before searching.
+
+## Step 2: request facet distributions
+
+Use the `facets` search parameter to tell Meilisearch which attributes should include distribution counts in the response:
+
+<CodeSamplesFacetedSearch1 />
+
+The response includes a `facetDistribution` object showing every value for each requested facet and how many documents match:
+
+```json
+{
+  "hits": [
+    { "id": 5, "title": "Hard Times", "genres": ["Classics", "Fiction"], "rating": 3 }
+  ],
+  "query": "classic",
+  "facetDistribution": {
+    "genres": {
+      "Classics": 12,
+      "Fiction": 8,
+      "Literature": 6,
+      "Victorian": 4,
+      "Romance": 3
+    },
+    "language": {
+      "English": 15,
+      "French": 3,
+      "Spanish": 1
+    },
+    "rating": {
+      "3": 5,
+      "4": 8,
+      "5": 6
+    }
+  },
+  "facetStats": {
+    "rating": {
+      "min": 1,
+      "max": 5
+    }
+  },
+  "processingTimeMs": 1,
+  "estimatedTotalHits": 19
+}
+```
+
+The `facetDistribution` tells you exactly which values exist and how many documents match each one. The `facetStats` object provides minimum and maximum values for numeric facets, useful for building range sliders.
+
+## Step 3: apply a filter when the user clicks a facet
+
+When a user clicks a facet value, send a new search request with a `filter` parameter:
+
+```bash
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/books/search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "q": "classic",
+    "filter": "genres = Classics",
+    "facets": ["genres", "language", "rating"]
+  }'
+```
+
+The response updates both the `hits` and the `facetDistribution` to reflect the active filter. This means the facet counts adjust dynamically, showing users how many results remain for each option.
+
+## Step 4: combine multiple facet filters
+
+Users often select multiple facet values. Combine them using `AND` and `OR` operators:
+
+```bash
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/books/search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "q": "classic",
+    "filter": "genres = Classics AND language = English AND rating >= 4",
+    "facets": ["genres", "language", "rating"]
+  }'
+```
+
+Use `AND` to require all conditions (narrow results) and `OR` to match any condition (broaden results within a facet group):
+
+```bash
+"filter": "(genres = Classics OR genres = Fiction) AND language = English"
+```
+
+## Frontend implementation pattern
+
+Here is a JavaScript pattern for building an interactive faceted sidebar:
+
+```html
+<div id="app">
+  <input type="text" id="search-input" placeholder="Search books..." />
+  <div style="display: flex;">
+    <div id="facets-sidebar" style="width: 250px;"></div>
+    <div id="results" style="flex: 1;"></div>
+  </div>
+</div>
+
+<script>
+  const MEILI_URL = 'MEILISEARCH_URL';
+  const MEILI_KEY = 'your_search_api_key';
+  const FACET_ATTRIBUTES = ['genres', 'language', 'rating'];
+
+  let activeFilters = {};
+
+  async function search() {
+    const query = document.getElementById('search-input').value;
+
+    // Build filter string from active selections
+    const filterParts = Object.entries(activeFilters)
+      .filter(([_, values]) => values.length > 0)
+      .map(([attr, values]) => {
+        const conditions = values.map(v => `${attr} = "${v}"`).join(' OR ');
+        return `(${conditions})`;
+      });
+    const filter = filterParts.join(' AND ');
+
+    const response = await fetch(`${MEILI_URL}/indexes/books/search`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${MEILI_KEY}`
+      },
+      body: JSON.stringify({
+        q: query,
+        filter: filter || undefined,
+        facets: FACET_ATTRIBUTES
+      })
+    });
+
+    const data = await response.json();
+    renderFacets(data.facetDistribution);
+    renderResults(data.hits);
+  }
+
+  function renderFacets(distribution) {
+    const sidebar = document.getElementById('facets-sidebar');
+    sidebar.innerHTML = Object.entries(distribution)
+      .map(([attribute, values]) => {
+        const items = Object.entries(values)
+          .sort((a, b) => b[1] - a[1])
+          .map(([value, count]) => {
+            const selected = (activeFilters[attribute] || []).includes(value);
+            return `<label style="display: block;">
+              <input type="checkbox" ${selected ? 'checked' : ''}
+                onchange="toggleFacet('${attribute}', '${value}')" />
+              ${value} (${count})
+            </label>`;
+          })
+          .join('');
+        return `<div><h4>${attribute}</h4>${items}</div>`;
+      })
+      .join('');
+  }
+
+  function renderResults(hits) {
+    document.getElementById('results').innerHTML = hits
+      .map(hit => `<div><strong>${hit.title}</strong> by ${hit.author}</div>`)
+      .join('');
+  }
+
+  function toggleFacet(attribute, value) {
+    if (!activeFilters[attribute]) activeFilters[attribute] = [];
+    const index = activeFilters[attribute].indexOf(value);
+    if (index === -1) {
+      activeFilters[attribute].push(value);
+    } else {
+      activeFilters[attribute].splice(index, 1);
+    }
+    search();
+  }
+
+  document.getElementById('search-input').addEventListener('input', search);
+  search(); // initial load
+</script>
+```
+
+This pattern:
+
+1. Tracks active filter selections in an `activeFilters` object
+2. Builds a filter string from active selections on each search
+3. Renders facet values as checkboxes with document counts
+4. Updates both facets and results when the user toggles a checkbox
+
+## Key points
+
+- Always include the `facets` parameter in every search request so the sidebar stays updated
+- Facet counts reflect the current filter state, so users see accurate numbers
+- Use `OR` within the same attribute (for example, multiple genres) and `AND` across attributes (for example, genre AND language)
+- Numeric facets include `facetStats` with `min` and `max` values, useful for range sliders
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Search with facets" href="/capabilities/filtering_sorting_faceting/how_to/filter_with_facets">
+    Learn more about facets and facet search
+  </Card>
+  <Card title="Search API reference" href="/reference/api/search/search-with-post">
+    Full documentation for the search endpoint parameters
+  </Card>
+  <Card title="Combine filters and sort" href="/capabilities/filtering_sorting_faceting/how_to/combine_filters_and_sort">
+    Add sorting to your filtered search results
+  </Card>
+</CardGroup>

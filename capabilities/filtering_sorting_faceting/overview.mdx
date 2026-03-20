@@ -1,0 +1,52 @@
+---
+title: Filtering, sorting, and faceting
+description: Narrow, order, and categorize search results using filters, sorting rules, and faceted navigation.
+---
+
+Filtering, sorting, and faceting are three complementary tools for refining search results:
+
+- **Filtering** narrows results to documents matching specific criteria (e.g., `genre = "action"`)
+- **Sorting** orders results by a field value (e.g., price ascending)
+- **Faceting** returns aggregated counts for field values, powering category navigation in your UI
+
+## Filters vs facets
+
+Filters and facets both use `filterableAttributes`, but serve different purposes:
+
+| Feature | Purpose | Example |
+|---------|---------|---------|
+| Filters | Remove non-matching documents from results | Show only in-stock items |
+| Facets | Show available options with counts | "Color: Red (12), Blue (8)" |
+| Sorting | Order results by a field | Cheapest first |
+
+Facets are filters that also return distribution data. Use them together to build interactive, ecommerce-style navigation.
+
+## How it works
+
+Before you can filter, sort, or facet on an attribute, you must declare it in your index settings. Add attributes to `filterableAttributes` to enable filtering and faceting, or to `sortableAttributes` to enable sorting. Meilisearch then builds optimized internal data structures for those attributes, allowing operations to execute quickly even on large datasets.
+
+At search time, pass filter expressions in the `filter` parameter, sorting instructions in the `sort` parameter, and request facet distributions using the `facets` parameter. You can combine all three in a single search request.
+
+## Common use cases
+
+- **E-commerce faceted navigation**: Let shoppers narrow products by brand, color, size, and price range while displaying counts for each option.
+- **Date-range filtering**: Restrict results to a specific time window, such as articles published in the last 30 days or events happening this week.
+- **Price or rating sorting**: Allow users to sort results by price (ascending or descending) or by average customer rating.
+- **Location-based filtering**: Combine geo filters with category filters to show nearby restaurants, stores, or listings matching specific criteria.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Getting started" href="/capabilities/filtering_sorting_faceting/getting_started">
+    Set up filterable attributes and run your first filtered search
+  </Card>
+  <Card title="Faceted navigation" href="/capabilities/filtering_sorting_faceting/how_to/filter_with_facets">
+    Build category navigation with facet counts
+  </Card>
+  <Card title="Sorting" href="/capabilities/filtering_sorting_faceting/how_to/sort_results">
+    Order results by price, date, or any sortable field
+  </Card>
+  <Card title="Filter syntax" href="/capabilities/filtering_sorting_faceting/advanced/filter_expression_syntax">
+    Reference for filter expressions and operators
+  </Card>
+</CardGroup>

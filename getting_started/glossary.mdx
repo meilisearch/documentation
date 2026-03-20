@@ -34,43 +34,43 @@ A secret key set at launch that protects your Meilisearch instance. The master k
 
 ### Tenant token
 
-A short-lived token generated from an API key that enforces search rules for multi-tenant applications. Tenant tokens allow you to restrict search results per user without creating separate indexes. [Learn more about tenant tokens](/learn/security/multitenancy_tenant_tokens).
+A short-lived token generated from an API key that enforces search rules for multi-tenant applications. Tenant tokens allow you to restrict search results per user without creating separate indexes. [Learn more about tenant tokens](/capabilities/security/overview).
 
 ### Task
 
-An asynchronous operation returned by Meilisearch when processing write requests (adding documents, updating settings, etc.). Tasks have statuses like `enqueued`, `processing`, `succeeded`, or `failed`. [Learn more about tasks](/learn/async/working_with_tasks).
+An asynchronous operation returned by Meilisearch when processing write requests (adding documents, updating settings, etc.). Tasks have statuses like `enqueued`, `processing`, `succeeded`, or `failed`. [Learn more about tasks](/capabilities/indexing/how_to/monitor_tasks).
 
 ### Batch
 
-A group of tasks that Meilisearch processes together in a single operation. Meilisearch automatically groups compatible enqueued tasks into batches to improve indexing throughput. For example, multiple document addition tasks targeting the same index may be merged into one batch. [Learn more about batches](/learn/async/asynchronous_operations#task-batches).
+A group of tasks that Meilisearch processes together in a single operation. Meilisearch automatically groups compatible enqueued tasks into batches to improve indexing throughput. For example, multiple document addition tasks targeting the same index may be merged into one batch. [Learn more about batches](/capabilities/indexing/advanced/async_operations#task-batches).
 
 ### Ranking rules
 
-An ordered list of criteria Meilisearch uses to sort search results by relevance. Default ranking rules include `words`, `typo`, `proximity`, `attribute`, `sort`, and `exactness`. [Learn more about ranking rules](/learn/relevancy/ranking_rules).
+An ordered list of criteria Meilisearch uses to sort search results by relevance. Default ranking rules include `words`, `typo`, `proximity`, `attribute`, `sort`, and `exactness`. [Learn more about ranking rules](/capabilities/full_text_search/relevancy/ranking_rules).
 
 ### Filterable attributes
 
-Document fields configured to support filtering. Only fields explicitly listed as filterable can be used in `filter` search parameters. [Learn more about filtering](/learn/filtering_and_sorting/filter_search_results).
+Document fields configured to support filtering. Only fields explicitly listed as filterable can be used in `filter` search parameters. [Learn more about filtering](/capabilities/filtering_sorting_faceting/getting_started).
 
 ### Sortable attributes
 
-Document fields configured to support custom sorting. Only fields explicitly listed as sortable can be used in `sort` search parameters. [Learn more about sorting](/learn/filtering_and_sorting/sort_search_results).
+Document fields configured to support custom sorting. Only fields explicitly listed as sortable can be used in `sort` search parameters. [Learn more about sorting](/capabilities/filtering_sorting_faceting/how_to/sort_results).
 
 ### Searchable attributes
 
-Document fields that Meilisearch scans when performing a search query. By default, all fields are searchable. Restricting searchable attributes improves relevancy and performance. [Learn more about searchable attributes](/learn/relevancy/displayed_searchable_attributes).
+Document fields that Meilisearch scans when performing a search query. By default, all fields are searchable. Restricting searchable attributes improves relevancy and performance. [Learn more about searchable attributes](/capabilities/full_text_search/relevancy/displayed_searchable_attributes).
 
 ### Displayed attributes
 
-Document fields returned in search results. By default, all fields are displayed. Restricting displayed attributes lets you hide internal fields from search responses. [Learn more about displayed attributes](/learn/relevancy/displayed_searchable_attributes).
+Document fields returned in search results. By default, all fields are displayed. Restricting displayed attributes lets you hide internal fields from search responses. [Learn more about displayed attributes](/capabilities/full_text_search/relevancy/displayed_searchable_attributes).
 
 ### Distinct attribute
 
-A field used to deduplicate search results. When set, Meilisearch returns only one document per unique value of the distinct attribute. [Learn more about distinct attribute](/learn/relevancy/distinct_attribute).
+A field used to deduplicate search results. When set, Meilisearch returns only one document per unique value of the distinct attribute. [Learn more about distinct attribute](/capabilities/full_text_search/relevancy/distinct_attribute).
 
 ### Synonyms
 
-Words or phrases configured to be treated as equivalent during search. For example, you can define `"phone"` and `"mobile"` as synonyms so a search for either term returns results containing both. [Learn more about synonyms](/learn/relevancy/synonyms).
+Words or phrases configured to be treated as equivalent during search. For example, you can define `"phone"` and `"mobile"` as synonyms so a search for either term returns results containing both. [Learn more about synonyms](/capabilities/full_text_search/relevancy/synonyms).
 
 ### Stop words
 
@@ -78,7 +78,7 @@ Common words (such as "the", "a", "is") excluded from search queries to improve 
 
 ### Typo tolerance
 
-Meilisearch's built-in ability to return relevant results even when the search query contains typos. You can configure the number of allowed typos and disable typo tolerance for specific attributes or words. [Learn more about typo tolerance](/learn/relevancy/typo_tolerance_settings).
+Meilisearch's built-in ability to return relevant results even when the search query contains typos. You can configure the number of allowed typos and disable typo tolerance for specific attributes or words. [Learn more about typo tolerance](/capabilities/full_text_search/relevancy/typo_tolerance_settings).
 
 ### Pagination
 
@@ -86,45 +86,45 @@ The mechanism for retrieving search results in smaller chunks. Meilisearch suppo
 
 ### Facets
 
-Categorized counts of document attribute values returned alongside search results. Facets enable UI elements like filtering sidebars showing how many results exist for each category. [Learn more about facets](/learn/filtering_and_sorting/search_with_facet_filters).
+Categorized counts of document attribute values returned alongside search results. Facets enable UI elements like filtering sidebars showing how many results exist for each category. [Learn more about facets](/capabilities/filtering_sorting_faceting/how_to/filter_with_facets).
 
 ### Geo search
 
-The ability to filter and sort search results based on geographic coordinates (`_geo` field). Geo search supports filtering by radius (`_geoRadius`) or bounding box (`_geoBoundingBox`), and sorting by distance using `_geoPoint`. [Learn more about geo search](/learn/filtering_and_sorting/geosearch).
+The ability to filter and sort search results based on geographic coordinates (`_geo` field). Geo search supports filtering by radius (`_geoRadius`) or bounding box (`_geoBoundingBox`), and sorting by distance using `_geoPoint`. [Learn more about geo search](/capabilities/geo_search/getting_started).
 
 ### Multi-search
 
-A single API request that performs multiple search queries across one or more indexes. Multi-search reduces network overhead and latency compared to sending individual search requests. [Learn more about multi-search](/learn/multi_search/multi_search_vs_federated_search).
+A single API request that performs multiple search queries across one or more indexes. Multi-search reduces network overhead and latency compared to sending individual search requests. [Learn more about multi-search](/capabilities/multi_search/overview).
 
 ### Federated search
 
-A type of multi-search where results from multiple indexes are merged and ranked together into a single list, rather than returned as separate result sets. [Learn more about federated search](/learn/multi_search/performing_federated_search).
+A type of multi-search where results from multiple indexes are merged and ranked together into a single list, rather than returned as separate result sets. [Learn more about federated search](/capabilities/multi_search/getting_started/federated_search).
 
 ### Dump
 
-A serialized export of your entire Meilisearch instance (documents, settings, API keys, and tasks). Dumps are portable across Meilisearch versions and can be used for migrations. [Learn more about dumps](/learn/data_backup/dumps).
+A serialized export of your entire Meilisearch instance (documents, settings, API keys, and tasks). Dumps are portable across Meilisearch versions and can be used for migrations. [Learn more about dumps](/resources/self_hosting/data_backup/dumps).
 
 ### Snapshot
 
-A binary copy of your Meilisearch database at a specific point in time. Snapshots are faster to create and restore than dumps but are not portable across versions. [Learn more about snapshots](/learn/data_backup/snapshots).
+A binary copy of your Meilisearch database at a specific point in time. Snapshots are faster to create and restore than dumps but are not portable across versions. [Learn more about snapshots](/resources/self_hosting/data_backup/snapshots).
 
 ### Embedder
 
-A model or service that generates vector representations (embeddings) of documents and queries for AI-powered search. Meilisearch supports built-in embedders (OpenAI, HuggingFace, Ollama) and custom REST embedders. [Learn more about embedders](/learn/ai_powered_search/choose_an_embedder).
+A model or service that generates vector representations (embeddings) of documents and queries for AI-powered search. Meilisearch supports built-in embedders (OpenAI, HuggingFace, Ollama) and custom REST embedders. [Learn more about embedders](/capabilities/hybrid_search/how_to/choose_an_embedder).
 
 ### Auto-embeddings
 
-Meilisearch's ability to automatically generate vector embeddings from your documents without any external pipeline. When you configure an embedder, Meilisearch generates embeddings at indexing time and at query time, so you never need to manage vectors yourself. [Learn more about AI-powered search](/learn/ai_powered_search/getting_started_with_ai_search).
+Meilisearch's ability to automatically generate vector embeddings from your documents without any external pipeline. When you configure an embedder, Meilisearch generates embeddings at indexing time and at query time, so you never need to manage vectors yourself. [Learn more about AI-powered search](/capabilities/hybrid_search/getting_started).
 
 ### Document template
 
-A template that controls how document fields are combined into a single text string before being sent to an embedder for auto-embedding. Templates let you choose which fields matter for semantic search and how they are formatted. For example, a template like `"{{ doc.title }}: {{ doc.description }}"` tells Meilisearch to embed the title and description together. [Learn more about document templates](/learn/ai_powered_search/document_template_best_practices).
+A template that controls how document fields are combined into a single text string before being sent to an embedder for auto-embedding. Templates let you choose which fields matter for semantic search and how they are formatted. For example, a template like `"{{ doc.title }}: {{ doc.description }}"` tells Meilisearch to embed the title and description together. [Learn more about document templates](/capabilities/hybrid_search/advanced/document_template_best_practices).
 
 ## Search and information retrieval
 
 ### Full-text search
 
-A search technique that scans the entire content of indexed document fields to find matches for a query. Meilisearch's full-text search supports typo tolerance, prefix matching, and ranking by relevance. [Learn more about relevancy](/learn/relevancy/relevancy).
+A search technique that scans the entire content of indexed document fields to find matches for a query. Meilisearch's full-text search supports typo tolerance, prefix matching, and ranking by relevance. [Learn more about relevancy](/capabilities/full_text_search/relevancy/relevancy).
 
 ### Keyword search
 
@@ -132,47 +132,47 @@ A search approach that matches documents based on the exact or near-exact presen
 
 ### Semantic search
 
-A search technique that understands the meaning and intent behind a query, not just the keywords. Semantic search uses vector embeddings to find documents that are conceptually similar to the query, even if they don't share the same words. [Learn more about AI-powered search](/learn/ai_powered_search/getting_started_with_ai_search).
+A search technique that understands the meaning and intent behind a query, not just the keywords. Semantic search uses vector embeddings to find documents that are conceptually similar to the query, even if they don't share the same words. [Learn more about AI-powered search](/capabilities/hybrid_search/getting_started).
 
 ### Hybrid search
 
-A search approach that combines full-text (keyword) search with semantic (vector) search. Meilisearch merges results from both techniques to provide results that are both keyword-accurate and semantically relevant. [Learn more about hybrid search](/learn/ai_powered_search/getting_started_with_ai_search).
+A search approach that combines full-text (keyword) search with semantic (vector) search. Meilisearch merges results from both techniques to provide results that are both keyword-accurate and semantically relevant. [Learn more about hybrid search](/capabilities/hybrid_search/getting_started).
 
 ### Vector search
 
-A search technique that represents documents and queries as high-dimensional vectors (embeddings) and finds matches based on mathematical similarity. Vector search powers semantic search in Meilisearch. [Learn more about AI-powered search](/learn/ai_powered_search/getting_started_with_ai_search).
+A search technique that represents documents and queries as high-dimensional vectors (embeddings) and finds matches based on mathematical similarity. Vector search powers semantic search in Meilisearch. [Learn more about AI-powered search](/capabilities/hybrid_search/getting_started).
 
 ### Embeddings
 
-Numerical vector representations of text (or images) generated by machine learning models. Embeddings capture semantic meaning, allowing similar concepts to have similar vector representations. [Learn more about embedders](/learn/ai_powered_search/choose_an_embedder).
+Numerical vector representations of text (or images) generated by machine learning models. Embeddings capture semantic meaning, allowing similar concepts to have similar vector representations. [Learn more about embedders](/capabilities/hybrid_search/how_to/choose_an_embedder).
 
 ### Conversational search
 
-An AI-powered search experience where users interact with search results through natural language conversations. Meilisearch provides tooling for building conversational search interfaces using LLMs. [Learn more about conversational search](/learn/chat/getting_started_with_chat).
+An AI-powered search experience where users interact with search results through natural language conversations. Meilisearch provides tooling for building conversational search interfaces using LLMs. [Learn more about conversational search](/capabilities/conversational_search/getting_started).
 
 ### RAG (Retrieval-Augmented Generation)
 
-A technique that combines search (retrieval) with AI text generation. Instead of relying solely on the AI model's training data, RAG first retrieves relevant documents from a search engine and uses them as context for generating responses. [Learn more about chat completions](/learn/chat/getting_started_with_chat).
+A technique that combines search (retrieval) with AI text generation. Instead of relying solely on the AI model's training data, RAG first retrieves relevant documents from a search engine and uses them as context for generating responses. [Learn more about chat completions](/capabilities/conversational_search/getting_started).
 
 ### Relevancy
 
-How well search results match the user's intent. Meilisearch determines relevancy through ranking rules that consider factors like number of matching words, typo count, word proximity, and attribute importance. [Learn more about relevancy](/learn/relevancy/relevancy).
+How well search results match the user's intent. Meilisearch determines relevancy through ranking rules that consider factors like number of matching words, typo count, word proximity, and attribute importance. [Learn more about relevancy](/capabilities/full_text_search/relevancy/relevancy).
 
 ### Tokenization
 
-The process of breaking text into individual units (tokens) for indexing. Meilisearch tokenizes text based on word boundaries, with special handling for languages like Chinese, Japanese, and Korean. [Learn more about tokenization](/learn/indexing/tokenization).
+The process of breaking text into individual units (tokens) for indexing. Meilisearch tokenizes text based on word boundaries, with special handling for languages like Chinese, Japanese, and Korean. [Learn more about tokenization](/capabilities/indexing/advanced/tokenization).
 
 ### Prefix search
 
-A search behavior where Meilisearch matches documents containing words that start with the query terms. For example, searching for "hel" matches "hello" and "help". By default, only the last word in a query uses prefix matching. [Learn more about prefix search](/learn/engine/prefix).
+A search behavior where Meilisearch matches documents containing words that start with the query terms. For example, searching for "hel" matches "hello" and "help". By default, only the last word in a query uses prefix matching. [Learn more about prefix search](/resources/internals/prefix).
 
 ### Faceted search
 
-A search interface pattern where users can refine results using categorized filters (facets). For example, an e-commerce site might let users filter by price range, brand, and color alongside their search query. [Learn more about faceted search](/learn/filtering_and_sorting/search_with_facet_filters).
+A search interface pattern where users can refine results using categorized filters (facets). For example, an e-commerce site might let users filter by price range, brand, and color alongside their search query. [Learn more about faceted search](/capabilities/filtering_sorting_faceting/how_to/filter_with_facets).
 
 ### Geosearch
 
-The ability to filter or sort search results based on geographic location. Users can find results within a specific radius or bounding box of a given point. [Learn more about geosearch](/learn/filtering_and_sorting/geosearch).
+The ability to filter or sort search results based on geographic location. Users can find results within a specific radius or bounding box of a given point. [Learn more about geosearch](/capabilities/geo_search/getting_started).
 
 ### Autocomplete
 
@@ -184,21 +184,21 @@ An instant search experience where results update with every keystroke. Meilisea
 
 ### Typo tolerance (search concept)
 
-The ability of a search engine to return relevant results despite misspellings in the query. Meilisearch calculates the edit distance (number of character changes) between query terms and indexed words. [Learn more about typo tolerance](/learn/relevancy/typo_tolerance_settings).
+The ability of a search engine to return relevant results despite misspellings in the query. Meilisearch calculates the edit distance (number of character changes) between query terms and indexed words. [Learn more about typo tolerance](/capabilities/full_text_search/relevancy/typo_tolerance_settings).
 
 ### Multi-tenancy
 
-An architecture where a single Meilisearch instance serves multiple users or organizations, with each tenant seeing only their own data. Meilisearch supports multi-tenancy through tenant tokens and filtered search. [Learn more about multi-tenancy](/learn/security/multitenancy_tenant_tokens).
+An architecture where a single Meilisearch instance serves multiple users or organizations, with each tenant seeing only their own data. Meilisearch supports multi-tenancy through tenant tokens and filtered search. [Learn more about multi-tenancy](/capabilities/security/overview).
 
 ### Analytics
 
-Data collected about search behavior (queries, clicks, conversions) used to understand how users interact with search and improve results over time. Meilisearch Cloud provides built-in analytics dashboards. [Learn more about analytics](/learn/analytics/configure_analytics_events).
+Data collected about search behavior (queries, clicks, conversions) used to understand how users interact with search and improve results over time. Meilisearch Cloud provides built-in analytics dashboards. [Learn more about analytics](/capabilities/analytics/getting_started).
 
 ## Infrastructure and scaling
 
 ### Sharding
 
-Splitting a large dataset across multiple Meilisearch instances, each holding a subset of documents. Queries are sent to all shards in parallel using multi-search, and results are merged. Sharding allows horizontal scaling beyond what a single instance can handle. [Learn more about sharding](/learn/multi_search/implement_sharding).
+Splitting a large dataset across multiple Meilisearch instances, each holding a subset of documents. Queries are sent to all shards in parallel using multi-search, and results are merged. Sharding allows horizontal scaling beyond what a single instance can handle. [Learn more about sharding](/resources/self_hosting/deployment/overview).
 
 ### Replication
 
@@ -206,7 +206,7 @@ Running multiple copies of the same Meilisearch instance so that read queries ca
 
 ### Federation
 
-Combining search results from multiple Meilisearch instances or indexes into a single ranked list. Federation can work locally (multiple indexes on one instance) or remotely (across multiple instances on a network). [Learn more about federation](/learn/multi_search/performing_federated_search).
+Combining search results from multiple Meilisearch instances or indexes into a single ranked list. Federation can work locally (multiple indexes on one instance) or remotely (across multiple instances on a network). [Learn more about federation](/capabilities/multi_search/getting_started/federated_search).
 
 ### High availability
 
@@ -214,7 +214,7 @@ A deployment configuration where your search infrastructure continues to operate
 
 ### Horizontal scaling
 
-Adding more Meilisearch instances to handle larger datasets or higher query volumes, as opposed to vertical scaling (upgrading a single machine). Meilisearch supports horizontal scaling through sharding and replication. [Learn more about sharding](/learn/multi_search/implement_sharding).
+Adding more Meilisearch instances to handle larger datasets or higher query volumes, as opposed to vertical scaling (upgrading a single machine). Meilisearch supports horizontal scaling through sharding and replication. [Learn more about sharding](/resources/self_hosting/deployment/overview).
 
 ### Binary quantization
 
@@ -222,7 +222,7 @@ A compression technique that reduces vector embeddings to 1-bit representations.
 
 ### Memory mapping
 
-A storage technique where Meilisearch maps database files directly into virtual memory, allowing the operating system to manage caching efficiently. This lets Meilisearch handle datasets larger than available RAM. [Learn more about storage](/learn/engine/storage).
+A storage technique where Meilisearch maps database files directly into virtual memory, allowing the operating system to manage caching efficiently. This lets Meilisearch handle datasets larger than available RAM. [Learn more about storage](/resources/internals/storage).
 
 ### DiskANN
 

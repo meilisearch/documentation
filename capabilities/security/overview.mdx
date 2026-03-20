@@ -1,0 +1,59 @@
+---
+title: Security and tenant tokens
+description: Secure your Meilisearch data with API keys and tenant tokens for multi-tenant applications.
+---
+
+Meilisearch uses API keys and tenant tokens to control access to your data. API keys authenticate requests, while tenant tokens restrict what data each user can see within a shared index.
+
+## Multi-tenancy with tenant tokens
+
+Tenant tokens are short-lived, scoped credentials generated from an API key. They embed search rules (filters) that automatically apply to every search request, ensuring users only see their own data.
+
+| Concept | Purpose |
+|---------|---------|
+| API keys | Authenticate API requests, define base permissions |
+| Tenant tokens | Restrict search results per user with embedded filters |
+| Search rules | Filter expressions baked into a token (e.g., `user_id = 123`) |
+
+## When to use tenant tokens
+
+Use tenant tokens when multiple users or organizations share the same Meilisearch index but should only see their own data. Common examples include SaaS platforms, marketplace search, and personalized content feeds.
+
+## Security model
+
+Meilisearch uses a layered key hierarchy to manage access:
+
+| Level | Key type | Purpose |
+|-------|----------|---------|
+| 1 | **Master key** | Set at launch. Grants full access to every API route. Never expose to end users or frontend code. |
+| 2 | **Admin API key** | Generated from the master key. Allows creating and managing indexes, settings, and other API keys. Used by your backend. |
+| 3 | **Search API key** | Generated from the master key. Permits only search operations. Safe to use in frontend applications when data is not multi-tenant. |
+| 4 | **Tenant token** | Generated in your backend from an API key. Embeds search rules (filters) that automatically restrict results per user. Short-lived and scoped. |
+
+In a typical multi-tenant setup, your backend holds the admin or search API key, generates tenant tokens on the fly for each user session, and sends those tokens to the frontend. The frontend then uses the tenant token to search directly against Meilisearch, and the embedded filters ensure each user only sees their own data.
+
+## How it works
+
+1. You start Meilisearch with a **master key**, which generates a default admin key and search key.
+2. Your backend uses the admin key to manage indexes and settings.
+3. When a user authenticates in your application, your backend generates a **tenant token** from the search key, embedding user-specific filter rules (for example, `tenant_id = 42`).
+4. The frontend uses this tenant token to query Meilisearch directly. Every search automatically applies the embedded filters, so users never see data belonging to other tenants.
+
+For enterprise teams, Meilisearch Cloud also supports **SSO (Single Sign-On)** integration, allowing team members to authenticate through your identity provider.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Getting started" href="/capabilities/security/getting_started">
+    Generate your first tenant token using an SDK
+  </Card>
+  <Card title="Token from scratch" href="/capabilities/security/how_to/generate_token_from_scratch">
+    Build a tenant token manually without an SDK
+  </Card>
+  <Card title="Token payload" href="/capabilities/security/advanced/tenant_token_payload">
+    Reference for tenant token JWT payload structure
+  </Card>
+  <Card title="Manage API keys" href="/capabilities/security/how_to/manage_api_keys">
+    Create, rotate, and scope API keys
+  </Card>
+</CardGroup>

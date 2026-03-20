@@ -1,0 +1,122 @@
+---
+title: Generate user context
+description: Build user context from browsing history and preferences to power personalized search results.
+---
+
+User context is the plain-text description you send with each search request to personalize results. Meilisearch does not generate user context automatically. You build it on your backend by aggregating data about each user, then pass it as a string in the `personalize` search parameter.
+
+This guide covers strategies for collecting user signals, structuring them into a context string, and sending that context with search requests.
+
+## Requirements
+
+- A Meilisearch project with [search personalization enabled](/capabilities/personalization/getting_started)
+- A backend service that can track user behavior
+
+## Strategies for building user context
+
+### Browsing history
+
+Track which pages, categories, or items a user views. Summarize their recent activity into preference signals.
+
+**Raw data**: User viewed 12 electronics products, 3 kitchen items, and 1 clothing item in the last 7 days.
+
+**Context string**: `"Interested in electronics and gadgets, occasionally browses kitchen appliances."`
+
+### Purchase history
+
+Analyze past purchases to identify brand loyalty, price ranges, and product categories.
+
+**Raw data**: User bought 4 Samsung products and 2 Apple products in the last 6 months, average order value $85.
+
+**Context string**: `"Frequently buys Samsung and Apple electronics, mid-range budget around $85 per item."`
+
+### Explicit preferences
+
+Use data from user profiles, preference surveys, or onboarding flows.
+
+**Raw data**: User selected "Running" and "Yoga" as interests, set size to "Medium".
+
+**Context string**: `"Interested in running and yoga gear, prefers size Medium."`
+
+### Demographic and contextual data
+
+Incorporate location, language, or seasonal context when relevant.
+
+**Raw data**: User is located in Montreal, Canada. Current season is winter.
+
+**Context string**: `"Based in Montreal, Canada. Currently winter season, likely interested in cold-weather products."`
+
+## Structure the context string
+
+Combine multiple signals into a single plain-text description. The re-ranking model works best with affirmatively stated preferences. Focus on what the user likes rather than what they dislike.
+
+**Good**: `"Prefers organic food, shops for family of four, budget-conscious, favors local brands."`
+
+**Less effective**: `"Does not like expensive items, never buys imported goods."`
+
+Keep the context string concise (1 to 3 sentences). Include the most relevant and recent signals. Overly long descriptions do not improve results and may dilute the most important signals.
+
+## Send context with a search request
+
+Pass user context in the `personalize` parameter of your search request. The `personalize` object must contain a `userContext` field with your description string:
+
+```bash
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/products/search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "q": "running shoes",
+    "personalize": {
+      "userContext": "Prefers lightweight trail running shoes from Salomon or Hoka, mid-range budget, runs 30 miles per week."
+    }
+  }'
+```
+
+Meilisearch retrieves results matching the query, then re-ranks them based on the user context you provided. Documents that better match the user's profile appear higher in the results.
+
+## Example: building context from a user profile
+
+Here is a simplified backend example that constructs a context string from stored user data:
+
+```javascript
+function buildUserContext(user) {
+  const parts = [];
+
+  if (user.favoriteCategories?.length > 0) {
+    parts.push(`Interested in ${user.favoriteCategories.join(', ')}.`);
+  }
+
+  if (user.favoriteBrands?.length > 0) {
+    parts.push(`Prefers brands like ${user.favoriteBrands.join(', ')}.`);
+  }
+
+  if (user.averageOrderValue) {
+    const budget = user.averageOrderValue < 50 ? 'budget-conscious'
+      : user.averageOrderValue < 150 ? 'mid-range budget'
+      : 'premium shopper';
+    parts.push(`Typically a ${budget}.`);
+  }
+
+  if (user.location) {
+    parts.push(`Based in ${user.location}.`);
+  }
+
+  return parts.join(' ');
+}
+
+// Result: "Interested in electronics, fitness gear. Prefers brands like Samsung, Nike. Typically a mid-range budget. Based in Berlin, Germany."
+```
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Getting started with personalization" href="/capabilities/personalization/getting_started">
+    Enable personalization and perform your first personalized search
+  </Card>
+  <Card title="Personalization overview" href="/capabilities/personalization/overview">
+    Understand how search personalization works
+  </Card>
+  <Card title="Personalize ecommerce search" href="/capabilities/personalization/how_to/personalize_ecommerce_search">
+    End-to-end ecommerce personalization example
+  </Card>
+</CardGroup>

@@ -631,7 +631,7 @@ To customize your index settings, see [configuring index settings](/resources/in
 
 ### Configure embedders for hybrid search
 
-If you currently use Supabase Vector for semantic similarity search, you can replace the entire pipeline — embedding generation in Edge Functions, vector columns, RPC functions, pgvector indexes — with Meilisearch's built-in hybrid search. Configure an [embedder](/learn/ai_powered_search/getting_started_with_ai_search) and Meilisearch handles all vectorization automatically, both at indexing time and at search time.
+If you currently use Supabase Vector for semantic similarity search, you can replace the entire pipeline — embedding generation in Edge Functions, vector columns, RPC functions, pgvector indexes — with Meilisearch's built-in hybrid search. Configure an [embedder](/capabilities/hybrid_search/getting_started) and Meilisearch handles all vectorization automatically, both at indexing time and at search time.
 
 ```bash
 curl -X PATCH 'MEILI_HOST/indexes/MEILI_INDEX_NAME/settings' \
@@ -657,7 +657,7 @@ The `documentTemplate` controls what text is sent to the embedding model. Adjust
 - Any pgvector indexes (ivfflat or hnsw)
 - Client-side embedding generation code
 
-For more options including HuggingFace models, Ollama, and custom REST endpoints, see [configuring embedders](/learn/ai_powered_search/getting_started_with_ai_search).
+For more options including HuggingFace models, Ollama, and custom REST endpoints, see [configuring embedders](/capabilities/hybrid_search/getting_started).
 
 <Accordion title="Alternative: use existing pgvector embeddings">
 If you already have embeddings stored in a pgvector `vector` column and prefer not to re-embed, export them from Supabase and include them in the `_vectors` field of each document. Then configure a `userProvided` embedder:

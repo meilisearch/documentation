@@ -1,0 +1,100 @@
+---
+title: Multi-index search
+sidebarTitle: Multi-index search
+description: Search multiple indexes in a single API request and receive separate result lists for each index.
+---
+
+import CodeSamplesMultiSearch1 from '/snippets/generated-code-samples/code_samples_multi_search_1.mdx';
+
+Multi-index search lets you send several search queries in one HTTP request to the `/multi-search` endpoint. Each query targets a specific index and returns its own result list, making it ideal for search interfaces that display different content types in separate sections.
+
+## Requirements
+
+- A running Meilisearch project with at least two indexes
+- A command-line console
+
+## Send a multi-search request
+
+The `/multi-search` endpoint accepts an object with a `queries` array. Each element in the array is an independent search query with its own `indexUid`, search terms, and parameters.
+
+<CodeSamplesMultiSearch1 />
+
+In this example, the request sends three queries: two targeting the `movies` index with different search terms and limits, and one targeting the `movie_ratings` index.
+
+## Understand the response format
+
+Meilisearch returns a `results` array with one entry per query, in the same order as the queries you sent:
+
+```json
+{
+  "results": [
+    {
+      "indexUid": "movies",
+      "hits": [
+        { "id": 24, "title": "Winnie the Pooh" }
+      ],
+      "query": "pooh",
+      "processingTimeMs": 0,
+      "limit": 5,
+      "offset": 0,
+      "estimatedTotalHits": 2
+    },
+    {
+      "indexUid": "movies",
+      "hits": [
+        { "id": 12, "title": "Finding Nemo" }
+      ],
+      "query": "nemo",
+      "processingTimeMs": 0,
+      "limit": 5,
+      "offset": 0,
+      "estimatedTotalHits": 1
+    },
+    {
+      "indexUid": "movie_ratings",
+      "hits": [
+        { "id": 458723, "title": "Us", "director": "Jordan Peele" }
+      ],
+      "query": "us",
+      "processingTimeMs": 0,
+      "limit": 20,
+      "offset": 0,
+      "estimatedTotalHits": 1
+    }
+  ]
+}
+```
+
+Each result set contains the same fields as a standard search response, including `hits`, `query`, `processingTimeMs`, and `estimatedTotalHits`.
+
+## How queries work together
+
+Each query in a multi-search request is fully independent. This means:
+
+- **Different indexes**: each query can target a different index
+- **Different parameters**: each query can have its own `filter`, `sort`, `limit`, `offset`, `attributesToRetrieve`, and other search parameters
+- **Same index, different queries**: you can send multiple queries to the same index with different search terms or parameters
+- **Single HTTP request**: all queries are bundled into one network call, reducing latency compared to sending individual requests
+
+## When to use multi-index search
+
+Multi-index search is best suited for interfaces that show results from different indexes in separate sections. For example, a search bar that displays matching products in one panel, blog posts in another, and user profiles in a third.
+
+If you want to merge results from multiple indexes into a single ranked list instead, use [federated search](/capabilities/multi_search/getting_started/federated_search).
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Federated search" href="/capabilities/multi_search/getting_started/federated_search">
+    Merge results from multiple indexes into one ranked list
+  </Card>
+  <Card title="Multi-search overview" href="/capabilities/multi_search/overview">
+    Learn about both modes of multi-search
+  </Card>
+  <Card title="API reference" href="/reference/api/multi-search/perform-a-multi-search">
+    Full endpoint documentation for multi-search
+  </Card>
+  <Card title="Different filters per index" href="/capabilities/multi_search/how_to/search_with_different_filters">
+    Apply different filters to each query
+  </Card>
+</CardGroup>

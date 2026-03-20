@@ -1,0 +1,148 @@
+---
+title: Combine filters and sort
+sidebarTitle: Combine filters and sort
+description: Use filtering and sorting together to narrow and order search results for a refined user experience.
+---
+
+
+Combining filters and sorting lets you narrow results to a relevant subset and then control the order in which they appear. For example, you can filter movies by genre and then sort them by rating.
+
+## Requirements
+
+- A running Meilisearch project
+- A command-line console
+
+## Configure filterable and sortable attributes
+
+Before using filters and sorting together, you must add the relevant attributes to both `filterableAttributes` and `sortableAttributes`. An attribute used only in filters does not need to be sortable, and an attribute used only for sorting does not need to be filterable.
+
+Suppose you have a `movies` index with documents like this:
+
+```json
+{
+  "id": 1,
+  "title": "Mad Max: Fury Road",
+  "genres": ["Action", "Adventure"],
+  "rating": 8.1,
+  "release_date": 1431648000
+}
+```
+
+Configure the index so that `genres` is filterable and `rating` is sortable:
+
+```bash
+curl \
+  -X PATCH 'MEILISEARCH_URL/indexes/movies/settings' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "filterableAttributes": ["genres", "release_date"],
+    "sortableAttributes": ["rating", "release_date"]
+  }'
+```
+
+Wait for the settings task to complete before searching.
+
+## Filter and sort in a single request
+
+Once your settings are configured, pass both `filter` and `sort` in the same search request:
+
+```bash
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/movies/search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "q": "",
+    "filter": "genres = Action",
+    "sort": ["rating:desc"]
+  }'
+```
+
+This request returns only action movies, sorted by rating from highest to lowest. The `q` parameter is set to an empty string, making this a placeholder search that returns all matching documents.
+
+The response looks like this:
+
+```json
+{
+  "hits": [
+    { "id": 1, "title": "Mad Max: Fury Road", "genres": ["Action", "Adventure"], "rating": 8.1 },
+    { "id": 5, "title": "John Wick", "genres": ["Action", "Thriller"], "rating": 7.4 },
+    { "id": 12, "title": "The Expendables", "genres": ["Action"], "rating": 6.5 }
+  ],
+  "query": "",
+  "processingTimeMs": 1,
+  "estimatedTotalHits": 45
+}
+```
+
+## Combine multiple filters with sort
+
+You can use `AND`, `OR`, and `NOT` operators to build complex filter expressions:
+
+```bash
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/movies/search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "q": "hero",
+    "filter": "genres = Action AND rating > 7.0",
+    "sort": ["release_date:desc"]
+  }'
+```
+
+This request searches for "hero" in action movies with a rating above 7.0, sorted by most recent first.
+
+## Combine geo filter with text search and sort
+
+If your documents have `_geo` data, you can combine geographic filtering with text search and sorting. For example, find restaurants near a specific location and sort them by rating:
+
+```bash
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/restaurants/search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "q": "pizza",
+    "filter": "_geoRadius(45.472735, 9.184019, 2000)",
+    "sort": ["rating:desc"]
+  }'
+```
+
+This returns pizza restaurants within 2 km of the specified coordinates, sorted by their rating. Make sure `_geo` is in `filterableAttributes` and `rating` is in `sortableAttributes`.
+
+## Sort by multiple attributes
+
+You can sort by more than one attribute. Meilisearch uses the second sort criterion as a tiebreaker when documents have the same value for the first:
+
+```bash
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/movies/search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "q": "",
+    "filter": "genres = Action",
+    "sort": ["rating:desc", "release_date:desc"]
+  }'
+```
+
+This sorts action movies by rating first, then by release date for movies with the same rating.
+
+## Key points
+
+- Fields used in `filter` must be in `filterableAttributes`
+- Fields used in `sort` must be in `sortableAttributes`
+- A field can appear in both settings lists if you need to both filter and sort by it
+- Filters narrow the result set before sorting is applied
+- When combining with a text query, Meilisearch first applies the text relevancy ranking, then uses `sort` as an additional ranking rule
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Filter search results" href="/capabilities/filtering_sorting_faceting/getting_started">
+    Learn the basics of configuring and using filters
+  </Card>
+  <Card title="Sort search results" href="/capabilities/filtering_sorting_faceting/how_to/sort_results">
+    Learn more about sorting configuration and options
+  </Card>
+  <Card title="Build faceted navigation" href="/capabilities/filtering_sorting_faceting/how_to/build_faceted_navigation">
+    Add an interactive faceted sidebar to your search
+  </Card>
+</CardGroup>

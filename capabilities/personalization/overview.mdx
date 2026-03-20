@@ -1,0 +1,49 @@
+---
+title: What is search personalization?
+description: Search personalization lets you boost search results based on user profiles, making results tailored to their behavior.
+---
+
+Search personalization uses AI technology to re-rank search results at query time based on the user context you provide.
+
+## Why use search personalization?
+
+Not everyone searches the same way. Personalizing search results allows you to adapt relevance to each user’s preferences, behavior, or intent.
+
+For example, in an e-commerce site, someone who often shops for sportswear might see sneakers and activewear ranked higher when searching for “shoes”. A user interested in luxury fashion might see designer heels or leather boots first instead.
+
+## How does search personalization work?
+
+1. First generate a plain-text description of the user: `"The user prefers genres like Documentary, Music, Drama"`
+2. When the user performs a search, you submit their description together with their search request
+3. Meilisearch retrieves documents based on the user's query as usual
+4. Finally, the re-ranking model reorders results based on the user context you provided in the first step
+
+## How to enable search personalization in Meilisearch?
+
+Search personalization is an experimental feature.
+
+If you are a Meilisearch Cloud user, contact support to activate it for your projects.
+
+If you are self-hosting Meilisearch, relaunch it using the [search personalization instance option](/resources/self_hosting/configuration/reference#search-personalization).
+
+Consult the [search personalization guide](/capabilities/personalization/getting_started) for more information on how to implement it in your application.
+
+## Use cases
+
+- **E-commerce**: Surface products aligned with a shopper's purchase history, brand preferences, or browsing behavior. A customer who frequently buys running gear sees running shoes before formal shoes when searching for "shoes".
+- **Content platforms**: Rank articles, videos, or podcasts based on the topics a user engages with most. A reader interested in machine learning sees ML-related content higher in results for broad queries like "tutorial".
+- **Marketplace search**: Tailor listings to a buyer's location, budget range, or past interactions so the most relevant offers appear first.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Getting started" href="/capabilities/personalization/getting_started">
+    Enable personalization and send your first personalized search
+  </Card>
+  <Card title="Generate user context" href="/capabilities/personalization/how_to/generate_user_context">
+    Build plain-text user descriptions from behavior data
+  </Card>
+  <Card title="Personalize e-commerce search" href="/capabilities/personalization/how_to/personalize_ecommerce_search">
+    Step-by-step guide for personalizing product search results
+  </Card>
+</CardGroup>

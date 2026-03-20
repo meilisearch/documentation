@@ -1,0 +1,52 @@
+---
+title: Hybrid and semantic search
+description: Combine full-text keyword search with AI-powered semantic search to deliver results that match both exact terms and meaning.
+---
+
+Hybrid search combines two search strategies: full-text search (matching keywords) and semantic search (matching meaning). This gives users the best of both worlds, returning results that are both textually and conceptually relevant.
+
+## How it works
+
+Meilisearch uses **embedders** to convert documents and queries into numerical vectors that capture their semantic meaning. At search time, results from keyword matching and vector similarity are merged using a configurable `semanticRatio` parameter.
+
+- **semanticRatio = 0**: pure keyword search (full-text only)
+- **semanticRatio = 1**: pure semantic search (vector only)
+- **semanticRatio = 0.5**: balanced hybrid (default)
+
+## Semantic vs full-text search
+
+Full-text search excels when users know exactly what terms to search for. Semantic search shines when users describe what they want in their own words, even if those words don't appear in the documents.
+
+| Scenario | Best approach |
+|----------|--------------|
+| User searches for a product name or SKU | Full-text search |
+| User describes a problem in natural language | Semantic search |
+| Ecommerce product search with varied vocabulary | Hybrid search |
+| Documentation search with technical terms | Hybrid search |
+
+## Supported embedder providers
+
+Meilisearch supports multiple embedder sources:
+
+- **OpenAI**: cloud-hosted models like `text-embedding-3-small`
+- **Cohere**: cloud-hosted embedding models
+- **HuggingFace**: locally-run open-source models
+- **REST**: any embedding API via a custom REST endpoint
+- **User-provided**: bring your own pre-computed vectors
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Getting started" href="/capabilities/hybrid_search/getting_started">
+    Configure an embedder and perform your first semantic search
+  </Card>
+  <Card title="Choose an embedder" href="/capabilities/hybrid_search/how_to/choose_an_embedder">
+    Compare providers and pick the right one for your use case
+  </Card>
+  <Card title="Image search" href="/capabilities/hybrid_search/how_to/image_search_with_multimodal">
+    Search images using multimodal embeddings
+  </Card>
+  <Card title="Similar documents" href="/capabilities/hybrid_search/how_to/retrieve_similar_documents">
+    Find documents similar to a given document
+  </Card>
+</CardGroup>

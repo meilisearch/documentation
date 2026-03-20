@@ -647,7 +647,7 @@ The most important difference: **PostgreSQL has no typo tolerance**. A search fo
 
 ### Configure embedders for hybrid search
 
-If you currently use pgvector for semantic similarity search, you can replace it with Meilisearch's built-in hybrid search. Configure an [embedder](/learn/ai_powered_search/getting_started_with_ai_search) and Meilisearch handles all vectorization automatically — both at indexing time and at search time. No more managing embeddings in your application code.
+If you currently use pgvector for semantic similarity search, you can replace it with Meilisearch's built-in hybrid search. Configure an [embedder](/capabilities/hybrid_search/getting_started) and Meilisearch handles all vectorization automatically — both at indexing time and at search time. No more managing embeddings in your application code.
 
 ```bash
 curl -X PATCH 'MEILI_HOST/indexes/MEILI_INDEX_NAME/settings' \
@@ -665,7 +665,7 @@ curl -X PATCH 'MEILI_HOST/indexes/MEILI_INDEX_NAME/settings' \
   }'
 ```
 
-The `documentTemplate` controls what text is sent to the embedding model. Adjust it to match the fields in your documents. For more options including HuggingFace models, Ollama, and custom REST endpoints, see [configuring embedders](/learn/ai_powered_search/getting_started_with_ai_search).
+The `documentTemplate` controls what text is sent to the embedding model. Adjust it to match the fields in your documents. For more options including HuggingFace models, Ollama, and custom REST endpoints, see [configuring embedders](/capabilities/hybrid_search/getting_started).
 
 <Accordion title="Alternative: use existing pgvector embeddings">
 If you already have embeddings stored in a pgvector `vector` column and prefer not to re-embed, export them from PostgreSQL and include them in the `_vectors` field of each document. Then configure a `userProvided` embedder:

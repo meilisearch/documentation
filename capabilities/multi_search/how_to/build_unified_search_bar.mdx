@@ -1,0 +1,241 @@
+---
+title: Build a unified search bar
+sidebarTitle: Build a unified search bar
+description: Combine results from multiple indexes like products, articles, and users into a single search bar experience.
+---
+
+A unified search bar queries multiple indexes and presents all results in one interface. Depending on your needs, you can display results in categorized sections (multi-index mode) or as a single merged list (federated mode). This page walks through both patterns and shows how to implement them in a frontend application.
+
+## Requirements
+
+- A running Meilisearch project with at least two indexes
+- Basic knowledge of HTML and JavaScript
+
+## Choose a display mode
+
+| Mode | Best for | Result format |
+|------|----------|---------------|
+| **Multi-index** | Showing results grouped by type (products section, articles section) | Separate result arrays |
+| **Federated** | Showing a single ranked list across all content types | One merged array |
+
+## Option 1: categorized sections with multi-index search
+
+Use multi-index search when you want to display results from each index in its own section. This gives you full control over how each category appears.
+
+Send a multi-search request without the `federation` parameter:
+
+```bash
+curl \
+  -X POST 'MEILISEARCH_URL/multi-search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "queries": [
+      {
+        "indexUid": "products",
+        "q": "running shoes",
+        "limit": 4,
+        "attributesToRetrieve": ["id", "name", "price", "image_url"]
+      },
+      {
+        "indexUid": "articles",
+        "q": "running shoes",
+        "limit": 3,
+        "attributesToRetrieve": ["id", "title", "excerpt"]
+      },
+      {
+        "indexUid": "users",
+        "q": "running shoes",
+        "limit": 2,
+        "attributesToRetrieve": ["id", "username", "avatar_url"]
+      }
+    ]
+  }'
+```
+
+Each query limits results and selects only the fields needed for the search bar display.
+
+### Frontend implementation
+
+Here is a simple JavaScript pattern for rendering categorized results:
+
+```html
+<input type="text" id="search-input" placeholder="Search..." />
+<div id="search-results"></div>
+
+<script>
+  const MEILI_URL = 'MEILISEARCH_URL';
+  const MEILI_KEY = 'your_search_api_key';
+
+  const categories = [
+    { indexUid: 'products', label: 'Products', limit: 4 },
+    { indexUid: 'articles', label: 'Articles', limit: 3 },
+    { indexUid: 'users', label: 'Users', limit: 2 }
+  ];
+
+  document.getElementById('search-input').addEventListener('input', async (e) => {
+    const query = e.target.value;
+    if (!query) {
+      document.getElementById('search-results').innerHTML = '';
+      return;
+    }
+
+    const response = await fetch(`${MEILI_URL}/multi-search`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${MEILI_KEY}`
+      },
+      body: JSON.stringify({
+        queries: categories.map(cat => ({
+          indexUid: cat.indexUid,
+          q: query,
+          limit: cat.limit
+        }))
+      })
+    });
+
+    const data = await response.json();
+    renderCategorizedResults(data.results);
+  });
+
+  function renderCategorizedResults(results) {
+    const container = document.getElementById('search-results');
+    container.innerHTML = results
+      .map((result, i) => {
+        if (result.hits.length === 0) return '';
+        const hits = result.hits
+          .map(hit => `<li>${hit.name || hit.title || hit.username}</li>`)
+          .join('');
+        return `
+          <div class="category">
+            <h3>${categories[i].label}</h3>
+            <ul>${hits}</ul>
+          </div>`;
+      })
+      .join('');
+  }
+</script>
+```
+
+## Option 2: merged list with federated search
+
+Use federated search when you want a single ranked list where the most relevant results appear first, regardless of which index they come from.
+
+```bash
+curl \
+  -X POST 'MEILISEARCH_URL/multi-search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "federation": {},
+    "queries": [
+      {
+        "indexUid": "products",
+        "q": "running shoes",
+        "federationOptions": { "weight": 1.2 }
+      },
+      {
+        "indexUid": "articles",
+        "q": "running shoes"
+      },
+      {
+        "indexUid": "users",
+        "q": "running shoes"
+      }
+    ]
+  }'
+```
+
+The response returns a flat `hits` array. Each hit includes a `_federation` object that tells you which index it came from:
+
+```json
+{
+  "hits": [
+    {
+      "id": 55,
+      "name": "Trail Running Shoes Pro",
+      "_federation": { "indexUid": "products", "queriesPosition": 0 }
+    },
+    {
+      "id": 12,
+      "title": "How to Choose Running Shoes",
+      "_federation": { "indexUid": "articles", "queriesPosition": 1 }
+    }
+  ]
+}
+```
+
+### Frontend implementation
+
+Use the `_federation.indexUid` field to style each result according to its type:
+
+```html
+<input type="text" id="search-input" placeholder="Search..." />
+<div id="search-results"></div>
+
+<script>
+  const MEILI_URL = 'MEILISEARCH_URL';
+  const MEILI_KEY = 'your_search_api_key';
+
+  document.getElementById('search-input').addEventListener('input', async (e) => {
+    const query = e.target.value;
+    if (!query) {
+      document.getElementById('search-results').innerHTML = '';
+      return;
+    }
+
+    const response = await fetch(`${MEILI_URL}/multi-search`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${MEILI_KEY}`
+      },
+      body: JSON.stringify({
+        federation: {},
+        queries: [
+          { indexUid: 'products', q: query },
+          { indexUid: 'articles', q: query },
+          { indexUid: 'users', q: query }
+        ]
+      })
+    });
+
+    const data = await response.json();
+    renderMergedResults(data.hits);
+  });
+
+  function renderMergedResults(hits) {
+    const container = document.getElementById('search-results');
+    container.innerHTML = hits
+      .map(hit => {
+        const type = hit._federation.indexUid;
+        const label = type.charAt(0).toUpperCase() + type.slice(1);
+        const title = hit.name || hit.title || hit.username;
+        return `<div class="result result-${type}">
+          <span class="badge">${label}</span>
+          <span>${title}</span>
+        </div>`;
+      })
+      .join('');
+  }
+</script>
+```
+
+## Which mode should you use?
+
+- **Categorized sections** work well when users expect to see clear separation between content types, like a sidebar with "Products", "Articles", and "Help" sections
+- **Merged list** works well for a single search bar where the most relevant result should always appear first, regardless of type
+- You can also combine both: use federated search for the main results and multi-index search for a "quick suggestions" dropdown
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Multi-index search" href="/capabilities/multi_search/getting_started/multi_search">
+    Learn the basics of multi-index search
+  </Card>
+  <Card title="Federated search" href="/capabilities/multi_search/getting_started/federated_search">
+    Learn how to set up federated search
+  </Card>
+  <Card title="Boost results" href="/capabilities/multi_search/how_to/boost_results_across_indexes">
+    Use weights to prioritize results from specific indexes
+  </Card>
+</CardGroup>

@@ -1,0 +1,101 @@
+---
+title: Configure SSO
+sidebarTitle: Configure SSO
+description: Set up Single Sign-On for Meilisearch Cloud to authenticate team members through your identity provider.
+---
+
+Single Sign-On (SSO) allows your team members to log into Meilisearch Cloud using your organization's existing identity provider (IdP). Instead of managing separate Meilisearch credentials, users authenticate through a centralized system like Okta, Azure AD, or Google Workspace.
+
+<Note>
+SSO is a Meilisearch Cloud enterprise feature. It is not available on self-hosted instances or non-enterprise Cloud plans.
+</Note>
+
+## Supported protocols
+
+Meilisearch Cloud supports **SAML 2.0** for SSO integration. SAML 2.0 is an industry-standard protocol supported by most identity providers, including:
+
+- Okta
+- Azure Active Directory (Microsoft Entra ID)
+- Google Workspace
+- OneLogin
+- Auth0
+- JumpCloud
+
+## Requirements
+
+- A Meilisearch Cloud account on an enterprise plan
+- Administrative access to your identity provider
+- The ability to add Meilisearch as a SAML service provider in your IdP
+
+## Setup process
+
+### Step 1: Contact the Meilisearch team
+
+SSO configuration requires coordination with the Meilisearch team. Reach out through your enterprise support channel or email [support@meilisearch.com](mailto:support@meilisearch.com) to initiate the setup process.
+
+The Meilisearch team will provide you with:
+
+- The **Assertion Consumer Service (ACS) URL** for your organization
+- The **Entity ID** (also called the Audience URI) for Meilisearch
+- Any additional SAML attributes required for the integration
+
+### Step 2: Configure your identity provider
+
+In your IdP's admin console, create a new SAML application for Meilisearch Cloud using the values provided by the Meilisearch team:
+
+1. Create a new SAML 2.0 application in your IdP
+2. Set the **ACS URL** to the value provided by Meilisearch
+3. Set the **Entity ID** to the value provided by Meilisearch
+4. Configure the **Name ID format** to `emailAddress`
+5. Map the following user attributes:
+
+| SAML attribute | Value |
+|:---------------|:------|
+| `email` | User's email address |
+| `firstName` | User's first name |
+| `lastName` | User's last name |
+
+6. Assign the appropriate users or groups to the application
+
+### Step 3: Provide IdP metadata to Meilisearch
+
+After configuring the SAML application, share the following with the Meilisearch team:
+
+- Your **IdP metadata URL** (preferred) or the **IdP metadata XML file**
+- The **IdP SSO URL** (the endpoint where Meilisearch sends authentication requests)
+- The **IdP certificate** used to sign SAML assertions
+
+The Meilisearch team will complete the configuration on their end and confirm when SSO is active.
+
+### Step 4: Test the SSO login flow
+
+Once the Meilisearch team confirms the setup:
+
+1. Navigate to the Meilisearch Cloud login page
+2. Select the SSO login option
+3. Enter your organization's email domain
+4. You will be redirected to your identity provider for authentication
+5. After successful authentication, you will be redirected back to Meilisearch Cloud
+
+<Warning>
+Test SSO with a non-admin account first to verify the integration works correctly before rolling it out to your entire team.
+</Warning>
+
+## Managing SSO users
+
+Once SSO is enabled, new team members are automatically provisioned in Meilisearch Cloud when they first log in through your IdP. To manage user access:
+
+- **Grant access:** Assign the Meilisearch Cloud application to users or groups in your IdP
+- **Revoke access:** Remove users from the Meilisearch Cloud application in your IdP
+- **Role management:** Contact the Meilisearch team to configure role mappings between your IdP groups and Meilisearch Cloud roles
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Teams overview" href="/capabilities/teams/overview">
+    Learn about team management in Meilisearch Cloud
+  </Card>
+  <Card title="Security overview" href="/capabilities/security/overview">
+    Understand Meilisearch security concepts including API keys and tenant tokens
+  </Card>
+</CardGroup>
