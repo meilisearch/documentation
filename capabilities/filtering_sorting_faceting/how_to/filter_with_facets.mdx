@@ -154,3 +154,35 @@ The response contains a `facetHits` array listing all matching facets, together 
 ```
 
 You can further refine results using the `q`, `filter`, and `matchingStrategy` parameters. [Learn more about them in the API reference.](/reference/api/facet-search/search-in-facets)
+
+## Toggle facet search globally
+
+By default, the facet search endpoint is enabled for all indexes. If you do not need facet search and want to speed up indexing, you can disable it with the `facetSearch` index setting:
+
+```bash
+curl \
+  -X PUT 'MEILISEARCH_URL/indexes/books/settings/facet-search' \
+  -H 'Content-Type: application/json' \
+  --data-binary 'false'
+```
+
+Setting `facetSearch` to `false` disables the `/indexes/{index_uid}/facet-search` endpoint for this index. Documents are still indexed for regular facet distribution, but Meilisearch skips the additional processing needed for facet search, resulting in faster indexing. To re-enable facet search, send the same request with `true`.
+
+## Get exact facet counts
+
+By default, the facet counts returned by the facet search endpoint are estimates. This is faster but may not be perfectly accurate for large datasets.
+
+To get exact facet counts, set the `exhaustiveFacetCount` parameter to `true` in your facet search request:
+
+```bash
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/books/facet-search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "facetName": "genres",
+    "facetQuery": "c",
+    "exhaustiveFacetCount": true
+  }'
+```
+
+Exact counts are slower to compute, especially on large indexes. Use this option when precision matters more than speed, for example when displaying category counts in a storefront.

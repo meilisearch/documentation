@@ -1,0 +1,125 @@
+---
+title: Composite embedders
+description: Use different embedding providers for indexing and search to optimize cost, latency, and throughput independently.
+---
+
+Composite embedders let you assign one embedder for indexing and a different one for search within the same index. This decouples the two operations so you can optimize each independently, for example using a high-throughput cloud API for bulk indexing and a local model for low-latency search.
+
+<Warning>
+Composite embedders are an experimental feature. You must enable the `compositeEmbedders` experimental flag before using them. Experimental features may change or be removed in future releases.
+</Warning>
+
+## When to use composite embedders
+
+A single embedder works well for most projects. Composite embedders are useful when indexing and search have different performance requirements:
+
+| Scenario | Indexing embedder | Search embedder |
+|---|---|---|
+| Cost optimization | Cloud API with batch pricing | Local model (no per-query cost) |
+| Latency optimization | REST endpoint (higher throughput, higher latency) | HuggingFace local model (lower latency) |
+| Infrastructure split | GPU server for bulk embedding | CPU-based model for real-time queries |
+| Rate limit management | Dedicated batch API endpoint | Separate endpoint with its own rate limits |
+
+## Prerequisites
+
+- A running Meilisearch project (v1.14 or later)
+- A command-line terminal
+- Two embedding providers that produce vectors with the same number of dimensions
+
+## Step 1: enable the experimental feature
+
+Activate the `compositeEmbedders` flag:
+
+```sh
+curl \
+  -X PATCH 'http://localhost:7700/experimental-features' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+  --data-binary '{
+    "compositeEmbedders": true
+  }'
+```
+
+## Step 2: configure a composite embedder
+
+Set the embedder source to `"composite"` and define separate `searchEmbedder` and `indexingEmbedder` objects. Each sub-embedder uses the same configuration format as a standard embedder.
+
+```sh
+curl \
+  -X PATCH 'http://localhost:7700/indexes/movies/settings/embedders' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+  --data-binary '{
+    "hybrid": {
+      "source": "composite",
+      "searchEmbedder": {
+        "source": "huggingFace",
+        "model": "BAAI/bge-base-en-v1.5"
+      },
+      "indexingEmbedder": {
+        "source": "rest",
+        "url": "https://your-embedding-api.example.com/embed",
+        "request": {
+          "input": "{{text}}"
+        },
+        "response": {
+          "data": [
+            {
+              "embedding": "{{embedding}}"
+            }
+          ]
+        },
+        "dimensions": 768
+      }
+    }
+  }'
+```
+
+In this example:
+
+- **Indexing** uses a REST embedder pointing to a high-throughput embedding API. This endpoint can handle large batches of documents efficiently.
+- **Search** uses a local HuggingFace model (`BAAI/bge-base-en-v1.5`). Running locally eliminates network latency for real-time search queries.
+
+Both produce 768-dimensional vectors, so their outputs are compatible.
+
+## Step 3: search with the composite embedder
+
+Search works exactly like any other hybrid search. Reference the composite embedder by name:
+
+```sh
+curl \
+  -X POST 'http://localhost:7700/indexes/movies/search' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+  --data-binary '{
+    "q": "feel-good adventure movie",
+    "hybrid": {
+      "semanticRatio": 0.7,
+      "embedder": "hybrid"
+    }
+  }'
+```
+
+Meilisearch automatically uses the search embedder for the query and the indexing embedder when processing new or updated documents.
+
+## Important constraints
+
+**Matching dimensions**: both the search embedder and the indexing embedder must produce vectors with the same number of dimensions. If they differ, Meilisearch returns an error when you try to configure the embedder.
+
+**Compatible models**: for coherent search results, both embedders should use the same underlying model or models trained to produce compatible vector spaces. Using unrelated models (for example, one trained on English text and another on multilingual data) will produce poor search quality because the vector spaces will not align.
+
+**Experimental status**: this feature requires the `compositeEmbedders` experimental flag. The API surface may change in future versions. Monitor the [changelog](/changelog) for updates.
+
+## Next steps
+
+<CardGroup cols={3}>
+  <Card title="Choose an embedder" icon="magnifying-glass" href="/capabilities/hybrid_search/how_to/choose_an_embedder">
+    Compare embedding providers and pick the right one for your use case.
+  </Card>
+  <Card title="Configure a REST embedder" icon="plug" href="/capabilities/hybrid_search/how_to/configure_rest_embedder">
+    Set up embedders using any provider with a REST API.
+  </Card>
+  <Card title="Configure a HuggingFace embedder" icon="robot" href="/capabilities/hybrid_search/how_to/configure_huggingface_embedder">
+    Run embedding models locally with HuggingFace.
+  </Card>
+</CardGroup>

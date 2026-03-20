@@ -330,6 +330,22 @@ Now the embedder object is complete, update your index settings:
 
 <CodeSamplesConfigureRestEmbedder1 />
 
+## Configure request timeout
+
+By default, REST embedder requests use a fixed timeout. If you are using slow models or processing large batches, requests may fail before the provider returns a response.
+
+To customize the timeout, set the `MEILI_EXPERIMENTAL_REST_EMBEDDER_TIMEOUT_SECONDS` environment variable to a positive integer (in seconds) when starting Meilisearch:
+
+```bash
+MEILI_EXPERIMENTAL_REST_EMBEDDER_TIMEOUT_SECONDS=120 meilisearch
+```
+
+This sets the maximum time Meilisearch waits for a response from the REST embedder provider before considering the request failed.
+
+<Warning>
+This is an experimental feature and may change in future releases.
+</Warning>
+
 ## Conclusion
 
 In this guide you have seen a few examples of how to configure a REST embedder in Meilisearch. Though it used Mistral and Cloudflare, the general steps remain the same for all providers:
