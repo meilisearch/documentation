@@ -1,0 +1,164 @@
+---
+title: Configure granular filterable attributes
+description: Control which filter operations are enabled for each attribute to optimize indexing performance and restrict filter usage.
+---
+
+By default, adding an attribute to `filterableAttributes` enables every filter feature for that attribute: equality checks, comparison operators, and facet search. Granular filterable attributes let you enable only the features each attribute actually needs, reducing indexing time and memory usage.
+
+## Requirements
+
+- A running Meilisearch project (v1.14 or later)
+- A command-line terminal
+
+## The default approach
+
+The standard way to configure filterable attributes is a flat array:
+
+```json
+{
+  "filterableAttributes": ["genre", "price", "rating", "artist"]
+}
+```
+
+This enables all filter operations (equality, comparison, and facet search) for every listed attribute. For many projects this is fine, but it means Meilisearch builds data structures for operations you may never use.
+
+## Granular configuration with attributePatterns
+
+Instead of a simple array, you can pass an object that specifies exactly which features each attribute supports. Each entry pairs one or more `attributePatterns` with a `features` object:
+
+```json
+{
+  "filterableAttributes": [
+    {
+      "attributePatterns": ["genre", "artist"],
+      "features": {
+        "facetSearch": true,
+        "filter": {
+          "equality": true,
+          "comparison": false
+        }
+      }
+    },
+    {
+      "attributePatterns": ["price", "rating"],
+      "features": {
+        "facetSearch": false,
+        "filter": {
+          "equality": true,
+          "comparison": true
+        }
+      }
+    }
+  ]
+}
+```
+
+In this example:
+
+- `genre` and `artist` support facet search and equality filters (`genre = "Rock"`), but not comparison operators. Genres and artist names are categorical values, so greater-than or less-than comparisons are meaningless.
+- `price` and `rating` support equality and comparison filters (`price > 10`, `rating >= 4`), but not facet search. Numeric ranges are better served by comparison operators than by listing every possible value in a facet sidebar.
+
+## Complete example
+
+Use `PATCH /indexes/{indexUid}/settings` to apply granular filterable attributes:
+
+```sh
+curl \
+  -X PATCH 'http://localhost:7700/indexes/products/settings' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+  --data-binary '{
+    "filterableAttributes": [
+      {
+        "attributePatterns": ["genre", "artist"],
+        "features": {
+          "facetSearch": true,
+          "filter": {
+            "equality": true,
+            "comparison": false
+          }
+        }
+      },
+      {
+        "attributePatterns": ["price", "rating"],
+        "features": {
+          "facetSearch": false,
+          "filter": {
+            "equality": true,
+            "comparison": true
+          }
+        }
+      }
+    ]
+  }'
+```
+
+Meilisearch returns a summarized task object. Wait for the task to complete before querying with the new filters.
+
+## Available features
+
+| Feature | Type | Description |
+|---|---|---|
+| `facetSearch` | Boolean | Enables facet search on the attribute. Used with the `/facet-search` endpoint and facet distribution. |
+| `filter.equality` | Boolean | Enables equality operators: `=`, `!=`, `IN`, `NOT IN`, `IS NULL`, `IS NOT NULL`, `IS EMPTY`, `IS NOT EMPTY`, `EXISTS`, `NOT EXISTS`. |
+| `filter.comparison` | Boolean | Enables comparison operators: `>`, `>=`, `<`, `<=`, `TO`. |
+
+## Wildcard patterns
+
+You can use `"*"` as a wildcard to set default features for all attributes, then override specific ones:
+
+```json
+{
+  "filterableAttributes": [
+    {
+      "attributePatterns": ["*"],
+      "features": {
+        "facetSearch": false,
+        "filter": {
+          "equality": true,
+          "comparison": false
+        }
+      }
+    },
+    {
+      "attributePatterns": ["price", "rating"],
+      "features": {
+        "facetSearch": false,
+        "filter": {
+          "equality": true,
+          "comparison": true
+        }
+      }
+    }
+  ]
+}
+```
+
+This sets equality-only as the default for all filterable attributes, then adds comparison support specifically for `price` and `rating`.
+
+## Performance benefits
+
+Each enabled filter feature requires Meilisearch to build and maintain additional internal data structures during indexing. Disabling features you do not use has two benefits:
+
+- **Faster indexing**: fewer data structures to build means documents are indexed more quickly.
+- **Lower memory usage**: Meilisearch stores only the structures it needs, reducing RAM consumption for large datasets.
+
+The improvement scales with the number of filterable attributes and the size of your dataset. Projects with many filterable attributes and millions of documents will see the largest gains.
+
+## Backward compatibility
+
+The simple array format continues to work. You can mix both formats across different settings updates. If you switch from the granular format back to the simple array, all filter features are re-enabled for every listed attribute.
+
+## Next steps
+
+<CardGroup cols={3}>
+  <Card title="Filter expression syntax" icon="code" href="/capabilities/filtering_sorting_faceting/advanced/filter_expression_syntax">
+    Learn the full syntax for building filter expressions.
+  </Card>
+  <Card title="Search with facets" icon="layer-group" href="/capabilities/filtering_sorting_faceting/how_to/filter_with_facets">
+    Build faceted search interfaces with filter distributions.
+  </Card>
+  <Card title="Sort results" icon="arrow-down-wide-short" href="/capabilities/filtering_sorting_faceting/how_to/sort_results">
+    Sort search results by one or more attributes.
+  </Card>
+</CardGroup>

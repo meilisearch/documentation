@@ -92,6 +92,35 @@ When `status` changes to `succeeded`, Meilisearch has finished processing your r
 
 If the task `status` changes to `failed`, Meilisearch was not able to fulfill your request. Check the task object's `error` field for more information.
 
+## Track tasks with custom metadata
+
+You can attach a `customMetadata` query parameter to document operations. This metadata string appears in task responses and webhook payloads, making it easier to track which batch of data triggered a specific task.
+
+```bash
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/movies/documents?customMetadata=batch-2026-03-daily-update' \
+  -H 'Content-Type: application/json' \
+  --data-binary '[
+    { "id": 1, "title": "Movie One" },
+    { "id": 2, "title": "Movie Two" }
+  ]'
+```
+
+The summarized task object returned by this request includes the metadata you specified:
+
+```json
+{
+  "taskUid": 12,
+  "indexUid": "movies",
+  "status": "enqueued",
+  "type": "documentAdditionOrUpdate",
+  "customMetadata": "batch-2026-03-daily-update",
+  "enqueuedAt": "2026-03-21T10:00:00.000000Z"
+}
+```
+
+This is particularly useful when combined with [webhooks](/reference/api/management/list-webhooks), as the metadata lets you correlate incoming webhook notifications with specific data pipelines or scheduled imports.
+
 ## Conclusion
 
 You have seen what happens when an API request adds a task to the task queue, and how to check the status of that task. Consult the [task API reference](/reference/api/tasks/list-tasks) and the [asynchronous operations explanation](/capabilities/indexing/advanced/async_operations) for more information on how tasks work.

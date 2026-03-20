@@ -45,3 +45,32 @@ It is not possible to associate multiple `conversion` events with the same query
 </Note>
 
 For more information, consult the [analytics events endpoint reference](/capabilities/analytics/advanced/events_endpoint).
+
+## Retrieve the query UID with search metadata
+
+To associate analytics events with specific search queries, you need the query's unique identifier. Include the `Meili-Include-Metadata` header in your search requests to receive this information:
+
+```bash
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/movies/search' \
+  -H 'Content-Type: application/json' \
+  -H 'Meili-Include-Metadata: true' \
+  --data-binary '{
+    "q": "action hero"
+  }'
+```
+
+When this header is present, the search response includes a `metadata` field:
+
+```json
+{
+  "hits": [ … ],
+  "metadata": {
+    "requestUid": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "indexUid": "movies",
+    "primaryKey": "id"
+  }
+}
+```
+
+Use the `requestUid` value as the `queryUid` when sending `click` or `conversion` events. This ensures Meilisearch correctly links user interactions to the search query that produced them.

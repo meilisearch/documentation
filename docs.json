@@ -287,7 +287,8 @@
                     "pages": [
                       "capabilities/hybrid_search/advanced/semantic_vs_hybrid",
                       "capabilities/hybrid_search/advanced/document_template_best_practices",
-                      "capabilities/hybrid_search/advanced/custom_hybrid_ranking"
+                      "capabilities/hybrid_search/advanced/custom_hybrid_ranking",
+                      "capabilities/hybrid_search/advanced/composite_embedders"
                     ]
                   }
                 ]
@@ -360,7 +361,8 @@
                       "capabilities/filtering_sorting_faceting/how_to/sort_results",
                       "capabilities/filtering_sorting_faceting/how_to/filter_and_sort_by_date",
                       "capabilities/filtering_sorting_faceting/how_to/combine_filters_and_sort",
-                      "capabilities/filtering_sorting_faceting/how_to/build_faceted_navigation"
+                      "capabilities/filtering_sorting_faceting/how_to/build_faceted_navigation",
+                      "capabilities/filtering_sorting_faceting/how_to/configure_granular_filters"
                     ]
                   },
                   {

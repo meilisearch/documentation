@@ -79,6 +79,31 @@ In this article you saw the main steps to generating prompts that lead to releva
 - Truncate long fields
 - Add guards for missing fields
 
+## Handle embedding failures
+
+By default, if a document template fails to render or an embedder request fails, the entire indexing batch fails. This means a single problematic document can block all other documents in the same batch.
+
+With the experimental `MEILI_EXPERIMENTAL_CONFIG_EMBEDDER_FAILURE_MODES` environment variable, you can configure Meilisearch to ignore these errors instead:
+
+```bash
+# Ignore template rendering failures only
+MEILI_EXPERIMENTAL_CONFIG_EMBEDDER_FAILURE_MODES=ignore_document_template_failures meilisearch
+
+# Ignore embedder request failures only
+MEILI_EXPERIMENTAL_CONFIG_EMBEDDER_FAILURE_MODES=ignore_embedder_failures meilisearch
+
+# Ignore both types of failures
+MEILI_EXPERIMENTAL_CONFIG_EMBEDDER_FAILURE_MODES=ignore_document_template_failures,ignore_embedder_failures meilisearch
+```
+
+<Warning>
+Ignoring errors means some documents may not have embeddings, which affects search quality. Documents without embeddings will not appear in semantic or hybrid search results.
+</Warning>
+
+<Note>
+This is an experimental feature. Cloud users should contact support to enable it.
+</Note>
+
 ## Next steps
 
 <CardGroup cols={2}>

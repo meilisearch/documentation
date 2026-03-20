@@ -141,6 +141,39 @@ curl \
 
 Batch operations are processed as a single task. Meilisearch handles large batches efficiently, so prefer sending documents in bulk rather than one at a time.
 
+## Update without creating new documents
+
+By default, both `POST` and `PUT` document operations create new documents if no document with the given primary key exists. To change this behavior, add the `skipCreation=true` query parameter to your request. When enabled, Meilisearch silently ignores any documents whose primary key does not match an existing document in the index.
+
+```bash
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/movies/documents?skipCreation=true' \
+  -H 'Content-Type: application/json' \
+  --data-binary '[
+    { "id": 1, "title": "Updated Title" },
+    { "id": 99999, "title": "This document does not exist" }
+  ]'
+```
+
+In this example, only document `1` is updated. Document `99999` is ignored because it does not already exist in the index.
+
+This is useful when you want to safely update fields for existing documents without accidentally creating incomplete records.
+
+## Retrieve multiple documents by ID
+
+Use `POST /indexes/{index_uid}/documents/fetch` to retrieve specific documents by their primary keys:
+
+```bash
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/movies/documents/fetch' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "ids": ["id1", "id2", "id3"]
+  }'
+```
+
+Meilisearch returns the matching documents in the `results` array. Note that documents are not returned in the order you queried them, and non-existent IDs are silently ignored.
+
 ## Next steps
 
 <CardGroup cols={2}>
