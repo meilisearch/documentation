@@ -155,6 +155,12 @@ Before and after making changes, measure your search performance to verify impro
 3. Check that result quality remains acceptable after performance optimizations
 4. Monitor the [tasks endpoint](/reference/api/tasks/get-all-tasks) to track indexing duration
 
+## Debug with performance details
+
+If you need to identify exactly which stage of the search pipeline is slow, use the `showPerformanceDetails` parameter. It returns per-stage timing information so you can target your optimizations precisely.
+
+See [debug search performance](/capabilities/full_text_search/advanced/debug_search_performance) for full instructions and examples.
+
 <Tip>
 Performance optimization is iterative. Start with the changes that have the biggest impact (limiting searchable attributes, configuring stop words) and measure before making further adjustments.
 </Tip>
