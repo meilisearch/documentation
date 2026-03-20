@@ -458,7 +458,10 @@
                       "capabilities/indexing/how_to/filter_tasks",
                       "capabilities/indexing/how_to/manage_task_database",
                       "capabilities/indexing/how_to/optimize_batch_performance",
-                      "capabilities/indexing/how_to/use_foreign_keys"
+                      "capabilities/indexing/how_to/use_foreign_keys",
+                      "capabilities/indexing/how_to/export_data",
+                      "capabilities/indexing/how_to/compact_an_index",
+                      "capabilities/indexing/how_to/inspect_index_fields"
                     ]
                   },
                   {
@@ -992,6 +995,7 @@
                   {
                     "group": "Advanced",
                     "pages": [
+                      "resources/self_hosting/sharding",
                       "resources/self_hosting/performance/ram_multithreading",
                       "resources/self_hosting/webhooks",
                       "resources/self_hosting/huggingface_gpu"
@@ -1654,7 +1658,7 @@
     },
     {
       "source": "/learn/advanced/sharding",
-      "destination": "/resources/self_hosting/deployment/overview"
+      "destination": "/resources/self_hosting/sharding"
     },
     {
       "source": "/reference/api/stats",
@@ -1858,7 +1862,7 @@
     },
     {
       "source": "/learn/multi_search/implement_sharding",
-      "destination": "/resources/self_hosting/deployment/overview"
+      "destination": "/resources/self_hosting/sharding"
     },
     {
       "source": "/learn/multi_search/multi_search_vs_federated_search",

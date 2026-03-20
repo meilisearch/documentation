@@ -1,0 +1,115 @@
+---
+title: Inspect index fields
+description: Use the fields endpoint to get detailed metadata about all fields in an index, including their search, filter, and display settings.
+---
+
+The fields endpoint returns metadata about every field Meilisearch has detected in an index. This includes each field's name and its current configuration for searching, filtering, sorting, and display.
+
+## When to use field inspection
+
+- **Debugging**: Verify that a field is searchable, filterable, or sortable as expected.
+- **Auditing settings**: Review the effective configuration of all fields in one request instead of checking individual settings endpoints.
+- **Building admin interfaces**: Retrieve field metadata to dynamically generate configuration panels or dashboards.
+
+## List all fields in an index
+
+Send a `POST` request to `/indexes/{index_uid}/fields`:
+
+```bash
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/movies/fields' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+  --data-binary '{}'
+```
+
+The response is paginated and includes metadata for each field:
+
+```json
+{
+  "results": [
+    {
+      "name": "id",
+      "searchable": false,
+      "displayed": true,
+      "filterable": false,
+      "sortable": false
+    },
+    {
+      "name": "title",
+      "searchable": true,
+      "displayed": true,
+      "filterable": false,
+      "sortable": false
+    },
+    {
+      "name": "genres",
+      "searchable": true,
+      "displayed": true,
+      "filterable": true,
+      "sortable": false
+    }
+  ],
+  "offset": 0,
+  "limit": 20,
+  "total": 3
+}
+```
+
+## Paginate results
+
+Use `offset` and `limit` to paginate through indexes with many fields:
+
+```bash
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/movies/fields' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+  --data-binary '{
+    "offset": 20,
+    "limit": 20
+  }'
+```
+
+## Filter fields by pattern
+
+You can filter the results to only return fields matching a specific pattern:
+
+```bash
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/movies/fields' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+  --data-binary '{
+    "pattern": "release*"
+  }'
+```
+
+This returns only fields whose names match the given pattern, such as `release_date` or `release_year`.
+
+## Fields vs. settings
+
+The fields endpoint and the settings endpoint serve different purposes:
+
+| | Fields endpoint | Settings endpoint |
+|---|---|---|
+| **Returns** | Actual field-level metadata based on indexed data | The configured rules for the index |
+| **Scope** | Every field detected in the index | Only fields explicitly referenced in settings |
+| **Use case** | Inspect what Meilisearch knows about your data | Configure how Meilisearch should handle your data |
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Fields API reference" href="/reference/api/indexes/list-index-fields">
+    Full API reference for the fields endpoint
+  </Card>
+  <Card title="Displayed attributes" href="/reference/api/settings/get-displayed-attributes">
+    Configure which fields appear in search results
+  </Card>
+  <Card title="Searchable attributes" href="/reference/api/settings/get-searchable-attributes">
+    Configure which fields are searchable
+  </Card>
+  <Card title="Filterable attributes" href="/reference/api/settings/get-filterable-attributes">
+    Configure which fields can be used as filters
+  </Card>
+</CardGroup>

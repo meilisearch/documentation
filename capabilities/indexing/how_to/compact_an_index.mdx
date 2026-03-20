@@ -1,0 +1,64 @@
+---
+title: Compact an index
+description: Reclaim disk space by compacting an index's internal data structures after heavy document updates or deletions.
+---
+
+When you add, update, or delete documents, Meilisearch's internal data structures may retain unused space from previous versions of the data. Compaction reclaims this space by reorganizing the index on disk.
+
+## When to compact
+
+- **After bulk deletions**: Removing a large number of documents leaves gaps in the internal storage.
+- **After many updates**: Repeatedly updating the same documents accumulates obsolete data.
+- **When disk usage seems high**: If an index uses more disk space than expected for its document count, compaction can help.
+
+You do not need to compact after every operation. It is most useful after large batch changes.
+
+## Compact an index
+
+Send a `POST` request to `/indexes/{index_uid}/compact`:
+
+```bash
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/movies/compact' \
+  -H 'Authorization: Bearer MEILISEARCH_API_KEY'
+```
+
+Meilisearch returns a summarized task object:
+
+```json
+{
+  "taskUid": 87,
+  "indexUid": "movies",
+  "status": "enqueued",
+  "type": "indexCompaction",
+  "enqueuedAt": "2025-01-01T00:00:00.000000Z"
+}
+```
+
+## Monitor the compaction task
+
+Compaction runs asynchronously. Check its progress with the task endpoint:
+
+```bash
+curl \
+  -X GET 'MEILISEARCH_URL/tasks/87' \
+  -H 'Authorization: Bearer MEILISEARCH_API_KEY'
+```
+
+## Search availability during compaction
+
+Compaction does not block search. Your index remains fully searchable while the operation runs. New indexing tasks will be queued and processed after compaction completes.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Compact API reference" href="/reference/api/indexes/compact-index">
+    Full API reference for the compact endpoint
+  </Card>
+  <Card title="Monitor tasks" href="/capabilities/indexing/how_to/monitor_tasks">
+    Track the status of asynchronous operations
+  </Card>
+  <Card title="Indexing best practices" href="/capabilities/indexing/advanced/indexing_best_practices">
+    Optimize your indexing workflow for production
+  </Card>
+</CardGroup>
