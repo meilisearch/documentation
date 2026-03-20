@@ -1,14 +1,24 @@
 ---
-title: Hannoy vector store
-sidebarTitle: Hannoy
-description: How Meilisearch stores and searches vector embeddings using Hannoy, a disk-backed HNSW implementation that delivers 10x faster vector search.
+title: "Vector storage: DiskANN"
+sidebarTitle: Vector storage
+description: How Meilisearch stores and searches vector embeddings using a disk-backed DiskANN approach, implemented through its Hannoy library for fast and scalable vector search.
 ---
 
-**Hannoy** is Meilisearch's vector store library, introduced in v1.29. It implements **HNSW** (Hierarchical Navigable Small World) with LMDB persistence, delivering up to 10x faster indexing and search compared to its predecessor.
+Meilisearch stores and searches vector embeddings using a **disk-backed approximate nearest neighbor (ANN)** approach inspired by [DiskANN](https://github.com/microsoft/DiskANN), Microsoft's research on graph-based vector search that scales beyond RAM. The implementation lives in **Hannoy**, Meilisearch's purpose-built vector store library introduced in v1.29.
 
-## Why Hannoy replaced Arroy
+## What is DiskANN?
 
-Meilisearch previously used [Arroy](https://github.com/meilisearch/arroy), which built hyperplane trees (k-d trees) for vector search. While Arroy worked well for lower dimensions, it had limitations:
+DiskANN is a family of techniques for building graph-based vector indexes that live on disk rather than entirely in memory. Traditional vector search engines (like FAISS or HNSWlib) require the full index to fit in RAM, which becomes expensive or impossible at scale. DiskANN's key insight is that careful disk layout, combined with graph-based navigation, can achieve near in-memory search speeds while storing data on SSD.
+
+Meilisearch builds on this approach by combining **HNSW** (Hierarchical Navigable Small World) graph navigation with **LMDB** persistence, giving you fast vector search without RAM limitations.
+
+## Hannoy: Meilisearch's DiskANN implementation
+
+Hannoy implements the core DiskANN principles with HNSW as the graph structure and LMDB as the storage backend. It replaced [Arroy](https://github.com/meilisearch/arroy), Meilisearch's previous vector store based on hyperplane trees (k-d trees).
+
+### Why Hannoy replaced Arroy
+
+While Arroy worked well for lower dimensions, it had limitations:
 
 | Issue | Impact |
 |-------|--------|
@@ -17,13 +27,13 @@ Meilisearch previously used [Arroy](https://github.com/meilisearch/arroy), which
 | **Read-heavy indexing** | Over 90% of indexing time spent on I/O and page faults |
 | **Complex maintenance** | Tree balancing and temporary file management |
 
-Hannoy addresses all these issues using a graph-based HNSW approach.
+Hannoy addresses all these issues using a graph-based approach.
 
-## Performance improvements
+### Performance improvements
 
 Benchmarks on 1 million documents show dramatic improvements:
 
-### 768-dimensional embeddings
+#### 768-dimensional embeddings
 
 | Metric | Arroy | Hannoy | Improvement |
 |--------|-------|--------|-------------|
@@ -31,7 +41,7 @@ Benchmarks on 1 million documents show dramatic improvements:
 | **Search latency** | 190ms | 29ms | **6.5x faster** |
 | **Disk usage** | 16.19 GiB | 4.03 GiB | **4x smaller** |
 
-### 1536-dimensional (quantized)
+#### 1536-dimensional (quantized)
 
 | Metric | Arroy | Hannoy | Improvement |
 |--------|-------|--------|-------------|
@@ -41,9 +51,11 @@ Benchmarks on 1 million documents show dramatic improvements:
 
 Real-world impact: One customer's indexing time dropped from 2 months to 6 seconds.
 
-## How HNSW works
+## How it works
 
-HNSW organizes vectors into a hierarchical graph structure:
+### HNSW graph navigation
+
+Hannoy organizes vectors into a hierarchical graph structure:
 
 ```
 Layer 2:    A -------- D              (sparse, long-range links)
@@ -59,18 +71,18 @@ Layer 0:    A-B-C-D-E-F-G-H-I-J      (all vectors, short links)
 3. Descend to the next layer at each local minimum
 4. Return nearest neighbors from the bottom layer
 
-This "small world" property---where any vector can reach any other through few hops---enables efficient search without checking every vector.
+This "small world" property, where any vector can reach any other through few hops, enables efficient search without checking every vector.
 
-## Key features
+### Disk-backed storage with LMDB
 
-### LMDB integration
-
-Hannoy stores the graph structure in LMDB:
+Following the DiskANN philosophy, Hannoy stores the graph structure in LMDB rather than in RAM:
 
 - **Disk-backed**: Handle datasets larger than available RAM
 - **Memory-mapped**: OS manages caching automatically
 - **Concurrent reads**: Multiple search threads simultaneously
 - **~200 bytes overhead** per vector for graph edges
+
+This is the key advantage over in-memory-only solutions. Your dataset size is limited by disk space, not RAM.
 
 ### Incremental updates
 
