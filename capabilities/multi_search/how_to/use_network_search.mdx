@@ -1,0 +1,184 @@
+---
+title: Search across a network of instances
+description: Use the useNetwork parameter to automatically search all Meilisearch instances in your network and merge results.
+---
+
+The `useNetwork` parameter lets you search across your entire network of Meilisearch instances with a single request. When enabled, Meilisearch automatically forwards the query to all configured remotes and merges the results into one response.
+
+This is useful when your data is distributed across multiple Meilisearch instances, for example in sharded or geographically distributed deployments.
+
+<Note>
+`useNetwork` is an experimental feature. You must enable the `network` experimental feature before using it.
+</Note>
+
+## Requirements
+
+- Two or more Meilisearch instances
+- The `network` experimental feature enabled on all instances
+- Network topology configured via `PATCH /experimental-features`
+
+## Enable the network feature
+
+Before using `useNetwork`, enable the network experimental feature and configure your network topology. Send a `PATCH` request to the `/experimental-features` endpoint:
+
+```bash
+curl \
+  -X PATCH 'MEILISEARCH_URL/experimental-features' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "network": true
+  }'
+```
+
+Then configure the network topology so each instance knows about its remotes:
+
+```bash
+curl \
+  -X PATCH 'MEILISEARCH_URL/network' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "self": "main",
+    "remotes": {
+      "main": {
+        "url": "http://main.example.com",
+        "searchApiKey": "masterKey"
+      },
+      "remote-a": {
+        "url": "http://remote-a.example.com",
+        "searchApiKey": "remoteKeyA"
+      },
+      "remote-b": {
+        "url": "http://remote-b.example.com",
+        "searchApiKey": "remoteKeyB"
+      }
+    }
+  }'
+```
+
+## Use useNetwork in a regular search
+
+Add `"useNetwork": true` to any search request. Meilisearch will query all remotes and merge the results:
+
+```bash
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/movies/search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "q": "batman",
+    "useNetwork": true
+  }'
+```
+
+You can also use the GET route:
+
+```bash
+curl 'MEILISEARCH_URL/indexes/movies/search?q=batman&useNetwork=true'
+```
+
+The response includes `_federation` metadata showing which remote each result came from:
+
+```json
+{
+  "hits": [
+    {
+      "id": 42,
+      "title": "Batman Begins",
+      "_federation": {
+        "indexUid": "movies",
+        "queriesPosition": 0,
+        "remote": "remote-a"
+      }
+    },
+    {
+      "id": 87,
+      "title": "The Batman",
+      "_federation": {
+        "indexUid": "movies",
+        "queriesPosition": 0,
+        "remote": "remote-b"
+      }
+    }
+  ],
+  "processingTimeMs": 12,
+  "limit": 20,
+  "offset": 0,
+  "estimatedTotalHits": 5
+}
+```
+
+## Use useNetwork in federated search
+
+In a multi-search request, add `"useNetwork": true` to individual queries. This lets you combine local and network-wide searches in a single request:
+
+```bash
+curl \
+  -X POST 'MEILISEARCH_URL/multi-search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "federation": {},
+    "queries": [
+      {
+        "indexUid": "movies",
+        "q": "batman",
+        "useNetwork": true
+      },
+      {
+        "indexUid": "actors",
+        "q": "batman",
+        "useNetwork": true
+      }
+    ]
+  }'
+```
+
+Results from all remotes are merged and ranked together, just like a regular federated search.
+
+## Shard-aware search
+
+When using `useNetwork: true` in a replicated sharding setup, Meilisearch automatically expands the query to ensure each shard is queried exactly once. This prevents duplicate or missing results when the same index is replicated across multiple instances.
+
+No additional configuration is needed. Meilisearch detects the sharding topology from the network configuration and handles deduplication automatically.
+
+## Filter by shard
+
+When the network feature is enabled, you can use the `_shard` filter to target specific shards:
+
+```bash
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/movies/search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "q": "batman",
+    "useNetwork": true,
+    "filter": "_shard = \"shard-a\""
+  }'
+```
+
+The `_shard` filter supports equality, inequality, and `IN` operators:
+
+- `_shard = "shard-a"` returns results only from `shard-a`
+- `_shard != "shard-a"` returns results from all shards except `shard-a`
+- `_shard IN ["shard-a", "shard-b"]` returns results from both `shard-a` and `shard-b`
+
+## Limitations
+
+- **Facet search**: the `/facet-search` route does not support `useNetwork`
+- **Chat routes**: chat completions do not support `useNetwork`
+- **Experimental**: this feature requires the `network` experimental feature to be enabled. Experimental features may change in future releases
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Federated search" href="/capabilities/multi_search/getting_started/federated_search">
+    Learn how to merge results from multiple indexes into a single list.
+  </Card>
+  <Card title="Boost results across indexes" href="/capabilities/multi_search/how_to/boost_results_across_indexes">
+    Use federation weights to prioritize results from specific indexes.
+  </Card>
+  <Card title="Search with POST" href="/reference/api/search/search-with-post">
+    API reference for the search endpoint.
+  </Card>
+  <Card title="Multi-search API" href="/reference/api/multi-search/perform-a-multi-search">
+    API reference for the multi-search endpoint.
+  </Card>
+</CardGroup>

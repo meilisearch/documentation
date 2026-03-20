@@ -1,0 +1,134 @@
+---
+title: Use foreign keys for cross-index document hydration
+description: Automatically enrich documents with related data from other indexes using the experimental foreign keys feature.
+---
+
+Foreign keys let you link documents across indexes so that search results are automatically enriched with related data. Instead of duplicating information, you store it once in a dedicated index and reference it by ID.
+
+For example, a `movies` index can reference actors by ID. When you search for movies, Meilisearch automatically replaces the actor IDs with full actor documents from the `actors` index.
+
+<Warning>
+Foreign keys is an experimental feature. Its API and behavior may change in future releases. It is not supported in remote sharding environments.
+</Warning>
+
+## Requirements
+
+- A running Meilisearch instance
+- At least two indexes (one main index and one related index)
+
+## Step 1: Enable the experimental feature
+
+Foreign keys must be activated through the experimental features endpoint before you can use them:
+
+```bash
+curl \
+  -X PATCH 'MEILISEARCH_URL/experimental-features' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "foreignKeys": true
+  }'
+```
+
+## Step 2: Create your related index
+
+Add documents to the index you want to reference. In this example, create an `actors` index with actor data:
+
+```bash
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/actors/documents' \
+  -H 'Content-Type: application/json' \
+  --data-binary '[
+    { "id": 1, "name": "Tom Hanks", "born": 1956 },
+    { "id": 2, "name": "Robin Wright", "born": 1966 },
+    { "id": 3, "name": "Gary Sinise", "born": 1955 }
+  ]'
+```
+
+## Step 3: Configure foreign keys in the main index
+
+Use the settings endpoint to define which fields contain foreign references and which index they point to:
+
+```bash
+curl \
+  -X PATCH 'MEILISEARCH_URL/indexes/movies/settings' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "foreignKeys": [
+      {
+        "fieldName": "actors",
+        "foreignIndexUid": "actors"
+      }
+    ]
+  }'
+```
+
+This tells Meilisearch that the `actors` field in the `movies` index contains IDs that reference documents in the `actors` index.
+
+## Step 4: Add documents with foreign IDs
+
+Add documents to your main index. Use arrays of IDs for the foreign key field:
+
+```bash
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/movies/documents' \
+  -H 'Content-Type: application/json' \
+  --data-binary '[
+    { "id": 1, "title": "Forrest Gump", "actors": [1, 2, 3] },
+    { "id": 2, "title": "Cast Away", "actors": [1] }
+  ]'
+```
+
+## Step 5: Search and see hydrated results
+
+When you search the `movies` index, Meilisearch automatically replaces foreign IDs with full documents from the referenced index:
+
+```bash
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/movies/search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{ "q": "forrest" }'
+```
+
+Without foreign keys, a result would look like this:
+
+```json
+{
+  "id": 1,
+  "title": "Forrest Gump",
+  "actors": [1, 2, 3]
+}
+```
+
+With foreign keys configured, the same result is automatically hydrated:
+
+```json
+{
+  "id": 1,
+  "title": "Forrest Gump",
+  "actors": [
+    { "id": 1, "name": "Tom Hanks", "born": 1956 },
+    { "id": 2, "name": "Robin Wright", "born": 1966 },
+    { "id": 3, "name": "Gary Sinise", "born": 1955 }
+  ]
+}
+```
+
+## Limitations
+
+- **Experimental**: This feature may change or be removed in future versions.
+- **No remote sharding**: Foreign keys are not supported in environments using remote sharding.
+- **One direction**: Hydration works from the main index to the referenced index. The referenced index does not automatically link back.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Foreign keys settings API" href="/reference/api/settings/get-foreign-keys">
+    Full API reference for foreign key settings
+  </Card>
+  <Card title="Experimental features API" href="/reference/api/experimental-features/list-experimental-features">
+    Enable and manage experimental features
+  </Card>
+  <Card title="Indexing overview" href="/capabilities/indexing/overview">
+    Learn more about how indexing works in Meilisearch
+  </Card>
+</CardGroup>

@@ -242,7 +242,8 @@
                     "group": "Advanced",
                     "pages": [
                       "capabilities/full_text_search/advanced/ranking_pipeline",
-                      "capabilities/full_text_search/advanced/performance_tuning"
+                      "capabilities/full_text_search/advanced/performance_tuning",
+                      "capabilities/full_text_search/advanced/debug_search_performance"
                     ]
                   },
                   {
@@ -341,7 +342,8 @@
                     "pages": [
                       "capabilities/multi_search/how_to/boost_results_across_indexes",
                       "capabilities/multi_search/how_to/search_with_different_filters",
-                      "capabilities/multi_search/how_to/build_unified_search_bar"
+                      "capabilities/multi_search/how_to/build_unified_search_bar",
+                      "capabilities/multi_search/how_to/use_network_search"
                     ]
                   }
                 ]
@@ -455,7 +457,8 @@
                       "capabilities/indexing/how_to/monitor_tasks",
                       "capabilities/indexing/how_to/filter_tasks",
                       "capabilities/indexing/how_to/manage_task_database",
-                      "capabilities/indexing/how_to/optimize_batch_performance"
+                      "capabilities/indexing/how_to/optimize_batch_performance",
+                      "capabilities/indexing/how_to/use_foreign_keys"
                     ]
                   },
                   {

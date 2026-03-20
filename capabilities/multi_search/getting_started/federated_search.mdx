@@ -95,9 +95,47 @@ This request will lead to results from the query targeting `profile` ranking hig
 }
 ```
 
+## Paginate federated results
+
+By default, federated search returns a limited number of results using `offset` and `limit`. If you need exhaustive pagination, use the `federation.page` and `federation.hitsPerPage` parameters instead. These work like traditional page-based pagination across the merged result set.
+
+Send a federated search request with pagination:
+
+```bash
+curl \
+  -X POST 'MEILISEARCH_URL/multi-search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "federation": {
+      "page": 2,
+      "hitsPerPage": 10
+    },
+    "queries": [
+      { "indexUid": "profiles", "q": "Nguyen" },
+      { "indexUid": "chats", "q": "Nguyen" },
+      { "indexUid": "tickets", "q": "Nguyen" }
+    ]
+  }'
+```
+
+The response includes `page`, `hitsPerPage`, and `totalPages` instead of `offset`, `limit`, and `estimatedTotalHits`:
+
+```json
+{
+  "hits": [ … ],
+  "processingTimeMs": 1,
+  "page": 2,
+  "hitsPerPage": 10,
+  "totalHits": 25,
+  "totalPages": 3
+}
+```
+
+This makes it straightforward to build paginated UIs that display merged results from multiple indexes.
+
 ## Conclusion
 
-You have created three indexes, then performed a federated multi-index search to receive all results in a single list. You then used `weight` to boost results from the index most likely to contain the information you wanted.
+You have created three indexes, then performed a federated multi-index search to receive all results in a single list. You then used `weight` to boost results from the index most likely to contain the information you wanted, and paginated through merged results using `federation.page` and `federation.hitsPerPage`.
 
 ## Next steps
 

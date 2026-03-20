@@ -39,6 +39,10 @@ All formats require that each document contains a primary key field to uniquely 
 
 Every document in a Meilisearch index must have a unique **primary key** field. If you do not specify a primary key when creating an index, Meilisearch attempts to auto-detect it by looking for an attribute ending in `id` (such as `id`, `movieId`, or `product_id`). You can also set the primary key explicitly when adding documents or through the index settings.
 
+## Cross-index relationships (experimental)
+
+Foreign keys allow you to link documents across indexes. Instead of duplicating data, you store related information in a separate index and reference it by ID. At search time, Meilisearch automatically hydrates results with the full referenced documents. See [Use foreign keys](/capabilities/indexing/how_to/use_foreign_keys) for a step-by-step guide.
+
 ## Next steps
 
 <CardGroup cols={2}>

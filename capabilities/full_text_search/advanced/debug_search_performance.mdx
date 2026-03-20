@@ -1,0 +1,178 @@
+---
+title: Debug search performance
+description: Use the showPerformanceDetails parameter to get detailed timing breakdowns for each stage of a search query.
+---
+
+When a search query is slower than expected, it can be difficult to tell which part of the pipeline is responsible. The `showPerformanceDetails` parameter returns per-stage timing information so you can pinpoint bottlenecks without guesswork.
+
+## How it works
+
+Set `showPerformanceDetails` to `true` in any search request. Meilisearch will include a `performanceDetails` object in the response, breaking down how much time each stage of the search pipeline consumed.
+
+This parameter is supported on all search routes:
+
+- `POST /indexes/{indexUid}/search`
+- `GET /indexes/{indexUid}/search`
+- `POST /multi-search`
+- `POST /indexes/{indexUid}/similar`
+- `GET /indexes/{indexUid}/similar`
+
+## Basic usage
+
+Add `showPerformanceDetails` to a standard search request:
+
+```bash
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/movies/search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "q": "glass",
+    "showPerformanceDetails": true
+  }'
+```
+
+The response includes the usual search results along with a `performanceDetails` object:
+
+```json
+{
+  "hits": [
+    { "id": 1, "title": "Glass Onion" }
+  ],
+  "query": "glass",
+  "processingTimeMs": 4,
+  "performanceDetails": {
+    "wait for permit": "295.29µs",
+    "search > tokenize": "436.67µs",
+    "search > resolve universe": "649.00µs",
+    "search > keyword search": "515.71µs",
+    "search > format": "288.54µs",
+    "search": "3.56ms"
+  }
+}
+```
+
+## Understanding performance stages
+
+Each key in `performanceDetails` represents a stage of the search pipeline:
+
+| Stage | Description |
+|-------|-------------|
+| `wait for permit` | Time spent waiting for a search permit. Meilisearch uses concurrency control to limit the number of simultaneous searches, so a high value here indicates your instance is handling many concurrent queries. |
+| `search > tokenize` | Time spent breaking the query string into individual tokens. This is typically very fast unless the query is unusually long. |
+| `search > resolve universe` | Time spent determining the set of candidate documents that could match the query. Filters, geo constraints, and other pre-search operations contribute to this stage. |
+| `search > keyword search` | Time spent running keyword matching against the candidate set. This is often the most significant stage for broad queries on large datasets. |
+| `search > format` | Time spent formatting results, including highlighting, cropping, and building the response payload. |
+| `search` | Total time for the entire search operation. This is roughly the sum of the stages above plus minor internal overhead. |
+
+<Note>
+Depending on your query and configuration, you may see additional stages (for example, stages related to vector search or re-ranking) or fewer stages if certain pipeline steps are skipped.
+</Note>
+
+## Multi-search
+
+In multi-search requests, set `showPerformanceDetails` on each individual query that you want to profile:
+
+```bash
+curl \
+  -X POST 'MEILISEARCH_URL/multi-search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "queries": [
+      {
+        "indexUid": "movies",
+        "q": "glass",
+        "showPerformanceDetails": true
+      },
+      {
+        "indexUid": "actors",
+        "q": "samuel",
+        "showPerformanceDetails": true
+      }
+    ]
+  }'
+```
+
+Each result in the response includes its own `performanceDetails`, letting you compare timing across indexes and queries.
+
+## Federated search
+
+For federated multi-search, set `showPerformanceDetails` in the `federation` object to get timing details for the combined search:
+
+```bash
+curl \
+  -X POST 'MEILISEARCH_URL/multi-search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "federation": {
+      "showPerformanceDetails": true
+    },
+    "queries": [
+      { "indexUid": "movies", "q": "glass" },
+      { "indexUid": "books", "q": "glass" }
+    ]
+  }'
+```
+
+## Similar documents
+
+The similar documents endpoint also supports `showPerformanceDetails`:
+
+```bash
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/movies/similar' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "id": "143",
+    "showPerformanceDetails": true
+  }'
+```
+
+## Practical tips
+
+### Identify the bottleneck
+
+Look for the stage with the highest duration. Common patterns include:
+
+- **High `wait for permit`**: your instance is overloaded with concurrent searches. Consider scaling your hardware or reducing query volume.
+- **High `search > resolve universe`**: complex filters or geo constraints are expensive. Simplify filters or ensure your filterable attributes are correctly configured.
+- **High `search > keyword search`**: the query matches too many candidates. Adding stop words, limiting searchable attributes, or setting a search cutoff can help.
+- **High `search > format`**: large `attributesToRetrieve`, `attributesToHighlight`, or `attributesToCrop` values force Meilisearch to do more work formatting results. Reduce these to only the fields you need.
+
+### Compare before and after
+
+Use `showPerformanceDetails` before and after configuration changes (adding stop words, adjusting searchable attributes, modifying the search cutoff) to measure the impact of each optimization.
+
+### Disable in production
+
+Collecting performance details adds a small amount of overhead to each search request. Use this parameter for debugging and profiling, then remove it from production queries.
+
+<CardGroup cols={2}>
+  <Card
+    title="Performance tuning"
+    icon="gauge-high"
+    href="/capabilities/full_text_search/advanced/performance_tuning"
+  >
+    Optimize search speed and relevancy for large datasets
+  </Card>
+  <Card
+    title="Ranking pipeline"
+    icon="list-ol"
+    href="/capabilities/full_text_search/advanced/ranking_pipeline"
+  >
+    Understand how Meilisearch ranks search results
+  </Card>
+  <Card
+    title="Configure search cutoff"
+    icon="timer"
+    href="/capabilities/full_text_search/how_to/configure_search_cutoff"
+  >
+    Set time limits to guarantee consistent response times
+  </Card>
+  <Card
+    title="Search API reference"
+    icon="code"
+    href="/reference/api/search/search-with-post"
+  >
+    Full API reference for the search endpoint
+  </Card>
+</CardGroup>
