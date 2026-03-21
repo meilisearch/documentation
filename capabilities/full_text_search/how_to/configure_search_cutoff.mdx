@@ -45,17 +45,12 @@ Remove the search cutoff and return to the default behavior (no time limit):
 
 ## Choosing a cutoff value
 
-The right cutoff value depends on your dataset size, hardware, and user experience requirements:
+The right cutoff value is a trade-off: lower values guarantee faster responses but increase the chance of returning incomplete results for broad queries. Higher values give Meilisearch more time to find all matches but allow occasional slow queries.
 
-| Scenario | Suggested range |
-|----------|----------------|
-| Small datasets (under 100K documents) | Not needed (`null`) |
-| Medium datasets (100K to 1M documents) | 200ms to 500ms |
-| Large datasets (over 1M documents) | 100ms to 300ms |
-| Real-time search-as-you-type | 50ms to 150ms |
+As a general recommendation, avoid setting the cutoff below **500ms**. This provides a good safety net against unusually long queries (including potential abuse from crafted search strings) while still giving Meilisearch enough time to return quality results for the vast majority of queries.
 
 <Tip>
-Monitor your search response times before setting a cutoff. If most queries already complete within an acceptable time, a cutoff may not be necessary. The cutoff is most useful as a safety net for occasional slow queries on large datasets.
+The cutoff is most useful as a safety net, not as a performance tuning knob. If your searches are consistently slow, address the root cause with the optimizations below rather than lowering the cutoff.
 </Tip>
 
 ## Search cutoff vs. other performance optimizations
