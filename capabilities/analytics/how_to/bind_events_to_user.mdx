@@ -7,10 +7,6 @@ description: This guide shows you how to manually differentiate users across sea
 import CodeSamplesAnalyticsEventBindSearch1 from '/snippets/generated-code-samples/code_samples_analytics_event_bind_search_1.mdx';
 import CodeSamplesAnalyticsEventBindEvent1 from '/snippets/generated-code-samples/code_samples_analytics_event_bind_event_1.mdx';
 
-<Note>
-This article refers to a new version of the Meilisearch Cloud analytics that is being rolled out in November 2025. Some features described here may not yet be available to your account. Contact support for more information.
-</Note>
-
 ## Assign user IDs to search requests
 
 You can assign user IDs to search requests by including an `X-MS-USER-ID` header with your query:
@@ -47,8 +43,6 @@ curl \
     "userId": "SEARCH_USER_ID"
   }'
 ```
-
-Replace `SEARCH_USER_ID` with any value that uniquely identifies that user. This may be an authenticated user's ID when running searches from your own back end, or a hash of the user's IP address.
 
 <Warning>
 It is mandatory to specify a user ID when sending analytics events.
