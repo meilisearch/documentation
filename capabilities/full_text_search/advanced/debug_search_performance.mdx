@@ -53,19 +53,49 @@ The response includes the usual search results along with a `performanceDetails`
 
 ## Understanding performance stages
 
-Each key in `performanceDetails` represents a stage of the search pipeline:
+Each key in `performanceDetails` represents a stage of the search pipeline. Stage names are hierarchical, using `>` as a separator (e.g., `search > keyword search`).
+
+### Top-level stages
 
 | Stage | Description |
 |-------|-------------|
-| `wait for permit` | Time spent waiting for a search permit. Meilisearch uses concurrency control to limit the number of simultaneous searches, so a high value here indicates your instance is handling many concurrent queries. |
-| `search > tokenize` | Time spent breaking the query string into individual tokens. This is typically very fast unless the query is unusually long. |
-| `search > resolve universe` | Time spent determining the set of candidate documents that could match the query. Filters, [geo search](/capabilities/geo_search/overview) constraints, and other pre-search operations contribute to this stage. |
-| `search > keyword search` | Time spent running keyword matching against the candidate set. This is often the most significant stage for broad queries on large datasets. |
-| `search > format` | Time spent formatting results, including [highlighting and cropping](/capabilities/full_text_search/how_to/highlight_search_results), and building the response payload. |
-| `search` | Total time for the entire search operation. This is roughly the sum of the stages above plus minor internal overhead. |
+| `wait for permit` | Time waiting for a search permit. Meilisearch limits concurrent searches, so a high value here means your instance is handling too many simultaneous queries. |
+| `search` | Total time for the entire search operation, including all sub-stages below. |
+| `similar` | Total time for a similar documents request (instead of `search`). |
+
+### Search sub-stages
+
+These appear as children of the `search` stage. Not all stages appear in every query; Meilisearch only reports stages that were actually executed.
+
+| Stage | Description |
+|-------|-------------|
+| `search > tokenize` | Breaking the query string into individual tokens. Typically very fast unless the query is unusually long. |
+| `search > embed` | Generating vector embeddings for the query. Only appears when using [hybrid or semantic search](/capabilities/hybrid_search/overview). Duration depends on your embedder provider and network latency. |
+| `search > filter` | Evaluating [filter expressions](/capabilities/filtering_sorting_faceting/advanced/filter_expression_syntax) to narrow the candidate set. Complex filters or many filterable attributes increase this time. |
+| `search > resolve universe` | Determining the initial set of candidate documents. This combines filter results with the full document set to establish which documents are eligible for ranking. |
+| `search > keyword search` | Running keyword matching against candidates. Often the most significant stage for broad queries on large datasets. |
+| `search > placeholder search` | Retrieving documents when the query is empty ([placeholder search](/capabilities/full_text_search/getting_started/placeholder_search)). Appears instead of `keyword search` when `q` is empty or missing. |
+| `search > semantic search` | Running vector similarity search against candidates. Only appears when using [hybrid or semantic search](/capabilities/hybrid_search/overview). |
+| `search > personalization` | Applying [search personalization](/capabilities/personalization/overview) to re-rank results based on user context. Only appears when personalization is configured. |
+| `search > facet distribution` | Computing facet value counts for the `facets` parameter. Cost scales with the number of faceted attributes and unique values. See [maxValuesPerFacet](/capabilities/full_text_search/advanced/performance_tuning#lower-max-values-per-facet). |
+| `search > format` | Formatting results: [highlighting, cropping](/capabilities/full_text_search/how_to/highlight_search_results), building the response payload. Cost scales with the number of attributes to highlight/crop and the size of document fields. |
+
+### Federated search stages
+
+When using `showPerformanceDetails` at the `federation` level, you see these stages instead:
+
+| Stage | Description |
+|-------|-------------|
+| `federating results > partition queries` | Organizing queries by index and remote host. |
+| `federating results > start remote search` | Initiating search requests to remote Meilisearch instances. Only appears when using [network search](/capabilities/multi_search/how_to/use_network_search). |
+| `federating results > execute local search` | Executing queries against local indexes. |
+| `federating results > wait for remote results` | Waiting for remote instances to respond. High values indicate network latency or slow remote instances. |
+| `federating results > merge results` | Merging and deduplicating results from all sources into a single ranked list. |
+| `federating results > hydrate documents` | Fetching full document data, including [foreign key](/capabilities/indexing/how_to/use_foreign_keys) joins. |
+| `federating results > merge facets` | Combining facet distributions from all sources. |
 
 <Note>
-Depending on your query and configuration, you may see additional stages (for example, stages related to vector search or re-ranking) or fewer stages if certain pipeline steps are skipped.
+Multiple occurrences of the same stage (e.g., multiple `search > keyword search` in a federated query) are automatically accumulated into a single total duration.
 </Note>
 
 ## Multi-search
@@ -131,12 +161,16 @@ curl \
 
 ### Identify the bottleneck
 
-Look for the stage with the highest duration. Common patterns include:
+Look for the stage with the highest duration. Common patterns:
 
-- **High `wait for permit`**: your instance is overloaded with concurrent searches. Consider scaling your hardware or reducing query volume.
+- **High `wait for permit`**: your instance is overloaded with concurrent searches. Scale your hardware or reduce query volume.
+- **High `search > filter`**: complex filter expressions or too many filterable attributes. Use [granular filterable attributes](/capabilities/filtering_sorting_faceting/how_to/configure_granular_filters) to disable unused filter features.
 - **High `search > resolve universe`**: complex [filters](/capabilities/filtering_sorting_faceting/getting_started) or geo constraints are expensive. Simplify filters or ensure your filterable attributes are correctly configured.
-- **High `search > keyword search`**: the query matches too many candidates. Adding [stop words](/capabilities/full_text_search/how_to/configure_stop_words), limiting [searchable attributes](/capabilities/full_text_search/how_to/configure_searchable_attributes), or setting a [search cutoff](/capabilities/full_text_search/how_to/configure_search_cutoff) can help.
-- **High `search > format`**: large `attributesToRetrieve`, `attributesToHighlight`, or `attributesToCrop` values force Meilisearch to do more work formatting results. Reduce these to only the fields you need.
+- **High `search > keyword search`**: the query matches too many candidates. Add [stop words](/capabilities/full_text_search/how_to/configure_stop_words), limit [searchable attributes](/capabilities/full_text_search/how_to/configure_searchable_attributes), or lower [`maxTotalHits`](/capabilities/full_text_search/advanced/performance_tuning#lower-max-total-hits).
+- **High `search > embed`**: your embedder is slow. Consider switching to a faster model, using a local embedder for search with [composite embedders](/capabilities/hybrid_search/advanced/composite_embedders), or caching embeddings.
+- **High `search > facet distribution`**: too many faceted attributes or high `maxValuesPerFacet`. Lower it to the number of facet values you actually display.
+- **High `search > format`**: large `attributesToRetrieve`, `attributesToHighlight`, or `attributesToCrop`. Reduce to only the fields your UI needs.
+- **High `federating results > wait for remote results`**: network latency to remote instances. Check network connectivity or colocate instances.
 
 ### Compare before and after
 
