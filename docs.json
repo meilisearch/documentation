@@ -293,6 +293,7 @@
                     "group": "Providers",
                     "pages": [
                       "capabilities/hybrid_search/how_to/configure_openai_embedder",
+                      "guides/embedders/openai",
                       "capabilities/hybrid_search/how_to/configure_cohere_embedder",
                       "capabilities/hybrid_search/how_to/configure_huggingface_embedder",
                       "capabilities/hybrid_search/how_to/configure_rest_embedder",
@@ -923,16 +924,7 @@
                 "pages": [
                   "guides/ai/getting_started_with_chat",
                   "guides/ai/mcp",
-                  "guides/embedders/openai",
-                  "guides/langchain",
-                  "guides/embedders/huggingface",
-                  "guides/embedders/bedrock",
-                  "guides/embedders/cloudflare",
-                  "guides/embedders/cohere",
-                  "guides/embedders/mistral",
-                  "guides/embedders/voyage",
-                  "guides/embedders/jina",
-                  "guides/embedders/gemini"
+                  "guides/langchain"
                 ]
               },
               {
