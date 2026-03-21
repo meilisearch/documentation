@@ -59,7 +59,7 @@ Use `PATCH /indexes/{indexUid}/settings` to apply granular filterable attributes
 
 ```sh
 curl \
-  -X PATCH 'http://localhost:7700/indexes/products/settings' \
+  -X PATCH 'MEILISEARCH_URL/indexes/products/settings' \
   -H 'Content-Type: application/json' \
   -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
   --data-binary '{
