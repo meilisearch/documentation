@@ -218,7 +218,7 @@
             "tab": "Capabilities",
             "groups": [
               {
-                "group": "Overview",
+                "group": "",
                 "pages": [
                   "capabilities/overview"
                 ]
