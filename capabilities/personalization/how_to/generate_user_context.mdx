@@ -1,11 +1,11 @@
 ---
 title: Generate user context
-description: Build user context from browsing history and preferences to power personalized search results.
+description: Build user profiles from browsing history and preferences to power personalized search results.
 ---
 
-User context is the plain-text description you send with each search request to personalize results. Meilisearch does not generate user context automatically. You build it on your backend by aggregating data about each user (potentially using [analytics](/capabilities/analytics/overview) events), then pass it as a string in the `personalize` search parameter.
+A user profile is the plain-text string you send with each search request to personalize results. Meilisearch does not yet generate user profiles automatically. You build them on your backend by aggregating data about each user (potentially using [analytics](/capabilities/analytics/overview) events), then pass the profile as a string in the `personalize` search parameter.
 
-This guide covers strategies for collecting user signals, structuring them into a context string, and sending that context with search requests.
+This guide covers strategies for collecting user signals, structuring them into a profile string, and sending that profile with search requests.
 
 ## Strategies for building user context
 
@@ -43,7 +43,7 @@ Incorporate location, language, or seasonal context when relevant.
 
 ## Structure the context string
 
-Combine multiple signals into a single plain-text description. The re-ranking model works best with affirmatively stated preferences. Focus on what the user likes rather than what they dislike.
+Combine multiple signals into a single profile string. The re-ranking model works best with affirmatively stated preferences. Focus on what the user likes rather than what they dislike.
 
 **Good**: `"Prefers organic food, shops for family of four, budget-conscious, favors local brands."`
 
@@ -53,7 +53,7 @@ Keep the context string concise (1 to 3 sentences). Include the most relevant an
 
 ## Send context with a search request
 
-Pass user context in the `personalize` parameter of your search request. The `personalize` object must contain a `userContext` field with your description string:
+Pass the user profile in the `personalize` parameter of your search request. The `personalize` object must contain a `userContext` field with your profile string:
 
 <CodeGroup>
 
@@ -71,7 +71,7 @@ curl \
 
 </CodeGroup>
 
-Meilisearch retrieves results matching the query, then re-ranks them based on the user context you provided. Documents that better match the user's profile appear higher in the results.
+Meilisearch retrieves results matching the query, then re-ranks them based on the user profile you provided. Documents that better match the profile appear higher in the results.
 
 ## Example: building context from a user profile
 

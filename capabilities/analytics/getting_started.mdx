@@ -1,7 +1,7 @@
 ---
-title: Configure Meilisearch Cloud analytics events
+title: Configure analytics events
 sidebarTitle: Getting started
-description: By default, Meilisearch Cloud analytics tracks metrics such as number of users and latency. Follow this guide to track advanced events such as user conversion and click-through rates.
+description: By default, Meilisearch analytics tracks metrics such as number of users and latency. Follow this guide to track advanced events such as user conversion and click-through rates.
 ---
 
 import CodeSamplesAnalyticsEventConversion1 from '/snippets/generated-code-samples/code_samples_analytics_event_conversion_1.mdx';
@@ -9,15 +9,15 @@ import CodeSamplesAnalyticsEventClick1 from '/snippets/generated-code-samples/co
 
 ## Configure click-through rate and average click position
 
-To track click-through rate and average click position, Meilisearch Cloud needs to know when users click on search results.
+To track click-through rate and average click position, Meilisearch needs to know when users click on search results.
 
-Every time a user clicks on a search result, your application must send a `click` event to the `POST` endpoint of Meilisearch Cloud's `/events` route:
+Every time a user clicks on a search result, your application must send a `click` event to the `POST /events` endpoint:
 
 <CodeSamplesAnalyticsEventClick1 />
 
 You must explicitly submit a `userId` associated with the event. This can be any arbitrary string you use to identify the user, such as their profile ID in your application or their hashed IP address. You may submit user IDs directly on the event payload, or setting a `X-MS-USER-ID` request header.
 
-Specifying a `queryUid` is optional but recommended as it ensures Meilisearch correctly associates the search query with the event. You can find the query UID in the [`metadata` field present in Meilisearch Cloud's search query responses](/reference/api/headers#search-metadata).
+Specifying a `queryUid` is optional but recommended as it ensures Meilisearch correctly associates the search query with the event. You can find the query UID in the [`metadata` field present in search query responses](/reference/api/headers#search-metadata).
 
 For more information, consult the [analytics events endpoint reference](/capabilities/analytics/advanced/events_endpoint).
 
@@ -25,13 +25,13 @@ For more information, consult the [analytics events endpoint reference](/capabil
 
 To track conversion rate, first identify what should count as a conversion for your application. For example, in a web shop a conversion might be a user finalizing the checkout process.
 
-Once you have established what is a conversion in your application, configure it to send a `conversion` event to the `POST` endpoint of Meilisearch Cloud analytics route:
+Once you have established what is a conversion in your application, configure it to send a `conversion` event to the `POST /events` endpoint:
 
 <CodeSamplesAnalyticsEventConversion1 />
 
 You must explicitly submit a `userId` associated with the event. This can be any arbitrary string you can use to identify the user, such as their profile ID in your application or their hashed IP address. You may submit user IDs directly on the event payload, or setting a `X-MS-USER-ID` request header.
 
-Specifying a `queryUid` is optional but recommended as it ensures Meilisearch correctly associates the search query with the event. You can find the query UID in the `metadata` field present in Meilisearch Cloud's search query response.
+Specifying a `queryUid` is optional but recommended as it ensures Meilisearch correctly associates the search query with the event. You can find the query UID in the `metadata` field present in search query responses.
 
 <Note>
 It is not possible to associate multiple `conversion` events with the same query.
@@ -39,7 +39,7 @@ It is not possible to associate multiple `conversion` events with the same query
 
 For more information, consult the [analytics events endpoint reference](/capabilities/analytics/advanced/events_endpoint).
 
-## Retrieve the query UID with search metadata
+## Retrieve search identifiers with metadata
 
 To associate analytics events with specific search queries, you need the query's unique identifier. Include the `Meili-Include-Metadata` header in your search requests to receive this information:
 
@@ -66,6 +66,7 @@ When this header is present, the search response includes a `metadata` field:
   "hits": [ … ],
   "metadata": {
     "requestUid": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "queryUid": "f7g8h9i0-j1k2-3456-lmno-pq7890123456",
     "indexUid": "movies",
     "primaryKey": "id"
   }
@@ -74,4 +75,31 @@ When this header is present, the search response includes a `metadata` field:
 
 </CodeGroup>
 
-Use the `requestUid` value as the `queryUid` when sending `click` or `conversion` events. This ensures Meilisearch correctly links user interactions to the search query that produced them.
+Use the `queryUid` value when sending `click` or `conversion` events. This ensures Meilisearch correctly links user interactions to the search query that produced them.
+
+In a [multi-search](/capabilities/multi_search/overview) request, all sub-queries share the same `requestUid` but each has its own `queryUid`. Use the `queryUid` matching the specific sub-query result the user interacted with.
+
+## Attach custom fields to search requests
+
+You can include additional metadata with your search requests using the `analyticsCustomFields` parameter. Custom fields are stored alongside the search event and available for analysis in the dashboard:
+
+<CodeGroup>
+
+```bash
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/movies/search' \
+  -H 'Content-Type: application/json' \
+  -H 'Meili-Include-Metadata: true' \
+  --data-binary '{
+    "q": "action hero",
+    "analyticsCustomFields": {
+      "page": "homepage",
+      "abTestGroup": "variant-b",
+      "platform": "mobile"
+    }
+  }'
+```
+
+</CodeGroup>
+
+Custom fields accept any JSON object. Use them to track contextual information like which page triggered the search, A/B test variants, or platform details. The `analyticsCustomFields` parameter is stripped from the request before it reaches the search engine, so it does not affect search results.

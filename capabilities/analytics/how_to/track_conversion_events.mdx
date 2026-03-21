@@ -49,7 +49,7 @@ When a user completes a conversion action, send a `conversion` event to the `POS
 | `queryUid` | Recommended | The UID of the original search query |
 | `objectName` | Optional | A human-readable description of the document |
 
-The `queryUid` links the conversion back to the original search request. You can find it in the [`metadata` field present in Meilisearch Cloud's search query responses](/reference/api/headers#search-metadata).
+The `queryUid` links the conversion back to the original search request. You can find it in the [`metadata` field present in search query responses](/reference/api/headers#search-metadata).
 
 <Note>
 It is not possible to associate multiple `conversion` events with the same query. If a user converts on the same query twice, only the first event is recorded.
@@ -71,7 +71,7 @@ async function handleAddToCart(product, queryUid) {
   // Add the product to the cart in your application
   await addToCart(product.id);
 
-  // Send the conversion event to Meilisearch Cloud
+  // Send the conversion event to Meilisearch
   await fetch('https://PROJECT_URL/events', {
     method: 'POST',
     headers: {

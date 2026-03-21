@@ -4,7 +4,7 @@ sidebarTitle: Overview
 description: Search personalization lets you boost search results based on user profiles, making results tailored to their behavior.
 ---
 
-Search personalization uses AI technology to re-rank search results at query time based on the user context you provide. It works alongside [full-text search](/capabilities/full_text_search/overview) and [hybrid search](/capabilities/hybrid_search/overview) to deliver results tailored to each user.
+Search personalization uses AI technology to re-rank search results at query time based on the user profile you provide. It works alongside [full-text search](/capabilities/full_text_search/overview) and [hybrid search](/capabilities/hybrid_search/overview) to deliver results tailored to each user.
 
 ## Why use search personalization?
 
@@ -14,20 +14,10 @@ For example, in an e-commerce site, someone who often shops for sportswear might
 
 ## How does search personalization work?
 
-1. First generate a plain-text description of the user: `"The user prefers genres like Documentary, Music, Drama"`
-2. When the user performs a search, you submit their description together with their search request
+1. First generate a user profile: `"The user prefers genres like Documentary, Music, Drama"`
+2. When the user performs a search, you submit their profile together with their search request
 3. Meilisearch retrieves documents based on the user's query as usual
-4. Finally, the re-ranking model reorders results based on the user context you provided in the first step
-
-## How to enable search personalization in Meilisearch?
-
-Search personalization is an experimental feature.
-
-If you are a Meilisearch Cloud user, contact support to activate it for your projects.
-
-If you are self-hosting Meilisearch, relaunch it using the [search personalization instance option](/resources/self_hosting/configuration/reference#search-personalization).
-
-Consult the [search personalization guide](/capabilities/personalization/getting_started) for more information on how to implement it in your application.
+4. Finally, the re-ranking model reorders results based on the user profile you provided in the first step
 
 ## Use cases
 
@@ -42,7 +32,7 @@ Consult the [search personalization guide](/capabilities/personalization/getting
     Enable personalization and send your first personalized search
   </Card>
   <Card title="Generate user context" href="/capabilities/personalization/how_to/generate_user_context">
-    Build plain-text user descriptions from behavior data
+    Build user profiles from behavior data
   </Card>
   <Card title="Personalize e-commerce search" href="/capabilities/personalization/how_to/personalize_ecommerce_search">
     Step-by-step guide for personalizing product search results
