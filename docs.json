@@ -222,6 +222,7 @@
                   {
                     "group": "Getting started",
                     "pages": [
+                      "capabilities/full_text_search/getting_started/basic_search",
                       "capabilities/full_text_search/getting_started/placeholder_search",
                       "capabilities/full_text_search/getting_started/search_with_snippets",
                       "capabilities/full_text_search/getting_started/phrase_search"
