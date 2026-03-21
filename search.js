@@ -220,13 +220,19 @@ function initializeMeilisearchIntegration() {
     filterTagsContainer.className = 'meilisearch-filter-tags';
 
     // Create filter tags for each section
-    const sections = ['learn', 'guides', 'reference'];
+    const sections = [
+      { key: 'getting_started', label: 'Getting started' },
+      { key: 'capabilities', label: 'Capabilities' },
+      { key: 'reference', label: 'Reference' },
+      { key: 'resources', label: 'Resources' },
+      { key: 'changelog', label: 'Changelog' }
+    ];
     const filterTags = {};
 
-    sections.forEach(section => {
+    sections.forEach(({ key: section, label }) => {
       const tag = document.createElement('button');
       tag.className = 'meilisearch-filter-tag';
-      tag.textContent = section;
+      tag.textContent = label;
       tag.dataset.section = section;
       tag.addEventListener('click', () => {
         tag.classList.toggle('active');
