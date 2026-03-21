@@ -19,95 +19,21 @@ Because each subsequent rule only operates within the groups created by the prev
 
 ## The default ranking pipeline
 
-Meilisearch applies the following built-in ranking rules in this order by default:
+Meilisearch applies seven [built-in ranking rules](/capabilities/full_text_search/relevancy/ranking_rules) in this order by default:
 
-```json
-[
-  "words",
-  "typo",
-  "proximity",
-  "attributeRank",
-  "sort",
-  "wordPosition",
-  "exactness"
-]
-```
+| Step | Rule | What it does |
+|------|------|-------------|
+| 1 | `words` | Sorts by number of matched query terms (more matches = higher rank) |
+| 2 | `typo` | Sorts by number of typos in matches (fewer typos = higher rank) |
+| 3 | `proximity` | Sorts by distance between matched terms (closer = higher rank) |
+| 4 | `attributeRank` | Sorts by which attribute contains the match (higher-priority attribute = higher rank) |
+| 5 | `sort` | Applies user-defined sorting from the `sort` search parameter |
+| 6 | `wordPosition` | Sorts by position of matched terms within attributes (earlier = higher rank) |
+| 7 | `exactness` | Sorts by how closely matches resemble the original query terms |
 
-### Step 1: Words
+Each rule only breaks ties from the previous one. The order matters: rules placed higher in the list have a greater overall impact.
 
-Documents are sorted by the **number of matched query terms**, in decreasing order. Documents containing all query terms appear first. Documents missing one or more terms appear later. The [matching strategy](/capabilities/full_text_search/how_to/use_matching_strategy) controls how terms are dropped.
-
-For example, if the query is `batman dark knight`:
-- Bucket A: documents matching all three terms
-- Bucket B: documents matching two terms
-- Bucket C: documents matching one term
-
-The `words` rule works from right to left. Meilisearch drops the rightmost (last) query term first when looking for partial matches. This means a document matching "batman" and "dark" ranks above one matching only "batman".
-
-<Note>
-Meilisearch always behaves as if the `words` rule has the highest priority among text-based ranking rules, even if you reorder or remove it from the ranking rules list.
-</Note>
-
-### Step 2: Typo
-
-Within each bucket from the previous step, documents are sorted by the **total number of typos** in matched terms, in increasing order. Documents with fewer typos rank higher. You can configure this behavior through [typo tolerance](/capabilities/full_text_search/relevancy/typo_tolerance_settings) settings.
-
-For example, if two documents both match all three query terms, but one matches "knight" exactly while the other matches "knights" (one typo), the exact match ranks higher.
-
-### Step 3: Proximity
-
-Documents are sorted by the **distance between matched query terms**, in increasing order. Documents where query terms appear close together and in the same order as the query rank higher.
-
-For example, a document containing "dark knight" as adjacent words ranks higher than one where "dark" and "knight" are separated by several paragraphs.
-
-### Step 4: Attribute rank
-
-Documents are sorted by **which attribute contains the match**, based on the [attribute ranking order](/capabilities/full_text_search/relevancy/attribute_ranking_order). Documents where matches appear in higher-priority attributes rank higher.
-
-For example, if `searchableAttributes` is `["title", "overview", "genres"]`, a match in `title` ranks above a match in `overview`.
-
-<Tip>
-The legacy `attribute` rule combines both `attributeRank` and `wordPosition` into a single step. For more control, use them separately so you can place other rules (like `sort`) between them. See [built-in ranking rules](/capabilities/full_text_search/relevancy/ranking_rules) for details.
-</Tip>
-
-### Step 5: Sort
-
-Documents are sorted according to **user-defined sort parameters** provided at query time via the `sort` search parameter. This rule only takes effect when the search request includes a `sort` value.
-
-The position of the `sort` rule in the ranking pipeline affects behavior:
-- **Higher position**: Sorting is more strict, but results may be less relevant to the query
-- **Lower position** (default): Results are highly relevant first, with sorting as a secondary factor
-
-### Step 6: Word position
-
-Documents are sorted by the **position of matched terms within their attributes**, in increasing order. Documents where matches appear closer to the beginning of an attribute rank higher.
-
-For example, if two documents both match "knight" in the `title` attribute, the one where "knight" appears as the first word ranks above the one where it appears as the fifth word.
-
-### Step 7: Exactness
-
-Documents are sorted by how closely matched terms **resemble the original query terms**. Documents containing exact matches (no typos, no prefix expansion) rank higher than those where the match required fuzzy matching.
-
-For example, a search for "knight" ranks a document containing the exact word "knight" above one containing "knights" (even though "knights" is a valid match through [prefix search](/capabilities/full_text_search/how_to/configure_prefix_search)).
-
-## Custom ranking rules
-
-You can add custom ranking rules to the pipeline to sort by document attributes like `rating`, `popularity`, or `date`. Custom rules use the format `attribute:asc` or `attribute:desc`:
-
-```json
-[
-  "words",
-  "typo",
-  "proximity",
-  "attributeRank",
-  "sort",
-  "wordPosition",
-  "exactness",
-  "rating:desc"
-]
-```
-
-Custom ranking rules are applied after the built-in rules and only break ties between documents that are otherwise equally relevant. For more details, see [custom ranking rules](/capabilities/full_text_search/relevancy/custom_ranking_rules).
+You can reorder these rules and add [custom ranking rules](/capabilities/full_text_search/relevancy/custom_ranking_rules) (like `rating:desc`) to inject business logic into the pipeline. See [built-in ranking rules](/capabilities/full_text_search/relevancy/ranking_rules) for detailed descriptions and visual examples of each rule.
 
 ## Visualizing the pipeline
 
