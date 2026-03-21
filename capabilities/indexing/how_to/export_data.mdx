@@ -3,7 +3,7 @@ title: Export data to another instance
 description: Use the export endpoint to migrate data from one Meilisearch instance to another without creating dump files.
 ---
 
-The export endpoint transfers data directly from one Meilisearch instance to another over the network. Unlike [dumps](/capabilities/indexing/how_to/manage_task_database), which create a file on disk that you must manually move, exports push data straight to a remote instance in a single operation.
+The export endpoint transfers data directly from one Meilisearch instance to another over the network. Unlike [dumps](/capabilities/indexing/tasks_and_batches/manage_task_database), which create a file on disk that you must manually move, exports push data straight to a remote instance in a single operation.
 
 ## When to use exports
 
@@ -48,7 +48,7 @@ Meilisearch returns a summarized task object:
 
 ## Monitor the export task
 
-The export runs [asynchronously](/capabilities/indexing/advanced/async_operations). Use the task UID to check its progress:
+The export runs [asynchronously](/capabilities/indexing/tasks_and_batches/async_operations). Use the task UID to check its progress:
 
 <CodeGroup>
 
@@ -76,7 +76,7 @@ When the task status changes to `succeeded`, all data has been transferred to th
   <Card title="Export API reference" href="/reference/api/export/export-to-a-remote-meilisearch">
     Full API reference for the export endpoint
   </Card>
-  <Card title="Monitor tasks" href="/capabilities/indexing/how_to/monitor_tasks">
+  <Card title="Monitor tasks" href="/capabilities/indexing/tasks_and_batches/monitor_tasks">
     Track the status of asynchronous operations
   </Card>
   <Card title="Indexing overview" href="/capabilities/indexing/overview">

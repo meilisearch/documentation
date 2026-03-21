@@ -6,24 +6,23 @@ description: Create, rotate, and scope API keys to control access to your Meilis
 
 API keys control who can access your Meilisearch instance and what actions they can perform. Each key has specific permissions and can be scoped to specific indexes. For multi-tenant scenarios, consider using [tenant tokens](/capabilities/security/overview) to restrict search results per user.
 
-## Master key vs. API keys
+## API key types
 
-The master key and API keys serve different purposes:
+Meilisearch provides several types of API keys:
 
 | Key type | Purpose | Usage |
 |:---------|:--------|:------|
-| Master key | Protects the instance, grants full access | Set at launch, used only to manage API keys |
 | Default admin key | Full API access | Day-to-day admin operations |
 | Default search key | Search-only access | Client-side search requests |
 | Custom API keys | Scoped permissions | Fine-grained access control |
 
 <Warning>
-Never expose the master key in client-side code or public repositories. Use it only to manage API keys through the `/keys` endpoint, then use those API keys for all other operations.
+Never expose admin API keys in client-side code or public repositories. Use them only server-side to manage API keys through the `/keys` endpoint, then use search or scoped API keys for all other operations.
 </Warning>
 
 ## List all API keys
 
-Retrieve all existing API keys. This endpoint requires the master key.
+Retrieve all existing API keys. This endpoint requires the admin API key.
 
 <CodeGroup>
 
@@ -183,7 +182,7 @@ Set `expiresAt` to a date in the near future (for example, 90 days) and schedule
 - **Use the principle of least privilege.** Give each key only the permissions it needs. A front-end search client should only have the `search` action.
 - **Scope keys to specific indexes.** Avoid using `["*"]` for indexes unless the key genuinely needs access to all of them.
 - **Set expiration dates.** Keys without expiration dates remain valid indefinitely, which increases security risk.
-- **Never expose the master key.** Only use it server-side to manage API keys. Use generated API keys for all other operations.
+- **Never expose admin API keys.** Only use them server-side to manage API keys. Use search or scoped API keys for all other operations.
 - **Rotate keys regularly.** Create new keys before old ones expire and update your applications accordingly.
 
 ## Next steps

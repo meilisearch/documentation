@@ -38,11 +38,11 @@ A short-lived token generated from an API key that enforces search rules for mul
 
 ### Task
 
-An asynchronous operation returned by Meilisearch when processing write requests (adding documents, updating settings, etc.). Tasks have statuses like `enqueued`, `processing`, `succeeded`, or `failed`. [Learn more about tasks](/capabilities/indexing/how_to/monitor_tasks).
+An asynchronous operation returned by Meilisearch when processing write requests (adding documents, updating settings, etc.). Tasks have statuses like `enqueued`, `processing`, `succeeded`, or `failed`. [Learn more about tasks](/capabilities/indexing/tasks_and_batches/monitor_tasks).
 
 ### Batch
 
-A group of tasks that Meilisearch processes together in a single operation. Meilisearch automatically groups compatible enqueued tasks into batches to improve indexing throughput. For example, multiple document addition tasks targeting the same index may be merged into one batch. [Learn more about batches](/capabilities/indexing/advanced/async_operations#task-batches).
+A group of tasks that Meilisearch processes together in a single operation. Meilisearch automatically groups compatible enqueued tasks into batches to improve indexing throughput. For example, multiple document addition tasks targeting the same index may be merged into one batch. [Learn more about batches](/capabilities/indexing/tasks_and_batches/async_operations#task-batches).
 
 ### Ranking rules
 

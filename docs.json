@@ -460,7 +460,6 @@
                     "pages": [
                       "capabilities/security/how_to/generate_token_third_party",
                       "capabilities/security/how_to/generate_token_from_scratch",
-                      "capabilities/security/how_to/configure_sso",
                       "capabilities/security/how_to/manage_api_keys"
                     ]
                   },
@@ -496,22 +495,26 @@
                     "pages": [
                       "capabilities/indexing/how_to/add_and_update_documents",
                       "capabilities/indexing/how_to/handle_multilingual_data",
-                      "capabilities/indexing/how_to/monitor_tasks",
-                      "capabilities/indexing/how_to/filter_tasks",
-                      "capabilities/indexing/how_to/manage_task_database",
-                      "capabilities/indexing/how_to/optimize_batch_performance",
-                      "capabilities/indexing/how_to/use_foreign_keys",
+                      "capabilities/indexing/how_to/document_relations",
                       "capabilities/indexing/how_to/export_data",
-                      "capabilities/indexing/how_to/compact_an_index",
-                      "capabilities/indexing/how_to/inspect_index_fields"
+                      "capabilities/indexing/how_to/compact_an_index"
+                    ]
+                  },
+                  {
+                    "group": "Tasks and batches",
+                    "pages": [
+                      "capabilities/indexing/tasks_and_batches/async_operations",
+                      "capabilities/indexing/tasks_and_batches/monitor_tasks",
+                      "capabilities/indexing/tasks_and_batches/filter_tasks",
+                      "capabilities/indexing/tasks_and_batches/manage_task_database",
+                      "capabilities/indexing/tasks_and_batches/optimize_batch_performance"
                     ]
                   },
                   {
                     "group": "Advanced",
                     "pages": [
                       "capabilities/indexing/advanced/indexing_best_practices",
-                      "capabilities/indexing/advanced/tokenization",
-                      "capabilities/indexing/advanced/async_operations"
+                      "capabilities/indexing/advanced/tokenization"
                     ]
                   }
                 ]
@@ -1101,6 +1104,10 @@
     }
   },
   "redirects": [
+    {
+      "source": "/capabilities/security/how_to/configure_sso",
+      "destination": "/capabilities/teams/how_to/configure_sso_for_team"
+    },
     {
       "source": "/capabilities/multi_search/how_to/use_network_search",
       "destination": "/resources/self_hosting/sharding"
@@ -1823,19 +1830,19 @@
     },
     {
       "source": "/learn/async/working_with_tasks",
-      "destination": "/capabilities/indexing/how_to/monitor_tasks"
+      "destination": "/capabilities/indexing/tasks_and_batches/monitor_tasks"
     },
     {
       "source": "/learn/async/filtering_tasks",
-      "destination": "/capabilities/indexing/how_to/filter_tasks"
+      "destination": "/capabilities/indexing/tasks_and_batches/filter_tasks"
     },
     {
       "source": "/learn/async/paginating_tasks",
-      "destination": "/capabilities/indexing/how_to/manage_task_database"
+      "destination": "/capabilities/indexing/tasks_and_batches/manage_task_database"
     },
     {
       "source": "/learn/async/asynchronous_operations",
-      "destination": "/capabilities/indexing/advanced/async_operations"
+      "destination": "/capabilities/indexing/tasks_and_batches/async_operations"
     },
     {
       "source": "/learn/configuration/configuring_index_settings",
@@ -1923,7 +1930,7 @@
     },
     {
       "source": "/learn/indexing/optimize_indexing_performance",
-      "destination": "/capabilities/indexing/how_to/optimize_batch_performance"
+      "destination": "/capabilities/indexing/tasks_and_batches/optimize_batch_performance"
     },
     {
       "source": "/learn/relevancy/relevancy",
@@ -1980,6 +1987,34 @@
     {
       "source": "/learn/getting_started/what_is_meilisearch",
       "destination": "/getting_started/overview"
+    },
+    {
+      "source": "/capabilities/indexing/how_to/monitor_tasks",
+      "destination": "/capabilities/indexing/tasks_and_batches/monitor_tasks"
+    },
+    {
+      "source": "/capabilities/indexing/how_to/filter_tasks",
+      "destination": "/capabilities/indexing/tasks_and_batches/filter_tasks"
+    },
+    {
+      "source": "/capabilities/indexing/how_to/manage_task_database",
+      "destination": "/capabilities/indexing/tasks_and_batches/manage_task_database"
+    },
+    {
+      "source": "/capabilities/indexing/how_to/optimize_batch_performance",
+      "destination": "/capabilities/indexing/tasks_and_batches/optimize_batch_performance"
+    },
+    {
+      "source": "/capabilities/indexing/advanced/async_operations",
+      "destination": "/capabilities/indexing/tasks_and_batches/async_operations"
+    },
+    {
+      "source": "/capabilities/indexing/how_to/use_foreign_keys",
+      "destination": "/capabilities/indexing/how_to/document_relations"
+    },
+    {
+      "source": "/capabilities/indexing/how_to/inspect_index_fields",
+      "destination": "/capabilities/indexing/overview"
     }
   ]
 }

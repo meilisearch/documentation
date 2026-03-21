@@ -4,7 +4,7 @@ sidebarTitle: Overview
 description: Add, update, and manage documents in Meilisearch indexes, including task monitoring and batch operations.
 ---
 
-Indexing is the process of adding documents to Meilisearch so they become searchable. All indexing operations are [asynchronous](/capabilities/indexing/advanced/async_operations), meaning they are added to a task queue and processed in order.
+Indexing is the process of adding documents to Meilisearch so they become searchable. All indexing operations are [asynchronous](/capabilities/indexing/tasks_and_batches/async_operations), meaning they are added to a task queue and processed in order.
 
 ## Key concepts
 
@@ -42,7 +42,7 @@ Every document in a Meilisearch index must have a unique **primary key** field. 
 
 ## Cross-index relationships (experimental)
 
-Foreign keys allow you to link documents across indexes. Instead of duplicating data, you store related information in a separate index and reference it by ID. At search time, Meilisearch automatically hydrates results with the full referenced documents. See [Use foreign keys](/capabilities/indexing/how_to/use_foreign_keys) for a step-by-step guide.
+Foreign keys allow you to link documents across indexes. Instead of duplicating data, you store related information in a separate index and reference it by ID. At search time, Meilisearch automatically hydrates results with the full referenced documents. See [Link indexes](/capabilities/indexing/how_to/document_relations) for a step-by-step guide.
 
 ## Operational tools
 
@@ -50,21 +50,19 @@ Meilisearch includes several endpoints for managing indexes and migrating data:
 
 - **Export**: Transfer data directly from one instance to another over the network, without creating intermediate files. See [Export data to another instance](/capabilities/indexing/how_to/export_data).
 - **Compact**: Reclaim disk space by reorganizing an index's internal data structures after bulk updates or deletions. See [Compact an index](/capabilities/indexing/how_to/compact_an_index).
-- **Field inspection**: Retrieve detailed metadata about every field in an index, including its search, filter, and display settings. See [Inspect index fields](/capabilities/indexing/how_to/inspect_index_fields).
-
 ## Next steps
 
 <CardGroup cols={2}>
   <Card title="Getting started" href="/capabilities/indexing/getting_started">
     Add your first documents and verify they are indexed
   </Card>
-  <Card title="Monitor tasks" href="/capabilities/indexing/how_to/monitor_tasks">
+  <Card title="Monitor tasks" href="/capabilities/indexing/tasks_and_batches/monitor_tasks">
     Track the status of indexing operations
   </Card>
   <Card title="Best practices" href="/capabilities/indexing/advanced/indexing_best_practices">
     Optimize your indexing workflow for production
   </Card>
-  <Card title="Async operations" href="/capabilities/indexing/advanced/async_operations">
+  <Card title="Async operations" href="/capabilities/indexing/tasks_and_batches/async_operations">
     Deep dive into the task lifecycle and queue
   </Card>
 </CardGroup>

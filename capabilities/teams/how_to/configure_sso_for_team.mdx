@@ -1,39 +1,67 @@
 ---
-title: Configure SSO for teams
-description: Enable Single Sign-On for your team to streamline authentication through your identity provider.
+title: Configure SSO
+sidebarTitle: Configure SSO
+description: Set up Single Sign-On for Meilisearch Cloud to authenticate team members through your identity provider.
 ---
 
-Single Sign-On (SSO) allows all [team](/capabilities/teams/overview) members to authenticate through your organization's identity provider (IdP) instead of using individual email and password credentials. This is an enterprise feature available on Meilisearch Cloud enterprise plans. For the general SSO setup guide, see [Configure SSO](/capabilities/security/how_to/configure_sso).
+Single Sign-On (SSO) allows your [team](/capabilities/teams/overview) members to log into Meilisearch Cloud using your organization's existing identity provider (IdP). Instead of managing separate Meilisearch credentials, users authenticate through a centralized system like Okta, Azure AD, or Google Workspace.
 
-## How SSO works for teams
+<Note>
+SSO is a Meilisearch Cloud enterprise feature. It is not available on self-hosted instances or non-enterprise Cloud plans.
+</Note>
 
-Once SSO is enabled for your team, all authentication goes through your IdP. Team members no longer use email and password to log in. Instead, they are redirected to your IdP's login page and authenticated there.
+## Supported protocols
 
-New members added through your IdP are automatically provisioned in your Meilisearch Cloud team. When you remove a member from your IdP, they lose access to Meilisearch Cloud as well.
+Meilisearch Cloud supports **SAML 2.0** for SSO integration. SAML 2.0 is an industry-standard protocol supported by most identity providers, including:
 
-## Request SSO activation
+- Okta
+- Azure Active Directory (Microsoft Entra ID)
+- Google Workspace
+- OneLogin
+- Auth0
+- JumpCloud
 
-SSO configuration requires assistance from the Meilisearch team:
+## Setup process
 
-1. Contact Meilisearch support through the Cloud dashboard or by emailing [support@meilisearch.com](mailto:support@meilisearch.com)
-2. Provide your team name and the IdP you plan to use
-3. The Meilisearch team will provide the necessary configuration details (such as the SSO callback URL and entity ID)
+### Step 1: Contact the Meilisearch team
 
-## Configure your identity provider
+SSO configuration requires coordination with the Meilisearch team. Reach out through your enterprise support channel or email [support@meilisearch.com](mailto:support@meilisearch.com) to initiate the setup process.
 
-After receiving the configuration details from Meilisearch:
+The Meilisearch team will provide you with:
 
-1. Log in to your IdP's admin console
-2. Create a new SAML or OIDC application (depending on your IdP)
-3. Enter the callback URL and entity ID provided by Meilisearch
-4. Configure the required attribute mappings:
-   - **Email** (required): the user's email address
-   - **Name** (optional): the user's display name
-5. Assign the application to the users or groups that should have access
+- The **Assertion Consumer Service (ACS) URL** for your organization
+- The **Entity ID** (also called the Audience URI) for Meilisearch
+- Any additional SAML attributes required for the integration
 
-Send the IdP metadata URL (or metadata XML file) back to Meilisearch support to complete the setup.
+### Step 2: Configure your identity provider
 
-## Test the SSO flow
+In your IdP's admin console, create a new SAML application for Meilisearch Cloud using the values provided by the Meilisearch team:
+
+1. Create a new SAML 2.0 application in your IdP
+2. Set the **ACS URL** to the value provided by Meilisearch
+3. Set the **Entity ID** to the value provided by Meilisearch
+4. Configure the **Name ID format** to `emailAddress`
+5. Map the following user attributes:
+
+| SAML attribute | Value |
+|:---------------|:------|
+| `email` | User's email address |
+| `firstName` | User's first name |
+| `lastName` | User's last name |
+
+6. Assign the appropriate users or groups to the application
+
+### Step 3: Provide IdP metadata to Meilisearch
+
+After configuring the SAML application, share the following with the Meilisearch team:
+
+- Your **IdP metadata URL** (preferred) or the **IdP metadata XML file**
+- The **IdP SSO URL** (the endpoint where Meilisearch sends authentication requests)
+- The **IdP certificate** used to sign SAML assertions
+
+The Meilisearch team will complete the configuration on their end and confirm when SSO is active.
+
+### Step 4: Test the SSO login flow
 
 Before rolling out SSO to your entire team:
 
@@ -42,9 +70,13 @@ Before rolling out SSO to your entire team:
 3. Verify they appear in your team members list
 4. Confirm they have the correct access level
 
+<Warning>
+Test SSO with a non-admin account first to verify the integration works correctly before rolling it out to your entire team.
+</Warning>
+
 ## Manage team membership through your IdP
 
-Once SSO is active, you can manage team access directly from your IdP:
+Once SSO is enabled, new team members are automatically provisioned in Meilisearch Cloud when they first log in through your IdP. To manage user access:
 
 - **Add members**: assign the Meilisearch application to new users or groups in your IdP. They are provisioned automatically on their first login.
 - **Remove members**: unassign the application from users in your IdP. They will no longer be able to authenticate.
@@ -57,10 +89,10 @@ Role assignment (Owner vs. Member) is still managed within the Meilisearch Cloud
 ## Next steps
 
 <CardGroup cols={2}>
-  <Card title="Configure SSO" href="/capabilities/security/how_to/configure_sso">
-    General SSO configuration guide for Meilisearch Cloud
+  <Card title="Manage team roles" href="/capabilities/teams/how_to/manage_team_roles">
+    Configure roles and permissions for team members
   </Card>
   <Card title="Teams overview" href="/capabilities/teams/overview">
-    Learn more about teams and team roles
+    Learn more about teams and team management
   </Card>
 </CardGroup>
