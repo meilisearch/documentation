@@ -13,6 +13,8 @@ Before using filters and sorting together, you must add the relevant attributes 
 
 Suppose you have a `movies` index with documents like this:
 
+<CodeGroup>
+
 ```json
 {
   "id": 1,
@@ -23,7 +25,11 @@ Suppose you have a `movies` index with documents like this:
 }
 ```
 
+</CodeGroup>
+
 Configure the index so that `genres` is filterable and `rating` is sortable:
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -35,11 +41,15 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 Wait for the settings task to complete before searching.
 
 ## Filter and sort in a single request
 
 Once your settings are configured, pass both `filter` and `sort` in the same search request:
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -52,9 +62,13 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 This request returns only action movies, sorted by rating from highest to lowest. The `q` parameter is set to an empty string, making this a placeholder search that returns all matching documents.
 
 The response looks like this:
+
+<CodeGroup>
 
 ```json
 {
@@ -69,9 +83,13 @@ The response looks like this:
 }
 ```
 
+</CodeGroup>
+
 ## Combine multiple filters with sort
 
 You can use `AND`, `OR`, and `NOT` operators to build complex [filter expressions](/capabilities/filtering_sorting_faceting/advanced/filter_expression_syntax):
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -84,11 +102,15 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 This request searches for "hero" in action movies with a rating above 7.0, sorted by most recent first.
 
 ## Combine geo filter with text search and sort
 
 If your documents have `_geo` data, you can combine [geo search](/capabilities/geo_search/overview) filtering with text search and sorting. For example, find restaurants near a specific location and sort them by rating:
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -101,11 +123,15 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 This returns pizza restaurants within 2 km of the specified coordinates, sorted by their rating. Make sure `_geo` is in `filterableAttributes` and `rating` is in `sortableAttributes`.
 
 ## Sort by multiple attributes
 
 You can sort by more than one attribute. Meilisearch uses the second sort criterion as a tiebreaker when documents have the same value for the first:
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -117,6 +143,8 @@ curl \
     "sort": ["rating:desc", "release_date:desc"]
   }'
 ```
+
+</CodeGroup>
 
 This sorts action movies by rating first, then by release date for movies with the same rating.
 

@@ -20,6 +20,8 @@ A single embedder is a good fit when all your searches are the same type. But re
 
 Add multiple keys to the `embedders` setting. Each key is a named embedder with its own configuration:
 
+<CodeGroup>
+
 ```bash
 curl \
   -X PATCH 'MEILISEARCH_URL/indexes/products/settings/embedders' \
@@ -64,11 +66,15 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 This configures two embedders: `text` for keyword-aware semantic search and `image` for visual similarity search.
 
 ## Search with a specific embedder
 
 Specify which embedder to use with the `hybrid.embedder` parameter:
+
+<CodeGroup>
 
 ```bash
 # Semantic text search
@@ -100,9 +106,13 @@ curl -X POST 'MEILISEARCH_URL/indexes/products/search' \
   }'
 ```
 
+</CodeGroup>
+
 ## Combine embedders with federated search
 
 The most powerful use case for multiple embedders is [federated search](/capabilities/multi_search/getting_started/federated_search). You can run full-text, semantic, and image searches in a single request and merge the results:
+
+<CodeGroup>
 
 ```bash
 curl -X POST 'MEILISEARCH_URL/multi-search' \
@@ -143,6 +153,8 @@ curl -X POST 'MEILISEARCH_URL/multi-search' \
     ]
   }'
 ```
+
+</CodeGroup>
 
 This single request combines:
 1. **Full-text search** (`semanticRatio: 0.0`) with the highest weight for keyword-relevant results

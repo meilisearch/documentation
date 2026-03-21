@@ -18,6 +18,8 @@ The `maxTotalHits` pagination setting controls how deep Meilisearch ranks result
 
 Some users set this to very high values (100K or even 1M), forcing Meilisearch to run the full ranking pipeline across all matching documents for every single query. This is almost never necessary because users rarely go beyond the first few pages of results.
 
+<CodeGroup>
+
 ```bash
 curl \
   -X PATCH 'MEILISEARCH_URL/indexes/products/settings/pagination' \
@@ -26,6 +28,8 @@ curl \
     "maxTotalHits": 200
   }'
 ```
+
+</CodeGroup>
 
 Set `maxTotalHits` to the realistic maximum a user would ever paginate to. For most applications, 100 to 200 is plenty (that covers 5 to 10 pages of 20 results). Going higher means Meilisearch spends time ranking documents nobody will ever see.
 
@@ -36,6 +40,8 @@ Set `maxTotalHits` to the realistic maximum a user would ever paginate to. For m
 Every attribute listed in `filterableAttributes` creates additional data structures during indexing that are also evaluated at search time. The more filter features you enable, the more work Meilisearch does.
 
 Use [granular filterable attributes](/capabilities/filtering_sorting_faceting/how_to/configure_granular_filters) to enable only the filter operations you actually need per attribute:
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -61,6 +67,8 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 Key things to disable if you don't need them:
 - **`facetSearch`**: facet search is resource-intensive. Disable it on attributes where users will never search within facet values
 - **`comparison`**: comparison filters (`<`, `>`, `TO`) require additional data structures. Only enable on numeric/date fields that actually need range filtering
@@ -73,12 +81,16 @@ The `proximity` [ranking rule](/capabilities/full_text_search/relevancy/ranking_
 
 Switching to **attribute-level** precision drastically reduces this cost:
 
+<CodeGroup>
+
 ```bash
 curl \
   -X PUT 'MEILISEARCH_URL/indexes/products/settings/proximity-precision' \
   -H 'Content-Type: application/json' \
   --data-binary '"byAttribute"'
 ```
+
+</CodeGroup>
 
 With `byAttribute`, Meilisearch only checks whether query terms appear in the same attribute, not their exact distance within it. This makes indexing significantly faster and reduces the work done during each search.
 
@@ -90,6 +102,8 @@ The trade-off is that multi-word queries like "dark knight" will rank documents 
 
 The `maxValuesPerFacet` setting (default: 100) controls how many distinct facet values Meilisearch returns in the `facetDistribution`. If you have attributes with thousands of unique values (like tags or cities), Meilisearch computes counts for all of them up to this limit.
 
+<CodeGroup>
+
 ```bash
 curl \
   -X PATCH 'MEILISEARCH_URL/indexes/products/settings/faceting' \
@@ -99,6 +113,8 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 Set this to the number of facet values you actually display in your UI. If your sidebar shows 10 categories, there is no reason to compute counts for 100.
 
 ## Limit searchable attributes
@@ -107,12 +123,16 @@ Set this to the number of facet values you actually display in your UI. If your 
 
 By default, Meilisearch searches through every field in your documents. Restrict [searchable attributes](/capabilities/full_text_search/how_to/configure_searchable_attributes) to only the fields that matter for search:
 
+<CodeGroup>
+
 ```bash
 curl \
   -X PUT 'MEILISEARCH_URL/indexes/products/settings/searchable-attributes' \
   -H 'Content-Type: application/json' \
   --data-binary '["name", "description", "category"]'
 ```
+
+</CodeGroup>
 
 Exclude fields like IDs, URLs, timestamps, and numeric values that users would never search by text. This reduces the amount of data Meilisearch processes during each query.
 
@@ -122,12 +142,16 @@ Exclude fields like IDs, URLs, timestamps, and numeric values that users would n
 
 [Stop words](/capabilities/full_text_search/how_to/configure_stop_words) like "the", "is", and "of" appear in nearly every document and slow down query processing without improving result quality:
 
+<CodeGroup>
+
 ```bash
 curl \
   -X PUT 'MEILISEARCH_URL/indexes/products/settings/stop-words' \
   -H 'Content-Type: application/json' \
   --data-binary '["the", "a", "an", "is", "are", "of", "in", "to", "and", "or"]'
 ```
+
+</CodeGroup>
 
 This reduces the number of terms Meilisearch evaluates during each search.
 
@@ -139,6 +163,8 @@ This reduces the number of terms Meilisearch evaluates during each search.
 
 **Disable typos on numbers**: prevents false positives like "2024" matching "2025" and reduces the search space for numeric terms:
 
+<CodeGroup>
+
 ```bash
 curl \
   -X PATCH 'MEILISEARCH_URL/indexes/products/settings/typo-tolerance' \
@@ -148,7 +174,11 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 **Increase minimum word size for typos**: by default, 1 typo is allowed on words of 5+ chars and 2 typos on 9+ chars. Raising these thresholds reduces the fuzzy matching work:
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -162,7 +192,11 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 **Disable typos on structured fields** like SKUs or product codes where typos are unlikely:
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -173,11 +207,15 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 ## Disable prefix search
 
 **Impact: medium**
 
 [Prefix search](/capabilities/full_text_search/how_to/configure_prefix_search) enables "search as you type" but increases index size. If your application uses form-based search (users type a full query and press Enter), disable it:
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -186,11 +224,15 @@ curl \
   --data-binary '"disabled"'
 ```
 
+</CodeGroup>
+
 ## Use search cutoff as a safety net
 
 **Impact: low (safety measure)**
 
 Set a [search cutoff](/capabilities/full_text_search/how_to/configure_search_cutoff) to guarantee a maximum response time. This is not a performance optimization per se, but a safety net against unusually long queries or potential abuse:
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -198,6 +240,8 @@ curl \
   -H 'Content-Type: application/json' \
   --data-binary '500'
 ```
+
+</CodeGroup>
 
 Don't go below 500ms. If your searches are consistently slow, fix the root cause with the optimizations above.
 

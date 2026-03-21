@@ -12,6 +12,8 @@ If you haven't added documents yet, follow the [indexing getting started guide](
 
 Send a search request to your index with the `q` parameter:
 
+<CodeGroup>
+
 ```bash
 curl -X POST 'MEILISEARCH_URL/indexes/movies/search' \
   -H 'Content-Type: application/json' \
@@ -21,7 +23,11 @@ curl -X POST 'MEILISEARCH_URL/indexes/movies/search' \
   }'
 ```
 
+</CodeGroup>
+
 Meilisearch returns a JSON response with matching documents:
+
+<CodeGroup>
 
 ```json
 {
@@ -47,6 +53,8 @@ Meilisearch returns a JSON response with matching documents:
 }
 ```
 
+</CodeGroup>
+
 ## Understanding the response
 
 | Field | Description |
@@ -62,6 +70,8 @@ Meilisearch returns a JSON response with matching documents:
 
 Meilisearch handles typos automatically. A search for "galxy" or "galaxi" still returns results for "galaxy":
 
+<CodeGroup>
+
 ```bash
 curl -X POST 'MEILISEARCH_URL/indexes/movies/search' \
   -H 'Content-Type: application/json' \
@@ -71,11 +81,15 @@ curl -X POST 'MEILISEARCH_URL/indexes/movies/search' \
   }'
 ```
 
+</CodeGroup>
+
 This works because Meilisearch uses [typo tolerance](/capabilities/full_text_search/relevancy/typo_tolerance_settings) to match words even when they contain spelling mistakes.
 
 ## Search with multiple words
 
 When you search with multiple words, Meilisearch finds documents containing any of those words and ranks them by how many words match:
+
+<CodeGroup>
 
 ```bash
 curl -X POST 'MEILISEARCH_URL/indexes/movies/search' \
@@ -86,11 +100,15 @@ curl -X POST 'MEILISEARCH_URL/indexes/movies/search' \
   }'
 ```
 
+</CodeGroup>
+
 Documents containing both "dark" and "knight" rank higher than documents containing only one of those words. You can control this behavior with the [matching strategy](/capabilities/full_text_search/how_to/use_matching_strategy).
 
 ## Limit and paginate results
 
 Control how many results you get back with `limit` and `offset`:
+
+<CodeGroup>
 
 ```bash
 curl -X POST 'MEILISEARCH_URL/indexes/movies/search' \
@@ -102,6 +120,8 @@ curl -X POST 'MEILISEARCH_URL/indexes/movies/search' \
     "offset": 10
   }'
 ```
+
+</CodeGroup>
 
 This returns 5 results starting from the 11th match.
 

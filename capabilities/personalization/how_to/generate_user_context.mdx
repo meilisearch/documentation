@@ -55,6 +55,8 @@ Keep the context string concise (1 to 3 sentences). Include the most relevant an
 
 Pass user context in the `personalize` parameter of your search request. The `personalize` object must contain a `userContext` field with your description string:
 
+<CodeGroup>
+
 ```bash
 curl \
   -X POST 'MEILISEARCH_URL/indexes/products/search' \
@@ -67,11 +69,15 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 Meilisearch retrieves results matching the query, then re-ranks them based on the user context you provided. Documents that better match the user's profile appear higher in the results.
 
 ## Example: building context from a user profile
 
 Here is a simplified backend example that constructs a context string from stored user data:
+
+<CodeGroup>
 
 ```javascript
 function buildUserContext(user) {
@@ -101,6 +107,8 @@ function buildUserContext(user) {
 
 // Result: "Interested in electronics, fitness gear. Prefers brands like Samsung, Nike. Typically a mid-range budget. Based in Berlin, Germany."
 ```
+
+</CodeGroup>
 
 ## Next steps
 

@@ -27,6 +27,8 @@ For most self-hosted use cases, `BAAI/bge-base-en-v1.5` provides a good balance 
 
 Create an embedder object with the `huggingFace` source:
 
+<CodeGroup>
+
 ```json
 {
   "my-hf": {
@@ -36,6 +38,8 @@ Create an embedder object with the `huggingFace` source:
   }
 }
 ```
+
+</CodeGroup>
 
 In this configuration:
 
@@ -48,6 +52,8 @@ Unlike cloud-based embedders, the HuggingFace source does not require an API key
 ## Update your index settings
 
 Send the embedder configuration to Meilisearch:
+
+<CodeGroup>
 
 ```sh
 curl \
@@ -64,6 +70,8 @@ curl \
     }
   }'
 ```
+
+</CodeGroup>
 
 Replace `MEILISEARCH_URL` with the address of your Meilisearch instance, `INDEX_NAME` with your index name, and `MEILISEARCH_API_KEY` with your Meilisearch API key.
 
@@ -90,6 +98,8 @@ To use HuggingFace models on Meilisearch Cloud, deploy a [HuggingFace Inference 
 
 Once indexing is complete, perform a search using the `hybrid` parameter:
 
+<CodeGroup>
+
 ```json
 {
   "q": "something to stir soup with",
@@ -99,6 +109,8 @@ Once indexing is complete, perform a search using the `hybrid` parameter:
   }
 }
 ```
+
+</CodeGroup>
 
 A [`semanticRatio`](/capabilities/hybrid_search/advanced/custom_hybrid_ranking) of `0.5` returns a balanced mix of keyword and semantic results. Adjust this value based on your needs.
 

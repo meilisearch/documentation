@@ -7,13 +7,6 @@ import CodeSamplesChatCompletions1 from '/snippets/generated-code-samples/code_s
 
 Streaming delivers chat responses incrementally, giving users immediate feedback instead of waiting for the full response to generate. Meilisearch uses Server-Sent Events (SSE) to stream responses from the chat completions endpoint.
 
-## Prerequisites
-
-Before implementing streaming, make sure you have:
-
-- A [configured chat workspace](/capabilities/conversational_search/how_to/configure_chat_workspace)
-- A valid Meilisearch [API key](/capabilities/security/overview) with chat permissions
-
 ## Send a streaming request
 
 Send a `POST` request to the chat completions endpoint. The response is streamed by default:
@@ -30,6 +23,8 @@ Meilisearch streams responses as Server-Sent Events. Each event is a line prefix
 
 Regular content chunks contain the AI-generated text. Each chunk includes a small piece of the response in `choices[0].delta.content`:
 
+<CodeGroup>
+
 ```
 data: {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1677652288,"model":"gpt-4o","choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null}]}
 
@@ -40,9 +35,13 @@ data: {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1677652288
 data: {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1677652288,"model":"gpt-4o","choices":[{"index":0,"delta":{"content":" a"},"finish_reason":null}]}
 ```
 
+</CodeGroup>
+
 ### Tool call chunks
 
 When you include Meilisearch tools in your request, the stream also contains tool call chunks. These appear in `choices[0].delta.tool_calls` and carry search progress and source information:
+
+<CodeGroup>
 
 ```
 data: {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1677652288,"model":"gpt-4o","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"id":"call_abc123","type":"function","function":{"name":"_meiliSearchProgress","arguments":""}}]},"finish_reason":null}]}
@@ -50,9 +49,13 @@ data: {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1677652288
 data: {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1677652288,"model":"gpt-4o","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"{\"call_id\":\"abc\",\"function_name\":\"_meiliSearchInIndex\",\"function_parameters\":\"{\\\"index_uid\\\":\\\"movies\\\",\\\"q\\\":\\\"search engine\\\"}\"}"}}]},"finish_reason":null}]}
 ```
 
+</CodeGroup>
+
 ### End of stream
 
 The stream ends with a `finish_reason` of `"stop"` followed by the `[DONE]` marker:
+
+<CodeGroup>
 
 ```
 data: {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1677652288,"model":"gpt-4o","choices":[{"index":0,"delta":{},"finish_reason":"stop"}]}
@@ -60,9 +63,13 @@ data: {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1677652288
 data: [DONE]
 ```
 
+</CodeGroup>
+
 ## Handle streaming in JavaScript
 
 Use the Fetch API to process the SSE stream in a browser or Node.js application:
+
+<CodeGroup>
 
 ```javascript
 async function streamChat(query) {
@@ -134,9 +141,13 @@ async function streamChat(query) {
 }
 ```
 
+</CodeGroup>
+
 ## Use the OpenAI SDK
 
 Since Meilisearch's chat endpoint is OpenAI-compatible, you can use the official OpenAI SDK for a simpler streaming implementation:
+
+<CodeGroup>
 
 ```javascript
 import OpenAI from 'openai';
@@ -176,9 +187,13 @@ for await (const chunk of stream) {
 }
 ```
 
+</CodeGroup>
+
 ## Maintain conversation context
 
 The chat completions endpoint is stateless. To maintain conversation history across multiple exchanges, append each response to the `messages` array in subsequent requests:
+
+<CodeGroup>
 
 ```javascript
 const messages = [];
@@ -207,7 +222,9 @@ async function sendMessage(userMessage) {
 }
 ```
 
-When using Meilisearch tools, also handle `_meiliAppendConversationMessage` tool calls by appending the provided messages to your conversation history. See the [chat tooling reference](/capabilities/conversational_search/how_to/chat_tooling_reference#_meiliappendconversationmessage) for details.
+</CodeGroup>
+
+When using Meilisearch tools, also handle `_meiliAppendConversationMessage` tool calls by appending the provided messages to your conversation history. See the [chat tooling reference](/capabilities/conversational_search/advanced/chat_tooling_reference#_meiliappendconversationmessage) for details.
 
 ## Next steps
 

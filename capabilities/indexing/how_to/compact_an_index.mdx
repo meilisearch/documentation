@@ -17,13 +17,19 @@ You do not need to compact after every operation. It is most useful after large 
 
 Send a `POST` request to `/indexes/{index_uid}/compact`:
 
+<CodeGroup>
+
 ```bash
 curl \
   -X POST 'MEILISEARCH_URL/indexes/movies/compact' \
   -H 'Authorization: Bearer MEILISEARCH_API_KEY'
 ```
 
+</CodeGroup>
+
 Meilisearch returns a summarized task object:
+
+<CodeGroup>
 
 ```json
 {
@@ -35,15 +41,21 @@ Meilisearch returns a summarized task object:
 }
 ```
 
+</CodeGroup>
+
 ## Monitor the compaction task
 
 Compaction runs [asynchronously](/capabilities/indexing/advanced/async_operations). Check its progress with the task endpoint:
+
+<CodeGroup>
 
 ```bash
 curl \
   -X GET 'MEILISEARCH_URL/tasks/87' \
   -H 'Authorization: Bearer MEILISEARCH_API_KEY'
 ```
+
+</CodeGroup>
 
 ## Search availability during compaction
 

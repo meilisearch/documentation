@@ -16,6 +16,8 @@ In this guide you will see how to configure and use Meilisearch filters in a hyp
 
 Suppose you have a collection of movies called `movie_ratings` containing the following fields:
 
+<CodeGroup>
+
 ```json
 [
   {
@@ -36,6 +38,8 @@ Suppose you have a collection of movies called `movie_ratings` containing the fo
   …
 ]
 ```
+
+</CodeGroup>
 
 If you want to filter results based on an attribute, you must first add it to the `filterableAttributes` list:
 
@@ -71,9 +75,13 @@ If you only want recent `Planet of the Apes` movies that weren't directed by `Ti
 
 <CodeSamplesFilteringGuide3 />
 
+<CodeGroup>
+
 ```
 release_date > 1577884550 AND (NOT director = "Tim Burton" AND director EXISTS)
 ```
+
+</CodeGroup>
 
 <Warning>
 [Synonyms](/capabilities/full_text_search/relevancy/synonyms) don't apply to filters. Meaning, if you have `SF` and `San Francisco` set as synonyms, filtering by `SF` and `San Francisco` will show you different results.

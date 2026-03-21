@@ -27,6 +27,8 @@ If your dataset is primarily English, use `embed-english-v3.0`. For multilingual
 
 Because Cohere uses the REST embedder source, you must define the `request` and `response` structures that match Cohere's API. Create the following embedder configuration:
 
+<CodeGroup>
+
 ```json
 {
   "my-cohere": {
@@ -47,6 +49,8 @@ Because Cohere uses the REST embedder source, you must define the `request` and 
 }
 ```
 
+</CodeGroup>
+
 In this configuration:
 
 - `source`: must be `"rest"` because Cohere uses the REST embedder integration
@@ -64,6 +68,8 @@ The `input_type` parameter is required by Cohere's API. Set it to `"search_docum
 ## Update your index settings
 
 Send the embedder configuration to Meilisearch:
+
+<CodeGroup>
 
 ```sh
 curl \
@@ -91,6 +97,8 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 Replace `MEILISEARCH_URL` with the address of your Meilisearch project, `INDEX_NAME` with your index name, `MEILISEARCH_API_KEY` with your Meilisearch API key, and `COHERE_API_KEY` with your [Cohere API key](https://dashboard.cohere.com/api-keys).
 
 Meilisearch will start generating embeddings for all documents in the index. Monitor progress through the [task queue](/reference/api/tasks/list-tasks).
@@ -103,6 +111,8 @@ Never share your Cohere API key publicly or commit it to version control. Use en
 
 Once indexing is complete, perform a search using the `hybrid` parameter:
 
+<CodeGroup>
+
 ```json
 {
   "q": "something to stir soup with",
@@ -112,6 +122,8 @@ Once indexing is complete, perform a search using the `hybrid` parameter:
   }
 }
 ```
+
+</CodeGroup>
 
 A [`semanticRatio`](/capabilities/hybrid_search/advanced/custom_hybrid_ranking) of `0.5` returns a balanced mix of keyword and semantic results. Adjust this value based on your needs.
 

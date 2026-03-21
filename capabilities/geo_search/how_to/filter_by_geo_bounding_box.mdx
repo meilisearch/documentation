@@ -3,42 +3,19 @@ title: Filter by geo bounding box
 description: Filter search results within a rectangular geographic area defined by two corner points.
 ---
 
-import CodeSamplesGeosearchGuideFilterSettings1 from '/snippets/generated-code-samples/code_samples_geosearch_guide_filter_settings_1.mdx';
 import CodeSamplesGeosearchGuideFilterUsage3 from '/snippets/generated-code-samples/code_samples_geosearch_guide_filter_usage_3.mdx';
 
 The `_geoBoundingBox` filter returns documents located within a rectangle defined by its top-left and bottom-right coordinates. This is especially useful for map-based interfaces where you want to display results that fit within the current viewport.
 
-## Prerequisites
-
-Before using `_geoBoundingBox`, make sure your documents and index meet the following requirements:
-
-1. **Documents must contain a `_geo` field** with valid `lat` and `lng` values:
-
-```json
-{
-  "id": 1,
-  "name": "Nàpiz' Milano",
-  "address": "Viale Vittorio Veneto, 30, 20124, Milan, Italy",
-  "type": "pizza",
-  "rating": 9,
-  "_geo": {
-    "lat": 45.4777599,
-    "lng": 9.1967508
-  }
-}
-```
-
-2. **Add `_geo` to `filterableAttributes`**:
-
-<CodeSamplesGeosearchGuideFilterSettings1 />
-
-Meilisearch will rebuild your index after updating [`filterableAttributes`](/capabilities/filtering_sorting_faceting/getting_started). Depending on the size of your dataset, this might take some time.
-
 ## Syntax
+
+<CodeGroup>
 
 ```
 _geoBoundingBox([topLeftLat, topLeftLng], [bottomRightLat, bottomRightLng])
 ```
+
+</CodeGroup>
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
@@ -59,6 +36,8 @@ The following example searches for restaurants within a bounding box covering ce
 <CodeSamplesGeosearchGuideFilterUsage3 />
 
 Meilisearch returns all documents with a `_geo` location inside the specified rectangle:
+
+<CodeGroup>
 
 ```json
 {
@@ -91,6 +70,8 @@ Meilisearch returns all documents with a `_geo` location inside the specified re
 }
 ```
 
+</CodeGroup>
+
 <Note>
 When using `_geoBoundingBox` without `_geoRadius` or `_geoPoint` sorting, the `_geoDistance` field is `0` because there is no reference point to calculate distance from.
 </Note>
@@ -100,6 +81,8 @@ When using `_geoBoundingBox` without `_geoRadius` or `_geoPoint` sorting, the `_
 Bounding box filters work well with interactive maps. When a user pans or zooms the map, read the visible bounds from your map library and pass them directly to Meilisearch.
 
 For example, with a JavaScript map library:
+
+<CodeGroup>
 
 ```javascript
 // Get the current map bounds
@@ -113,9 +96,13 @@ const results = await client.index('restaurants').search('', {
 });
 ```
 
+</CodeGroup>
+
 ## Combine with other filters
 
 You can combine `_geoBoundingBox` with any other filter using `AND` and `OR` operators:
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -125,6 +112,8 @@ curl \
     "filter": "_geoBoundingBox([45.494181, 9.214024], [45.449484, 9.179175]) AND type = pizza"
   }'
 ```
+
+</CodeGroup>
 
 <CardGroup cols={2}>
   <Card title="Geo search overview" icon="globe" href="/capabilities/geo_search/getting_started">

@@ -6,12 +6,14 @@ description: Limit hallucination and restrict conversational search responses to
 Guardrails help ensure the AI only answers questions based on your [indexed](/capabilities/indexing/overview) data and stays within the boundaries you define. The primary mechanism for setting guardrails in Meilisearch is the system prompt, configured through the [chat workspace settings](/capabilities/conversational_search/how_to/configure_chat_workspace).
 
 <Warning>
-Conversational search is still in early development. Even with well-configured guardrails, conversational agents may occasionally hallucinate inaccurate information. Always monitor responses in production environments.
+Even with well-configured guardrails, LLMs may occasionally hallucinate inaccurate information. Guardrails work by shaping the system prompt to guide the model's behavior, which significantly reduces unwanted responses but cannot eliminate them entirely. Always monitor responses in production environments.
 </Warning>
 
 ## How system prompts work
 
 The system prompt is the first instruction the LLM receives before processing any user question. It shapes the agent's behavior, tone, and boundaries for the entire conversation. Set it through the `prompts.system` field in your workspace settings:
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -25,11 +27,15 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 ## Restrict responses to indexed data
 
 The most important guardrail is instructing the LLM to only use information from the documents retrieved by Meilisearch. This reduces hallucination significantly.
 
 Include explicit instructions like these in your system prompt:
+
+<CodeGroup>
 
 ```text
 You are a helpful assistant. Only answer questions using information
@@ -37,6 +43,8 @@ from the search results provided to you. If the search results do not
 contain enough information to answer the question, say so clearly
 instead of guessing.
 ```
+
+</CodeGroup>
 
 Key phrases that help restrict the model:
 
@@ -51,6 +59,8 @@ Limit the topics the agent will discuss. This prevents users from using your con
 
 ### Customer support example
 
+<CodeGroup>
+
 ```text
 You are a customer support agent for Acme Corp. You help users with
 questions about our products, orders, shipping, and return policies.
@@ -64,7 +74,11 @@ Rules:
   support@acme.com
 ```
 
+</CodeGroup>
+
 ### Product search example
+
+<CodeGroup>
 
 ```text
 You are a product search assistant for an electronics store. Help
@@ -78,7 +92,11 @@ Rules:
 - Do not discuss competitor products
 ```
 
+</CodeGroup>
+
 ### Documentation search example
+
+<CodeGroup>
 
 ```text
 You are a technical documentation assistant. Help developers find
@@ -95,9 +113,13 @@ Rules:
   comes from
 ```
 
+</CodeGroup>
+
 ## Control response format and tone
 
 Use the system prompt to standardize how the agent formats its responses:
+
+<CodeGroup>
 
 ```text
 You are a helpful assistant for a legal research platform.
@@ -111,9 +133,13 @@ Response format:
   legal implications
 ```
 
+</CodeGroup>
+
 ## Combine multiple guardrails
 
 In production, combine scope restrictions, data constraints, and formatting rules into a single system prompt:
+
+<CodeGroup>
 
 ```text
 You are the support assistant for CloudDeploy, a cloud hosting
@@ -137,6 +163,8 @@ Format rules:
 - Start with a direct answer, then provide supporting details
 ```
 
+</CodeGroup>
+
 ## Test your guardrails
 
 After setting up guardrails, test them by sending questions that should be rejected:
@@ -152,4 +180,4 @@ Adjust your system prompt based on these tests until the agent behaves as expect
 
 - [Configure a chat workspace](/capabilities/conversational_search/how_to/configure_chat_workspace) to apply your guardrails
 - [Display source documents](/capabilities/conversational_search/how_to/display_source_documents) so users can verify responses
-- Learn about [chat tools](/capabilities/conversational_search/how_to/chat_tooling_reference) to enhance the user experience
+- Learn about [chat tools](/capabilities/conversational_search/advanced/chat_tooling_reference) to enhance the user experience

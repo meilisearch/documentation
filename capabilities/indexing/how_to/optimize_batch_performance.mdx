@@ -15,9 +15,13 @@ The `progressTrace` field within the batch object offers a detailed breakdown of
 `progressTrace` is a hierarchical trace showing each phase of indexing and how long it took.
 Each entry follows the structure:
 
+<CodeGroup>
+
 ```json
 "processing tasks > indexing > extracting word proximity": "33.71s"
 ```
+
+</CodeGroup>
 
 This means:
 
@@ -100,9 +104,13 @@ Focus on the **longest-running steps** and investigate which index settings or d
 
 If you see:
 
+<CodeGroup>
+
 ```json
 "processing tasks > indexing > post processing facets > facet search": "1763.06s"
 ```
+
+</CodeGroup>
 
 [Facet searching](/capabilities/filtering_sorting_faceting/how_to/filter_with_facets#searching-facet-values) is taking significant indexing time. If your application doesn’t use facets, disable the feature:
 

@@ -43,6 +43,8 @@ For more information, consult the [analytics events endpoint reference](/capabil
 
 To associate analytics events with specific search queries, you need the query's unique identifier. Include the `Meili-Include-Metadata` header in your search requests to receive this information:
 
+<CodeGroup>
+
 ```bash
 curl \
   -X POST 'MEILISEARCH_URL/indexes/movies/search' \
@@ -53,7 +55,11 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 When this header is present, the search response includes a `metadata` field:
+
+<CodeGroup>
 
 ```json
 {
@@ -65,5 +71,7 @@ When this header is present, the search response includes a `metadata` field:
   }
 }
 ```
+
+</CodeGroup>
 
 Use the `requestUid` value as the `queryUid` when sending `click` or `conversion` events. This ensures Meilisearch correctly links user interactions to the search query that produced them.

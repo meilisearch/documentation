@@ -64,6 +64,8 @@ Conversion events should be sent at the moment the user completes the action, no
 3. User reads the product page (no event)
 4. User adds the product to their cart (conversion event)
 
+<CodeGroup>
+
 ```javascript
 async function handleAddToCart(product, queryUid) {
   // Add the product to the cart in your application
@@ -88,6 +90,8 @@ async function handleAddToCart(product, queryUid) {
   });
 }
 ```
+
+</CodeGroup>
 
 <Tip>
 Store the `queryUid` when the user performs a search, then pass it along as the user navigates through your application. This ensures you can still associate a conversion with the original query even if the conversion happens on a different page.

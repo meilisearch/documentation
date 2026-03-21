@@ -35,6 +35,8 @@ The `queryUid` links the click event to the original search request. You can fin
 
 In a typical web application, you fire a click event when the user clicks on a search result link. Here is a JavaScript example:
 
+<CodeGroup>
+
 ```javascript
 async function handleResultClick(result, position, queryUid) {
   // Send the click event to Meilisearch Cloud
@@ -60,6 +62,8 @@ async function handleResultClick(result, position, queryUid) {
   window.location.href = result.url;
 }
 ```
+
+</CodeGroup>
 
 Attach this handler to each search result in your UI. The `position` parameter should match the document's zero-based index in the results list.
 

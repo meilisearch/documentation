@@ -25,6 +25,8 @@ When replacing a document, any fields present in the old version but missing fro
 
 Suppose your index contains this document:
 
+<CodeGroup>
+
 ```json
 {
   "id": 287947,
@@ -34,7 +36,11 @@ Suppose your index contains this document:
 }
 ```
 
+</CodeGroup>
+
 If you send a POST request with:
+
+<CodeGroup>
 
 ```json
 {
@@ -43,9 +49,13 @@ If you send a POST request with:
   "overview": "A boy is given the ability to become an adult superhero."
 }
 ```
+
+</CodeGroup>
 
 The stored document becomes:
 
+<CodeGroup>
+
 ```json
 {
   "id": 287947,
@@ -53,6 +63,8 @@ The stored document becomes:
   "overview": "A boy is given the ability to become an adult superhero."
 }
 ```
+
+</CodeGroup>
 
 The `genres` field is gone because it was not included in the replacement.
 
@@ -68,6 +80,8 @@ This operation is ideal when you only need to change specific fields without res
 
 Starting with the same document:
 
+<CodeGroup>
+
 ```json
 {
   "id": 287947,
@@ -77,7 +91,11 @@ Starting with the same document:
 }
 ```
 
+</CodeGroup>
+
 If you send a PUT request with:
+
+<CodeGroup>
 
 ```json
 {
@@ -87,7 +105,11 @@ If you send a PUT request with:
 }
 ```
 
+</CodeGroup>
+
 The stored document becomes:
+
+<CodeGroup>
 
 ```json
 {
@@ -97,6 +119,8 @@ The stored document becomes:
   "genres": "comedy"
 }
 ```
+
+</CodeGroup>
 
 The `overview` field is preserved because the update only touched `title` and `genres`.
 
@@ -123,6 +147,8 @@ Meilisearch also supports batch deletion and deletion by filter:
 
 All three operations support sending multiple documents in a single request. Send an array of documents in the request body:
 
+<CodeGroup>
+
 ```bash
 curl \
   -X POST 'MEILISEARCH_URL/indexes/movies/documents' \
@@ -134,11 +160,15 @@ curl \
   ]'
 ```
 
+</CodeGroup>
+
 Batch operations are processed as a single [task](/capabilities/indexing/advanced/async_operations). Meilisearch handles large batches efficiently, so prefer sending documents in bulk rather than one at a time.
 
 ## Update without creating new documents
 
 By default, both `POST` and `PUT` document operations create new documents if no document with the given primary key exists. To change this behavior, add the `skipCreation=true` query parameter to your request. When enabled, Meilisearch silently ignores any documents whose primary key does not match an existing document in the index.
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -150,6 +180,8 @@ curl \
   ]'
 ```
 
+</CodeGroup>
+
 In this example, only document `1` is updated. Document `99999` is ignored because it does not already exist in the index.
 
 This is useful when you want to safely update fields for existing documents without accidentally creating incomplete records.
@@ -157,6 +189,8 @@ This is useful when you want to safely update fields for existing documents with
 ## Retrieve multiple documents by ID
 
 Use `POST /indexes/{index_uid}/documents/fetch` to retrieve specific documents by their primary keys:
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -166,6 +200,8 @@ curl \
     "ids": ["id1", "id2", "id3"]
   }'
 ```
+
+</CodeGroup>
 
 Meilisearch returns the matching documents in the `results` array. Note that documents are not returned in the order you queried them, and non-existent IDs are silently ignored.
 

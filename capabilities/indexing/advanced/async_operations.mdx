@@ -36,6 +36,8 @@ Tasks are objects containing information that allow you to track their progress 
 
 A [task object](/reference/api/tasks/get-task) includes data not present in the original request, such as when the request was enqueued, the type of request, and an error code when the task fails:
 
+<CodeGroup>
+
 ```json
 {
     "uid": 1,
@@ -55,11 +57,15 @@ A [task object](/reference/api/tasks/get-task) includes data not present in the 
 }
 ```
 
+</CodeGroup>
+
 For a comprehensive description of each task object field, consult the [task API reference](/reference/api/tasks/get-task).
 
 #### Summarized task objects
 
 When you make an API request for an asynchronous operation, Meilisearch returns a [summarized version](/reference/api/tasks/get-task) of the full `task` object.
+
+<CodeGroup>
 
 ```json
 {
@@ -70,6 +76,8 @@ When you make an API request for an asynchronous operation, Meilisearch returns 
   "enqueuedAt": "2021-08-11T09:25:53.000000Z"
 }
 ```
+
+</CodeGroup>
 
 Use the summarized task's `taskUid` to [track the progress of a task](/reference/api/tasks/get-task).
 
@@ -163,6 +171,8 @@ Suppose you add a new document to your instance using the [add documents endpoin
 
 When you query the [get task endpoint](/reference/api/tasks/get-task) using this value, you see that it has been `enqueued`:
 
+<CodeGroup>
+
 ```json
 {
     "uid": 1,
@@ -182,7 +192,11 @@ When you query the [get task endpoint](/reference/api/tasks/get-task) using this
 }
 ```
 
+</CodeGroup>
+
 Later, you check the task's progress one more time. It was successfully processed and its `status` changed to `succeeded`:
+
+<CodeGroup>
 
 ```json
 {
@@ -203,7 +217,11 @@ Later, you check the task's progress one more time. It was successfully processe
 }
 ```
 
+</CodeGroup>
+
 Had the task failed, the response would have included a detailed `error` object:
+
+<CodeGroup>
 
 ```json
 {
@@ -228,6 +246,8 @@ Had the task failed, the response would have included a detailed `error` object:
     "finishedAt": "2021-08-10T14:29:19.000000Z"
 }
 ```
+
+</CodeGroup>
 
 If the task had been [canceled](/reference/api/tasks/cancel-tasks) while it was `enqueued` or `processing`, it would have the `canceled` status and a non-`null` value for the `canceledBy` field.
 

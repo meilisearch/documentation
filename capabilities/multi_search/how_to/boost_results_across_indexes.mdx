@@ -27,6 +27,8 @@ In this request, the `profiles` query has a weight of `1.2`, while the other que
 
 The response returns all results in a single list, with profile matches promoted toward the top:
 
+<CodeGroup>
+
 ```json
 {
   "hits": [
@@ -56,11 +58,15 @@ The response returns all results in a single list, with profile matches promoted
 }
 ```
 
+</CodeGroup>
+
 Each hit includes a `_federation` object showing which index and query position it came from.
 
 ## Practical example: products over blog posts
 
 For an ecommerce site with both a `products` index and a `blog_posts` index, you likely want product listings to appear before blog content when users search:
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -82,6 +88,8 @@ curl \
     ]
   }'
 ```
+
+</CodeGroup>
 
 With a weight of `1.5` on products and `0.8` on blog posts, product results will consistently appear higher in the merged list unless a blog post has a significantly better relevancy match.
 

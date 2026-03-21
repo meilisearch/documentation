@@ -21,6 +21,8 @@ Start by creating an index, then add a large number of documents to this index:
 
 Instead of processing your request immediately, Meilisearch will add it to a queue and return a summarized task object:
 
+<CodeGroup>
+
 ```json
 {
   "taskUid": 0,
@@ -30,6 +32,8 @@ Instead of processing your request immediately, Meilisearch will add it to a que
   "enqueuedAt": "2021-08-11T09:25:53.000000Z"
 }
 ```
+
+</CodeGroup>
 
 The summarized task object is confirmation your request has been accepted. It also gives you information you can use to monitor the status of your request, such as the `taskUid`.
 
@@ -63,6 +67,8 @@ Use the `taskUid` from your request's response to check the status of a task:
 
 This will return the full task object:
 
+<CodeGroup>
+
 ```json
 {
   "uid": 4,
@@ -81,6 +87,8 @@ This will return the full task object:
 }
 ```
 
+</CodeGroup>
+
 If the task is still `enqueued` or `processing`, wait a few moments and query the database once again. You may also [set up a webhook listener](/reference/api/management/list-webhooks).
 
 When `status` changes to `succeeded`, Meilisearch has finished processing your request.
@@ -90,6 +98,8 @@ If the task `status` changes to `failed`, Meilisearch was not able to fulfill yo
 ## Track tasks with custom metadata
 
 You can attach a `customMetadata` query parameter to document operations. This metadata string appears in task responses and webhook payloads, making it easier to track which batch of data triggered a specific task.
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -101,7 +111,11 @@ curl \
   ]'
 ```
 
+</CodeGroup>
+
 The summarized task object returned by this request includes the metadata you specified:
+
+<CodeGroup>
 
 ```json
 {
@@ -113,6 +127,8 @@ The summarized task object returned by this request includes the metadata you sp
   "enqueuedAt": "2026-03-21T10:00:00.000000Z"
 }
 ```
+
+</CodeGroup>
 
 This is particularly useful when combined with [webhooks](/reference/api/management/list-webhooks), as the metadata lets you correlate incoming webhook notifications with specific data pipelines or scheduled imports.
 

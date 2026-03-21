@@ -28,11 +28,15 @@ With this configuration, fields like `id`, `poster_url`, or `internal_rating` ar
 
 To restore the default behavior (all fields displayed), reset the setting:
 
+<CodeGroup>
+
 ```bash
 curl \
   -X DELETE 'MEILISEARCH_URL/indexes/movies/settings/displayed-attributes' \
   -H 'Authorization: Bearer MEILISEARCH_API_KEY'
 ```
+
+</CodeGroup>
 
 <Note>
 All fields are always stored in the database regardless of display settings. Making a field non-displayed does not delete it. You can also use `attributesToRetrieve` at search time to limit which displayed fields are returned for a specific query, without changing the index setting.

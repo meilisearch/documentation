@@ -54,6 +54,8 @@ After resetting, new attributes will once again be automatically added to the se
 
 If you need to limit which attributes are searched for a specific query without changing the index setting, use the `attributesToSearchOn` search parameter:
 
+<CodeGroup>
+
 ```bash
 curl \
   -X POST 'MEILISEARCH_URL/indexes/movies/search' \
@@ -63,6 +65,8 @@ curl \
     "attributesToSearchOn": ["title"]
   }'
 ```
+
+</CodeGroup>
 
 This searches only the `title` field for this request, regardless of the index-level `searchableAttributes` setting. The attributes specified must be a subset of the configured `searchableAttributes`.
 

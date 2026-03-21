@@ -10,6 +10,8 @@ Each query in a [multi-search](/capabilities/multi_search/overview) request is i
 
 Before filtering, make sure the relevant attributes are marked as filterable on each index. For example, configure three indexes with different filterable attributes:
 
+<CodeGroup>
+
 ```bash
 # Products: filter by category and price
 curl \
@@ -31,9 +33,13 @@ curl \
 # Users: no filters needed
 ```
 
+</CodeGroup>
+
 ## Send a multi-search request with different filters
 
 Once your index settings are configured, send a multi-search request where each query uses its own filter and parameters:
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -63,6 +69,8 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 In this example:
 
 - The `products` query filters by category and stock availability, sorts by price, and returns up to 5 results
@@ -72,6 +80,8 @@ In this example:
 ## Understand the response
 
 The response contains one result set for each query, in the same order:
+
+<CodeGroup>
 
 ```json
 {
@@ -107,9 +117,13 @@ The response contains one result set for each query, in the same order:
 }
 ```
 
+</CodeGroup>
+
 ## Combine with federated mode
 
 You can also use different filters per query in [federated search](/capabilities/multi_search/getting_started/federated_search) mode by adding the `federation` parameter. Each query retains its own filter, and results are merged into a single ranked list:
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -131,6 +145,8 @@ curl \
     ]
   }'
 ```
+
+</CodeGroup>
 
 ## Key points
 

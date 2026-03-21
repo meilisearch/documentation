@@ -3,48 +3,21 @@ title: Sort by geo point
 description: Sort search results by distance from a geographic reference point to show the closest results first.
 ---
 
-import CodeSamplesGeosearchGuideSortSettings1 from '/snippets/generated-code-samples/code_samples_geosearch_guide_sort_settings_1.mdx';
 import CodeSamplesGeosearchGuideSortUsage1 from '/snippets/generated-code-samples/code_samples_geosearch_guide_sort_usage_1.mdx';
 import CodeSamplesGeosearchGuideSortUsage2 from '/snippets/generated-code-samples/code_samples_geosearch_guide_sort_usage_2.mdx';
 
 The `_geoPoint` sort rule orders results by their distance from a specified latitude and longitude. Use this to show users the nearest matching results first, or to push nearby results to the end of the list.
 
-## Prerequisites
-
-Before using `_geoPoint` for sorting, make sure your documents and index meet the following requirements:
-
-1. **Documents must contain a `_geo` field** with valid `lat` and `lng` values:
-
-```json
-{
-  "id": 1,
-  "name": "Nàpiz' Milano",
-  "address": "Viale Vittorio Veneto, 30, 20124, Milan, Italy",
-  "type": "pizza",
-  "rating": 9,
-  "_geo": {
-    "lat": 45.4777599,
-    "lng": 9.1967508
-  }
-}
-```
-
-2. **Add `_geo` to `sortableAttributes`**:
-
-<CodeSamplesGeosearchGuideSortSettings1 />
-
-Meilisearch will rebuild your index after updating [`sortableAttributes`](/capabilities/filtering_sorting_faceting/how_to/sort_results). Depending on the size of your dataset, this might take some time.
-
-<Warning>
-Geo sorting only works with the `_geo` field. It is not possible to sort documents based on the `_geojson` attribute.
-</Warning>
-
 ## Syntax
+
+<CodeGroup>
 
 ```
 _geoPoint(lat, lng):asc
 _geoPoint(lat, lng):desc
 ```
+
+</CodeGroup>
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
@@ -58,6 +31,8 @@ Use `:asc` to show the closest results first, or `:desc` to show the farthest re
 The following example sorts restaurants by their distance from the Eiffel Tower (latitude 48.8561446, longitude 2.2978204), with the closest results first:
 
 <CodeSamplesGeosearchGuideSortUsage1 />
+
+<CodeGroup>
 
 ```json
 {
@@ -101,6 +76,8 @@ The following example sorts restaurants by their distance from the Eiffel Tower 
   ]
 }
 ```
+
+</CodeGroup>
 
 ### Understanding `_geoDistance`
 
@@ -116,6 +93,8 @@ When you use `_geoPoint` for sorting, Meilisearch automatically includes a `_geo
 
 <CodeSamplesGeosearchGuideSortUsage2 />
 
+<CodeGroup>
+
 ```json
 {
   "hits": [
@@ -159,9 +138,13 @@ When you use `_geoPoint` for sorting, Meilisearch automatically includes a `_geo
 }
 ```
 
+</CodeGroup>
+
 ## Combine with geo filters
 
 You can use `_geoPoint` sorting together with geo filters to both limit results to a geographic area and order them by proximity. For example, find restaurants within 5 km of central Milan, sorted by distance:
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -172,6 +155,8 @@ curl \
     "sort": ["_geoPoint(45.472735, 9.184019):asc"]
   }'
 ```
+
+</CodeGroup>
 
 This is useful when you want to both restrict results to a specific area and present them in order from nearest to farthest.
 

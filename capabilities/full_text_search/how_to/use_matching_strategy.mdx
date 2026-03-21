@@ -18,6 +18,8 @@ For a query like `batman dark knight`, this strategy returns:
 2. Documents matching "batman" and "dark"
 3. Documents matching "batman"
 
+<CodeGroup>
+
 ```bash
 curl \
   -X POST 'MEILISEARCH_URL/indexes/movies/search' \
@@ -28,11 +30,15 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 Use `last` when you want to always return results, even if the query is long or specific. This is the best choice for most search interfaces.
 
 ### `all`
 
 The `all` strategy requires every query term to be present in matching documents. If a document is missing any term, it is excluded from the results.
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -44,6 +50,8 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 This only returns documents containing all three terms: "batman", "dark", and "knight".
 
 Use `all` when precision matters more than returning many results. This is a good choice for technical search, product catalogs with specific queries, or situations where showing irrelevant results is worse than showing fewer results.
@@ -51,6 +59,8 @@ Use `all` when precision matters more than returning many results. This is a goo
 ### `frequency`
 
 The `frequency` strategy drops the most common query terms first rather than dropping from the end. It analyzes how frequently each term appears across all documents in the index and removes the most common terms to improve result relevancy.
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -61,6 +71,8 @@ curl \
     "matchingStrategy": "frequency"
   }'
 ```
+
+</CodeGroup>
 
 If "the" appears in 90% of documents while "rises" appears in only 5%, the `frequency` strategy drops "the" first because it is the least distinctive term.
 

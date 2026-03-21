@@ -36,6 +36,8 @@ Binary quantization is less effective with low-dimensional models (under 512 dim
 
 Set `binaryQuantized` to `true` in your embedder configuration:
 
+<CodeGroup>
+
 ```bash
 curl \
   -X PATCH 'MEILISEARCH_URL/indexes/products/settings/embedders' \
@@ -48,11 +50,15 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 This works with any embedder source ([OpenAI](/capabilities/hybrid_search/how_to/configure_openai_embedder), [Cohere](/capabilities/hybrid_search/how_to/configure_cohere_embedder), [HuggingFace](/capabilities/hybrid_search/how_to/configure_huggingface_embedder), [REST](/capabilities/hybrid_search/how_to/configure_rest_embedder), or user-provided).
 
 ### Example: OpenAI with a large model
 
 Use OpenAI's largest embedding model with binary quantization for the best balance of quality and efficiency:
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -68,6 +74,8 @@ curl \
     }
   }'
 ```
+
+</CodeGroup>
 
 <Warning>
 **Activating binary quantization is irreversible.** Once enabled, Meilisearch converts all vectors and discards the original full-precision data. The only way to recover the original vectors is to re-index all documents in a new embedder without binary quantization.

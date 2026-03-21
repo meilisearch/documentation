@@ -9,6 +9,8 @@ This guide walks through a complete ecommerce personalization implementation. Yo
 
 Make sure your product index contains rich, descriptive documents. The more relevant fields your documents have, the better personalization can re-rank results:
 
+<CodeGroup>
+
 ```json
 [
   {
@@ -38,6 +40,8 @@ Make sure your product index contains rich, descriptive documents. The more rele
 ]
 ```
 
+</CodeGroup>
+
 ## Step 2: Collect user signals
 
 Track user interactions on your ecommerce site. The most useful signals for personalization include:
@@ -59,6 +63,8 @@ If you use Meilisearch analytics, you can track clicks and conversions with the 
 ## Step 3: Build a user profile string
 
 Transform aggregated signals into a plain-text description. Focus on positive, affirmative statements:
+
+<CodeGroup>
 
 ```javascript
 function buildShopperProfile(user) {
@@ -94,11 +100,15 @@ function buildShopperProfile(user) {
 }
 ```
 
+</CodeGroup>
+
 Example output: `"Frequently buys electronics. Prefers Samsung, Sony. Budget-conscious shopper. Recently searched for wireless earbuds, portable speakers."`
 
 ## Step 4: Send personalized search requests
 
 Pass the user profile string in the `personalize` search parameter:
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -111,6 +121,8 @@ curl \
     }
   }'
 ```
+
+</CodeGroup>
 
 ## Step 5: Compare results for different profiles
 

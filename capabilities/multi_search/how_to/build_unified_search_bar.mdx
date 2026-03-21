@@ -19,6 +19,8 @@ Use multi-index search when you want to display results from each index in its o
 
 Send a multi-search request without the `federation` parameter:
 
+<CodeGroup>
+
 ```bash
 curl \
   -X POST 'MEILISEARCH_URL/multi-search' \
@@ -47,11 +49,15 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 Each query limits results and selects only the fields needed for the search bar display.
 
 ### Frontend implementation
 
 Here is a simple JavaScript pattern for rendering categorized results:
+
+<CodeGroup>
 
 ```html
 <input type="text" id="search-input" placeholder="Search..." />
@@ -112,9 +118,13 @@ Here is a simple JavaScript pattern for rendering categorized results:
 </script>
 ```
 
+</CodeGroup>
+
 ## Option 2: merged list with federated search
 
 Use federated search when you want a single ranked list where the most relevant results appear first, regardless of which index they come from.
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -140,7 +150,11 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 The response returns a flat `hits` array. Each hit includes a `_federation` object that tells you which index it came from:
+
+<CodeGroup>
 
 ```json
 {
@@ -159,9 +173,13 @@ The response returns a flat `hits` array. Each hit includes a `_federation` obje
 }
 ```
 
+</CodeGroup>
+
 ### Frontend implementation
 
 Use the `_federation.indexUid` field to style each result according to its type:
+
+<CodeGroup>
 
 ```html
 <input type="text" id="search-input" placeholder="Search..." />
@@ -214,6 +232,8 @@ Use the `_federation.indexUid` field to style each result according to its type:
   }
 </script>
 ```
+
+</CodeGroup>
 
 ## Which mode should you use?
 

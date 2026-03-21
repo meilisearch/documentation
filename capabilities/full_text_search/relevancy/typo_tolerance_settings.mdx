@@ -70,6 +70,8 @@ With the above settings, matches in the `title` attribute will not tolerate any 
 
 You can disable typo tolerance for all numeric values across all indexes and search requests by setting `disableOnNumbers` to `true`:
 
+<CodeGroup>
+
 ```bash
 curl \
   -X PATCH 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/typo-tolerance' \
@@ -79,6 +81,8 @@ curl \
     "disableOnNumbers": true
   }'
 ```
+
+</CodeGroup>
 
 By default, typo tolerance on numerical values is turned on. This may lead to false positives, such as a search for `2024` matching documents containing `2025` or `2004`.
 

@@ -3,43 +3,20 @@ title: Filter by geo radius
 description: Filter search results to only include documents within a specified distance from a geographic point.
 ---
 
-import CodeSamplesGeosearchGuideFilterSettings1 from '/snippets/generated-code-samples/code_samples_geosearch_guide_filter_settings_1.mdx';
 import CodeSamplesGeosearchGuideFilterUsage1 from '/snippets/generated-code-samples/code_samples_geosearch_guide_filter_usage_1.mdx';
 import CodeSamplesGeosearchGuideFilterUsage2 from '/snippets/generated-code-samples/code_samples_geosearch_guide_filter_usage_2.mdx';
 
 The `_geoRadius` filter returns documents located within a circular area defined by a center point and a radius. This is the most common geo filter, useful for "find nearby" features like store locators, restaurant finders, or service area lookups.
 
-## Prerequisites
-
-Before using `_geoRadius`, make sure your documents and index meet the following requirements:
-
-1. **Documents must contain a `_geo` field** with valid `lat` and `lng` values:
-
-```json
-{
-  "id": 1,
-  "name": "Nàpiz' Milano",
-  "address": "Viale Vittorio Veneto, 30, 20124, Milan, Italy",
-  "type": "pizza",
-  "rating": 9,
-  "_geo": {
-    "lat": 45.4777599,
-    "lng": 9.1967508
-  }
-}
-```
-
-2. **Add `_geo` to `filterableAttributes`**:
-
-<CodeSamplesGeosearchGuideFilterSettings1 />
-
-Meilisearch will rebuild your index after updating [`filterableAttributes`](/capabilities/filtering_sorting_faceting/getting_started). Depending on the size of your dataset, this might take some time.
-
 ## Syntax
+
+<CodeGroup>
 
 ```
 _geoRadius(lat, lng, distanceInMeters)
 ```
+
+</CodeGroup>
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
@@ -56,6 +33,8 @@ The following example searches for restaurants within 2 km of central Milan (lat
 <CodeSamplesGeosearchGuideFilterUsage1 />
 
 Meilisearch returns all documents with a `_geo` location inside the specified circle:
+
+<CodeGroup>
 
 ```json
 {
@@ -88,6 +67,8 @@ Meilisearch returns all documents with a `_geo` location inside the specified ci
 }
 ```
 
+</CodeGroup>
+
 ### Understanding `_geoDistance`
 
 When you use `_geoRadius`, Meilisearch automatically includes a `_geoDistance` field in each result. This value represents the distance in meters between the document's location and the center point of your radius filter.
@@ -101,6 +82,8 @@ When you use `_geoRadius`, Meilisearch automatically includes a `_geoDistance` f
 You can combine `_geoRadius` with any other filter using `AND` and `OR` operators. The following example finds only pizzerias within 2 km of central Milan:
 
 <CodeSamplesGeosearchGuideFilterUsage2 />
+
+<CodeGroup>
 
 ```json
 {
@@ -120,6 +103,8 @@ You can combine `_geoRadius` with any other filter using `AND` and `OR` operator
   ]
 }
 ```
+
+</CodeGroup>
 
 ## Common radius values
 

@@ -11,6 +11,8 @@ Meilisearch provides two complementary features for this: **highlighting** wraps
 
 Use `attributesToHighlight` to specify which fields should have matched terms wrapped in highlight tags. Set it to `["*"]` to highlight all [displayed attributes](/capabilities/full_text_search/how_to/configure_displayed_attributes).
 
+<CodeGroup>
+
 ```bash
 curl \
   -X POST 'MEILISEARCH_URL/indexes/movies/search' \
@@ -21,7 +23,11 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 The response includes a `_formatted` object in each hit. Inside `_formatted`, matched terms are wrapped in `<em>` tags by default:
+
+<CodeGroup>
 
 ```json
 {
@@ -38,9 +44,13 @@ The response includes a `_formatted` object in each hit. Inside `_formatted`, ma
 }
 ```
 
+</CodeGroup>
+
 ### Custom highlight tags
 
 Use `highlightPreTag` and `highlightPostTag` to replace the default `<em>` tags with custom markup:
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -54,9 +64,13 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 ## Cropping long text fields
 
 Use `attributesToCrop` to trim long text fields so only the portion around matched terms is returned. This is especially useful for fields like descriptions or article bodies.
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -69,7 +83,11 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 The `_formatted` object contains the cropped text:
+
+<CodeGroup>
 
 ```json
 {
@@ -78,6 +96,8 @@ The `_formatted` object contains the cropped text:
   }
 }
 ```
+
+</CodeGroup>
 
 ### Crop parameters
 
@@ -91,6 +111,8 @@ The `_formatted` object contains the cropped text:
 
 You can set a specific crop length for individual attributes by appending `:length` to the attribute name:
 
+<CodeGroup>
+
 ```bash
 curl \
   -X POST 'MEILISEARCH_URL/indexes/movies/search' \
@@ -101,9 +123,13 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 ## Combining highlighting and cropping
 
 For the best user experience, use both features together. This gives you a short, relevant snippet with matched terms visually emphasized:
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -119,7 +145,11 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 The `_formatted` response combines both:
+
+<CodeGroup>
 
 ```json
 {
@@ -129,6 +159,8 @@ The `_formatted` response combines both:
   }
 }
 ```
+
+</CodeGroup>
 
 <Tip>
 Fields listed in `attributesToCrop` are automatically highlighted if they also appear in `attributesToHighlight` or if `attributesToHighlight` is set to `["*"]`.
