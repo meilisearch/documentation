@@ -19,6 +19,8 @@ Values in between shift the balance. For example, `0.7` returns more semantic re
 
 You set `semanticRatio` at search time as part of the `hybrid` parameter:
 
+<CodeGroup>
+
 ```json
 {
   "q": "comfortable running shoes",
@@ -28,6 +30,8 @@ You set `semanticRatio` at search time as part of the `hybrid` parameter:
   }
 }
 ```
+
+</CodeGroup>
 
 This means you can use different ratios for different search contexts within the same application.
 
@@ -54,6 +58,8 @@ Consider these three queries against a kitchenware dataset:
 
 **With `semanticRatio: 0.3`** (favoring keywords):
 
+<CodeGroup>
+
 ```json
 {
   "q": "KitchenAid mixer",
@@ -61,9 +67,13 @@ Consider these three queries against a kitchenware dataset:
 }
 ```
 
+</CodeGroup>
+
 Returns the exact KitchenAid mixer product at the top. Good for brand-specific searches.
 
 **With `semanticRatio: 0.7`** (favoring semantics):
+
+<CodeGroup>
 
 ```json
 {
@@ -72,9 +82,13 @@ Returns the exact KitchenAid mixer product at the top. Good for brand-specific s
 }
 ```
 
+</CodeGroup>
+
 Returns stand mixers, hand mixers, and mixing bowls. Good for descriptive queries where users do not know the exact product name.
 
 **With `semanticRatio: 0.5`** (balanced):
+
+<CodeGroup>
 
 ```json
 {
@@ -83,6 +97,8 @@ Returns stand mixers, hand mixers, and mixing bowls. Good for descriptive querie
 }
 ```
 
+</CodeGroup>
+
 Returns a mix of exact "stand mixer" keyword matches and semantically related baking equipment. Good as a general default.
 
 ## Using multiple embedders
@@ -90,6 +106,8 @@ Returns a mix of exact "stand mixer" keyword matches and semantically related ba
 Meilisearch supports configuring multiple embedders on the same index. Each embedder can use a different model, provider, or document template. At search time, you choose which embedder to use.
 
 This is useful when different types of queries benefit from different embedding models:
+
+<CodeGroup>
 
 ```json
 {
@@ -110,7 +128,11 @@ This is useful when different types of queries benefit from different embedding 
 }
 ```
 
+</CodeGroup>
+
 At search time, select the embedder that best fits the query context:
+
+<CodeGroup>
 
 ```json
 {
@@ -121,6 +143,8 @@ At search time, select the embedder that best fits the query context:
   }
 }
 ```
+
+</CodeGroup>
 
 ### When to use multiple embedders
 
@@ -147,6 +171,8 @@ For each test query, identify the expected top results. This creates a ground tr
 
 Run your query set against multiple `semanticRatio` values:
 
+<CodeGroup>
+
 ```json
 // Configuration A
 { "q": "test query", "hybrid": { "semanticRatio": 0.3, "embedder": "my-embedder" } }
@@ -157,6 +183,8 @@ Run your query set against multiple `semanticRatio` values:
 // Configuration C
 { "q": "test query", "hybrid": { "semanticRatio": 0.7, "embedder": "my-embedder" } }
 ```
+
+</CodeGroup>
 
 ### 4. Measure and compare
 

@@ -15,6 +15,8 @@ This guide walks through the full pattern: configuring filterable attributes, re
 
 Only attributes listed in `filterableAttributes` can be used as facets. Suppose you have a `books` index with documents like this:
 
+<CodeGroup>
+
 ```json
 {
   "id": 5,
@@ -26,6 +28,8 @@ Only attributes listed in `filterableAttributes` can be used as facets. Suppose 
   "rating": 3
 }
 ```
+
+</CodeGroup>
 
 Add the attributes you want as facets to `filterableAttributes`:
 
@@ -40,6 +44,8 @@ Use the `facets` search parameter to tell Meilisearch which attributes should in
 <CodeSamplesFacetedSearch1 />
 
 The response includes a `facetDistribution` object showing every value for each requested facet and how many documents match:
+
+<CodeGroup>
 
 ```json
 {
@@ -77,11 +83,15 @@ The response includes a `facetDistribution` object showing every value for each 
 }
 ```
 
+</CodeGroup>
+
 The `facetDistribution` tells you exactly which values exist and how many documents match each one. The `facetStats` object provides minimum and maximum values for numeric facets, useful for building range sliders.
 
 ## Step 3: apply a filter when the user clicks a facet
 
 When a user clicks a facet value, send a new search request with a `filter` parameter:
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -94,11 +104,15 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 The response updates both the `hits` and the `facetDistribution` to reflect the active filter. This means the facet counts adjust dynamically, showing users how many results remain for each option.
 
 ## Step 4: combine multiple facet filters
 
 Users often select multiple facet values. Combine them using `AND` and `OR` operators:
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -111,15 +125,23 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 Use `AND` to require all conditions (narrow results) and `OR` to match any condition (broaden results within a facet group). See the [filter expression syntax](/capabilities/filtering_sorting_faceting/advanced/filter_expression_syntax) reference for the full list of operators:
+
+<CodeGroup>
 
 ```bash
 "filter": "(genres = Classics OR genres = Fiction) AND language = English"
 ```
 
+</CodeGroup>
+
 ## Frontend implementation pattern
 
 Here is a JavaScript pattern for building an interactive faceted sidebar:
+
+<CodeGroup>
 
 ```html
 <div id="app">
@@ -208,6 +230,8 @@ Here is a JavaScript pattern for building an interactive faceted sidebar:
   search(); // initial load
 </script>
 ```
+
+</CodeGroup>
 
 This pattern:
 

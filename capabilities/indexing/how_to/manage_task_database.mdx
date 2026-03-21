@@ -21,6 +21,8 @@ Use the `limit` parameter to change the number of returned tasks:
 
 Meilisearch will return a batch of tasks. Each batch of returned tasks is often called a "page" of tasks, and the size of that page is determined by `limit`:
 
+<CodeGroup>
+
 ```json
 {
   "results": [
@@ -33,6 +35,8 @@ Meilisearch will return a batch of tasks. Each batch of returned tasks is often 
 }
 ```
 
+</CodeGroup>
+
 It is possible none of the returned tasks are the ones you are looking for. In that case, you will need to use the [get all tasks request response](/reference/api/tasks/list-tasks) to navigate the results.
 
 ## Navigating the task list with `from` and `next`
@@ -42,6 +46,8 @@ Use the `next` value included in the response to your previous query together wi
 <CodeSamplesGetAllTasksPaginating2 />
 
 This will return a new batch of tasks:
+
+<CodeGroup>
 
 ```json
 {
@@ -54,6 +60,8 @@ This will return a new batch of tasks:
   "next": 6
 }
 ```
+
+</CodeGroup>
 
 When the value of `next` is `null`, you have reached the final set of results.
 

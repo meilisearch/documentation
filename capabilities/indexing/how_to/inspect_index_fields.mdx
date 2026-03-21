@@ -15,6 +15,8 @@ The fields endpoint returns metadata about every field Meilisearch has detected 
 
 Send a `POST` request to `/indexes/{index_uid}/fields`:
 
+<CodeGroup>
+
 ```bash
 curl \
   -X POST 'MEILISEARCH_URL/indexes/movies/fields' \
@@ -23,7 +25,11 @@ curl \
   --data-binary '{}'
 ```
 
+</CodeGroup>
+
 The response is paginated and includes metadata for each field:
+
+<CodeGroup>
 
 ```json
 {
@@ -56,9 +62,13 @@ The response is paginated and includes metadata for each field:
 }
 ```
 
+</CodeGroup>
+
 ## Paginate results
 
 Use `offset` and `limit` to paginate through indexes with many fields:
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -71,9 +81,13 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 ## Filter fields by pattern
 
 You can filter the results to only return fields matching a specific pattern:
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -84,6 +98,8 @@ curl \
     "pattern": "release*"
   }'
 ```
+
+</CodeGroup>
 
 This returns only fields whose names match the given pattern, such as `release_date` or `release_year`.
 

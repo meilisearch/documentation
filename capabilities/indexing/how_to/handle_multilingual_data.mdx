@@ -89,6 +89,8 @@ The [`localizedAttributes` setting](/reference/api/settings/get-localizedattribu
 
 For example, if your dataset contains multilingual titles, you can declare which attribute belongs to which language:
 
+<CodeGroup>
+
 ```json
 {
   "id": 1,
@@ -98,15 +100,21 @@ For example, if your dataset contains multilingual titles, you can declare which
 }
 ```
 
+</CodeGroup>
+
 <CodeSamplesMultilingualDatasetGuideUpdateLocalizedAttributes1 />
 
 #### Specifying locales for queries
 
 When performing searches, you can specify [query locales](/reference/api/search/search-with-post#body-locales) to ensure queries are tokenized with the correct rules.
 
+<CodeGroup>
+
 ```javascript
 client.index('INDEX_NAME').search('schiff', { locales: ['deu'] })
 ```
+
+</CodeGroup>
 
 This ensures queries are interpreted with the correct tokenizer and normalization rules, avoiding false mismatches.
 

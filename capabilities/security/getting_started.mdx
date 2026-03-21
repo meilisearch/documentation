@@ -14,6 +14,8 @@ There are two steps to use tenant tokens with an official SDK: generating the te
 
 First, import the SDK. Then create a set of [search rules](/capabilities/security/advanced/tenant_token_payload#search-rules):
 
+<CodeGroup>
+
 ```json
 {
   "patient_medical_records": {
@@ -21,6 +23,8 @@ First, import the SDK. Then create a set of [search rules](/capabilities/securit
   }
 }
 ```
+
+</CodeGroup>
 
 Search rules must be an object where each key corresponds to an index in your instance. You may configure any number of filters for each index.
 

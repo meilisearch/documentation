@@ -16,6 +16,8 @@ Meilisearch accepts documents in three formats: **JSON**, **NDJSON**, and **CSV*
 
 Here is a small sample dataset of movies in JSON format:
 
+<CodeGroup>
+
 ```json
 [
   {
@@ -45,6 +47,8 @@ Here is a small sample dataset of movies in JSON format:
 ]
 ```
 
+</CodeGroup>
+
 In this dataset, `id` is the primary key. Meilisearch automatically infers the primary key if a field is named `id`. If your primary key has a different name, you must specify it when adding documents.
 
 ## Send documents to an index
@@ -61,6 +65,8 @@ For a small number of documents sent inline:
 
 Meilisearch returns a summarized task object confirming your request has been accepted:
 
+<CodeGroup>
+
 ```json
 {
   "taskUid": 0,
@@ -71,6 +77,8 @@ Meilisearch returns a summarized task object confirming your request has been ac
 }
 ```
 
+</CodeGroup>
+
 ## Check the task status
 
 All indexing operations in Meilisearch are [asynchronous](/capabilities/indexing/advanced/async_operations). Use the `taskUid` from the response to check whether your documents have been indexed:
@@ -78,6 +86,8 @@ All indexing operations in Meilisearch are [asynchronous](/capabilities/indexing
 <CodeSamplesGettingStartedCheckTaskStatus />
 
 A successful task returns a status of `succeeded`:
+
+<CodeGroup>
 
 ```json
 {
@@ -92,11 +102,15 @@ A successful task returns a status of `succeeded`:
 }
 ```
 
+</CodeGroup>
+
 If the status is `failed`, the response includes an `error` object explaining what went wrong.
 
 ## Verify documents are searchable
 
 Once the task succeeds, your documents are ready to search. Test with a simple query:
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -104,6 +118,8 @@ curl \
   -H 'Content-Type: application/json' \
   --data-binary '{ "q": "wonder" }'
 ```
+
+</CodeGroup>
 
 You should see "Wonder Woman" in the results.
 

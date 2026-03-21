@@ -29,6 +29,8 @@ If using HTTP headers, include an `X-MS-USER-ID` header with your query:
 
 If you prefer to include the user ID in your event payload, include a `userId` field with your request:
 
+<CodeGroup>
+
 ```bash
 curl \
   -X POST 'MEILISEARCH_URL/events' \
@@ -43,6 +45,8 @@ curl \
     "userId": "SEARCH_USER_ID"
   }'
 ```
+
+</CodeGroup>
 
 <Warning>
 It is mandatory to specify a user ID when sending analytics events.

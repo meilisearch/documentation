@@ -15,6 +15,8 @@ This guide shows you the main steps when creating tenant tokens using [`node-jso
 
 First, create a set of search rules:
 
+<CodeGroup>
+
 ```json
 {
   "INDEX_NAME": {
@@ -23,19 +25,27 @@ First, create a set of search rules:
 }
 ```
 
+</CodeGroup>
+
 Next, find your default search API key. Query the [get API keys endpoint](/reference/api/keys/get-api-key) and inspect the `uid` field to obtain your API key's UID:
 
 <CodeSamplesAuthorizationHeader1 />
 
 For maximum security, you should also set an expiry date for your tenant tokens. The following example configures the token to expire 20 minutes after its creation:
 
+<CodeGroup>
+
 ```js
 parseInt(Date.now() / 1000) + 20 * 60
 ```
 
+</CodeGroup>
+
 ### Create tenant token
 
 First, include `jsonwebtoken` in your application. Next, assemble the token payload and pass it to `jsonwebtoken`'s `sign` method:
+
+<CodeGroup>
 
 ```js
 const jwt = require('jsonwebtoken');
@@ -57,6 +67,8 @@ const tokenPayload = {
 
 const token = jwt.sign(tokenPayload, apiKey, {algorithm: 'HS256'});
 ```
+
+</CodeGroup>
 
 `sign` requires the payload, a Meilisearch API key, and an encryption algorithm. Meilisearch supports the following encryption algorithms: `HS256`, `HS384`, and `HS512`.
 

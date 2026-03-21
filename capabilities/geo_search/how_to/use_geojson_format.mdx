@@ -15,6 +15,8 @@ To use GeoJSON, add a `_geojson` field to your documents. The value must follow 
 
 For simple point locations, you can use either the `_geo` field or a GeoJSON `Point`:
 
+<CodeGroup>
+
 ```json
 {
   "id": 1,
@@ -30,6 +32,8 @@ For simple point locations, you can use either the `_geo` field or a GeoJSON `Po
 }
 ```
 
+</CodeGroup>
+
 <Warning>
 GeoJSON uses **longitude first, latitude second** (`[lng, lat]`). This is the opposite order from the `_geo` field, which uses `lat` and `lng` as named keys.
 </Warning>
@@ -37,6 +41,8 @@ GeoJSON uses **longitude first, latitude second** (`[lng, lat]`). This is the op
 ### Polygon geometry
 
 Use a Polygon to represent an area like a neighborhood, a property boundary, or a delivery zone:
+
+<CodeGroup>
 
 ```json
 {
@@ -59,6 +65,8 @@ Use a Polygon to represent an area like a neighborhood, a property boundary, or 
 }
 ```
 
+</CodeGroup>
+
 In GeoJSON Polygon format, the coordinates array contains one or more linear rings. The first ring defines the outer boundary, and the last coordinate must repeat the first to close the ring.
 
 <Note>
@@ -68,6 +76,8 @@ Meilisearch does not support polygons with holes. If your polygon includes an in
 ### MultiPolygon geometry
 
 Use a MultiPolygon when a single document covers multiple separate areas:
+
+<CodeGroup>
 
 ```json
 {
@@ -99,9 +109,13 @@ Use a MultiPolygon when a single document covers multiple separate areas:
 }
 ```
 
+</CodeGroup>
+
 ## Filtering and sorting with GeoJSON documents
 
 Filtering works the same way with GeoJSON documents as with `_geo` documents. Add `_geo` to [`filterableAttributes`](/capabilities/filtering_sorting_faceting/getting_started), then use `_geoRadius`, `_geoBoundingBox`, or `_geoPolygon` in your search queries.
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -110,7 +124,11 @@ curl \
   --data-binary '["_geo"]'
 ```
 
+</CodeGroup>
+
 Then search as usual:
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -121,6 +139,8 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 When a document has a `_geojson` Polygon or MultiPolygon, Meilisearch checks whether the filter area intersects with the document's geometry.
 
 <Warning>
@@ -130,6 +150,8 @@ Sorting with `_geoPoint` only works with the `_geo` field. It is not possible to
 ## Using `_geo` and `_geojson` together
 
 If your application needs both distance-based sorting and polygon-based filtering, add both fields to your documents:
+
+<CodeGroup>
 
 ```json
 {
@@ -155,6 +177,8 @@ If your application needs both distance-based sorting and polygon-based filterin
   }
 }
 ```
+
+</CodeGroup>
 
 When a document contains both fields, Meilisearch:
 

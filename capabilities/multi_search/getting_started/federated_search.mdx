@@ -17,11 +17,15 @@ Download the following datasets: <a href="/assets/datasets/crm-chats.json">`crm-
 
 Add the datasets to Meilisearch and create three separate indexes, `profiles`, `chats`, and `tickets`:
 
+<CodeGroup>
+
 ```sh
 curl -X POST 'MEILISEARCH_URL/indexes/profiles' -H 'Content-Type: application/json' --data-binary @crm-profiles.json &&
 curl -X POST 'MEILISEARCH_URL/indexes/chats' -H 'Content-Type: application/json' --data-binary @crm-chats.json &&
 curl -X POST 'MEILISEARCH_URL/indexes/tickets' -H 'Content-Type: application/json' --data-binary @crm-tickets.json
 ```
+
+</CodeGroup>
 
 [Use the tasks endpoint](/capabilities/indexing/how_to/monitor_tasks) to check the indexing status. Once Meilisearch successfully indexed all three datasets, you are ready to perform a federated search.
 
@@ -34,6 +38,8 @@ Use the `/multi-search` endpoint with the `federation` parameter to query the th
 <CodeSamplesFederatedSearchMultiSearch1 />
 
 Meilisearch should respond with a single list of search results:
+
+<CodeGroup>
 
 ```json
 {
@@ -58,6 +64,8 @@ Meilisearch should respond with a single list of search results:
 }
 ```
 
+</CodeGroup>
+
 ## Promote results from a specific index
 
 Since this is a CRM application, users have profiles with their preferred contact information. If you want to search for Riccardo Rotondo's preferred email, you can boost documents in the `profiles` index.
@@ -67,6 +75,8 @@ Use the `weight` property of the `federation` parameter to boost results coming 
 <CodeSamplesFederatedSearchMultiSearchWeight1 />
 
 This request will lead to results from the query targeting `profile` ranking higher than documents from other queries:
+
+<CodeGroup>
 
 ```json
 {
@@ -90,11 +100,15 @@ This request will lead to results from the query targeting `profile` ranking hig
 }
 ```
 
+</CodeGroup>
+
 ## Paginate federated results
 
 By default, federated search returns a limited number of results using `offset` and `limit`. If you need exhaustive pagination, use the `federation.page` and `federation.hitsPerPage` parameters instead. These work like traditional page-based pagination across the merged result set.
 
 Send a federated search request with pagination:
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -113,7 +127,11 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 The response includes `page`, `hitsPerPage`, and `totalPages` instead of `offset`, `limit`, and `estimatedTotalHits`:
+
+<CodeGroup>
 
 ```json
 {
@@ -125,6 +143,8 @@ The response includes `page`, `hitsPerPage`, and `totalPages` instead of `offset
   "totalPages": 3
 }
 ```
+
+</CodeGroup>
 
 This makes it straightforward to build paginated UIs that display merged results from multiple indexes.
 

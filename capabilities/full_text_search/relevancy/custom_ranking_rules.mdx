@@ -34,17 +34,27 @@ Suppose you have a movie dataset. The documents contain the fields `release_date
 
 The following example creates a rule that makes older movies more relevant than recent ones. A movie released in 1999 will appear before a movie released in 2020.
 
+<CodeGroup>
+
 ```
 release_date:asc
 ```
 
+</CodeGroup>
+
 The following example will create a rule that makes movies with a good rank more relevant than movies with a lower rank. Movies with a higher ranking will appear first.
+
+<CodeGroup>
 
 ```
 movie_ranking:desc
 ```
 
+</CodeGroup>
+
 The following array includes all built-in ranking rules and places the custom rules at the bottom of the processing order:
+
+<CodeGroup>
 
 ```json
 [
@@ -59,6 +69,8 @@ The following array includes all built-in ranking rules and places the custom ru
   "movie_ranking:desc"
 ]
 ```
+
+</CodeGroup>
 
 ## Sorting at search time and custom ranking rules
 

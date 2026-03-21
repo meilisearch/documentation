@@ -10,6 +10,8 @@ The `_rankingScore` is a normalized value between `0.0` and `1.0` that represent
 
 To include `_rankingScore` in search results, set `showRankingScore` to `true` in your search request:
 
+<CodeGroup>
+
 ```sh
 curl \
   -X POST 'MEILISEARCH_URL/indexes/movies/search' \
@@ -20,7 +22,11 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 Each document in the response will include a `_rankingScore` field:
+
+<CodeGroup>
 
 ```json
 {
@@ -40,9 +46,13 @@ Each document in the response will include a `_rankingScore` field:
 }
 ```
 
+</CodeGroup>
+
 ## Requesting a detailed breakdown
 
 For a deeper understanding of why a document received a particular score, set `showRankingScoreDetails` to `true`. This returns the contribution of each ranking rule:
+
+<CodeGroup>
 
 ```sh
 curl \
@@ -55,7 +65,11 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 The response includes a `_rankingScoreDetails` object for each document:
+
+<CodeGroup>
 
 ```json
 {
@@ -75,6 +89,8 @@ The response includes a `_rankingScoreDetails` object for each document:
   ]
 }
 ```
+
+</CodeGroup>
 
 Each key in `_rankingScoreDetails` corresponds to a [ranking rule](/capabilities/full_text_search/relevancy/ranking_rules), and its `score` property shows how well the document performed on that rule.
 
@@ -107,12 +123,16 @@ The table below details all the index settings that can influence the `_rankingS
 
 Consider a recipe search with two documents matching "chicken curry", sorted by `prep_time_minutes:asc`:
 
+<CodeGroup>
+
 ```json
 [
   { "id": 1, "title": "Easy Chicken Curry", "prep_time_minutes": 20 },
   { "id": 2, "title": "Chicken Stew with Curry Spices and Vegetables", "prep_time_minutes": 15 }
 ]
 ```
+
+</CodeGroup>
 
 With Sort placed **after** Proximity in ranking rules (`["words", "typo", "proximity", "sort", ...]`), walk through the `_rankingScoreDetails` in order:
 

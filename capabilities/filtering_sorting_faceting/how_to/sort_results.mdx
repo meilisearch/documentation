@@ -49,6 +49,8 @@ This can lead to unexpected behavior when sorting. For optimal user experience, 
 
 Suppose you have collection of books containing the following fields:
 
+<CodeGroup>
+
 ```json
 [
   {
@@ -68,6 +70,8 @@ Suppose you have collection of books containing the following fields:
 ]
 ```
 
+</CodeGroup>
+
 If you are using this dataset in a webshop, you might want to allow your users to sort on `author` and `price`:
 
 <CodeSamplesSortingGuideUpdateSortableAttributes1 />
@@ -77,6 +81,8 @@ If you are using this dataset in a webshop, you might want to allow your users t
 When users sort results at search time, [Meilisearch's ranking rules](/capabilities/full_text_search/relevancy/relevancy) are set up so the top matches emphasize relevant results over sorting order. You might need to alter this behavior depending on your application's needs.
 
 This is the default configuration of Meilisearch's ranking rules:
+
+<CodeGroup>
 
 ```json
 [
@@ -89,6 +95,8 @@ This is the default configuration of Meilisearch's ranking rules:
   "exactness"
 ]
 ```
+
+</CodeGroup>
 
 `"sort"` is in fifth place. This means it acts as a tie-breaker rule: Meilisearch will first place results closely matching search terms at the top of the returned documents list and only then will apply the `"sort"` parameters as requested by the user. In other words, by default Meilisearch provides a very relevant sorting.
 
@@ -114,6 +122,8 @@ Attributes must be given as `attribute:sorting_order`. In other words, each attr
 
 When using the `POST` route, `sort` expects an array of strings:
 
+<CodeGroup>
+
 ```json
 "sort": [
   "price:asc",
@@ -121,11 +131,17 @@ When using the `POST` route, `sort` expects an array of strings:
 ]
 ```
 
+</CodeGroup>
+
 When using the `GET` route, `sort` expects a comma-separated string:
+
+<CodeGroup>
 
 ```
 sort="price:desc,author:asc"
 ```
+
+</CodeGroup>
 
 The order of `sort` values matter: the higher an attribute is in the search parameter value, the more Meilisearch will prioritize it over attributes placed lower. In our example, if multiple documents have the same value for `price`, Meilisearch will decide the order between these similarly-priced documents based on their `author`.
 
@@ -136,6 +152,8 @@ Suppose you are searching for books in a webshop and want to see the cheapest sc
 <CodeSamplesSortingGuideSortParameter1 />
 
 With our example dataset, the results look like this:
+
+<CodeGroup>
 
 ```json
 [
@@ -168,9 +186,13 @@ With our example dataset, the results look like this:
 ]
 ```
 
+</CodeGroup>
+
 It is common to search books based on an author's name. `sort` can help grouping results from the same author. This query would only return books matching the query term `"butler"` and group results according to their authors:
 
 <CodeSamplesSortingGuideSortParameter2 />
+
+<CodeGroup>
 
 ```json
 [
@@ -216,6 +238,8 @@ It is common to search books based on an author's name. `sort` can help grouping
   }
 ]
 ```
+
+</CodeGroup>
 
 ### Sort by nested fields
 

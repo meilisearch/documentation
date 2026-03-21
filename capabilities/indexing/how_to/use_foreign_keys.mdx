@@ -15,6 +15,8 @@ Foreign keys is an experimental feature. Its API and behavior may change in futu
 
 Foreign keys must be activated through the experimental features endpoint before you can use them:
 
+<CodeGroup>
+
 ```bash
 curl \
   -X PATCH 'MEILISEARCH_URL/experimental-features' \
@@ -24,9 +26,13 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 ## Step 2: Create your related index
 
 Add documents to the index you want to reference. In this example, create an `actors` index with actor data:
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -39,9 +45,13 @@ curl \
   ]'
 ```
 
+</CodeGroup>
+
 ## Step 3: Configure foreign keys in the main index
 
 Use the settings endpoint to define which fields contain foreign references and which index they point to:
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -57,11 +67,15 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 This tells Meilisearch that the `actors` field in the `movies` index contains IDs that reference documents in the `actors` index.
 
 ## Step 4: Add documents with foreign IDs
 
 Add documents to your main index. Use arrays of IDs for the foreign key field:
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -73,9 +87,13 @@ curl \
   ]'
 ```
 
+</CodeGroup>
+
 ## Step 5: Search and see hydrated results
 
 When you search the `movies` index, Meilisearch automatically replaces foreign IDs with full documents from the referenced index:
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -84,7 +102,11 @@ curl \
   --data-binary '{ "q": "forrest" }'
 ```
 
+</CodeGroup>
+
 Without foreign keys, a result would look like this:
+
+<CodeGroup>
 
 ```json
 {
@@ -94,7 +116,11 @@ Without foreign keys, a result would look like this:
 }
 ```
 
+</CodeGroup>
+
 With foreign keys configured, the same result is automatically hydrated:
+
+<CodeGroup>
 
 ```json
 {
@@ -107,6 +133,8 @@ With foreign keys configured, the same result is automatically hydrated:
   ]
 }
 ```
+
+</CodeGroup>
 
 ## Limitations
 

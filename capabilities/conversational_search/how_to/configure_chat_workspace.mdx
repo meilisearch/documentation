@@ -7,20 +7,13 @@ import CodeSamplesChatPatchSettings1 from '/snippets/generated-code-samples/code
 import CodeSamplesChatGetSettings1 from '/snippets/generated-code-samples/code_samples_chat_get_settings_1.mdx';
 import CodeSamplesChatIndexSettings1 from '/snippets/generated-code-samples/code_samples_chat_index_settings_1.mdx';
 
-A chat workspace defines the configuration for a conversational search session, including which indexes to search, the system prompt, and the LLM provider. You can create multiple workspaces targeting different use cases, such as a public-facing knowledge base and an internal support tool.
-
-## Prerequisites
-
-Before configuring a workspace, make sure you have:
-
-- A running Meilisearch >= v1.15.1 instance with a master key
-- The [chat completions experimental feature enabled](/capabilities/conversational_search/getting_started#enable-the-chat-completions-feature)
-- An [API key](/capabilities/security/overview) from your LLM provider (OpenAI, Azure OpenAI, Mistral, or vLLM)
-- At least one [index](/capabilities/indexing/overview) with searchable content
+A chat workspace defines the configuration for a conversational search session, including the LLM provider, system prompt, and search behavior. You can create multiple workspaces targeting different use cases, such as a public-facing knowledge base and an internal support tool.
 
 ## Create a workspace
 
 Create a workspace by sending a `PATCH` request to `/chats/{workspace_uid}/settings`. If the workspace does not exist, Meilisearch creates it automatically.
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -30,12 +23,13 @@ curl \
   --data-binary '{
     "source": "openAi",
     "apiKey": "YOUR_OPENAI_API_KEY",
-    "model": "gpt-4o",
     "prompts": {
       "system": "You are a helpful support assistant. Answer questions based only on the provided context."
     }
   }'
 ```
+
+</CodeGroup>
 
 The `workspace_uid` in the URL (in this example, `my-support-bot`) is a unique identifier you choose. Use a descriptive name that reflects the workspace's purpose.
 
@@ -43,16 +37,18 @@ The `workspace_uid` in the URL (in this example, `my-support-bot`) is a unique i
 
 The `source` field determines which LLM provider Meilisearch uses. Each provider has slightly different requirements:
 
-| Provider | `source` value | Required fields |
-|----------|---------------|-----------------|
-| OpenAI | `openAi` | `apiKey` |
-| Azure OpenAI | `azureOpenAi` | `apiKey`, `baseUrl` |
-| Mistral | `mistral` | `apiKey` |
-| vLLM | `vLlm` | `baseUrl` |
+| Provider | `source` value | Required fields | Optional fields |
+|----------|---------------|-----------------|-----------------|
+| OpenAI | `openAi` | `apiKey` | `baseUrl`, `orgId`, `projectId` |
+| Azure OpenAI | `azureOpenAi` | `apiKey`, `baseUrl` | `deploymentId`, `apiVersion` |
+| Mistral | `mistral` | `apiKey` | `baseUrl` |
+| vLLM | `vLlm` | `baseUrl` | |
 
-### Set the model
+### Azure OpenAI example
 
-Use the `model` field to specify which model your workspace uses by default. This must be a model supported by your chosen provider:
+Azure OpenAI requires additional fields compared to other providers:
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -60,17 +56,21 @@ curl \
   -H 'Authorization: Bearer MEILISEARCH_KEY' \
   -H 'Content-Type: application/json' \
   --data-binary '{
-    "source": "openAi",
-    "apiKey": "YOUR_OPENAI_API_KEY",
-    "model": "gpt-4o-mini"
+    "source": "azureOpenAi",
+    "apiKey": "YOUR_AZURE_API_KEY",
+    "baseUrl": "https://your-resource.openai.azure.com",
+    "deploymentId": "your-deployment-id",
+    "apiVersion": "2024-02-01"
   }'
 ```
 
-You can override the model on a per-request basis by including a `model` field in your chat completions request.
+</CodeGroup>
 
 ## Configure the system prompt
 
 The system prompt gives the conversational agent its baseline instructions. It controls the agent's behavior, tone, and scope. Set it through the `prompts.system` field:
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -84,7 +84,19 @@ curl \
   }'
 ```
 
-For guidance on writing effective system prompts, see [configure guardrails](/capabilities/conversational_search/how_to/configure_guardrails).
+</CodeGroup>
+
+The `prompts` object accepts additional fields that help the LLM understand how to use Meilisearch's search capabilities:
+
+| Field | Description |
+|-------|-------------|
+| `system` | Baseline instructions for the conversational agent |
+| `searchDescription` | Describes the search function to the LLM, helping it understand when and how to search |
+| `searchQParam` | Describes the query parameter, guiding the LLM on how to formulate search queries |
+| `searchFilterParam` | Describes the filter parameter, helping the LLM construct appropriate filters |
+| `searchIndexUidParam` | Describes the index UID parameter, guiding the LLM on which index to search |
+
+These fields provide additional context that improves how the agent formulates searches. For guidance on writing effective system prompts, see [configure guardrails](/capabilities/conversational_search/how_to/configure_guardrails).
 
 ## Configure indexes for chat
 
@@ -92,7 +104,56 @@ Before a workspace can search your data, each index must have its chat settings 
 
 <CodeSamplesChatIndexSettings1 />
 
+### Index chat settings fields
+
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `description` | string | `""` | Describes the index content to the LLM so it can decide when and how to query it |
+| `documentTemplate` | string | All searchable fields | Liquid template defining the text sent to the LLM for each document |
+| `documentTemplateMaxBytes` | integer | `400` | Maximum size in bytes of the rendered document template. Longer text is truncated |
+| `searchParameters` | object | `{}` | Search parameters applied when the LLM queries this index |
+
 The `description` field is particularly important. It helps the LLM understand what each index contains, so it can decide which index to search when answering a question.
+
+### Configure search parameters
+
+The `searchParameters` object lets you control how the LLM searches each index. This is useful for enabling hybrid search, limiting results, or sorting:
+
+<CodeGroup>
+
+```bash
+curl \
+  -X PATCH 'MEILISEARCH_URL/indexes/movies/settings' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "chat": {
+      "description": "A movie database containing titles, overviews, genres, and release dates",
+      "documentTemplateMaxBytes": 400,
+      "searchParameters": {
+        "hybrid": {
+          "embedder": "default",
+          "semanticRatio": 0.5
+        },
+        "limit": 10
+      }
+    }
+  }'
+```
+
+</CodeGroup>
+
+Available search parameters:
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `hybrid` | object | Enable hybrid search with `embedder` (required) and `semanticRatio` (0.0 for keyword, 1.0 for semantic) |
+| `limit` | integer | Maximum number of documents returned per search |
+| `sort` | string[] | Sort order, e.g. `["price:asc", "rating:desc"]` |
+| `distinct` | string | Return at most one document per distinct value of this attribute |
+| `matchingStrategy` | string | How query terms are matched: `last`, `all`, or `frequency` |
+| `attributesToSearchOn` | string[] | Restrict search to specific attributes |
+| `rankingScoreThreshold` | number | Minimum ranking score (0.0 to 1.0) for a document to be included |
 
 ## Verify workspace configuration
 
@@ -100,7 +161,7 @@ Retrieve the current settings for a workspace at any time:
 
 <CodeSamplesChatGetSettings1 />
 
-This returns the full configuration, including the provider, model, and system prompt. Note that the `apiKey` value is redacted in the response for security.
+This returns the full configuration, including the provider and system prompt. Note that the `apiKey` value is redacted in the response for security.
 
 ## Update workspace settings
 
@@ -108,7 +169,9 @@ Update any workspace setting by sending a `PATCH` request with only the fields y
 
 <CodeSamplesChatPatchSettings1 />
 
-For example, to update only the system prompt without changing the provider or model:
+For example, to update only the system prompt without changing the provider:
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -121,6 +184,8 @@ curl \
     }
   }'
 ```
+
+</CodeGroup>
 
 ## Next steps
 

@@ -30,6 +30,8 @@ Suppose you have an e-commerce dataset. For an index that contains information a
 
 As shown below, this dataset contains three documents representing different versions of a Lee jeans leather jacket. One of the jackets is brown, one is black, and the last one is blue.
 
+<CodeGroup>
+
 ```json
 [
   {
@@ -56,6 +58,8 @@ As shown below, this dataset contains three documents representing different ver
 ]
 ```
 
+</CodeGroup>
+
 By default, a search for `lee leather jacket` would return all three documents. This might not be desired, since displaying nearly identical variations of the same item can make results appear cluttered.
 
 In this case, you may want to return only one document with the `product_id` corresponding to this Lee jeans leather jacket. To do so, you could set `product_id` as the `distinctAttribute`.
@@ -65,6 +69,8 @@ In this case, you may want to return only one document with the `product_id` cor
 By setting `distinctAttribute` to `product_id`, search requests **will never return more than one document with the same `product_id`**.
 
 After setting the distinct attribute as shown above, querying for `lee leather jacket` would only return the first document found. The response would look like this:
+
+<CodeGroup>
 
 ```json
 {
@@ -84,6 +90,8 @@ After setting the distinct attribute as shown above, querying for `lee leather j
   "query": "lee leather jacket"
 }
 ```
+
+</CodeGroup>
 
 For more in-depth information on distinct attribute, consult the [API reference](/reference/api/settings/get-distinctattribute).
 

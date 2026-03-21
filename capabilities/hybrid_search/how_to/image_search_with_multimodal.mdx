@@ -32,6 +32,8 @@ Use `indexingFragments` to tell Meilisearch how to send document data to the pro
 
 For example, when using VoyageAI's multimodal model, an indexing fragment might look like this:
 
+<CodeGroup>
+
 ```json
 "indexingFragments": {
   "TEXTUAL_FRAGMENT_NAME": {
@@ -57,6 +59,8 @@ For example, when using VoyageAI's multimodal model, an indexing fragment might 
 }
 ```
 
+</CodeGroup>
+
 The example above requests Meilisearch to create two sets of embeddings during indexing: one for the textual description of an image, and another for the actual image.
 
 Any JSON string value appearing in a fragment is handled as a Liquid template, where you interpolate document data present in `doc`. In `IMAGE_FRAGMENT_NAME`, that's  `image_url` which outputs the plain URL string in the document field `poster_url`. In `TEXT_FRAGMENT_NAME`, `text` contains a longer string contextualizing two document fields, `title` and `description`.
@@ -64,6 +68,8 @@ Any JSON string value appearing in a fragment is handled as a Liquid template, w
 ### `searchFragments`
 
 Use `searchFragments` to tell Meilisearch how to send search query data to the chosen provider's REST API when converting them into embeddings:
+
+<CodeGroup>
 
 ```json
 "searchFragments": {
@@ -89,6 +95,8 @@ Use `searchFragments` to tell Meilisearch how to send search query data to the c
   }
 }
 ```
+
+</CodeGroup>
 
 In this example, two modes of search are configured:
 

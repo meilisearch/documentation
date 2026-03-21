@@ -30,6 +30,8 @@ Next, use the Cloud UI to configure an OpenAI embedder:
 
 You may also use the `/settings/embedders` API subroute to configure your embedder:
 
+<CodeGroup>
+
 ```bash
 curl \
   -X PATCH 'MEILISEARCH_URL/indexes/movies/settings/embedders' \
@@ -45,6 +47,8 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 Replace `MEILISEARCH_URL`, `MEILISEARCH_API_KEY`, and `OPENAI_API_KEY` with the corresponding values in your application.
 
 Meilisearch will start generating the embeddings for all movies in your dataset. Use the returned `taskUid` to [track the progress of this task](/capabilities/indexing/advanced/async_operations). Once it is finished, you are ready to start searching.
@@ -52,6 +56,8 @@ Meilisearch will start generating the embeddings for all movies in your dataset.
 ## Perform a hybrid search
 
 With your documents added and all embeddings generated, you can perform a search:
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -67,11 +73,15 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 This request returns a list of movies. Pick the top result and take note of its primary key in the `id` field. In this case, it's the movie "Batman" with `id` 192.
 
 ## Return similar documents
 
 Pass "Batman"'s `id` to your index's [`/similar` route](/reference/api/similar-documents/get-similar-documents-with-post), specifying `movies-text` as your embedder:
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -83,6 +93,8 @@ curl \
     "embedder": "movies-text"
   }'
 ```
+
+</CodeGroup>
 
 Meilisearch will return a list of the 20 documents most similar to the movie you chose. You may then choose to display some of these similar results to your users, pointing them to other movies that may also interest them.
 

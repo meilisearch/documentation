@@ -11,15 +11,11 @@ The export endpoint transfers data directly from one Meilisearch instance to ano
 - **Creating replicas**: Set up a second instance with the same data for redundancy or load distribution.
 - **Scaling**: Transfer indexes to a larger instance when your data outgrows the current one.
 
-## Prerequisites
-
-- The **source** instance must be running and contain the data you want to export.
-- The **destination** instance must be reachable from the source over the network.
-- If the destination instance uses an [API key](/capabilities/security/how_to/manage_api_keys), you must provide it in the export request.
-
 ## Export data to a remote instance
 
 Send a `POST` request to `/export` on the source instance, specifying the destination URL and (optionally) an API key:
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -32,7 +28,11 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 Meilisearch returns a summarized task object:
+
+<CodeGroup>
 
 ```json
 {
@@ -44,15 +44,21 @@ Meilisearch returns a summarized task object:
 }
 ```
 
+</CodeGroup>
+
 ## Monitor the export task
 
 The export runs [asynchronously](/capabilities/indexing/advanced/async_operations). Use the task UID to check its progress:
+
+<CodeGroup>
 
 ```bash
 curl \
   -X GET 'MEILISEARCH_URL/tasks/42' \
   -H 'Authorization: Bearer MEILISEARCH_API_KEY'
 ```
+
+</CodeGroup>
 
 When the task status changes to `succeeded`, all data has been transferred to the destination instance.
 

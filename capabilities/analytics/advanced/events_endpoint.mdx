@@ -24,6 +24,8 @@ Send an analytics event to Meilisearch Cloud.
 | `position`    | Integer         | N/A           | An integer indicating the clicked document's position in the search result list |
 | `userId`      | String          | N/A           | An arbitrary string identifying the user who performed the action               |
 
+<CodeGroup>
+
 ```json
 {
   "eventType": "click",
@@ -33,6 +35,8 @@ Send an analytics event to Meilisearch Cloud.
   "position": 0
 }
 ```
+
+</CodeGroup>
 
 <Note>
 You must provide a string identifying your user if you want Meilisearch Cloud to track conversion and click events.

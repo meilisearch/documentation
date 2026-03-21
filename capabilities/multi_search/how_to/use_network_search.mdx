@@ -15,6 +15,8 @@ This is useful when your data is distributed across multiple Meilisearch instanc
 
 Before using `useNetwork`, enable the network experimental feature and configure your network topology. Send a `PATCH` request to the `/experimental-features` endpoint:
 
+<CodeGroup>
+
 ```bash
 curl \
   -X PATCH 'MEILISEARCH_URL/experimental-features' \
@@ -24,7 +26,11 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 Then configure the network topology so each instance knows about its remotes:
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -49,9 +55,13 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 ## Use useNetwork in a regular search
 
 Add `"useNetwork": true` to any search request. Meilisearch will query all remotes and merge the results:
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -63,13 +73,21 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 You can also use the GET route:
+
+<CodeGroup>
 
 ```bash
 curl 'MEILISEARCH_URL/indexes/movies/search?q=batman&useNetwork=true'
 ```
 
+</CodeGroup>
+
 The response includes `_federation` metadata showing which remote each result came from:
+
+<CodeGroup>
 
 ```json
 {
@@ -100,9 +118,13 @@ The response includes `_federation` metadata showing which remote each result ca
 }
 ```
 
+</CodeGroup>
+
 ## Use useNetwork in federated search
 
 In a multi-search request, add `"useNetwork": true` to individual queries. This lets you combine local and network-wide searches in a single request:
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -125,6 +147,8 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 Results from all remotes are merged and ranked together, just like a regular [federated search](/capabilities/multi_search/getting_started/federated_search).
 
 ## Shard-aware search
@@ -137,6 +161,8 @@ No additional configuration is needed. Meilisearch detects the sharding topology
 
 When the network feature is enabled, you can use the `_shard` filter to target specific shards:
 
+<CodeGroup>
+
 ```bash
 curl \
   -X POST 'MEILISEARCH_URL/indexes/movies/search' \
@@ -147,6 +173,8 @@ curl \
     "filter": "_shard = \"shard-a\""
   }'
 ```
+
+</CodeGroup>
 
 The `_shard` filter supports equality, inequality, and `IN` operators:
 

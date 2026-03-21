@@ -31,11 +31,15 @@ Open a blank file in your text editor. You will build your embedder configuratio
 
 In your blank file, create your `embedder` object:
 
+<CodeGroup>
+
 ```json
 {
   "products-openai": {}
 }
 ```
+
+</CodeGroup>
 
 `products-openai` is the name of your embedder for this tutorial. You can name embedders any way you want, but try to keep it simple, short, and easy to remember.
 
@@ -45,6 +49,8 @@ Meilisearch relies on third-party embedding models to generate embeddings. These
 
 Add a new `source` field to your embedder object:
 
+<CodeGroup>
+
 ```json
 {
   "products-openai": {
@@ -53,9 +59,13 @@ Add a new `source` field to your embedder object:
 }
 ```
 
+</CodeGroup>
+
 ### Choose an embedder model
 
 Embedding models vary in size, cost, and quality. Add a new `model` field to your embedder object:
+
+<CodeGroup>
 
 ```json
 {
@@ -66,6 +76,8 @@ Embedding models vary in size, cost, and quality. Add a new `model` field to you
 }
 ```
 
+</CodeGroup>
+
 `text-embedding-3-small` is a cost-effective model for general usage. OpenAI also offers `text-embedding-3-large` for higher accuracy at a higher cost.
 
 ### Create your API key
@@ -73,6 +85,8 @@ Embedding models vary in size, cost, and quality. Add a new `model` field to you
 Log into OpenAI, or create an account if this is your first time using it. Generate a new API key using [OpenAI's web interface](https://platform.openai.com/api-keys).
 
 Add the `apiKey` field to your embedder:
+
+<CodeGroup>
 
 ```json
 {
@@ -83,6 +97,8 @@ Add the `apiKey` field to your embedder:
   }
 }
 ```
+
+</CodeGroup>
 
 Replace `OPEN_AI_API_KEY` with your own API key.
 
@@ -96,6 +112,8 @@ Documents can be complex objects with many fields. A **document template** tells
 
 A good template should be short and only include the most relevant information. Add the following `documentTemplate` to your embedder:
 
+<CodeGroup>
+
 ```json
 {
   "products-openai": {
@@ -106,6 +124,8 @@ A good template should be short and only include the most relevant information. 
   }
 }
 ```
+
+</CodeGroup>
 
 This template gives general context (`An object used in a kitchen`) and adds the information specific to each document (`doc.name`, with values like `wooden spoon` or `rolling pin`).
 

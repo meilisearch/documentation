@@ -25,11 +25,15 @@ Never expose the master key in client-side code or public repositories. Use it o
 
 Retrieve all existing API keys. This endpoint requires the master key.
 
+<CodeGroup>
+
 ```bash
 curl \
   -X GET 'MEILISEARCH_URL/keys' \
-  -H 'Authorization: Bearer MASTER_KEY'
+  -H 'Authorization: Bearer MEILISEARCH_KEY'
 ```
+
+</CodeGroup>
 
 The response includes each key's `uid`, `key`, `actions`, `indexes`, `expiresAt`, and timestamps.
 
@@ -37,11 +41,13 @@ The response includes each key's `uid`, `key`, `actions`, `indexes`, `expiresAt`
 
 Create a new key with specific permissions. Specify which `actions` the key can perform and which `indexes` it can access.
 
+<CodeGroup>
+
 ```bash
 curl \
   -X POST 'MEILISEARCH_URL/keys' \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer MASTER_KEY' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   --data-binary '{
     "description": "Search-only key for products index",
     "actions": ["search"],
@@ -49,6 +55,8 @@ curl \
     "expiresAt": "2026-12-31T00:00:00Z"
   }'
 ```
+
+</CodeGroup>
 
 ### Available actions
 
@@ -84,11 +92,13 @@ Actions define what operations a key can perform:
 
 The `indexes` field accepts an array of index UIDs. Use `["*"]` to grant access to all indexes, or specify individual ones:
 
+<CodeGroup>
+
 ```bash
 curl \
   -X POST 'MEILISEARCH_URL/keys' \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer MASTER_KEY' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   --data-binary '{
     "description": "Documents admin for products and reviews",
     "actions": ["documents.add", "documents.get", "documents.delete"],
@@ -97,22 +107,28 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 Setting `expiresAt` to `null` creates a key that never expires.
 
 ## Update an API key
 
 You can update a key's `name` and `description`. The `actions`, `indexes`, and `expiresAt` fields cannot be modified after creation. If you need different permissions, create a new key instead.
 
+<CodeGroup>
+
 ```bash
 curl \
   -X PATCH 'MEILISEARCH_URL/keys/API_KEY_UID' \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer MASTER_KEY' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   --data-binary '{
     "name": "Products search key",
     "description": "Updated description for the products search key"
   }'
 ```
+
+</CodeGroup>
 
 Replace `API_KEY_UID` with the key's `uid` value (not the key itself).
 
@@ -120,11 +136,15 @@ Replace `API_KEY_UID` with the key's `uid` value (not the key itself).
 
 Permanently revoke a key by deleting it. Any requests using this key will be rejected immediately.
 
+<CodeGroup>
+
 ```bash
 curl \
   -X DELETE 'MEILISEARCH_URL/keys/API_KEY_UID' \
-  -H 'Authorization: Bearer MASTER_KEY'
+  -H 'Authorization: Bearer MEILISEARCH_KEY'
 ```
+
+</CodeGroup>
 
 ## Key rotation
 
@@ -137,11 +157,13 @@ Regularly rotating API keys reduces the risk of compromised credentials. To rota
 
 Use the `expiresAt` field to enforce automatic expiration. When a key expires, all requests using it will return a `403` error.
 
+<CodeGroup>
+
 ```bash
 curl \
   -X POST 'MEILISEARCH_URL/keys' \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer MASTER_KEY' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   --data-binary '{
     "description": "Rotating search key - Q1 2026",
     "actions": ["search"],
@@ -149,6 +171,8 @@ curl \
     "expiresAt": "2026-04-01T00:00:00Z"
   }'
 ```
+
+</CodeGroup>
 
 <Tip>
 Set `expiresAt` to a date in the near future (for example, 90 days) and schedule key rotation before expiration. This limits the window of exposure if a key is compromised.

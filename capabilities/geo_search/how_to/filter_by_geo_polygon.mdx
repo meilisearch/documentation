@@ -3,41 +3,17 @@ title: Filter by geo polygon
 description: Filter search results within a custom polygon shape defined by a series of coordinate points.
 ---
 
-import CodeSamplesGeosearchGuideFilterSettings1 from '/snippets/generated-code-samples/code_samples_geosearch_guide_filter_settings_1.mdx';
-
 The `_geoPolygon` filter returns documents located within a custom polygon shape. Use this for irregular geographic boundaries like delivery zones, school districts, or custom sales territories that cannot be represented by a simple circle or rectangle.
 
-## Prerequisites
-
-Before using `_geoPolygon`, make sure your documents and index meet the following requirements:
-
-1. **Documents must contain a `_geo` or `_geojson` field**. When using `_geoPolygon`, Meilisearch matches against `_geojson` values. If your documents only have `_geo`, the filter still works for point-in-polygon checks.
-
-```json
-{
-  "id": 1,
-  "name": "Nàpiz' Milano",
-  "address": "Viale Vittorio Veneto, 30, 20124, Milan, Italy",
-  "type": "pizza",
-  "rating": 9,
-  "_geo": {
-    "lat": 45.4777599,
-    "lng": 9.1967508
-  }
-}
-```
-
-2. **Add `_geo` to `filterableAttributes`**:
-
-<CodeSamplesGeosearchGuideFilterSettings1 />
-
-Meilisearch will rebuild your index after updating [`filterableAttributes`](/capabilities/filtering_sorting_faceting/getting_started). Depending on the size of your dataset, this might take some time.
-
 ## Syntax
+
+<CodeGroup>
 
 ```
 _geoPolygon([lat1, lng1], [lat2, lng2], [lat3, lng3], ...)
 ```
+
+</CodeGroup>
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
@@ -49,6 +25,8 @@ You must provide **at least 3 coordinate pairs** to define a valid polygon. Meil
 
 The following example defines a triangular delivery zone in central Milan and searches for restaurants within it:
 
+<CodeGroup>
+
 ```bash
 curl \
   -X POST 'MEILISEARCH_URL/indexes/restaurants/search' \
@@ -58,12 +36,16 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 This creates a triangle with vertices at:
 - Northwest corner: 45.490, 9.170
 - Northeast corner: 45.490, 9.210
 - South center: 45.450, 9.190
 
 Meilisearch returns all documents located within this triangular area:
+
+<CodeGroup>
 
 ```json
 {
@@ -96,9 +78,13 @@ Meilisearch returns all documents located within this triangular area:
 }
 ```
 
+</CodeGroup>
+
 ## Define complex shapes
 
 You can use as many points as needed to define complex boundaries. For example, a five-sided delivery zone:
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -109,6 +95,8 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 <Warning>
 Meilisearch does not support polygons that cross the 180th meridian (transmeridian shapes). If your polygon crosses this line, split it into two separate polygons and query each one individually.
 </Warning>
@@ -116,6 +104,8 @@ Meilisearch does not support polygons that cross the 180th meridian (transmeridi
 ## Combine with other filters
 
 You can combine `_geoPolygon` with any other filter using `AND` and `OR` operators:
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -126,7 +116,11 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 You can also combine `_geoPolygon` with `_geoRadius` or `_geoBoundingBox` for more precise geographic targeting:
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -136,6 +130,8 @@ curl \
     "filter": "_geoPolygon([45.490, 9.170], [45.490, 9.210], [45.450, 9.190]) AND _geoRadius(45.472735, 9.184019, 1000)"
   }'
 ```
+
+</CodeGroup>
 
 <CardGroup cols={2}>
   <Card title="Geo search overview" icon="globe" href="/capabilities/geo_search/getting_started">

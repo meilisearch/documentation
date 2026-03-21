@@ -12,6 +12,8 @@ Built-in ranking rules are the core of Meilisearch's relevancy calculations.
 
 Meilisearch contains seven built-in ranking rules in the following order:
 
+<CodeGroup>
+
 ```json
 [
   "words",
@@ -23,6 +25,8 @@ Meilisearch contains seven built-in ranking rules in the following order:
   "exactness"
 ]
 ```
+
+</CodeGroup>
 
 Depending on your needs, you might want to change this order. To do so, use the [update settings endpoint](/reference/api/settings/update-all-settings) or [update ranking rules endpoint](/reference/api/settings/update-rankingrules).
 
@@ -116,6 +120,8 @@ Place custom ranking rules (`popularity:desc`, `release_date:desc`, etc.) at the
 
 ### Recommended order
 
+<CodeGroup>
+
 ```json
 [
   "words",
@@ -128,6 +134,8 @@ Place custom ranking rules (`popularity:desc`, `release_date:desc`, etc.) at the
   "popularity:desc"
 ]
 ```
+
+</CodeGroup>
 
 ## Examples
 

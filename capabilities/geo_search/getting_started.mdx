@@ -15,6 +15,8 @@ This guide walks you through indexing documents with geographic coordinates, the
 
 Documents must contain a `_geo` field with `lat` and `lng` values:
 
+<CodeGroup>
+
 ```json
 [
   {
@@ -52,6 +54,8 @@ Documents must contain a `_geo` field with `lat` and `lng` values:
   }
 ]
 ```
+
+</CodeGroup>
 
 <Warning>
 Trying to index a dataset with one or more documents containing badly formatted `_geo` values will cause Meilisearch to throw an [`invalid_document_geo_field`](/reference/errors/error_codes#invalid_document_geo_field) error. In this case, the update will fail and no documents will be added or modified.
@@ -79,6 +83,8 @@ Use the [`filter` search parameter](/reference/api/search/search-with-post#body-
 
 <CodeSamplesGeosearchGuideFilterUsage1 />
 
+<CodeGroup>
+
 ```json
 [
   {
@@ -106,11 +112,15 @@ Use the [`filter` search parameter](/reference/api/search/search-with-post#body-
 ]
 ```
 
+</CodeGroup>
+
 ## Sort results by distance
 
 Use `_geoPoint` in the [`sort` search parameter](/reference/api/search/search-with-post#body-sort) to order results by proximity. The following example sorts restaurants by distance from the Eiffel Tower:
 
 <CodeSamplesGeosearchGuideSortUsage1 />
+
+<CodeGroup>
 
 ```json
 [
@@ -128,6 +138,8 @@ Use `_geoPoint` in the [`sort` search parameter](/reference/api/search/search-wi
   …
 ]
 ```
+
+</CodeGroup>
 
 ## Next steps
 

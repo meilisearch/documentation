@@ -9,6 +9,8 @@ Highlighting wraps matched query terms in HTML tags so your frontend can visuall
 
 Use `attributesToHighlight` to specify which fields should have matched terms wrapped in tags:
 
+<CodeGroup>
+
 ```bash
 curl \
   -X POST 'MEILISEARCH_URL/indexes/movies/search' \
@@ -19,7 +21,11 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 Matched terms appear in the `_formatted` object wrapped in `<em>` tags:
+
+<CodeGroup>
 
 ```json
 {
@@ -30,9 +36,13 @@ Matched terms appear in the `_formatted` object wrapped in `<em>` tags:
 }
 ```
 
+</CodeGroup>
+
 ## Highlight all attributes
 
 Set `attributesToHighlight` to `["*"]` to highlight matched terms across all [displayed attributes](/capabilities/full_text_search/how_to/configure_displayed_attributes):
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -44,9 +54,13 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 ## Custom highlight tags
 
 Replace the default `<em>` tags with any markup using `highlightPreTag` and `highlightPostTag`:
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -60,7 +74,11 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 Result:
+
+<CodeGroup>
 
 ```json
 {
@@ -70,9 +88,13 @@ Result:
 }
 ```
 
+</CodeGroup>
+
 ## Crop long text fields
 
 Use `attributesToCrop` to trim long fields and show only the portion around the matched terms:
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -85,7 +107,11 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 Result:
+
+<CodeGroup>
 
 ```json
 {
@@ -94,6 +120,8 @@ Result:
   }
 }
 ```
+
+</CodeGroup>
 
 ### Crop parameters reference
 
@@ -107,6 +135,8 @@ Result:
 
 Override the global `cropLength` for specific attributes by appending `:length` to the attribute name:
 
+<CodeGroup>
+
 ```bash
 curl \
   -X POST 'MEILISEARCH_URL/indexes/movies/search' \
@@ -117,9 +147,13 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 ### Custom crop marker
 
 Replace the default `"..."` truncation marker:
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -132,9 +166,13 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 ## Combine highlighting and cropping
 
 For the best user experience, use both features together to show short, relevant snippets with visually emphasized matches:
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -151,7 +189,11 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 Result:
+
+<CodeGroup>
 
 ```json
 {
@@ -161,6 +203,8 @@ Result:
   }
 }
 ```
+
+</CodeGroup>
 
 <Tip>
 Attributes listed in `attributesToCrop` are automatically included in the `_formatted` response. If the same attribute appears in both `attributesToCrop` and `attributesToHighlight`, the cropped text will also have matched terms highlighted.

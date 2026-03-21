@@ -11,6 +11,8 @@ This guide shows you what to do and what to avoid when writing a `documentTempla
 
 Take a look at this document from a database of movies:
 
+<CodeGroup>
+
 ```json
 {
   "id": 2,
@@ -26,6 +28,8 @@ Take a look at this document from a database of movies:
 }
 ```
 
+</CodeGroup>
+
 ## Do not use the default `documentTemplate`
 
 Use a custom `documentTemplate` value in your embedder configuration.
@@ -36,9 +40,13 @@ The default `documentTemplate` includes all searchable fields with non-`null` va
 
 Take a look at your document and identify the most relevant fields. A good `documentTemplate` for the sample document could be:
 
+<CodeGroup>
+
 ```
 "A movie called {{doc.title}} about {{doc.overview}}"
 ```
+
+</CodeGroup>
 
 In the sample document, `poster` and `id` contain data that has little semantic importance and can be safely excluded. The data in `genres` and `release_date` is very useful for filters, but say little about this specific film.
 
@@ -48,9 +56,13 @@ This leaves two relevant fields: `title` and `overview`.
 
 For the best results, keep prompts somewhere between 15 and 45 words:
 
+<CodeGroup>
+
 ```
 "A movie called {{doc.title}} about {{doc.overview | truncatewords: 20}}"
 ```
+
+</CodeGroup>
 
 In the sample document, the `overview` alone is 49 words. Use Liquid's [`truncate`](https://shopify.github.io/liquid/filters/truncate/) or [`truncatewords`](https://shopify.github.io/liquid/filters/truncatewords/) to shorten it.
 
@@ -62,11 +74,15 @@ Some documents might not contain all the fields you expect. If your template dir
 
 To prevent this, use Liquid’s `if` statements to add guards around fields:
 
+<CodeGroup>
+
 ```
 {% if doc.title %}
 A movie called {{ doc.title }}
 {% endif %}
 ```
+
+</CodeGroup>
 
 This ensures the template only tries to include data that already exists in a document. If a field is missing, the embedder still receives a valid and useful prompt without errors.
 
@@ -85,6 +101,8 @@ By default, if a document template fails to render or an embedder request fails,
 
 With the experimental `MEILI_EXPERIMENTAL_CONFIG_EMBEDDER_FAILURE_MODES` environment variable, you can configure Meilisearch to ignore these errors instead:
 
+<CodeGroup>
+
 ```bash
 # Ignore template rendering failures only
 MEILI_EXPERIMENTAL_CONFIG_EMBEDDER_FAILURE_MODES=ignore_document_template_failures meilisearch
@@ -95,6 +113,8 @@ MEILI_EXPERIMENTAL_CONFIG_EMBEDDER_FAILURE_MODES=ignore_embedder_failures meilis
 # Ignore both types of failures
 MEILI_EXPERIMENTAL_CONFIG_EMBEDDER_FAILURE_MODES=ignore_document_template_failures,ignore_embedder_failures meilisearch
 ```
+
+</CodeGroup>
 
 <Warning>
 Ignoring errors means some documents may not have embeddings, which affects search quality. Documents without embeddings will not appear in semantic or hybrid search results.

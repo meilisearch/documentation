@@ -5,16 +5,11 @@ description: Show users which indexed documents were used to generate a conversa
 
 Displaying source documents builds user trust by showing which data the AI used to formulate its answer. Meilisearch provides source information through two special tools: `_meiliSearchProgress` (which reports what searches are being performed) and `_meiliSearchSources` (which returns the actual documents used).
 
-## Prerequisites
-
-Before implementing source display, make sure you have:
-
-- A [configured chat workspace](/capabilities/conversational_search/how_to/configure_chat_workspace)
-- Familiarity with [streaming chat responses](/capabilities/conversational_search/how_to/stream_chat_responses)
-
 ## Include source tools in your request
 
 To receive source documents, include both `_meiliSearchProgress` and `_meiliSearchSources` in the `tools` array of your chat completions request:
+
+<CodeGroup>
 
 ```bash
 curl -N \
@@ -48,6 +43,8 @@ curl -N \
   }'
 ```
 
+</CodeGroup>
+
 Both tools are necessary. `_meiliSearchProgress` reports which searches are being performed and assigns a `call_id` to each search. `_meiliSearchSources` then returns the documents found, referencing the same `call_id` so you can associate sources with their corresponding queries.
 
 ## Understand the response structure
@@ -58,6 +55,8 @@ During a streamed response, tool calls arrive as chunks alongside content chunks
 
 When the agent decides to search an index, you receive a `_meiliSearchProgress` tool call:
 
+<CodeGroup>
+
 ```json
 {
   "function": {
@@ -67,11 +66,15 @@ When the agent decides to search an index, you receive a `_meiliSearchProgress` 
 }
 ```
 
+</CodeGroup>
+
 This tells you the agent is searching the `movies` index for "best sci-fi movies". The `call_id` value (`abc123`) links this search to its results.
 
 ### 2. Source documents
 
 After the search completes, you receive a `_meiliSearchSources` tool call with the matching documents:
+
+<CodeGroup>
 
 ```json
 {
@@ -82,6 +85,8 @@ After the search completes, you receive a `_meiliSearchSources` tool call with t
 }
 ```
 
+</CodeGroup>
+
 The `call_id` matches the progress event, so you know these documents came from the "best sci-fi movies" search on the `movies` index.
 
 ### 3. Generated answer
@@ -91,6 +96,8 @@ Content chunks contain the AI-generated answer, which is based on the retrieved 
 ## Extract sources in JavaScript
 
 Parse tool calls from the stream and collect sources into a structured object:
+
+<CodeGroup>
 
 ```javascript
 const sources = new Map(); // call_id -> { query, index, documents }
@@ -118,11 +125,15 @@ function handleToolCall(toolCall) {
 }
 ```
 
+</CodeGroup>
+
 After the stream finishes, `sources` contains all search queries and their corresponding documents, keyed by `call_id`.
 
 ## Display sources in your UI
 
 Here is a simple pattern for displaying sources alongside the chat response. This example uses plain HTML, but the same approach works with any frontend framework:
+
+<CodeGroup>
 
 ```javascript
 function renderSources(sources) {
@@ -151,6 +162,8 @@ function renderSources(sources) {
 }
 ```
 
+</CodeGroup>
+
 ### Common UI patterns
 
 There are several ways to present source documents to users:
@@ -168,6 +181,8 @@ A single user question may trigger multiple searches across different indexes. F
 
 Each search produces its own `call_id`, so you can group and display sources per search:
 
+<CodeGroup>
+
 ```javascript
 function renderGroupedSources(sources) {
   for (const [callId, source] of sources) {
@@ -179,8 +194,10 @@ function renderGroupedSources(sources) {
 }
 ```
 
+</CodeGroup>
+
 ## Next steps
 
-- Learn about all available tools in the [chat tooling reference](/capabilities/conversational_search/how_to/chat_tooling_reference)
+- Learn about all available tools in the [chat tooling reference](/capabilities/conversational_search/advanced/chat_tooling_reference)
 - [Configure guardrails](/capabilities/conversational_search/how_to/configure_guardrails) to improve response accuracy
 - [Stream chat responses](/capabilities/conversational_search/how_to/stream_chat_responses) for real-time delivery

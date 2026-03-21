@@ -81,6 +81,8 @@ If you work with non-textual content (images, audio) or already generate embeddi
 
 ## Decision flowchart
 
+<CodeGroup>
+
 ```mermaid
 flowchart TD
     A[Starting out?] -->|Yes| B[Use OpenAI text-embedding-3-small<br/>or Voyage 3.5-lite]
@@ -92,3 +94,5 @@ flowchart TD
     G -->|Yes| H[Cohere multilingual,<br/>Jina v5, or BGE multilingual]
     G -->|No| I[Pick the cheapest model<br/>that meets your needs]
 ```
+
+</CodeGroup>

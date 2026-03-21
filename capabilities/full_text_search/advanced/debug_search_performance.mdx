@@ -21,6 +21,8 @@ This parameter is supported on all search routes:
 
 Add `showPerformanceDetails` to a standard search request:
 
+<CodeGroup>
+
 ```bash
 curl \
   -X POST 'MEILISEARCH_URL/indexes/movies/search' \
@@ -31,7 +33,11 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 The response includes the usual search results along with a `performanceDetails` object:
+
+<CodeGroup>
 
 ```json
 {
@@ -50,6 +56,8 @@ The response includes the usual search results along with a `performanceDetails`
   }
 }
 ```
+
+</CodeGroup>
 
 ## Understanding performance stages
 
@@ -102,6 +110,8 @@ Multiple occurrences of the same stage (e.g., multiple `search > keyword search`
 
 In multi-search requests, set `showPerformanceDetails` on each individual query that you want to profile:
 
+<CodeGroup>
+
 ```bash
 curl \
   -X POST 'MEILISEARCH_URL/multi-search' \
@@ -122,11 +132,15 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 Each result in the response includes its own `performanceDetails`, letting you compare timing across indexes and queries.
 
 ## Federated search
 
 For federated multi-search, set `showPerformanceDetails` in the `federation` object to get timing details for the combined search:
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -143,9 +157,13 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 ## Similar documents
 
 The similar documents endpoint also supports `showPerformanceDetails`:
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -156,6 +174,8 @@ curl \
     "showPerformanceDetails": true
   }'
 ```
+
+</CodeGroup>
 
 ## Practical tips
 

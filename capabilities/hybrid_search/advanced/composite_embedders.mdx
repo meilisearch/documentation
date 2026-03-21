@@ -28,6 +28,8 @@ This guide requires two embedding providers that produce vectors with the same n
 
 Activate the `compositeEmbedders` flag:
 
+<CodeGroup>
+
 ```sh
 curl \
   -X PATCH 'http://localhost:7700/experimental-features' \
@@ -38,9 +40,13 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 ## Step 2: configure a composite embedder
 
 Set the embedder source to `"composite"` and define separate `searchEmbedder` and `indexingEmbedder` objects. Each sub-embedder uses the same configuration format as a standard embedder.
+
+<CodeGroup>
 
 ```sh
 curl \
@@ -73,6 +79,8 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 In this example:
 
 - **Indexing** uses a REST embedder pointing to a high-throughput embedding API. This endpoint can handle large batches of documents efficiently.
@@ -83,6 +91,8 @@ Both produce 768-dimensional vectors, so their outputs are compatible.
 ## Step 3: search with the composite embedder
 
 Search works exactly like any other hybrid search. Reference the composite embedder by name:
+
+<CodeGroup>
 
 ```sh
 curl \
@@ -97,6 +107,8 @@ curl \
     }
   }'
 ```
+
+</CodeGroup>
 
 Meilisearch automatically uses the search embedder for the query and the indexing embedder when processing new or updated documents.
 

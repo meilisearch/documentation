@@ -33,11 +33,15 @@ By default, Meilisearch uses whitespace and punctuation to determine word bounda
 
 For example, if your dataset uses `|` as a delimiter within a field, you can add it as a separator token so Meilisearch treats it as a word boundary:
 
+<CodeGroup>
+
 ```json
 {
   "separatorTokens": ["|"]
 }
 ```
+
+</CodeGroup>
 
 With this setting, a field value like `"red|green|blue"` is tokenized into `red`, `green`, and `blue`.
 
@@ -47,11 +51,15 @@ Conversely, you can tell Meilisearch to treat certain characters as part of a wo
 
 This is useful when your data includes special characters that should be searchable. For example, if your dataset contains programming terms like `C++` or `C#`, you can prevent `+` and `#` from acting as separators:
 
+<CodeGroup>
+
 ```json
 {
   "nonSeparatorTokens": ["+", "#"]
 }
 ```
+
+</CodeGroup>
 
 ### Dictionary
 
@@ -59,11 +67,15 @@ The [dictionary setting](/reference/api/settings/get-dictionary) lets you define
 
 For example, if users need to search for "ice cream" and your data contains the compound form "icecream", you can add it to the dictionary so Meilisearch knows how to handle it:
 
+<CodeGroup>
+
 ```json
 {
   "dictionary": ["icecream"]
 }
 ```
+
+</CodeGroup>
 
 ## How tokenization affects search
 

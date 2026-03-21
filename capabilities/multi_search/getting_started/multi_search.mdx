@@ -20,6 +20,8 @@ In this example, the request sends three queries: two targeting the `movies` ind
 
 Meilisearch returns a `results` array with one entry per query, in the same order as the queries you sent:
 
+<CodeGroup>
+
 ```json
 {
   "results": [
@@ -59,6 +61,8 @@ Meilisearch returns a `results` array with one entry per query, in the same orde
   ]
 }
 ```
+
+</CodeGroup>
 
 Each result set contains the same fields as a standard search response, including `hits`, `query`, `processingTimeMs`, and `estimatedTotalHits`.
 
