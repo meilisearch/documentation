@@ -8,15 +8,39 @@ Hybrid search combines two search strategies: [full-text search](/capabilities/f
 
 ## How it works
 
-Meilisearch uses **embedders** to convert documents and queries into numerical vectors that capture their semantic meaning. At search time, results from keyword matching and vector similarity are merged using a configurable [`semanticRatio`](/capabilities/hybrid_search/advanced/custom_hybrid_ranking) parameter.
+When you configure an embedder, Meilisearch automatically generates vector embeddings for every document in your index. You don't need to compute or manage embeddings yourself.
 
-- **semanticRatio = 0**: pure keyword search (full-text only)
-- **semanticRatio = 1**: pure semantic search (vector only)
-- **semanticRatio = 0.5**: balanced hybrid (default)
+```mermaid
+flowchart LR
+    A[Documents] --> B[Meilisearch]
+    B -->|auto-embeds| C[Vector index]
+    B -->|indexes| D[Keyword index]
+    E[Search query] --> B
+    B --> F[Merge & rank results]
+```
 
-## Semantic vs full-text search
+At search time, Meilisearch runs both keyword and semantic search in parallel, then merges the results using a smart scoring system.
 
-Full-text search excels when users know exactly what terms to search for. Semantic search shines when users describe what they want in their own words, even if those words don't appear in the documents.
+### Automatic embedding generation
+
+Meilisearch handles the entire embedding pipeline for you:
+
+- **Batching**: documents are grouped and sent to the embedding provider in optimized batches, minimizing API calls and maximizing throughput
+- **Caching**: embeddings are stored and only regenerated when document content changes, so re-indexing unchanged documents costs nothing
+- **Rate limit handling**: Meilisearch automatically retries when providers return rate limit errors, with no configuration needed
+- **Document templates**: you control exactly which fields are embedded using [Liquid templates](/capabilities/hybrid_search/advanced/document_template_best_practices), so the embedding captures the most relevant parts of each document
+
+### Smart result ranking
+
+When you perform a hybrid search, Meilisearch does not simply concatenate keyword and semantic results. It uses a scoring system that automatically determines, for each query, whether full-text or semantic results are more relevant:
+
+- A precise query like `"iPhone 15 Pro Max 256GB"` will naturally favor keyword matches, because the exact terms appear in matching documents
+- A descriptive query like `"lightweight laptop for travel"` will favor semantic matches, because the meaning matters more than the exact words
+- Ambiguous queries get a balanced mix of both strategies
+
+You can influence this balance with the [`semanticRatio`](/capabilities/hybrid_search/advanced/custom_hybrid_ranking) parameter, but the default (`0.5`) works well for most use cases because Meilisearch's scoring handles the blending intelligently.
+
+## When to use hybrid search
 
 | Scenario | Best approach |
 |----------|--------------|
@@ -24,16 +48,36 @@ Full-text search excels when users know exactly what terms to search for. Semant
 | User describes a problem in natural language | Semantic search |
 | Ecommerce product search with varied vocabulary | Hybrid search |
 | Documentation search with technical terms | Hybrid search |
+| FAQ or support knowledge base | Hybrid search |
 
 ## Supported embedder providers
 
-Meilisearch supports multiple embedder sources:
+Meilisearch supports a wide range of embedding providers. Some have native integrations, while others are available through the flexible [REST embedder](/capabilities/hybrid_search/how_to/configure_rest_embedder) that works with any API.
 
-- **[OpenAI](/capabilities/hybrid_search/how_to/configure_openai_embedder)**: cloud-hosted models like `text-embedding-3-small`
-- **[Cohere](/capabilities/hybrid_search/how_to/configure_cohere_embedder)**: cloud-hosted embedding models
-- **[HuggingFace](/capabilities/hybrid_search/how_to/configure_huggingface_embedder)**: locally-run open-source models
-- **[REST](/capabilities/hybrid_search/how_to/configure_rest_embedder)**: any embedding API via a custom REST endpoint
-- **User-provided**: bring your own pre-computed vectors
+### Native integrations
+
+| Provider | Source | Guide |
+|----------|--------|-------|
+| OpenAI | `openAi` | [Configure OpenAI](/capabilities/hybrid_search/how_to/configure_openai_embedder) |
+| HuggingFace (local) | `huggingFace` | [Configure HuggingFace](/capabilities/hybrid_search/how_to/configure_huggingface_embedder) |
+
+### Available via REST embedder
+
+| Provider | Guide |
+|----------|-------|
+| Cohere | [Configure Cohere](/guides/embedders/cohere) |
+| Mistral | [Configure Mistral](/guides/embedders/mistral) |
+| Google Gemini | [Configure Gemini](/guides/embedders/gemini) |
+| Cloudflare Workers AI | [Configure Cloudflare](/guides/embedders/cloudflare) |
+| Voyage AI | [Configure Voyage](/guides/embedders/voyage) |
+| AWS Bedrock | [Configure Bedrock](/guides/embedders/bedrock) |
+| HuggingFace Inference Endpoints | [Configure HF Inference](/guides/embedders/huggingface) |
+| Jina | Available via [REST embedder](/capabilities/hybrid_search/how_to/configure_rest_embedder) |
+| Any REST API | [Configure REST embedder](/capabilities/hybrid_search/how_to/configure_rest_embedder) |
+
+### User-provided embeddings
+
+If you pre-compute embeddings externally (for example, for images or audio content), you can supply them directly. See [search with user-provided embeddings](/capabilities/hybrid_search/how_to/search_with_user_provided_embeddings).
 
 ## Next steps
 
@@ -44,10 +88,10 @@ Meilisearch supports multiple embedder sources:
   <Card title="Choose an embedder" href="/capabilities/hybrid_search/how_to/choose_an_embedder">
     Compare providers and pick the right one for your use case
   </Card>
-  <Card title="Image search" href="/capabilities/hybrid_search/how_to/image_search_with_multimodal">
-    Search images using multimodal embeddings
+  <Card title="Document templates" href="/capabilities/hybrid_search/advanced/document_template_best_practices">
+    Control which document fields are used for embedding generation
   </Card>
-  <Card title="Similar documents" href="/capabilities/hybrid_search/how_to/retrieve_similar_documents">
-    Find documents similar to a given document
+  <Card title="Custom hybrid ranking" href="/capabilities/hybrid_search/advanced/custom_hybrid_ranking">
+    Tune semanticRatio to balance keyword and semantic results
   </Card>
 </CardGroup>
