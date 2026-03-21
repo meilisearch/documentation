@@ -2,99 +2,18 @@
 title: Geosearch
 sidebarTitle: Getting started
 description: Filter and sort search results based on their geographic location.
-sidebarDepth: 3
 ---
 
 import CodeSamplesGeosearchGuideFilterSettings1 from '/snippets/generated-code-samples/code_samples_geosearch_guide_filter_settings_1.mdx';
 import CodeSamplesGeosearchGuideFilterUsage1 from '/snippets/generated-code-samples/code_samples_geosearch_guide_filter_usage_1.mdx';
-import CodeSamplesGeosearchGuideFilterUsage3 from '/snippets/generated-code-samples/code_samples_geosearch_guide_filter_usage_3.mdx';
-import CodeSamplesGeosearchGuideFilterUsage2 from '/snippets/generated-code-samples/code_samples_geosearch_guide_filter_usage_2.mdx';
 import CodeSamplesGeosearchGuideSortSettings1 from '/snippets/generated-code-samples/code_samples_geosearch_guide_sort_settings_1.mdx';
 import CodeSamplesGeosearchGuideSortUsage1 from '/snippets/generated-code-samples/code_samples_geosearch_guide_sort_usage_1.mdx';
-import CodeSamplesGeosearchGuideSortUsage2 from '/snippets/generated-code-samples/code_samples_geosearch_guide_sort_usage_2.mdx';
 
-Meilisearch allows you to filter and sort results based on their geographic location. This can be useful when you only want results within a specific area or when sorting results based on their distance from a specific location.
+This guide walks you through indexing documents with geographic coordinates, then filtering and sorting results by location.
 
-## Preparing documents for location-based search
+## Add `_geo` to your documents
 
-To start filtering documents based on their geographic location, you must make sure they contain a valid `_geo` or `_geojson` field. If you also want to sort documents geographically, they must have a valid `_geo` field.
-
-`_geo` and `_geojson` are reserved fields. If you include one of them in your documents, Meilisearch expects its value to conform to a specific format.
-
-When using JSON and NDJSON, `_geo` must contain an object with two keys: `lat` and `lng`. Both fields must contain either a floating point number or a string indicating, respectively, latitude and longitude:
-
-```json
-{
-  …
-  "_geo": {
-    "lat": 0.0,
-    "lng": "0.0"
-  }
-}
-```
-
-`_geojson` must be an object whose contents follow the [GeoJSON specification](https://geojson.org/):
-
-```json
-{
-  …
-  "_geojson": {
-    "type": "Feature",
-    "geometry": {
-      "type": "Point",
-      "coordinates": [0.0, 0.0]
-    }
-  }
-}
-```
-
-Meilisearch does not support transmeridian shapes. If your document includes a transmeridian shape, split it into two separate shapes grouped as a `MultiPolygon` or `MultiLine`. Transmeridian shapes are polygons or lines that cross the 180th meridian.
-
-**Meilisearch does not support polygons with holes**. If your polygon consists of an external ring and an inner empty space, Meilisearch ignores the hole and treats the polygon as a solid shape.
-
-<Note>
-### Using `_geo` and `_geojson` together
-
-If your application requires both sorting by distance to a point and filtering by shapes other than a circle or a rectangle, you will need to add both `_geo` and `_geojson` to your documents.
-
-When handling documents with both fields, Meilisearch:
-
-- Ignores `_geojson` values when sorting
-- Ignores `_geo` values when filtering with `_geoPolygon`
-- Matches both `_geo` and `_geojson` values when filtering with `_geoRadius` and `_geoBoundingBox`
-</Note>
-
-### Examples
-
-Suppose we have a JSON array containing a few restaurants:
-
-```json
-[
-  {
-    "id": 1,
-    "name": "Nàpiz' Milano",
-    "address": "Viale Vittorio Veneto, 30, 20124, Milan, Italy",
-    "type": "pizza",
-    "rating": 9
-  },
-  {
-    "id": 2,
-    "name": "Bouillon Pigalle",
-    "address": "22 Bd de Clichy, 75018 Paris, France",
-    "type": "french",
-    "rating": 8
-  },
-  {
-    "id": 3,
-    "name": "Artico Gelateria Tradizionale",
-    "address": "Via Dogana, 1, 20123 Milan, Italy",
-    "type": "ice cream",
-    "rating": 10
-  }
-]
-```
-
-Our restaurant dataset looks like this once we add `_geo` data:
+Documents must contain a `_geo` field with `lat` and `lng` values:
 
 ```json
 [
@@ -138,154 +57,61 @@ Our restaurant dataset looks like this once we add `_geo` data:
 Trying to index a dataset with one or more documents containing badly formatted `_geo` values will cause Meilisearch to throw an [`invalid_document_geo_field`](/reference/errors/error_codes#invalid_document_geo_field) error. In this case, the update will fail and no documents will be added or modified.
 </Warning>
 
-### Using `_geo` with CSV
+<Note>
+Meilisearch also supports [GeoJSON](/capabilities/geo_search/how_to/use_geojson_format) for complex geometries like polygons and multi-polygons.
+</Note>
 
-If your dataset is formatted as CSV, the file header must have a `_geo` column. Each row in the dataset must then contain a column with a comma-separated string indicating latitude and longitude:
+## Configure filterable and sortable attributes
 
-```csv
-"id:number","name:string","address:string","type:string","rating:number","_geo:string"
-"1","Nàpiz Milano","Viale Vittorio Veneto, 30, 20124, Milan, Italy","pizzeria",9,"45.4777599,9.1967508"
-"2","Bouillon Pigalle","22 Bd de Clichy, 75018 Paris, France","french",8,"48.8826517,2.3352748"
-"3","Artico Gelateria Tradizionale","Via Dogana, 1, 20123 Milan, Italy","ice cream",10,"48.8826517,2.3352748"
-```
-
-CSV files do not support the `_geojson` attribute.
-
-## Filtering results with `_geoRadius`, `_geoBoundingBox`, and `_geoPolygon`
-
-You can use `_geo` and `_geojson` data to filter queries so you only receive results located within a given geographic area.
-
-### Configuration
-
-To filter results based on their location, you must add `_geo` or `_geojson` to the `filterableAttributes` list:
+To filter results by location, add `_geo` to `filterableAttributes`:
 
 <CodeSamplesGeosearchGuideFilterSettings1 />
 
-Meilisearch will rebuild your index whenever you update `filterableAttributes`. Depending on the size of your dataset, this might take a considerable amount of time.
-
-[You can read more about configuring `filterableAttributes` in our dedicated filtering guide.](/capabilities/filtering_sorting_faceting/getting_started)
-
-### Usage
-
-Use the [`filter` search parameter](/reference/api/search/search-with-post#body-filter) along with `_geoRadius` and `_geoBoundingBox`. These are special filter rules that ensure Meilisearch only returns results located within a specific geographic area. If you are using GeoJSON for your documents, you may also filter results with `_geoPolygon`.
-
-### `_geoRadius`
-
-```
-_geoRadius(lat, lng, distance_in_meters, resolution)
-```
-
-### `_geoBoundingBox`
-
-```
-_geoBoundingBox([LAT, LNG], [LAT, LNG])
-```
-
-### `_geoPolygon`
-
-```
-_geoPolygon([LAT, LNG], [LAT, LNG], [LAT, LNG], …)
-```
-
-### Examples
-
-Using our <a id="downloadRestaurants" href="/assets/datasets/restaurants.json" download="restaurants.json">example dataset</a>, we can search for places to eat near the center of Milan with `_geoRadius`:
-
-<CodeSamplesGeosearchGuideFilterUsage1 />
-
-We also make a similar query using `_geoBoundingBox`:
-
-<CodeSamplesGeosearchGuideFilterUsage3 />
-
-And with `_geoPolygon`:
-
-```bash
-curl \
-  -X POST 'MEILISEARCH_URL/indexes/restaurants/search' \
-  -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
-  --data-binary '{
-    "filter": "_geoPolygon([45.49, 9.18], [45.46, 9.16], [45.46, 9.20], [45.49, 9.20])"
-  }'
-```
-
-```json
-[
-  {
-    "id": 1,
-    "name": "Nàpiz' Milano",
-    "address": "Viale Vittorio Veneto, 30, 20124, Milan, Italy",
-    "type": "pizza",
-    "rating": 9,
-    "_geo": {
-      "lat": 45.4777599,
-      "lng": 9.1967508
-    }
-  },
-  {
-    "id": 3,
-    "name": "Artico Gelateria Tradizionale",
-    "address": "Via Dogana, 1, 20123 Milan, Italy",
-    "type": "ice cream",
-    "rating": 10,
-    "_geo": {
-      "lat": 45.4632046,
-      "lng": 9.1719421
-    }
-  }
-]
-```
-
-It is also possible to combine `_geoRadius`, `_geoBoundingBox`, and `_geoPolygon` with other filters. We can narrow down our previous search so it only includes pizzerias:
-
-<CodeSamplesGeosearchGuideFilterUsage2 />
-
-```json
-[
-  {
-    "id": 1,
-    "name": "Nàpiz' Milano",
-    "address": "Viale Vittorio Veneto, 30, 20124, Milan, Italy",
-    "type": "pizza",
-    "rating": 9,
-    "_geo": {
-      "lat": 45.4777599,
-      "lng": 9.1967508
-    }
-  }
-]
-```
-
-<Warning>
-`_geo`, `_geoDistance`, and `_geoPoint` are not valid filter rules. Trying to use any of them with the `filter` search parameter will result in an [`invalid_search_filter`](/reference/errors/error_codes#invalid_search_filter) error.
-</Warning>
-
-## Sorting results with `_geoPoint`
-
-### Configuration
-
-Before using geosearch for sorting, you must add the `_geo` attribute to the [`sortableAttributes` list](/capabilities/filtering_sorting_faceting/how_to/sort_results):
+To sort results by distance, add `_geo` to `sortableAttributes`:
 
 <CodeSamplesGeosearchGuideSortSettings1 />
 
-<Danger>
-It is not possible to sort documents based on the `_geojson` attribute.
-</Danger>
+Meilisearch will rebuild your index whenever you update these settings. Depending on the size of your dataset, this might take a considerable amount of time.
 
-### Usage
+## Filter results by location
 
+Use the [`filter` search parameter](/reference/api/search/search-with-post#body-filter) with `_geoRadius` to find results within a given distance from a point. The following example searches for restaurants within 2km of central Milan:
+
+<CodeSamplesGeosearchGuideFilterUsage1 />
+
+```json
+[
+  {
+    "id": 1,
+    "name": "Nàpiz' Milano",
+    "address": "Viale Vittorio Veneto, 30, 20124, Milan, Italy",
+    "type": "pizza",
+    "rating": 9,
+    "_geo": {
+      "lat": 45.4777599,
+      "lng": 9.1967508
+    }
+  },
+  {
+    "id": 3,
+    "name": "Artico Gelateria Tradizionale",
+    "address": "Via Dogana, 1, 20123 Milan, Italy",
+    "type": "ice cream",
+    "rating": 10,
+    "_geo": {
+      "lat": 45.4632046,
+      "lng": 9.1719421
+    }
+  }
+]
 ```
-_geoPoint(0.0, 0.0):asc
-```
 
-### Examples
+## Sort results by distance
 
-The `_geoPoint` sorting function can be used like any other sorting rule. We can order documents based on how close they are to the Eiffel Tower:
+Use `_geoPoint` in the [`sort` search parameter](/reference/api/search/search-with-post#body-sort) to order results by proximity. The following example sorts restaurants by distance from the Eiffel Tower:
 
 <CodeSamplesGeosearchGuideSortUsage1 />
 
-With our <a id="downloadRestaurants" href="/assets/datasets/restaurants.json" download="restaurants.json">restaurants dataset</a>, the results look like this:
-
 ```json
 [
   {
@@ -299,69 +125,26 @@ With our <a id="downloadRestaurants" href="/assets/datasets/restaurants.json" do
       "lng": 2.3352748
     }
   },
-  {
-    "id": 3,
-    "name": "Artico Gelateria Tradizionale",
-    "address": "Via Dogana, 1, 20123 Milan, Italy",
-    "type": "ice cream",
-    "rating": 10,
-    "_geo": {
-      "lat": 45.4632046,
-      "lng": 9.1719421
-    }
-  },
-  {
-    "id": 1,
-    "name": "Nàpiz' Milano",
-    "address": "Viale Vittorio Veneto, 30, 20124, Milan, Italy",
-    "type": "pizza",
-    "rating": 9,
-    "_geo": {
-      "lat": 45.4777599,
-      "lng": 9.1967508
-    }
-  }
+  …
 ]
 ```
 
-`_geoPoint` also works when used together with other sorting rules. We can sort restaurants based on their proximity to the Eiffel Tower and their rating:
+## Next steps
 
-<CodeSamplesGeosearchGuideSortUsage2 />
-
-```json
-[
-  {
-    "id": 2,
-    "name": "Bouillon Pigalle",
-    "address": "22 Bd de Clichy, 75018 Paris, France",
-    "type": "french",
-    "rating": 8,
-    "_geo": {
-      "lat": 48.8826517,
-      "lng": 2.3352748
-    }
-  },
-  {
-    "id": 3,
-    "name": "Artico Gelateria Tradizionale",
-    "address": "Via Dogana, 1, 20123 Milan, Italy",
-    "type": "ice cream",
-    "rating": 10,
-    "_geo": {
-      "lat": 45.4632046,
-      "lng": 9.1719421
-    }
-  },
-  {
-    "id": 1,
-    "name": "Nàpiz' Milano",
-    "address": "Viale Vittorio Veneto, 30, 20124, Milan, Italy",
-    "type": "pizza",
-    "rating": 9,
-    "_geo": {
-      "lat": 45.4777599,
-      "lng": 9.1967508
-    }
-  }
-]
-```
+<CardGroup cols={2}>
+  <Card title="Filter by radius" href="/capabilities/geo_search/how_to/filter_by_geo_radius">
+    Find results within a circular area around a point
+  </Card>
+  <Card title="Filter by bounding box" href="/capabilities/geo_search/how_to/filter_by_geo_bounding_box">
+    Find results within a rectangular area
+  </Card>
+  <Card title="Filter by polygon" href="/capabilities/geo_search/how_to/filter_by_geo_polygon">
+    Find results within a custom polygon shape
+  </Card>
+  <Card title="Sort by distance" href="/capabilities/geo_search/how_to/sort_by_geo_point">
+    Rank results by proximity to a location
+  </Card>
+  <Card title="Use GeoJSON format" href="/capabilities/geo_search/how_to/use_geojson_format">
+    Index complex geometries with the GeoJSON standard
+  </Card>
+</CardGroup>
