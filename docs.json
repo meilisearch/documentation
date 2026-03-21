@@ -207,7 +207,9 @@
                   "getting_started/integrations/firebase",
                   "getting_started/integrations/vercel",
                   "getting_started/integrations/postman",
-                  "getting_started/integrations/meilisearch_importer"
+                  "getting_started/integrations/meilisearch_importer",
+                  "getting_started/integrations/mcp",
+                  "getting_started/integrations/langchain"
                 ]
               }
             ]
@@ -215,6 +217,12 @@
           {
             "tab": "Capabilities",
             "groups": [
+              {
+                "group": "Overview",
+                "pages": [
+                  "capabilities/overview"
+                ]
+              },
               {
                 "group": "Full-text search",
                 "pages": [
@@ -238,7 +246,8 @@
                       "capabilities/full_text_search/how_to/use_matching_strategy",
                       "capabilities/full_text_search/how_to/configure_search_cutoff",
                       "capabilities/full_text_search/how_to/configure_displayed_attributes",
-                      "capabilities/full_text_search/how_to/configure_distinct_attribute"
+                      "capabilities/full_text_search/how_to/configure_distinct_attribute",
+                      "capabilities/full_text_search/how_to/paginate_search_results"
                     ]
                   },
                   {
@@ -911,45 +920,6 @@
             ]
           },
           {
-            "tab": "Guides",
-            "groups": [
-              {
-                "group": "Front end",
-                "pages": [
-                  "guides/front_end/pagination"
-                ]
-              },
-              {
-                "group": "Artificial intelligence",
-                "pages": [
-                  "guides/ai/getting_started_with_chat",
-                  "guides/ai/mcp",
-                  "guides/langchain"
-                ]
-              },
-              {
-                "group": "Performance",
-                "pages": [
-                  "guides/improve_relevancy_large_documents"
-                ]
-              },
-              {
-                "group": "Security",
-                "pages": [
-                  "guides/laravel_multitenancy",
-                  "guides/multitenancy_nodejs"
-                ]
-              },
-              {
-                "group": "Relevancy",
-                "pages": [
-                  "guides/relevancy/ordering_ranking_rules",
-                  "guides/relevancy/interpreting_ranking_scores"
-                ]
-              }
-            ]
-          },
-          {
             "tab": "Resources",
             "groups": [
               {
@@ -1582,6 +1552,42 @@
     {
       "source": "/reference/features/search_parameters",
       "destination": "/reference/api/search/search-with-post"
+    },
+    {
+      "source": "/guides/ai/mcp",
+      "destination": "/getting_started/integrations/mcp"
+    },
+    {
+      "source": "/guides/langchain",
+      "destination": "/getting_started/integrations/langchain"
+    },
+    {
+      "source": "/guides/laravel_multitenancy",
+      "destination": "/capabilities/security/overview"
+    },
+    {
+      "source": "/guides/multitenancy_nodejs",
+      "destination": "/capabilities/security/overview"
+    },
+    {
+      "source": "/guides/ai/getting_started_with_chat",
+      "destination": "/capabilities/conversational_search/getting_started"
+    },
+    {
+      "source": "/guides/front_end/pagination",
+      "destination": "/capabilities/full_text_search/how_to/paginate_search_results"
+    },
+    {
+      "source": "/guides/relevancy/ordering_ranking_rules",
+      "destination": "/capabilities/full_text_search/relevancy/ranking_rules"
+    },
+    {
+      "source": "/guides/relevancy/interpreting_ranking_scores",
+      "destination": "/capabilities/full_text_search/relevancy/ranking_score"
+    },
+    {
+      "source": "/guides/improve_relevancy_large_documents",
+      "destination": "/capabilities/full_text_search/relevancy/relevancy"
     },
     {
       "source": "/learn/analytics/configure_analytics",
