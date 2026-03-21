@@ -25,7 +25,7 @@ The key insight is that **a large model with binary quantization often outperfor
 
 Binary quantization is most effective when:
 
-- Your dataset contains **more than 100K documents** with embeddings
+- Your dataset contains **more than 1M documents** with embeddings
 - You use a model with **1400+ dimensions** (the more dimensions, the better BQ works, because there is more information to preserve even after quantization)
 - You want to **reduce disk usage** and **speed up indexing** without switching to a smaller model
 - Storage or memory is a constraint in your deployment
