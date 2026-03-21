@@ -1,0 +1,208 @@
+---
+title: Optimize chat prompts
+description: Improve conversational search response quality by tuning system prompts, document templates, and index chat settings.
+---
+
+The quality of conversational search responses depends on three layers of configuration: the system prompt, the document template, and the index-level chat settings. Each layer shapes what the LLM receives and how it responds. This guide covers how to tune each one for better results.
+
+## System prompt strategies
+
+The system prompt (set through [workspace settings](/capabilities/conversational_search/how_to/configure_chat_workspace)) defines the LLM's overall behavior. Beyond basic [guardrails](/capabilities/conversational_search/how_to/configure_guardrails), you can shape response quality with specific instructions.
+
+### Be specific about the domain
+
+Generic prompts produce generic answers. Tell the LLM exactly what it is and what data it works with:
+
+<CodeGroup>
+
+```text Bad
+You are a helpful assistant.
+```
+
+```text Good
+You are a product specialist for an outdoor equipment store.
+You help customers find hiking, camping, and climbing gear
+based on their needs, experience level, and budget.
+The search results contain our current product catalog
+with prices, specifications, and customer reviews.
+```
+
+</CodeGroup>
+
+The more context the LLM has about the domain, the better it can interpret ambiguous queries and structure relevant answers.
+
+### Define answer structure
+
+Tell the LLM how to format responses. This improves consistency and readability:
+
+<CodeGroup>
+
+```text System prompt
+When recommending products:
+1. Start with a brief answer to the user's question
+2. List 2-3 recommended products with their key specs
+3. Explain why each product fits the user's needs
+4. Mention the price range
+
+When comparing products:
+1. Create a brief comparison of the key differences
+2. Recommend which product fits best based on the user's stated needs
+3. Mention any trade-offs
+```
+
+</CodeGroup>
+
+### Control response length
+
+Without guidance, LLMs tend to produce long responses. Set explicit length expectations:
+
+<CodeGroup>
+
+```text System prompt
+Keep responses concise. For simple factual questions, answer
+in 1-2 sentences. For product recommendations, use 3-5 short
+paragraphs. For comparisons, use a brief list format.
+Never exceed 300 words unless the user explicitly asks for
+a detailed explanation.
+```
+
+</CodeGroup>
+
+## Configure index chat settings
+
+Each index has chat-specific settings that control how documents are prepared for the LLM. Configure these through the [index chat settings](/capabilities/conversational_search/how_to/configure_index_chat_settings) endpoint:
+
+<CodeGroup>
+
+```bash
+curl \
+  -X PATCH 'MEILISEARCH_URL/chats/WORKSPACE_NAME/indexes/products' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "description": "Product catalog with hiking, camping, and climbing equipment. Each product has a name, description, price, category, brand, weight, and customer rating.",
+    "searchParameters": {
+      "limit": 5,
+      "hybrid": {
+        "semanticRatio": 0.7,
+        "embedder": "my-embedder"
+      },
+      "attributesToRetrieve": ["name", "description", "price", "category", "rating"]
+    }
+  }'
+```
+
+</CodeGroup>
+
+### Write a good index description
+
+The `description` field tells the LLM what kind of data the index contains. The LLM uses this to decide whether to search the index and how to interpret results:
+
+<CodeGroup>
+
+```text Bad
+Products index.
+```
+
+```text Good
+Product catalog for an outdoor equipment retailer. Contains
+hiking boots, backpacks, tents, climbing gear, and camping
+accessories. Each product includes name, detailed description,
+price in USD, weight in grams, brand, category, average
+customer rating (1-5), and number of reviews.
+```
+
+</CodeGroup>
+
+### Limit retrieved attributes
+
+By default, Meilisearch sends all document attributes to the LLM. This can include irrelevant data that confuses the model or wastes tokens. Use `attributesToRetrieve` to send only what matters:
+
+<CodeGroup>
+
+```json
+{
+  "searchParameters": {
+    "attributesToRetrieve": ["name", "description", "price", "rating"]
+  }
+}
+```
+
+</CodeGroup>
+
+Exclude internal IDs, timestamps, image URLs, and other fields the LLM does not need for generating answers.
+
+### Tune search parameters for chat
+
+Conversational queries are often longer and more natural than keyword searches. Adjust search parameters to match:
+
+- **Higher `semanticRatio`** (0.6-0.8): natural language questions benefit from semantic search more than keyword matching
+- **Lower `limit`** (3-5): the LLM processes fewer, more relevant documents better than many loosely related ones
+- **Broader matching strategy**: use `"matchingStrategy": "last"` (the default) to match as many terms as possible
+
+<CodeGroup>
+
+```json
+{
+  "searchParameters": {
+    "limit": 5,
+    "hybrid": {
+      "semanticRatio": 0.7,
+      "embedder": "my-embedder"
+    },
+    "matchingStrategy": "last"
+  }
+}
+```
+
+</CodeGroup>
+
+## Optimize document templates for chat
+
+If your index uses an [embedder](/capabilities/hybrid_search/how_to/choose_an_embedder), the `documentTemplate` affects both embedding quality and the text the LLM sees during conversational search. A good template for chat should be readable as natural language:
+
+<CodeGroup>
+
+```text Bad
+{{doc.name}} {{doc.price}} {{doc.category}}
+```
+
+```text Good
+{{doc.name}} is a {{doc.category}} product priced at ${{doc.price}}.
+{{doc.description}}. Rated {{doc.rating}} out of 5 by customers.
+```
+
+</CodeGroup>
+
+The LLM reads these rendered templates as context. Structured, readable text helps it generate better answers. See [document template best practices](/capabilities/hybrid_search/advanced/document_template_best_practices) for detailed guidance.
+
+## Test and iterate
+
+After configuring prompts and settings, test with realistic queries to evaluate quality:
+
+1. **Factual questions**: "What is the lightest 2-person tent you carry?" (should cite specific products with weights)
+2. **Comparison questions**: "Should I get the TrailRunner Pro or the SpeedHike 3?" (should compare features)
+3. **Vague questions**: "I need something for a weekend trip" (should ask clarifying questions or give broad recommendations)
+4. **Out-of-scope questions**: "What is the weather forecast?" (should decline politely)
+
+For each test, evaluate:
+- Is the answer grounded in the search results?
+- Is the response length appropriate?
+- Does the formatting match your instructions?
+- Are the recommended documents relevant to the question?
+
+Adjust the system prompt, index description, and search parameters based on what you find.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Configure guardrails" href="/capabilities/conversational_search/how_to/configure_guardrails">
+    Restrict responses to indexed data and defined topics
+  </Card>
+  <Card title="Configure index chat settings" href="/capabilities/conversational_search/how_to/configure_index_chat_settings">
+    Full reference for index-level chat configuration
+  </Card>
+  <Card title="Document template best practices" href="/capabilities/hybrid_search/advanced/document_template_best_practices">
+    Write effective templates for embedding and chat
+  </Card>
+</CardGroup>

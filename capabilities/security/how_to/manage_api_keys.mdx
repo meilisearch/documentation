@@ -110,6 +110,10 @@ curl \
 
 Setting `expiresAt` to `null` creates a key that never expires.
 
+<Warning>
+The `actions`, `indexes`, and `expiresAt` fields cannot be changed after a key is created. If you create a key without an expiration date, you cannot add one later. If you need different permissions or expiration, delete the key and create a new one.
+</Warning>
+
 ## Update an API key
 
 You can update a key's `name` and `description`. The `actions`, `indexes`, and `expiresAt` fields cannot be modified after creation. If you need different permissions, create a new key instead.

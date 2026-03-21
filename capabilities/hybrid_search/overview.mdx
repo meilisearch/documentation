@@ -39,7 +39,7 @@ At search time, Meilisearch runs both keyword and semantic search in parallel, t
 Meilisearch handles the entire embedding pipeline for you:
 
 - **Batching**: documents are grouped and sent to the embedding provider in optimized batches, minimizing API calls and maximizing throughput
-- **Caching**: embeddings are stored and only regenerated when document content changes, so re-indexing unchanged documents costs nothing
+- **Caching**: embeddings are stored and only regenerated when document content changes, so re-indexing unchanged documents costs nothing. Note that changing your embedder configuration (switching model, provider, or document template) triggers a full re-embedding of all documents, which may incur significant API costs for large indexes
 - **Rate limit handling**: Meilisearch automatically retries when providers return rate limit errors, with no configuration needed
 - **Document templates**: you control exactly which fields are embedded using [Liquid templates](/capabilities/hybrid_search/advanced/document_template_best_practices), so the embedding captures the most relevant parts of each document
 

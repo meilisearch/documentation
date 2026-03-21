@@ -353,7 +353,9 @@
                       "capabilities/conversational_search/how_to/configure_index_chat_settings",
                       "capabilities/conversational_search/how_to/stream_chat_responses",
                       "capabilities/conversational_search/how_to/configure_guardrails",
-                      "capabilities/conversational_search/how_to/display_source_documents"
+                      "capabilities/conversational_search/how_to/display_source_documents",
+                      "capabilities/conversational_search/how_to/handle_errors_and_fallbacks",
+                      "capabilities/conversational_search/how_to/optimize_chat_prompts"
                     ]
                   },
                   {
@@ -400,7 +402,9 @@
                       "capabilities/filtering_sorting_faceting/how_to/filter_and_sort_by_date",
                       "capabilities/filtering_sorting_faceting/how_to/combine_filters_and_sort",
                       "capabilities/filtering_sorting_faceting/how_to/build_faceted_navigation",
-                      "capabilities/filtering_sorting_faceting/how_to/configure_granular_filters"
+                      "capabilities/filtering_sorting_faceting/how_to/configure_granular_filters",
+                      "capabilities/filtering_sorting_faceting/how_to/search_and_filter_together",
+                      "capabilities/filtering_sorting_faceting/how_to/handle_large_facet_cardinality"
                     ]
                   },
                   {
@@ -497,7 +501,10 @@
                       "capabilities/indexing/how_to/handle_multilingual_data",
                       "capabilities/indexing/how_to/document_relations",
                       "capabilities/indexing/how_to/export_data",
-                      "capabilities/indexing/how_to/compact_an_index"
+                      "capabilities/indexing/how_to/compact_an_index",
+                      "capabilities/indexing/how_to/import_large_datasets",
+                      "capabilities/indexing/how_to/design_primary_keys",
+                      "capabilities/indexing/how_to/delete_documents_at_scale"
                     ]
                   },
                   {

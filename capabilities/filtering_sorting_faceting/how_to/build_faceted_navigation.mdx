@@ -189,6 +189,13 @@ Here is a JavaScript pattern for building an interactive faceted sidebar:
     renderResults(data.hits);
   }
 
+  // Note: when a user selects a facet value (e.g., brand = "Nike"),
+  // the facet counts update to reflect only results matching that filter.
+  // This means other brand options may show reduced counts or disappear.
+  // If you want to preserve the full list of facet values regardless of
+  // active filters, use disjunctive facets:
+  // /capabilities/filtering_sorting_faceting/advanced/disjunctive_facets
+
   function renderFacets(distribution) {
     const sidebar = document.getElementById('facets-sidebar');
     sidebar.innerHTML = Object.entries(distribution)
