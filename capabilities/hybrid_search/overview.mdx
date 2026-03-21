@@ -6,6 +6,15 @@ description: Combine full-text keyword search with AI-powered semantic search to
 
 Hybrid search combines two search strategies: [full-text search](/capabilities/full_text_search/overview) (matching keywords) and semantic search (matching meaning). This gives users the best of both worlds, returning results that are both textually and conceptually relevant.
 
+## Embedding models, not LLMs
+
+Semantic search in Meilisearch relies on **embedding models**, not large language models (LLMs). This is an important distinction:
+
+- **Embedding models** convert text into numerical vectors that capture meaning. They are small, fast, and inexpensive to run.
+- **LLMs** (like GPT-4 or Claude) generate text and reason about it. They are much larger, slower, and more expensive.
+
+Meilisearch uses embedding models for hybrid and semantic search, making it orders of magnitude cheaper and faster than LLM-based approaches. For conversational AI features that do use LLMs, see [conversational search](/capabilities/conversational_search/overview).
+
 ## How it works
 
 When you configure an embedder, Meilisearch automatically generates vector embeddings for every document in your index. You don't need to compute or manage embeddings yourself.
