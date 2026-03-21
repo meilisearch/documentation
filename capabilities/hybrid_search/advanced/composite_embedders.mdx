@@ -20,11 +20,9 @@ A single embedder works well for most projects. Composite embedders are useful w
 | Infrastructure split | GPU server for bulk embedding | CPU-based model for real-time queries |
 | Rate limit management | Dedicated batch API endpoint | Separate endpoint with its own rate limits |
 
-## Prerequisites
-
-- A running Meilisearch project (v1.14 or later)
-- A command-line terminal
-- Two embedding providers that produce vectors with the same number of dimensions
+<Note>
+This guide requires two embedding providers that produce vectors with the same number of dimensions.
+</Note>
 
 ## Step 1: enable the experimental feature
 
