@@ -338,15 +338,29 @@
                 "group": "Conversational search",
                 "pages": [
                   "capabilities/conversational_search/overview",
-                  "capabilities/conversational_search/getting_started",
+                  {
+                    "group": "Getting started",
+                    "pages": [
+                      "capabilities/conversational_search/getting_started/setup",
+                      "capabilities/conversational_search/getting_started/chat",
+                      "capabilities/conversational_search/getting_started/one_shot_summarization"
+                    ]
+                  },
                   {
                     "group": "How to",
                     "pages": [
                       "capabilities/conversational_search/how_to/configure_chat_workspace",
+                      "capabilities/conversational_search/how_to/configure_index_chat_settings",
                       "capabilities/conversational_search/how_to/stream_chat_responses",
                       "capabilities/conversational_search/how_to/configure_guardrails",
-                      "capabilities/conversational_search/how_to/display_source_documents",
-                      "capabilities/conversational_search/how_to/chat_tooling_reference"
+                      "capabilities/conversational_search/how_to/display_source_documents"
+                    ]
+                  },
+                  {
+                    "group": "Advanced",
+                    "pages": [
+                      "capabilities/conversational_search/advanced/reduce_hallucination",
+                      "capabilities/conversational_search/advanced/chat_tooling_reference"
                     ]
                   }
                 ]
@@ -1569,7 +1583,7 @@
     },
     {
       "source": "/guides/ai/getting_started_with_chat",
-      "destination": "/capabilities/conversational_search/getting_started"
+      "destination": "/capabilities/conversational_search/getting_started/setup"
     },
     {
       "source": "/guides/front_end/pagination",
@@ -1749,15 +1763,23 @@
     },
     {
       "source": "/learn/chat/getting_started_with_chat",
-      "destination": "/capabilities/conversational_search/getting_started"
+      "destination": "/capabilities/conversational_search/getting_started/setup"
     },
     {
       "source": "/learn/chat/chat_tooling_reference",
-      "destination": "/capabilities/conversational_search/how_to/chat_tooling_reference"
+      "destination": "/capabilities/conversational_search/advanced/chat_tooling_reference"
+    },
+    {
+      "source": "/capabilities/conversational_search/how_to/chat_tooling_reference",
+      "destination": "/capabilities/conversational_search/advanced/chat_tooling_reference"
     },
     {
       "source": "/learn/chat/conversational_search",
       "destination": "/capabilities/conversational_search/overview"
+    },
+    {
+      "source": "/capabilities/conversational_search/getting_started",
+      "destination": "/capabilities/conversational_search/getting_started/setup"
     },
     {
       "source": "/learn/personalization/making_personalized_search_queries",

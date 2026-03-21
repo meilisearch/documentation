@@ -15,7 +15,7 @@ The system prompt is the first instruction the LLM receives before processing an
 
 <CodeGroup>
 
-```bash
+```bash cURL
 curl \
   -X PATCH 'MEILISEARCH_URL/chats/WORKSPACE_NAME/settings' \
   -H 'Authorization: Bearer MEILISEARCH_KEY' \
@@ -37,7 +37,7 @@ Include explicit instructions like these in your system prompt:
 
 <CodeGroup>
 
-```text
+```text System prompt
 You are a helpful assistant. Only answer questions using information
 from the search results provided to you. If the search results do not
 contain enough information to answer the question, say so clearly
@@ -61,7 +61,7 @@ Limit the topics the agent will discuss. This prevents users from using your con
 
 <CodeGroup>
 
-```text
+```text System prompt
 You are a customer support agent for Acme Corp. You help users with
 questions about our products, orders, shipping, and return policies.
 
@@ -80,7 +80,7 @@ Rules:
 
 <CodeGroup>
 
-```text
+```text System prompt
 You are a product search assistant for an electronics store. Help
 users find the right products based on their needs and preferences.
 
@@ -98,7 +98,7 @@ Rules:
 
 <CodeGroup>
 
-```text
+```text System prompt
 You are a technical documentation assistant. Help developers find
 answers to their questions about our API and SDKs.
 
@@ -121,7 +121,7 @@ Use the system prompt to standardize how the agent formats its responses:
 
 <CodeGroup>
 
-```text
+```text System prompt
 You are a helpful assistant for a legal research platform.
 
 Response format:
@@ -141,7 +141,7 @@ In production, combine scope restrictions, data constraints, and formatting rule
 
 <CodeGroup>
 
-```text
+```text System prompt
 You are the support assistant for CloudDeploy, a cloud hosting
 platform. You help users with deployment, configuration, billing,
 and troubleshooting.

@@ -1,57 +1,53 @@
 ---
 title: What is conversational search?
 sidebarTitle: Overview
-description: Conversational search allows people to make search queries using natural languages.
+description: Conversational search allows people to make search queries using natural languages and receive AI-generated answers grounded in your data.
 ---
 
-Conversational search is an AI-powered search feature that allows users to ask questions in everyday language and receive answers based on the information in Meilisearch's indexes.
+Conversational search is an AI-powered feature built on top of Meilisearch's search engine. It works as a built-in Retrieval Augmented Generation (RAG) system: when a user asks a question, Meilisearch retrieves relevant documents from its indexes, then uses an LLM to generate a response grounded in those results. The AI never answers from its own general knowledge. Every response is based on the data you have indexed in Meilisearch.
 
-## When to use conversational vs traditional search
-
-Use conversational search when:
-
-- Users need easy-to-read answers to specific questions
-- You are handling informational-dense content, such as knowledge bases
-- Natural language interaction improves user experience
-
-Use traditional search when:
-
-- Users need to browse multiple options, such as an ecommerce website
-- Approximate answers are not acceptable
-- Your users need very quick responses
+This is similar to how [Perplexity](https://www.perplexity.ai/) works: every answer comes with source documents so users can verify the information. Meilisearch brings the same pattern to your own data.
 
 <Warning>
-Conversational search is still in early development. Conversational agents may occasionally hallucinate inaccurate and misleading information, so it is important to closely monitor it in production environments.
+Conversational search relies on large language models (LLMs) to generate responses. LLMs may occasionally hallucinate inaccurate or misleading information, even when provided with correct source documents. Always monitor responses in production environments and consider implementing [guardrails](/capabilities/conversational_search/how_to/configure_guardrails) to reduce this risk.
 </Warning>
 
-## Conversational search user workflow
+## Use cases
 
-### Traditional search workflow
+Conversational search supports three main use cases, all powered by the same `/chats` API route:
 
-1. User enters keywords
-2. Meilisearch returns matching documents
-3. User reviews results to find answers
+### Multi-turn chat
 
-### Conversational search workflow
+Build a full conversational interface where users ask follow-up questions and the agent maintains context across the conversation. This is ideal for knowledge bases, customer support, and documentation search.
 
-1. User asks a question in natural language
-2. Meilisearch retrieves relevant documents
-3. AI generates a direct answer based on those documents
+**Example**: A user asks "What models do you support?", then follows up with "Which one is the fastest?" without restating the context.
+
+### One-shot answer summarization
+
+Generate a single, concise answer to a user's question without maintaining conversation history. This is useful when you want to display a summarized answer alongside traditional search results.
+
+**Example**: A user searches "How do I reset my password?" and gets a direct answer synthesized from your help articles, displayed above the regular search results.
+
+### RAG pipelines
+
+Integrate Meilisearch as the retrieval layer in a broader RAG architecture. Meilisearch handles query understanding and hybrid retrieval, while your application controls the generation step.
+
+**Example**: A product recommendation engine that retrieves matching products via Meilisearch, then uses a custom prompt to generate personalized suggestions.
+
+## How it works
+
+1. **Query understanding**: Meilisearch automatically transforms the user's natural language question into optimized search parameters
+2. **Hybrid retrieval**: combines keyword and semantic search for better relevancy
+3. **Answer generation**: your chosen LLM generates a response using only the retrieved documents as context
+4. **Source attribution**: every response can include references to the source documents used to generate the answer
 
 ## Implementation strategies
 
-### Retrieval Augmented Generation (RAG)
+### Chat completions API (recommended)
 
-In the majority of cases, you should use the [`/chats` route](/reference/api/chats/update-chat) to build a Retrieval Augmented Generation (RAG) pipeline. RAGs excel when working with unstructured data and emphasise high-quality responses.
+In the majority of cases, you should use the [`/chats` route](/reference/api/chats/update-chat) to build conversational search. This API consolidates the entire RAG pipeline into a single endpoint, handling retrieval, context management, and generation.
 
-Meilisearch's chat completions API consolidates RAG creation into a single process:
-
-1. **Query understanding**: automatically transforms questions into search parameters
-2. **Hybrid retrieval**: combines keyword and semantic search for better relevancy
-3. **Answer generation**: uses your chosen LLM to generate responses
-4. **Context management**: maintains conversation history by constantly pushing the full conversation to the dedicated tool
-
-Follow the [chat completions tutorial](/capabilities/conversational_search/getting_started) for information on how to implement a RAG with Meilisearch.
+Follow the [getting started guide](/capabilities/conversational_search/getting_started/setup) to set up conversational search, then build a [chat interface](/capabilities/conversational_search/getting_started/chat) or generate [summarized answers](/capabilities/conversational_search/getting_started/one_shot_summarization).
 
 ### Model Context Protocol (MCP)
 

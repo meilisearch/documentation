@@ -1,0 +1,203 @@
+---
+title: Reduce hallucination
+description: Techniques to minimize LLM hallucination in conversational search, including few-shot prompting, system prompt engineering, and guardrail strategies.
+---
+
+Large language models can sometimes generate information that is not present in the source documents. This is known as hallucination. While it cannot be fully eliminated, several techniques significantly reduce its occurrence in Meilisearch's conversational search.
+
+## Understanding why hallucination happens
+
+When Meilisearch sends retrieved documents to the LLM, the model may:
+
+- Fill gaps in the provided context with its own training data
+- Misinterpret ambiguous information in the documents
+- Combine facts from different documents in incorrect ways
+- Generate plausible-sounding but fabricated details
+
+The key principle is: **the LLM should only use information from the documents Meilisearch retrieves, never its general knowledge**. All the techniques below reinforce this principle.
+
+## System prompt engineering
+
+The system prompt is your first and most important line of defense. A well-crafted system prompt sets clear boundaries for the model.
+
+### Be explicit about data boundaries
+
+<CodeGroup>
+
+```text System prompt
+You are a search assistant for our product documentation. You MUST
+follow these rules:
+
+1. Only answer using information from the search results provided
+2. If the search results do not contain enough information to answer
+   the question, respond with: "I could not find this information in
+   our documentation."
+3. Never use your general knowledge to fill in gaps
+4. Never invent product features, prices, or specifications
+```
+
+</CodeGroup>
+
+### Specify how to handle uncertainty
+
+<CodeGroup>
+
+```text System prompt
+When you are not confident in your answer:
+- Say "Based on the available documents, ..." to signal partial
+  information
+- List what you found and what is missing
+- Suggest the user refine their search query or contact support
+```
+
+</CodeGroup>
+
+### Require source attribution
+
+Forcing the model to cite its sources makes it harder to hallucinate, because fabricated information has no source to point to:
+
+<CodeGroup>
+
+```text System prompt
+For every claim in your answer, reference the specific document it
+comes from. Use the format [Source: document title]. If you cannot
+attribute a claim to a specific document, do not include it.
+```
+
+</CodeGroup>
+
+## Few-shot prompting
+
+Few-shot prompting provides the model with examples of correct behavior directly in the system prompt. This is one of the most effective techniques for reducing hallucination.
+
+### Show the model what good answers look like
+
+Include 2-3 examples in your system prompt that demonstrate the expected behavior:
+
+<CodeGroup>
+
+```text System prompt
+You are a product support assistant. Answer questions using only the
+search results provided. Here are examples of how to respond:
+
+Example 1:
+User: "What is the battery life of the X100?"
+Search results contain: "The X100 features a 4500mAh battery with
+up to 12 hours of screen-on time."
+Good answer: "The X100 has a 4500mAh battery that provides up to
+12 hours of screen-on time. [Source: X100 product page]"
+
+Example 2:
+User: "Does the X100 support wireless charging?"
+Search results contain: Information about X100 battery and display,
+but nothing about wireless charging.
+Good answer: "I could not find information about wireless charging
+for the X100 in our documentation. You may want to check the full
+specifications page or contact our support team."
+
+Example 3:
+User: "Compare the X100 and the Y200 battery life."
+Search results contain: "X100: 4500mAh, 12h screen-on time" and
+"Y200: 5000mAh battery"
+Good answer: "The X100 has a 4500mAh battery with up to 12 hours
+of screen-on time. The Y200 has a larger 5000mAh battery, but I
+could not find its screen-on time in the available documents.
+[Sources: X100 product page, Y200 product page]"
+
+Now answer the user's question following this same pattern.
+```
+
+</CodeGroup>
+
+### Show the model what to avoid
+
+Negative examples are equally powerful. Show the model what a hallucinated answer looks like:
+
+<CodeGroup>
+
+```text System prompt
+NEVER respond like this:
+User: "Does the X100 support 5G?"
+Search results: No mention of 5G.
+Bad answer: "Yes, the X100 supports 5G connectivity with sub-6GHz
+and mmWave bands."
+This is wrong because the answer fabricates information not in the
+search results.
+```
+
+</CodeGroup>
+
+## Guardrails in Meilisearch Cloud
+
+Meilisearch Cloud provides built-in guardrail options through the workspace settings. These guardrails work by injecting carefully crafted instructions into the system prompt to guide the model's behavior.
+
+<Note>
+Guardrails are prompt-based, meaning they shape the model's behavior through instructions rather than through hard technical constraints. They significantly improve response quality but should be combined with monitoring for production use.
+</Note>
+
+Configure guardrails through the [chat workspace settings](/capabilities/conversational_search/how_to/configure_chat_workspace) or the Meilisearch Cloud UI. Available guardrails include:
+
+- **Scope restriction**: limits the topics the agent discusses
+- **Data grounding**: forces the agent to only use retrieved documents
+- **Response formatting**: controls the length and structure of answers
+
+For detailed configuration examples, see the [Configure guardrails](/capabilities/conversational_search/how_to/configure_guardrails) guide.
+
+## Combine techniques for best results
+
+In production, use multiple techniques together. Here is an example of a system prompt that combines system prompt engineering, few-shot prompting, and source attribution:
+
+<CodeGroup>
+
+```text System prompt
+You are the documentation assistant for CloudDeploy. Answer questions
+using ONLY the search results provided by Meilisearch.
+
+Rules:
+- Never use information from your training data
+- Cite sources for every claim: [Source: document title]
+- If you cannot find the answer, say "I could not find this in our
+  documentation" and suggest contacting support@clouddeploy.com
+- Keep answers concise (under 150 words) unless more detail is
+  requested
+
+Example of a good answer:
+User: "How do I configure auto-scaling?"
+Search results: "Auto-scaling can be enabled in the dashboard under
+Settings > Scaling. Set min and max instances."
+Answer: "To configure auto-scaling, go to Settings > Scaling in the
+CloudDeploy dashboard. There you can set the minimum and maximum
+number of instances. [Source: Auto-scaling configuration guide]"
+
+Example of handling missing information:
+User: "What are the pricing tiers?"
+Search results: No pricing information found.
+Answer: "I could not find pricing information in our documentation.
+Please visit our pricing page or contact support@clouddeploy.com
+for current pricing details."
+```
+
+</CodeGroup>
+
+## Monitor and iterate
+
+No prompt configuration is perfect from the start. Build a feedback loop:
+
+1. **Log conversations**: track questions and answers to identify hallucination patterns
+2. **Test edge cases**: regularly test with questions that should be refused or answered with uncertainty
+3. **Refine prompts**: update your system prompt based on observed failures
+4. **Review source documents**: sometimes hallucination occurs because the indexed data itself is ambiguous or incomplete. Improving document quality is often the most effective fix
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Configure guardrails" href="/capabilities/conversational_search/how_to/configure_guardrails">
+    Set up scope restrictions and data grounding rules.
+  </Card>
+  <Card title="Display source documents" href="/capabilities/conversational_search/how_to/display_source_documents">
+    Let users verify AI responses by showing source documents.
+  </Card>
+  <Card title="Configure a chat workspace" href="/capabilities/conversational_search/how_to/configure_chat_workspace">
+    Customize your workspace settings and system prompt.
+  </Card>
+</CardGroup>

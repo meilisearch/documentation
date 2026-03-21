@@ -1,0 +1,153 @@
+---
+title: Generate summarized answers
+sidebarTitle: Summarized answers
+description: Generate single, concise AI answers from your search results without maintaining conversation history.
+---
+
+One-shot summarization uses the same `/chats` API as multi-turn chat, but with a different prompt strategy: instead of building a conversation, you send a single question and receive a summarized answer based on your indexed documents. This is useful for displaying AI-generated answers alongside traditional search results.
+
+Make sure you have completed the [setup guide](/capabilities/conversational_search/getting_started/setup) before continuing.
+
+## Configure your workspace prompt for summarization
+
+The key difference from a chat interface is the system prompt. For summarization, instruct the model to produce concise, self-contained answers and avoid follow-up questions:
+
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X PATCH 'MEILISEARCH_URL/chats/WORKSPACE_NAME/settings' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "prompts": {
+      "system": "You are a search assistant. When the user asks a question, provide a single concise answer based only on the search results. Keep your response to 2-3 sentences maximum. Do not ask follow-up questions. Do not use your general knowledge. If the search results do not contain enough information, say so briefly."
+    }
+  }'
+```
+
+</CodeGroup>
+
+Key differences from a multi-turn chat prompt:
+
+- The system prompt explicitly asks for **short, self-contained answers**
+- The model is told **not to ask follow-up questions**
+- Responses are limited to a few sentences
+
+You can use the same workspace you already created in the setup guide, or create a dedicated one for this use case. The rest of the workspace configuration (LLM provider, API key, etc.) stays the same.
+
+## Send a single question
+
+Send a request to the chat completions endpoint. The difference from multi-turn chat is that you only send one message and do not maintain conversation history:
+
+<CodeGroup>
+
+```bash cURL
+curl \
+  -N -X POST 'MEILISEARCH_URL/chats/WORKSPACE_NAME/chat/completions' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "model": "PROVIDER_MODEL_UID",
+    "messages": [
+      {
+        "role": "user",
+        "content": "What is the return policy for electronics?"
+      }
+    ],
+    "tools": [
+      {
+        "type": "function",
+        "function": {
+          "name": "_meiliSearchSources",
+          "description": "Provides sources of the search",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "call_id": { "type": "string", "description": "The call ID to track the original search" },
+              "documents": { "type": "object", "description": "The documents associated with the search" }
+            },
+            "required": ["call_id", "documents"],
+            "additionalProperties": false
+          },
+          "strict": true
+        }
+      }
+    ]
+  }'
+```
+
+```javascript OpenAI SDK
+import OpenAI from 'openai';
+
+const client = new OpenAI({
+  baseURL: 'MEILISEARCH_URL/chats/WORKSPACE_NAME',
+  apiKey: 'MEILISEARCH_KEY',
+});
+
+const stream = await client.chat.completions.create({
+  model: 'PROVIDER_MODEL_UID',
+  messages: [{ role: 'user', content: 'What is the return policy for electronics?' }],
+  stream: true,
+  tools: [
+    { type: 'function', function: { name: '_meiliSearchSources', description: 'Provides source documents' } },
+  ],
+});
+
+let answer = '';
+for await (const chunk of stream) {
+  const content = chunk.choices[0]?.delta?.content || '';
+  answer += content;
+  // Update the UI progressively as chunks arrive
+  updateSummaryBox(answer);
+}
+```
+
+```javascript Vercel AI SDK
+import { createOpenAI } from '@ai-sdk/openai';
+import { streamText, tool, jsonSchema } from 'ai';
+
+const meilisearch = createOpenAI({
+  baseURL: 'MEILISEARCH_URL/chats/WORKSPACE_NAME',
+  apiKey: 'MEILISEARCH_KEY',
+});
+
+const { textStream } = streamText({
+  model: meilisearch('PROVIDER_MODEL_UID'),
+  messages: [{ role: 'user', content: 'What is the return policy for electronics?' }],
+  tools: {
+    _meiliSearchSources: tool({
+      description: 'Provides source documents',
+      parameters: jsonSchema({ type: 'object', properties: { call_id: { type: 'string' }, documents: { type: 'object' } }, required: ['call_id', 'documents'] }),
+    }),
+  },
+});
+
+let answer = '';
+for await (const text of textStream) {
+  answer += text;
+  // Update the UI progressively as chunks arrive
+  updateSummaryBox(answer);
+}
+```
+
+</CodeGroup>
+
+Including the `_meiliSearchSources` tool lets you display the source documents alongside the summarized answer, so users can verify the information. In a real application, you would run this in parallel with a standard Meilisearch search request and display both results together.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Build a chat interface" href="/capabilities/conversational_search/getting_started/chat">
+    Create a multi-turn conversational interface with follow-up questions.
+  </Card>
+  <Card title="Display source documents" href="/capabilities/conversational_search/how_to/display_source_documents">
+    Show users which documents were used to generate the summary.
+  </Card>
+  <Card title="Configure guardrails" href="/capabilities/conversational_search/how_to/configure_guardrails">
+    Restrict AI responses to topics covered by your data.
+  </Card>
+  <Card title="Reduce hallucination" href="/capabilities/conversational_search/advanced/reduce_hallucination">
+    Learn techniques to improve accuracy of AI-generated answers.
+  </Card>
+</CardGroup>
