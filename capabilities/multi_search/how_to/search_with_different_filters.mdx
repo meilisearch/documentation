@@ -6,12 +6,6 @@ description: Apply different filters, sorting, and parameters to each index in a
 
 Each query in a [multi-search](/capabilities/multi_search/overview) request is independent. This means you can apply different [filters](/capabilities/filtering_sorting_faceting/getting_started), [sorting](/capabilities/filtering_sorting_faceting/how_to/sort_results) rules, and search parameters to each index in the same request. This is useful when your indexes have different structures or when each content type requires different filtering logic.
 
-## Requirements
-
-- A running Meilisearch project with multiple indexes
-- Filterable and sortable attributes configured on each index as needed
-- A command-line console
-
 ## Configure index settings
 
 Before filtering, make sure the relevant attributes are marked as filterable on each index. For example, configure three indexes with different filterable attributes:

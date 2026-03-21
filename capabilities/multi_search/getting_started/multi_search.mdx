@@ -8,11 +8,6 @@ import CodeSamplesMultiSearch1 from '/snippets/generated-code-samples/code_sampl
 
 Multi-index search lets you send several search queries in one HTTP request to the `/multi-search` endpoint. Each query targets a specific index and returns its own result list, making it ideal for search interfaces that display different content types in separate sections.
 
-## Requirements
-
-- A running Meilisearch project with at least two indexes
-- A command-line console
-
 ## Send a multi-search request
 
 The `/multi-search` endpoint accepts an object with a `queries` array. Each element in the array is an independent search query with its own `indexUid`, search terms, and parameters.

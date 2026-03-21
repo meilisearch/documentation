@@ -5,10 +5,6 @@ description: Highlight and crop matched terms in search results to help users qu
 
 Highlighting wraps matched query terms in HTML tags so your frontend can visually emphasize them. Cropping trims long text fields to show only the relevant portion around matched terms. Both features work through search parameters and return their results in the `_formatted` object of each hit.
 
-## Requirements
-
-- An existing Meilisearch index with documents
-
 ## Highlight specific attributes
 
 Use `attributesToHighlight` to specify which fields should have matched terms wrapped in tags:

@@ -9,10 +9,6 @@ import CodeSamplesResetSearchCutoff1 from '/snippets/generated-code-samples/code
 
 The search cutoff defines the maximum time in milliseconds that Meilisearch spends processing a single search query. When the cutoff is reached, Meilisearch stops searching and returns the best results found so far. This ensures predictable response times on large datasets where some queries might otherwise take too long.
 
-## Requirements
-
-- An existing Meilisearch index with documents
-
 ## How it works
 
 When a search query is processed, Meilisearch iterates through documents and [ranking rules](/capabilities/full_text_search/relevancy/ranking_rules) to find and rank the best matches. On very large datasets (millions of documents) or with broad queries, this process can take significant time.
