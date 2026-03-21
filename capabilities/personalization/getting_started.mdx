@@ -6,33 +6,11 @@ description: Search personalization uses context about the person performing the
 
 import CodeSamplesPersonalizationSearch1 from '/snippets/generated-code-samples/code_samples_personalization_search_1.mdx';
 
-<Note>
-Self-hosted Meilisearch users need a Cohere API key for search personalization.
-</Note>
+## Generating a user profile
 
-## Activate personalized search
+Search personalization requires a profile of the user performing the search. Meilisearch does not yet provide automated generation of user profiles.
 
-### Cloud users
-
-Open a support ticket requesting Meilisearch to activate search personalization for your project.
-
-### Self-hosted users
-
-Relaunch your instance using the search personalization instance option:
-
-<CodeGroup>
-
-```sh
-meilisearch --experimental-personalization-api-key="COHERE_API_KEY"
-```
-
-</CodeGroup>
-
-## Generating user context
-
-Search personalization requires a description about the user performing the search. Meilisearch does not currently provide automated generation of user context.
-
-You’ll need to **dynamically generate a plain-text user description** for each search request. This should summarize relevant traits, such as:
+You’ll need to **dynamically generate a user profile** for each search request. This should summarize relevant traits, such as:
 
 - Category preferences, like brand or size
 - Price sensitivity, like budget-conscious
@@ -45,7 +23,7 @@ The re-ranking model is optimized to favor positive signals. For best results, f
 
 Once search personalization is active and you have a pipeline in place to generate user profiles, you are ready to perform personalized searches.
 
-Submit a search query and include the `personalize` search parameter. `personalize` must be an object with a single field, `userContext`. Use the description you generated in the previous step as the value for `userContext`:
+Submit a search query and include the `personalize` search parameter. `personalize` must be an object with a single field, `userContext`. Use the profile you generated in the previous step as the value for `userContext`:
 
 <CodeSamplesPersonalizationSearch1 />
 

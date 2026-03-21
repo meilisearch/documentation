@@ -16,7 +16,9 @@ You can assign user IDs to search requests by including an `X-MS-USER-ID` header
 Replace `SEARCH_USER_ID` with any value that uniquely identifies that user. This may be an authenticated user's ID when running searches from your own back end, or a hash of the user's IP address.
 
 <Note>
-Assigning user IDs to search requests is optional. If a Meilisearch Cloud search request does not have an ID, Meilisearch will automatically generate one.
+Assigning user IDs to search requests is optional. If a search request does not include a user ID, Meilisearch automatically generates an anonymous identifier based on the user's browser information. This allows basic tracking across requests while preserving user anonymity.
+
+However, providing your own user IDs is recommended for more accurate analytics. Auto-generated identifiers may not reliably track the same user across different sessions or devices, which can inflate your total user count and reduce the accuracy of per-user metrics.
 </Note>
 
 ## Assign user IDs to analytics events
