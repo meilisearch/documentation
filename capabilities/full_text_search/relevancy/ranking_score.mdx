@@ -12,7 +12,7 @@ To include `_rankingScore` in search results, set `showRankingScore` to `true` i
 
 ```sh
 curl \
-  -X POST 'http://localhost:7700/indexes/movies/search' \
+  -X POST 'MEILISEARCH_URL/indexes/movies/search' \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "q": "batman dark knight",
@@ -46,7 +46,7 @@ For a deeper understanding of why a document received a particular score, set `s
 
 ```sh
 curl \
-  -X POST 'http://localhost:7700/indexes/movies/search' \
+  -X POST 'MEILISEARCH_URL/indexes/movies/search' \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "q": "batman dark knight",
@@ -102,6 +102,29 @@ The table below details all the index settings that can influence the `_rankingS
 | `stopWords`            | Always                                               | Stop words influence the `words` ranking rule, which is almost always used                                                                                                   |
 | `synonyms`             | Always                                               | Synonyms influence the `words` ranking rule, which is almost always used                                                                                                     |
 | `typoTolerance`        | The `typo` ranking rule is used                      | Used to compute the maximum number of typos for a query                                                                                                                      |
+
+## Example: reading ranking score details
+
+Consider a recipe search with two documents matching "chicken curry", sorted by `prep_time_minutes:asc`:
+
+```json
+[
+  { "id": 1, "title": "Easy Chicken Curry", "prep_time_minutes": 20 },
+  { "id": 2, "title": "Chicken Stew with Curry Spices and Vegetables", "prep_time_minutes": 15 }
+]
+```
+
+With Sort placed **after** Proximity in ranking rules (`["words", "typo", "proximity", "sort", ...]`), walk through the `_rankingScoreDetails` in order:
+
+| Step | Rule | Doc 1 | Doc 2 | Outcome |
+|------|------|-------|-------|---------|
+| 0 | Words | 2/2, score `1.0` | 2/2, score `1.0` | Tie |
+| 1 | Typo | 0 typos, score `1.0` | 0 typos, score `1.0` | Tie |
+| 2 | Proximity | score `1.0` | score `0.5` | Doc 1 wins |
+
+Proximity broke the tie: "chicken" and "curry" sit next to each other in Doc 1's title (score `1.0`), but are separated by three words in Doc 2 (score `0.5`). Sort never got a chance to act, so even though Doc 2 has a faster prep time, it ranks second.
+
+Notice that Sort shows a `value` (not a `score`) because it does not measure relevance. This is why a document with a higher `_rankingScore` can still rank lower when Sort takes priority. See [ordering ranking rules](/capabilities/full_text_search/relevancy/ranking_rules#where-to-place-sort) for how Sort placement changes outcomes.
 
 ## Use cases
 
