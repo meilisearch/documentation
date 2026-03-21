@@ -116,7 +116,7 @@ Meilisearch automatically uses the search embedder for the query and the indexin
 
 **Matching dimensions**: both the search embedder and the indexing embedder must produce vectors with the same number of dimensions. If they differ, Meilisearch returns an error when you try to configure the embedder.
 
-**Compatible models**: for coherent search results, both embedders should use the same underlying model or models trained to produce compatible vector spaces. Using unrelated models (for example, one trained on English text and another on multilingual data) will produce poor search quality because the vector spaces will not align.
+**Compatible models**: for coherent search results, both embedders must use the exact same model with the same version and configuration. For example, you can use BGE-M3 hosted locally for indexing and the same BGE-M3 model on Cloudflare Workers AI for search, as long as both use the same model revision. Using different models (for example, an OpenAI model for indexing and a Mistral model for search) will produce poor search quality because the vector spaces will not align, even if dimensions match.
 
 **Experimental status**: this feature requires the `compositeEmbedders` experimental flag. The API surface may change in future versions. Monitor the [changelog](/changelog) for updates.
 

@@ -52,6 +52,8 @@ Here is a more comprehensive list you can use as a starting point for English-la
 
 Adapt this list to your dataset and language. For example, French datasets might include words like "le", "la", "les", "de", "du", "des".
 
+If your application serves multiple languages, the recommended approach is to create a separate index per language and configure language-specific stop words for each index. This avoids situations where a stop word in one language is a meaningful term in another (for example, "die" is a stop word in German but a meaningful English word).
+
 ### Important considerations
 
 - **Stop words are index-specific.** Each index has its own stop word list. If you have multiple indexes with different languages, configure appropriate stop words for each one.

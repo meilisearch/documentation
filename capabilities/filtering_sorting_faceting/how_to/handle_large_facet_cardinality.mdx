@@ -1,0 +1,205 @@
+---
+title: Handle large facet cardinality
+description: Manage facet attributes with thousands of unique values using facet search, pagination strategies, and performance optimization.
+---
+
+When a facet attribute has thousands of unique values (for example, a `brand` attribute with 5,000 brands or a `city` attribute with 10,000 cities), displaying all values at once becomes impractical. Meilisearch provides tools to handle this efficiently.
+
+## Understand the challenge
+
+By default, Meilisearch returns at most 100 facet values per attribute in the `facetDistribution` response. This limit is configurable through the [`maxValuesPerFacet`](/reference/api/settings/get-faceting) setting:
+
+<CodeGroup>
+
+```bash
+curl \
+  -X PATCH 'MEILISEARCH_URL/indexes/products/settings/faceting' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+  --data-binary '{
+    "maxValuesPerFacet": 200
+  }'
+```
+
+</CodeGroup>
+
+Increasing `maxValuesPerFacet` returns more values but slows down search responses and increases payload size. For high-cardinality attributes, a better approach is to let users search within facet values.
+
+## Search within facet values
+
+The [facet search endpoint](/reference/api/facet-search/search-in-facets) lets users type to find specific facet values. This is the primary tool for handling high-cardinality facets.
+
+<CodeGroup>
+
+```bash
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/products/facet-search' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+  --data-binary '{
+    "facetName": "brand",
+    "facetQuery": "ni"
+  }'
+```
+
+</CodeGroup>
+
+The response returns matching facet values with their document counts:
+
+<CodeGroup>
+
+```json
+{
+  "facetHits": [
+    { "value": "Nike", "count": 342 },
+    { "value": "Nikon", "count": 28 },
+    { "value": "Nintendo", "count": 15 },
+    { "value": "Ninja", "count": 7 }
+  ],
+  "facetQuery": "ni",
+  "processingTimeMs": 1
+}
+```
+
+</CodeGroup>
+
+## Combine facet search with a query
+
+Facet search results are context-aware. You can pass a `q` parameter to narrow facet values to those relevant to the user's search:
+
+<CodeGroup>
+
+```bash
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/products/facet-search' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+  --data-binary '{
+    "facetName": "brand",
+    "facetQuery": "ni",
+    "q": "running shoes"
+  }'
+```
+
+</CodeGroup>
+
+This returns only brands starting with "ni" that have running shoes. Without `q`, you might get "Nikon" and "Nintendo" which sell cameras and consoles, not shoes.
+
+You can also apply filters to further restrict facet search results:
+
+<CodeGroup>
+
+```bash
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/products/facet-search' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+  --data-binary '{
+    "facetName": "brand",
+    "facetQuery": "ni",
+    "q": "running shoes",
+    "filter": "price < 200"
+  }'
+```
+
+</CodeGroup>
+
+## Build a searchable facet UI
+
+For high-cardinality facets, replace the traditional checkbox list with a search input. The typical pattern is:
+
+1. Show the top 5-10 facet values from `facetDistribution` (most common values)
+2. Add a search input below the initial values
+3. When the user types, call the facet search endpoint
+4. Display matched facet values as selectable options
+
+<CodeGroup>
+
+```javascript
+// Show top facet values from the main search response
+const topBrands = searchResponse.facetDistribution.brand;
+
+// When user types in the facet search input
+async function searchBrands(query) {
+  const response = await fetch(
+    `${MEILISEARCH_URL}/indexes/products/facet-search`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${API_KEY}`
+      },
+      body: JSON.stringify({
+        facetName: 'brand',
+        facetQuery: query,
+        q: currentSearchQuery // keep context with the main search
+      })
+    }
+  );
+  const data = await response.json();
+  return data.facetHits; // [{ value: "Nike", count: 42 }, ...]
+}
+```
+
+</CodeGroup>
+
+## Performance considerations
+
+High-cardinality facets affect indexing time and storage. Here are strategies to keep performance in check:
+
+### Keep maxValuesPerFacet reasonable
+
+Avoid setting `maxValuesPerFacet` to very high values. Instead, rely on facet search for discovery. A value of 100 (the default) is sufficient for most UIs when combined with facet search.
+
+### Disable facet search for low-cardinality attributes
+
+If some facets have few values (like `color` with 10 options) and others have many (like `brand` with 5,000), you only need facet search for the high-cardinality ones. You can disable facet search globally if no attribute needs it:
+
+<CodeGroup>
+
+```bash
+curl \
+  -X PUT 'MEILISEARCH_URL/indexes/products/settings/facet-search' \
+  -H 'Content-Type: application/json' \
+  --data-binary 'false'
+```
+
+</CodeGroup>
+
+Disabling facet search reduces indexing time, as Meilisearch skips building the data structures needed for searching within facet values.
+
+### Sort facet values by count
+
+For high-cardinality attributes, sorting by count (descending) ensures the most relevant values appear first:
+
+<CodeGroup>
+
+```bash
+curl \
+  -X PATCH 'MEILISEARCH_URL/indexes/products/settings/faceting' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+  --data-binary '{
+    "sortFacetValuesBy": {
+      "brand": "count"
+    }
+  }'
+```
+
+</CodeGroup>
+
+With this setting, `facetDistribution` returns brands ordered by how many matching documents each brand has, making the default view more useful.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Search with facets" href="/capabilities/filtering_sorting_faceting/how_to/filter_with_facets">
+    Learn the basics of faceted search
+  </Card>
+  <Card title="Build faceted navigation" href="/capabilities/filtering_sorting_faceting/how_to/build_faceted_navigation">
+    Build a complete faceted search UI
+  </Card>
+  <Card title="Facet search API reference" href="/reference/api/facet-search/search-in-facets">
+    Full API reference for the facet search endpoint
+  </Card>
+</CardGroup>

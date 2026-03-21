@@ -23,7 +23,7 @@ However, providing your own user IDs is recommended for more accurate analytics.
 
 ## Assign user IDs to analytics events
 
-You can assign a user ID to analytics `/events` in two ways: HTTP headers or including it in the event payload.
+You can assign a user ID to analytics `/events` in two ways: HTTP headers or including it in the event payload. When possible, prefer including the `userId` field directly in the event payload. `X-MS-USER-ID` and other `X-` prefixed headers may be stripped by certain proxies, CDNs, or load balancers.
 
 If using HTTP headers, include an `X-MS-USER-ID` header with your query:
 

@@ -57,6 +57,10 @@ curl \
 
 </CodeGroup>
 
+## Disk space requirements
+
+Compaction requires temporary disk space roughly equal to the size of the index being compacted. Ensure your machine has sufficient free space before starting. If the disk fills up during compaction, the task fails and the index remains in its pre-compaction state.
+
 ## Search availability during compaction
 
 Compaction does not block search. Your index remains fully searchable while the operation runs. New [indexing](/capabilities/indexing/overview) tasks will be queued and processed after compaction completes.

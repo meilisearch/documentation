@@ -138,8 +138,61 @@ You can also use an image to search for other, similar images:
 <CodeSamplesImageSearchMultimodalSearchImage1 />
 
 <Tip>
-In most cases you will need a GUI interface that allows users to submit their images and converts these images to Base64 format. Creating this is outside the scope of this guide.
+Image-to-image search requires converting the user's image to Base64 format before sending it to Meilisearch. Your application must handle this conversion client-side.
 </Tip>
+
+### Convert images to Base64 on the client
+
+To search with a user-submitted image, read it as a data URL and extract the MIME type and Base64 data:
+
+<CodeGroup>
+
+```javascript
+async function imageToSearchPayload(file) {
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      // reader.result is "data:<mime>;base64,<data>"
+      const [header, data] = reader.result.split(',');
+      const mime = header.match(/data:(.*);base64/)[1];
+      resolve({ mime, data });
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+// Usage with a file input
+const file = document.getElementById('image-input').files[0];
+const { mime, data } = await imageToSearchPayload(file);
+
+const response = await fetch(
+  `${MEILISEARCH_URL}/indexes/images/search`,
+  {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${API_KEY}`
+    },
+    body: JSON.stringify({
+      hybrid: {
+        semanticRatio: 1.0,
+        embedder: 'multimodal'
+      },
+      media: {
+        image: { mime, data }
+      }
+    })
+  }
+);
+```
+
+</CodeGroup>
+
+The `media.image.mime` and `media.image.data` fields in the search request correspond to the `{{media.image.mime}}` and `{{media.image.data}}` template variables used in the `searchFragments` configuration above.
+
+<Note>
+Large images increase request payload size and embedding latency. Consider resizing images to a maximum of 1024x1024 pixels before encoding. The embedding provider handles any further resizing internally.
+</Note>
 
 ## Conclusion
 

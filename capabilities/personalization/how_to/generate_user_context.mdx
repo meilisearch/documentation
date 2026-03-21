@@ -49,7 +49,20 @@ Combine multiple signals into a single profile string. The re-ranking model work
 
 **Less effective**: `"Does not like expensive items, never buys imported goods."`
 
-Keep the context string concise (1 to 3 sentences). Include the most relevant and recent signals. Overly long descriptions do not improve results and may dilute the most important signals.
+Keep the context string concise (1 to 3 sentences). Include the most relevant and recent signals. There is no hard maximum length, but longer context strings increase latency and cost without improving results. Overly long descriptions dilute the most important signals.
+
+## When to regenerate context
+
+You build and send the user context string yourself, which gives you full flexibility over when to update it. The context is not stored by Meilisearch. It is sent as a parameter with each search request, so you can change it at any time.
+
+Common strategies:
+
+- **Per-session**: regenerate the context string when a user starts a new session. This balances freshness with compute cost.
+- **After key actions**: update the context immediately after a purchase, a category switch, or an explicit preference change. This ensures the next search reflects the latest intent.
+- **Per-request**: for maximum personalization, recompute the context before every search. This is useful if the context changes rapidly (for example, a user browsing multiple categories in quick succession).
+- **Asynchronous batch**: precompute context strings for all users on a schedule (daily, hourly) and cache them. This works well for large user bases where per-request generation would be too expensive.
+
+Since you control the context string, you can mix strategies. For example, use a cached daily profile as a baseline and enrich it with the current session's browsing data before each request.
 
 ## Send context with a search request
 
