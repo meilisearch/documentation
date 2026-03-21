@@ -8,11 +8,6 @@ import CodeSamplesFederatedSearchMultiSearchWeight1 from '/snippets/generated-co
 
 When using [federated search](/capabilities/multi_search/getting_started/federated_search), all results from different indexes are merged into a single ranked list. By default, results from every index carry the same weight. You can change this by assigning different weights to each query, making results from one index rank higher than others.
 
-## Requirements
-
-- A running Meilisearch project with at least two indexes
-- A command-line console
-
 ## How weights work
 
 Each query in a federated [multi-search](/capabilities/multi_search/overview) request can include a `federationOptions` object with a `weight` property. The weight is a floating-point number that multiplies the [ranking rules](/capabilities/full_text_search/relevancy/ranking_rules) relevancy score of results from that query:

@@ -5,11 +5,6 @@ description: Control which filter operations are enabled for each attribute to o
 
 By default, adding an attribute to `filterableAttributes` enables every filter feature for that attribute: equality checks, comparison operators, and facet search. Granular filterable attributes let you enable only the features each attribute actually needs, reducing [indexing](/capabilities/indexing/overview) time and memory usage.
 
-## Requirements
-
-- A running Meilisearch project (v1.14 or later)
-- A command-line terminal
-
 ## The default approach
 
 The standard way to configure filterable attributes is a flat array:

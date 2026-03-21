@@ -9,10 +9,6 @@ import CodeSamplesResetStopWords1 from '/snippets/generated-code-samples/code_sa
 
 Stop words are common terms that appear in nearly every document and add little value to search relevancy. Words like "the", "is", "at", and "of" are typical examples. Configuring stop words tells Meilisearch to ignore these terms during [indexing](/capabilities/indexing/overview) and searching, which improves both query speed and result quality.
 
-## Requirements
-
-- An existing Meilisearch index with documents
-
 ## Why configure stop words
 
 Without stop words, a search for `the lord of the rings` treats every word equally. The words "the" and "of" match nearly every document, diluting the relevancy of the more meaningful terms "lord" and "rings". By marking "the" and "of" as stop words, Meilisearch focuses on the terms that actually matter.

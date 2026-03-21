@@ -9,11 +9,6 @@ import CodeSamplesDeleteOneDocument1 from '/snippets/generated-code-samples/code
 
 Meilisearch provides three document operations: add or replace, add or update, and delete. This guide explains the difference between each operation and when to use them.
 
-## Requirements
-
-- A running Meilisearch project
-- An existing index (or Meilisearch will create one automatically)
-
 ## Add or replace documents
 
 Use `POST /indexes/{index_uid}/documents` to add new documents or replace existing ones. If a document with the same [primary key](/resources/internals/primary_key) already exists, Meilisearch **replaces the entire document** with the new version.
