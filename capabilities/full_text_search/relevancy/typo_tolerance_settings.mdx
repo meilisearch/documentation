@@ -1,7 +1,7 @@
 ---
-title: Typo tolerance settings
-sidebarTitle: Typo tolerance settings
-description: This article describes each of the typo tolerance settings.
+title: Typo tolerance
+sidebarTitle: Typo tolerance
+description: Configure typo tolerance to control how Meilisearch handles spelling mistakes in search queries.
 ---
 
 import CodeSamplesTypoToleranceGuide1 from '/snippets/generated-code-samples/code_samples_typo_tolerance_guide_1.mdx';
@@ -47,7 +47,7 @@ Meilisearch considers a typo on a query's first character as two typos.
 **Concatenation**  
 When considering possible candidates for typo tolerance, Meilisearch will concatenate multiple search terms separated by a [space separator](/resources/internals/datatypes#string). This is treated as one typo. For example, a search for `any way` would match documents containing `anyway`.
 
-For more about typo calculations, [see below](/capabilities/full_text_search/relevancy/typo_tolerance_calculations).
+For more about typo calculations, [see below](#how-typo-tolerance-works).
 </Tip>
 
 ## `disableOnWords`
@@ -83,3 +83,36 @@ curl \
 By default, typo tolerance on numerical values is turned on. This may lead to false positives, such as a search for `2024` matching documents containing `2025` or `2004`.
 
 When `disableOnNumbers` is set to `true`, queries with numbers only return exact matches. Besides reducing the number of false positives, disabling typo tolerance on numbers may also improve indexing performance.
+
+## How typo tolerance works
+
+Meilisearch uses a prefix [Levenshtein algorithm](https://en.wikipedia.org/wiki/Levenshtein_distance) to determine if a word in a document could be a possible match for a query term.
+
+The number of allowed typos is roughly equivalent to Levenshtein distance. The Levenshtein distance between two words _M_ and _P_ can be thought of as "the minimum cost of transforming _M_ into _P_" by performing the following elementary operations on _M_:
+
+- Substitution of a character (for example, `kitten` → `sitten`)
+- Insertion of a character (for example, `siting` → `sitting`)
+- Deletion of a character (for example, `saturday` → `satuday`)
+
+By default, Meilisearch uses the following rules for matching documents. These rules apply **per word**, not for the whole query string:
+
+- If the query word is between `1` and `4` characters, **no typo** is allowed. Only documents containing words that **start with** or are of the **same length** as the query word are considered
+- If the query word is between `5` and `8` characters, **one typo** is allowed
+- If the query word contains more than `8` characters, a maximum of **two typos** is allowed
+
+For example, `saturday` (8 characters) uses the second rule and matches with **one typo**:
+
+- `saturday` is accepted (exact match)
+- `satuday` is accepted (one typo)
+- `sutuday` is not accepted (two typos)
+- `caturday` is not accepted (a typo on the first letter counts as two typos)
+
+## Impact on the `typo` ranking rule
+
+The [`typo` ranking rule](/capabilities/full_text_search/relevancy/ranking_rules#2-typo) sorts search results by increasing number of typos on matched query words. Documents with 0 typos rank highest, followed by those with 1 and then 2 typos.
+
+The presence or absence of the `typo` ranking rule has no impact on the typo tolerance setting. However, **disabling typo tolerance effectively also disables the `typo` ranking rule**, because all returned documents will contain 0 typos.
+
+- Typo tolerance affects how lenient Meilisearch is when matching documents
+- The `typo` ranking rule affects how Meilisearch sorts its results
+- Disabling typo tolerance also disables the `typo` ranking rule
