@@ -236,7 +236,9 @@
                       "capabilities/full_text_search/how_to/configure_prefix_search",
                       "capabilities/full_text_search/how_to/highlight_search_results",
                       "capabilities/full_text_search/how_to/use_matching_strategy",
-                      "capabilities/full_text_search/how_to/configure_search_cutoff"
+                      "capabilities/full_text_search/how_to/configure_search_cutoff",
+                      "capabilities/full_text_search/how_to/configure_displayed_attributes",
+                      "capabilities/full_text_search/how_to/configure_distinct_attribute"
                     ]
                   },
                   {
@@ -256,8 +258,6 @@
                       "capabilities/full_text_search/relevancy/ranking_score",
                       "capabilities/full_text_search/relevancy/attribute_ranking_order",
                       "capabilities/full_text_search/relevancy/typo_tolerance_settings",
-                      "capabilities/full_text_search/relevancy/distinct_attribute",
-                      "capabilities/full_text_search/relevancy/displayed_searchable_attributes",
                       "capabilities/full_text_search/relevancy/synonyms"
                     ]
                   }
@@ -1620,7 +1620,7 @@
     },
     {
       "source": "/learn/configuration/displayed_searchable_attributes",
-      "destination": "/capabilities/full_text_search/relevancy/displayed_searchable_attributes"
+      "destination": "/capabilities/full_text_search/how_to/configure_displayed_attributes"
     },
     {
       "source": "/learn/ai_powered_search/vector_search",
@@ -1916,11 +1916,19 @@
     },
     {
       "source": "/learn/relevancy/distinct_attribute",
-      "destination": "/capabilities/full_text_search/relevancy/distinct_attribute"
+      "destination": "/capabilities/full_text_search/how_to/configure_distinct_attribute"
+    },
+    {
+      "source": "/capabilities/full_text_search/relevancy/distinct_attribute",
+      "destination": "/capabilities/full_text_search/how_to/configure_distinct_attribute"
+    },
+    {
+      "source": "/capabilities/full_text_search/relevancy/displayed_searchable_attributes",
+      "destination": "/capabilities/full_text_search/how_to/configure_displayed_attributes"
     },
     {
       "source": "/learn/relevancy/displayed_searchable_attributes",
-      "destination": "/capabilities/full_text_search/relevancy/displayed_searchable_attributes"
+      "destination": "/capabilities/full_text_search/how_to/configure_displayed_attributes"
     },
     {
       "source": "/learn/relevancy/synonyms",
