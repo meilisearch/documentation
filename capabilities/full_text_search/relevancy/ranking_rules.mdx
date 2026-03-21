@@ -82,6 +82,53 @@ This rule evaluates only the position of matched words within attributes and doe
 
 Results are sorted by **the similarity of the matched words with the query words**. Returns documents that contain exactly the same terms as the ones queried first.
 
+## Ordering ranking rules
+
+The order of ranking rules determines which criteria take priority. Meilisearch applies rules sequentially using a bucket sort: the first rule sorts all results into groups, and each subsequent rule acts as a tiebreaker within those groups. Once a rule separates two documents, later rules have no effect on their relative order.
+
+### Group 1: broad matching (Words, Typo, Proximity)
+
+These three rules cast a wide net and return lots of results. Keep them first to ensure Meilisearch starts with a broad pool of relevant documents before narrowing down.
+
+- **Words**: how many of your search terms appear in the document
+- **Typo**: whether matches are exact words or typo-tolerant matches
+- **Proximity**: how close together your search terms appear
+
+### Group 2: fine-tuning (Attribute Rank, Word Position, Exactness)
+
+These rules return fewer, more precise results. Place them after Group 1 to refine the large result set.
+
+- **Attribute Rank**: matches in more important fields rank higher
+- **Word Position**: matches near the beginning of a field rank higher
+- **Exactness**: documents that match the whole query exactly rank higher
+
+### Where to place Sort
+
+Sort only activates when you include the `sort` parameter in your search query. Without it, the Sort rule has no effect.
+
+Place Sort **after Group 1 rules and before Group 2 rules** for the best balance of relevancy and sorting. This way, Meilisearch finds relevant results first, then uses your sort field to order documents with similar text relevance.
+
+If sorting matters more than text relevance for your use case (for example, strict price ordering in ecommerce), move Sort higher. If Sort seems to have no effect, try moving it up one position at a time.
+
+### Custom ranking rules as tiebreakers
+
+Place custom ranking rules (`popularity:desc`, `release_date:desc`, etc.) at the end of your sequence. They work best for adding business logic after text relevance has been established.
+
+### Recommended order
+
+```json
+[
+  "words",
+  "typo",
+  "proximity",
+  "sort",
+  "attributeRank",
+  "wordPosition",
+  "exactness",
+  "popularity:desc"
+]
+```
+
 ## Examples
 
 <Tabs>

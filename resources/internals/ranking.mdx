@@ -160,7 +160,7 @@ Meilisearch's approach is optimized for application and site search. There are s
 | :--- | :--- | :--- |
 | **Log analytics** | Better — term frequency matters for finding error patterns | Not designed for this use case |
 | **Academic paper search** | Better — TF-IDF identifies topically relevant papers | Optimized for short, user-facing queries |
-| **Documents > 10KB** | Handles naturally | Best with documents [split into smaller chunks](/guides/improve_relevancy_large_documents) |
+| **Documents > 10KB** | Handles naturally | Best with documents [split into smaller chunks](/capabilities/full_text_search/relevancy/relevancy#chunking-large-documents) |
 | **Custom scoring formulas** | Fully customizable via script scores | Fixed rule set with configurable order |
 | **Billions of documents** | Horizontally scalable | Designed for millions of documents per index |
 
@@ -200,4 +200,4 @@ The `semanticRatio` controls the blend: `0.0` uses only the multi-criteria ranki
 - [Bucket sort](/resources/internals/bucket_sort) — How the bucket sort algorithm works
 - [Ranking score](/capabilities/full_text_search/relevancy/ranking_score) — Understanding the 0.0–1.0 ranking score
 - [Custom ranking rules](/capabilities/full_text_search/relevancy/custom_ranking_rules) — Add business logic to ranking
-- [Ordering ranking rules](/guides/relevancy/ordering_ranking_rules) — Best practices for rule ordering
+- [Ordering ranking rules](/capabilities/full_text_search/relevancy/ranking_rules#ordering-ranking-rules) — Best practices for rule ordering

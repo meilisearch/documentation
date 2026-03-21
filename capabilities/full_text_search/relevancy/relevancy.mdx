@@ -24,6 +24,14 @@ Meilisearch uses a [bucket sort](https://en.wikipedia.org/wiki/Bucket_sort) pipe
 
 By default, Meilisearch ships with built-in ranking rules that handle word matching, typo tolerance, proximity, attribute weight, exactness, and more. You can also insert custom ranking rules at any position in the pipeline to sort by numeric or date fields specific to your dataset (for example, sorting by a popularity score or a release date).
 
+## Chunking large documents
+
+Meilisearch is optimized for paragraph-sized chunks of text. Documents with very large text fields (multiple pages of content) may lead to reduced search relevancy because ranking rules like proximity and word position work best on shorter text.
+
+If your dataset contains large documents, split them into smaller chunks (one per paragraph or section) before indexing. Each chunk becomes its own document with a shared identifier linking it back to the original. Use Meilisearch's [distinct attribute](/capabilities/full_text_search/how_to/configure_distinct_attribute) to prevent duplicates in search results.
+
+For example, a book with 50 paragraphs becomes 50 documents, each containing one paragraph plus the book's metadata (title, author). The distinct attribute ensures only the best-matching paragraph is returned per book.
+
 ## Explore relevancy features
 
 <CardGroup cols={2}>
