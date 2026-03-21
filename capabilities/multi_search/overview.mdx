@@ -19,10 +19,6 @@ Send an array of search queries to the `/multi-search` endpoint. Each query can 
 
 In federated mode, Meilisearch merges and re-ranks results from all indexes using configurable weights, giving you control over which index's results appear higher.
 
-## Distributed search with useNetwork
-
-If your deployment spans multiple Meilisearch instances, you can add `"useNetwork": true` to any search query. Meilisearch will automatically forward the query to all configured remotes and merge the results. This works with both regular search and multi-search (federated mode). See [Search across a network of instances](/capabilities/multi_search/how_to/use_network_search) for setup instructions and examples.
-
 ## Next steps
 
 <CardGroup cols={2}>
@@ -38,7 +34,7 @@ If your deployment spans multiple Meilisearch instances, you can add `"useNetwor
   <Card title="Unified search bar" href="/capabilities/multi_search/how_to/build_unified_search_bar">
     Build a single search bar across content types
   </Card>
-  <Card title="Network search" href="/capabilities/multi_search/how_to/use_network_search">
-    Search across multiple Meilisearch instances with useNetwork
+  <Card title="Semantic multi-search" href="/capabilities/multi_search/how_to/combine_text_and_image_search">
+    Combine text and image semantic search across indexes
   </Card>
 </CardGroup>

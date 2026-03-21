@@ -382,7 +382,7 @@
                       "capabilities/multi_search/how_to/boost_results_across_indexes",
                       "capabilities/multi_search/how_to/search_with_different_filters",
                       "capabilities/multi_search/how_to/build_unified_search_bar",
-                      "capabilities/multi_search/how_to/use_network_search"
+                      "capabilities/multi_search/how_to/combine_text_and_image_search"
                     ]
                   }
                 ]
@@ -1097,6 +1097,10 @@
     }
   },
   "redirects": [
+    {
+      "source": "/capabilities/multi_search/how_to/use_network_search",
+      "destination": "/resources/self_hosting/sharding"
+    },
     {
       "source": "/resources/self_hosting/getting_started",
       "destination": "/resources/self_hosting/getting_started/quick_start"

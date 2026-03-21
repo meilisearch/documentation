@@ -149,7 +149,7 @@ curl \
   }'
 ```
 
-Meilisearch queries all remotes, gathers results from each shard, and merges them into a single ranked response. For more details and advanced examples, see [Search across a network of instances](/capabilities/multi_search/how_to/use_network_search).
+Meilisearch queries all remotes, gathers results from each shard, and merges them into a single ranked response. The response includes `_federation` metadata showing which remote each result came from.
 
 ## Filter by shard
 
@@ -195,8 +195,8 @@ The network feature has evolved across releases. If you are upgrading from an ea
 ## Next steps
 
 <CardGroup cols={2}>
-  <Card title="Search across a network" href="/capabilities/multi_search/how_to/use_network_search">
-    Use the useNetwork parameter to search all instances and merge results.
+  <Card title="Federated search" href="/capabilities/multi_search/getting_started/federated_search">
+    Learn how to merge results from multiple indexes into a single list.
   </Card>
   <Card title="Deployment overview" href="/resources/self_hosting/deployment/overview">
     Deploy Meilisearch to production on various cloud providers.
