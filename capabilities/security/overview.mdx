@@ -26,21 +26,18 @@ Meilisearch uses a layered key hierarchy to manage access:
 
 | Level | Key type | Purpose |
 |-------|----------|---------|
-| 1 | **Master key** | Set at launch. Grants full access to every API route. Never expose to end users or frontend code. |
-| 2 | **Admin API key** | Generated from the master key. Allows creating and managing indexes, settings, and other API keys. Used by your backend. |
-| 3 | **Search API key** | Generated from the master key. Permits only search operations. Safe to use in frontend applications when data is not multi-tenant. |
-| 4 | **Tenant token** | Generated in your backend from an API key. Embeds search rules (filters) that automatically restrict results per user. Short-lived and scoped. |
+| 1 | **Admin API key** | Allows creating and managing indexes, settings, and other API keys. Used by your backend. |
+| 2 | **Search API key** | Permits only search operations. Safe to use in frontend applications when data is not multi-tenant. |
+| 3 | **Tenant token** | Generated in your backend from an API key. Embeds search rules (filters) that automatically restrict results per user. Short-lived and scoped. |
 
 In a typical multi-tenant setup, your backend holds the admin or search API key, generates tenant tokens on the fly for each user session, and sends those tokens to the frontend. The frontend then uses the tenant token to search directly against Meilisearch, and the embedded filters ensure each user only sees their own data.
 
 ## How it works
 
-1. You start Meilisearch with a **master key**, which generates a default admin key and search key.
+1. Meilisearch provides a default **admin API key** and **search API key**.
 2. Your backend uses the admin key to manage indexes and settings.
 3. When a user authenticates in your application, your backend generates a **tenant token** from the search key, embedding user-specific filter rules (for example, `tenant_id = 42`).
 4. The frontend uses this tenant token to query Meilisearch directly. Every search automatically applies the embedded filters, so users never see data belonging to other tenants.
-
-For enterprise [teams](/capabilities/teams/overview), Meilisearch Cloud also supports **SSO (Single Sign-On)** integration, allowing team members to authenticate through your identity provider.
 
 ## Next steps
 

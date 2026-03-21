@@ -35,7 +35,7 @@ Set the `searchableAttributes` list to control which fields are searchable and t
 This configuration makes `title` the most important searchable field, followed by `overview`, then `genres`. Fields not in the list (such as `id` and `release_date`) are no longer searchable.
 
 <Warning>
-Updating `searchableAttributes` triggers a re-indexing of all documents in the index. This is an [asynchronous](/capabilities/indexing/advanced/async_operations) operation. Use the [task API](/reference/api/tasks/get-all-tasks) to monitor progress.
+Updating `searchableAttributes` triggers a re-indexing of all documents in the index. This is an [asynchronous](/capabilities/indexing/tasks_and_batches/async_operations) operation. Use the [task API](/reference/api/tasks/get-all-tasks) to monitor progress.
 </Warning>
 
 <Warning>
