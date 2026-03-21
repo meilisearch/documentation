@@ -406,7 +406,9 @@
                   {
                     "group": "Advanced",
                     "pages": [
-                      "capabilities/filtering_sorting_faceting/advanced/filter_expression_syntax"
+                      "capabilities/filtering_sorting_faceting/advanced/filter_expression_syntax",
+                      "capabilities/filtering_sorting_faceting/advanced/optimize_facet_performance",
+                      "capabilities/filtering_sorting_faceting/advanced/disjunctive_facets"
                     ]
                   }
                 ]
