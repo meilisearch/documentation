@@ -10,12 +10,6 @@ Click tracking records when a user interacts with a search result. Each click ev
 
 Tracking clicks helps you understand how users interact with search results. Low click-through rates may indicate poor relevance (consider tuning your [ranking rules](/capabilities/full_text_search/relevancy/ranking_rules)), while high average click positions suggest that the most relevant results are not appearing near the top.
 
-## Requirements
-
-- A [Meilisearch Cloud](https://meilisearch.com/cloud) account with analytics enabled
-- A search API key for your project
-- A method for identifying users (profile ID, hashed IP, or similar)
-
 ## Send a click event
 
 Every time a user clicks on a search result, your application must send a `click` event to the `POST /events` endpoint:

@@ -11,11 +11,6 @@ This is useful when your data is distributed across multiple Meilisearch instanc
 `useNetwork` is an experimental feature. You must enable the `network` experimental feature before using it. For a complete guide on setting up a network of instances with sharding and replication, see [Sharding and distributed search](/resources/self_hosting/sharding).
 </Note>
 
-## Requirements
-
-- The `network` experimental feature enabled on all instances
-- Network topology configured via `PATCH /experimental-features`
-
 ## Enable the network feature
 
 Before using `useNetwork`, enable the network experimental feature and configure your network topology. Send a `PATCH` request to the `/experimental-features` endpoint:
