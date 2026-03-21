@@ -1,0 +1,185 @@
+---
+title: Optimize facet performance
+sidebarTitle: Optimize facet performance
+description: Reduce indexing time and search latency by tuning faceting settings, using granular filterable attributes, and disabling unused facet features.
+---
+
+Faceting adds overhead at both indexing and search time. Every filterable attribute requires Meilisearch to build internal data structures, and every facet distribution request computes counts across all matching documents. This page covers the main levers you can use to minimize that cost.
+
+## Use granular filterable attributes
+
+By default, adding an attribute to `filterableAttributes` enables equality filters, comparison filters, and facet search. Most attributes only need a subset of these features. Use [granular filterable attributes](/capabilities/filtering_sorting_faceting/how_to/configure_granular_filters) to enable only what you need.
+
+### Choose the right features per attribute
+
+| Attribute type | Example | Recommended features |
+|---|---|---|
+| Categories, tags, brands | `genre`, `color`, `brand` | `filter.equality: true`, `facetSearch: true` |
+| Numeric ranges | `price`, `rating`, `year` | `filter.equality: true`, `filter.comparison: true`, `facetSearch: false` |
+| Boolean flags | `in_stock`, `is_featured` | `filter.equality: true`, `filter.comparison: false`, `facetSearch: false` |
+| Internal IDs used only for filtering | `tenant_id`, `user_id` | `filter.equality: true`, `filter.comparison: false`, `facetSearch: false` |
+
+Apply this with a wildcard default and specific overrides:
+
+<CodeGroup>
+
+```json
+{
+  "filterableAttributes": [
+    {
+      "attributePatterns": ["*"],
+      "features": {
+        "facetSearch": false,
+        "filter": {
+          "equality": true,
+          "comparison": false
+        }
+      }
+    },
+    {
+      "attributePatterns": ["genre", "color", "brand"],
+      "features": {
+        "facetSearch": true,
+        "filter": {
+          "equality": true,
+          "comparison": false
+        }
+      }
+    },
+    {
+      "attributePatterns": ["price", "rating"],
+      "features": {
+        "facetSearch": false,
+        "filter": {
+          "equality": true,
+          "comparison": true
+        }
+      }
+    }
+  ]
+}
+```
+
+</CodeGroup>
+
+This configuration:
+
+- Sets a restrictive default for all attributes (equality only, no facet search)
+- Enables facet search only on categorical attributes that appear in your sidebar
+- Enables comparison operators only on numeric attributes that need range filtering
+
+The fewer features enabled, the less work Meilisearch does during indexing. The improvement scales with the number of filterable attributes and the size of your dataset.
+
+## Lower maxValuesPerFacet
+
+The `maxValuesPerFacet` setting (default: 100) controls how many distinct values Meilisearch returns per attribute in the `facetDistribution` response. If your UI only displays 10 or 20 facet values per category, computing counts for 100 is unnecessary work.
+
+<CodeGroup>
+
+```bash
+curl \
+  -X PATCH 'MEILISEARCH_URL/indexes/products/settings/faceting' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+  --data-binary '{
+    "maxValuesPerFacet": 20
+  }'
+```
+
+</CodeGroup>
+
+Set this to the number of values you actually display. If your sidebar shows the top 10 brands, set `maxValuesPerFacet` to 10 or 15 (a small margin lets you implement "Show more" without a separate request).
+
+For attributes with high cardinality (cities, tags, SKU variants), this setting has the largest impact on search latency.
+
+## Disable facet search
+
+Facet search lets users type inside a facet group to find specific values (e.g., searching for "Nik" to find "Nike" in the brands facet). If you do not use this feature, disabling it reduces the data structures Meilisearch builds during indexing.
+
+### Disable globally for an index
+
+<CodeGroup>
+
+```bash
+curl \
+  -X PUT 'MEILISEARCH_URL/indexes/products/settings/facet-search' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+  --data-binary 'false'
+```
+
+</CodeGroup>
+
+This disables the `/indexes/{index_uid}/facet-search` endpoint entirely. Documents are still indexed for regular facet distribution, but Meilisearch skips the additional processing needed for facet search.
+
+### Disable per attribute
+
+If you need facet search on some attributes but not others, use granular filterable attributes instead of the global toggle:
+
+<CodeGroup>
+
+```json
+{
+  "filterableAttributes": [
+    {
+      "attributePatterns": ["brand"],
+      "features": {
+        "facetSearch": true,
+        "filter": { "equality": true, "comparison": false }
+      }
+    },
+    {
+      "attributePatterns": ["color", "size", "in_stock"],
+      "features": {
+        "facetSearch": false,
+        "filter": { "equality": true, "comparison": false }
+      }
+    }
+  ]
+}
+```
+
+</CodeGroup>
+
+This enables facet search only on `brand` (which may have hundreds of values) and disables it on `color`, `size`, and `in_stock` (which have a small, known set of values).
+
+## Request only the facets you need
+
+At search time, only include the attributes you need in the `facets` parameter. Each attribute listed in `facets` requires Meilisearch to compute a count for every distinct value.
+
+<CodeGroup>
+
+```json
+{
+  "q": "running shoes",
+  "facets": ["brand", "color"]
+}
+```
+
+</CodeGroup>
+
+Avoid requesting facets you do not display. If a page only shows brand and color filters, do not include `size`, `price`, or `rating` in the `facets` array.
+
+## Summary
+
+| Optimization | When to use | Impact |
+|---|---|---|
+| Granular filterable attributes | Always, when you have more than a few filterable attributes | Reduces indexing time and memory |
+| Lower `maxValuesPerFacet` | When attributes have many unique values | Reduces search latency |
+| Disable facet search (global) | When you never use the facet search endpoint | Reduces indexing time |
+| Disable facet search (per attribute) | When only some attributes need facet search | Reduces indexing time |
+| Request fewer facets at search time | Always | Reduces search latency |
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Configure granular filters" icon="sliders" href="/capabilities/filtering_sorting_faceting/how_to/configure_granular_filters">
+    Full guide to granular filterable attributes.
+  </Card>
+  <Card title="Build disjunctive facets" icon="object-ungroup" href="/capabilities/filtering_sorting_faceting/advanced/disjunctive_facets">
+    Implement faceted navigation where selecting a value does not collapse counts in the same group.
+  </Card>
+  <Card title="Debug search performance" icon="gauge-high" href="/capabilities/full_text_search/advanced/debug_search_performance">
+    Identify which part of the search pipeline is slow.
+  </Card>
+</CardGroup>
