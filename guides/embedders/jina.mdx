@@ -1,0 +1,131 @@
+---
+title: Semantic Search with Jina Embeddings
+sidebarTitle: Jina
+description: Set up Meilisearch with Jina embedding models for semantic search.
+---
+
+Jina AI provides a range of embedding models with strong multilingual support and competitive pricing. This guide shows you how to configure Meilisearch with Jina embeddings using the REST embedder.
+
+## Requirements
+
+- A Meilisearch project
+- A [Jina AI](https://jina.ai/) account with an API key
+
+## Available models
+
+| Model | Dimensions | Notes |
+|-------|-----------|-------|
+| `jina-embeddings-v5-text-small` | 1024 | Latest generation, balanced quality and speed |
+| `jina-embeddings-v5-text-nano` | 768 | Smallest and fastest v5 model |
+| `jina-embeddings-v3` | 1024 | Previous generation, well-tested |
+| `jina-colbert-v2` | 128 | Multi-vector model for fine-grained matching |
+
+## Configure the embedder
+
+### Standard embedding models
+
+Use this configuration for `jina-embeddings-v5-text-small`, `jina-embeddings-v5-text-nano`, or `jina-embeddings-v3`:
+
+```json
+{
+  "jina": {
+    "source": "rest",
+    "apiKey": "<JINA_API_KEY>",
+    "dimensions": 1024,
+    "documentTemplate": "A product named '{{doc.name}}': {{doc.description}}",
+    "url": "https://api.jina.ai/v1/embeddings",
+    "request": {
+      "model": "jina-embeddings-v5-text-small",
+      "input": ["{{text}}", "{{..}}"]
+    },
+    "response": {
+      "data": [
+        { "embedding": "{{embedding}}" },
+        "{{..}}"
+      ]
+    }
+  }
+}
+```
+
+Adjust `model` and `dimensions` to match the model you choose (1024 for v5-text-small and v3, 768 for v5-text-nano).
+
+### ColBERT multi-vector model
+
+`jina-colbert-v2` uses a different API endpoint and response format:
+
+```json
+{
+  "jina-colbert": {
+    "source": "rest",
+    "apiKey": "<JINA_API_KEY>",
+    "dimensions": 128,
+    "documentTemplate": "A product named '{{doc.name}}': {{doc.description}}",
+    "url": "https://api.jina.ai/v1/multi-vector",
+    "request": {
+      "model": "jina-colbert-v2",
+      "input_type": "document",
+      "embedding_type": "float",
+      "input": ["{{text}}", "{{..}}"]
+    },
+    "response": {
+      "data": [
+        { "embeddings": ["{{embedding}}"] },
+        "{{..}}"
+      ]
+    }
+  }
+}
+```
+
+### Send the configuration
+
+```sh
+curl \
+  -X PATCH 'MEILISEARCH_URL/indexes/INDEX_NAME/settings' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+  --data-binary '{
+    "embedders": {
+      "jina": {
+        "source": "rest",
+        "apiKey": "<JINA_API_KEY>",
+        "dimensions": 1024,
+        "documentTemplate": "A product named '\''{{doc.name}}'\'': {{doc.description}}",
+        "url": "https://api.jina.ai/v1/embeddings",
+        "request": {
+          "model": "jina-embeddings-v5-text-small",
+          "input": ["{{text}}", "{{..}}"]
+        },
+        "response": {
+          "data": [
+            { "embedding": "{{embedding}}" },
+            "{{..}}"
+          ]
+        }
+      }
+    }
+  }'
+```
+
+Replace `<JINA_API_KEY>` with your actual Jina API key.
+
+Meilisearch handles batching and rate limiting automatically. Monitor the [tasks queue](/reference/api/tasks/list-tasks) to track indexing progress.
+
+## Test the search
+
+```json
+{
+  "q": "comfortable shoes for walking",
+  "hybrid": {
+    "semanticRatio": 0.5,
+    "embedder": "jina"
+  }
+}
+```
+
+## Next steps
+
+- [Document template best practices](/capabilities/hybrid_search/advanced/document_template_best_practices) to optimize which fields are embedded
+- [Custom hybrid ranking](/capabilities/hybrid_search/advanced/custom_hybrid_ranking) to tune the balance between keyword and semantic results
+- [Embedder settings reference](/reference/api/settings/list-all-settings) for all configuration options

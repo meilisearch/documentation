@@ -272,10 +272,6 @@
                     "group": "How to",
                     "pages": [
                       "capabilities/hybrid_search/how_to/choose_an_embedder",
-                      "capabilities/hybrid_search/how_to/configure_rest_embedder",
-                      "capabilities/hybrid_search/how_to/configure_openai_embedder",
-                      "capabilities/hybrid_search/how_to/configure_cohere_embedder",
-                      "capabilities/hybrid_search/how_to/configure_huggingface_embedder",
                       "capabilities/hybrid_search/how_to/search_with_user_provided_embeddings",
                       "capabilities/hybrid_search/how_to/image_search_with_multimodal",
                       "capabilities/hybrid_search/how_to/image_search_with_user_embeddings",
@@ -289,6 +285,22 @@
                       "capabilities/hybrid_search/advanced/document_template_best_practices",
                       "capabilities/hybrid_search/advanced/custom_hybrid_ranking",
                       "capabilities/hybrid_search/advanced/composite_embedders"
+                    ]
+                  },
+                  {
+                    "group": "Providers",
+                    "pages": [
+                      "capabilities/hybrid_search/how_to/configure_openai_embedder",
+                      "capabilities/hybrid_search/how_to/configure_cohere_embedder",
+                      "capabilities/hybrid_search/how_to/configure_huggingface_embedder",
+                      "capabilities/hybrid_search/how_to/configure_rest_embedder",
+                      "guides/embedders/mistral",
+                      "guides/embedders/gemini",
+                      "guides/embedders/cloudflare",
+                      "guides/embedders/voyage",
+                      "guides/embedders/bedrock",
+                      "guides/embedders/jina",
+                      "guides/embedders/huggingface"
                     ]
                   }
                 ]
@@ -916,6 +928,7 @@
                   "guides/embedders/cohere",
                   "guides/embedders/mistral",
                   "guides/embedders/voyage",
+                  "guides/embedders/jina",
                   "guides/embedders/gemini"
                 ]
               },
