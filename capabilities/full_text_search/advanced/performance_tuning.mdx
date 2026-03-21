@@ -65,6 +65,25 @@ Key things to disable if you don't need them:
 - **`facetSearch`**: facet search is resource-intensive. Disable it on attributes where users will never search within facet values
 - **`comparison`**: comparison filters (`<`, `>`, `TO`) require additional data structures. Only enable on numeric/date fields that actually need range filtering
 
+## Reduce proximity precision
+
+**Impact: very high**
+
+The `proximity` [ranking rule](/capabilities/full_text_search/relevancy/ranking_rules) measures the distance between matched query terms in a document. By default, Meilisearch calculates this at **word-level** precision, which means it tracks the exact position of every word in every document. This is one of the most expensive operations in the search pipeline, both at indexing time and at search time.
+
+Switching to **attribute-level** precision drastically reduces this cost:
+
+```bash
+curl \
+  -X PUT 'MEILISEARCH_URL/indexes/products/settings/proximity-precision' \
+  -H 'Content-Type: application/json' \
+  --data-binary '"byAttribute"'
+```
+
+With `byAttribute`, Meilisearch only checks whether query terms appear in the same attribute, not their exact distance within it. This makes indexing significantly faster and reduces the work done during each search.
+
+The trade-off is that multi-word queries like "dark knight" will rank documents the same whether the words are adjacent or far apart within the same field. For most use cases (ecommerce, documentation, catalogs), this difference is negligible. Word-level precision matters most for long-form content where word proximity is a strong relevancy signal.
+
 ## Lower max values per facet
 
 **Impact: high**
@@ -153,21 +172,6 @@ curl \
     "disableOnAttributes": ["sku", "product_code"]
   }'
 ```
-
-## Reduce proximity precision
-
-**Impact: medium**
-
-The `proximity` [ranking rule](/capabilities/full_text_search/relevancy/ranking_rules) measures the distance between matched query terms. By default, this is calculated at word-level precision. Reducing to attribute-level is faster but less precise for multi-term queries:
-
-```bash
-curl \
-  -X PUT 'MEILISEARCH_URL/indexes/products/settings/proximity-precision' \
-  -H 'Content-Type: application/json' \
-  --data-binary '"byAttribute"'
-```
-
-With `byAttribute`, Meilisearch only checks whether query terms appear in the same attribute rather than measuring their exact distance.
 
 ## Disable prefix search
 
