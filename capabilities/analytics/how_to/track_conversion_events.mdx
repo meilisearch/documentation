@@ -10,7 +10,7 @@ import CodeSamplesAnalyticsEventConversion1 from '/snippets/generated-code-sampl
 This article refers to a new version of the Meilisearch Cloud analytics that is being rolled out in November 2025. Some features described here may not yet be available to your account. Contact support for more information.
 </Note>
 
-Conversion tracking records when a user completes a desired action after finding something through search. While click events tell you which results users interact with, conversion events tell you which results deliver real business value.
+Conversion tracking records when a user completes a desired action after finding something through search. While [click events](/capabilities/analytics/how_to/track_click_events) tell you which results users interact with, conversion events tell you which results deliver real business value.
 
 ## Clicks vs. conversions
 
@@ -56,7 +56,7 @@ When a user completes a conversion action, send a `conversion` event to the `POS
 | `eventName` | Yes | A descriptive label, such as `"Product Added To Cart"` |
 | `indexUid` | Yes | The index containing the converted document |
 | `userId` | Yes | An arbitrary string identifying the user |
-| `objectId` | Recommended | The primary key of the converted document |
+| `objectId` | Recommended | The [primary key](/resources/internals/primary_key) of the converted document |
 | `queryUid` | Recommended | The UID of the original search query |
 | `objectName` | Optional | A human-readable description of the document |
 

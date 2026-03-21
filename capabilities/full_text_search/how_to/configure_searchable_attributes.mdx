@@ -7,7 +7,7 @@ import CodeSamplesGetSearchableAttributes1 from '/snippets/generated-code-sample
 import CodeSamplesUpdateSearchableAttributes1 from '/snippets/generated-code-samples/code_samples_update_searchable_attributes_1.mdx';
 import CodeSamplesResetSearchableAttributes1 from '/snippets/generated-code-samples/code_samples_reset_searchable_attributes_1.mdx';
 
-By default, Meilisearch searches through all document fields. Use the `searchableAttributes` setting to limit which fields are searchable and control their relative importance in the [attribute ranking order](/capabilities/full_text_search/relevancy/attribute_ranking_order).
+By default, Meilisearch searches through all document fields. Use the `searchableAttributes` setting to limit which fields are searchable and control their relative importance in the [attribute ranking order](/capabilities/full_text_search/relevancy/attribute_ranking_order). This also affects [ranking rules](/capabilities/full_text_search/relevancy/ranking_rules) that depend on attribute order.
 
 ## Requirements
 
@@ -39,7 +39,7 @@ Set the `searchableAttributes` list to control which fields are searchable and t
 This configuration makes `title` the most important searchable field, followed by `overview`, then `genres`. Fields not in the list (such as `id` and `release_date`) are no longer searchable.
 
 <Warning>
-Updating `searchableAttributes` triggers a re-indexing of all documents in the index. This is an asynchronous operation. Use the [task API](/reference/api/tasks/get-all-tasks) to monitor progress.
+Updating `searchableAttributes` triggers a re-indexing of all documents in the index. This is an [asynchronous](/capabilities/indexing/advanced/async_operations) operation. Use the [task API](/reference/api/tasks/get-all-tasks) to monitor progress.
 </Warning>
 
 <Warning>

@@ -4,7 +4,7 @@ sidebarTitle: Search with different filters per index
 description: Apply different filters, sorting, and parameters to each index in a multi-search request.
 ---
 
-Each query in a multi-search request is independent. This means you can apply different filters, sorting rules, and search parameters to each index in the same request. This is useful when your indexes have different structures or when each content type requires different filtering logic.
+Each query in a [multi-search](/capabilities/multi_search/overview) request is independent. This means you can apply different [filters](/capabilities/filtering_sorting_faceting/getting_started), [sorting](/capabilities/filtering_sorting_faceting/how_to/sort_results) rules, and search parameters to each index in the same request. This is useful when your indexes have different structures or when each content type requires different filtering logic.
 
 ## Requirements
 
@@ -115,7 +115,7 @@ The response contains one result set for each query, in the same order:
 
 ## Combine with federated mode
 
-You can also use different filters per query in federated mode by adding the `federation` parameter. Each query retains its own filter, and results are merged into a single ranked list:
+You can also use different filters per query in [federated search](/capabilities/multi_search/getting_started/federated_search) mode by adding the `federation` parameter. Each query retains its own filter, and results are merged into a single ranked list:
 
 ```bash
 curl \
@@ -142,7 +142,7 @@ curl \
 
 - Each query's `filter`, `sort`, `limit`, `offset`, `attributesToRetrieve`, and other parameters are scoped to that query only
 - A filter on one query does not affect results from other queries
-- You must configure `filterableAttributes` and `sortableAttributes` separately on each index before using them in queries
+- You must configure [`filterableAttributes`](/capabilities/filtering_sorting_faceting/getting_started) and [`sortableAttributes`](/capabilities/filtering_sorting_faceting/how_to/sort_results) separately on each index before using them in queries
 - Queries without filters are valid and return unfiltered results for that index
 
 ## Next steps

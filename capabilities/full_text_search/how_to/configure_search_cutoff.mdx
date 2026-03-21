@@ -15,7 +15,7 @@ The search cutoff defines the maximum time in milliseconds that Meilisearch spen
 
 ## How it works
 
-When a search query is processed, Meilisearch iterates through documents and ranking rules to find and rank the best matches. On very large datasets (millions of documents) or with broad queries, this process can take significant time.
+When a search query is processed, Meilisearch iterates through documents and [ranking rules](/capabilities/full_text_search/relevancy/ranking_rules) to find and rank the best matches. On very large datasets (millions of documents) or with broad queries, this process can take significant time.
 
 The search cutoff sets an upper bound on this processing time. If Meilisearch reaches the cutoff before finishing, it returns the results collected up to that point. These results are still ranked correctly according to the ranking rules, but the result set may not include every possible match.
 

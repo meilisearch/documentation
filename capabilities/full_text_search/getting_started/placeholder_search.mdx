@@ -3,13 +3,13 @@ title: Placeholder search
 description: Placeholder search returns results when users submit an empty query, allowing you to display default or trending content before the user types anything.
 ---
 
-Placeholder search is a search request where the query string `q` is empty or missing. Instead of returning no results, Meilisearch returns documents from the index, respecting all other search parameters such as filters, sorting, and facets.
+Placeholder search is a search request where the query string `q` is empty or missing. Instead of returning no results, Meilisearch returns documents from the index, respecting all other search parameters such as [filters](/capabilities/filtering_sorting_faceting/getting_started), [sorting](/capabilities/filtering_sorting_faceting/how_to/sort_results), and [facets](/capabilities/filtering_sorting_faceting/how_to/filter_with_facets).
 
 This is useful when you want to display default content on a landing page, show trending items, or let users browse results before they start typing.
 
 ## How it works
 
-When Meilisearch receives a search request with an empty query, it skips the text-matching phase entirely. Documents are returned in the order determined by the active [ranking rules](/capabilities/full_text_search/relevancy/ranking_rules), with custom ranking rules and the `sort` parameter playing the most significant role.
+When Meilisearch receives a search request with an empty query, it skips the text-matching phase entirely. Documents are returned in the order determined by the active [ranking rules](/capabilities/full_text_search/relevancy/ranking_rules), with [custom ranking rules](/capabilities/full_text_search/relevancy/custom_ranking_rules) and the `sort` parameter playing the most significant role.
 
 Since no query terms are involved, text-based ranking rules like `words`, `typo`, `proximity`, and `exactness` have no effect. Only `sort` and custom ranking rules influence the order of results.
 

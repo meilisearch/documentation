@@ -16,7 +16,7 @@ Meilisearch provides three document operations: add or replace, add or update, a
 
 ## Add or replace documents
 
-Use `POST /indexes/{index_uid}/documents` to add new documents or replace existing ones. If a document with the same primary key already exists, Meilisearch **replaces the entire document** with the new version.
+Use `POST /indexes/{index_uid}/documents` to add new documents or replace existing ones. If a document with the same [primary key](/resources/internals/primary_key) already exists, Meilisearch **replaces the entire document** with the new version.
 
 <CodeSamplesAddOrReplaceDocuments1 />
 
@@ -114,7 +114,7 @@ Use `DELETE /indexes/{index_uid}/documents/{document_id}` to remove a single doc
 Meilisearch also supports batch deletion and deletion by filter:
 
 - **Delete by batch**: send a `POST /indexes/{index_uid}/documents/delete-batch` request with an array of document IDs
-- **Delete by filter**: send a `POST /indexes/{index_uid}/documents/delete` request with a filter expression to remove all matching documents
+- **Delete by filter**: send a `POST /indexes/{index_uid}/documents/delete` request with a [filter expression](/capabilities/filtering_sorting_faceting/advanced/filter_expression_syntax) to remove all matching documents
 
 ## Choosing the right operation
 
@@ -139,7 +139,7 @@ curl \
   ]'
 ```
 
-Batch operations are processed as a single task. Meilisearch handles large batches efficiently, so prefer sending documents in bulk rather than one at a time.
+Batch operations are processed as a single [task](/capabilities/indexing/advanced/async_operations). Meilisearch handles large batches efficiently, so prefer sending documents in bulk rather than one at a time.
 
 ## Update without creating new documents
 

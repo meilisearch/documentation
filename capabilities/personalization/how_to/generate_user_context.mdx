@@ -3,7 +3,7 @@ title: Generate user context
 description: Build user context from browsing history and preferences to power personalized search results.
 ---
 
-User context is the plain-text description you send with each search request to personalize results. Meilisearch does not generate user context automatically. You build it on your backend by aggregating data about each user, then pass it as a string in the `personalize` search parameter.
+User context is the plain-text description you send with each search request to personalize results. Meilisearch does not generate user context automatically. You build it on your backend by aggregating data about each user (potentially using [analytics](/capabilities/analytics/overview) events), then pass it as a string in the `personalize` search parameter.
 
 This guide covers strategies for collecting user signals, structuring them into a context string, and sending that context with search requests.
 

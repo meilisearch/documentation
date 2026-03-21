@@ -76,7 +76,7 @@ The response looks like this:
 
 ## Combine multiple filters with sort
 
-You can use `AND`, `OR`, and `NOT` operators to build complex filter expressions:
+You can use `AND`, `OR`, and `NOT` operators to build complex [filter expressions](/capabilities/filtering_sorting_faceting/advanced/filter_expression_syntax):
 
 ```bash
 curl \
@@ -93,7 +93,7 @@ This request searches for "hero" in action movies with a rating above 7.0, sorte
 
 ## Combine geo filter with text search and sort
 
-If your documents have `_geo` data, you can combine geographic filtering with text search and sorting. For example, find restaurants near a specific location and sort them by rating:
+If your documents have `_geo` data, you can combine [geo search](/capabilities/geo_search/overview) filtering with text search and sorting. For example, find restaurants near a specific location and sort them by rating:
 
 ```bash
 curl \
@@ -131,7 +131,7 @@ This sorts action movies by rating first, then by release date for movies with t
 - Fields used in `sort` must be in `sortableAttributes`
 - A field can appear in both settings lists if you need to both filter and sort by it
 - Filters narrow the result set before sorting is applied
-- When combining with a text query, Meilisearch first applies the text relevancy ranking, then uses `sort` as an additional ranking rule
+- When combining with a text query, Meilisearch first applies the text relevancy [ranking rules](/capabilities/full_text_search/relevancy/ranking_rules), then uses `sort` as an additional ranking rule
 
 ## Next steps
 

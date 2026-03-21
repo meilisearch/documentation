@@ -16,7 +16,7 @@ A single embedder works well for most projects. Composite embedders are useful w
 | Scenario | Indexing embedder | Search embedder |
 |---|---|---|
 | Cost optimization | Cloud API with batch pricing | Local model (no per-query cost) |
-| Latency optimization | REST endpoint (higher throughput, higher latency) | HuggingFace local model (lower latency) |
+| Latency optimization | [REST endpoint](/capabilities/hybrid_search/how_to/configure_rest_embedder) (higher throughput, higher latency) | HuggingFace local model (lower latency) |
 | Infrastructure split | GPU server for bulk embedding | CPU-based model for real-time queries |
 | Rate limit management | Dedicated batch API endpoint | Separate endpoint with its own rate limits |
 

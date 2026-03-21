@@ -3,11 +3,11 @@ title: Inspect index fields
 description: Use the fields endpoint to get detailed metadata about all fields in an index, including their search, filter, and display settings.
 ---
 
-The fields endpoint returns metadata about every field Meilisearch has detected in an index. This includes each field's name and its current configuration for searching, filtering, sorting, and display.
+The fields endpoint returns metadata about every field Meilisearch has detected in an index. This includes each field's name and its current configuration for searching, [filtering](/capabilities/filtering_sorting_faceting/getting_started), [sorting](/capabilities/filtering_sorting_faceting/how_to/sort_results), and display.
 
 ## When to use field inspection
 
-- **Debugging**: Verify that a field is searchable, filterable, or sortable as expected.
+- **Debugging**: Verify that a field is [searchable](/capabilities/full_text_search/how_to/configure_searchable_attributes), filterable, or sortable as expected.
 - **Auditing settings**: Review the effective configuration of all fields in one request instead of checking individual settings endpoints.
 - **Building admin interfaces**: Retrieve field metadata to dynamically generate configuration panels or dashboards.
 

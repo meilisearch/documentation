@@ -3,7 +3,7 @@ title: Semantic vs hybrid search
 description: When to use pure semantic search vs hybrid search, and how to tune the balance between keyword and vector results.
 ---
 
-Meilisearch supports three search modes controlled by the `semanticRatio` parameter: pure keyword search, pure semantic search, and hybrid search. Each mode has strengths and weaknesses depending on your data and how your users search.
+Meilisearch supports three search modes controlled by the [`semanticRatio`](/capabilities/hybrid_search/advanced/custom_hybrid_ranking) parameter: pure keyword search, pure semantic search, and hybrid search. Each mode has strengths and weaknesses depending on your data and how your users search.
 
 This page helps you understand the tradeoffs and pick the right approach for your use case.
 
@@ -13,7 +13,7 @@ The `semanticRatio` parameter controls how Meilisearch blends keyword and semant
 
 | Mode | `semanticRatio` | How it works |
 |------|-----------------|-------------|
-| Pure keyword | `0.0` | Meilisearch uses only full-text matching. Results must contain the query terms (or close variants). No embedder is queried. |
+| Pure keyword | `0.0` | Meilisearch uses only [full-text](/capabilities/full_text_search/overview) matching. Results must contain the query terms (or close variants). No embedder is queried. |
 | Hybrid | `0.0 < ratio < 1.0` | Meilisearch runs both keyword and semantic search, then merges the results. Lower values favor keyword matches, higher values favor semantic matches. |
 | Pure semantic | `1.0` | Meilisearch uses only vector similarity. Results are ranked by how close their embeddings are to the query embedding. |
 
@@ -40,7 +40,7 @@ Best when:
 - Users describe what they need in natural language rather than using specific terms
 - Your content is homogeneous (all product descriptions, all articles, all Q&A pairs)
 - Vocabulary mismatch is common (users say "laptop" but documents say "notebook computer")
-- You are building conversational search or Q&A features
+- You are building [conversational search](/capabilities/conversational_search/overview) or Q&A features
 
 Example queries that work well with semantic search:
 - `"something to keep my coffee warm at my desk"`

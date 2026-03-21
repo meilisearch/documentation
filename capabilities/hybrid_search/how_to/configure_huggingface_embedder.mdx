@@ -41,7 +41,7 @@ In this configuration:
 
 - `source`: must be `"huggingFace"` to run the model locally
 - `model`: the HuggingFace model identifier. Meilisearch downloads the model automatically on first use
-- `documentTemplate`: a [Liquid template](/capabilities/hybrid_search/getting_started) that converts your documents into text for embedding
+- `documentTemplate`: a [Liquid template](/capabilities/hybrid_search/advanced/document_template_best_practices) that converts your documents into text for embedding
 
 Unlike cloud-based embedders, the HuggingFace source does not require an API key.
 
@@ -100,7 +100,7 @@ Once indexing is complete, perform a search using the `hybrid` parameter:
 }
 ```
 
-A `semanticRatio` of `0.5` returns a balanced mix of keyword and semantic results. Adjust this value based on your needs.
+A [`semanticRatio`](/capabilities/hybrid_search/advanced/custom_hybrid_ranking) of `0.5` returns a balanced mix of keyword and semantic results. Adjust this value based on your needs.
 
 ## Next steps
 

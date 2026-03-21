@@ -6,7 +6,7 @@ description: Use federation weights to control which index's results rank higher
 
 import CodeSamplesFederatedSearchMultiSearchWeight1 from '/snippets/generated-code-samples/code_samples_federated_search_multi_search_weight_1.mdx';
 
-When using federated search, all results from different indexes are merged into a single ranked list. By default, results from every index carry the same weight. You can change this by assigning different weights to each query, making results from one index rank higher than others.
+When using [federated search](/capabilities/multi_search/getting_started/federated_search), all results from different indexes are merged into a single ranked list. By default, results from every index carry the same weight. You can change this by assigning different weights to each query, making results from one index rank higher than others.
 
 ## Requirements
 
@@ -15,7 +15,7 @@ When using federated search, all results from different indexes are merged into 
 
 ## How weights work
 
-Each query in a federated multi-search request can include a `federationOptions` object with a `weight` property. The weight is a floating-point number that multiplies the relevancy score of results from that query:
+Each query in a federated [multi-search](/capabilities/multi_search/overview) request can include a `federationOptions` object with a `weight` property. The weight is a floating-point number that multiplies the [ranking rules](/capabilities/full_text_search/relevancy/ranking_rules) relevancy score of results from that query:
 
 - The default weight is `1.0`
 - A weight higher than `1.0` promotes results from that query

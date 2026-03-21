@@ -3,7 +3,7 @@ title: Configure OpenAI embedder
 description: Set up the OpenAI embedder to use models like text-embedding-3-small for semantic and hybrid search.
 ---
 
-The OpenAI embedder connects Meilisearch to OpenAI's embedding API to generate vectors for your documents and queries. This is one of the easiest ways to enable semantic search, as Meilisearch has built-in support for OpenAI through the `openAi` source.
+The OpenAI embedder connects Meilisearch to OpenAI's embedding API to generate vectors for your documents and queries. This is one of the easiest ways to enable [semantic search](/capabilities/hybrid_search/overview), as Meilisearch has built-in support for OpenAI through the `openAi` source.
 
 ## Requirements
 
@@ -42,7 +42,7 @@ In this configuration:
 - `source`: must be `"openAi"` to use OpenAI's built-in integration
 - `model`: the OpenAI model to use for generating embeddings
 - `apiKey`: your OpenAI API key
-- `documentTemplate`: a [Liquid template](/capabilities/hybrid_search/getting_started) that converts your documents into text for embedding. Keep it short and include only the most important fields
+- `documentTemplate`: a [Liquid template](/capabilities/hybrid_search/advanced/document_template_best_practices) that converts your documents into text for embedding. Keep it short and include only the most important fields
 
 ## Update your index settings
 
@@ -109,7 +109,7 @@ Once indexing is complete, perform a search using the `hybrid` parameter:
 }
 ```
 
-A `semanticRatio` of `0.5` returns a balanced mix of keyword and semantic results. Adjust this value based on your needs.
+A [`semanticRatio`](/capabilities/hybrid_search/advanced/custom_hybrid_ranking) of `0.5` returns a balanced mix of keyword and semantic results. Adjust this value based on your needs.
 
 ## Next steps
 

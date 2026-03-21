@@ -3,7 +3,7 @@ title: Personalize ecommerce search
 description: End-to-end example of implementing personalized search for an ecommerce store.
 ---
 
-This guide walks through a complete ecommerce personalization implementation. You will set up an embedder with personalization, collect user signals, build user profiles, and send personalized search requests that return different results for different shoppers.
+This guide walks through a complete ecommerce personalization implementation. You will set up an [embedder](/capabilities/hybrid_search/overview) with personalization, collect user signals, build user profiles, and send personalized search requests that return different results for different shoppers.
 
 ## Requirements
 
@@ -149,7 +149,7 @@ The underlying search results are the same, but personalization re-ranks them ba
 - **Update profiles regularly.** Recalculate the user context string after each session or purchase to keep it current.
 - **Use affirmative language.** Write "prefers budget options" instead of "avoids expensive products." The re-ranking model responds better to positive signals.
 - **Keep context concise.** One to three sentences is ideal. Long descriptions dilute the strongest signals.
-- **Test with real users.** Compare click-through rates and conversion rates between personalized and non-personalized search to measure impact.
+- **Test with real users.** Compare click-through rates and conversion rates between personalized and non-personalized search to measure impact. Use [analytics](/capabilities/analytics/overview) to track these metrics.
 - **Start with high-confidence signals.** Purchases and cart additions are stronger indicators than page views or browse time.
 
 ## Next steps

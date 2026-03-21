@@ -12,7 +12,7 @@ This article refers to a new version of the Meilisearch Cloud analytics that is 
 
 Click tracking records when a user interacts with a search result. Each click event captures the original query, the clicked document, and its position in the result list. This data powers two key analytics metrics: **click-through rate** and **average click position**.
 
-Tracking clicks helps you understand how users interact with search results. Low click-through rates may indicate poor relevance, while high average click positions suggest that the most relevant results are not appearing near the top.
+Tracking clicks helps you understand how users interact with search results. Low click-through rates may indicate poor relevance (consider tuning your [ranking rules](/capabilities/full_text_search/relevancy/ranking_rules)), while high average click positions suggest that the most relevant results are not appearing near the top.
 
 ## Requirements
 
@@ -34,7 +34,7 @@ Every time a user clicks on a search result, your application must send a `click
 | `eventName` | Yes | A descriptive label, such as `"Search Result Clicked"` |
 | `indexUid` | Yes | The index containing the clicked document |
 | `userId` | Yes | An arbitrary string identifying the user who clicked |
-| `objectId` | Recommended | The primary key of the clicked document |
+| `objectId` | Recommended | The [primary key](/resources/internals/primary_key) of the clicked document |
 | `position` | Recommended | The document's rank in the search results (starting from 0) |
 | `queryUid` | Recommended | The UID of the original search query |
 | `objectName` | Optional | A human-readable description of the document |
