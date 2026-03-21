@@ -256,7 +256,6 @@
                       "capabilities/full_text_search/relevancy/ranking_score",
                       "capabilities/full_text_search/relevancy/attribute_ranking_order",
                       "capabilities/full_text_search/relevancy/typo_tolerance_settings",
-                      "capabilities/full_text_search/relevancy/typo_tolerance_calculations",
                       "capabilities/full_text_search/relevancy/distinct_attribute",
                       "capabilities/full_text_search/relevancy/displayed_searchable_attributes",
                       "capabilities/full_text_search/relevancy/synonyms"
@@ -1911,7 +1910,11 @@
     },
     {
       "source": "/learn/relevancy/typo_tolerance_calculations",
-      "destination": "/capabilities/full_text_search/relevancy/typo_tolerance_calculations"
+      "destination": "/capabilities/full_text_search/relevancy/typo_tolerance_settings#how-typo-tolerance-works"
+    },
+    {
+      "source": "/capabilities/full_text_search/relevancy/typo_tolerance_calculations",
+      "destination": "/capabilities/full_text_search/relevancy/typo_tolerance_settings#how-typo-tolerance-works"
     },
     {
       "source": "/learn/relevancy/distinct_attribute",
