@@ -284,7 +284,8 @@
                       "capabilities/hybrid_search/advanced/semantic_vs_hybrid",
                       "capabilities/hybrid_search/advanced/document_template_best_practices",
                       "capabilities/hybrid_search/advanced/custom_hybrid_ranking",
-                      "capabilities/hybrid_search/advanced/composite_embedders"
+                      "capabilities/hybrid_search/advanced/composite_embedders",
+                      "capabilities/hybrid_search/advanced/binary_quantization"
                     ]
                   },
                   {
