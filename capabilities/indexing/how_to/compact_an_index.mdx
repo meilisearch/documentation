@@ -37,7 +37,7 @@ Meilisearch returns a summarized task object:
 
 ## Monitor the compaction task
 
-Compaction runs asynchronously. Check its progress with the task endpoint:
+Compaction runs [asynchronously](/capabilities/indexing/advanced/async_operations). Check its progress with the task endpoint:
 
 ```bash
 curl \
@@ -47,7 +47,7 @@ curl \
 
 ## Search availability during compaction
 
-Compaction does not block search. Your index remains fully searchable while the operation runs. New indexing tasks will be queued and processed after compaction completes.
+Compaction does not block search. Your index remains fully searchable while the operation runs. New [indexing](/capabilities/indexing/overview) tasks will be queued and processed after compaction completes.
 
 ## Next steps
 

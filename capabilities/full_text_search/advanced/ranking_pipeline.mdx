@@ -3,7 +3,7 @@ title: Ranking pipeline
 description: Understand how Meilisearch's multi-criteria bucket sort works step by step to rank search results.
 ---
 
-Meilisearch uses a **bucket sort** algorithm to rank search results. Rather than computing a single relevancy score and sorting by it, Meilisearch applies ranking rules one at a time. Each rule sorts documents into groups ("buckets") of equal relevance, and the next rule only breaks ties within each bucket.
+Meilisearch uses a **[bucket sort](/resources/internals/bucket_sort)** algorithm to rank search results. Rather than computing a single relevancy score and sorting by it, Meilisearch applies ranking rules one at a time. Each rule sorts documents into groups ("buckets") of equal relevance, and the next rule only breaks ties within each bucket.
 
 This approach produces highly relevant results while remaining fast, even on large datasets.
 
@@ -35,7 +35,7 @@ Meilisearch applies the following built-in ranking rules in this order by defaul
 
 ### Step 1: Words
 
-Documents are sorted by the **number of matched query terms**, in decreasing order. Documents containing all query terms appear first. Documents missing one or more terms appear later.
+Documents are sorted by the **number of matched query terms**, in decreasing order. Documents containing all query terms appear first. Documents missing one or more terms appear later. The [matching strategy](/capabilities/full_text_search/how_to/use_matching_strategy) controls how terms are dropped.
 
 For example, if the query is `batman dark knight`:
 - Bucket A: documents matching all three terms
@@ -50,7 +50,7 @@ Meilisearch always behaves as if the `words` rule has the highest priority among
 
 ### Step 2: Typo
 
-Within each bucket from the previous step, documents are sorted by the **total number of typos** in matched terms, in increasing order. Documents with fewer typos rank higher.
+Within each bucket from the previous step, documents are sorted by the **total number of typos** in matched terms, in increasing order. Documents with fewer typos rank higher. You can configure this behavior through [typo tolerance](/capabilities/full_text_search/relevancy/typo_tolerance_settings) settings.
 
 For example, if two documents both match all three query terms, but one matches "knight" exactly while the other matches "knights" (one typo), the exact match ranks higher.
 
@@ -88,7 +88,7 @@ For example, if two documents both match "knight" in the `title` attribute, the 
 
 Documents are sorted by how closely matched terms **resemble the original query terms**. Documents containing exact matches (no typos, no prefix expansion) rank higher than those where the match required fuzzy matching.
 
-For example, a search for "knight" ranks a document containing the exact word "knight" above one containing "knights" (even though "knights" is a valid match through prefix search).
+For example, a search for "knight" ranks a document containing the exact word "knight" above one containing "knights" (even though "knights" is a valid match through [prefix search](/capabilities/full_text_search/how_to/configure_prefix_search)).
 
 ## Custom ranking rules
 

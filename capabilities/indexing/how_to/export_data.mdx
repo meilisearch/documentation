@@ -15,7 +15,7 @@ The export endpoint transfers data directly from one Meilisearch instance to ano
 
 - The **source** instance must be running and contain the data you want to export.
 - The **destination** instance must be reachable from the source over the network.
-- If the destination instance uses an API key, you must provide it in the export request.
+- If the destination instance uses an [API key](/capabilities/security/how_to/manage_api_keys), you must provide it in the export request.
 
 ## Export data to a remote instance
 
@@ -46,7 +46,7 @@ Meilisearch returns a summarized task object:
 
 ## Monitor the export task
 
-The export runs asynchronously. Use the task UID to check its progress:
+The export runs [asynchronously](/capabilities/indexing/advanced/async_operations). Use the task UID to check its progress:
 
 ```bash
 curl \

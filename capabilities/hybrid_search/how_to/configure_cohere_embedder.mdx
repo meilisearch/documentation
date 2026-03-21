@@ -3,7 +3,7 @@ title: Configure Cohere embedder
 description: Set up the Cohere embedder for semantic and hybrid search using Cohere's embedding models.
 ---
 
-The Cohere embedder connects Meilisearch to Cohere's embedding API. Cohere models support multiple languages and offer different model sizes for different performance needs. Since Meilisearch does not have a built-in Cohere source, you configure it using the `rest` embedder source.
+The Cohere embedder connects Meilisearch to Cohere's embedding API. Cohere models support multiple languages and offer different model sizes for different performance needs. Since Meilisearch does not have a built-in Cohere source, you configure it using the [`rest` embedder](/capabilities/hybrid_search/how_to/configure_rest_embedder) source.
 
 ## Requirements
 
@@ -53,7 +53,7 @@ In this configuration:
 - `url`: the Cohere embeddings API endpoint
 - `apiKey`: your Cohere API key
 - `dimensions`: the number of dimensions for the chosen model (1024 for `embed-english-v3.0`)
-- `documentTemplate`: a [Liquid template](/capabilities/hybrid_search/getting_started) that converts your documents into text for embedding
+- `documentTemplate`: a [Liquid template](/capabilities/hybrid_search/advanced/document_template_best_practices) that converts your documents into text for embedding
 - `request`: defines the structure of requests sent to Cohere, including the model and input format
 - `response`: tells Meilisearch where to find the embeddings in Cohere's response
 
@@ -113,7 +113,7 @@ Once indexing is complete, perform a search using the `hybrid` parameter:
 }
 ```
 
-A `semanticRatio` of `0.5` returns a balanced mix of keyword and semantic results. Adjust this value based on your needs.
+A [`semanticRatio`](/capabilities/hybrid_search/advanced/custom_hybrid_ranking) of `0.5` returns a balanced mix of keyword and semantic results. Adjust this value based on your needs.
 
 ## Next steps
 

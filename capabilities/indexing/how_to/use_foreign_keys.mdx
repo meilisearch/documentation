@@ -5,7 +5,7 @@ description: Automatically enrich documents with related data from other indexes
 
 Foreign keys let you link documents across indexes so that search results are automatically enriched with related data. Instead of duplicating information, you store it once in a dedicated index and reference it by ID.
 
-For example, a `movies` index can reference actors by ID. When you search for movies, Meilisearch automatically replaces the actor IDs with full actor documents from the `actors` index.
+For example, a `movies` index can reference actors by ID. When you search for movies, Meilisearch automatically replaces the actor IDs with full actor documents from the `actors` index. This approach also works with [multi-search](/capabilities/multi_search/overview) when querying across related indexes.
 
 <Warning>
 Foreign keys is an experimental feature. Its API and behavior may change in future releases. It is not supported in remote sharding environments.
@@ -116,7 +116,7 @@ With foreign keys configured, the same result is automatically hydrated:
 ## Limitations
 
 - **Experimental**: This feature may change or be removed in future versions.
-- **No remote sharding**: Foreign keys are not supported in environments using remote sharding.
+- **No remote [sharding](/resources/self_hosting/sharding)**: Foreign keys are not supported in environments using remote sharding.
 - **One direction**: Hydration works from the main index to the referenced index. The referenced index does not automatically link back.
 
 ## Next steps

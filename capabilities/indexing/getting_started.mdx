@@ -17,7 +17,7 @@ This guide walks you through adding documents to Meilisearch for the first time.
 
 ## Prepare your documents
 
-Meilisearch accepts documents in three formats: **JSON**, **NDJSON**, and **CSV**. Each document must contain a field that serves as a unique **primary key**.
+Meilisearch accepts documents in three formats: **JSON**, **NDJSON**, and **CSV**. Each document must contain a field that serves as a unique **[primary key](/resources/internals/primary_key)**.
 
 Here is a small sample dataset of movies in JSON format:
 
@@ -78,7 +78,7 @@ Meilisearch returns a summarized task object confirming your request has been ac
 
 ## Check the task status
 
-All indexing operations in Meilisearch are asynchronous. Use the `taskUid` from the response to check whether your documents have been indexed:
+All indexing operations in Meilisearch are [asynchronous](/capabilities/indexing/advanced/async_operations). Use the `taskUid` from the response to check whether your documents have been indexed:
 
 <CodeSamplesGettingStartedCheckTaskStatus />
 

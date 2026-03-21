@@ -37,7 +37,7 @@ If your use case does not require search-as-you-type (for example, users submit 
 <CodeSamplesUpdatePrefixSearchSettings1 />
 
 <Warning>
-Updating the prefix search setting triggers a re-indexing of all documents in the index. This is an asynchronous operation. Use the [task API](/reference/api/tasks/get-all-tasks) to monitor progress.
+Updating the prefix search setting triggers a re-indexing of all documents in the index. This is an [asynchronous](/capabilities/indexing/advanced/async_operations) operation. Use the [task API](/reference/api/tasks/get-all-tasks) to monitor progress.
 </Warning>
 
 ## Reset prefix search
@@ -59,7 +59,7 @@ Restore the default `indexingTime` behavior:
 - **Discovery-oriented search**: Partial matches help users explore content they might not find with exact queries
 
 <Note>
-Prefix search only applies to the **last word** in a multi-word query. Earlier words in the query must match completely (or within typo tolerance). For example, searching for `harry pot` matches "Harry Potter" because "harry" matches exactly and "pot" is a prefix match for "Potter".
+Prefix search only applies to the **last word** in a multi-word query. Earlier words in the query must match completely (or within [typo tolerance](/capabilities/full_text_search/relevancy/typo_tolerance_settings)). For example, searching for `harry pot` matches "Harry Potter" because "harry" matches exactly and "pot" is a prefix match for "Potter".
 </Note>
 
 <Info>

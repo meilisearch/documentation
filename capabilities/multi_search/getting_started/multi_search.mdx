@@ -72,7 +72,7 @@ Each result set contains the same fields as a standard search response, includin
 Each query in a multi-search request is fully independent. This means:
 
 - **Different indexes**: each query can target a different index
-- **Different parameters**: each query can have its own `filter`, `sort`, `limit`, `offset`, `attributesToRetrieve`, and other search parameters
+- **Different parameters**: each query can have its own [`filter`](/capabilities/filtering_sorting_faceting/getting_started), [`sort`](/capabilities/filtering_sorting_faceting/how_to/sort_results), `limit`, `offset`, `attributesToRetrieve`, and other search parameters
 - **Same index, different queries**: you can send multiple queries to the same index with different search terms or parameters
 - **Single HTTP request**: all queries are bundled into one network call, reducing latency compared to sending individual requests
 

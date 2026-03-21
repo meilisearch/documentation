@@ -4,11 +4,11 @@ sidebarTitle: Overview
 description: Secure your Meilisearch data with API keys and tenant tokens for multi-tenant applications.
 ---
 
-Meilisearch uses API keys and tenant tokens to control access to your data. API keys authenticate requests, while tenant tokens restrict what data each user can see within a shared index.
+Meilisearch uses [API keys](/capabilities/security/how_to/manage_api_keys) and tenant tokens to control access to your data. API keys authenticate requests, while tenant tokens restrict what data each user can see within a shared index.
 
 ## Multi-tenancy with tenant tokens
 
-Tenant tokens are short-lived, scoped credentials generated from an API key. They embed search rules (filters) that automatically apply to every search request, ensuring users only see their own data.
+Tenant tokens are short-lived, scoped credentials generated from an API key. They embed search rules ([filters](/capabilities/filtering_sorting_faceting/getting_started)) that automatically apply to every search request, ensuring users only see their own data.
 
 | Concept | Purpose |
 |---------|---------|
@@ -40,7 +40,7 @@ In a typical multi-tenant setup, your backend holds the admin or search API key,
 3. When a user authenticates in your application, your backend generates a **tenant token** from the search key, embedding user-specific filter rules (for example, `tenant_id = 42`).
 4. The frontend uses this tenant token to query Meilisearch directly. Every search automatically applies the embedded filters, so users never see data belonging to other tenants.
 
-For enterprise teams, Meilisearch Cloud also supports **SSO (Single Sign-On)** integration, allowing team members to authenticate through your identity provider.
+For enterprise [teams](/capabilities/teams/overview), Meilisearch Cloud also supports **SSO (Single Sign-On)** integration, allowing team members to authenticate through your identity provider.
 
 ## Next steps
 

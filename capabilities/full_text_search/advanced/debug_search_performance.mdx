@@ -59,9 +59,9 @@ Each key in `performanceDetails` represents a stage of the search pipeline:
 |-------|-------------|
 | `wait for permit` | Time spent waiting for a search permit. Meilisearch uses concurrency control to limit the number of simultaneous searches, so a high value here indicates your instance is handling many concurrent queries. |
 | `search > tokenize` | Time spent breaking the query string into individual tokens. This is typically very fast unless the query is unusually long. |
-| `search > resolve universe` | Time spent determining the set of candidate documents that could match the query. Filters, geo constraints, and other pre-search operations contribute to this stage. |
+| `search > resolve universe` | Time spent determining the set of candidate documents that could match the query. Filters, [geo search](/capabilities/geo_search/overview) constraints, and other pre-search operations contribute to this stage. |
 | `search > keyword search` | Time spent running keyword matching against the candidate set. This is often the most significant stage for broad queries on large datasets. |
-| `search > format` | Time spent formatting results, including highlighting, cropping, and building the response payload. |
+| `search > format` | Time spent formatting results, including [highlighting and cropping](/capabilities/full_text_search/how_to/highlight_search_results), and building the response payload. |
 | `search` | Total time for the entire search operation. This is roughly the sum of the stages above plus minor internal overhead. |
 
 <Note>
@@ -134,8 +134,8 @@ curl \
 Look for the stage with the highest duration. Common patterns include:
 
 - **High `wait for permit`**: your instance is overloaded with concurrent searches. Consider scaling your hardware or reducing query volume.
-- **High `search > resolve universe`**: complex filters or geo constraints are expensive. Simplify filters or ensure your filterable attributes are correctly configured.
-- **High `search > keyword search`**: the query matches too many candidates. Adding stop words, limiting searchable attributes, or setting a search cutoff can help.
+- **High `search > resolve universe`**: complex [filters](/capabilities/filtering_sorting_faceting/getting_started) or geo constraints are expensive. Simplify filters or ensure your filterable attributes are correctly configured.
+- **High `search > keyword search`**: the query matches too many candidates. Adding [stop words](/capabilities/full_text_search/how_to/configure_stop_words), limiting [searchable attributes](/capabilities/full_text_search/how_to/configure_searchable_attributes), or setting a [search cutoff](/capabilities/full_text_search/how_to/configure_search_cutoff) can help.
 - **High `search > format`**: large `attributesToRetrieve`, `attributesToHighlight`, or `attributesToCrop` values force Meilisearch to do more work formatting results. Reduce these to only the fields you need.
 
 ### Compare before and after

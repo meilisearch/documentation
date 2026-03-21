@@ -11,7 +11,7 @@ This page covers how to tune `semanticRatio`, work with multiple embedders, and 
 
 The `semanticRatio` parameter accepts a floating-point value between `0.0` and `1.0`:
 
-- **`0.0`**: only keyword (full-text) results
+- **`0.0`**: only keyword ([full-text](/capabilities/full_text_search/overview)) results
 - **`0.5`**: equal blend of keyword and semantic results (default)
 - **`1.0`**: only semantic (vector) results
 
@@ -125,7 +125,7 @@ At search time, select the embedder that best fits the query context:
 ### When to use multiple embedders
 
 - **Different query types**: use one embedder for general product searches and another optimized for technical specification queries
-- **Different document fields**: create embedders with different `documentTemplate` values that emphasize different aspects of your documents
+- **Different document fields**: create embedders with different [`documentTemplate`](/capabilities/hybrid_search/advanced/document_template_best_practices) values that emphasize different aspects of your documents
 - **A/B testing models**: compare the quality of results from different models or providers before committing to one
 
 ## A/B testing approach
