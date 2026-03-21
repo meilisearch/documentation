@@ -1,13 +1,92 @@
 ---
 title: Performance tuning
-description: Optimize full-text search speed and relevancy for large datasets with practical configuration tips.
+sidebarTitle: Performance tuning
+description: Optimize full-text search speed for large datasets with practical configuration tips ordered by impact.
 ---
 
-As your dataset grows, search performance depends on how you configure index settings and search parameters. This page covers practical strategies for keeping search fast and relevant at scale.
+As your dataset grows, search performance depends on how you configure index settings and search parameters. This page covers practical strategies for keeping search fast, ordered from highest to lowest impact.
+
+<Note>
+This page focuses on **search-time** performance. For indexing performance, see [optimize batch performance](/capabilities/indexing/how_to/optimize_batch_performance).
+</Note>
+
+## Lower max total hits
+
+**Impact: very high**
+
+The `maxTotalHits` pagination setting controls how deep Meilisearch ranks results using the [bucket sort pipeline](/resources/internals/bucket_sort). By default, Meilisearch ranks up to 1,000 documents per query.
+
+Some users set this to very high values (100K or even 1M), forcing Meilisearch to run the full ranking pipeline across all matching documents for every single query. This is almost never necessary because users rarely go beyond the first few pages of results.
+
+```bash
+curl \
+  -X PATCH 'MEILISEARCH_URL/indexes/products/settings/pagination' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "maxTotalHits": 200
+  }'
+```
+
+Set `maxTotalHits` to the realistic maximum a user would ever paginate to. For most applications, 100 to 200 is plenty (that covers 5 to 10 pages of 20 results). Going higher means Meilisearch spends time ranking documents nobody will ever see.
+
+## Configure granular filterable attributes
+
+**Impact: very high**
+
+Every attribute listed in `filterableAttributes` creates additional data structures during indexing that are also evaluated at search time. The more filter features you enable, the more work Meilisearch does.
+
+Use [granular filterable attributes](/capabilities/filtering_sorting_faceting/how_to/configure_granular_filters) to enable only the filter operations you actually need per attribute:
+
+```bash
+curl \
+  -X PATCH 'MEILISEARCH_URL/indexes/products/settings' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "filterableAttributes": [
+      {
+        "attributePatterns": ["category", "brand"],
+        "features": {
+          "facetSearch": false,
+          "filter": { "equality": true, "comparison": false }
+        }
+      },
+      {
+        "attributePatterns": ["price"],
+        "features": {
+          "facetSearch": false,
+          "filter": { "equality": false, "comparison": true }
+        }
+      }
+    ]
+  }'
+```
+
+Key things to disable if you don't need them:
+- **`facetSearch`**: facet search is resource-intensive. Disable it on attributes where users will never search within facet values
+- **`comparison`**: comparison filters (`<`, `>`, `TO`) require additional data structures. Only enable on numeric/date fields that actually need range filtering
+
+## Lower max values per facet
+
+**Impact: high**
+
+The `maxValuesPerFacet` setting (default: 100) controls how many distinct facet values Meilisearch returns in the `facetDistribution`. If you have attributes with thousands of unique values (like tags or cities), Meilisearch computes counts for all of them up to this limit.
+
+```bash
+curl \
+  -X PATCH 'MEILISEARCH_URL/indexes/products/settings/faceting' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "maxValuesPerFacet": 20
+  }'
+```
+
+Set this to the number of facet values you actually display in your UI. If your sidebar shows 10 categories, there is no reason to compute counts for 100.
 
 ## Limit searchable attributes
 
-By default, Meilisearch searches through every field in your documents. For large datasets, this can slow down queries significantly. Restrict `searchableAttributes` to only the fields that matter for search:
+**Impact: high**
+
+By default, Meilisearch searches through every field in your documents. Restrict [searchable attributes](/capabilities/full_text_search/how_to/configure_searchable_attributes) to only the fields that matter for search:
 
 ```bash
 curl \
@@ -18,11 +97,11 @@ curl \
 
 Exclude fields like IDs, URLs, timestamps, and numeric values that users would never search by text. This reduces the amount of data Meilisearch processes during each query.
 
-See [configure searchable attributes](/capabilities/full_text_search/how_to/configure_searchable_attributes) for full instructions.
-
 ## Configure stop words
 
-Stop words like "the", "is", and "of" appear in nearly every document and slow down query processing without improving result quality. Configure stop words for your dataset's language:
+**Impact: medium**
+
+[Stop words](/capabilities/full_text_search/how_to/configure_stop_words) like "the", "is", and "of" appear in nearly every document and slow down query processing without improving result quality:
 
 ```bash
 curl \
@@ -31,47 +110,26 @@ curl \
   --data-binary '["the", "a", "an", "is", "are", "of", "in", "to", "and", "or"]'
 ```
 
-This reduces the number of terms Meilisearch evaluates during each search, improving both indexing speed and query speed.
+This reduces the number of terms Meilisearch evaluates during each search.
 
-See [configure stop words](/capabilities/full_text_search/how_to/configure_stop_words) for more details.
+## Tune typo tolerance
 
-## Use search cutoff for large datasets
+**Impact: medium**
 
-On datasets with millions of documents, some broad queries can take longer than usual. Set a search cutoff to guarantee consistent response times:
+[Typo tolerance](/capabilities/full_text_search/relevancy/typo_tolerance_settings) expands the search space for each query term. On large datasets, you can reduce this cost:
 
-```bash
-curl \
-  -X PUT 'MEILISEARCH_URL/indexes/products/settings/search-cutoff-ms' \
-  -H 'Content-Type: application/json' \
-  --data-binary '150'
-```
-
-The cutoff acts as a safety net. Meilisearch returns the best results found within the time limit. Start with 150ms and adjust based on your performance requirements.
-
-See [configure search cutoff](/capabilities/full_text_search/how_to/configure_search_cutoff) for guidance on choosing values.
-
-## Choose the right prefix search mode
-
-Prefix search enables "search as you type" but increases index size and indexing time. If your application uses form-based search (where users type a full query and press Enter), disable prefix search:
+**Disable typos on numbers**: prevents false positives like "2024" matching "2025" and reduces the search space for numeric terms:
 
 ```bash
 curl \
-  -X PUT 'MEILISEARCH_URL/indexes/products/settings/prefix-search' \
+  -X PATCH 'MEILISEARCH_URL/indexes/products/settings/typo-tolerance' \
   -H 'Content-Type: application/json' \
-  --data-binary '"disabled"'
+  --data-binary '{
+    "disableOnNumbers": true
+  }'
 ```
 
-Disabling prefix search reduces index size and speeds up both indexing and queries.
-
-See [configure prefix search](/capabilities/full_text_search/how_to/configure_prefix_search) for more information.
-
-## Adjust typo tolerance
-
-Typo tolerance is useful for user-facing search but comes with a performance cost. For large datasets, consider these adjustments:
-
-### Increase minimum word size for typos
-
-By default, Meilisearch allows one typo on words with 5 or more characters and two typos on words with 9 or more characters. Increasing these thresholds reduces the number of fuzzy matches Meilisearch evaluates:
+**Increase minimum word size for typos**: by default, 1 typo is allowed on words of 5+ chars and 2 typos on 9+ chars. Raising these thresholds reduces the fuzzy matching work:
 
 ```bash
 curl \
@@ -85,9 +143,7 @@ curl \
   }'
 ```
 
-### Disable typos on specific attributes
-
-If certain attributes contain structured data (like SKUs or product codes) where typos are unlikely, disable typo tolerance for those fields:
+**Disable typos on structured fields** like SKUs or product codes where typos are unlikely:
 
 ```bash
 curl \
@@ -98,11 +154,11 @@ curl \
   }'
 ```
 
-See [typo tolerance settings](/capabilities/full_text_search/relevancy/typo_tolerance_settings) for the full configuration reference.
+## Reduce proximity precision
 
-## Optimize proximity precision
+**Impact: medium**
 
-The `proximity` [ranking rule](/capabilities/full_text_search/relevancy/ranking_rules) measures the distance between matched query terms. By default, this is calculated at word-level precision. For very large datasets, reducing precision to attribute-level can significantly speed up indexing:
+The `proximity` [ranking rule](/capabilities/full_text_search/relevancy/ranking_rules) measures the distance between matched query terms. By default, this is calculated at word-level precision. Reducing to attribute-level is faster but less precise for multi-term queries:
 
 ```bash
 curl \
@@ -111,56 +167,55 @@ curl \
   --data-binary '"byAttribute"'
 ```
 
-With `byAttribute` precision, Meilisearch only checks whether query terms appear in the same attribute rather than measuring their exact distance. This is faster but may produce slightly less precise ranking for multi-term queries.
+With `byAttribute`, Meilisearch only checks whether query terms appear in the same attribute rather than measuring their exact distance.
 
-## Optimize indexing performance
+## Disable prefix search
 
-Search performance starts with efficient indexing. Here are key strategies:
+**Impact: medium**
 
-### Batch your document updates
-
-Send documents in large batches rather than one at a time. Meilisearch processes batches more efficiently because it can amortize the cost of updating internal data structures:
+[Prefix search](/capabilities/full_text_search/how_to/configure_prefix_search) enables "search as you type" but increases index size. If your application uses form-based search (users type a full query and press Enter), disable it:
 
 ```bash
-# Send 10,000 documents in a single request instead of 10,000 individual requests
 curl \
-  -X POST 'MEILISEARCH_URL/indexes/products/documents' \
+  -X PUT 'MEILISEARCH_URL/indexes/products/settings/prefix-search' \
   -H 'Content-Type: application/json' \
-  --data-binary @products.json
+  --data-binary '"disabled"'
 ```
 
-### Configure settings before indexing
+## Use search cutoff as a safety net
 
-Set your `searchableAttributes`, `filterableAttributes`, `sortableAttributes`, and stop words before adding documents. Changing these settings after indexing triggers a full re-index.
+**Impact: low (safety measure)**
 
-### Use CSV or NDJSON for large imports
-
-For very large datasets, CSV and NDJSON formats can be more efficient than JSON because they use less memory during parsing:
+Set a [search cutoff](/capabilities/full_text_search/how_to/configure_search_cutoff) to guarantee a maximum response time. This is not a performance optimization per se, but a safety net against unusually long queries or potential abuse:
 
 ```bash
 curl \
-  -X POST 'MEILISEARCH_URL/indexes/products/documents' \
-  -H 'Content-Type: text/csv' \
-  --data-binary @products.csv
+  -X PUT 'MEILISEARCH_URL/indexes/products/settings/search-cutoff-ms' \
+  -H 'Content-Type: application/json' \
+  --data-binary '500'
 ```
 
-See [optimize batch performance](/capabilities/indexing/how_to/optimize_batch_performance) for detailed indexing optimization strategies.
-
-## Monitor and measure
-
-Before and after making changes, measure your search performance to verify improvements:
-
-1. Test with representative queries that match your actual user behavior
-2. Measure response times for both common and edge-case queries
-3. Check that result quality remains acceptable after performance optimizations
-4. Monitor the [tasks endpoint](/reference/api/tasks/get-all-tasks) to track indexing duration
+Don't go below 500ms. If your searches are consistently slow, fix the root cause with the optimizations above.
 
 ## Debug with performance details
 
 If you need to identify exactly which stage of the search pipeline is slow, use the `showPerformanceDetails` parameter. It returns per-stage timing information so you can target your optimizations precisely.
 
-See [debug search performance](/capabilities/full_text_search/advanced/debug_search_performance) for full instructions and examples.
+See [debug search performance](/capabilities/full_text_search/advanced/debug_search_performance) for full instructions.
 
-<Tip>
-Performance optimization is iterative. Start with the changes that have the biggest impact (limiting searchable attributes, configuring stop words) and measure before making further adjustments.
-</Tip>
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Debug search performance" href="/capabilities/full_text_search/advanced/debug_search_performance">
+    Use showPerformanceDetails to pinpoint bottlenecks
+  </Card>
+  <Card title="Optimize indexing" href="/capabilities/indexing/how_to/optimize_batch_performance">
+    Speed up document indexing and batch operations
+  </Card>
+  <Card title="Ranking pipeline" href="/capabilities/full_text_search/advanced/ranking_pipeline">
+    Understand how bucket sort ranks results
+  </Card>
+  <Card title="Granular filters" href="/capabilities/filtering_sorting_faceting/how_to/configure_granular_filters">
+    Fine-tune which filter operations are enabled per attribute
+  </Card>
+</CardGroup>
