@@ -5,7 +5,6 @@ description: Set up a chat workspace with a system prompt, tools, and connected 
 
 import CodeSamplesChatPatchSettings1 from '/snippets/generated-code-samples/code_samples_chat_patch_settings_1.mdx';
 import CodeSamplesChatGetSettings1 from '/snippets/generated-code-samples/code_samples_chat_get_settings_1.mdx';
-import CodeSamplesChatIndexSettings1 from '/snippets/generated-code-samples/code_samples_chat_index_settings_1.mdx';
 
 A chat workspace defines the configuration for a conversational search session, including the LLM provider, system prompt, and search behavior. You can create multiple workspaces targeting different use cases, such as a public-facing knowledge base and an internal support tool.
 
@@ -15,7 +14,7 @@ Create a workspace by sending a `PATCH` request to `/chats/{workspace_uid}/setti
 
 <CodeGroup>
 
-```bash
+```bash cURL
 curl \
   -X PATCH 'MEILISEARCH_URL/chats/my-support-bot/settings' \
   -H 'Authorization: Bearer MEILISEARCH_KEY' \
@@ -50,7 +49,7 @@ Azure OpenAI requires additional fields compared to other providers:
 
 <CodeGroup>
 
-```bash
+```bash cURL
 curl \
   -X PATCH 'MEILISEARCH_URL/chats/my-support-bot/settings' \
   -H 'Authorization: Bearer MEILISEARCH_KEY' \
@@ -72,7 +71,7 @@ The system prompt gives the conversational agent its baseline instructions. It c
 
 <CodeGroup>
 
-```bash
+```bash cURL
 curl \
   -X PATCH 'MEILISEARCH_URL/chats/my-support-bot/settings' \
   -H 'Authorization: Bearer MEILISEARCH_KEY' \
@@ -100,60 +99,7 @@ These fields provide additional context that improves how the agent formulates s
 
 ## Configure indexes for chat
 
-Before a workspace can search your data, each index must have its chat settings configured. Use the index settings endpoint to describe what the index contains:
-
-<CodeSamplesChatIndexSettings1 />
-
-### Index chat settings fields
-
-| Field | Type | Default | Description |
-|-------|------|---------|-------------|
-| `description` | string | `""` | Describes the index content to the LLM so it can decide when and how to query it |
-| `documentTemplate` | string | All searchable fields | Liquid template defining the text sent to the LLM for each document |
-| `documentTemplateMaxBytes` | integer | `400` | Maximum size in bytes of the rendered document template. Longer text is truncated |
-| `searchParameters` | object | `{}` | Search parameters applied when the LLM queries this index |
-
-The `description` field is particularly important. It helps the LLM understand what each index contains, so it can decide which index to search when answering a question.
-
-### Configure search parameters
-
-The `searchParameters` object lets you control how the LLM searches each index. This is useful for enabling hybrid search, limiting results, or sorting:
-
-<CodeGroup>
-
-```bash
-curl \
-  -X PATCH 'MEILISEARCH_URL/indexes/movies/settings' \
-  -H 'Authorization: Bearer MEILISEARCH_KEY' \
-  -H 'Content-Type: application/json' \
-  --data-binary '{
-    "chat": {
-      "description": "A movie database containing titles, overviews, genres, and release dates",
-      "documentTemplateMaxBytes": 400,
-      "searchParameters": {
-        "hybrid": {
-          "embedder": "default",
-          "semanticRatio": 0.5
-        },
-        "limit": 10
-      }
-    }
-  }'
-```
-
-</CodeGroup>
-
-Available search parameters:
-
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `hybrid` | object | Enable hybrid search with `embedder` (required) and `semanticRatio` (0.0 for keyword, 1.0 for semantic) |
-| `limit` | integer | Maximum number of documents returned per search |
-| `sort` | string[] | Sort order, e.g. `["price:asc", "rating:desc"]` |
-| `distinct` | string | Return at most one document per distinct value of this attribute |
-| `matchingStrategy` | string | How query terms are matched: `last`, `all`, or `frequency` |
-| `attributesToSearchOn` | string[] | Restrict search to specific attributes |
-| `rankingScoreThreshold` | number | Minimum ranking score (0.0 to 1.0) for a document to be included |
+Before a workspace can search your data, each index must have its chat settings configured. See the dedicated [configure index chat settings](/capabilities/conversational_search/how_to/configure_index_chat_settings) guide for full documentation on `description`, `documentTemplate`, `searchParameters`, and other fields.
 
 ## Verify workspace configuration
 
@@ -173,7 +119,7 @@ For example, to update only the system prompt without changing the provider:
 
 <CodeGroup>
 
-```bash
+```bash cURL
 curl \
   -X PATCH 'MEILISEARCH_URL/chats/my-support-bot/settings' \
   -H 'Authorization: Bearer MEILISEARCH_KEY' \

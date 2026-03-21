@@ -11,13 +11,13 @@ To receive source documents, include both `_meiliSearchProgress` and `_meiliSear
 
 <CodeGroup>
 
-```bash
+```bash cURL
 curl -N \
   -X POST 'MEILISEARCH_URL/chats/WORKSPACE_NAME/chat/completions' \
-  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   -H 'Content-Type: application/json' \
   --data-binary '{
-    "model": "gpt-4o",
+    "model": "PROVIDER_MODEL_UID",
     "messages": [
       {
         "role": "user",
@@ -43,6 +43,50 @@ curl -N \
   }'
 ```
 
+```javascript OpenAI SDK
+import OpenAI from 'openai';
+
+const client = new OpenAI({
+  baseURL: 'MEILISEARCH_URL/chats/WORKSPACE_NAME',
+  apiKey: 'MEILISEARCH_KEY',
+});
+
+const stream = await client.chat.completions.create({
+  model: 'PROVIDER_MODEL_UID',
+  messages: [{ role: 'user', content: 'What are the best sci-fi movies?' }],
+  stream: true,
+  tools: [
+    { type: 'function', function: { name: '_meiliSearchProgress', description: 'Reports real-time search progress' } },
+    { type: 'function', function: { name: '_meiliSearchSources', description: 'Provides source documents' } },
+  ],
+});
+```
+
+```javascript Vercel AI SDK
+import { createOpenAI } from '@ai-sdk/openai';
+import { streamText, tool, jsonSchema } from 'ai';
+
+const meilisearch = createOpenAI({
+  baseURL: 'MEILISEARCH_URL/chats/WORKSPACE_NAME',
+  apiKey: 'MEILISEARCH_KEY',
+});
+
+const { textStream } = streamText({
+  model: meilisearch('PROVIDER_MODEL_UID'),
+  messages: [{ role: 'user', content: 'What are the best sci-fi movies?' }],
+  tools: {
+    _meiliSearchProgress: tool({
+      description: 'Reports real-time search progress',
+      parameters: jsonSchema({ type: 'object', properties: { call_id: { type: 'string' }, function_name: { type: 'string' }, function_parameters: { type: 'string' } }, required: ['call_id', 'function_name', 'function_parameters'] }),
+    }),
+    _meiliSearchSources: tool({
+      description: 'Provides source documents',
+      parameters: jsonSchema({ type: 'object', properties: { call_id: { type: 'string' }, documents: { type: 'object' } }, required: ['call_id', 'documents'] }),
+    }),
+  },
+});
+```
+
 </CodeGroup>
 
 Both tools are necessary. `_meiliSearchProgress` reports which searches are being performed and assigns a `call_id` to each search. `_meiliSearchSources` then returns the documents found, referencing the same `call_id` so you can associate sources with their corresponding queries.
@@ -57,7 +101,7 @@ When the agent decides to search an index, you receive a `_meiliSearchProgress` 
 
 <CodeGroup>
 
-```json
+```json Response
 {
   "function": {
     "name": "_meiliSearchProgress",
@@ -76,7 +120,7 @@ After the search completes, you receive a `_meiliSearchSources` tool call with t
 
 <CodeGroup>
 
-```json
+```json Response
 {
   "function": {
     "name": "_meiliSearchSources",
@@ -99,7 +143,7 @@ Parse tool calls from the stream and collect sources into a structured object:
 
 <CodeGroup>
 
-```javascript
+```javascript JavaScript
 const sources = new Map(); // call_id -> { query, index, documents }
 
 function handleToolCall(toolCall) {
@@ -135,7 +179,7 @@ Here is a simple pattern for displaying sources alongside the chat response. Thi
 
 <CodeGroup>
 
-```javascript
+```javascript JavaScript
 function renderSources(sources) {
   const container = document.getElementById('sources');
 
@@ -183,7 +227,7 @@ Each search produces its own `call_id`, so you can group and display sources per
 
 <CodeGroup>
 
-```javascript
+```javascript JavaScript
 function renderGroupedSources(sources) {
   for (const [callId, source] of sources) {
     console.log(`\nSearch: "${source.query}" in ${source.index}`);
