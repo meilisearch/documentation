@@ -208,6 +208,10 @@ const results = await index.search(
 `hitsPerPage` and `page` take precedence over `offset` and `limit`. If a query contains either `hitsPerPage` or `page`, any values passed to `offset` and `limit` are ignored.
 </Note>
 
+<Note>
+When using `hitsPerPage` and `page` together with `facets`, the `facetDistribution` counts reflect the entire result set matching your query, not just the hits on the current page. This means facet counts remain consistent as users navigate between pages.
+</Note>
+
 #### Create a numbered page list
 
 The `totalPages` field included in the response contains the exhaustive count of search result pages based on your query's `hitsPerPage`. Use this to create a numbered list of pages.
