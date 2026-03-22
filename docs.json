@@ -35,6 +35,10 @@
     },
     "links": [
       {
+        "label": "Website",
+        "href": "https://www.meilisearch.com"
+      },
+      {
         "label": "GitHub",
         "href": "https://github.com/meilisearch/meilisearch"
       },
@@ -1020,7 +1024,8 @@
                   "resources/comparisons/pinecone",
                   "resources/comparisons/qdrant",
                   "resources/comparisons/opensearch",
-                  "resources/comparisons/mongodb"
+                  "resources/comparisons/mongodb",
+                  "resources/comparisons/typo_tolerance_vs_fuzzy_search"
                 ]
               },
               {
