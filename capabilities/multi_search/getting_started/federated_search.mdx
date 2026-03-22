@@ -20,9 +20,9 @@ Add the datasets to Meilisearch and create three separate indexes, `profiles`, `
 <CodeGroup>
 
 ```sh
-curl -X POST 'MEILISEARCH_URL/indexes/profiles' -H 'Content-Type: application/json' --data-binary @crm-profiles.json &&
-curl -X POST 'MEILISEARCH_URL/indexes/chats' -H 'Content-Type: application/json' --data-binary @crm-chats.json &&
-curl -X POST 'MEILISEARCH_URL/indexes/tickets' -H 'Content-Type: application/json' --data-binary @crm-tickets.json
+curl -X POST 'MEILISEARCH_URL/indexes/profiles' -H 'Content-Type: application/json' -H 'Authorization: Bearer MEILISEARCH_KEY' --data-binary @crm-profiles.json &&
+curl -X POST 'MEILISEARCH_URL/indexes/chats' -H 'Content-Type: application/json' -H 'Authorization: Bearer MEILISEARCH_KEY' --data-binary @crm-chats.json &&
+curl -X POST 'MEILISEARCH_URL/indexes/tickets' -H 'Content-Type: application/json' -H 'Authorization: Bearer MEILISEARCH_KEY' --data-binary @crm-tickets.json
 ```
 
 </CodeGroup>
@@ -114,6 +114,7 @@ Send a federated search request with pagination:
 curl \
   -X POST 'MEILISEARCH_URL/multi-search' \
   -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   --data-binary '{
     "federation": {
       "page": 2,
