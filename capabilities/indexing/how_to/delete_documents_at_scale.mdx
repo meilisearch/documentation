@@ -15,7 +15,7 @@ Filter-based deletion removes all documents matching a [filter expression](/capa
 curl \
   -X POST 'MEILISEARCH_URL/indexes/products/documents/delete' \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   --data-binary '{
     "filter": "status = '\''archived'\''"
   }'
@@ -24,6 +24,10 @@ curl \
 </CodeGroup>
 
 The filter expression supports the same syntax as [search filters](/capabilities/filtering_sorting_faceting/advanced/filter_expression_syntax), including `AND`, `OR`, and comparison operators.
+
+<Note>
+Delete-by-filter tasks cannot be autobatched with other task types. Each delete-by-filter operation is processed as its own individual batch. If you are enqueuing many delete-by-filter tasks alongside other write operations, be aware that this may slow down overall task processing.
+</Note>
 
 <Warning>
 The attribute used in the filter must be listed in [`filterableAttributes`](/reference/api/settings/get-filterableattributes). If it is not, the request returns an error.
@@ -71,7 +75,7 @@ When you know the exact document IDs to remove, send them as an array:
 curl \
   -X POST 'MEILISEARCH_URL/indexes/products/documents/delete-batch' \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   --data-binary '["id1", "id2", "id3", "id4", "id5"]'
 ```
 
@@ -88,7 +92,7 @@ for batch_file in id_batch_*.json; do
   curl \
     -X POST 'MEILISEARCH_URL/indexes/products/documents/delete-batch' \
     -H 'Content-Type: application/json' \
-    -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+    -H 'Authorization: Bearer MEILISEARCH_KEY' \
     --data-binary @"$batch_file"
 done
 ```
@@ -119,7 +123,7 @@ Check the task to see how many documents were deleted:
 ```bash
 curl \
   -X GET 'MEILISEARCH_URL/tasks/128' \
-  -H 'Authorization: Bearer MEILISEARCH_API_KEY'
+  -H 'Authorization: Bearer MEILISEARCH_KEY'
 ```
 
 </CodeGroup>
@@ -160,7 +164,7 @@ To remove every document in an index while keeping the index settings:
 ```bash
 curl \
   -X DELETE 'MEILISEARCH_URL/indexes/products/documents' \
-  -H 'Authorization: Bearer MEILISEARCH_API_KEY'
+  -H 'Authorization: Bearer MEILISEARCH_KEY'
 ```
 
 </CodeGroup>
@@ -190,7 +194,7 @@ If your data has a natural lifecycle (listings expire, events pass, articles are
 curl \
   -X PATCH 'MEILISEARCH_URL/indexes/listings/settings' \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   --data-binary '{
     "filterableAttributes": ["status", "expires_at"]
   }'
@@ -207,7 +211,7 @@ Then run periodic cleanup jobs:
 curl \
   -X POST 'MEILISEARCH_URL/indexes/listings/documents/delete' \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   --data-binary "{
     \"filter\": \"expires_at < $(date +%s)\"
   }"
