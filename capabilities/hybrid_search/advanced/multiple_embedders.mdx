@@ -26,7 +26,7 @@ Add multiple keys to the `embedders` setting. Each key is a named embedder with 
 curl \
   -X PATCH 'MEILISEARCH_URL/indexes/products/settings/embedders' \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   --data-binary '{
     "text": {
       "source": "openAi",
@@ -80,7 +80,7 @@ Specify which embedder to use with the `hybrid.embedder` parameter:
 # Semantic text search
 curl -X POST 'MEILISEARCH_URL/indexes/products/search' \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   --data-binary '{
     "q": "comfortable running shoes",
     "hybrid": {
@@ -94,7 +94,7 @@ curl -X POST 'MEILISEARCH_URL/indexes/products/search' \
 # Image search
 curl -X POST 'MEILISEARCH_URL/indexes/products/search' \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   --data-binary '{
     "media": {
       "image": "https://example.com/shoe.jpg"
@@ -117,7 +117,7 @@ The most powerful use case for multiple embedders is [federated search](/capabil
 ```bash
 curl -X POST 'MEILISEARCH_URL/multi-search' \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   --data-binary '{
     "federation": {},
     "queries": [

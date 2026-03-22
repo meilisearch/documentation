@@ -15,7 +15,7 @@ Always configure your index settings before adding documents. If you add documen
 curl \
   -X PATCH 'MEILISEARCH_URL/indexes/products/settings' \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   --data-binary '{
     "searchableAttributes": ["title", "description"],
     "filterableAttributes": ["category", "price"],
@@ -53,7 +53,7 @@ For large imports, [NDJSON](http://ndjson.org/) (Newline Delimited JSON) is more
 curl \
   -X POST 'MEILISEARCH_URL/indexes/products/documents' \
   -H 'Content-Type: application/x-ndjson' \
-  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   --data-binary @products.ndjson
 ```
 
@@ -79,7 +79,7 @@ Meilisearch also supports CSV for tabular data:
 curl \
   -X POST 'MEILISEARCH_URL/indexes/products/documents' \
   -H 'Content-Type: text/csv' \
-  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   --data-binary @products.csv
 ```
 
@@ -97,7 +97,7 @@ curl \
   -X POST 'MEILISEARCH_URL/indexes/products/documents' \
   -H 'Content-Type: application/x-ndjson' \
   -H 'Content-Encoding: gzip' \
-  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   --data-binary @products.ndjson.gz
 ```
 
@@ -116,7 +116,7 @@ Each document addition returns a `taskUid`. Use it to check progress:
 RESPONSE=$(curl -s \
   -X POST 'MEILISEARCH_URL/indexes/products/documents' \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   --data-binary @batch_1.json)
 
 TASK_UID=$(echo $RESPONSE | jq -r '.taskUid')
@@ -124,7 +124,7 @@ TASK_UID=$(echo $RESPONSE | jq -r '.taskUid')
 # Check task status
 curl \
   -X GET "MEILISEARCH_URL/tasks/$TASK_UID" \
-  -H 'Authorization: Bearer MEILISEARCH_API_KEY'
+  -H 'Authorization: Bearer MEILISEARCH_KEY'
 ```
 
 </CodeGroup>
@@ -158,7 +158,7 @@ For batch imports, filter tasks by index to see all pending work:
 ```bash
 curl \
   -X GET 'MEILISEARCH_URL/tasks?indexUids=products&statuses=enqueued,processing' \
-  -H 'Authorization: Bearer MEILISEARCH_API_KEY'
+  -H 'Authorization: Bearer MEILISEARCH_KEY'
 ```
 
 </CodeGroup>

@@ -22,7 +22,7 @@ Send a `POST` request to `/indexes/{index_uid}/compact`:
 ```bash
 curl \
   -X POST 'MEILISEARCH_URL/indexes/movies/compact' \
-  -H 'Authorization: Bearer MEILISEARCH_API_KEY'
+  -H 'Authorization: Bearer MEILISEARCH_KEY'
 ```
 
 </CodeGroup>
@@ -52,7 +52,7 @@ Compaction runs [asynchronously](/capabilities/indexing/tasks_and_batches/async_
 ```bash
 curl \
   -X GET 'MEILISEARCH_URL/tasks/87' \
-  -H 'Authorization: Bearer MEILISEARCH_API_KEY'
+  -H 'Authorization: Bearer MEILISEARCH_KEY'
 ```
 
 </CodeGroup>

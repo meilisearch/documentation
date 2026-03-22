@@ -114,7 +114,7 @@ const response = await fetch("MEILISEARCH_URL/multi-search", {
   method: "POST",
   headers: {
     "Content-Type": "application/json",
-    "Authorization": "Bearer MEILISEARCH_API_KEY"
+    "Authorization": "Bearer MEILISEARCH_KEY"
   },
   body: JSON.stringify({ queries })
 });
@@ -204,7 +204,7 @@ async function disjunctiveSearch(query, activeFilters) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": "Bearer MEILISEARCH_API_KEY"
+      "Authorization": "Bearer MEILISEARCH_KEY"
     },
     body: JSON.stringify({ queries })
   });

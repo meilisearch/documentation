@@ -48,7 +48,7 @@ Import a CSV file:
 ```bash
 meilisearch-importer \
   --url "${MEILISEARCH_URL}" \
-  --api-key "${MEILISEARCH_API_KEY}" \
+  --api-key "${MEILISEARCH_KEY}" \
   --index movies \
   --file movies.csv
 ```
@@ -57,7 +57,7 @@ meilisearch-importer \
 **Set your environment variables:**
 ```bash
 export MEILISEARCH_URL="https://your-instance.meilisearch.io"
-export MEILISEARCH_API_KEY="your_api_key"
+export MEILISEARCH_KEY="your_api_key"
 ```
 </Note>
 
@@ -158,14 +158,14 @@ Verify your import:
 
 ```bash
 curl "${MEILISEARCH_URL}/indexes/products/stats" \
-  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}"
+  -H "Authorization: Bearer ${MEILISEARCH_KEY}"
 ```
 
 Test a search:
 
 ```bash
 curl "${MEILISEARCH_URL}/indexes/products/search" \
-  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
+  -H "Authorization: Bearer ${MEILISEARCH_KEY}" \
   -d '{"q": "test"}'
 ```
 

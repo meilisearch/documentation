@@ -30,7 +30,7 @@ require 'meilisearch'
 
 client = MeiliSearch::Client.new(
   ENV['MEILISEARCH_URL'],
-  ENV['MEILISEARCH_API_KEY']
+  ENV['MEILISEARCH_KEY']
 )
 ```
 
@@ -38,7 +38,7 @@ client = MeiliSearch::Client.new(
 **Set your environment variables:**
 ```bash
 export MEILISEARCH_URL="https://your-instance.meilisearch.io"  # or http://localhost:7700
-export MEILISEARCH_API_KEY="your_api_key"
+export MEILISEARCH_KEY="your_api_key"
 ```
 [Get a free Cloud instance →](https://cloud.meilisearch.com)
 </Note>
@@ -91,7 +91,7 @@ require 'meilisearch'
 
 client = MeiliSearch::Client.new(
   ENV['MEILISEARCH_URL'],
-  ENV['MEILISEARCH_API_KEY']
+  ENV['MEILISEARCH_KEY']
 )
 
 # Add documents

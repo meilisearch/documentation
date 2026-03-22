@@ -102,7 +102,7 @@ import { MeiliSearch } from 'meilisearch'
 
 const client = new MeiliSearch({
   host: process.env.MEILISEARCH_URL,
-  apiKey: process.env.MEILISEARCH_API_KEY
+  apiKey: process.env.MEILISEARCH_KEY
 })
 
 const results = await client.index('products').search('phone')
@@ -112,7 +112,7 @@ console.log(results.hits)
 <Tab title="cURL">
 ```bash
 curl "${MEILISEARCH_URL}/indexes/products/search" \
-  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
+  -H "Authorization: Bearer ${MEILISEARCH_KEY}" \
   -H "Content-Type: application/json" \
   -d '{"q": "phone"}'
 ```

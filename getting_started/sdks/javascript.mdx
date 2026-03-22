@@ -26,7 +26,7 @@ import { MeiliSearch } from 'meilisearch'
 
 const client = new MeiliSearch({
   host: process.env.MEILISEARCH_URL,
-  apiKey: process.env.MEILISEARCH_API_KEY
+  apiKey: process.env.MEILISEARCH_KEY
 })
 ```
 
@@ -34,7 +34,7 @@ const client = new MeiliSearch({
 **Set your environment variables:**
 ```bash
 export MEILISEARCH_URL="https://your-instance.meilisearch.io"  # or http://localhost:7700
-export MEILISEARCH_API_KEY="your_api_key"
+export MEILISEARCH_KEY="your_api_key"
 ```
 [Get a free Cloud instance →](https://cloud.meilisearch.com)
 </Note>
@@ -87,7 +87,7 @@ import { MeiliSearch } from 'meilisearch'
 
 const client = new MeiliSearch({
   host: process.env.MEILISEARCH_URL,
-  apiKey: process.env.MEILISEARCH_API_KEY
+  apiKey: process.env.MEILISEARCH_KEY
 })
 
 async function main() {

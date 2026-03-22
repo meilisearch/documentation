@@ -21,7 +21,7 @@ Send a `POST` request to `/export` on the source instance, specifying the destin
 curl \
   -X POST 'MEILISEARCH_URL/export' \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   --data-binary '{
     "url": "https://destination-instance.example.com",
     "apiKey": "destination-api-key"
@@ -55,7 +55,7 @@ The export runs [asynchronously](/capabilities/indexing/tasks_and_batches/async_
 ```bash
 curl \
   -X GET 'MEILISEARCH_URL/tasks/42' \
-  -H 'Authorization: Bearer MEILISEARCH_API_KEY'
+  -H 'Authorization: Bearer MEILISEARCH_KEY'
 ```
 
 </CodeGroup>

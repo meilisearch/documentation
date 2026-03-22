@@ -37,7 +37,7 @@ If you prefer to include the user ID in your event payload, include a `userId` f
 curl \
   -X POST 'MEILISEARCH_URL/events' \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   --data-binary '{
     "eventType": "click",
     "eventName": "Search Result Clicked",

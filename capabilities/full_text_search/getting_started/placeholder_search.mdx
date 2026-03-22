@@ -23,6 +23,7 @@ Send a search request with an empty query string:
 curl \
   -X POST 'MEILISEARCH_URL/indexes/movies/search' \
   -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   --data-binary '{
     "q": ""
   }'
@@ -42,6 +43,7 @@ Placeholder search becomes more powerful when combined with filters and sorting.
 curl \
   -X POST 'MEILISEARCH_URL/indexes/movies/search' \
   -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   --data-binary '{
     "q": "",
     "filter": "genres = Action",
@@ -63,6 +65,7 @@ You can also request facet distributions alongside a placeholder search to build
 curl \
   -X POST 'MEILISEARCH_URL/indexes/movies/search' \
   -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   --data-binary '{
     "q": "",
     "facets": ["genres", "release_year"]
@@ -90,6 +93,7 @@ Placeholder search supports the same pagination parameters as regular search. Us
 curl \
   -X POST 'MEILISEARCH_URL/indexes/movies/search' \
   -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   --data-binary '{
     "q": "",
     "limit": 20,

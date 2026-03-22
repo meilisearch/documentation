@@ -26,14 +26,14 @@ Create or update `config/packages/meilisearch.yaml`:
 ```yaml
 meilisearch:
   url: '%env(MEILISEARCH_URL)%'
-  api_key: '%env(MEILISEARCH_API_KEY)%'
+  api_key: '%env(MEILISEARCH_KEY)%'
 ```
 
 Add to your `.env` file:
 
 ```bash
 MEILISEARCH_URL=https://your-instance.meilisearch.io
-MEILISEARCH_API_KEY=your_api_key
+MEILISEARCH_KEY=your_api_key
 ```
 
 <Note>
@@ -134,7 +134,7 @@ First, configure filterable attributes in `config/packages/meilisearch.yaml`:
 ```yaml
 meilisearch:
   url: '%env(MEILISEARCH_URL)%'
-  api_key: '%env(MEILISEARCH_API_KEY)%'
+  api_key: '%env(MEILISEARCH_KEY)%'
   indices:
     - name: movies
       class: App\Entity\Movie

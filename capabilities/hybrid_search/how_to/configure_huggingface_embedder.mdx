@@ -59,7 +59,7 @@ Send the embedder configuration to Meilisearch:
 curl \
   -X PATCH 'MEILISEARCH_URL/indexes/INDEX_NAME/settings' \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   --data-binary '{
     "embedders": {
       "my-hf": {
@@ -73,7 +73,7 @@ curl \
 
 </CodeGroup>
 
-Replace `MEILISEARCH_URL` with the address of your Meilisearch instance, `INDEX_NAME` with your index name, and `MEILISEARCH_API_KEY` with your Meilisearch API key.
+Replace `MEILISEARCH_URL` with the address of your Meilisearch instance, `INDEX_NAME` with your index name, and `MEILISEARCH_KEY` with your Meilisearch API key.
 
 On the first request, Meilisearch downloads the model from HuggingFace. This may take a few minutes depending on the model size and your internet connection. After downloading, Meilisearch generates embeddings for all documents in the index.
 

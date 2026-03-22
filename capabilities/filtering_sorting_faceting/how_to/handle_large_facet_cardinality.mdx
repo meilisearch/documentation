@@ -15,7 +15,7 @@ By default, Meilisearch returns at most 100 facet values per attribute in the `f
 curl \
   -X PATCH 'MEILISEARCH_URL/indexes/products/settings/faceting' \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   --data-binary '{
     "maxValuesPerFacet": 200
   }'
@@ -35,7 +35,7 @@ The [facet search endpoint](/reference/api/facet-search/search-in-facets) lets u
 curl \
   -X POST 'MEILISEARCH_URL/indexes/products/facet-search' \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   --data-binary '{
     "facetName": "brand",
     "facetQuery": "ni"
@@ -73,7 +73,7 @@ Facet search results are context-aware. You can pass a `q` parameter to narrow f
 curl \
   -X POST 'MEILISEARCH_URL/indexes/products/facet-search' \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   --data-binary '{
     "facetName": "brand",
     "facetQuery": "ni",
@@ -93,7 +93,7 @@ You can also apply filters to further restrict facet search results:
 curl \
   -X POST 'MEILISEARCH_URL/indexes/products/facet-search' \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   --data-binary '{
     "facetName": "brand",
     "facetQuery": "ni",
@@ -178,7 +178,7 @@ For high-cardinality attributes, sorting by count (descending) ensures the most 
 curl \
   -X PATCH 'MEILISEARCH_URL/indexes/products/settings/faceting' \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   --data-binary '{
     "sortFacetValuesBy": {
       "brand": "count"

@@ -88,7 +88,7 @@ You can run the scraper with Docker:
 docker run -t --rm \
   --network=host \
   -e MEILISEARCH_HOST_URL='<MEILISEARCH_URL>' \
-  -e MEILISEARCH_API_KEY='<MASTER_KEY>' \
+  -e MEILISEARCH_KEY='<MASTER_KEY>' \
   -v <absolute-path-to-your-config-file>:/docs-scraper/config.json \
   getmeili/docs-scraper:latest pipenv run ./docs_scraper config.json
 ```
