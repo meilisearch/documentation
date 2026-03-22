@@ -18,7 +18,25 @@ Some document fields are necessary for [filtering](/capabilities/filtering_sorti
 
 ## Configure your index before adding documents
 
-When creating a new index, first [configure its settings](/reference/api/settings/list-all-settings) and only then add your documents. Whenever you update settings such as [ranking rules](/capabilities/full_text_search/relevancy/relevancy), Meilisearch will trigger a reindexing of all your documents. This can be a time-consuming process, especially if you have a large dataset. For this reason, it is better to define ranking rules and other settings before indexing your data.
+When creating a new index, first [configure its settings](/reference/api/settings/list-all-settings) and only then add your documents. Whenever you update certain settings, Meilisearch will trigger a full reindexing of all your documents. This can be a time-consuming process, especially if you have a large dataset. For this reason, it is better to define your settings before indexing your data.
+
+### Settings that trigger a full reindex
+
+Updating any of the following settings causes Meilisearch to reindex all documents in the affected index:
+
+- [Searchable attributes](/reference/api/settings/get-searchableattributes)
+- [Filterable attributes](/reference/api/settings/get-filterableattributes)
+- [Sortable attributes](/reference/api/settings/get-sortableattributes)
+- [Stop words](/reference/api/settings/get-stop-words)
+- [Synonyms](/reference/api/settings/get-synonyms)
+- [Typo tolerance](/reference/api/settings/get-typo-tolerance-settings)
+- [Embedder configuration](/reference/api/settings/update-embedders)
+- [Dictionary](/reference/api/settings/get-dictionary)
+- [Proximity precision](/reference/api/settings/get-proximity-precision-settings)
+- [Separator tokens](/reference/api/settings/get-separator-tokens)
+- [Non-separator tokens](/reference/api/settings/get-non-separator-tokens)
+
+Changes to [displayed attributes](/reference/api/settings/get-displayedattributes) or [ranking rules](/reference/api/settings/get-ranking-rules) do not trigger a full reindex.
 
 ## Optimize document size
 

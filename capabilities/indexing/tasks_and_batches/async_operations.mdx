@@ -151,6 +151,18 @@ When you make a [request for an asynchronous operation](#which-operations-are-as
 
 Meilisearch processes tasks in batches, grouping tasks for the best possible performance. In most cases, batching should be transparent and have no impact on the overall task workflow. Use [the `/batches` route](/reference/api/batches/list-batches) to obtain more information on batches and how they are processing your tasks.
 
+#### How auto-batching works
+
+Meilisearch automatically groups consecutive compatible tasks into a single batch. For tasks to be batched together, they must meet all of the following conditions:
+
+- They target the **same index**
+- They are the **same task type** (for example, multiple `documentAdditionOrUpdate` tasks)
+- They use the **same content type** (for example, all JSON or all NDJSON)
+
+When Meilisearch encounters a task that cannot be grouped with the current batch (because it targets a different index, is a different task type, or is a `deleteByFilter` operation), it closes the current batch and starts a new one. Task ordering is always preserved: tasks within a batch are applied in the order they were enqueued.
+
+Settings update tasks are also batched together when they target the same index. However, a settings update and a document addition cannot be part of the same batch, even if they target the same index.
+
 ### Canceling tasks
 
 You can cancel a task while it is `enqueued` or `processing` by using [the cancel tasks endpoint](/reference/api/tasks/cancel-tasks). Doing so changes a task's `status` to `canceled`.
