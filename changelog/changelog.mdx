@@ -2243,7 +2243,7 @@ curl http://localhost:7700/indexes/movies/documents/edit \
  --data-binary '{"function": "doc.title = `✨ ${doc.title.to_upper} ✨`", "filter": "id > 3000"}'
 ```
 
-The `function` parameter accepts Rhai code that can modify document fields. Use the `filter` parameter to target specific documents and `context` to pass data to your function.
+The `function` parameter accepts [Rhai](https://rhai.rs/book/) code that can modify document fields. Use the `filter` parameter to target specific documents and `context` to pass data to your function.
 
 ## Improvements
 
