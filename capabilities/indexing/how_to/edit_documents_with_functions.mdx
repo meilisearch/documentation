@@ -21,6 +21,8 @@ This feature is experimental. Enable it before use and expect its API to change 
 
 Send a `PATCH` request to `/experimental-features`:
 
+<CodeGroup>
+
 ```bash
 curl \
   -X PATCH 'MEILISEARCH_URL/experimental-features' \
@@ -31,9 +33,13 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 ## Basic usage
 
 Send a `POST` request to `/indexes/{index_uid}/documents/edit` with a `function` parameter containing Rhai code. The function receives each document as `doc` and can modify its fields directly:
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -45,11 +51,15 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 This converts the `title` field to uppercase for every document in the `movies` index. The operation is asynchronous and returns a task object.
 
 ## Filter target documents
 
 Use the `filter` parameter to apply the function only to documents matching a filter expression:
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -62,11 +72,15 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 This sets `status` to `"archived"` only for movies released before the year 2000. The `filter` parameter uses the same [filter expression syntax](/capabilities/filtering_sorting_faceting/advanced/filter_expression_syntax) as search filters. Filtered attributes must be declared in `filterableAttributes`.
 
 ## Pass data with context
 
 The `context` parameter lets you pass external data into your function. Access it through the `context` variable:
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -82,11 +96,15 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 This applies a 20% discount to specific products in the electronics category.
 
 ## Examples
 
 ### Add a new field
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -98,7 +116,11 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 ### Remove a field
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -110,7 +132,11 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 ### Concatenate fields
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -122,7 +148,11 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 ### Conditional logic
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -134,7 +164,11 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 ### Use context for batch tagging
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -149,6 +183,8 @@ curl \
     "filter": "category = \"blog\""
   }'
 ```
+
+</CodeGroup>
 
 ## Rhai language basics
 

@@ -63,6 +63,8 @@ The leader instance is responsible for write operations. Non-leader instances re
 
 To search across all instances, add `useNetwork: true` to your search request:
 
+<CodeGroup>
+
 ```bash
 curl \
   -X POST 'MEILISEARCH_URL/indexes/movies/search' \
@@ -73,6 +75,8 @@ curl \
     "useNetwork": true
   }'
 ```
+
+</CodeGroup>
 
 The response includes `_federation` metadata showing which remote each result came from. You can also use the `_shard` filter to target specific shards:
 
@@ -88,6 +92,8 @@ The response includes `_federation` metadata showing which remote each result ca
 
 Network search works with [multi-search](/capabilities/multi_search/getting_started/federated_search) and [federated search](/capabilities/multi_search/getting_started/federated_search). Add `useNetwork: true` to individual queries within a multi-search request:
 
+<CodeGroup>
+
 ```bash
 curl \
   -X POST 'MEILISEARCH_URL/multi-search' \
@@ -100,6 +106,8 @@ curl \
     ]
   }'
 ```
+
+</CodeGroup>
 
 ## Feature compatibility
 
@@ -132,14 +140,14 @@ Before setting up sharding and replication, you need:
 ## Next steps
 
 <CardGroup cols={2}>
-  <Card title="Set up a sharded cluster" href="/capabilities/replication_and_sharding/how_to/setup_sharded_cluster">
+  <Card title="Set up a sharded cluster" href="/resources/self_hosting/sharding/setup_sharded_cluster">
     Step-by-step guide to configuring sharding and replication.
   </Card>
-  <Card title="Manage the network" href="/capabilities/replication_and_sharding/how_to/manage_network">
-    Add and remove remotes, update topology, and handle failover.
+  <Card title="Configure replication" href="/resources/self_hosting/sharding/configure_replication">
+    Set up replicated shards for high availability and read scaling.
   </Card>
-  <Card title="Federated search" href="/capabilities/multi_search/getting_started/federated_search">
-    Merge results from multiple indexes into a single list.
+  <Card title="Manage the network" href="/resources/self_hosting/sharding/manage_network">
+    Add and remove remotes, update topology, and handle failover.
   </Card>
   <Card title="Enterprise Edition" href="/resources/self_hosting/enterprise_edition">
     Learn about the differences between Community and Enterprise editions.

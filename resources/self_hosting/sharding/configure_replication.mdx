@@ -7,7 +7,7 @@ description: Set up replicated shards across multiple Meilisearch instances to e
 Replication assigns the same shard to multiple remotes in your Meilisearch network. If one remote goes down, another remote holding the same shard continues serving results. This guide covers how to configure replication, common patterns, and what to expect during failover.
 
 <Note>
-Replication requires the Meilisearch Enterprise Edition v1.37 or later and a [configured network](/capabilities/replication_and_sharding/how_to/setup_sharded_cluster).
+Replication requires the Meilisearch Enterprise Edition v1.37 or later and a [configured network](/resources/self_hosting/sharding/setup_sharded_cluster).
 </Note>
 
 ## How replication works
@@ -18,11 +18,13 @@ When you configure shards, each shard can be assigned to one or more remotes. If
 
 To replicate a shard, list multiple remotes in its configuration:
 
+<CodeGroup>
+
 ```bash
 curl \
   -X PATCH 'MEILISEARCH_URL/network' \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer MASTER_KEY' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   --data-binary '{
     "shards": {
       "shard-a": { "remotes": ["ms-00", "ms-01"] },
@@ -31,6 +33,8 @@ curl \
     }
   }'
 ```
+
+</CodeGroup>
 
 In this configuration, every shard exists on two remotes. If any single instance goes down, all shards remain available.
 
@@ -100,11 +104,13 @@ To add a new replica for an existing shard:
 
 1. Add the new remote to the network:
 
+<CodeGroup>
+
 ```bash
 curl \
   -X PATCH 'MEILISEARCH_URL/network' \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer MASTER_KEY' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   --data-binary '{
     "addRemotes": {
       "ms-03": {
@@ -115,13 +121,17 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 2. Update the shard assignment to include the new remote:
+
+<CodeGroup>
 
 ```bash
 curl \
   -X PATCH 'MEILISEARCH_URL/network' \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer MASTER_KEY' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   --data-binary '{
     "shards": {
       "shard-a": { "remotes": ["ms-00", "ms-01", "ms-03"] },
@@ -130,6 +140,8 @@ curl \
     }
   }'
 ```
+
+</CodeGroup>
 
 ## The leader instance
 
@@ -149,28 +161,36 @@ There is no automatic leader election. If your leader goes down, you must manual
 
 Check the current network topology to see which remotes are configured:
 
+<CodeGroup>
+
 ```bash
 curl \
   -X GET 'MEILISEARCH_URL/network' \
-  -H 'Authorization: Bearer MASTER_KEY'
+  -H 'Authorization: Bearer MEILISEARCH_KEY'
 ```
 
+</CodeGroup>
+
 To verify a specific remote is responding, query it directly or use the health endpoint:
+
+<CodeGroup>
 
 ```bash
 curl 'http://ms-01.example.com:7701/health'
 ```
 
+</CodeGroup>
+
 ## Next steps
 
 <CardGroup cols={2}>
-  <Card title="Set up a sharded cluster" href="/capabilities/replication_and_sharding/how_to/setup_sharded_cluster">
+  <Card title="Set up a sharded cluster" href="/resources/self_hosting/sharding/setup_sharded_cluster">
     Start from scratch with a full cluster setup guide.
   </Card>
-  <Card title="Manage the network" href="/capabilities/replication_and_sharding/how_to/manage_network">
+  <Card title="Manage the network" href="/resources/self_hosting/sharding/manage_network">
     Add and remove remotes, update shard assignments.
   </Card>
-  <Card title="Replication and sharding overview" href="/capabilities/replication_and_sharding/overview">
+  <Card title="Replication and sharding overview" href="/resources/self_hosting/sharding/overview">
     Understand the concepts and feature compatibility.
   </Card>
   <Card title="Data backup" href="/resources/self_hosting/data_backup/overview">
