@@ -1,0 +1,88 @@
+---
+title: Compact the task queue
+sidebarTitle: Compact task queue
+description: Clean up completed and canceled tasks to reduce the size of the task database and improve performance.
+---
+
+Meilisearch stores every task in its internal task database indefinitely. Over time, completed, failed, and canceled tasks accumulate and increase disk usage. Task deletion lets you remove old tasks you no longer need, keeping the task database lean.
+
+## Delete tasks
+
+Use the `DELETE /tasks` endpoint with filter parameters to remove tasks matching specific criteria. For example, to delete all completed tasks:
+
+```bash
+curl \
+  -X DELETE 'MEILISEARCH_URL/tasks?statuses=succeeded' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY'
+```
+
+This returns a task summary. The deletion itself is an asynchronous operation.
+
+## Filter which tasks to delete
+
+You can combine filters to target specific tasks:
+
+| Parameter | Example | Description |
+|-----------|---------|-------------|
+| `statuses` | `succeeded,failed,canceled` | Delete tasks with these statuses |
+| `types` | `documentAdditionOrUpdate` | Delete tasks of this type |
+| `indexUids` | `movies,books` | Delete tasks targeting these indexes |
+| `uids` | `1,2,3` | Delete specific tasks by ID |
+| `beforeEnqueuedAt` | `2026-01-01T00:00:00Z` | Delete tasks enqueued before this date |
+| `beforeFinishedAt` | `2026-01-01T00:00:00Z` | Delete tasks finished before this date |
+
+### Delete old completed tasks
+
+```bash
+curl \
+  -X DELETE 'MEILISEARCH_URL/tasks?statuses=succeeded&beforeFinishedAt=2026-01-01T00:00:00Z' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY'
+```
+
+### Delete all failed and canceled tasks
+
+```bash
+curl \
+  -X DELETE 'MEILISEARCH_URL/tasks?statuses=failed,canceled' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY'
+```
+
+### Delete tasks for a specific index
+
+```bash
+curl \
+  -X DELETE 'MEILISEARCH_URL/tasks?indexUids=old_index&statuses=succeeded,failed,canceled' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY'
+```
+
+## When to clean up tasks
+
+Consider cleaning up tasks when:
+
+- **Disk usage grows**: the task database can accumulate thousands of entries over weeks of operation
+- **Task list queries slow down**: a large task database can make `/tasks` queries slower
+- **After bulk operations**: importing large datasets creates many tasks that can be cleaned up once verified
+
+<Warning>
+You must provide at least one filter parameter. Meilisearch does not allow deleting all tasks without any filter.
+</Warning>
+
+## Limitations
+
+- Task deletion is an asynchronous operation processed like any other task
+- Task deletion **cannot be autobatched** with other task types. Each deletion runs as its own batch
+- You cannot delete tasks that are currently `enqueued` or `processing`
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Filter tasks" href="/capabilities/indexing/tasks_and_batches/filter_tasks">
+    Use query parameters to find specific tasks.
+  </Card>
+  <Card title="Monitor tasks" href="/capabilities/indexing/tasks_and_batches/monitor_tasks">
+    Track the progress of asynchronous operations.
+  </Card>
+  <Card title="Asynchronous operations" href="/capabilities/indexing/tasks_and_batches/async_operations">
+    Understand how Meilisearch processes tasks in the background.
+  </Card>
+</CardGroup>

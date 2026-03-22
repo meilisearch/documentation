@@ -476,15 +476,6 @@ Sets the maximum time in seconds a search request can take before being dropped.
 
 Configures the number of concurrent search requests each CPU core can handle.
 
-### Allowed IP networks <NoticeTag type="experimental" label="experimental" />
-
-**Environment variable**: `MEILI_EXPERIMENTAL_ALLOWED_IP_NETWORKS`<br />
-**CLI option**: `--experimental-allowed-ip-networks`<br />
-**Default value**: `None`<br />
-**Expected value**: comma-separated list of CIDR ranges
-
-Override the default IP policy. Restricts access to Meilisearch to the specified IP networks.
-
 ### Search personalization <NoticeTag type="experimental" label="experimental" />
 
 **Environment variable**: `MEILI_EXPERIMENTAL_PERSONALIZATION_API_KEY`<br />
@@ -512,7 +503,27 @@ You may want to allow requests to private networks to query internal services du
 To do so, specify a list of comma-separated CIDR networks (e.g. `192.168.0.0/16,10.0.0.0/8`). You may specify `any` to allow all
 requests regardless of target IP (use only in controlled environments, this is not recommended for production).
 
-### S3 options
+### Remote search timeout <NoticeTag type="experimental" label="experimental" />
+
+**Environment variable**: `MEILI_EXPERIMENTAL_REMOTE_SEARCH_TIMEOUT_SECONDS`<br />
+**Default value**: `30`<br />
+**Expected value**: a positive integer (seconds)
+
+Sets the maximum time in seconds a remote federated search request can take before timing out. This configuration is only available via environment variable; no CLI flag is available.
+
+### Disable FID-based database cleanup <NoticeTag type="experimental" label="experimental" />
+
+**Environment variable**: `MEILI_EXPERIMENTAL_DISABLE_FID_BASED_DATABASES_CLEANUP`<br />
+**Default value**: `false`<br />
+**Expected value**: a boolean
+
+Allows you to opt out of the field ID-based database cleanup when upgrading from Meilisearch versions prior to v1.32. Set this to `true` if you experience issues during the upgrade process. This configuration is only available via environment variable; no CLI flag is available.
+
+### S3 options <NoticeTag type="enterprise" label="Enterprise" />
+
+<Note>
+S3 snapshot storage requires the Meilisearch Enterprise Edition. See [Enterprise and Community editions](/resources/self_hosting/enterprise_edition) for details.
+</Note>
 
 #### Bucket URL
 
