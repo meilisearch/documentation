@@ -68,6 +68,8 @@ genres = action
 
 When operating on strings, `=` is case-insensitive.
 
+When the filtered attribute contains an array, `=` matches any document where at least one element in the array equals the specified value. For example, if a document has `"genres": ["action", "adventure"]`, the filter `genres = action` will match that document because `"action"` is one of the array's elements. The same logic applies to `!=`, `IN`, and other comparison operators.
+
 The equality operator does not return any results for `null` and empty arrays.
 
 ### Inequality (`!=`)
