@@ -6,6 +6,10 @@ description: "Meilisearch's tenant tokens are JSON web tokens (JWTs). Their payl
 
 Meilisearch's tenant tokens are JSON web tokens (JWTs). Their payload is made of three elements: [search rules](#search-rules), an [API key UID](#api-key-uid), and an optional [expiration date](#expiry-date).
 
+<Tip>
+You can use [jwt.io](https://jwt.io) to inspect and debug tenant tokens during development. Paste a token into the tool to view its decoded header, payload, and signature.
+</Tip>
+
 ## Example payload
 
 <CodeGroup>
