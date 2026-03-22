@@ -14,34 +14,46 @@ Sharding requires the Meilisearch Enterprise Edition v1.37 or later.
 
 Start three Meilisearch instances, each with a master key:
 
+<CodeGroup>
+
 ```bash
 # Instance ms-00
-meilisearch --master-key MASTER_KEY_00 --http-addr 0.0.0.0:7700
+meilisearch --master-key MEILISEARCH_KEY_00 --http-addr 0.0.0.0:7700
 
 # Instance ms-01
-meilisearch --master-key MASTER_KEY_01 --http-addr 0.0.0.0:7701
+meilisearch --master-key MEILISEARCH_KEY_01 --http-addr 0.0.0.0:7701
 
 # Instance ms-02
-meilisearch --master-key MASTER_KEY_02 --http-addr 0.0.0.0:7702
+meilisearch --master-key MEILISEARCH_KEY_02 --http-addr 0.0.0.0:7702
 ```
+
+</CodeGroup>
 
 If your instances communicate over a private network, add the `--experimental-allowed-ip-networks` flag:
 
+<CodeGroup>
+
 ```bash
-meilisearch --master-key MASTER_KEY --experimental-allowed-ip-networks 10.0.0.0/8,192.168.0.0/16
+meilisearch --master-key MEILISEARCH_KEY --experimental-allowed-ip-networks 10.0.0.0/8,192.168.0.0/16
 ```
+
+</CodeGroup>
 
 ## Step 2: Enable the network feature
 
 Enable the experimental network feature on each instance:
 
+<CodeGroup>
+
 ```bash
 curl \
   -X PATCH 'http://ms-00.example.com:7700/experimental-features' \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer MASTER_KEY_00' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY_00' \
   --data-binary '{ "network": true }'
 ```
+
+</CodeGroup>
 
 Repeat for `ms-01` and `ms-02` with their respective URLs and master keys.
 
@@ -49,11 +61,13 @@ Repeat for `ms-01` and `ms-02` with their respective URLs and master keys.
 
 Send a `PATCH /network` request to each instance. The configuration is identical across instances except for the `self` field, which identifies the current instance:
 
+<CodeGroup>
+
 ```bash
 curl \
   -X PATCH 'http://ms-00.example.com:7700/network' \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer MASTER_KEY_00' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY_00' \
   --data-binary '{
     "leader": "ms-00",
     "self": "ms-00",
@@ -74,17 +88,21 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 Send the same request to `ms-01` (with `"self": "ms-01"`) and `ms-02` (with `"self": "ms-02"`).
 
 ## Step 4: Configure shards
 
 Define how documents are distributed across remotes. Each shard is assigned to one or more remotes:
 
+<CodeGroup>
+
 ```bash
 curl \
   -X PATCH 'http://ms-00.example.com:7700/network' \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer MASTER_KEY_00' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY_00' \
   --data-binary '{
     "shards": {
       "shard-a": { "remotes": ["ms-00", "ms-01"] },
@@ -94,23 +112,29 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 In this configuration, each shard is replicated across two remotes. If any single instance goes down, all shards remain available through the other instance.
 
 ## Step 5: Index documents
 
 Send documents to the leader instance (`ms-00`). The leader distributes them across shards automatically:
 
+<CodeGroup>
+
 ```bash
 curl \
   -X POST 'http://ms-00.example.com:7700/indexes/movies/documents' \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer MASTER_KEY_00' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY_00' \
   --data-binary '[
     { "id": 1, "title": "Batman Begins" },
     { "id": 2, "title": "The Dark Knight" },
     { "id": 3, "title": "Spider-Man" }
   ]'
 ```
+
+</CodeGroup>
 
 <Warning>
 All write operations (document additions, updates, deletions, settings changes) must go through the leader instance. Non-leader instances reject writes with a `not_a_leader` error.
@@ -119,6 +143,8 @@ All write operations (document additions, updates, deletions, settings changes) 
 ## Step 6: Search across the cluster
 
 Search with `useNetwork: true` to query all remotes:
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -131,25 +157,31 @@ curl \
   }'
 ```
 
+</CodeGroup>
+
 Meilisearch fans out the search to all remotes, collects results from each shard, and returns a single merged response.
 
 ## Verify the topology
 
 Check the current network configuration at any time:
 
+<CodeGroup>
+
 ```bash
 curl \
   -X GET 'http://ms-00.example.com:7700/network' \
-  -H 'Authorization: Bearer MASTER_KEY_00'
+  -H 'Authorization: Bearer MEILISEARCH_KEY_00'
 ```
+
+</CodeGroup>
 
 ## Next steps
 
 <CardGroup cols={2}>
-  <Card title="Manage the network" href="/capabilities/replication_and_sharding/how_to/manage_network">
+  <Card title="Manage the network" href="/resources/self_hosting/sharding/manage_network">
     Add and remove remotes dynamically without reconfiguring the entire topology.
   </Card>
-  <Card title="Replication and sharding overview" href="/capabilities/replication_and_sharding/overview">
+  <Card title="Replication and sharding overview" href="/resources/self_hosting/sharding/overview">
     Understand the concepts behind sharding, replication, and network search.
   </Card>
   <Card title="Data backup" href="/resources/self_hosting/data_backup/overview">

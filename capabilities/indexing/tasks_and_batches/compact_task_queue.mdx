@@ -10,11 +10,15 @@ Meilisearch stores every task in its internal task database indefinitely. Over t
 
 Use the `DELETE /tasks` endpoint with filter parameters to remove tasks matching specific criteria. For example, to delete all completed tasks:
 
+<CodeGroup>
+
 ```bash
 curl \
   -X DELETE 'MEILISEARCH_URL/tasks?statuses=succeeded' \
   -H 'Authorization: Bearer MEILISEARCH_KEY'
 ```
+
+</CodeGroup>
 
 This returns a task summary. The deletion itself is an asynchronous operation.
 
@@ -33,13 +37,19 @@ You can combine filters to target specific tasks:
 
 ### Delete old completed tasks
 
+<CodeGroup>
+
 ```bash
 curl \
   -X DELETE 'MEILISEARCH_URL/tasks?statuses=succeeded&beforeFinishedAt=2026-01-01T00:00:00Z' \
   -H 'Authorization: Bearer MEILISEARCH_KEY'
 ```
 
+</CodeGroup>
+
 ### Delete all failed and canceled tasks
+
+<CodeGroup>
 
 ```bash
 curl \
@@ -47,13 +57,19 @@ curl \
   -H 'Authorization: Bearer MEILISEARCH_KEY'
 ```
 
+</CodeGroup>
+
 ### Delete tasks for a specific index
+
+<CodeGroup>
 
 ```bash
 curl \
   -X DELETE 'MEILISEARCH_URL/tasks?indexUids=old_index&statuses=succeeded,failed,canceled' \
   -H 'Authorization: Bearer MEILISEARCH_KEY'
 ```
+
+</CodeGroup>
 
 ## When to clean up tasks
 

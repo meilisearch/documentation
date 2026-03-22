@@ -531,20 +531,6 @@
                     ]
                   }
                 ]
-              },
-              {
-                "group": "Replication and sharding",
-                "pages": [
-                  "capabilities/replication_and_sharding/overview",
-                  {
-                    "group": "How to",
-                    "pages": [
-                      "capabilities/replication_and_sharding/how_to/setup_sharded_cluster",
-                      "capabilities/replication_and_sharding/how_to/configure_replication",
-                      "capabilities/replication_and_sharding/how_to/manage_network"
-                    ]
-                  }
-                ]
               }
             ]
           },
@@ -1018,9 +1004,17 @@
                     ]
                   },
                   {
+                    "group": "Sharding and replication",
+                    "pages": [
+                      "resources/self_hosting/sharding/overview",
+                      "resources/self_hosting/sharding/setup_sharded_cluster",
+                      "resources/self_hosting/sharding/configure_replication",
+                      "resources/self_hosting/sharding/manage_network"
+                    ]
+                  },
+                  {
                     "group": "Advanced",
                     "pages": [
-                      "resources/self_hosting/sharding",
                       "resources/self_hosting/performance/ram_multithreading",
                       "resources/self_hosting/webhooks",
                       "resources/self_hosting/huggingface_gpu"
@@ -1136,7 +1130,15 @@
     },
     {
       "source": "/capabilities/multi_search/how_to/use_network_search",
-      "destination": "/capabilities/replication_and_sharding/overview"
+      "destination": "/resources/self_hosting/sharding/overview"
+    },
+    {
+      "source": "/resources/self_hosting/sharding",
+      "destination": "/resources/self_hosting/sharding/overview"
+    },
+    {
+      "source": "/capabilities/replication_and_sharding/overview",
+      "destination": "/resources/self_hosting/sharding/overview"
     },
     {
       "source": "/resources/self_hosting/getting_started",
@@ -1728,7 +1730,7 @@
     },
     {
       "source": "/learn/advanced/sharding",
-      "destination": "/capabilities/replication_and_sharding/overview"
+      "destination": "/resources/self_hosting/sharding/overview"
     },
     {
       "source": "/reference/api/stats",
@@ -1940,7 +1942,7 @@
     },
     {
       "source": "/learn/multi_search/implement_sharding",
-      "destination": "/capabilities/replication_and_sharding/overview"
+      "destination": "/resources/self_hosting/sharding/overview"
     },
     {
       "source": "/learn/multi_search/multi_search_vs_federated_search",
