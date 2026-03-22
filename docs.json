@@ -1124,6 +1124,10 @@
   },
   "redirects": [
     {
+      "source": "/learn/advanced",
+      "destination": "/capabilities/overview"
+    },
+    {
       "source": "/capabilities/security/how_to/configure_sso",
       "destination": "/capabilities/teams/how_to/configure_sso_for_team"
     },
