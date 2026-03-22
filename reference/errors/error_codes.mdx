@@ -166,6 +166,10 @@ The value passed to [`media`](/reference/api/search/search-with-post#body-media)
 
 The search query contains non-`null` values for both [`media`](/reference/api/search/search-with-post#body-media) and [`vector`](/reference/api/search/search-with-post#body-media). These two parameters are mutually exclusive, since `media` generates vector embeddings via the embedder configured in `hybrid`.
 
+## `invalid_filter`
+
+The provided [filter expression](/capabilities/filtering_sorting_faceting/advanced/filter_expression_syntax) is invalid. This may happen if the filter syntax is malformed, uses an unsupported operator, or references an attribute not listed in [`filterableAttributes`](/reference/api/settings/get-filterableattributes).
+
 ## `invalid_content_type`
 
 The [Content-Type header](/reference/api/headers) is not supported by Meilisearch. Currently, Meilisearch only supports JSON, CSV, and NDJSON.
@@ -730,9 +734,13 @@ The document exists in store, but there was an error retrieving it. This probabl
 
 ## `vector_embedding_error`
 
-Error while generating embeddings. You may often see this error when the embedding provider service is currently unavailable. Most providers offer status pages to monitor the state of their services, such as OpenAI's https://status.openai.com/.
+Error while generating embeddings. Common causes include:
 
-Inaccessible embedding provider errors usually include a message stating Meilisearch "could not reach embedding server".
+- **Provider unavailability**: The embedding provider service is temporarily down or unreachable. Most providers offer status pages to monitor the state of their services, such as OpenAI's https://status.openai.com/. Errors of this type usually include a message stating Meilisearch "could not reach embedding server".
+- **Invalid or expired API key**: The API key configured for your external embedding provider (OpenAI, Cohere, etc.) is incorrect, expired, or has exceeded its rate limit. Verify your key is valid and has sufficient quota.
+- **Misconfigured embedder settings**: The [`embedders`](/reference/api/settings/get-embedders) index setting contains incorrect values, such as a wrong model name, an invalid URL for a REST embedder, or missing required fields.
+- **Dimension mismatch**: The dimensions of the vectors provided or generated do not match the dimensions expected by the embedder configuration. Ensure the `dimensions` value in your embedder settings matches the output of your embedding model.
+- **Input too large**: The document content sent to the embedding provider exceeds the model's maximum token or input length. Consider reducing the size of your [`documentTemplate`](/capabilities/hybrid_search/advanced/document_template_best_practices) or limiting the attributes included in it.
 
 ## `remote_bad_response`
 
