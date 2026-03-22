@@ -508,6 +508,7 @@
                       "capabilities/indexing/how_to/compact_an_index",
                       "capabilities/indexing/how_to/import_large_datasets",
                       "capabilities/indexing/how_to/design_primary_keys",
+                      "capabilities/indexing/how_to/edit_documents_with_functions",
                       "capabilities/indexing/how_to/delete_documents_at_scale"
                     ]
                   },
@@ -518,7 +519,8 @@
                       "capabilities/indexing/tasks_and_batches/monitor_tasks",
                       "capabilities/indexing/tasks_and_batches/filter_tasks",
                       "capabilities/indexing/tasks_and_batches/manage_task_database",
-                      "capabilities/indexing/tasks_and_batches/optimize_batch_performance"
+                      "capabilities/indexing/tasks_and_batches/optimize_batch_performance",
+                      "capabilities/indexing/tasks_and_batches/compact_task_queue"
                     ]
                   },
                   {
@@ -526,6 +528,20 @@
                     "pages": [
                       "capabilities/indexing/advanced/indexing_best_practices",
                       "capabilities/indexing/advanced/tokenization"
+                    ]
+                  }
+                ]
+              },
+              {
+                "group": "Replication and sharding",
+                "pages": [
+                  "capabilities/replication_and_sharding/overview",
+                  {
+                    "group": "How to",
+                    "pages": [
+                      "capabilities/replication_and_sharding/how_to/setup_sharded_cluster",
+                      "capabilities/replication_and_sharding/how_to/configure_replication",
+                      "capabilities/replication_and_sharding/how_to/manage_network"
                     ]
                   }
                 ]
@@ -1122,7 +1138,7 @@
     },
     {
       "source": "/capabilities/multi_search/how_to/use_network_search",
-      "destination": "/resources/self_hosting/sharding"
+      "destination": "/capabilities/replication_and_sharding/overview"
     },
     {
       "source": "/resources/self_hosting/getting_started",
@@ -1714,7 +1730,7 @@
     },
     {
       "source": "/learn/advanced/sharding",
-      "destination": "/resources/self_hosting/sharding"
+      "destination": "/capabilities/replication_and_sharding/overview"
     },
     {
       "source": "/reference/api/stats",
@@ -1926,7 +1942,7 @@
     },
     {
       "source": "/learn/multi_search/implement_sharding",
-      "destination": "/resources/self_hosting/sharding"
+      "destination": "/capabilities/replication_and_sharding/overview"
     },
     {
       "source": "/learn/multi_search/multi_search_vs_federated_search",
