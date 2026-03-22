@@ -76,7 +76,7 @@ You can disable typo tolerance for all numeric values across all indexes and sea
 curl \
   -X PATCH 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/typo-tolerance' \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   --data-binary '{
     "disableOnNumbers": true
   }'
@@ -103,6 +103,8 @@ By default, Meilisearch uses the following rules for matching documents. These r
 - If the query word is between `1` and `4` characters, **no typo** is allowed. Only documents containing words that **start with** or are of the **same length** as the query word are considered
 - If the query word is between `5` and `8` characters, **one typo** is allowed
 - If the query word contains more than `8` characters, a maximum of **two typos** is allowed
+
+Meilisearch allows a maximum of 2 typos per word. Words with 3 or more typos will never match, regardless of word length or configuration.
 
 For example, `saturday` (8 characters) uses the second rule and matches with **one typo**:
 
