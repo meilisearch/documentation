@@ -153,14 +153,13 @@ This option will trigger an error if `--import-dump` is not defined.
 
 ### Ignore dump if DB exists
 
-<Warning>
-🚩 This option does not take any values. Assigning a value will throw an error. 🚩
-</Warning>
-
 **Environment variable**: `MEILI_IGNORE_DUMP_IF_DB_EXISTS`<br />
-**CLI option**: `--ignore-dump-if-db-exists`
+**CLI option**: `--ignore-dump-if-db-exists`<br />
+**Expected value**: a boolean (`true` or `false`)
 
-Prevents a Meilisearch instance with an existing database from throwing an error when using `--import-dump`. Instead, the dump will be ignored and Meilisearch will launch using the existing database.
+Set this option to `true` to prevent a Meilisearch instance with an existing database from throwing an error when using `--import-dump`. When enabled, the dump will be ignored and Meilisearch will launch using the existing database.
+
+For the environment variable, set `MEILI_IGNORE_DUMP_IF_DB_EXISTS=true`. For the CLI option, pass `--ignore-dump-if-db-exists`.
 
 This option will trigger an error if `--import-dump` is not defined.
 
