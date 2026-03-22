@@ -57,6 +57,7 @@ You can include more than one quoted phrase in a query:
 curl \
   -X POST 'MEILISEARCH_URL/indexes/movies/search' \
   -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   --data-binary '{
     "q": "\"star wars\" \"empire strikes\""
   }'

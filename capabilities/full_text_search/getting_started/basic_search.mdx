@@ -17,7 +17,7 @@ Send a search request to your index with the `q` parameter:
 ```bash
 curl -X POST 'MEILISEARCH_URL/indexes/movies/search' \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   --data-binary '{
     "q": "galaxy"
   }'
@@ -75,7 +75,7 @@ Meilisearch handles typos automatically. A search for "galxy" or "galaxi" still 
 ```bash
 curl -X POST 'MEILISEARCH_URL/indexes/movies/search' \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   --data-binary '{
     "q": "galxy"
   }'
@@ -94,7 +94,7 @@ When you search with multiple words, Meilisearch finds documents containing any 
 ```bash
 curl -X POST 'MEILISEARCH_URL/indexes/movies/search' \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   --data-binary '{
     "q": "dark knight"
   }'
@@ -113,7 +113,7 @@ Control how many results you get back with `limit` and `offset`:
 ```bash
 curl -X POST 'MEILISEARCH_URL/indexes/movies/search' \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   --data-binary '{
     "q": "action",
     "limit": 5,

@@ -17,6 +17,7 @@ Use `attributesToHighlight` to specify which fields should have matched terms wr
 curl \
   -X POST 'MEILISEARCH_URL/indexes/movies/search' \
   -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   --data-binary '{
     "q": "american hero",
     "attributesToHighlight": ["title", "overview"]
@@ -56,6 +57,7 @@ Use `highlightPreTag` and `highlightPostTag` to replace the default `<em>` tags 
 curl \
   -X POST 'MEILISEARCH_URL/indexes/movies/search' \
   -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   --data-binary '{
     "q": "american hero",
     "attributesToHighlight": ["title", "overview"],
@@ -76,6 +78,7 @@ Use `attributesToCrop` to trim long text fields so only the portion around match
 curl \
   -X POST 'MEILISEARCH_URL/indexes/movies/search' \
   -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   --data-binary '{
     "q": "romance",
     "attributesToCrop": ["overview"],
@@ -117,6 +120,7 @@ You can set a specific crop length for individual attributes by appending `:leng
 curl \
   -X POST 'MEILISEARCH_URL/indexes/movies/search' \
   -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   --data-binary '{
     "q": "adventure",
     "attributesToCrop": ["overview:30", "tagline:10"]
@@ -135,6 +139,7 @@ For the best user experience, use both features together. This gives you a short
 curl \
   -X POST 'MEILISEARCH_URL/indexes/movies/search' \
   -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   --data-binary '{
     "q": "space adventure",
     "attributesToHighlight": ["title", "overview"],

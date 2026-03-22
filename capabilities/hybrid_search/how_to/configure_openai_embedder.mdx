@@ -58,7 +58,7 @@ Send the embedder configuration to Meilisearch using the update settings endpoin
 curl \
   -X PATCH 'MEILISEARCH_URL/indexes/INDEX_NAME/settings' \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   --data-binary '{
     "embedders": {
       "my-openai": {
@@ -73,7 +73,7 @@ curl \
 
 </CodeGroup>
 
-Replace `MEILISEARCH_URL` with the address of your Meilisearch project, `INDEX_NAME` with your index name, `MEILISEARCH_API_KEY` with your Meilisearch API key, and `OPEN_AI_API_KEY` with your [OpenAI API key](https://platform.openai.com/api-keys).
+Replace `MEILISEARCH_URL` with the address of your Meilisearch project, `INDEX_NAME` with your index name, `MEILISEARCH_KEY` with your Meilisearch API key, and `OPEN_AI_API_KEY` with your [OpenAI API key](https://platform.openai.com/api-keys).
 
 Meilisearch will start generating embeddings for all documents in the index. Monitor progress through the [task queue](/reference/api/tasks/list-tasks).
 

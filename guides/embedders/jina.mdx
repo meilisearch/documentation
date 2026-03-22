@@ -84,7 +84,7 @@ Adjust `model` and `dimensions` to match the model you choose (1024 for v5-text-
 curl \
   -X PATCH 'MEILISEARCH_URL/indexes/INDEX_NAME/settings' \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   --data-binary '{
     "embedders": {
       "jina": {

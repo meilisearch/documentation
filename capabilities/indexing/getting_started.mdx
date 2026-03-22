@@ -116,6 +116,7 @@ Once the task succeeds, your documents are ready to search. Test with a simple q
 curl \
   -X POST 'MEILISEARCH_URL/indexes/movies/search' \
   -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   --data-binary '{ "q": "wonder" }'
 ```
 

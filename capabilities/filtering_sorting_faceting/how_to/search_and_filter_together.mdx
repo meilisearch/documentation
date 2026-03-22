@@ -27,7 +27,7 @@ Start with a products index configured with filterable and searchable attributes
 curl \
   -X PATCH 'MEILISEARCH_URL/indexes/products/settings' \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   --data-binary '{
     "filterableAttributes": ["category", "brand", "price"],
     "sortableAttributes": ["price"]

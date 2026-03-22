@@ -18,7 +18,7 @@ You can also set the primary key explicitly when creating the index or when addi
 curl \
   -X POST 'MEILISEARCH_URL/indexes' \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   --data-binary '{
     "uid": "products",
     "primaryKey": "product_id"
@@ -35,7 +35,7 @@ Or using the `primaryKey` query parameter when adding documents:
 curl \
   -X POST 'MEILISEARCH_URL/indexes/products/documents?primaryKey=product_id' \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   --data-binary @products.json
 ```
 
@@ -146,13 +146,13 @@ The primary key cannot be modified once set. If you need to change it:
 # Delete the index
 curl \
   -X DELETE 'MEILISEARCH_URL/indexes/products' \
-  -H 'Authorization: Bearer MEILISEARCH_API_KEY'
+  -H 'Authorization: Bearer MEILISEARCH_KEY'
 
 # Recreate with the correct primary key
 curl \
   -X POST 'MEILISEARCH_URL/indexes' \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   --data-binary '{
     "uid": "products",
     "primaryKey": "sku"

@@ -49,6 +49,7 @@ To associate analytics events with specific search queries, you need the query's
 curl \
   -X POST 'MEILISEARCH_URL/indexes/movies/search' \
   -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   -H 'Meili-Include-Metadata: true' \
   --data-binary '{
     "q": "action hero"
@@ -89,6 +90,7 @@ You can include additional metadata with your search requests using the `analyti
 curl \
   -X POST 'MEILISEARCH_URL/indexes/movies/search' \
   -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   -H 'Meili-Include-Metadata: true' \
   --data-binary '{
     "q": "action hero",

@@ -1,5 +1,5 @@
 const MEILISEARCH_HOST = 'https://ms-909f535664f8-173.lon.meilisearch.io'
-const MEILISEARCH_API_KEY = '776dc6a11c118bd1640c3a9ff9679f920bc384238534fc4861fcde0152e7fd68'; // Public search-only API key
+const MEILISEARCH_KEY = '776dc6a11c118bd1640c3a9ff9679f920bc384238534fc4861fcde0152e7fd68'; // Public search-only API key
 const MEILISEARCH_INDEX = 'mintlify-production';
 
 function initializeMeilisearchIntegration() {
@@ -383,7 +383,7 @@ function initializeMeilisearchIntegration() {
     try {
       const client = new window.meilisearch({
         host: MEILISEARCH_HOST,
-        apiKey: MEILISEARCH_API_KEY
+        apiKey: MEILISEARCH_KEY
       });
 
       const index = client.index(MEILISEARCH_INDEX);

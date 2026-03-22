@@ -67,7 +67,7 @@ You can reorder, add, or remove ranking rules:
 
 ```bash
 curl -X PUT "${MEILISEARCH_URL}/indexes/movies/settings/ranking-rules" \
-  -H "Authorization: Bearer ${MEILISEARCH_API_KEY}" \
+  -H "Authorization: Bearer ${MEILISEARCH_KEY}" \
   -H "Content-Type: application/json" \
   --data-binary '[
     "words",

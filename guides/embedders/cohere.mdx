@@ -90,7 +90,7 @@ Send this configuration to Meilisearch by updating your index settings:
 curl \
   -X PATCH 'MEILISEARCH_URL/indexes/INDEX_NAME/settings' \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   --data-binary '{
     "embedders": {
       "cohere": {

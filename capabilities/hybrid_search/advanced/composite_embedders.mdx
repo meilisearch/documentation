@@ -34,7 +34,7 @@ Activate the `compositeEmbedders` flag:
 curl \
   -X PATCH 'http://localhost:7700/experimental-features' \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   --data-binary '{
     "compositeEmbedders": true
   }'
@@ -52,7 +52,7 @@ Set the embedder source to `"composite"` and define separate `searchEmbedder` an
 curl \
   -X PATCH 'http://localhost:7700/indexes/movies/settings/embedders' \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   --data-binary '{
     "hybrid": {
       "source": "composite",
@@ -98,7 +98,7 @@ Search works exactly like any other hybrid search. Reference the composite embed
 curl \
   -X POST 'http://localhost:7700/indexes/movies/search' \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   --data-binary '{
     "q": "feel-good adventure movie",
     "hybrid": {

@@ -33,7 +33,7 @@ using Meilisearch;
 
 var client = new MeilisearchClient(
     Environment.GetEnvironmentVariable("MEILISEARCH_URL"),
-    Environment.GetEnvironmentVariable("MEILISEARCH_API_KEY")
+    Environment.GetEnvironmentVariable("MEILISEARCH_KEY")
 );
 ```
 
@@ -41,7 +41,7 @@ var client = new MeilisearchClient(
 **Set your environment variables:**
 ```bash
 export MEILISEARCH_URL="https://your-instance.meilisearch.io"  # or http://localhost:7700
-export MEILISEARCH_API_KEY="your_api_key"
+export MEILISEARCH_KEY="your_api_key"
 ```
 [Get a free Cloud instance →](https://cloud.meilisearch.com)
 </Note>
@@ -109,7 +109,7 @@ using Meilisearch;
 
 var client = new MeilisearchClient(
     Environment.GetEnvironmentVariable("MEILISEARCH_URL"),
-    Environment.GetEnvironmentVariable("MEILISEARCH_API_KEY")
+    Environment.GetEnvironmentVariable("MEILISEARCH_KEY")
 );
 
 // Add documents

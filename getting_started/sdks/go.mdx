@@ -30,7 +30,7 @@ import (
 func main() {
     client := meilisearch.New(
         os.Getenv("MEILISEARCH_URL"),
-        meilisearch.WithAPIKey(os.Getenv("MEILISEARCH_API_KEY")),
+        meilisearch.WithAPIKey(os.Getenv("MEILISEARCH_KEY")),
     )
 }
 ```
@@ -39,7 +39,7 @@ func main() {
 **Set your environment variables:**
 ```bash
 export MEILISEARCH_URL="https://your-instance.meilisearch.io"  # or http://localhost:7700
-export MEILISEARCH_API_KEY="your_api_key"
+export MEILISEARCH_KEY="your_api_key"
 ```
 [Get a free Cloud instance →](https://cloud.meilisearch.com)
 </Note>
@@ -113,7 +113,7 @@ type Movie struct {
 func main() {
     client := meilisearch.New(
         os.Getenv("MEILISEARCH_URL"),
-        meilisearch.WithAPIKey(os.Getenv("MEILISEARCH_API_KEY")),
+        meilisearch.WithAPIKey(os.Getenv("MEILISEARCH_KEY")),
     )
 
     // Add documents

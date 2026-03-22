@@ -42,7 +42,7 @@ Set `binaryQuantized` to `true` in your embedder configuration:
 curl \
   -X PATCH 'MEILISEARCH_URL/indexes/products/settings/embedders' \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   --data-binary '{
     "default": {
       "binaryQuantized": true
@@ -64,7 +64,7 @@ Use OpenAI's largest embedding model with binary quantization for the best balan
 curl \
   -X PATCH 'MEILISEARCH_URL/indexes/products/settings/embedders' \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   --data-binary '{
     "default": {
       "source": "openAi",

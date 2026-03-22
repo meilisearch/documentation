@@ -36,7 +36,7 @@ You may also use the `/settings/embedders` API subroute to configure your embedd
 curl \
   -X PATCH 'MEILISEARCH_URL/indexes/movies/settings/embedders' \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   --data-binary '{
     "movies-text": {
       "source": "openAi",
@@ -49,7 +49,7 @@ curl \
 
 </CodeGroup>
 
-Replace `MEILISEARCH_URL`, `MEILISEARCH_API_KEY`, and `OPENAI_API_KEY` with the corresponding values in your application.
+Replace `MEILISEARCH_URL`, `MEILISEARCH_KEY`, and `OPENAI_API_KEY` with the corresponding values in your application.
 
 Meilisearch will start generating the embeddings for all movies in your dataset. Use the returned `taskUid` to [track the progress of this task](/capabilities/indexing/tasks_and_batches/async_operations). Once it is finished, you are ready to start searching.
 
@@ -63,7 +63,7 @@ With your documents added and all embeddings generated, you can perform a search
 curl \
   -X POST 'MEILISEARCH_URL/indexes/movies/search' \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   --data-binary '{
     "q": "batman",
     "hybrid": {
@@ -87,7 +87,7 @@ Pass "Batman"'s `id` to your index's [`/similar` route](/reference/api/similar-d
 curl \
   -X POST 'MEILISEARCH_URL/indexes/movies/similar' \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   --data-binary '{
     "id": 192,
     "embedder": "movies-text"

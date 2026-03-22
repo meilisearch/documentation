@@ -80,7 +80,7 @@ The `maxValuesPerFacet` setting (default: 100) controls how many distinct values
 curl \
   -X PATCH 'MEILISEARCH_URL/indexes/products/settings/faceting' \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   --data-binary '{
     "maxValuesPerFacet": 20
   }'
@@ -104,7 +104,7 @@ Facet search lets users type inside a facet group to find specific values (e.g.,
 curl \
   -X PUT 'MEILISEARCH_URL/indexes/products/settings/facet-search' \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer MEILISEARCH_API_KEY' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
   --data-binary 'false'
 ```
 

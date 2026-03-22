@@ -29,7 +29,7 @@ use Meilisearch\Client;
 
 $client = new Client(
     getenv('MEILISEARCH_URL'),
-    getenv('MEILISEARCH_API_KEY')
+    getenv('MEILISEARCH_KEY')
 );
 ```
 
@@ -37,7 +37,7 @@ $client = new Client(
 **Set your environment variables:**
 ```bash
 export MEILISEARCH_URL="https://your-instance.meilisearch.io"  # or http://localhost:7700
-export MEILISEARCH_API_KEY="your_api_key"
+export MEILISEARCH_KEY="your_api_key"
 ```
 [Get a free Cloud instance →](https://cloud.meilisearch.com)
 </Note>
@@ -94,7 +94,7 @@ use Meilisearch\Client;
 
 $client = new Client(
     getenv('MEILISEARCH_URL'),
-    getenv('MEILISEARCH_API_KEY')
+    getenv('MEILISEARCH_KEY')
 );
 
 // Add documents
