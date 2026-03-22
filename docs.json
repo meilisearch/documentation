@@ -519,8 +519,7 @@
                       "capabilities/indexing/tasks_and_batches/monitor_tasks",
                       "capabilities/indexing/tasks_and_batches/filter_tasks",
                       "capabilities/indexing/tasks_and_batches/manage_task_database",
-                      "capabilities/indexing/tasks_and_batches/optimize_batch_performance",
-                      "capabilities/indexing/tasks_and_batches/compact_task_queue"
+                      "capabilities/indexing/tasks_and_batches/optimize_batch_performance"
                     ]
                   },
                   {
