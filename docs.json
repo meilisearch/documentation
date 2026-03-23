@@ -789,7 +789,8 @@
                       {
                         "group": "Compact",
                         "pages": [
-                          "POST /indexes/{index_uid}/compact"
+                          "POST /indexes/{index_uid}/compact",
+                          "POST /tasks/compact"
                         ]
                       },
                       {
