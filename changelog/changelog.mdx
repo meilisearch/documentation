@@ -4,6 +4,82 @@ description: "New features and improvements in Meilisearch"
 rss: true
 ---
 
+<Update label="v1.40" description="2026-03-23">
+
+## New Features
+
+### Support for `distinct` in federated search
+
+The `distinct` attribute can now be passed to the `federation` object in federated search to apply a global, cross-index and cross-remote distinct computation to the results. This works across multiple indexes and remote instances, and supports facet distribution.
+
+Example federated search request with distinct:
+
+```json
+{
+  "federation": {
+    "distinct": "genres",
+    "facetsByIndex": {
+      "comics": [
+        "genres"
+      ],
+      "movies": [
+        "genres"
+      ]
+    },
+    "mergeFacets": {}
+  },
+  "queries": [
+    {
+      "indexUid": "comics",
+      "q": "batman",
+      "attributesToRetrieve": [
+        "title",
+        "genres"
+      ],
+      "useNetwork": true
+    },
+    {
+      "indexUid": "movies",
+      "q": "superman",
+      "attributesToRetrieve": [
+        "title",
+        "genres"
+      ],
+      "useNetwork": true
+    }
+  ]
+}
+```
+
+Important notes:
+- Applying `distinct` at both the query level and federation level will return an HTTP 400 error
+- The distinct field must be a filterable attribute for all participating indexes
+- While Meilisearch attempts to compute accurate facet distribution, this cannot be guaranteed in distributed contexts since the distinct algorithm is not applied to all remote documents
+
+### Task queue compaction endpoint
+
+Added `POST /tasks/compact` to compact the task queue database and reclaim space for new tasks without deleting existing tasks. This feature is behind the `taskQueueCompactionRoute` experimental feature flag.
+
+Note: Once task queue compaction completes, all write operations are blocked until the server is restarted.
+
+## Improvements
+
+### Faster federated search performance
+
+Federated search is now approximately 100ms faster for all requests. Additionally, the server will no longer be blocked when processing large numbers of federated search requests.
+
+### Optimized JSON document generation
+
+Performance improvements for handling large documents, especially when requesting only a small subset of fields from large documents.
+
+### Better memory usage for large workloads
+
+Updated to mimalloc v3, which improves memory sharing between threads and significantly reduces memory usage on large workloads. The allocator is now overridden to use mimalloc at linking time, allowing LMDB, Meilisearch, and other C libraries to share allocations for better overall memory efficiency.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.40.0)
+
+</Update>
+
 <Update label="v1.39" description="2026-03-16">
 
 ## New Features
