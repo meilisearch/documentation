@@ -1,0 +1,33 @@
+---
+title: Where to Watch
+sidebarTitle: Where to Watch
+description: Movie discovery app showcasing hybrid search, recommendations, and multi-lingual semantic search
+---
+
+<Info>
+**Live demo**: [where2watch.meilisearch.com](https://where2watch.meilisearch.com)
+</Info>
+
+Where to Watch is a movie discovery application powered by Meilisearch's hybrid search. Use the search slider to blend full-text and semantic search, explore movie recommendations, and see how custom ranking promotes the most relevant results.
+
+[![Movies demo showing search results](/assets/images/movies-demo-dark.gif)](https://where2watch.meilisearch.com)
+
+## Key features
+
+- **Hybrid search slider**: Move from 0 (full-text search) to 100 (semantic search) to find the perfect balance. The middle ground combines both approaches for optimal relevancy.
+- **Recommendation API**: Select a movie to see similar titles powered by the similar documents endpoint. Recommendations surface movies in the same category or with similar themes.
+- **Multi-lingual semantic search**: Semantic search works across languages. Searching "Le seigneur des anneaux" finds "The Lord of the Rings" without manual translation.
+- **Automatic synonym handling**: Queries like "last tldr movie" find "The Lord of the Rings" movies, with the semantic engine understanding intent beyond exact keywords.
+- **Custom ranking rules**: Recent movies and highly rated titles are promoted in results, blending relevancy with freshness and popularity.
+- **Performance**: Sub-50ms response times, even with hybrid search combining full-text and vector retrieval.
+
+## Links
+
+<CardGroup cols={2}>
+  <Card title="Try the demo" icon="globe" href="https://where2watch.meilisearch.com">
+    Search movies and explore hybrid search
+  </Card>
+  <Card title="Source code" icon="github" href="https://github.com/meilisearch/demo-movies">
+    View implementation on GitHub
+  </Card>
+</CardGroup>

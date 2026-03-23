@@ -1,0 +1,31 @@
+---
+title: Personalized Search
+sidebarTitle: Personalized Search
+description: Dynamic search personalization with real-time user context customization
+---
+
+<Info>
+**Live demo**: [p13n-demo-reranking.vercel.app](https://p13n-demo-reranking.vercel.app)
+</Info>
+
+This demo showcases Meilisearch's personalization feature. Search for movies while customizing the user context on the fly. Toggle personalization on or off, edit the user prompt describing preferences, and watch results rerank in real time based on the user profile.
+
+![Personalized search demo with user context customization](/assets/images/demos/personalized-search-demo.png)
+
+## Key features
+
+- **Real-time personalization**: Toggle the "Personalize" switch to see how results change based on user context.
+- **Editable user profile**: Modify the user preference prompt (e.g., "The user prefers genres: Action, Adventure, Sci-Fi") and see results rerank instantly.
+- **Genre presets**: Quick-select genre combinations like "Thriller & Crime" or "Science Fiction & Action" to see how different preferences affect ranking.
+- **Transparent reranking**: Compare personalized vs. non-personalized results to understand the impact of context on relevancy.
+
+## Links
+
+<CardGroup cols={2}>
+  <Card title="Try the demo" icon="globe" href="https://p13n-demo-reranking.vercel.app">
+    Explore personalized search
+  </Card>
+  <Card title="Personalization docs" icon="user" href="/learn/personalization/search_personalization">
+    Implement personalization
+  </Card>
+</CardGroup>

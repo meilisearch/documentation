@@ -1,0 +1,110 @@
+---
+title: FAQ
+sidebarTitle: FAQ
+description: Common questions about Meilisearch features, setup, performance, and troubleshooting.
+---
+
+## I have never used a search engine before. Can I use Meilisearch anyway?
+
+Of course! No knowledge of Elasticsearch or Solr is required to use Meilisearch. It is designed to be **easy to use** and accessible to all developers.
+
+The fastest way to get started is with [Meilisearch Cloud](/getting_started/first_project), which gives you a running instance in minutes. You can also [self-host Meilisearch](/resources/self_hosting/getting_started/quick_start) if you prefer.
+
+We provide [SDKs](/resources/help/sdks) for many languages and frameworks to help you integrate Meilisearch into your project.
+
+## Should I use Meilisearch Cloud or self-host?
+
+[Meilisearch Cloud](https://www.meilisearch.com/cloud) is the recommended option for most users. It handles provisioning, scaling, backups, and updates automatically, and includes built-in analytics and monitoring.
+
+Self-hosting gives you full control over your infrastructure and is available under the MIT license (Community Edition). It requires managing your own servers, updates, and backups.
+
+See the [Cloud quick start](/getting_started/first_project) or [self-hosting guide](/resources/self_hosting/getting_started/quick_start) to get started with either option.
+
+## How does Meilisearch compare to other search engines?
+
+We maintain detailed [comparisons](/resources/comparisons/alternatives) with Elasticsearch, Algolia, Typesense, and others. You can also try Meilisearch with your own data — the [Cloud free trial](https://www.meilisearch.com/cloud) requires no credit card.
+
+## What are Meilisearch's limits?
+
+Key limits include:
+
+| Limit | Value |
+|-------|-------|
+| Max documents per index | ~4.3 billion |
+| Max index size | ~80 TiB (recommended < 2 TiB) |
+| Max attributes per document | 65,536 |
+| Max query terms (full-text search) | 10 words (configurable) |
+| Default max results per search | 1,000 (configurable) |
+
+For the full list, see [known limitations](/resources/help/known_limitations).
+
+## How do I update Meilisearch?
+
+Meilisearch Cloud instances can be updated with one click from the Cloud dashboard. For self-hosted instances, see the [update guide](/resources/migration/updating), which covers dumpless upgrades (v1.13+) and dump-based migration for older versions.
+
+## I keep getting a `400 - Bad Request` when adding documents
+
+This usually means your data is not in a valid format. Common causes include extraneous commas, mismatched brackets, or missing quotes. Meilisearch accepts JSON, CSV, and NDJSON formats.
+
+When [adding or replacing documents](/reference/api/documents/add-or-replace-documents), you must enclose them in an array even if there is only one document.
+
+## I uploaded documents but get no search results
+
+Your document upload likely failed. Check the status of the task using the returned [`taskUid`](/reference/api/async-task-management/get-task). If the task failed, the response contains an `error` object:
+
+```json
+{
+    "uid": 1,
+    "indexUid": "movies",
+    "status": "failed",
+    "type": "documentAdditionOrUpdate",
+    "canceledBy": null,
+    "details": {
+            "receivedDocuments": 67493,
+            "indexedDocuments": 0
+    },
+    "error": {
+        "message": "Document does not have a `:primaryKey` attribute: `:documentRepresentation`.",
+        "code": "missing_document_id",
+        "type": "invalid_request",
+        "link": "https://www.meilisearch.com/docs/reference/errors/error_codes#missing_document_id"
+    },
+    "duration": "PT1S",
+    "enqueuedAt": "2021-08-10T14:29:17.000000Z",
+    "startedAt": "2021-08-10T14:29:18.000000Z",
+    "finishedAt": "2021-08-10T14:29:19.000000Z"
+}
+```
+
+## Is killing a Meilisearch process safe?
+
+Yes. Killing Meilisearch is **safe**, even during indexing. When you restart, it resumes the task from the beginning. See the [asynchronous operations guide](/learn/async/asynchronous_operations) for more details.
+
+## Can I use Meilisearch for multi-tenant applications?
+
+Yes. Meilisearch supports [multitenancy with tenant tokens](/learn/security/multitenancy_tenant_tokens), which let you control which documents each user can search without maintaining separate indexes.
+
+## What are the hardware requirements for self-hosting?
+
+This depends on your dataset size, number of searchable/filterable fields, and query volume. As a starting point, provision a machine with at least **ten times the disk space** of your raw dataset.
+
+Key considerations:
+- **RAM**: Search speed depends on the ratio between RAM and database size. More RAM means faster searches.
+- **Disk**: More searchable/filterable fields and ranking rules increase database size.
+- **CPU cores**: More cores let Meilisearch handle more concurrent search queries.
+
+For optimization tips, see [RAM and multi-threading performance](/resources/self_hosting/performance/ram_multithreading).
+
+<Tip>
+**Always update index settings before adding documents.** This avoids double-indexing and reduces memory spikes.
+</Tip>
+
+## Is there a public roadmap?
+
+Yes. Visit the [public roadmap](https://roadmap.meilisearch.com/) to see planned features and ongoing work.
+
+## Does Meilisearch collect telemetry?
+
+Meilisearch collects **anonymous usage data** to understand feature usage and detect bugs. It never tracks or identifies individual users.
+
+You can read what is collected and how to opt out on the [telemetry page](/resources/help/telemetry). For privacy concerns, email [privacy@meilisearch.com](mailto:privacy@meilisearch.com).
