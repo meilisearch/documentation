@@ -21,7 +21,21 @@ Typesense is an open-source search engine started in 2015 and first publicly rel
 | **Conversational search** | Yes (built-in chat) | No |
 | **Multi-index search** | Yes (federated search) | Yes (multi-search) |
 
-## When to choose Meilisearch
+## What Typesense does well
+
+### Field weighting at query time
+
+Typesense allows boosting specific fields at query time, so you can ensure matches in product titles rank higher than description matches. Meilisearch achieves similar results through [searchable attributes ordering](/reference/api/settings/update-searchable-attributes), which ranks fields by priority at index time.
+
+### Grouping results
+
+Typesense provides the ability to group search results by a specified field, useful for deduplication or organizing results by category.
+
+### Fast in-memory search for small datasets
+
+By storing indexes entirely in RAM, Typesense achieves excellent search speeds for datasets that fit in memory. For small to medium datasets where memory cost is not a concern, this approach works well.
+
+## When to choose Meilisearch instead
 
 ### Your dataset can grow beyond available RAM
 
@@ -54,20 +68,6 @@ Meilisearch takes an open approach to embeddings. It can generate embeddings loc
 ### You value stability and memory safety
 
 Meilisearch is built in Rust, a language designed to prevent entire categories of bugs at compile time, including buffer overflows, use-after-free errors, and data races. These are the types of issues that commonly cause crashes and security vulnerabilities in C++ codebases. Typesense is written in C++, where memory management is manual and these bugs are harder to catch before they reach production. In practice, this means Meilisearch benefits from stronger reliability guarantees out of the box.
-
-## What Typesense does well
-
-### Field weighting at query time
-
-Typesense allows boosting specific fields at query time, so you can ensure matches in product titles rank higher than description matches. Meilisearch achieves similar results through [searchable attributes ordering](/reference/api/settings/update-searchable-attributes), which ranks fields by priority at index time.
-
-### Grouping results
-
-Typesense provides the ability to group search results by a specified field, useful for deduplication or organizing results by category.
-
-### Fast in-memory search for small datasets
-
-By storing indexes entirely in RAM, Typesense achieves excellent search speeds for datasets that fit in memory. For small to medium datasets where memory cost is not a concern, this approach works well.
 
 ## When to choose Typesense
 
