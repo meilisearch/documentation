@@ -11,7 +11,7 @@
       "name": "MIT",
       "identifier": "MIT"
     },
-    "version": "1.39.0"
+    "version": "1.40.0"
   },
   "servers": [
     {
@@ -1031,6 +1031,7 @@
                   "containsFilter": false,
                   "network": false,
                   "getTaskDocumentsRoute": false,
+                  "taskQueueCompactionRoute": false,
                   "compositeEmbedders": false,
                   "chatCompletions": false,
                   "multimodal": false,
@@ -1088,6 +1089,7 @@
                   "containsFilter": false,
                   "network": false,
                   "getTaskDocumentsRoute": false,
+                  "taskQueueCompactionRoute": false,
                   "compositeEmbedders": false,
                   "chatCompletions": false,
                   "multimodal": false,
@@ -11651,6 +11653,73 @@
         ]
       }
     },
+    "/tasks/compact": {
+      "post": {
+        "tags": [
+          "Async task management"
+        ],
+        "summary": "Compact task queue.",
+        "description": "Trigger a compaction process on the task queue database and return its size before and\nafter compaction. A successful compaction requires restarting the instance before it can\nsafely resume normal writes.",
+        "operationId": "compact_task_queue",
+        "responses": {
+          "200": {
+            "description": "Task queue compaction successfully completed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskCompactionSummary"
+                },
+                "example": {
+                  "preSize": "456 kiB",
+                  "postSize": "123 kiB",
+                  "status": "succeeded",
+                  "actionRequired": "you must restart your instance"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The authorization header is missing.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "example": {
+                  "message": "The Authorization header is missing. It must use the bearer authorization method.",
+                  "code": "missing_authorization_header",
+                  "type": "auth",
+                  "link": "https://docs.meilisearch.com/errors#missing_authorization_header"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Task queue compaction failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskCompactionSummary"
+                },
+                "example": {
+                  "status": "failed",
+                  "errorMessage": "unexpected internal error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": [
+              "tasks.compact",
+              "tasks.*",
+              "*"
+            ]
+          }
+        ]
+      }
+    },
     "/tasks/{task_id}": {
       "get": {
         "tags": [
@@ -12325,7 +12394,8 @@
           "webhooks.create",
           "webhooks.*",
           "indexes.compact",
-          "fields.post"
+          "fields.post",
+          "tasks.compact"
         ]
       },
       "AllBatches": {
@@ -13039,6 +13109,7 @@
           "invalid_multi_search_max_values_per_facet",
           "invalid_multi_search_merge_facets",
           "invalid_multi_search_query_facets",
+          "invalid_multi_search_distinct",
           "invalid_multi_search_query_pagination",
           "invalid_multi_search_query_ranking_rules",
           "invalid_multi_search_query_position",
@@ -13812,7 +13883,7 @@
               "string",
               "null"
             ],
-            "description": "URL of the embedder API.\n\n- Mandatory for `rest`. Optional for `openAi` and `ollama`.\n- 🌱 When modified for `openAi``, embeddings are never regenerated\n- 🏗️ When modified for `ollama` and `rest`, embeddings are always regenerated\n- If targetting URL resolving to a non-global IP (such as `localhost`), make sure that\n  `--experimental-allowed-ip-networks` allows it.",
+            "description": "URL of the embedder API.\n\n- Mandatory for `rest`. Optional for `openAi` and `ollama`.\n- 🌱 When modified for `openAi``, embeddings are never regenerated\n- 🏗️ When modified for `ollama` and `rest`, embeddings are always regenerated\n- If targetting URL resolving to a non-global IP (such as `localhost`), make sure that\n  `--experimental-allowed-ip-networks` allows it. For details on how use this parameter,\n  refer to [this documentation](https://www.meilisearch.com/docs/learn/self_hosted/configure_meilisearch_at_launch#allow-requests-to-private-networks).",
             "example": "http://localhost:11434/api/embeddings"
           },
           "indexingFragments": {
@@ -14347,6 +14418,13 @@
                 "description": "Options for merging facets from multiple indexes"
               }
             ]
+          },
+          "distinct": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Restrict search to documents with unique values of the specified attribute across all queries.\n\n1. This applies across all queries in the request, regardless of index or remote of origin.\n2. This overrides the index-level distinct attribute.\n3. This requires that the passed field can be set as distinct in all the participating indexes."
           },
           "showPerformanceDetails": {
             "type": "boolean",
@@ -16025,7 +16103,7 @@
               "string",
               "null"
             ],
-            "description": "URL of the remote instance",
+            "description": "URL of the remote instance\n\n- If the URL of the remote instance is resolving to a non-global IP, make sure that\n  `--experimental-allowed-ip-networks` allows it. For details on how use this parameter,\n  refer to [this documentation](https://www.meilisearch.com/docs/learn/self_hosted/configure_meilisearch_at_launch#allow-requests-to-private-networks).",
             "example": "http://localhost:7700"
           },
           "searchApiKey": {
@@ -16144,6 +16222,13 @@
               "null"
             ],
             "description": "Enable the route to get documents from tasks"
+          },
+          "taskQueueCompactionRoute": {
+            "type": [
+              "boolean",
+              "null"
+            ],
+            "description": "Enable the route to compact the task queue database"
           },
           "compositeEmbedders": {
             "type": [
@@ -16962,7 +17047,7 @@
                       "string",
                       "null"
                     ],
-                    "description": "URL of the embedder API.\n\n- Mandatory for `rest`. Optional for `openAi` and `ollama`.\n- 🌱 When modified for `openAi``, embeddings are never regenerated\n- 🏗️ When modified for `ollama` and `rest`, embeddings are always regenerated\n- If targetting URL resolving to a non-global IP (such as `localhost`), make sure that\n  `--experimental-allowed-ip-networks` allows it.",
+                    "description": "URL of the embedder API.\n\n- Mandatory for `rest`. Optional for `openAi` and `ollama`.\n- 🌱 When modified for `openAi``, embeddings are never regenerated\n- 🏗️ When modified for `ollama` and `rest`, embeddings are always regenerated\n- If targetting URL resolving to a non-global IP (such as `localhost`), make sure that\n  `--experimental-allowed-ip-networks` allows it. For details on how use this parameter,\n  refer to [this documentation](https://www.meilisearch.com/docs/learn/self_hosted/configure_meilisearch_at_launch#allow-requests-to-private-networks).",
                     "example": "http://localhost:11434/api/embeddings"
                   },
                   "indexingFragments": {
@@ -18023,7 +18108,7 @@
               "string",
               "null"
             ],
-            "description": "URL of the embedder API.\n\n- Mandatory for `rest`. Optional for `openAi` and `ollama`.\n- 🌱 When modified for `openAi``, embeddings are never regenerated\n- 🏗️ When modified for `ollama` and `rest`, embeddings are always regenerated\n- If targetting URL resolving to a non-global IP (such as `localhost`), make sure that\n  `--experimental-allowed-ip-networks` allows it.",
+            "description": "URL of the embedder API.\n\n- Mandatory for `rest`. Optional for `openAi` and `ollama`.\n- 🌱 When modified for `openAi``, embeddings are never regenerated\n- 🏗️ When modified for `ollama` and `rest`, embeddings are always regenerated\n- If targetting URL resolving to a non-global IP (such as `localhost`), make sure that\n  `--experimental-allowed-ip-networks` allows it. For details on how use this parameter,\n  refer to [this documentation](https://www.meilisearch.com/docs/learn/self_hosted/configure_meilisearch_at_launch#allow-requests-to-private-networks).",
             "example": "http://localhost:11434/api/embeddings"
           },
           "indexingFragments": {
@@ -18134,6 +18219,40 @@
           "rename": {
             "type": "boolean",
             "description": "If true, rename the first index to the second instead of swapping"
+          }
+        }
+      },
+      "TaskCompactionSummary": {
+        "type": "object",
+        "required": [
+          "status"
+        ],
+        "properties": {
+          "preSize": {
+            "type": "string",
+            "description": "Size of the task queue database before compaction."
+          },
+          "postSize": {
+            "type": "string",
+            "description": "Size of the task queue database after compaction."
+          },
+          "status": {
+            "$ref": "#/components/schemas/Status",
+            "description": "Outcome of the compaction operation."
+          },
+          "actionRequired": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Follow-up action required after a successful compaction."
+          },
+          "errorMessage": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Error message if compaction failed."
           }
         }
       },
