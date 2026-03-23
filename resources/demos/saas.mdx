@@ -1,0 +1,30 @@
+---
+title: SaaS CRM Search
+sidebarTitle: SaaS CRM
+description: Multi-tenant CRM search with native data isolation per user
+---
+
+<Info>
+**Live demo**: [saas.meilisearch.com](https://saas.meilisearch.com)
+</Info>
+
+This SaaS demo showcases Meilisearch's multi-tenancy capabilities in a CRM context. The core feature is native data isolation: switch between users and each one sees a completely different view of the data, even though all documents are stored in the same index.
+
+![SaaS demo screenshot](/assets/images/demos/saas-demo-screenshot.png)
+
+## Key features
+
+- **Multi-tenancy**: Switch users to see entirely different results. Each user's data is isolated natively at the search engine level, with no application-side filtering required.
+- **Federated search**: Query contacts, companies, and deals in a single request, with results grouped by type.
+- **Universal search bar**: One search input covers the entire application.
+
+## Links
+
+<CardGroup cols={2}>
+  <Card title="Try the demo" icon="globe" href="https://saas.meilisearch.com">
+    Experience multi-tenant search
+  </Card>
+  <Card title="Source code" icon="github" href="https://github.com/meilisearch/saas-demo">
+    View implementation on GitHub
+  </Card>
+</CardGroup>

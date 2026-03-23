@@ -1,0 +1,449 @@
+---
+title: Migrating from Algolia to Meilisearch
+sidebarTitle: Migrating from Algolia
+description: This guide will take you step-by-step through the creation of a script to upload data indexed by Algolia to Meilisearch.
+sidebarDepth: 3
+---
+
+This page aims to help current users of Algolia make the transition to Meilisearch.
+
+For a high-level comparison of the two search companies and their products, see [our analysis of the search market](/resources/comparisons/alternatives#meilisearch-vs-algolia).
+
+## Overview
+
+This guide will take you step-by-step through the creation of a script to upload Algolia index data to Meilisearch. Examples are provided in JavaScript, Python, and Ruby. [You can also skip directly to the finished script](#finished-script).
+
+The migration process consists of three steps:
+
+1. [Export your data stored in Algolia](#export-your-algolia-data)
+2. [Import your data into Meilisearch](#import-your-data-into-meilisearch)
+3. [Configure your Meilisearch index settings (optional)](#configure-your-index-settings)
+
+To help with the transition, we have also included a comparison of Meilisearch and Algolia's [API methods](#api-methods) and [front-end components](#front-end-components).
+
+Before continuing, make sure you have Meilisearch installed and have access to a command-line terminal. If you're unsure how to install Meilisearch, see our [quick start](/resources/self_hosting/getting_started/quick_start).
+
+<Note>
+This guide includes examples in JavaScript, Python, and Ruby. The packages used:
+
+- **JavaScript**: [`algoliasearch`](https://www.npmjs.com/package/algoliasearch) `4.x`, [`meilisearch`](https://www.npmjs.com/package/meilisearch) (compatible with Meilisearch v1.0+)
+- **Python**: [`algoliasearch`](https://pypi.org/project/algoliasearch/) `4.x`, [`meilisearch`](https://pypi.org/project/meilisearch/)
+- **Ruby**: [`algolia`](https://rubygems.org/gems/algolia) `3.x`, [`meilisearch`](https://rubygems.org/gems/meilisearch)
+</Note>
+
+## Export your Algolia data
+
+### Initialize project
+
+<CodeGroup>
+
+```bash JavaScript
+mkdir algolia-meilisearch-migration
+cd algolia-meilisearch-migration
+npm init -y
+touch script.js
+```
+
+```bash Python
+mkdir algolia-meilisearch-migration
+cd algolia-meilisearch-migration
+touch script.py
+```
+
+```bash Ruby
+mkdir algolia-meilisearch-migration
+cd algolia-meilisearch-migration
+touch script.rb
+```
+
+</CodeGroup>
+
+### Install dependencies
+
+<CodeGroup>
+
+```bash JavaScript
+npm install -s algoliasearch@4 meilisearch
+```
+
+```bash Python
+pip install algoliasearch meilisearch
+```
+
+```bash Ruby
+gem install algolia meilisearch
+```
+
+</CodeGroup>
+
+### Create Algolia client
+
+You'll need your **Application ID** and **Admin API Key** to start the Algolia client. Both can be found in your [Algolia account](https://www.algolia.com/account/api-keys).
+
+Paste the below code in your script file:
+
+<CodeGroup>
+
+```javascript JavaScript
+const algoliaSearch = require("algoliasearch");
+
+const algoliaClient = algoliaSearch(
+  "APPLICATION_ID",
+  "ADMIN_API_KEY"
+);
+const algoliaIndex = algoliaClient.initIndex("INDEX_NAME");
+```
+
+```python Python
+from algoliasearch.search.client import SearchClientSync
+
+algolia_client = SearchClientSync("APPLICATION_ID", "ADMIN_API_KEY")
+```
+
+```ruby Ruby
+require 'algolia'
+
+algolia_client = Algolia::SearchClient.create(
+  'APPLICATION_ID',
+  'ADMIN_API_KEY'
+)
+```
+
+</CodeGroup>
+
+Replace `APPLICATION_ID` and `ADMIN_API_KEY` with your Algolia application ID and admin API key respectively.
+
+Replace `INDEX_NAME` with the name of the Algolia index you would like to migrate to Meilisearch.
+
+### Fetch data from Algolia
+
+To fetch all Algolia index data at once, use Algolia's [`browseObjects`](https://www.algolia.com/doc/api-reference/api-methods/browse/) method.
+
+<CodeGroup>
+
+```javascript JavaScript
+let records = [];
+await algoliaIndex.browseObjects({
+    batch: (hits) => {
+      records = records.concat(hits);
+    }
+  });
+```
+
+```python Python
+records = []
+for hit in algolia_client.browse_objects(index_name="INDEX_NAME"):
+    records.append(hit)
+```
+
+```ruby Ruby
+records = []
+algolia_client.browse_objects('INDEX_NAME') do |hit|
+  records << hit
+end
+```
+
+</CodeGroup>
+
+The records array will contain all documents from your Algolia index. We will use `records` again later in the upload process.
+
+## Import your data into Meilisearch
+
+### Create Meilisearch client
+
+Create a Meilisearch client by passing the host URL and API key of your Meilisearch instance. The easiest option is to use the automatically generated [admin API key](/resources/self_hosting/security/basic_security).
+
+<CodeGroup>
+
+```javascript JavaScript
+const { MeiliSearch } = require("meilisearch");
+
+const meiliClient = new MeiliSearch({
+  host: "MEILI_HOST",
+  apiKey: "MEILI_API_KEY",
+});
+const meiliIndex = meiliClient.index("MEILI_INDEX_NAME");
+```
+
+```python Python
+import meilisearch
+
+meili_client = meilisearch.Client("MEILI_HOST", "MEILI_API_KEY")
+meili_index = meili_client.index("MEILI_INDEX_NAME")
+```
+
+```ruby Ruby
+require 'meilisearch'
+
+meili_client = MeiliSearch::Client.new(
+  'MEILI_HOST',
+  'MEILI_API_KEY'
+)
+meili_index = meili_client.index('MEILI_INDEX_NAME')
+```
+
+</CodeGroup>
+
+Replace `MEILI_HOST`,`MEILI_API_KEY`, and `MEILI_INDEX_NAME` with your Meilisearch host URL, Meilisearch API key, and the index name where you would like to add documents. Meilisearch will create the index if it doesn't already exist.
+
+### Upload data to Meilisearch
+
+Next, use `addDocumentsInBatches` to upload all your records in batches of 100,000.
+
+<CodeGroup>
+
+```javascript JavaScript
+const BATCH_SIZE = 100000;
+await meiliIndex.addDocumentsInBatches(records, BATCH_SIZE);
+```
+
+```python Python
+BATCH_SIZE = 100000
+meili_index.add_documents_in_batches(records, batch_size=BATCH_SIZE)
+```
+
+```ruby Ruby
+BATCH_SIZE = 100000
+meili_index.add_documents_in_batches(records, BATCH_SIZE)
+```
+
+</CodeGroup>
+
+That's all! When you're ready to run the script, enter the below command:
+
+<CodeGroup>
+
+```bash JavaScript
+node script.js
+```
+
+```bash Python
+python script.py
+```
+
+```bash Ruby
+ruby script.rb
+```
+
+</CodeGroup>
+
+### Finished script
+
+<CodeGroup>
+
+```javascript JavaScript
+const algoliaSearch = require("algoliasearch");
+const { MeiliSearch } = require("meilisearch");
+
+const BATCH_SIZE = 100000;
+
+(async () => {
+  const algoliaClient = algoliaSearch("APPLICATION_ID", "ADMIN_API_KEY");
+  const algoliaIndex = algoliaClient.initIndex("INDEX_NAME");
+
+  let records = [];
+  await algoliaIndex.browseObjects({
+    batch: (hits) => {
+      records = records.concat(hits);
+    }
+  });
+
+  const meiliClient = new MeiliSearch({
+    host: "MEILI_HOST",
+    apiKey: "MEILI_API_KEY",
+  });
+  const meiliIndex = meiliClient.index("MEILI_INDEX_NAME");
+
+  await meiliIndex.addDocumentsInBatches(records, BATCH_SIZE);
+})();
+```
+
+```python Python
+from algoliasearch.search.client import SearchClientSync
+import meilisearch
+
+BATCH_SIZE = 100000
+
+# Fetch all documents from Algolia
+algolia_client = SearchClientSync("APPLICATION_ID", "ADMIN_API_KEY")
+
+records = []
+for hit in algolia_client.browse_objects(index_name="INDEX_NAME"):
+    records.append(hit)
+
+print(f"Fetched {len(records)} documents from Algolia")
+
+# Upload to Meilisearch
+meili_client = meilisearch.Client("MEILI_HOST", "MEILI_API_KEY")
+meili_index = meili_client.index("MEILI_INDEX_NAME")
+
+meili_index.add_documents_in_batches(records, batch_size=BATCH_SIZE)
+print("Migration complete")
+```
+
+```ruby Ruby
+require 'algolia'
+require 'meilisearch'
+
+BATCH_SIZE = 100000
+
+# Fetch all documents from Algolia
+algolia_client = Algolia::SearchClient.create(
+  'APPLICATION_ID',
+  'ADMIN_API_KEY'
+)
+
+records = []
+algolia_client.browse_objects('INDEX_NAME') do |hit|
+  records << hit
+end
+
+puts "Fetched #{records.length} documents from Algolia"
+
+# Upload to Meilisearch
+meili_client = MeiliSearch::Client.new('MEILI_HOST', 'MEILI_API_KEY')
+meili_index = meili_client.index('MEILI_INDEX_NAME')
+
+meili_index.add_documents_in_batches(records, BATCH_SIZE)
+puts 'Migration complete'
+```
+
+</CodeGroup>
+
+## Configure your index settings
+
+Meilisearch's default settings are designed to deliver a fast and relevant search experience that works for most use-cases.
+
+To customize your index settings, we recommend following [this guide](/resources/internals/indexes#index-settings). To learn more about the differences between settings in Algolia and Meilisearch, read on.
+
+### Index settings vs. search parameters
+
+One of the key usage differences between Algolia and Meilisearch is how they approach index settings and search parameters.
+
+**In Algolia,** [API parameters](https://www.algolia.com/doc/api-reference/api-parameters/) is a flexible category that includes both index settings and search parameters. Many API parameters can be used both at indexing time—to set default behavior—or at search time—to override that behavior.
+
+**In Meilisearch,** [index settings](/reference/api/settings/list-all-settings) and [search parameters](/reference/api/search/search-with-post) are two distinct categories. Settings affect all searches on an index, while parameters affect the results of a single search.
+
+Some Meilisearch parameters require index settings to be configured beforehand. For example, you must first configure the index setting `sortableAttributes` to use the search parameter `sort`. However, unlike in Algolia, an index setting can never be used as a parameter and vice versa.
+
+### Settings and parameters comparison
+
+The below table compares Algolia's **API parameters** with the equivalent Meilisearch **setting** or **search parameter**. The **Type** column indicates whether the Meilisearch equivalent is a search parameter (param), an index setting (setting), or both.
+
+#### Query and pagination
+
+| Algolia | Meilisearch | Type |
+| :--- | :--- | :--- |
+| `query` | `q` | param |
+| `offset` | `offset` | param |
+| `length` | `limit` | param |
+| `page` | `page` | param |
+| `hitsPerPage` | `hitsPerPage` | param |
+| `paginatedHits` limit | [`pagination.maxTotalHits`](/reference/api/settings/update-pagination) | setting |
+
+#### Filtering and sorting
+
+| Algolia | Meilisearch | Type |
+| :--- | :--- | :--- |
+| `filters` | `filter` | param |
+| `facets` | `facets` | param |
+| `attributesForFaceting` | [`filterableAttributes`](/reference/api/settings/update-filterableattributes) | setting |
+| `maxValuesPerFacet` | [`faceting.maxValuesPerFacet`](/reference/api/settings/update-faceting) | setting |
+| `sortFacetValuesBy` | [`faceting.sortFacetValuesBy`](/reference/api/settings/update-faceting) | setting |
+| `maxFacetHits` | [`facetSearch`](/reference/api/settings/update-facetsearch) | setting |
+| Sorting (using replicas) | [`sortableAttributes`](/reference/api/settings/update-sortableattributes) + `sort` param (no replicas required) | setting + param |
+| `distinct` | `distinct` (per-query) or [`distinctAttribute`](/reference/api/settings/update-distinctattribute) (index-wide) | param + setting |
+| `attributeForDistinct` | [`distinctAttribute`](/reference/api/settings/update-distinctattribute) | setting |
+
+#### Geo search
+
+| Algolia | Meilisearch | Type |
+| :--- | :--- | :--- |
+| `aroundLatLng` / `aroundRadius` | `_geoRadius(lat, lng, radius)` in `filter` | param |
+| `insideBoundingBox` | `_geoBoundingBox([lat, lng], [lat, lng])` in `filter` | param |
+| `insidePolygon` | `_geoPolygon([lat, lng], [lat, lng], ...)` in `filter` | param |
+| `aroundPrecision` | No direct equivalent | — |
+
+#### Highlighting and snippets
+
+| Algolia | Meilisearch | Type |
+| :--- | :--- | :--- |
+| `attributesToHighlight` | `attributesToHighlight` | param |
+| `highlightPreTag` | `highlightPreTag` | param |
+| `highlightPostTag` | `highlightPostTag` | param |
+| `attributesToSnippet` | `attributesToCrop` + `cropLength` | param |
+| `snippetEllipsisText` | `cropMarker` | param |
+| `restrictHighlightAndSnippetArrays` | Not supported | — |
+
+#### Attributes and ranking
+
+| Algolia | Meilisearch | Type |
+| :--- | :--- | :--- |
+| `searchableAttributes` | [`searchableAttributes`](/reference/api/settings/update-searchableattributes) | setting |
+| `restrictSearchableAttributes` | `attributesToSearchOn` | param |
+| `attributesToRetrieve` | `attributesToRetrieve` | param |
+| `unretrievableAttributes` | No direct equivalent; achieved by removing attributes from [`displayedAttributes`](/reference/api/settings/update-displayedattributes) | setting |
+| `ranking` | [`rankingRules`](/reference/api/settings/update-rankingrules) | setting |
+| `customRanking` | Integrated within [`rankingRules`](/reference/api/settings/update-rankingrules) | setting |
+| `getRankingInfo` | `showRankingScore` / `showRankingScoreDetails` | param |
+
+#### Typo tolerance and language
+
+| Algolia | Meilisearch | Type |
+| :--- | :--- | :--- |
+| `typoTolerance` | [`typoTolerance`](/reference/api/settings/update-typotolerance) | setting |
+| `disableTypoToleranceOnAttributes` | `typoTolerance.disableOnAttributes` | setting |
+| `removeStopWords` | [`stopWords`](/reference/api/settings/update-stopwords) | setting |
+| `synonyms` | [`synonyms`](/reference/api/settings/update-synonyms) | setting |
+| `separatorsToIndex` | [`separatorTokens`](/reference/api/settings/get-separatortokens) / [`nonSeparatorTokens`](/reference/api/settings/get-nonseparatortokens) | setting |
+| `naturalLanguages` | [`localizedAttributes`](/reference/api/settings/update-localizedattributes) setting + `locales` param | setting + param |
+| `queryType` (prefix matching) | [`prefixSearch`](/reference/api/settings/update-prefixsearch) | setting |
+| `removeWordsIfNoResults` | Automatically supported via `matchingStrategy` param | param |
+
+#### AI and vector search
+
+| Algolia | Meilisearch | Type |
+| :--- | :--- | :--- |
+| NeuralSearch `mode` | `hybrid` param + [`embedders`](/reference/api/settings/update-embedders) setting | setting + param |
+| `enableReRanking` | Integrated in `hybrid` search | param |
+| AI personalization | `personalize` | param |
+
+#### Other
+
+| Algolia | Meilisearch | Type |
+| :--- | :--- | :--- |
+| `analytics` / `clickAnalytics` | Separate [Analytics API](/learn/analytics/events_endpoint) | — |
+| `disablePrefixOnAttributes` | Not supported | — |
+| `relevancyStrictness` | `rankingScoreThreshold` | param |
+
+## API methods
+
+This section compares Algolia and Meilisearch's respective API methods, using JavaScript for reference.
+
+| Method                | Algolia                                                                             | Meilisearch                                                                                                            |
+| :-------------------- | :---------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------- |
+| Index Instantiation   | `client.initIndex()`<br />Here, client is an Algolia instance.                      | `client.index()`<br />Here, client is a Meilisearch instance.                                                          |
+| Create Index          | Algolia automatically creates an index the first time you add a record or settings. | The same applies to Meilisearch, but users can also create an index explicitly: `client.createIndex(string indexName)` |
+| Get All Indexes       | `client.listIndices()`                                                              | `client.getIndexes()`                                                                                                  |
+| Get Single Index      | No method available                                                                 | `client.getIndex(string indexName)`                                                                                    |
+| Delete Index          | `index.delete()`                                                                    | `client.deleteIndex(string indexName)`                                                                                 |
+| Get Index Settings    | `index.getSettings()`                                                               | `index.getSettings()`                                                                                                |
+| Update Index Settings | `index.setSettings(object settings)`                                                | `index.updateSettings(object settings)`                                                                              |
+| Search Method         | `index.search(string query, { searchParameters, requestOptions })`                  | `index.search(string query, object searchParameters)`                                                                  |
+| Add Object            | `index.saveObjects(array objects)`                                                  | `index.addDocuments(array objects)`                                                                                    |
+| Partial Update Object | `index.partialUpdateObjects(array objects)`                                         | `index.updateDocuments(array objects)`                                                                                 |
+| Delete All Objects    | `index.deleteObjects(array objectIDs)`                                              | `index.deleteAllDocuments()`                                                                                           |
+| Delete One Object     | `index.deleteObject(string objectID)`                                               | `index.deleteDocument(string id)`                                                                                      |
+| Get All Objects       | `index.getObjects(array objectIDs)`                                                 | `index.getDocuments(object params)`                                                                                    |
+| Get Single Object     | `index.getObject(str objectID)`                                                     | `index.getDocument(string id)`                                                                                         |
+| Get API Keys          | `client.listApiKeys()`                                                              | `client.getKeys()`                                                                                                     |
+| Get API Key Info      | `client.getApiKey(string apiKey)`                                                   | `client.getKey(string apiKey)`                                                                                         |
+| Create API Key        | `client.addApiKey(array acl)`                                                       | `client.createKey(object configuration)`                                                                               |
+| Update API Key        | `client.updateApiKey(string apiKey, object configuration)`                          | `client.updateKey(string apiKey, object configuration)`                                                                |
+| Delete API Key        | `client.deleteApiKey(string apiKey)`                                                | `client.deleteKey(string apiKey)`                                                                                      |
+
+## Front-end components
+
+[InstantSearch](https://github.com/algolia/instantsearch.js) is a collection of open-source tools maintained by Algolia and used to generate front-end search UI components. To use InstantSearch with Meilisearch, you must use [Instant Meilisearch](https://github.com/meilisearch/meilisearch-js-plugins/tree/main/packages/instant-meilisearch).
+
+Instant Meilisearch is a plugin connecting your Meilisearch instance with InstantSearch, giving you access to many of the same front-end components as Algolia users. You can find an up-to-date list of [the components supported by Instant Meilisearch](https://github.com/meilisearch/meilisearch-js-plugins/tree/main/packages/instant-meilisearch#-api-resources) in the GitHub project's README.

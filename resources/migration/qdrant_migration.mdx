@@ -1,0 +1,927 @@
+---
+title: Migrating from Qdrant to Meilisearch
+sidebarTitle: Migrating from Qdrant
+description: A step-by-step guide to exporting data from Qdrant and importing it into Meilisearch, with a comparison of settings, queries, and API methods.
+sidebarDepth: 3
+---
+
+This page aims to help current users of Qdrant make the transition to Meilisearch.
+
+## Overview
+
+Qdrant is a vector similarity search engine. Meilisearch combines full-text search with vector search through its [hybrid search](/learn/ai_powered_search/getting_started_with_ai_search) feature, letting you replace a separate keyword search engine and vector database with a single system.
+
+This guide walks you through exporting points from a Qdrant collection and importing them into Meilisearch using a script in JavaScript, Python, or Ruby. [You can also skip directly to the finished script](#finished-script).
+
+The migration process consists of four steps:
+
+1. [Export your data from Qdrant](#export-your-qdrant-data)
+2. [Prepare your data for Meilisearch](#prepare-your-data)
+3. [Import your data into Meilisearch](#import-your-data-into-meilisearch)
+4. [Configure embedders and index settings](#configure-your-index-settings)
+
+To help with the transition, this guide also includes a comparison of [settings and parameters](#settings-and-parameters-comparison), [query types](#query-comparison), and [API methods](#api-methods).
+
+Before continuing, make sure you have Meilisearch installed and have access to a command-line terminal. If you're unsure how to install Meilisearch, see our [quick start](/resources/self_hosting/getting_started/quick_start).
+
+<Note>
+This guide includes examples in JavaScript, Python, and Ruby. The packages used:
+
+- **JavaScript**: [`@qdrant/js-client-rest`](https://www.npmjs.com/package/@qdrant/js-client-rest) `1.x`, [`meilisearch`](https://www.npmjs.com/package/meilisearch) (compatible with Meilisearch v1.0+)
+- **Python**: [`qdrant-client`](https://pypi.org/project/qdrant-client/) `1.x`, [`meilisearch`](https://pypi.org/project/meilisearch/)
+- **Ruby**: [`qdrant-ruby`](https://rubygems.org/gems/qdrant-ruby), [`meilisearch`](https://rubygems.org/gems/meilisearch)
+</Note>
+
+## Export your Qdrant data
+
+### Initialize project
+
+<CodeGroup>
+
+```bash JavaScript
+mkdir qdrant-meilisearch-migration
+cd qdrant-meilisearch-migration
+npm init -y
+touch script.js
+```
+
+```bash Python
+mkdir qdrant-meilisearch-migration
+cd qdrant-meilisearch-migration
+touch script.py
+```
+
+```bash Ruby
+mkdir qdrant-meilisearch-migration
+cd qdrant-meilisearch-migration
+touch script.rb
+```
+
+</CodeGroup>
+
+### Install dependencies
+
+<CodeGroup>
+
+```bash JavaScript
+npm install -s @qdrant/js-client-rest meilisearch
+```
+
+```bash Python
+pip install qdrant-client meilisearch
+```
+
+```bash Ruby
+gem install qdrant-ruby meilisearch
+```
+
+</CodeGroup>
+
+### Create Qdrant client
+
+You need your Qdrant **host URL** and optionally an **API key** if your instance requires authentication.
+
+<CodeGroup>
+
+```javascript JavaScript
+const { QdrantClient } = require("@qdrant/js-client-rest");
+
+const qdrantClient = new QdrantClient({
+  url: "QDRANT_URL",
+  // apiKey: "QDRANT_API_KEY", // if authentication is enabled
+});
+```
+
+```python Python
+from qdrant_client import QdrantClient
+
+qdrant_client = QdrantClient(
+    url="QDRANT_URL",
+    # api_key="QDRANT_API_KEY",  # if authentication is enabled
+)
+```
+
+```ruby Ruby
+require 'qdrant'
+
+qdrant_client = Qdrant::Client.new(
+  url: 'QDRANT_URL'
+  # api_key: 'QDRANT_API_KEY'  # if authentication is enabled
+)
+```
+
+</CodeGroup>
+
+Replace `QDRANT_URL` with your Qdrant instance URL (for example, `http://localhost:6333`) and provide your API key if required.
+
+### Fetch data from Qdrant
+
+Use the [Scroll API](https://qdrant.tech/documentation/concepts/points/#scroll-points) to paginate through all points in a collection. This retrieves both payload data and vectors.
+
+<CodeGroup>
+
+```javascript JavaScript
+const COLLECTION_NAME = "YOUR_COLLECTION_NAME";
+const BATCH_SIZE = 1000;
+
+async function fetchAllPoints() {
+  const records = [];
+  let offset = null;
+
+  while (true) {
+    const response = await qdrantClient.scroll(COLLECTION_NAME, {
+      limit: BATCH_SIZE,
+      offset: offset,
+      with_payload: true,
+      with_vectors: true,
+    });
+
+    records.push(...response.points);
+
+    if (!response.next_page_offset) break;
+    offset = response.next_page_offset;
+  }
+
+  return records;
+}
+```
+
+```python Python
+COLLECTION_NAME = "YOUR_COLLECTION_NAME"
+BATCH_SIZE = 1000
+
+def fetch_all_points():
+    records = []
+    offset = None
+
+    while True:
+        response = qdrant_client.scroll(
+            collection_name=COLLECTION_NAME,
+            limit=BATCH_SIZE,
+            offset=offset,
+            with_payload=True,
+            with_vectors=True,
+        )
+
+        points, next_offset = response
+        records.extend(points)
+
+        if next_offset is None:
+            break
+        offset = next_offset
+
+    return records
+```
+
+```ruby Ruby
+COLLECTION_NAME = 'YOUR_COLLECTION_NAME'
+BATCH_SIZE = 1000
+
+def fetch_all_points(qdrant_client)
+  records = []
+  offset = nil
+
+  loop do
+    response = qdrant_client.points.scroll(
+      collection_name: COLLECTION_NAME,
+      limit: BATCH_SIZE,
+      offset: offset,
+      with_payload: true,
+      with_vectors: true
+    )
+
+    points = response.dig('result', 'points') || []
+    records.concat(points)
+
+    next_offset = response.dig('result', 'next_page_offset')
+    break if next_offset.nil?
+    offset = next_offset
+  end
+
+  records
+end
+```
+
+</CodeGroup>
+
+Replace `YOUR_COLLECTION_NAME` with the name of the Qdrant collection you want to migrate.
+
+<Note>
+Set `with_vectors: true` if you want to keep your existing vectors. If you plan to let Meilisearch re-embed your documents using a configured embedder, you can set this to `false` to speed up the export.
+</Note>
+
+## Prepare your data
+
+Qdrant points contain an `id`, a `payload` (key-value data), and one or more `vectors`. You need to extract the payload fields as top-level document fields for Meilisearch.
+
+### Choose your vector strategy
+
+Before preparing your data, decide how you want to handle vectors:
+
+- **Option A: Let Meilisearch re-embed** (recommended) — Configure an [embedder](/learn/ai_powered_search/getting_started_with_ai_search) in Meilisearch and let it generate vectors automatically from your document content. This is simpler and keeps your vectors in sync with your data.
+- **Option B: Keep existing vectors** — Include your Qdrant vectors in the `_vectors` field of each document using a `userProvided` embedder. This avoids re-embedding costs but requires you to manage vector updates yourself.
+
+### Transform documents
+
+<CodeGroup>
+
+```javascript JavaScript
+function prepareDocuments(points, keepVectors = false) {
+  return points.map((point) => {
+    // Extract payload fields as top-level document fields
+    const doc = { ...point.payload };
+    doc.id = String(point.id);
+
+    // Option B: keep existing vectors
+    if (keepVectors && point.vector) {
+      if (typeof point.vector === "object" && !Array.isArray(point.vector)) {
+        // Named vectors: { "text-embedding": [...], "image-embedding": [...] }
+        doc._vectors = point.vector;
+      } else {
+        // Single unnamed vector
+        doc._vectors = { default: point.vector };
+      }
+    }
+
+    return doc;
+  });
+}
+```
+
+```python Python
+def prepare_documents(points, keep_vectors=False):
+    documents = []
+    for point in points:
+        # Extract payload fields as top-level document fields
+        doc = {**point.payload}
+        doc["id"] = str(point.id)
+
+        # Option B: keep existing vectors
+        if keep_vectors and point.vector is not None:
+            if isinstance(point.vector, dict):
+                # Named vectors: { "text-embedding": [...], "image-embedding": [...] }
+                doc["_vectors"] = point.vector
+            else:
+                # Single unnamed vector
+                doc["_vectors"] = {"default": point.vector}
+
+        documents.append(doc)
+    return documents
+```
+
+```ruby Ruby
+def prepare_documents(points, keep_vectors: false)
+  points.map do |point|
+    payload = point.is_a?(Hash) ? point['payload'] : point.payload
+    vector = point.is_a?(Hash) ? point['vector'] : point.vector
+    point_id = point.is_a?(Hash) ? point['id'] : point.id
+
+    # Extract payload fields as top-level document fields
+    doc = payload.dup
+    doc['id'] = point_id.to_s
+
+    # Option B: keep existing vectors
+    if keep_vectors && vector
+      if vector.is_a?(Hash)
+        # Named vectors: { "text-embedding" => [...], "image-embedding" => [...] }
+        doc['_vectors'] = vector
+      else
+        # Single unnamed vector
+        doc['_vectors'] = { 'default' => vector }
+      end
+    end
+
+    doc
+  end
+end
+```
+
+</CodeGroup>
+
+### Handle geo data
+
+If your Qdrant payloads contain `geo` fields (objects with `lat` and `lon`), convert them to Meilisearch's `_geo` format:
+
+<CodeGroup>
+
+```javascript JavaScript
+function convertGeoFields(doc, geoFieldName) {
+  if (doc[geoFieldName]) {
+    const geo = doc[geoFieldName];
+    doc._geo = {
+      lat: geo.lat,
+      lng: geo.lon, // Qdrant uses "lon", Meilisearch uses "lng"
+    };
+    delete doc[geoFieldName];
+  }
+  return doc;
+}
+```
+
+```python Python
+def convert_geo_fields(doc, geo_field_name):
+    if geo_field_name in doc:
+        geo = doc[geo_field_name]
+        doc["_geo"] = {
+            "lat": geo["lat"],
+            "lng": geo["lon"],  # Qdrant uses "lon", Meilisearch uses "lng"
+        }
+        del doc[geo_field_name]
+    return doc
+```
+
+```ruby Ruby
+def convert_geo_fields(doc, geo_field_name)
+  if doc[geo_field_name]
+    geo = doc[geo_field_name]
+    doc['_geo'] = {
+      'lat' => geo['lat'],
+      'lng' => geo['lon'] # Qdrant uses "lon", Meilisearch uses "lng"
+    }
+    doc.delete(geo_field_name)
+  end
+  doc
+end
+```
+
+</CodeGroup>
+
+## Import your data into Meilisearch
+
+### Create Meilisearch client
+
+Create a Meilisearch client by passing the host URL and API key of your Meilisearch instance. The easiest option is to use the automatically generated [admin API key](/resources/self_hosting/security/basic_security).
+
+<CodeGroup>
+
+```javascript JavaScript
+const { MeiliSearch } = require("meilisearch");
+
+const meiliClient = new MeiliSearch({
+  host: "MEILI_HOST",
+  apiKey: "MEILI_API_KEY",
+});
+const meiliIndex = meiliClient.index("MEILI_INDEX_NAME");
+```
+
+```python Python
+import meilisearch
+
+meili_client = meilisearch.Client("MEILI_HOST", "MEILI_API_KEY")
+meili_index = meili_client.index("MEILI_INDEX_NAME")
+```
+
+```ruby Ruby
+require 'meilisearch'
+
+meili_client = MeiliSearch::Client.new('MEILI_HOST', 'MEILI_API_KEY')
+meili_index = meili_client.index('MEILI_INDEX_NAME')
+```
+
+</CodeGroup>
+
+Replace `MEILI_HOST`, `MEILI_API_KEY`, and `MEILI_INDEX_NAME` with your Meilisearch host URL, API key, and target index name. Meilisearch will create the index if it doesn't already exist.
+
+### Upload data to Meilisearch
+
+Use the Meilisearch client to upload all records in batches of 100,000.
+
+<CodeGroup>
+
+```javascript JavaScript
+const UPLOAD_BATCH_SIZE = 100000;
+await meiliIndex.addDocumentsInBatches(documents, UPLOAD_BATCH_SIZE);
+```
+
+```python Python
+UPLOAD_BATCH_SIZE = 100000
+meili_index.add_documents_in_batches(documents, batch_size=UPLOAD_BATCH_SIZE)
+```
+
+```ruby Ruby
+UPLOAD_BATCH_SIZE = 100000
+meili_index.add_documents_in_batches(documents, UPLOAD_BATCH_SIZE)
+```
+
+</CodeGroup>
+
+When you're ready, run the script:
+
+<CodeGroup>
+
+```bash JavaScript
+node script.js
+```
+
+```bash Python
+python script.py
+```
+
+```bash Ruby
+ruby script.rb
+```
+
+</CodeGroup>
+
+### Finished script
+
+<CodeGroup>
+
+```javascript JavaScript
+const { QdrantClient } = require("@qdrant/js-client-rest");
+const { MeiliSearch } = require("meilisearch");
+
+const COLLECTION_NAME = "YOUR_COLLECTION_NAME";
+const FETCH_BATCH_SIZE = 1000;
+const UPLOAD_BATCH_SIZE = 100000;
+const KEEP_VECTORS = false; // set to true to preserve existing vectors
+
+(async () => {
+  // Connect to Qdrant
+  const qdrantClient = new QdrantClient({
+    url: "QDRANT_URL",
+  });
+
+  // Fetch all points using Scroll API
+  const records = [];
+  let offset = null;
+
+  while (true) {
+    const response = await qdrantClient.scroll(COLLECTION_NAME, {
+      limit: FETCH_BATCH_SIZE,
+      offset: offset,
+      with_payload: true,
+      with_vectors: KEEP_VECTORS,
+    });
+
+    records.push(...response.points);
+
+    if (!response.next_page_offset) break;
+    offset = response.next_page_offset;
+  }
+
+  // Prepare documents for Meilisearch
+  const documents = records.map((point) => {
+    const doc = { ...point.payload };
+    doc.id = String(point.id);
+
+    if (KEEP_VECTORS && point.vector) {
+      if (typeof point.vector === "object" && !Array.isArray(point.vector)) {
+        doc._vectors = point.vector;
+      } else {
+        doc._vectors = { default: point.vector };
+      }
+    }
+
+    return doc;
+  });
+
+  console.log(`Fetched ${documents.length} points from Qdrant`);
+
+  // Upload to Meilisearch
+  const meiliClient = new MeiliSearch({
+    host: "MEILI_HOST",
+    apiKey: "MEILI_API_KEY",
+  });
+  const meiliIndex = meiliClient.index("MEILI_INDEX_NAME");
+
+  await meiliIndex.addDocumentsInBatches(documents, UPLOAD_BATCH_SIZE);
+  console.log("Migration complete");
+})();
+```
+
+```python Python
+from qdrant_client import QdrantClient
+import meilisearch
+
+COLLECTION_NAME = "YOUR_COLLECTION_NAME"
+FETCH_BATCH_SIZE = 1000
+UPLOAD_BATCH_SIZE = 100000
+KEEP_VECTORS = False  # set to True to preserve existing vectors
+
+# Connect to Qdrant
+qdrant_client = QdrantClient(url="QDRANT_URL")
+
+# Fetch all points using Scroll API
+records = []
+offset = None
+
+while True:
+    points, next_offset = qdrant_client.scroll(
+        collection_name=COLLECTION_NAME,
+        limit=FETCH_BATCH_SIZE,
+        offset=offset,
+        with_payload=True,
+        with_vectors=KEEP_VECTORS,
+    )
+
+    records.extend(points)
+
+    if next_offset is None:
+        break
+    offset = next_offset
+
+# Prepare documents for Meilisearch
+documents = []
+for point in records:
+    doc = {**point.payload}
+    doc["id"] = str(point.id)
+
+    if KEEP_VECTORS and point.vector is not None:
+        if isinstance(point.vector, dict):
+            doc["_vectors"] = point.vector
+        else:
+            doc["_vectors"] = {"default": point.vector}
+
+    documents.append(doc)
+
+print(f"Fetched {len(documents)} points from Qdrant")
+
+# Upload to Meilisearch
+meili_client = meilisearch.Client("MEILI_HOST", "MEILI_API_KEY")
+meili_index = meili_client.index("MEILI_INDEX_NAME")
+
+meili_index.add_documents_in_batches(documents, batch_size=UPLOAD_BATCH_SIZE)
+print("Migration complete")
+```
+
+```ruby Ruby
+require 'qdrant'
+require 'meilisearch'
+
+COLLECTION_NAME = 'YOUR_COLLECTION_NAME'
+FETCH_BATCH_SIZE = 1000
+UPLOAD_BATCH_SIZE = 100_000
+KEEP_VECTORS = false # set to true to preserve existing vectors
+
+# Connect to Qdrant
+qdrant_client = Qdrant::Client.new(url: 'QDRANT_URL')
+
+# Fetch all points using Scroll API
+records = []
+offset = nil
+
+loop do
+  response = qdrant_client.points.scroll(
+    collection_name: COLLECTION_NAME,
+    limit: FETCH_BATCH_SIZE,
+    offset: offset,
+    with_payload: true,
+    with_vectors: KEEP_VECTORS
+  )
+
+  points = response.dig('result', 'points') || []
+  records.concat(points)
+
+  next_offset = response.dig('result', 'next_page_offset')
+  break if next_offset.nil?
+  offset = next_offset
+end
+
+# Prepare documents for Meilisearch
+documents = records.map do |point|
+  doc = point['payload'].dup
+  doc['id'] = point['id'].to_s
+
+  if KEEP_VECTORS && point['vector']
+    if point['vector'].is_a?(Hash)
+      doc['_vectors'] = point['vector']
+    else
+      doc['_vectors'] = { 'default' => point['vector'] }
+    end
+  end
+
+  doc
+end
+
+puts "Fetched #{documents.length} points from Qdrant"
+
+# Upload to Meilisearch
+meili_client = MeiliSearch::Client.new('MEILI_HOST', 'MEILI_API_KEY')
+meili_index = meili_client.index('MEILI_INDEX_NAME')
+
+meili_index.add_documents_in_batches(documents, UPLOAD_BATCH_SIZE)
+puts 'Migration complete'
+```
+
+</CodeGroup>
+
+## Configure your index settings
+
+After importing your data, you need to configure Meilisearch to handle vector search. You also gain access to full-text search, typo tolerance, faceting, and other features that work automatically.
+
+### Configure embedders
+
+One of the biggest differences between Qdrant and Meilisearch is how they handle vectors. With Qdrant, your application must compute vectors before indexing and searching. With Meilisearch, you configure an embedder once and Meilisearch handles all embedding automatically — both at indexing time and at search time.
+
+This means you can **remove all embedding logic from your application code**. Instead of calling an embedding API, computing vectors, and sending them to your search engine, you simply send documents and text queries to Meilisearch.
+
+Configure an [embedder](/learn/ai_powered_search/getting_started_with_ai_search) source such as OpenAI, HuggingFace, or a custom REST endpoint:
+
+```bash
+curl -X PATCH 'MEILI_HOST/indexes/MEILI_INDEX_NAME/settings' \
+  -H 'Authorization: Bearer MEILI_API_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "embedders": {
+      "default": {
+        "source": "openAi",
+        "apiKey": "OPENAI_API_KEY",
+        "model": "text-embedding-3-small",
+        "documentTemplate": "A document titled {{doc.title}}: {{doc.description}}"
+      }
+    }
+  }'
+```
+
+The `documentTemplate` controls what text is sent to the embedding model. Adjust it to match the fields in your documents. Meilisearch will automatically embed all existing documents and keep vectors up to date as you add, update, or delete documents.
+
+For more options including HuggingFace models, Ollama, and custom REST endpoints, see [configuring embedders](/learn/ai_powered_search/getting_started_with_ai_search).
+
+<Accordion title="Alternative: use existing vectors from Qdrant">
+If you prefer to keep your existing Qdrant vectors instead of re-embedding, you can export them (set `with_vectors: true` in the migration script) and configure a `userProvided` embedder:
+
+```bash
+curl -X PATCH 'MEILI_HOST/indexes/MEILI_INDEX_NAME/settings' \
+  -H 'Authorization: Bearer MEILI_API_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "embedders": {
+      "default": {
+        "source": "userProvided",
+        "dimensions": 1536
+      }
+    }
+  }'
+```
+
+Replace `1536` with the vector dimension used in your Qdrant collection. With this approach, you remain responsible for computing and providing vectors when adding or updating documents. You also need to compute query vectors client-side when searching.
+
+If your Qdrant collection uses **named vectors**, create a separate embedder for each vector name. The embedder names in Meilisearch must match the keys used in the `_vectors` field of your documents.
+</Accordion>
+
+### Configure filterable and sortable attributes
+
+In Qdrant, payload indexes must be created explicitly for filtering. In Meilisearch, configure [`filterableAttributes`](/reference/api/settings/update-filterableattributes) and [`sortableAttributes`](/reference/api/settings/update-sortableattributes) for the fields you want to filter and sort on:
+
+```bash
+curl -X PATCH 'MEILI_HOST/indexes/MEILI_INDEX_NAME/settings' \
+  -H 'Authorization: Bearer MEILI_API_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "filterableAttributes": ["category", "price", "_geo"],
+    "sortableAttributes": ["price", "date", "_geo"]
+  }'
+```
+
+### What you gain
+
+Migrating from Qdrant to Meilisearch gives you several features that work out of the box:
+
+- **No more client-side embedding** — Configure an embedder once, then just send text queries. Meilisearch handles vectorization for both documents and searches
+- **Full-text search** with typo tolerance, prefix matching, and language-aware tokenization
+- **Hybrid search** combining keyword relevancy and semantic similarity in a single query — no need to orchestrate two search systems
+- **Faceted search** with value distributions for building filter UIs
+- **Highlighting** of matching terms in results
+- **Synonyms and stop words** support
+- **Built-in ranking rules** that combine text relevancy, semantic similarity, and custom sort attributes
+
+### Settings and parameters comparison
+
+The below tables compare Qdrant concepts with their Meilisearch equivalents.
+
+#### Core concepts
+
+| Qdrant | Meilisearch | Notes |
+| :--- | :--- | :--- |
+| Collection | Index | — |
+| Point | Document | A Point is vector-first (vector + metadata payload). A Document is content-first (fields + optional vectors) |
+| Payload | Document fields | Payload fields become top-level document fields |
+| Vector | `_vectors` field or auto-generated via [`embedders`](/reference/api/settings/update-embedders) | Meilisearch can auto-generate vectors from document content, so importing vectors is optional |
+| Point ID (uuid or integer) | Document `id` (string) | Must convert to string |
+| Named vectors | Multiple [`embedders`](/reference/api/settings/update-embedders) | One embedder per vector name |
+| Collection aliases | [Index swap](/reference/api/indexes/swap-indexes) | Atomic swap of two indexes |
+
+#### Indexing and storage
+
+| Qdrant | Meilisearch | Notes |
+| :--- | :--- | :--- |
+| `payload_schema` / payload index | [`filterableAttributes`](/reference/api/settings/update-filterableattributes) | Required for filtering |
+| HNSW index config | Automatic (DiskANN-based) | No manual tuning needed |
+| Quantization (scalar, product, binary) | Built-in binary quantization via [`embedders`](/reference/api/settings/update-embedders) | Configured per embedder |
+| `on_disk` storage | Automatic | Meilisearch uses memory-mapped storage |
+| Sharding / replication | Automatic ([Meilisearch Cloud](https://www.meilisearch.com/cloud)) | — |
+| Snapshots | [Dumps](/reference/api/backups/create-dump) / [Snapshots](/reference/api/backups/create-snapshot) | — |
+
+#### Search parameters
+
+| Qdrant | Meilisearch | Notes |
+| :--- | :--- | :--- |
+| `query` (precomputed vector) | `q` + `hybrid` with auto-embedder | Meilisearch embeds the query for you — no client-side vector computation |
+| No built-in full-text search | `q` search param | Full-text search with typo tolerance, works standalone or combined with `hybrid` |
+| No equivalent | `hybrid.semanticRatio` | Tune the balance between keyword and semantic results (0.0–1.0) |
+| `filter.must` | `filter` with `AND` | — |
+| `filter.should` | `filter` with `OR` | — |
+| `filter.must_not` | `filter` with `NOT` | — |
+| `filter.match` (exact value) | `filter` with `=` operator | — |
+| `filter.range` (gt, gte, lt, lte) | `filter` with `>`, `>=`, `<`, `<=` or `TO` | — |
+| `filter.geo_bounding_box` | `_geoBoundingBox([lat, lng], [lat, lng])` in `filter` | — |
+| `filter.geo_radius` | `_geoRadius(lat, lng, radius)` in `filter` | — |
+| `with_payload` | `attributesToRetrieve` | Search param |
+| `score_threshold` | `rankingScoreThreshold` | Search param |
+| `limit` | `limit` | Search param |
+| `offset` | `offset` | Search param |
+| `with_vectors` | `retrieveVectors` | Search param |
+| No equivalent | `attributesToHighlight` | Highlight matching terms in results |
+| No equivalent | `facets` | Get value distributions for fields |
+| No equivalent | `sort` | Sort by attributes (requires `sortableAttributes`) |
+| No equivalent | `attributesToCrop` | Excerpt matching content |
+
+## Query comparison
+
+This section shows how common Qdrant queries translate to Meilisearch. All Meilisearch examples below assume you have configured an [auto-embedder](#configure-embedders) — you simply send a text query and Meilisearch handles embedding automatically. No need to compute vectors client-side.
+
+### Semantic search
+
+With Qdrant, you must compute the query vector yourself before searching. With Meilisearch, you just send a natural language query:
+
+**Qdrant:**
+```json
+POST /collections/my_collection/points/search
+{
+  "vector": [0.1, 0.2, 0.3, ...],
+  "limit": 10
+}
+```
+
+**Meilisearch:**
+```json
+POST /indexes/my_index/search
+{
+  "q": "comfortable running shoes",
+  "hybrid": {
+    "semanticRatio": 1.0,
+    "embedder": "default"
+  },
+  "limit": 10
+}
+```
+
+With an auto-embedder configured, Meilisearch embeds the `q` text for you. Setting `semanticRatio` to `1.0` performs pure semantic search, just like Qdrant — but without managing vectors in your application code.
+
+### Hybrid search (keyword + semantic)
+
+This is Meilisearch's biggest advantage over Qdrant. A single query combines typo-tolerant keyword matching with semantic similarity — something that would require two separate systems with Qdrant:
+
+**Meilisearch:**
+```json
+POST /indexes/my_index/search
+{
+  "q": "comfortable running shoes",
+  "hybrid": {
+    "semanticRatio": 0.5,
+    "embedder": "default"
+  }
+}
+```
+
+A `semanticRatio` of `0.5` gives equal weight to keyword and semantic results. Adjust this value to tune the balance: closer to `0.0` favors keyword matching, closer to `1.0` favors semantic similarity.
+
+### Filtered search
+
+**Qdrant:**
+```json
+POST /collections/my_collection/points/search
+{
+  "vector": [0.1, 0.2, 0.3, ...],
+  "filter": {
+    "must": [
+      { "key": "category", "match": { "value": "electronics" } },
+      { "key": "price", "range": { "lte": 500 } }
+    ]
+  },
+  "limit": 10
+}
+```
+
+**Meilisearch:**
+```json
+POST /indexes/my_index/search
+{
+  "q": "wireless headphones",
+  "filter": "category = electronics AND price <= 500",
+  "hybrid": {
+    "semanticRatio": 0.7,
+    "embedder": "default"
+  },
+  "limit": 10
+}
+```
+
+No need to compute a vector for "wireless headphones" — Meilisearch handles it. The filter syntax is also simpler: a single string instead of nested JSON objects.
+
+<Note>
+Attributes used in `filter` must first be added to [`filterableAttributes`](/reference/api/settings/update-filterableattributes).
+</Note>
+
+### Geo search
+
+**Qdrant:**
+```json
+POST /collections/my_collection/points/search
+{
+  "vector": [0.1, 0.2, 0.3, ...],
+  "filter": {
+    "must": [
+      {
+        "key": "location",
+        "geo_radius": {
+          "center": { "lat": 48.8566, "lon": 2.3522 },
+          "radius": 10000
+        }
+      }
+    ]
+  }
+}
+```
+
+**Meilisearch:**
+```json
+POST /indexes/my_index/search
+{
+  "q": "restaurant",
+  "filter": "_geoRadius(48.8566, 2.3522, 10000)",
+  "sort": ["_geoPoint(48.8566, 2.3522):asc"],
+  "hybrid": {
+    "semanticRatio": 0.5,
+    "embedder": "default"
+  }
+}
+```
+
+Meilisearch adds geo-distance sorting on top of filtered search — and you still just send a text query instead of a precomputed vector.
+
+<Note>
+The `_geo` attribute must be added to both [`filterableAttributes`](/reference/api/settings/update-filterableattributes) and [`sortableAttributes`](/reference/api/settings/update-sortableattributes).
+</Note>
+
+### Faceted search
+
+Qdrant has no equivalent for faceted search. In Meilisearch, you can retrieve value distributions for any filterable attribute:
+
+**Meilisearch:**
+```json
+POST /indexes/my_index/search
+{
+  "q": "shoes",
+  "facets": ["brand", "color", "size"],
+  "hybrid": {
+    "semanticRatio": 0.5,
+    "embedder": "default"
+  }
+}
+```
+
+This returns search results along with a count of documents matching each facet value — useful for building filter UIs.
+
+### Full-text search (no vectors)
+
+Meilisearch also works as a standalone keyword search engine. If you don't need semantic search for a particular query, omit the `hybrid` parameter entirely:
+
+**Meilisearch:**
+```json
+POST /indexes/my_index/search
+{
+  "q": "runnign shoes",
+  "limit": 10
+}
+```
+
+This returns results using keyword matching with automatic typo tolerance (note the typo in "runnign" — Meilisearch handles it). This has no equivalent in Qdrant.
+
+## API methods
+
+This section compares Qdrant and Meilisearch API operations.
+
+| Operation | Qdrant | Meilisearch |
+| :--- | :--- | :--- |
+| Create collection/index | `PUT /collections/{name}` | `POST /indexes` |
+| Delete collection/index | `DELETE /collections/{name}` | `DELETE /indexes/{index_uid}` |
+| Get collection/index info | `GET /collections/{name}` | `GET /indexes/{index_uid}` |
+| List collections/indexes | `GET /collections` | `GET /indexes` |
+| Upsert points/documents | `PUT /collections/{name}/points` | `POST /indexes/{index_uid}/documents` |
+| Get point/document | `GET /collections/{name}/points/{id}` | `GET /indexes/{index_uid}/documents/{id}` |
+| Delete points/documents | `POST /collections/{name}/points/delete` | `POST /indexes/{index_uid}/documents/delete` |
+| Scroll/browse | `POST /collections/{name}/points/scroll` | `GET /indexes/{index_uid}/documents` |
+| Search | `POST /collections/{name}/points/search` | `POST /indexes/{index_uid}/search` |
+| Multi-search | `POST /collections/{name}/points/search/batch` | `POST /multi-search` |
+| Create payload index | `PUT /collections/{name}/index` | `PATCH /indexes/{index_uid}/settings` |
+| Get collection config | `GET /collections/{name}` | `GET /indexes/{index_uid}/settings` |
+| Create snapshot | `POST /collections/{name}/snapshots` | `POST /snapshots` |
+| Health check | `GET /healthz` | `GET /health` |
+
+## Front-end components
+
+Qdrant does not include front-end search components. Meilisearch is compatible with Algolia's [InstantSearch](https://github.com/algolia/instantsearch.js) libraries through [Instant Meilisearch](https://github.com/meilisearch/meilisearch-js-plugins/tree/main/packages/instant-meilisearch), giving you pre-built widgets for search boxes, hit displays, facet filters, pagination, and more.
+
+You can find an up-to-date list of [the components supported by Instant Meilisearch](https://github.com/meilisearch/meilisearch-js-plugins/tree/main/packages/instant-meilisearch#-api-resources) in the GitHub project's README.
