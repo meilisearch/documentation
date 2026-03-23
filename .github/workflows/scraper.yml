@@ -26,19 +26,19 @@ jobs:
       - name: Run docs-scraper
         env:
           HOST_URL: ${{ secrets.MEILISEARCH_HOST_URL }}
-          API_KEY: ${{ secrets.MEILISEARCH_KEY }}
+          API_KEY: ${{ secrets.MEILISEARCH_API_KEY }}
           CONFIG_FILE_PATH: ${{ github.workspace }}/docs-scraper.config.json
         run: |
           docker run -t --rm \
             -e MEILISEARCH_HOST_URL=$HOST_URL \
-            -e MEILISEARCH_KEY=$API_KEY \
+            -e MEILISEARCH_API_KEY=$API_KEY \
             -v $CONFIG_FILE_PATH:/docs-scraper/config.json \
             getmeili/docs-scraper:v0.12.8 pipenv run ./docs_scraper config.json
 
       - name: Extract section from URLs using RHAI function
         env:
           HOST_URL: ${{ secrets.MEILISEARCH_HOST_URL }}
-          API_KEY: ${{ secrets.MEILISEARCH_KEY }}
+          API_KEY: ${{ secrets.MEILISEARCH_API_KEY }}
         run: |
           curl -X POST "$HOST_URL/indexes/mintlify-production/documents/edit" \
             -H "Content-Type: application/json" \
