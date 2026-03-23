@@ -1,0 +1,860 @@
+---
+title: Migrating from MongoDB Atlas Search to Meilisearch
+sidebarTitle: Migrating from MongoDB Atlas Search
+description: A step-by-step guide to exporting data from MongoDB Atlas Search and importing it into Meilisearch, with a comparison of settings, queries, and API methods.
+sidebarDepth: 3
+---
+
+This page aims to help current users of MongoDB Atlas Search make the transition to Meilisearch.
+
+For a high-level comparison of the two search engines, see [Meilisearch vs MongoDB Atlas Search](/resources/comparisons/mongodb).
+
+## Overview
+
+MongoDB Atlas Search is a full-text search engine built on Apache Lucene, integrated directly into MongoDB Atlas. It uses aggregation pipelines with the `$search` stage to query data. While this tight integration is convenient for MongoDB users, it also means your search is coupled to your database and constrained by the aggregation pipeline syntax.
+
+Meilisearch offers a simpler, faster alternative with typo tolerance, faceted search, and hybrid search out of the box — all through a straightforward REST API.
+
+This guide walks you through reading documents from a MongoDB collection and importing them into Meilisearch using a script in JavaScript, Python, or Ruby. [You can also skip directly to the finished script](#finished-script).
+
+The migration process consists of four steps:
+
+1. [Export your data from MongoDB](#export-your-mongodb-data)
+2. [Prepare your data for Meilisearch](#prepare-your-data)
+3. [Import your data into Meilisearch](#import-your-data-into-meilisearch)
+4. [Configure your Meilisearch index settings (optional)](#configure-your-index-settings)
+
+To help with the transition, this guide also includes a comparison of [settings and parameters](#settings-and-parameters-comparison), [query types](#query-comparison), and [API methods](#api-methods).
+
+Before continuing, make sure you have Meilisearch installed and have access to a command-line terminal. If you're unsure how to install Meilisearch, see our [quick start](/resources/self_hosting/getting_started/quick_start).
+
+<Note>
+This guide includes examples in JavaScript, Python, and Ruby. The packages used:
+
+- **JavaScript**: [`mongodb`](https://www.npmjs.com/package/mongodb) `6.x`, [`meilisearch`](https://www.npmjs.com/package/meilisearch) (compatible with Meilisearch v1.0+)
+- **Python**: [`pymongo`](https://pypi.org/project/pymongo/) `4.x`, [`meilisearch`](https://pypi.org/project/meilisearch/)
+- **Ruby**: [`mongo`](https://rubygems.org/gems/mongo) `2.x`, [`meilisearch`](https://rubygems.org/gems/meilisearch)
+</Note>
+
+## Export your MongoDB data
+
+### Initialize project
+
+<CodeGroup>
+
+```bash JavaScript
+mkdir mongodb-meilisearch-migration
+cd mongodb-meilisearch-migration
+npm init -y
+touch script.js
+```
+
+```bash Python
+mkdir mongodb-meilisearch-migration
+cd mongodb-meilisearch-migration
+touch script.py
+```
+
+```bash Ruby
+mkdir mongodb-meilisearch-migration
+cd mongodb-meilisearch-migration
+touch script.rb
+```
+
+</CodeGroup>
+
+### Install dependencies
+
+<CodeGroup>
+
+```bash JavaScript
+npm install -s mongodb meilisearch
+```
+
+```bash Python
+pip install pymongo meilisearch
+```
+
+```bash Ruby
+gem install mongo meilisearch
+```
+
+</CodeGroup>
+
+### Create MongoDB client
+
+You need your MongoDB **connection string** (URI). For Atlas, this is available in your cluster's connection settings.
+
+<CodeGroup>
+
+```javascript JavaScript
+const { MongoClient } = require("mongodb");
+
+const mongoClient = new MongoClient("MONGODB_URI");
+```
+
+```python Python
+from pymongo import MongoClient
+
+mongo_client = MongoClient("MONGODB_URI")
+```
+
+```ruby Ruby
+require 'mongo'
+
+mongo_client = Mongo::Client.new('MONGODB_URI')
+```
+
+</CodeGroup>
+
+Replace `MONGODB_URI` with your MongoDB connection string (for example, `mongodb+srv://user:password@cluster.mongodb.net/myDatabase`).
+
+### Fetch data from MongoDB
+
+Use the `find()` method to retrieve all documents from a collection. For large collections, process documents in batches using a cursor.
+
+<CodeGroup>
+
+```javascript JavaScript
+const DB_NAME = "YOUR_DATABASE_NAME";
+const COLLECTION_NAME = "YOUR_COLLECTION_NAME";
+const BATCH_SIZE = 10000;
+
+async function fetchAllDocuments() {
+  await mongoClient.connect();
+  const db = mongoClient.db(DB_NAME);
+  const collection = db.collection(COLLECTION_NAME);
+
+  const records = [];
+  const cursor = collection.find({}).batchSize(BATCH_SIZE);
+
+  for await (const doc of cursor) {
+    records.push(doc);
+  }
+
+  return records;
+}
+```
+
+```python Python
+DB_NAME = "YOUR_DATABASE_NAME"
+COLLECTION_NAME = "YOUR_COLLECTION_NAME"
+BATCH_SIZE = 10000
+
+def fetch_all_documents():
+    db = mongo_client[DB_NAME]
+    collection = db[COLLECTION_NAME]
+
+    records = []
+    cursor = collection.find({}).batch_size(BATCH_SIZE)
+
+    for doc in cursor:
+        records.append(doc)
+
+    return records
+```
+
+```ruby Ruby
+DB_NAME = 'YOUR_DATABASE_NAME'
+COLLECTION_NAME = 'YOUR_COLLECTION_NAME'
+BATCH_SIZE = 10_000
+
+def fetch_all_documents(mongo_client)
+  records = []
+  collection = mongo_client.use(DB_NAME)[COLLECTION_NAME]
+
+  collection.find({}).batch_size(BATCH_SIZE).each do |doc|
+    records << doc
+  end
+
+  records
+end
+```
+
+</CodeGroup>
+
+Replace `YOUR_DATABASE_NAME` and `YOUR_COLLECTION_NAME` with your MongoDB database and collection names.
+
+## Prepare your data
+
+MongoDB documents use `_id` as the primary key, which is typically an `ObjectId`. Meilisearch requires a string or integer primary key, so you need to convert `_id` to a string.
+
+<CodeGroup>
+
+```javascript JavaScript
+function prepareDocuments(docs) {
+  return docs.map((doc) => {
+    doc.id = doc._id.toString();
+    delete doc._id;
+    return doc;
+  });
+}
+```
+
+```python Python
+def prepare_documents(docs):
+    documents = []
+    for doc in docs:
+        doc["id"] = str(doc["_id"])
+        del doc["_id"]
+        documents.append(doc)
+    return documents
+```
+
+```ruby Ruby
+def prepare_documents(docs)
+  docs.map do |doc|
+    doc['id'] = doc['_id'].to_s
+    doc.delete('_id')
+    doc
+  end
+end
+```
+
+</CodeGroup>
+
+<Note>
+Meilisearch stores documents as flat JSON objects. If your MongoDB documents use deeply nested objects, only top-level fields can be used for filtering, sorting, and searching. You can keep nested objects for display purposes, but consider flattening fields you need to filter on. For example, `{ "author": { "name": "John" } }` can stay as-is if you only display it, but you should add `"author_name": "John"` as a top-level field if you need to filter by author name.
+</Note>
+
+### Handle geo data
+
+MongoDB uses [GeoJSON](https://www.mongodb.com/docs/manual/reference/geojson/) for location data, typically stored as `{ type: "Point", coordinates: [longitude, latitude] }`. Meilisearch uses a `_geo` object with `lat` and `lng`. Note that MongoDB stores coordinates in `[longitude, latitude]` order.
+
+<CodeGroup>
+
+```javascript JavaScript
+function convertGeoFields(doc, geoFieldName) {
+  if (doc[geoFieldName] && doc[geoFieldName].type === "Point") {
+    const coordinates = doc[geoFieldName].coordinates;
+    doc._geo = {
+      lat: coordinates[1], // GeoJSON: [lon, lat]
+      lng: coordinates[0],
+    };
+    delete doc[geoFieldName];
+  }
+  return doc;
+}
+```
+
+```python Python
+def convert_geo_fields(doc, geo_field_name):
+    if geo_field_name in doc and doc[geo_field_name].get("type") == "Point":
+        coordinates = doc[geo_field_name]["coordinates"]
+        doc["_geo"] = {
+            "lat": coordinates[1],  # GeoJSON: [lon, lat]
+            "lng": coordinates[0],
+        }
+        del doc[geo_field_name]
+    return doc
+```
+
+```ruby Ruby
+def convert_geo_fields(doc, geo_field_name)
+  if doc[geo_field_name] && doc[geo_field_name]['type'] == 'Point'
+    coordinates = doc[geo_field_name]['coordinates']
+    doc['_geo'] = {
+      'lat' => coordinates[1], # GeoJSON: [lon, lat]
+      'lng' => coordinates[0]
+    }
+    doc.delete(geo_field_name)
+  end
+  doc
+end
+```
+
+</CodeGroup>
+
+## Import your data into Meilisearch
+
+### Create Meilisearch client
+
+Create a Meilisearch client by passing the host URL and API key of your Meilisearch instance. The easiest option is to use the automatically generated [admin API key](/resources/self_hosting/security/basic_security).
+
+<CodeGroup>
+
+```javascript JavaScript
+const { MeiliSearch } = require("meilisearch");
+
+const meiliClient = new MeiliSearch({
+  host: "MEILI_HOST",
+  apiKey: "MEILI_API_KEY",
+});
+const meiliIndex = meiliClient.index("MEILI_INDEX_NAME");
+```
+
+```python Python
+import meilisearch
+
+meili_client = meilisearch.Client("MEILI_HOST", "MEILI_API_KEY")
+meili_index = meili_client.index("MEILI_INDEX_NAME")
+```
+
+```ruby Ruby
+require 'meilisearch'
+
+meili_client = MeiliSearch::Client.new('MEILI_HOST', 'MEILI_API_KEY')
+meili_index = meili_client.index('MEILI_INDEX_NAME')
+```
+
+</CodeGroup>
+
+Replace `MEILI_HOST`, `MEILI_API_KEY`, and `MEILI_INDEX_NAME` with your Meilisearch host URL, API key, and target index name. Meilisearch will create the index if it doesn't already exist.
+
+### Upload data to Meilisearch
+
+Use the Meilisearch client method `addDocumentsInBatches` to upload all records in batches of 100,000.
+
+<CodeGroup>
+
+```javascript JavaScript
+const UPLOAD_BATCH_SIZE = 100000;
+await meiliIndex.addDocumentsInBatches(documents, UPLOAD_BATCH_SIZE);
+```
+
+```python Python
+UPLOAD_BATCH_SIZE = 100000
+meili_index.add_documents_in_batches(documents, batch_size=UPLOAD_BATCH_SIZE)
+```
+
+```ruby Ruby
+UPLOAD_BATCH_SIZE = 100_000
+meili_index.add_documents_in_batches(documents, UPLOAD_BATCH_SIZE)
+```
+
+</CodeGroup>
+
+When you're ready, run the script:
+
+<CodeGroup>
+
+```bash JavaScript
+node script.js
+```
+
+```bash Python
+python script.py
+```
+
+```bash Ruby
+ruby script.rb
+```
+
+</CodeGroup>
+
+### Finished script
+
+<CodeGroup>
+
+```javascript JavaScript
+const { MongoClient } = require("mongodb");
+const { MeiliSearch } = require("meilisearch");
+
+const DB_NAME = "YOUR_DATABASE_NAME";
+const COLLECTION_NAME = "YOUR_COLLECTION_NAME";
+const FETCH_BATCH_SIZE = 10000;
+const UPLOAD_BATCH_SIZE = 100000;
+
+(async () => {
+  // Connect to MongoDB
+  const mongoClient = new MongoClient("MONGODB_URI");
+  await mongoClient.connect();
+
+  const db = mongoClient.db(DB_NAME);
+  const collection = db.collection(COLLECTION_NAME);
+
+  // Fetch all documents
+  const records = [];
+  const cursor = collection.find({}).batchSize(FETCH_BATCH_SIZE);
+
+  for await (const doc of cursor) {
+    records.push(doc);
+  }
+
+  await mongoClient.close();
+
+  // Prepare documents for Meilisearch
+  const documents = records.map((doc) => {
+    doc.id = doc._id.toString();
+    delete doc._id;
+    return doc;
+  });
+
+  console.log(`Fetched ${documents.length} documents from MongoDB`);
+
+  // Upload to Meilisearch
+  const meiliClient = new MeiliSearch({
+    host: "MEILI_HOST",
+    apiKey: "MEILI_API_KEY",
+  });
+  const meiliIndex = meiliClient.index("MEILI_INDEX_NAME");
+
+  await meiliIndex.addDocumentsInBatches(documents, UPLOAD_BATCH_SIZE);
+  console.log("Migration complete");
+})();
+```
+
+```python Python
+from pymongo import MongoClient
+import meilisearch
+
+DB_NAME = "YOUR_DATABASE_NAME"
+COLLECTION_NAME = "YOUR_COLLECTION_NAME"
+FETCH_BATCH_SIZE = 10000
+UPLOAD_BATCH_SIZE = 100000
+
+# Connect to MongoDB
+mongo_client = MongoClient("MONGODB_URI")
+db = mongo_client[DB_NAME]
+collection = db[COLLECTION_NAME]
+
+# Fetch all documents
+records = []
+cursor = collection.find({}).batch_size(FETCH_BATCH_SIZE)
+
+for doc in cursor:
+    records.append(doc)
+
+mongo_client.close()
+
+# Prepare documents for Meilisearch
+documents = []
+for doc in records:
+    doc["id"] = str(doc["_id"])
+    del doc["_id"]
+    documents.append(doc)
+
+print(f"Fetched {len(documents)} documents from MongoDB")
+
+# Upload to Meilisearch
+meili_client = meilisearch.Client("MEILI_HOST", "MEILI_API_KEY")
+meili_index = meili_client.index("MEILI_INDEX_NAME")
+
+meili_index.add_documents_in_batches(documents, batch_size=UPLOAD_BATCH_SIZE)
+print("Migration complete")
+```
+
+```ruby Ruby
+require 'mongo'
+require 'meilisearch'
+
+DB_NAME = 'YOUR_DATABASE_NAME'
+COLLECTION_NAME = 'YOUR_COLLECTION_NAME'
+FETCH_BATCH_SIZE = 10_000
+UPLOAD_BATCH_SIZE = 100_000
+
+# Connect to MongoDB
+mongo_client = Mongo::Client.new('MONGODB_URI')
+collection = mongo_client.use(DB_NAME)[COLLECTION_NAME]
+
+# Fetch all documents
+records = []
+collection.find({}).batch_size(FETCH_BATCH_SIZE).each do |doc|
+  records << doc
+end
+
+mongo_client.close
+
+# Prepare documents for Meilisearch
+documents = records.map do |doc|
+  doc['id'] = doc['_id'].to_s
+  doc.delete('_id')
+  doc
+end
+
+puts "Fetched #{documents.length} documents from MongoDB"
+
+# Upload to Meilisearch
+meili_client = MeiliSearch::Client.new('MEILI_HOST', 'MEILI_API_KEY')
+meili_index = meili_client.index('MEILI_INDEX_NAME')
+
+meili_index.add_documents_in_batches(documents, UPLOAD_BATCH_SIZE)
+puts 'Migration complete'
+```
+
+</CodeGroup>
+
+## Configure your index settings
+
+Meilisearch's default settings deliver relevant, typo-tolerant search out of the box. Unlike MongoDB Atlas Search, which requires you to define search index mappings before you can search, Meilisearch indexes all fields automatically.
+
+### Key conceptual differences
+
+**MongoDB Atlas Search** requires you to create [search indexes](https://www.mongodb.com/docs/atlas/atlas-search/create-index/) with field mappings (dynamic or static) before you can run `$search` queries. Search behavior is configured through the aggregation pipeline using stages like `$search`, `$searchMeta`, and `$vectorSearch`. Each query requires constructing a pipeline with specific operators like `text`, `compound`, `range`, and `near`.
+
+**Meilisearch** takes a simpler approach: all fields are automatically indexed and searchable by default. You refine behavior through [index settings](/reference/api/settings/list-all-settings) (which affect all searches) and [search parameters](/reference/api/search/search-with-post) (which affect a single query). Features like typo tolerance, prefix search, and ranking work without any configuration.
+
+This means most Atlas Search index configurations have no direct equivalent in Meilisearch because the behavior is automatic. You don't need to configure analyzers, define field mappings, or create search indexes before querying.
+
+### Configure embedders
+
+If you used MongoDB Atlas Vector Search (`$vectorSearch`), you can replace it with Meilisearch's built-in hybrid search. The key difference: with Atlas Vector Search, your application must compute vectors before indexing and searching. With Meilisearch, you configure an embedder once and Meilisearch handles all embedding automatically — both at indexing time and at search time.
+
+This means you can **remove all embedding logic from your application code**. Instead of calling an embedding API, computing vectors, and sending them alongside your aggregation pipeline, you simply send documents and text queries to Meilisearch.
+
+Configure an [embedder](/capabilities/hybrid_search/getting_started) source such as OpenAI, HuggingFace, or a custom REST endpoint:
+
+```bash
+curl -X PATCH 'MEILI_HOST/indexes/MEILI_INDEX_NAME/settings' \
+  -H 'Authorization: Bearer MEILI_API_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "embedders": {
+      "default": {
+        "source": "openAi",
+        "apiKey": "OPENAI_API_KEY",
+        "model": "text-embedding-3-small",
+        "documentTemplate": "A document titled {{doc.title}}: {{doc.description}}"
+      }
+    }
+  }'
+```
+
+The `documentTemplate` controls what text is sent to the embedding model. Adjust it to match the fields in your documents. Meilisearch will automatically embed all existing documents and keep vectors up to date as you add, update, or delete documents.
+
+For more options including HuggingFace models, Ollama, and custom REST endpoints, see [configuring embedders](/capabilities/hybrid_search/getting_started).
+
+<Accordion title="Alternative: use existing vectors with userProvided embedder">
+If you already have precomputed vectors stored alongside your MongoDB documents and want to keep them, you can include them in the `_vectors` field during migration and configure a `userProvided` embedder:
+
+```bash
+curl -X PATCH 'MEILI_HOST/indexes/MEILI_INDEX_NAME/settings' \
+  -H 'Authorization: Bearer MEILI_API_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "embedders": {
+      "default": {
+        "source": "userProvided",
+        "dimensions": 1536
+      }
+    }
+  }'
+```
+
+Replace `1536` with the dimension of your vectors. With this approach, you remain responsible for computing and providing vectors when adding or updating documents. You also need to compute query vectors client-side when searching.
+
+To include vectors during migration, modify the `prepareDocuments` function to extract your vector field into `_vectors`:
+
+```javascript
+// Inside prepareDocuments, if your MongoDB docs have a "embedding" field:
+doc._vectors = { default: doc.embedding };
+delete doc.embedding;
+```
+</Accordion>
+
+### Configure filterable and sortable attributes
+
+In MongoDB Atlas Search, you define which fields support faceting and filtering through your search index mappings. In Meilisearch, configure [`filterableAttributes`](/reference/api/settings/update-filterableattributes) and [`sortableAttributes`](/reference/api/settings/update-sortableattributes):
+
+```bash
+curl -X PATCH 'MEILI_HOST/indexes/MEILI_INDEX_NAME/settings' \
+  -H 'Authorization: Bearer MEILI_API_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "filterableAttributes": ["category", "price", "status", "_geo"],
+    "sortableAttributes": ["price", "date", "_geo"]
+  }'
+```
+
+### What you gain
+
+Migrating from MongoDB Atlas Search to Meilisearch gives you several advantages:
+
+- **No search index definitions** — Meilisearch indexes all fields automatically. No need to create or maintain search index mappings
+- **Simpler query syntax** — Replace complex aggregation pipelines with a flat JSON search request
+- **Typo tolerance** out of the box — no configuration required
+- **Hybrid search** combining keyword relevancy and semantic similarity in a single query, with automatic embedding
+- **Faceted search** with value distributions for building filter UIs
+- **Highlighting** of matching terms in results
+- **Synonyms and stop words** support
+- **Decoupled search** — Your search engine is independent of your database, so you can scale, tune, and deploy each separately
+
+## Settings and parameters comparison
+
+The below tables compare MongoDB Atlas Search concepts with their Meilisearch equivalents.
+
+### Search index configuration
+
+| MongoDB Atlas Search | Meilisearch | Notes |
+| :--- | :--- | :--- |
+| Dynamic field mappings | Automatic | Meilisearch indexes all fields by default |
+| Static field mappings | [`searchableAttributes`](/reference/api/settings/update-searchableattributes) / [`filterableAttributes`](/reference/api/settings/update-filterableattributes) | Use these to restrict or reorder searchable fields and enable filtering |
+| Lucene analyzer (`lucene.standard`, etc.) | Automatic | Meilisearch uses a built-in language-aware analyzer |
+| Custom analyzers | [`separatorTokens`](/reference/api/settings/get-separatortokens) / [`nonSeparatorTokens`](/reference/api/settings/get-nonseparatortokens) | Customize word boundary behavior |
+| `storedSource` | [`displayedAttributes`](/reference/api/settings/update-displayedattributes) | Control which fields appear in results |
+| `synonyms` (in index definition) | [`synonyms`](/reference/api/settings/update-synonyms) | Define equivalent terms |
+| `type: "string"` mapping | Automatic | Field types are inferred |
+| `type: "number"` mapping | Automatic | Field types are inferred |
+| `type: "geo"` mapping | `_geo` field with `lat`/`lng` | Add `_geo` to `filterableAttributes` and `sortableAttributes` |
+
+### Search operators
+
+| MongoDB Atlas Search | Meilisearch | Notes |
+| :--- | :--- | :--- |
+| `$search` with `text` operator | `q` search param | Meilisearch searches all `searchableAttributes` by default |
+| `$search` with `phrase` operator | `q` search param | Use `"quoted phrase"` in the query string for phrase matching |
+| `$search` with `wildcard` operator | Automatic prefix search | Meilisearch applies prefix search on the last query word by default |
+| `$search` with `regex` operator | No direct equivalent | Use `filter` for exact matching on specific field values |
+| `$search` with `compound` (`must`/`should`/`mustNot`/`filter`) | `q` + `filter` | Combine search query with filter expressions using `AND`, `OR`, `NOT` |
+| `$search` with `range` operator | `filter` search param | Use operators like `field > value` or `field value1 TO value2` |
+| `$search` with `near` (geo) | `_geoRadius(lat, lng, radius)` or `_geoBoundingBox([lat, lng], [lat, lng])` in `filter` | Requires `_geo` in `filterableAttributes` |
+| `$vectorSearch` | `hybrid` + auto-embedder | No need to precompute vectors — Meilisearch embeds queries automatically |
+| `$searchMeta` with `facet` collector | `facets` search param | Returns value distributions for each facet |
+| `highlight` option in `$search` | `attributesToHighlight` + `highlightPreTag` + `highlightPostTag` | Search params |
+| `$sort` stage after `$search` | `sort` search param | Requires [`sortableAttributes`](/reference/api/settings/update-sortableattributes) |
+| `$skip` / `$limit` stages | `offset` / `limit` or `page` / `hitsPerPage` | Search params |
+| `scoreDetails: true` | `showRankingScoreDetails` | Search param |
+| `count` in `$searchMeta` | Automatic | Meilisearch returns `estimatedTotalHits` (or `totalHits` with exhaustive pagination) |
+
+### Index settings
+
+| MongoDB Atlas Search | Meilisearch | Notes |
+| :--- | :--- | :--- |
+| Search index definition | Automatic | No index definition needed before searching |
+| Analyzer configuration | Automatic | Built-in language-aware text processing |
+| `storedSource` | [`displayedAttributes`](/reference/api/settings/update-displayedattributes) | Control which fields appear in results |
+| `synonyms` mapping | [`synonyms`](/reference/api/settings/update-synonyms) | Define equivalent terms |
+| Index on specific fields | [`searchableAttributes`](/reference/api/settings/update-searchableattributes) | All fields searchable by default; use this to restrict |
+| Atlas cluster scaling | Automatic ([Meilisearch Cloud](https://www.meilisearch.com/cloud)) | Meilisearch Cloud handles scaling |
+
+## Query comparison
+
+This section shows how common MongoDB Atlas Search aggregation pipelines translate to Meilisearch search requests.
+
+### Full-text search
+
+**MongoDB Atlas Search:**
+```json
+db.collection.aggregate([
+  {
+    "$search": {
+      "text": {
+        "query": "search engine",
+        "path": "title"
+      }
+    }
+  }
+])
+```
+
+**Meilisearch:**
+```json
+{
+  "q": "search engine"
+}
+```
+
+Meilisearch searches all `searchableAttributes` by default. To restrict to a specific field, use the `attributesToSearchOn` search parameter.
+
+### Filtered search
+
+**MongoDB Atlas Search:**
+```json
+db.collection.aggregate([
+  {
+    "$search": {
+      "compound": {
+        "must": [
+          {
+            "text": {
+              "query": "laptop",
+              "path": "title"
+            }
+          }
+        ],
+        "filter": [
+          {
+            "range": {
+              "path": "price",
+              "gte": 500,
+              "lte": 2000
+            }
+          },
+          {
+            "text": {
+              "query": "electronics",
+              "path": "category"
+            }
+          }
+        ]
+      }
+    }
+  }
+])
+```
+
+**Meilisearch:**
+```json
+{
+  "q": "laptop",
+  "filter": "price >= 500 AND price <= 2000 AND category = electronics"
+}
+```
+
+<Note>
+Attributes used in `filter` must first be added to [`filterableAttributes`](/reference/api/settings/update-filterableattributes).
+</Note>
+
+### Sorting
+
+**MongoDB Atlas Search:**
+```json
+db.collection.aggregate([
+  {
+    "$search": {
+      "text": {
+        "query": "shoes",
+        "path": "title"
+      }
+    }
+  },
+  { "$sort": { "price": 1, "date": -1 } }
+])
+```
+
+**Meilisearch:**
+```json
+{
+  "q": "shoes",
+  "sort": ["price:asc", "date:desc"]
+}
+```
+
+<Note>
+Attributes used in `sort` must first be added to [`sortableAttributes`](/reference/api/settings/update-sortableattributes).
+</Note>
+
+### Faceted search
+
+**MongoDB Atlas Search:**
+```json
+db.collection.aggregate([
+  {
+    "$searchMeta": {
+      "facet": {
+        "operator": {
+          "text": {
+            "query": "shoes",
+            "path": "title"
+          }
+        },
+        "facets": {
+          "colorFacet": {
+            "type": "string",
+            "path": "color"
+          },
+          "priceFacet": {
+            "type": "number",
+            "path": "price",
+            "boundaries": [0, 50, 100, 200]
+          }
+        }
+      }
+    }
+  }
+])
+```
+
+**Meilisearch:**
+```json
+{
+  "q": "shoes",
+  "facets": ["color", "price"]
+}
+```
+
+Meilisearch returns value distributions for each facet. Range aggregations with custom boundaries are not supported — use `filter` to narrow results by range.
+
+### Geo search
+
+**MongoDB Atlas Search:**
+```json
+db.collection.aggregate([
+  {
+    "$search": {
+      "near": {
+        "path": "location",
+        "origin": {
+          "type": "Point",
+          "coordinates": [2.3522, 48.8566]
+        },
+        "pivot": 10000
+      }
+    }
+  }
+])
+```
+
+**Meilisearch:**
+```json
+{
+  "filter": "_geoRadius(48.8566, 2.3522, 10000)",
+  "sort": ["_geoPoint(48.8566, 2.3522):asc"]
+}
+```
+
+<Note>
+The `_geo` attribute must be added to both [`filterableAttributes`](/reference/api/settings/update-filterableattributes) and [`sortableAttributes`](/reference/api/settings/update-sortableattributes). Note that MongoDB uses `[longitude, latitude]` order in GeoJSON while Meilisearch uses `lat, lng` order.
+</Note>
+
+### Vector / semantic search
+
+With Atlas Vector Search, you must compute the query vector yourself before searching. With Meilisearch, you configure an auto-embedder once and just send natural language queries:
+
+**MongoDB Atlas Vector Search:**
+```json
+db.collection.aggregate([
+  {
+    "$vectorSearch": {
+      "index": "vector_index",
+      "path": "embedding",
+      "queryVector": [0.1, 0.2, 0.3, "..."],
+      "numCandidates": 100,
+      "limit": 10
+    }
+  }
+])
+```
+
+**Meilisearch:**
+```json
+{
+  "q": "comfortable running shoes",
+  "hybrid": {
+    "semanticRatio": 1.0,
+    "embedder": "default"
+  },
+  "limit": 10
+}
+```
+
+With an auto-embedder configured, Meilisearch embeds the `q` text for you. Setting `semanticRatio` to `1.0` performs pure semantic search — but without managing vectors in your application code. Set `semanticRatio` to `0.5` to combine keyword and semantic results in a single hybrid query, something that would require running both `$search` and `$vectorSearch` pipelines separately with Atlas.
+
+## API methods
+
+This section compares MongoDB Atlas Search operations with Meilisearch API endpoints.
+
+| Operation | MongoDB Atlas Search | Meilisearch |
+| :--- | :--- | :--- |
+| Create search index | `db.collection.createSearchIndex()` | `POST /indexes` (automatic) |
+| Delete search index | `db.collection.dropSearchIndex()` | `DELETE /indexes/{index_uid}` |
+| List search indexes | `db.collection.getSearchIndexes()` | `GET /indexes` |
+| Full-text search | `db.collection.aggregate([{ $search: ... }])` | `POST /indexes/{index_uid}/search` |
+| Vector search | `db.collection.aggregate([{ $vectorSearch: ... }])` | `POST /indexes/{index_uid}/search` (with `hybrid`) |
+| Facet search | `db.collection.aggregate([{ $searchMeta: ... }])` | `POST /indexes/{index_uid}/search` (with `facets`) |
+| Multi-search | Multiple aggregation pipelines | `POST /multi-search` |
+| Add documents | `db.collection.insertMany()` | `POST /indexes/{index_uid}/documents` |
+| Get document | `db.collection.findOne()` | `GET /indexes/{index_uid}/documents/{id}` |
+| Delete document | `db.collection.deleteOne()` | `DELETE /indexes/{index_uid}/documents/{id}` |
+| Delete by filter | `db.collection.deleteMany()` | `POST /indexes/{index_uid}/documents/delete` |
+| Update settings | Update search index definition | `PATCH /indexes/{index_uid}/settings` |
+| Get settings | `db.collection.getSearchIndexes()` | `GET /indexes/{index_uid}/settings` |
+| API keys | Atlas access management | `POST /keys` |
+| Health check | Atlas monitoring | `GET /health` |
+| Task status | Atlas index build status | `GET /tasks/{task_uid}` |
+
+## Front-end components
+
+MongoDB Atlas Search does not include dedicated front-end search components. Meilisearch is compatible with Algolia's [InstantSearch](https://github.com/algolia/instantsearch.js) libraries through [Instant Meilisearch](https://github.com/meilisearch/meilisearch-js-plugins/tree/main/packages/instant-meilisearch), giving you pre-built widgets for search boxes, hit displays, facet filters, pagination, and more.
+
+You can find an up-to-date list of [the components supported by Instant Meilisearch](https://github.com/meilisearch/meilisearch-js-plugins/tree/main/packages/instant-meilisearch#-api-resources) in the GitHub project's README.

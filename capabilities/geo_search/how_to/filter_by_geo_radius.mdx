@@ -1,0 +1,125 @@
+---
+title: Filter by geo radius
+description: Filter search results to only include documents within a specified distance from a geographic point.
+---
+
+import CodeSamplesGeosearchGuideFilterUsage1 from '/snippets/generated-code-samples/code_samples_geosearch_guide_filter_usage_1.mdx';
+import CodeSamplesGeosearchGuideFilterUsage2 from '/snippets/generated-code-samples/code_samples_geosearch_guide_filter_usage_2.mdx';
+
+The `_geoRadius` filter returns documents located within a circular area defined by a center point and a radius. This is the most common geo filter, useful for "find nearby" features like store locators, restaurant finders, or service area lookups.
+
+## Syntax
+
+<CodeGroup>
+
+```
+_geoRadius(lat, lng, distanceInMeters)
+```
+
+</CodeGroup>
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `lat` | Float | Latitude of the center point |
+| `lng` | Float | Longitude of the center point |
+| `distanceInMeters` | Integer | Radius of the search area in meters |
+
+The distance is always expressed in **meters**. For example, use `2000` for a 2 km radius or `500` for 500 meters.
+
+## Filter by radius
+
+The following example searches for restaurants within 2 km of central Milan (latitude 45.472735, longitude 9.184019):
+
+<CodeSamplesGeosearchGuideFilterUsage1 />
+
+Meilisearch returns all documents with a `_geo` location inside the specified circle:
+
+<CodeGroup>
+
+```json
+{
+  "hits": [
+    {
+      "id": 1,
+      "name": "Nàpiz' Milano",
+      "address": "Viale Vittorio Veneto, 30, 20124, Milan, Italy",
+      "type": "pizza",
+      "rating": 9,
+      "_geo": {
+        "lat": 45.4777599,
+        "lng": 9.1967508
+      },
+      "_geoDistance": 1532
+    },
+    {
+      "id": 3,
+      "name": "Artico Gelateria Tradizionale",
+      "address": "Via Dogana, 1, 20123 Milan, Italy",
+      "type": "ice cream",
+      "rating": 10,
+      "_geo": {
+        "lat": 45.4632046,
+        "lng": 9.1719421
+      },
+      "_geoDistance": 1343
+    }
+  ]
+}
+```
+
+</CodeGroup>
+
+### Understanding `_geoDistance`
+
+When you use `_geoRadius`, Meilisearch automatically includes a `_geoDistance` field in each result. This value represents the distance in meters between the document's location and the center point of your radius filter.
+
+<Note>
+`_geoDistance` is a computed field that only appears in search results. It is not stored in your documents and cannot be used as a filter.
+</Note>
+
+## Combine with other filters
+
+You can combine `_geoRadius` with any other filter using `AND` and `OR` operators. The following example finds only pizzerias within 2 km of central Milan:
+
+<CodeSamplesGeosearchGuideFilterUsage2 />
+
+<CodeGroup>
+
+```json
+{
+  "hits": [
+    {
+      "id": 1,
+      "name": "Nàpiz' Milano",
+      "address": "Viale Vittorio Veneto, 30, 20124, Milan, Italy",
+      "type": "pizza",
+      "rating": 9,
+      "_geo": {
+        "lat": 45.4777599,
+        "lng": 9.1967508
+      },
+      "_geoDistance": 1532
+    }
+  ]
+}
+```
+
+</CodeGroup>
+
+## Common radius values
+
+| Use case | Radius |
+|----------|--------|
+| Walking distance | `1000` (1 km) |
+| Short drive | `5000` (5 km) |
+| City-wide | `15000` (15 km) |
+| Regional | `50000` (50 km) |
+
+<CardGroup cols={2}>
+  <Card title="Geo search overview" icon="globe" href="/capabilities/geo_search/getting_started">
+    Learn about all geo search capabilities in Meilisearch.
+  </Card>
+  <Card title="Search API reference" icon="code" href="/reference/api/search/search-with-post">
+    Full reference for the search endpoint and filter parameter.
+  </Card>
+</CardGroup>

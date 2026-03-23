@@ -1,0 +1,207 @@
+---
+title: Import large datasets
+description: Efficiently index millions of documents using batch sizing, payload compression, progress monitoring, and error recovery.
+---
+
+When working with datasets containing hundreds of thousands or millions of documents, how you send data to Meilisearch matters. This guide covers batch sizing, supported formats, compression, progress monitoring, and error handling for large imports.
+
+## Configure settings before importing
+
+Always configure your index settings before adding documents. If you add documents first and then change settings like [ranking rules](/capabilities/full_text_search/relevancy/ranking_rules) or [filterable attributes](/capabilities/filtering_sorting_faceting/getting_started), Meilisearch re-indexes the entire dataset. For large imports, this doubles the work.
+
+<CodeGroup>
+
+```bash
+curl \
+  -X PATCH 'MEILISEARCH_URL/indexes/products/settings' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  --data-binary '{
+    "searchableAttributes": ["title", "description"],
+    "filterableAttributes": ["category", "price"],
+    "sortableAttributes": ["price", "created_at"]
+  }'
+```
+
+</CodeGroup>
+
+Wait for this task to complete before sending documents.
+
+## Choose the right payload size
+
+A single large payload is faster than many small ones. Each HTTP request creates a [task](/capabilities/indexing/tasks_and_batches/async_operations), and Meilisearch processes tasks sequentially. Fewer, larger payloads mean less overhead.
+
+The default maximum payload size is 100 MB. You can adjust this with the `--http-payload-size-limit` [configuration option](/resources/self_hosting/configuration/reference#payload-limit-size).
+
+**Guidelines:**
+
+| Dataset size | Recommended batch size | Why |
+|---|---|---|
+| Under 100K documents | Send all at once | Fits in a single payload |
+| 100K to 1M documents | 50K to 100K per batch | Balances payload size with memory usage |
+| Over 1M documents | 50K to 100K per batch | Prevents memory pressure during indexing |
+
+The ideal batch size depends on your document size. If each document is small (under 1 KB), you can send more per batch. If documents are large (10+ KB each with long text fields), use smaller batches.
+
+## Use NDJSON for streaming
+
+For large imports, [NDJSON](http://ndjson.org/) (Newline Delimited JSON) is more efficient than JSON arrays. NDJSON lets you stream documents line by line without loading the entire payload into memory:
+
+<CodeGroup>
+
+```bash
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/products/documents' \
+  -H 'Content-Type: application/x-ndjson' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  --data-binary @products.ndjson
+```
+
+</CodeGroup>
+
+An NDJSON file has one JSON object per line:
+
+<CodeGroup>
+
+```json
+{"id": 1, "title": "Product A", "price": 29.99}
+{"id": 2, "title": "Product B", "price": 49.99}
+{"id": 3, "title": "Product C", "price": 19.99}
+```
+
+</CodeGroup>
+
+Meilisearch also supports CSV for tabular data:
+
+<CodeGroup>
+
+```bash
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/products/documents' \
+  -H 'Content-Type: text/csv' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  --data-binary @products.csv
+```
+
+</CodeGroup>
+
+## Compress payloads
+
+Reduce network transfer time by compressing your payloads. Meilisearch supports `gzip`, `deflate`, and `br` (Brotli) encoding:
+
+<CodeGroup>
+
+```bash
+gzip products.ndjson
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/products/documents' \
+  -H 'Content-Type: application/x-ndjson' \
+  -H 'Content-Encoding: gzip' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  --data-binary @products.ndjson.gz
+```
+
+</CodeGroup>
+
+Compression is especially effective for text-heavy documents. A typical JSON payload compresses to 10-20% of its original size.
+
+## Monitor import progress
+
+Each document addition returns a `taskUid`. Use it to check progress:
+
+<CodeGroup>
+
+```bash
+# Send documents
+RESPONSE=$(curl -s \
+  -X POST 'MEILISEARCH_URL/indexes/products/documents' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  --data-binary @batch_1.json)
+
+TASK_UID=$(echo $RESPONSE | jq -r '.taskUid')
+
+# Check task status
+curl \
+  -X GET "MEILISEARCH_URL/tasks/$TASK_UID" \
+  -H 'Authorization: Bearer MEILISEARCH_KEY'
+```
+
+</CodeGroup>
+
+The task response includes timing information:
+
+<CodeGroup>
+
+```json
+{
+  "uid": 42,
+  "status": "succeeded",
+  "type": "documentAdditionOrUpdate",
+  "details": {
+    "receivedDocuments": 50000,
+    "indexedDocuments": 50000
+  },
+  "duration": "PT12.453S",
+  "enqueuedAt": "2024-01-15T10:00:00Z",
+  "startedAt": "2024-01-15T10:00:01Z",
+  "finishedAt": "2024-01-15T10:00:13Z"
+}
+```
+
+</CodeGroup>
+
+For batch imports, filter tasks by index to see all pending work:
+
+<CodeGroup>
+
+```bash
+curl \
+  -X GET 'MEILISEARCH_URL/tasks?indexUids=products&statuses=enqueued,processing' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY'
+```
+
+</CodeGroup>
+
+## Handle errors in batches
+
+If a batch fails, the task status is `failed` with an error description. Common errors during large imports:
+
+| Error | Cause | Solution |
+|---|---|---|
+| `payload_too_large` | Batch exceeds payload size limit | Reduce batch size or increase `--http-payload-size-limit` |
+| `invalid_document_id` | A document has an invalid primary key | Fix the offending documents and resend the batch |
+| `missing_document_id` | Documents are missing the primary key field | Add the primary key field or set it using the `primaryKey` query parameter |
+
+When a batch fails, only that batch is affected. Other batches continue processing normally.
+
+### Retry strategy
+
+For automated imports, implement a simple retry pattern:
+
+1. Send a batch and record the `taskUid`
+2. Poll the task status until it reaches `succeeded` or `failed`
+3. If `failed`, log the error, fix the data if needed, and resend
+4. If `succeeded`, move to the next batch
+
+<Warning>
+Do not resend a batch before its task has completed. Sending duplicate documents is safe (Meilisearch deduplicates by primary key), but it creates unnecessary work in the task queue.
+</Warning>
+
+## Trim documents before importing
+
+Remove fields that are not searchable, filterable, sortable, or displayed. Smaller documents index faster and use less disk space. If your source data has 50 fields but users only search on 5, extract those 5 fields before sending to Meilisearch.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Indexing best practices" href="/capabilities/indexing/advanced/indexing_best_practices">
+    Additional tips for efficient indexing
+  </Card>
+  <Card title="Monitor tasks" href="/capabilities/indexing/tasks_and_batches/monitor_tasks">
+    Track task status and progress
+  </Card>
+  <Card title="Design primary keys" href="/capabilities/indexing/how_to/design_primary_keys">
+    Choose the right primary key for your documents
+  </Card>
+</CardGroup>

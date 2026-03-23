@@ -1,0 +1,68 @@
+---
+title: Configure search cutoff
+description: Set a maximum search time to ensure consistent response times for large datasets.
+---
+
+import CodeSamplesGetSearchCutoff1 from '/snippets/generated-code-samples/code_samples_get_search_cutoff_1.mdx';
+import CodeSamplesUpdateSearchCutoff1 from '/snippets/generated-code-samples/code_samples_update_search_cutoff_1.mdx';
+import CodeSamplesResetSearchCutoff1 from '/snippets/generated-code-samples/code_samples_reset_search_cutoff_1.mdx';
+
+The search cutoff defines the maximum time in milliseconds that Meilisearch spends processing a single search query. When the cutoff is reached, Meilisearch stops searching and returns the best results found so far. This ensures predictable response times on large datasets where some queries might otherwise take too long.
+
+## How it works
+
+When a search query is processed, Meilisearch iterates through documents and [ranking rules](/capabilities/full_text_search/relevancy/ranking_rules) to find and rank the best matches. On very large datasets (millions of documents) or with broad queries, this process can take significant time.
+
+The search cutoff sets an upper bound on this processing time. If Meilisearch reaches the cutoff before finishing, it returns the results collected up to that point. These results are still ranked correctly according to the ranking rules, but the result set may not include every possible match.
+
+By default, the search cutoff is `null`, meaning there is no time limit.
+
+## Check current search cutoff
+
+Retrieve the current `searchCutoffMs` setting for an index:
+
+<CodeSamplesGetSearchCutoff1 />
+
+The default response is `null`.
+
+## Set a search cutoff
+
+Configure a maximum search time of 150 milliseconds:
+
+<CodeSamplesUpdateSearchCutoff1 />
+
+With this configuration, any search query that takes longer than 150ms will be interrupted, and Meilisearch returns the best results found within that time.
+
+<Warning>
+Setting the cutoff too low may result in incomplete or empty result sets for broad queries. Start with a value between 100ms and 500ms and adjust based on your performance requirements.
+</Warning>
+
+## Reset search cutoff
+
+Remove the search cutoff and return to the default behavior (no time limit):
+
+<CodeSamplesResetSearchCutoff1 />
+
+## Choosing a cutoff value
+
+The right cutoff value is a trade-off: lower values guarantee faster responses but increase the chance of returning incomplete results for broad queries. Higher values give Meilisearch more time to find all matches but allow occasional slow queries.
+
+As a general recommendation, avoid setting the cutoff below **500ms**. This provides a good safety net against unusually long queries (including potential abuse from crafted search strings) while still giving Meilisearch enough time to return quality results for the vast majority of queries.
+
+<Tip>
+The cutoff is most useful as a safety net, not as a performance tuning knob. If your searches are consistently slow, address the root cause with the optimizations below rather than lowering the cutoff.
+</Tip>
+
+## Search cutoff vs. other performance optimizations
+
+The search cutoff is a reactive measure that limits query time after it becomes a problem. For proactive performance improvements, consider:
+
+- [Configuring searchable attributes](/capabilities/full_text_search/how_to/configure_searchable_attributes) to reduce the number of fields Meilisearch scans
+- [Configuring stop words](/capabilities/full_text_search/how_to/configure_stop_words) to eliminate common terms from indexing
+- [Disabling prefix search](/capabilities/full_text_search/how_to/configure_prefix_search) if search-as-you-type is not needed
+
+These optimizations reduce the work Meilisearch does during each query, which may eliminate the need for a cutoff entirely.
+
+<Info>
+For the full API reference, see [get search cutoff](/reference/api/settings/get-searchcutoffms).
+</Info>

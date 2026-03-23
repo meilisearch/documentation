@@ -1,0 +1,80 @@
+---
+title: Analytics metrics reference
+description: This reference describes the metrics you can find in the Meilisearch analytics interface.
+---
+
+## How metrics are computed
+
+Analytics metrics are based on **search IDs**, which represent search intents rather than individual HTTP requests. When a user types "run", "runn", "running shoes" in a search-as-you-type interface, those keystrokes generate multiple requests but count as a single search intent. This means metrics like click-through rate, conversion rate, and no-result rate reflect actual user behavior rather than keystroke volume.
+
+For more details on the relationship between search IDs, request IDs, and query IDs, see the [analytics overview](/capabilities/analytics/overview#search-id-request-id-and-query-id).
+
+## Total searches
+
+Total number of search intents during the specified period. Multiple requests within the same search intent count as a single search.
+
+## Total users
+
+Total number of users who performed a search in the specified period.
+
+Include the [user ID](/capabilities/analytics/how_to/bind_events_to_user) in your search request headers for the most accurate metrics. If search requests do not provide any user ID, Meilisearch generates an anonymous identifier automatically. Providing your own user IDs gives more accurate tracking, especially for users across multiple sessions.
+
+## No result rate
+
+Percentage of searches that did not return any results.
+
+## Click-through rate
+
+The ratio between the number of times users clicked on a result and the number of times Meilisearch showed that result. Since users will click on results that potentially match what they were looking for, a higher number indicates better relevancy.
+
+Meilisearch does not have access to this information by default. You must [configure your application to submit click events](/capabilities/analytics/getting_started) to Meilisearch if you want to track it in the analytics interface.
+
+## Average click position
+
+The average list position of clicked search results. A lower number means users have clicked on the first search results and indicates good relevancy.
+
+Meilisearch does not have access to this information by default. You must [configure your application to submit click events](/capabilities/analytics/getting_started) to Meilisearch if you want to track it in the analytics interface.
+
+## Conversion
+
+The percentage of searches resulting in a conversion event in your application. Conversion events vary depending on your application and indicate a user has performed a specific desired action. For example, a conversion for an e-commerce website might mean a user has bought a product.
+
+You must explicitly [configure your application to send conversion](/capabilities/analytics/getting_started) events when conditions are met.
+
+<Note>
+It is not possible to associate multiple `conversion` events with the same query.
+</Note>
+
+## Search requests
+
+Total number of search requests within the specified time period.
+
+## Search latency
+
+The amount of time between a user making a search request and Meilisearch returning search results. A lower number indicates users receive search results more quickly.
+
+## Most searched queries
+
+Most common query terms users have used while searching.
+
+## Searches without results
+
+Most common query terms that did not return any search results.
+
+## Countries with most searches
+
+List of countries that generate the largest amount of search requests. Meilisearch determines geographic distribution automatically based on the user's IP address. No additional configuration is required.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Get started with analytics" href="/capabilities/analytics/getting_started">
+    Set up analytics and start collecting search data.
+  </Card>
+  <Card title="Track click events" href="/capabilities/analytics/how_to/track_click_events">
+    Configure your application to send click events to Meilisearch.
+  </Card>
+  <Card title="Track conversion events" href="/capabilities/analytics/how_to/track_conversion_events">
+    Measure how often searches lead to desired user actions.
+  </Card>
+</CardGroup>

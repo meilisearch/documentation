@@ -1,0 +1,122 @@
+---
+title: Track conversion events
+sidebarTitle: Track conversion events
+description: Track purchases, sign-ups, and other actions that result from search to measure search effectiveness.
+---
+
+import CodeSamplesAnalyticsEventConversion1 from '/snippets/generated-code-samples/code_samples_analytics_event_conversion_1.mdx';
+
+Conversion tracking records when a user completes a desired action after finding something through search. While [click events](/capabilities/analytics/how_to/track_click_events) tell you which results users interact with, conversion events tell you which results deliver real business value.
+
+## Clicks vs. conversions
+
+| Event type | What it measures | Example |
+|:-----------|:-----------------|:--------|
+| Click | User viewed or opened a search result | User clicks on a product in search results |
+| Conversion | User completed a meaningful action | User adds that product to their cart or completes a purchase |
+
+Click events measure engagement with search results. Conversion events measure whether search actually drives outcomes. Together, they give you a complete picture of search quality.
+
+## Define your conversions
+
+Before implementing tracking, decide what actions count as conversions for your use case:
+
+| Application type | Typical conversion |
+|:-----------------|:-------------------|
+| E-commerce | Adding to cart, completing a purchase |
+| Content platform | Reading an article, subscribing |
+| Documentation site | Copying a code sample, following a tutorial |
+| Job board | Applying to a job listing |
+| SaaS product | Starting a free trial, upgrading a plan |
+
+Pick the action that best represents a successful search outcome for your business.
+
+## Send a conversion event
+
+When a user completes a conversion action, send a `conversion` event to the `POST /events` endpoint:
+
+<CodeSamplesAnalyticsEventConversion1 />
+
+### Required and recommended fields
+
+| Field | Required | Description |
+|:------|:---------|:------------|
+| `eventType` | Yes | Must be `"conversion"` |
+| `eventName` | Yes | A descriptive label, such as `"Product Added To Cart"` |
+| `indexUid` | Yes | The index containing the converted document |
+| `userId` | Yes | An arbitrary string identifying the user |
+| `objectId` | Recommended | The [primary key](/resources/internals/primary_key) of the converted document |
+| `queryUid` | Recommended | The UID of the original search query |
+| `objectName` | Optional | A human-readable description of the document |
+
+The `queryUid` links the conversion back to the original search request. You can find it in the [`metadata` field present in search query responses](/reference/api/headers#search-metadata).
+
+<Note>
+It is not possible to associate multiple `conversion` events with the same query. If a user converts on the same query twice, only the first event is recorded.
+</Note>
+
+## When to fire conversion events
+
+Conversion events should be sent at the moment the user completes the action, not when they first view the result. In a typical e-commerce flow:
+
+1. User searches for "wireless headphones" (search request)
+2. User clicks on a product (click event)
+3. User reads the product page (no event)
+4. User adds the product to their cart (conversion event)
+
+<CodeGroup>
+
+```javascript
+async function handleAddToCart(product, queryUid) {
+  // Add the product to the cart in your application
+  await addToCart(product.id);
+
+  // Send the conversion event to Meilisearch
+  await fetch('https://PROJECT_URL/events', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer DEFAULT_SEARCH_API_KEY',
+    },
+    body: JSON.stringify({
+      eventType: 'conversion',
+      eventName: 'Product Added To Cart',
+      indexUid: 'products',
+      userId: getCurrentUserId(),
+      queryUid: queryUid,
+      objectId: product.id,
+      objectName: product.title,
+    }),
+  });
+}
+```
+
+</CodeGroup>
+
+<Tip>
+Store the `queryUid` when the user performs a search, then pass it along as the user navigates through your application. This ensures you can still associate a conversion with the original query even if the conversion happens on a different page.
+</Tip>
+
+## Best practices
+
+- **Track the most meaningful action.** If you track too many conversion types, the conversion rate metric becomes less useful. Focus on the action that best represents search success.
+- **Preserve the `queryUid` across pages.** Store it in session storage or pass it as a URL parameter so you can associate conversions with the search that led to them.
+- **Use consistent user IDs.** The same user should have the same `userId` across all searches and events.
+- **Do not send duplicate conversions.** Only one conversion event per query is recorded, so avoid sending the same event multiple times.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Getting started with analytics" href="/capabilities/analytics/getting_started">
+    Set up click and conversion tracking from scratch
+  </Card>
+  <Card title="Events endpoint reference" href="/capabilities/analytics/advanced/events_endpoint">
+    Full reference for the `/events` endpoint fields and behavior
+  </Card>
+  <Card title="Track click events" href="/capabilities/analytics/how_to/track_click_events">
+    Record which search results users click on
+  </Card>
+  <Card title="Bind events to a user" href="/capabilities/analytics/how_to/bind_events_to_user">
+    Learn how to associate analytics events with specific users
+  </Card>
+</CardGroup>

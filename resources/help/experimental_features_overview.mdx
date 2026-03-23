@@ -1,0 +1,69 @@
+---
+title: Experimental features overview
+sidebarTitle: Experimental features overview
+description: This article covers how to activate and configure Meilisearch experimental features.
+---
+
+import CodeSamplesUpdateExperimentalFeatures1 from '/snippets/generated-code-samples/code_samples_update_experimental_features_1.mdx';
+
+Meilisearch periodically introduces new experimental features. Experimental features are not always ready for production, but offer functionality that might benefit some users.
+
+An experimental feature's API can change significantly and become incompatible between releases. Keep this in mind when using experimental features in a production environment.
+
+Meilisearch makes experimental features available expecting they will become stable in a future release, but this is not guaranteed.
+
+## Activating experimental features
+
+Experimental features fall into two groups based on how they are activated or deactivated:
+
+1. Those that are activated at launch with a command-line flag or environment variable
+2. Those that are activated with the [`/experimental-features` API route](/reference/api/management/list-experimental-features).
+
+## Activating experimental features at launch
+
+Some experimental features can be [activated at launch](/resources/self_hosting/configuration/overview), for example with a command-line flag:
+
+```sh
+./meilisearch --experimental-enable-metrics
+```
+
+Flags and environment variables for experimental features are not included in the [regular configuration options list](/resources/self_hosting/configuration/reference#all-instance-options). Instead, consult the specific documentation page for the feature you are interested in, which can be found in the experimental section.
+
+Command-line flags for experimental features are always prefixed with `--experimental`. Environment variables for experimental features are always prefixed with `MEILI_EXPERIMENTAL`.
+
+Activating or deactivating experimental features this way requires you to relaunch Meilisearch.
+
+### Activating experimental features during runtime
+
+Some experimental features can be activated via an HTTP call using the [`/experimental-features` API route](/reference/api/management/list-experimental-features):
+
+<CodeSamplesUpdateExperimentalFeatures1 />
+
+Activating or deactivating experimental features this way does not require you to relaunch Meilisearch.
+
+## Current experimental features
+
+| Name                                                                                            | Description                                                                | How to configure                            |
+| ----------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- | ------------------------------------------- |
+| [Limit task batch size](/resources/self_hosting/configuration/overview)                     | Limits number of tasks processed in a single batch                         | CLI flag or environment variable            |
+| [Log customization](/reference/api/logs)                                                        | Customize log output and set up log streams                                | CLI flag or environment variable, API route |
+| [Metrics API](/reference/api/metrics)                                                           | Exposes Prometheus-compatible analytics data                               | CLI flag or environment variable, API route |
+| [Reduce indexing memory usage](/resources/self_hosting/configuration/overview)              | Optimizes indexing performance                                             | CLI flag or environment variable            |
+| [Replication parameters](/resources/self_hosting/configuration/overview)                    | Alters task processing for clustering compatibility                        | CLI flag or environment variable            |
+| [Search queue size](/resources/self_hosting/configuration/overview)                         | Configure maximum number of concurrent search requests                     | CLI flag or environment variable            |
+| [Drop search after](/resources/self_hosting/configuration/overview)                         | Drop irrelevant search requests after a configurable timeout (default: 60s) | CLI flag or environment variable           |
+| [Searches per core](/resources/self_hosting/configuration/overview)                         | Configure number of concurrent search requests per CPU core (default: 4)   | CLI flag or environment variable            |
+| [`CONTAINS` filter operator](/capabilities/filtering_sorting_faceting/advanced/filter_expression_syntax#contains) | Enables usage of `CONTAINS` with the `filter` search parameter             | CLI flag or environment variable, API route |
+| [Edit documents with function](/capabilities/indexing/how_to/edit_documents_with_functions) | Use a [Rhai](https://rhai.rs/book/) function to edit documents directly in the Meilisearch database | API route                                   |
+| [`/network` route](/reference/api/network/get-network)                                                      | Enable `/network` route                                                    | API route                                   |
+| [Dumpless upgrade](/resources/self_hosting/configuration/reference#dumpless-upgrade)         | Upgrade Meilisearch without generating a dump                              | API route                                   |
+| [Composite embedders](/reference/api/settings/get-embedders)                              | Enable composite embedders                                                 | API route                                   |
+| [Chat completions](/reference/api/chats/update-settings-of-a-chat-workspace)                   | Enable chat completion capabilities                                        | API route                                   |
+| [Get task documents route](/reference/api/async-task-management/list-tasks)                    | Enable route to retrieve documents from tasks                              | API route                                   |
+| [Search query embedding cache](/resources/self_hosting/configuration/reference#search-query-embedding-cache) | Enable a cache for search query embeddings                 | CLI flag or environment variable            |
+| [Uncompressed snapshots](/resources/self_hosting/configuration/reference#uncompressed-snapshots) | Disable snapshot compaction                                            | CLI flag or environment variable            |
+| [Maximum batch payload size](/resources/self_hosting/configuration/reference#maximum-batch-payload-size) | Limit batch payload size                                       | CLI flag or environment variable            |
+| [Multimodal search](/reference/api/settings/list-all-settings)                                                    | Enable multimodal search                                                   | API route                                   |
+| [Disable new indexer](/resources/self_hosting/configuration/overview)                       | Use previous settings indexer                                              | CLI flag or environment variable            |
+| [Allowed IP networks](/resources/self_hosting/configuration/overview)                       | Override default IP policy with allowed CIDR ranges                        | CLI flag or environment variable            |
+| [Search personalization](/capabilities/personalization/getting_started)                       | Enables search personalization                                              | CLI flag or environment variable            |

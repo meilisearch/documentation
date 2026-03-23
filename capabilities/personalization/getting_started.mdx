@@ -1,0 +1,42 @@
+---
+title: Performing personalized search queries
+sidebarTitle: Getting started
+description: Search personalization uses context about the person performing the search to provide results more relevant to that specific user. This article guides you through configuring and performing personalized search queries.
+---
+
+import CodeSamplesPersonalizationSearch1 from '/snippets/generated-code-samples/code_samples_personalization_search_1.mdx';
+
+## Generating a user profile
+
+Search personalization requires a profile of the user performing the search. Meilisearch does not yet provide automated generation of user profiles.
+
+You’ll need to **dynamically generate a user profile** for each search request. This should summarize relevant traits, such as:
+
+- Category preferences, like brand or size
+- Price sensitivity, like budget-conscious
+- Possible use cases, such as fitness and sport
+- Other assorted information, such as general interests or location
+
+The re-ranking model only processes positive signals. It cannot interpret negative statements like "dislikes blue" or "is not interested in luxury brands". Always use affirmatively stated preferences instead: "likes the color red", "prefers cheaper brands".
+
+## Perform a personalized search
+
+Once search personalization is active and you have a pipeline in place to generate user profiles, you are ready to perform personalized searches.
+
+Submit a search query and include the `personalize` search parameter. `personalize` must be an object with a single field, `userContext`. Use the profile you generated in the previous step as the value for `userContext`:
+
+<CodeSamplesPersonalizationSearch1 />
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Generate user context" href="/capabilities/personalization/how_to/generate_user_context">
+    Build dynamic user profiles for more relevant personalized results.
+  </Card>
+  <Card title="Personalize e-commerce search" href="/capabilities/personalization/how_to/personalize_ecommerce_search">
+    Apply search personalization to an e-commerce product catalog.
+  </Card>
+  <Card title="Personalization overview" href="/capabilities/personalization/overview">
+    Learn how search personalization works and when to use it.
+  </Card>
+</CardGroup>

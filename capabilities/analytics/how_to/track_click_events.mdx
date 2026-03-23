@@ -1,0 +1,96 @@
+---
+title: Track click events
+sidebarTitle: Track click events
+description: Implement click tracking to record which search results users click on and improve search relevancy.
+---
+
+import CodeSamplesAnalyticsEventClick1 from '/snippets/generated-code-samples/code_samples_analytics_event_click_1.mdx';
+
+Click tracking records when a user interacts with a search result. Each click event captures the original query, the clicked document, and its position in the result list. This data powers two key analytics metrics: **click-through rate** and **average click position**.
+
+Tracking clicks helps you understand how users interact with search results. Low click-through rates may indicate poor relevance (consider tuning your [ranking rules](/capabilities/full_text_search/relevancy/ranking_rules)), while high average click positions suggest that the most relevant results are not appearing near the top.
+
+## Send a click event
+
+Every time a user clicks on a search result, your application must send a `click` event to the `POST /events` endpoint:
+
+<CodeSamplesAnalyticsEventClick1 />
+
+### Required and recommended fields
+
+| Field | Required | Description |
+|:------|:---------|:------------|
+| `eventType` | Yes | Must be `"click"` |
+| `eventName` | Yes | A descriptive label, such as `"Search Result Clicked"` |
+| `indexUid` | Yes | The index containing the clicked document |
+| `userId` | Yes | An arbitrary string identifying the user who clicked |
+| `objectId` | Recommended | The [primary key](/resources/internals/primary_key) of the clicked document |
+| `position` | Recommended | The document's rank in the search results (starting from 0) |
+| `queryUid` | Recommended | The UID of the original search query |
+| `objectName` | Optional | A human-readable description of the document |
+
+The `queryUid` links the click event to the original search request. You can find it in the [`metadata` field present in search query responses](/reference/api/headers#search-metadata). Including it ensures Meilisearch correctly computes click-through rate and average click position.
+
+## Capture clicks in a frontend application
+
+In a typical web application, you fire a click event when the user clicks on a search result link. Here is a JavaScript example:
+
+<CodeGroup>
+
+```javascript
+async function handleResultClick(result, position, queryUid) {
+  // Send the click event to Meilisearch
+  await fetch('https://PROJECT_URL/events', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer DEFAULT_SEARCH_API_KEY',
+    },
+    body: JSON.stringify({
+      eventType: 'click',
+      eventName: 'Search Result Clicked',
+      indexUid: 'products',
+      userId: getCurrentUserId(),
+      queryUid: queryUid,
+      objectId: result.id,
+      objectName: result.title,
+      position: position,
+    }),
+  });
+
+  // Navigate to the result page
+  window.location.href = result.url;
+}
+```
+
+</CodeGroup>
+
+Attach this handler to each search result in your UI. The `position` parameter should match the document's zero-based index in the results list.
+
+<Warning>
+Always send the click event before navigating away from the search results page. If the navigation happens first, the event request may be cancelled by the browser.
+</Warning>
+
+## Best practices
+
+- **Include `queryUid` whenever possible.** Without it, Meilisearch cannot associate the click with a specific search query.
+- **Use consistent user IDs.** The same user should have the same `userId` across searches and events so analytics can track their full journey.
+- **Send events in real time.** Batching click events or sending them with a delay reduces the accuracy of your analytics.
+- **Track position accurately.** If your UI displays results across multiple pages, account for pagination offset when calculating the position value.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Getting started with analytics" href="/capabilities/analytics/getting_started">
+    Set up click and conversion tracking from scratch
+  </Card>
+  <Card title="Events endpoint reference" href="/capabilities/analytics/advanced/events_endpoint">
+    Full reference for the `/events` endpoint fields and behavior
+  </Card>
+  <Card title="Track conversion events" href="/capabilities/analytics/how_to/track_conversion_events">
+    Record when users complete a desired action after searching
+  </Card>
+  <Card title="Bind events to a user" href="/capabilities/analytics/how_to/bind_events_to_user">
+    Learn how to associate analytics events with specific users
+  </Card>
+</CardGroup>

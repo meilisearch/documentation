@@ -1,0 +1,31 @@
+---
+title: Image Search
+sidebarTitle: Image Search
+description: Multimodal search across 100 million images with similar image discovery
+---
+
+<Info>
+**Live demo**: [flickr.meilisearch.com](https://flickr.meilisearch.com)
+</Info>
+
+Search 100 million Flickr images using multimodal search. Type natural language descriptions like "autumn colors" and find matching images instantly. This is not vector search on text metadata, it is true multimodal search where the model understands visual content.
+
+![Image search demo showing "autumn colors" results](/assets/images/demos/image-search-demo.png)
+
+## Key features
+
+- **Multimodal search**: Search images by describing what you want in natural language. The model processes both text queries and image content in the same embedding space.
+- **Similar images**: Click any result to discover visually similar images using the similar documents API.
+- **Massive scale**: 100 million images indexed and searchable with sub-second response times.
+- **Built with Nova Embeddings**: Powered by Amazon Nova Embeddings from AWS for high-quality multimodal understanding.
+
+## Links
+
+<CardGroup cols={2}>
+  <Card title="Try the demo" icon="globe" href="https://flickr.meilisearch.com">
+    Search 100 million images
+  </Card>
+  <Card title="Image search guide" icon="image" href="/capabilities/hybrid_search/how_to/image_search_with_multimodal">
+    Implement image search in your app
+  </Card>
+</CardGroup>

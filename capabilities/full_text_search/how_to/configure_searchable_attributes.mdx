@@ -1,0 +1,75 @@
+---
+title: Configure searchable attributes
+description: Choose which document fields Meilisearch scans during a search query by setting the searchableAttributes index setting.
+---
+
+import CodeSamplesGetSearchableAttributes1 from '/snippets/generated-code-samples/code_samples_get_searchable_attributes_1.mdx';
+import CodeSamplesUpdateSearchableAttributes1 from '/snippets/generated-code-samples/code_samples_update_searchable_attributes_1.mdx';
+import CodeSamplesResetSearchableAttributes1 from '/snippets/generated-code-samples/code_samples_reset_searchable_attributes_1.mdx';
+
+By default, Meilisearch searches through all document fields. Use the `searchableAttributes` setting to limit which fields are searchable and control their relative importance in the [attribute ranking order](/capabilities/full_text_search/relevancy/attribute_ranking_order). This also affects [ranking rules](/capabilities/full_text_search/relevancy/ranking_rules) that depend on attribute order.
+
+## Why configure searchable attributes
+
+There are two main reasons to customize searchable attributes:
+
+1. **Improve relevancy**: Fields listed earlier in the `searchableAttributes` array have a greater impact on relevancy. If a match is found in the first attribute, that document ranks higher than one where the match appears in a later attribute.
+2. **Improve performance**: Reducing the number of searchable fields means Meilisearch has less data to scan during each query, which can speed up search on large datasets.
+
+For example, in a movies index with fields like `id`, `title`, `overview`, `genres`, and `release_date`, you probably want `title` to carry the most weight, followed by `overview` and `genres`. The `id` and `release_date` fields are not useful for text search and can be excluded.
+
+## Check current searchable attributes
+
+Retrieve the current `searchableAttributes` setting for an index:
+
+<CodeSamplesGetSearchableAttributes1 />
+
+By default, the response is `["*"]`, meaning all attributes are searchable in their order of appearance.
+
+## Update searchable attributes
+
+Set the `searchableAttributes` list to control which fields are searchable and their ranking order. Fields listed first have the highest impact on relevancy:
+
+<CodeSamplesUpdateSearchableAttributes1 />
+
+This configuration makes `title` the most important searchable field, followed by `overview`, then `genres`. Fields not in the list (such as `id` and `release_date`) are no longer searchable.
+
+<Warning>
+Updating `searchableAttributes` triggers a re-indexing of all documents in the index. This is an [asynchronous](/capabilities/indexing/tasks_and_batches/async_operations) operation. Use the [task API](/reference/api/tasks/get-all-tasks) to monitor progress.
+</Warning>
+
+<Warning>
+After manually updating `searchableAttributes`, new attributes found in subsequently indexed documents will not be automatically added to the list. You must either include them manually or [reset the setting](#reset-searchable-attributes).
+</Warning>
+
+## Reset searchable attributes
+
+Reset `searchableAttributes` to its default value (`["*"]`), making all fields searchable again:
+
+<CodeSamplesResetSearchableAttributes1 />
+
+After resetting, new attributes will once again be automatically added to the searchable attributes list as documents are indexed.
+
+## Restrict searchable attributes at query time
+
+If you need to limit which attributes are searched for a specific query without changing the index setting, use the `attributesToSearchOn` search parameter:
+
+<CodeGroup>
+
+```bash
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/movies/search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "q": "adventure",
+    "attributesToSearchOn": ["title"]
+  }'
+```
+
+</CodeGroup>
+
+This searches only the `title` field for this request, regardless of the index-level `searchableAttributes` setting. The attributes specified must be a subset of the configured `searchableAttributes`.
+
+<Info>
+For more details on how searchable and displayed attributes work together, see [displayed and searchable attributes](/capabilities/full_text_search/how_to/configure_displayed_attributes). For the full API reference, see [get searchable attributes](/reference/api/settings/get-searchableattributes).
+</Info>

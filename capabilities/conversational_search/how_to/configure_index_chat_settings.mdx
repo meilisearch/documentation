@@ -1,0 +1,181 @@
+---
+title: Configure index chat settings
+description: Control how each index is described to the LLM and how it is searched during conversational search.
+---
+
+Each index you want to make available to conversational search must have its chat settings configured. These settings tell the LLM what the index contains, how to format document data, and what search parameters to use.
+
+## Update chat settings
+
+Use the `/indexes/{index_uid}/settings/chat` endpoint to configure chat settings for an index:
+
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X PATCH 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/chat' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "description": "A movie database containing titles, overviews, genres, and release dates",
+    "documentTemplate": "{% for field in fields %}{% if field.is_searchable and field.value != nil %}{{ field.name }}: {{ field.value }}\n{% endif %}{% endfor %}",
+    "documentTemplateMaxBytes": 400
+  }'
+```
+
+</CodeGroup>
+
+## Settings reference
+
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `description` | string | `""` | Describes the index content to the LLM so it can decide when and how to query it |
+| `documentTemplate` | string | All searchable fields | Liquid template defining the text sent to the LLM for each document |
+| `documentTemplateMaxBytes` | integer | `400` | Maximum size in bytes of the rendered document template. Longer text is truncated |
+| `searchParameters` | object | `{}` | Search parameters applied when the LLM queries this index |
+
+## Description
+
+The `description` field is the most important setting. It tells the LLM what the index contains, so it can decide which index to search when answering a question. A well-written description significantly improves answer relevance.
+
+Write your description as if you were explaining the index to a person who has never seen your data:
+
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X PATCH 'MEILISEARCH_URL/indexes/movies/settings/chat' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "description": "A movie database with titles, overviews, genres, release dates, and ratings. Use this index when the user asks about movies, films, actors, directors, or anything related to cinema."
+  }'
+```
+
+</CodeGroup>
+
+If you have multiple indexes, make each description specific enough that the LLM can distinguish between them. For example:
+
+- **movies index**: "A movie database with titles, overviews, genres, and ratings"
+- **actors index**: "A database of actors with names, biographies, and filmographies"
+- **reviews index**: "User-submitted movie reviews with ratings and comments"
+
+## Document template
+
+The `documentTemplate` field is a [Liquid template](https://shopify.github.io/liquid/) that defines what data Meilisearch sends to the LLM for each matching document. By default, Meilisearch sends all searchable fields, which may not be ideal if your documents have many fields.
+
+A good document template includes only the fields relevant to answering questions:
+
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X PATCH 'MEILISEARCH_URL/indexes/movies/settings/chat' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "documentTemplate": "Title: {{ doc.title }}\nGenres: {{ doc.genres | join: \", \" }}\nOverview: {{ doc.overview }}\nRelease date: {{ doc.release_date }}"
+  }'
+```
+
+</CodeGroup>
+
+The `documentTemplateMaxBytes` field truncates the rendered template to a maximum size in bytes (default 400). This ensures a good balance between context quality and response speed. Increase this value if your documents contain long text fields that are important for answering questions.
+
+For more guidance, see the [document template best practices](/capabilities/hybrid_search/advanced/document_template_best_practices) article.
+
+## Search parameters
+
+The `searchParameters` object controls how the LLM searches the index. This is useful for enabling hybrid search, limiting the number of results, or applying default sorting.
+
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X PATCH 'MEILISEARCH_URL/indexes/movies/settings/chat' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "searchParameters": {
+      "hybrid": {
+        "embedder": "default",
+        "semanticRatio": 0.5
+      },
+      "limit": 10,
+      "attributesToSearchOn": ["title", "overview"]
+    }
+  }'
+```
+
+</CodeGroup>
+
+### Available parameters
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `hybrid` | object | Enable hybrid search with `embedder` (required) and `semanticRatio` (0.0 for keyword only, 1.0 for semantic only) |
+| `limit` | integer | Maximum number of documents returned per search |
+| `sort` | string[] | Sort order, e.g. `["price:asc", "rating:desc"]` |
+| `distinct` | string | Return at most one document per distinct value of this attribute |
+| `matchingStrategy` | string | How query terms are matched: `last`, `all`, or `frequency` |
+| `attributesToSearchOn` | string[] | Restrict search to specific attributes |
+| `rankingScoreThreshold` | number | Minimum ranking score (0.0 to 1.0) for a document to be included |
+
+### Enable hybrid search
+
+If you have configured [embedders](/capabilities/hybrid_search/getting_started) on your index, enable hybrid search in chat to combine keyword and semantic search:
+
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X PATCH 'MEILISEARCH_URL/indexes/movies/settings/chat' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "searchParameters": {
+      "hybrid": {
+        "embedder": "default",
+        "semanticRatio": 0.7
+      }
+    }
+  }'
+```
+
+</CodeGroup>
+
+A `semanticRatio` of `0.7` favors semantic search while still using keyword matching. Adjust this value based on your data and query patterns.
+
+## Retrieve current settings
+
+Get the current chat settings for an index:
+
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X GET 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/chat' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY'
+```
+
+</CodeGroup>
+
+## Reset settings
+
+Reset chat settings to their defaults:
+
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X DELETE 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/chat' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY'
+```
+
+</CodeGroup>
+
+## Next steps
+
+- [Set up conversational search](/capabilities/conversational_search/getting_started/setup) if you have not done so yet
+- [Configure a chat workspace](/capabilities/conversational_search/how_to/configure_chat_workspace) with your LLM provider
+- [Document template best practices](/capabilities/hybrid_search/advanced/document_template_best_practices) for optimizing what data is sent to the LLM

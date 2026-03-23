@@ -1,0 +1,93 @@
+---
+title: Meilisearch vs Typesense
+sidebarTitle: Typesense
+description: Compare Meilisearch and Typesense, two open-source search engines focused on speed and developer experience. Learn key differences and when to choose each.
+---
+
+Typesense is an open-source search engine started in 2015 and first publicly released in 2018, built in C++ and focused on speed and ease of use. Like Meilisearch, it targets developer experience and typo-tolerant instant search. While both engines share similar goals, they differ significantly in architecture, language support, scalability, and licensing.
+
+## Quick comparison
+
+|  | Meilisearch | Typesense |
+|---|:---:|:---:|
+| **License** | MIT (CE) / BUSL-1.1 (EE) | GPL-3 (copyleft) |
+| **Built with** | Rust | C++ |
+| **Data storage** | Disk (memory-mapped) | RAM-only |
+| **Sharding** | Yes (Enterprise Edition) | No |
+| **Language support** | Optimized for CJK, Arabic, Hebrew, Thai | Unicode-based (limited CJK) |
+| **Auto language detection** | Yes | No |
+| **Analytics** | Full dashboard (Cloud) | Query analytics, event tracking |
+| **Embedding generation** | Built-in local (Candle) + any HTTP API provider | Built-in ONNX, OpenAI, Azure OpenAI, GCP Vertex AI |
+| **Conversational search** | Yes (built-in chat) | No |
+| **Multi-index search** | Yes (federated search) | Yes (multi-search) |
+
+## When to choose Meilisearch
+
+### Your dataset can grow beyond available RAM
+
+This is one of the most important architectural differences. Meilisearch uses disk-based storage with memory mapping, so your dataset size is not limited by available RAM. Typesense stores indexes entirely in memory. This means a growing dataset on Typesense requires increasingly expensive hardware, and large datasets can become impractical or prohibitively costly.
+
+### You need to scale horizontally with sharding
+
+Meilisearch Enterprise Edition supports sharding, allowing you to distribute large indexes across multiple nodes. This is essential for production workloads that outgrow a single machine. Typesense does not support sharding. While it offers replication for high availability, every node must hold the entire dataset in RAM, which limits your ability to scale beyond what a single machine's memory can handle.
+
+### You need robust multilingual support
+
+Meilisearch provides optimized tokenization for Chinese, Japanese, Korean, Thai, Hebrew, Arabic, and other languages with complex word boundaries. It also automatically detects document language and applies appropriate processing. Typesense relies on Unicode-based tokenization, which struggles with languages that lack conventional word spacing or have rich morphology. If your users search in multiple languages, Meilisearch handles this out of the box.
+
+### You want conversational search
+
+Meilisearch offers built-in [conversational search](/capabilities/conversational_search/getting_started/setup) that lets users interact with your data through natural language chat, powered by LLMs and grounded in your indexed documents. Typesense does not offer a comparable feature.
+
+### You prefer MIT licensing
+
+Meilisearch's Community Edition uses the permissive MIT license, giving you complete freedom to use, modify, and distribute without restrictions. Typesense uses GPL-3, a copyleft license that requires derivative works to be distributed under the same license. While GPL-3 does not restrict commercial use, the copyleft requirement can be a concern for organizations embedding search into proprietary products.
+
+### You need comprehensive analytics
+
+Meilisearch Cloud provides a full analytics dashboard with no-result rates, popular queries, geographic distribution, click tracking, and conversion metrics. Typesense supports query analytics and event tracking, but does not offer a comparable hosted analytics experience.
+
+### You want maximum embedding flexibility
+
+Meilisearch takes an open approach to embeddings. It can generate embeddings locally using [Candle](https://github.com/huggingface/candle), a Rust-based ML framework, with no external dependencies required. On top of that, Meilisearch works with any model accessible through an HTTP API, whether that's OpenAI, Mistral, Cohere, a self-hosted Ollama instance, or any other provider. This means you can run fully local AI-powered search or mix and match providers as needed. Typesense is limited to built-in ONNX models and a fixed set of cloud providers (OpenAI, Azure OpenAI, GCP Vertex AI).
+
+### You value stability and memory safety
+
+Meilisearch is built in Rust, a language designed to prevent entire categories of bugs at compile time, including buffer overflows, use-after-free errors, and data races. These are the types of issues that commonly cause crashes and security vulnerabilities in C++ codebases. Typesense is written in C++, where memory management is manual and these bugs are harder to catch before they reach production. In practice, this means Meilisearch benefits from stronger reliability guarantees out of the box.
+
+## What Typesense does well
+
+### Field weighting at query time
+
+Typesense allows boosting specific fields at query time, so you can ensure matches in product titles rank higher than description matches. Meilisearch achieves similar results through [searchable attributes ordering](/reference/api/settings/update-searchable-attributes), which ranks fields by priority at index time.
+
+### Grouping results
+
+Typesense provides the ability to group search results by a specified field, useful for deduplication or organizing results by category.
+
+### Fast in-memory search for small datasets
+
+By storing indexes entirely in RAM, Typesense achieves excellent search speeds for datasets that fit in memory. For small to medium datasets where memory cost is not a concern, this approach works well.
+
+## When to choose Typesense
+
+Consider Typesense if:
+
+- Your dataset comfortably fits in RAM and you want memory-optimized performance
+- Field weighting at query time is critical for your relevancy tuning
+- You need to group search results by field values
+- GPL-3 licensing aligns with your project requirements
+
+## Migration resources
+
+If you're considering Meilisearch:
+
+- [Meilisearch quick start](/getting_started/first_project) - Get started in minutes
+- [AI-powered search](/capabilities/hybrid_search/getting_started) - Hybrid and semantic search capabilities
+- [Conversational search](/capabilities/conversational_search/getting_started/setup) - Built-in chat grounded in your data
+- [Language support](/resources/help/language) - Supported languages and tokenization
+- [Sharding](/resources/self_hosting/deployment/overview) - Scale beyond a single node
+
+<Note>
+Typesense is a registered trademark of Typesense, Inc. This comparison is based on publicly available information and our own analysis.
+</Note>

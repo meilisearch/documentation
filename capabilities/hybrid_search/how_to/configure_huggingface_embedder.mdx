@@ -1,0 +1,126 @@
+---
+title: Configure HuggingFace embedder
+sidebarTitle: HuggingFace (local)
+description: Run open-source embedding models locally with the HuggingFace embedder for semantic search without external API dependencies.
+---
+
+The HuggingFace embedder runs open-source models directly on your machine or server. This eliminates external API calls, giving you full control over latency and data privacy. It is best suited for self-hosted Meilisearch instances with small, static datasets.
+
+<Note>
+Running the HuggingFace embedder locally requires sufficient server resources (CPU and RAM) for the chosen model.
+</Note>
+
+## Choose a model
+
+HuggingFace hosts thousands of embedding models. Here are some recommended options for different use cases:
+
+| Model | Dimensions | Best for |
+|-------|-----------|----------|
+| `BAAI/bge-base-en-v1.5` | 768 | English content, good balance of speed and accuracy |
+| `BAAI/bge-small-en-v1.5` | 384 | English content, faster with lower resource usage |
+| `sentence-transformers/all-MiniLM-L6-v2` | 384 | General English text, lightweight |
+| `sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2` | 384 | Multilingual content |
+
+For most self-hosted use cases, `BAAI/bge-base-en-v1.5` provides a good balance of accuracy and performance. If server resources are limited, choose a smaller model like `BAAI/bge-small-en-v1.5`.
+
+## Configure the embedder
+
+Create an embedder object with the `huggingFace` source:
+
+<CodeGroup>
+
+```json
+{
+  "my-hf": {
+    "source": "huggingFace",
+    "model": "BAAI/bge-base-en-v1.5",
+    "documentTemplate": "A product named '{{doc.name}}' described as '{{doc.description}}'"
+  }
+}
+```
+
+</CodeGroup>
+
+In this configuration:
+
+- `source`: must be `"huggingFace"` to run the model locally
+- `model`: the HuggingFace model identifier. Meilisearch downloads the model automatically on first use
+- `documentTemplate`: a [Liquid template](/capabilities/hybrid_search/advanced/document_template_best_practices) that converts your documents into text for embedding
+
+Unlike cloud-based embedders, the HuggingFace source does not require an API key.
+
+## Update your index settings
+
+Send the embedder configuration to Meilisearch:
+
+<CodeGroup>
+
+```sh
+curl \
+  -X PATCH 'MEILISEARCH_URL/indexes/INDEX_NAME/settings' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  --data-binary '{
+    "embedders": {
+      "my-hf": {
+        "source": "huggingFace",
+        "model": "BAAI/bge-base-en-v1.5",
+        "documentTemplate": "A product named '\''{{doc.name}}'\'' described as '\''{{doc.description}}'\''"
+      }
+    }
+  }'
+```
+
+</CodeGroup>
+
+Replace `MEILISEARCH_URL` with the address of your Meilisearch instance, `INDEX_NAME` with your index name, and `MEILISEARCH_KEY` with your Meilisearch API key.
+
+On the first request, Meilisearch downloads the model from HuggingFace. This may take a few minutes depending on the model size and your internet connection. After downloading, Meilisearch generates embeddings for all documents in the index.
+
+Monitor progress through the [task queue](/reference/api/tasks/list-tasks).
+
+## Performance considerations
+
+The HuggingFace embedder runs on the same machine as Meilisearch. Keep these points in mind:
+
+- **CPU usage**: Embedding generation is computationally intensive. Expect higher CPU usage during indexing, especially with large datasets
+- **Memory**: Each model requires memory to load. Larger models like `bge-base-en-v1.5` (768 dimensions) use more RAM than smaller models like `bge-small-en-v1.5` (384 dimensions)
+- **Indexing speed**: Local embedding generation is slower than cloud-based providers for large datasets. For datasets over 10,000 documents that are updated frequently, consider using a cloud-based embedder instead
+- **Search latency**: Once indexed, search performance is comparable to cloud-based embedders since the model runs locally without network overhead
+
+<Note>
+Meilisearch Cloud does not support embedders with `{"source": "huggingFace"}`.
+
+To use HuggingFace models on Meilisearch Cloud, deploy a [HuggingFace Inference Endpoint](https://ui.endpoints.huggingface.co/) and configure a [REST embedder](/capabilities/hybrid_search/how_to/configure_rest_embedder) pointing to it. See the [HuggingFace Inference Endpoints guide](/guides/embedders/huggingface) for detailed instructions.
+</Note>
+
+## Test the embedder
+
+Once indexing is complete, perform a search using the `hybrid` parameter:
+
+<CodeGroup>
+
+```json
+{
+  "q": "something to stir soup with",
+  "hybrid": {
+    "semanticRatio": 0.5,
+    "embedder": "my-hf"
+  }
+}
+```
+
+</CodeGroup>
+
+A [`semanticRatio`](/capabilities/hybrid_search/advanced/custom_hybrid_ranking) of `0.5` returns a balanced mix of keyword and semantic results. Adjust this value based on your needs.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Full HuggingFace guide" href="/guides/embedders/huggingface">
+    Using HuggingFace Inference Endpoints with the REST embedder
+  </Card>
+  <Card title="Choose an embedder" href="/capabilities/hybrid_search/how_to/choose_an_embedder">
+    Compare HuggingFace with other embedder providers
+  </Card>
+</CardGroup>

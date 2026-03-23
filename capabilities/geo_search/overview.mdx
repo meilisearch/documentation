@@ -1,0 +1,40 @@
+---
+title: Geo search
+sidebarTitle: Overview
+description: Filter and sort search results by geographic location using coordinates, bounding boxes, and polygons.
+---
+
+Geo search allows you to [filter](/capabilities/filtering_sorting_faceting/getting_started) and [sort](/capabilities/filtering_sorting_faceting/how_to/sort_results) documents based on their geographic location. Use it to build store locators, delivery zone finders, local service directories, and any application where physical proximity matters.
+
+## Supported geo formats
+
+Meilisearch supports two ways to store geographic data:
+
+- **`_geo` field**: a simple object with `lat` and `lng` properties for point locations
+- **GeoJSON**: a standardized format for complex geometries including points, polygons, and multi-polygons
+
+## Geo operations
+
+| Operation | Description |
+|-----------|-------------|
+| `_geoRadius` | Filter results within a circular area |
+| `_geoBoundingBox` | Filter results within a rectangular area |
+| `_geoPolygon` | Filter results within a custom polygon shape |
+| `_geoPoint` | Sort results by distance from a reference point |
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Getting started" href="/capabilities/geo_search/getting_started">
+    Index documents with coordinates and run your first geo search
+  </Card>
+  <Card title="Filter by radius" href="/capabilities/geo_search/how_to/filter_by_geo_radius">
+    Find results within a distance from a point
+  </Card>
+  <Card title="Sort by distance" href="/capabilities/geo_search/how_to/sort_by_geo_point">
+    Rank results by proximity to a location
+  </Card>
+  <Card title="GeoJSON format" href="/capabilities/geo_search/how_to/use_geojson_format">
+    Index complex geometries with GeoJSON
+  </Card>
+</CardGroup>

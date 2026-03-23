@@ -1,0 +1,68 @@
+---
+title: Analytics events endpoint
+description: Use `/events` to submit analytics events such as `click` and `conversion` to Meilisearch.
+---
+
+import CodeSamplesAnalyticsEventClick1 from '/snippets/generated-code-samples/code_samples_analytics_event_click_1.mdx';
+
+## Send an event
+
+<RouteHighlighter method="POST" path="/events" />
+
+Send an analytics event to Meilisearch.
+
+### Body
+
+| Name          | Type            | Required    | Description                                                                     |
+| :------------ | :-------------- | :---------- | :------------------------------------------------------------------------------ |
+| `eventType`   | String          | Yes         | The event type: `"click"` or `"conversion"`                                     |
+| `eventName`   | String          | Yes         | A descriptive label for the event                                               |
+| `indexUid`    | String          | Yes         | The index containing the document the user interacted with                      |
+| `userId`      | String          | Yes         | An arbitrary string identifying the user who performed the action               |
+| `queryUid`    | String          | Recommended | The [search query's UID](/reference/api/headers#search-metadata). Links the event to a specific search query |
+| `objectId`    | String          | Recommended | The document's primary key value                                                |
+| `position`    | Integer         | Recommended | The document's position in the search result list (0-based). Only relevant for `click` events |
+| `objectName`  | String          | No          | A human-readable description of the document                                    |
+
+<CodeGroup>
+
+```json
+{
+  "eventType": "click",
+  "eventName": "Search Result Clicked",
+  "indexUid": "products",
+  "objectId": "0",
+  "position": 0
+}
+```
+
+</CodeGroup>
+
+<Note>
+You must provide a string identifying your user if you want Meilisearch to track conversion and click events.
+
+You may do that in two ways:
+
+- Specify the user ID in the payload, using the `userId` field
+- Specify the user ID with the `X-MS-USER-ID` header with your `/events` and search requests
+</Note>
+
+#### Example
+
+<CodeSamplesAnalyticsEventClick1 />
+
+##### Response: `201 Created`
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Get started with analytics" href="/capabilities/analytics/getting_started">
+    Set up analytics and start collecting search data.
+  </Card>
+  <Card title="Bind events to a user" href="/capabilities/analytics/how_to/bind_events_to_user">
+    Associate analytics events with specific users for accurate tracking.
+  </Card>
+  <Card title="Track click events" href="/capabilities/analytics/how_to/track_click_events">
+    Configure your application to send click events to Meilisearch.
+  </Card>
+</CardGroup>

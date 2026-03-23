@@ -28,7 +28,7 @@ The requested database has reached its maximum size.
 
 ## `document_fields_limit_reached`
 
-A document exceeds the [maximum limit of 65,535 fields](/learn/resources/known_limitations#maximum-number-of-attributes-per-document).
+A document exceeds the [maximum limit of 65,536 attributes](/resources/help/known_limitations#maximum-number-of-attributes-per-document).
 
 ## `document_not_found`
 
@@ -44,7 +44,7 @@ The [`/facet-search`](/reference/api/facet-search/search-in-facets) route has be
 
 ## `feature_not_enabled`
 
-You have tried using an [experimental feature](/learn/resources/experimental_features_overview) without activating it.
+You have tried using an [experimental feature](/resources/help/experimental_features_overview) without activating it.
 
 ## `immutable_api_key_actions`
 
@@ -96,23 +96,23 @@ You tried to manually set a webhook's `isEditable` field. Meilisearch automatica
 
 ## `index_already_exists`
 
-An index with this [`uid`](/reference/api/indexes/get-index) already exists, check out our guide on [index creation](/learn/getting_started/indexes).
+An index with this [`uid`](/reference/api/indexes/get-index) already exists, check out our guide on [index creation](/resources/internals/indexes).
 
 ## `index_creation_failed`
 
-An error occurred while trying to create an index, check out our guide on [index creation](/learn/getting_started/indexes).
+An error occurred while trying to create an index, check out our guide on [index creation](/resources/internals/indexes).
 
 ## `index_not_found`
 
-An index with this `uid` was not found, check out our guide on [index creation](/learn/getting_started/indexes).
+An index with this `uid` was not found, check out our guide on [index creation](/resources/internals/indexes).
 
 ## `index_primary_key_already_exists`
 
-The requested index already has a primary key that [cannot be changed](/learn/getting_started/primary_key#changing-your-primary-key-with-the-update-index-endpoint).
+The requested index already has a primary key that [cannot be changed](/resources/internals/primary_key#changing-your-primary-key-with-the-update-index-endpoint).
 
 ## `index_primary_key_multiple_candidates_found`
 
-[Primary key inference](/learn/getting_started/primary_key#meilisearch-guesses-your-primary-key) failed because the received documents contain multiple fields ending with `id`. Use the [update index endpoint](/reference/api/indexes/update-index) to manually set a primary key.
+[Primary key inference](/resources/internals/primary_key#meilisearch-guesses-your-primary-key) failed because the received documents contain multiple fields ending with `id`. Use the [update index endpoint](/reference/api/indexes/update-index) to manually set a primary key.
 
 ## `internal`
 
@@ -120,7 +120,7 @@ Meilisearch experienced an internal error. Check the error message, and [open an
 
 ## `invalid_api_key`
 
-The requested resources are protected with an API key. The provided API key is invalid. Read more about it in our [security tutorial](/learn/security/basic_security).
+The requested resources are protected with an API key. The provided API key is invalid. Read more about it in our [security tutorial](/resources/self_hosting/security/basic_security).
 
 ## `invalid_api_key_actions`
 
@@ -156,7 +156,7 @@ The given [`uid`](/reference/api/keys/get-api-key#response-uid) is invalid. The 
 
 ## `invalid_search_attributes_to_search_on`
 
-The value passed to [`attributesToSearchOn`](/reference/api/search/search-with-post#body-attributes-to-search-on) is invalid. `attributesToSearchOn` accepts an array of strings indicating document attributes. Attributes given to `attributesToSearchOn` must be present in the [`searchableAttributes` list](/learn/relevancy/displayed_searchable_attributes#the-searchableattributes-list).
+The value passed to [`attributesToSearchOn`](/reference/api/search/search-with-post#body-attributes-to-search-on) is invalid. `attributesToSearchOn` accepts an array of strings indicating document attributes. Attributes given to `attributesToSearchOn` must be present in the [`searchableAttributes` list](/capabilities/full_text_search/how_to/configure_displayed_attributes#the-searchableattributes-list).
 
 ## `invalid_search_media`
 
@@ -165,6 +165,10 @@ The value passed to [`media`](/reference/api/search/search-with-post#body-media)
 ## `invalid_search_media_and_vector`
 
 The search query contains non-`null` values for both [`media`](/reference/api/search/search-with-post#body-media) and [`vector`](/reference/api/search/search-with-post#body-media). These two parameters are mutually exclusive, since `media` generates vector embeddings via the embedder configured in `hybrid`.
+
+## `invalid_filter`
+
+The provided [filter expression](/capabilities/filtering_sorting_faceting/advanced/filter_expression_syntax) is invalid. This may happen if the filter syntax is malformed, uses an unsupported operator, or references an attribute not listed in [`filterableAttributes`](/reference/api/settings/get-filterableattributes).
 
 ## `invalid_content_type`
 
@@ -176,7 +180,7 @@ The [`csvDelimiter`](/reference/api/documents/add-or-replace-documents) paramete
 
 ## `invalid_document_id`
 
-The provided [document identifier](/learn/getting_started/primary_key#document-id) does not meet the format requirements. A document identifier must be of type integer or string, composed only of alphanumeric characters (a-z A-Z 0-9), hyphens (-), and underscores (_).
+The provided [document identifier](/resources/internals/primary_key#document-id) does not meet the format requirements. A document identifier must be of type integer or string, composed only of alphanumeric characters (a-z A-Z 0-9), hyphens (-), and underscores (_).
 
 ## `invalid_document_fields`
 
@@ -190,7 +194,7 @@ This error occurs if:
   - It should be a string, array of strings, or array of array of strings for the [get documents with POST endpoint](/reference/api/documents/list-documents-with-post)
   - It should be a string for the [get documents with GET endpoint](/reference/api/documents/list-documents-with-get)
 - The attribute used for filtering is not defined in the [`filterableAttributes` list](/reference/api/settings/get-filterableattributes)
-- The [filter expression](/learn/filtering_and_sorting/filter_expression_reference) has a missing or invalid operator. [Read more about our supported operators](/learn/filtering_and_sorting/filter_expression_reference)
+- The [filter expression](/capabilities/filtering_sorting_faceting/advanced/filter_expression_syntax) has a missing or invalid operator. [Read more about our supported operators](/capabilities/filtering_sorting_faceting/advanced/filter_expression_syntax)
 
 ## `invalid_document_limit`
 
@@ -210,7 +214,7 @@ This error occurs if:
 
 ## `invalid_document_geo_field`
 
-The provided `_geo` field of one or more documents is invalid. Meilisearch expects `_geo` to be an object with two fields, `lat` and `lng`, each containing geographic coordinates expressed as a string or floating point number. Read more about `_geo` and how to troubleshoot it in [our dedicated guide](/learn/filtering_and_sorting/geosearch).
+The provided `_geo` field of one or more documents is invalid. Meilisearch expects `_geo` to be an object with two fields, `lat` and `lng`, each containing geographic coordinates expressed as a string or floating point number. Read more about `_geo` and how to troubleshoot it in [our dedicated guide](/capabilities/geo_search/getting_started).
 
 ## `invalid_document_geojson_field`
 
@@ -234,7 +238,7 @@ The provided index pattern is invalid. The index pattern must be an alphanumeric
 
 ## `invalid_export_index_filter`
 
-The provided index export filter is not a valid [filter expression](/learn/filtering_and_sorting/filter_expression_reference).
+The provided index export filter is not a valid [filter expression](/capabilities/filtering_sorting_faceting/advanced/filter_expression_syntax).
 
 ## `invalid_facet_search_facet_name`
 
@@ -254,7 +258,7 @@ The [`offset`](/reference/api/indexes/list-all-indexes) parameter is invalid. It
 
 ## `invalid_index_uid`
 
-There is an error in the provided index format, check out our guide on [index creation](/learn/getting_started/indexes).
+There is an error in the provided index format, check out our guide on [index creation](/resources/internals/indexes).
 
 ## `invalid_index_primary_key`
 
@@ -441,11 +445,11 @@ This error occurs if:
 
 ## `invalid_settings_displayed_attributes`
 
-The value of [displayed attributes](/learn/relevancy/displayed_searchable_attributes#displayed-fields) is invalid. It should be an empty array, an array of strings, or set to `null`.
+The value of [displayed attributes](/capabilities/full_text_search/how_to/configure_displayed_attributes#displayed-fields) is invalid. It should be an empty array, an array of strings, or set to `null`.
 
 ## `invalid_settings_distinct_attribute`
 
-The value of [distinct attributes](/learn/relevancy/distinct_attribute) is invalid. It should be a string or set to `null`.
+The value of [distinct attributes](/capabilities/full_text_search/how_to/configure_distinct_attribute) is invalid. It should be a string or set to `null`.
 
 ## `invalid_settings_faceting_sort_facet_values_by`
 
@@ -633,7 +637,7 @@ This error generally occurs when the host system has no space left on the device
 
 ## `index_primary_key_no_candidate_found`
 
-[Primary key inference](/learn/getting_started/primary_key#meilisearch-guesses-your-primary-key) failed as the received documents do not contain any fields ending with `id`. [Manually designate the primary key](/learn/getting_started/primary_key#setting-the-primary-key), or add some field ending with `id` to your documents.
+[Primary key inference](/resources/internals/primary_key#meilisearch-guesses-your-primary-key) failed as the received documents do not contain any fields ending with `id`. [Manually designate the primary key](/resources/internals/primary_key#setting-the-primary-key), or add some field ending with `id` to your documents.
 
 ## `malformed_payload`
 
@@ -655,7 +659,7 @@ The [`indexes`](/reference/api/keys/get-api-key#response-indexes) field is missi
 
 This error happens if:
 
-- The requested resources are protected with an API key that was not provided in the request header. Check our [security tutorial](/learn/security/basic_security) for more information
+- The requested resources are protected with an API key that was not provided in the request header. Check our [security tutorial](/resources/self_hosting/security/basic_security) for more information
 
 ## `missing_content_type`
 
@@ -679,7 +683,7 @@ The [`facetName`](/reference/api/facet-search/search-in-facets) parameter is req
 
 ## `missing_master_key`
 
-You need to set a master key before you can access the `/keys` route. Read more about setting a master key at launch in our [security tutorial](/learn/security/basic_security).
+You need to set a master key before you can access the `/keys` route. Read more about setting a master key at launch in our [security tutorial](/resources/self_hosting/security/basic_security).
 
 ## `missing_network_url`
 
@@ -710,7 +714,7 @@ The requested resources could not be found.
 
 ## `payload_too_large`
 
-The payload sent to the server was too large. Check out this [guide](/learn/self_hosted/configure_meilisearch_at_launch#payload-limit-size) to customize the maximum payload size accepted by Meilisearch.
+The payload sent to the server was too large. Check out this [guide](/resources/self_hosting/configuration/reference#payload-limit-size) to customize the maximum payload size accepted by Meilisearch.
 
 ## `task_not_found`
 
@@ -722,7 +726,7 @@ Indexing a large batch of documents, such as a JSON file over 3.5GB in size, can
 
 ## `too_many_search_requests`
 
-You have reached the limit of concurrent search requests. You may configure it by relaunching your instance and setting a higher value to [`--experimental-search-queue-size`](/learn/self_hosted/configure_meilisearch_at_launch).
+You have reached the limit of concurrent search requests. You may configure it by relaunching your instance and setting a higher value to [`--experimental-search-queue-size`](/resources/self_hosting/configuration/overview).
 
 ## `unretrievable_document`
 
@@ -730,9 +734,13 @@ The document exists in store, but there was an error retrieving it. This probabl
 
 ## `vector_embedding_error`
 
-Error while generating embeddings. You may often see this error when the embedding provider service is currently unavailable. Most providers offer status pages to monitor the state of their services, such as OpenAI's https://status.openai.com/.
+Error while generating embeddings. Common causes include:
 
-Inaccessible embedding provider errors usually include a message stating Meilisearch "could not reach embedding server".
+- **Provider unavailability**: The embedding provider service is temporarily down or unreachable. Most providers offer status pages to monitor the state of their services, such as OpenAI's https://status.openai.com/. Errors of this type usually include a message stating Meilisearch "could not reach embedding server".
+- **Invalid or expired API key**: The API key configured for your external embedding provider (OpenAI, Cohere, etc.) is incorrect, expired, or has exceeded its rate limit. Verify your key is valid and has sufficient quota.
+- **Misconfigured embedder settings**: The [`embedders`](/reference/api/settings/get-embedders) index setting contains incorrect values, such as a wrong model name, an invalid URL for a REST embedder, or missing required fields.
+- **Dimension mismatch**: The dimensions of the vectors provided or generated do not match the dimensions expected by the embedder configuration. Ensure the `dimensions` value in your embedder settings matches the output of your embedding model.
+- **Input too large**: The document content sent to the embedding provider exceeds the model's maximum token or input length. Consider reducing the size of your [`documentTemplate`](/capabilities/hybrid_search/advanced/document_template_best_practices) or limiting the attributes included in it.
 
 ## `remote_bad_response`
 

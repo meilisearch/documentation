@@ -9,7 +9,7 @@ This guide walks you through setting up Meilisearch with Dart and Flutter.
 ## Prerequisites
 
 - Dart 3.0 or higher (or Flutter 3.0+)
-- A Meilisearch instance ([Cloud](https://cloud.meilisearch.com) or [self-hosted](/learn/self_hosted/getting_started_with_self_hosted_meilisearch))
+- A Meilisearch instance ([Cloud](https://cloud.meilisearch.com) or [self-hosted](/resources/self_hosting/getting_started/quick_start))
 
 ## 1. Install the SDK
 
@@ -36,7 +36,7 @@ import 'dart:io';
 
 final client = MeiliSearchClient(
   Platform.environment['MEILISEARCH_URL']!,
-  Platform.environment['MEILISEARCH_API_KEY'],
+  Platform.environment['MEILISEARCH_KEY'],
 );
 ```
 
@@ -44,7 +44,7 @@ final client = MeiliSearchClient(
 **Set your environment variables:**
 ```bash
 export MEILISEARCH_URL="https://your-instance.meilisearch.io"  # or http://localhost:7700
-export MEILISEARCH_API_KEY="your_api_key"
+export MEILISEARCH_KEY="your_api_key"
 ```
 [Get a free Cloud instance →](https://cloud.meilisearch.com)
 </Note>
@@ -104,7 +104,7 @@ void main() async {
   // Connect
   final client = MeiliSearchClient(
     Platform.environment['MEILISEARCH_URL']!,
-    Platform.environment['MEILISEARCH_API_KEY'],
+    Platform.environment['MEILISEARCH_KEY'],
   );
 
   // Add documents
@@ -170,13 +170,13 @@ class _SearchScreenState extends State<SearchScreen> {
 ## Next steps
 
 <CardGroup cols={2}>
-  <Card title="Full-text search" icon="magnifying-glass" href="/learn/relevancy/relevancy">
+  <Card title="Full-text search" icon="magnifying-glass" href="/capabilities/full_text_search/relevancy/relevancy">
     Configure ranking and relevancy
   </Card>
-  <Card title="Filtering" icon="filter" href="/learn/filtering_and_sorting/filter_search_results">
+  <Card title="Filtering" icon="filter" href="/capabilities/filtering_sorting_faceting/getting_started">
     Add filters and facets
   </Card>
-  <Card title="AI-powered search" icon="brain" href="/learn/ai_powered_search/getting_started_with_ai_search">
+  <Card title="AI-powered search" icon="brain" href="/capabilities/hybrid_search/getting_started">
     Add semantic search
   </Card>
   <Card title="API reference" icon="code" href="/reference/api/search/search-with-post">

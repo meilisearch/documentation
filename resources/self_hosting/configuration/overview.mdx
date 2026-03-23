@@ -1,0 +1,132 @@
+---
+title: Configure Meilisearch at launch
+sidebarTitle: Configuration overview
+description: Configure Meilisearch at launch with command-line options, environment variables, or a configuration file.
+---
+
+When self-hosting Meilisearch, you can configure your instance at launch with **command-line options**, **environment variables**, or a **configuration file**.
+
+These startup options affect your entire Meilisearch instance, not just a single index. For settings that affect search within a single index, see [index settings](/reference/api/settings/list-all-settings).
+
+## Configuration methods
+
+Meilisearch supports three configuration methods. When used simultaneously, **command-line options** take the highest precedence, followed by **environment variables**, and finally the **configuration file**.
+
+### Command-line options and flags
+
+Pass command-line options and their respective values when launching a Meilisearch instance:
+
+```bash
+./meilisearch --db-path ./meilifiles --http-addr 'localhost:7700'
+```
+
+Meilisearch also has **command-line flags** that don't take values. If a flag is given, it activates and changes default behavior:
+
+```bash
+./meilisearch --no-analytics
+```
+
+All command-line options and flags are prepended with `--`. They take precedence over environment variables.
+
+### Environment variables
+
+Set environment variables prior to launching the instance:
+
+<Tabs>
+<Tab title="UNIX">
+
+```sh
+export MEILI_DB_PATH=./meilifiles
+export MEILI_HTTP_ADDR=localhost:7700
+./meilisearch
+```
+
+</Tab>
+
+<Tab title="Windows">
+
+```sh
+set MEILI_DB_PATH=./meilifiles
+set MEILI_HTTP_ADDR=127.0.0.1:7700
+./meilisearch
+```
+
+</Tab>
+</Tabs>
+
+Environment variables for flags accept `n`, `no`, `f`, `false`, `off`, and `0` as `false`. An absent environment variable is also considered `false`. Any other value is considered `true`.
+
+Environment variables are always identical to the corresponding command-line option, but prepended with `MEILI_` and written in all uppercase.
+
+### Configuration file
+
+Meilisearch accepts a configuration file in `.toml` format. Configuration files can be easily shared, versioned, and allow you to define multiple options.
+
+Download a default configuration file:
+
+```sh
+curl https://raw.githubusercontent.com/meilisearch/meilisearch/latest/config.toml > config.toml
+```
+
+By default, Meilisearch looks for a `config.toml` file in the working directory. You can override this with the `MEILI_CONFIG_FILE_PATH` environment variable or the `--config-file-path` CLI option:
+
+<Tabs>
+<Tab title="CLI">
+
+```sh
+./meilisearch --config-file-path="./config.toml"
+```
+
+</Tab>
+
+<Tab title="Environment variable">
+
+UNIX:
+
+```sh
+export MEILI_CONFIG_FILE_PATH="./config.toml"
+./meilisearch
+```
+
+Windows:
+
+```sh
+set MEILI_CONFIG_FILE_PATH="./config.toml"
+./meilisearch
+```
+
+</Tab>
+</Tabs>
+
+In configuration files, options must be written in [snake case](https://en.wikipedia.org/wiki/Snake_case). For example, `--import-dump` would be written as `import_dump`.
+
+<Warning>
+Specifying the `config_file_path` option within the configuration file will throw an error.
+</Warning>
+
+## Configuring cloud-hosted instances
+
+To configure Meilisearch with command-line options in a cloud-hosted instance, edit its [service file](/resources/self_hosting/deployment/running_production#step-4-run-meilisearch-as-a-service). The default location of the service file is `/etc/systemd/system/meilisearch.service`.
+
+To configure Meilisearch with environment variables in a cloud-hosted instance, modify Meilisearch's `env` file. Its default location is `/var/opt/meilisearch/env`.
+
+After editing your configuration options, relaunch the Meilisearch service:
+
+```sh
+systemctl restart meilisearch
+```
+
+<Tip>
+[Meilisearch Cloud](https://www.meilisearch.com/cloud?utm_campaign=oss&utm_source=docs&utm_medium=instance-options) offers an optimal pre-configured environment. You do not need to use any of the configuration options listed here when hosting your project on Meilisearch Cloud.
+</Tip>
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Configuration reference" icon="list" href="/resources/self_hosting/configuration/reference">
+    Complete list of all instance configuration options.
+  </Card>
+  <Card title="Index settings" icon="gear" href="/reference/api/settings/list-all-settings">
+    Configure search behavior for individual indexes.
+  </Card>
+</CardGroup>

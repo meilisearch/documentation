@@ -1,0 +1,150 @@
+---
+title: Getting started with indexing
+sidebarTitle: Getting started
+description: Add your first documents to a Meilisearch index, check task status, and verify your data is searchable.
+---
+
+import CodeSamplesGettingStartedAddDocuments from '/snippets/generated-code-samples/code_samples_getting_started_add_documents.mdx';
+import CodeSamplesGettingStartedCheckTaskStatus from '/snippets/generated-code-samples/code_samples_getting_started_check_task_status.mdx';
+import CodeSamplesAddOrReplaceDocuments1 from '/snippets/generated-code-samples/code_samples_add_or_replace_documents_1.mdx';
+
+This guide walks you through adding documents to Meilisearch for the first time. You will prepare a dataset, send it to an index, monitor the indexing task, and verify the documents are searchable.
+
+## Prepare your documents
+
+Meilisearch accepts documents in three formats: **JSON**, **NDJSON**, and **CSV**. Each document must contain a field that serves as a unique **[primary key](/resources/internals/primary_key)**.
+
+Here is a small sample dataset of movies in JSON format:
+
+<CodeGroup>
+
+```json
+[
+  {
+    "id": 1,
+    "title": "Carol",
+    "genres": ["Romance", "Drama"],
+    "year": 2015
+  },
+  {
+    "id": 2,
+    "title": "Wonder Woman",
+    "genres": ["Action", "Adventure"],
+    "year": 2017
+  },
+  {
+    "id": 3,
+    "title": "Life of Pi",
+    "genres": ["Adventure", "Drama"],
+    "year": 2012
+  },
+  {
+    "id": 4,
+    "title": "Mad Max: Fury Road",
+    "genres": ["Action", "Adventure"],
+    "year": 2015
+  }
+]
+```
+
+</CodeGroup>
+
+In this dataset, `id` is the primary key. Meilisearch automatically infers the primary key if a field is named `id`. If your primary key has a different name, you must specify it when adding documents.
+
+## Send documents to an index
+
+Use the `POST /indexes/{index_uid}/documents` endpoint to add documents. If the index does not exist yet, Meilisearch creates it automatically.
+
+For a large dataset stored in a file:
+
+<CodeSamplesGettingStartedAddDocuments />
+
+For a small number of documents sent inline:
+
+<CodeSamplesAddOrReplaceDocuments1 />
+
+Meilisearch returns a summarized task object confirming your request has been accepted:
+
+<CodeGroup>
+
+```json
+{
+  "taskUid": 0,
+  "indexUid": "movies",
+  "status": "enqueued",
+  "type": "documentAdditionOrUpdate",
+  "enqueuedAt": "2024-08-11T09:25:53.000000Z"
+}
+```
+
+</CodeGroup>
+
+## Check the task status
+
+All indexing operations in Meilisearch are [asynchronous](/capabilities/indexing/tasks_and_batches/async_operations). Use the `taskUid` from the response to check whether your documents have been indexed:
+
+<CodeSamplesGettingStartedCheckTaskStatus />
+
+A successful task returns a status of `succeeded`:
+
+<CodeGroup>
+
+```json
+{
+  "uid": 0,
+  "indexUid": "movies",
+  "status": "succeeded",
+  "type": "documentAdditionOrUpdate",
+  "details": {
+    "receivedDocuments": 4,
+    "indexedDocuments": 4
+  }
+}
+```
+
+</CodeGroup>
+
+If the status is `failed`, the response includes an `error` object explaining what went wrong.
+
+## Verify documents are searchable
+
+Once the task succeeds, your documents are ready to search. Test with a simple query:
+
+<CodeGroup>
+
+```bash
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/movies/search' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  --data-binary '{ "q": "wonder" }'
+```
+
+</CodeGroup>
+
+You should see "Wonder Woman" in the results.
+
+## Accepted document formats
+
+| Format | Content-Type header | Notes |
+|--------|-------------------|-------|
+| JSON | `application/json` | Array of objects. Most common format. |
+| NDJSON | `application/x-ndjson` | One JSON object per line. Useful for streaming large datasets. |
+| CSV | `text/csv` | First row must be column headers. All values are strings by default. |
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Monitor tasks" href="/capabilities/indexing/tasks_and_batches/monitor_tasks">
+    Track and manage asynchronous indexing operations
+  </Card>
+  <Card title="Add and update documents" href="/capabilities/indexing/how_to/add_and_update_documents">
+    Learn the difference between replacing and partially updating documents
+  </Card>
+  <Card title="Indexing overview" href="/capabilities/indexing/overview">
+    Understand how indexing works in Meilisearch
+  </Card>
+  <Card title="Best practices" href="/capabilities/indexing/advanced/indexing_best_practices">
+    Optimize your indexing performance
+  </Card>
+</CardGroup>

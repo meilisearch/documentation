@@ -1,0 +1,195 @@
+---
+title: Getting started with AI-powered search
+sidebarTitle: Getting started
+description: Configure an embedding model and perform your first semantic search with Meilisearch. This tutorial uses OpenAI, but Meilisearch supports many providers.
+---
+
+import CodeSamplesAiSearchGettingStartedEmbedders1 from '/snippets/generated-code-samples/code_samples_ai_search_getting_started_embedders_1.mdx';
+import CodeSamplesAiSearchGettingStartedSearch1 from '/snippets/generated-code-samples/code_samples_ai_search_getting_started_search_1.mdx';
+
+AI-powered search uses **embedding models** to retrieve search results based on the meaning and context of a query, not just matching keywords. Unlike LLMs, embedding models are lightweight, fast, and inexpensive to run.
+
+This tutorial uses OpenAI as the embedding provider because it is the simplest to set up. Meilisearch supports [many other providers](/capabilities/hybrid_search/overview#supported-embedder-providers) including Cohere, Mistral, Gemini, Cloudflare, Voyage, AWS Bedrock, and more.
+
+<Note>
+This tutorial requires an [OpenAI API key](https://platform.openai.com/api-keys).
+</Note>
+
+## Create a new index
+
+First, create a new Meilisearch project. If this is your first time using Meilisearch, follow the [quick start](/getting_started/first_project) then come back to this tutorial.
+
+Next, create a `kitchenware` index and add [this kitchenware products dataset](/assets/datasets/kitchenware.json) to it. It will take Meilisearch a few moments to process your request, but you can continue to the next step while your data is indexing.
+
+## Configure an embedder
+
+In this step, you will configure an OpenAI embedder. Meilisearch uses **embedders** to convert documents and queries into **embeddings**, numerical vectors that capture their semantic meaning. Once configured, Meilisearch generates and caches all embeddings automatically.
+
+Open a blank file in your text editor. You will build your embedder configuration one step at a time.
+
+### Choose an embedder name
+
+In your blank file, create your `embedder` object:
+
+<CodeGroup>
+
+```json
+{
+  "products-openai": {}
+}
+```
+
+</CodeGroup>
+
+`products-openai` is the name of your embedder for this tutorial. You can name embedders any way you want, but try to keep it simple, short, and easy to remember.
+
+### Choose an embedder source
+
+Meilisearch relies on third-party embedding models to generate embeddings. These services are referred to as the embedder source.
+
+Add a new `source` field to your embedder object:
+
+<CodeGroup>
+
+```json
+{
+  "products-openai": {
+    "source": "openAi"
+  }
+}
+```
+
+</CodeGroup>
+
+### Choose an embedder model
+
+Embedding models vary in size, cost, and quality. Add a new `model` field to your embedder object:
+
+<CodeGroup>
+
+```json
+{
+  "products-openai": {
+    "source": "openAi",
+    "model": "text-embedding-3-small"
+  }
+}
+```
+
+</CodeGroup>
+
+`text-embedding-3-small` is a cost-effective model for general usage. OpenAI also offers `text-embedding-3-large` for higher accuracy at a higher cost.
+
+### Create your API key
+
+Log into OpenAI, or create an account if this is your first time using it. Generate a new API key using [OpenAI's web interface](https://platform.openai.com/api-keys).
+
+Add the `apiKey` field to your embedder:
+
+<CodeGroup>
+
+```json
+{
+  "products-openai": {
+    "source": "openAi",
+    "model": "text-embedding-3-small",
+    "apiKey": "OPEN_AI_API_KEY"
+  }
+}
+```
+
+</CodeGroup>
+
+Replace `OPEN_AI_API_KEY` with your own API key.
+
+<Tip>
+You may use any key tier for this tutorial. Use at least [Tier 2 keys](https://platform.openai.com/docs/guides/rate-limits/usage-tiers?context=tier-two) in production environments.
+</Tip>
+
+### Design a document template
+
+Documents can be complex objects with many fields. A **document template** tells Meilisearch which fields to include when generating the embedding, using [Liquid](https://shopify.github.io/liquid/basics/introduction/) syntax.
+
+A good template should be short and only include the most relevant information. Add the following `documentTemplate` to your embedder:
+
+<CodeGroup>
+
+```json
+{
+  "products-openai": {
+    "source": "openAi",
+    "model": "text-embedding-3-small",
+    "apiKey": "OPEN_AI_API_KEY",
+    "documentTemplate": "An object used in a kitchen named '{{doc.name}}'"
+  }
+}
+```
+
+</CodeGroup>
+
+This template gives general context (`An object used in a kitchen`) and adds the information specific to each document (`doc.name`, with values like `wooden spoon` or `rolling pin`).
+
+For more advanced templates, see [document template best practices](/capabilities/hybrid_search/advanced/document_template_best_practices).
+
+### Send the configuration to Meilisearch
+
+Your embedder object is ready. Send it to Meilisearch by updating your index settings:
+
+<CodeSamplesAiSearchGettingStartedEmbedders1 />
+
+Replace `MEILISEARCH_URL` with the address of your Meilisearch project, and `OPEN_AI_API_KEY` with your [OpenAI API key](https://platform.openai.com/api-keys).
+
+Meilisearch will automatically batch your documents and send them to OpenAI for embedding generation. Embeddings are cached, so only new or modified documents are processed on subsequent indexing operations.
+
+## Perform a hybrid search
+
+Hybrid searches are very similar to basic text searches. Query the `/search` endpoint with a request containing both the `q` and the `hybrid` parameters:
+
+<CodeSamplesAiSearchGettingStartedSearch1 />
+
+Meilisearch runs both keyword and semantic search, then merges the results using its [smart scoring system](/capabilities/hybrid_search/overview#smart-result-ranking). The most relevant results appear first, whether they matched by exact keywords or by meaning.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Choose an embedder" href="/capabilities/hybrid_search/how_to/choose_an_embedder">
+    Compare providers and pick the right one for your use case
+  </Card>
+  <Card title="Custom hybrid ranking" href="/capabilities/hybrid_search/advanced/custom_hybrid_ranking">
+    Tune semanticRatio to balance keyword and semantic results
+  </Card>
+</CardGroup>
+
+### Guides for other embedding providers
+
+This tutorial used OpenAI, but Meilisearch works with many providers. Each guide below walks you through the full configuration:
+
+<CardGroup cols={3}>
+  <Card title="Cohere" href="/guides/embedders/cohere">
+    Cloud-hosted multilingual embeddings
+  </Card>
+  <Card title="Mistral" href="/guides/embedders/mistral">
+    Mistral's embedding API
+  </Card>
+  <Card title="Google Gemini" href="/guides/embedders/gemini">
+    Google's embedding models
+  </Card>
+  <Card title="Cloudflare" href="/guides/embedders/cloudflare">
+    Cloudflare Workers AI embeddings
+  </Card>
+  <Card title="Voyage AI" href="/guides/embedders/voyage">
+    Specialized embedding models
+  </Card>
+  <Card title="Jina" href="/guides/embedders/jina">
+    Multilingual embedding models
+  </Card>
+  <Card title="AWS Bedrock" href="/guides/embedders/bedrock">
+    Amazon's embedding service
+  </Card>
+  <Card title="HuggingFace" href="/guides/embedders/huggingface">
+    HuggingFace Inference Endpoints
+  </Card>
+  <Card title="REST embedder" href="/capabilities/hybrid_search/how_to/configure_rest_embedder">
+    Connect any embedding API
+  </Card>
+</CardGroup>

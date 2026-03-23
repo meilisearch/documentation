@@ -1,0 +1,78 @@
+---
+title: Phrase search
+description: Use exact phrase matching with quotes to find documents containing a specific sequence of words.
+---
+
+import CodeSamplesPhraseSearch1 from '/snippets/generated-code-samples/code_samples_phrase_search_1.mdx';
+
+Phrase search allows users to find documents containing an exact sequence of words by wrapping their query in double quotes. This is useful when word order and adjacency matter, such as searching for a specific movie title, a known expression, or a technical term.
+
+## How it works
+
+When you wrap part or all of a search query in double quotes, Meilisearch treats the quoted portion as a phrase. Instead of matching individual words independently, the engine looks for documents where those words appear consecutively and in the specified order.
+
+A query like `"african american" horror` contains one phrase (`african american`) and one regular term (`horror`). Meilisearch finds documents where "african" and "american" appear next to each other, and also contain "horror".
+
+<CodeSamplesPhraseSearch1 />
+
+## Example response
+
+Given a `movies` index, searching for `"african american" horror` might return:
+
+<CodeGroup>
+
+```json
+{
+  "hits": [
+    {
+      "id": 3021,
+      "title": "Tales from the Hood",
+      "overview": "A funeral director tells four African American horror stories..."
+    }
+  ],
+  "query": "\"african american\" horror"
+}
+```
+
+</CodeGroup>
+
+Documents containing "african" and "american" as separate, non-adjacent words would not match the phrase portion of the query.
+
+## Phrase search and matching strategy
+
+Phrase search interacts with the [matching strategy](/capabilities/full_text_search/how_to/use_matching_strategy) parameter. The quoted phrase is always treated as a single required unit. When combined with non-quoted terms, the matching strategy applies to those additional terms.
+
+For example, with the query `"science fiction" adventure comedy`:
+
+- **`last` strategy** (default): Documents must contain the phrase "science fiction". The terms "adventure" and "comedy" follow normal matching behavior, where the least important terms may be dropped.
+- **`all` strategy**: Documents must contain the phrase "science fiction" and both additional terms "adventure" and "comedy".
+
+## Multiple phrases in a single query
+
+You can include more than one quoted phrase in a query:
+
+<CodeGroup>
+
+```bash
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/movies/search' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  --data-binary '{
+    "q": "\"star wars\" \"empire strikes\""
+  }'
+```
+
+</CodeGroup>
+
+Each quoted phrase must appear as an exact sequence in the matching documents.
+
+## When to use phrase search
+
+- **Known titles or names**: Search for `"The Lord of the Rings"` to avoid matching documents that simply contain "lord", "rings", or "the" in different contexts
+- **Technical terms**: Search for `"machine learning"` to find the exact concept rather than separate occurrences of "machine" and "learning"
+- **Quoted expressions**: Search for `"to be or not to be"` to find the exact phrase
+
+<Info>
+For a complete list of search parameters, see the [search API reference](/reference/api/search/search-with-post).
+</Info>

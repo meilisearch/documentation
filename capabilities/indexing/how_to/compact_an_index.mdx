@@ -1,0 +1,80 @@
+---
+title: Compact an index
+description: Reclaim disk space by compacting an index's internal data structures after heavy document updates or deletions.
+---
+
+When you add, update, or delete documents, Meilisearch's internal data structures may retain unused space from previous versions of the data. Compaction reclaims this space by reorganizing the index on disk.
+
+## When to compact
+
+- **After bulk deletions**: Removing a large number of documents leaves gaps in the internal storage.
+- **After many updates**: Repeatedly updating the same documents accumulates obsolete data.
+- **When disk usage seems high**: If an index uses more disk space than expected for its document count, compaction can help.
+
+You do not need to compact after every operation. It is most useful after large batch changes.
+
+## Compact an index
+
+Send a `POST` request to `/indexes/{index_uid}/compact`:
+
+<CodeGroup>
+
+```bash
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/movies/compact' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY'
+```
+
+</CodeGroup>
+
+Meilisearch returns a summarized task object:
+
+<CodeGroup>
+
+```json
+{
+  "taskUid": 87,
+  "indexUid": "movies",
+  "status": "enqueued",
+  "type": "indexCompaction",
+  "enqueuedAt": "2025-01-01T00:00:00.000000Z"
+}
+```
+
+</CodeGroup>
+
+## Monitor the compaction task
+
+Compaction runs [asynchronously](/capabilities/indexing/tasks_and_batches/async_operations). Check its progress with the task endpoint:
+
+<CodeGroup>
+
+```bash
+curl \
+  -X GET 'MEILISEARCH_URL/tasks/87' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY'
+```
+
+</CodeGroup>
+
+## Disk space requirements
+
+Compaction requires temporary disk space roughly equal to the size of the index being compacted. Ensure your machine has sufficient free space before starting. If the disk fills up during compaction, the task fails and the index remains in its pre-compaction state.
+
+## Search availability during compaction
+
+Compaction does not block search. Your index remains fully searchable while the operation runs. New [indexing](/capabilities/indexing/overview) tasks will be queued and processed after compaction completes.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Compact API reference" href="/reference/api/indexes/compact-index">
+    Full API reference for the compact endpoint
+  </Card>
+  <Card title="Monitor tasks" href="/capabilities/indexing/tasks_and_batches/monitor_tasks">
+    Track the status of asynchronous operations
+  </Card>
+  <Card title="Indexing best practices" href="/capabilities/indexing/advanced/indexing_best_practices">
+    Optimize your indexing workflow for production
+  </Card>
+</CardGroup>

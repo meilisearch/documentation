@@ -1,0 +1,54 @@
+---
+title: Ranking pipeline
+description: Understand how Meilisearch's multi-criteria bucket sort works step by step to rank search results.
+---
+
+Meilisearch uses a **[bucket sort](/resources/internals/bucket_sort)** algorithm to rank search results. Rather than computing a single relevancy score and sorting by it, Meilisearch applies ranking rules one at a time. Each rule sorts documents into groups ("buckets") of equal relevance, and the next rule only breaks ties within each bucket.
+
+This approach produces highly relevant results while remaining fast, even on large datasets.
+
+## How bucket sort works
+
+1. A search query arrives and Meilisearch identifies all matching documents
+2. The first ranking rule sorts these documents, creating groups of documents that are equally relevant according to that rule
+3. Within each group, the second ranking rule further sorts documents into smaller groups
+4. This process continues through each ranking rule in order
+5. The final ordering is the search result
+
+Because each subsequent rule only operates within the groups created by the previous rule, **the order of ranking rules matters significantly**. Rules placed higher in the list have a greater overall impact on the final ranking.
+
+## The default ranking pipeline
+
+Meilisearch applies seven [built-in ranking rules](/capabilities/full_text_search/relevancy/ranking_rules) in this order by default:
+
+| Step | Rule | What it does |
+|------|------|-------------|
+| 1 | `words` | Sorts by number of matched query terms (more matches = higher rank) |
+| 2 | `typo` | Sorts by number of typos in matches (fewer typos = higher rank) |
+| 3 | `proximity` | Sorts by distance between matched terms (closer = higher rank) |
+| 4 | `attributeRank` | Sorts by which attribute contains the match (higher-priority attribute = higher rank) |
+| 5 | `sort` | Applies user-defined sorting from the `sort` search parameter |
+| 6 | `wordPosition` | Sorts by position of matched terms within attributes (earlier = higher rank) |
+| 7 | `exactness` | Sorts by how closely matches resemble the original query terms |
+
+Each rule only breaks ties from the previous one. The order matters: rules placed higher in the list have a greater overall impact.
+
+You can reorder these rules and add [custom ranking rules](/capabilities/full_text_search/relevancy/custom_ranking_rules) (like `rating:desc`) to inject business logic into the pipeline. See [built-in ranking rules](/capabilities/full_text_search/relevancy/ranking_rules) for detailed descriptions and visual examples of each rule.
+
+## Visualizing the pipeline
+
+Consider a search for `dark knight` across a movies index. Here is how documents flow through the pipeline:
+
+1. **Words**: 50 documents match both terms, 30 match only one term. The 50 full-match documents form the first bucket.
+2. **Typo**: Within the 50 full-match documents, 40 have zero typos and 10 have one typo. The 40 zero-typo documents form the top bucket.
+3. **Proximity**: Within those 40 documents, 15 have "dark" and "knight" adjacent, 25 have them further apart. The 15 adjacent-match documents rank highest.
+4. **Attribute rank**: Within those 15 documents, 5 have the match in `title` and 10 have it in `overview`. The 5 title-match documents rank highest.
+5. **Sort**: No `sort` parameter was provided, so this rule has no effect.
+6. **Word position**: Within the 5 title-match documents, those with "dark knight" appearing earlier in the title rank higher.
+7. **Exactness**: Final tiebreaker based on exact vs. fuzzy matches.
+
+The final result is a precisely ordered list where the most relevant documents appear first.
+
+<Info>
+For a deeper look at the bucket sort algorithm, see [bucket sort internals](/resources/internals/bucket_sort). For details on each ranking rule, see [built-in ranking rules](/capabilities/full_text_search/relevancy/ranking_rules).
+</Info>

@@ -1,0 +1,269 @@
+---
+title: Performance tuning
+sidebarTitle: Performance tuning
+description: Optimize full-text search speed for large datasets with practical configuration tips ordered by impact.
+---
+
+As your dataset grows, search performance depends on how you configure index settings and search parameters. This page covers practical strategies for keeping search fast, ordered from highest to lowest impact.
+
+<Note>
+This page focuses on **search-time** performance. For indexing performance, see [optimize batch performance](/capabilities/indexing/tasks_and_batches/optimize_batch_performance).
+</Note>
+
+## Lower max total hits
+
+**Impact: very high**
+
+The `maxTotalHits` pagination setting controls how deep Meilisearch ranks results using the [bucket sort pipeline](/resources/internals/bucket_sort). By default, Meilisearch ranks up to 1,000 documents per query.
+
+Some users set this to very high values (100K or even 1M), forcing Meilisearch to run the full ranking pipeline across all matching documents for every single query. This is almost never necessary because users rarely go beyond the first few pages of results.
+
+<CodeGroup>
+
+```bash
+curl \
+  -X PATCH 'MEILISEARCH_URL/indexes/products/settings/pagination' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "maxTotalHits": 200
+  }'
+```
+
+</CodeGroup>
+
+Set `maxTotalHits` to the realistic maximum a user would ever paginate to. For most applications, 100 to 200 is plenty (that covers 5 to 10 pages of 20 results). Going higher means Meilisearch spends time ranking documents nobody will ever see.
+
+## Configure granular filterable attributes
+
+**Impact: very high**
+
+Every attribute listed in `filterableAttributes` creates additional data structures during indexing that are also evaluated at search time. The more filter features you enable, the more work Meilisearch does.
+
+Use [granular filterable attributes](/capabilities/filtering_sorting_faceting/how_to/configure_granular_filters) to enable only the filter operations you actually need per attribute:
+
+<CodeGroup>
+
+```bash
+curl \
+  -X PATCH 'MEILISEARCH_URL/indexes/products/settings' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "filterableAttributes": [
+      {
+        "attributePatterns": ["category", "brand"],
+        "features": {
+          "facetSearch": false,
+          "filter": { "equality": true, "comparison": false }
+        }
+      },
+      {
+        "attributePatterns": ["price"],
+        "features": {
+          "facetSearch": false,
+          "filter": { "equality": false, "comparison": true }
+        }
+      }
+    ]
+  }'
+```
+
+</CodeGroup>
+
+Key things to disable if you don't need them:
+- **`facetSearch`**: facet search is resource-intensive. Disable it on attributes where users will never search within facet values
+- **`comparison`**: comparison filters (`<`, `>`, `TO`) require additional data structures. Only enable on numeric/date fields that actually need range filtering
+
+## Reduce proximity precision
+
+**Impact: very high**
+
+The `proximity` [ranking rule](/capabilities/full_text_search/relevancy/ranking_rules) measures the distance between matched query terms in a document. By default, Meilisearch calculates this at **word-level** precision, which means it tracks the exact position of every word in every document. This is one of the most expensive operations in the search pipeline, both at indexing time and at search time.
+
+Switching to **attribute-level** precision drastically reduces this cost:
+
+<CodeGroup>
+
+```bash
+curl \
+  -X PUT 'MEILISEARCH_URL/indexes/products/settings/proximity-precision' \
+  -H 'Content-Type: application/json' \
+  --data-binary '"byAttribute"'
+```
+
+</CodeGroup>
+
+With `byAttribute`, Meilisearch only checks whether query terms appear in the same attribute, not their exact distance within it. This makes indexing significantly faster and reduces the work done during each search.
+
+The trade-off is that multi-word queries like "dark knight" will rank documents the same whether the words are adjacent or far apart within the same field. For most use cases (ecommerce, documentation, catalogs), this difference is negligible. Word-level precision matters most for long-form content where word proximity is a strong relevancy signal.
+
+## Lower max values per facet
+
+**Impact: high**
+
+The `maxValuesPerFacet` setting (default: 100) controls how many distinct facet values Meilisearch returns in the `facetDistribution`. If you have attributes with thousands of unique values (like tags or cities), Meilisearch computes counts for all of them up to this limit.
+
+<CodeGroup>
+
+```bash
+curl \
+  -X PATCH 'MEILISEARCH_URL/indexes/products/settings/faceting' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "maxValuesPerFacet": 20
+  }'
+```
+
+</CodeGroup>
+
+Set this to the number of facet values you actually display in your UI. If your sidebar shows 10 categories, there is no reason to compute counts for 100.
+
+## Limit searchable attributes
+
+**Impact: high**
+
+By default, Meilisearch searches through every field in your documents. Restrict [searchable attributes](/capabilities/full_text_search/how_to/configure_searchable_attributes) to only the fields that matter for search:
+
+<CodeGroup>
+
+```bash
+curl \
+  -X PUT 'MEILISEARCH_URL/indexes/products/settings/searchable-attributes' \
+  -H 'Content-Type: application/json' \
+  --data-binary '["name", "description", "category"]'
+```
+
+</CodeGroup>
+
+Exclude fields like IDs, URLs, timestamps, and numeric values that users would never search by text. This reduces the amount of data Meilisearch processes during each query.
+
+## Configure stop words
+
+**Impact: medium**
+
+[Stop words](/capabilities/full_text_search/how_to/configure_stop_words) like "the", "is", and "of" appear in nearly every document and slow down query processing without improving result quality:
+
+<CodeGroup>
+
+```bash
+curl \
+  -X PUT 'MEILISEARCH_URL/indexes/products/settings/stop-words' \
+  -H 'Content-Type: application/json' \
+  --data-binary '["the", "a", "an", "is", "are", "of", "in", "to", "and", "or"]'
+```
+
+</CodeGroup>
+
+This reduces the number of terms Meilisearch evaluates during each search.
+
+## Tune typo tolerance
+
+**Impact: medium**
+
+[Typo tolerance](/capabilities/full_text_search/relevancy/typo_tolerance_settings) expands the search space for each query term. On large datasets, you can reduce this cost:
+
+**Disable typos on numbers**: prevents false positives like "2024" matching "2025" and reduces the search space for numeric terms:
+
+<CodeGroup>
+
+```bash
+curl \
+  -X PATCH 'MEILISEARCH_URL/indexes/products/settings/typo-tolerance' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "disableOnNumbers": true
+  }'
+```
+
+</CodeGroup>
+
+**Increase minimum word size for typos**: by default, 1 typo is allowed on words of 5+ chars and 2 typos on 9+ chars. Raising these thresholds reduces the fuzzy matching work:
+
+<CodeGroup>
+
+```bash
+curl \
+  -X PATCH 'MEILISEARCH_URL/indexes/products/settings/typo-tolerance' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "minWordSizeForTypos": {
+      "oneTypo": 6,
+      "twoTypos": 12
+    }
+  }'
+```
+
+</CodeGroup>
+
+**Disable typos on structured fields** like SKUs or product codes where typos are unlikely:
+
+<CodeGroup>
+
+```bash
+curl \
+  -X PATCH 'MEILISEARCH_URL/indexes/products/settings/typo-tolerance' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "disableOnAttributes": ["sku", "product_code"]
+  }'
+```
+
+</CodeGroup>
+
+## Disable prefix search
+
+**Impact: medium**
+
+[Prefix search](/capabilities/full_text_search/how_to/configure_prefix_search) enables "search as you type" but increases index size. If your application uses form-based search (users type a full query and press Enter), disable it:
+
+<CodeGroup>
+
+```bash
+curl \
+  -X PUT 'MEILISEARCH_URL/indexes/products/settings/prefix-search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '"disabled"'
+```
+
+</CodeGroup>
+
+## Use search cutoff as a safety net
+
+**Impact: low (safety measure)**
+
+Set a [search cutoff](/capabilities/full_text_search/how_to/configure_search_cutoff) to guarantee a maximum response time. This is not a performance optimization per se, but a safety net against unusually long queries or potential abuse:
+
+<CodeGroup>
+
+```bash
+curl \
+  -X PUT 'MEILISEARCH_URL/indexes/products/settings/search-cutoff-ms' \
+  -H 'Content-Type: application/json' \
+  --data-binary '500'
+```
+
+</CodeGroup>
+
+Don't go below 500ms. If your searches are consistently slow, fix the root cause with the optimizations above.
+
+## Debug with performance details
+
+If you need to identify exactly which stage of the search pipeline is slow, use the `showPerformanceDetails` parameter. It returns per-stage timing information so you can target your optimizations precisely.
+
+See [debug search performance](/capabilities/full_text_search/advanced/debug_search_performance) for full instructions.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Debug search performance" href="/capabilities/full_text_search/advanced/debug_search_performance">
+    Use showPerformanceDetails to pinpoint bottlenecks
+  </Card>
+  <Card title="Optimize indexing" href="/capabilities/indexing/tasks_and_batches/optimize_batch_performance">
+    Speed up document indexing and batch operations
+  </Card>
+  <Card title="Ranking pipeline" href="/capabilities/full_text_search/advanced/ranking_pipeline">
+    Understand how bucket sort ranks results
+  </Card>
+  <Card title="Granular filters" href="/capabilities/filtering_sorting_faceting/how_to/configure_granular_filters">
+    Fine-tune which filter operations are enabled per attribute
+  </Card>
+</CardGroup>

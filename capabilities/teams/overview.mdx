@@ -1,0 +1,55 @@
+---
+title: Meilisearch Cloud teams
+sidebarTitle: Overview
+description: Meilisearch Cloud teams helps collaboration between project stakeholders with different skillsets and responsibilities.
+---
+
+Meilisearch Cloud teams are groups of users who all have access to a specific set of projects. This feature is designed to help collaboration between project stakeholders with different skillsets and responsibilities.
+
+When you open a new account, Meilisearch Cloud automatically creates a default team. A team may have any number of team members.
+
+## Team roles and permissions
+
+There are two types of team members in Meilisearch Cloud teams: owners and regular team members.
+
+Team owners have full control over a project's administrative details. Only team owners may change a project's billing plan or update its billing information. Additionally, only team owners may rename a team, add and remove members from a team, or transfer team ownership.
+
+A team may only have one owner.
+
+## Multiple teams in the same account
+
+If you are responsible for different applications belonging to multiple organizations, it might be useful to create separate teams. There are no limits for the amount of teams a single user may create.
+
+Meilisearch Cloud billing is based on projects, not teams. There are no costs associated with creating or keeping teams. If you no longer need a team, you can remove all members and delete its projects to bring its billing to zero.
+
+## Roles and permissions
+
+| Capability | Owner | Member |
+|------------|-------|--------|
+| Access projects and indexes | Yes | Yes |
+| View project metrics and analytics | Yes | Yes |
+| Create and manage [API keys](/capabilities/security/how_to/manage_api_keys) | Yes | Yes |
+| Change billing plan or payment info | Yes | No |
+| Rename the team | Yes | No |
+| Add or remove team members | Yes | No |
+| Transfer team ownership | Yes | No |
+
+Each team has exactly one owner. If you need to transfer ownership, the current owner can do so from the team settings page.
+
+## SSO integration
+
+Meilisearch Cloud supports Single Sign-On ([SSO](/capabilities/teams/how_to/configure_sso_for_team)) for teams that need centralized authentication. With SSO enabled, team members authenticate through your organization's identity provider (such as Okta, Google Workspace, or Azure AD) instead of managing separate credentials.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Getting started" href="/capabilities/teams/getting_started">
+    Create your first team and invite members
+  </Card>
+  <Card title="Manage team roles" href="/capabilities/teams/how_to/manage_team_roles">
+    Add members, assign roles, and transfer ownership
+  </Card>
+  <Card title="Configure SSO" href="/capabilities/teams/how_to/configure_sso_for_team">
+    Set up Single Sign-On for your team
+  </Card>
+</CardGroup>

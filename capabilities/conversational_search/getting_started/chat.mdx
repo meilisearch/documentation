@@ -1,0 +1,310 @@
+---
+title: Build a chat interface
+sidebarTitle: Chat interface
+description: Build a multi-turn conversational search interface using Meilisearch's chat completions API.
+---
+
+import CodeSamplesChatGetSettings1 from '/snippets/generated-code-samples/code_samples_chat_get_settings_1.mdx';
+import CodeSamplesChatPatchSettings1 from '/snippets/generated-code-samples/code_samples_chat_patch_settings_1.mdx';
+
+This guide shows you how to build a multi-turn chat interface where users ask questions and follow up with additional context. Make sure you have completed the [setup guide](/capabilities/conversational_search/getting_started/setup) before continuing.
+
+## Send your first chat completions request
+
+Send a streaming request to the chat completions API route:
+
+<CodeGroup>
+
+```bash cURL
+curl -N \
+  -X POST 'MEILISEARCH_URL/chats/WORKSPACE_NAME/chat/completions' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "model": "PROVIDER_MODEL_UID",
+    "messages": [
+      {
+        "role": "user",
+        "content": "USER_PROMPT"
+      }
+    ],
+    "tools": [
+      {
+        "type": "function",
+        "function": {
+          "name": "_meiliSearchProgress",
+          "description": "Reports real-time search progress to the user"
+        }
+      },
+      {
+        "type": "function",
+        "function": {
+          "name": "_meiliSearchSources",
+          "description": "Provides sources and references for the information"
+        }
+      }
+    ]
+  }'
+```
+
+```javascript OpenAI SDK
+import OpenAI from 'openai';
+
+const client = new OpenAI({
+  baseURL: 'MEILISEARCH_URL/chats/WORKSPACE_NAME',
+  apiKey: 'MEILISEARCH_KEY',
+});
+
+const stream = await client.chat.completions.create({
+  model: 'PROVIDER_MODEL_UID',
+  messages: [{ role: 'user', content: 'USER_PROMPT' }],
+  stream: true,
+  tools: [
+    { type: 'function', function: { name: '_meiliSearchProgress', description: 'Reports real-time search progress' } },
+    { type: 'function', function: { name: '_meiliSearchSources', description: 'Provides source documents' } },
+  ],
+});
+
+for await (const chunk of stream) {
+  const content = chunk.choices[0]?.delta?.content || '';
+  process.stdout.write(content);
+}
+```
+
+```javascript Vercel AI SDK
+import { createOpenAI } from '@ai-sdk/openai';
+import { streamText, tool, jsonSchema } from 'ai';
+
+const meilisearch = createOpenAI({
+  baseURL: 'MEILISEARCH_URL/chats/WORKSPACE_NAME',
+  apiKey: 'MEILISEARCH_KEY',
+});
+
+const { textStream } = streamText({
+  model: meilisearch('PROVIDER_MODEL_UID'),
+  messages: [{ role: 'user', content: 'USER_PROMPT' }],
+  tools: {
+    _meiliSearchProgress: tool({
+      description: 'Reports real-time search progress',
+      parameters: jsonSchema({ type: 'object', properties: { call_id: { type: 'string' }, function_name: { type: 'string' }, function_parameters: { type: 'string' } }, required: ['call_id', 'function_name', 'function_parameters'] }),
+    }),
+    _meiliSearchSources: tool({
+      description: 'Provides source documents',
+      parameters: jsonSchema({ type: 'object', properties: { call_id: { type: 'string' }, documents: { type: 'object' } }, required: ['call_id', 'documents'] }),
+    }),
+  },
+});
+
+for await (const text of textStream) {
+  process.stdout.write(text);
+}
+```
+
+</CodeGroup>
+
+- `model` is mandatory and must indicate a model supported by your chosen `source`
+- `messages` contains the messages exchanged between the conversational search agent and the user
+- `tools` sets up two optional but highly [recommended tools](/capabilities/conversational_search/advanced/chat_tooling_reference):
+  - `_meiliSearchProgress`: shows users what searches are being performed
+  - `_meiliSearchSources`: displays the actual documents used to generate responses
+
+## Maintain conversation context
+
+The chat completions endpoint is stateless. To maintain conversation history across multiple exchanges, you need to accumulate messages and send them with each request.
+
+<CodeGroup>
+
+```javascript JavaScript Fetch
+const messages = [];
+
+async function sendMessage(userMessage) {
+  messages.push({ role: 'user', content: userMessage });
+
+  const response = await fetch(
+    'MEILISEARCH_URL/chats/WORKSPACE_NAME/chat/completions',
+    {
+      method: 'POST',
+      headers: {
+        Authorization: 'Bearer MEILISEARCH_KEY',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'PROVIDER_MODEL_UID',
+        messages,
+      }),
+    }
+  );
+
+  const reader = response.body.getReader();
+  const decoder = new TextDecoder();
+  let assistantMessage = '';
+
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+
+    for (const line of decoder.decode(value).split('\n')) {
+      if (line.startsWith('data: ') && line !== 'data: [DONE]') {
+        const content = JSON.parse(line.slice(6)).choices[0]?.delta?.content;
+        if (content) {
+          assistantMessage += content;
+          // Update the UI progressively
+        }
+      }
+    }
+  }
+
+  messages.push({ role: 'assistant', content: assistantMessage });
+}
+
+// First question
+await sendMessage('What sci-fi movies came out in 2024?');
+// Follow-up — the agent remembers the context
+await sendMessage('Which one has the best rating?');
+```
+
+```javascript OpenAI SDK
+import OpenAI from 'openai';
+
+const client = new OpenAI({
+  baseURL: 'MEILISEARCH_URL/chats/WORKSPACE_NAME',
+  apiKey: 'MEILISEARCH_KEY',
+});
+
+const messages = [];
+
+async function sendMessage(userMessage) {
+  messages.push({ role: 'user', content: userMessage });
+
+  // .stream() accumulates chunks and exposes helpers
+  const runner = client.chat.completions.stream({
+    model: 'PROVIDER_MODEL_UID',
+    messages,
+  });
+
+  runner.on('content', (delta) => {
+    // Update the UI progressively
+    process.stdout.write(delta);
+  });
+
+  // .finalMessage() returns the complete assistant message
+  const finalMessage = await runner.finalMessage();
+  messages.push(finalMessage);
+}
+
+// First question
+await sendMessage('What sci-fi movies came out in 2024?');
+// Follow-up — the agent remembers the context
+await sendMessage('Which one has the best rating?');
+```
+
+```javascript Vercel AI SDK
+import { createOpenAI } from '@ai-sdk/openai';
+import { streamText, tool, jsonSchema } from 'ai';
+
+const meilisearch = createOpenAI({
+  baseURL: 'MEILISEARCH_URL/chats/WORKSPACE_NAME',
+  apiKey: 'MEILISEARCH_KEY',
+});
+
+const messages = [];
+
+async function sendMessage(userMessage) {
+  messages.push({ role: 'user', content: userMessage });
+
+  const result = streamText({
+    model: meilisearch('PROVIDER_MODEL_UID'),
+    messages,
+    tools: {
+      _meiliSearchProgress: tool({
+        description: 'Reports real-time search progress',
+        parameters: jsonSchema({ type: 'object', properties: { call_id: { type: 'string' }, function_name: { type: 'string' }, function_parameters: { type: 'string' } }, required: ['call_id', 'function_name', 'function_parameters'] }),
+      }),
+      _meiliSearchSources: tool({
+        description: 'Provides source documents',
+        parameters: jsonSchema({ type: 'object', properties: { call_id: { type: 'string' }, documents: { type: 'object' } }, required: ['call_id', 'documents'] }),
+      }),
+    },
+    // onFinish provides the complete response messages
+    onFinish({ response }) {
+      messages.push(...response.messages);
+    },
+  });
+
+  for await (const text of result.textStream) {
+    // Update the UI progressively
+    process.stdout.write(text);
+  }
+}
+
+// First question
+await sendMessage('What sci-fi movies came out in 2024?');
+// Follow-up — the agent remembers the context
+await sendMessage('Which one has the best rating?');
+```
+
+</CodeGroup>
+
+## Troubleshooting
+
+### Empty reply from server (curl error 52)
+
+**Causes:**
+
+- Experimental features not enabled
+- Missing authentication in requests
+
+**Solution:**
+
+1. Enable experimental features (see [setup guide](/capabilities/conversational_search/getting_started/setup))
+2. Include Authorization header in all requests
+
+### "Invalid API key" error
+
+**Cause:** Using the wrong type of API key
+
+**Solution:**
+
+- Use the "Default Chat API Key"
+- Don't use search or admin API keys for chat endpoints
+- Find your chat key with the [list keys endpoint](/reference/api/keys/list-api-keys)
+
+### "Socket connection closed unexpectedly"
+
+**Cause:** Usually means the OpenAI API key is missing or invalid in workspace settings
+
+**Solution:**
+
+1. Check workspace configuration:
+
+   <CodeSamplesChatGetSettings1 />
+
+2. Update with valid API key:
+
+   <CodeSamplesChatPatchSettings1 />
+
+### Chat not searching the database
+
+**Cause:** Missing Meilisearch tools in the request
+
+**Solution:**
+
+- Include `_meiliSearchProgress` and `_meiliSearchSources` tools in your request
+- Ensure indexes have proper chat descriptions configured
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="One-shot summarization" href="/capabilities/conversational_search/getting_started/one_shot_summarization">
+    Generate single AI answers without conversation history.
+  </Card>
+  <Card title="Stream chat responses" href="/capabilities/conversational_search/how_to/stream_chat_responses">
+    Handle streaming responses for a real-time experience.
+  </Card>
+  <Card title="Display source documents" href="/capabilities/conversational_search/how_to/display_source_documents">
+    Show users which documents were used to generate responses.
+  </Card>
+  <Card title="Configure guardrails" href="/capabilities/conversational_search/how_to/configure_guardrails">
+    Restrict AI responses to topics covered by your data.
+  </Card>
+</CardGroup>

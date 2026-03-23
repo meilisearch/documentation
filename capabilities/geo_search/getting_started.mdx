@@ -1,0 +1,162 @@
+---
+title: Geosearch
+sidebarTitle: Getting started
+description: Filter and sort search results based on their geographic location.
+---
+
+import CodeSamplesGeosearchGuideFilterSettings1 from '/snippets/generated-code-samples/code_samples_geosearch_guide_filter_settings_1.mdx';
+import CodeSamplesGeosearchGuideFilterUsage1 from '/snippets/generated-code-samples/code_samples_geosearch_guide_filter_usage_1.mdx';
+import CodeSamplesGeosearchGuideSortSettings1 from '/snippets/generated-code-samples/code_samples_geosearch_guide_sort_settings_1.mdx';
+import CodeSamplesGeosearchGuideSortUsage1 from '/snippets/generated-code-samples/code_samples_geosearch_guide_sort_usage_1.mdx';
+
+This guide walks you through indexing documents with geographic coordinates, then filtering and sorting results by location.
+
+## Add `_geo` to your documents
+
+Documents must contain a `_geo` field with `lat` and `lng` values:
+
+<CodeGroup>
+
+```json
+[
+  {
+    "id": 1,
+    "name": "Nàpiz' Milano",
+    "address": "Viale Vittorio Veneto, 30, 20124, Milan, Italy",
+    "type": "pizza",
+    "rating": 9,
+    "_geo": {
+      "lat": 45.4777599,
+      "lng": 9.1967508
+    }
+  },
+  {
+    "id": 2,
+    "name": "Bouillon Pigalle",
+    "address": "22 Bd de Clichy, 75018 Paris, France",
+    "type": "french",
+    "rating": 8,
+    "_geo": {
+      "lat": 48.8826517,
+      "lng": 2.3352748
+    }
+  },
+  {
+    "id": 3,
+    "name": "Artico Gelateria Tradizionale",
+    "address": "Via Dogana, 1, 20123 Milan, Italy",
+    "type": "ice cream",
+    "rating": 10,
+    "_geo": {
+      "lat": 45.4632046,
+      "lng": 9.1719421
+    }
+  }
+]
+```
+
+</CodeGroup>
+
+<Warning>
+Trying to index a dataset with one or more documents containing badly formatted `_geo` values will cause Meilisearch to throw an [`invalid_document_geo_field`](/reference/errors/error_codes#invalid_document_geo_field) error. In this case, the update will fail and no documents will be added or modified.
+</Warning>
+
+<Note>
+Meilisearch also supports [GeoJSON](/capabilities/geo_search/how_to/use_geojson_format) for complex geometries like polygons and multi-polygons.
+</Note>
+
+## Configure filterable and sortable attributes
+
+To filter results by location, add `_geo` to `filterableAttributes`:
+
+<CodeSamplesGeosearchGuideFilterSettings1 />
+
+To sort results by distance, add `_geo` to `sortableAttributes`:
+
+<CodeSamplesGeosearchGuideSortSettings1 />
+
+Meilisearch will rebuild your index whenever you update these settings. Depending on the size of your dataset, this might take a considerable amount of time.
+
+## Filter results by location
+
+Use the [`filter` search parameter](/reference/api/search/search-with-post#body-filter) with `_geoRadius` to find results within a given distance from a point. The following example searches for restaurants within 2km of central Milan:
+
+<CodeSamplesGeosearchGuideFilterUsage1 />
+
+<CodeGroup>
+
+```json
+[
+  {
+    "id": 1,
+    "name": "Nàpiz' Milano",
+    "address": "Viale Vittorio Veneto, 30, 20124, Milan, Italy",
+    "type": "pizza",
+    "rating": 9,
+    "_geo": {
+      "lat": 45.4777599,
+      "lng": 9.1967508
+    }
+  },
+  {
+    "id": 3,
+    "name": "Artico Gelateria Tradizionale",
+    "address": "Via Dogana, 1, 20123 Milan, Italy",
+    "type": "ice cream",
+    "rating": 10,
+    "_geo": {
+      "lat": 45.4632046,
+      "lng": 9.1719421
+    }
+  }
+]
+```
+
+</CodeGroup>
+
+## Sort results by distance
+
+Use `_geoPoint` in the [`sort` search parameter](/reference/api/search/search-with-post#body-sort) to order results by proximity. The following example sorts restaurants by distance from the Eiffel Tower:
+
+<CodeSamplesGeosearchGuideSortUsage1 />
+
+<CodeGroup>
+
+```json
+[
+  {
+    "id": 2,
+    "name": "Bouillon Pigalle",
+    "address": "22 Bd de Clichy, 75018 Paris, France",
+    "type": "french",
+    "rating": 8,
+    "_geo": {
+      "lat": 48.8826517,
+      "lng": 2.3352748
+    }
+  },
+  …
+]
+```
+
+</CodeGroup>
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Filter by radius" href="/capabilities/geo_search/how_to/filter_by_geo_radius">
+    Find results within a circular area around a point
+  </Card>
+  <Card title="Filter by bounding box" href="/capabilities/geo_search/how_to/filter_by_geo_bounding_box">
+    Find results within a rectangular area
+  </Card>
+  <Card title="Filter by polygon" href="/capabilities/geo_search/how_to/filter_by_geo_polygon">
+    Find results within a custom polygon shape
+  </Card>
+  <Card title="Sort by distance" href="/capabilities/geo_search/how_to/sort_by_geo_point">
+    Rank results by proximity to a location
+  </Card>
+  <Card title="Use GeoJSON format" href="/capabilities/geo_search/how_to/use_geojson_format">
+    Index complex geometries with the GeoJSON standard
+  </Card>
+</CardGroup>

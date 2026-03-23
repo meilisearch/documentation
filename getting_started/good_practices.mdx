@@ -99,7 +99,7 @@ Compress your HTTP payloads using `gzip`, `deflate`, or `br` encoding to reduce 
 
 ### Monitor task completion during large imports
 
-When sending multiple batches, you don't need to wait for each task to complete before sending the next one. Meilisearch queues all tasks and processes them in order. However, monitoring [task status](/learn/async/working_with_tasks) helps you detect errors early.
+When sending multiple batches, you don't need to wait for each task to complete before sending the next one. Meilisearch queues all tasks and processes them in order. However, monitoring [task status](/capabilities/indexing/tasks_and_batches/monitor_tasks) helps you detect errors early.
 
 ## Indexing performance
 
@@ -152,16 +152,16 @@ Each release includes indexing and search performance improvements. Check the [c
 ## Next steps
 
 <CardGroup cols={2}>
-  <Card title="Configure index settings" icon="gear" href="/learn/configuration/configuring_index_settings">
+  <Card title="Configure index settings" icon="gear" href="/capabilities/indexing/overview">
     Learn how to set up searchable, filterable, and sortable attributes
   </Card>
-  <Card title="Relevancy and ranking" icon="ranking-star" href="/learn/relevancy/relevancy">
+  <Card title="Relevancy and ranking" icon="ranking-star" href="/capabilities/full_text_search/relevancy/relevancy">
     Understand how Meilisearch ranks search results
   </Card>
-  <Card title="Working with tasks" icon="list-check" href="/learn/async/working_with_tasks">
+  <Card title="Working with tasks" icon="list-check" href="/capabilities/indexing/tasks_and_batches/monitor_tasks">
     Monitor indexing progress with the task API
   </Card>
-  <Card title="Security" icon="lock" href="/learn/security/basic_security">
+  <Card title="Security" icon="lock" href="/resources/self_hosting/security/basic_security">
     Secure your Meilisearch instance with API keys
   </Card>
 </CardGroup>
