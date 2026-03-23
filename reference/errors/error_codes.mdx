@@ -28,7 +28,7 @@ The requested database has reached its maximum size.
 
 ## `document_fields_limit_reached`
 
-A document exceeds the [maximum limit of 65,535 fields](/learn/resources/known_limitations#maximum-number-of-attributes-per-document).
+A document exceeds the [maximum limit of 65,536 attributes](/resources/help/known_limitations#maximum-number-of-attributes-per-document).
 
 ## `document_not_found`
 
@@ -44,7 +44,7 @@ The [`/facet-search`](/reference/api/facet-search/search-in-facets) route has be
 
 ## `feature_not_enabled`
 
-You have tried using an [experimental feature](/learn/resources/experimental_features_overview) without activating it.
+You have tried using an [experimental feature](/resources/help/experimental_features_overview) without activating it.
 
 ## `immutable_api_key_actions`
 
@@ -96,23 +96,23 @@ You tried to manually set a webhook's `isEditable` field. Meilisearch automatica
 
 ## `index_already_exists`
 
-An index with this [`uid`](/reference/api/indexes/get-index) already exists, check out our guide on [index creation](/learn/getting_started/indexes).
+An index with this [`uid`](/reference/api/indexes/get-index) already exists, check out our guide on [index creation](/resources/internals/indexes).
 
 ## `index_creation_failed`
 
-An error occurred while trying to create an index, check out our guide on [index creation](/learn/getting_started/indexes).
+An error occurred while trying to create an index, check out our guide on [index creation](/resources/internals/indexes).
 
 ## `index_not_found`
 
-An index with this `uid` was not found, check out our guide on [index creation](/learn/getting_started/indexes).
+An index with this `uid` was not found, check out our guide on [index creation](/resources/internals/indexes).
 
 ## `index_primary_key_already_exists`
 
-The requested index already has a primary key that [cannot be changed](/learn/getting_started/primary_key#changing-your-primary-key-with-the-update-index-endpoint).
+The requested index already has a primary key that [cannot be changed](/resources/internals/primary_key#changing-your-primary-key-with-the-update-index-endpoint).
 
 ## `index_primary_key_multiple_candidates_found`
 
-[Primary key inference](/learn/getting_started/primary_key#meilisearch-guesses-your-primary-key) failed because the received documents contain multiple fields ending with `id`. Use the [update index endpoint](/reference/api/indexes/update-index) to manually set a primary key.
+[Primary key inference](/resources/internals/primary_key#meilisearch-guesses-your-primary-key) failed because the received documents contain multiple fields ending with `id`. Use the [update index endpoint](/reference/api/indexes/update-index) to manually set a primary key.
 
 ## `internal`
 
@@ -120,7 +120,7 @@ Meilisearch experienced an internal error. Check the error message, and [open an
 
 ## `invalid_api_key`
 
-The requested resources are protected with an API key. The provided API key is invalid. Read more about it in our [security tutorial](/learn/security/basic_security).
+The requested resources are protected with an API key. The provided API key is invalid. Read more about it in our [security tutorial](/resources/self_hosting/security/basic_security).
 
 ## `invalid_api_key_actions`
 
@@ -176,7 +176,7 @@ The [`csvDelimiter`](/reference/api/documents/add-or-replace-documents) paramete
 
 ## `invalid_document_id`
 
-The provided [document identifier](/learn/getting_started/primary_key#document-id) does not meet the format requirements. A document identifier must be of type integer or string, composed only of alphanumeric characters (a-z A-Z 0-9), hyphens (-), and underscores (_).
+The provided [document identifier](/resources/internals/primary_key#document-id) does not meet the format requirements. A document identifier must be of type integer or string, composed only of alphanumeric characters (a-z A-Z 0-9), hyphens (-), and underscores (_).
 
 ## `invalid_document_fields`
 
@@ -254,7 +254,7 @@ The [`offset`](/reference/api/indexes/list-all-indexes) parameter is invalid. It
 
 ## `invalid_index_uid`
 
-There is an error in the provided index format, check out our guide on [index creation](/learn/getting_started/indexes).
+There is an error in the provided index format, check out our guide on [index creation](/resources/internals/indexes).
 
 ## `invalid_index_primary_key`
 
@@ -633,7 +633,7 @@ This error generally occurs when the host system has no space left on the device
 
 ## `index_primary_key_no_candidate_found`
 
-[Primary key inference](/learn/getting_started/primary_key#meilisearch-guesses-your-primary-key) failed as the received documents do not contain any fields ending with `id`. [Manually designate the primary key](/learn/getting_started/primary_key#setting-the-primary-key), or add some field ending with `id` to your documents.
+[Primary key inference](/resources/internals/primary_key#meilisearch-guesses-your-primary-key) failed as the received documents do not contain any fields ending with `id`. [Manually designate the primary key](/resources/internals/primary_key#setting-the-primary-key), or add some field ending with `id` to your documents.
 
 ## `malformed_payload`
 
@@ -655,7 +655,7 @@ The [`indexes`](/reference/api/keys/get-api-key#response-indexes) field is missi
 
 This error happens if:
 
-- The requested resources are protected with an API key that was not provided in the request header. Check our [security tutorial](/learn/security/basic_security) for more information
+- The requested resources are protected with an API key that was not provided in the request header. Check our [security tutorial](/resources/self_hosting/security/basic_security) for more information
 
 ## `missing_content_type`
 
@@ -679,7 +679,7 @@ The [`facetName`](/reference/api/facet-search/search-in-facets) parameter is req
 
 ## `missing_master_key`
 
-You need to set a master key before you can access the `/keys` route. Read more about setting a master key at launch in our [security tutorial](/learn/security/basic_security).
+You need to set a master key before you can access the `/keys` route. Read more about setting a master key at launch in our [security tutorial](/resources/self_hosting/security/basic_security).
 
 ## `missing_network_url`
 
@@ -710,7 +710,7 @@ The requested resources could not be found.
 
 ## `payload_too_large`
 
-The payload sent to the server was too large. Check out this [guide](/learn/self_hosted/configure_meilisearch_at_launch#payload-limit-size) to customize the maximum payload size accepted by Meilisearch.
+The payload sent to the server was too large. Check out this [guide](/resources/self_hosting/configuration/reference#payload-limit-size) to customize the maximum payload size accepted by Meilisearch.
 
 ## `task_not_found`
 
@@ -722,7 +722,7 @@ Indexing a large batch of documents, such as a JSON file over 3.5GB in size, can
 
 ## `too_many_search_requests`
 
-You have reached the limit of concurrent search requests. You may configure it by relaunching your instance and setting a higher value to [`--experimental-search-queue-size`](/learn/self_hosted/configure_meilisearch_at_launch).
+You have reached the limit of concurrent search requests. You may configure it by relaunching your instance and setting a higher value to [`--experimental-search-queue-size`](/resources/self_hosting/configuration/overview).
 
 ## `unretrievable_document`
 

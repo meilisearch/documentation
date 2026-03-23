@@ -1,0 +1,49 @@
+---
+title: Self-hosting Meilisearch
+sidebarTitle: Overview
+description: Learn about self-hosting Meilisearch, from installation to production deployment, security, and backups.
+---
+
+Meilisearch is a single binary with no external dependencies. You can run it on any Linux, macOS, or Windows machine, on bare metal or in containers.
+
+<Tip>
+[Meilisearch Cloud](https://www.meilisearch.com/cloud?utm_campaign=oss&utm_source=docs&utm_medium=self-hosting-overview) is the recommended way to use Meilisearch. It handles provisioning, scaling, security, and updates for you. Self-hosting gives you full control over your infrastructure.
+</Tip>
+
+## When to self-host
+
+Self-hosting Meilisearch makes sense when you need:
+
+- **Full infrastructure control**: choose your own servers, network configuration, and storage
+- **Data residency compliance**: keep data in specific geographic regions or on-premises
+- **Custom deployment pipelines**: integrate Meilisearch into existing CI/CD and orchestration workflows
+- **Air-gapped environments**: run Meilisearch in networks without internet access
+
+## What you'll need
+
+- A server running a [supported operating system](/resources/self_hosting/getting_started/install_locally#supported-operating-systems)
+- At least 256 MB of RAM (more for larger datasets, see [performance guide](/resources/self_hosting/performance/ram_multithreading))
+- The Meilisearch binary, available via [direct download, Docker, Homebrew, or APT](/resources/self_hosting/getting_started/install_locally)
+
+For production deployments, you will also need:
+
+- A reverse proxy (Nginx or Caddy) for HTTPS termination
+- A process manager (systemd) to keep Meilisearch running
+- A [master key](/resources/self_hosting/security/overview) for authentication
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Quick start" icon="rocket" href="/resources/self_hosting/getting_started/quick_start">
+    Install Meilisearch, add documents, and run your first search.
+  </Card>
+  <Card title="Deploy to production" icon="server" href="/resources/self_hosting/deployment/overview">
+    Deploy Meilisearch on AWS, GCP, Azure, or DigitalOcean.
+  </Card>
+  <Card title="Secure your instance" icon="lock" href="/resources/self_hosting/security/overview">
+    Set up API keys, HTTPS, and access control.
+  </Card>
+  <Card title="Configuration" icon="gear" href="/resources/self_hosting/configuration/overview">
+    Configure Meilisearch with CLI options, environment variables, or a config file.
+  </Card>
+</CardGroup>

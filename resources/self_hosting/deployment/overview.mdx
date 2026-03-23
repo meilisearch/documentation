@@ -1,0 +1,34 @@
+---
+title: Deploying Meilisearch
+sidebarTitle: Deployment overview
+description: Choose a deployment strategy for running Meilisearch in production, from single-server setups to cloud provider deployments.
+---
+
+This section covers deploying Meilisearch to production environments. Each guide walks you through server setup, Meilisearch installation, systemd configuration, reverse proxy setup, and HTTPS.
+
+<Note>
+[Meilisearch Cloud](https://www.meilisearch.com/cloud?utm_campaign=oss&utm_source=docs&utm_medium=deployment-overview) is the recommended way to run Meilisearch in production environments. It handles provisioning, updates, backups, and scaling automatically.
+</Note>
+
+## Choosing a deployment target
+
+| Target | Best for |
+|--------|----------|
+| [Generic Linux server](/resources/self_hosting/deployment/running_production) | Any Linux server or VPS. Start here if your provider isn't listed below. |
+| [AWS](/resources/self_hosting/deployment/aws) | Amazon Web Services EC2 instances |
+| [GCP](/resources/self_hosting/deployment/gcp) | Google Cloud Compute Engine VMs |
+| [Azure](/resources/self_hosting/deployment/azure) | Azure Virtual Machines |
+| [DigitalOcean](/resources/self_hosting/deployment/digitalocean) | DigitalOcean droplets |
+
+All cloud provider guides follow the same pattern: provision a server, install Meilisearch, configure systemd, set up Nginx with HTTPS, and configure firewall rules. The main differences are provider-specific networking and firewall configuration.
+
+## Production checklist
+
+Before going to production, make sure you have:
+
+- [ ] Set a strong [master key](/resources/self_hosting/security/master_api_keys) (at least 16 bytes)
+- [ ] Set [environment to `production`](/resources/self_hosting/configuration/reference#environment)
+- [ ] Configured a reverse proxy (Nginx or Caddy) with HTTPS
+- [ ] Set up [scheduled snapshots](/resources/self_hosting/data_backup/snapshots) or a backup strategy
+- [ ] Configured systemd to restart Meilisearch on failure
+- [ ] Reviewed [RAM and threading settings](/resources/self_hosting/performance/ram_multithreading) for your workload

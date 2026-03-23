@@ -1,51 +1,55 @@
 ---
 title: Postman collection for Meilisearch
 sidebarTitle: Postman
-description: This how-to guide explains how to use Postman when testing and debugging Meilisearch's API.
+description: Import Meilisearch's OpenAPI specification into Postman to test and debug the API with a ready-made collection.
 ---
 
-Are you tired of using the `curl` command in your terminal to test Meilisearch? It can be tedious to re-write every route when wanting to try out an API.
-
-Postman is a platform that lets you create HTTP requests you can easily reuse and share with everyone. We provide a [Postman collection](https://github.com/meilisearch/meilisearch-postman) containing all the routes of the Meilisearch API! 🚀
+Postman is a platform that lets you create, organize, and reuse HTTP requests. You can import the Meilisearch OpenAPI specification directly into Postman to get a complete, up-to-date collection of all API routes.
 
 If you don't have Postman already, you can [download it here](https://www.postman.com/downloads/). It's free and available on many OS distributions.
 
-## Import the collection
+## Prerequisites
 
-Once you have downloaded the [Postman collection](https://github.com/meilisearch/meilisearch-postman), you need to import it into Postman.
+Download the Meilisearch OpenAPI specification file from the [Meilisearch GitHub repository](https://github.com/meilisearch/open-api/releases/latest). Save it somewhere on your computer.
 
-<Frame>
-  <img src="/assets/images/postman/import.png" alt="The 'Import' button" />
-</Frame>
+## Import the OpenAPI specification
 
-## Edit the configuration
+Click the three-dot menu (**...**) at the top of the sidebar, then select **Import**.
 
 <Frame>
-  <img src="/assets/images/postman/edit.png" alt="Selecting 'Edit' from the overflow menu" />
+  <img src="/assets/images/postman/import_menu.png" alt="The three-dot menu in the Postman sidebar with the 'Import' option highlighted" />
 </Frame>
 
-Set the "Token" if needed (set to `masterKey` by default):
+In the import dialog, drag and drop the OpenAPI specification file or click **files** to select it from your computer.
 
 <Frame>
-  <img src="/assets/images/postman/set_token.png" alt="The 'Token' field set to masterKey and 'Type' to Bearer Token in the 'Authorization' tab." />
+  <img src="/assets/images/postman/import_dialog.png" alt="The Postman import dialog with a drop zone for files" />
 </Frame>
 
-Set `url` (set to Meilisearch's local port by default) and `indexUID` (set to `indexUID` by default):
+Postman detects the file format and asks how to import it. Select **Postman Collection** to create a collection with all Meilisearch API routes, then click **Import**.
 
 <Frame>
-  <img src="/assets/images/postman/set_variables.png" alt="Setting the 'URL' to http://localhost:7700/ and 'indexUID' to indexUID in the Variables tab." />
+  <img src="/assets/images/postman/import_postman_collection.png" alt="The import specification dialog with 'Postman Collection' selected" />
 </Frame>
 
-The `url` and `indexUID` variables are used in all the collection routes, like in this one:
+<Note>
+You can also select **OpenAPI 3.1 Specification with a Postman Collection** if you want to keep the raw specification alongside the collection.
 
 <Frame>
-  <img src="/assets/images/postman/url.png" alt="Highlighting {{url}} and {{indexUID}}" />
+  <img src="/assets/images/postman/import_openapi.png" alt="The import specification dialog with 'OpenAPI 3.1 Specification with a Postman Collection' selected" />
 </Frame>
+</Note>
 
-## Start to use it
+## Configure authentication
 
-You can now [run your Meilisearch instance](/learn/self_hosted/getting_started_with_self_hosted_meilisearch#setup-and-installation) and create your first index:
+After importing, you need to configure your API key so Postman can authenticate requests to your Meilisearch instance.
+
+Individual requests use **Bearer Token** authentication. You can verify this by selecting any request and checking the **Authorization** tab. The token field references `{{bearerToken}}`, which Postman resolves from your global variables.
 
 <Frame>
-  <img src="/assets/images/postman/create_index.png" alt="The 'Send' button" />
+  <img src="/assets/images/postman/collection_overview.png" alt="The Postman collection showing all Meilisearch API routes with the Authorization tab open and Bearer Token configured" />
 </Frame>
+
+## Start using the collection
+
+You can now select any route from the sidebar, adjust parameters as needed, and click **Send** to make requests to your Meilisearch instance.
