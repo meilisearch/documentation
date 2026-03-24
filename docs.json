@@ -255,14 +255,6 @@
                     ]
                   },
                   {
-                    "group": "Advanced",
-                    "pages": [
-                      "capabilities/full_text_search/advanced/ranking_pipeline",
-                      "capabilities/full_text_search/advanced/performance_tuning",
-                      "capabilities/full_text_search/advanced/debug_search_performance"
-                    ]
-                  },
-                  {
                     "group": "Relevancy",
                     "pages": [
                       "capabilities/full_text_search/relevancy/relevancy",
@@ -272,6 +264,14 @@
                       "capabilities/full_text_search/relevancy/attribute_ranking_order",
                       "capabilities/full_text_search/relevancy/typo_tolerance_settings",
                       "capabilities/full_text_search/relevancy/synonyms"
+                    ]
+                  },
+                  {
+                    "group": "Advanced",
+                    "pages": [
+                      "capabilities/full_text_search/advanced/ranking_pipeline",
+                      "capabilities/full_text_search/advanced/performance_tuning",
+                      "capabilities/full_text_search/advanced/debug_search_performance"
                     ]
                   }
                 ]
@@ -287,8 +287,7 @@
                       "capabilities/hybrid_search/how_to/choose_an_embedder",
                       "capabilities/hybrid_search/how_to/search_with_user_provided_embeddings",
                       "capabilities/hybrid_search/how_to/image_search_with_multimodal",
-                      "capabilities/hybrid_search/how_to/image_search_with_user_embeddings",
-                      "capabilities/hybrid_search/how_to/retrieve_similar_documents"
+                      "capabilities/hybrid_search/how_to/image_search_with_user_embeddings"
                     ]
                   },
                   {
@@ -425,7 +424,13 @@
                 "group": "Personalization",
                 "pages": [
                   "capabilities/personalization/overview",
-                  "capabilities/personalization/getting_started",
+                  {
+                    "group": "Getting started",
+                    "pages": [
+                      "capabilities/personalization/getting_started/personalized_search",
+                      "capabilities/personalization/getting_started/recommendations"
+                    ]
+                  },
                   {
                     "group": "How to",
                     "pages": [
@@ -518,15 +523,15 @@
                       "capabilities/indexing/tasks_and_batches/async_operations",
                       "capabilities/indexing/tasks_and_batches/monitor_tasks",
                       "capabilities/indexing/tasks_and_batches/filter_tasks",
-                      "capabilities/indexing/tasks_and_batches/manage_task_database",
-                      "capabilities/indexing/tasks_and_batches/optimize_batch_performance"
+                      "capabilities/indexing/tasks_and_batches/manage_task_database"
                     ]
                   },
                   {
                     "group": "Advanced",
                     "pages": [
                       "capabilities/indexing/advanced/indexing_best_practices",
-                      "capabilities/indexing/advanced/tokenization"
+                      "capabilities/indexing/advanced/tokenization",
+                      "capabilities/indexing/tasks_and_batches/optimize_batch_performance"
                     ]
                   }
                 ]
@@ -1799,7 +1804,15 @@
     },
     {
       "source": "/learn/ai_powered_search/retrieve_related_search_results",
-      "destination": "/capabilities/hybrid_search/how_to/retrieve_similar_documents"
+      "destination": "/capabilities/personalization/getting_started/recommendations"
+    },
+    {
+      "source": "/capabilities/hybrid_search/how_to/retrieve_similar_documents",
+      "destination": "/capabilities/personalization/getting_started/recommendations"
+    },
+    {
+      "source": "/capabilities/personalization/getting_started",
+      "destination": "/capabilities/personalization/getting_started/personalized_search"
     },
     {
       "source": "/learn/ai_powered_search/choose_an_embedder",

@@ -1,35 +1,49 @@
 ---
-title: What is search personalization?
+title: Personalization and recommendations
 sidebarTitle: Overview
-description: Search personalization lets you boost search results based on user profiles, making results tailored to their behavior.
+description: Personalize search results based on user profiles and recommend related items with the similar documents endpoint.
 ---
 
-Search personalization uses AI technology to re-rank search results at query time based on the user profile you provide. It works alongside [full-text search](/capabilities/full_text_search/overview) and [hybrid search](/capabilities/hybrid_search/overview) to deliver results tailored to each user.
+Meilisearch offers two ways to tailor results to individual users:
 
-## Why use search personalization?
+- **Personalized search** re-ranks search results at query time based on a user profile you provide, so each user sees the most relevant results for them.
+- **Recommendations** use the [`/similar` endpoint](/capabilities/personalization/getting_started/recommendations) to find documents semantically close to a given item, powering features like "More like this" or "Related items".
 
-Not everyone searches the same way. Personalizing search results allows you to adapt relevance to each user’s preferences, behavior, or intent.
+Both features work alongside [full-text search](/capabilities/full_text_search/overview) and [hybrid search](/capabilities/hybrid_search/overview).
 
-For example, in an e-commerce site, someone who often shops for sportswear might see sneakers and activewear ranked higher when searching for “shoes”. A user interested in luxury fashion might see designer heels or leather boots first instead.
+## Personalized search
 
-## How does search personalization work?
+Not everyone searches the same way. Personalized search lets you adapt relevance to each user's preferences, behavior, or intent.
 
-1. First generate a user profile: `"The user prefers genres like Documentary, Music, Drama"`
-2. When the user performs a search, you submit their profile together with their search request
-3. Meilisearch retrieves documents based on the user's query as usual
-4. Finally, the re-ranking model reorders results based on the user profile you provided in the first step
+For example, in an e-commerce site, someone who often shops for sportswear might see sneakers and activewear ranked higher when searching for "shoes". A user interested in luxury fashion might see designer heels or leather boots first instead.
+
+### How it works
+
+1. Generate a user profile: `"The user prefers genres like Documentary, Music, Drama"`
+2. Submit the profile together with the search request
+3. Meilisearch retrieves documents based on the query as usual
+4. The re-ranking model reorders results based on the user profile
+
+## Recommendations
+
+Once you have configured an [embedder](/capabilities/hybrid_search/how_to/choose_an_embedder), you can use the `/similar` endpoint to find documents that are semantically close to a reference document. This requires no additional configuration beyond the embedder itself.
+
+Typical use cases include "Customers also viewed" on product pages, "Related articles" on content platforms, and "Because you watched X" on media streaming services.
 
 ## Use cases
 
-- **E-commerce**: Surface products aligned with a shopper's purchase history, brand preferences, or browsing behavior. A customer who frequently buys running gear sees running shoes before formal shoes when searching for "shoes".
-- **Content platforms**: Rank articles, videos, or podcasts based on the topics a user engages with most. A reader interested in machine learning sees ML-related content higher in results for broad queries like "tutorial". Combine with [analytics](/capabilities/analytics/overview) to measure impact.
+- **E-commerce**: Surface products aligned with a shopper's purchase history, brand preferences, or browsing behavior. Recommend similar products on detail pages.
+- **Content platforms**: Rank articles, videos, or podcasts based on the topics a user engages with most. Show related content alongside the current item. Combine with [analytics](/capabilities/analytics/overview) to measure impact.
 - **Marketplace search**: Tailor listings to a buyer's location, budget range, or past interactions so the most relevant offers appear first.
 
 ## Next steps
 
 <CardGroup cols={2}>
-  <Card title="Getting started" href="/capabilities/personalization/getting_started">
-    Enable personalization and send your first personalized search
+  <Card title="Personalized search" href="/capabilities/personalization/getting_started/personalized_search">
+    Configure and perform your first personalized search
+  </Card>
+  <Card title="Recommendations" href="/capabilities/personalization/getting_started/recommendations">
+    Build a recommendation system with the similar documents endpoint
   </Card>
   <Card title="Generate user context" href="/capabilities/personalization/how_to/generate_user_context">
     Build user profiles from behavior data

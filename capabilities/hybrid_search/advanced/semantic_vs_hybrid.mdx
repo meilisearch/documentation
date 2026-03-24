@@ -109,7 +109,7 @@ These are starting points. Test with real queries from your users and adjust bas
 Hybrid search is not always the best choice. Consider pure semantic search (`semanticRatio: 1.0`) instead when:
 
 - **Image-only search**: if your data is purely visual (image catalogs with no text metadata), keyword search has nothing to match against. Use pure semantic search with [multimodal embeddings](/capabilities/hybrid_search/how_to/image_search_with_multimodal).
-- **Similarity-based use cases**: if you are building a recommendation system using the [`/similar` endpoint](/capabilities/hybrid_search/how_to/retrieve_similar_documents), you are already using pure vector similarity. Hybrid search does not apply.
+- **Similarity-based use cases**: if you are building a recommendation system using the [`/similar` endpoint](/capabilities/personalization/getting_started/recommendations), you are already using pure vector similarity. Hybrid search does not apply.
 - **Pre-computed embeddings without text**: if you provide your own embeddings for non-textual content (audio, sensor data), there are no keywords to match.
 
 ## Next steps
