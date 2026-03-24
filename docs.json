@@ -2071,7 +2071,7 @@
     },
     {
       "source": "/learn/resources/contributing-docs",
-      "destination": "/resources/help/contributing"
+      "destination": "/resources/help/contributing_docs"
     },
     {
       "source": "/learn/advanced/security",
@@ -2136,6 +2136,74 @@
     {
       "source": "/guides/introduction/quick_start_guide",
       "destination": "/getting_started/first_project"
+    },
+    {
+      "source": "/guides/security/http2_ssl",
+      "destination": "/resources/self_hosting/security/http2_ssl"
+    },
+    {
+      "source": "/guides/security/multitenancy_nodejs",
+      "destination": "/capabilities/security/overview"
+    },
+    {
+      "source": "/learn/cookbooks/multitenancy_nodejs",
+      "destination": "/capabilities/security/overview"
+    },
+    {
+      "source": "/guides/back_end/strapi_v4",
+      "destination": "/getting_started/frameworks/strapi"
+    },
+    {
+      "source": "/guides/deployment/railway",
+      "destination": "/resources/self_hosting/deployment/overview"
+    },
+    {
+      "source": "/learn/advanced/snapshots",
+      "destination": "/resources/self_hosting/data_backup/snapshots"
+    },
+    {
+      "source": "/learn/advanced/snapshots_vs_dumps",
+      "destination": "/resources/self_hosting/data_backup/overview"
+    },
+    {
+      "source": "/learn/experimental/metrics",
+      "destination": "/reference/api/stats/get-prometheus-metrics"
+    },
+    {
+      "source": "/learn/experimental/log_customization",
+      "destination": "/reference/api/logs/retrieve-logs"
+    },
+    {
+      "source": "/learn/experimental/puffin_reports",
+      "destination": "/resources/help/experimental_features_overview"
+    },
+    {
+      "source": "/learn/cookbooks/qovery",
+      "destination": "/resources/self_hosting/deployment/overview"
+    },
+    {
+      "source": "/learn/contributing/contributing_docs",
+      "destination": "/resources/help/contributing_docs"
+    },
+    {
+      "source": "/learn/ai-powered-search/search_with_user_provided_embeddings",
+      "destination": "/capabilities/hybrid_search/how_to/search_with_user_provided_embeddings"
+    },
+    {
+      "source": "/guides/performance/large_documents",
+      "destination": "/capabilities/indexing/how_to/import_large_datasets"
+    },
+    {
+      "source": "/learn/analytics/configure_monitoring",
+      "destination": "/capabilities/analytics/getting_started"
+    },
+    {
+      "source": "/reference/api/settings/get-vectorstore",
+      "destination": "/reference/api/settings/get-embedders"
+    },
+    {
+      "source": "/reference/api/settings/reset-vectorstore",
+      "destination": "/reference/api/settings/get-embedders"
     }
   ]
 }
