@@ -891,6 +891,7 @@
                 "group": "Demos",
                 "pages": [
                   "resources/demos/overview",
+                  "resources/demos/home_booking",
                   "resources/demos/where_to_watch",
                   "resources/demos/ecommerce",
                   "resources/demos/saas",

@@ -1,0 +1,42 @@
+---
+title: Home Booking
+sidebarTitle: Home Booking
+description: Airbnb-style home booking demo with conversational chat search and classic search powered by Meilisearch
+---
+
+<Info>
+**Live demo**: [lodging-lark.lovable.app](https://lodging-lark.lovable.app/)
+</Info>
+
+Home Booking is an Airbnb-style property search application that combines classic search with a conversational chat interface. Describe your ideal stay in natural language and let the AI refine results as you add constraints, or switch to classic search for direct filtering.
+
+![Home Booking demo showing chat search for beach houses in Europe](/assets/images/demos/home-booking-chat-demo.png)
+
+## Key features
+
+- **Chat search**: Describe your ideal stay in plain language (e.g., "Find me a family-friendly beach house in Europe under $300/night") and get relevant property results with matching keywords highlighted.
+- **Iterative refinement**: Narrow results through follow-up messages. Start broad, then refine: "Only alpine cabins" then "for 8 persons" to progressively filter down to the perfect match.
+- **Classic search**: Switch between chat and traditional keyword search with filters for a familiar booking experience.
+- **Meilisearch chat route**: Uses the `/chat` route with ChatGPT 5.2 as the LLM and [Zembed](https://www.zeroentropy.dev/) embeddings via HuggingFace Inference Endpoints for semantic understanding.
+- **Built with Lovable**: The frontend is entirely generated with Lovable, demonstrating how quickly you can prototype a full search experience on top of Meilisearch.
+
+<Warning>
+This demo has minimal guardrails. The chat interface may occasionally produce unexpected responses.
+</Warning>
+
+## Example conversation
+
+1. **"Find me a family-friendly beach house in Europe under $300/night"** - Returns 6 beach properties across Italy, Spain, and Greece, all under budget, with matching terms highlighted.
+2. **"I would like only alpine cabins"** - Filters down to 4 cabin-style properties in alpine regions.
+3. **"For 8 persons"** - Narrows to a single property that fits all criteria.
+
+## Links
+
+<CardGroup cols={2}>
+  <Card title="Try the demo" icon="globe" href="https://lodging-lark.lovable.app/">
+    Search properties with chat or classic search
+  </Card>
+  <Card title="Chat route docs" icon="message-bot" href="/capabilities/conversational_search/overview">
+    Learn about Meilisearch conversational search
+  </Card>
+</CardGroup>
