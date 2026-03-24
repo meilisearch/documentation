@@ -305,17 +305,17 @@
                     "group": "Providers",
                     "pages": [
                       "capabilities/hybrid_search/how_to/configure_openai_embedder",
-                      "guides/embedders/openai",
+                      "capabilities/hybrid_search/providers/openai",
                       "capabilities/hybrid_search/how_to/configure_cohere_embedder",
                       "capabilities/hybrid_search/how_to/configure_huggingface_embedder",
                       "capabilities/hybrid_search/how_to/configure_rest_embedder",
-                      "guides/embedders/mistral",
-                      "guides/embedders/gemini",
-                      "guides/embedders/cloudflare",
-                      "guides/embedders/voyage",
-                      "guides/embedders/bedrock",
-                      "guides/embedders/jina",
-                      "guides/embedders/huggingface"
+                      "capabilities/hybrid_search/providers/mistral",
+                      "capabilities/hybrid_search/providers/gemini",
+                      "capabilities/hybrid_search/providers/cloudflare",
+                      "capabilities/hybrid_search/providers/voyage",
+                      "capabilities/hybrid_search/providers/bedrock",
+                      "capabilities/hybrid_search/providers/jina",
+                      "capabilities/hybrid_search/providers/huggingface"
                     ]
                   }
                 ]
@@ -1204,7 +1204,7 @@
     },
     {
       "source": "/learn/cookbooks/multitenancy_nodejs",
-      "destination": "/guides/multitenancy_nodejs"
+      "destination": "/capabilities/security/overview"
     },
     {
       "source": "/reference/api/batches",
@@ -1588,7 +1588,7 @@
     },
     {
       "source": "/guides/security/laravel_multitenancy",
-      "destination": "/guides/laravel_multitenancy"
+      "destination": "/capabilities/security/overview"
     },
     {
       "source": "/guides/misc/docker",
@@ -1653,6 +1653,42 @@
     {
       "source": "/guides/improve_relevancy_large_documents",
       "destination": "/capabilities/full_text_search/relevancy/relevancy"
+    },
+    {
+      "source": "/guides/embedders/openai",
+      "destination": "/capabilities/hybrid_search/providers/openai"
+    },
+    {
+      "source": "/guides/embedders/cohere",
+      "destination": "/capabilities/hybrid_search/providers/cohere"
+    },
+    {
+      "source": "/guides/embedders/mistral",
+      "destination": "/capabilities/hybrid_search/providers/mistral"
+    },
+    {
+      "source": "/guides/embedders/gemini",
+      "destination": "/capabilities/hybrid_search/providers/gemini"
+    },
+    {
+      "source": "/guides/embedders/cloudflare",
+      "destination": "/capabilities/hybrid_search/providers/cloudflare"
+    },
+    {
+      "source": "/guides/embedders/voyage",
+      "destination": "/capabilities/hybrid_search/providers/voyage"
+    },
+    {
+      "source": "/guides/embedders/bedrock",
+      "destination": "/capabilities/hybrid_search/providers/bedrock"
+    },
+    {
+      "source": "/guides/embedders/jina",
+      "destination": "/capabilities/hybrid_search/providers/jina"
+    },
+    {
+      "source": "/guides/embedders/huggingface",
+      "destination": "/capabilities/hybrid_search/providers/huggingface"
     },
     {
       "source": "/learn/analytics/configure_analytics",
@@ -1736,7 +1772,7 @@
     },
     {
       "source": "/learn/tutorials/getting_started/search_bar_for_docs",
-      "destination": "/guides/front_end/pagination"
+      "destination": "/capabilities/full_text_search/how_to/paginate_search_results"
     },
     {
       "source": "/learn/advanced/sharding",
