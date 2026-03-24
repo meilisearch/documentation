@@ -1130,6 +1130,10 @@
   },
   "redirects": [
     {
+      "source": "/home",
+      "destination": "/getting_started/overview"
+    },
+    {
       "source": "/learn/advanced",
       "destination": "/capabilities/overview"
     },
