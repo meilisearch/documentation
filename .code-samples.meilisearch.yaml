@@ -818,14 +818,33 @@ update_network_1: |-
     -H 'Content-Type: application/json' \
     --data-binary '{
       "self": "ms-00",
+      "leader": "ms-00",
       "remotes": {
         "ms-00": {
           "url": "http://INSTANCE_URL",
-          "searchApiKey": "INSTANCE_API_KEY"
+          "searchApiKey": "INSTANCE_API_KEY",
+          "writeApiKey": "INSTANCE_API_KEY"
         },
         "ms-01": {
           "url": "http://ANOTHER_INSTANCE_URL",
-          "searchApiKey": "ANOTHER_INSTANCE_API_KEY"
+          "searchApiKey": "ANOTHER_INSTANCE_API_KEY",
+          "writeApiKey": "ANOTHER_INSTANCE_API_KEY"
+        },
+        "ms-02": {
+          "url": "http://YET_ANOTHER_INSTANCE_URL",
+          "searchApiKey": "YET_ANOTHER_INSTANCE_API_KEY",
+          "writeApiKey": "YET_ANOTHER_INSTANCE_API_KEY"
+        }
+      },
+      "shards": {
+        "s-a": {
+          "remotes": ["ms-00", "ms-01"]
+        },
+        "s-b": {
+          "remotes": ["ms-01", "ms-02"]
+        },
+        "s-c": {
+          "remotes": ["ms-02", "ms-00"]
         }
       }
     }'
@@ -1296,28 +1315,14 @@ rename_an_index_1: |-
     -H 'Content-Type: application/json' \
     --data-binary '{ "uid": "INDEX_B" }'
 
-multi_search_remote_federated_1: |-
+no_use_network_search_1: |-
   curl \
-    -X POST 'MEILISEARCH_URL/multi-search' \
+    -X POST 'MEILISEARCH_URL/indexes/INDEX_A/search' \
     -H 'Content-Type: application/json' \
     --data-binary '{
-      "federation": {},
-      "queries": [
-        {
-          "indexUid": "movies",
-          "q": "batman",
-          "federationOptions": {
-            "remote": "ms-00"
-          }
-        },
-        {
-          "indexUid": "movies",
-          "q": "batman",
-          "federationOptions": {
-            "remote": "ms-01"
-          }
-        }
-      ]
+      "q": "batman",
+      "useNetwork": false
+    }'
 # post_indexes_indexUid_fields
 list_index_fields_1: |-
   curl \
