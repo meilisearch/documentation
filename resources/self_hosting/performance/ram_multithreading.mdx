@@ -34,8 +34,21 @@ Multi-threading is unfortunately not possible in machines with only one processo
 
 In some cases, the OS will interrupt Meilisearch and stop all its processes. Most of these crashes happen during indexing and are a result of a machine running out of RAM. This means your computer does not have enough memory to process your dataset.
 
-Meilisearch is aware of this issue and actively trying to resolve it. If you are struggling with memory-related crashes, consider:
+### Diagnosing memory issues
 
-- Adding new documents in smaller batches
+Before making changes, identify the root cause:
+
+- **Check your `--max-indexing-memory` setting**: If you have manually configured [`--max-indexing-memory`](/resources/self_hosting/configuration/reference#max-indexing-memory) to a value close to or exceeding your machine's total available RAM, Meilisearch may consume too much memory during indexing. Try lowering this value to leave room for the OS and other processes.
+- **Monitor RSS usage**: Use tools such as `top`, `htop`, or `ps` to monitor the Resident Set Size (RSS) of the Meilisearch process during indexing. If RSS approaches the machine's total available memory, the OS may kill the process via the OOM (Out Of Memory) killer.
+- **Evaluate dataset size relative to available RAM**: As a general guideline, your machine should have enough RAM to hold the full dataset in memory during indexing. If your dataset is significantly larger than available RAM, memory crashes become more likely.
+- **Check system logs**: On Linux, inspect `dmesg` or `/var/log/syslog` for OOM killer messages. These logs confirm whether the OS terminated Meilisearch due to memory pressure.
+
+### Mitigating memory crashes
+
+If you are struggling with memory-related crashes, consider:
+
+- Adding new documents in smaller batches to reduce peak memory consumption during indexing
+- Lowering the [`--max-indexing-memory`](/resources/self_hosting/configuration/reference#max-indexing-memory) value so Meilisearch reserves less memory for indexing
 - Increasing your machine's RAM
-- [Following indexing best practices](/learn/indexing/indexing_best_practices)
+- Reducing the number of searchable, filterable, and sortable attributes in your index settings, as each adds to indexing memory requirements
+- [Following indexing best practices](/capabilities/indexing/advanced/indexing_best_practices)

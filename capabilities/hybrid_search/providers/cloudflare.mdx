@@ -1,0 +1,97 @@
+---
+title: Semantic Search with Cloudflare Workers AI Embeddings
+sidebarTitle: Cloudflare Workers AI
+description: Set up Meilisearch with Cloudflare Workers AI embedding models for semantic search.
+---
+
+Cloudflare Workers AI provides embedding models that run on Cloudflare's edge network. This guide shows you how to configure Meilisearch with Cloudflare Workers AI embeddings using the REST embedder.
+
+## Requirements
+
+- A Meilisearch project
+- A [Cloudflare](https://www.cloudflare.com/) account with access to Workers AI
+- Your Cloudflare account ID and API key
+
+## Available models
+
+| Model | Dimensions | Notes |
+|-------|-----------|-------|
+| `@cf/baai/bge-small-en-v1.5` | 384 | Fastest, English only |
+| `@cf/baai/bge-base-en-v1.5` | 768 | Balanced, English only |
+| `@cf/baai/bge-large-en-v1.5` | 1024 | Highest quality BGE, English only |
+| `@cf/google/embeddinggemma-300m` | 768 | Google's compact embedding model |
+| `@cf/qwen/qwen3-embedding-0.6b` | 1024 | Qwen3's lightweight embedding model |
+
+## Configure the embedder
+
+Update your index settings with the Cloudflare Workers AI embedder configuration:
+
+```json
+{
+  "cloudflare": {
+    "source": "rest",
+    "apiKey": "<CLOUDFLARE_API_KEY>",
+    "dimensions": 384,
+    "documentTemplate": "A product named '{{doc.name}}': {{doc.description}}",
+    "url": "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai/run/@cf/baai/bge-small-en-v1.5",
+    "request": {
+      "text": ["{{text}}", "{{..}}"]
+    },
+    "response": {
+      "result": {
+        "data": ["{{embedding}}", "{{..}}"]
+      }
+    }
+  }
+}
+```
+
+Replace `<CLOUDFLARE_API_KEY>` with your Cloudflare API key and `<ACCOUNT_ID>` with your Cloudflare account ID. The model name is part of the URL path. Adjust `dimensions` to match the model you choose.
+
+Send this configuration to Meilisearch:
+
+```sh
+curl \
+  -X PATCH 'MEILISEARCH_URL/indexes/INDEX_NAME/settings' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  --data-binary '{
+    "embedders": {
+      "cloudflare": {
+        "source": "rest",
+        "apiKey": "<CLOUDFLARE_API_KEY>",
+        "dimensions": 384,
+        "documentTemplate": "A product named '\''{{doc.name}}'\'': {{doc.description}}",
+        "url": "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai/run/@cf/baai/bge-small-en-v1.5",
+        "request": {
+          "text": ["{{text}}", "{{..}}"]
+        },
+        "response": {
+          "result": {
+            "data": ["{{embedding}}", "{{..}}"]
+          }
+        }
+      }
+    }
+  }'
+```
+
+Meilisearch handles batching and rate limiting automatically. Monitor the [tasks queue](/reference/api/tasks/list-tasks) to track indexing progress.
+
+## Test the search
+
+```json
+{
+  "q": "comfortable shoes for walking",
+  "hybrid": {
+    "semanticRatio": 0.5,
+    "embedder": "cloudflare"
+  }
+}
+```
+
+## Next steps
+
+- [Document template best practices](/capabilities/hybrid_search/advanced/document_template_best_practices) to optimize which fields are embedded
+- [Custom hybrid ranking](/capabilities/hybrid_search/advanced/custom_hybrid_ranking) to tune the balance between keyword and semantic results
+- [Embedder settings reference](/reference/api/settings/list-all-settings) for all configuration options

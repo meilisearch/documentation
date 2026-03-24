@@ -1,0 +1,100 @@
+---
+title: Use matching strategy
+description: Control how Meilisearch matches query terms using the matchingStrategy parameter to balance precision and recall.
+---
+
+The matching strategy determines how Meilisearch handles multi-word queries. It controls whether all query terms must be present in a document or whether some terms can be dropped to return more results.
+
+Set `matchingStrategy` as a search parameter to control the trade-off between returning more results (higher recall) and returning more precise results (higher precision).
+
+## Available strategies
+
+### `last` (default)
+
+The `last` strategy drops query terms starting from the end of the query. It returns documents matching all terms first, then progressively drops the rightmost terms to find more results.
+
+For a query like `batman dark knight`, this strategy returns:
+1. Documents matching "batman", "dark", and "knight"
+2. Documents matching "batman" and "dark"
+3. Documents matching "batman"
+
+<CodeGroup>
+
+```bash
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/movies/search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "q": "batman dark knight",
+    "matchingStrategy": "last"
+  }'
+```
+
+</CodeGroup>
+
+Use `last` when you want to always return results, even if the query is long or specific. This is the best choice for most search interfaces.
+
+### `all`
+
+The `all` strategy requires every query term to be present in matching documents. If a document is missing any term, it is excluded from the results.
+
+<CodeGroup>
+
+```bash
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/movies/search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "q": "batman dark knight",
+    "matchingStrategy": "all"
+  }'
+```
+
+</CodeGroup>
+
+This only returns documents containing all three terms: "batman", "dark", and "knight".
+
+Use `all` when precision matters more than returning many results. This is a good choice for technical search, product catalogs with specific queries, or situations where showing irrelevant results is worse than showing fewer results.
+
+### `frequency`
+
+The `frequency` strategy drops the most common query terms first rather than dropping from the end. It analyzes how frequently each term appears across all documents in the index and removes the most common terms to improve result relevancy.
+
+<CodeGroup>
+
+```bash
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/movies/search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "q": "the dark knight rises",
+    "matchingStrategy": "frequency"
+  }'
+```
+
+</CodeGroup>
+
+If "the" appears in 90% of documents while "rises" appears in only 5%, the `frequency` strategy drops "the" first because it is the least distinctive term.
+
+Use `frequency` when your users search with natural language queries that may include common words. This strategy is particularly effective when you have not configured [stop words](/capabilities/full_text_search/how_to/configure_stop_words), as it naturally de-emphasizes high-frequency terms.
+
+## Comparison
+
+| Strategy | Drops terms from | Best for | Result count |
+|----------|-----------------|----------|-------------|
+| `last` | End of query | General search, search-as-you-type | Most results |
+| `all` | None (requires all) | Precise queries, technical search | Fewest results |
+| `frequency` | Most common first | Natural language queries | Moderate results |
+
+## Interaction with phrase search
+
+When a query contains a [phrase search](/capabilities/full_text_search/getting_started/phrase_search) (quoted terms), the phrase is always treated as a single required unit regardless of the matching strategy. The strategy only applies to non-quoted terms in the query.
+
+For example, with the query `"dark knight" batman returns`:
+- **`last`**: The phrase "dark knight" is required, "batman" may be dropped, then "returns"
+- **`all`**: The phrase "dark knight", "batman", and "returns" are all required
+- **`frequency`**: The phrase "dark knight" is required, the most frequent of "batman" and "returns" may be dropped
+
+<Info>
+For the full parameter reference, see the [search API reference](/reference/api/search/search-with-post).
+</Info>

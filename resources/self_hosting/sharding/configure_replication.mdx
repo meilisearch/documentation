@@ -1,0 +1,199 @@
+---
+title: Configure replication for high availability
+sidebarTitle: Configure replication
+description: Set up replicated shards across multiple Meilisearch instances to ensure high availability and distribute search load.
+---
+
+Replication assigns the same shard to multiple remotes in your Meilisearch network. If one remote goes down, another remote holding the same shard continues serving results. This guide covers how to configure replication, common patterns, and what to expect during failover.
+
+<Note>
+Replication requires the Meilisearch Enterprise Edition v1.37 or later and a [configured network](/resources/self_hosting/sharding/setup_sharded_cluster).
+</Note>
+
+## How replication works
+
+When you configure shards, each shard can be assigned to one or more remotes. If a shard is assigned to multiple remotes, Meilisearch replicates the data to each of them. During a search with `useNetwork: true`, Meilisearch queries each shard exactly once, picking one of the available remotes for each shard. This avoids duplicate results and provides automatic failover.
+
+## Assign shards to multiple remotes
+
+To replicate a shard, list multiple remotes in its configuration:
+
+<CodeGroup>
+
+```bash
+curl \
+  -X PATCH 'MEILISEARCH_URL/network' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  --data-binary '{
+    "shards": {
+      "shard-a": { "remotes": ["ms-00", "ms-01"] },
+      "shard-b": { "remotes": ["ms-01", "ms-02"] },
+      "shard-c": { "remotes": ["ms-02", "ms-00"] }
+    }
+  }'
+```
+
+</CodeGroup>
+
+In this configuration, every shard exists on two remotes. If any single instance goes down, all shards remain available.
+
+## Common replication patterns
+
+### Full replication (every shard on every remote)
+
+Best for small datasets where you want maximum availability and read throughput:
+
+```json
+{
+  "shards": {
+    "shard-a": { "remotes": ["ms-00", "ms-01", "ms-02"] }
+  }
+}
+```
+
+All three remotes hold the same data. This is effectively a read-replica setup: you get 3x the search capacity, and any two instances can go down without affecting availability.
+
+### N+1 replication
+
+Each shard on two remotes, spread across the cluster:
+
+```json
+{
+  "shards": {
+    "shard-a": { "remotes": ["ms-00", "ms-01"] },
+    "shard-b": { "remotes": ["ms-01", "ms-02"] },
+    "shard-c": { "remotes": ["ms-02", "ms-00"] }
+  }
+}
+```
+
+This is the recommended pattern for most use cases. It balances data redundancy, search throughput, and storage efficiency. Each instance holds 2 shards, and losing any single instance still leaves all shards available.
+
+### Geographic replication
+
+Place replicas in different regions to reduce latency for geographically distributed users:
+
+```json
+{
+  "shards": {
+    "shard-a": { "remotes": ["us-east-01", "eu-west-01"] },
+    "shard-b": { "remotes": ["us-east-02", "eu-west-02"] }
+  }
+}
+```
+
+Route search requests to the closest cluster. Both regions hold all data, so either can serve a full result set.
+
+## Failover behavior
+
+When a remote becomes unavailable during a network search:
+
+1. Meilisearch detects the remote is unreachable
+2. If another remote holds the same shard, Meilisearch queries that remote instead
+3. The search completes with results from all shards, using the available replicas
+4. If no remote for a given shard is reachable, results from that shard are missing from the response
+
+Meilisearch does not require manual intervention for failover. When the failed remote comes back online, it automatically rejoins the network and starts serving searches again.
+
+## Scaling read throughput
+
+Replication is the primary way to scale search throughput in Meilisearch. Each replica can independently handle search requests, so adding more replicas increases the total number of concurrent searches your cluster can handle.
+
+To add a new replica for an existing shard:
+
+1. Add the new remote to the network:
+
+<CodeGroup>
+
+```bash
+curl \
+  -X PATCH 'MEILISEARCH_URL/network' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  --data-binary '{
+    "addRemotes": {
+      "ms-03": {
+        "url": "http://ms-03.example.com:7703",
+        "searchApiKey": "SEARCH_KEY_03"
+      }
+    }
+  }'
+```
+
+</CodeGroup>
+
+2. Update the shard assignment to include the new remote:
+
+<CodeGroup>
+
+```bash
+curl \
+  -X PATCH 'MEILISEARCH_URL/network' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  --data-binary '{
+    "shards": {
+      "shard-a": { "remotes": ["ms-00", "ms-01", "ms-03"] },
+      "shard-b": { "remotes": ["ms-01", "ms-02"] },
+      "shard-c": { "remotes": ["ms-02", "ms-00"] }
+    }
+  }'
+```
+
+</CodeGroup>
+
+## The leader instance
+
+The leader is responsible for all write operations (document additions, settings changes, index management). Non-leader instances reject writes with a `not_a_leader` error.
+
+If the leader goes down:
+
+- **Search continues**: replicas still serve search results for all replicated shards
+- **Writes are blocked**: no documents can be added or updated until a leader is available
+- **Manual promotion**: you must designate a new leader by updating the network topology with `PATCH /network` and setting `"leader"` to another instance
+
+<Warning>
+There is no automatic leader election. If your leader goes down, you must manually promote a new one. Plan for this in your deployment strategy.
+</Warning>
+
+## Monitoring replica health
+
+Check the current network topology to see which remotes are configured:
+
+<CodeGroup>
+
+```bash
+curl \
+  -X GET 'MEILISEARCH_URL/network' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY'
+```
+
+</CodeGroup>
+
+To verify a specific remote is responding, query it directly or use the health endpoint:
+
+<CodeGroup>
+
+```bash
+curl 'http://ms-01.example.com:7701/health'
+```
+
+</CodeGroup>
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Set up a sharded cluster" href="/resources/self_hosting/sharding/setup_sharded_cluster">
+    Start from scratch with a full cluster setup guide.
+  </Card>
+  <Card title="Manage the network" href="/resources/self_hosting/sharding/manage_network">
+    Add and remove remotes, update shard assignments.
+  </Card>
+  <Card title="Replication and sharding overview" href="/resources/self_hosting/sharding/overview">
+    Understand the concepts and feature compatibility.
+  </Card>
+  <Card title="Data backup" href="/resources/self_hosting/data_backup/overview">
+    Configure snapshots and dumps for your cluster.
+  </Card>
+</CardGroup>

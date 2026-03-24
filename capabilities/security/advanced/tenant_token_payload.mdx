@@ -1,0 +1,232 @@
+---
+title: Tenant token payload reference
+sidebarTitle: Tenant token payload reference
+description: "Meilisearch's tenant tokens are JSON web tokens (JWTs). Their payload is made of three elements: search rules, an API key UID, and an optional expiration date."
+---
+
+Meilisearch's tenant tokens are JSON web tokens (JWTs). Their payload is made of three elements: [search rules](#search-rules), an [API key UID](#api-key-uid), and an optional [expiration date](#expiry-date).
+
+<Tip>
+You can use [jwt.io](https://jwt.io) to inspect and debug tenant tokens during development. Paste a token into the tool to view its decoded header, payload, and signature.
+</Tip>
+
+## Example payload
+
+<CodeGroup>
+
+```json
+{
+  "exp": 1646756934,
+  "apiKeyUid": "at5cd97d-5a4b-4226-a868-2d0eb6d197ab",
+  "searchRules": {
+    "INDEX_NAME": {
+      "filter": "attribute = value"
+    }
+  }
+}
+```
+
+</CodeGroup>
+
+## Search rules
+
+The search rules object is a set of instructions defining search parameters Meilisearch enforces in every query made with a specific tenant token.
+
+### Search rules object
+
+`searchRules` must be a JSON object. Each key must correspond to one or more indexes:
+
+<CodeGroup>
+
+```json
+{
+  "searchRules": {
+    "*": {},
+    "INDEX_*": {},
+    "INDEX_NAME_A": {}
+  }
+}
+```
+
+</CodeGroup>
+
+Each search rule object may contain a single `filter` key. This `filter`'s value must be a [filter expression](/capabilities/filtering_sorting_faceting/advanced/filter_expression_syntax):
+
+<CodeGroup>
+
+```json
+{
+  "*": {
+    "filter": "attribute_A = value_X AND attribute_B = value_Y"
+  }
+}
+```
+
+</CodeGroup>
+
+Meilisearch applies the filter to all searches made with that tenant token. A token only has access to the indexes present in the `searchRules` object.
+
+A token may contain rules for any number of indexes. **Specific rulesets take precedence and overwrite `*` rules.**
+
+<Warning>
+Because tenant tokens are generated in your application, Meilisearch cannot check if search rule filters are valid. Invalid search rules throw errors when searching.
+
+Consult the search API reference for [more information on Meilisearch filter syntax](/reference/api/search/search-with-post#body-filter).
+</Warning>
+
+The search rule may also be an empty object. In this case, the tenant token will have access to all documents in an index:
+
+<CodeGroup>
+
+```json
+{
+  "INDEX_NAME": {}
+}
+```
+
+</CodeGroup>
+
+### Examples
+
+#### Single filter
+
+In this example, the user will only receive `medical_records` documents whose `user_id` equals `1`:
+
+<CodeGroup>
+
+```json
+{
+  "medical_records": {
+    "filter": "user_id = 1"
+  }
+}
+```
+
+</CodeGroup>
+
+#### Multiple filters
+
+In this example, the user will only receive `medical_records` documents whose `user_id` equals `1` and whose `published` field equals `true`:
+
+<CodeGroup>
+
+```json
+{
+  "medical_records": {
+    "filter": "user_id = 1 AND published = true"
+  }
+}
+```
+
+</CodeGroup>
+
+#### Give access to all documents in an index
+
+In this example, the user has access to all documents in `medical_records`:
+
+<CodeGroup>
+
+```json
+{
+  "medical_records": {}
+}
+```
+
+</CodeGroup>
+
+#### Target multiple indexes with a partial wildcard
+
+In this example, the user will receive documents from any index starting with `medical`. This includes indexes such as `medical_records` and `medical_patents`:
+
+<CodeGroup>
+
+```json
+{
+  "medical*": {
+    "filter": "user_id = 1"
+  }
+}
+```
+
+</CodeGroup>
+
+#### Target all indexes with a wildcard
+
+In this example, the user will receive documents from any index in the whole instance:
+
+<CodeGroup>
+
+```json
+{
+  "*": {
+    "filter": "user_id = 1"
+  }
+}
+```
+
+</CodeGroup>
+
+### Target multiple indexes manually
+
+In this example, the user has access to documents with `user_id = 1` for all indexes, except one. When querying `medical_records`, the user will only have access to published documents:
+
+<CodeGroup>
+
+```json
+{
+  "*": {
+    "filter": "user_id = 1"
+  },
+  "medical_records": {
+    "filter": "user_id = 1 AND published = true",
+  }
+}
+```
+
+</CodeGroup>
+
+## API key UID
+
+Tenant token payloads must include an API key UID to validate requests. The UID is an alphanumeric string identifying an API key:
+
+<CodeGroup>
+
+```json
+{
+  "apiKeyUid": "at5cd97d-5a4b-4226-a868-2d0eb6d197ab"
+}
+```
+
+</CodeGroup>
+
+Query the [get one API key endpoint](/reference/api/keys/get-api-key) to obtain an API key's UID.
+
+The UID must indicate an API key with access to [the search action](/reference/api/keys/create-api-key#body-actions). A token has access to the same indexes and routes as the API key used to generate it.
+
+Avoid exposing API keys and **always generate tokens on your application's back end**.
+
+<Warning>
+If an API key expires, any tenant tokens created with it will become invalid. The same applies if the API key is deleted.
+</Warning>
+
+## Expiry date
+
+The expiry date must be a UNIX timestamp or `null`:
+
+<CodeGroup>
+
+```json
+{
+  "exp": 1646756934
+}
+```
+
+</CodeGroup>
+
+A token's expiration date cannot exceed its parent API key's expiration date.
+
+Setting a token expiry date is optional, but highly recommended. Tokens without an expiry date remain valid indefinitely and may be a security liability.
+
+<Warning>
+The only way to revoke a token without an expiry date is to [delete](/reference/api/keys/delete-api-key) its parent API key.
+</Warning>

@@ -1,0 +1,168 @@
+---
+title: Ranking score
+sidebarTitle: Ranking score
+description: Learn how Meilisearch computes the _rankingScore for each document and which index settings influence it.
+---
+
+The `_rankingScore` is a normalized value between `0.0` and `1.0` that represents how relevant a document is to a given search query. A score of `1.0` means the document is a perfect match, while a score closer to `0.0` means it is a weak match. Meilisearch does not return the ranking score by default; you must explicitly request it.
+
+## Requesting the ranking score
+
+To include `_rankingScore` in search results, set `showRankingScore` to `true` in your search request:
+
+<CodeGroup>
+
+```sh
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/movies/search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "q": "batman dark knight",
+    "showRankingScore": true
+  }'
+```
+
+</CodeGroup>
+
+Each document in the response will include a `_rankingScore` field:
+
+<CodeGroup>
+
+```json
+{
+  "hits": [
+    {
+      "id": 155,
+      "title": "The Dark Knight",
+      "_rankingScore": 0.9546
+    },
+    {
+      "id": 36657,
+      "title": "Batman Begins",
+      "_rankingScore": 0.8103
+    }
+  ],
+  "query": "batman dark knight"
+}
+```
+
+</CodeGroup>
+
+## Requesting a detailed breakdown
+
+For a deeper understanding of why a document received a particular score, set `showRankingScoreDetails` to `true`. This returns the contribution of each ranking rule:
+
+<CodeGroup>
+
+```sh
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/movies/search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "q": "batman dark knight",
+    "showRankingScore": true,
+    "showRankingScoreDetails": true
+  }'
+```
+
+</CodeGroup>
+
+The response includes a `_rankingScoreDetails` object for each document:
+
+<CodeGroup>
+
+```json
+{
+  "hits": [
+    {
+      "id": 155,
+      "title": "The Dark Knight",
+      "_rankingScore": 0.9546,
+      "_rankingScoreDetails": {
+        "words": { "order": 0, "matchingWords": 3, "maxMatchingWords": 3, "score": 1.0 },
+        "typo": { "order": 1, "typoCount": 0, "maxTypoCount": 3, "score": 1.0 },
+        "proximity": { "order": 2, "score": 0.9286 },
+        "attributeRank": { "order": 3, "attributeRankingOrderScore": 1.0, "score": 1.0 },
+        "exactness": { "order": 5, "matchType": "noExactMatch", "score": 0.3333 }
+      }
+    }
+  ]
+}
+```
+
+</CodeGroup>
+
+Each key in `_rankingScoreDetails` corresponds to a [ranking rule](/capabilities/full_text_search/relevancy/ranking_rules), and its `score` property shows how well the document performed on that rule.
+
+## How the score is computed
+
+Ranking rules sort documents either by relevancy (`words`, `typo`, `proximity`, `exactness`, `attributeRank`, `wordPosition`) or by the value of a field (`sort`). Since `sort` does not rank documents by relevancy, it does not influence the `_rankingScore`.
+
+Meilisearch computes the overall score by combining the subscores from each ranking rule, weighted by their position in the ranking rules list. Rules listed earlier carry more weight.
+
+<Note>
+A document's ranking score does not change based on the scores of other documents in the same index.
+
+For example, if a document A has a score of `0.5` for a query term, this value remains constant no matter the score of documents B, C, or D.
+</Note>
+
+## Settings that influence the ranking score
+
+The table below details all the index settings that can influence the `_rankingScore`. **Unlisted settings do not influence the ranking score.**
+
+| Index setting          | Influences if                                        | Rationale                                                                                                                                                                    |
+| :--------------------- | :--------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `searchableAttributes` | The `attributeRank` ranking rule is used             | The `attributeRank` ranking rule rates the document depending on the attribute in which the query terms show up. The order is determined by `searchableAttributes`          |
+| `searchableAttributes` | The `wordPosition` ranking rule is used         | The `wordPosition` ranking rule rates the document based on the position of query terms within attributes                                                               |
+| `rankingRules`         | Always                                               | The score is computed by computing the subscore of each ranking rule with a weight that depends on their order                                                               |
+| `stopWords`            | Always                                               | Stop words influence the `words` ranking rule, which is almost always used                                                                                                   |
+| `synonyms`             | Always                                               | Synonyms influence the `words` ranking rule, which is almost always used                                                                                                     |
+| `typoTolerance`        | The `typo` ranking rule is used                      | Used to compute the maximum number of typos for a query                                                                                                                      |
+
+## Example: reading ranking score details
+
+Consider a recipe search with two documents matching "chicken curry", sorted by `prep_time_minutes:asc`:
+
+<CodeGroup>
+
+```json
+[
+  { "id": 1, "title": "Easy Chicken Curry", "prep_time_minutes": 20 },
+  { "id": 2, "title": "Chicken Stew with Curry Spices and Vegetables", "prep_time_minutes": 15 }
+]
+```
+
+</CodeGroup>
+
+With Sort placed **after** Proximity in ranking rules (`["words", "typo", "proximity", "sort", ...]`), walk through the `_rankingScoreDetails` in order:
+
+| Step | Rule | Doc 1 | Doc 2 | Outcome |
+|------|------|-------|-------|---------|
+| 0 | Words | 2/2, score `1.0` | 2/2, score `1.0` | Tie |
+| 1 | Typo | 0 typos, score `1.0` | 0 typos, score `1.0` | Tie |
+| 2 | Proximity | score `1.0` | score `0.5` | Doc 1 wins |
+
+Proximity broke the tie: "chicken" and "curry" sit next to each other in Doc 1's title (score `1.0`), but are separated by three words in Doc 2 (score `0.5`). Sort never got a chance to act, so even though Doc 2 has a faster prep time, it ranks second.
+
+Notice that Sort shows a `value` (not a `score`) because it does not measure relevance. This is why a document with a higher `_rankingScore` can still rank lower when Sort takes priority. See [ordering ranking rules](/capabilities/full_text_search/relevancy/ranking_rules#where-to-place-sort) for how Sort placement changes outcomes.
+
+## Use cases
+
+- **Debugging relevancy**: Use `showRankingScoreDetails` to understand exactly why a document ranks higher or lower than expected. This helps you fine-tune ranking rules, searchable attributes, and other settings.
+- **Building confidence indicators**: Display the ranking score in your UI as a relevancy badge or progress bar so users can gauge how closely a result matches their query.
+- **Setting score thresholds**: Filter out low-quality results in your frontend by only displaying documents above a certain `_rankingScore` threshold (for example, `0.5`).
+- **A/B testing ranking configurations**: Compare ranking scores across different index configurations to measure which setup produces better relevancy for your use case.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Built-in ranking rules" href="/capabilities/full_text_search/relevancy/ranking_rules">
+    Understand the ranking rules that determine document relevancy
+  </Card>
+  <Card title="Custom ranking rules" href="/capabilities/full_text_search/relevancy/custom_ranking_rules">
+    Add your own ranking rules based on document attributes
+  </Card>
+  <Card title="Search API reference" href="/reference/api/search/search-with-post">
+    Full reference for search parameters including showRankingScore
+  </Card>
+</CardGroup>

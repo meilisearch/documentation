@@ -1,0 +1,105 @@
+---
+title: Building recommendations with similar documents
+sidebarTitle: Recommendations
+description: Use the /similar endpoint to recommend documents that are semantically close to a given item, powering "More like this" and "Related items" features.
+---
+
+The `/similar` endpoint finds documents that are semantically close to a reference document. Once you have configured an embedder, you can use it to build recommendation features such as "More like this", "Related items", or "You might also like".
+
+<Note>
+This guide requires a configured embedder. If you haven't set one up yet, see the [hybrid search getting started](/capabilities/hybrid_search/getting_started) guide.
+</Note>
+
+## Create an index with embeddings
+
+Create an index called `movies` and add this <a href="/assets/datasets/movies.json" download="movies.json">`movies.json`</a> dataset to it. If necessary, consult the [getting started](/getting_started/first_project) for more instructions on index creation.
+
+Then configure an OpenAI embedder:
+
+<CodeGroup>
+
+```bash
+curl \
+  -X PATCH 'MEILISEARCH_URL/indexes/movies/settings/embedders' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  --data-binary '{
+    "movies-text": {
+      "source": "openAi",
+      "apiKey": "OPENAI_API_KEY",
+      "model": "text-embedding-3-small",
+      "documentTemplate": "A movie titled {{doc.title}} whose plot is: {{doc.overview}}"
+    }
+  }'
+```
+
+</CodeGroup>
+
+Replace `MEILISEARCH_URL`, `MEILISEARCH_KEY`, and `OPENAI_API_KEY` with the corresponding values in your application.
+
+Meilisearch will start generating embeddings for all documents. Use the returned `taskUid` to [track the progress of this task](/capabilities/indexing/tasks_and_batches/async_operations).
+
+## Find a reference document
+
+To recommend similar items, you first need a reference document. This is typically the item a user is currently viewing. For this example, search for "batman":
+
+<CodeGroup>
+
+```bash
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/movies/search' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  --data-binary '{
+    "q": "batman",
+    "hybrid": {
+      "semanticRatio": 0.5,
+      "embedder": "movies-text"
+    }
+  }'
+```
+
+</CodeGroup>
+
+The top result is the movie "Batman" with `id` 192. Use this as the reference document.
+
+## Retrieve similar documents
+
+Pass the reference document's `id` to the [`/similar` endpoint](/reference/api/similar-documents/get-similar-documents-with-post), specifying your embedder:
+
+<CodeGroup>
+
+```bash
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/movies/similar' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  --data-binary '{
+    "id": 192,
+    "embedder": "movies-text"
+  }'
+```
+
+</CodeGroup>
+
+Meilisearch returns the 20 documents most similar to the reference movie. Display these as recommendations to your users.
+
+## Use cases
+
+- **E-commerce**: "Customers also viewed" or "Similar products" on product detail pages
+- **Content platforms**: "Related articles" or "More like this" alongside the current content
+- **Media streaming**: "Because you watched X" recommendations based on the current title
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Choose an embedder" href="/capabilities/hybrid_search/how_to/choose_an_embedder">
+    Compare embedding providers and pick the right one for your use case.
+  </Card>
+  <Card title="Personalized search" href="/capabilities/personalization/getting_started/personalized_search">
+    Combine recommendations with personalized search for a tailored experience.
+  </Card>
+  <Card title="Similar documents API reference" href="/reference/api/similar-documents/get-similar-documents-with-post">
+    Full API reference for the /similar endpoint.
+  </Card>
+</CardGroup>

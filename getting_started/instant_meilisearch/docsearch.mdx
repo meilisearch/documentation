@@ -17,7 +17,7 @@ This tutorial will guide you through the steps of building a relevant and powerf
 
 ## Run a Meilisearch instance
 
-First, create a new Meilisearch project on Meilisearch Cloud. You can also [install and run Meilisearch locally or in another cloud service](/learn/self_hosted/getting_started_with_self_hosted_meilisearch#setup-and-installation).
+First, create a new Meilisearch project on Meilisearch Cloud. You can also [install and run Meilisearch locally or in another cloud service](/resources/self_hosting/getting_started/quick_start#setup-and-installation).
 
 <Note>
 The host URL and the API key you will provide in the next steps correspond to the credentials of this Meilisearch instance.
@@ -88,7 +88,7 @@ You can run the scraper with Docker:
 docker run -t --rm \
   --network=host \
   -e MEILISEARCH_HOST_URL='<MEILISEARCH_URL>' \
-  -e MEILISEARCH_API_KEY='<MASTER_KEY>' \
+  -e MEILISEARCH_KEY='<MASTER_KEY>' \
   -v <absolute-path-to-your-config-file>:/docs-scraper/config.json \
   getmeili/docs-scraper:latest pipenv run ./docs_scraper config.json
 ```
@@ -216,4 +216,4 @@ For more concrete examples, you can check out this [basic HTML file](https://git
 ## Next steps
 
 At this point, you should have a working search engine on your website, congrats!
-You can check [this tutorial](/learn/self_hosted/getting_started_with_self_hosted_meilisearch) if you now want to run Meilisearch in production!
+You can check [this tutorial](/resources/self_hosting/getting_started/quick_start) if you now want to run Meilisearch in production!

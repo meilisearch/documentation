@@ -1,0 +1,140 @@
+---
+title: Configure a chat workspace
+description: Set up a chat workspace with a system prompt, tools, and connected indexes for conversational search.
+---
+
+import CodeSamplesChatPatchSettings1 from '/snippets/generated-code-samples/code_samples_chat_patch_settings_1.mdx';
+import CodeSamplesChatGetSettings1 from '/snippets/generated-code-samples/code_samples_chat_get_settings_1.mdx';
+
+A chat workspace defines the configuration for a conversational search session, including the LLM provider, system prompt, and search behavior. You can create multiple workspaces targeting different use cases, such as a public-facing knowledge base and an internal support tool.
+
+## Create a workspace
+
+Create a workspace by sending a `PATCH` request to `/chats/{workspace_uid}/settings`. If the workspace does not exist, Meilisearch creates it automatically.
+
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X PATCH 'MEILISEARCH_URL/chats/my-support-bot/settings' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "source": "openAi",
+    "apiKey": "YOUR_OPENAI_API_KEY",
+    "prompts": {
+      "system": "You are a helpful support assistant. Answer questions based only on the provided context."
+    }
+  }'
+```
+
+</CodeGroup>
+
+The `workspace_uid` in the URL (in this example, `my-support-bot`) is a unique identifier you choose. Use a descriptive name that reflects the workspace's purpose.
+
+## Configure the LLM provider
+
+The `source` field determines which LLM provider Meilisearch uses. Each provider has slightly different requirements:
+
+| Provider | `source` value | Required fields | Optional fields |
+|----------|---------------|-----------------|-----------------|
+| OpenAI | `openAi` | `apiKey` | `baseUrl`, `orgId`, `projectId` |
+| Azure OpenAI | `azureOpenAi` | `apiKey`, `baseUrl` | `deploymentId`, `apiVersion` |
+| Mistral | `mistral` | `apiKey` | `baseUrl` |
+| vLLM | `vLlm` | `baseUrl` | |
+
+### Azure OpenAI example
+
+Azure OpenAI requires additional fields compared to other providers:
+
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X PATCH 'MEILISEARCH_URL/chats/my-support-bot/settings' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "source": "azureOpenAi",
+    "apiKey": "YOUR_AZURE_API_KEY",
+    "baseUrl": "https://your-resource.openai.azure.com",
+    "deploymentId": "your-deployment-id",
+    "apiVersion": "2024-02-01"
+  }'
+```
+
+</CodeGroup>
+
+## Configure the system prompt
+
+The system prompt gives the conversational agent its baseline instructions. It controls the agent's behavior, tone, and scope. Set it through the `prompts.system` field:
+
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X PATCH 'MEILISEARCH_URL/chats/my-support-bot/settings' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "prompts": {
+      "system": "You are a customer support agent for an online bookstore. Only answer questions about books, orders, and shipping. If the user asks about unrelated topics, politely redirect them to the relevant support channel."
+    }
+  }'
+```
+
+</CodeGroup>
+
+The `prompts` object accepts additional fields that help the LLM understand how to use Meilisearch's search capabilities:
+
+| Field | Description |
+|-------|-------------|
+| `system` | Baseline instructions for the conversational agent |
+| `searchDescription` | Describes the search function to the LLM, helping it understand when and how to search |
+| `searchQParam` | Describes the query parameter, guiding the LLM on how to formulate search queries |
+| `searchFilterParam` | Describes the filter parameter, helping the LLM construct appropriate filters |
+| `searchIndexUidParam` | Describes the index UID parameter, guiding the LLM on which index to search |
+
+These fields provide additional context that improves how the agent formulates searches. For guidance on writing effective system prompts, see [configure guardrails](/capabilities/conversational_search/how_to/configure_guardrails).
+
+## Configure indexes for chat
+
+Before a workspace can search your data, each index must have its chat settings configured. See the dedicated [configure index chat settings](/capabilities/conversational_search/how_to/configure_index_chat_settings) guide for full documentation on `description`, `documentTemplate`, `searchParameters`, and other fields.
+
+## Verify workspace configuration
+
+Retrieve the current settings for a workspace at any time:
+
+<CodeSamplesChatGetSettings1 />
+
+This returns the full configuration, including the provider and system prompt. Note that the `apiKey` value is redacted in the response for security.
+
+## Update workspace settings
+
+Update any workspace setting by sending a `PATCH` request with only the fields you want to change. Fields you omit remain unchanged:
+
+<CodeSamplesChatPatchSettings1 />
+
+For example, to update only the system prompt without changing the provider:
+
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X PATCH 'MEILISEARCH_URL/chats/my-support-bot/settings' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "prompts": {
+      "system": "You are a helpful assistant for a tech documentation site. Always include code examples in your answers when relevant."
+    }
+  }'
+```
+
+</CodeGroup>
+
+## Next steps
+
+- [Stream chat responses](/capabilities/conversational_search/how_to/stream_chat_responses) to deliver answers token by token
+- [Configure guardrails](/capabilities/conversational_search/how_to/configure_guardrails) to control the scope and quality of responses
+- Consult the [full API reference](/reference/api/chats/update-settings-of-a-chat-workspace) for all available workspace settings

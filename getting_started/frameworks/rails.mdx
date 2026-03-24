@@ -41,7 +41,7 @@ Then add your Meilisearch URL and [Default Admin API Key](/resources/self_hostin
 ```Ruby
 MeiliSearch::Rails.configuration = {
   meilisearch_url: '<your Meilisearch URL>',
-  meilisearch_api_key: '<your Meilisearch API key>'
+  MEILISEARCH_KEY: '<your Meilisearch API key>'
 }
 ```
 
@@ -123,4 +123,4 @@ We also provide resources to help you quickly build your own [frontend interface
 
 ## Next steps
 
-When you're ready to use your own data, make sure to configure your [index settings](/reference/api/settings/list-all-settings) first to follow [best practices](/learn/indexing/indexing_best_practices). For a full configuration example, see the [meilisearch-rails gem README](https://github.com/meilisearch/meilisearch-rails?tab=readme-ov-file#%EF%B8%8F-settings).
+When you're ready to use your own data, make sure to configure your [index settings](/reference/api/settings/list-all-settings) first to follow [best practices](/capabilities/indexing/advanced/indexing_best_practices). For a full configuration example, see the [meilisearch-rails gem README](https://github.com/meilisearch/meilisearch-rails?tab=readme-ov-file#%EF%B8%8F-settings).

@@ -7,7 +7,7 @@ sidebarDepth: 3
 
 import CodeSamplesAddOrReplaceDocuments1 from '/snippets/generated-code-samples/code_samples_add_or_replace_documents_1.mdx';
 
-This guide teaches you how to configure a single webhook via instance options to notify a URL when Meilisearch completes a [task](/learn/async/asynchronous_operations).
+This guide teaches you how to configure a single webhook via instance options to notify a URL when Meilisearch completes a [task](/capabilities/indexing/tasks_and_batches/async_operations).
 
 <Tip>
 If you are using Meilisearch Cloud or need to configure multiple webhooks, use the [`/webhooks` API route](/reference/api/webhooks) instead.
@@ -22,7 +22,7 @@ If you are using Meilisearch Cloud or need to configure multiple webhooks, use t
 ## Configure the webhook URL
 
 <Warning>
-🚩 To be able to configure a webhook to notify internal services (such as `localhost`), you will need to [allow requests on private networks](/learn/self_hosted/configure_meilisearch_at_launch#allow-requests-to-private-networks). 🚩
+🚩 To be able to configure a webhook to notify internal services (such as `localhost`), you will need to [allow requests on private networks](/resources/self_hosting/configuration/overview#allow-requests-to-private-networks). 🚩
 </Warning>
 
 Restart your Meilisearch instance and provide the webhook URL to `--task-webhook-URL`:

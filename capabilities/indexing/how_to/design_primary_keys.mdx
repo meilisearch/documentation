@@ -1,0 +1,173 @@
+---
+title: Design primary keys
+description: Choose the right primary key for your documents to ensure correct indexing, efficient updates, and reliable deduplication.
+---
+
+Every document in a Meilisearch index must have a unique identifier called the [primary key](/resources/internals/primary_key). The primary key determines how Meilisearch identifies, updates, and deduplicates documents. Choosing the right primary key affects how you manage your data over time.
+
+## How Meilisearch selects the primary key
+
+When you add documents to a new index, Meilisearch tries to detect the primary key automatically. It looks for an attribute ending in `id` (case-insensitive). If it finds exactly one, it uses that attribute. If it finds multiple candidates or none, it returns an error.
+
+You can also set the primary key explicitly when creating the index or when adding documents:
+
+<CodeGroup>
+
+```bash
+# Set when creating the index
+curl \
+  -X POST 'MEILISEARCH_URL/indexes' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  --data-binary '{
+    "uid": "products",
+    "primaryKey": "product_id"
+  }'
+```
+
+</CodeGroup>
+
+Or using the `primaryKey` query parameter when adding documents:
+
+<CodeGroup>
+
+```bash
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/products/documents?primaryKey=product_id' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  --data-binary @products.json
+```
+
+</CodeGroup>
+
+<Warning>
+Once set, the primary key cannot be changed without deleting and recreating the index. Choose carefully before your first import.
+</Warning>
+
+## Accepted types
+
+Primary key values must be either **integers** or **strings**. Strings can contain alphanumeric characters (`a-z`, `A-Z`, `0-9`), hyphens (`-`), and underscores (`_`).
+
+| Type | Example | Valid |
+|---|---|---|
+| Integer | `42` | Yes |
+| String | `"product-123"` | Yes |
+| String with UUID | `"550e8400-e29b-41d4-a716-446655440000"` | Yes |
+| Float | `3.14` | No |
+| Boolean | `true` | No |
+| Null | `null` | No |
+
+## Choose a good primary key
+
+### Use your source system's ID
+
+If your documents come from a database, use the existing unique identifier. This makes it easy to keep Meilisearch in sync:
+
+<CodeGroup>
+
+```json
+{
+  "product_id": "SKU-12345",
+  "title": "Running Shoes",
+  "price": 129.99
+}
+```
+
+</CodeGroup>
+
+Using the source system's ID means you can send updates with `PUT` (add or update) using the same ID, and Meilisearch merges the changes into the existing document.
+
+### UUIDs vs sequential integers
+
+Both work well. Choose based on your use case:
+
+| Approach | Pros | Cons |
+|---|---|---|
+| Sequential integers (`1`, `2`, `3`) | Simple, compact, easy to debug | Requires a central ID generator, reveals document count |
+| UUIDs (`550e8400-...`) | No coordination needed, safe for distributed systems | Longer, harder to read in logs |
+| Composite strings (`category-123`) | Human-readable, encodes context | Must guarantee uniqueness across categories |
+
+For most applications, using whatever ID your database already assigns is the best choice.
+
+## Anti-patterns to avoid
+
+### Using a non-unique field
+
+If two documents share the same primary key value, the second one overwrites the first. This is by design (it enables updates), but accidental duplicates cause data loss:
+
+<CodeGroup>
+
+```json
+// These two documents have the same ID
+// Only the second one will be stored
+[
+  { "id": 1, "title": "Product A", "price": 29.99 },
+  { "id": 1, "title": "Product B", "price": 49.99 }
+]
+```
+
+</CodeGroup>
+
+Always ensure primary key values are unique across your entire dataset.
+
+### Using a field that changes
+
+If you use a field that can change over time (like a URL or slug), updating the document becomes difficult. When the "ID" changes, Meilisearch treats it as a new document instead of an update.
+
+<CodeGroup>
+
+```json
+// Bad: slug can change when the title is edited
+{ "slug": "running-shoes-v1", "title": "Running Shoes" }
+
+// Good: stable ID that never changes
+{ "id": "product-42", "title": "Running Shoes", "slug": "running-shoes-v1" }
+```
+
+</CodeGroup>
+
+### Relying on auto-detection with multiple ID fields
+
+If your documents have fields like `id`, `product_id`, and `user_id`, Meilisearch cannot auto-detect which one to use and returns an error. Always set the primary key explicitly when your documents have multiple fields ending in `id`.
+
+## Change the primary key
+
+The primary key cannot be modified once set. If you need to change it:
+
+1. [Export your data](/capabilities/indexing/how_to/export_data) from the current index
+2. Delete the index
+3. Create a new index with the correct primary key
+4. Re-import your data
+
+<CodeGroup>
+
+```bash
+# Delete the index
+curl \
+  -X DELETE 'MEILISEARCH_URL/indexes/products' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY'
+
+# Recreate with the correct primary key
+curl \
+  -X POST 'MEILISEARCH_URL/indexes' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  --data-binary '{
+    "uid": "products",
+    "primaryKey": "sku"
+  }'
+```
+
+</CodeGroup>
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Add and update documents" href="/capabilities/indexing/how_to/add_and_update_documents">
+    Learn how document operations use the primary key
+  </Card>
+  <Card title="Primary key reference" href="/resources/internals/primary_key">
+    Technical details about primary key handling
+  </Card>
+</CardGroup>

@@ -1,0 +1,143 @@
+---
+title: Your first search
+sidebarTitle: Your first search
+description: Perform your first full-text search query in Meilisearch and understand the response format.
+---
+
+Full-text search is the core feature of Meilisearch. Once you have documents in an index, you can search them with a simple query and get relevant results in milliseconds.
+
+If you haven't added documents yet, follow the [indexing getting started guide](/capabilities/indexing/getting_started) first.
+
+## Perform a search
+
+Send a search request to your index with the `q` parameter:
+
+<CodeGroup>
+
+```bash
+curl -X POST 'MEILISEARCH_URL/indexes/movies/search' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  --data-binary '{
+    "q": "galaxy"
+  }'
+```
+
+</CodeGroup>
+
+Meilisearch returns a JSON response with matching documents:
+
+<CodeGroup>
+
+```json
+{
+  "hits": [
+    {
+      "id": 24,
+      "title": "Guardians of the Galaxy",
+      "overview": "A group of intergalactic criminals are forced to work together...",
+      "genres": ["Action", "Science Fiction"]
+    },
+    {
+      "id": 25,
+      "title": "The Hitchhiker's Guide to the Galaxy",
+      "overview": "Mere seconds before the Earth is to be demolished...",
+      "genres": ["Adventure", "Comedy", "Science Fiction"]
+    }
+  ],
+  "query": "galaxy",
+  "processingTimeMs": 1,
+  "limit": 20,
+  "offset": 0,
+  "estimatedTotalHits": 2
+}
+```
+
+</CodeGroup>
+
+## Understanding the response
+
+| Field | Description |
+|-------|-------------|
+| `hits` | Array of matching documents, ordered by relevance |
+| `query` | The search query you sent |
+| `processingTimeMs` | How long the search took in milliseconds |
+| `limit` | Maximum number of results returned (default: 20) |
+| `offset` | Number of results skipped (for pagination) |
+| `estimatedTotalHits` | Estimated total number of matching documents |
+
+## Search with typos
+
+Meilisearch handles typos automatically. A search for "galxy" or "galaxi" still returns results for "galaxy":
+
+<CodeGroup>
+
+```bash
+curl -X POST 'MEILISEARCH_URL/indexes/movies/search' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  --data-binary '{
+    "q": "galxy"
+  }'
+```
+
+</CodeGroup>
+
+This works because Meilisearch uses [typo tolerance](/capabilities/full_text_search/relevancy/typo_tolerance_settings) to match words even when they contain spelling mistakes.
+
+## Search with multiple words
+
+When you search with multiple words, Meilisearch finds documents containing any of those words and ranks them by how many words match:
+
+<CodeGroup>
+
+```bash
+curl -X POST 'MEILISEARCH_URL/indexes/movies/search' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  --data-binary '{
+    "q": "dark knight"
+  }'
+```
+
+</CodeGroup>
+
+Documents containing both "dark" and "knight" rank higher than documents containing only one of those words. You can control this behavior with the [matching strategy](/capabilities/full_text_search/how_to/use_matching_strategy).
+
+## Limit and paginate results
+
+Control how many results you get back with `limit` and `offset`:
+
+<CodeGroup>
+
+```bash
+curl -X POST 'MEILISEARCH_URL/indexes/movies/search' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  --data-binary '{
+    "q": "action",
+    "limit": 5,
+    "offset": 10
+  }'
+```
+
+</CodeGroup>
+
+This returns 5 results starting from the 11th match.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Highlight results" href="/capabilities/full_text_search/how_to/highlight_search_results">
+    Show users where their query matched in each result
+  </Card>
+  <Card title="Phrase search" href="/capabilities/full_text_search/getting_started/phrase_search">
+    Search for exact phrases with quotes
+  </Card>
+  <Card title="Add filters" href="/capabilities/filtering_sorting_faceting/getting_started">
+    Narrow results with filters and sorting
+  </Card>
+  <Card title="Relevancy" href="/capabilities/full_text_search/relevancy/relevancy">
+    Understand and customize how results are ranked
+  </Card>
+</CardGroup>

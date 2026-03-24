@@ -1,0 +1,63 @@
+---
+title: Analytics
+sidebarTitle: Overview
+description: Track search events, user clicks, and conversions to measure and improve your search relevancy.
+---
+
+Meilisearch analytics helps you understand how users interact with your search. Track search queries, click events, and conversions to measure search quality and identify opportunities for improvement. Analytics data can also feed into [personalization](/capabilities/personalization/overview) to tailor results per user.
+
+## What analytics tracks
+
+| Data | Description |
+|--------|-------------|
+| Searches | Total queries, queries with no results, popular search terms, geographic distribution |
+| Clicks | Which results users click on, average click position |
+| Conversions | Actions taken after searching (purchases, sign-ups) |
+| Custom fields | Additional metadata you attach to search requests for your own analysis |
+
+Meilisearch automatically tracks geographic distribution of searches based on the user's IP address. No additional configuration is needed.
+
+## How it works
+
+Analytics follows a three-stage event flow. First, a user performs a search and Meilisearch returns results along with a unique query identifier. Next, your application reports click events when the user interacts with a result, referencing the query identifier so Meilisearch can associate the click with the original search. Finally, if the user completes a meaningful action (such as a purchase or sign-up), your application sends a conversion event tied to the same query. This chain of search, click, and conversion events gives you a complete picture of the user journey from query to outcome.
+
+### Search ID, request ID, and query ID
+
+Meilisearch analytics uses three levels of identifiers to track search activity:
+
+- **Query ID (`queryUid`)**: Identifies a single query that produces a query tree and returns results. In a standard search, there is one query ID per request. In a [multi-search](/capabilities/multi_search/overview), a single request produces multiple query IDs (one per sub-query).
+- **Request ID (`requestUid`)**: Identifies a single HTTP request to the search endpoint. A request is created each time the user types a character (in a search-as-you-type implementation) or submits a query.
+- **Search ID**: Groups consecutive requests into a single search intent. For example, a user typing "run", "runn", "running", "running shoes" generates multiple request IDs but a single search ID representing one search intent.
+
+Analytics rates (click-through rate, conversion rate, no-result rate) are computed based on search IDs, not individual request IDs or query IDs. This gives you a more accurate picture of user behavior by measuring outcomes per search intent rather than per keystroke.
+
+## Data retention
+
+Analytics data retention depends on your Meilisearch Cloud plan. Check your plan details in the Meilisearch Cloud dashboard or contact support for more information.
+
+## Key metrics
+
+Once events are flowing, you can measure several indicators of search quality:
+
+- **Total searches**: The overall volume of search intents over a given period.
+- **No-result rate**: The percentage of searches that return zero results, highlighting gaps in your content or [synonyms](/capabilities/full_text_search/relevancy/synonyms).
+- **Click-through rate**: The proportion of searches where users click at least one result, indicating how useful results appear.
+- **Average click position**: The mean position of clicked results in the list. A lower number means users find what they need near the top.
+- **Conversion rate**: The share of searches that lead to a conversion event, connecting search quality directly to business outcomes.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Getting started" href="/capabilities/analytics/getting_started">
+    Set up analytics event tracking in your application
+  </Card>
+  <Card title="Bind events to users" href="/capabilities/analytics/how_to/bind_events_to_user">
+    Associate analytics events with specific users
+  </Card>
+  <Card title="Metrics reference" href="/capabilities/analytics/advanced/analytics_metrics">
+    Complete reference of available analytics metrics
+  </Card>
+  <Card title="Events endpoint" href="/capabilities/analytics/advanced/events_endpoint">
+    API reference for the analytics events endpoint
+  </Card>
+</CardGroup>

@@ -1,0 +1,220 @@
+---
+title: Add and update documents
+description: Add new documents, replace existing ones, or partially update specific fields using the documents API.
+---
+
+import CodeSamplesAddOrReplaceDocuments1 from '/snippets/generated-code-samples/code_samples_add_or_replace_documents_1.mdx';
+import CodeSamplesAddOrUpdateDocuments1 from '/snippets/generated-code-samples/code_samples_add_or_update_documents_1.mdx';
+import CodeSamplesDeleteOneDocument1 from '/snippets/generated-code-samples/code_samples_delete_one_document_1.mdx';
+
+Meilisearch provides three document operations: add or replace, add or update, and delete. This guide explains the difference between each operation and when to use them.
+
+## Add or replace documents
+
+Use `POST /indexes/{index_uid}/documents` to add new documents or replace existing ones. If a document with the same [primary key](/resources/internals/primary_key) already exists, Meilisearch **replaces the entire document** with the new version.
+
+<CodeSamplesAddOrReplaceDocuments1 />
+
+This operation is best when you have complete document objects and want to ensure the stored version matches exactly what you send.
+
+<Warning>
+When replacing a document, any fields present in the old version but missing from the new version are removed. Always include all fields you want to keep.
+</Warning>
+
+### Example
+
+Suppose your index contains this document:
+
+<CodeGroup>
+
+```json
+{
+  "id": 287947,
+  "title": "Shazam",
+  "overview": "A boy becomes a superhero.",
+  "genres": ["Action", "Comedy"]
+}
+```
+
+</CodeGroup>
+
+If you send a POST request with:
+
+<CodeGroup>
+
+```json
+{
+  "id": 287947,
+  "title": "Shazam!",
+  "overview": "A boy is given the ability to become an adult superhero."
+}
+```
+
+</CodeGroup>
+
+The stored document becomes:
+
+<CodeGroup>
+
+```json
+{
+  "id": 287947,
+  "title": "Shazam!",
+  "overview": "A boy is given the ability to become an adult superhero."
+}
+```
+
+</CodeGroup>
+
+The `genres` field is gone because it was not included in the replacement.
+
+## Add or update documents
+
+Use `PUT /indexes/{index_uid}/documents` to add new documents or partially update existing ones. If a document with the same primary key already exists, Meilisearch **merges the new fields** into the existing document. Fields not included in the update remain unchanged.
+
+<CodeSamplesAddOrUpdateDocuments1 />
+
+This operation is ideal when you only need to change specific fields without resending the entire document.
+
+### Example
+
+Starting with the same document:
+
+<CodeGroup>
+
+```json
+{
+  "id": 287947,
+  "title": "Shazam",
+  "overview": "A boy becomes a superhero.",
+  "genres": ["Action", "Comedy"]
+}
+```
+
+</CodeGroup>
+
+If you send a PUT request with:
+
+<CodeGroup>
+
+```json
+{
+  "id": 287947,
+  "title": "Shazam ⚡️",
+  "genres": "comedy"
+}
+```
+
+</CodeGroup>
+
+The stored document becomes:
+
+<CodeGroup>
+
+```json
+{
+  "id": 287947,
+  "title": "Shazam ⚡️",
+  "overview": "A boy becomes a superhero.",
+  "genres": "comedy"
+}
+```
+
+</CodeGroup>
+
+The `overview` field is preserved because the update only touched `title` and `genres`.
+
+## Delete documents
+
+Use `DELETE /indexes/{index_uid}/documents/{document_id}` to remove a single document by its primary key:
+
+<CodeSamplesDeleteOneDocument1 />
+
+Meilisearch also supports batch deletion and deletion by filter:
+
+- **Delete by batch**: send a `POST /indexes/{index_uid}/documents/delete-batch` request with an array of document IDs
+- **Delete by filter**: send a `POST /indexes/{index_uid}/documents/delete` request with a [filter expression](/capabilities/filtering_sorting_faceting/advanced/filter_expression_syntax) to remove all matching documents
+
+## Choosing the right operation
+
+| Operation | HTTP method | Behavior | Use when |
+|-----------|------------|----------|----------|
+| Add or replace | `POST` | Replaces entire document | You have complete documents and want exact control |
+| Add or update | `PUT` | Merges fields into existing document | You only need to change specific fields |
+| Delete | `DELETE` | Removes document entirely | You need to remove documents from the index |
+
+## Batch operations
+
+All three operations support sending multiple documents in a single request. Send an array of documents in the request body:
+
+<CodeGroup>
+
+```bash
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/movies/documents' \
+  -H 'Content-Type: application/json' \
+  --data-binary '[
+    { "id": 1, "title": "Movie One" },
+    { "id": 2, "title": "Movie Two" },
+    { "id": 3, "title": "Movie Three" }
+  ]'
+```
+
+</CodeGroup>
+
+Batch operations are processed as a single [task](/capabilities/indexing/tasks_and_batches/async_operations). Meilisearch handles large batches efficiently, so prefer sending documents in bulk rather than one at a time.
+
+## Update without creating new documents
+
+By default, both `POST` and `PUT` document operations create new documents if no document with the given primary key exists. To change this behavior, add the `skipCreation=true` query parameter to your request. When enabled, Meilisearch silently ignores any documents whose primary key does not match an existing document in the index.
+
+<CodeGroup>
+
+```bash
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/movies/documents?skipCreation=true' \
+  -H 'Content-Type: application/json' \
+  --data-binary '[
+    { "id": 1, "title": "Updated Title" },
+    { "id": 99999, "title": "This document does not exist" }
+  ]'
+```
+
+</CodeGroup>
+
+In this example, only document `1` is updated. Document `99999` is ignored because it does not already exist in the index.
+
+This is useful when you want to safely update fields for existing documents without accidentally creating incomplete records.
+
+## Retrieve multiple documents by ID
+
+Use `POST /indexes/{index_uid}/documents/fetch` to retrieve specific documents by their primary keys:
+
+<CodeGroup>
+
+```bash
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/movies/documents/fetch' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "ids": ["id1", "id2", "id3"]
+  }'
+```
+
+</CodeGroup>
+
+Meilisearch returns the matching documents in the `results` array. Note that documents are not returned in the order you queried them, and non-existent IDs are silently ignored.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Documents API reference" href="/reference/api/documents/add-or-replace-documents">
+    Full API reference for document operations
+  </Card>
+  <Card title="Indexing overview" href="/capabilities/indexing/overview">
+    Learn more about how indexing works in Meilisearch
+  </Card>
+  <Card title="Monitor tasks" href="/capabilities/indexing/tasks_and_batches/monitor_tasks">
+    Track the status of your document operations
+  </Card>
+</CardGroup>

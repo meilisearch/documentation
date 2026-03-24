@@ -91,7 +91,7 @@ This is called **lexicographic ordering** — the same logic humans use to sort 
 | 6 | **wordPosition** | Position of match within the attribute | Matching at the start of a title beats matching at the end |
 | 7 | **exactness** | Exact match vs prefix/typo match | "knight" exactly beats "knights" (prefix) |
 
-You can [reorder, add, or remove](/learn/relevancy/ranking_rules) any of these rules. You can also add [custom ranking rules](/learn/relevancy/custom_ranking_rules) that incorporate business logic — like boosting newer products or higher-rated items.
+You can [reorder, add, or remove](/capabilities/full_text_search/relevancy/ranking_rules) any of these rules. You can also add [custom ranking rules](/capabilities/full_text_search/relevancy/custom_ranking_rules) that incorporate business logic — like boosting newer products or higher-rated items.
 
 ## Why this is better for application search
 
@@ -127,7 +127,7 @@ A match in `title` **always** outranks a match in `description` (assuming previo
 
 ### 4. Ranking is transparent and debuggable
 
-BM25 produces opaque scores. Meilisearch lets you inspect exactly why a document ranks where it does using [`showRankingScoreDetails`](/learn/relevancy/ranking_score):
+BM25 produces opaque scores. Meilisearch lets you inspect exactly why a document ranks where it does using [`showRankingScoreDetails`](/capabilities/full_text_search/relevancy/ranking_score):
 
 ```json
 {
@@ -160,13 +160,13 @@ Meilisearch's approach is optimized for application and site search. There are s
 | :--- | :--- | :--- |
 | **Log analytics** | Better — term frequency matters for finding error patterns | Not designed for this use case |
 | **Academic paper search** | Better — TF-IDF identifies topically relevant papers | Optimized for short, user-facing queries |
-| **Documents > 10KB** | Handles naturally | Best with documents [split into smaller chunks](/guides/improve_relevancy_large_documents) |
+| **Documents > 10KB** | Handles naturally | Best with documents [split into smaller chunks](/capabilities/full_text_search/relevancy/relevancy#chunking-large-documents) |
 | **Custom scoring formulas** | Fully customizable via script scores | Fixed rule set with configurable order |
 | **Billions of documents** | Horizontally scalable | Designed for millions of documents per index |
 
 ## Combining ranking with semantic search
 
-Meilisearch's ranking system works alongside [hybrid search](/learn/ai_powered_search/getting_started_with_ai_search). When you enable an [embedder](/learn/ai_powered_search/getting_started_with_ai_search), Meilisearch combines keyword-based ranking (the rules above) with vector similarity in a single query:
+Meilisearch's ranking system works alongside [hybrid search](/capabilities/hybrid_search/getting_started). When you enable an [embedder](/capabilities/hybrid_search/getting_started), Meilisearch combines keyword-based ranking (the rules above) with vector similarity in a single query:
 
 ```json
 {
@@ -196,8 +196,8 @@ The `semanticRatio` controls the blend: `0.0` uses only the multi-criteria ranki
 
 ## Learn more
 
-- [Ranking rules](/learn/relevancy/ranking_rules) — Configure and reorder the seven built-in rules
+- [Ranking rules](/capabilities/full_text_search/relevancy/ranking_rules) — Configure and reorder the seven built-in rules
 - [Bucket sort](/resources/internals/bucket_sort) — How the bucket sort algorithm works
-- [Ranking score](/learn/relevancy/ranking_score) — Understanding the 0.0–1.0 ranking score
-- [Custom ranking rules](/learn/relevancy/custom_ranking_rules) — Add business logic to ranking
-- [Ordering ranking rules](/guides/relevancy/ordering_ranking_rules) — Best practices for rule ordering
+- [Ranking score](/capabilities/full_text_search/relevancy/ranking_score) — Understanding the 0.0–1.0 ranking score
+- [Custom ranking rules](/capabilities/full_text_search/relevancy/custom_ranking_rules) — Add business logic to ranking
+- [Ordering ranking rules](/capabilities/full_text_search/relevancy/ranking_rules#ordering-ranking-rules) — Best practices for rule ordering

@@ -1,0 +1,120 @@
+---
+title: Binary quantization
+sidebarTitle: Binary quantization
+description: Compress embedding vectors to reduce storage and improve indexing speed while using larger, more capable models.
+---
+
+Binary quantization compresses embedding vectors by representing each dimension with a single bit instead of a full floating-point number. This dramatically reduces storage requirements and speeds up vector operations, making it practical to use larger, higher-quality embedding models that produce more dimensions.
+
+## Why use binary quantization
+
+Larger embedding models (1536+ dimensions) generally produce better semantic search results because they capture more nuance in the meaning of text. However, storing and comparing high-dimensional vectors is expensive in terms of disk space, memory, and CPU time.
+
+Binary quantization solves this trade-off:
+
+| Without BQ | With BQ |
+|-----------|---------|
+| Each dimension stored as 32-bit float | Each dimension stored as 1 bit |
+| 1536-dim vector = 6 KB | 1536-dim vector = 192 bytes |
+| Slower indexing at high dimensions | Significantly faster indexing |
+| Full precision similarity | Approximate similarity (still effective) |
+
+The key insight is that **a large model with binary quantization often outperforms a small model without it**. For example, OpenAI's `text-embedding-3-large` (3072 dimensions) with binary quantization typically produces better search results than `text-embedding-3-small` (1536 dimensions) at full precision, while using less storage.
+
+## When to use it
+
+Binary quantization is most effective when:
+
+- Your dataset contains **more than 1M documents** with embeddings
+- You use a model with **1400+ dimensions** (the more dimensions, the better BQ works, because there is more information to preserve even after quantization)
+- You want to **reduce disk usage** and **speed up indexing** without switching to a smaller model
+- Storage or memory is a constraint in your deployment
+
+Binary quantization is less effective with low-dimensional models (under 512 dimensions), where the information loss from quantization has a more noticeable impact on search quality.
+
+## Enable binary quantization
+
+Set `binaryQuantized` to `true` in your embedder configuration:
+
+<CodeGroup>
+
+```bash
+curl \
+  -X PATCH 'MEILISEARCH_URL/indexes/products/settings/embedders' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  --data-binary '{
+    "default": {
+      "binaryQuantized": true
+    }
+  }'
+```
+
+</CodeGroup>
+
+This works with any embedder source ([OpenAI](/capabilities/hybrid_search/how_to/configure_openai_embedder), [Cohere](/capabilities/hybrid_search/how_to/configure_cohere_embedder), [HuggingFace](/capabilities/hybrid_search/how_to/configure_huggingface_embedder), [REST](/capabilities/hybrid_search/how_to/configure_rest_embedder), or user-provided).
+
+### Example: OpenAI with a large model
+
+Use OpenAI's largest embedding model with binary quantization for the best balance of quality and efficiency:
+
+<CodeGroup>
+
+```bash
+curl \
+  -X PATCH 'MEILISEARCH_URL/indexes/products/settings/embedders' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  --data-binary '{
+    "default": {
+      "source": "openAi",
+      "apiKey": "OPEN_AI_API_KEY",
+      "model": "text-embedding-3-large",
+      "binaryQuantized": true
+    }
+  }'
+```
+
+</CodeGroup>
+
+<Warning>
+**Activating binary quantization is irreversible.** Once enabled, Meilisearch converts all vectors and discards the original full-precision data. The only way to recover the original vectors is to re-index all documents in a new embedder without binary quantization.
+</Warning>
+
+## Impact on search quality
+
+Binary quantization reduces the precision of vector similarity calculations. In practice, the impact on search quality depends on the model and dataset:
+
+- **High-dimensional models (1500+ dims)**: minimal quality loss, often imperceptible
+- **Medium-dimensional models (512-1500 dims)**: slight quality reduction, acceptable for most use cases
+- **Low-dimensional models (under 512 dims)**: noticeable quality reduction, not recommended
+
+The [ranking pipeline](/capabilities/full_text_search/advanced/ranking_pipeline) mitigates this further in [hybrid search](/capabilities/hybrid_search/overview) mode, where keyword matching compensates for any precision loss in the vector component.
+
+## Recommended models with binary quantization
+
+| Provider | Model | Dimensions | Good with BQ? |
+|----------|-------|-----------|---------------|
+| OpenAI | `text-embedding-3-large` | 3072 | Excellent |
+| OpenAI | `text-embedding-3-small` | 1536 | Good |
+| Cohere | `embed-english-v3.0` | 1024 | Good |
+| Cohere | `embed-multilingual-v3.0` | 1024 | Good |
+| HuggingFace | `BAAI/bge-large-en-v1.5` | 1024 | Good |
+| HuggingFace | `BAAI/bge-small-en-v1.5` | 384 | Not recommended |
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Choose an embedder" href="/capabilities/hybrid_search/how_to/choose_an_embedder">
+    Compare embedding providers for your use case
+  </Card>
+  <Card title="Custom hybrid ranking" href="/capabilities/hybrid_search/advanced/custom_hybrid_ranking">
+    Tune the balance between keyword and vector search
+  </Card>
+  <Card title="Composite embedders" href="/capabilities/hybrid_search/advanced/composite_embedders">
+    Use different models for indexing and search
+  </Card>
+  <Card title="Performance tuning" href="/capabilities/full_text_search/advanced/performance_tuning">
+    Optimize overall search performance
+  </Card>
+</CardGroup>

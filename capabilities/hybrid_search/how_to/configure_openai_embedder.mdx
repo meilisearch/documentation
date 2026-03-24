@@ -1,0 +1,139 @@
+---
+title: Configure OpenAI embedder
+sidebarTitle: OpenAI
+description: Set up the OpenAI embedder to use models like text-embedding-3-small for semantic and hybrid search.
+---
+
+The OpenAI embedder connects Meilisearch to OpenAI's embedding API to generate vectors for your documents and queries. This is one of the easiest ways to enable [semantic search](/capabilities/hybrid_search/overview), as Meilisearch has built-in support for OpenAI through the `openAi` source.
+
+<Note>
+This guide requires an [OpenAI API key](https://platform.openai.com/api-keys).
+</Note>
+
+## Choose a model
+
+OpenAI offers three main embedding models:
+
+| Model | Dimensions | Notes |
+|-------|-----------|-------|
+| `text-embedding-3-small` | 1,536 | Cost-effective, good for most use cases |
+| `text-embedding-3-large` | 3,072 | Higher accuracy, best for complex datasets |
+| `text-embedding-ada-002` | 1,536 | Legacy model, still supported |
+
+For most applications, `text-embedding-3-small` provides a good balance between accuracy and cost. Use `text-embedding-3-large` when you need maximum retrieval quality and can accept higher API costs.
+
+## Configure the embedder
+
+Create an embedder object with the `openAi` source. Open your text editor and build the following configuration:
+
+<CodeGroup>
+
+```json
+{
+  "my-openai": {
+    "source": "openAi",
+    "model": "text-embedding-3-small",
+    "apiKey": "OPEN_AI_API_KEY",
+    "documentTemplate": "A product named '{{doc.name}}' described as '{{doc.description}}'"
+  }
+}
+```
+
+</CodeGroup>
+
+In this configuration:
+
+- `source`: must be `"openAi"` to use OpenAI's built-in integration
+- `model`: the OpenAI model to use for generating embeddings
+- `apiKey`: your OpenAI API key
+- `documentTemplate`: a [Liquid template](/capabilities/hybrid_search/advanced/document_template_best_practices) that converts your documents into text for embedding. Keep it short and include only the most important fields
+
+## Update your index settings
+
+Send the embedder configuration to Meilisearch using the update settings endpoint:
+
+<CodeGroup>
+
+```sh
+curl \
+  -X PATCH 'MEILISEARCH_URL/indexes/INDEX_NAME/settings' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  --data-binary '{
+    "embedders": {
+      "my-openai": {
+        "source": "openAi",
+        "model": "text-embedding-3-small",
+        "apiKey": "OPEN_AI_API_KEY",
+        "documentTemplate": "A product named '\''{{doc.name}}'\'' described as '\''{{doc.description}}'\''"
+      }
+    }
+  }'
+```
+
+</CodeGroup>
+
+Replace `MEILISEARCH_URL` with the address of your Meilisearch project, `INDEX_NAME` with your index name, `MEILISEARCH_KEY` with your Meilisearch API key, and `OPEN_AI_API_KEY` with your [OpenAI API key](https://platform.openai.com/api-keys).
+
+Meilisearch will start generating embeddings for all documents in the index. Monitor progress through the [task queue](/reference/api/tasks/list-tasks).
+
+## Customize dimensions
+
+OpenAI's `text-embedding-3-small` and `text-embedding-3-large` models support custom dimensions. You can reduce the vector size to save storage and improve performance at the cost of some accuracy:
+
+<CodeGroup>
+
+```json
+{
+  "my-openai": {
+    "source": "openAi",
+    "model": "text-embedding-3-small",
+    "apiKey": "OPEN_AI_API_KEY",
+    "dimensions": 512,
+    "documentTemplate": "A product named '{{doc.name}}'"
+  }
+}
+```
+
+</CodeGroup>
+
+Lower dimension values reduce storage requirements and can speed up search. However, very low values may decrease result quality.
+
+<Warning>
+Never share your OpenAI API key publicly or commit it to version control. Use environment variables or a secrets manager to store it securely.
+</Warning>
+
+<Note>
+OpenAI applies [rate limits](https://platform.openai.com/docs/guides/rate-limits/usage-tiers) based on your account tier. Free-tier accounts may experience slow indexing. Meilisearch handles rate limiting automatically with a retry strategy, but using at least a Tier 2 key is recommended for production environments.
+</Note>
+
+## Test the embedder
+
+Once indexing is complete, perform a search using the `hybrid` parameter:
+
+<CodeGroup>
+
+```json
+{
+  "q": "something to stir soup with",
+  "hybrid": {
+    "semanticRatio": 0.5,
+    "embedder": "my-openai"
+  }
+}
+```
+
+</CodeGroup>
+
+A [`semanticRatio`](/capabilities/hybrid_search/advanced/custom_hybrid_ranking) of `0.5` returns a balanced mix of keyword and semantic results. Adjust this value based on your needs.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Choose an embedder" href="/capabilities/hybrid_search/how_to/choose_an_embedder">
+    Compare OpenAI with other embedder providers
+  </Card>
+  <Card title="Document templates" href="/capabilities/hybrid_search/advanced/document_template_best_practices">
+    Optimize which fields are embedded for better results
+  </Card>
+</CardGroup>

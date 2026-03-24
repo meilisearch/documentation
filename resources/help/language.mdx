@@ -32,21 +32,22 @@ Languages not listed above still work with Meilisearch. Any language that uses w
 
 We aim to provide global language support, and your feedback helps us move closer to that goal. If you notice inconsistencies in your search results or the way your documents are processed, please [open an issue in the Meilisearch repository](https://github.com/meilisearch/meilisearch/issues/new/choose).
 
-[Read more about our tokenizer](/learn/indexing/tokenization)
+[Read more about our tokenizer](/capabilities/indexing/advanced/tokenization)
 
 ## Multilingual hybrid search
 
-Meilisearch's keyword-based search relies on Charabia for tokenization, but [hybrid search](/learn/ai_powered_search/getting_started_with_ai_search) and [semantic search](/learn/ai_powered_search/difference_full_text_ai_search) use embedding models that can handle languages independently of the tokenizer.
+Meilisearch's keyword-based search relies on Charabia for tokenization, but [hybrid search](/capabilities/hybrid_search/getting_started) and [semantic search](/capabilities/hybrid_search/overview) use embedding models that can handle languages independently of the tokenizer.
 
 Many embedding providers offer multilingual models that work across 100+ languages out of the box:
 
 | Provider | Multilingual model | Dimensions |
 |---|---|---|
-| [Cohere](/guides/embedders/cohere) | `embed-multilingual-v3.0` | 1024 |
-| [Cohere](/guides/embedders/cohere) | `embed-multilingual-light-v3.0` | 384 |
-| [Voyage AI](/guides/embedders/voyage) | `voyage-multilingual-2` | 1024 |
-| [AWS Bedrock](/guides/embedders/bedrock) | `cohere.embed-multilingual-v3` | 1024 |
-| [Hugging Face](/guides/embedders/huggingface) | `sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2` | 384 |
+| [Cohere](/capabilities/hybrid_search/how_to/configure_cohere_embedder) | `embed-v4.0` | 256, 512, 1,024, or 1,536 |
+| [Cohere](/capabilities/hybrid_search/how_to/configure_cohere_embedder) | `embed-multilingual-v3.0` | 1,024 |
+| [Voyage AI](/capabilities/hybrid_search/providers/voyage) | `voyage-4` | 256, 512, 1,024, or 2,048 |
+| [Jina](/capabilities/hybrid_search/providers/jina) | `jina-embeddings-v4` | 128, 256, 512, 1,024, or 2,048 |
+| [AWS Bedrock](/capabilities/hybrid_search/providers/bedrock) | `cohere.embed-v4:0` | 256, 512, 1,024, or 1,536 |
+| [Hugging Face](/capabilities/hybrid_search/providers/huggingface) | `sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2` | 384 |
 
 Using a multilingual embedding model allows you to:
 
@@ -54,10 +55,10 @@ Using a multilingual embedding model allows you to:
 - **Simplify multilingual indexing**: instead of creating one index per language, a single index with a multilingual embedder can serve multiple languages.
 - **Complement keyword search**: combine Charabia's keyword tokenization with semantic embeddings in hybrid search for the best of both approaches.
 
-For multilingual datasets, consider using [hybrid search](/learn/ai_powered_search/getting_started_with_ai_search) with a multilingual embedder alongside [localized attributes](/reference/api/settings/get-localizedattributes) for keyword matching. This gives you accurate tokenization per language for keyword search and cross-language understanding for semantic search.
+For multilingual datasets, consider using [hybrid search](/capabilities/hybrid_search/getting_started) with a multilingual embedder alongside [localized attributes](/reference/api/settings/get-localizedattributes) for keyword matching. This gives you accurate tokenization per language for keyword search and cross-language understanding for semantic search.
 
 <Note>
-For guidance on structuring multilingual datasets, see [Handling multilingual datasets](/learn/indexing/multilingual-datasets).
+For guidance on structuring multilingual datasets, see [Handling multilingual datasets](/capabilities/indexing/how_to/handle_multilingual_data).
 </Note>
 
 ## Improving our language support
@@ -76,7 +77,7 @@ Optimized support for a language means Meilisearch has implemented internal proc
 
 ### My language does not use whitespace to separate words. Can I still use Meilisearch?
 
-Yes. For keyword search, results may be less relevant than for fully optimized languages. However, you can use [hybrid search](/learn/ai_powered_search/getting_started_with_ai_search) with a multilingual embedding model to get strong semantic results regardless of tokenization support.
+Yes. For keyword search, results may be less relevant than for fully optimized languages. However, you can use [hybrid search](/capabilities/hybrid_search/getting_started) with a multilingual embedding model to get strong semantic results regardless of tokenization support.
 
 ### My language does not use the Roman alphabet. Can I still use Meilisearch?
 

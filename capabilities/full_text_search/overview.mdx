@@ -1,0 +1,35 @@
+---
+title: Full-text search
+sidebarTitle: Overview
+description: Meilisearch's full-text search returns relevant results in milliseconds with built-in typo tolerance, prefix matching, and multi-criteria ranking.
+---
+
+Full-text search is the core capability of Meilisearch. When a user types a query, Meilisearch scans [indexed](/capabilities/indexing/overview) documents and returns results ranked by relevance using a multi-criteria sorting algorithm.
+
+## Key features
+
+- **[Typo tolerance](/capabilities/full_text_search/relevancy/typo_tolerance_settings)**: automatically handles misspellings using Levenshtein distance
+- **[Prefix search](/capabilities/full_text_search/how_to/configure_prefix_search)**: returns results as the user types, matching partial words
+- **Multi-criteria ranking**: combines multiple [ranking rules](/capabilities/full_text_search/relevancy/ranking_rules) (typo, proximity, attribute, exactness, and more) to determine result order
+- **Customizable relevancy**: configure ranking rules, [searchable attributes](/capabilities/full_text_search/how_to/configure_searchable_attributes), [stop words](/capabilities/full_text_search/how_to/configure_stop_words), [synonyms](/capabilities/full_text_search/relevancy/synonyms), and more to fine-tune results for your use case
+
+## When to use full-text search
+
+Full-text search works best when users search with keywords or short phrases and expect results ranked by textual relevance. If your users search with natural language questions or need results based on meaning rather than exact terms, consider [hybrid search](/capabilities/hybrid_search/overview) or [conversational search](/capabilities/conversational_search/overview).
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Getting started" href="/capabilities/full_text_search/getting_started/placeholder_search">
+    Try your first search query
+  </Card>
+  <Card title="Configure relevancy" href="/capabilities/full_text_search/relevancy/relevancy">
+    Learn how ranking works and how to customize it
+  </Card>
+  <Card title="Hybrid search" href="/capabilities/hybrid_search/overview">
+    Combine full-text with semantic search
+  </Card>
+  <Card title="How-to guides" href="/capabilities/full_text_search/how_to/configure_searchable_attributes">
+    Configure search behavior for your use case
+  </Card>
+</CardGroup>

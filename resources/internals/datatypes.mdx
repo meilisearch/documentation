@@ -41,7 +41,7 @@ Meilisearch comes with a number of general-use dictionaries for its officially s
 
 ### Distance
 
-Distance plays an essential role in determining whether documents are relevant since [one of the ranking rules is the **proximity** rule](/learn/relevancy/relevancy). The proximity rule sorts the results by increasing distance between matched query terms. Then, two words separated by a soft space are closer and thus considered **more relevant** than two words separated by a hard space.
+Distance plays an essential role in determining whether documents are relevant since [one of the ranking rules is the **proximity** rule](/capabilities/full_text_search/relevancy/relevancy). The proximity rule sorts the results by increasing distance between matched query terms. Then, two words separated by a soft space are closer and thus considered **more relevant** than two words separated by a hard space.
 
 After the tokenizing process, each word is indexed and stored in the global dictionary of the corresponding index.
 
@@ -76,9 +76,15 @@ When making a query on `Bruce Willis`, `002` will be the first document returned
 
 A numeric type (`integer`, `float`) is converted to a human-readable decimal number string representation. Numeric types can be searched as they are converted to strings.
 
-You can add [custom ranking rules](/learn/relevancy/custom_ranking_rules) to create an ascending or descending sorting rule on a given attribute that has a numeric value in the documents.
+You can add [custom ranking rules](/capabilities/full_text_search/relevancy/custom_ranking_rules) to create an ascending or descending sorting rule on a given attribute that has a numeric value in the documents.
 
-You can also create [filters](/learn/filtering_and_sorting/filter_search_results). The `>`, `>=`, `<`, `<=`, and `TO` relational operators apply only to numerical values.
+You can also create [filters](/capabilities/filtering_sorting_faceting/getting_started). The `>`, `>=`, `<`, `<=`, and `TO` relational operators apply only to numerical values.
+
+### Floating-point precision
+
+Meilisearch stores all numeric values as 64-bit IEEE 754 floating-point numbers (`f64`). This format provides up to approximately 15 significant decimal digits of precision.
+
+As a consequence, very large integers (beyond 2^53, or 9,007,199,254,740,992) may lose precision when stored in Meilisearch. If your dataset includes large integer identifiers or high-precision decimal values, consider storing them as strings instead to preserve their exact representation.
 
 ## Boolean
 
@@ -144,7 +150,7 @@ During indexing, Meilisearch uses dot notation to eliminate nested fields:
 }
 ```
 
-Using dot notation, no information is lost when flattening nested objects, regardless of nesting depth.
+Using dot notation, no information is lost when flattening nested objects, regardless of nesting depth. Dot notation also works with arrays of objects. For example, if a document contains `"items": [{"name": "foo"}, {"name": "bar"}]`, Meilisearch flattens this to `"items.name": ["foo", "bar"]`. You can use `items.name` when configuring searchable, filterable, or sortable attributes to access these nested values.
 
 Imagine that the example document above includes an additional object, `address`, containing home and work addresses, each of which are objects themselves. After flattening, the document would look like this:
 
@@ -292,6 +298,45 @@ The best way to work around this limitation is reformatting your data. The above
 
 Object fields cannot be partially updated. Updating an object field with either the `PUT` or `POST` routes with an object fully replaces that value and removes any omitted subfields. Dot notation is also not supported when updating a document.
 
+## Reserved field: `_vectors`
+
+When using [AI-powered search](/capabilities/hybrid_search/overview), documents can contain a special `_vectors` field. This reserved field stores embedding data for one or more configured embedders.
+
+The `_vectors` field is an object where each key corresponds to a configured embedder name. Values can use one of two formats:
+
+**Simple format** (array of numbers):
+
+```json
+{
+  "id": 1,
+  "title": "A great movie",
+  "_vectors": {
+    "my_embedder": [0.1, 0.2, 0.3, 0.4]
+  }
+}
+```
+
+**Explicit format** (object with `embeddings` and `regenerate`):
+
+```json
+{
+  "id": 1,
+  "title": "A great movie",
+  "_vectors": {
+    "my_embedder": {
+      "embeddings": [[0.1, 0.2, 0.3, 0.4]],
+      "regenerate": false
+    }
+  }
+}
+```
+
+In the explicit format, `embeddings` is an array of arrays (supporting multiple embeddings per document), and `regenerate` controls whether Meilisearch should regenerate the embedding when the document is updated. Set `regenerate` to `false` when you provide your own embeddings and do not want Meilisearch to overwrite them.
+
+<Note>
+The `_vectors` field is only relevant when you have configured at least one [embedder](/reference/api/settings/update-embedders) for your index. If no embedder is configured, `_vectors` is treated as a regular field.
+</Note>
+
 ## Possible tokenization issues
 
 Even if it behaves exactly as expected, the tokenization process may lead to counterintuitive results in some cases, such as:
@@ -304,4 +349,4 @@ Even if it behaves exactly as expected, the tokenization process may lead to cou
 
 For the two strings above, the full stops `.` will be considered as hard spaces.
 
-`10,3` will be broken into two strings—`10` and `3`—instead of being processed as a numeric type.
+`10,3` will be broken into two strings (`10` and `3`) instead of being processed as a numeric type.

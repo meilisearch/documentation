@@ -1,0 +1,247 @@
+---
+title: Display source documents
+description: Show users which indexed documents were used to generate a conversational search response.
+---
+
+Displaying source documents builds user trust by showing which data the AI used to formulate its answer. Meilisearch provides source information through two special tools: `_meiliSearchProgress` (which reports what searches are being performed) and `_meiliSearchSources` (which returns the actual documents used).
+
+## Include source tools in your request
+
+To receive source documents, include both `_meiliSearchProgress` and `_meiliSearchSources` in the `tools` array of your chat completions request:
+
+<CodeGroup>
+
+```bash cURL
+curl -N \
+  -X POST 'MEILISEARCH_URL/chats/WORKSPACE_NAME/chat/completions' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "model": "PROVIDER_MODEL_UID",
+    "messages": [
+      {
+        "role": "user",
+        "content": "What are the best sci-fi movies?"
+      }
+    ],
+    "tools": [
+      {
+        "type": "function",
+        "function": {
+          "name": "_meiliSearchProgress",
+          "description": "Reports real-time search progress"
+        }
+      },
+      {
+        "type": "function",
+        "function": {
+          "name": "_meiliSearchSources",
+          "description": "Provides source documents"
+        }
+      }
+    ]
+  }'
+```
+
+```javascript OpenAI SDK
+import OpenAI from 'openai';
+
+const client = new OpenAI({
+  baseURL: 'MEILISEARCH_URL/chats/WORKSPACE_NAME',
+  apiKey: 'MEILISEARCH_KEY',
+});
+
+const stream = await client.chat.completions.create({
+  model: 'PROVIDER_MODEL_UID',
+  messages: [{ role: 'user', content: 'What are the best sci-fi movies?' }],
+  stream: true,
+  tools: [
+    { type: 'function', function: { name: '_meiliSearchProgress', description: 'Reports real-time search progress' } },
+    { type: 'function', function: { name: '_meiliSearchSources', description: 'Provides source documents' } },
+  ],
+});
+```
+
+```javascript Vercel AI SDK
+import { createOpenAI } from '@ai-sdk/openai';
+import { streamText, tool, jsonSchema } from 'ai';
+
+const meilisearch = createOpenAI({
+  baseURL: 'MEILISEARCH_URL/chats/WORKSPACE_NAME',
+  apiKey: 'MEILISEARCH_KEY',
+});
+
+const { textStream } = streamText({
+  model: meilisearch('PROVIDER_MODEL_UID'),
+  messages: [{ role: 'user', content: 'What are the best sci-fi movies?' }],
+  tools: {
+    _meiliSearchProgress: tool({
+      description: 'Reports real-time search progress',
+      parameters: jsonSchema({ type: 'object', properties: { call_id: { type: 'string' }, function_name: { type: 'string' }, function_parameters: { type: 'string' } }, required: ['call_id', 'function_name', 'function_parameters'] }),
+    }),
+    _meiliSearchSources: tool({
+      description: 'Provides source documents',
+      parameters: jsonSchema({ type: 'object', properties: { call_id: { type: 'string' }, documents: { type: 'object' } }, required: ['call_id', 'documents'] }),
+    }),
+  },
+});
+```
+
+</CodeGroup>
+
+Both tools are necessary. `_meiliSearchProgress` reports which searches are being performed and assigns a `call_id` to each search. `_meiliSearchSources` then returns the documents found, referencing the same `call_id` so you can associate sources with their corresponding queries.
+
+## Understand the response structure
+
+During a streamed response, tool calls arrive as chunks alongside content chunks. Here is the sequence of events:
+
+### 1. Search progress
+
+When the agent decides to search an index, you receive a `_meiliSearchProgress` tool call:
+
+<CodeGroup>
+
+```json Response
+{
+  "function": {
+    "name": "_meiliSearchProgress",
+    "arguments": "{\"call_id\":\"abc123\",\"function_name\":\"_meiliSearchInIndex\",\"function_parameters\":\"{\\\"index_uid\\\":\\\"movies\\\",\\\"q\\\":\\\"best sci-fi movies\\\"}\"}"
+  }
+}
+```
+
+</CodeGroup>
+
+This tells you the agent is searching the `movies` index for "best sci-fi movies". The `call_id` value (`abc123`) links this search to its results.
+
+### 2. Source documents
+
+After the search completes, you receive a `_meiliSearchSources` tool call with the matching documents:
+
+<CodeGroup>
+
+```json Response
+{
+  "function": {
+    "name": "_meiliSearchSources",
+    "arguments": "{\"call_id\":\"abc123\",\"documents\":[{\"id\":11,\"title\":\"Blade Runner 2049\",\"overview\":\"A young blade runner discovers a secret...\"},{\"id\":27,\"title\":\"Interstellar\",\"overview\":\"A team of explorers travel through a wormhole...\"}]}"
+  }
+}
+```
+
+</CodeGroup>
+
+The `call_id` matches the progress event, so you know these documents came from the "best sci-fi movies" search on the `movies` index.
+
+### 3. Generated answer
+
+Content chunks contain the AI-generated answer, which is based on the retrieved documents.
+
+## Extract sources in JavaScript
+
+Parse tool calls from the stream and collect sources into a structured object:
+
+<CodeGroup>
+
+```javascript JavaScript
+const sources = new Map(); // call_id -> { query, index, documents }
+
+function handleToolCall(toolCall) {
+  if (!toolCall.function?.name) return;
+
+  const args = JSON.parse(toolCall.function.arguments);
+
+  if (toolCall.function.name === '_meiliSearchProgress') {
+    const params = JSON.parse(args.function_parameters);
+    sources.set(args.call_id, {
+      query: params.q,
+      index: params.index_uid,
+      documents: [],
+    });
+  }
+
+  if (toolCall.function.name === '_meiliSearchSources') {
+    const existing = sources.get(args.call_id);
+    if (existing) {
+      existing.documents = args.documents;
+    }
+  }
+}
+```
+
+</CodeGroup>
+
+After the stream finishes, `sources` contains all search queries and their corresponding documents, keyed by `call_id`.
+
+## Display sources in your UI
+
+Here is a simple pattern for displaying sources alongside the chat response. This example uses plain HTML, but the same approach works with any frontend framework:
+
+<CodeGroup>
+
+```javascript JavaScript
+function renderSources(sources) {
+  const container = document.getElementById('sources');
+
+  for (const [callId, source] of sources) {
+    const section = document.createElement('div');
+    section.className = 'source-group';
+
+    const heading = document.createElement('h4');
+    heading.textContent = `Results for "${source.query}"`;
+    section.appendChild(heading);
+
+    for (const doc of source.documents) {
+      const card = document.createElement('div');
+      card.className = 'source-card';
+      card.innerHTML = `
+        <strong>${doc.title || doc.id}</strong>
+        <p>${doc.overview || ''}</p>
+      `;
+      section.appendChild(card);
+    }
+
+    container.appendChild(section);
+  }
+}
+```
+
+</CodeGroup>
+
+### Common UI patterns
+
+There are several ways to present source documents to users:
+
+- **Inline citations**: Number each source and reference them in the response text (e.g., [1], [2])
+- **Collapsible panel**: Show a "Sources" section below the response that users can expand
+- **Side panel**: Display sources in a sidebar next to the conversation
+- **Footnotes**: List sources at the bottom of each response
+
+Choose the pattern that fits your application's layout and your users' needs.
+
+## Handle multiple searches
+
+A single user question may trigger multiple searches across different indexes. For example, asking "Compare the pricing and features of Product X" might search both a `products` index and a `pricing` index.
+
+Each search produces its own `call_id`, so you can group and display sources per search:
+
+<CodeGroup>
+
+```javascript JavaScript
+function renderGroupedSources(sources) {
+  for (const [callId, source] of sources) {
+    console.log(`\nSearch: "${source.query}" in ${source.index}`);
+    for (const doc of source.documents) {
+      console.log(`  - ${doc.title || doc.id}`);
+    }
+  }
+}
+```
+
+</CodeGroup>
+
+## Next steps
+
+- Learn about all available tools in the [chat tooling reference](/capabilities/conversational_search/advanced/chat_tooling_reference)
+- [Configure guardrails](/capabilities/conversational_search/how_to/configure_guardrails) to improve response accuracy
+- [Stream chat responses](/capabilities/conversational_search/how_to/stream_chat_responses) for real-time delivery

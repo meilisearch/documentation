@@ -1,0 +1,76 @@
+---
+title: Security and tenant tokens
+sidebarTitle: Overview
+description: Secure your Meilisearch data with API keys and tenant tokens for multi-tenant applications.
+---
+
+Meilisearch uses [API keys](/capabilities/security/how_to/manage_api_keys) and tenant tokens to control access to your data. API keys authenticate requests, while tenant tokens restrict what data each user can see within a shared index. This page also covers [sanitizing search results](#sanitizing-search-results) to prevent XSS when rendering user-generated content.
+
+## Multi-tenancy with tenant tokens
+
+Tenant tokens are short-lived, scoped credentials generated from an API key. They embed search rules ([filters](/capabilities/filtering_sorting_faceting/getting_started)) that automatically apply to every search request, ensuring users only see their own data.
+
+| Concept | Purpose |
+|---------|---------|
+| API keys | Authenticate API requests, define base permissions |
+| Tenant tokens | Restrict search results per user with embedded filters |
+| Search rules | Filter expressions baked into a token (e.g., `user_id = 123`) |
+
+## When to use tenant tokens
+
+Use tenant tokens when multiple users or organizations share the same Meilisearch index but should only see their own data. Common examples include SaaS platforms, marketplace search, and personalized content feeds.
+
+If you are familiar with other search or database systems, tenant tokens serve a similar purpose to Algolia's secured API keys or PostgreSQL's row-level security (RLS). They let you restrict search results per user without creating separate indexes for each tenant.
+
+<Note>
+Tenant tokens only restrict the **search endpoint**. They do not apply to admin operations such as indexing, settings updates, or API key management. Use API keys to control access to those endpoints.
+</Note>
+
+## Security model
+
+Meilisearch uses a layered key hierarchy to manage access:
+
+| Level | Key type | Purpose |
+|-------|----------|---------|
+| 1 | **Admin API key** | Allows creating and managing indexes, settings, and other API keys. Used by your backend. |
+| 2 | **Search API key** | Permits only search operations. Safe to use in frontend applications when data is not multi-tenant. |
+| 3 | **Tenant token** | Generated in your backend from an API key. Embeds search rules (filters) that automatically restrict results per user. Short-lived and scoped. |
+
+In a typical multi-tenant setup, your backend holds the admin or search API key, generates tenant tokens on the fly for each user session, and sends those tokens to the frontend. The frontend then uses the tenant token to search directly against Meilisearch, and the embedded filters ensure each user only sees their own data.
+
+## How it works
+
+1. Meilisearch provides a default **admin API key** and **search API key**.
+2. Your backend uses the admin key to manage indexes and settings.
+3. When a user authenticates in your application, your backend generates a **tenant token** from the search key, embedding user-specific filter rules (for example, `tenant_id = 42`).
+4. The frontend uses this tenant token to query Meilisearch directly. Every search automatically applies the embedded filters, so users never see data belonging to other tenants.
+
+## Sanitizing search results
+
+Meilisearch indexes and returns document content as-is. If your documents contain user-generated content, you must sanitize or escape all field values before rendering them in HTML. Failing to do so can expose your application to cross-site scripting (XSS) attacks.
+
+For example, if a document's `title` field contains `<script>alert('xss')</script>` and your frontend renders it with `innerHTML` or similar unescaped output, the script will execute in your users' browsers.
+
+To prevent this:
+
+- Always escape or sanitize document field values before inserting them into the DOM
+- Use your framework's built-in escaping (React, Vue, and Angular escape by default when using standard template syntax)
+- Be especially careful with `dangerouslySetInnerHTML` (React), `v-html` (Vue), or any other raw HTML rendering method
+- Consider using a sanitization library such as [DOMPurify](https://github.com/cure53/DOMPurify) if you need to render rich HTML content from search results
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Getting started" href="/capabilities/security/getting_started">
+    Generate your first tenant token using an SDK
+  </Card>
+  <Card title="Token from scratch" href="/capabilities/security/how_to/generate_token_from_scratch">
+    Build a tenant token manually without an SDK
+  </Card>
+  <Card title="Token payload" href="/capabilities/security/advanced/tenant_token_payload">
+    Reference for tenant token JWT payload structure
+  </Card>
+  <Card title="Manage API keys" href="/capabilities/security/how_to/manage_api_keys">
+    Create, rotate, and scope API keys
+  </Card>
+</CardGroup>

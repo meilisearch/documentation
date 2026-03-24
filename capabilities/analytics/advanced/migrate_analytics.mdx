@@ -1,0 +1,101 @@
+---
+title: Migrate to the November 2025 Meilisearch Cloud analytics
+description: Follow this guide to ensure your Meilisearch Cloud analytics configuration is up to date after the November 2025 release.
+---
+
+In November 2025, Meilisearch Cloud simplified how analytics works. The previous system required routing search requests through a separate `edge.meilisearch.com` proxy to capture analytics data. The new system captures analytics natively on every Meilisearch Cloud project, so the proxy is no longer needed.
+
+This guide walks you through the migration steps and helps you verify everything is working correctly.
+
+## What changed
+
+| Before (pre-November 2025) | After (November 2025+) |
+|---|---|
+| Search requests routed through `edge.meilisearch.com` | All requests go directly to your project URL |
+| Analytics required explicit opt-in | Basic analytics (searches, latency, users) are always active |
+| Click and conversion tracking configured via edge proxy | Click and conversion events sent directly to the `/events` route on your project URL |
+| Custom API keys created on `edge.meilisearch.com` | API keys managed on your project URL |
+
+## Step 1: Update search URLs
+
+Replace all occurrences of `edge.meilisearch.com` in your application code with your Meilisearch Cloud project URL.
+
+**Before:**
+
+<CodeGroup>
+
+```sh
+curl \
+  -X POST 'https://edge.meilisearch.com/indexes/products/search' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer YOUR_API_KEY' \
+  --data-binary '{ "q": "green socks" }'
+```
+
+</CodeGroup>
+
+**After:**
+
+<CodeGroup>
+
+```sh
+curl \
+  -X POST 'https://PROJECT_URL/indexes/products/search' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer YOUR_API_KEY' \
+  --data-binary '{ "q": "green socks" }'
+```
+
+</CodeGroup>
+
+`edge.meilisearch.com` was deprecated on February 28, 2026 and is no longer functional. You must update all API requests to use your project URL.
+
+## Step 2: Update event tracking URLs
+
+If you track click or conversion events, update those requests as well. Events are now sent to the `/events` route on your project URL:
+
+<CodeGroup>
+
+```sh
+curl \
+  -X POST 'https://PROJECT_URL/events' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer YOUR_API_KEY' \
+  --data-binary '{
+    "eventType": "click",
+    "eventName": "Product Clicked",
+    "indexUid": "products",
+    "objectId": "product_123",
+    "userId": "user_456"
+  }'
+```
+
+</CodeGroup>
+
+## Step 3: Replace API keys
+
+If you created any custom API keys using the previous `edge.meilisearch.com` URL, you will need to create new keys on your project URL and update your application accordingly. Keys created on the old URL are no longer valid.
+
+## Verify your migration
+
+After updating your URLs, confirm that analytics data is flowing correctly:
+
+1. **Run a test search** using your project URL and check that results are returned normally.
+2. **Check the analytics dashboard** in Meilisearch Cloud. Within a few minutes, you should see your test search appear in the search metrics.
+3. **Send a test event** (click or conversion) and verify it appears in the corresponding dashboard section.
+4. **Search your codebase** for any remaining references to `edge.meilisearch.com` and replace them.
+
+<Note>
+Basic analytics (total searches, latency, users) require no extra configuration. Click-through rate, average click position, and conversion tracking still require you to send events explicitly. See the [getting started guide](/capabilities/analytics/getting_started) for setup instructions.
+</Note>
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Analytics getting started" href="/capabilities/analytics/getting_started">
+    Set up click and conversion event tracking in your application
+  </Card>
+  <Card title="Analytics overview" href="/capabilities/analytics/overview">
+    Learn what analytics tracks and how to use the dashboard
+  </Card>
+</CardGroup>

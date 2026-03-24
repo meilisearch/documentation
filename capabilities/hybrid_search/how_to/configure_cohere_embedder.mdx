@@ -1,0 +1,142 @@
+---
+title: Configure Cohere embedder
+sidebarTitle: Cohere
+description: Set up the Cohere embedder for semantic and hybrid search using Cohere's embedding models.
+---
+
+The Cohere embedder connects Meilisearch to Cohere's embedding API. Cohere models support multiple languages and offer different model sizes for different performance needs. Since Meilisearch does not have a built-in Cohere source, you configure it using the [`rest` embedder](/capabilities/hybrid_search/how_to/configure_rest_embedder) source.
+
+<Note>
+This guide requires a [Cohere account](https://cohere.com/) with an API key.
+</Note>
+
+## Choose a model
+
+Cohere offers several embedding models:
+
+| Model | Dimensions | Notes |
+|-------|-----------|-------|
+| `embed-v4.0` | 256, 512, 1,024, or 1,536 | Latest generation, multilingual, supports text and images |
+| `embed-english-v3.0` | 1,024 | Best accuracy for English-only content |
+| `embed-multilingual-v3.0` | 1,024 | Best v3 option for multilingual datasets |
+| `embed-english-light-v3.0` | 384 | Faster, lower cost for English content |
+| `embed-multilingual-light-v3.0` | 384 | Faster, lower cost for multilingual content |
+
+For new projects, `embed-v4.0` is the recommended choice as it supports both text and images with flexible dimensions. If you only need English text embeddings and want a proven model, `embed-english-v3.0` remains a solid option. The light variants are faster and cheaper but may return slightly less accurate results.
+
+See the [Cohere Embed documentation](https://docs.cohere.com/docs/cohere-embed) for the full model catalog.
+
+## Configure the embedder
+
+Because Cohere uses the REST embedder source, you must define the `request` and `response` structures that match Cohere's API. Create the following embedder configuration:
+
+<CodeGroup>
+
+```json
+{
+  "my-cohere": {
+    "source": "rest",
+    "url": "https://api.cohere.com/v1/embed",
+    "apiKey": "COHERE_API_KEY",
+    "dimensions": 1024,
+    "documentTemplate": "A product named '{{doc.name}}' described as '{{doc.description}}'",
+    "request": {
+      "model": "embed-english-v3.0",
+      "texts": ["{{text}}", "{{..}}"],
+      "input_type": "search_document"
+    },
+    "response": {
+      "embeddings": ["{{embedding}}", "{{..}}"]
+    }
+  }
+}
+```
+
+</CodeGroup>
+
+In this configuration:
+
+- `source`: must be `"rest"` because Cohere uses the REST embedder integration
+- `url`: the Cohere embeddings API endpoint
+- `apiKey`: your Cohere API key
+- `dimensions`: the number of dimensions for the chosen model (1024 for `embed-english-v3.0`)
+- `documentTemplate`: a [Liquid template](/capabilities/hybrid_search/advanced/document_template_best_practices) that converts your documents into text for embedding
+- `request`: defines the structure of requests sent to Cohere, including the model and input format
+- `response`: tells Meilisearch where to find the embeddings in Cohere's response
+
+<Note>
+The `input_type` parameter is required by Cohere's API. Set it to `"search_document"` when indexing documents. Meilisearch automatically uses `"search_query"` for search queries.
+</Note>
+
+## Update your index settings
+
+Send the embedder configuration to Meilisearch:
+
+<CodeGroup>
+
+```sh
+curl \
+  -X PATCH 'MEILISEARCH_URL/indexes/INDEX_NAME/settings' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  --data-binary '{
+    "embedders": {
+      "my-cohere": {
+        "source": "rest",
+        "url": "https://api.cohere.com/v1/embed",
+        "apiKey": "COHERE_API_KEY",
+        "dimensions": 1024,
+        "documentTemplate": "A product named '\''{{doc.name}}'\'' described as '\''{{doc.description}}'\''",
+        "request": {
+          "model": "embed-english-v3.0",
+          "texts": ["{{text}}", "{{..}}"],
+          "input_type": "search_document"
+        },
+        "response": {
+          "embeddings": ["{{embedding}}", "{{..}}"]
+        }
+      }
+    }
+  }'
+```
+
+</CodeGroup>
+
+Replace `MEILISEARCH_URL` with the address of your Meilisearch project, `INDEX_NAME` with your index name, `MEILISEARCH_KEY` with your Meilisearch API key, and `COHERE_API_KEY` with your [Cohere API key](https://dashboard.cohere.com/api-keys).
+
+Meilisearch will start generating embeddings for all documents in the index. Monitor progress through the [task queue](/reference/api/tasks/list-tasks).
+
+<Warning>
+Never share your Cohere API key publicly or commit it to version control. Use environment variables or a secrets manager to store it securely.
+</Warning>
+
+## Test the embedder
+
+Once indexing is complete, perform a search using the `hybrid` parameter:
+
+<CodeGroup>
+
+```json
+{
+  "q": "something to stir soup with",
+  "hybrid": {
+    "semanticRatio": 0.5,
+    "embedder": "my-cohere"
+  }
+}
+```
+
+</CodeGroup>
+
+A [`semanticRatio`](/capabilities/hybrid_search/advanced/custom_hybrid_ranking) of `0.5` returns a balanced mix of keyword and semantic results. Adjust this value based on your needs.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Choose an embedder" href="/capabilities/hybrid_search/how_to/choose_an_embedder">
+    Compare Cohere with other embedder providers
+  </Card>
+  <Card title="Document templates" href="/capabilities/hybrid_search/advanced/document_template_best_practices">
+    Optimize which fields are embedded for better results
+  </Card>
+</CardGroup>

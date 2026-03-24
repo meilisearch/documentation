@@ -1,0 +1,139 @@
+---
+title: Document template best practices
+description: This guide shows you what to do and what to avoid when writing a `documentTemplate`.
+---
+
+When using AI-powered search, Meilisearch generates prompts by filling in your embedder's `documentTemplate` with each document's data. The better your prompt is, the more relevant your search results.
+
+This guide shows you what to do and what to avoid when writing a `documentTemplate`.
+
+## Sample document
+
+Take a look at this document from a database of movies:
+
+<CodeGroup>
+
+```json
+{
+  "id": 2,
+  "title": "Ariel",
+  "overview": "Taisto Kasurinen is a Finnish coal miner whose father has just committed suicide and who is framed for a crime he did not commit. In jail, he starts to dream about leaving the country and starting a new life. He escapes from prison but things don't go as planned...",
+  "genres": [
+    "Drama",
+    "Crime",
+    "Comedy"
+  ],
+  "poster": "https://image.tmdb.org/t/p/w500/ojDg0PGvs6R9xYFodRct2kdI6wC.jpg",
+  "release_date": 593395200
+}
+```
+
+</CodeGroup>
+
+## Do not use the default `documentTemplate`
+
+Use a custom `documentTemplate` value in your embedder configuration.
+
+The default `documentTemplate` includes all searchable fields with non-`null` values. In most cases, this adds noise and more information than the embedder needs to provide relevant search results.
+
+## Only include highly relevant information
+
+Take a look at your document and identify the most relevant fields. A good `documentTemplate` for the sample document could be:
+
+<CodeGroup>
+
+```
+"A movie called {{doc.title}} about {{doc.overview}}"
+```
+
+</CodeGroup>
+
+In the sample document, `poster` and `id` contain data that has little semantic importance and can be safely excluded. The data in `genres` and `release_date` is very useful for filters, but say little about this specific film.
+
+This leaves two relevant fields: `title` and `overview`.
+
+## Keep prompts short
+
+For the best results, keep prompts somewhere between 15 and 45 words:
+
+<CodeGroup>
+
+```
+"A movie called {{doc.title}} about {{doc.overview | truncatewords: 20}}"
+```
+
+</CodeGroup>
+
+In the sample document, the `overview` alone is 49 words. Use Liquid's [`truncate`](https://shopify.github.io/liquid/filters/truncate/) or [`truncatewords`](https://shopify.github.io/liquid/filters/truncatewords/) to shorten it.
+
+Short prompts do not have enough information for the embedder to properly understand the query context. Long prompts instead provide too much information and make it hard for the embedder to identify what is truly relevant about a document.
+
+## Add guards for missing fields
+
+Some documents might not contain all the fields you expect. If your template directly references a missing field, Meilisearch will throw an error when indexing documents.
+
+To prevent this, use Liquid’s `if` statements to add guards around fields:
+
+<CodeGroup>
+
+```
+{% if doc.title %}
+A movie called {{ doc.title }}
+{% endif %}
+```
+
+</CodeGroup>
+
+This ensures the template only tries to include data that already exists in a document. If a field is missing, the embedder still receives a valid and useful prompt without errors.
+
+## Conclusion
+
+In this article you saw the main steps to generating prompts that lead to relevant AI-powered search results:
+
+- Do not use the default `documentTemplate`
+- Only include relevant data
+- Truncate long fields
+- Add guards for missing fields
+
+## Handle embedding failures
+
+By default, if a document template fails to render or an embedder request fails, the entire indexing batch fails. This means a single problematic document can block all other documents in the same batch.
+
+With the experimental `MEILI_EXPERIMENTAL_CONFIG_EMBEDDER_FAILURE_MODES` environment variable, you can configure Meilisearch to ignore these errors instead:
+
+<CodeGroup>
+
+```bash
+# Ignore template rendering failures only
+MEILI_EXPERIMENTAL_CONFIG_EMBEDDER_FAILURE_MODES=ignore_document_template_failures meilisearch
+
+# Ignore embedder request failures only
+MEILI_EXPERIMENTAL_CONFIG_EMBEDDER_FAILURE_MODES=ignore_embedder_failures meilisearch
+
+# Ignore both types of failures
+MEILI_EXPERIMENTAL_CONFIG_EMBEDDER_FAILURE_MODES=ignore_document_template_failures,ignore_embedder_failures meilisearch
+```
+
+</CodeGroup>
+
+<Warning>
+Ignoring errors means some documents may not have embeddings, which affects search quality. Documents without embeddings will not appear in semantic or hybrid search results.
+</Warning>
+
+<Note>
+This is an experimental feature. Cloud users should contact support to enable it.
+</Note>
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Get started with hybrid search" href="/capabilities/hybrid_search/getting_started">
+    Set up AI-powered search and configure your first embedder.
+  </Card>
+  <Card title="Choose an embedder" href="/capabilities/hybrid_search/how_to/choose_an_embedder">
+    Compare available embedding providers and pick the right one for your use case.
+  </Card>
+  <Card title="Configure a REST embedder" href="/capabilities/hybrid_search/how_to/configure_rest_embedder">
+    Connect Meilisearch to any embedding provider through a REST API.
+  </Card>
+</CardGroup>

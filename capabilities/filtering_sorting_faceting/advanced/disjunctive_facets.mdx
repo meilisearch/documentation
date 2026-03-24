@@ -1,0 +1,253 @@
+---
+title: Build disjunctive facets
+sidebarTitle: Disjunctive facets
+description: Implement faceted navigation where selecting a value in one facet group does not collapse the counts of other values in the same group.
+---
+
+In standard (conjunctive) faceted navigation, selecting "Red" in the color facet filters the entire result set, including the color facet counts. The result: "Blue" drops to 0 because no document is both Red and Blue. Users cannot compare options within the same facet group.
+
+Disjunctive facets solve this. When a user selects "Red", the color facet still shows "Blue (15), Green (8)" with their unfiltered counts, while other facet groups (brand, size) update normally. This is the pattern used by most ecommerce sites.
+
+## How it works
+
+Meilisearch does not have a built-in disjunctive facet mode. Instead, you implement it client-side using [multi-search](/capabilities/multi_search/overview). The idea is to send multiple queries in a single request:
+
+1. **One main query** with all active filters applied, returning the hits and facet counts for non-disjunctive groups
+2. **One query per disjunctive facet group** where you remove the filters for that group, so its counts reflect the broader result set
+
+For example, if the user has selected `color = Red` and `brand = Nike`:
+
+| Query | Filters applied | Facets requested | Purpose |
+|---|---|---|---|
+| Main | `color = Red AND brand = Nike` | `["size"]` | Get hits and non-disjunctive facet counts |
+| Color query | `brand = Nike` | `["color"]` | Get color counts without the color filter |
+| Brand query | `color = Red` | `["brand"]` | Get brand counts without the brand filter |
+
+## Implementation
+
+### Step 1: track active filters by group
+
+Organize your active filters by facet group so you can selectively exclude each group:
+
+<CodeGroup>
+
+```javascript
+const activeFilters = {
+  color: ["Red"],
+  brand: ["Nike"],
+  size: []
+};
+```
+
+</CodeGroup>
+
+### Step 2: build the multi-search request
+
+For each facet group that has active selections, create an additional query that excludes that group's filters:
+
+<CodeGroup>
+
+```javascript
+function buildDisjunctiveQueries(query, activeFilters, allFacetGroups) {
+  // Build filter string for a subset of groups
+  function buildFilter(excludeGroup) {
+    const parts = [];
+    for (const [group, values] of Object.entries(activeFilters)) {
+      if (group === excludeGroup || values.length === 0) continue;
+      if (values.length === 1) {
+        parts.push(`${group} = "${values[0]}"`);
+      } else {
+        const conditions = values.map(v => `${group} = "${v}"`).join(" OR ");
+        parts.push(`(${conditions})`);
+      }
+    }
+    return parts.join(" AND ") || undefined;
+  }
+
+  // Groups that have active selections are disjunctive
+  const disjunctiveGroups = Object.entries(activeFilters)
+    .filter(([_, values]) => values.length > 0)
+    .map(([group]) => group);
+
+  // Non-disjunctive groups have no active selections
+  const nonDisjunctiveGroups = allFacetGroups
+    .filter(g => !disjunctiveGroups.includes(g));
+
+  // Main query: all filters applied, only non-disjunctive facets
+  const queries = [
+    {
+      indexUid: "products",
+      q: query,
+      filter: buildFilter(null),
+      facets: nonDisjunctiveGroups
+    }
+  ];
+
+  // One query per disjunctive group, excluding its own filter
+  for (const group of disjunctiveGroups) {
+    queries.push({
+      indexUid: "products",
+      q: query,
+      filter: buildFilter(group),
+      facets: [group],
+      limit: 0  // we only need facet counts, not hits
+    });
+  }
+
+  return queries;
+}
+```
+
+</CodeGroup>
+
+Setting `limit: 0` on the per-group queries avoids fetching duplicate hits. You only need the `facetDistribution` from these queries.
+
+### Step 3: send the multi-search request
+
+<CodeGroup>
+
+```javascript
+const allFacetGroups = ["color", "brand", "size"];
+const queries = buildDisjunctiveQueries("running shoes", activeFilters, allFacetGroups);
+
+const response = await fetch("MEILISEARCH_URL/multi-search", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    "Authorization": "Bearer MEILISEARCH_KEY"
+  },
+  body: JSON.stringify({ queries })
+});
+
+const data = await response.json();
+```
+
+</CodeGroup>
+
+### Step 4: merge facet distributions
+
+Combine the facet distributions from all queries into a single object for your UI:
+
+<CodeGroup>
+
+```javascript
+function mergeFacetDistributions(results) {
+  const merged = {};
+  for (const result of results) {
+    if (!result.facetDistribution) continue;
+    for (const [attribute, values] of Object.entries(result.facetDistribution)) {
+      merged[attribute] = values;
+    }
+  }
+  return merged;
+}
+
+const hits = data.results[0].hits;
+const facetDistribution = mergeFacetDistributions(data.results);
+```
+
+</CodeGroup>
+
+The first result contains the actual search hits. The remaining results contribute their facet distributions. Since each facet group appears in exactly one query, merging is a simple assignment with no conflicts.
+
+## Full example
+
+Putting it all together with a complete search function:
+
+<CodeGroup>
+
+```javascript
+async function disjunctiveSearch(query, activeFilters) {
+  const allFacetGroups = ["color", "brand", "size"];
+
+  function buildFilter(excludeGroup) {
+    const parts = [];
+    for (const [group, values] of Object.entries(activeFilters)) {
+      if (group === excludeGroup || values.length === 0) continue;
+      if (values.length === 1) {
+        parts.push(`${group} = "${values[0]}"`);
+      } else {
+        const conditions = values.map(v => `${group} = "${v}"`).join(" OR ");
+        parts.push(`(${conditions})`);
+      }
+    }
+    return parts.join(" AND ") || undefined;
+  }
+
+  const disjunctiveGroups = Object.entries(activeFilters)
+    .filter(([_, values]) => values.length > 0)
+    .map(([group]) => group);
+
+  const nonDisjunctiveGroups = allFacetGroups
+    .filter(g => !disjunctiveGroups.includes(g));
+
+  const queries = [
+    {
+      indexUid: "products",
+      q: query,
+      filter: buildFilter(null),
+      facets: nonDisjunctiveGroups.length > 0 ? nonDisjunctiveGroups : undefined
+    }
+  ];
+
+  for (const group of disjunctiveGroups) {
+    queries.push({
+      indexUid: "products",
+      q: query,
+      filter: buildFilter(group),
+      facets: [group],
+      limit: 0
+    });
+  }
+
+  const response = await fetch("MEILISEARCH_URL/multi-search", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer MEILISEARCH_KEY"
+    },
+    body: JSON.stringify({ queries })
+  });
+
+  const data = await response.json();
+
+  // Merge all facet distributions
+  const facetDistribution = {};
+  for (const result of data.results) {
+    if (!result.facetDistribution) continue;
+    Object.assign(facetDistribution, result.facetDistribution);
+  }
+
+  return {
+    hits: data.results[0].hits,
+    facetDistribution,
+    estimatedTotalHits: data.results[0].estimatedTotalHits
+  };
+}
+```
+
+</CodeGroup>
+
+## Performance considerations
+
+Disjunctive facets require one additional query per facet group with active selections. In practice this is fast because:
+
+- Multi-search executes all queries in a single HTTP request
+- Per-group queries set `limit: 0`, so Meilisearch skips ranking and document retrieval
+- Meilisearch processes multi-search queries concurrently
+
+For most applications, the total response time is comparable to a single search request. If you have many facet groups (10+), consider only making disjunctive queries for groups that the user has actively filtered on.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Multi-search" icon="layer-group" href="/capabilities/multi_search/overview">
+    Learn more about multi-search and how to batch queries.
+  </Card>
+  <Card title="Build faceted navigation" icon="sidebar" href="/capabilities/filtering_sorting_faceting/how_to/build_faceted_navigation">
+    Standard faceted navigation pattern for simpler use cases.
+  </Card>
+  <Card title="Optimize facet performance" icon="gauge-high" href="/capabilities/filtering_sorting_faceting/advanced/optimize_facet_performance">
+    Reduce indexing time and search latency for faceted search.
+  </Card>
+</CardGroup>

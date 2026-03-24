@@ -1,0 +1,260 @@
+---
+title: Handle errors and fallbacks
+description: Build resilient conversational search by handling LLM failures, empty results, rate limiting, and providing meaningful fallback responses.
+---
+
+Conversational search involves multiple systems (Meilisearch, an LLM provider, your application). Any of these can fail. This guide covers common failure modes and how to handle them gracefully.
+
+## Common error scenarios
+
+| Scenario | HTTP status | Cause |
+|---|---|---|
+| LLM provider unreachable | `502` or `504` | Network issue or provider outage |
+| LLM rate limited | `429` | Too many requests to the LLM provider |
+| No search results | `200` (empty) | Query does not match any documents |
+| Invalid workspace | `404` | Workspace name does not exist |
+| Invalid model | `400` | Model identifier not recognized by the provider |
+| Context too long | `400` | Conversation history exceeds the model's context window |
+
+## Handle LLM provider errors
+
+When the LLM provider is unavailable or returns an error, the chat completions endpoint forwards the error. Wrap your requests in error handling to provide a fallback:
+
+<CodeGroup>
+
+```javascript
+async function chat(messages) {
+  try {
+    const response = await fetch(
+      `${MEILISEARCH_URL}/chats/${WORKSPACE}/chat/completions`,
+      {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${API_KEY}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          model: MODEL,
+          messages,
+          tools: [
+            {
+              type: 'function',
+              function: {
+                name: '_meiliSearchProgress',
+                description: 'Reports search progress'
+              }
+            }
+          ]
+        })
+      }
+    );
+
+    if (response.status === 429) {
+      return {
+        role: 'assistant',
+        content: 'The service is currently experiencing high demand. Please try again in a moment.'
+      };
+    }
+
+    if (response.status === 502 || response.status === 504) {
+      return {
+        role: 'assistant',
+        content: 'The AI service is temporarily unavailable. Try a regular search instead.',
+        fallback: true
+      };
+    }
+
+    if (!response.ok) {
+      const error = await response.json();
+      console.error('Chat error:', error);
+      return {
+        role: 'assistant',
+        content: 'Something went wrong. Please try rephrasing your question.'
+      };
+    }
+
+    return response;
+  } catch (networkError) {
+    return {
+      role: 'assistant',
+      content: 'Unable to connect to the search service. Please check your connection and try again.'
+    };
+  }
+}
+```
+
+</CodeGroup>
+
+## Fall back to regular search
+
+When conversational search fails, you can fall back to a standard keyword or hybrid search. This ensures users still get results:
+
+<CodeGroup>
+
+```javascript
+async function searchWithFallback(query, conversationHistory) {
+  // Try conversational search first
+  const chatResponse = await chat([
+    ...conversationHistory,
+    { role: 'user', content: query }
+  ]);
+
+  if (chatResponse.fallback) {
+    // Fall back to standard search
+    const searchResponse = await fetch(
+      `${MEILISEARCH_URL}/indexes/${INDEX}/search`,
+      {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${API_KEY}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          q: query,
+          hybrid: { semanticRatio: 0.5, embedder: EMBEDDER }
+        })
+      }
+    );
+
+    const results = await searchResponse.json();
+    return {
+      type: 'search',
+      hits: results.hits,
+      message: 'Showing search results instead. The AI assistant is temporarily unavailable.'
+    };
+  }
+
+  return { type: 'chat', response: chatResponse };
+}
+```
+
+</CodeGroup>
+
+## Handle empty search results
+
+When the LLM cannot find relevant documents, it may hallucinate an answer or give a vague response. Use [guardrails](/capabilities/conversational_search/how_to/configure_guardrails) in your system prompt to handle this:
+
+<CodeGroup>
+
+```text System prompt
+When the search results do not contain enough information to answer
+the user's question:
+
+1. Clearly state that you could not find relevant information
+2. Suggest alternative search terms the user might try
+3. Never make up information that is not in the search results
+```
+
+</CodeGroup>
+
+You can also detect empty results on the client side by inspecting the `_meiliSearchSources` tool call. If the sources array is empty, display a helpful message:
+
+<CodeGroup>
+
+```javascript
+function handleSources(toolCall) {
+  const sources = JSON.parse(toolCall.function.arguments);
+
+  if (!sources.results || sources.results.length === 0) {
+    showMessage('No matching documents found. Try different keywords or broaden your search.');
+    return;
+  }
+
+  displaySources(sources.results);
+}
+```
+
+</CodeGroup>
+
+## Handle rate limiting
+
+LLM providers enforce rate limits based on requests per minute or tokens per minute. When you hit these limits, implement backoff:
+
+<CodeGroup>
+
+```javascript
+async function chatWithRetry(messages, maxRetries = 3) {
+  for (let attempt = 0; attempt < maxRetries; attempt++) {
+    const response = await fetch(
+      `${MEILISEARCH_URL}/chats/${WORKSPACE}/chat/completions`,
+      {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${API_KEY}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ model: MODEL, messages })
+      }
+    );
+
+    if (response.status !== 429) {
+      return response;
+    }
+
+    // Exponential backoff: 1s, 2s, 4s
+    const waitMs = Math.pow(2, attempt) * 1000;
+    await new Promise(resolve => setTimeout(resolve, waitMs));
+  }
+
+  return {
+    fallback: true,
+    content: 'The service is busy. Please try again shortly.'
+  };
+}
+```
+
+</CodeGroup>
+
+To reduce rate limiting in production:
+
+- Use a higher-tier API key with your LLM provider
+- Implement client-side debouncing to avoid sending requests on every keystroke
+- Cache responses for repeated questions
+
+## Manage context window limits
+
+Long conversations can exceed the LLM's context window. When this happens, the provider returns an error. Trim older messages from the conversation history to stay within limits:
+
+<CodeGroup>
+
+```javascript
+function trimConversation(messages, maxMessages = 20) {
+  if (messages.length <= maxMessages) {
+    return messages;
+  }
+
+  // Keep the system message (if any) and the most recent messages
+  const systemMessages = messages.filter(m => m.role === 'system');
+  const nonSystemMessages = messages.filter(m => m.role !== 'system');
+
+  return [
+    ...systemMessages,
+    ...nonSystemMessages.slice(-maxMessages)
+  ];
+}
+```
+
+</CodeGroup>
+
+## Display errors in your UI
+
+When an error occurs, give users clear feedback and actionable next steps. Avoid exposing raw error messages or stack traces:
+
+| Error type | User-facing message |
+|---|---|
+| Provider down | "AI search is temporarily unavailable. Showing regular search results." |
+| Rate limited | "High demand right now. Please wait a moment and try again." |
+| No results | "No results found. Try different keywords or a broader question." |
+| Network error | "Connection issue. Check your internet and try again." |
+| Context too long | "This conversation is getting long. Start a new conversation for best results." |
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Configure guardrails" href="/capabilities/conversational_search/how_to/configure_guardrails">
+    Reduce hallucination with system prompts
+  </Card>
+  <Card title="Stream chat responses" href="/capabilities/conversational_search/how_to/stream_chat_responses">
+    Implement real-time streaming for chat responses
+  </Card>
+</CardGroup>

@@ -1,0 +1,103 @@
+---
+title: Tokenization
+sidebarTitle: Tokenization
+description: Tokenization is the process of taking a sentence or phrase and splitting it into smaller units of language. It is a crucial procedure when indexing documents.
+---
+
+**Tokenization** is the act of taking a sentence or phrase and splitting it into smaller units of language, called tokens. It is the first step of document indexing in the Meilisearch engine, and is a critical factor in the quality of search results.
+
+When you index a document containing `"Freshly baked croissants"`, Meilisearch splits it into three tokens: `freshly`, `baked`, and `croissants`. These tokens are what Meilisearch stores and matches against when a user performs a search query.
+
+Breaking sentences into smaller chunks requires understanding where one word ends and another begins, making tokenization a highly complex and language-dependent task. Meilisearch's solution to this problem is a **modular tokenizer** that follows different processes, called **pipelines**, based on the language it detects.
+
+This allows Meilisearch to function in several different languages with zero setup.
+
+## Deep dive: The Meilisearch tokenizer
+
+Meilisearch uses [charabia](https://github.com/meilisearch/charabia), an open-source Rust library purpose-built for multilingual tokenization. When you add documents to a Meilisearch index, the tokenization process is handled by an abstract interface called the tokenizer. The tokenizer is responsible for splitting each field by writing system (for example, Latin alphabet, Chinese hanzi). It then applies the corresponding pipeline to each part of each document field.
+
+We can break down the tokenization process like so:
+
+1. Crawl the document(s), splitting each field by script
+2. Go back over the documents part-by-part, running the corresponding tokenization pipeline, if it exists
+
+Pipelines include many language-specific operations. Currently, we have a number of pipelines, including a default pipeline for languages that use whitespace to separate words, and dedicated pipelines for Chinese, Japanese, Hebrew, Thai, and Khmer.
+
+## Customizing tokenization behavior
+
+Meilisearch provides three settings that let you control how text is split into tokens.
+
+### Separator tokens
+
+By default, Meilisearch uses whitespace and punctuation to determine word boundaries. You can add custom characters or strings as separators using the [separator tokens setting](/reference/api/settings/get-separatortokens).
+
+For example, if your dataset uses `|` as a delimiter within a field, you can add it as a separator token so Meilisearch treats it as a word boundary:
+
+<CodeGroup>
+
+```json
+{
+  "separatorTokens": ["|"]
+}
+```
+
+</CodeGroup>
+
+With this setting, a field value like `"red|green|blue"` is tokenized into `red`, `green`, and `blue`.
+
+### Non-separator tokens
+
+Conversely, you can tell Meilisearch to treat certain characters as part of a word rather than as separators using the [non-separator tokens setting](/reference/api/settings/get-nonseparatortokens).
+
+This is useful when your data includes special characters that should be searchable. For example, if your dataset contains programming terms like `C++` or `C#`, you can prevent `+` and `#` from acting as separators:
+
+<CodeGroup>
+
+```json
+{
+  "nonSeparatorTokens": ["+", "#"]
+}
+```
+
+</CodeGroup>
+
+### Dictionary
+
+The [dictionary setting](/reference/api/settings/get-dictionary) lets you define custom word boundaries for strings that Meilisearch would not otherwise split correctly. This is particularly useful for compound words or domain-specific terms.
+
+For example, if users need to search for "ice cream" and your data contains the compound form "icecream", you can add it to the dictionary so Meilisearch knows how to handle it:
+
+<CodeGroup>
+
+```json
+{
+  "dictionary": ["icecream"]
+}
+```
+
+</CodeGroup>
+
+## How tokenization affects search
+
+Tokenization directly determines which queries match which documents. Here are common scenarios to be aware of:
+
+- **Compound words**: A search for `"ice cream"` will not match a document containing `"icecream"` because they produce different tokens. Use the dictionary setting or [synonyms](/capabilities/full_text_search/relevancy/synonyms) to bridge the gap.
+- **Special characters**: By default, characters like `@`, `#`, and `+` act as separators. If your data includes terms like `C#` or email addresses, configure non-separator tokens so these characters are preserved during tokenization.
+- **CJK languages**: Chinese, Japanese, and Korean do not use whitespace between words. Meilisearch's dedicated pipelines handle segmentation for these languages automatically, but for best results consider using [localized attributes](/capabilities/indexing/how_to/handle_multilingual_data).
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Multilingual datasets" href="/capabilities/indexing/how_to/handle_multilingual_data">
+    Best practices for indexing and searching content in multiple languages
+  </Card>
+  <Card title="Separator tokens reference" href="/reference/api/settings/get-separatortokens">
+    API reference for configuring custom separator tokens
+  </Card>
+  <Card title="Non-separator tokens reference" href="/reference/api/settings/get-nonseparatortokens">
+    API reference for configuring non-separator tokens
+  </Card>
+  <Card title="Dictionary reference" href="/reference/api/settings/get-dictionary">
+    API reference for configuring the dictionary setting
+  </Card>
+</CardGroup>

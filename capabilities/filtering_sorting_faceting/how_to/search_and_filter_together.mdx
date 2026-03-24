@@ -1,0 +1,216 @@
+---
+title: Search and filter together
+description: Combine keyword queries with filters to refine results and understand how facet counts change based on the search query.
+---
+
+Filters and search queries work together in Meilisearch. When you combine a query with filters, the results are first filtered, then ranked by relevancy within the filtered set. Facet distributions also update dynamically to reflect only the filtered and queried results.
+
+This guide explains how these interactions work and how to use them effectively.
+
+## How query and filter interact
+
+When you send a search request with both `q` and `filter`, Meilisearch applies them in combination:
+
+1. Meilisearch finds all documents matching the filter expression
+2. Within that filtered set, it ranks documents by relevancy to the query
+3. Facet distributions reflect the intersection of both query and filter
+
+This means `facetDistribution` counts change depending on the query. If you search for "running shoes" with a `brand` facet, you only see brands that have running shoes, not all brands in the index.
+
+## Basic example
+
+Start with a products index configured with filterable and searchable attributes:
+
+<CodeGroup>
+
+```bash
+curl \
+  -X PATCH 'MEILISEARCH_URL/indexes/products/settings' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  --data-binary '{
+    "filterableAttributes": ["category", "brand", "price"],
+    "sortableAttributes": ["price"]
+  }'
+```
+
+</CodeGroup>
+
+Search for "running shoes" while filtering by category and requesting facet distributions:
+
+<CodeGroup>
+
+```json
+{
+  "q": "running shoes",
+  "filter": "category = 'Footwear'",
+  "facets": ["brand", "category"],
+  "sort": ["price:asc"]
+}
+```
+
+</CodeGroup>
+
+The response includes only footwear matching "running shoes", sorted by price. The `facetDistribution` reflects this combined result:
+
+<CodeGroup>
+
+```json
+{
+  "hits": [
+    { "id": 1, "title": "TrailRunner Pro", "brand": "Nike", "price": 129.99 },
+    { "id": 2, "title": "SpeedRun 5", "brand": "Adidas", "price": 139.99 }
+  ],
+  "facetDistribution": {
+    "brand": {
+      "Nike": 12,
+      "Adidas": 8,
+      "New Balance": 5
+    },
+    "category": {
+      "Footwear": 25
+    }
+  },
+  "facetStats": {
+    "price": { "min": 49.99, "max": 299.99 }
+  }
+}
+```
+
+</CodeGroup>
+
+The brand counts show only brands that have running shoes in the Footwear category, not all brands in the index.
+
+## Facet counts are query-aware
+
+This is a key behavior to understand when building search interfaces. Consider two scenarios:
+
+**Without a query** (empty `q`):
+
+<CodeGroup>
+
+```json
+{
+  "q": "",
+  "facets": ["brand"]
+}
+```
+
+</CodeGroup>
+
+Returns brand counts across the entire index: Nike (150), Adidas (120), Puma (80).
+
+**With a query**:
+
+<CodeGroup>
+
+```json
+{
+  "q": "waterproof jacket",
+  "facets": ["brand"]
+}
+```
+
+</CodeGroup>
+
+Returns brand counts only for documents matching "waterproof jacket": Nike (8), Adidas (3), Columbia (12).
+
+When building a faceted search UI, update your facet sidebar every time the user types a new query. The facet counts should always reflect what the user is currently searching for.
+
+## Combine multiple filters with a query
+
+You can stack filters to narrow results further. Users often select multiple facet values as they refine their search:
+
+<CodeGroup>
+
+```json
+{
+  "q": "running shoes",
+  "filter": "category = 'Footwear' AND brand IN ['Nike', 'Adidas'] AND price < 200",
+  "facets": ["brand", "category", "price"]
+}
+```
+
+</CodeGroup>
+
+Each additional filter reduces the result set. The `facetDistribution` updates to reflect all active constraints.
+
+## Preserve unfiltered facet counts
+
+In some UIs, you want to show all available facet values, even those with zero results under the current query. Meilisearch does not return facet values with zero matches. To show "disabled" facet values in your UI, compare the current facet distribution against a baseline.
+
+One approach is to send two requests:
+
+1. A search request with the current query and all filters, to get active results
+2. A search request with the current query but without the filter you want to display fully, to get the complete distribution for that facet
+
+For example, to show all brands even when the user has filtered to Nike only:
+
+<CodeGroup>
+
+```json
+// Request 1: filtered results
+{
+  "q": "running shoes",
+  "filter": "brand = 'Nike'",
+  "facets": ["brand"]
+}
+
+// Request 2: unfiltered facet distribution
+{
+  "q": "running shoes",
+  "facets": ["brand"],
+  "limit": 0
+}
+```
+
+</CodeGroup>
+
+Setting `limit: 0` in the second request avoids fetching hits when you only need the facet distribution. Use [multi-search](/capabilities/multi_search/overview) to send both requests in a single HTTP call.
+
+## Use facetStats for range filters
+
+When filtering by numeric attributes like price or rating, `facetStats` provides the minimum and maximum values. Use these to build range sliders in your UI:
+
+<CodeGroup>
+
+```json
+{
+  "q": "laptop",
+  "facets": ["price", "rating"],
+  "filter": "category = 'Electronics'"
+}
+```
+
+</CodeGroup>
+
+The response includes:
+
+<CodeGroup>
+
+```json
+{
+  "facetStats": {
+    "price": { "min": 299.99, "max": 2499.99 },
+    "rating": { "min": 2.5, "max": 4.9 }
+  }
+}
+```
+
+</CodeGroup>
+
+Use these values to set the bounds of your range slider. When the user adjusts the slider, add a filter like `price >= 500 AND price <= 1500` to the next search request.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Build faceted navigation" href="/capabilities/filtering_sorting_faceting/how_to/build_faceted_navigation">
+    Complete guide to building a faceted search UI
+  </Card>
+  <Card title="Filter expression reference" href="/capabilities/filtering_sorting_faceting/advanced/filter_expression_syntax">
+    Full syntax reference for filter expressions
+  </Card>
+  <Card title="Multi-search" href="/capabilities/multi_search/overview">
+    Send multiple search requests in a single HTTP call
+  </Card>
+</CardGroup>
