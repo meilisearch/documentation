@@ -1134,22 +1134,6 @@
       "destination": "/capabilities/overview"
     },
     {
-      "source": "/capabilities/security/how_to/configure_sso",
-      "destination": "/capabilities/teams/how_to/configure_sso_for_team"
-    },
-    {
-      "source": "/capabilities/multi_search/how_to/use_network_search",
-      "destination": "/resources/self_hosting/sharding/overview"
-    },
-    {
-      "source": "/resources/self_hosting/sharding",
-      "destination": "/resources/self_hosting/sharding/overview"
-    },
-    {
-      "source": "/capabilities/replication_and_sharding/overview",
-      "destination": "/resources/self_hosting/sharding/overview"
-    },
-    {
       "source": "/resources/self_hosting/getting_started",
       "destination": "/resources/self_hosting/getting_started/quick_start"
     },
@@ -1200,10 +1184,6 @@
     {
       "source": "/learn/indexing/indexing_best_practices",
       "destination": "/getting_started/good_practices"
-    },
-    {
-      "source": "/learn/cookbooks/multitenancy_nodejs",
-      "destination": "/capabilities/security/overview"
     },
     {
       "source": "/reference/api/batches",
@@ -1324,10 +1304,6 @@
     {
       "source": "/reference/api/error_codes",
       "destination": "/reference/errors/error_codes"
-    },
-    {
-      "source": "/reference/api/errors",
-      "destination": "/reference/errors/overview"
     },
     {
       "source": "/reference/api/fields",
@@ -1658,14 +1634,6 @@
       "destination": "/capabilities/hybrid_search/how_to/configure_openai_embedder"
     },
     {
-      "source": "/capabilities/hybrid_search/providers/openai",
-      "destination": "/capabilities/hybrid_search/how_to/configure_openai_embedder"
-    },
-    {
-      "source": "/capabilities/hybrid_search/providers/cohere",
-      "destination": "/capabilities/hybrid_search/how_to/configure_cohere_embedder"
-    },
-    {
       "source": "/guides/embedders/cohere",
       "destination": "/capabilities/hybrid_search/how_to/configure_cohere_embedder"
     },
@@ -1688,10 +1656,6 @@
     {
       "source": "/guides/embedders/bedrock",
       "destination": "/capabilities/hybrid_search/providers/bedrock"
-    },
-    {
-      "source": "/guides/embedders/jina",
-      "destination": "/capabilities/hybrid_search/providers/jina"
     },
     {
       "source": "/guides/embedders/huggingface",
@@ -1850,14 +1814,6 @@
       "destination": "/capabilities/personalization/getting_started/recommendations"
     },
     {
-      "source": "/capabilities/hybrid_search/how_to/retrieve_similar_documents",
-      "destination": "/capabilities/personalization/getting_started/recommendations"
-    },
-    {
-      "source": "/capabilities/personalization/getting_started",
-      "destination": "/capabilities/personalization/getting_started/personalized_search"
-    },
-    {
       "source": "/learn/ai_powered_search/choose_an_embedder",
       "destination": "/capabilities/hybrid_search/how_to/choose_an_embedder"
     },
@@ -1874,16 +1830,8 @@
       "destination": "/capabilities/conversational_search/advanced/chat_tooling_reference"
     },
     {
-      "source": "/capabilities/conversational_search/how_to/chat_tooling_reference",
-      "destination": "/capabilities/conversational_search/advanced/chat_tooling_reference"
-    },
-    {
       "source": "/learn/chat/conversational_search",
       "destination": "/capabilities/conversational_search/overview"
-    },
-    {
-      "source": "/capabilities/conversational_search/getting_started",
-      "destination": "/capabilities/conversational_search/getting_started/setup"
     },
     {
       "source": "/learn/personalization/making_personalized_search_queries",
@@ -1892,6 +1840,26 @@
     {
       "source": "/learn/personalization/search_personalization",
       "destination": "/capabilities/personalization/overview"
+    },
+    {
+      "source": "/errors",
+      "destination": "/reference/errors/overview"
+    },
+    {
+      "source": "/learn/what_is_meilisearch/sdks",
+      "destination": "/resources/help/sdks"
+    },
+    {
+      "source": "/learn/security/master_api_keys",
+      "destination": "/resources/self_hosting/security/master_api_keys"
+    },
+    {
+      "source": "/learn/core_concepts/indexes",
+      "destination": "/resources/internals/indexes"
+    },
+    {
+      "source": "/guides/advanced_guides/configuration",
+      "destination": "/resources/self_hosting/configuration/overview"
     },
     {
       "source": "/learn/analytics/configure_analytics_events",
@@ -1967,10 +1935,6 @@
     },
     {
       "source": "/learn/filtering_and_sorting/facet_types",
-      "destination": "/capabilities/filtering_sorting_faceting/overview"
-    },
-    {
-      "source": "/learn/filtering_and_sorting/facets_vs_filters",
       "destination": "/capabilities/filtering_sorting_faceting/overview"
     },
     {
@@ -2050,20 +2014,8 @@
       "destination": "/capabilities/full_text_search/relevancy/typo_tolerance_settings#how-typo-tolerance-works"
     },
     {
-      "source": "/capabilities/full_text_search/relevancy/typo_tolerance_calculations",
-      "destination": "/capabilities/full_text_search/relevancy/typo_tolerance_settings#how-typo-tolerance-works"
-    },
-    {
       "source": "/learn/relevancy/distinct_attribute",
       "destination": "/capabilities/full_text_search/how_to/configure_distinct_attribute"
-    },
-    {
-      "source": "/capabilities/full_text_search/relevancy/distinct_attribute",
-      "destination": "/capabilities/full_text_search/how_to/configure_distinct_attribute"
-    },
-    {
-      "source": "/capabilities/full_text_search/relevancy/displayed_searchable_attributes",
-      "destination": "/capabilities/full_text_search/how_to/configure_displayed_attributes"
     },
     {
       "source": "/learn/relevancy/displayed_searchable_attributes",
@@ -2076,34 +2028,6 @@
     {
       "source": "/learn/getting_started/what_is_meilisearch",
       "destination": "/getting_started/overview"
-    },
-    {
-      "source": "/capabilities/indexing/how_to/monitor_tasks",
-      "destination": "/capabilities/indexing/tasks_and_batches/monitor_tasks"
-    },
-    {
-      "source": "/capabilities/indexing/how_to/filter_tasks",
-      "destination": "/capabilities/indexing/tasks_and_batches/filter_tasks"
-    },
-    {
-      "source": "/capabilities/indexing/how_to/manage_task_database",
-      "destination": "/capabilities/indexing/tasks_and_batches/manage_task_database"
-    },
-    {
-      "source": "/capabilities/indexing/how_to/optimize_batch_performance",
-      "destination": "/capabilities/indexing/tasks_and_batches/optimize_batch_performance"
-    },
-    {
-      "source": "/capabilities/indexing/advanced/async_operations",
-      "destination": "/capabilities/indexing/tasks_and_batches/async_operations"
-    },
-    {
-      "source": "/capabilities/indexing/how_to/use_foreign_keys",
-      "destination": "/capabilities/indexing/how_to/document_relations"
-    },
-    {
-      "source": "/capabilities/indexing/how_to/inspect_index_fields",
-      "destination": "/capabilities/indexing/overview"
     }
   ]
 }
