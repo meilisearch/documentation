@@ -2028,6 +2028,110 @@
     {
       "source": "/learn/getting_started/what_is_meilisearch",
       "destination": "/getting_started/overview"
+    },
+    {
+      "source": "/learn/fine_tuning_results/geosearch",
+      "destination": "/capabilities/geo_search/overview"
+    },
+    {
+      "source": "/learn/configuration/settings",
+      "destination": "/reference/api/settings/list-all-settings"
+    },
+    {
+      "source": "/learn/advanced/language",
+      "destination": "/resources/help/language"
+    },
+    {
+      "source": "/learn/cookbooks/docker",
+      "destination": "/resources/self_hosting/getting_started/docker"
+    },
+    {
+      "source": "/learn/cookbooks/digitalocean_droplet",
+      "destination": "/resources/self_hosting/deployment/digitalocean"
+    },
+    {
+      "source": "/learn/cookbooks/running_production",
+      "destination": "/resources/self_hosting/deployment/running_production"
+    },
+    {
+      "source": "/learn/what_is_meilisearch/overview",
+      "destination": "/getting_started/overview"
+    },
+    {
+      "source": "/learn/what_is_meilisearch/features",
+      "destination": "/getting_started/features"
+    },
+    {
+      "source": "/learn/getting_started/customizing_relevancy",
+      "destination": "/capabilities/full_text_search/relevancy/relevancy"
+    },
+    {
+      "source": "/learn/resources/contributing-docs",
+      "destination": "/resources/help/contributing"
+    },
+    {
+      "source": "/learn/advanced/security",
+      "destination": "/capabilities/security/overview"
+    },
+    {
+      "source": "/learn/cookbooks/computing_hugging_face_embeddings_gpu",
+      "destination": "/resources/self_hosting/huggingface_gpu"
+    },
+    {
+      "source": "/reference/features/known_limitations",
+      "destination": "/resources/help/known_limitations"
+    },
+    {
+      "source": "/reference/features/filtering_and_faceted_search",
+      "destination": "/capabilities/filtering_sorting_faceting/overview"
+    },
+    {
+      "source": "/reference/features/installation",
+      "destination": "/resources/self_hosting/getting_started/install_locally"
+    },
+    {
+      "source": "/reference/features/settings",
+      "destination": "/reference/api/settings/list-all-settings"
+    },
+    {
+      "source": "/reference/features/filtering",
+      "destination": "/capabilities/filtering_sorting_faceting/overview"
+    },
+    {
+      "source": "/reference/features/authentication",
+      "destination": "/capabilities/security/overview"
+    },
+    {
+      "source": "/reference/features/faceted_search",
+      "destination": "/capabilities/filtering_sorting_faceting/overview"
+    },
+    {
+      "source": "/reference/api/updates",
+      "destination": "/reference/api/tasks/list-tasks"
+    },
+    {
+      "source": "/guides/advanced_guides/faceted_search",
+      "destination": "/capabilities/filtering_sorting_faceting/overview"
+    },
+    {
+      "source": "/guides/advanced_guides/synonyms",
+      "destination": "/capabilities/full_text_search/relevancy/synonyms"
+    },
+    {
+      "source": "/guides/advanced_guides/authentication",
+      "destination": "/capabilities/security/overview"
+    },
+    {
+      "source": "/guides/main_concepts/documents",
+      "destination": "/capabilities/indexing/overview"
+    },
+    {
+      "source": "/guides/main_concepts/relevancy",
+      "destination": "/capabilities/full_text_search/relevancy/relevancy"
+    },
+    {
+      "source": "/guides/introduction/quick_start_guide",
+      "destination": "/getting_started/first_project"
     }
   ]
 }
