@@ -4,21 +4,33 @@ sidebarTitle: HuggingFace Inference
 description: This guide will walk you through the process of setting up Meilisearch with Hugging Face Inference Endpoints.
 ---
 
-## Introduction
-
-This guide will walk you through the process of setting up a Meilisearch REST embedder with [Hugging Face Inference Endpoints](https://ui.endpoints.huggingface.co/) to enable semantic search capabilities.
+This guide shows you how to set up a Meilisearch REST embedder with [Hugging Face Inference Endpoints](https://ui.endpoints.huggingface.co/) for semantic search.
 
 <Note>
-You can use Hugging Face and Meilisearch in two ways: running the model locally by setting the embedder source to `huggingface`, or remotely in Hugging Face's servers by setting the embeder source to `rest`.
+You can use Hugging Face and Meilisearch in two ways: running the model locally by setting the embedder source to `huggingFace`, or remotely on Hugging Face's servers by setting the embedder source to `rest`.
 </Note>
+
+## Popular models
+
+Hugging Face hosts hundreds of sentence embedding models. Some popular choices:
+
+| Model | Dimensions | Notes |
+|-------|-----------|-------|
+| `BAAI/bge-small-en-v1.5` | 384 | Fast, English-only, great for most use cases |
+| `BAAI/bge-large-en-v1.5` | 1,024 | Higher quality English embeddings |
+| `BAAI/bge-multilingual-gemma2` | varies | Multilingual, based on Gemma 2 |
+| `sentence-transformers/all-MiniLM-L6-v2` | 384 | Lightweight and fast |
+| `sentence-transformers/all-mpnet-base-v2` | 768 | Higher quality general-purpose |
+| `sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2` | 384 | Multilingual, lightweight |
+| `intfloat/multilingual-e5-large` | 1,024 | Strong multilingual performance |
+
+Browse the full catalog of available models on the [Hugging Face Inference Endpoints catalog](https://ui.endpoints.huggingface.co/catalog?task=sentence-embeddings).
 
 ## Requirements
 
-To follow this guide, you'll need:
-
-- A [Meilisearch Cloud](https://www.meilisearch.com/cloud) project running version >=1.13
+- A [Meilisearch Cloud](https://www.meilisearch.com/cloud) project or a self-hosted instance
 - A [Hugging Face account](https://huggingface.co/) with a deployed inference endpoint
-- The endpoint URL and API key of the deployed model on your Hugging Face account
+- The endpoint URL and API key of the deployed model
 
 ## Configure the embedder
 
@@ -54,7 +66,7 @@ In this configuration:
 Once you've configured the embedder, Meilisearch will automatically generate embeddings for your documents. Monitor the task using the Cloud UI or the [list tasks endpoint](/reference/api/tasks/list-tasks).
 
 <Note>
-This example uses [BAAI/bge-small-en-v1.5](https://huggingface.co/BAAI/bge-small-en-v1.5) as its model, but Hugging Face offers [other options that may fit your dataset better](https://ui.endpoints.huggingface.co/catalog?task=sentence-embeddings).
+This example uses [BAAI/bge-small-en-v1.5](https://huggingface.co/BAAI/bge-small-en-v1.5) as its model. See the [popular models](#popular-models) section above for alternatives, or browse the full [Inference Endpoints catalog](https://ui.endpoints.huggingface.co/catalog?task=sentence-embeddings).
 </Note>
 
 ## Perform a semantic search

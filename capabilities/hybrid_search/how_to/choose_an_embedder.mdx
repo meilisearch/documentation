@@ -13,15 +13,15 @@ Meilisearch supports a wide range of embedding providers, each with different mo
 | Provider | Models | Strengths | Guide |
 |----------|--------|-----------|-------|
 | OpenAI | text-embedding-3-small, text-embedding-3-large | Straightforward setup, good general quality | [Guide](/capabilities/hybrid_search/how_to/configure_openai_embedder) |
-| Cohere | embed-v4.0, embed-english-v3.0, embed-multilingual-v3.0 | Strong multilingual support, input type optimization | [Guide](/capabilities/hybrid_search/how_to/configure_cohere_embedder) |
-| Voyage AI | voyage-3.5-lite, voyage-3.5, voyage-3-large | High quality, competitive pricing | [Guide](/capabilities/hybrid_search/providers/voyage) |
-| Jina | jina-embeddings-v5-text-small/nano, jina-embeddings-v3 | Multilingual, affordable, fast | [Guide](/capabilities/hybrid_search/providers/jina) |
+| Cohere | embed-v4.0, embed-english-v3.0, embed-multilingual-v3.0 | Latest v4 supports text and images, strong multilingual | [Guide](/capabilities/hybrid_search/how_to/configure_cohere_embedder) |
+| Voyage AI | voyage-4, voyage-4-lite, voyage-4-large | High quality, flexible dimensions, domain-specific models | [Guide](/capabilities/hybrid_search/providers/voyage) |
+| Jina | jina-embeddings-v4, jina-embeddings-v5-text-small/nano | v4 supports text, images, and PDFs, 32K context | [Guide](/capabilities/hybrid_search/providers/jina) |
 | Mistral | mistral-embed | Good for existing Mistral users | [Guide](/capabilities/hybrid_search/providers/mistral) |
 | Google Gemini | gemini-embedding-001 | High dimensions (3072), Google ecosystem | [Guide](/capabilities/hybrid_search/providers/gemini) |
 | Cloudflare | bge-small/base/large, embeddinggemma, qwen3 | Edge network, low latency, free tier | [Guide](/capabilities/hybrid_search/providers/cloudflare) |
-| AWS Bedrock | Titan v2, Nova, Cohere on Bedrock | AWS ecosystem, multimodal options | [Guide](/capabilities/hybrid_search/providers/bedrock) |
+| AWS Bedrock | Titan v2, Nova, Cohere Embed v4 on Bedrock | AWS ecosystem, multimodal options | [Guide](/capabilities/hybrid_search/providers/bedrock) |
 | HuggingFace (local) | Any compatible model | No API costs, full control | [Guide](/capabilities/hybrid_search/how_to/configure_huggingface_embedder) |
-| HuggingFace Inference | Any hosted model | Scalable open-source models | [Guide](/capabilities/hybrid_search/providers/huggingface) |
+| HuggingFace Inference | bge, MiniLM, mpnet, multilingual-e5, and more | Scalable open-source models, hundreds available | [Guide](/capabilities/hybrid_search/providers/huggingface) |
 
 ## Smaller models are often better
 
@@ -29,7 +29,7 @@ Bigger is not always better. In a hybrid search setup, Meilisearch combines keyw
 
 This means a small, fast embedding model is often enough. The quality difference between a 384-dimension model and a 3072-dimension model is rarely worth the extra cost and latency, especially when the keyword side is already covering precise queries.
 
-**Prioritize cheaper, faster models** unless you have a specific reason to need more dimensions or higher embedding quality. Models like `text-embedding-3-small`, `voyage-3.5-lite`, `jina-embeddings-v5-text-nano`, or `embed-english-light-v3.0` are excellent starting points.
+**Prioritize cheaper, faster models** unless you have a specific reason to need more dimensions or higher embedding quality. Models like `text-embedding-3-small`, `voyage-4-lite`, `jina-embeddings-v5-text-nano`, or `embed-english-light-v3.0` are excellent starting points.
 
 ## What to look for
 
@@ -85,13 +85,13 @@ If you work with non-textual content (images, audio) or already generate embeddi
 
 ```mermaid
 flowchart TD
-    A[Starting out?] -->|Yes| B[Use OpenAI text-embedding-3-small<br/>or Voyage 3.5-lite]
+    A[Starting out?] -->|Yes| B[Use OpenAI text-embedding-3-small<br/>or Voyage 4-lite]
     A -->|No| C{Need maximum<br/>search speed?}
     C -->|Yes| D[Composite embedder:<br/>cloud API for indexing +<br/>local HuggingFace for search]
     C -->|No| E{Need specialized<br/>domain model?}
     E -->|Yes| F[Check provider catalogs<br/>for domain-specific models]
     E -->|No| G{Multilingual<br/>content?}
-    G -->|Yes| H[Cohere multilingual,<br/>Jina v5, or BGE multilingual]
+    G -->|Yes| H[Cohere embed-v4.0,<br/>Jina v4, or BGE multilingual]
     G -->|No| I[Pick the cheapest model<br/>that meets your needs]
 ```
 

@@ -15,10 +15,13 @@ Jina AI provides a range of embedding models with strong multilingual support an
 
 | Model | Dimensions | Notes |
 |-------|-----------|-------|
-| `jina-embeddings-v5-text-small` | 1024 | Latest generation, balanced quality and speed |
+| `jina-embeddings-v4` | 128, 256, 512, 1,024, or 2,048 | Multimodal (text, images, PDFs), 32K context, multilingual |
+| `jina-embeddings-v5-text-small` | 1,024 | Text-only, balanced quality and speed |
 | `jina-embeddings-v5-text-nano` | 768 | Smallest and fastest v5 model |
-| `jina-embeddings-v3` | 1024 | Previous generation, well-tested |
+| `jina-embeddings-v3` | 1,024 | Previous generation, well-tested |
 | `jina-colbert-v2` | 128 | Multi-vector model for fine-grained matching |
+
+For new projects, `jina-embeddings-v4` is the recommended choice with its multimodal support and flexible dimensions. If you only need text embeddings, the v5-text models offer a lighter alternative. See the [Jina models page](https://jina.ai/models/jina-embeddings-v4) for details.
 
 ## Configure the embedder
 

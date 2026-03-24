@@ -16,12 +16,15 @@ Cohere offers several embedding models:
 
 | Model | Dimensions | Notes |
 |-------|-----------|-------|
-| `embed-english-v3.0` | 1,024 | Best accuracy for English content |
-| `embed-multilingual-v3.0` | 1,024 | Best for multilingual datasets |
+| `embed-v4.0` | 256, 512, 1,024, or 1,536 | Latest generation, multilingual, supports text and images |
+| `embed-english-v3.0` | 1,024 | Best accuracy for English-only content |
+| `embed-multilingual-v3.0` | 1,024 | Best v3 option for multilingual datasets |
 | `embed-english-light-v3.0` | 384 | Faster, lower cost for English content |
 | `embed-multilingual-light-v3.0` | 384 | Faster, lower cost for multilingual content |
 
-If your dataset is primarily English, use `embed-english-v3.0`. For multilingual content, choose `embed-multilingual-v3.0`. The light variants are faster and cheaper but may return slightly less accurate results.
+For new projects, `embed-v4.0` is the recommended choice as it supports both text and images with flexible dimensions. If you only need English text embeddings and want a proven model, `embed-english-v3.0` remains a solid option. The light variants are faster and cheaper but may return slightly less accurate results.
+
+See the [Cohere Embed documentation](https://docs.cohere.com/docs/cohere-embed) for the full model catalog.
 
 ## Configure the embedder
 
