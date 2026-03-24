@@ -305,7 +305,6 @@
                     "group": "Providers",
                     "pages": [
                       "capabilities/hybrid_search/how_to/configure_openai_embedder",
-                      "capabilities/hybrid_search/providers/openai",
                       "capabilities/hybrid_search/how_to/configure_cohere_embedder",
                       "capabilities/hybrid_search/how_to/configure_huggingface_embedder",
                       "capabilities/hybrid_search/how_to/configure_rest_embedder",
@@ -1656,11 +1655,19 @@
     },
     {
       "source": "/guides/embedders/openai",
-      "destination": "/capabilities/hybrid_search/providers/openai"
+      "destination": "/capabilities/hybrid_search/how_to/configure_openai_embedder"
+    },
+    {
+      "source": "/capabilities/hybrid_search/providers/openai",
+      "destination": "/capabilities/hybrid_search/how_to/configure_openai_embedder"
+    },
+    {
+      "source": "/capabilities/hybrid_search/providers/cohere",
+      "destination": "/capabilities/hybrid_search/how_to/configure_cohere_embedder"
     },
     {
       "source": "/guides/embedders/cohere",
-      "destination": "/capabilities/hybrid_search/providers/cohere"
+      "destination": "/capabilities/hybrid_search/how_to/configure_cohere_embedder"
     },
     {
       "source": "/guides/embedders/mistral",
