@@ -101,6 +101,9 @@ get_all_tasks_1: |-
 get_task_1: |-
   curl \
     -X GET 'MEILISEARCH_URL/tasks/1'
+get_task_documents_1: |-
+  curl \
+    -X GET 'MEILISEARCH_URL/tasks/1/documents'
 get_all_tasks_paginating_1: |-
   curl \
     -X GET 'MEILISEARCH_URL/tasks?limit=2&from=10
@@ -597,7 +600,6 @@ reset_chat_settings_1: |-
   curl \
     -X DELETE 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/chat'
 ### END settings + subroutes
-
 # post_dumps
 post_dump_1: |-
   curl \
@@ -846,7 +848,6 @@ get_version_1: |-
   curl \
     -X GET 'MEILISEARCH_URL/version'
 ## END /reference/api
-
 distinct_attribute_guide_1: |-
   curl \
     -X PUT 'MEILISEARCH_URL/indexes/jackets/settings/distinct-attribute' \
