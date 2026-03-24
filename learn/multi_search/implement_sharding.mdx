@@ -1,28 +1,26 @@
 ---
-title: Implement sharding with remote federated search
-description: This guide walks you through implementing a sharding strategy by activating the `/network` route, configuring the network object, and performing remote federated searches.
+title: Scale horizontally with sharding and replication
+description: This guide walks you through configuring sharding and replication in Meilisearch.
 ---
 
 import { NoticeTag } from '/snippets/notice_tag.mdx';
 
-import CodeSamplesMultiSearchRemoteFederated1 from '/snippets/generated-code-samples/code_samples_multi_search_remote_federated_1.mdx';
+import CodeSamplesNoUseNetworkSearch1 from '/snippets/generated-code-samples/code_samples_no_use_network_search_1.mdx';
 
-Sharding is the process of splitting an index containing many documents into multiple smaller indexes, often called shards. This horizontal scaling technique is useful when handling large databases. In Meilisearch, the best way to implement a sharding strategy is to use remote federated search.
+Sharding is the process of splitting an index containing many documents into multiple smaller indexes, often called shards.
+This horizontal scaling technique is useful when handling large databases.
 
-This guide walks you through activating the `/network` route, configuring the network object, and performing remote federated searches.
+Replicated sharding adds the constraint that a shard is stored in several Meilisearch instances,
+guaranteeing document availability even when an individual instance is not available.
+
+This guide walks you through activating the `/network` route, configuring the network object, and performing search across all shards.
 
 <NoticeTag label="Enterprise Edition" />
 Sharding is an Enterprise Edition feature. You are free to use it for evaluation purposes. Please [reach out to us](mailto:sales@meilisearch.com) before using it in production.
 
-<Tip>
-## Configuring multiple instances
-
-To minimize issues and limit unexpected behavior, instance, network, and index configuration should be identical for all shards. This guide describes the individual steps you must take on a single instance and assumes you will replicate them across all instances.
-</Tip>
-
 ## Prerequisites
 
-- Multiple Meilisearch projects (instances) running Meilisearch >=v1.19
+- Multiple Meilisearch projects (instances) running Meilisearch >=v1.35
 
 ## Activate the `/network` endpoint
 
@@ -47,15 +45,19 @@ Meilisearch should respond immediately, confirming the route is now accessible. 
 
 ## Configuring the network object
 
-Next, you must configure the network object. It consists of the following fields:
+If you are using Meilisearch Cloud, then you can skip this section.
+
+Self-hosted users must configure the network object. It consists of the following fields:
 
 - `remotes`: defines a list with the required information to access each remote instance
 - `self`: specifies which of the configured `remotes` corresponds to the current instance
-- `sharding`: whether to use sharding.
+- `leader`: specifies which of the configured `remotes` is the leader of the network. Setting this field will enable sharding.
+- `shards`: defines a list of shards representing the various pieces of the index data to split between the remotes.
 
 ### Setting up the list of remotes
 
-Use the `/network` route to configure the `remotes` field of the network object. `remotes` should be an object containing one or more objects. Each one of the nested objects should consist of the name of each instance, associated with its URL and an API key with search permission:
+Use the `/network` route to configure the `remotes` field of the network object. `remotes` should be an object containing one or more objects. Each one of the nested objects should consist of the name of each instance,
+associated with its URL, an API key with search permission, and an API key with write permission:
 
 ```sh
 curl \
@@ -65,95 +67,164 @@ curl \
     "remotes": {
       "REMOTE_NAME_1": {
         "url": "INSTANCE_URL_1",
-        "searchApiKey": "SEARCH_API_KEY_1"
+        "searchApiKey": "SEARCH_API_KEY_1",
+        "writeApiKey": "WRITE_API_KEY_1"
       },
       "REMOTE_NAME_2": {
         "url": "INSTANCE_URL_2",
-        "searchApiKey": "SEARCH_API_KEY_2"
+        "searchApiKey": "SEARCH_API_KEY_2",
+        "writeApiKey": "WRITE_API_KEY_2"
       },
       "REMOTE_NAME_3": {
         "url": "INSTANCE_URL_3",
-        "searchApiKey": "SEARCH_API_KEY_3"
+        "searchApiKey": "SEARCH_API_KEY_3",
+        "writeApiKey": "WRITE_API_KEY_3"
       },
       …
     }
   }'
 ```
 
-Configure the entire set of remote instances in your sharded database, making sure to send the same remotes to each instance.
+### Pick a leader instance
 
-### Specify the name of the current instance
-
-Now all instances share the same list of remotes, set the `self` field to specify which of the remotes corresponds to the current instance:
+In a Meilisearch network, the leader will be responsible for:
+- Receiving any task that modifies the state of the Meilisearch instance: document additions, settings change, etc.
+  - Any task will be replicated to the remote instances of the network.
+  - If you send a task to a non-leader remote instance, the task will not be registered and a 400 BAD REQUEST HTTP error code will be emitted.
+- Receiving network change requests.
+  - They will be propagated to the rest of the network.
 
 ```sh
 curl \
   -X PATCH 'MEILISEARCH_URL/network' \
   -H 'Content-Type: application/json' \
   --data-binary '{
-    "self": "REMOTE_NAME_1"
+    "leader": "REMOTE_NAME_1",
+    "remotes": {
+      "REMOTE_NAME_1": {
+        "url": "INSTANCE_URL_1",
+        "searchApiKey": "SEARCH_API_KEY_1",
+        "writeApiKey": "WRITE_API_KEY_1"
+      },
+      "REMOTE_NAME_2": {
+        "url": "INSTANCE_URL_2",
+        "searchApiKey": "SEARCH_API_KEY_2",
+        "writeApiKey": "WRITE_API_KEY_2"
+      },
+      "REMOTE_NAME_3": {
+        "url": "INSTANCE_URL_3",
+        "searchApiKey": "SEARCH_API_KEY_3",
+        "writeApiKey": "WRITE_API_KEY_3"
+      },
+      …
+    }
+  }'
+```
+
+### Specify the name of the current instance
+
+Since the network change payload must be sent to the leader, this is always the same as the leader:
+
+
+```sh
+curl \
+  -X PATCH 'MEILISEARCH_URL/network' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "self": "REMOTE_NAME_1",
+    "leader": "REMOTE_NAME_1",
+    "remotes": {
+      "REMOTE_NAME_1": {
+        "url": "INSTANCE_URL_1",
+        "searchApiKey": "SEARCH_API_KEY_1",
+        "writeApiKey": "WRITE_API_KEY_1"
+      },
+      "REMOTE_NAME_2": {
+        "url": "INSTANCE_URL_2",
+        "searchApiKey": "SEARCH_API_KEY_2",
+        "writeApiKey": "WRITE_API_KEY_2"
+      },
+      "REMOTE_NAME_3": {
+        "url": "INSTANCE_URL_3",
+        "searchApiKey": "SEARCH_API_KEY_3",
+        "writeApiKey": "WRITE_API_KEY_3"
+      },
+      …
+    }
   }'
 ```
 
 Meilisearch processes searches on the remote that corresponds to `self` locally instead of making a remote request.
 
-### Enabling sharding
+### Setting up the list of shards
 
-Finally enable the automatic sharding of documents by Meilisearch on all instances:
+Shards are a list of named entries, each specifying a list of remotes that should own that shard. The same shard can be owned by multiple remotes,
+and remotes can own multiple shards, allowing to fine-tune how data is sharded and replicated in the network.
 
 ```sh
 curl \
   -X PATCH 'MEILISEARCH_URL/network' \
   -H 'Content-Type: application/json' \
   --data-binary '{
-    "sharding": true
+    "shards": {
+      "SHARD_NAME_1": {
+        "remotes": ["REMOTE_NAME_1", "REMOTE_NAME_2"]
+      },
+      "SHARD_NAME_2": {
+        "remotes": ["REMOTE_NAME_2", "REMOTE_NAME_3"]
+      },
+      "SHARD_NAME_3": {
+        "remotes": ["REMOTE_NAME_3", "REMOTE_NAME_1"]
+      }
+    },
+    "self": "REMOTE_NAME_1",
+    "leader": "REMOTE_NAME_1",
+    "remotes": {
+      "REMOTE_NAME_1": {
+        "url": "INSTANCE_URL_1",
+        "searchApiKey": "SEARCH_API_KEY_1",
+        "writeApiKey": "WRITE_API_KEY_1"
+      },
+      "REMOTE_NAME_2": {
+        "url": "INSTANCE_URL_2",
+        "searchApiKey": "SEARCH_API_KEY_2",
+        "writeApiKey": "WRITE_API_KEY_2"
+      },
+      "REMOTE_NAME_3": {
+        "url": "INSTANCE_URL_3",
+        "searchApiKey": "SEARCH_API_KEY_3",
+        "writeApiKey": "WRITE_API_KEY_3"
+      },
+      …
+    }
   }'
 ```
 
-### Adding or removing an instance
+This example demonstrates a mixed sharding and replication setup: each remote owns 60% of the documents (2 out of 3 shards),
+and losing 1 out of 3 remotes never causes a loss of documents, achieving replication.
 
-Changing the topology of the network involves moving some documents from an instance to another, depending on your hashing scheme.
+### Adding or removing an instance or shard
 
-As Meilisearch does not provide atomicity across multiple instances, you will need to either:
-
-1. accept search downtime while migrating documents
-2. accept some documents will not appear in search results during the migration
-3. accept some duplicate documents may appear in search results during the migration
-
-#### Reducing downtime
-
-If your disk space allows, you can reduce the downtime by applying the following algorithm:
-
-1. Create a new temporary index in each remote instance
-2. Compute the new instance for each document
-3. Send the documents to the temporary index of their new instance
-4. Once Meilisearch has copied all documents to their instance of destination, swap the new index with the previously used index
-5. Delete the temporary index after the swap
-6. Update network configuration and search queries across all instances
-
-## Create indexes
-
-Create the same empty indexes with the same settings on all instances.
-Keeping the settings and indexes in sync is important to avoid errors and unexpected behavior, though not strictly required.
+Changing the topology of the network involves moving some documents from an instance to another.
+Meilisearch will rebalance documents automatically depending on the change in network topology, via a
+`NetworkTopologyChange` task on all remotes of the network.
 
 ## Add documents
 
-Pick a single instance to send all your documents to. Documents will be replicated to the other instances.
+Send your documents to the designated leader. Documents will be replicated to the other instances.
 
 Each instance will index the documents they are responsible for and ignore the others.
 
-You _may_ send the same document to multiple instances, the task will be replicated to all instances, and only the instance responsible for the document will index it.
-
-Similarly, you may send any future versions of any document to the instance you picked, and only the correct instance will process that document.
-
 ### Updating index settings
 
-Changing settings in a sharded database is not fundamentally different from changing settings on a single Meilisearch instance. If the update enables a feature, such as setting filterable attributes, wait until all changes have been processed before using the `filter` search parameter in a query. Likewise, if an update disables a feature, first remove it from your search requests, then update your settings.
+Changing settings in a sharded database is not fundamentally different from changing settings on a single Meilisearch instance.
+If the update enables a feature, such as setting filterable attributes, wait until all changes have been processed before using the `filter` search parameter in a query.
+Likewise, if an update disables a feature, first remove it from your search requests, then update your settings.
 
 ## Perform a search
 
-Send your federated search request containing one query per instance:
+When sharding is enabled, your search requests will happen over all instances of the network automatically.
 
-<CodeSamplesMultiSearchRemoteFederated1 />
+To disable this behavior and force the request to be executed solely locally, add `useNetwork: false` to your search requests.
 
-If all instances share the same network configuration, you can send the search request to any instance. Having `"remote": "ms-00"` appear in the list of queries on the instance of that name will not cause an actual proxy search thanks to `network.self`.
+<CodeSamplesNoUseNetworkSearch1 />
