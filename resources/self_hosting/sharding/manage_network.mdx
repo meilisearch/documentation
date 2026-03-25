@@ -8,7 +8,7 @@ Once your [sharded cluster is set up](/resources/self_hosting/sharding/setup_sha
 
 ## Add a remote
 
-Use `addRemotes` to add a new instance to the network without rewriting the entire `remotes` configuration:
+Include the new remote in the `remotes` object. Remotes not present in the request are left unchanged:
 
 <CodeGroup>
 
@@ -18,22 +18,26 @@ curl \
   -H 'Content-Type: application/json' \
   -H 'Authorization: Bearer MEILISEARCH_KEY' \
   --data-binary '{
-    "addRemotes": {
+    "remotes": {
       "ms-03": {
         "url": "http://ms-03.example.com:7703",
-        "searchApiKey": "SEARCH_KEY_03"
+        "searchApiKey": "SEARCH_KEY_03",
+        "writeApiKey": "WRITE_KEY_03"
       }
+    },
+    "shards": {
+      "shard-a": { "addRemotes": ["ms-03"] }
     }
   }'
 ```
 
 </CodeGroup>
 
-After adding the remote, update your shard configuration to assign shards to it.
+You can use `addRemotes` inside a shard definition to add the new remote to an existing shard without rewriting the full shard assignment.
 
 ## Remove a remote
 
-Use `removeRemotes` to take an instance out of the network:
+Set a remote to `null` to remove it from the network. This also removes the remote from all shard assignments:
 
 <CodeGroup>
 
@@ -43,19 +47,21 @@ curl \
   -H 'Content-Type: application/json' \
   -H 'Authorization: Bearer MEILISEARCH_KEY' \
   --data-binary '{
-    "removeRemotes": ["ms-03"]
+    "remotes": {
+      "ms-03": null
+    }
   }'
 ```
 
 </CodeGroup>
 
-<Warning>
-Before removing a remote, make sure its shards are replicated on other remotes. Removing the only remote holding a shard makes that data unavailable for network searches.
-</Warning>
+When a remote is removed, Meilisearch triggers a `NetworkTopologyChange` task that automatically rebalances documents. Data held by the removed remote is exported and imported by the remaining remotes before being deleted.
 
 ## Update shard assignments
 
-Reassign shards to different remotes by sending a new `shards` configuration:
+You can also use `removeRemotes` inside a shard definition to remove a remote from a specific shard.
+
+To fully replace the shard assignment, send a new `shards` configuration with the `remotes` list:
 
 <CodeGroup>
 

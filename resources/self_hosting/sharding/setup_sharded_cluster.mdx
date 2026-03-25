@@ -59,7 +59,7 @@ Repeat for `ms-01` and `ms-02` with their respective URLs and master keys.
 
 ## Step 3: Configure the network topology
 
-Send a `PATCH /network` request to each instance. The configuration is identical across instances except for the `self` field, which identifies the current instance:
+Send a single `PATCH /network` request to the leader instance (`ms-00`). The leader propagates the configuration to all other remotes automatically. You must define `remotes` and `shards` together in the same request:
 
 <CodeGroup>
 
@@ -74,36 +74,20 @@ curl \
     "remotes": {
       "ms-00": {
         "url": "http://ms-00.example.com:7700",
-        "searchApiKey": "SEARCH_KEY_00"
+        "searchApiKey": "SEARCH_KEY_00",
+        "writeApiKey": "WRITE_KEY_00"
       },
       "ms-01": {
         "url": "http://ms-01.example.com:7701",
-        "searchApiKey": "SEARCH_KEY_01"
+        "searchApiKey": "SEARCH_KEY_01",
+        "writeApiKey": "WRITE_KEY_01"
       },
       "ms-02": {
         "url": "http://ms-02.example.com:7702",
-        "searchApiKey": "SEARCH_KEY_02"
+        "searchApiKey": "SEARCH_KEY_02",
+        "writeApiKey": "WRITE_KEY_02"
       }
-    }
-  }'
-```
-
-</CodeGroup>
-
-Send the same request to `ms-01` (with `"self": "ms-01"`) and `ms-02` (with `"self": "ms-02"`).
-
-## Step 4: Configure shards
-
-Define how documents are distributed across remotes. Each shard is assigned to one or more remotes:
-
-<CodeGroup>
-
-```bash
-curl \
-  -X PATCH 'http://ms-00.example.com:7700/network' \
-  -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer MEILISEARCH_KEY_00' \
-  --data-binary '{
+    },
     "shards": {
       "shard-a": { "remotes": ["ms-00", "ms-01"] },
       "shard-b": { "remotes": ["ms-01", "ms-02"] },
@@ -116,7 +100,7 @@ curl \
 
 In this configuration, each shard is replicated across two remotes. If any single instance goes down, all shards remain available through the other instance.
 
-## Step 5: Index documents
+## Step 4: Index documents
 
 Send documents to the leader instance (`ms-00`). The leader distributes them across shards automatically:
 
@@ -140,9 +124,9 @@ curl \
 All write operations (document additions, updates, deletions, settings changes) must go through the leader instance. Non-leader instances reject writes with a `not_a_leader` error.
 </Warning>
 
-## Step 6: Search across the cluster
+## Step 5: Search across the cluster
 
-Search with `useNetwork: true` to query all remotes:
+Search requests can be sent to any instance in the network, not just the leader. Add `useNetwork: true` to query all remotes:
 
 <CodeGroup>
 

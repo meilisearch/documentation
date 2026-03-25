@@ -24,20 +24,19 @@ Replication assigns the same shard to more than one remote. If one remote become
 
 ```mermaid
 graph TD
-    Client[Client application] -->|search with useNetwork: true| Leader[Leader instance]
-    Leader -->|fan out| R1[Remote ms-00<br/>shard-a, shard-c]
-    Leader -->|fan out| R2[Remote ms-01<br/>shard-a, shard-b]
-    Leader -->|fan out| R3[Remote ms-02<br/>shard-b, shard-c]
-    R1 -->|partial results| Leader
-    R2 -->|partial results| Leader
-    R3 -->|partial results| Leader
-    Leader -->|merged results| Client
+    Client[Client application] -->|search with useNetwork: true| Any[Any instance]
+    Any -->|fan out| R1[Remote ms-00<br/>shard-a, shard-c]
+    Any -->|fan out| R2[Remote ms-01<br/>shard-a, shard-b]
+    Any -->|fan out| R3[Remote ms-02<br/>shard-b, shard-c]
+    R1 -->|partial results| Any
+    R2 -->|partial results| Any
+    R3 -->|partial results| Any
+    Any -->|merged results| Client
 ```
 
-1. **Network**: all instances register with each other through the `/network` endpoint, forming a topology with a designated leader
+1. **Network**: the leader configures the topology via `/network` and propagates it to all remotes
 2. **Shards**: the leader distributes document subsets across remotes based on shard assignments
-3. **Search**: when `useNetwork: true` is set, the leader fans out the search to all remotes, then merges and ranks the combined results
-4. **Failover**: if a remote is down, another remote holding the same shard serves those results
+3. **Search**: when `useNetwork: true` is set, the instance receiving the request fans out the search to all remotes, then merges and ranks the combined results
 
 ## When to use sharding and replication
 
@@ -54,10 +53,10 @@ All instances in a Meilisearch network share a topology configuration that defin
 
 - **`self`**: the identity of the current instance
 - **`leader`**: the instance coordinating writes and topology changes
-- **`remotes`**: all instances in the network with their URLs and search API keys
+- **`remotes`**: all instances in the network with their URLs, search API keys, and write API keys
 - **`shards`**: how document subsets are distributed across remotes
 
-The leader instance is responsible for write operations. Non-leader instances reject write requests (document additions, settings changes, index creation) with a `not_a_leader` error.
+The leader instance is responsible for write operations and topology changes. Non-leader instances reject write requests (document additions, settings changes, index creation) with a `not_a_leader` error. Search requests can be sent to any instance in the network.
 
 ## Searching across the network
 
@@ -117,7 +116,7 @@ Most Meilisearch features work transparently across a sharded network. The follo
 |---------|---------------------|-------|
 | Full-text search | Yes | Results merged and ranked across all remotes |
 | Filtering and sorting | Yes | Filters applied on each remote before merging |
-| Faceted search | Yes | Facet counts aggregated across remotes |
+| Faceted search | Partial | Facet distribution in search results works across remotes, but the `/facet-search` endpoint does not support `useNetwork` |
 | Hybrid/semantic search | Yes | Each remote runs its own vector search, results merged |
 | Geo search | Yes | Geographic filters and sorting work across remotes |
 | Multi-search | Yes | Use `useNetwork: true` per query |
@@ -126,7 +125,7 @@ Most Meilisearch features work transparently across a sharded network. The follo
 | Tenant tokens | Yes | Token filters apply on each remote |
 | Document operations | Leader only | Writes must go through the leader instance |
 | Settings changes | Leader only | Settings updates must go through the leader |
-| Conversational search | Yes | Chat queries can use network search |
+| Conversational search | No | Chat completions do not support `useNetwork` |
 
 ## Prerequisites
 
