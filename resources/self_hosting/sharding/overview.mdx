@@ -18,7 +18,7 @@ When a user searches, Meilisearch queries all remotes in the network, collects r
 
 ## What is replication?
 
-Replication assigns the same shard to more than one remote. If one remote becomes unavailable, another remote holding the same shard continues serving results. Meilisearch automatically queries each shard exactly once, avoiding duplicate results even when shards are replicated.
+Replication assigns the same shard to more than one remote. This ensures your data is stored redundantly across instances. During a search, Meilisearch queries each shard exactly once by picking one of the available replicas, avoiding duplicate results.
 
 ## How it works
 
@@ -146,7 +146,7 @@ Before setting up sharding and replication, you need:
     Set up replicated shards for high availability and read scaling.
   </Card>
   <Card title="Manage the network" href="/resources/self_hosting/sharding/manage_network">
-    Add and remove remotes, update topology, and handle failover.
+    Add and remove remotes, update shard assignments.
   </Card>
   <Card title="Enterprise Edition" href="/resources/self_hosting/enterprise_edition">
     Learn about the differences between Community and Enterprise editions.

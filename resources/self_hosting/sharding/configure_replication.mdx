@@ -36,7 +36,7 @@ curl \
 
 </CodeGroup>
 
-In this configuration, every shard exists on two remotes. If any single instance goes down, all shards remain available.
+In this configuration, every shard exists on two remotes. If any single instance goes down, all shard data still exists on another instance.
 
 ## Common replication patterns
 
@@ -87,7 +87,7 @@ Route search requests to the closest cluster. Both regions hold all data, so eit
 
 ## Remote availability
 
-Replication ensures that your data exists on multiple remotes. However, Meilisearch does not currently provide automatic failover during search. If a remote becomes unreachable during a network search, the search request may fail for the shards assigned to that remote.
+Replication ensures that your data exists on multiple remotes. However, Meilisearch does not currently provide automatic search failover between replicas. During a network search, each shard is assigned to a randomly chosen replica. If that replica is unreachable, Meilisearch retries the same remote up to 3 times but does not automatically try another replica holding the same shard.
 
 To handle remote failures, route search traffic away from unhealthy instances at the infrastructure level (for example, using a load balancer with health checks). When the failed remote comes back online, it can start serving searches again without manual intervention.
 
@@ -128,7 +128,7 @@ The leader is responsible for all write operations (document additions, settings
 
 If the leader goes down:
 
-- **Search continues**: replicas still serve search results for all replicated shards
+- **Search may be affected**: if search requests are routed to the downed leader, they will fail. Route search traffic to healthy instances using a load balancer
 - **Writes are blocked**: no documents can be added or updated until a leader is available
 - **Manual promotion**: you must designate a new leader by updating the network topology with `PATCH /network` and setting `"leader"` to another instance
 
