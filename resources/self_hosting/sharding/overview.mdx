@@ -56,7 +56,7 @@ All instances in a Meilisearch network share a topology configuration that defin
 - **`remotes`**: all instances in the network with their URLs, search API keys, and write API keys
 - **`shards`**: how document subsets are distributed across remotes
 
-The leader instance is responsible for write operations and topology changes. Non-leader instances reject write requests (document additions, settings changes, index creation) with a `not_a_leader` error. Search requests can be sent to any instance in the network.
+The leader instance is responsible for write operations and topology changes. Non-leader instances reject write requests (document additions, settings changes, index creation) with a `not_leader` error. Search requests can be sent to any instance in the network.
 
 ## Searching across the network
 
@@ -117,6 +117,7 @@ Most Meilisearch features work transparently across a sharded network. The follo
 | Full-text search | Yes | Results merged and ranked across all remotes |
 | Filtering and sorting | Yes | Filters applied on each remote before merging |
 | Faceted search | Partial | Facet distribution in search results works across remotes, but the `/facet-search` endpoint does not support `useNetwork` |
+| Distinct attribute | Yes | Requires Meilisearch v1.40 or later |
 | Hybrid/semantic search | Yes | Each remote runs its own vector search, results merged |
 | Geo search | Yes | Geographic filters and sorting work across remotes |
 | Multi-search | Yes | Use `useNetwork: true` per query |
@@ -126,6 +127,10 @@ Most Meilisearch features work transparently across a sharded network. The follo
 | Document operations | Leader only | Writes must go through the leader instance |
 | Settings changes | Leader only | Settings updates must go through the leader |
 | Conversational search | No | Chat completions do not support `useNetwork` |
+
+<Warning>
+Search requests may return errors during a network topology change if they reference shards that are being added or removed. Wait for all `NetworkTopologyChange` tasks to complete before searching.
+</Warning>
 
 ## Prerequisites
 

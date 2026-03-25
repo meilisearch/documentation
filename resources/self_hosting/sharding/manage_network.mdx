@@ -55,7 +55,11 @@ curl \
 
 </CodeGroup>
 
-When a remote is removed, Meilisearch triggers a `NetworkTopologyChange` task that automatically rebalances documents. Data held by the removed remote is exported and imported by the remaining remotes before being deleted.
+When a remote is removed, Meilisearch triggers a `NetworkTopologyChange` task that rebalances documents across the remaining remotes.
+
+<Note>
+The removed instance still retains its local data after being removed from the network. It is no longer part of the cluster and will not receive new documents or participate in searches.
+</Note>
 
 ## Update shard assignments
 

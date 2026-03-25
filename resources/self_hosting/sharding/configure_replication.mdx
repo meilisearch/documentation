@@ -124,7 +124,7 @@ Use `addRemotes` inside a shard definition to add the new remote to that shard w
 
 ## The leader instance
 
-The leader is responsible for all write operations (document additions, settings changes, index management). Non-leader instances reject writes with a `not_a_leader` error.
+The leader is responsible for all write operations (document additions, settings changes, index management). Non-leader instances reject writes with a `not_leader` error.
 
 If the leader goes down:
 
