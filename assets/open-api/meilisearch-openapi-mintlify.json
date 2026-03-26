@@ -1351,7 +1351,7 @@
           },
           {
             "lang": "Dart",
-            "source": "await client.export(\n  ExportQuery(\n    url: 'new_instance_url',\n    apiKey: 'new_instance_api_key',\n    payloadSize: \"100 MiB\",\n  ),\n);"
+            "source": "await client.export(\n  ExportQuery(\n    url: exportSinkUrl,\n    apiKey: 'new_instance_api_key',\n    payloadSize: \"100 MiB\",\n  ),\n);"
           }
         ]
       }
