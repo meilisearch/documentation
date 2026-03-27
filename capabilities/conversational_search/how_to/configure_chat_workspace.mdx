@@ -40,12 +40,14 @@ The `source` field determines which LLM provider Meilisearch uses. Each provider
 |----------|---------------|-----------------|-----------------|
 | OpenAI | `openAi` | `apiKey` | `baseUrl`, `orgId`, `projectId` |
 | Azure OpenAI | `azureOpenAi` | `apiKey`, `baseUrl` | `deploymentId`, `apiVersion` |
-| Mistral | `mistral` | `apiKey` | `baseUrl` |
+| Mistral | `mistral` | `apiKey`, `baseUrl` | |
 | vLLM | `vLlm` | `baseUrl` | |
+
+`baseUrl` is required for all providers except OpenAI. For OpenAI, it is optional and only needed when using a custom endpoint.
 
 ### Azure OpenAI example
 
-Azure OpenAI requires additional fields compared to other providers:
+Azure OpenAI requires additional fields for deployment configuration:
 
 <CodeGroup>
 
