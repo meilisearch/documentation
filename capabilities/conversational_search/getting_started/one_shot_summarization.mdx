@@ -8,6 +8,10 @@ One-shot summarization uses the same `/chats` API as multi-turn chat, but with a
 
 Make sure you have completed the [setup guide](/capabilities/conversational_search/getting_started/setup) before continuing.
 
+<Note>
+In code examples, replace `WORKSPACE_NAME` with the name of your workspace. On Meilisearch Cloud, the default workspace name is `cloud`.
+</Note>
+
 ## Configure your workspace prompt for summarization
 
 The key difference from a chat interface is the system prompt. For summarization, instruct the model to produce concise, self-contained answers and avoid follow-up questions:

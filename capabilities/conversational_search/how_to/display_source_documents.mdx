@@ -5,6 +5,10 @@ description: Show users which indexed documents were used to generate a conversa
 
 Displaying source documents builds user trust by showing which data the AI used to formulate its answer. Meilisearch provides source information through two special tools: `_meiliSearchProgress` (which reports what searches are being performed) and `_meiliSearchSources` (which returns the actual documents used).
 
+<Note>
+In code examples, replace `WORKSPACE_NAME` with the name of your workspace. On Meilisearch Cloud, the default workspace name is `cloud`.
+</Note>
+
 ## Include source tools in your request
 
 To receive source documents, include both `_meiliSearchProgress` and `_meiliSearchSources` in the `tools` array of your chat completions request:
