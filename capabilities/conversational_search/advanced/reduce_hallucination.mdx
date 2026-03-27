@@ -14,7 +14,7 @@ When Meilisearch sends retrieved documents to the LLM, the model may:
 - Combine facts from different documents in incorrect ways
 - Generate plausible-sounding but fabricated details
 
-The key principle is: **the LLM should only use information from the documents Meilisearch retrieves, never its general knowledge**. All the techniques below reinforce this principle.
+The key principle is: **the LLM should only use information from the documents Meilisearch retrieves, not its general knowledge**. By default, LLMs may draw on their training data to fill gaps. All the techniques below help enforce this boundary and keep responses grounded in your indexed data.
 
 ## System prompt engineering
 

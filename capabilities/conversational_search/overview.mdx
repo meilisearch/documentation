@@ -4,12 +4,12 @@ sidebarTitle: Overview
 description: Conversational search allows people to make search queries using natural languages and receive AI-generated answers grounded in your data.
 ---
 
-Conversational search is an AI-powered feature built on top of Meilisearch's search engine. It works as a built-in Retrieval Augmented Generation (RAG) system: when a user asks a question, Meilisearch retrieves relevant documents from its indexes, then uses an LLM to generate a response grounded in those results. The AI never answers from its own general knowledge. Every response is based on the data you have indexed in Meilisearch.
+Conversational search is an AI-powered feature built on top of Meilisearch's search engine. It works as a built-in Retrieval Augmented Generation (RAG) system: when a user asks a question, Meilisearch retrieves relevant documents from its indexes, then uses an LLM to generate a response grounded in those results. With proper configuration, such as [system prompt engineering](/capabilities/conversational_search/advanced/reduce_hallucination#system-prompt-engineering) and [guardrails](/capabilities/conversational_search/how_to/configure_guardrails), you can ensure that responses are based on your indexed data rather than the LLM's general knowledge.
 
 This is similar to how [Perplexity](https://www.perplexity.ai/) works: every answer comes with source documents so users can verify the information. Meilisearch brings the same pattern to your own data.
 
 <Warning>
-Conversational search relies on large language models (LLMs) to generate responses. LLMs may occasionally hallucinate inaccurate or misleading information, even when provided with correct source documents. Always monitor responses in production environments and consider implementing [guardrails](/capabilities/conversational_search/how_to/configure_guardrails) to reduce this risk.
+Conversational search relies on large language models (LLMs) to generate responses. LLMs may occasionally hallucinate inaccurate or misleading information, even when provided with correct source documents. Follow the [hallucination reduction guide](/capabilities/conversational_search/advanced/reduce_hallucination) and configure [guardrails](/capabilities/conversational_search/how_to/configure_guardrails) to minimize this risk in production environments.
 </Warning>
 
 ## Use cases
@@ -47,7 +47,7 @@ Integrate Meilisearch as the retrieval layer in a broader RAG architecture. Meil
 
 In the majority of cases, you should use the [`/chats` route](/reference/api/chats/update-chat) to build conversational search. This API consolidates the entire RAG pipeline into a single endpoint, handling retrieval, context management, and generation.
 
-Follow the [getting started guide](/capabilities/conversational_search/getting_started/setup) to set up conversational search, then build a [chat interface](/capabilities/conversational_search/getting_started/chat) or generate [summarized answers](/capabilities/conversational_search/getting_started/one_shot_summarization).
+Follow the [getting started guide](/capabilities/conversational_search/getting_started/setup) to set up conversational search, then build a [chat interface](/capabilities/conversational_search/getting_started/chat) or generate [summarized answers](/capabilities/conversational_search/getting_started/one_shot_summarization). Consult the [chat completions API reference](/reference/api/chats/request-a-chat-completion) for the full list of supported parameters.
 
 ### Model Context Protocol (MCP)
 

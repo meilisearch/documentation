@@ -52,7 +52,7 @@ curl \
 
 </CodeGroup>
 
-- `description` tells the LLM what the index contains. A good description helps the agent decide which index to search and improves answer relevance
+- `description` tells the LLM what the index contains. A good description helps the agent decide which index to search and improves answer relevance. See [optimize chat prompts](/capabilities/conversational_search/how_to/optimize_chat_prompts#write-a-good-index-description) for tips on writing effective descriptions
 - `documentTemplate` defines the document data Meilisearch sends to the AI provider. This template outputs all searchable fields in your documents, which may not be ideal if your documents have many fields. Consult the [document template best practices](/capabilities/hybrid_search/advanced/document_template_best_practices) article for more guidance
 - `documentTemplateMaxBytes` establishes a size limit for the document templates. Documents bigger than 400 bytes are truncated to ensure a good balance between speed and relevancy
 
@@ -131,7 +131,7 @@ curl \
 
 Which fields are mandatory depends on your chosen provider. In most cases, you need to provide an `apiKey`. `baseUrl` is only mandatory for Azure OpenAI and vLLM.
 
-The `prompts.system` field gives the agent its baseline instructions. [The `prompts` object accepts additional fields](/reference/api/chats/update-chat) that help the agent formulate better searches.
+The `prompts.system` field gives the agent its baseline instructions. [The `prompts` object accepts additional fields](/reference/api/chats/update-settings-of-a-chat-workspace) that help the agent formulate better searches. For guidance on writing effective prompts, see [configure guardrails](/capabilities/conversational_search/how_to/configure_guardrails) and [optimize chat prompts](/capabilities/conversational_search/how_to/optimize_chat_prompts).
 
 ## Next steps
 

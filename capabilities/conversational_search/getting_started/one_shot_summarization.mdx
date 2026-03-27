@@ -135,6 +135,8 @@ for await (const text of textStream) {
 
 Including the `_meiliSearchSources` tool lets you display the source documents alongside the summarized answer, so users can verify the information. In a real application, you would run this in parallel with a standard Meilisearch search request and display both results together.
 
+For summarization, you may want to use a lower `temperature` value (e.g. `0.1` or `0.2`) to produce more deterministic, factual answers. Meilisearch [passes these parameters through](/capabilities/conversational_search/how_to/configure_chat_workspace#llm-provider-parameters-passthrough) to your LLM provider.
+
 ## Next steps
 
 <CardGroup cols={2}>
@@ -149,5 +151,8 @@ Including the `_meiliSearchSources` tool lets you display the source documents a
   </Card>
   <Card title="Reduce hallucination" href="/capabilities/conversational_search/advanced/reduce_hallucination">
     Learn techniques to improve accuracy of AI-generated answers.
+  </Card>
+  <Card title="Chat completions API reference" href="/reference/api/chats/request-a-chat-completion">
+    Full reference for the chat completions endpoint.
   </Card>
 </CardGroup>

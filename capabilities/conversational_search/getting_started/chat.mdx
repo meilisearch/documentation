@@ -104,6 +104,7 @@ for await (const text of textStream) {
 
 - `model` is mandatory and must indicate a model supported by your chosen `source`
 - `messages` contains the messages exchanged between the conversational search agent and the user
+- You can also include standard LLM parameters like `temperature` or `top_p`, which Meilisearch [passes through to the provider](/capabilities/conversational_search/how_to/configure_chat_workspace#llm-provider-parameters-passthrough)
 - `tools` sets up two optional but highly [recommended tools](/capabilities/conversational_search/advanced/chat_tooling_reference):
   - `_meiliSearchProgress`: shows users what searches are being performed
   - `_meiliSearchSources`: displays the actual documents used to generate responses
@@ -306,5 +307,11 @@ await sendMessage('Which one has the best rating?');
   </Card>
   <Card title="Configure guardrails" href="/capabilities/conversational_search/how_to/configure_guardrails">
     Restrict AI responses to topics covered by your data.
+  </Card>
+  <Card title="Chat completions API reference" href="/reference/api/chats/request-a-chat-completion">
+    Full reference for the chat completions endpoint.
+  </Card>
+  <Card title="Reduce hallucination" href="/capabilities/conversational_search/advanced/reduce_hallucination">
+    Techniques to keep AI responses grounded in your data.
   </Card>
 </CardGroup>
