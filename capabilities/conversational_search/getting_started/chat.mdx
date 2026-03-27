@@ -246,7 +246,7 @@ const MEILISEARCH_TOOLS = [
         type: 'object',
         properties: {
           call_id: { type: 'string' },
-          documents: { type: 'object' },
+          documents: { type: 'array', items: { type: 'object' } },
         },
         required: ['call_id', 'documents'],
         additionalProperties: false,

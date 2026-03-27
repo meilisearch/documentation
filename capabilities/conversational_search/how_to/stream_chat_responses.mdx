@@ -57,7 +57,7 @@ curl -N \
             "type": "object",
             "properties": {
               "call_id": { "type": "string" },
-              "documents": { "type": "object" }
+              "documents": { "type": "array", "items": { "type": "object" } }
             },
             "required": ["call_id", "documents"],
             "additionalProperties": false
@@ -128,7 +128,7 @@ const stream = await client.chat.completions.create({
           type: 'object',
           properties: {
             call_id: { type: 'string' },
-            documents: { type: 'object' },
+            documents: { type: 'array', items: { type: 'object' } },
           },
           required: ['call_id', 'documents'],
           additionalProperties: false,
@@ -183,7 +183,7 @@ const { textStream } = streamText({
     }),
     _meiliSearchSources: tool({
       description: 'Provides source documents',
-      parameters: jsonSchema({ type: 'object', properties: { call_id: { type: 'string' }, documents: { type: 'object' } }, required: ['call_id', 'documents'] }),
+      parameters: jsonSchema({ type: 'object', properties: { call_id: { type: 'string' }, documents: { type: 'array', items: { type: 'object' } } }, required: ['call_id', 'documents'] }),
     }),
   },
 });
@@ -295,7 +295,7 @@ async function streamChat(query) {
                 type: 'object',
                 properties: {
                   call_id: { type: 'string' },
-                  documents: { type: 'object' },
+                  documents: { type: 'array', items: { type: 'object' } },
                 },
                 required: ['call_id', 'documents'],
                 additionalProperties: false,

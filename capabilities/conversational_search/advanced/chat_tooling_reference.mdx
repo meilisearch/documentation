@@ -188,7 +188,7 @@ curl \
             "type": "object",
             "properties": {
               "call_id": { "type": "string", "description": "The call ID to track the original search associated to those sources" },
-              "documents": { "type": "object", "description": "The documents associated with the search. Only displayed attributes are returned" }
+              "documents": { "type": "array", "items": { "type": "object" }, "description": "The documents associated with the search. Only displayed attributes are returned" }
             },
             "required": ["call_id", "documents"],
             "additionalProperties": false
@@ -248,7 +248,7 @@ const tools = [
         type: 'object',
         properties: {
           call_id: { type: 'string', description: 'The call ID to track the original search associated to those sources' },
-          documents: { type: 'object', description: 'The documents associated with the search.' },
+          documents: { type: 'array', items: { type: 'object' }, description: 'The documents associated with the search.' },
         },
         required: ['call_id', 'documents'],
         additionalProperties: false,
@@ -348,7 +348,7 @@ const tools = [
         type: 'object',
         properties: {
           call_id: { type: 'string' },
-          documents: { type: 'object' },
+          documents: { type: 'array', items: { type: 'object' } },
         },
         required: ['call_id', 'documents'],
         additionalProperties: false,
@@ -428,7 +428,7 @@ const { textStream } = streamText({
         type: 'object',
         properties: {
           call_id: { type: 'string' },
-          documents: { type: 'object' },
+          documents: { type: 'array', items: { type: 'object' } },
         },
         required: ['call_id', 'documents'],
         additionalProperties: false,

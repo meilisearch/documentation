@@ -74,7 +74,7 @@ curl -N \
             "type": "object",
             "properties": {
               "call_id": { "type": "string", "description": "The call ID to track the original search" },
-              "documents": { "type": "object", "description": "The documents associated with the search" }
+              "documents": { "type": "array", "items": { "type": "object" }, "description": "The documents associated with the search" }
             },
             "required": ["call_id", "documents"],
             "additionalProperties": false
@@ -127,7 +127,7 @@ const { textStream } = streamText({
   tools: {
     _meiliSearchSources: tool({
       description: 'Provides source documents',
-      parameters: jsonSchema({ type: 'object', properties: { call_id: { type: 'string' }, documents: { type: 'object' } }, required: ['call_id', 'documents'] }),
+      parameters: jsonSchema({ type: 'object', properties: { call_id: { type: 'string' }, documents: { type: 'array', items: { type: 'object' } } }, required: ['call_id', 'documents'] }),
     }),
   },
 });
