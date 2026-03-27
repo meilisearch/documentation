@@ -11,7 +11,7 @@ In code examples, replace `WORKSPACE_NAME` with the name of your workspace. On M
 
 ## Send a streaming request
 
-Send a `POST` request to the chat completions endpoint. The response is streamed by default:
+Send a `POST` request to the chat completions endpoint with `"stream": true`. Non-streaming is not yet supported and returns a `501 Not Implemented` error.
 
 <CodeGroup>
 
@@ -22,6 +22,7 @@ curl -N \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "model": "PROVIDER_MODEL_UID",
+    "stream": true,
     "messages": [
       {
         "role": "user",
@@ -33,14 +34,54 @@ curl -N \
         "type": "function",
         "function": {
           "name": "_meiliSearchProgress",
-          "description": "Reports real-time search progress"
+          "description": "Provides information about the current Meilisearch search operation",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "call_id": { "type": "string" },
+              "function_name": { "type": "string" },
+              "function_parameters": { "type": "string" }
+            },
+            "required": ["call_id", "function_name", "function_parameters"],
+            "additionalProperties": false
+          },
+          "strict": true
         }
       },
       {
         "type": "function",
         "function": {
           "name": "_meiliSearchSources",
-          "description": "Provides source documents"
+          "description": "Provides sources of the search",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "call_id": { "type": "string" },
+              "documents": { "type": "object" }
+            },
+            "required": ["call_id", "documents"],
+            "additionalProperties": false
+          },
+          "strict": true
+        }
+      },
+      {
+        "type": "function",
+        "function": {
+          "name": "_meiliAppendConversationMessage",
+          "description": "Append a new message to the conversation based on what happened internally",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "role": { "type": "string" },
+              "content": { "type": "string" },
+              "tool_calls": { "type": ["array", "null"] },
+              "tool_call_id": { "type": ["string", "null"] }
+            },
+            "required": ["role", "content", "tool_calls", "tool_call_id"],
+            "additionalProperties": false
+          },
+          "strict": true
         }
       }
     ]
@@ -57,11 +98,63 @@ const client = new OpenAI({
 
 const stream = await client.chat.completions.create({
   model: 'PROVIDER_MODEL_UID',
-  messages: [{ role: 'user', content: 'What is Meilisearch?' }],
   stream: true,
+  messages: [{ role: 'user', content: 'What is Meilisearch?' }],
   tools: [
-    { type: 'function', function: { name: '_meiliSearchProgress', description: 'Reports real-time search progress' } },
-    { type: 'function', function: { name: '_meiliSearchSources', description: 'Provides source documents' } },
+    {
+      type: 'function',
+      function: {
+        name: '_meiliSearchProgress',
+        description: 'Provides information about the current Meilisearch search operation',
+        parameters: {
+          type: 'object',
+          properties: {
+            call_id: { type: 'string' },
+            function_name: { type: 'string' },
+            function_parameters: { type: 'string' },
+          },
+          required: ['call_id', 'function_name', 'function_parameters'],
+          additionalProperties: false,
+        },
+        strict: true,
+      },
+    },
+    {
+      type: 'function',
+      function: {
+        name: '_meiliSearchSources',
+        description: 'Provides sources of the search',
+        parameters: {
+          type: 'object',
+          properties: {
+            call_id: { type: 'string' },
+            documents: { type: 'object' },
+          },
+          required: ['call_id', 'documents'],
+          additionalProperties: false,
+        },
+        strict: true,
+      },
+    },
+    {
+      type: 'function',
+      function: {
+        name: '_meiliAppendConversationMessage',
+        description: 'Append a new message to the conversation based on what happened internally',
+        parameters: {
+          type: 'object',
+          properties: {
+            role: { type: 'string' },
+            content: { type: 'string' },
+            tool_calls: { type: ['array', 'null'] },
+            tool_call_id: { type: ['string', 'null'] },
+          },
+          required: ['role', 'content', 'tool_calls', 'tool_call_id'],
+          additionalProperties: false,
+        },
+        strict: true,
+      },
+    },
   ],
 });
 
@@ -172,20 +265,61 @@ async function streamChat(query) {
       },
       body: JSON.stringify({
         model: 'gpt-4o',
+        stream: true,
         messages: [{ role: 'user', content: query }],
         tools: [
           {
             type: 'function',
             function: {
               name: '_meiliSearchProgress',
-              description: 'Reports real-time search progress',
+              description: 'Provides information about the current Meilisearch search operation',
+              parameters: {
+                type: 'object',
+                properties: {
+                  call_id: { type: 'string' },
+                  function_name: { type: 'string' },
+                  function_parameters: { type: 'string' },
+                },
+                required: ['call_id', 'function_name', 'function_parameters'],
+                additionalProperties: false,
+              },
+              strict: true,
             },
           },
           {
             type: 'function',
             function: {
               name: '_meiliSearchSources',
-              description: 'Provides source documents',
+              description: 'Provides sources of the search',
+              parameters: {
+                type: 'object',
+                properties: {
+                  call_id: { type: 'string' },
+                  documents: { type: 'object' },
+                },
+                required: ['call_id', 'documents'],
+                additionalProperties: false,
+              },
+              strict: true,
+            },
+          },
+          {
+            type: 'function',
+            function: {
+              name: '_meiliAppendConversationMessage',
+              description: 'Append a new message to the conversation based on what happened internally',
+              parameters: {
+                type: 'object',
+                properties: {
+                  role: { type: 'string' },
+                  content: { type: 'string' },
+                  tool_calls: { type: ['array', 'null'] },
+                  tool_call_id: { type: ['string', 'null'] },
+                },
+                required: ['role', 'content', 'tool_calls', 'tool_call_id'],
+                additionalProperties: false,
+              },
+              strict: true,
             },
           },
         ],
@@ -254,7 +388,9 @@ async function sendMessage(userMessage) {
       },
       body: JSON.stringify({
         model: 'PROVIDER_MODEL_UID',
+        stream: true,
         messages,
+        tools: MEILISEARCH_TOOLS, // See the complete example in the chat interface guide
       }),
     }
   );
@@ -262,16 +398,27 @@ async function sendMessage(userMessage) {
   const reader = response.body.getReader();
   const decoder = new TextDecoder();
   let assistantMessage = '';
+  const pendingToolCalls = {};
 
   while (true) {
     const { done, value } = await reader.read();
     if (done) break;
 
     for (const line of decoder.decode(value).split('\n')) {
-      if (line.startsWith('data: ') && line !== 'data: [DONE]') {
-        const content = JSON.parse(line.slice(6)).choices[0]?.delta?.content;
-        if (content) assistantMessage += content;
+      if (!line.startsWith('data: ') || line === 'data: [DONE]') continue;
+      const delta = JSON.parse(line.slice(6)).choices[0]?.delta;
+      if (delta?.content) assistantMessage += delta.content;
+      for (const toolCall of delta?.tool_calls ?? []) {
+        if (toolCall.id) pendingToolCalls[toolCall.id] = { name: toolCall.function.name, args: '' };
+        const pending = toolCall.id ? pendingToolCalls[toolCall.id] : Object.values(pendingToolCalls).at(-1);
+        if (pending && toolCall.function?.arguments) pending.args += toolCall.function.arguments;
       }
+    }
+  }
+
+  for (const call of Object.values(pendingToolCalls)) {
+    if (call.name === '_meiliAppendConversationMessage') {
+      messages.push(JSON.parse(call.args)); // Preserve search context for follow-ups
     }
   }
 
@@ -332,7 +479,7 @@ async function sendMessage(userMessage) {
 
 </CodeGroup>
 
-When using Meilisearch tools, also handle `_meiliAppendConversationMessage` tool calls by appending the provided messages to your conversation history. See the [chat tooling reference](/capabilities/conversational_search/advanced/chat_tooling_reference#_meiliappendconversationmessage) for details.
+For a complete example combining all tools with progress, sources, and history, see the [chat interface guide](/capabilities/conversational_search/getting_started/chat#complete-example-progress-sources-and-history).
 
 ## Next steps
 

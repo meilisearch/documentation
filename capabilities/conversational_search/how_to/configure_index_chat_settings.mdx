@@ -18,7 +18,7 @@ curl \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "description": "A movie database containing titles, overviews, genres, and release dates",
-    "documentTemplate": "{% for field in fields %}{% if field.is_searchable and field.value != nil %}{{ field.name }}: {{ field.value }}\n{% endif %}{% endfor %}",
+    "documentTemplate": "A movie titled '{{doc.title}}' that released in {{ doc.release_date | date: '%Y' }}. The movie genres are: {{doc.genres}}. The key themes include: {{doc.keywords}}. The storyline is about: {{doc.overview|truncatewords: 100}}",
     "documentTemplateMaxBytes": 400
   }'
 ```
