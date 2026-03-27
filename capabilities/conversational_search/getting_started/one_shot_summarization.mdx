@@ -12,6 +12,10 @@ Make sure you have completed the [setup guide](/capabilities/conversational_sear
 In code examples, replace `WORKSPACE_NAME` with the name of your workspace. On Meilisearch Cloud, the default workspace name is `cloud`.
 </Note>
 
+<Warning>
+All requests to the chat completions endpoint must include `"stream": true`. Non-streaming (`stream: false`) is not yet supported and returns a `501 Not Implemented` error.
+</Warning>
+
 ## Configure your workspace prompt for summarization
 
 The key difference from a chat interface is the system prompt. For summarization, instruct the model to produce concise, self-contained answers and avoid follow-up questions:
@@ -38,7 +42,7 @@ Key differences from a multi-turn chat prompt:
 - The model is told **not to ask follow-up questions**
 - Responses are limited to a few sentences
 
-You can use the same workspace you already created in the setup guide, or create a dedicated one for this use case. The rest of the workspace configuration (LLM provider, API key, etc.) stays the same.
+Since the system prompt controls the answer style, we recommend creating a dedicated workspace for summarization rather than reusing a chat workspace. This keeps the prompts separate and avoids affecting other use cases.
 
 ## Send a single question
 
@@ -47,12 +51,13 @@ Send a request to the chat completions endpoint. The difference from multi-turn 
 <CodeGroup>
 
 ```bash cURL
-curl \
-  -N -X POST 'MEILISEARCH_URL/chats/WORKSPACE_NAME/chat/completions' \
+curl -N \
+  -X POST 'MEILISEARCH_URL/chats/WORKSPACE_NAME/chat/completions' \
   -H 'Authorization: Bearer MEILISEARCH_KEY' \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "model": "PROVIDER_MODEL_UID",
+    "stream": true,
     "messages": [
       {
         "role": "user",
