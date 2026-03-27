@@ -72,13 +72,13 @@ The specific model to use is chosen per request in the `/chat/completions` call,
 
 ### On Meilisearch Cloud
 
-Your project comes with a single default workspace named `cloud`. Configure it by sending a `PATCH` request to `/chats/cloud/settings`:
+Your project comes with a single default workspace named `cloud`. Use `cloud` as the `WORKSPACE_NAME` in all API calls:
 
 <CodeGroup>
 
 ```bash OpenAI
 curl \
-  -X PATCH 'MEILISEARCH_URL/chats/cloud/settings' \
+  -X PATCH 'MEILISEARCH_URL/chats/WORKSPACE_NAME/settings' \
   -H 'Authorization: Bearer MEILISEARCH_KEY' \
   -H 'Content-Type: application/json' \
   --data-binary '{
@@ -92,7 +92,7 @@ curl \
 
 ```bash Azure OpenAI
 curl \
-  -X PATCH 'MEILISEARCH_URL/chats/cloud/settings' \
+  -X PATCH 'MEILISEARCH_URL/chats/WORKSPACE_NAME/settings' \
   -H 'Authorization: Bearer MEILISEARCH_KEY' \
   -H 'Content-Type: application/json' \
   --data-binary '{
@@ -107,7 +107,7 @@ curl \
 
 ```bash Mistral
 curl \
-  -X PATCH 'MEILISEARCH_URL/chats/cloud/settings' \
+  -X PATCH 'MEILISEARCH_URL/chats/WORKSPACE_NAME/settings' \
   -H 'Authorization: Bearer MEILISEARCH_KEY' \
   -H 'Content-Type: application/json' \
   --data-binary '{
@@ -122,7 +122,7 @@ curl \
 
 ```bash vLLM
 curl \
-  -X PATCH 'MEILISEARCH_URL/chats/cloud/settings' \
+  -X PATCH 'MEILISEARCH_URL/chats/WORKSPACE_NAME/settings' \
   -H 'Authorization: Bearer MEILISEARCH_KEY' \
   -H 'Content-Type: application/json' \
   --data-binary '{
