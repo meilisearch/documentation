@@ -144,7 +144,7 @@ for await (const text of textStream) {
 
 Including the `_meiliSearchSources` tool lets you display the source documents alongside the summarized answer, so users can verify the information. In a real application, you would run this in parallel with a standard Meilisearch search request and display both results together.
 
-For summarization, you may want to use a lower `temperature` value (e.g. `0.1` or `0.2`) to produce more deterministic, factual answers. Meilisearch [passes these parameters through](/capabilities/conversational_search/how_to/configure_chat_workspace#llm-provider-parameters-passthrough) to your LLM provider.
+For summarization, you may want to use a lower `temperature` value (for example, `0.1` or `0.2`) to produce more deterministic, factual answers. Meilisearch [passes these parameters through](/capabilities/conversational_search/how_to/configure_chat_workspace#llm-provider-parameters-passthrough) to your LLM provider.
 
 ## Next steps
 

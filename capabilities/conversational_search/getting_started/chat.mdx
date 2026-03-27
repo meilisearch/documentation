@@ -50,7 +50,7 @@ const client = new OpenAI({
   apiKey: 'MEILISEARCH_KEY',
 });
 
-const stream = client.chat.completions.stream({
+const stream = await client.chat.completions.create({
   model: 'PROVIDER_MODEL_UID',
   stream: true,
   messages: [{ role: 'user', content: 'What movies are about artificial intelligence?' }],
@@ -151,7 +151,8 @@ The `call_id` field links `_meiliSearchProgress` and `_meiliSearchSources` event
           "description": "The call ID to track the original search associated to those sources"
         },
         "documents": {
-          "type": "object",
+          "type": "array",
+          "items": { "type": "object" },
           "description": "The documents associated with the search. Only displayed attributes are returned"
         }
       },
@@ -294,16 +295,22 @@ async function chat(userMessage) {
     }),
   });
 
-  const reader = response.body.getReader();
+  const reader = response.body?.getReader();
+  if (!reader) throw new Error('No readable stream on response');
   const decoder = new TextDecoder();
   let answer = '';
+  let buffer = '';
   const pendingToolCalls = {};
 
   while (true) {
     const { done, value } = await reader.read();
     if (done) break;
 
-    for (const line of decoder.decode(value).split('\n')) {
+    buffer += decoder.decode(value, { stream: true });
+    const lines = buffer.split('\n');
+    buffer = lines.pop() ?? ''; // retain any incomplete trailing line
+
+    for (const line of lines) {
       if (!line.startsWith('data: ') || line === 'data: [DONE]') continue;
 
       const chunk = JSON.parse(line.slice(6));
