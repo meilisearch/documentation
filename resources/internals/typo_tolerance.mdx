@@ -1,7 +1,7 @@
 ---
 title: "Typo tolerance vs fuzzy search: how Meilisearch handles misspellings"
 sidebarTitle: Typo tolerance vs fuzzy search
-description: How Meilisearch's typo tolerance works under the hood, why it differs from fuzzy search in Elasticsearch, Algolia, Typesense, and PostgreSQL, and what the practical implications are.
+description: How Meilisearch's typo tolerance works under the hood, why it differs from fuzzy search in Elasticsearch, Solr, MongoDB Atlas Search, Manticore, and PostgreSQL, and what the practical implications are.
 ---
 
 Most search engines treat typo handling as an optional, query-level feature you opt into. Meilisearch treats it as a first-class ranking criterion that works automatically on every query. This page explains the technical differences and why they matter.
@@ -43,7 +43,7 @@ Since Meilisearch v1.15, you can disable typo tolerance specifically for numeric
 
 ### Elasticsearch and OpenSearch
 
-Elasticsearch uses fuzzy queries based on Levenshtein distance, but they must be **explicitly enabled per query** with the `fuzziness` parameter:
+Elasticsearch (and OpenSearch, which shares the same Lucene core) uses fuzzy queries based on Levenshtein distance, but they must be **explicitly enabled per query** with the `fuzziness` parameter:
 
 ```json
 {
@@ -61,36 +61,64 @@ Elasticsearch uses fuzzy queries based on Levenshtein distance, but they must be
 `fuzziness: "AUTO"` applies the same length-based thresholds as Meilisearch (0 for short words, 1 for medium, 2 for long). However:
 
 - **Opt-in**: if you forget to add `fuzziness` to a query, typos return zero results
-- **Score modifier**: fuzzy matches lower the BM25 score, but the score is still a single number mixing term frequency, IDF, and fuzziness into an opaque value
-- **Not a ranking rule**: there is no way to say "always prefer 0-typo matches over 1-typo matches regardless of term frequency." A very frequent misspelled term can outscore a rare exact match
-- **Prefix queries are separate**: `fuzzy` and `prefix` are two separate query types in Elasticsearch
+- **Score modifier**: fuzzy matches lower the BM25 score, but the score is still a single number mixing term frequency, IDF, and fuzziness penalty into an opaque value
+- **Not a ranking rule**: there is no way to say "always prefer 0-typo matches over 1-typo matches regardless of term frequency." A frequent misspelled term can outscore a rare exact match
+- **Prefix queries are separate**: `fuzzy` and `prefix` are two distinct query types in Elasticsearch — you cannot fuzzily match a prefix without combining both in a `bool` query
+- **Computed at query time**: Lucene computes Levenshtein automata at query time, not at indexing time
 
-### Algolia
+### Apache Solr
 
-Algolia's approach is the closest to Meilisearch. Typo tolerance is automatic and on by default, with configurable word length thresholds (`minWordSizefor1Typo`, `minWordSizefor2Typos`). Key differences:
+Solr is built on the same Lucene engine as Elasticsearch. Fuzzy matching uses the `~` tilde syntax in query strings, or the `fuzzy` query type in JSON:
 
-- **Ranking integration**: Algolia also uses a multi-criteria ranking system where typo count is a first-class criterion, similar to Meilisearch
-- **Prefix DFA**: Algolia uses a similar DFA-based approach pre-computed at indexing time
-- **Configuration granularity**: Algolia exposes more fine-grained controls (per-attribute typo, typo on single vs compound words) but requires more upfront tuning
-- **No `disableOnNumbers` equivalent**: disabling typo tolerance for numeric tokens requires custom workarounds in Algolia
+```
+q=title:iphoen~1
+```
 
-### Typesense
+The `~N` suffix sets the maximum edit distance (0, 1, or 2). Behavior is identical to Elasticsearch at the Lucene level:
 
-Typesense uses Levenshtein distance with a `num_typos` query parameter (default: 2). Unlike Elasticsearch, typo tolerance is on by default, but the degree is controlled per query:
+- **Opt-in per query**: not automatic
+- **Lucene fuzzy query**: edit distance computed at query time, Levenshtein automata generated on the fly
+- **BM25 score modifier**: fuzzy matches reduce the document's relevance score; no strict bucket ordering
+- **No prefix fuzzy**: the tilde syntax does not combine prefix expansion with fuzzy matching
+
+### MongoDB Atlas Search
+
+MongoDB Atlas Search is built on Lucene and exposes a `fuzzy` option within the `text` operator:
 
 ```json
 {
-  "q": "iphoen",
-  "query_by": "title",
-  "num_typos": 1
+  "$search": {
+    "text": {
+      "query": "iphoen",
+      "path": "title",
+      "fuzzy": {
+        "maxEdits": 2,
+        "prefixLength": 3
+      }
+    }
+  }
 }
 ```
 
-Differences from Meilisearch:
+- **Opt-in**: the `fuzzy` option must be added explicitly; standard `text` queries do not tolerate typos
+- **`prefixLength`**: the first N characters must match exactly before fuzzy expansion applies, which improves performance but reduces coverage for early-position typos
+- **Lucene scoring**: fuzzy matches lower the relevance score, same BM25 mechanics as Elasticsearch and Solr
+- **Computed at query time**: automata are generated on the fly per query
 
-- **Per-query parameter**: you can tune typo tolerance at query time, which is flexible but means different queries may behave inconsistently if not carefully managed
-- **Ranking**: typo count is factored into Typesense's scoring, but the ranking model is different — it blends typo count into a single score rather than using strict bucket ordering
-- **No DFA pre-computation claim**: Typesense computes edit distances at query time
+### Manticore Search
+
+Manticore Search (a fork of Sphinx) supports fuzzy matching via the `MATCH` function with a `fuzzy` flag or using `levenshtein()` in expressions:
+
+```sql
+SELECT * FROM movies WHERE MATCH('@title iphoen~2');
+```
+
+Or with the HTTP API using the `fuzziness` parameter in a way similar to Elasticsearch (Manticore offers an Elasticsearch-compatible API layer).
+
+- **Opt-in**: fuzzy matching must be explicitly invoked per query
+- **Levenshtein distance**: computed at query time
+- **Score modifier**: fuzzy matches reduce the BM25-based relevance weight
+- **No automatic prefix+fuzzy**: prefix and fuzzy are separate matching modes
 
 ### PostgreSQL (`pg_trgm`)
 
@@ -104,26 +132,26 @@ ORDER BY similarity(title, 'iphoen') DESC;
 
 This is a fundamentally different approach:
 
-- **Statistical, not edit-based**: "iphone" and "iphoen" share many trigrams (iph, pho, hoe, oen) so they score well. But "cat" and "bat" also share `" at"` and `"at "` trigrams, so short-word false positives are common
-- **Threshold tuning required**: the similarity threshold (default 0.3) needs manual tuning per use case
-- **Not automatic**: requires explicit `similarity()` calls or GIN/GIST indexes with `%` operator
-- **No ranking integration**: similarity is a score modifier on top of other query conditions, not a first-class ranking criterion
-- **No prefix search**: trigram similarity is not prefix-aware
+- **Statistical, not edit-based**: "iphone" and "iphoen" share many trigrams (`iph`, `pho`, `hoe`, `oen`) so they score well. But short-word false positives are common because short strings share few trigrams in general
+- **Threshold tuning required**: the similarity threshold (default 0.3) must be manually tuned per use case
+- **Not automatic**: requires explicit `similarity()` calls or GIN/GIST indexes with the `%` operator
+- **No ranking integration**: similarity is a plain score on top of SQL `WHERE` clauses, not a search ranking rule
+- **No prefix awareness**: trigram similarity is not prefix-aware — "prog" does not naturally match "programming" via trigrams the way prefix DFA does
 
 ---
 
 ## Summary
 
-| | Meilisearch | Elasticsearch | Algolia | Typesense | PostgreSQL `pg_trgm` |
+| | Meilisearch | Elasticsearch / Solr / OpenSearch | MongoDB Atlas Search | Manticore Search | PostgreSQL `pg_trgm` |
 |---|---|---|---|---|---|
-| **Algorithm** | Prefix DFA (Levenshtein) | Levenshtein | Prefix DFA (Levenshtein) | Levenshtein | Trigram similarity |
-| **Pre-computed at index time** | Yes | No | Yes | No | Partial (GIN index) |
-| **Automatic (no query config)** | Yes | No (`fuzziness` required) | Yes | Yes (default) | No |
-| **Ranking integration** | First-class rule (bucket sort) | Score modifier (BM25) | First-class rule | Score blend | Score modifier |
-| **0-typo always beats 1-typo** | Yes (strict) | No (BM25 can override) | Yes (strict) | No (score blend) | N/A |
-| **Word length thresholds** | Configurable | `AUTO` or manual | Configurable | `num_typos` param | Threshold-based |
-| **Disable on numbers** | Yes (v1.15+) | Manual query logic | Workarounds only | Not built-in | Not applicable |
-| **Prefix search** | Automatic | Separate query type | Automatic | Separate param | No |
+| **Algorithm** | Prefix DFA (Levenshtein) | Levenshtein (Lucene) | Levenshtein (Lucene) | Levenshtein | Trigram similarity |
+| **Pre-computed at index time** | Yes | No | No | No | Partial (GIN index) |
+| **Automatic (no query config)** | Yes | No | No | No | No |
+| **Ranking integration** | First-class rule (bucket sort) | BM25 score modifier | BM25 score modifier | BM25 score modifier | SQL score modifier |
+| **0-typo always beats 1-typo** | Yes (strict) | No (BM25 can override) | No (BM25 can override) | No (BM25 can override) | N/A |
+| **Word length thresholds** | Configurable | `AUTO` or manual | `maxEdits` param | Manual | Threshold-based |
+| **Disable on numbers** | Yes (v1.15+) | Manual query logic | Manual query logic | Manual | Not applicable |
+| **Prefix search** | Automatic on last word | Separate query type | Separate operator | Separate mode | No |
 
 ## Learn more
 
