@@ -45,7 +45,7 @@ There is no score blending or weighting — just a strict, transparent ordering.
 
 Meilisearch applies prefix search and typo tolerance **simultaneously** on the last word of a query. This means a partial, misspelled word still returns results. For example, searching `"iphoe"` (5 characters, 1 typo budget) can match `"iphone"` as a prefixed, typo-corrected term in a single pass.
 
-No other engine in this comparison combines prefix expansion and Levenshtein matching in a single step without separate query types or analyzers.
+Elasticsearch can approximate this by combining an `edge_ngram` tokenizer (for prefix expansion at index time) with a `fuzzy` query at search time, but the two mechanisms work on different levels and require careful coordination. In Meilisearch, prefix and typo tolerance are a single unified step with no extra configuration.
 
 You can [disable prefix search](/reference/api/settings/get-prefixsearch) independently from typo tolerance if needed.
 
@@ -59,7 +59,7 @@ Beyond character-level edits, Meilisearch handles a class of mistakes that Leven
 
 Split words must remain adjacent — a document with `"news"` and `"paper"` separated by other words will not match.
 
-Together, these two mechanisms handle the common real-world case where users omit or add spaces within compound words or multi-word phrases — something no other engine in this comparison does automatically. See [Concatenated and split queries](/resources/internals/concat) for more detail.
+Together, these two mechanisms handle the common real-world case where users omit or add spaces within compound words or multi-word phrases. Elasticsearch can handle compound words through custom token filters (like the `word_delimiter_graph` filter or language-specific compound word decomposers), but this requires upfront index configuration per language and does not cover the query-side concatenation case. See [Concatenated and split queries](/resources/internals/concat) for more detail.
 
 ### Language-aware tokenization before typo matching
 
@@ -90,7 +90,7 @@ Meilisearch gives you four independent knobs to turn typo tolerance off for spec
 | `disableOnAttributes` | Specific document fields | SKU, barcode, serial number fields where precision matters |
 | `disableOnNumbers` | All numeric tokens | Prevents `2024` matching `2025`, improves indexing performance |
 
-No other engine in this comparison exposes this level of granularity without per-query code changes.
+Elasticsearch can achieve similar granularity through per-field analyzer configuration and query-level `fuzziness` overrides, but it requires per-query code changes or separate index mappings. Meilisearch exposes all of these as index-level settings applied consistently across every query.
 
 ---
 
@@ -118,8 +118,10 @@ Elasticsearch (and OpenSearch, which shares the same Lucene core) uses fuzzy que
 - **Opt-in**: if you forget to add `fuzziness` to a query, typos return zero results
 - **Score modifier**: fuzzy matches lower the BM25 score, but the score is still a single number mixing term frequency, IDF, and fuzziness penalty into an opaque value
 - **Not a ranking rule**: there is no way to say "always prefer 0-typo matches over 1-typo matches regardless of term frequency." A frequent misspelled term can outscore a rare exact match
-- **Prefix queries are separate**: `fuzzy` and `prefix` are two distinct query types in Elasticsearch — you cannot fuzzily match a prefix without combining both in a `bool` query
+- **Prefix queries are separate**: `fuzzy` and `prefix` are two distinct query types in Elasticsearch. Combining them requires a `bool` query with both a `fuzzy` clause and a `prefix` clause, or using an `edge_ngram` tokenizer at index time. It is achievable, but requires deliberate setup and adds complexity to every query
 - **Computed at query time**: Lucene computes Levenshtein automata at query time, not at indexing time
+
+**Normalization and custom tokenizers.** Where Elasticsearch has a genuine advantage is in its analyzer system. You can build a fully custom pipeline — any combination of character filters (strip HTML, map characters), tokenizers (standard, whitespace, ngram, edge-ngram, pattern, language-specific), and token filters (lowercase, stemmer, synonym, ASCII folding, stop words, phonetic). This makes Elasticsearch extremely powerful for domain-specific normalization: a medical search engine can apply specialized stemming, a legal platform can expand abbreviations, a multilingual product catalog can use the ICU analyzer with Unicode-aware case folding and decomposition across all scripts. Charabia provides built-in normalization for the most common languages, but Elasticsearch's analyzer framework is more flexible for advanced or unusual requirements. The trade-off is that getting it right requires significant configuration expertise — and misconfigured analyzers are a common source of relevance bugs.
 
 ### Apache Solr
 
@@ -209,7 +211,7 @@ This is a fundamentally different approach:
 | **Concatenation typo** (`any way` → `anyway`) | Yes (up to 3 words) | No | No | No | No |
 | **Frequency-based word splitting** (`newspaper` → `news paper`) | Yes | No | No | No | No |
 | **Prefix + typo simultaneously on last word** | Yes | No (separate query types) | No (separate operators) | No | No |
-| **Language-aware normalization before typo** | Yes (Charabia) | Partial (analyzers) | Partial (analyzers) | No | No |
+| **Language-aware normalization before typo** | Yes, built-in (Charabia) | Yes, configurable (analyzer framework — more powerful but requires expertise) | Yes, configurable (analyzers) | No | No |
 | **Disable on numbers** | Yes | Manual query logic | Manual query logic | Manual | Not applicable |
 | **Disable on specific words** | Yes (`disableOnWords`) | No | No | No | No |
 | **Disable on specific attributes** | Yes (`disableOnAttributes`) | Partial (per-field query) | Partial (per-field query) | No | No |
