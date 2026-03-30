@@ -8,7 +8,7 @@ Once your [sharded cluster is set up](/resources/self_hosting/sharding/setup_sha
 
 ## Add a remote
 
-Include the new remote in the `remotes` object. Remotes not present in the request are left unchanged:
+Include the new remote in the `remotes` object and update the shard assignments to include it:
 
 <CodeGroup>
 
@@ -26,36 +26,16 @@ curl \
       }
     },
     "shards": {
-      "shard-a": { "addRemotes": ["ms-03"] }
+      "shard-a": { "remotes": ["ms-00", "ms-01", "ms-03"] }
     }
   }'
 ```
 
 </CodeGroup>
-
-You can use `addRemotes` inside a shard definition to add the new remote to an existing shard without rewriting the full shard assignment.
 
 ## Update shard assignments
 
-Use `removeRemotes` inside a shard definition to remove a remote from a specific shard without rewriting the full assignment:
-
-<CodeGroup>
-
-```bash
-curl \
-  -X PATCH 'MEILISEARCH_URL/network' \
-  -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer MEILISEARCH_KEY' \
-  --data-binary '{
-    "shards": {
-      "shard-a": { "removeRemotes": ["ms-03"] }
-    }
-  }'
-```
-
-</CodeGroup>
-
-To fully replace the shard assignment, send a new `shards` configuration with the `remotes` list:
+Send a new `shards` configuration with the full `remotes` list for each shard you want to update. Shards not included in the request are left unchanged:
 
 <CodeGroup>
 

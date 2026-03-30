@@ -113,14 +113,16 @@ curl \
       }
     },
     "shards": {
-      "shard-a": { "addRemotes": ["ms-03"] }
+      "shard-a": { "remotes": ["ms-00", "ms-01", "ms-03"] },
+      "shard-b": { "remotes": ["ms-01", "ms-02"] },
+      "shard-c": { "remotes": ["ms-02", "ms-00"] }
     }
   }'
 ```
 
 </CodeGroup>
 
-Use `addRemotes` inside a shard definition to add the new remote to that shard without rewriting the full list. Remotes not included in the `remotes` object are left unchanged.
+Send the full `remotes` list for each shard you want to update. Shards not included in the request are left unchanged.
 
 ## The leader instance
 
