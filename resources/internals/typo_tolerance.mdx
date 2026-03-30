@@ -1,0 +1,133 @@
+---
+title: "Typo tolerance vs fuzzy search: how Meilisearch handles misspellings"
+sidebarTitle: Typo tolerance vs fuzzy search
+description: How Meilisearch's typo tolerance works under the hood, why it differs from fuzzy search in Elasticsearch, Algolia, Typesense, and PostgreSQL, and what the practical implications are.
+---
+
+Most search engines treat typo handling as an optional, query-level feature you opt into. Meilisearch treats it as a first-class ranking criterion that works automatically on every query. This page explains the technical differences and why they matter.
+
+## How Meilisearch handles typos
+
+Meilisearch uses a **prefix-based Deterministic Finite Automaton (DFA)** built from [Levenshtein distance](https://en.wikipedia.org/wiki/Levenshtein_distance). When you index documents, Meilisearch pre-computes a DFA for every term in the index. At query time, the engine walks this automaton to find all indexed terms within the allowed edit distance of the query term — without recomputing anything at query time.
+
+### Word length thresholds
+
+Meilisearch does not apply typo tolerance uniformly. The number of typos allowed depends on the length of the query word:
+
+| Query word length | Typos allowed |
+|-------------------|---------------|
+| 1–4 characters | 0 (exact match only) |
+| 5–8 characters | 1 |
+| 9+ characters | 2 |
+
+These thresholds are [configurable](/capabilities/full_text_search/relevancy/typo_tolerance_settings). Short words like "cat" or "by" are not fuzzy-matched, which avoids noise like "cat" matching "bat" or "car".
+
+### Typo tolerance is a ranking rule, not a filter
+
+When a query term matches an indexed term via a typo, that result is not discarded or penalized with a separate score modifier. Instead, typo count feeds directly into the `typo` [ranking rule](/resources/internals/ranking) — one of the seven criteria in Meilisearch's [bucket sort](/resources/internals/bucket_sort) pipeline.
+
+This means:
+- A document matching with 0 typos always ranks above one matching with 1 typo, all else being equal
+- A document matching with 1 typo always ranks above one matching with 2 typos
+- A result with 2 typos but an exact title match still outranks a result with 0 typos but a body-only match (because `attributeRank` comes after `typo`)
+
+There is no score blending or weighting — just a strict, transparent ordering.
+
+### `disableOnNumbers`
+
+Since Meilisearch v1.15, you can disable typo tolerance specifically for numeric tokens. This prevents false positives like `"2024"` matching `"2025"` or `"192.168.1.0"` matching similar strings. It is configured via the [`typoTolerance.disableOnNumbers`](/capabilities/full_text_search/relevancy/typo_tolerance_settings) setting.
+
+---
+
+## How other engines handle typos
+
+### Elasticsearch and OpenSearch
+
+Elasticsearch uses fuzzy queries based on Levenshtein distance, but they must be **explicitly enabled per query** with the `fuzziness` parameter:
+
+```json
+{
+  "query": {
+    "match": {
+      "title": {
+        "query": "iphoen",
+        "fuzziness": "AUTO"
+      }
+    }
+  }
+}
+```
+
+`fuzziness: "AUTO"` applies the same length-based thresholds as Meilisearch (0 for short words, 1 for medium, 2 for long). However:
+
+- **Opt-in**: if you forget to add `fuzziness` to a query, typos return zero results
+- **Score modifier**: fuzzy matches lower the BM25 score, but the score is still a single number mixing term frequency, IDF, and fuzziness into an opaque value
+- **Not a ranking rule**: there is no way to say "always prefer 0-typo matches over 1-typo matches regardless of term frequency." A very frequent misspelled term can outscore a rare exact match
+- **Prefix queries are separate**: `fuzzy` and `prefix` are two separate query types in Elasticsearch
+
+### Algolia
+
+Algolia's approach is the closest to Meilisearch. Typo tolerance is automatic and on by default, with configurable word length thresholds (`minWordSizefor1Typo`, `minWordSizefor2Typos`). Key differences:
+
+- **Ranking integration**: Algolia also uses a multi-criteria ranking system where typo count is a first-class criterion, similar to Meilisearch
+- **Prefix DFA**: Algolia uses a similar DFA-based approach pre-computed at indexing time
+- **Configuration granularity**: Algolia exposes more fine-grained controls (per-attribute typo, typo on single vs compound words) but requires more upfront tuning
+- **No `disableOnNumbers` equivalent**: disabling typo tolerance for numeric tokens requires custom workarounds in Algolia
+
+### Typesense
+
+Typesense uses Levenshtein distance with a `num_typos` query parameter (default: 2). Unlike Elasticsearch, typo tolerance is on by default, but the degree is controlled per query:
+
+```json
+{
+  "q": "iphoen",
+  "query_by": "title",
+  "num_typos": 1
+}
+```
+
+Differences from Meilisearch:
+
+- **Per-query parameter**: you can tune typo tolerance at query time, which is flexible but means different queries may behave inconsistently if not carefully managed
+- **Ranking**: typo count is factored into Typesense's scoring, but the ranking model is different — it blends typo count into a single score rather than using strict bucket ordering
+- **No DFA pre-computation claim**: Typesense computes edit distances at query time
+
+### PostgreSQL (`pg_trgm`)
+
+PostgreSQL's `pg_trgm` extension uses **trigram similarity** rather than edit distance. It splits strings into overlapping 3-character substrings and measures how many trigrams two strings share:
+
+```sql
+SELECT * FROM movies
+WHERE similarity(title, 'iphoen') > 0.3
+ORDER BY similarity(title, 'iphoen') DESC;
+```
+
+This is a fundamentally different approach:
+
+- **Statistical, not edit-based**: "iphone" and "iphoen" share many trigrams (iph, pho, hoe, oen) so they score well. But "cat" and "bat" also share `" at"` and `"at "` trigrams, so short-word false positives are common
+- **Threshold tuning required**: the similarity threshold (default 0.3) needs manual tuning per use case
+- **Not automatic**: requires explicit `similarity()` calls or GIN/GIST indexes with `%` operator
+- **No ranking integration**: similarity is a score modifier on top of other query conditions, not a first-class ranking criterion
+- **No prefix search**: trigram similarity is not prefix-aware
+
+---
+
+## Summary
+
+| | Meilisearch | Elasticsearch | Algolia | Typesense | PostgreSQL `pg_trgm` |
+|---|---|---|---|---|---|
+| **Algorithm** | Prefix DFA (Levenshtein) | Levenshtein | Prefix DFA (Levenshtein) | Levenshtein | Trigram similarity |
+| **Pre-computed at index time** | Yes | No | Yes | No | Partial (GIN index) |
+| **Automatic (no query config)** | Yes | No (`fuzziness` required) | Yes | Yes (default) | No |
+| **Ranking integration** | First-class rule (bucket sort) | Score modifier (BM25) | First-class rule | Score blend | Score modifier |
+| **0-typo always beats 1-typo** | Yes (strict) | No (BM25 can override) | Yes (strict) | No (score blend) | N/A |
+| **Word length thresholds** | Configurable | `AUTO` or manual | Configurable | `num_typos` param | Threshold-based |
+| **Disable on numbers** | Yes (v1.15+) | Manual query logic | Workarounds only | Not built-in | Not applicable |
+| **Prefix search** | Automatic | Separate query type | Automatic | Separate param | No |
+
+## Learn more
+
+- [Typo tolerance settings](/capabilities/full_text_search/relevancy/typo_tolerance_settings) — Configure thresholds, disable on words or numbers, and more
+- [Typo tolerance calculations](/capabilities/full_text_search/relevancy/typo_tolerance_calculations) — How edit distance is computed in detail
+- [Ranking rules](/capabilities/full_text_search/relevancy/ranking_rules) — How the `typo` rule fits into the full ranking pipeline
+- [Ranking vs BM25](/resources/internals/ranking) — Why Meilisearch's multi-criteria system produces better results for application search
