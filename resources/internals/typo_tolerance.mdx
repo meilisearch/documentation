@@ -37,7 +37,7 @@ When a query term matches an indexed term via a typo, that result is not discard
 This means:
 - A document matching with 0 typos always ranks above one matching with 1 typo, all else being equal
 - A document matching with 1 typo always ranks above one matching with 2 typos
-- A result with 2 typos but an exact title match still outranks a result with 0 typos but a body-only match (because `attributeRank` comes after `typo`)
+- A result with 0 typos in a less important attribute (body) outranks a result with 2 typos in a more important attribute (title), because `typo` comes before `attribute` in the ranking pipeline
 
 There is no score blending or weighting — just a strict, transparent ordering. Disabling typo tolerance entirely also disables the `typo` ranking rule, since every returned document would have 0 typos by definition.
 
@@ -197,30 +197,10 @@ This is a fundamentally different approach:
 
 ---
 
-## Summary
-
-| | Meilisearch | Elasticsearch / Solr / OpenSearch | MongoDB Atlas Search | Manticore Search | PostgreSQL `pg_trgm` |
-|---|---|---|---|---|---|
-| **Algorithm** | Prefix DFA (Levenshtein) | Levenshtein (Lucene) | Levenshtein (Lucene) | Levenshtein | Trigram similarity |
-| **Pre-computed at index time** | Yes | No | No | No | Partial (GIN index) |
-| **Automatic (no query config)** | Yes | No | No | No | No |
-| **Ranking integration** | First-class rule (bucket sort) | BM25 score modifier | BM25 score modifier | BM25 score modifier | SQL score modifier |
-| **0-typo always beats 1-typo** | Yes (strict) | No (BM25 can override) | No (BM25 can override) | No (BM25 can override) | N/A |
-| **Word length thresholds** | Configurable | `AUTO` or manual | `maxEdits` param | Manual | Threshold-based |
-| **First-char typo costs 2** | Yes | No | No | No | N/A |
-| **Concatenation typo** (`any way` → `anyway`) | Yes (up to 3 words) | No | No | No | No |
-| **Frequency-based word splitting** (`newspaper` → `news paper`) | Yes | No | No | No | No |
-| **Prefix + typo simultaneously on last word** | Yes | No (separate query types) | No (separate operators) | No | No |
-| **Language-aware normalization before typo** | Yes, built-in (Charabia) | Yes, configurable (analyzer framework — more powerful but requires expertise) | Yes, configurable (analyzers) | No | No |
-| **Disable on numbers** | Yes | Manual query logic | Manual query logic | Manual | Not applicable |
-| **Disable on specific words** | Yes (`disableOnWords`) | No | No | No | No |
-| **Disable on specific attributes** | Yes (`disableOnAttributes`) | Partial (per-field query) | Partial (per-field query) | No | No |
-| **Prefix search** | Automatic on last word | Separate query type | Separate operator | Separate mode | No |
-
 ## Learn more
 
 - [Typo tolerance settings](/capabilities/full_text_search/relevancy/typo_tolerance_settings) — Configure thresholds, disable on words or numbers, and more
-- [Typo tolerance calculations](/capabilities/full_text_search/relevancy/typo_tolerance_calculations) — How edit distance is computed in detail
+- [Typo tolerance calculations](/capabilities/full_text_search/relevancy/typo_tolerance_settings#how-typo-tolerance-works) — How edit distance is computed in detail
 - [Concatenated and split queries](/resources/internals/concat) — How Meilisearch handles word boundary mistakes
 - [Prefix search](/resources/internals/prefix) — How prefix matching works and how it interacts with typo tolerance
 - [Language support](/resources/help/language) — Charabia's tokenization and normalization per language
