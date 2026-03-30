@@ -11,7 +11,7 @@
       "name": "MIT",
       "identifier": "MIT"
     },
-    "version": "1.40.0"
+    "version": "1.41.0"
   },
   "servers": [
     {
@@ -1008,6 +1008,379 @@
         ]
       }
     },
+    "/dynamic-search-rules": {
+      "post": {
+        "tags": [
+          "Dynamic search rules"
+        ],
+        "summary": "List dynamic search rules",
+        "description": "Return all dynamic search rules configured on the instance.",
+        "operationId": "list_rules",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ListRules"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Dynamic search rules are returned.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginationView_DynamicSearchRule"
+                },
+                "example": {
+                  "results": [
+                    {
+                      "uid": "black-friday",
+                      "description": "Black Friday 2025 rules",
+                      "priority": 10,
+                      "active": true,
+                      "conditions": [
+                        {
+                          "scope": "query",
+                          "isEmpty": true
+                        },
+                        {
+                          "scope": "time",
+                          "start": "2025-11-28T00:00:00Z",
+                          "end": "2025-11-28T23:59:59Z"
+                        }
+                      ],
+                      "actions": [
+                        {
+                          "selector": {
+                            "indexUid": "products",
+                            "id": "123"
+                          },
+                          "action": {
+                            "type": "pin",
+                            "position": 1
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "offset": 0,
+                  "limit": 20,
+                  "total": 1
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The authorization header is missing.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "example": {
+                  "message": "The Authorization header is missing. It must use the bearer authorization method.",
+                  "code": "missing_authorization_header",
+                  "type": "auth",
+                  "link": "https://docs.meilisearch.com/errors#missing_authorization_header"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": [
+              "dynamicSearchRules.get",
+              "dynamicSearchRules.*",
+              "*.get",
+              "*"
+            ]
+          }
+        ]
+      }
+    },
+    "/dynamic-search-rules/{uid}": {
+      "get": {
+        "tags": [
+          "Dynamic search rules"
+        ],
+        "summary": "Get a dynamic search rule",
+        "description": "Retrieve a single dynamic search rule by its unique identifier.",
+        "operationId": "get_rule",
+        "parameters": [
+          {
+            "name": "uid",
+            "in": "path",
+            "description": "Unique identifier of the dynamic search rule.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "black-friday"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Dynamic search rule returned.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DynamicSearchRule"
+                },
+                "example": {
+                  "uid": "black-friday",
+                  "description": "Black Friday 2025 rules",
+                  "priority": 10,
+                  "active": true,
+                  "conditions": [
+                    {
+                      "scope": "query",
+                      "isEmpty": true
+                    },
+                    {
+                      "scope": "time",
+                      "start": "2025-11-28T00:00:00Z",
+                      "end": "2025-11-28T23:59:59Z"
+                    }
+                  ],
+                  "actions": [
+                    {
+                      "selector": {
+                        "indexUid": "products",
+                        "id": "123"
+                      },
+                      "action": {
+                        "type": "pin",
+                        "position": 1
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The authorization header is missing.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "example": {
+                  "message": "The Authorization header is missing. It must use the bearer authorization method.",
+                  "code": "missing_authorization_header",
+                  "type": "auth",
+                  "link": "https://docs.meilisearch.com/errors#missing_authorization_header"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Dynamic search rule not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "example": {
+                  "message": "Dynamic search rule `black-friday` not found.",
+                  "code": "dynamic_search_rule_not_found",
+                  "type": "invalid_request",
+                  "link": "https://docs.meilisearch.com/errors#dynamic_search_rule_not_found"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": [
+              "dynamicSearchRules.get",
+              "dynamicSearchRules.*",
+              "*.get",
+              "*"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Dynamic search rules"
+        ],
+        "summary": "Delete a dynamic search rule",
+        "description": "Delete a dynamic search rule by its unique identifier.",
+        "operationId": "delete_rule",
+        "parameters": [
+          {
+            "name": "uid",
+            "in": "path",
+            "description": "Unique identifier of the dynamic search rule.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "black-friday"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Dynamic search rule deleted."
+          },
+          "401": {
+            "description": "The authorization header is missing.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "example": {
+                  "message": "The Authorization header is missing. It must use the bearer authorization method.",
+                  "code": "missing_authorization_header",
+                  "type": "auth",
+                  "link": "https://docs.meilisearch.com/errors#missing_authorization_header"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Dynamic search rule not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "example": {
+                  "message": "Dynamic search rule `black-friday` not found.",
+                  "code": "dynamic_search_rule_not_found",
+                  "type": "invalid_request",
+                  "link": "https://docs.meilisearch.com/errors#dynamic_search_rule_not_found"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": [
+              "dynamicSearchRules.delete",
+              "dynamicSearchRules.*",
+              "*.delete",
+              "*"
+            ]
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "Dynamic search rules"
+        ],
+        "summary": "Update a dynamic search rule or create a new one if it doesn't exist",
+        "description": "Partially update a dynamic search rule by replacing the provided fields.",
+        "operationId": "update_or_create_rule",
+        "parameters": [
+          {
+            "name": "uid",
+            "in": "path",
+            "description": "Unique identifier of the dynamic search rule.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "black-friday"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateOrCreateDynamicSearchRuleRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Dynamic search rule updated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DynamicSearchRule"
+                },
+                "example": {
+                  "uid": "black-friday",
+                  "description": "Black Friday 2025 rules",
+                  "priority": 5,
+                  "active": true,
+                  "conditions": [
+                    {
+                      "scope": "query",
+                      "isEmpty": true
+                    }
+                  ],
+                  "actions": [
+                    {
+                      "selector": {
+                        "indexUid": "products",
+                        "id": "123"
+                      },
+                      "action": {
+                        "type": "pin",
+                        "position": 1
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The authorization header is missing.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "example": {
+                  "message": "The Authorization header is missing. It must use the bearer authorization method.",
+                  "code": "missing_authorization_header",
+                  "type": "auth",
+                  "link": "https://docs.meilisearch.com/errors#missing_authorization_header"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Dynamic search rule not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "example": {
+                  "message": "Dynamic search rule `black-friday` not found.",
+                  "code": "dynamic_search_rule_not_found",
+                  "type": "invalid_request",
+                  "link": "https://docs.meilisearch.com/errors#dynamic_search_rule_not_found"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": [
+              "dynamicSearchRules.update",
+              "dynamicSearchRules.*",
+              "*"
+            ]
+          }
+        ]
+      }
+    },
     "/experimental-features": {
       "get": {
         "tags": [
@@ -1029,6 +1402,7 @@
                   "logsRoute": false,
                   "editDocumentsByFunction": false,
                   "containsFilter": false,
+                  "dynamicSearchRules": false,
                   "network": false,
                   "getTaskDocumentsRoute": false,
                   "taskQueueCompactionRoute": false,
@@ -1087,6 +1461,7 @@
                   "logsRoute": false,
                   "editDocumentsByFunction": false,
                   "containsFilter": false,
+                  "dynamicSearchRules": false,
                   "network": false,
                   "getTaskDocumentsRoute": false,
                   "taskQueueCompactionRoute": false,
@@ -11815,8 +12190,8 @@
         "tags": [
           "Async task management"
         ],
-        "summary": "Get task's documents",
-        "description": "Retrieve the list of documents that were processed or affected by a given [task](https://www.meilisearch.com/docs/learn/async/asynchronous_operations). Only available for document-related tasks.",
+        "summary": "Get task's document payload",
+        "description": "Retrieve the document payload that was sent with this [task](https://www.meilisearch.com/docs/learn/async/asynchronous_operations).\nOnly available for document-related tasks that are enqueued or processing.",
         "operationId": "get_task_documents_file",
         "parameters": [
           {
@@ -12395,7 +12770,12 @@
           "webhooks.*",
           "indexes.compact",
           "fields.post",
-          "tasks.compact"
+          "tasks.compact",
+          "dynamicSearchRules.get",
+          "dynamicSearchRules.create",
+          "dynamicSearchRules.update",
+          "dynamicSearchRules.delete",
+          "dynamicSearchRules.*"
         ]
       },
       "AllBatches": {
@@ -13299,7 +13679,18 @@
           "invalid_webhook_uuid",
           "webhook_not_found",
           "immutable_webhook_uuid",
-          "immutable_webhook_is_editable"
+          "immutable_webhook_is_editable",
+          "invalid_dynamic_search_rule_offset",
+          "invalid_dynamic_search_rule_limit",
+          "invalid_dynamic_search_rule_filter",
+          "invalid_dynamic_search_rule_description",
+          "invalid_dynamic_search_rule_priority",
+          "invalid_dynamic_search_rule_active",
+          "invalid_dynamic_search_rule_conditions",
+          "invalid_dynamic_search_rule_actions",
+          "invalid_dynamic_search_rule_filter_attribute_patterns",
+          "invalid_dynamic_search_rule_filter_active",
+          "dynamic_search_rule_not_found"
         ]
       },
       "ComputedFacets": {
@@ -13339,6 +13730,64 @@
             }
           }
         }
+      },
+      "Condition": {
+        "oneOf": [
+          {
+            "type": "object",
+            "required": [
+              "scope"
+            ],
+            "properties": {
+              "isEmpty": {
+                "type": [
+                  "boolean",
+                  "null"
+                ]
+              },
+              "contains": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "scope": {
+                "type": "string",
+                "enum": [
+                  "query"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "scope"
+            ],
+            "properties": {
+              "start": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "format": "date-time"
+              },
+              "end": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "format": "date-time"
+              },
+              "scope": {
+                "type": "string",
+                "enum": [
+                  "time"
+                ]
+              }
+            }
+          }
+        ]
       },
       "CreateApiKey": {
         "type": "object",
@@ -13752,6 +14201,53 @@
           "function": {
             "type": "string",
             "description": "RHAI function to apply to each document"
+          }
+        }
+      },
+      "DynamicSearchRule": {
+        "type": "object",
+        "required": [
+          "uid",
+          "actions"
+        ],
+        "properties": {
+          "uid": {
+            "$ref": "#/components/schemas/IndexUid",
+            "description": "Unique identifier of the dynamic search rule."
+          },
+          "description": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Human-readable description of the dynamic search rule."
+          },
+          "priority": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "format": "u-int64",
+            "description": "Precedence of the dynamic search rule. Lower numeric values take precedence over higher\nones. If omitted, the rule is treated as having the lowest precedence. This precedence is\nused to resolve conflicts between matching rules:\n- If the same document is selected by multiple rules, the smallest `priority` number wins\n- If different documents are pinned to the same position, they are ordered by ascending `priority`",
+            "minimum": 0
+          },
+          "active": {
+            "type": "boolean",
+            "description": "Whether the dynamic search rule is active."
+          },
+          "conditions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Condition"
+            },
+            "description": "Conditions that must match before the dynamic search rule applies."
+          },
+          "actions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RuleAction"
+            },
+            "description": "Actions to apply when the dynamic search rule matches."
           }
         }
       },
@@ -15158,6 +15654,55 @@
           }
         }
       },
+      "ListRules": {
+        "type": "object",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "description": "Number of rules to skip. Defaults to 0.",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "description": "Maximum number of rules to return. Default to 20.",
+            "minimum": 0
+          },
+          "filter": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/ListRulesFilter",
+                "description": "Optional filter to restrict which rules are returned (e.g. by attribute patterns or by properties like if the rule is active or not)"
+              }
+            ]
+          }
+        }
+      },
+      "ListRulesFilter": {
+        "type": "object",
+        "properties": {
+          "attribute_patterns": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/AttributePatterns",
+                "description": "Only include rules whose names match these patterns (e.g. `[\"black-friday\", \"promo*\"]`)."
+              }
+            ]
+          },
+          "active": {
+            "type": [
+              "boolean",
+              "null"
+            ],
+            "description": "Only include rules that are active (true) or not active (false)."
+          }
+        }
+      },
       "Locale": {
         "type": "string",
         "enum": [
@@ -15642,6 +16187,83 @@
           }
         },
         "additionalProperties": false
+      },
+      "PaginationView_DynamicSearchRule": {
+        "type": "object",
+        "required": [
+          "results",
+          "offset",
+          "limit",
+          "total"
+        ],
+        "properties": {
+          "results": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "uid",
+                "actions"
+              ],
+              "properties": {
+                "uid": {
+                  "$ref": "#/components/schemas/IndexUid",
+                  "description": "Unique identifier of the dynamic search rule."
+                },
+                "description": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "description": "Human-readable description of the dynamic search rule."
+                },
+                "priority": {
+                  "type": [
+                    "integer",
+                    "null"
+                  ],
+                  "format": "u-int64",
+                  "description": "Precedence of the dynamic search rule. Lower numeric values take precedence over higher\nones. If omitted, the rule is treated as having the lowest precedence. This precedence is\nused to resolve conflicts between matching rules:\n- If the same document is selected by multiple rules, the smallest `priority` number wins\n- If different documents are pinned to the same position, they are ordered by ascending `priority`",
+                  "minimum": 0
+                },
+                "active": {
+                  "type": "boolean",
+                  "description": "Whether the dynamic search rule is active."
+                },
+                "conditions": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Condition"
+                  },
+                  "description": "Conditions that must match before the dynamic search rule applies."
+                },
+                "actions": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RuleAction"
+                  },
+                  "description": "Actions to apply when the dynamic search rule matches."
+                }
+              }
+            },
+            "description": "Items for the current page."
+          },
+          "offset": {
+            "type": "integer",
+            "description": "Number of items skipped.",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "description": "Maximum number of items returned.",
+            "minimum": 0
+          },
+          "total": {
+            "type": "integer",
+            "description": "Total number of items matching the query.",
+            "minimum": 0
+          }
+        }
       },
       "PaginationView_Field": {
         "type": "object",
@@ -16177,6 +16799,24 @@
           }
         }
       },
+      "RuleAction": {
+        "type": "object",
+        "required": [
+          "selector",
+          "action"
+        ],
+        "properties": {
+          "selector": {
+            "$ref": "#/components/schemas/Selector",
+            "description": "Target document selector for this action."
+          },
+          "action": {
+            "type": "object",
+            "description": "Action payload to apply to the selected document."
+          }
+        },
+        "additionalProperties": false
+      },
       "RuntimeTogglableFeatures": {
         "type": "object",
         "description": "Experimental features that can be toggled at runtime",
@@ -16208,6 +16848,13 @@
               "null"
             ],
             "description": "Enable the CONTAINS filter operator"
+          },
+          "dynamicSearchRules": {
+            "type": [
+              "boolean",
+              "null"
+            ],
+            "description": "Enable dynamic search rules and the `/dynamic-search-rules` routes"
           },
           "network": {
             "type": [
@@ -16544,7 +17191,7 @@
               "boolean",
               "null"
             ],
-            "description": "When `true`, runs the query on the whole network (all shards covered, documents deduplicated across remotes).\n\nWhen `false` or omitted, the query runs locally.\n\n**Enterprise Edition only.** This feature is available in the Enterprise Edition.\n\nIt also requires the `network` [experimental feature](http://localhost:3000/reference/api/experimental-features/configure-experimental-features).\n\nValues: `true` = use the whole network; `false` or omitted = local (default).\n\nWhen using the network, the index must exist with compatible settings on all remotes.\n\nDocuments with the same id are assumed identical for deduplication."
+            "description": "When `true`, runs the query on the whole network (all shards covered exactly once).\n\nWhen `false`, the query runs locally.\n\nWhen omitted or `null`, the default value depends on whether the sharding is enabled for the instance:\n\n- If the instance has sharding enabled (has a leader), defaults to `true`.\n- Otherwise defaults to `false`.\n\n**Enterprise Edition only.** This feature is available in the Enterprise Edition.\n\nIt also requires the `network` [experimental feature](http://localhost:3000/reference/api/experimental-features/configure-experimental-features).\n\nValues: `true` = use the whole network; `false` = local, default = see above.\n\nWhen using the network, the index must exist with compatible settings on all remotes."
           },
           "showRankingScore": {
             "type": "boolean",
@@ -16767,7 +17414,8 @@
             "type": [
               "boolean",
               "null"
-            ]
+            ],
+            "description": "When `true`, runs the query on the whole network (all shards covered exactly once).\n\nWhen `false`, the query runs locally.\n\nWhen omitted or `null`, the default value depends on whether the sharding is enabled for the instance:\n\n- If the instance has sharding enabled (has a leader), defaults to `true`.\n- Otherwise defaults to `false`.\n\n**Enterprise Edition only.** This feature is available in the Enterprise Edition.\n\nIt also requires the `network` [experimental feature](http://localhost:3000/reference/api/experimental-features/configure-experimental-features).\n\nValues: `true` = use the whole network; `false` = local, default = see above.\n\nWhen using the network, the index must exist with compatible settings on all remotes."
           },
           "showRankingScore": {
             "type": "boolean",
@@ -16947,6 +17595,28 @@
             "description": "Array of search results for each query"
           }
         }
+      },
+      "Selector": {
+        "type": "object",
+        "properties": {
+          "indexUid": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/IndexUid"
+              }
+            ]
+          },
+          "id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "additionalProperties": false
       },
       "SettingEmbeddingSettings": {
         "type": "object",
@@ -18464,6 +19134,54 @@
           }
         }
       },
+      "UpdateOrCreateDynamicSearchRuleRequest": {
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Human-readable description of the dynamic search rule."
+          },
+          "priority": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "format": "u-int64",
+            "description": "Precedence of the dynamic search rule. Lower numeric values take precedence over higher\nones. If omitted, the rule is treated as having the lowest precedence. This precedence is\nused to resolve conflicts between matching rules:\n- If the same document is selected by multiple rules, the smallest `priority` number wins\n- If different documents are pinned to the same position, they are ordered by ascending `priority`",
+            "minimum": 0
+          },
+          "active": {
+            "type": [
+              "boolean",
+              "null"
+            ],
+            "description": "Whether the dynamic search rule is active."
+          },
+          "conditions": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "$ref": "#/components/schemas/Condition"
+            },
+            "description": "Conditions that must match before the dynamic search rule applies."
+          },
+          "actions": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "$ref": "#/components/schemas/RuleAction"
+            },
+            "description": "Actions to apply when the dynamic search rule matches."
+          }
+        }
+      },
       "UpdateStderrLogs": {
         "type": "object",
         "description": "Request body for updating stderr log configuration",
@@ -18659,7 +19377,11 @@
     },
     {
       "name": "Search",
-      "description": "Meilisearch exposes two routes to perform searches:\n\n- A POST route: this is the preferred route when using API authentication, as it allows [preflight request](https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request) caching and better performance.\n- A GET route: the usage of this route is discouraged, unless you have good reason to do otherwise (specific caching abilities for example)"
+      "description": "Meilisearch exposes two routes to perform searches:\n\n- A POST route: this is the preferred route when using API authentication, as it allows [preflight request](https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request) caching and better performance.\n- A GET route: the usage of this route is discouraged, unless you have good reason to do otherwise (specific caching abilities for example)",
+      "externalDocs": {
+        "url": "https://www.meilisearch.com/docs/reference/api/search",
+        "description": "Search API reference"
+      }
     },
     {
       "name": "Keys",
@@ -18684,6 +19406,10 @@
     {
       "name": "Webhooks",
       "description": "The `/webhooks` route allows you to register endpoints to be called once tasks are processed."
+    },
+    {
+      "name": "Dynamic search rules",
+      "description": "The `/dynamic-search-rules` route allows you to configure dynamic search rules."
     }
   ]
 }
