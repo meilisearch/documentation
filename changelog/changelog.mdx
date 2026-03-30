@@ -4,6 +4,73 @@ description: "New features and improvements in Meilisearch"
 rss: true
 ---
 
+<Update label="v1.41" description="2026-03-30">
+
+## New Features
+
+### Dynamic Search Rules with pinning
+
+Introduce the Dynamic Search Rules (DSR) experimental feature, making it easy to promote the right content for the right searches with flexible, condition-based pinning. In this first version, rules can be triggered by query-based conditions such as empty queries or literal substring matches, as well as time windows. Multiple documents can be pinned in a defined order, and pins still work with filtering, pagination, facet distribution, hybrid search, and federated search.
+
+Rules can be created or updated with `PATCH /dynamic-search-rules/{uid}` and removed with `DELETE /dynamic-search-rules/{uid}`. In this first version, a rule can define query- or time-based conditions and pin specific documents at fixed positions in the results list.
+
+Example of rule creation/update:
+
+```json
+{
+  "description": "Promote featured products for wireless headphone searches",
+  "active": true,
+  "conditions": [
+    {
+      "scope": "query",
+      "contains": "headphone"
+    }
+  ],
+  "actions": [
+    {
+      "selector": {
+        "indexUid": "products",
+        "id": "featured-headphones-001"
+      },
+      "action": {
+        "type": "pin",
+        "position": 0
+      }
+    },
+    {
+      "selector": {
+        "indexUid": "products",
+        "id": "featured-headphones-002"
+      },
+      "action": {
+        "type": "pin",
+        "position": 1
+      }
+    }
+  ]
+}
+```
+
+## Improvements
+
+### Network enabled by default in sharded instances
+
+When `network.leader` is set in the instance, `useNetwork` now defaults to `true` in search requests when omitted. This allows you to naturally query all documents in a sharded context without explicitly requesting network searches.
+
+Search requests now automatically use the network when replicated sharding is enabled, ensuring all shards are covered exactly once. When `network.leader` is not present (particularly when no network is defined), the behavior remains identical to previous versions.
+
+### `useNetwork` optimizes shard selection
+
+To prevent unnecessary network activity, when deciding which remote to ask for a shard in a network search, Meilisearch will now always pick the local instance if it owns the shard.
+
+### More efficient FST building
+
+The construction of the word FST (word dictionary) has been improved by removing the need for a full scan of the word docids database. This drastically improves database performance when inserting a large number of documents, even when inserting only a few.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.41.0)
+
+</Update>
+
 <Update label="v1.40" description="2026-03-23">
 
 ## New Features
