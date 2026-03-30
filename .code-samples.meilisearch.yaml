@@ -101,6 +101,7 @@ get_all_tasks_1: |-
 get_task_1: |-
   curl \
     -X GET 'MEILISEARCH_URL/tasks/1'
+# get_task_taskId_documents
 get_task_documents_1: |-
   curl \
     -X GET 'MEILISEARCH_URL/tasks/1/documents'
