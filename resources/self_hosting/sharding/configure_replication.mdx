@@ -87,7 +87,7 @@ Route search requests to the closest cluster. Both regions hold all data, so eit
 
 ## Remote availability
 
-Replication ensures that your data exists on multiple remotes. However, Meilisearch does not currently provide automatic search failover between replicas. During a network search, each shard is assigned to a randomly chosen replica. If that replica is unreachable, Meilisearch retries the same remote up to 3 times but does not automatically try another replica holding the same shard.
+Replication ensures that your data exists on multiple remotes. However, Meilisearch does not currently provide automatic search failover between replicas. If a replica is unreachable during a network search, results from that shard may be missing from the response.
 
 To handle remote failures, route search traffic away from unhealthy instances at the infrastructure level (for example, using a load balancer with health checks). When the failed remote comes back online, it can start serving searches again without manual intervention.
 
@@ -122,7 +122,7 @@ curl \
 
 </CodeGroup>
 
-Send the full `remotes` list for each shard you want to update. Shards not included in the request are left unchanged.
+Send the full `remotes` list for each shard you want to update.
 
 ## The leader instance
 

@@ -117,7 +117,6 @@ Most Meilisearch features work transparently across a sharded network. The follo
 | Full-text search | Yes | Results merged and ranked across all remotes |
 | Filtering and sorting | Yes | Filters applied on each remote before merging |
 | Faceted search | Partial | Facet distribution in search results works across remotes, but the `/facet-search` endpoint does not support `useNetwork` |
-| Distinct attribute | Yes | Requires Meilisearch v1.40 or later |
 | Hybrid/semantic search | Yes | Each remote runs its own vector search, results merged |
 | Geo search | Yes | Geographic filters and sorting work across remotes |
 | Multi-search | Yes | Use `useNetwork: true` per query |
