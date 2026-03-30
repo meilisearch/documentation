@@ -114,7 +114,6 @@ namespace App\Controller;
 
 use Meilisearch\Bundle\SearchManagerInterface;
 use App\Entity\Movie;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -122,12 +121,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class SearchController extends AbstractController
 {
     #[Route('/search', name: 'search')]
-    public function search(
-        EntityManagerInterface $entityManager,
-        SearchManagerInterface $searchManager
-    ): Response {
+    public function search(SearchManagerInterface $searchManager): Response
+    {
         $results = $searchManager->search(
-            $entityManager,
             Movie::class,
             'matrix'
         );
@@ -165,7 +161,6 @@ Then search with filters:
 
 ```php
 $results = $searchManager->search(
-    $entityManager,
     Movie::class,
     'action',
     [
