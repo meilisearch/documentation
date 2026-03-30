@@ -1,14 +1,14 @@
 ---
 title: Manage the network
 sidebarTitle: Manage the network
-description: Add remotes, update shard assignments, and manage your Meilisearch network topology dynamically.
+description: Add remotes, update shard assignments, and manage your Meilisearch network topology dynamically. Includes rebalancing behavior and validation rules.
 ---
 
 Once your [sharded cluster is set up](/resources/self_hosting/sharding/setup_sharded_cluster), you can modify the topology without restarting instances. All topology changes go through `PATCH /network` on the leader instance.
 
 ## Add a remote
 
-Include the new remote in the `remotes` object and update the shard assignments to include it:
+Include the new remote in the `remotes` object. To assign it to an existing shard, either send the full `remotes` list for that shard, or use `addRemotes` as a convenience to append without rewriting the full list:
 
 <CodeGroup>
 
@@ -26,16 +26,46 @@ curl \
       }
     },
     "shards": {
-      "shard-a": { "remotes": ["ms-00", "ms-01", "ms-03"] }
+      "shard-a": { "addRemotes": ["ms-03"] }
     }
   }'
 ```
 
 </CodeGroup>
 
+<Note>
+`addRemotes` and `removeRemotes` are write-only convenience fields. They are applied on top of the existing shard configuration and are never returned by `GET /network`, which always returns the full `remotes` list for each shard.
+</Note>
+
 ## Update shard assignments
 
-Send a new `shards` configuration with the full `remotes` list for each shard you want to update:
+Each shard object in a `PATCH /network` request accepts three fields:
+
+| Field | Type | Behavior |
+|-------|------|----------|
+| `remotes` | array | Full replacement of the shard's remote list |
+| `addRemotes` | array | Adds remotes to the existing list |
+| `removeRemotes` | array | Removes remotes from the existing list, applied after `addRemotes` |
+
+Shards not included in the request are left unchanged. To remove a remote from a specific shard:
+
+<CodeGroup>
+
+```bash
+curl \
+  -X PATCH 'MEILISEARCH_URL/network' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  --data-binary '{
+    "shards": {
+      "shard-a": { "removeRemotes": ["ms-03"] }
+    }
+  }'
+```
+
+</CodeGroup>
+
+To fully replace a shard's assignment, use `remotes`:
 
 <CodeGroup>
 
@@ -54,6 +84,29 @@ curl \
 ```
 
 </CodeGroup>
+
+## Topology changes and rebalancing
+
+When you modify shard assignments, Meilisearch triggers a `NetworkTopologyChange` task on all remotes. This task runs in three steps:
+
+1. **Compute new shards**: each instance uses rendezvous hashing to determine which documents now belong to which shard under the new topology.
+2. **Export and import**: documents are sent to remotes that now own them.
+3. **Delete stale data**: once all remotes confirm their imports are complete, each instance deletes the documents it no longer owns. Search switches to the new shard definitions at this point.
+
+Cancelling a topology change at step 3 only results in stale documents being retained temporarily. It does not cause data loss.
+
+<Warning>
+Search requests may return incomplete results during a topology change. Wait for all `NetworkTopologyChange` tasks to complete before resuming normal search traffic.
+</Warning>
+
+## Validation
+
+`PATCH /network` rejects requests with a `400 invalid_network_shards` error in the following cases:
+
+- The shard list would become empty after applying the patch
+- A shard's `remotes` list would become empty after applying `removeRemotes`
+- A shard references a remote that is not in the `remotes` object
+- A remote is removed from `remotes` and this leaves a shard with no remotes
 
 ## Filter searches by shard
 

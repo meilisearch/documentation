@@ -18,7 +18,7 @@ When a user searches, Meilisearch queries all remotes in the network, collects r
 
 ## What is replication?
 
-Replication assigns the same shard to more than one remote. This ensures your data is stored redundantly across instances. During a search, Meilisearch queries each shard exactly once by picking one of the available replicas, avoiding duplicate results.
+Replication assigns the same shard to more than one remote. This ensures your data is stored redundantly across instances. During a network search, Meilisearch builds an internal partition: it assigns each shard to exactly one remote (chosen randomly, favoring the local instance), then sends one query per remote filtered to only that remote's assigned shards. This guarantees each shard is queried exactly once, so results are never duplicated regardless of how many replicas exist.
 
 ## How it works
 

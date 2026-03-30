@@ -87,7 +87,9 @@ Route search requests to the closest cluster. Both regions hold all data, so eit
 
 ## Remote availability
 
-Replication ensures that your data exists on multiple remotes. However, Meilisearch does not currently provide automatic search failover between replicas. If a replica is unreachable during a network search, results from that shard may be missing from the response.
+When a network search runs, Meilisearch builds an internal partition: it assigns each shard to exactly one remote, then sends one query per remote with a shard filter. This guarantees no shard is queried twice and results are never duplicated.
+
+The downside is that there is no automatic fallback. If the remote assigned to a shard is unreachable, that shard's results are missing from the response — Meilisearch does not retry using another replica that holds the same shard.
 
 To handle remote failures, route search traffic away from unhealthy instances at the infrastructure level (for example, using a load balancer with health checks). When the failed remote comes back online, it can start serving searches again without manual intervention.
 
@@ -95,7 +97,7 @@ To handle remote failures, route search traffic away from unhealthy instances at
 
 Replication is the primary way to scale search throughput in Meilisearch. Each replica can independently handle search requests, so adding more replicas increases the total number of concurrent searches your cluster can handle.
 
-To add a new replica for an existing shard, add the new remote and update the shard assignment in a single request:
+To add a new replica for an existing shard, add the new remote and use `addRemotes` to append it to the shard without rewriting the full assignment:
 
 <CodeGroup>
 
@@ -113,16 +115,14 @@ curl \
       }
     },
     "shards": {
-      "shard-a": { "remotes": ["ms-00", "ms-01", "ms-03"] },
-      "shard-b": { "remotes": ["ms-01", "ms-02"] },
-      "shard-c": { "remotes": ["ms-02", "ms-00"] }
+      "shard-a": { "addRemotes": ["ms-03"] }
     }
   }'
 ```
 
 </CodeGroup>
 
-Send the full `remotes` list for each shard you want to update.
+This triggers a `NetworkTopologyChange` task that replicates the shard's documents to `ms-03`.
 
 ## The leader instance
 
