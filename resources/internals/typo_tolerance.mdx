@@ -41,6 +41,44 @@ This means:
 
 There is no score blending or weighting — just a strict, transparent ordering. Disabling typo tolerance entirely also disables the `typo` ranking rule, since every returned document would have 0 typos by definition.
 
+### Prefix search and typo tolerance work together
+
+Meilisearch applies prefix search and typo tolerance **simultaneously** on the last word of a query. This means a partial, misspelled word still returns results. For example, searching `"iphoe"` (5 characters, 1 typo budget) can match `"iphone"` as a prefixed, typo-corrected term in a single pass.
+
+No other engine in this comparison combines prefix expansion and Levenshtein matching in a single step without separate query types or analyzers.
+
+You can [disable prefix search](/reference/api/settings/get-prefixsearch) independently from typo tolerance if needed.
+
+### Split and concatenate: handling word boundary mistakes
+
+Beyond character-level edits, Meilisearch handles a class of mistakes that Levenshtein distance cannot catch: wrong word boundaries.
+
+**Concatenation** — when a user types multiple words, Meilisearch also searches their concatenated forms. For a query `"the news paper"`, it additionally tries `"thenews paper"`, `"the newspaper"`, and `"thenewspaper"`. Concatenation is applied to up to 3 consecutive words, and each concatenated candidate counts as 1 typo in the ranking pipeline.
+
+**Splitting** — when a user types a single word, Meilisearch considers frequency-based splits. For `"newspaper"`, it finds that `"news"` and `"paper"` both have meaningful frequency in the index and tries the split candidate. The split is data-driven: it picks the boundary that maximizes the frequency of both halves in the index dictionary, not a fixed linguistic rule. A split into `"new"` + `"spaper"` is rejected because `"spaper"` has no frequency.
+
+Split words must remain adjacent — a document with `"news"` and `"paper"` separated by other words will not match.
+
+Together, these two mechanisms handle the common real-world case where users omit or add spaces within compound words or multi-word phrases — something no other engine in this comparison does automatically. See [Concatenated and split queries](/resources/internals/concat) for more detail.
+
+### Language-aware tokenization before typo matching
+
+Meilisearch's tokenizer, [Charabia](https://github.com/meilisearch/charabia), normalizes and segments text **before** typo tolerance runs. This matters because typo matching operates on tokens, not raw characters — and what counts as a token depends on the language.
+
+Key transformations that affect typo matching:
+
+| Language / Feature | What Charabia does | Why it matters for typos |
+|---|---|---|
+| **All Latin scripts** | Lowercase, decompose accents, remove diacritics | `"café"` and `"cafe"` are the same token — no typo budget wasted on accents |
+| **CamelCase** | Splits `"iPhone"` into `"i"` + `"phone"` | Searching `"iphoen"` can match the `"phone"` token with 1 typo |
+| **German** | Decomposes compound words (`"Krankenhaus"` → `"kranken"` + `"haus"`) | Each part is independently typo-matchable |
+| **Arabic** | Removes the definite article `"ال"` | `"الكتاب"` and `"كتاب"` are treated as the same root |
+| **Turkish** | Specialized case folding (dotted/dotless i) | `"I"` and `"ı"` don't incorrectly cost a typo |
+| **Chinese / Japanese / Korean** | Dictionary-based segmentation (jieba, lindera) | Words are correctly isolated before character-level matching |
+| **Greek** | Final sigma handling | `"λόγος"` and `"λόγοσ"` normalize to the same form |
+
+In contrast, fuzzy engines that operate on raw query strings (Elasticsearch, Solr, Manticore) apply edit distance on the unprocessed token. An accent, a case difference, or a language-specific ligature can consume part of the typo budget or cause misses entirely. PostgreSQL `pg_trgm` is similarly raw — trigrams of `"café"` and `"cafe"` differ.
+
 ### Surgical disable controls
 
 Meilisearch gives you four independent knobs to turn typo tolerance off for specific situations, without affecting the rest:
@@ -168,7 +206,10 @@ This is a fundamentally different approach:
 | **0-typo always beats 1-typo** | Yes (strict) | No (BM25 can override) | No (BM25 can override) | No (BM25 can override) | N/A |
 | **Word length thresholds** | Configurable | `AUTO` or manual | `maxEdits` param | Manual | Threshold-based |
 | **First-char typo costs 2** | Yes | No | No | No | N/A |
-| **Concatenation typo** (`any way` → `anyway`) | Yes | No | No | No | No |
+| **Concatenation typo** (`any way` → `anyway`) | Yes (up to 3 words) | No | No | No | No |
+| **Frequency-based word splitting** (`newspaper` → `news paper`) | Yes | No | No | No | No |
+| **Prefix + typo simultaneously on last word** | Yes | No (separate query types) | No (separate operators) | No | No |
+| **Language-aware normalization before typo** | Yes (Charabia) | Partial (analyzers) | Partial (analyzers) | No | No |
 | **Disable on numbers** | Yes | Manual query logic | Manual query logic | Manual | Not applicable |
 | **Disable on specific words** | Yes (`disableOnWords`) | No | No | No | No |
 | **Disable on specific attributes** | Yes (`disableOnAttributes`) | Partial (per-field query) | Partial (per-field query) | No | No |
@@ -178,5 +219,8 @@ This is a fundamentally different approach:
 
 - [Typo tolerance settings](/capabilities/full_text_search/relevancy/typo_tolerance_settings) — Configure thresholds, disable on words or numbers, and more
 - [Typo tolerance calculations](/capabilities/full_text_search/relevancy/typo_tolerance_calculations) — How edit distance is computed in detail
+- [Concatenated and split queries](/resources/internals/concat) — How Meilisearch handles word boundary mistakes
+- [Prefix search](/resources/internals/prefix) — How prefix matching works and how it interacts with typo tolerance
+- [Language support](/resources/help/language) — Charabia's tokenization and normalization per language
 - [Ranking rules](/capabilities/full_text_search/relevancy/ranking_rules) — How the `typo` rule fits into the full ranking pipeline
 - [Ranking vs BM25](/resources/internals/ranking) — Why Meilisearch's multi-criteria system produces better results for application search
