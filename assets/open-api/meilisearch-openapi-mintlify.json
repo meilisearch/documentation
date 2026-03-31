@@ -16635,6 +16635,12 @@
               "*"
             ]
           }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "cURL",
+            "source": "curl \\\n  -X GET 'MEILISEARCH_URL/tasks/1/documents'"
+          }
         ]
       }
     },
