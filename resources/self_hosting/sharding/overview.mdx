@@ -14,7 +14,7 @@ Replication and sharding require the Meilisearch Enterprise Edition v1.37 or lat
 
 Sharding distributes documents from a single index across multiple Meilisearch instances, called "remotes." Each remote holds one or more named shards containing a subset of your documents.
 
-When a user searches, Meilisearch queries all remotes in the network, collects results from each shard, and merges them into a single ranked response, as if the data lived on one machine.
+When a user searches, Meilisearch queries the necessary remotes in the network, collects results from each shard, and merges them into a single ranked response, as if the data lived on a single machine.
 
 ## What is replication?
 
