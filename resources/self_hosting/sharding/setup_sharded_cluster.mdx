@@ -89,16 +89,20 @@ curl \
       }
     },
     "shards": {
-      "shard-a": { "remotes": ["ms-00", "ms-01"] },
-      "shard-b": { "remotes": ["ms-01", "ms-02"] },
-      "shard-c": { "remotes": ["ms-02", "ms-00"] }
+      "shard-a": { "remotes": ["ms-00"] },
+      "shard-b": { "remotes": ["ms-01"] },
+      "shard-c": { "remotes": ["ms-02"] }
     }
   }'
 ```
 
 </CodeGroup>
 
-In this configuration, each shard is replicated across two remotes. If any single instance goes down, all shard data still exists on another instance.
+In this configuration, each shard lives on exactly one remote. Documents are distributed across all three instances, and each instance handles searches for its own shards.
+
+<Note>
+This setup has no replication. If a remote becomes unavailable, its shards are missing from search results — Meilisearch does not yet automatically fall back to another instance. See [Configure replication](/resources/self_hosting/sharding/configure_replication) for a high-availability setup.
+</Note>
 
 ## Step 4: Index documents
 
@@ -126,7 +130,7 @@ All write operations (document additions, updates, deletions, settings changes) 
 
 ## Step 5: Search across the cluster
 
-Search requests can be sent to any instance in the network, not just the leader. Add `useNetwork: true` to query all remotes:
+Search requests can be sent to any instance in the network, not just the leader. `useNetwork` defaults to `true` when a network topology is defined:
 
 <CodeGroup>
 
@@ -136,14 +140,13 @@ curl \
   -H 'Content-Type: application/json' \
   -H 'Authorization: Bearer SEARCH_KEY_00' \
   --data-binary '{
-    "q": "batman",
-    "useNetwork": true
+    "q": "batman"
   }'
 ```
 
 </CodeGroup>
 
-Meilisearch fans out the search to all remotes, collects results from each shard, and returns a single merged response.
+Meilisearch fans out the search to all shards, collects results from each shard, and returns a single merged response.
 
 ## Verify the topology
 

@@ -12,7 +12,7 @@ Replication requires the Meilisearch Enterprise Edition v1.37 or later and a [co
 
 ## How replication works
 
-When you configure shards, each shard can be assigned to one or more remotes. If a shard is assigned to multiple remotes, Meilisearch replicates the data to each of them. During a search with `useNetwork: true`, Meilisearch queries each shard exactly once, picking one of the available remotes for each shard. This avoids duplicate results.
+When you configure shards, each shard can be assigned to one or more remotes. If a shard is assigned to multiple remotes, Meilisearch replicates the data to each of them. During a search, Meilisearch queries each shard exactly once, picking one of the available remotes for each shard (prioritizing the `self`/local remote). This avoids duplicate results.
 
 ## Assign shards to multiple remotes
 
@@ -83,15 +83,13 @@ Place replicas in different regions to reduce latency for geographically distrib
 }
 ```
 
-Route search requests to the closest cluster. Both regions hold all data, so either can serve a full result set.
+Route search requests to the closest cluster. Both regions hold all data, so either can serve a full result set. By default, Meilisearch prioritizes local search requests and will not transfer the request to a remote server. Make sure your search requests are made on the closest remote instance to ensure this setup is efficient.
 
 ## Remote availability
 
-When a network search runs, Meilisearch builds an internal partition: it assigns each shard to exactly one remote, then sends one query per remote with a shard filter. This guarantees no shard is queried twice and results are never duplicated.
+When a network search runs, Meilisearch builds an internal set of remotes to query: it assigns each shard to a remote, then sends one query per remote with a shard filter. This guarantees that no shard is queried twice and that results are never duplicated.
 
-The downside is that there is no automatic fallback. If the remote assigned to a shard is unreachable, that shard's results are missing from the response — Meilisearch does not retry using another replica that holds the same shard.
-
-To handle remote failures, route search traffic away from unhealthy instances at the infrastructure level (for example, using a load balancer with health checks). When the failed remote comes back online, it can start serving searches again without manual intervention.
+The downside is that there is no automatic fallback. If the remote assigned to a shard is unreachable, that shard's results are missing from the response — Meilisearch does not yet retry using another replica that holds the same shard.
 
 ## Scaling read throughput
 
@@ -130,8 +128,8 @@ The leader is responsible for all write operations (document additions, settings
 
 If the leader goes down:
 
-- **Search may be affected**: if search requests are routed to the downed leader, they will fail. Route search traffic to healthy instances using a load balancer
-- **Writes are blocked**: no documents can be added or updated until a leader is available
+- **Search may be affected**: if search requests are routed to the downed leader, they will fail
+- **Writes are blocked**: no documents can be added or updated until a leader is available. Note that alive remote instances continue to process tasks
 - **Manual promotion**: you must designate a new leader by updating the network topology with `PATCH /network` and setting `"leader"` to another instance
 
 <Warning>

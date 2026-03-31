@@ -89,7 +89,7 @@ curl \
 
 When you modify shard assignments, Meilisearch triggers a `NetworkTopologyChange` task on all remotes. This task runs in three steps:
 
-1. **Compute new shards**: each instance uses rendezvous hashing to determine which documents now belong to which shard under the new topology.
+1. **Compute new shards**: each instance uses rendezvous hashing on document IDs to determine which documents belong to which shard under the new topology.
 2. **Export and import**: documents are sent to remotes that now own them.
 3. **Delete stale data**: once all remotes confirm their imports are complete, each instance deletes the documents it no longer owns. Search switches to the new shard definitions at this point.
 
@@ -121,7 +121,6 @@ curl \
   -H 'Authorization: Bearer MEILISEARCH_KEY' \
   --data-binary '{
     "q": "batman",
-    "useNetwork": true,
     "filter": "_shard = \"shard-a\""
   }'
 ```
@@ -132,9 +131,9 @@ Supported `_shard` filter operators:
 
 | Syntax | Behavior |
 |--------|----------|
-| `_shard = "shard-a"` | Results from `shard-a` only |
-| `_shard != "shard-a"` | Results from all shards except `shard-a` |
-| `_shard IN ["shard-a", "shard-b"]` | Results from both `shard-a` and `shard-b` |
+| `_shard = "shard-a"` | Documents associated to `shard-a` |
+| `_shard != "shard-a"` | Documents associated to all shards except `shard-a` |
+| `_shard IN ["shard-a", "shard-b"]` | Documents associated to both `shard-a` and `shard-b` |
 
 ## Private network security
 

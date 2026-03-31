@@ -34,9 +34,9 @@ graph TD
     Any -->|merged results| Client
 ```
 
-1. **Network**: the leader configures the topology via `/network` and propagates it to all remotes
-2. **Shards**: the leader distributes document subsets across remotes based on shard assignments
-3. **Search**: when `useNetwork: true` is set, the instance receiving the request fans out the search to all remotes, then merges and ranks the combined results
+1. **Network**: the user configures the topology via `/network` on the leader, and this instance propagates it to all remotes
+2. **Shards**: Remotes distribute the subsets of documents across themselves based on shard assignments
+3. **Search**: when `useNetwork: true` is set or not defined (defaults to `true`), the instance receiving the request fans out the search to all remotes, then merges and ranks the combined results
 
 ## When to use sharding and replication
 
@@ -60,7 +60,11 @@ The leader instance is responsible for write operations and topology changes. No
 
 ## Searching across the network
 
-To search across all instances, add `useNetwork: true` to your search request:
+To search across all instances:
+
+<Note>
+`useNetwork` defaults to `true` when a network topology is defined.
+</Note>
 
 <CodeGroup>
 
@@ -70,8 +74,7 @@ curl \
   -H 'Content-Type: application/json' \
   -H 'Authorization: Bearer MEILISEARCH_KEY' \
   --data-binary '{
-    "q": "batman",
-    "useNetwork": true
+    "q": "batman"
   }'
 ```
 
@@ -82,7 +85,6 @@ The response includes `_federation` metadata showing which remote each result ca
 ```json
 {
   "q": "batman",
-  "useNetwork": true,
   "filter": "_shard = \"shard-a\""
 }
 ```
@@ -100,8 +102,8 @@ curl \
   -H 'Authorization: Bearer MEILISEARCH_KEY' \
   --data-binary '{
     "queries": [
-      { "indexUid": "movies", "q": "batman", "useNetwork": true },
-      { "indexUid": "comics", "q": "batman", "useNetwork": true }
+      { "indexUid": "movies", "q": "batman" },
+      { "indexUid": "comics", "q": "batman" }
     ]
   }'
 ```
@@ -119,7 +121,7 @@ Most Meilisearch features work transparently across a sharded network. The follo
 | Faceted search | Partial | Facet distribution in search results works across remotes, but the `/facet-search` endpoint does not support `useNetwork` |
 | Hybrid/semantic search | Yes | Each remote runs its own vector search, results merged |
 | Geo search | Yes | Geographic filters and sorting work across remotes |
-| Multi-search | Yes | Use `useNetwork: true` per query |
+| Multi-search | Yes | Works per query; `useNetwork` defaults to `true` when a network is configured |
 | Federated search | Yes | Federation merges results from both indexes and remotes |
 | Analytics | Partial | Events are tracked on the instance that receives the search request |
 | Tenant tokens | Yes | Token filters apply on each remote |
