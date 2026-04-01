@@ -59,7 +59,7 @@ Repeat for `ms-01` and `ms-02` with their respective URLs and master keys.
 
 ## Step 3: Configure the network topology
 
-Send a `PATCH /network` request to each instance. The configuration is identical across instances except for the `self` field, which identifies the current instance:
+Send a single `PATCH /network` request to the leader instance (`ms-00`). The leader propagates the configuration to all other remotes automatically. For initial setup, define `self`, `leader`, `remotes`, and `shards` together:
 
 <CodeGroup>
 
@@ -74,49 +74,37 @@ curl \
     "remotes": {
       "ms-00": {
         "url": "http://ms-00.example.com:7700",
-        "searchApiKey": "SEARCH_KEY_00"
+        "searchApiKey": "SEARCH_KEY_00",
+        "writeApiKey": "WRITE_KEY_00"
       },
       "ms-01": {
         "url": "http://ms-01.example.com:7701",
-        "searchApiKey": "SEARCH_KEY_01"
+        "searchApiKey": "SEARCH_KEY_01",
+        "writeApiKey": "WRITE_KEY_01"
       },
       "ms-02": {
         "url": "http://ms-02.example.com:7702",
-        "searchApiKey": "SEARCH_KEY_02"
+        "searchApiKey": "SEARCH_KEY_02",
+        "writeApiKey": "WRITE_KEY_02"
       }
-    }
-  }'
-```
-
-</CodeGroup>
-
-Send the same request to `ms-01` (with `"self": "ms-01"`) and `ms-02` (with `"self": "ms-02"`).
-
-## Step 4: Configure shards
-
-Define how documents are distributed across remotes. Each shard is assigned to one or more remotes:
-
-<CodeGroup>
-
-```bash
-curl \
-  -X PATCH 'http://ms-00.example.com:7700/network' \
-  -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer MEILISEARCH_KEY_00' \
-  --data-binary '{
+    },
     "shards": {
-      "shard-a": { "remotes": ["ms-00", "ms-01"] },
-      "shard-b": { "remotes": ["ms-01", "ms-02"] },
-      "shard-c": { "remotes": ["ms-02", "ms-00"] }
+      "shard-a": { "remotes": ["ms-00"] },
+      "shard-b": { "remotes": ["ms-01"] },
+      "shard-c": { "remotes": ["ms-02"] }
     }
   }'
 ```
 
 </CodeGroup>
 
-In this configuration, each shard is replicated across two remotes. If any single instance goes down, all shards remain available through the other instance.
+In this configuration, each shard lives on exactly one remote. Documents are distributed across all three instances, and each instance handles searches for its own shards.
 
-## Step 5: Index documents
+<Note>
+This setup has no replication. If a remote becomes unavailable, its shards are missing from search results — Meilisearch does not yet automatically fall back to another instance. See [Configure replication](/resources/self_hosting/sharding/configure_replication) for a high-availability setup.
+</Note>
+
+## Step 4: Index documents
 
 Send documents to the leader instance (`ms-00`). The leader distributes them across shards automatically:
 
@@ -137,12 +125,12 @@ curl \
 </CodeGroup>
 
 <Warning>
-All write operations (document additions, updates, deletions, settings changes) must go through the leader instance. Non-leader instances reject writes with a `not_a_leader` error.
+All write operations (document additions, updates, deletions, settings changes) must go through the leader instance. Non-leader instances reject writes with a `not_leader` error.
 </Warning>
 
-## Step 6: Search across the cluster
+## Step 5: Search across the cluster
 
-Search with `useNetwork: true` to query all remotes:
+Search requests can be sent to any instance in the network, not just the leader. `useNetwork` defaults to `true` when a network topology is defined:
 
 <CodeGroup>
 
@@ -152,14 +140,13 @@ curl \
   -H 'Content-Type: application/json' \
   -H 'Authorization: Bearer SEARCH_KEY_00' \
   --data-binary '{
-    "q": "batman",
-    "useNetwork": true
+    "q": "batman"
   }'
 ```
 
 </CodeGroup>
 
-Meilisearch fans out the search to all remotes, collects results from each shard, and returns a single merged response.
+Meilisearch fans out the search to all shards, collects results from each shard, and returns a single merged response.
 
 ## Verify the topology
 
