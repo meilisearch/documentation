@@ -42,7 +42,18 @@ MEILISEARCH_KEY=your_api_key
 
 ## 3. Configure an entity for indexing
 
-Add the `Searchable` attribute to your Doctrine entity:
+Register your entity in `config/packages/meilisearch.yaml`:
+
+```yaml
+meilisearch:
+  url: '%env(MEILISEARCH_URL)%'
+  api_key: '%env(MEILISEARCH_KEY)%'
+  indices:
+    - name: movies
+      class: App\Entity\Movie
+```
+
+In your entity, implement `getSearchableArray()` to control which fields are indexed:
 
 ```php
 <?php
@@ -50,10 +61,8 @@ Add the `Searchable` attribute to your Doctrine entity:
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Meilisearch\Bundle\Searchable;
 
 #[ORM\Entity]
-#[Searchable(indexName: 'movies')]
 class Movie
 {
     #[ORM\Id]
@@ -72,7 +81,6 @@ class Movie
 
     // Getters and setters...
 
-    // Define which fields to index
     public function getSearchableArray(): array
     {
         return [
@@ -97,14 +105,14 @@ New entities are automatically indexed when created or updated via Doctrine.
 
 ## 5. Search
 
-Use the `SearchService` to search your indexed entities:
+Use `SearchManagerInterface` to search your indexed entities:
 
 ```php
 <?php
 
 namespace App\Controller;
 
-use Meilisearch\Bundle\SearchService;
+use Meilisearch\Bundle\SearchManagerInterface;
 use App\Entity\Movie;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -113,9 +121,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class SearchController extends AbstractController
 {
     #[Route('/search', name: 'search')]
-    public function search(SearchService $searchService): Response
+    public function search(SearchManagerInterface $searchManager): Response
     {
-        $results = $searchService->search(
+        $results = $searchManager->search(
             Movie::class,
             'matrix'
         );
@@ -129,7 +137,7 @@ class SearchController extends AbstractController
 
 ## 6. Search with filters
 
-First, configure filterable attributes in `config/packages/meilisearch.yaml`:
+Add index settings to your `config/packages/meilisearch.yaml`:
 
 ```yaml
 meilisearch:
@@ -152,7 +160,7 @@ php bin/console meilisearch:create
 Then search with filters:
 
 ```php
-$results = $searchService->search(
+$results = $searchManager->search(
     Movie::class,
     'action',
     [
