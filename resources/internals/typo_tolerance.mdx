@@ -8,7 +8,7 @@ Most search engines treat typo handling as an optional, query-level feature you 
 
 ## How Meilisearch handles typos
 
-Meilisearch uses a **prefix-based Deterministic Finite Automaton (DFA)** built from [Levenshtein distance](https://en.wikipedia.org/wiki/Levenshtein_distance). When you index documents, Meilisearch pre-computes a DFA for every term in the index. At query time, the engine walks this automaton to find all indexed terms within the allowed edit distance of the query term, without recomputing anything at query time.
+Meilisearch stores all indexed terms in a single **Finite State Transducer (FST)** built at index time. At query time, the engine generates a [Levenshtein automaton](https://en.wikipedia.org/wiki/Levenshtein_distance) from your search term and intersects it with the pre-built FST in a single streaming pass. This finds all indexed terms within the allowed edit distance efficiently, without scanning the entire dictionary. Meilisearch uses **Damerau-Levenshtein distance**, meaning transpositions (swapped adjacent characters, like `"teh"` → `"the"`) count as a single edit, not two.
 
 Typo tolerance is **on by default** for every index and every query. No query-level parameters are required.
 
@@ -77,7 +77,7 @@ Key transformations that affect typo matching:
 | **Chinese / Japanese / Korean** | Dictionary-based segmentation (jieba, lindera) | Words are correctly isolated before character-level matching |
 | **Greek** | Final sigma handling | `"λόγος"` and `"λόγοσ"` normalize to the same form |
 
-In contrast, fuzzy engines that operate on raw query strings (Elasticsearch, Solr, Manticore) apply edit distance on the unprocessed token. An accent, a case difference, or a language-specific ligature can consume part of the typo budget or cause misses entirely. PostgreSQL `pg_trgm` is similarly raw: trigrams of `"café"` and `"cafe"` differ.
+In contrast, engines like Elasticsearch, Solr, and Manticore apply edit distance after their configured analyzer runs. If the analyzer includes ASCII folding, accents are normalized before matching. But normalization is opt-in and per-field: without explicit configuration, an accent, a case difference, or a language-specific ligature can consume part of the typo budget or cause misses entirely. Charabia applies the right normalization automatically based on the detected language, with no per-field setup required. PostgreSQL `pg_trgm` is always raw: trigrams of `"café"` and `"cafe"` differ regardless of configuration.
 
 ### Surgical disable controls
 
@@ -113,13 +113,21 @@ Elasticsearch (and OpenSearch, which shares the same Lucene core) uses fuzzy que
 }
 ```
 
-`fuzziness: "AUTO"` applies the same length-based thresholds as Meilisearch (0 for short words, 1 for medium, 2 for long). However:
+`fuzziness: "AUTO"` applies similar length-based thresholds, but they differ from Meilisearch's defaults:
+
+| Word length | Elasticsearch AUTO | Meilisearch default |
+|---|---|---|
+| 1-2 chars | 0 edits | 0 typos |
+| 3-5 chars | 1 edit | 0 typos |
+| 5-8 chars | 2 edits | 1 typo |
+| 9+ chars | 2 edits | 2 typos |
+
+Elasticsearch is more permissive for short words (allows 1 edit from 3 characters vs Meilisearch's threshold of 5), which increases recall but also false positives on short terms. However:
 
 - **Opt-in**: if you forget to add `fuzziness` to a query, typos return zero results
 - **Score modifier**: fuzzy matches lower the BM25 score, but the score is still a single number mixing term frequency, IDF, and fuzziness penalty into an opaque value
 - **Not a ranking rule**: there is no way to say "always prefer 0-typo matches over 1-typo matches regardless of term frequency." A frequent misspelled term can outscore a rare exact match
 - **Prefix queries are separate**: `fuzzy` and `prefix` are two distinct query types in Elasticsearch. Combining them requires a `bool` query with both a `fuzzy` clause and a `prefix` clause, or using an `edge_ngram` tokenizer at index time. It is achievable, but requires deliberate setup and adds complexity to every query
-- **Computed at query time**: Lucene computes Levenshtein automata at query time, not at indexing time
 
 **Normalization and custom tokenizers.** Where Elasticsearch has a genuine advantage is in its analyzer system. You can build a fully custom pipeline: any combination of character filters (strip HTML, map characters), tokenizers (standard, whitespace, ngram, edge-ngram, pattern, language-specific), and token filters (lowercase, stemmer, synonym, ASCII folding, stop words, phonetic). This makes Elasticsearch extremely powerful for domain-specific normalization: a medical search engine can apply specialized stemming, a legal platform can expand abbreviations, a multilingual product catalog can use the ICU analyzer with Unicode-aware case folding and decomposition across all scripts. Charabia provides built-in normalization for the most common languages, but Elasticsearch's analyzer framework is more flexible for advanced or unusual requirements. The trade-off is that getting it right requires significant configuration expertise, and misconfigured analyzers are a common source of relevance bugs.
 
