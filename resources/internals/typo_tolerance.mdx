@@ -32,7 +32,7 @@ The hard cap is **2 typos per word**, regardless of length. Words with 3 or more
 
 ### Typo tolerance is a ranking rule, not a filter
 
-When a query term matches an indexed term via a typo, that result is not discarded or penalized with a separate score modifier. Instead, typo count feeds directly into the `typo` [ranking rule](/resources/internals/ranking) — one of the seven criteria in Meilisearch's [bucket sort](/resources/internals/bucket_sort) pipeline.
+When a query term matches an indexed term via a typo, that result is not discarded or penalized with a separate score modifier. Instead, typo count feeds directly into the `typo` [ranking rule](/resources/internals/ranking), one of the seven criteria in Meilisearch's [bucket sort](/resources/internals/bucket_sort) pipeline.
 
 This means:
 - A document matching with 0 typos always ranks above one matching with 1 typo, all else being equal
@@ -121,7 +121,7 @@ Elasticsearch (and OpenSearch, which shares the same Lucene core) uses fuzzy que
 - **Prefix queries are separate**: `fuzzy` and `prefix` are two distinct query types in Elasticsearch. Combining them requires a `bool` query with both a `fuzzy` clause and a `prefix` clause, or using an `edge_ngram` tokenizer at index time. It is achievable, but requires deliberate setup and adds complexity to every query
 - **Computed at query time**: Lucene computes Levenshtein automata at query time, not at indexing time
 
-**Normalization and custom tokenizers.** Where Elasticsearch has a genuine advantage is in its analyzer system. You can build a fully custom pipeline — any combination of character filters (strip HTML, map characters), tokenizers (standard, whitespace, ngram, edge-ngram, pattern, language-specific), and token filters (lowercase, stemmer, synonym, ASCII folding, stop words, phonetic). This makes Elasticsearch extremely powerful for domain-specific normalization: a medical search engine can apply specialized stemming, a legal platform can expand abbreviations, a multilingual product catalog can use the ICU analyzer with Unicode-aware case folding and decomposition across all scripts. Charabia provides built-in normalization for the most common languages, but Elasticsearch's analyzer framework is more flexible for advanced or unusual requirements. The trade-off is that getting it right requires significant configuration expertise — and misconfigured analyzers are a common source of relevance bugs.
+**Normalization and custom tokenizers.** Where Elasticsearch has a genuine advantage is in its analyzer system. You can build a fully custom pipeline: any combination of character filters (strip HTML, map characters), tokenizers (standard, whitespace, ngram, edge-ngram, pattern, language-specific), and token filters (lowercase, stemmer, synonym, ASCII folding, stop words, phonetic). This makes Elasticsearch extremely powerful for domain-specific normalization: a medical search engine can apply specialized stemming, a legal platform can expand abbreviations, a multilingual product catalog can use the ICU analyzer with Unicode-aware case folding and decomposition across all scripts. Charabia provides built-in normalization for the most common languages, but Elasticsearch's analyzer framework is more flexible for advanced or unusual requirements. The trade-off is that getting it right requires significant configuration expertise, and misconfigured analyzers are a common source of relevance bugs.
 
 ### Apache Solr
 
