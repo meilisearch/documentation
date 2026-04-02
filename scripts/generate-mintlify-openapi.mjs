@@ -9,7 +9,7 @@
  *
  * Output: assets/open-api/meilisearch-openapi-mintlify.json
  *
- * Optional: set GITHUB_PAT or GH_TOKEN for higher rate limits when fetching SDK samples.
+ * Optional: set GITHUB_TOKEN, GITHUB_PAT, or GH_TOKEN for higher rate limits when fetching SDK samples.
  */
 
 import fs from "fs";
@@ -90,7 +90,7 @@ const CODE_SAMPLES_SOURCES = [
 ];
 
 function getHeaders() {
-  const token = process.env.GITHUB_PAT || process.env.GH_TOKEN;
+  const token = process.env.GITHUB_TOKEN || process.env.GITHUB_PAT || process.env.GH_TOKEN;
   const headers = {};
   if (token) headers.Authorization = `Bearer ${token}`;
   return headers;
