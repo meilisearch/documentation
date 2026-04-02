@@ -891,8 +891,7 @@
                 "resources/comparisons/pinecone",
                 "resources/comparisons/qdrant",
                 "resources/comparisons/opensearch",
-                "resources/comparisons/mongodb",
-                "resources/comparisons/typo_tolerance_vs_fuzzy_search"
+                "resources/comparisons/mongodb"
               ]
             },
             {
@@ -943,6 +942,7 @@
                 "resources/internals/hannoy",
                 "resources/internals/concat",
                 "resources/internals/prefix",
+                "resources/internals/typo_tolerance",
                 "resources/help/language"
               ]
             },
