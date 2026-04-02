@@ -640,7 +640,7 @@
                     ]
                   },
                   {
-                    "group": "Dynamic Search Rules",
+                    "group": "Search Rules",
                     "pages": [
                       "POST /dynamic-search-rules",
                       "GET /dynamic-search-rules/{uid}",
