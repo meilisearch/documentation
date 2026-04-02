@@ -1,0 +1,31 @@
+# Runs on PRs targeting main and on workflow_dispatch.
+# Checks for missing redirects (URLs with traffic but no page or redirect)
+# and unused redirects (redirects with zero traffic) using Fathom Analytics data.
+name: Check missing redirects
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  check-missing-redirects:
+    name: Check missing redirects
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Check missing redirects
+        env:
+          FATHOM_API_KEY: ${{ secrets.FATHOM_API_KEY }}
+          FATHOM_SITE_ID: ${{ secrets.FATHOM_SITE_ID }}
+        run: npm run check-missing-redirects
