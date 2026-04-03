@@ -1,6 +1,6 @@
 ---
 title: Search performance
-description: Monitor search latency percentiles and query throughput for your Meilisearch Cloud project.
+description: Monitor search latency percentiles, query throughput, and per-step search timing for your Meilisearch Cloud project.
 ---
 
 {/* Screenshots needed on this page:
@@ -43,6 +43,31 @@ Use this chart to:
 - Verify that your resource tier handles your traffic without latency degradation
 - Detect unexpected traffic drops that may indicate application errors
 
+## Performance trace
+
+Performance trace gives you a per-step breakdown of how time was spent during a search request. Use it to understand exactly where latency comes from, especially when your p99 is high but the cause is not obvious from aggregate metrics.
+
+To enable it, open the **Search preview** tab for your project and toggle **Performance trace** in the top-right of the results panel.
+
+<Frame>
+  <img src="/assets/images/platform/monitoring/search_performance_trace.png" alt="Search preview showing Performance trace panel with per-step timing breakdown including semantic search at 98% of total time" />
+</Frame>
+
+The trace shows each step of the search pipeline with its duration and share of total time:
+
+| Step | What it covers |
+|------|---------------|
+| **wait for permit** | Time waiting to acquire a read permit (queue wait) |
+| **search** | Total time inside the search engine |
+| **tokenize** | Query tokenization |
+| **resolve universe** | Filter evaluation to compute the candidate document set |
+| **keyword search** | Full-text ranking and scoring |
+| **embed** | Time to generate the query vector (for hybrid/semantic search) |
+| **semantic search** | Vector similarity search against the index |
+| **format** | Formatting and serializing the response |
+
+In the example above, semantic search accounts for 98% of total time (430 ms out of 440 ms). This is expected for hybrid search with a small model, and indicates the bottleneck is the vector search step rather than filtering or ranking.
+
 ## Common issues and fixes
 
 | Symptom | Likely cause | Fix |
@@ -51,3 +76,6 @@ Use this chart to:
 | All percentiles high | Index too large for available RAM | Upgrade resource plan |
 | Latency spike after re-indexing | Settings change triggering re-ranking overhead | Monitor for a few minutes after settings changes; latency typically stabilizes |
 | QPS drop without explanation | Application errors or expired API keys | Check application logs and verify API key validity |
+| High `embed` time in trace | Slow embedding model or cold model start | Switch to a faster embedder model or use a larger resource tier |
+| High `semantic search` time | Large vector index or high vector dimensions | Reduce vector dimensions, or upgrade RAM |
+| High `resolve universe` time | Complex filter expressions or many filterable attributes | Simplify filters; avoid filtering on high-cardinality attributes |
