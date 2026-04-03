@@ -1,0 +1,45 @@
+---
+title: Experimental features
+description: Enable or disable experimental Meilisearch features from the Cloud project settings.
+---
+
+{/* Screenshots needed on this page:
+  1. Experimental features panel in Cloud project settings showing toggle switches
+*/}
+
+Meilisearch occasionally ships features in an experimental state before promoting them to stable. Experimental features are fully functional but their API or behavior may change in a future release without a deprecation period.
+
+You can enable or disable experimental features for each project individually from the Meilisearch Cloud dashboard.
+
+## Enabling experimental features
+
+1. Open your project in the Meilisearch Cloud dashboard.
+2. Go to **Settings** and find the **Experimental features** section.
+3. Toggle the features you want to enable or disable.
+4. Click **Save**.
+
+<Warning>
+  **Screenshot needed** — Replace this placeholder with a screenshot of the experimental features section in project settings, showing toggle switches for each feature before publishing.
+</Warning>
+
+<Frame>
+  <img src="/images/platform/management/experimental_features.png" alt="Meilisearch Cloud experimental features panel showing toggle switches" />
+</Frame>
+
+Changes take effect immediately. You do not need to restart or re-index.
+
+## Available experimental features
+
+The list of experimental features evolves with each Meilisearch release. Common examples include:
+
+| Feature | Description |
+|---------|-------------|
+| **Metrics endpoint** | Exposes a `/metrics` endpoint in Prometheus format for external monitoring integration |
+| **Vector search** | Enables hybrid and semantic search using embeddings (may already be stable depending on your version) |
+| **Edit documents by function** | Allows updating documents using a JavaScript filter function |
+
+Check the [changelog](/changelog) and your project settings for the current list of experimental features available on your Meilisearch version.
+
+## Stability notice
+
+Experimental features are not covered by the standard API stability guarantee. If you depend on an experimental feature in production, monitor the [changelog](/changelog) for any changes or promotions to stable.

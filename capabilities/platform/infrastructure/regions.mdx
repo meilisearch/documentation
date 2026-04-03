@@ -1,0 +1,29 @@
+---
+title: Cloud regions
+description: Reference of all available Meilisearch Cloud regions with location and latency guidance.
+---
+
+Meilisearch Cloud is available in six regions. Choosing the right region is one of the most impactful decisions for search latency: network round-trip time between your users and the Meilisearch instance is typically the largest contributor to perceived search speed.
+
+## Available regions
+
+| Region ID | Location | Recommended use case |
+|-----------|----------|---------------------|
+| `eu-west` | Frankfurt, Germany | Primary region for European users (GDPR-compliant by default) |
+| `eu-west-2` | London, United Kingdom | UK-based users or when lower latency to London is required |
+| `ap-southeast` | Singapore | Southeast Asia, Oceania, and APAC users |
+| `ap-northeast` | Tokyo, Japan | Japan and Northeast Asia |
+| `us-west` | Oregon, United States | US West Coast and Pacific users |
+| `us-east` | Virginia, United States | US East Coast, Latin America, and global-default workloads |
+
+## Choosing a region
+
+**Minimize latency for your users.** A search that takes 5 ms to execute on the server can feel instant or sluggish depending on whether the user is 10 ms or 200 ms away. Choose the region closest to the majority of your users.
+
+**Consider data residency requirements.** If your application handles personal data subject to GDPR or other regional regulations, ensure your project is hosted in a compliant region. The `eu-west` and `eu-west-2` regions are located within the European Union or UK.
+
+**Plan for multiple regions if you have a global audience.** You can create separate projects per region and route search traffic to the nearest instance from your application layer. Each project is billed independently.
+
+## Changing a region
+
+Regions cannot be changed after a project is created. To move to a different region, create a new project in the target region and re-index your documents.
