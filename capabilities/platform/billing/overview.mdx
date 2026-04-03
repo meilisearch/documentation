@@ -1,20 +1,32 @@
 ---
 title: Billing
 sidebarTitle: Overview
-description: Understand how Meilisearch Cloud billing works, view invoices, and manage payment methods.
+description: Understand how Meilisearch Cloud billing works, view your estimated next bill, and manage payment settings through Stripe.
 ---
 
-Meilisearch Cloud billing is based on your projects. What you pay depends on the billing model you chose when creating each project: resource-based or usage-based. There are no per-seat fees.
+Meilisearch Cloud billing is fully powered by Stripe. The **Billing** tab in the Cloud dashboard shows a summary of your current billing settings and an estimate of your next bill. For invoice history, payment methods, and billing information, click **Manage billing settings and invoices** to open the Stripe customer portal.
 
 ## Billing models
 
 | | Resource-based | Usage-based |
 |---|---|---|
 | **What you pay for** | Fixed CPU, RAM, and storage allocation | Number of searches and documents indexed |
-| **Billing cycle** | Hourly (prorated) | Daily (prorated) |
+| **Billing cycle** | Hourly (prorated) | Monthly |
 | **Price predictability** | High | Varies with traffic |
 
 See [project types](/capabilities/platform/infrastructure/overview#resource-based-vs-usage-based-projects) for guidance on which model to choose.
+
+## The Billing tab
+
+<Frame>
+  <img src="/assets/images/platform/billing/billing_tab.png" alt="Meilisearch Cloud Billing tab showing billing settings, payment method, and estimated cost for next bill" />
+</Frame>
+
+The Billing tab shows:
+
+- **Billing settings**: your current Tax ID and default payment method
+- **Manage billing settings and invoices**: button to open the Stripe portal for full billing management
+- **Estimated cost for next bill**: a line-by-line breakdown of charges accrued in the current billing period, covering all active projects
 
 ## What affects your bill
 
@@ -24,12 +36,12 @@ Only active projects generate charges. Deleting a project stops billing immediat
 
 <CardGroup cols={2}>
   <Card title="Pricing model" href="/capabilities/platform/billing/pricing_model">
-    How daily billing works, resource pricing, and cost estimation
+    How billing works, resource pricing, and cost estimation
   </Card>
   <Card title="Invoices" href="/capabilities/platform/billing/invoices">
-    View and download your billing history
+    View and download your billing history via Stripe
   </Card>
   <Card title="Payment methods" href="/capabilities/platform/billing/payment_methods">
-    Add, update, or remove payment methods
+    Add or update payment methods via Stripe
   </Card>
 </CardGroup>
