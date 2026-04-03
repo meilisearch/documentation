@@ -1,0 +1,56 @@
+---
+title: Search performance
+description: Monitor search latency, query throughput, and error rates for your Meilisearch Cloud project.
+---
+
+{/* Screenshots needed on this page:
+  1. Search metrics dashboard showing p50/p95/p99 latency, QPS, and error rate graphs
+  2. Performance preview detail view in the Cloud UI showing per-step timing breakdown
+*/}
+
+The search performance dashboard shows how quickly Meilisearch responds to queries and highlights trends that may indicate configuration or capacity issues.
+
+## Key metrics
+
+| Metric | Description | Worth investigating when... |
+|--------|-------------|----------------------------|
+| **p50 latency** | Median search response time | Exceeds your baseline by more than 20% |
+| **p95 latency** | 95th percentile response time | Exceeds 100 ms for most workloads |
+| **p99 latency** | 99th percentile response time | Exceeds 200 ms, as outliers affect user experience |
+| **Queries per second (QPS)** | Number of search requests processed per second | Drops unexpectedly (may indicate errors) or spikes beyond plan capacity |
+| **Error rate** | Percentage of requests that return a non-2xx response | Any sustained value above 0% |
+
+<Warning>
+  **Screenshot needed** — Replace this placeholder with a screenshot of the search metrics dashboard showing latency percentiles, QPS, and error rate graphs before publishing.
+</Warning>
+
+<Frame>
+  <img src="/images/platform/monitoring/search_metrics_dashboard.png" alt="Meilisearch Cloud search performance dashboard showing latency and QPS graphs" />
+</Frame>
+
+## Performance preview
+
+Performance preview gives you a per-request breakdown of time spent at each stage of the search pipeline. It is useful for diagnosing why a specific type of query is slow.
+
+To use it, add `?performance=true` to a search request (or enable the toggle in the Cloud search preview UI). The response includes a `processingTimeDetails` object showing the time spent in each ranking rule and processing step.
+
+<Warning>
+  **Screenshot needed** — Replace this placeholder with a screenshot of the performance preview detail view in the Cloud UI, showing per-step timing (e.g., filtering, ranking, attribute loading) before publishing.
+</Warning>
+
+<Frame>
+  <img src="/images/platform/monitoring/performance_preview.png" alt="Meilisearch Cloud performance preview showing per-step timing breakdown for a search query" />
+</Frame>
+
+## Common issues and fixes
+
+| Symptom | Likely cause | Fix |
+|---------|-------------|-----|
+| High p99 latency, normal p50 | Outlier queries with many results or complex filters | Add pagination, tighten `hitsPerPage`, simplify filter expressions |
+| High latency across all percentiles | Too many filterable attributes or large index not fitting in RAM | Reduce `filterableAttributes`, upgrade resource plan |
+| Error rate spikes | Malformed requests, expired API keys | Check application logs, verify API key validity |
+| Latency increases after re-indexing | Settings change (e.g., added attributes) causing re-ranking overhead | Review recent settings changes, monitor for a few minutes |
+
+## Alerts
+
+Alert configuration for search performance metrics is available on Enterprise plans. Contact your account manager for details.
