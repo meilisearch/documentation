@@ -43,10 +43,64 @@ Pricing may vary slightly by region. The Cloud UI shows the exact price for your
 | `SFO` | San Francisco |
 | `NYC` | New York |
 
+## Choosing a resource tier
+
+For resource-based projects, the most important factor is **RAM**: Meilisearch keeps indexes in memory for fast search, so your instance needs enough RAM to hold your index comfortably.
+
+### Step 1: Estimate your index size
+
+Your index size depends on how many documents you have and how large each document is. Use these typical document sizes as a starting point:
+
+| Document type | Avg size | Examples |
+|--------------|----------|---------|
+| Small | ~1 KB | SaaS records, simple product listings with few filters |
+| Medium | ~3 KB | E-commerce products with descriptions and ~10 filterable attributes |
+| Large | ~8 KB | Articles, blog posts, rich content |
+| AI (with vectors) | ~12 KB | Any document type with vector embeddings |
+
+**Formula:**
+
+```
+Index size ≈ number of documents × average document size × 5
+```
+
+The ×5 factor accounts for the inverted index, facet data, prefix structures, and other internal data Meilisearch builds from your documents.
+
+**Examples:**
+
+| Documents | Avg size | Estimated index size |
+|-----------|----------|---------------------|
+| 100K | 3 KB (medium) | ~1.4 GB |
+| 500K | 3 KB (medium) | ~7 GB |
+| 100K | 12 KB (AI) | ~5.7 GB |
+| 1M | 8 KB (large) | ~37 GB |
+
+### Step 2: Choose a tier with enough RAM
+
+Choose the smallest tier where **RAM exceeds your estimated index size**. Leave headroom for query cache and peak usage.
+
+| Tier | vCPU | RAM | Suitable for |
+|------|------|-----|-------------|
+| XS | 0.5 | 1 GB | Development and testing |
+| S | 1 | 2 GB | Up to ~80K small documents |
+| M | 2 | 4 GB | Up to ~80K medium or ~160K small documents |
+| L | 2 | 8 GB | Up to ~400K medium documents |
+| XL | 4 | 16 GB | Up to ~800K medium or ~300K AI documents |
+| 2XL | 8 | 32 GB | Up to ~1.6M medium or ~600K AI documents |
+| 4XL | 16 | 64 GB | Up to ~3M medium or ~1.2M AI documents |
+
+For larger workloads, contact [sales@meilisearch.com](mailto:sales@meilisearch.com) to discuss Enterprise options including [sharding and replication](/capabilities/platform/infrastructure/sharding_and_replication).
+
+### Step 3: Consider vCPU for high query volume
+
+RAM is almost always the bottleneck. However, if your workload involves sustained high QPS (hundreds of searches per second), choose a tier with more vCPUs. Tiers L and below share 2 vCPUs, while XL and above provide dedicated cores.
+
+### Interactive estimator
+
+Use the [pricing page calculator](https://www.meilisearch.com/pricing) to get a recommendation based on your document count, document type, and expected search volume.
+
 ## Estimating your costs
 
-**Resource-based projects:** multiply the daily rate by 30 for a monthly estimate. Choose a tier where RAM comfortably exceeds your index size (a Meilisearch index is typically 2 to 4 times the size of the raw JSON data).
+**Resource-based projects:** the Cloud UI shows the hourly rate and an estimated monthly cost for each tier. You can also multiply the hourly rate by 730 for a full-month estimate.
 
-**Usage-based projects:** monitor the daily cost shown in the Cloud UI over the first few days and extrapolate. Costs scale with search volume and document count, so factor in expected traffic growth.
-
-For large-scale workloads requiring [sharding and replication](/capabilities/platform/infrastructure/sharding_and_replication), contact [sales@meilisearch.com](mailto:sales@meilisearch.com) for an Enterprise quote.
+**Usage-based projects:** monitor the accrued cost shown in the Cloud UI over the first few days and extrapolate. Costs scale with search volume and document count, so factor in expected traffic growth.
