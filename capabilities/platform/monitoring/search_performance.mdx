@@ -1,56 +1,53 @@
 ---
 title: Search performance
-description: Monitor search latency, query throughput, and error rates for your Meilisearch Cloud project.
+description: Monitor search latency percentiles and query throughput for your Meilisearch Cloud project.
 ---
 
 {/* Screenshots needed on this page:
-  1. Search metrics dashboard showing p50/p95/p99 latency, QPS, and error rate graphs
-  2. Performance preview detail view in the Cloud UI showing per-step timing breakdown
+  1. Search latency chart (p75/p90/p95/p99 in ms) — media_JxXCjcfqpR
+  2. Maximum search queries per second chart — media_T1CoksUKsc
 */}
 
-The search performance dashboard shows how quickly Meilisearch responds to queries and highlights trends that may indicate configuration or capacity issues.
+The search performance section of the monitoring dashboard shows how quickly Meilisearch responds to queries and how much search traffic your project is handling. It is labeled **Beta** in the Cloud UI.
 
-## Key metrics
+You can filter all charts by index using the **All indexes** dropdown, set a date range, or enable real-time mode. Timestamps are displayed in UTC.
 
-| Metric | Description | Worth investigating when... |
-|--------|-------------|----------------------------|
-| **p50 latency** | Median search response time | Exceeds your baseline by more than 20% |
-| **p95 latency** | 95th percentile response time | Exceeds 100 ms for most workloads |
-| **p99 latency** | 99th percentile response time | Exceeds 200 ms, as outliers affect user experience |
-| **Queries per second (QPS)** | Number of search requests processed per second | Drops unexpectedly (may indicate errors) or spikes beyond plan capacity |
-| **Error rate** | Percentage of requests that return a non-2xx response | Any sustained value above 0% |
+## Search latency
 
-<Warning>
-  **Screenshot needed** — Replace this placeholder with a screenshot of the search metrics dashboard showing latency percentiles, QPS, and error rate graphs before publishing.
-</Warning>
+The search latency chart tracks response times at four percentiles: **p75**, **p90**, **p95**, and **p99**, measured in milliseconds.
 
 <Frame>
-  <img src="/images/platform/monitoring/search_metrics_dashboard.png" alt="Meilisearch Cloud search performance dashboard showing latency and QPS graphs" />
+  <img src="/assets/images/platform/monitoring/search_latency.png" alt="Search latency chart showing p75, p90, p95, and p99 response times in milliseconds over time" />
 </Frame>
 
-## Performance preview
+| Percentile | What it means |
+|------------|--------------|
+| **p75** | 75% of searches completed within this time |
+| **p90** | 90% of searches completed within this time |
+| **p95** | 95% of searches completed within this time |
+| **p99** | 99% of searches completed within this time — the slowest requests |
 
-Performance preview gives you a per-request breakdown of time spent at each stage of the search pipeline. It is useful for diagnosing why a specific type of query is slow.
+p99 latency is the most important signal for user experience: even rare slow queries are visible to users. A healthy p99 is typically under 100 ms for most workloads.
 
-To use it, add `?performance=true` to a search request (or enable the toggle in the Cloud search preview UI). The response includes a `processingTimeDetails` object showing the time spent in each ranking rule and processing step.
+## Maximum search queries per second
 
-<Warning>
-  **Screenshot needed** — Replace this placeholder with a screenshot of the performance preview detail view in the Cloud UI, showing per-step timing (e.g., filtering, ranking, attribute loading) before publishing.
-</Warning>
+This chart shows the peak number of search requests processed per second (q/s) during each time interval.
 
 <Frame>
-  <img src="/images/platform/monitoring/performance_preview.png" alt="Meilisearch Cloud performance preview showing per-step timing breakdown for a search query" />
+  <img src="/assets/images/platform/monitoring/search_qps.png" alt="Maximum search queries per second chart" />
 </Frame>
+
+Use this chart to:
+
+- Understand peak traffic patterns across the day or week
+- Verify that your resource tier handles your traffic without latency degradation
+- Detect unexpected traffic drops that may indicate application errors
 
 ## Common issues and fixes
 
 | Symptom | Likely cause | Fix |
 |---------|-------------|-----|
-| High p99 latency, normal p50 | Outlier queries with many results or complex filters | Add pagination, tighten `hitsPerPage`, simplify filter expressions |
-| High latency across all percentiles | Too many filterable attributes or large index not fitting in RAM | Reduce `filterableAttributes`, upgrade resource plan |
-| Error rate spikes | Malformed requests, expired API keys | Check application logs, verify API key validity |
-| Latency increases after re-indexing | Settings change (e.g., added attributes) causing re-ranking overhead | Review recent settings changes, monitor for a few minutes |
-
-## Alerts
-
-Alert configuration for search performance metrics is available on Enterprise plans. Contact your account manager for details.
+| High p99, normal p75 | Occasional complex queries or large result sets | Add pagination, reduce `hitsPerPage`, simplify filter expressions |
+| All percentiles high | Index too large for available RAM | Upgrade resource plan |
+| Latency spike after re-indexing | Settings change triggering re-ranking overhead | Monitor for a few minutes after settings changes; latency typically stabilizes |
+| QPS drop without explanation | Application errors or expired API keys | Check application logs and verify API key validity |

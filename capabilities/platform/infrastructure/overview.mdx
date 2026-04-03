@@ -12,23 +12,37 @@ A project is the core unit of Meilisearch Cloud. Think of it as a dedicated Meil
 
 - Each project has its own indexes and documents
 - Each project has its own API keys and security settings
-- Each project runs on the resource tier you choose (CPU, RAM, and storage)
-- Billing is per project, based on the plan and region
+- Each project is either resource-based or usage-based (see below)
 
 You can create multiple projects in the same account, for example one per application or one per environment (production, staging).
+
+## Resource-based vs usage-based projects
+
+When creating a project, you choose a billing model:
+
+**Resource-based** projects give you a fixed allocation of CPU, RAM, and storage. You have full control over the resources available to your instance, and billing is predictable: you pay for what you provision, regardless of traffic.
+
+**Usage-based** projects scale automatically. Instead of choosing a resource tier, you pay based on the number of searches performed and documents indexed. Meilisearch Cloud provisions the resources needed to serve your workload without you managing capacity. This model is simpler to get started with, but costs are harder to predict since they vary with your usage.
+
+| | Resource-based | Usage-based |
+|---|---|---|
+| Billing | Fixed resources (CPU, RAM, storage) | Searches and documents |
+| Scaling | Manual (you choose the tier) | Automatic |
+| Price predictability | High | Depends on traffic |
+| Best for | Production workloads with known traffic | Variable or early-stage workloads |
 
 ## Regions
 
 Meilisearch Cloud is available in multiple regions across the world. Choose the region closest to your users for the lowest latency.
 
-| Region ID | Location | Recommended for |
-|-----------|----------|----------------|
-| `eu-west` | Frankfurt, Germany | European users |
-| `eu-west-2` | London, United Kingdom | UK and Western Europe |
-| `ap-southeast` | Singapore | Southeast Asia and Oceania |
-| `ap-northeast` | Tokyo, Japan | Japan and Northeast Asia |
-| `us-west` | Oregon, United States | US West Coast |
-| `us-east` | Virginia, United States | US East Coast and global default |
+| Code | Location | Recommended for |
+|------|----------|----------------|
+| `FRA` | Frankfurt, Germany | European users |
+| `LON` | London, United Kingdom | UK and Western Europe |
+| `SGP` | Singapore | Southeast Asia and Oceania |
+| `JPN` | Japan | Japan and Northeast Asia |
+| `SFO` | San Francisco, United States | US West Coast |
+| `NYC` | New York, United States | US East Coast and global default |
 
 ## Resource tiers
 
@@ -39,6 +53,17 @@ Each project runs on a resource tier that defines its CPU, RAM, and storage allo
 - **Vector search**: Storing and searching vectors requires additional RAM proportional to the number of dimensions and documents
 
 You can change the resource tier at any time from the project settings.
+
+## Premium Compute
+
+Premium Compute is a class of dedicated infrastructure available on Enterprise plans. Compared to standard resource tiers, Premium Compute offers:
+
+- Dedicated physical resources (no shared CPU or memory with other tenants)
+- Higher-performance CPUs with better single-thread and multi-thread throughput
+- Faster disk I/O for index reads and writes
+- Optimized builds tuned for search workloads
+
+Premium Compute is suited for production workloads with strict latency requirements or very large indexes. Contact [sales@meilisearch.com](mailto:sales@meilisearch.com) to enable it.
 
 ## Next steps
 
@@ -57,5 +82,8 @@ You can change the resource tier at any time from the project settings.
   </Card>
   <Card title="Sharding and replication" href="/capabilities/platform/infrastructure/sharding_and_replication">
     Scale to large datasets with high availability
+  </Card>
+  <Card title="Backups" href="/capabilities/platform/infrastructure/backups">
+    Automatic weekly backups with Enterprise customization options
   </Card>
 </CardGroup>

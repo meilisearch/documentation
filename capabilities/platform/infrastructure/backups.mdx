@@ -1,0 +1,30 @@
+---
+title: Backups
+description: Meilisearch Cloud automatically backs up your project data on a weekly schedule, with customizable options for Enterprise customers.
+---
+
+Meilisearch Cloud automatically backs up your project data. Backups protect against accidental data loss and allow you to restore a project to a previous state.
+
+## Default backup schedule
+
+| Setting | Default |
+|---------|---------|
+| Frequency | Once per week |
+| Backups retained | 2 (the two most recent) |
+| Scheduled day | Based on the day the project was created |
+
+The backup window is automatically set when you create a project. Older backups are discarded as new ones are created, so only the two most recent backups are kept at any time.
+
+## Restoring from a backup
+
+To restore your project from a backup, contact [support@meilisearch.com](mailto:support@meilisearch.com) with your project name and the date you want to restore to.
+
+## Enterprise backup customization
+
+Enterprise customers can fully customize their backup configuration:
+
+- **Frequency**: daily, multiple times per day, or any custom schedule
+- **Retention**: keep more than 2 backups
+- **Timing**: choose the exact time backups run to avoid peak traffic periods
+
+Contact [sales@meilisearch.com](mailto:sales@meilisearch.com) to configure a custom backup policy for your project.

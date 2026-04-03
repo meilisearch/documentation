@@ -3,46 +3,50 @@ title: Pricing model
 description: How Meilisearch Cloud billing works, including daily cycles, resource pricing, and cost estimation.
 ---
 
-Meilisearch Cloud charges per project per day, based on the resource tier and region selected for each project.
+Meilisearch Cloud charges per project per day. The billing model depends on whether each project is resource-based or usage-based.
 
-## How billing works
+## Resource-based pricing
 
-**Daily billing cycle.** Each project accrues a daily charge based on its resource plan. The charge is prorated if a project is created or deleted mid-day: you only pay for the time the project exists.
+Resource-based projects are billed at an hourly rate based on the resource tier you select (Memory and vCPU). You pay for the resources you provision, regardless of how many searches you run or documents you index.
 
-**Per-project pricing.** Each project is billed independently. A team with three projects on three different plans is billed the sum of all three project rates.
+The Cloud UI shows the hourly rate and estimated monthly cost for each tier at project creation and in the project settings. Pricing may vary slightly by region.
 
-**No additional usage fees.** Billing is based on the resource tier only. There are no per-query fees, per-document fees, or bandwidth charges.
+## Usage-based pricing
 
-**Project pausing.** If you need to stop a project temporarily without deleting it and its data, contact support. Paused projects may have reduced or no billing depending on your plan.
+Usage-based projects are billed on what your project actually consumes. There are three plans:
 
-## Resource pricing
+| Plan | Included searches | Extra searches | Included documents | Extra documents | Resources |
+|------|------------------|----------------|--------------------|-----------------|-----------|
+| **Build** | 50K/month | $0.40 per 1,000 | 100K | $0.30 per 1,000 | Shared |
+| **Pro** | 250K/month | $0.30 per 1,000 | 1M | $0.20 per 1,000 | Dedicated |
+Resources scale automatically. You do not choose a tier. The Cloud UI shows your accrued costs based on recent usage.
 
-The price of a project depends on two factors:
+## Shared billing rules
 
-1. **Resource tier** (CPU, RAM, and storage allocation)
-2. **Region** where the project is hosted
+Regardless of billing model:
 
-Exact pricing for each tier and region is shown in the Meilisearch Cloud UI when you create or modify a project, and on the [Meilisearch pricing page](https://www.meilisearch.com/pricing).
+- **Per-project billing.** Each project is billed independently. A team with multiple projects is billed the sum of all project charges.
+- **Prorated daily cycle.** Creating or deleting a project mid-day adjusts the charge proportionally.
+- **Project pausing.** If you need to suspend a project temporarily without deleting its data, contact support. Paused projects may have reduced billing depending on your plan.
+- **No per-seat fees.** Adding team members does not affect billing.
 
 ## Regions and pricing
 
-Pricing may vary slightly by region due to underlying infrastructure costs. The Cloud UI shows the price for your selected region at checkout.
+Pricing may vary slightly by region. The Cloud UI shows the exact price for your selected region.
 
-| Region | Location | Pricing reference |
-|--------|----------|------------------|
-| `eu-west` | Frankfurt | See Cloud UI |
-| `eu-west-2` | London | See Cloud UI |
-| `ap-southeast` | Singapore | See Cloud UI |
-| `ap-northeast` | Tokyo | See Cloud UI |
-| `us-west` | Oregon | See Cloud UI |
-| `us-east` | Virginia | See Cloud UI |
+| Region | Location |
+|--------|----------|
+| `FRA` | Frankfurt |
+| `LON` | London |
+| `SGP` | Singapore |
+| `JPN` | Japan |
+| `SFO` | San Francisco |
+| `NYC` | New York |
 
 ## Estimating your costs
 
-To estimate your monthly cost:
+**Resource-based projects:** multiply the daily rate by 30 for a monthly estimate. Choose a tier where RAM comfortably exceeds your index size (a Meilisearch index is typically 2 to 4 times the size of the raw JSON data).
 
-1. **Determine your index size.** Export or estimate the size of the data you plan to index. A good rule of thumb: the Meilisearch index is typically 2-4x the size of the raw JSON data, depending on the number of indexed attributes.
-2. **Choose a tier where RAM comfortably exceeds your index size.** Leave headroom for growth and peak usage.
-3. **Multiply the daily rate by 30** for a monthly estimate.
+**Usage-based projects:** monitor the daily cost shown in the Cloud UI over the first few days and extrapolate. Costs scale with search volume and document count, so factor in expected traffic growth.
 
-For high-availability or large-scale workloads requiring [sharding and replication](/capabilities/platform/infrastructure/sharding_and_replication), contact [sales@meilisearch.com](mailto:sales@meilisearch.com) for an Enterprise quote.
+For large-scale workloads requiring [sharding and replication](/capabilities/platform/infrastructure/sharding_and_replication), contact [sales@meilisearch.com](mailto:sales@meilisearch.com) for an Enterprise quote.

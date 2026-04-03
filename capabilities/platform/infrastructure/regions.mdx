@@ -7,23 +7,31 @@ Meilisearch Cloud is available in six regions. Choosing the right region is one 
 
 ## Available regions
 
-| Region ID | Location | Recommended use case |
-|-----------|----------|---------------------|
-| `eu-west` | Frankfurt, Germany | Primary region for European users (GDPR-compliant by default) |
-| `eu-west-2` | London, United Kingdom | UK-based users or when lower latency to London is required |
-| `ap-southeast` | Singapore | Southeast Asia, Oceania, and APAC users |
-| `ap-northeast` | Tokyo, Japan | Japan and Northeast Asia |
-| `us-west` | Oregon, United States | US West Coast and Pacific users |
-| `us-east` | Virginia, United States | US East Coast, Latin America, and global-default workloads |
+| Code | Location | Recommended use case |
+|------|----------|---------------------|
+| `FRA` | Frankfurt, Germany | European users (GDPR-compliant) |
+| `LON` | London, United Kingdom | UK and Western Europe |
+| `SGP` | Singapore | Southeast Asia, Oceania, and APAC |
+| `JPN` | Japan | Japan and Northeast Asia |
+| `SFO` | San Francisco, United States | US West Coast and Pacific |
+| `NYC` | New York, United States | US East Coast, Latin America, and global default |
 
 ## Choosing a region
 
 **Minimize latency for your users.** A search that takes 5 ms to execute on the server can feel instant or sluggish depending on whether the user is 10 ms or 200 ms away. Choose the region closest to the majority of your users.
 
-**Consider data residency requirements.** If your application handles personal data subject to GDPR or other regional regulations, ensure your project is hosted in a compliant region. The `eu-west` and `eu-west-2` regions are located within the European Union or UK.
+**Consider data residency requirements.** If your application handles personal data subject to GDPR or other regional regulations, ensure your project is hosted in a compliant region. `FRA` and `LON` are located within the EU and UK.
 
 **Plan for multiple regions if you have a global audience.** You can create separate projects per region and route search traffic to the nearest instance from your application layer. Each project is billed independently.
 
 ## Changing a region
 
 Regions cannot be changed after a project is created. To move to a different region, create a new project in the target region and re-index your documents.
+
+## Requesting a new region
+
+The list of available regions grows over time. If none of the current regions fit your requirements (latency, data residency, or compliance), contact [sales@meilisearch.com](mailto:sales@meilisearch.com) to request a new one.
+
+## Multi-region replication
+
+For Enterprise workloads that require data to be replicated across multiple regions (for disaster recovery, global low-latency search, or compliance), Meilisearch supports multi-region replication. This is an Enterprise feature that requires dedicated infrastructure setup. Contact [sales@meilisearch.com](mailto:sales@meilisearch.com) to discuss your requirements.
