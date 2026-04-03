@@ -17,7 +17,7 @@ import { fileURLToPath } from "url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = path.resolve(__dirname, "..");
 
-const MIN_VIEWS = 10;
+const MIN_VIEWS = 1;
 
 // ---------------------------------------------------------------------------
 // Load .env manually (no external dependency)
@@ -171,13 +171,23 @@ async function getDocsPages() {
   return pages;
 }
 
+function resolveRef(value) {
+  if (value && typeof value === "object" && "$ref" in value) {
+    const refPath = path.resolve(REPO_ROOT, value["$ref"]);
+    return JSON.parse(fs.readFileSync(refPath, "utf-8"));
+  }
+  return value;
+}
+
 function getRedirects() {
   const docsJsonPath = path.join(REPO_ROOT, "docs.json");
   const docsJson = JSON.parse(fs.readFileSync(docsJsonPath, "utf-8"));
   const redirects = []; // { source, destination }
 
-  if (docsJson.redirects && Array.isArray(docsJson.redirects)) {
-    for (const r of docsJson.redirects) {
+  const rawRedirects = resolveRef(docsJson.redirects);
+
+  if (Array.isArray(rawRedirects)) {
+    for (const r of rawRedirects) {
       redirects.push({
         source: r.source,
         sourceFull: "/docs" + r.source,
@@ -187,6 +197,46 @@ function getRedirects() {
   }
 
   return redirects;
+}
+
+// ---------------------------------------------------------------------------
+// Suggest destination for a missing redirect
+// ---------------------------------------------------------------------------
+const NOISE_WORDS = new Set([
+  "learn", "guides", "reference", "api", "docs", "the", "and", "for",
+  "with", "how", "to", "a", "an", "of", "in", "on", "at", "get", "set",
+  "use", "using", "what", "is", "are", "overview", "guide", "tutorial",
+]);
+
+function tokenize(urlPath) {
+  return urlPath
+    .split(/[\/\-_]/)
+    .map((t) => t.toLowerCase())
+    .filter((t) => t.length > 1 && !NOISE_WORDS.has(t));
+}
+
+function suggestDestination(missingPath, docsPages) {
+  const queryTokens = new Set(tokenize(missingPath));
+  if (queryTokens.size === 0) return null;
+
+  let bestScore = 0;
+  let bestPage = null;
+
+  for (const page of docsPages) {
+    const pageTokens = new Set(tokenize(page));
+    let score = 0;
+    for (const t of queryTokens) {
+      if (pageTokens.has(t)) score++;
+    }
+    if (score > bestScore) {
+      bestScore = score;
+      bestPage = page;
+    }
+  }
+
+  if (bestScore === 0) return null;
+  // Return as a docs-relative path (strip /docs prefix)
+  return bestPage.replace(/^\/docs/, "");
 }
 
 // ---------------------------------------------------------------------------
@@ -216,13 +266,19 @@ async function main() {
 
     if (normalized.match(/\.(png|jpg|jpeg|gif|svg|webp|ico|css|js|json|xml|woff2?|ttf|eot)$/i)) continue;
 
-    // Skip junk paths (broken URLs, internal Mintlify props, double /docs/)
+    // Skip junk paths (broken URLs, internal framework paths, bot injections, double /docs/)
     if (normalized.match(/\.(Version|Database|html)$/i)) continue;
     if (normalized.endsWith(".")) continue;
     if (normalized.includes("/src/_props/")) continue;
     if (normalized.startsWith("/docs/docs/")) continue;
     if (normalized.startsWith("/docs/error/")) continue;
     if (normalized.startsWith("/docs/create/")) continue;
+    if (normalized.startsWith("/docs/_next")) continue;
+    if (normalized.startsWith("/docs/_mintlify")) continue;
+    if (normalized.includes(" ")) continue; // paths with spaces are malformed/bot traffic
+    if (normalized.includes("<")) continue; // HTML injection attempts
+    if (normalized.match(/[*")\]\\(]$/)) continue; // trailing special chars (malformed URLs)
+    if (normalized.match(/\.\w{0,3}[^a-z0-9]$/i)) continue; // trailing dot+non-alphanum (e.g. ".(")
 
     missingRedirects.push({ path: normalized, views });
   }
@@ -262,10 +318,12 @@ async function main() {
   console.log(`URLs with >= ${MIN_VIEWS} views but no page or redirect: ${sortedMissing.length}\n`);
 
   if (sortedMissing.length > 0) {
-    console.log("Views  | Path");
+    console.log("Views  | Path  ->  Suggested destination");
     console.log("-------|-----");
     for (const { path: p, views } of sortedMissing) {
-      console.log(`${String(views).padStart(6)} | ${p}`);
+      const suggestion = suggestDestination(p, docsPages);
+      const hint = suggestion ? `  ->  ${suggestion}` : "";
+      console.log(`${String(views).padStart(6)} | ${p}${hint}`);
     }
   }
 
@@ -305,6 +363,11 @@ async function main() {
   const outputPath = path.join(REPO_ROOT, "missing-redirects.txt");
   fs.writeFileSync(outputPath, outputLines.join("\n") + "\n");
   console.log(`\nReport written to ${outputPath}`);
+
+  if (sortedMissing.length > 0) {
+    console.error(`\nERROR: ${sortedMissing.length} missing redirect(s) found. Add them to docs.json before merging.`);
+    process.exit(1);
+  }
 }
 
 main().catch((err) => {
