@@ -474,7 +474,8 @@
                       "capabilities/platform/infrastructure/regions",
                       "capabilities/platform/infrastructure/manage_resources",
                       "capabilities/platform/infrastructure/version_management",
-                      "capabilities/platform/infrastructure/sharding_and_replication"
+                      "capabilities/platform/infrastructure/sharding_and_replication",
+                      "capabilities/platform/infrastructure/backups"
                     ]
                   },
                   {

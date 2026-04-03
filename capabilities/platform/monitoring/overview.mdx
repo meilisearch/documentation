@@ -1,35 +1,31 @@
 ---
 title: Monitoring
 sidebarTitle: Overview
-description: Monitor search performance, indexing health, and infrastructure usage for your Meilisearch Cloud projects.
+description: Monitor search performance, indexing health, and API operations for your Meilisearch Cloud projects.
 ---
 
-Meilisearch Cloud provides built-in monitoring dashboards so you can understand how your search is performing and catch issues before they affect users. Monitoring is organized into three areas:
+Meilisearch Cloud includes built-in monitoring dashboards so you can understand how your project is performing and catch issues before they affect users. Monitoring is currently in **Beta**.
 
-| Area | What it covers |
-|------|---------------|
-| **Search performance** | Latency (p50/p95/p99), queries per second, error rate |
-| **Indexing performance** | Indexing speed, task queue depth, per-task breakdown |
-| **Usage metrics** | Memory, storage, and CPU utilization |
+The dashboard is organized into three sections:
 
-## Why monitoring matters
+| Section | What it covers |
+|---------|---------------|
+| **Search performance** | Search latency (p75/p90/p95/p99) and maximum queries per second |
+| **Operations** | Bandwidth (In/Out) and API call volume (Failed/Successful) |
+| **Indexing performance** | Indexing latency TTS (p75/p90/p95/p99) |
 
-Search performance often degrades gradually rather than failing suddenly. Monitoring helps you:
-
-- Detect latency regressions after a settings change or data update
-- Identify indexing bottlenecks before the task queue backs up
-- Know when your project is approaching its resource limits and needs a plan upgrade
+All charts support filtering by index, custom date ranges, and a real-time mode. Timestamps are displayed in UTC.
 
 ## Next steps
 
 <CardGroup cols={2}>
   <Card title="Search performance" href="/capabilities/platform/monitoring/search_performance">
-    Monitor and debug search latency, QPS, and error rates
+    Monitor search latency percentiles and query throughput
+  </Card>
+  <Card title="Operations" href="/capabilities/platform/monitoring/usage_metrics">
+    Track bandwidth and API call activity
   </Card>
   <Card title="Indexing performance" href="/capabilities/platform/monitoring/indexing_performance">
-    Track indexing speed and inspect individual task breakdowns
-  </Card>
-  <Card title="Usage metrics" href="/capabilities/platform/monitoring/usage_metrics">
-    Monitor memory, storage, and CPU for capacity planning
+    Track time-to-search (TTS) for indexing tasks
   </Card>
 </CardGroup>
