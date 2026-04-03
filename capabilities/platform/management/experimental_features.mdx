@@ -3,43 +3,30 @@ title: Experimental features
 description: Enable or disable experimental Meilisearch features from the Cloud project settings.
 ---
 
-{/* Screenshots needed on this page:
-  1. Experimental features panel in Cloud project settings showing toggle switches
-*/}
+Meilisearch occasionally ships features in an experimental state before promoting them to stable. Experimental features are fully functional but their API or behavior may change between Meilisearch versions without a deprecation period. Be careful when enabling them in production environments.
 
-Meilisearch occasionally ships features in an experimental state before promoting them to stable. Experimental features are fully functional but their API or behavior may change in a future release without a deprecation period.
-
-You can enable or disable experimental features for each project individually from the Meilisearch Cloud dashboard.
-
-## Enabling experimental features
-
-1. Open your project in the Meilisearch Cloud dashboard.
-2. Go to **Settings** and find the **Experimental features** section.
-3. Toggle the features you want to enable or disable.
-4. Click **Save**.
-
-<Warning>
-  **Screenshot needed:** Replace this placeholder with a screenshot of the experimental features section in project settings, showing toggle switches for each feature before publishing.
-</Warning>
+You can enable or disable experimental features per project from **Project Settings > General**.
 
 <Frame>
-  <img src="/images/platform/management/experimental_features.png" alt="Meilisearch Cloud experimental features panel showing toggle switches" />
+  <img src="/assets/images/platform/management/experimental_features.png" alt="Experimental features section in Project Settings showing checkboxes for each available feature" />
 </Frame>
 
-Changes take effect immediately. You do not need to restart or re-index.
+Check the box next to a feature to enable it. Changes take effect immediately without a restart or re-index.
 
-## Available experimental features
+## Available features
 
-The list of experimental features evolves with each Meilisearch release. Common examples include:
+The list evolves with each Meilisearch release. As of the current version:
 
 | Feature | Description |
 |---------|-------------|
-| **Metrics endpoint** | Exposes a `/metrics` endpoint in Prometheus format for external monitoring integration |
-| **Vector search** | Enables hybrid and semantic search using embeddings (may already be stable depending on your version) |
-| **Edit documents by function** | Allows updating documents using a JavaScript filter function |
+| **Edit documents by function** | Apply custom transformations to documents using Rhai scripts, from simple formatting changes to complex logic |
+| **"CONTAINS" and "STARTS_WITH" filters** | Adds the `CONTAINS` filter operator to filter documents where an attribute includes a specific substring |
+| **Dynamic Search Rules** | Enable rules that change how search results are ordered when specific conditions are met (e.g. pinning) |
+| **Composite embedders** | Use different embedders at search time and indexing time |
+| **Multi-modal search** | Index and search through images, text, and other formats in documents |
 
-Check the [changelog](/changelog) and your project settings for the current list of experimental features available on your Meilisearch version.
+Check the [changelog](/changelog) for the most up-to-date list of experimental features available on your version.
 
 ## Stability notice
 
-Experimental features are not covered by the standard API stability guarantee. If you depend on an experimental feature in production, monitor the [changelog](/changelog) for any changes or promotions to stable.
+Experimental features are not covered by the standard API stability guarantee. If you rely on one in production, monitor the [changelog](/changelog) for changes or promotion to stable.
