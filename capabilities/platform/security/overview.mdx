@@ -4,7 +4,7 @@ sidebarTitle: Overview
 description: Secure your Meilisearch data with API keys and tenant tokens for multi-tenant applications.
 ---
 
-Meilisearch uses [API keys](/capabilities/security/how_to/manage_api_keys) and tenant tokens to control access to your data. API keys authenticate requests, while tenant tokens restrict what data each user can see within a shared index. This page also covers [sanitizing search results](#sanitizing-search-results) to prevent XSS when rendering user-generated content.
+Meilisearch uses [API keys](/capabilities/platform/security/how_to/manage_api_keys) and tenant tokens to control access to your data. API keys authenticate requests, while tenant tokens restrict what data each user can see within a shared index. This page also covers [sanitizing search results](#sanitizing-search-results) to prevent XSS when rendering user-generated content.
 
 ## Multi-tenancy with tenant tokens
 
@@ -61,16 +61,16 @@ To prevent this:
 ## Next steps
 
 <CardGroup cols={2}>
-  <Card title="Getting started" href="/capabilities/security/getting_started">
+  <Card title="Getting started" href="/capabilities/platform/security/getting_started">
     Generate your first tenant token using an SDK
   </Card>
-  <Card title="Token from scratch" href="/capabilities/security/how_to/generate_token_from_scratch">
+  <Card title="Token from scratch" href="/capabilities/platform/security/how_to/generate_token_from_scratch">
     Build a tenant token manually without an SDK
   </Card>
-  <Card title="Token payload" href="/capabilities/security/advanced/tenant_token_payload">
+  <Card title="Token payload" href="/capabilities/platform/security/advanced/tenant_token_payload">
     Reference for tenant token JWT payload structure
   </Card>
-  <Card title="Manage API keys" href="/capabilities/security/how_to/manage_api_keys">
+  <Card title="Manage API keys" href="/capabilities/platform/security/how_to/manage_api_keys">
     Create, rotate, and scope API keys
   </Card>
 </CardGroup>

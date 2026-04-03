@@ -1,0 +1,55 @@
+---
+title: Version management
+description: View your Meilisearch version and upgrade to newer releases from the Cloud project settings.
+---
+
+{/* Screenshots needed on this page:
+  1. Version display in project settings (current version, available upgrade)
+  2. Upgrade confirmation modal
+*/}
+
+Meilisearch Cloud manages the Meilisearch engine version for each project. You can view the current version and initiate upgrades from the project settings without any manual server operations.
+
+## Viewing the current version
+
+1. Open your project in the Meilisearch Cloud dashboard.
+2. Go to **Settings**. The current Meilisearch version is displayed in the **Version** section.
+
+<Warning>
+  **Screenshot needed** — Replace this placeholder with a screenshot of the version section in project settings, showing the current version number and an available upgrade notice before publishing.
+</Warning>
+
+<Frame>
+  <img src="/images/platform/infrastructure/version_display.png" alt="Meilisearch Cloud project settings showing current version and available upgrade" />
+</Frame>
+
+## Upgrading to a newer version
+
+When a new Meilisearch version is available, an upgrade notice appears in the project settings.
+
+1. Click **Upgrade** in the Version section.
+2. Review the upgrade details, including the target version and any notes about breaking changes.
+
+<Warning>
+  **Screenshot needed** — Replace this placeholder with a screenshot of the upgrade confirmation modal showing the target version and a confirmation button before publishing.
+</Warning>
+
+<Frame>
+  <img src="/images/platform/infrastructure/upgrade_modal.png" alt="Meilisearch Cloud upgrade confirmation modal" />
+</Frame>
+
+3. Click **Confirm upgrade** to proceed.
+
+## What happens during an upgrade
+
+- Meilisearch Cloud places the project in upgrade mode.
+- Incoming tasks are paused temporarily.
+- The engine is updated to the new version.
+- Indexes may be re-indexed if the new version includes internal format changes (this is noted in the upgrade details).
+- Once complete, tasks resume and the project returns to normal operation.
+
+Upgrade duration depends on the index size and whether a full re-index is required. For large projects, plan upgrades during low-traffic periods.
+
+## Staying up to date
+
+Check the [changelog](/changelog) for release notes on each Meilisearch version. New versions typically bring performance improvements, new features, and bug fixes.

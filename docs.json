@@ -463,36 +463,79 @@
                 ]
               },
               {
-                "group": "Security and tenant tokens",
+                "group": "Platform",
                 "pages": [
-                  "capabilities/security/overview",
-                  "capabilities/security/getting_started",
+                  "capabilities/platform/overview",
                   {
-                    "group": "How to",
+                    "group": "Infrastructure",
                     "pages": [
-                      "capabilities/security/how_to/generate_token_third_party",
-                      "capabilities/security/how_to/generate_token_from_scratch",
-                      "capabilities/security/how_to/manage_api_keys"
+                      "capabilities/platform/infrastructure/overview",
+                      "capabilities/platform/infrastructure/create_a_project",
+                      "capabilities/platform/infrastructure/regions",
+                      "capabilities/platform/infrastructure/manage_resources",
+                      "capabilities/platform/infrastructure/version_management",
+                      "capabilities/platform/infrastructure/sharding_and_replication"
                     ]
                   },
                   {
-                    "group": "Advanced",
+                    "group": "Monitoring",
                     "pages": [
-                      "capabilities/security/advanced/tenant_token_payload"
+                      "capabilities/platform/monitoring/overview",
+                      "capabilities/platform/monitoring/search_performance",
+                      "capabilities/platform/monitoring/indexing_performance",
+                      "capabilities/platform/monitoring/usage_metrics"
                     ]
-                  }
-                ]
-              },
-              {
-                "group": "Teams",
-                "pages": [
-                  "capabilities/teams/overview",
-                  "capabilities/teams/getting_started",
+                  },
                   {
-                    "group": "How to",
+                    "group": "Billing",
                     "pages": [
-                      "capabilities/teams/how_to/manage_team_roles",
-                      "capabilities/teams/how_to/configure_sso_for_team"
+                      "capabilities/platform/billing/overview",
+                      "capabilities/platform/billing/pricing_model",
+                      "capabilities/platform/billing/invoices",
+                      "capabilities/platform/billing/payment_methods"
+                    ]
+                  },
+                  {
+                    "group": "Security and tenant tokens",
+                    "pages": [
+                      "capabilities/platform/security/overview",
+                      "capabilities/platform/security/getting_started",
+                      {
+                        "group": "How to",
+                        "pages": [
+                          "capabilities/platform/security/how_to/generate_token_third_party",
+                          "capabilities/platform/security/how_to/generate_token_from_scratch",
+                          "capabilities/platform/security/how_to/manage_api_keys"
+                        ]
+                      },
+                      {
+                        "group": "Advanced",
+                        "pages": [
+                          "capabilities/platform/security/advanced/tenant_token_payload"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "group": "Teams",
+                    "pages": [
+                      "capabilities/platform/teams/overview",
+                      "capabilities/platform/teams/getting_started",
+                      {
+                        "group": "How to",
+                        "pages": [
+                          "capabilities/platform/teams/how_to/manage_team_roles",
+                          "capabilities/platform/teams/how_to/configure_sso_for_team"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "group": "Management",
+                    "pages": [
+                      "capabilities/platform/management/overview",
+                      "capabilities/platform/management/webhooks",
+                      "capabilities/platform/management/experimental_features"
                     ]
                   }
                 ]
@@ -1577,7 +1620,7 @@
     },
     {
       "source": "/guides/security/laravel_multitenancy",
-      "destination": "/capabilities/security/overview"
+      "destination": "/capabilities/platform/security/overview"
     },
     {
       "source": "/guides/misc/docker",
@@ -1617,11 +1660,11 @@
     },
     {
       "source": "/guides/laravel_multitenancy",
-      "destination": "/capabilities/security/overview"
+      "destination": "/capabilities/platform/security/overview"
     },
     {
       "source": "/guides/multitenancy_nodejs",
-      "destination": "/capabilities/security/overview"
+      "destination": "/capabilities/platform/security/overview"
     },
     {
       "source": "/guides/ai/getting_started_with_chat",
@@ -1693,7 +1736,7 @@
     },
     {
       "source": "/learn/security/api_keys",
-      "destination": "/capabilities/security/getting_started"
+      "destination": "/capabilities/platform/security/getting_started"
     },
     {
       "source": "/learn/advanced/hybrid_search",
@@ -1897,7 +1940,7 @@
     },
     {
       "source": "/learn/teams/teams",
-      "destination": "/capabilities/teams/overview"
+      "destination": "/capabilities/platform/teams/overview"
     },
     {
       "source": "/learn/async/working_with_tasks",
@@ -1953,27 +1996,27 @@
     },
     {
       "source": "/learn/security/generate_tenant_token_sdk",
-      "destination": "/capabilities/security/getting_started"
+      "destination": "/capabilities/platform/security/getting_started"
     },
     {
       "source": "/learn/security/generate_tenant_token_third_party",
-      "destination": "/capabilities/security/how_to/generate_token_third_party"
+      "destination": "/capabilities/platform/security/how_to/generate_token_third_party"
     },
     {
       "source": "/learn/security/generate_tenant_token_scratch",
-      "destination": "/capabilities/security/how_to/generate_token_from_scratch"
+      "destination": "/capabilities/platform/security/how_to/generate_token_from_scratch"
     },
     {
       "source": "/learn/security/tenant_token_reference",
-      "destination": "/capabilities/security/advanced/tenant_token_payload"
+      "destination": "/capabilities/platform/security/advanced/tenant_token_payload"
     },
     {
       "source": "/learn/security/multitenancy_tenant_tokens",
-      "destination": "/capabilities/security/overview"
+      "destination": "/capabilities/platform/security/overview"
     },
     {
       "source": "/learn/security/tenant_tokens",
-      "destination": "/capabilities/security/overview"
+      "destination": "/capabilities/platform/security/overview"
     },
     {
       "source": "/learn/multi_search/performing_federated_search",
@@ -2085,7 +2128,7 @@
     },
     {
       "source": "/learn/advanced/security",
-      "destination": "/capabilities/security/overview"
+      "destination": "/capabilities/platform/security/overview"
     },
     {
       "source": "/learn/cookbooks/computing_hugging_face_embeddings_gpu",
@@ -2113,7 +2156,7 @@
     },
     {
       "source": "/reference/features/authentication",
-      "destination": "/capabilities/security/overview"
+      "destination": "/capabilities/platform/security/overview"
     },
     {
       "source": "/reference/features/faceted_search",
@@ -2133,7 +2176,7 @@
     },
     {
       "source": "/guides/advanced_guides/authentication",
-      "destination": "/capabilities/security/overview"
+      "destination": "/capabilities/platform/security/overview"
     },
     {
       "source": "/guides/main_concepts/documents",
@@ -2153,11 +2196,11 @@
     },
     {
       "source": "/guides/security/multitenancy_nodejs",
-      "destination": "/capabilities/security/overview"
+      "destination": "/capabilities/platform/security/overview"
     },
     {
       "source": "/learn/cookbooks/multitenancy_nodejs",
-      "destination": "/capabilities/security/overview"
+      "destination": "/capabilities/platform/security/overview"
     },
     {
       "source": "/guides/back_end/strapi_v4",
@@ -2214,6 +2257,54 @@
     {
       "source": "/reference/api/settings/reset-vectorstore",
       "destination": "/reference/api/settings/get-embedders"
+    },
+    {
+      "source": "/capabilities/teams",
+      "destination": "/capabilities/platform/teams"
+    },
+    {
+      "source": "/capabilities/teams/overview",
+      "destination": "/capabilities/platform/teams/overview"
+    },
+    {
+      "source": "/capabilities/teams/getting_started",
+      "destination": "/capabilities/platform/teams/getting_started"
+    },
+    {
+      "source": "/capabilities/teams/how_to/configure_sso_for_team",
+      "destination": "/capabilities/platform/teams/how_to/configure_sso_for_team"
+    },
+    {
+      "source": "/capabilities/teams/how_to/manage_team_roles",
+      "destination": "/capabilities/platform/teams/how_to/manage_team_roles"
+    },
+    {
+      "source": "/capabilities/security",
+      "destination": "/capabilities/platform/security"
+    },
+    {
+      "source": "/capabilities/security/overview",
+      "destination": "/capabilities/platform/security/overview"
+    },
+    {
+      "source": "/capabilities/security/getting_started",
+      "destination": "/capabilities/platform/security/getting_started"
+    },
+    {
+      "source": "/capabilities/security/how_to/manage_api_keys",
+      "destination": "/capabilities/platform/security/how_to/manage_api_keys"
+    },
+    {
+      "source": "/capabilities/security/how_to/generate_token_from_scratch",
+      "destination": "/capabilities/platform/security/how_to/generate_token_from_scratch"
+    },
+    {
+      "source": "/capabilities/security/how_to/generate_token_third_party",
+      "destination": "/capabilities/platform/security/how_to/generate_token_third_party"
+    },
+    {
+      "source": "/capabilities/security/advanced/tenant_token_payload",
+      "destination": "/capabilities/platform/security/advanced/tenant_token_payload"
     }
   ]
 }

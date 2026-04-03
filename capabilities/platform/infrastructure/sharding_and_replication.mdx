@@ -1,0 +1,50 @@
+---
+title: Sharding and replication
+description: Scale Meilisearch Cloud to large datasets and achieve high availability with sharding and replication.
+---
+
+{/* Screenshots needed on this page:
+  1. Sharding and replication configuration UI in project settings
+*/}
+
+Meilisearch Cloud supports sharding and replication for projects that need to handle very large datasets or require high availability. Both features are managed entirely from the Cloud UI, with no infrastructure configuration required on your part.
+
+<Note>
+Sharding and replication require an **Enterprise plan**. Contact [sales@meilisearch.com](mailto:sales@meilisearch.com) or your account manager to enable this for your organization.
+</Note>
+
+## Sharding vs replication
+
+| Feature | What it does | When to use it |
+|---------|-------------|----------------|
+| **Sharding** | Splits your index across multiple nodes, each holding a subset of the data | Index is too large to fit on a single node, or query throughput needs to be distributed |
+| **Replication** | Creates identical copies (replicas) of each shard on separate nodes | You need high availability and fault tolerance; a node failure should not take down search |
+
+Sharding and replication are complementary. A production-grade setup typically uses both: sharding to distribute data, and replication to ensure each shard has at least one backup.
+
+## How it works
+
+With sharding enabled, Meilisearch distributes documents across shards at indexing time. Search queries are fanned out to all shards in parallel, and results are merged before being returned. From the client's perspective, the interface is identical: you still query a single endpoint and receive a unified result set.
+
+Replication keeps a copy of each shard on a separate node. If a node becomes unavailable, traffic automatically routes to a healthy replica with no manual intervention.
+
+## Enabling sharding and replication
+
+<Warning>
+  **Screenshot needed** — Replace this placeholder with a screenshot of the sharding and replication configuration panel in project settings, showing shard count and replica count inputs before publishing.
+</Warning>
+
+<Frame>
+  <img src="/images/platform/infrastructure/sharding_replication.png" alt="Meilisearch Cloud sharding and replication configuration panel" />
+</Frame>
+
+1. Open your project in the Meilisearch Cloud dashboard.
+2. Go to **Settings** and find the **Sharding and replication** section.
+3. Set the desired number of shards and replicas.
+4. Click **Save**. Meilisearch Cloud re-distributes your data across the new topology. For large indexes this may take some time.
+
+## Recommendations
+
+- Start with sharding when your index exceeds the RAM of a single node.
+- Enable at least one replica per shard for any production workload where downtime is unacceptable.
+- Increasing the shard count beyond what your data requires adds overhead without benefit. Contact support if you are unsure what configuration suits your dataset.

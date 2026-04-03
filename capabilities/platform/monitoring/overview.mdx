@@ -1,0 +1,35 @@
+---
+title: Monitoring
+sidebarTitle: Overview
+description: Monitor search performance, indexing health, and infrastructure usage for your Meilisearch Cloud projects.
+---
+
+Meilisearch Cloud provides built-in monitoring dashboards so you can understand how your search is performing and catch issues before they affect users. Monitoring is organized into three areas:
+
+| Area | What it covers |
+|------|---------------|
+| **Search performance** | Latency (p50/p95/p99), queries per second, error rate |
+| **Indexing performance** | Indexing speed, task queue depth, per-task breakdown |
+| **Usage metrics** | Memory, storage, and CPU utilization |
+
+## Why monitoring matters
+
+Search performance often degrades gradually rather than failing suddenly. Monitoring helps you:
+
+- Detect latency regressions after a settings change or data update
+- Identify indexing bottlenecks before the task queue backs up
+- Know when your project is approaching its resource limits and needs a plan upgrade
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Search performance" href="/capabilities/platform/monitoring/search_performance">
+    Monitor and debug search latency, QPS, and error rates
+  </Card>
+  <Card title="Indexing performance" href="/capabilities/platform/monitoring/indexing_performance">
+    Track indexing speed and inspect individual task breakdowns
+  </Card>
+  <Card title="Usage metrics" href="/capabilities/platform/monitoring/usage_metrics">
+    Monitor memory, storage, and CPU for capacity planning
+  </Card>
+</CardGroup>

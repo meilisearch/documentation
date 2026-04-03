@@ -1,0 +1,71 @@
+---
+title: Usage metrics
+description: Monitor memory, storage, and CPU usage for your Meilisearch Cloud project.
+---
+
+{/* Screenshots needed on this page:
+  1. Usage metrics dashboard showing memory, storage, and CPU graphs over time
+*/}
+
+Usage metrics show how much of your project's allocated resources are being consumed. Use these graphs to understand normal utilization patterns, plan capacity upgrades, and detect anomalies.
+
+<Warning>
+  **Screenshot needed** — Replace this placeholder with a screenshot of the usage metrics dashboard in the Cloud UI, showing memory, storage, and CPU utilization graphs before publishing.
+</Warning>
+
+<Frame>
+  <img src="/images/platform/monitoring/usage_metrics_dashboard.png" alt="Meilisearch Cloud usage metrics dashboard showing memory, storage, and CPU graphs" />
+</Frame>
+
+## Memory usage
+
+RAM is the most critical resource for search performance. Meilisearch keeps indexes in memory for fast access.
+
+**What consumes RAM:**
+
+| Component | Notes |
+|-----------|-------|
+| Index data (inverted index, facets) | Scales with document count and number of indexed attributes |
+| Vector store | Grows proportionally to `number of documents x vector dimensions` |
+| Query cache | A small portion of RAM used for caching frequent query results |
+| System and engine overhead | Fixed baseline regardless of index size |
+
+**When memory is consistently above 80%**, consider upgrading to a higher RAM tier to avoid performance degradation under peak load.
+
+## Storage usage
+
+Disk stores the persistent copy of your indexes and the task database.
+
+**What consumes storage:**
+
+- Raw index files (the on-disk representation of all indexed data)
+- Vector embeddings stored on disk
+- Task history (enqueued, processing, and completed task records)
+
+Storage usage grows as you add documents and shrinks when you delete indexes. Meilisearch Cloud automatically manages disk, but if you approach the storage limit for your plan, an upgrade is needed.
+
+## CPU usage
+
+CPU usage varies significantly between indexing and search:
+
+- **During indexing**: CPU spikes as Meilisearch builds the inverted index, processes vectors, and computes ranking data
+- **During search**: CPU reflects concurrent queries, filter evaluation, and ranking computation
+- **Idle**: Very low CPU usage; Meilisearch is efficient at rest
+
+**What to watch for:**
+
+- Consistently high CPU during search (not just indexing) may indicate a query pattern that is expensive to evaluate. Check the [search performance](/capabilities/platform/monitoring/search_performance) dashboard for high-latency queries.
+- CPU spikes during indexing are expected and normal. If indexing CPU stays elevated long after tasks complete, check for background tasks in the task queue.
+
+## Reading the dashboard
+
+The usage metrics graphs display resource utilization over a configurable time window (last hour, last day, last week). Key guidance:
+
+- **Spikes during indexing** are normal; focus on the steady-state baseline during search-only periods.
+- **Sustained high memory** (above 80-90%) is a reliable signal to upgrade the resource plan.
+- **Storage nearing the plan limit** requires either deleting unused indexes or upgrading to a larger plan.
+- **CPU peaks** are expected during large batch indexing. Concern arises when CPU is high during normal search traffic with no indexing in progress.
+
+## Upgrading when needed
+
+If usage metrics show consistent pressure on any resource, upgrade your resource plan from the [project settings](/capabilities/platform/infrastructure/manage_resources).

@@ -1,0 +1,48 @@
+---
+title: Payment methods
+description: Add, update, or remove payment methods for your Meilisearch Cloud account.
+---
+
+{/* Screenshots needed on this page:
+  1. The payment methods page in the Billing section of the Cloud UI
+*/}
+
+All payment processing for Meilisearch Cloud is handled by [Stripe](https://stripe.com). You can manage your payment methods from the Billing section of the Cloud dashboard.
+
+## Viewing payment methods
+
+1. Open the [Meilisearch Cloud dashboard](https://cloud.meilisearch.com).
+2. Click **Billing** in the left navigation.
+3. Select the **Payment methods** tab.
+
+<Warning>
+  **Screenshot needed** — Replace this placeholder with a screenshot of the Payment methods page in the Billing section, showing existing cards and the "Add payment method" button before publishing.
+</Warning>
+
+<Frame>
+  <img src="/images/platform/billing/payment_methods_page.png" alt="Meilisearch Cloud billing payment methods page" />
+</Frame>
+
+## Adding a payment method
+
+1. Click **Add payment method**.
+2. Enter your card details in the Stripe-hosted form.
+3. Click **Save**. The new method appears in the list.
+
+If you have multiple payment methods, you can set one as the default. The default method is charged automatically on each billing cycle.
+
+## Updating a payment method
+
+Credit and debit card details cannot be edited in place. To update an expiring card:
+
+1. Add the new card as a new payment method.
+2. Set it as the default.
+3. Remove the old card if desired.
+
+## Removing a payment method
+
+Click the **Remove** button next to a payment method. You cannot remove the default payment method if there are active projects. Set a different method as default first.
+
+## Payment failures
+
+If a payment fails (for example, due to an expired card), Meilisearch Cloud will notify you by email and retry the charge. Update your payment method promptly to avoid service interruption.

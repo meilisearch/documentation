@@ -1,0 +1,77 @@
+---
+title: Create a project
+description: Create a new Meilisearch Cloud project from the dashboard in a few steps.
+---
+
+{/* Screenshots needed on this page:
+  1. The "New project" form (name, region, plan fields)
+  2. The project dashboard after successful creation
+*/}
+
+A project is an isolated Meilisearch instance. Follow these steps to create one from the Meilisearch Cloud dashboard.
+
+## Prerequisites
+
+- A Meilisearch Cloud account. [Sign up at cloud.meilisearch.com](https://cloud.meilisearch.com) if you do not have one.
+
+## Steps
+
+### 1. Go to the dashboard
+
+Open [cloud.meilisearch.com](https://cloud.meilisearch.com) and sign in. You will land on the projects list.
+
+### 2. Click "New project"
+
+Click the **New project** button in the top-right corner of the projects list.
+
+<Warning>
+  **Screenshot needed** — Replace this placeholder with a screenshot of the "New project" button on the projects list page before publishing.
+</Warning>
+
+<Frame>
+  <img src="/images/platform/infrastructure/new_project_button.png" alt="New project button on the Meilisearch Cloud projects list" />
+</Frame>
+
+### 3. Fill in the project form
+
+Enter the following details:
+
+| Field | Description |
+|-------|-------------|
+| **Name** | A display name for your project. You can rename it later. |
+| **Region** | The cloud region where your project will be hosted. Choose the region closest to your users. See [Regions](/capabilities/platform/infrastructure/regions) for guidance. |
+| **Plan** | The resource tier (CPU, RAM, storage). You can change this later. See [Manage resources](/capabilities/platform/infrastructure/manage_resources) for details. |
+
+<Warning>
+  **Screenshot needed** — Replace this placeholder with a screenshot of the new project creation form with name, region, and plan fields visible before publishing.
+</Warning>
+
+<Frame>
+  <img src="/images/platform/infrastructure/create_project_form.png" alt="Meilisearch Cloud new project form showing name, region, and plan fields" />
+</Frame>
+
+### 4. Confirm and create
+
+Click **Create project**. Meilisearch Cloud provisions the instance. This typically takes a few seconds.
+
+### 5. Access your project
+
+Once ready, you are redirected to the project dashboard. From there you can:
+
+- Copy your **API keys** to start indexing documents
+- Open the **search preview** to test queries
+- Configure **settings** such as filterable attributes and ranking rules
+
+<Warning>
+  **Screenshot needed** — Replace this placeholder with a screenshot of the project dashboard immediately after creation, showing the API keys section and search preview before publishing.
+</Warning>
+
+<Frame>
+  <img src="/images/platform/infrastructure/project_dashboard.png" alt="Meilisearch Cloud project dashboard showing API keys and search preview" />
+</Frame>
+
+## Next steps
+
+- [Add documents](/getting_started/quick_start) using your new project's API URL and admin key
+- [Manage resources](/capabilities/platform/infrastructure/manage_resources) to scale the project as your data grows
+- [Invite team members](/capabilities/platform/teams/overview) to collaborate on the project

@@ -1,0 +1,58 @@
+---
+title: Indexing performance
+description: Track indexing speed, task queue depth, and per-task breakdowns for your Meilisearch Cloud project.
+---
+
+{/* Screenshots needed on this page:
+  1. Indexing metrics dashboard showing indexing latency, documents/sec, and task queue depth
+  2. Task detail view showing per-phase timing breakdown
+*/}
+
+The indexing performance dashboard shows how quickly Meilisearch processes documents and tasks. Use it to track throughput, catch failed tasks early, and identify phases of the indexing pipeline that take the most time.
+
+## Key metrics
+
+| Metric | Description | Worth investigating when... |
+|--------|-------------|----------------------------|
+| **Indexing latency** | Time from task enqueue to task completion | Increases significantly compared to your baseline |
+| **Documents per second** | Throughput during active indexing tasks | Much lower than expected for your resource tier |
+| **Task queue depth** | Number of tasks waiting to be processed | Grows consistently without draining |
+| **Task error rate** | Percentage of tasks that fail | Any value above 0% |
+
+<Warning>
+  **Screenshot needed** — Replace this placeholder with a screenshot of the indexing metrics dashboard showing latency, documents per second, and task queue depth before publishing.
+</Warning>
+
+<Frame>
+  <img src="/images/platform/monitoring/indexing_metrics_dashboard.png" alt="Meilisearch Cloud indexing performance dashboard" />
+</Frame>
+
+## Task detail view
+
+Every task recorded by Meilisearch is visible in the task list within the Cloud UI. Click any task to open its detail view, which shows:
+
+- **Task ID and type** (e.g., `documentAdditionOrUpdate`, `indexSwap`)
+- **Status** (enqueued, processing, succeeded, failed)
+- **Duration** and timestamps for each phase:
+  - Document parsing and validation
+  - Index build (inverted index, facets, geo, vectors)
+  - Commit to disk
+- **Error details** if the task failed, including the affected document IDs
+
+<Warning>
+  **Screenshot needed** — Replace this placeholder with a screenshot of the task detail view in the Cloud UI showing per-phase timing and status before publishing.
+</Warning>
+
+<Frame>
+  <img src="/images/platform/monitoring/task_detail_view.png" alt="Meilisearch Cloud task detail view showing per-phase indexing timing" />
+</Frame>
+
+## Common issues and fixes
+
+| Symptom | Likely cause | Fix |
+|---------|-------------|-----|
+| Slow indexing, normal document count | Too many filterable or sortable attributes | Reduce the set of `filterableAttributes` and `sortableAttributes` |
+| Very slow vector indexing | High vector dimensions or large batch size | Reduce batch size, or switch to a plan with more RAM |
+| Task queue growing without draining | Resource exhaustion or large concurrent batches | Upgrade plan, reduce batch frequency |
+| Tasks failing with document errors | Invalid field types or malformed payloads | Check the failed task's error details for affected document IDs |
+| Indexing fast but search latency increases | Settings change causing re-ranking overhead | Monitor p95 latency for a few minutes after each re-index |

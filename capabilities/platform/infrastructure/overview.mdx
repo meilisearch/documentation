@@ -1,0 +1,61 @@
+---
+title: Cloud infrastructure
+sidebarTitle: Overview
+description: Understand Meilisearch Cloud projects, available regions, and resource tiers for hosting your search instances.
+---
+
+Infrastructure is the foundation of Meilisearch Cloud. Every search experience you build starts with a **project**: a fully isolated Meilisearch instance with its own indexes, API keys, settings, and resource allocation.
+
+## Projects
+
+A project is the core unit of Meilisearch Cloud. Think of it as a dedicated Meilisearch server:
+
+- Each project has its own indexes and documents
+- Each project has its own API keys and security settings
+- Each project runs on the resource tier you choose (CPU, RAM, and storage)
+- Billing is per project, based on the plan and region
+
+You can create multiple projects in the same account, for example one per application or one per environment (production, staging).
+
+## Regions
+
+Meilisearch Cloud is available in multiple regions across the world. Choose the region closest to your users for the lowest latency.
+
+| Region ID | Location | Recommended for |
+|-----------|----------|----------------|
+| `eu-west` | Frankfurt, Germany | European users |
+| `eu-west-2` | London, United Kingdom | UK and Western Europe |
+| `ap-southeast` | Singapore | Southeast Asia and Oceania |
+| `ap-northeast` | Tokyo, Japan | Japan and Northeast Asia |
+| `us-west` | Oregon, United States | US West Coast |
+| `us-east` | Virginia, United States | US East Coast and global default |
+
+## Resource tiers
+
+Each project runs on a resource tier that defines its CPU, RAM, and storage allocation. Choose a tier based on:
+
+- **Index size**: Larger indexes require more RAM for fast search
+- **Query volume**: High QPS benefits from more CPU
+- **Vector search**: Storing and searching vectors requires additional RAM proportional to the number of dimensions and documents
+
+You can change the resource tier at any time from the project settings.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Create a project" href="/capabilities/platform/infrastructure/create_a_project">
+    Step-by-step guide to creating your first project
+  </Card>
+  <Card title="Regions" href="/capabilities/platform/infrastructure/regions">
+    Detailed region reference and latency guidance
+  </Card>
+  <Card title="Manage resources" href="/capabilities/platform/infrastructure/manage_resources">
+    Scale CPU and RAM to match your workload
+  </Card>
+  <Card title="Version management" href="/capabilities/platform/infrastructure/version_management">
+    View and upgrade your Meilisearch version
+  </Card>
+  <Card title="Sharding and replication" href="/capabilities/platform/infrastructure/sharding_and_replication">
+    Scale to large datasets with high availability
+  </Card>
+</CardGroup>
