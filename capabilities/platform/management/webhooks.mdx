@@ -3,56 +3,48 @@ title: Webhooks
 description: Configure HTTP webhooks to receive notifications when Meilisearch indexing tasks complete or fail.
 ---
 
-{/* Screenshots needed on this page:
-  1. Webhook configuration UI in the Cloud project settings, showing URL, event type, and authorization header fields
-*/}
+Webhooks let Meilisearch notify an external HTTP endpoint whenever a task completes. Use them to trigger downstream actions automatically, such as purging a cache after a successful index update or alerting your team when a task fails.
 
-Webhooks let Meilisearch Cloud notify an external HTTP endpoint whenever a task reaches a terminal state (succeeded or failed). Use webhooks to trigger downstream actions automatically, such as purging a cache after a successful index update or alerting your team when a task fails.
+Webhooks are configured per project in **Project Settings > Webhooks**. Up to 20 webhooks can be configured per project.
+
+<Frame>
+  <img src="/assets/images/platform/management/webhooks_empty.png" alt="Webhooks section in Project Settings showing the Add webhook button and description" />
+</Frame>
+
+## Adding a webhook
+
+1. Go to **Project Settings > Webhooks** and click **+ Add webhook**.
+
+<Frame>
+  <img src="/assets/images/platform/management/webhooks_add.png" alt="Add webhook modal with Webhook URL and Authorization Header fields" />
+</Frame>
+
+2. Enter the **Webhook URL**: the endpoint where Meilisearch will send POST requests with task data.
+3. Optionally, enter an **Authorization Header** (e.g. `Bearer your-secret-token`). This header is sent with every webhook request so your endpoint can verify the source.
+4. Click **Add webhook**.
 
 ## How webhooks work
 
-When a task completes, Meilisearch Cloud sends an HTTP POST request to your configured URL. The request body is [ndjson](https://ndjson.org/) (newline-delimited JSON), with one task object per line. This matches the task object format returned by the [Tasks API](/reference/api/tasks/get-task).
+When a task completes, Meilisearch sends an HTTP POST request to your configured URL. The request body is [ndjson](https://ndjson.org/) (newline-delimited JSON), with one task object per line matching the format returned by the [Tasks API](/reference/api/tasks/get-task).
 
 ```
 {"uid":1,"indexUid":"movies","status":"succeeded","type":"documentAdditionOrUpdate",...}
 {"uid":2,"indexUid":"movies","status":"failed","type":"documentAdditionOrUpdate",...}
 ```
 
-Your endpoint must respond with a 2xx HTTP status code. Non-2xx responses are treated as delivery failures. Meilisearch Cloud retries failed deliveries with exponential backoff.
-
-## Configuring webhooks via the Cloud UI
-
-1. Open your project in the Meilisearch Cloud dashboard.
-2. Go to **Settings** and find the **Webhooks** section.
-3. Click **Add webhook**.
-4. Enter the **URL** of your endpoint.
-5. Optionally, enter a value for the **Authorization** header. Meilisearch Cloud will send this header with every webhook request so your endpoint can verify the source.
-6. Click **Save**.
+Your endpoint must respond with a 2xx status code. Non-2xx responses are treated as failures and retried with exponential backoff.
 
 <Warning>
-  **Screenshot needed:** Replace this placeholder with a screenshot of the webhook configuration UI showing the URL field, authorization header field, and save button before publishing.
+  Multiple active webhooks may impact performance. Keep only the webhooks you actively use.
 </Warning>
 
-<Frame>
-  <img src="/images/platform/management/webhook_config.png" alt="Meilisearch Cloud webhook configuration panel showing URL and authorization header fields" />
-</Frame>
+## Securing your endpoint
 
-You can configure multiple webhooks for the same project. Each webhook receives all task completion events for the project.
-
-## Configuring webhooks via the API
-
-You can also manage webhooks programmatically using the `/webhooks` API route. See the [API reference](/reference/api/webhooks/get-webhooks) for endpoint details.
-
-## Securing your webhook endpoint
-
-Always validate the `Authorization` header on incoming webhook requests. Set a long, random secret value and verify it matches before processing the payload. Reject requests that do not match.
-
-Example (Node.js):
+Always validate the `Authorization` header on incoming webhook requests. Set a long random secret and reject requests that do not match.
 
 ```js
 app.post('/webhook', (req, res) => {
-  const auth = req.headers['authorization'];
-  if (auth !== process.env.WEBHOOK_SECRET) {
+  if (req.headers['authorization'] !== process.env.WEBHOOK_SECRET) {
     return res.status(401).end();
   }
   // Process the ndjson payload
@@ -64,7 +56,7 @@ app.post('/webhook', (req, res) => {
 
 | Use case | Description |
 |----------|-------------|
-| **Cache purge** | After a `documentAdditionOrUpdate` task succeeds, invalidate your CDN or application cache |
+| **Cache purge** | Invalidate your CDN or application cache after a `documentAdditionOrUpdate` task succeeds |
 | **Slack notification** | Send a message to a Slack channel when any task fails |
 | **CI/CD integration** | Signal a deployment pipeline that a new index is ready |
 | **Audit log** | Append every task event to an external log store for compliance |
