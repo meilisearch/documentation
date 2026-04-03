@@ -1,71 +1,43 @@
 ---
-title: Usage metrics
-description: Monitor memory, storage, and CPU usage for your Meilisearch Cloud project.
+title: Operations
+description: Monitor bandwidth and API call activity for your Meilisearch Cloud project.
 ---
 
 {/* Screenshots needed on this page:
-  1. Usage metrics dashboard showing memory, storage, and CPU graphs over time
+  1. Bandwidth chart showing In/Out in MB — media_yQbWnbfdrS
+  2. API calls chart showing Failed/Successful — media_dv5dHTm4jJ
 */}
 
-Usage metrics show how much of your project's allocated resources are being consumed. Use these graphs to understand normal utilization patterns, plan capacity upgrades, and detect anomalies.
+The operations section of the monitoring dashboard shows network activity and API call volume for your project. It is labeled **Beta** in the Cloud UI.
 
-<Warning>
-  **Screenshot needed** — Replace this placeholder with a screenshot of the usage metrics dashboard in the Cloud UI, showing memory, storage, and CPU utilization graphs before publishing.
-</Warning>
+You can filter all charts by index using the **All indexes** dropdown, set a date range, or enable real-time mode. Timestamps are displayed in UTC.
+
+## Bandwidth
+
+The bandwidth chart shows the volume of data transferred in and out of your project, displayed in megabytes (MB).
 
 <Frame>
-  <img src="/images/platform/monitoring/usage_metrics_dashboard.png" alt="Meilisearch Cloud usage metrics dashboard showing memory, storage, and CPU graphs" />
+  <img src="/assets/images/platform/monitoring/bandwidth.png" alt="Bandwidth chart showing inbound and outbound data transfer in MB over time" />
 </Frame>
 
-## Memory usage
+- **In**: data sent to Meilisearch (document additions, updates, settings changes)
+- **Out**: data returned by Meilisearch (search results, document fetches)
 
-RAM is the most critical resource for search performance. Meilisearch keeps indexes in memory for fast access.
+Outbound bandwidth is typically much higher than inbound for read-heavy workloads. A sudden increase in inbound bandwidth usually corresponds to a large indexing operation.
 
-**What consumes RAM:**
+## API calls
 
-| Component | Notes |
-|-----------|-------|
-| Index data (inverted index, facets) | Scales with document count and number of indexed attributes |
-| Vector store | Grows proportionally to `number of documents x vector dimensions` |
-| Query cache | A small portion of RAM used for caching frequent query results |
-| System and engine overhead | Fixed baseline regardless of index size |
+The API calls chart shows the number of requests to your project's API, broken down into **Failed** and **Successful** calls.
 
-**When memory is consistently above 80%**, consider upgrading to a higher RAM tier to avoid performance degradation under peak load.
+<Frame>
+  <img src="/assets/images/platform/monitoring/api_calls.png" alt="API calls bar chart showing failed and successful requests over time" />
+</Frame>
 
-## Storage usage
+A healthy project should have near-zero failed calls. Common causes of failed API calls:
 
-Disk stores the persistent copy of your indexes and the task database.
-
-**What consumes storage:**
-
-- Raw index files (the on-disk representation of all indexed data)
-- Vector embeddings stored on disk
-- Task history (enqueued, processing, and completed task records)
-
-Storage usage grows as you add documents and shrinks when you delete indexes. Meilisearch Cloud automatically manages disk, but if you approach the storage limit for your plan, an upgrade is needed.
-
-## CPU usage
-
-CPU usage varies significantly between indexing and search:
-
-- **During indexing**: CPU spikes as Meilisearch builds the inverted index, processes vectors, and computes ranking data
-- **During search**: CPU reflects concurrent queries, filter evaluation, and ranking computation
-- **Idle**: Very low CPU usage; Meilisearch is efficient at rest
-
-**What to watch for:**
-
-- Consistently high CPU during search (not just indexing) may indicate a query pattern that is expensive to evaluate. Check the [search performance](/capabilities/platform/monitoring/search_performance) dashboard for high-latency queries.
-- CPU spikes during indexing are expected and normal. If indexing CPU stays elevated long after tasks complete, check for background tasks in the task queue.
-
-## Reading the dashboard
-
-The usage metrics graphs display resource utilization over a configurable time window (last hour, last day, last week). Key guidance:
-
-- **Spikes during indexing** are normal; focus on the steady-state baseline during search-only periods.
-- **Sustained high memory** (above 80-90%) is a reliable signal to upgrade the resource plan.
-- **Storage nearing the plan limit** requires either deleting unused indexes or upgrading to a larger plan.
-- **CPU peaks** are expected during large batch indexing. Concern arises when CPU is high during normal search traffic with no indexing in progress.
-
-## Upgrading when needed
-
-If usage metrics show consistent pressure on any resource, upgrade your resource plan from the [project settings](/capabilities/platform/infrastructure/manage_resources).
+| Cause | Fix |
+|-------|-----|
+| Expired or invalid API key | Rotate the API key in your project settings |
+| Malformed request payload | Check your application's request construction |
+| Rate limit exceeded | Reduce request frequency or upgrade your plan |
+| Index does not exist | Verify the index name in your application |

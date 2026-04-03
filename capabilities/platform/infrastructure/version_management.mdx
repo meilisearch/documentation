@@ -12,44 +12,47 @@ Meilisearch Cloud manages the Meilisearch engine version for each project. You c
 
 ## Viewing the current version
 
-1. Open your project in the Meilisearch Cloud dashboard.
-2. Go to **Settings**. The current Meilisearch version is displayed in the **Version** section.
-
-<Warning>
-  **Screenshot needed** — Replace this placeholder with a screenshot of the version section in project settings, showing the current version number and an available upgrade notice before publishing.
-</Warning>
+Open your project and go to **Project Settings**. The current Meilisearch version is shown in the **General settings** section. When an upgrade is available, an **Update available** badge appears next to the version number.
 
 <Frame>
-  <img src="/images/platform/infrastructure/version_display.png" alt="Meilisearch Cloud project settings showing current version and available upgrade" />
+  <img src="/assets/images/platform/infrastructure/version_update_available.png" alt="Project settings showing current Meilisearch version with an Update available badge" />
 </Frame>
 
 ## Upgrading to a newer version
 
-When a new Meilisearch version is available, an upgrade notice appears in the project settings.
-
-1. Click **Upgrade** in the Version section.
-2. Review the upgrade details, including the target version and any notes about breaking changes.
-
-<Warning>
-  **Screenshot needed** — Replace this placeholder with a screenshot of the upgrade confirmation modal showing the target version and a confirmation button before publishing.
-</Warning>
+1. Click **Update available** in the General settings section.
+2. Select the target version from the dropdown. The modal also links to the changelog for that version.
 
 <Frame>
-  <img src="/images/platform/infrastructure/upgrade_modal.png" alt="Meilisearch Cloud upgrade confirmation modal" />
+  <img src="/assets/images/platform/infrastructure/version_update_modal.png" alt="Update Meilisearch version modal showing version selector, changelog link, and Update button" />
 </Frame>
 
-3. Click **Confirm upgrade** to proceed.
+3. Click **Update**. The project status changes to **updating** and the version field shows the in-progress target version. You will receive an email when the update is complete.
+
+<Frame>
+  <img src="/assets/images/platform/infrastructure/version_updating.png" alt="Project settings showing updating status with Updating to v1.41.0 indicator" />
+</Frame>
 
 ## What happens during an upgrade
 
-- Meilisearch Cloud places the project in upgrade mode.
-- Incoming tasks are paused temporarily.
-- The engine is updated to the new version.
-- Indexes may be re-indexed if the new version includes internal format changes (this is noted in the upgrade details).
-- Once complete, tasks resume and the project returns to normal operation.
+Search remains available throughout the upgrade. Document indexing is paused until the upgrade completes. The project status shows **updating** in the dashboard until the process completes. You will receive an email notification when the upgrade is finished, regardless of how long it takes.
 
-Upgrade duration depends on the index size and whether a full re-index is required. For large projects, plan upgrades during low-traffic periods.
+For zero-downtime upgrades including indexing, use replication and upgrade node by node. Contact [sales@meilisearch.com](mailto:sales@meilisearch.com) to set this up as part of an Enterprise plan.
+
+**From v1.14 onwards**, upgrades no longer use snapshots for migration. The process takes only a few seconds with minimal downtime. For projects on older versions, upgrade duration may be longer depending on index size.
+
+## Available versions
+
+Meilisearch releases a new version every week. The Cloud UI always offers the two most recent versions for selection, both when creating a project and when upgrading an existing one.
+
+If you prefer stability over being on the cutting edge, consider using the second-to-last available version. It has had more time in production before being offered for selection.
 
 ## Staying up to date
 
 Check the [changelog](/changelog) for release notes on each Meilisearch version. New versions typically bring performance improvements, new features, and bug fixes.
+
+## Enterprise upgrade management
+
+Enterprise customers have additional control over their upgrade schedule. The default upgrade window can be customized to fit your release process, and upgrades can be triggered at any time rather than waiting for the standard rollout. Meilisearch can also conduct upgrade reviews with your team beforehand to walk through breaking changes, migration steps, and expected downtime.
+
+Contact [sales@meilisearch.com](mailto:sales@meilisearch.com) to configure a custom upgrade window or schedule an upgrade review.

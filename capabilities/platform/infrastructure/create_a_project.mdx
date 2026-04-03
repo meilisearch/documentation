@@ -4,74 +4,81 @@ description: Create a new Meilisearch Cloud project from the dashboard in a few 
 ---
 
 {/* Screenshots needed on this page:
-  1. The "New project" form (name, region, plan fields)
-  2. The project dashboard after successful creation
+  1. The project dashboard after successful creation (API keys, search preview)
 */}
 
-A project is an isolated Meilisearch instance. Follow these steps to create one from the Meilisearch Cloud dashboard.
+A project is an isolated Meilisearch instance. Creating one takes two steps: choose a plan type, then configure the project.
 
 ## Prerequisites
 
 - A Meilisearch Cloud account. [Sign up at cloud.meilisearch.com](https://cloud.meilisearch.com) if you do not have one.
 
-## Steps
+## Step 1: Click "New project"
 
-### 1. Go to the dashboard
-
-Open [cloud.meilisearch.com](https://cloud.meilisearch.com) and sign in. You will land on the projects list.
-
-### 2. Click "New project"
-
-Click the **New project** button in the top-right corner of the projects list.
-
-<Warning>
-  **Screenshot needed** — Replace this placeholder with a screenshot of the "New project" button on the projects list page before publishing.
-</Warning>
+From the [Cloud dashboard](https://cloud.meilisearch.com), click the **New project** button.
 
 <Frame>
-  <img src="/images/platform/infrastructure/new_project_button.png" alt="New project button on the Meilisearch Cloud projects list" />
+  <img src="/assets/images/platform/infrastructure/new_project_button.png" alt="Meilisearch Cloud projects list with the New project button" />
 </Frame>
 
-### 3. Fill in the project form
+## Step 2: Choose a plan type
 
-Enter the following details:
+You will be asked to choose between two billing models:
+
+| Plan type | Description |
+|-----------|-------------|
+| **Resource-Based** | Select compute and storage to match your performance needs. You pay a fixed hourly rate for the resources you provision. |
+| **Usage-Based** | Pay as you go. Costs adjust automatically based on your actual searches and documents. |
+
+See [Resource-based vs usage-based](/capabilities/platform/infrastructure/overview#resource-based-vs-usage-based-projects) for guidance on which to choose.
+
+<Frame>
+  <img src="/assets/images/platform/infrastructure/plan_type_selection.png" alt="Create project modal showing Resource-Based and Usage-Based plan type options" />
+</Frame>
+
+## Step 3: Configure the project
+
+Both plan types share three common fields:
 
 | Field | Description |
 |-------|-------------|
-| **Name** | A display name for your project. You can rename it later. |
-| **Region** | The cloud region where your project will be hosted. Choose the region closest to your users. See [Regions](/capabilities/platform/infrastructure/regions) for guidance. |
-| **Plan** | The resource tier (CPU, RAM, storage). You can change this later. See [Manage resources](/capabilities/platform/infrastructure/manage_resources) for details. |
+| **Project name** | Between 3 and 40 characters. |
+| **Region** | The region where your project is hosted. Cannot be changed after creation. See [Regions](/capabilities/platform/infrastructure/regions). |
+| **Meilisearch version** | The version to deploy. Defaults to the latest stable release. |
 
-<Warning>
-  **Screenshot needed** — Replace this placeholder with a screenshot of the new project creation form with name, region, and plan fields visible before publishing.
-</Warning>
+### Resource-Based configuration
+
+Select a resource tier (Memory and vCPU). The Cloud UI shows the hourly cost and estimated monthly cost for the selected tier. See [resource-based pricing](/capabilities/platform/billing/pricing_model#resource-based-pricing) for more details.
 
 <Frame>
-  <img src="/images/platform/infrastructure/create_project_form.png" alt="Meilisearch Cloud new project form showing name, region, and plan fields" />
+  <img src="/assets/images/platform/infrastructure/resource_based_config.png" alt="Configure resource-based project form showing memory, vCPU, and hourly cost breakdown" />
 </Frame>
 
-### 4. Confirm and create
+### Usage-Based configuration
 
-Click **Create project**. Meilisearch Cloud provisions the instance. This typically takes a few seconds.
+Select a plan:
 
-### 5. Access your project
+| Plan | Included searches | Included documents | Resources | Support |
+|------|------------------|--------------------|-----------|---------|
+| **Build** | 50K/month, then $0.40 per 1,000 | 100K, then $0.30 per 1,000 | Shared | Community (Discord) |
+| **Pro** | 250K/month, then $0.30 per 1,000 | 1M, then $0.20 per 1,000 | Dedicated | Meilisearch team |
 
-Once ready, you are redirected to the project dashboard. From there you can:
-
-- Copy your **API keys** to start indexing documents
-- Open the **search preview** to test queries
-- Configure **settings** such as filterable attributes and ranking rules
-
-<Warning>
-  **Screenshot needed** — Replace this placeholder with a screenshot of the project dashboard immediately after creation, showing the API keys section and search preview before publishing.
-</Warning>
+See [usage-based pricing](/capabilities/platform/billing/pricing_model#usage-based-pricing) for more details.
 
 <Frame>
-  <img src="/images/platform/infrastructure/project_dashboard.png" alt="Meilisearch Cloud project dashboard showing API keys and search preview" />
+  <img src="/assets/images/platform/infrastructure/usage_based_config.png" alt="Configure usage-based project form showing Build and Pro plan options with pricing details" />
+</Frame>
+
+## Step 4: Create the project
+
+Click **Create project**. Meilisearch Cloud provisions the instance. The project appears in your dashboard with a **creating** status while it is being provisioned, then becomes available in a few seconds.
+
+<Frame>
+  <img src="/assets/images/platform/infrastructure/project_creating.png" alt="Meilisearch Cloud projects list showing a project with creating status" />
 </Frame>
 
 ## Next steps
 
-- [Add documents](/getting_started/quick_start) using your new project's API URL and admin key
-- [Manage resources](/capabilities/platform/infrastructure/manage_resources) to scale the project as your data grows
+- [Add documents](/getting_started/first_project) using your project's API URL and admin key
+- [Manage resources](/capabilities/platform/infrastructure/manage_resources) to scale as your data grows
 - [Invite team members](/capabilities/platform/teams/overview) to collaborate on the project

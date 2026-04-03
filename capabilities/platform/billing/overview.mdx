@@ -4,23 +4,21 @@ sidebarTitle: Overview
 description: Understand how Meilisearch Cloud billing works, view invoices, and manage payment methods.
 ---
 
-Meilisearch Cloud billing is straightforward: you are charged per project based on the resource tier and region you choose. There are no per-seat fees or query limits.
+Meilisearch Cloud billing is based on your projects. What you pay depends on the billing model you chose when creating each project: resource-based or usage-based. There are no per-seat fees.
 
-## Billing basics
+## Billing models
 
-| Concept | Details |
-|---------|---------|
-| **Billing unit** | Per project |
-| **Billing cycle** | Daily (prorated if project created or deleted mid-day) |
-| **Price factors** | Resource tier (CPU/RAM/storage) and region |
-| **Payment processor** | Stripe |
-| **Invoices** | Generated automatically each billing period |
+| | Resource-based | Usage-based |
+|---|---|---|
+| **What you pay for** | Fixed CPU, RAM, and storage allocation | Number of searches and documents indexed |
+| **Billing cycle** | Daily (prorated) | Daily (prorated) |
+| **Price predictability** | High | Varies with traffic |
+
+See [project types](/capabilities/platform/infrastructure/overview#resource-based-vs-usage-based-projects) for guidance on which model to choose.
 
 ## What affects your bill
 
-Only active projects generate charges. Deleting a project stops billing for that project immediately (prorated for the current day). Creating a project immediately starts billing.
-
-Team members and API keys do not affect billing.
+Only active projects generate charges. Deleting a project stops billing immediately (prorated for the current day). Team members and API keys do not affect billing.
 
 ## Next steps
 

@@ -8,6 +8,10 @@ description: Scale your Meilisearch Cloud project's CPU and RAM up or down from 
   2. The plan selection UI showing available tiers with CPU/RAM/price
 */}
 
+<Info>
+  Resource management applies to **resource-based projects** only. Usage-based projects scale automatically and do not have a configurable resource tier. If you are on a usage-based plan and want more control over your infrastructure, you can migrate to a resource-based project at any time by creating a new resource-based project and re-indexing your data.
+</Info>
+
 You can change a project's resource tier at any time from the Meilisearch Cloud project settings. Scaling up increases available CPU and RAM, scaling down reduces costs.
 
 ## Resource tiers
@@ -39,7 +43,7 @@ Signs that your project needs more resources:
 3. Click **Change plan**.
 
 <Warning>
-  **Screenshot needed** — Replace this placeholder with a screenshot of the resource settings panel showing the current plan and a "Change plan" button before publishing.
+  **Screenshot needed:** Replace this placeholder with a screenshot of the resource settings panel showing the current plan and a "Change plan" button before publishing.
 </Warning>
 
 <Frame>
@@ -49,8 +53,8 @@ Signs that your project needs more resources:
 4. Select the desired tier from the plan picker.
 
 <Warning>
-  **Screenshot needed** — Replace this placeholder with a screenshot of the plan selection UI showing available tiers with CPU, RAM, and pricing information before publishing.
-</Frame>
+  **Screenshot needed:** Replace this placeholder with a screenshot of the plan selection UI showing available tiers with CPU, RAM, and pricing information before publishing.
+</Warning>
 
 <Frame>
   <img src="/images/platform/infrastructure/plan_selection.png" alt="Meilisearch Cloud plan selection UI showing available resource tiers" />
@@ -60,4 +64,4 @@ Signs that your project needs more resources:
 
 ## Impact on billing
 
-Billing is calculated daily based on the active plan at the time of the billing cycle. If you change plans mid-day, the new rate applies from that point forward. See [Pricing model](/capabilities/platform/billing/pricing_model) for details.
+Resource-based projects are billed by the hour. When you change resource tiers, the new rate applies from the next hour. You are never double-billed: at most, you may be charged for a partial hour at the old rate before the new rate kicks in. See [Pricing model](/capabilities/platform/billing/pricing_model) for details.

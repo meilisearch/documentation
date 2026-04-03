@@ -1,58 +1,38 @@
 ---
 title: Indexing performance
-description: Track indexing speed, task queue depth, and per-task breakdowns for your Meilisearch Cloud project.
+description: Track indexing latency for your Meilisearch Cloud project.
 ---
 
 {/* Screenshots needed on this page:
-  1. Indexing metrics dashboard showing indexing latency, documents/sec, and task queue depth
-  2. Task detail view showing per-phase timing breakdown
+  1. Indexing latency (TTS) chart showing p75/p90/p95/p99 in ms — media_LHhV4Ero7U
 */}
 
-The indexing performance dashboard shows how quickly Meilisearch processes documents and tasks. Use it to track throughput, catch failed tasks early, and identify phases of the indexing pipeline that take the most time.
+The indexing performance section of the monitoring dashboard shows how quickly Meilisearch processes indexing tasks. It is labeled **Beta** in the Cloud UI.
 
-## Key metrics
+You can filter all charts by index using the **All indexes** dropdown, set a date range, or enable real-time mode. Timestamps are displayed in UTC.
 
-| Metric | Description | Worth investigating when... |
-|--------|-------------|----------------------------|
-| **Indexing latency** | Time from task enqueue to task completion | Increases significantly compared to your baseline |
-| **Documents per second** | Throughput during active indexing tasks | Much lower than expected for your resource tier |
-| **Task queue depth** | Number of tasks waiting to be processed | Grows consistently without draining |
-| **Task error rate** | Percentage of tasks that fail | Any value above 0% |
+## Indexing latency (TTS)
 
-<Warning>
-  **Screenshot needed** — Replace this placeholder with a screenshot of the indexing metrics dashboard showing latency, documents per second, and task queue depth before publishing.
-</Warning>
+The indexing latency chart tracks **time-to-search (TTS)**: the time from when an indexing task is enqueued to when the indexed documents become searchable. Latency is shown at four percentiles, measured in milliseconds: **p75**, **p90**, **p95**, and **p99**.
 
 <Frame>
-  <img src="/images/platform/monitoring/indexing_metrics_dashboard.png" alt="Meilisearch Cloud indexing performance dashboard" />
+  <img src="/assets/images/platform/monitoring/indexing_latency.png" alt="Indexing latency TTS chart showing p75, p90, p95, and p99 times in milliseconds over time" />
 </Frame>
 
-## Task detail view
+| Percentile | What it means |
+|------------|--------------|
+| **p75** | 75% of indexing tasks completed within this time |
+| **p90** | 90% of indexing tasks completed within this time |
+| **p95** | 95% of indexing tasks completed within this time |
+| **p99** | 99% of indexing tasks completed within this time — the slowest tasks |
 
-Every task recorded by Meilisearch is visible in the task list within the Cloud UI. Click any task to open its detail view, which shows:
-
-- **Task ID and type** (e.g., `documentAdditionOrUpdate`, `indexSwap`)
-- **Status** (enqueued, processing, succeeded, failed)
-- **Duration** and timestamps for each phase:
-  - Document parsing and validation
-  - Index build (inverted index, facets, geo, vectors)
-  - Commit to disk
-- **Error details** if the task failed, including the affected document IDs
-
-<Warning>
-  **Screenshot needed** — Replace this placeholder with a screenshot of the task detail view in the Cloud UI showing per-phase timing and status before publishing.
-</Warning>
-
-<Frame>
-  <img src="/images/platform/monitoring/task_detail_view.png" alt="Meilisearch Cloud task detail view showing per-phase indexing timing" />
-</Frame>
+TTS is the metric that matters most for use cases where freshness is important, such as e-commerce catalog updates or live content indexing.
 
 ## Common issues and fixes
 
 | Symptom | Likely cause | Fix |
 |---------|-------------|-----|
-| Slow indexing, normal document count | Too many filterable or sortable attributes | Reduce the set of `filterableAttributes` and `sortableAttributes` |
-| Very slow vector indexing | High vector dimensions or large batch size | Reduce batch size, or switch to a plan with more RAM |
-| Task queue growing without draining | Resource exhaustion or large concurrent batches | Upgrade plan, reduce batch frequency |
-| Tasks failing with document errors | Invalid field types or malformed payloads | Check the failed task's error details for affected document IDs |
-| Indexing fast but search latency increases | Settings change causing re-ranking overhead | Monitor p95 latency for a few minutes after each re-index |
+| High TTS across all percentiles | Large document batches or many indexed attributes | Reduce batch size, or reduce the number of `filterableAttributes` and `sortableAttributes` |
+| TTS spikes periodically | Scheduled bulk imports competing with search traffic | Stagger indexing operations to off-peak hours |
+| High p99 TTS, normal p75 | Occasional large tasks mixed with small ones | Break large batches into smaller chunks for more predictable latency |
+| TTS increasing over time | Index growing beyond available RAM | Upgrade to a resource tier with more RAM |
