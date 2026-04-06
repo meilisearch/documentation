@@ -1379,6 +1379,115 @@ federated_search_multi_search_weight_1: |-
         }
       ]
     }'
+# get_chats
+list_chat_workspaces_1: |-
+  curl \
+    -X GET 'MEILISEARCH_URL/chats'
+# get_chats_workspaceUid
+get_chat_workspace_1: |-
+  curl \
+    -X GET 'MEILISEARCH_URL/chats/WORKSPACE_NAME'
+# delete_chats_workspaceUid
+delete_chat_workspace_1: |-
+  curl \
+    -X DELETE 'MEILISEARCH_URL/chats/WORKSPACE_NAME'
+# post_chats_workspaceUid_chat_completions
+post_chat_completion_1: |-
+  curl \
+    -X POST 'MEILISEARCH_URL/chats/WORKSPACE_NAME/chat/completions' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "model": "gpt-4",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Hello"
+        }
+      ]
+    }'
+# get_chats_workspaceUid_settings
+chat_get_settings_1: |-
+  curl \
+    -X GET 'MEILISEARCH_URL/chats/WORKSPACE_NAME/settings' \
+    -H "Authorization: Bearer MEILISEARCH_KEY"
+# patch_chats_workspaceUid_settings
+chat_patch_settings_1: |-
+  curl \
+    -X PATCH 'MEILISEARCH_URL/chats/WORKSPACE_NAME/settings' \
+    -H "Authorization: Bearer MEILISEARCH_KEY" \
+    -H "Content-Type: application/json" \
+    --data-binary '{ "apiKey": "your-valid-api-key" }'
+# delete_chats_workspaceUid_settings
+reset_chat_workspace_settings_1: |-
+  curl \
+    -X DELETE 'MEILISEARCH_URL/chats/WORKSPACE_NAME/settings' \
+    -H "Authorization: Bearer MEILISEARCH_KEY"
+# post_dynamic_search_rules
+list_dynamic_search_rules_1: |-
+  curl \
+    -X POST 'MEILISEARCH_URL/dynamic-search-rules' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "offset": 0,
+      "limit": 20
+    }'
+# get_dynamic_search_rules_uid
+get_dynamic_search_rule_1: |-
+  curl \
+    -X GET 'MEILISEARCH_URL/dynamic-search-rules/black-friday'
+# patch_dynamic_search_rules_uid
+patch_dynamic_search_rule_1: |-
+  curl \
+    -X PATCH 'MEILISEARCH_URL/dynamic-search-rules/black-friday' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "description": "Black Friday 2025 rules",
+      "priority": 5,
+      "active": true
+    }'
+# delete_dynamic_search_rules_uid
+delete_dynamic_search_rule_1: |-
+  curl \
+    -X DELETE 'MEILISEARCH_URL/dynamic-search-rules/black-friday'
+# get_indexes_indexUid_settings_foreign_keys
+get_foreign_keys_setting_1: |-
+  curl \
+    -X GET 'MEILISEARCH_URL/indexes/movies/settings/foreign-keys'
+# put_indexes_indexUid_settings_foreign_keys
+update_foreign_keys_setting_1: |-
+  curl \
+    -X PUT 'MEILISEARCH_URL/indexes/movies/settings/foreign-keys' \
+    -H 'Content-Type: application/json' \
+    --data-binary '[
+      {
+        "foreignIndexUid": "authors",
+        "fieldName": "authorId"
+      }
+    ]'
+# delete_indexes_indexUid_settings_foreign_keys
+reset_foreign_keys_setting_1: |-
+  curl \
+    -X DELETE 'MEILISEARCH_URL/indexes/movies/settings/foreign-keys'
+# post_network_control
+network_control_1: |-
+  curl \
+    -X POST 'MEILISEARCH_URL/network/control' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "origin": {
+        "remoteName": "ms-00",
+        "taskUid": 42
+      },
+      "message": {
+        "type": "importFinishedForRemote",
+        "remote": "ms-01",
+        "successful": true
+      }
+    }'
+# post_tasks_compact
+compact_task_queue_1: |-
+  curl \
+    -X POST 'MEILISEARCH_URL/tasks/compact'
 chat_create_key_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/keys' \
@@ -1391,16 +1500,6 @@ chat_create_key_1: |-
       "indexes": ["*"],
       "expiresAt": null
     }'
-chat_get_settings_1: |-
-  curl \
-    -X GET 'MEILISEARCH_URL/chats/WORKSPACE_NAME/settings' \
-    -H "Authorization: Bearer MEILISEARCH_KEY"
-chat_patch_settings_1: |-
-  curl \
-    -X PATCH 'MEILISEARCH_URL/chats/WORKSPACE_NAME/settings' \
-    -H "Authorization: Bearer MEILISEARCH_KEY" \
-    -H "Content-Type: application/json" \
-    --data-binary '{ "apiKey": "your-valid-api-key" }'
 image_search_multimodal_settings_1: |-
   curl \
     -X PATCH 'MEILISEARCH_URL/indexes/INDEX_NAME/settings' \
