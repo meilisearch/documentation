@@ -1,0 +1,19 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/network/control' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "origin": {
+      "remoteName": "ms-00",
+      "taskUid": 42
+    },
+    "message": {
+      "type": "importFinishedForRemote",
+      "remote": "ms-01",
+      "successful": true
+    }
+  }'
+```
+</CodeGroup>

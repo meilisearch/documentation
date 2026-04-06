@@ -1393,15 +1393,32 @@ delete_chat_workspace_1: |-
     -X DELETE 'MEILISEARCH_URL/chats/WORKSPACE_NAME'
 # post_chats_workspaceUid_chat_completions
 post_chat_completion_1: |-
-  curl \
+  curl -N \
     -X POST 'MEILISEARCH_URL/chats/WORKSPACE_NAME/chat/completions' \
+    -H 'Authorization: Bearer MEILISEARCH_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
-      "model": "gpt-4",
+      "model": "PROVIDER_MODEL_UID",
       "messages": [
         {
           "role": "user",
-          "content": "Hello"
+          "content": "USER_PROMPT"
+        }
+      ],
+      "tools": [
+        {
+          "type": "function",
+          "function": {
+            "name": "_meiliSearchProgress",
+            "description": "Reports real-time search progress to the user"
+          }
+        },
+        {
+          "type": "function",
+          "function": {
+            "name": "_meiliSearchSources",
+            "description": "Provides sources and references for the information"
+          }
         }
       ]
     }'
@@ -1426,11 +1443,7 @@ reset_chat_workspace_settings_1: |-
 list_dynamic_search_rules_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/dynamic-search-rules' \
-    -H 'Content-Type: application/json' \
-    --data-binary '{
-      "offset": 0,
-      "limit": 20
-    }'
+    -H 'Content-Type: application/json'
 # get_dynamic_search_rules_uid
 get_dynamic_search_rule_1: |-
   curl \
@@ -1442,8 +1455,18 @@ patch_dynamic_search_rule_1: |-
     -H 'Content-Type: application/json' \
     --data-binary '{
       "description": "Black Friday 2025 rules",
-      "priority": 5,
-      "active": true
+      "priority": 10,
+      "active": true,
+      "conditions": [
+        { "scope": "query", "isEmpty": true },
+        { "scope": "time", "start": "2025-11-28T00:00:00Z", "end": "2025-11-28T23:59:59Z" }
+      ],
+      "actions": [
+        {
+          "selector": { "indexUid": "products", "id": "123" },
+          "action": { "type": "pin", "position": 1 }
+        }
+      ]
     }'
 # delete_dynamic_search_rules_uid
 delete_dynamic_search_rule_1: |-
@@ -1452,22 +1475,26 @@ delete_dynamic_search_rule_1: |-
 # get_indexes_indexUid_settings_foreign_keys
 get_foreign_keys_setting_1: |-
   curl \
-    -X GET 'MEILISEARCH_URL/indexes/movies/settings/foreign-keys'
+    -X GET 'MEILISEARCH_URL/indexes/books/settings/foreign-keys'
 # put_indexes_indexUid_settings_foreign_keys
 update_foreign_keys_setting_1: |-
   curl \
-    -X PUT 'MEILISEARCH_URL/indexes/movies/settings/foreign-keys' \
+    -X PUT 'MEILISEARCH_URL/indexes/books/settings/foreign-keys' \
     -H 'Content-Type: application/json' \
     --data-binary '[
       {
         "foreignIndexUid": "authors",
-        "fieldName": "authorId"
+        "fieldName": "author"
+      },
+      {
+        "foreignIndexUid": "authors",
+        "fieldName": "related_authors"
       }
     ]'
 # delete_indexes_indexUid_settings_foreign_keys
 reset_foreign_keys_setting_1: |-
   curl \
-    -X DELETE 'MEILISEARCH_URL/indexes/movies/settings/foreign-keys'
+    -X DELETE 'MEILISEARCH_URL/indexes/books/settings/foreign-keys'
 # post_network_control
 network_control_1: |-
   curl \
@@ -1476,12 +1503,12 @@ network_control_1: |-
     --data-binary '{
       "origin": {
         "remoteName": "ms-00",
-        "taskUid": 42
+        "taskUid": 42,
+        "networkVersion": "0195e7a8-9c0d-7b3a-8f2e-123456789abc"
       },
       "message": {
-        "type": "importFinishedForRemote",
-        "remote": "ms-01",
-        "successful": true
+        "type": "exportNoIndexForRemote",
+        "remote": "ms-01"
       }
     }'
 # post_tasks_compact
