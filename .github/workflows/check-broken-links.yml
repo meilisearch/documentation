@@ -1,0 +1,28 @@
+# Runs on every PR targeting main and on workflow_dispatch.
+# Checks for broken internal links in MDX documentation files.
+# No secrets required — runs entirely from local files.
+name: Check broken links
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  check-broken-links:
+    name: Check broken links
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Check broken internal links
+        run: npm run check-broken-links
