@@ -25,6 +25,7 @@
     "check-code-samples-usage": "node scripts/check-code-samples-usage.mjs",
     "check-openapi-routes-coverage": "node scripts/check-openapi-routes-coverage.mjs",
     "generate-changelog": "npx tsx scripts/generate-changelog.ts",
-    "check-missing-redirects": "node scripts/check-missing-redirects.mjs"
+    "check-missing-redirects": "node scripts/check-missing-redirects.mjs",
+    "check-broken-links": "node scripts/check-broken-links.mjs"
   }
 }
