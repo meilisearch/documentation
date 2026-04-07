@@ -374,6 +374,10 @@ async function main() {
   fs.writeFileSync(outputPath, outputLines.join("\n") + "\n");
   console.log(`\nReport written to ${outputPath}`);
 
+  if (unusedRedirects.length > 0 && sortedMissing.length === 0) {
+    console.log(`\n::warning::${unusedRedirects.length} unused redirect(s) found with zero traffic in 90 days. Consider removing them from config/redirects.json.`);
+  }
+
   if (sortedMissing.length > 0) {
     console.error(`\nERROR: ${sortedMissing.length} missing redirect(s) found. Add them to docs.json before merging.`);
     process.exit(1);
