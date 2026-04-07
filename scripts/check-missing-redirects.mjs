@@ -219,6 +219,10 @@ function suggestDestination(missingPath, docsPages) {
   const queryTokens = new Set(tokenize(missingPath));
   if (queryTokens.size === 0) return null;
 
+  // For old /reference/api/... paths, prefer new /reference/api/... destinations
+  // by boosting pages that share the same top-level section.
+  const isRefPath = missingPath.includes("/reference/");
+
   let bestScore = 0;
   let bestPage = null;
 
@@ -228,6 +232,12 @@ function suggestDestination(missingPath, docsPages) {
     for (const t of queryTokens) {
       if (pageTokens.has(t)) score++;
     }
+
+    // Boost reference-to-reference matches to avoid capability pages winning on ties
+    if (isRefPath && page.includes("/docs/reference/")) {
+      score += 0.5;
+    }
+
     if (score > bestScore) {
       bestScore = score;
       bestPage = page;
