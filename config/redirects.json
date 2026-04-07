@@ -4150,5 +4150,13 @@
   {
     "source": "/guides/ai/langchain",
     "destination": "/getting_started/integrations/langchain"
+  },
+  {
+    "source": "/learn/comparison_to_alternatives",
+    "destination": "/resources/comparisons/alternatives"
+  },
+  {
+    "source": "/resource",
+    "destination": "/resources/overview"
   }
 ]
