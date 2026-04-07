@@ -3926,5 +3926,229 @@
   {
     "source": "/learn/self_hosted",
     "destination": "/resources/self_hosting/overview"
+  },
+  {
+    "source": "/reference/api/settings/get-foreign-keys",
+    "destination": "/reference/api/settings/get-foreignkeys"
+  },
+  {
+    "source": "/reference/api/ranking_rules",
+    "destination": "/reference/api/settings/get-rankingrules"
+  },
+  {
+    "source": "/reference/api/settings/typo-tolerance",
+    "destination": "/reference/api/settings/get-typotolerance"
+  },
+  {
+    "source": "/reference/api/vector_search",
+    "destination": "/capabilities/hybrid_search/overview"
+  },
+  {
+    "source": "/reference/api/settings/ranking-rules",
+    "destination": "/reference/api/settings/get-rankingrules"
+  },
+  {
+    "source": "/reference/api/settings/get-settings",
+    "destination": "/reference/api/settings/list-all-settings"
+  },
+  {
+    "source": "/reference/api/settings/all-settings",
+    "destination": "/reference/api/settings/list-all-settings"
+  },
+  {
+    "source": "/reference/api/backups/export",
+    "destination": "/reference/api/export/export-to-a-remote-meilisearch"
+  },
+  {
+    "source": "/reference/features/synonyms",
+    "destination": "/reference/api/settings/get-synonyms"
+  },
+  {
+    "source": "/api/similar",
+    "destination": "/reference/api/similar-documents/get-similar-documents-with-post"
+  },
+  {
+    "source": "/learn/advanced/prefix",
+    "destination": "/capabilities/full_text_search/how_to/configure_prefix_search"
+  },
+  {
+    "source": "/guides/advanced_guides/field_properties",
+    "destination": "/reference/api/settings/list-all-settings"
+  },
+  {
+    "source": "/learn/cookbooks/vercel",
+    "destination": "/getting_started/integrations/vercel"
+  },
+  {
+    "source": "/v1.13/resources/self_hosting/configuration/reference",
+    "destination": "/resources/self_hosting/configuration/overview"
+  },
+  {
+    "source": "/guides/advanced_guides/tokenization",
+    "destination": "/capabilities/indexing/advanced/tokenization"
+  },
+  {
+    "source": "/guides/migrating-to-meilisearch-cloud",
+    "destination": "/resources/migration/migrating_cloud"
+  },
+  {
+    "source": "/learn/cookbooks/aws",
+    "destination": "/resources/self_hosting/deployment/aws"
+  },
+  {
+    "source": "/guides/self_hosted/migrating_to_cloud",
+    "destination": "/resources/migration/migrating_cloud"
+  },
+  {
+    "source": "/learn/contributing/contributing_to_docs",
+    "destination": "/resources/help/contributing_docs"
+  },
+  {
+    "source": "/learn/advanced/working_with_dates",
+    "destination": "/capabilities/filtering_sorting_faceting/overview"
+  },
+  {
+    "source": "/learn/relevancy/exact_match",
+    "destination": "/capabilities/full_text_search/relevancy/attribute_ranking_order"
+  },
+  {
+    "source": "/guides/advanced_guides/safeguards",
+    "destination": "/capabilities/security/overview"
+  },
+  {
+    "source": "/learn/advanced/sorting",
+    "destination": "/capabilities/filtering_sorting_faceting/how_to/sort_results"
+  },
+  {
+    "source": "/guides/advanced/_guides/installation",
+    "destination": "/getting_started/overview"
+  },
+  {
+    "source": "/learn/advanced/asynchronous_operations",
+    "destination": "/capabilities/indexing/advanced/indexing_best_practices"
+  },
+  {
+    "source": "/reference/configuration",
+    "destination": "/resources/self_hosting/configuration/overview"
+  },
+  {
+    "source": "/learn/advanced/tasks",
+    "destination": "/capabilities/indexing/advanced/indexing_best_practices"
+  },
+  {
+    "source": "/learn/fine_tuning/filtering_and_sorting",
+    "destination": "/capabilities/filtering_sorting_faceting/overview"
+  },
+  {
+    "source": "/reference/sdk/sdk_js",
+    "destination": "/getting_started/sdks/javascript"
+  },
+  {
+    "source": "/resources/about_storage",
+    "destination": "/resources/internals/storage"
+  },
+  {
+    "source": "/guides/migration/migration_guide",
+    "destination": "/resources/migration/algolia_migration"
+  },
+  {
+    "source": "/learn/getting_started/a",
+    "destination": "/getting_started/overview"
+  },
+  {
+    "source": "/learn/cookbooks/koyeb",
+    "destination": "/resources/self_hosting/deployment/overview"
+  },
+  {
+    "source": "/learn/front_end/pagination",
+    "destination": "/reference/api/pagination"
+  },
+  {
+    "source": "/capabilities/hybrid_search/how_to/custom_hybrid_ranking",
+    "destination": "/capabilities/hybrid_search/advanced/custom_hybrid_ranking"
+  },
+  {
+    "source": "/learn/what_is_meilisearch/philosophy",
+    "destination": "/getting_started/overview"
+  },
+  {
+    "source": "/learn/resources/self_hosting/configuration/reference",
+    "destination": "/resources/self_hosting/configuration/overview"
+  },
+  {
+    "source": "/v1.19/resources/self_hosting/configuration/reference",
+    "destination": "/resources/self_hosting/configuration/overview"
+  },
+  {
+    "source": "/learn/what_is_meilisearch/instant_search",
+    "destination": "/getting_started/instant_meilisearch/javascript"
+  },
+  {
+    "source": "/resources/howtos/search_bar_for_docs",
+    "destination": "/capabilities/multi_search/how_to/build_unified_search_bar"
+  },
+  {
+    "source": "/capabilities/hybrid_search/how_to/document_templates",
+    "destination": "/capabilities/hybrid_search/advanced/document_template_best_practices"
+  },
+  {
+    "source": "/learn/filtering_and_sorting",
+    "destination": "/capabilities/filtering_sorting_faceting/overview"
+  },
+  {
+    "source": "/capabilities/fine_tuning_results/overview",
+    "destination": "/capabilities/filtering_sorting_faceting/how_to/sort_results"
+  },
+  {
+    "source": "/learn/deployment",
+    "destination": "/resources/self_hosting/deployment/overview"
+  },
+  {
+    "source": "/learn/cookbooks/strapi_v4",
+    "destination": "/getting_started/frameworks/strapi"
+  },
+  {
+    "source": "/learn/advanced/concat",
+    "destination": "/capabilities/full_text_search/how_to/configure_searchable_attributes"
+  },
+  {
+    "source": "/guides/ai/cohere",
+    "destination": "/capabilities/hybrid_search/how_to/configure_cohere_embedder"
+  },
+  {
+    "source": "/learn/cookbooks/gcp",
+    "destination": "/resources/self_hosting/deployment/gcp"
+  },
+  {
+    "source": "/learn/ai-powered-search/difference_full_text_ai_search",
+    "destination": "/capabilities/hybrid_search/overview"
+  },
+  {
+    "source": "/guides/ai/mistral",
+    "destination": "/capabilities/hybrid_search/providers/mistral"
+  },
+  {
+    "source": "/guides/ai/cloudflare",
+    "destination": "/capabilities/hybrid_search/providers/cloudflare"
+  },
+  {
+    "source": "/learn/advanced/faceted_search",
+    "destination": "/capabilities/filtering_sorting_faceting/overview"
+  },
+  {
+    "source": "/learn/cookbooks/indexing_best_practices",
+    "destination": "/capabilities/indexing/advanced/indexing_best_practices"
+  },
+  {
+    "source": "/learn/cookbooks/meilisync_postgresql",
+    "destination": "/capabilities/indexing/overview"
+  },
+  {
+    "source": "/guides/integrations/vercel",
+    "destination": "/getting_started/integrations/vercel"
+  },
+  {
+    "source": "/guides/ai/langchain",
+    "destination": "/getting_started/integrations/langchain"
   }
 ]
