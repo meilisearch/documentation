@@ -379,7 +379,7 @@ async function main() {
   }
 
   if (sortedMissing.length > 0) {
-    console.error(`\nERROR: ${sortedMissing.length} missing redirect(s) found. Add them to docs.json before merging.`);
+    console.error(`\nERROR: ${sortedMissing.length} missing redirect(s) found. Add them to config/redirects.json before merging.`);
     process.exit(1);
   }
 }
