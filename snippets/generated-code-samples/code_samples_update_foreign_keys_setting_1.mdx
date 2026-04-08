@@ -1,0 +1,14 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X PUT 'MEILISEARCH_URL/indexes/movies/settings/foreign-keys' \
+  -H 'Content-Type: application/json' \
+  --data-binary '[
+    {
+      "foreignIndexUid": "authors",
+      "fieldName": "authorId"
+    }
+  ]'
+```
+</CodeGroup>

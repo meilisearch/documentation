@@ -854,15 +854,6 @@ distinct_attribute_guide_1: |-
     -X PUT 'MEILISEARCH_URL/indexes/jackets/settings/distinct-attribute' \
     -H 'Content-Type: application/json' \
     --data-binary '"product_id"'
-field_properties_guide_searchable_1: |-
-  curl \
-    -X PUT 'MEILISEARCH_URL/indexes/movies/settings/searchable-attributes' \
-    -H 'Content-Type: application/json' \
-    --data-binary '[
-        "title",
-        "overview",
-        "genres"
-      ]'
 field_properties_guide_displayed_1: |-
   curl \
     -X PUT 'MEILISEARCH_URL/indexes/movies/settings/displayed-attributes' \
@@ -1195,28 +1186,6 @@ facet_search_3: |-
       "facetQuery": "c",
       "facetName": "genres"
   }'
-search_parameter_guide_show_ranking_score_details_1: |-
-  curl \
-    -X POST 'MEILISEARCH_URL/indexes/movies/search' \
-    -H 'Content-Type: application/json' \
-    --data-binary '{
-      "q": "dragon",
-      "showRankingScoreDetails": true
-    }'
-index_settings_tutorial_api_get_setting_1: |-
-  curl \
-    -X GET 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/searchable-attributes'
-index_settings_tutorial_api_put_setting_1: |-
-  curl \
-    -X PUT 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/searchable-attributes' \
-    -H 'Content-Type: application/json' \
-    --data-binary '[
-      "title",
-      "overview"
-    ]'
-index_settings_tutorial_api_task_1: |-
-  curl \
-    -X GET 'MEILISEARCH_URL/tasks/TASK_UID'
 analytics_event_click_1: |-
   curl \
     -X POST 'https://PROJECT_URL/events' \
@@ -1292,34 +1261,6 @@ search_parameter_guide_vector_1: |-
         "embedder": "EMBEDDER_NAME"
       }
     }'
-rename_an_index_1: |-
-  curl \
-    -X PATCH 'MEILISEARCH_URL/indexes/INDEX_A' \
-    -H 'Content-Type: application/json' \
-    --data-binary '{ "uid": "INDEX_B" }'
-
-multi_search_remote_federated_1: |-
-  curl \
-    -X POST 'MEILISEARCH_URL/multi-search' \
-    -H 'Content-Type: application/json' \
-    --data-binary '{
-      "federation": {},
-      "queries": [
-        {
-          "indexUid": "movies",
-          "q": "batman",
-          "federationOptions": {
-            "remote": "ms-00"
-          }
-        },
-        {
-          "indexUid": "movies",
-          "q": "batman",
-          "federationOptions": {
-            "remote": "ms-01"
-          }
-        }
-      ]
 # post_indexes_indexUid_fields
 list_index_fields_1: |-
   curl \
@@ -1438,31 +1379,20 @@ federated_search_multi_search_weight_1: |-
         }
       ]
     }'
-chat_create_key_1: |-
+# get_chats
+list_chat_workspaces_1: |-
   curl \
-    -X POST 'MEILISEARCH_URL/keys' \
-    -H 'Authorization: Bearer MEILISEARCH_KEY' \
-    -H 'Content-Type: application/json' \
-    --data-binary '{
-      "name": "Chat API Key",
-      "description": "API key for chat completions",
-      "actions": ["search", "chatCompletions"],
-      "indexes": ["*"],
-      "expiresAt": null
-    }'
-chat_index_settings_1: |-
+    -X GET 'MEILISEARCH_URL/chats'
+# get_chats_workspaceUid
+get_chat_workspace_1: |-
   curl \
-    -X PATCH 'MEILISEARCH_URL/indexes/INDEX_NAME/settings' \
-    -H 'Authorization: Bearer MEILISEARCH_KEY' \
-    -H 'Content-Type: application/json' \
-    --data-binary '{
-      "chat": {
-        "description": "A comprehensive database of TYPE_OF_DOCUMENT containing titles, descriptions, genres, and release dates to help users searching for TYPE_OF_DOCUMENT",
-        "documentTemplate": "{% for field in fields %}{% if field.is_searchable and field.value != nil %}{{ field.name }}: {{ field.value }}\n{% endif %}{% endfor %}",
-        "documentTemplateMaxBytes": 400
-      }
-    }'
-chat_completions_1: |-
+    -X GET 'MEILISEARCH_URL/chats/WORKSPACE_NAME'
+# delete_chats_workspaceUid
+delete_chat_workspace_1: |-
+  curl \
+    -X DELETE 'MEILISEARCH_URL/chats/WORKSPACE_NAME'
+# post_chats_workspaceUid_chat_completions
+post_chat_completion_1: |-
   curl -N \
     -X POST 'MEILISEARCH_URL/chats/WORKSPACE_NAME/chat/completions' \
     -H 'Authorization: Bearer MEILISEARCH_KEY' \
@@ -1492,16 +1422,111 @@ chat_completions_1: |-
         }
       ]
     }'
+# get_chats_workspaceUid_settings
 chat_get_settings_1: |-
   curl \
     -X GET 'MEILISEARCH_URL/chats/WORKSPACE_NAME/settings' \
     -H "Authorization: Bearer MEILISEARCH_KEY"
+# patch_chats_workspaceUid_settings
 chat_patch_settings_1: |-
   curl \
     -X PATCH 'MEILISEARCH_URL/chats/WORKSPACE_NAME/settings' \
     -H "Authorization: Bearer MEILISEARCH_KEY" \
     -H "Content-Type: application/json" \
     --data-binary '{ "apiKey": "your-valid-api-key" }'
+# delete_chats_workspaceUid_settings
+reset_chat_workspace_settings_1: |-
+  curl \
+    -X DELETE 'MEILISEARCH_URL/chats/WORKSPACE_NAME/settings' \
+    -H "Authorization: Bearer MEILISEARCH_KEY"
+# post_dynamic_search_rules
+list_dynamic_search_rules_1: |-
+  curl \
+    -X POST 'MEILISEARCH_URL/dynamic-search-rules' \
+    -H 'Content-Type: application/json'
+# get_dynamic_search_rules_uid
+get_dynamic_search_rule_1: |-
+  curl \
+    -X GET 'MEILISEARCH_URL/dynamic-search-rules/black-friday'
+# patch_dynamic_search_rules_uid
+patch_dynamic_search_rule_1: |-
+  curl \
+    -X PATCH 'MEILISEARCH_URL/dynamic-search-rules/black-friday' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "description": "Black Friday 2025 rules",
+      "priority": 10,
+      "active": true,
+      "conditions": [
+        { "scope": "query", "isEmpty": true },
+        { "scope": "time", "start": "2025-11-28T00:00:00Z", "end": "2025-11-28T23:59:59Z" }
+      ],
+      "actions": [
+        {
+          "selector": { "indexUid": "products", "id": "123" },
+          "action": { "type": "pin", "position": 1 }
+        }
+      ]
+    }'
+# delete_dynamic_search_rules_uid
+delete_dynamic_search_rule_1: |-
+  curl \
+    -X DELETE 'MEILISEARCH_URL/dynamic-search-rules/black-friday'
+# get_indexes_indexUid_settings_foreign_keys
+get_foreign_keys_setting_1: |-
+  curl \
+    -X GET 'MEILISEARCH_URL/indexes/books/settings/foreign-keys'
+# put_indexes_indexUid_settings_foreign_keys
+update_foreign_keys_setting_1: |-
+  curl \
+    -X PUT 'MEILISEARCH_URL/indexes/books/settings/foreign-keys' \
+    -H 'Content-Type: application/json' \
+    --data-binary '[
+      {
+        "foreignIndexUid": "authors",
+        "fieldName": "author"
+      },
+      {
+        "foreignIndexUid": "authors",
+        "fieldName": "related_authors"
+      }
+    ]'
+# delete_indexes_indexUid_settings_foreign_keys
+reset_foreign_keys_setting_1: |-
+  curl \
+    -X DELETE 'MEILISEARCH_URL/indexes/books/settings/foreign-keys'
+# post_network_control
+network_control_1: |-
+  curl \
+    -X POST 'MEILISEARCH_URL/network/control' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "origin": {
+        "remoteName": "ms-00",
+        "taskUid": 42,
+        "networkVersion": "0195e7a8-9c0d-7b3a-8f2e-123456789abc"
+      },
+      "message": {
+        "type": "exportNoIndexForRemote",
+        "remote": "ms-01"
+      }
+    }'
+# post_tasks_compact
+compact_task_queue_1: |-
+  curl \
+    -X POST 'MEILISEARCH_URL/tasks/compact'
+chat_create_key_1: |-
+  curl \
+    -X POST 'MEILISEARCH_URL/keys' \
+    -H 'Authorization: Bearer MEILISEARCH_KEY' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "name": "Chat API Key",
+      "description": "API key for chat completions",
+      "actions": ["search", "chatCompletions"],
+      "indexes": ["*"],
+      "expiresAt": null
+    }'
 image_search_multimodal_settings_1: |-
   curl \
     -X PATCH 'MEILISEARCH_URL/indexes/INDEX_NAME/settings' \

@@ -503,6 +503,12 @@
               "*"
             ]
           }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "cURL",
+            "source": "curl \\\n  -X GET 'MEILISEARCH_URL/chats'"
+          }
         ]
       }
     },
@@ -576,6 +582,12 @@
               "*"
             ]
           }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "cURL",
+            "source": "curl \\\n  -X GET 'MEILISEARCH_URL/chats/WORKSPACE_NAME'"
+          }
         ]
       },
       "delete": {
@@ -639,6 +651,12 @@
               "chats.delete",
               "*"
             ]
+          }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "cURL",
+            "source": "curl \\\n  -X DELETE 'MEILISEARCH_URL/chats/WORKSPACE_NAME'"
           }
         ]
       }
@@ -762,6 +780,12 @@
               "*"
             ]
           }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "cURL",
+            "source": "curl -N \\\n  -X POST 'MEILISEARCH_URL/chats/WORKSPACE_NAME/chat/completions' \\\n  -H 'Authorization: Bearer MEILISEARCH_KEY' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '{\n    \"model\": \"PROVIDER_MODEL_UID\",\n    \"messages\": [\n      {\n        \"role\": \"user\",\n        \"content\": \"USER_PROMPT\"\n      }\n    ],\n    \"tools\": [\n      {\n        \"type\": \"function\",\n        \"function\": {\n          \"name\": \"_meiliSearchProgress\",\n          \"description\": \"Reports real-time search progress to the user\"\n        }\n      },\n      {\n        \"type\": \"function\",\n        \"function\": {\n          \"name\": \"_meiliSearchSources\",\n          \"description\": \"Provides sources and references for the information\"\n        }\n      }\n    ]\n  }'"
+          }
         ]
       }
     },
@@ -843,6 +867,12 @@
               "*"
             ]
           }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "cURL",
+            "source": "curl \\\n  -X GET 'MEILISEARCH_URL/chats/WORKSPACE_NAME/settings' \\\n  -H \"Authorization: Bearer MEILISEARCH_KEY\""
+          }
         ]
       },
       "delete": {
@@ -921,6 +951,12 @@
               "chats.settings.update",
               "*"
             ]
+          }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "cURL",
+            "source": "curl \\\n  -X DELETE 'MEILISEARCH_URL/chats/WORKSPACE_NAME/settings' \\\n  -H \"Authorization: Bearer MEILISEARCH_KEY\""
           }
         ]
       },
@@ -1010,6 +1046,12 @@
               "chats.settings.update",
               "*"
             ]
+          }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "cURL",
+            "source": "curl \\\n  -X PATCH 'MEILISEARCH_URL/chats/WORKSPACE_NAME/settings' \\\n  -H \"Authorization: Bearer MEILISEARCH_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  --data-binary '{ \"apiKey\": \"your-valid-api-key\" }'"
           }
         ]
       }
@@ -1205,6 +1247,12 @@
               "*"
             ]
           }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "cURL",
+            "source": "curl \\\n  -X POST 'MEILISEARCH_URL/dynamic-search-rules' \\\n  -H 'Content-Type: application/json'"
+          }
         ]
       }
     },
@@ -1310,6 +1358,12 @@
               "*"
             ]
           }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "cURL",
+            "source": "curl \\\n  -X GET 'MEILISEARCH_URL/dynamic-search-rules/black-friday'"
+          }
         ]
       },
       "delete": {
@@ -1376,6 +1430,12 @@
               "*.delete",
               "*"
             ]
+          }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "cURL",
+            "source": "curl \\\n  -X DELETE 'MEILISEARCH_URL/dynamic-search-rules/black-friday'"
           }
         ]
       },
@@ -1483,6 +1543,12 @@
               "dynamicSearchRules.*",
               "*"
             ]
+          }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "cURL",
+            "source": "curl \\\n  -X PATCH 'MEILISEARCH_URL/dynamic-search-rules/black-friday' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '{\n    \"description\": \"Black Friday 2025 rules\",\n    \"priority\": 10,\n    \"active\": true,\n    \"conditions\": [\n      { \"scope\": \"query\", \"isEmpty\": true },\n      { \"scope\": \"time\", \"start\": \"2025-11-28T00:00:00Z\", \"end\": \"2025-11-28T23:59:59Z\" }\n    ],\n    \"actions\": [\n      {\n        \"selector\": { \"indexUid\": \"products\", \"id\": \"123\" },\n        \"action\": { \"type\": \"pin\", \"position\": 1 }\n      }\n    ]\n  }'"
           }
         ]
       }
@@ -8316,6 +8382,12 @@
               "*"
             ]
           }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "cURL",
+            "source": "curl \\\n  -X GET 'MEILISEARCH_URL/indexes/books/settings/foreign-keys'"
+          }
         ]
       },
       "put": {
@@ -8409,6 +8481,12 @@
               "*"
             ]
           }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "cURL",
+            "source": "curl \\\n  -X PUT 'MEILISEARCH_URL/indexes/books/settings/foreign-keys' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '[\n    {\n      \"foreignIndexUid\": \"authors\",\n      \"fieldName\": \"author\"\n    },\n    {\n      \"foreignIndexUid\": \"authors\",\n      \"fieldName\": \"related_authors\"\n    }\n  ]'"
+          }
         ]
       },
       "delete": {
@@ -8488,6 +8566,12 @@
               "settings.*",
               "*"
             ]
+          }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "cURL",
+            "source": "curl \\\n  -X DELETE 'MEILISEARCH_URL/indexes/books/settings/foreign-keys'"
           }
         ]
       }
@@ -15153,6 +15237,12 @@
               "*"
             ]
           }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "cURL",
+            "source": "curl \\\n  -X POST 'MEILISEARCH_URL/network/control' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '{\n    \"origin\": {\n      \"remoteName\": \"ms-00\",\n      \"taskUid\": 42,\n      \"networkVersion\": \"0195e7a8-9c0d-7b3a-8f2e-123456789abc\"\n    },\n    \"message\": {\n      \"type\": \"exportNoIndexForRemote\",\n      \"remote\": \"ms-01\"\n    }\n  }'"
+          }
         ]
       }
     },
@@ -16423,6 +16513,12 @@
               "tasks.*",
               "*"
             ]
+          }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "cURL",
+            "source": "curl \\\n  -X POST 'MEILISEARCH_URL/tasks/compact'"
           }
         ]
       }
