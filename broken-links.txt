@@ -1,0 +1,14 @@
+5 broken internal link(s) across 4 file(s):
+
+  capabilities/full_text_search/advanced/debug_search_performance.mdx
+    line   98: /resources/self_hosting/sharding
+
+  capabilities/indexing/how_to/document_relations.mdx
+    line  142: /resources/self_hosting/sharding
+    line  148: /reference/api/settings/get-foreign-keys
+
+  resources/help/experimental_features_overview.mdx
+    line   69: /capabilities/personalization/getting_started
+
+  resources/self_hosting/enterprise_edition.mdx
+    line   14: /resources/self_hosting/sharding
