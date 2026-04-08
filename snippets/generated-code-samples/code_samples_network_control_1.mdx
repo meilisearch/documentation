@@ -7,12 +7,12 @@ curl \
   --data-binary '{
     "origin": {
       "remoteName": "ms-00",
-      "taskUid": 42
+      "taskUid": 42,
+      "networkVersion": "0195e7a8-9c0d-7b3a-8f2e-123456789abc"
     },
     "message": {
-      "type": "importFinishedForRemote",
-      "remote": "ms-01",
-      "successful": true
+      "type": "exportNoIndexForRemote",
+      "remote": "ms-01"
     }
   }'
 ```

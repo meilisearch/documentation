@@ -6,8 +6,18 @@ curl \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "description": "Black Friday 2025 rules",
-    "priority": 5,
-    "active": true
+    "priority": 10,
+    "active": true,
+    "conditions": [
+      { "scope": "query", "isEmpty": true },
+      { "scope": "time", "start": "2025-11-28T00:00:00Z", "end": "2025-11-28T23:59:59Z" }
+    ],
+    "actions": [
+      {
+        "selector": { "indexUid": "products", "id": "123" },
+        "action": { "type": "pin", "position": 1 }
+      }
+    ]
   }'
 ```
 </CodeGroup>
