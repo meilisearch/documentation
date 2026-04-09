@@ -15182,7 +15182,7 @@
           },
           {
             "lang": "Go",
-            "source": "client.UpdateNetwork(&meilisearch.UpdateNetworkRequest{\n  Self: meilisearch.String(\"ms-00\"),\n  Leader: meilisearch.String(\"ms-00\"),\n  Remotes: meilisearch.NewOpt(map[string]meilisearch.Opt[meilisearch.Remote]{\n    \"ms-00\": meilisearch.NewOpt(meilisearch.Remote{\n      URL:          meilisearch.String(\"https://meilisearch.com\"),\n      SearchAPIKey: meilisearch.String(\"ReadKey\"),\n      WriteAPIKey: meilisearch.String(\"WriteKey\"),\n    },\n  },\n});"
+            "source": "client.UpdateNetwork(&meilisearch.UpdateNetworkRequest{\n  Self: meilisearch.String(\"ms-00\"),\n  Leader: meilisearch.String(\"ms-00\"),\n  Remotes: meilisearch.NewOpt(map[string]meilisearch.Opt[meilisearch.UpdateRemote]{\n    \"ms-00\": meilisearch.NewOpt(meilisearch.UpdateRemote{\n      URL:          meilisearch.String(\"https://meilisearch.com\"),\n      SearchAPIKey: meilisearch.String(\"ReadKey\"),\n      WriteAPIKey:  meilisearch.String(\"WriteKey\"),\n    }),\n  }),\n  Shards: meilisearch.NewOpt(map[string]meilisearch.Opt[meilisearch.UpdateRemoteShard]{\n    \"ms-00\": meilisearch.NewOpt(meilisearch.UpdateRemoteShard{\n      Remotes: meilisearch.NewOpt([]string{\"ms-00\"}),\n    }),\n  }),\n})"
           },
           {
             "lang": "Rust",
