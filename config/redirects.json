@@ -1,5 +1,9 @@
 [
   {
+    "source": "/resources/comparisons/typo_tolerance_vs_fuzzy_search",
+    "destination": "/resources/internals/typo_tolerance"
+  },
+  {
     "source": "/home",
     "destination": "/getting_started/overview"
   },

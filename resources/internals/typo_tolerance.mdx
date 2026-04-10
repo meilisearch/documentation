@@ -1,0 +1,216 @@
+---
+title: "Typo tolerance vs fuzzy search: how Meilisearch handles misspellings"
+sidebarTitle: Typo tolerance vs fuzzy search
+description: How Meilisearch's typo tolerance works under the hood, why it differs from fuzzy search in Elasticsearch, Solr, MongoDB Atlas Search, Manticore, and PostgreSQL, and what the practical implications are.
+---
+
+Most search engines treat typo handling as an optional, query-level feature you opt into. Meilisearch treats it as a first-class ranking criterion that works automatically on every query. This page explains the technical differences and why they matter.
+
+## How Meilisearch handles typos
+
+Meilisearch stores all indexed terms in a single **Finite State Transducer (FST)** built at index time. At query time, the engine generates a [Levenshtein automaton](https://en.wikipedia.org/wiki/Levenshtein_distance) from your search term and intersects it with the pre-built FST in a single streaming pass. This finds all indexed terms within the allowed edit distance efficiently, without scanning the entire dictionary. Meilisearch uses **Damerau-Levenshtein distance**, meaning transpositions (swapped adjacent characters, like `"teh"` → `"the"`) count as a single edit, not two.
+
+Typo tolerance is **on by default** for every index and every query. No query-level parameters are required.
+
+### Word length thresholds
+
+Meilisearch does not apply typo tolerance uniformly. The number of typos allowed depends on the length of the query word:
+
+| Query word length | Typos allowed |
+|-------------------|---------------|
+| 1–4 characters | 0 (prefix match only) |
+| 5–8 characters | 1 |
+| 9+ characters | 2 |
+
+The hard cap is **2 typos per word**, regardless of length. Words with 3 or more differences will never match. These thresholds are [configurable](/capabilities/full_text_search/relevancy/typo_tolerance_settings) via `minWordSizeForTypos`.
+
+### Two special typo counting rules
+
+**First-character typo costs 2.** A typo on the first character of a word is counted as two typos, not one. This means "caturday" does not match "saturday" (one substitution on position 1, but it costs 2, exceeding the 1-typo budget for 8-char words). This prevents a class of false positives where only the initial character differs.
+
+**Concatenation costs 1 typo.** When two words are separated by a space, Meilisearch also considers them as a single concatenated candidate with 1 typo. For example, searching for `"any way"` will match documents containing `"anyway"`. No other engine in this comparison handles word-split typos this way.
+
+### Typo tolerance is a ranking rule, not a filter
+
+When a query term matches an indexed term via a typo, that result is not discarded or penalized with a separate score modifier. Instead, typo count feeds directly into the `typo` [ranking rule](/resources/internals/ranking), one of the seven criteria in Meilisearch's [bucket sort](/resources/internals/bucket_sort) pipeline.
+
+This means:
+- A document matching with 0 typos always ranks above one matching with 1 typo, all else being equal
+- A document matching with 1 typo always ranks above one matching with 2 typos
+- A result with 0 typos in a less important attribute (body) outranks a result with 2 typos in a more important attribute (title), because `typo` comes before `attribute` in the ranking pipeline
+
+There is no score blending or weighting. The ordering is strict and transparent. Disabling typo tolerance entirely also disables the `typo` ranking rule, since every returned document would have 0 typos by definition.
+
+### Prefix search and typo tolerance work together
+
+Meilisearch applies prefix search and typo tolerance **simultaneously** on the last word of a query. This means a partial, misspelled word still returns results. For example, searching `"iphoe"` (5 characters, 1 typo budget) can match `"iphone"` as a prefixed, typo-corrected term in a single pass.
+
+Elasticsearch can approximate this by combining an `edge_ngram` tokenizer (for prefix expansion at index time) with a `fuzzy` query at search time, but the two mechanisms work on different levels and require careful coordination. In Meilisearch, prefix and typo tolerance are a single unified step with no extra configuration.
+
+You can [disable prefix search](/reference/api/settings/get-prefixsearch) independently from typo tolerance if needed.
+
+### Split and concatenate: handling word boundary mistakes
+
+Beyond character-level edits, Meilisearch handles a class of mistakes that Levenshtein distance cannot catch: wrong word boundaries.
+
+**Concatenation:** when a user types multiple words, Meilisearch also searches their concatenated forms. For a query `"the news paper"`, it additionally tries `"thenews paper"`, `"the newspaper"`, and `"thenewspaper"`. Concatenation is applied to up to 3 consecutive words, and each concatenated candidate counts as 1 typo in the ranking pipeline.
+
+**Splitting:** when a user types a single word, Meilisearch considers frequency-based splits. For `"newspaper"`, it finds that `"news"` and `"paper"` both have meaningful frequency in the index and tries the split candidate. The split is data-driven: it picks the boundary that maximizes the frequency of both halves in the index dictionary, not a fixed linguistic rule. A split into `"new"` + `"spaper"` is rejected because `"spaper"` has no frequency.
+
+Split words must remain adjacent. A document with `"news"` and `"paper"` separated by other words will not match.
+
+Together, these two mechanisms handle the common real-world case where users omit or add spaces within compound words or multi-word phrases. Elasticsearch can handle compound words through custom token filters (like the `word_delimiter_graph` filter or language-specific compound word decomposers), but this requires upfront index configuration per language and does not cover the query-side concatenation case. See [Concatenated and split queries](/resources/internals/concat) for more detail.
+
+### Language-aware tokenization before typo matching
+
+Meilisearch's tokenizer, [Charabia](https://github.com/meilisearch/charabia), normalizes and segments text **before** typo tolerance runs. This matters because typo matching operates on tokens, not raw characters, and what counts as a token depends on the language.
+
+Key transformations that affect typo matching:
+
+| Language / Feature | What Charabia does | Why it matters for typos |
+|---|---|---|
+| **All Latin scripts** | Lowercase, decompose accents, remove diacritics | `"café"` and `"cafe"` are the same token (no typo budget wasted on accents) |
+| **CamelCase** | Splits `"iPhone"` into `"i"` + `"phone"` | Searching `"iphoen"` can match the `"phone"` token with 1 typo |
+| **German** | Decomposes compound words (`"Krankenhaus"` → `"kranken"` + `"haus"`) | Each part is independently typo-matchable |
+| **Arabic** | Removes the definite article `"ال"` | `"الكتاب"` and `"كتاب"` are treated as the same root |
+| **Turkish** | Specialized case folding (dotted/dotless i) | `"I"` and `"ı"` don't incorrectly cost a typo |
+| **Chinese / Japanese / Korean** | Dictionary-based segmentation (jieba, lindera) | Words are correctly isolated before character-level matching |
+| **Greek** | Final sigma handling | `"λόγος"` and `"λόγοσ"` normalize to the same form |
+
+In contrast, engines like Elasticsearch, Solr, and Manticore apply edit distance after their configured analyzer runs. If the analyzer includes ASCII folding, accents are normalized before matching. But normalization is opt-in and per-field: without explicit configuration, an accent, a case difference, or a language-specific ligature can consume part of the typo budget or cause misses entirely. Charabia applies the right normalization automatically based on the detected language, with no per-field setup required. PostgreSQL `pg_trgm` is always raw: trigrams of `"café"` and `"cafe"` differ regardless of configuration.
+
+### Surgical disable controls
+
+Meilisearch gives you four independent knobs to turn typo tolerance off for specific situations, without affecting the rest:
+
+| Setting | Scope | Use case |
+|---------|-------|----------|
+| `enabled: false` | Entire index | Massive or multilingual datasets where false positives dominate |
+| `disableOnWords` | Specific query terms | Brand names, proper nouns, product codes you want exact |
+| `disableOnAttributes` | Specific document fields | SKU, barcode, serial number fields where precision matters |
+| `disableOnNumbers` | All numeric tokens | Prevents `2024` matching `2025`, improves indexing performance |
+
+Elasticsearch can achieve similar granularity through per-field analyzer configuration and query-level `fuzziness` overrides, but it requires per-query code changes or separate index mappings. Meilisearch exposes all of these as index-level settings applied consistently across every query.
+
+---
+
+## How other engines handle typos
+
+### Elasticsearch and OpenSearch
+
+Elasticsearch (and OpenSearch, which shares the same Lucene core) uses fuzzy queries based on Levenshtein distance, but they must be **explicitly enabled per query** with the `fuzziness` parameter:
+
+```json
+{
+  "query": {
+    "match": {
+      "title": {
+        "query": "iphoen",
+        "fuzziness": "AUTO"
+      }
+    }
+  }
+}
+```
+
+`fuzziness: "AUTO"` applies similar length-based thresholds, but they differ from Meilisearch's defaults:
+
+| Word length | Elasticsearch AUTO | Meilisearch default |
+|---|---|---|
+| 1-2 chars | 0 edits | 0 typos |
+| 3-5 chars | 1 edit | 0 typos |
+| 5-8 chars | 2 edits | 1 typo |
+| 9+ chars | 2 edits | 2 typos |
+
+Elasticsearch is more permissive for short words (allows 1 edit from 3 characters vs Meilisearch's threshold of 5), which increases recall but also false positives on short terms. However:
+
+- **Opt-in**: if you forget to add `fuzziness` to a query, typos return zero results
+- **Score modifier**: fuzzy matches lower the BM25 score, but the score is still a single number mixing term frequency, IDF, and fuzziness penalty into an opaque value
+- **Not a ranking rule**: there is no way to say "always prefer 0-typo matches over 1-typo matches regardless of term frequency." A frequent misspelled term can outscore a rare exact match
+- **Prefix queries are separate**: `fuzzy` and `prefix` are two distinct query types in Elasticsearch. Combining them requires a `bool` query with both a `fuzzy` clause and a `prefix` clause, or using an `edge_ngram` tokenizer at index time. It is achievable, but requires deliberate setup and adds complexity to every query
+
+**Normalization and custom tokenizers.** Where Elasticsearch has a genuine advantage is in its analyzer system. You can build a fully custom pipeline: any combination of character filters (strip HTML, map characters), tokenizers (standard, whitespace, ngram, edge-ngram, pattern, language-specific), and token filters (lowercase, stemmer, synonym, ASCII folding, stop words, phonetic). This makes Elasticsearch extremely powerful for domain-specific normalization: a medical search engine can apply specialized stemming, a legal platform can expand abbreviations, a multilingual product catalog can use the ICU analyzer with Unicode-aware case folding and decomposition across all scripts. Charabia provides built-in normalization for the most common languages, but Elasticsearch's analyzer framework is more flexible for advanced or unusual requirements. The trade-off is that getting it right requires significant configuration expertise, and misconfigured analyzers are a common source of relevance bugs.
+
+### Apache Solr
+
+Solr is built on the same Lucene engine as Elasticsearch. Fuzzy matching uses the `~` tilde syntax in query strings, or the `fuzzy` query type in JSON:
+
+```
+q=title:iphoen~1
+```
+
+The `~N` suffix sets the maximum edit distance (0, 1, or 2). Behavior is identical to Elasticsearch at the Lucene level:
+
+- **Opt-in per query**: not automatic
+- **Lucene fuzzy query**: edit distance computed at query time, Levenshtein automata generated on the fly
+- **BM25 score modifier**: fuzzy matches reduce the document's relevance score; no strict bucket ordering
+- **No prefix fuzzy**: the tilde syntax does not combine prefix expansion with fuzzy matching
+
+### MongoDB Atlas Search
+
+MongoDB Atlas Search is built on Lucene and exposes a `fuzzy` option within the `text` operator:
+
+```json
+{
+  "$search": {
+    "text": {
+      "query": "iphoen",
+      "path": "title",
+      "fuzzy": {
+        "maxEdits": 2,
+        "prefixLength": 3
+      }
+    }
+  }
+}
+```
+
+- **Opt-in**: the `fuzzy` option must be added explicitly; standard `text` queries do not tolerate typos
+- **`prefixLength`**: the first N characters must match exactly before fuzzy expansion applies, which improves performance but reduces coverage for early-position typos
+- **Lucene scoring**: fuzzy matches lower the relevance score, same BM25 mechanics as Elasticsearch and Solr
+- **Computed at query time**: automata are generated on the fly per query
+
+### Manticore Search
+
+Manticore Search (a fork of Sphinx) supports fuzzy matching via the `MATCH` function with a `fuzzy` flag or using `levenshtein()` in expressions:
+
+```sql
+SELECT * FROM movies WHERE MATCH('@title iphoen~2');
+```
+
+Or with the HTTP API using the `fuzziness` parameter in a way similar to Elasticsearch (Manticore offers an Elasticsearch-compatible API layer).
+
+- **Opt-in**: fuzzy matching must be explicitly invoked per query
+- **Levenshtein distance**: computed at query time
+- **Score modifier**: fuzzy matches reduce the BM25-based relevance weight
+- **No automatic prefix+fuzzy**: prefix and fuzzy are separate matching modes
+
+### PostgreSQL (`pg_trgm`)
+
+PostgreSQL's `pg_trgm` extension uses **trigram similarity** rather than edit distance. It splits strings into overlapping 3-character substrings and measures how many trigrams two strings share:
+
+```sql
+SELECT * FROM movies
+WHERE similarity(title, 'iphoen') > 0.3
+ORDER BY similarity(title, 'iphoen') DESC;
+```
+
+This is a fundamentally different approach:
+
+- **Statistical, not edit-based**: "iphone" and "iphoen" share many trigrams (`iph`, `pho`, `hoe`, `oen`) so they score well. But short-word false positives are common because short strings share few trigrams in general
+- **Threshold tuning required**: the similarity threshold (default 0.3) must be manually tuned per use case
+- **Not automatic**: requires explicit `similarity()` calls or GIN/GIST indexes with the `%` operator
+- **No ranking integration**: similarity is a plain score on top of SQL `WHERE` clauses, not a search ranking rule
+- **No prefix awareness**: trigram similarity is not prefix-aware. "prog" does not naturally match "programming" via trigrams the way prefix DFA does
+
+---
+
+## Learn more
+
+- [Typo tolerance settings](/capabilities/full_text_search/relevancy/typo_tolerance_settings): configure thresholds, disable on words or numbers, and more
+- [Typo tolerance calculations](/capabilities/full_text_search/relevancy/typo_tolerance_settings#how-typo-tolerance-works): how edit distance is computed in detail
+- [Concatenated and split queries](/resources/internals/concat): how Meilisearch handles word boundary mistakes
+- [Prefix search](/resources/internals/prefix): how prefix matching works and how it interacts with typo tolerance
+- [Language support](/resources/help/language): Charabia's tokenization and normalization per language
+- [Ranking rules](/capabilities/full_text_search/relevancy/ranking_rules): how the `typo` rule fits into the full ranking pipeline
+- [Ranking vs BM25](/resources/internals/ranking): why Meilisearch's multi-criteria system produces better results for application search
