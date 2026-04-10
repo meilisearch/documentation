@@ -5,6 +5,10 @@ description: Show users which indexed documents were used to generate a conversa
 
 Displaying source documents builds user trust by showing which data the AI used to formulate its answer. Meilisearch provides source information through two special tools: `_meiliSearchProgress` (which reports what searches are being performed) and `_meiliSearchSources` (which returns the actual documents used).
 
+<Note>
+In code examples, replace `WORKSPACE_NAME` with the name of your workspace. On Meilisearch Cloud, the default workspace name is `cloud`.
+</Note>
+
 ## Include source tools in your request
 
 To receive source documents, include both `_meiliSearchProgress` and `_meiliSearchSources` in the `tools` array of your chat completions request:
@@ -18,6 +22,7 @@ curl -N \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "model": "PROVIDER_MODEL_UID",
+    "stream": true,
     "messages": [
       {
         "role": "user",
@@ -29,14 +34,35 @@ curl -N \
         "type": "function",
         "function": {
           "name": "_meiliSearchProgress",
-          "description": "Reports real-time search progress"
+          "description": "Provides information about the current Meilisearch search operation",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "call_id": { "type": "string" },
+              "function_name": { "type": "string" },
+              "function_parameters": { "type": "string" }
+            },
+            "required": ["call_id", "function_name", "function_parameters"],
+            "additionalProperties": false
+          },
+          "strict": true
         }
       },
       {
         "type": "function",
         "function": {
           "name": "_meiliSearchSources",
-          "description": "Provides source documents"
+          "description": "Provides sources of the search",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "call_id": { "type": "string" },
+              "documents": { "type": "array", "items": { "type": "object" } }
+            },
+            "required": ["call_id", "documents"],
+            "additionalProperties": false
+          },
+          "strict": true
         }
       }
     ]
@@ -53,11 +79,44 @@ const client = new OpenAI({
 
 const stream = await client.chat.completions.create({
   model: 'PROVIDER_MODEL_UID',
-  messages: [{ role: 'user', content: 'What are the best sci-fi movies?' }],
   stream: true,
+  messages: [{ role: 'user', content: 'What are the best sci-fi movies?' }],
   tools: [
-    { type: 'function', function: { name: '_meiliSearchProgress', description: 'Reports real-time search progress' } },
-    { type: 'function', function: { name: '_meiliSearchSources', description: 'Provides source documents' } },
+    {
+      type: 'function',
+      function: {
+        name: '_meiliSearchProgress',
+        description: 'Provides information about the current Meilisearch search operation',
+        parameters: {
+          type: 'object',
+          properties: {
+            call_id: { type: 'string' },
+            function_name: { type: 'string' },
+            function_parameters: { type: 'string' },
+          },
+          required: ['call_id', 'function_name', 'function_parameters'],
+          additionalProperties: false,
+        },
+        strict: true,
+      },
+    },
+    {
+      type: 'function',
+      function: {
+        name: '_meiliSearchSources',
+        description: 'Provides sources of the search',
+        parameters: {
+          type: 'object',
+          properties: {
+            call_id: { type: 'string' },
+            documents: { type: 'array', items: { type: 'object' } },
+          },
+          required: ['call_id', 'documents'],
+          additionalProperties: false,
+        },
+        strict: true,
+      },
+    },
   ],
 });
 ```
@@ -81,7 +140,7 @@ const { textStream } = streamText({
     }),
     _meiliSearchSources: tool({
       description: 'Provides source documents',
-      parameters: jsonSchema({ type: 'object', properties: { call_id: { type: 'string' }, documents: { type: 'object' } }, required: ['call_id', 'documents'] }),
+      parameters: jsonSchema({ type: 'object', properties: { call_id: { type: 'string' }, documents: { type: 'array', items: { type: 'object' } } }, required: ['call_id', 'documents'] }),
     }),
   },
 });

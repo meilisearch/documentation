@@ -1144,6 +1144,50 @@
       "destination": "/getting_started/overview"
     },
     {
+      "source": "/learn/experimental/vector_search",
+      "destination": "/capabilities/hybrid_search/getting_started"
+    },
+    {
+      "source": "/learn/getting_started/quick_start",
+      "destination": "/getting_started/first_project"
+    },
+    {
+      "source": "/learn/getting_started/installation",
+      "destination": "/resources/self_hosting/getting_started/install_locally"
+    },
+    {
+      "source": "/learn/configuration/instance_options",
+      "destination": "/resources/self_hosting/configuration/reference"
+    },
+    {
+      "source": "/learn/fine_tuning_results/faceted_search",
+      "destination": "/capabilities/filtering_sorting_faceting/getting_started"
+    },
+    {
+      "source": "/learn/what_is_meilisearch/telemetry",
+      "destination": "/resources/help/telemetry"
+    },
+    {
+      "source": "/learn/cookbooks/laravel_scout",
+      "destination": "/getting_started/frameworks/laravel"
+    },
+    {
+      "source": "/reference/api/tasks/list-tasks",
+      "destination": "/reference/api/async-task-management/list-tasks"
+    },
+    {
+      "source": "/learn/filtering_and_sorting/filtering",
+      "destination": "/capabilities/filtering_sorting_faceting/getting_started"
+    },
+    {
+      "source": "/guides/misc/postman_collection",
+      "destination": "/getting_started/integrations/postman"
+    },
+    {
+      "source": "/reference/api/tasks/get-task",
+      "destination": "/reference/api/async-task-management/get-task"
+    },
+    {
       "source": "/learn/advanced",
       "destination": "/capabilities/overview"
     },

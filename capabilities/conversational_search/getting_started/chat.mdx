@@ -7,11 +7,21 @@ description: Build a multi-turn conversational search interface using Meilisearc
 import CodeSamplesChatGetSettings1 from '/snippets/generated-code-samples/code_samples_chat_get_settings_1.mdx';
 import CodeSamplesChatPatchSettings1 from '/snippets/generated-code-samples/code_samples_chat_patch_settings_1.mdx';
 
-This guide shows you how to build a multi-turn chat interface where users ask questions and follow up with additional context. Make sure you have completed the [setup guide](/capabilities/conversational_search/getting_started/setup) before continuing.
+Meilisearch's chat completions endpoint works as a built-in RAG (Retrieval Augmented Generation) system: for each user message, Meilisearch searches your indexes, then passes the retrieved documents to the LLM to generate a grounded response. This guide shows you how to build a multi-turn chat interface on top of this.
 
-## Send your first chat completions request
+Make sure you have completed the [setup guide](/capabilities/conversational_search/getting_started/setup) before continuing.
 
-Send a streaming request to the chat completions API route:
+<Note>
+In code examples, replace `WORKSPACE_NAME` with the name of your workspace. On Meilisearch Cloud, the default workspace name is `cloud`.
+</Note>
+
+## Streaming is required
+
+All requests to the chat completions endpoint must include `"stream": true`. Non-streaming (`stream: false`) is not yet supported and returns a `501 Not Implemented` error.
+
+## Send a streaming request
+
+Send a `POST` request to `/chats/{workspace}/chat/completions` with `stream: true`:
 
 <CodeGroup>
 
@@ -22,26 +32,11 @@ curl -N \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "model": "PROVIDER_MODEL_UID",
+    "stream": true,
     "messages": [
       {
         "role": "user",
-        "content": "USER_PROMPT"
-      }
-    ],
-    "tools": [
-      {
-        "type": "function",
-        "function": {
-          "name": "_meiliSearchProgress",
-          "description": "Reports real-time search progress to the user"
-        }
-      },
-      {
-        "type": "function",
-        "function": {
-          "name": "_meiliSearchSources",
-          "description": "Provides sources and references for the information"
-        }
+        "content": "What movies are about artificial intelligence?"
       }
     ]
   }'
@@ -57,12 +52,8 @@ const client = new OpenAI({
 
 const stream = await client.chat.completions.create({
   model: 'PROVIDER_MODEL_UID',
-  messages: [{ role: 'user', content: 'USER_PROMPT' }],
   stream: true,
-  tools: [
-    { type: 'function', function: { name: '_meiliSearchProgress', description: 'Reports real-time search progress' } },
-    { type: 'function', function: { name: '_meiliSearchSources', description: 'Provides source documents' } },
-  ],
+  messages: [{ role: 'user', content: 'What movies are about artificial intelligence?' }],
 });
 
 for await (const chunk of stream) {
@@ -73,7 +64,7 @@ for await (const chunk of stream) {
 
 ```javascript Vercel AI SDK
 import { createOpenAI } from '@ai-sdk/openai';
-import { streamText, tool, jsonSchema } from 'ai';
+import { streamText } from 'ai';
 
 const meilisearch = createOpenAI({
   baseURL: 'MEILISEARCH_URL/chats/WORKSPACE_NAME',
@@ -82,17 +73,7 @@ const meilisearch = createOpenAI({
 
 const { textStream } = streamText({
   model: meilisearch('PROVIDER_MODEL_UID'),
-  messages: [{ role: 'user', content: 'USER_PROMPT' }],
-  tools: {
-    _meiliSearchProgress: tool({
-      description: 'Reports real-time search progress',
-      parameters: jsonSchema({ type: 'object', properties: { call_id: { type: 'string' }, function_name: { type: 'string' }, function_parameters: { type: 'string' } }, required: ['call_id', 'function_name', 'function_parameters'] }),
-    }),
-    _meiliSearchSources: tool({
-      description: 'Provides source documents',
-      parameters: jsonSchema({ type: 'object', properties: { call_id: { type: 'string' }, documents: { type: 'object' } }, required: ['call_id', 'documents'] }),
-    }),
-  },
+  messages: [{ role: 'user', content: 'What movies are about artificial intelligence?' }],
 });
 
 for await (const text of textStream) {
@@ -102,148 +83,289 @@ for await (const text of textStream) {
 
 </CodeGroup>
 
-- `model` is mandatory and must indicate a model supported by your chosen `source`
-- `messages` contains the messages exchanged between the conversational search agent and the user
-- `tools` sets up two optional but highly [recommended tools](/capabilities/conversational_search/advanced/chat_tooling_reference):
-  - `_meiliSearchProgress`: shows users what searches are being performed
-  - `_meiliSearchSources`: displays the actual documents used to generate responses
+This basic request works and the LLM will search your indexes and generate an answer. However, without Meilisearch tools, you get no visibility into what is being searched and no way to maintain conversation context across follow-up questions. The next section explains how to address this.
 
-## Maintain conversation context
+## Meilisearch tools
 
-The chat completions endpoint is stateless. To maintain conversation history across multiple exchanges, you need to accumulate messages and send them with each request.
+Meilisearch provides three special tools that improve the chat experience. Declare them in the `tools` array of your request and Meilisearch intercepts them — they are never forwarded to the LLM provider.
+
+<Warning>
+These tool definitions must include the exact parameter schemas below. Missing or incorrect parameters will prevent the tools from working.
+</Warning>
+
+| Tool | Purpose |
+|------|---------|
+| `_meiliSearchProgress` | Reports what searches are being performed in real time |
+| `_meiliSearchSources` | Returns the documents used by the LLM to formulate its answer |
+| `_meiliAppendConversationMessage` | Asks the client to append internal tool calls and results to the conversation history |
+
+The `call_id` field links `_meiliSearchProgress` and `_meiliSearchSources` events together: both carry the same `call_id`, allowing you to associate a search query with the documents it returned.
+
+`_meiliAppendConversationMessage` is the key to multi-turn conversations. Since the endpoint is stateless, Meilisearch uses this tool to expose the internal search tool calls and their results back to the client. You must push these messages into your `messages` array before the next request, or the LLM will lose the context from previous searches and produce lower-quality answers.
+
+### Tool schemas
 
 <CodeGroup>
 
-```javascript JavaScript Fetch
+```json _meiliSearchProgress
+{
+  "type": "function",
+  "function": {
+    "name": "_meiliSearchProgress",
+    "description": "Provides information about the current Meilisearch search operation",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "call_id": {
+          "type": "string",
+          "description": "The call ID to track the sources of the search"
+        },
+        "function_name": {
+          "type": "string",
+          "description": "The name of the function being executed"
+        },
+        "function_parameters": {
+          "type": "string",
+          "description": "The parameters of the function being executed, encoded in JSON"
+        }
+      },
+      "required": ["call_id", "function_name", "function_parameters"],
+      "additionalProperties": false
+    },
+    "strict": true
+  }
+}
+```
+
+```json _meiliSearchSources
+{
+  "type": "function",
+  "function": {
+    "name": "_meiliSearchSources",
+    "description": "Provides sources of the search",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "call_id": {
+          "type": "string",
+          "description": "The call ID to track the original search associated to those sources"
+        },
+        "documents": {
+          "type": "array",
+          "items": { "type": "object" },
+          "description": "The documents associated with the search. Only displayed attributes are returned"
+        }
+      },
+      "required": ["call_id", "documents"],
+      "additionalProperties": false
+    },
+    "strict": true
+  }
+}
+```
+
+```json _meiliAppendConversationMessage
+{
+  "type": "function",
+  "function": {
+    "name": "_meiliAppendConversationMessage",
+    "description": "Append a new message to the conversation based on what happened internally",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "role": {
+          "type": "string",
+          "description": "The role of the message author"
+        },
+        "content": {
+          "type": "string",
+          "description": "The content of the message. Required unless tool_calls is specified"
+        },
+        "tool_calls": {
+          "type": ["array", "null"],
+          "description": "Tool calls generated by the model",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string" },
+              "type": { "type": "string" },
+              "function": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string" },
+                  "arguments": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "tool_call_id": {
+          "type": ["string", "null"],
+          "description": "Tool call this message is responding to"
+        }
+      },
+      "required": ["role", "content", "tool_calls", "tool_call_id"],
+      "additionalProperties": false
+    },
+    "strict": true
+  }
+}
+```
+
+</CodeGroup>
+
+## Complete example: progress, sources, and history
+
+The following example combines all three tools and demonstrates the full recommended usage: streaming progress, displaying sources, and maintaining conversation history for multi-turn questions.
+
+```javascript JavaScript (Fetch)
+const MEILISEARCH_TOOLS = [
+  {
+    type: 'function',
+    function: {
+      name: '_meiliSearchProgress',
+      description: 'Provides information about the current Meilisearch search operation',
+      parameters: {
+        type: 'object',
+        properties: {
+          call_id: { type: 'string' },
+          function_name: { type: 'string' },
+          function_parameters: { type: 'string' },
+        },
+        required: ['call_id', 'function_name', 'function_parameters'],
+        additionalProperties: false,
+      },
+      strict: true,
+    },
+  },
+  {
+    type: 'function',
+    function: {
+      name: '_meiliSearchSources',
+      description: 'Provides sources of the search',
+      parameters: {
+        type: 'object',
+        properties: {
+          call_id: { type: 'string' },
+          documents: { type: 'array', items: { type: 'object' } },
+        },
+        required: ['call_id', 'documents'],
+        additionalProperties: false,
+      },
+      strict: true,
+    },
+  },
+  {
+    type: 'function',
+    function: {
+      name: '_meiliAppendConversationMessage',
+      description: 'Append a new message to the conversation based on what happened internally',
+      parameters: {
+        type: 'object',
+        properties: {
+          role: { type: 'string' },
+          content: { type: 'string' },
+          tool_calls: { type: ['array', 'null'] },
+          tool_call_id: { type: ['string', 'null'] },
+        },
+        required: ['role', 'content', 'tool_calls', 'tool_call_id'],
+        additionalProperties: false,
+      },
+      strict: true,
+    },
+  },
+];
+
 const messages = [];
 
-async function sendMessage(userMessage) {
+async function chat(userMessage) {
   messages.push({ role: 'user', content: userMessage });
 
-  const response = await fetch(
-    'MEILISEARCH_URL/chats/WORKSPACE_NAME/chat/completions',
-    {
-      method: 'POST',
-      headers: {
-        Authorization: 'Bearer MEILISEARCH_KEY',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: 'PROVIDER_MODEL_UID',
-        messages,
-      }),
-    }
-  );
+  const response = await fetch('MEILISEARCH_URL/chats/WORKSPACE_NAME/chat/completions', {
+    method: 'POST',
+    headers: {
+      Authorization: 'Bearer MEILISEARCH_KEY',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      model: 'PROVIDER_MODEL_UID',
+      stream: true,
+      messages,
+      tools: MEILISEARCH_TOOLS,
+    }),
+  });
 
-  const reader = response.body.getReader();
+  const reader = response.body?.getReader();
+  if (!reader) throw new Error('No readable stream on response');
   const decoder = new TextDecoder();
-  let assistantMessage = '';
+  let answer = '';
+  let buffer = '';
+  const pendingToolCalls = {};
 
   while (true) {
     const { done, value } = await reader.read();
     if (done) break;
 
-    for (const line of decoder.decode(value).split('\n')) {
-      if (line.startsWith('data: ') && line !== 'data: [DONE]') {
-        const content = JSON.parse(line.slice(6)).choices[0]?.delta?.content;
-        if (content) {
-          assistantMessage += content;
-          // Update the UI progressively
+    buffer += decoder.decode(value, { stream: true });
+    const lines = buffer.split('\n');
+    buffer = lines.pop() ?? ''; // retain any incomplete trailing line
+
+    for (const line of lines) {
+      if (!line.startsWith('data: ') || line === 'data: [DONE]') continue;
+
+      const chunk = JSON.parse(line.slice(6));
+      const delta = chunk.choices[0]?.delta;
+
+      // Accumulate answer tokens
+      if (delta?.content) {
+        answer += delta.content;
+        process.stdout.write(delta.content);
+      }
+
+      // Accumulate tool call arguments (they may arrive in multiple chunks)
+      for (const toolCall of delta?.tool_calls ?? []) {
+        if (toolCall.id) {
+          pendingToolCalls[toolCall.id] = { name: toolCall.function.name, args: '' };
+        }
+        const pending = toolCall.id
+          ? pendingToolCalls[toolCall.id]
+          : Object.values(pendingToolCalls).at(-1);
+        if (pending && toolCall.function?.arguments) {
+          pending.args += toolCall.function.arguments;
         }
       }
     }
   }
 
-  messages.push({ role: 'assistant', content: assistantMessage });
-}
+  // Process completed tool calls
+  for (const call of Object.values(pendingToolCalls)) {
+    const args = JSON.parse(call.args);
 
-// First question
-await sendMessage('What sci-fi movies came out in 2024?');
-// Follow-up — the agent remembers the context
-await sendMessage('Which one has the best rating?');
-```
+    if (call.name === '_meiliSearchProgress') {
+      // Show real-time search progress in the UI
+      const params = JSON.parse(args.function_parameters);
+      console.log(`Searched "${params.q}" in index "${params.index_uid}"`);
+    }
 
-```javascript OpenAI SDK
-import OpenAI from 'openai';
+    if (call.name === '_meiliSearchSources') {
+      // Display source documents alongside the answer
+      console.log('Sources used:', args.documents);
+    }
 
-const client = new OpenAI({
-  baseURL: 'MEILISEARCH_URL/chats/WORKSPACE_NAME',
-  apiKey: 'MEILISEARCH_KEY',
-});
-
-const messages = [];
-
-async function sendMessage(userMessage) {
-  messages.push({ role: 'user', content: userMessage });
-
-  // .stream() accumulates chunks and exposes helpers
-  const runner = client.chat.completions.stream({
-    model: 'PROVIDER_MODEL_UID',
-    messages,
-  });
-
-  runner.on('content', (delta) => {
-    // Update the UI progressively
-    process.stdout.write(delta);
-  });
-
-  // .finalMessage() returns the complete assistant message
-  const finalMessage = await runner.finalMessage();
-  messages.push(finalMessage);
-}
-
-// First question
-await sendMessage('What sci-fi movies came out in 2024?');
-// Follow-up — the agent remembers the context
-await sendMessage('Which one has the best rating?');
-```
-
-```javascript Vercel AI SDK
-import { createOpenAI } from '@ai-sdk/openai';
-import { streamText, tool, jsonSchema } from 'ai';
-
-const meilisearch = createOpenAI({
-  baseURL: 'MEILISEARCH_URL/chats/WORKSPACE_NAME',
-  apiKey: 'MEILISEARCH_KEY',
-});
-
-const messages = [];
-
-async function sendMessage(userMessage) {
-  messages.push({ role: 'user', content: userMessage });
-
-  const result = streamText({
-    model: meilisearch('PROVIDER_MODEL_UID'),
-    messages,
-    tools: {
-      _meiliSearchProgress: tool({
-        description: 'Reports real-time search progress',
-        parameters: jsonSchema({ type: 'object', properties: { call_id: { type: 'string' }, function_name: { type: 'string' }, function_parameters: { type: 'string' } }, required: ['call_id', 'function_name', 'function_parameters'] }),
-      }),
-      _meiliSearchSources: tool({
-        description: 'Provides source documents',
-        parameters: jsonSchema({ type: 'object', properties: { call_id: { type: 'string' }, documents: { type: 'object' } }, required: ['call_id', 'documents'] }),
-      }),
-    },
-    // onFinish provides the complete response messages
-    onFinish({ response }) {
-      messages.push(...response.messages);
-    },
-  });
-
-  for await (const text of result.textStream) {
-    // Update the UI progressively
-    process.stdout.write(text);
+    if (call.name === '_meiliAppendConversationMessage') {
+      // Append internal search context to maintain quality in follow-up questions
+      messages.push(args);
+    }
   }
+
+  messages.push({ role: 'assistant', content: answer });
 }
 
 // First question
-await sendMessage('What sci-fi movies came out in 2024?');
-// Follow-up — the agent remembers the context
-await sendMessage('Which one has the best rating?');
+await chat('What movies are about artificial intelligence?');
+// Follow-up — the agent uses the search context from the previous turn
+await chat('Which one has the best reviews?');
 ```
-
-</CodeGroup>
 
 ## Troubleshooting
 
@@ -251,13 +373,13 @@ await sendMessage('Which one has the best rating?');
 
 **Causes:**
 
-- Experimental features not enabled
+- Chat completions feature not enabled
 - Missing authentication in requests
 
 **Solution:**
 
-1. Enable experimental features (see [setup guide](/capabilities/conversational_search/getting_started/setup))
-2. Include Authorization header in all requests
+1. Enable the feature (see [setup guide](/capabilities/conversational_search/getting_started/setup))
+2. Include the `Authorization` header in all requests
 
 ### "Invalid API key" error
 
@@ -266,12 +388,12 @@ await sendMessage('Which one has the best rating?');
 **Solution:**
 
 - Use the "Default Chat API Key"
-- Don't use search or admin API keys for chat endpoints
+- Do not use search or admin API keys for chat endpoints
 - Find your chat key with the [list keys endpoint](/reference/api/keys/list-api-keys)
 
 ### "Socket connection closed unexpectedly"
 
-**Cause:** Usually means the OpenAI API key is missing or invalid in workspace settings
+**Cause:** Usually means the LLM provider API key is missing or invalid in workspace settings
 
 **Solution:**
 
@@ -279,18 +401,17 @@ await sendMessage('Which one has the best rating?');
 
    <CodeSamplesChatGetSettings1 />
 
-2. Update with valid API key:
+2. Update with a valid API key:
 
    <CodeSamplesChatPatchSettings1 />
 
-### Chat not searching the database
+### No search progress visible
 
-**Cause:** Missing Meilisearch tools in the request
+**Cause:** The `_meiliSearchProgress` tool is not declared in the request
 
 **Solution:**
 
-- Include `_meiliSearchProgress` and `_meiliSearchSources` tools in your request
-- Ensure indexes have proper chat descriptions configured
+The search still runs and the LLM still answers, but without `_meiliSearchProgress` you receive no visibility into what searches are being performed. Add all three Meilisearch tools to your request as shown in the [complete example](#complete-example-progress-sources-and-history).
 
 ## Next steps
 
@@ -306,5 +427,11 @@ await sendMessage('Which one has the best rating?');
   </Card>
   <Card title="Configure guardrails" href="/capabilities/conversational_search/how_to/configure_guardrails">
     Restrict AI responses to topics covered by your data.
+  </Card>
+  <Card title="Chat completions API reference" href="/reference/api/chats/request-a-chat-completion">
+    Full reference for the chat completions endpoint.
+  </Card>
+  <Card title="Reduce hallucination" href="/capabilities/conversational_search/advanced/reduce_hallucination">
+    Techniques to keep AI responses grounded in your data.
   </Card>
 </CardGroup>

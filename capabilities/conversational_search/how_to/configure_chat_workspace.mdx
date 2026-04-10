@@ -8,6 +8,10 @@ import CodeSamplesChatGetSettings1 from '/snippets/generated-code-samples/code_s
 
 A chat workspace defines the configuration for a conversational search session, including the LLM provider, system prompt, and search behavior. You can create multiple workspaces targeting different use cases, such as a public-facing knowledge base and an internal support tool.
 
+<Note>
+On Meilisearch Cloud, the default workspace name is `cloud`. Replace `WORKSPACE_NAME` with `cloud` in all API calls. If you need additional workspaces, contact us.
+</Note>
+
 ## Create a workspace
 
 Create a workspace by sending a `PATCH` request to `/chats/{workspace_uid}/settings`. If the workspace does not exist, Meilisearch creates it automatically.
@@ -40,12 +44,14 @@ The `source` field determines which LLM provider Meilisearch uses. Each provider
 |----------|---------------|-----------------|-----------------|
 | OpenAI | `openAi` | `apiKey` | `baseUrl`, `orgId`, `projectId` |
 | Azure OpenAI | `azureOpenAi` | `apiKey`, `baseUrl` | `deploymentId`, `apiVersion` |
-| Mistral | `mistral` | `apiKey` | `baseUrl` |
+| Mistral | `mistral` | `apiKey`, `baseUrl` | |
 | vLLM | `vLlm` | `baseUrl` | |
+
+`baseUrl` is required for all providers except OpenAI. For OpenAI, it is optional and only needed when using a custom endpoint.
 
 ### Azure OpenAI example
 
-Azure OpenAI requires additional fields compared to other providers:
+Azure OpenAI requires additional fields for deployment configuration:
 
 <CodeGroup>
 
@@ -97,6 +103,37 @@ The `prompts` object accepts additional fields that help the LLM understand how 
 
 These fields provide additional context that improves how the agent formulates searches. For guidance on writing effective system prompts, see [configure guardrails](/capabilities/conversational_search/how_to/configure_guardrails).
 
+## LLM provider parameters passthrough
+
+Meilisearch forwards standard chat completion parameters directly to the configured LLM provider. This means you can include parameters like `temperature`, `top_p`, `frequency_penalty`, or `presence_penalty` in your [chat completions requests](/reference/api/chats/request-a-chat-completion) and Meilisearch will pass them through to the provider as-is.
+
+For example, lowering `temperature` makes responses more deterministic and factual, while raising it produces more varied and creative outputs:
+
+<CodeGroup>
+
+```bash cURL
+curl -N \
+  -X POST 'MEILISEARCH_URL/chats/WORKSPACE_NAME/chat/completions' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "model": "PROVIDER_MODEL_UID",
+    "messages": [
+      {
+        "role": "user",
+        "content": "What are your return policies?"
+      }
+    ],
+    "temperature": 0.2
+  }'
+```
+
+</CodeGroup>
+
+<Note>
+Available parameters and their behavior depend on the LLM provider you configured. Refer to your provider's documentation for the full list of supported parameters and their effects.
+</Note>
+
 ## Configure indexes for chat
 
 Before a workspace can search your data, each index must have its chat settings configured. See the dedicated [configure index chat settings](/capabilities/conversational_search/how_to/configure_index_chat_settings) guide for full documentation on `description`, `documentTemplate`, `searchParameters`, and other fields.
@@ -137,4 +174,5 @@ curl \
 
 - [Stream chat responses](/capabilities/conversational_search/how_to/stream_chat_responses) to deliver answers token by token
 - [Configure guardrails](/capabilities/conversational_search/how_to/configure_guardrails) to control the scope and quality of responses
-- Consult the [full API reference](/reference/api/chats/update-settings-of-a-chat-workspace) for all available workspace settings
+- [Reduce hallucination](/capabilities/conversational_search/advanced/reduce_hallucination) with system prompt engineering and few-shot prompting
+- Consult the [workspace settings API reference](/reference/api/chats/update-settings-of-a-chat-workspace) and the [chat completions API reference](/reference/api/chats/request-a-chat-completion) for all available parameters

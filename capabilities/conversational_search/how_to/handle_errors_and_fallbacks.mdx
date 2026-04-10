@@ -35,13 +35,25 @@ async function chat(messages) {
         },
         body: JSON.stringify({
           model: MODEL,
+          stream: true,
           messages,
           tools: [
             {
               type: 'function',
               function: {
                 name: '_meiliSearchProgress',
-                description: 'Reports search progress'
+                description: 'Provides information about the current Meilisearch search operation',
+                parameters: {
+                  type: 'object',
+                  properties: {
+                    call_id: { type: 'string' },
+                    function_name: { type: 'string' },
+                    function_parameters: { type: 'string' },
+                  },
+                  required: ['call_id', 'function_name', 'function_parameters'],
+                  additionalProperties: false,
+                },
+                strict: true,
               }
             }
           ]
@@ -153,14 +165,14 @@ You can also detect empty results on the client side by inspecting the `_meiliSe
 
 ```javascript
 function handleSources(toolCall) {
-  const sources = JSON.parse(toolCall.function.arguments);
+  const args = JSON.parse(toolCall.function.arguments);
 
-  if (!sources.results || sources.results.length === 0) {
+  if (!args.documents || Object.keys(args.documents).length === 0) {
     showMessage('No matching documents found. Try different keywords or broaden your search.');
     return;
   }
 
-  displaySources(sources.results);
+  displaySources(args.documents);
 }
 ```
 
@@ -183,7 +195,7 @@ async function chatWithRetry(messages, maxRetries = 3) {
           'Authorization': `Bearer ${API_KEY}`,
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ model: MODEL, messages })
+        body: JSON.stringify({ model: MODEL, stream: true, messages })
       }
     );
 

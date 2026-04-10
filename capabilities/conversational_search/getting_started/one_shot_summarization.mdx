@@ -8,6 +8,14 @@ One-shot summarization uses the same `/chats` API as multi-turn chat, but with a
 
 Make sure you have completed the [setup guide](/capabilities/conversational_search/getting_started/setup) before continuing.
 
+<Note>
+In code examples, replace `WORKSPACE_NAME` with the name of your workspace. On Meilisearch Cloud, the default workspace name is `cloud`.
+</Note>
+
+<Warning>
+All requests to the chat completions endpoint must include `"stream": true`. Non-streaming (`stream: false`) is not yet supported and returns a `501 Not Implemented` error.
+</Warning>
+
 ## Configure your workspace prompt for summarization
 
 The key difference from a chat interface is the system prompt. For summarization, instruct the model to produce concise, self-contained answers and avoid follow-up questions:
@@ -34,7 +42,7 @@ Key differences from a multi-turn chat prompt:
 - The model is told **not to ask follow-up questions**
 - Responses are limited to a few sentences
 
-You can use the same workspace you already created in the setup guide, or create a dedicated one for this use case. The rest of the workspace configuration (LLM provider, API key, etc.) stays the same.
+Since the system prompt controls the answer style, we recommend creating a dedicated workspace for summarization rather than reusing a chat workspace. This keeps the prompts separate and avoids affecting other use cases. On Meilisearch Cloud, if you need a second workspace, contact our support team.
 
 ## Send a single question
 
@@ -43,12 +51,13 @@ Send a request to the chat completions endpoint. The difference from multi-turn 
 <CodeGroup>
 
 ```bash cURL
-curl \
-  -N -X POST 'MEILISEARCH_URL/chats/WORKSPACE_NAME/chat/completions' \
+curl -N \
+  -X POST 'MEILISEARCH_URL/chats/WORKSPACE_NAME/chat/completions' \
   -H 'Authorization: Bearer MEILISEARCH_KEY' \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "model": "PROVIDER_MODEL_UID",
+    "stream": true,
     "messages": [
       {
         "role": "user",
@@ -65,7 +74,7 @@ curl \
             "type": "object",
             "properties": {
               "call_id": { "type": "string", "description": "The call ID to track the original search" },
-              "documents": { "type": "object", "description": "The documents associated with the search" }
+              "documents": { "type": "array", "items": { "type": "object" }, "description": "The documents associated with the search" }
             },
             "required": ["call_id", "documents"],
             "additionalProperties": false
@@ -118,7 +127,7 @@ const { textStream } = streamText({
   tools: {
     _meiliSearchSources: tool({
       description: 'Provides source documents',
-      parameters: jsonSchema({ type: 'object', properties: { call_id: { type: 'string' }, documents: { type: 'object' } }, required: ['call_id', 'documents'] }),
+      parameters: jsonSchema({ type: 'object', properties: { call_id: { type: 'string' }, documents: { type: 'array', items: { type: 'object' } } }, required: ['call_id', 'documents'] }),
     }),
   },
 });
@@ -135,6 +144,8 @@ for await (const text of textStream) {
 
 Including the `_meiliSearchSources` tool lets you display the source documents alongside the summarized answer, so users can verify the information. In a real application, you would run this in parallel with a standard Meilisearch search request and display both results together.
 
+For summarization, you may want to use a lower `temperature` value (for example, `0.1` or `0.2`) to produce more deterministic, factual answers. Meilisearch [passes these parameters through](/capabilities/conversational_search/how_to/configure_chat_workspace#llm-provider-parameters-passthrough) to your LLM provider.
+
 ## Next steps
 
 <CardGroup cols={2}>
@@ -149,5 +160,8 @@ Including the `_meiliSearchSources` tool lets you display the source documents a
   </Card>
   <Card title="Reduce hallucination" href="/capabilities/conversational_search/advanced/reduce_hallucination">
     Learn techniques to improve accuracy of AI-generated answers.
+  </Card>
+  <Card title="Chat completions API reference" href="/reference/api/chats/request-a-chat-completion">
+    Full reference for the chat completions endpoint.
   </Card>
 </CardGroup>

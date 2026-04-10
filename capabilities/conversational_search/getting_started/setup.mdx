@@ -4,7 +4,6 @@ sidebarTitle: Setup
 description: Enable the chat completions feature, configure your indexes, and create a workspace to start using conversational search.
 ---
 
-import CodeSamplesUpdateExperimentalFeaturesChat1 from '/snippets/generated-code-samples/code_samples_update_experimental_features_chat_1.mdx';
 import CodeSamplesAuthorizationHeader1 from '/snippets/generated-code-samples/code_samples_authorization_header_1.mdx';
 import CodeSamplesChatCreateKey1 from '/snippets/generated-code-samples/code_samples_chat_create_key_1.mdx';
 
@@ -12,11 +11,14 @@ Before building a chat interface or generating summarized answers, you need to e
 
 ## Enable the chat completions feature
 
-If you are using Meilisearch Cloud, enable chat completions from your project's settings page under "Experimental features".
+Enable chat completions from your Meilisearch Cloud project in one of two ways:
 
-For self-hosted instances, enable the feature through the experimental features endpoint:
+- Go to your project's **Settings** page and enable it under **Experimental features**
+- Or open the **Chat** tab in your project and activate the feature directly from there
 
-<CodeSamplesUpdateExperimentalFeaturesChat1 />
+<Note>
+For self-hosted instances, enable the feature through the [experimental features API](/reference/api/experimental-features/update-experimental-features).
+</Note>
 
 ## Find your chat API key
 
@@ -34,7 +36,7 @@ If your instance does not have a Default Chat API Key, create one manually:
 
 ## Configure your indexes
 
-Configure the `chat` settings for each index you want to make available to the conversational search agent:
+Configure the [chat settings](/reference/api/chat-settings/update-index-chat-settings) for each index you want to make available to the conversational search agent:
 
 <CodeGroup>
 
@@ -44,29 +46,33 @@ curl \
   -H 'Authorization: Bearer MEILISEARCH_KEY' \
   -H 'Content-Type: application/json' \
   --data-binary '{
-    "description": "A comprehensive database of TYPE_OF_DOCUMENT containing titles, descriptions, genres, and release dates to help users searching for TYPE_OF_DOCUMENT",
-    "documentTemplate": "{% for field in fields %}{% if field.is_searchable and field.value != nil %}{{ field.name }}: {{ field.value }}\n{% endif %}{% endfor %}",
+    "description": "A movie database containing titles, genres, release dates, keywords, and plot overviews to help users find films to watch",
+    "documentTemplate": "A movie titled '\''{{doc.title}}'\'' that released in {{ doc.release_date | date: '\''%Y'\'' }}. The movie genres are: {{doc.genres}}. The key themes include: {{doc.keywords}}. The storyline is about: {{doc.overview|truncatewords: 100}}",
     "documentTemplateMaxBytes": 400
   }'
 ```
 
 </CodeGroup>
 
-- `description` tells the LLM what the index contains. A good description helps the agent decide which index to search and improves answer relevance
-- `documentTemplate` defines the document data Meilisearch sends to the AI provider. This template outputs all searchable fields in your documents, which may not be ideal if your documents have many fields. Consult the [document template best practices](/capabilities/hybrid_search/advanced/document_template_best_practices) article for more guidance
-- `documentTemplateMaxBytes` establishes a size limit for the document templates. Documents bigger than 400 bytes are truncated to ensure a good balance between speed and relevancy
+- `description` tells the LLM what the index contains. A good description helps the agent decide which index to search and improves answer relevance. See [optimize chat prompts](/capabilities/conversational_search/how_to/optimize_chat_prompts#write-a-good-index-description) for tips on writing effective descriptions
+- `documentTemplate` is a [Liquid](https://shopify.github.io/liquid/) template that defines the text representation of each document sent to the LLM. Write it as natural language so the model can extract relevant information easily. Consult the [document template best practices](/capabilities/hybrid_search/advanced/document_template_best_practices) article for more guidance
+- `documentTemplateMaxBytes` sets a size limit on the text generated from the template. If the rendered text exceeds this limit, it is truncated. The default of 400 bytes balances context quality and speed
 
 You can also configure `searchParameters` to control how the LLM searches the index (hybrid search, result limits, sorting, etc.). See [configure index chat settings](/capabilities/conversational_search/how_to/configure_index_chat_settings) for all available options.
 
-## Create a workspace
+## Configure a workspace
 
-Chat completion workspaces are isolated configurations targeting different use cases. Each workspace can:
+A workspace holds your LLM provider configuration and system prompt. Each workspace can:
 
-- Use different LLM providers (OpenAI, Azure OpenAI, Mistral, vLLM)
-- Establish separate conversation contexts via system prompts
+- Connect to a different LLM provider (OpenAI, Azure OpenAI, Mistral, vLLM, or any OpenAI-compatible provider)
+- Define its own system prompt and conversation context
 - Access a specific set of indexes
 
-Create a workspace by setting your LLM provider as its `source`:
+The specific model to use is chosen per request in the `/chat/completions` call, not in the workspace settings.
+
+### On Meilisearch Cloud
+
+Your project comes with a single default workspace named `cloud`. Use `cloud` as the `WORKSPACE_NAME` in all API calls:
 
 <CodeGroup>
 
@@ -107,6 +113,7 @@ curl \
   --data-binary '{
     "source": "mistral",
     "apiKey": "PROVIDER_API_KEY",
+    "baseUrl": "PROVIDER_API_URL",
     "prompts": {
       "system": "You are a helpful assistant. Answer questions based only on the provided context."
     }
@@ -129,9 +136,62 @@ curl \
 
 </CodeGroup>
 
-Which fields are mandatory depends on your chosen provider. In most cases, you need to provide an `apiKey`. `baseUrl` is only mandatory for Azure OpenAI and vLLM.
+If your use case requires multiple workspaces, contact us. This limit may change in the future.
 
-The `prompts.system` field gives the agent its baseline instructions. [The `prompts` object accepts additional fields](/reference/api/chats/update-chat) that help the agent formulate better searches.
+### On self-hosted instances
+
+You can create as many workspaces as you need. Choose any name for `WORKSPACE_NAME` — if the workspace does not exist, Meilisearch creates it automatically:
+
+<CodeGroup>
+
+```bash OpenAI
+curl \
+  -X PATCH 'MEILISEARCH_URL/chats/WORKSPACE_NAME/settings' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "source": "openAi",
+    "apiKey": "PROVIDER_API_KEY",
+    "prompts": {
+      "system": "You are a helpful assistant. Answer questions based only on the provided context."
+    }
+  }'
+```
+
+```bash Mistral
+curl \
+  -X PATCH 'MEILISEARCH_URL/chats/WORKSPACE_NAME/settings' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "source": "mistral",
+    "apiKey": "PROVIDER_API_KEY",
+    "baseUrl": "PROVIDER_API_URL",
+    "prompts": {
+      "system": "You are a helpful assistant. Answer questions based only on the provided context."
+    }
+  }'
+```
+
+```bash vLLM
+curl \
+  -X PATCH 'MEILISEARCH_URL/chats/WORKSPACE_NAME/settings' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "source": "vLlm",
+    "baseUrl": "PROVIDER_API_URL",
+    "prompts": {
+      "system": "You are a helpful assistant. Answer questions based only on the provided context."
+    }
+  }'
+```
+
+</CodeGroup>
+
+`baseUrl` is required for all providers except OpenAI. For OpenAI, it is optional and only needed if you are using a custom endpoint. See the [workspace settings API reference](/reference/api/chats/update-settings-of-a-chat-workspace) for all available fields.
+
+The `prompts.system` field gives the agent its baseline instructions. For guidance on writing effective prompts, see [configure guardrails](/capabilities/conversational_search/how_to/configure_guardrails) and [optimize chat prompts](/capabilities/conversational_search/how_to/optimize_chat_prompts).
 
 ## Next steps
 
