@@ -12,7 +12,7 @@
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
-    "mint": "^4.2.108",
+    "mint": "^4.2.506",
     "typescript": "^5.0.0"
   },
   "scripts": {
