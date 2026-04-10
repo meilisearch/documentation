@@ -25,16 +25,24 @@ Joins enable you to define relationships between documents in different indices,
 
 ## How relationships work
 
-A relationship connects a **source index** to a **target index** using foreign key fields:
+A relationship connects a **source index** to a **target index** using foreign key fields. For example, a document in the `deals` index references a document in the `companies` index through a `company_id` field:
 
-```
-Source Index (Deals)          Target Index (Companies)
-├── id: "deal_1"              ├── id: "company_1"
-├── company_id: "company_1" ──┤   └── name: "Acme Inc"
-└── title: "Contract X"        
+```json Deals index
+{
+  "id": "deal_1",
+  "title": "Contract X",
+  "company_id": "company_1"
+}
 ```
 
-The `company_id` field in the Deals index links to the `id` field in the Companies index. Once configured, Meilisearch automatically hydrates the related document in search results.
+```json Companies index
+{
+  "id": "company_1",
+  "name": "Acme Inc"
+}
+```
+
+Once the relationship is configured, Meilisearch automatically hydrates the related document in search results, replacing `company_id` with the full company object.
 
 ## Define a relationship
 

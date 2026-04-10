@@ -187,20 +187,23 @@ Filter to include public documents:
 
 ## Example: Implementing on the server
 
-```pseudocode
-function searchDocuments(query, tenantToken) {
+```javascript
+import { MeiliSearch } from 'meilisearch'
+import jwt from 'jsonwebtoken'
+
+const client = new MeiliSearch({ host: 'http://localhost:7700', apiKey: 'ADMIN_API_KEY' })
+
+async function searchDocuments(query, tenantToken) {
   // 1. Validate token server-side
-  user = validateToken(tenantToken)
-  
+  const user = jwt.verify(tenantToken, process.env.JWT_SECRET)
+
   // 2. Construct filter from token claims
-  filter = `_foreign(access, user = "${user.email}" OR teams IN ${JSON.stringify(user.teams)})`
-  
+  const teams = JSON.stringify(user.teams)
+  const filter = `_foreign(access, user = "${user.email}" OR teams IN ${teams})`
+
   // 3. Search with filter
-  results = meilisearch.search({
-    q: query,
-    filter: filter
-  })
-  
+  const results = await client.index('documents').search(query, { filter })
+
   return results
 }
 ```
