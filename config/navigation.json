@@ -375,13 +375,7 @@
                 {
                   "group": "Joins",
                   "pages": [
-                    "capabilities/indexing/joins/overview",
-                    {
-                      "group": "How to",
-                      "pages": [
-                        "capabilities/indexing/joins/how_to/define_join_relationships"
-                      ]
-                    }
+                    "capabilities/indexing/joins/define_index_relationships"
                   ]
                 },
                 {
