@@ -187,64 +187,9 @@ Returns deals that are:
 
 ## Precise filtering with multiple array items
 
-When a relationship contains an array of related documents, Meilisearch provides precise filtering capabilities.
+When you have array relationships, foreign filters enable **AND logic** across array items. This means you can find documents where a single related item meets multiple conditions simultaneously.
 
-### Array filter logic
-
-Normal filters use **OR logic** across array items:
-- Find films where `actors.country = "France" OR actors.age > 35`
-- Returns films with ANY actor who is French OR over 35 (possibly different actors)
-
-Foreign filters use **AND logic** across array items:
-- Find films where `_foreign(actors, country = "France" AND age > 35)`
-- Returns films with an actor who is BOTH French AND over 35 (same actor meets both conditions)
-
-### Film cast example
-
-Consider a film with three actors:
-
-```json
-{
-  "id": "film_1",
-  "title": "Ocean's Eleven",
-  "actor_ids": ["actor_1", "actor_2", "actor_3"]
-}
-```
-
-Where the actors are:
-
-```json
-[
-  {"id": "actor_1", "name": "Actor A", "country": "USA", "age": 45},
-  {"id": "actor_2", "name": "Actor B", "country": "France", "age": 38},
-  {"id": "actor_3", "name": "Actor C", "country": "France", "age": 30}
-]
-```
-
-**Query 1: Normal filter**
-```bash
-curl -X POST "http://localhost:7700/indexes/films/search" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "filter": "actors.country = France OR actors.age > 35"
-  }'
-```
-
-**Result:** Film is included because:
-- Actor B is French (country = France) ✓
-- Actor A is over 35 (age > 35) ✓
-
-**Query 2: Foreign filter (using joins)**
-```bash
-curl -X POST "http://localhost:7700/indexes/films/search" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "filter": "_foreign(actors, country = \"France\" AND age > 35)"
-  }'
-```
-
-**Result:** Film is included because:
-- Actor B is BOTH French AND over 35 ✓
+For detailed examples and use cases, see the [Precise filtering with array relationships](/capabilities/filtering_sorting_faceting/advanced/precise_filtering_array_items) guide.
 
 ## Common patterns
 

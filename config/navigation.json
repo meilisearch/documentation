@@ -259,7 +259,8 @@
                     "capabilities/filtering_sorting_faceting/advanced/filter_expression_syntax",
                     "capabilities/filtering_sorting_faceting/advanced/optimize_facet_performance",
                     "capabilities/filtering_sorting_faceting/advanced/disjunctive_facets",
-                    "capabilities/filtering_sorting_faceting/advanced/filtering_by_joined_data"
+                    "capabilities/filtering_sorting_faceting/advanced/filtering_by_joined_data",
+                    "capabilities/filtering_sorting_faceting/advanced/precise_filtering_array_items"
                   ]
                 }
               ]
@@ -323,7 +324,8 @@
                 {
                   "group": "Advanced",
                   "pages": [
-                    "capabilities/security/advanced/tenant_token_payload"
+                    "capabilities/security/advanced/tenant_token_payload",
+                    "capabilities/security/advanced/rbac_with_joins"
                   ]
                 }
               ]

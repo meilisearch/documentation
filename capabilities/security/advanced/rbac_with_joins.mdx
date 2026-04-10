@@ -1,0 +1,220 @@
+---
+title: Role-based access control with joins
+sidebarTitle: RBAC with joins
+description: Implement role-based access control using foreign filters and tenant tokens to control document visibility based on user roles and teams.
+---
+
+Combine foreign filters with tenant tokens to implement fine-grained, role-based access control (RBAC). Users see only documents they're authorized to access based on their roles and team memberships.
+
+## How it works
+
+**Core concept:** Create a separate access control table that defines which users and teams can access which documents. Use foreign filters to enforce these permissions at query time.
+
+**Tenant tokens** carry user identity:
+```json
+{
+  "sub": "jeremy@meilisearch.com",
+  "teams": ["product", "engineering"]
+}
+```
+
+**Foreign filters** enforce the rules:
+```bash
+_foreign(access, user = "jeremy@meilisearch.com" OR teams IN ["product", "engineering"])
+```
+
+Only documents where the access table grants permission are returned.
+
+## Data structure
+
+### Access control table
+
+Create a separate "access" index to define permissions:
+
+```json
+[
+  {
+    "id": "access_1",
+    "document_id": "doc_internal_memo_1",
+    "user": "jeremy@meilisearch.com",
+    "teams": ["product", "engineering"],
+    "roles": ["viewer", "editor"]
+  },
+  {
+    "id": "access_2",
+    "document_id": "doc_internal_memo_1",
+    "teams": ["finance"],
+    "roles": ["viewer"]
+  },
+  {
+    "id": "access_3",
+    "document_id": "doc_public_post_1",
+    "teams": ["*"],
+    "roles": ["viewer"]
+  }
+]
+```
+
+### Main documents
+
+Documents reference the access control table:
+
+```json
+[
+  {
+    "id": "doc_internal_memo_1",
+    "title": "Q4 Product Roadmap",
+    "content": "...",
+    "access_id": "access_1"
+  },
+  {
+    "id": "doc_public_post_1",
+    "title": "Welcome to our blog",
+    "content": "...",
+    "access_id": "access_3"
+  }
+]
+```
+
+## Setting up relationships
+
+1. **Create access control index** with documents defining who can access what
+2. **Add foreign key** to your main index pointing to access table:
+
+```json
+{
+  "foreignKeys": [
+    {
+      "fieldName": "access",
+      "foreignIndexUid": "access"
+    }
+  ]
+}
+```
+
+3. **Configure filterable attributes** on access table:
+
+```json
+{
+  "filterableAttributes": [
+    "user",
+    "teams",
+    "roles"
+  ]
+}
+```
+
+## Using tenant tokens with RBAC
+
+The tenant token contains the authenticated user's identity:
+
+```json
+{
+  "sub": "jeremy@meilisearch.com",
+  "teams": ["product", "engineering"],
+  "exp": 1234567890
+}
+```
+
+When the user searches, the application includes this token and constructs the filter:
+
+```bash
+curl -X POST "http://localhost:7700/indexes/documents/search" \
+  -H "Authorization: Bearer <TENANT_TOKEN>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "q": "roadmap",
+    "filter": "_foreign(access, user = \"jeremy@meilisearch.com\" OR teams IN [\"product\", \"engineering\"])"
+  }'
+```
+
+**Result:** Only documents where the access table has an entry for Jeremy (direct user match) or for the "product" or "engineering" teams are returned.
+
+## Multi-level RBAC example
+
+Combine user, team, and role filtering:
+
+```bash
+curl -X POST "http://localhost:7700/indexes/documents/search" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "q": "sensitive",
+    "filter": "_foreign(access, (user = \"jeremy@meilisearch.com\" AND roles IN [\"editor\", \"owner\"]) OR (teams IN [\"product\", \"engineering\"] AND roles IN [\"editor\"]))"
+  }'
+```
+
+This returns documents where:
+- Jeremy has editor or owner role, OR
+- Product/engineering teams have at least editor role
+
+## Handling wildcard access
+
+For public documents, set `teams = ["*"]` in the access table:
+
+```json
+{
+  "id": "access_public",
+  "document_id": "doc_public_announcement",
+  "teams": ["*"],
+  "roles": ["viewer"]
+}
+```
+
+Filter to include public documents:
+
+```bash
+"filter": "_foreign(access, user = \"jeremy@meilisearch.com\" OR teams IN [\"product\", \"engineering\", \"*\"])"
+```
+
+## Performance considerations
+
+1. **Access table size:** Each document's access rules create entries. For 1000 documents with 10 team access rules each, you need ~10,000 access records.
+
+2. **Filter specificity:** The foreign filter must match ≤ 100 access records. Design your access control structure to stay within this limit:
+   - Use team-based rules instead of per-user rules where possible
+   - Group documents by access level (public, internal, secret)
+   - Consider combining user + team checks: `(user = "..." OR (teams IN [...] AND roles IN [...]))`
+
+3. **Denormalization trade-off:** If RBAC queries regularly hit the 100-document limit, consider denormalizing permission fields directly into documents instead of using joins.
+
+## Security best practices
+
+- **Token validation:** Always validate tenant tokens server-side before searching
+- **Immutable filters:** Construct the filter on the server, never client-side
+- **Scope limitation:** Limit token expiration and use short-lived tokens when possible
+- **Audit logging:** Log access attempts for compliance and debugging
+- **Regular review:** Periodically audit access control table entries to remove stale permissions
+
+## Example: Implementing on the server
+
+```pseudocode
+function searchDocuments(query, tenantToken) {
+  // 1. Validate token server-side
+  user = validateToken(tenantToken)
+  
+  // 2. Construct filter from token claims
+  filter = `_foreign(access, user = "${user.email}" OR teams IN ${JSON.stringify(user.teams)})`
+  
+  // 3. Search with filter
+  results = meilisearch.search({
+    q: query,
+    filter: filter
+  })
+  
+  return results
+}
+```
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Tenant tokens" href="/capabilities/security/how_to/generate_token_from_scratch">
+    Learn how to generate and manage tenant tokens
+  </Card>
+  <Card title="Foreign filters" href="/capabilities/filtering_sorting_faceting/advanced/filtering_by_joined_data">
+    Understand foreign filter syntax and capabilities
+  </Card>
+  <Card title="Define relationships" href="/capabilities/indexing/joins/how_to/define_join_relationships">
+    Set up join relationships for RBAC
+  </Card>
+</CardGroup>
