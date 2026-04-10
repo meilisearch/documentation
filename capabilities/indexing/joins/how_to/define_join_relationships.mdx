@@ -1,0 +1,307 @@
+---
+title: Define join relationships
+sidebarTitle: Define relationships
+description: Set up relationships between indices by configuring foreign keys that link documents across collections.
+---
+
+Relationships define how documents in one index reference documents in another index. This guide covers how to configure, update, and manage these relationships.
+
+## How relationships work
+
+A relationship connects a **source index** to a **target index** using foreign key fields:
+
+```
+Source Index (Deals)          Target Index (Companies)
+├── id: "deal_1"              ├── id: "company_1"
+├── company_id: "company_1" ──┤   └── name: "Acme Inc"
+└── title: "Contract X"        
+```
+
+The `company_id` field in the Deals index links to the `id` field in the Companies index.
+
+## Relationship types
+
+### One-to-one
+
+Each source document has exactly one related target document.
+
+**Example:** Users → Profiles
+- Each user has one profile
+- A user document contains a single profile ID
+
+**Configuration:**
+```bash
+curl -X PATCH "http://localhost:7700/indexes/users/settings/join-configurations" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "user_profile": {
+      "sourceField": "profile_id",
+      "targetIndex": "profiles",
+      "targetField": "id"
+    }
+  }'
+```
+
+### One-to-many
+
+Each source document has multiple related target documents, stored as an array of IDs.
+
+**Example:** Companies → Employees
+- One company has many employees
+- A company document contains an array of employee IDs: `employee_ids: ["emp_1", "emp_2", "emp_3"]`
+
+**Configuration:**
+```bash
+curl -X PATCH "http://localhost:7700/indexes/companies/settings/join-configurations" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "company_employees": {
+      "sourceField": "employee_ids",
+      "targetIndex": "employees",
+      "targetField": "id"
+    }
+  }'
+```
+
+### Many-to-many
+
+Multiple source documents reference multiple target documents, typically using array fields.
+
+**Example:** Films → Actors
+- One film has many actors
+- Many films feature the same actor
+- A film document contains an array of actor IDs: `actor_ids: ["actor_1", "actor_2"]`
+
+**Configuration:**
+```bash
+curl -X PATCH "http://localhost:7700/indexes/films/settings/join-configurations" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "film_actors": {
+      "sourceField": "actor_ids",
+      "targetIndex": "actors",
+      "targetField": "id"
+    }
+  }'
+```
+
+## Relationship configuration parameters
+
+| Parameter | Type | Description | Example |
+|-----------|------|-------------|---------|
+| `sourceField` | string | Field in the source index containing the ID(s) | `"company_id"` or `"employee_ids"` |
+| `targetIndex` | string | Name of the target index | `"companies"` |
+| `targetField` | string | Field in the target index that serves as the primary key | `"id"` |
+| Relationship name | string | Key identifying this relationship | `"company_employees"` |
+
+## Common patterns
+
+### E-commerce: Products and Reviews
+
+```bash
+curl -X PATCH "http://localhost:7700/indexes/products/settings/join-configurations" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "product_reviews": {
+      "sourceField": "review_ids",
+      "targetIndex": "reviews",
+      "targetField": "id"
+    }
+  }'
+```
+
+A product document:
+```json
+{
+  "id": "product_123",
+  "name": "Wireless Headphones",
+  "review_ids": ["review_456", "review_789"]
+}
+```
+
+### SaaS: Deals, Companies, and Users
+
+```bash
+curl -X PATCH "http://localhost:7700/indexes/deals/settings/join-configurations" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "deal_company": {
+      "sourceField": "company_id",
+      "targetIndex": "companies",
+      "targetField": "id"
+    },
+    "deal_owner": {
+      "sourceField": "owner_user_id",
+      "targetIndex": "users",
+      "targetField": "id"
+    }
+  }'
+```
+
+A deal document:
+```json
+{
+  "id": "deal_001",
+  "title": "Enterprise Contract",
+  "company_id": "company_42",
+  "owner_user_id": "user_100",
+  "value": 500000
+}
+```
+
+### Marketplace: Orders and Products
+
+```bash
+curl -X PATCH "http://localhost:7700/indexes/orders/settings/join-configurations" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "order_items": {
+      "sourceField": "product_ids",
+      "targetIndex": "products",
+      "targetField": "id"
+    }
+  }'
+```
+
+## Schema design tips
+
+### Use ID suffixes
+
+Adopt a naming convention for foreign key fields to make relationships clear:
+
+| Type | Convention | Example |
+|------|-----------|---------|
+| One-to-one | `{resource}_id` | `company_id`, `profile_id` |
+| One-to-many | `{resource}_ids` | `employee_ids`, `product_ids` |
+| Many-to-many | `{resource}_ids` or `{resource}_list` | `actor_ids`, `tag_ids` |
+
+### Keep IDs simple
+
+Use simple data types for foreign key fields:
+- **Preferred:** UUIDs or simple integers (e.g., `"company_1"`, `123`)
+- **Avoid:** Complex objects or nested structures as key values
+
+### Design for referential integrity
+
+While Meilisearch does not enforce referential integrity, design your data model with care:
+- Ensure all IDs in foreign key fields point to existing documents
+- Use a cleanup strategy for orphaned references (see Data Integrity section below)
+
+## Update relationships
+
+Change relationship configurations using `PATCH`:
+
+```bash
+curl -X PATCH "http://localhost:7700/indexes/deals/settings/join-configurations" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "deal_owner": {
+      "sourceField": "owner_user_id",
+      "targetIndex": "users",
+      "targetField": "id"
+    }
+  }'
+```
+
+To update an existing relationship, provide the same relationship name with new parameters:
+
+```bash
+curl -X PATCH "http://localhost:7700/indexes/deals/settings/join-configurations" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "deal_owner": {
+      "sourceField": "assigned_user_id",
+      "targetIndex": "users",
+      "targetField": "user_uid"
+    }
+  }'
+```
+
+To remove a relationship, send an empty configuration:
+
+```bash
+curl -X PATCH "http://localhost:7700/indexes/deals/settings/join-configurations" \
+  -H "Content-Type: application/json" \
+  -d '{}'
+```
+
+## Self-references
+
+You can create relationships where a document references other documents in the same index. This is useful for modeling hierarchical or interconnected data.
+
+**Example:** Products frequently bought together
+- A product can have an array of related product IDs that link back to the products index
+- A product document: `{"id": "product_1", "frequently_bought_with": ["product_2", "product_5"]}`
+
+**Configuration:**
+```bash
+curl -X PATCH "http://localhost:7700/indexes/products/settings/join-configurations" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "product_recommendations": {
+      "sourceField": "frequently_bought_with",
+      "targetIndex": "products",
+      "targetField": "id"
+    }
+  }'
+```
+
+When hydrating this relationship, the full product details for recommended items will be embedded in search results.
+
+## Data integrity considerations
+
+### No referential integrity enforcement
+
+Meilisearch does not enforce referential integrity. This means:
+- You can create foreign key references to non-existent documents
+- You can delete a target document without deleting documents that reference it
+- Indexes can contain orphaned references
+
+### Orphaned references
+
+When a referenced document is deleted, what happens depends on how you query:
+- **Hydration:** Returns the document UID instead of the full object
+- **Filtering:** The reference is ignored in filter comparisons
+
+**Example:** If you delete a company with ID `company_1`, deals still containing `company_id: "company_1"` will:
+- Show `"company": "company_1"` instead of the full company object during hydration
+- Be excluded from filters on company properties
+
+### Cleanup strategy
+
+To remove orphaned references from your source index, use the delete by filter function:
+
+1. **Identify orphaned documents** in your target index (companies with no deals)
+2. **Query for documents** referencing those orphaned IDs
+3. **Delete with filters** to remove source documents that reference non-existent targets
+
+Example using the delete by filter API:
+
+```bash
+curl -X POST "http://localhost:7700/indexes/deals/delete-by-filter" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "filter": [
+      ["company_id", "IN", ["deleted_company_1", "deleted_company_2"]]
+    ]
+  }'
+```
+
+## Constraints and validation
+
+- **Relationship name:** Must be unique within an index and follow naming conventions (alphanumeric with underscores)
+- **Source field:** Must exist and contain ID values or arrays of IDs
+- **Target index:** Must exist in your Meilisearch instance
+- **Target field:** Should be the primary key field in the target index (typically `id`)
+- **Type compatibility:** Foreign key values must be compatible with the target field type
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Use hydration" href="/capabilities/indexing/joins/how_to/hydration_during_search">
+    Learn how to embed related documents in search results
+  </Card>
+  <Card title="Filter by relationships" href="/capabilities/filtering_sorting_faceting/advanced/filtering_by_joined_data">
+    Advanced: filter documents by related data properties
+  </Card>
+</CardGroup>
