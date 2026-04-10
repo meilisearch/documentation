@@ -258,7 +258,8 @@
                   "pages": [
                     "capabilities/filtering_sorting_faceting/advanced/filter_expression_syntax",
                     "capabilities/filtering_sorting_faceting/advanced/optimize_facet_performance",
-                    "capabilities/filtering_sorting_faceting/advanced/disjunctive_facets"
+                    "capabilities/filtering_sorting_faceting/advanced/disjunctive_facets",
+                    "capabilities/filtering_sorting_faceting/advanced/filtering_by_joined_data"
                   ]
                 }
               ]
@@ -370,9 +371,23 @@
                   ]
                 },
                 {
+                  "group": "Joins",
+                  "pages": [
+                    "capabilities/indexing/joins/overview",
+                    {
+                      "group": "How to",
+                      "pages": [
+                        "capabilities/indexing/joins/how_to/define_join_relationships",
+                        "capabilities/indexing/joins/how_to/hydration_during_search"
+                      ]
+                    }
+                  ]
+                },
+                {
                   "group": "Advanced",
                   "pages": [
                     "capabilities/indexing/advanced/indexing_best_practices",
+                    "capabilities/indexing/advanced/optimization",
                     "capabilities/indexing/advanced/tokenization",
                     "capabilities/indexing/tasks_and_batches/optimize_batch_performance"
                   ]
