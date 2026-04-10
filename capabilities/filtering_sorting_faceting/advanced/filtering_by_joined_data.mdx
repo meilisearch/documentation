@@ -1,0 +1,331 @@
+---
+title: Filter by joined data
+sidebarTitle: Filtering by joined data
+description: Use relationships to filter search results by properties of related documents.
+---
+
+Filtering by joined data enables you to find documents based on properties of related documents in other indices. Instead of storing all data in one denormalized document, you can define relationships and filter across them.
+
+## What is filtering by joined data?
+
+Without joins, you must denormalize data:
+
+```json
+{
+  "id": "deal_1",
+  "title": "Enterprise Contract",
+  "company_name": "Acme Inc",
+  "company_industry": "Technology",
+  "company_founded_year": 2010
+}
+```
+
+With joins, you store only the reference:
+
+```json
+{
+  "id": "deal_1",
+  "title": "Enterprise Contract",
+  "company_id": "company_42"
+}
+```
+
+Then filter deals by company properties:
+
+```bash
+curl -X POST "http://localhost:7700/indexes/deals/search" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "q": "contract",
+    "filter": "company.industry = Technology AND company.founded_year >= 2000"
+  }'
+```
+
+## How it works: Normalized vs. Denormalized
+
+### Without joins (denormalized)
+
+Duplicate data in each deal:
+
+```json
+[
+  {"id": "deal_1", "company_name": "Acme Inc", "company_industry": "Technology"},
+  {"id": "deal_2", "company_name": "Acme Inc", "company_industry": "Technology"},
+  {"id": "deal_3", "company_name": "Beta Corp", "company_industry": "Finance"}
+]
+```
+
+Update Acme's industry and all three deals must be updated.
+
+### With joins (normalized)
+
+Store data once:
+
+**Companies:**
+```json
+[
+  {"id": "company_42", "name": "Acme Inc", "industry": "Technology"}
+]
+```
+
+**Deals:**
+```json
+[
+  {"id": "deal_1", "company_id": "company_42"},
+  {"id": "deal_2", "company_id": "company_42"},
+  {"id": "deal_3", "company_id": "company_99"}
+]
+```
+
+Update Acme's industry once. All deals linked to it automatically reflect the change.
+
+## Hard limit: Maximum 100 matching documents
+
+<Callout type="warning">
+If a foreign filter on a relationship returns more than 100 matching documents from the target index, Meilisearch will return an error. Design your filters carefully to stay within this limit by being more specific with your filtering criteria.
+</Callout>
+
+**Example:** If you filter for `company.industry = "Technology"` and your database has 150 technology companies, the query fails.
+
+**Solutions:**
+- Add additional filter conditions: `company.industry = "Technology" AND company.founded_year >= 2020` (narrows results)
+- Use other attributes: `company.industry = "Technology" AND company.revenue > 1000000`
+- Break into multiple queries with narrower filters
+- Consider denormalization if filtering patterns require very broad queries
+
+## Simple equality filters
+
+Filter deals where the company is a specific one:
+
+```bash
+curl -X POST "http://localhost:7700/indexes/deals/search" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "q": "contract",
+    "filter": "company.id = company_42"
+  }'
+```
+
+Returns deals with the matching company ID.
+
+### Multiple equality conditions
+
+Find deals from companies with multiple specific criteria:
+
+```bash
+curl -X POST "http://localhost:7700/indexes/deals/search" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "q": "",
+    "filter": "company.industry = Technology OR company.industry = Finance"
+  }'
+```
+
+## Range filters
+
+Filter by numeric or date properties of related documents:
+
+```bash
+curl -X POST "http://localhost:7700/indexes/deals/search" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "q": "enterprise",
+    "filter": "company.founded_year >= 2000 AND company.founded_year <= 2020"
+  }'
+```
+
+Returns deals from companies founded between 2000 and 2020.
+
+### Date ranges
+
+Filter by date properties:
+
+```bash
+curl -X POST "http://localhost:7700/indexes/deals/search" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "q": "",
+    "filter": "company.last_funding_date >= \"2023-01-01\""
+  }'
+```
+
+## Multiple conditions with AND/OR
+
+Combine conditions using logical operators:
+
+```bash
+curl -X POST "http://localhost:7700/indexes/deals/search" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "q": "contract",
+    "filter": "(company.industry = Technology AND company.founded_year >= 2010) OR (company.revenue > 1000000)"
+  }'
+```
+
+Returns deals where:
+- Company is in Technology industry AND founded after 2010, OR
+- Company has revenue over 1 million
+
+## Combine with document filters
+
+Mix filters on source and related documents:
+
+```bash
+curl -X POST "http://localhost:7700/indexes/deals/search" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "q": "contract",
+    "filter": "value >= 100000 AND company.industry = Technology AND owner.department = Sales"
+  }'
+```
+
+Returns deals that are:
+- Worth at least 100k, AND
+- From a technology company, AND
+- Owned by someone in Sales
+
+## Precise filtering with multiple array items
+
+When a relationship contains an array of related documents, Meilisearch provides precise filtering capabilities.
+
+### Array filter logic
+
+Normal filters use **OR logic** across array items:
+- Find films where `actors.country = France OR actors.age > 35`
+- Returns films with ANY actor who is French OR over 35 (possibly different actors)
+
+Foreign filters use **AND logic** across array items:
+- Find films where `actors.country = France AND actors.age > 35`
+- Returns films with an actor who is BOTH French AND over 35 (same actor meets both conditions)
+
+### Film cast example
+
+Consider a film with three actors:
+
+```json
+{
+  "id": "film_1",
+  "title": "Ocean's Eleven",
+  "actor_ids": ["actor_1", "actor_2", "actor_3"]
+}
+```
+
+Where the actors are:
+
+```json
+[
+  {"id": "actor_1", "name": "Actor A", "country": "USA", "age": 45},
+  {"id": "actor_2", "name": "Actor B", "country": "France", "age": 38},
+  {"id": "actor_3", "name": "Actor C", "country": "France", "age": 30}
+]
+```
+
+**Query 1: Normal filter**
+```bash
+curl -X POST "http://localhost:7700/indexes/films/search" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "filter": "actors.country = France OR actors.age > 35"
+  }'
+```
+
+**Result:** Film is included because:
+- Actor B is French (country = France) ✓
+- Actor A is over 35 (age > 35) ✓
+
+**Query 2: Foreign filter (using joins)**
+```bash
+curl -X POST "http://localhost:7700/indexes/films/search" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "filter": "actors.country = France AND actors.age > 35"
+  }'
+```
+
+**Result:** Film is included because:
+- Actor B is BOTH French AND over 35 ✓
+
+## Common patterns
+
+### Filter by user role
+
+Find documents associated with specific user roles:
+
+```bash
+curl -X POST "http://localhost:7700/indexes/tasks/search" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "q": "project",
+    "filter": "assigned_user.role = admin"
+  }'
+```
+
+### Filter by tenant
+
+Isolate results to a specific customer or organization:
+
+```bash
+curl -X POST "http://localhost:7700/indexes/orders/search" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "q": "laptop",
+    "filter": "customer.tenant_id = tenant_123"
+  }'
+```
+
+### Filter by location and category
+
+Combine location and category filters from related data:
+
+```bash
+curl -X POST "http://localhost:7700/indexes/stores/search" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "q": "",
+    "filter": "location.country = USA AND category.name = Electronics"
+  }'
+```
+
+## Performance considerations
+
+### Filter specificity
+
+Broader filters on related data may hit the 100-document limit:
+
+```bash
+# ✓ Good: Very specific
+filter: "company.industry = Technology AND company.state = CA"
+
+# ✗ Problematic: May return > 100 docs
+filter: "company.industry = Technology"
+```
+
+### Combine filters strategically
+
+Use multiple conditions to narrow results:
+
+```bash
+# Combine source and target filters to reduce matching documents
+filter: "value >= 500000 AND company.founded_year >= 2020"
+```
+
+### Test with your data
+
+Before production, verify filter performance:
+- Estimate how many target documents match each filter
+- Ensure results stay under 100 documents
+- Add more specific conditions if needed
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Define relationships" href="/capabilities/indexing/joins/how_to/define_join_relationships">
+    Learn how to configure join relationships
+  </Card>
+  <Card title="Use hydration" href="/capabilities/indexing/joins/how_to/hydration_during_search">
+    Embed related documents in search results
+  </Card>
+  <Card title="Filtering basics" href="/capabilities/filtering_sorting_faceting/getting_started/filtering">
+    Return to basic filtering guide
+  </Card>
+</CardGroup>
