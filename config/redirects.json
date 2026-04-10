@@ -4246,5 +4246,33 @@
   {
     "source": "/resource",
     "destination": "/resources/overview"
+  },
+  {
+    "source": "/learn/security/master-key",
+    "destination": "/resources/self_hosting/security/master_api_keys"
+  },
+  {
+    "source": "/guides/ai/ollama",
+    "destination": "/capabilities/hybrid_search/how_to/choose_an_embedder"
+  },
+  {
+    "source": "/learn/async/tasks",
+    "destination": "/capabilities/indexing/tasks_and_batches/async_operations"
+  },
+  {
+    "source": "/reference/api/settings/update-search-cutoff",
+    "destination": "/reference/api/settings/update-searchcutoffms"
+  },
+  {
+    "source": "/reference/api/settings/get-features",
+    "destination": "/reference/api/experimental-features/list-experimental-features"
+  },
+  {
+    "source": "/learn/vector_search",
+    "destination": "/capabilities/hybrid_search/overview"
+  },
+  {
+    "source": "/reference/api/settings/reset-vectorstore",
+    "destination": "/reference/api/settings/reset-embedders"
   }
 ]

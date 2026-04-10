@@ -17,7 +17,7 @@ import { fileURLToPath } from "url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = path.resolve(__dirname, "..");
 
-const MIN_VIEWS = 1;
+const MIN_VIEWS = 2;
 
 // ---------------------------------------------------------------------------
 // Load .env manually (no external dependency)
@@ -289,6 +289,9 @@ async function main() {
     if (normalized.includes("<")) continue; // HTML injection attempts
     if (normalized.match(/[*")\]\\(]$/)) continue; // trailing special chars (malformed URLs)
     if (normalized.match(/\.\w{0,3}[^a-z0-9]$/i)) continue; // trailing dot+non-alphanum (e.g. ".(")
+    if (normalized.includes("https:") || normalized.includes("http:")) continue; // embedded URLs (malformed)
+    if (/[^\x20-\x7E]/.test(normalized)) continue; // non-ASCII characters (bot/malformed traffic)
+    if (normalized.match(/\.[A-Z]{2,}$/)) continue; // uppercase file extensions (e.g. ".MD")
 
     missingRedirects.push({ path: normalized, views });
   }
