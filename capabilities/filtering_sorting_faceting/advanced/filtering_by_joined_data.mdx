@@ -177,47 +177,6 @@ When you have array relationships, foreign filters enable **AND logic** across a
 
 For detailed examples and use cases, see the [Precise filtering with array relationships](/capabilities/filtering_sorting_faceting/advanced/precise_filtering_array_items) guide.
 
-## Common patterns
-
-### Filter by user role
-
-Find documents associated with specific user roles:
-
-```bash
-curl -X POST "http://localhost:7700/indexes/tasks/search" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "q": "project",
-    "filter": "_foreign(assigned_user, role = \"admin\")"
-  }'
-```
-
-### Filter by tenant
-
-Isolate results to a specific customer or organization:
-
-```bash
-curl -X POST "http://localhost:7700/indexes/orders/search" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "q": "laptop",
-    "filter": "_foreign(customer, tenant_id = \"tenant_123\")"
-  }'
-```
-
-### Filter by location and category
-
-Combine location and category filters from related data:
-
-```bash
-curl -X POST "http://localhost:7700/indexes/stores/search" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "q": "",
-    "filter": "_foreign(location, country = \"USA\") AND _foreign(category, name = \"Electronics\")"
-  }'
-```
-
 ## Performance considerations
 
 ### Filter specificity
