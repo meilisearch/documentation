@@ -1,0 +1,87 @@
+---
+title: Search performance
+description: Monitor search latency percentiles, query throughput, and per-step search timing for your Meilisearch Cloud project.
+---
+
+{/* Screenshots needed on this page:
+  1. Search latency chart (p75/p90/p95/p99 in ms) — media_JxXCjcfqpR
+  2. Maximum search queries per second chart — media_T1CoksUKsc
+*/}
+
+The search performance section of the monitoring dashboard shows how quickly Meilisearch responds to queries and how much search traffic your project is handling. It is labeled **Beta** in the Cloud UI.
+
+You can filter all charts by index using the **All indexes** dropdown, set a date range, or enable real-time mode. Timestamps are displayed in UTC.
+
+## Search latency
+
+The search latency chart tracks response times at four percentiles: **p75**, **p90**, **p95**, and **p99**, measured in milliseconds.
+
+<Frame>
+  <img src="/assets/images/platform/monitoring/search_latency.png" alt="Search latency chart showing p75, p90, p95, and p99 response times in milliseconds over time" />
+</Frame>
+
+| Percentile | What it means |
+|------------|--------------|
+| **p75** | 75% of searches completed within this time |
+| **p90** | 90% of searches completed within this time |
+| **p95** | 95% of searches completed within this time |
+| **p99** | 99% of searches completed within this time — the slowest requests |
+
+p99 latency is the most important signal for user experience: even rare slow queries are visible to users. A healthy p99 is typically under 100 ms for most workloads.
+
+## Maximum search queries per second
+
+This chart shows the peak number of search requests processed per second (q/s) during each time interval.
+
+<Frame>
+  <img src="/assets/images/platform/monitoring/search_qps.png" alt="Maximum search queries per second chart" />
+</Frame>
+
+Use this chart to:
+
+- Understand peak traffic patterns across the day or week
+- Verify that your resource tier handles your traffic without latency degradation
+- Detect unexpected traffic drops that may indicate application errors
+
+## Performance trace
+
+Performance trace gives you a per-step breakdown of how time was spent during a search request. Use it to understand exactly where latency comes from, especially when your p99 is high but the cause is not obvious from aggregate metrics.
+
+To enable it, open the **Search preview** tab for your project and toggle **Performance trace** in the top-right of the results panel.
+
+<Frame>
+  <img src="/assets/images/platform/monitoring/search_performance_trace.png" alt="Search preview showing Performance trace panel with per-step timing breakdown including semantic search at 98% of total time" />
+</Frame>
+
+The trace shows each step of the search pipeline with its duration and share of total time:
+
+| Step | What it covers |
+|------|---------------|
+| **wait for permit** | Time waiting to acquire a read permit (queue wait) |
+| **search** | Total time inside the search engine |
+| **tokenize** | Query tokenization |
+| **resolve universe** | Filter evaluation to compute the candidate document set |
+| **keyword search** | Full-text ranking and scoring |
+| **embed** | Time to generate the query vector (for hybrid/semantic search) |
+| **semantic search** | Vector similarity search against the index |
+| **format** | Formatting and serializing the response |
+
+In the example above, semantic search accounts for 98% of total time (430 ms out of 440 ms). This is expected for hybrid search with a small model, and indicates the bottleneck is the vector search step rather than filtering or ranking.
+
+## Expert support for Enterprise customers
+
+In most cases, the simplest way to improve search performance is to upgrade to a larger resource tier. More RAM means more of the index fits in memory, which directly reduces latency. You can change your resource tier at any time from the [project settings](/capabilities/platform/infrastructure/manage_resources).
+
+If upgrading does not resolve the issue, the Meilisearch team can help. Enterprise customers have direct access to experts who can review your index configuration, query patterns, and performance traces to optimize for your specific workload. Contact [sales@meilisearch.com](mailto:sales@meilisearch.com) to learn more.
+
+## Common issues and fixes
+
+| Symptom | Likely cause | Fix |
+|---------|-------------|-----|
+| High p99, normal p75 | Occasional complex queries or large result sets | Add pagination, reduce `hitsPerPage`, simplify filter expressions |
+| All percentiles high | Index too large for available RAM | Upgrade resource plan |
+| Latency spike after re-indexing | Settings change triggering re-ranking overhead | Monitor for a few minutes after settings changes; latency typically stabilizes |
+| QPS drop without explanation | Application errors or expired API keys | Check application logs and verify API key validity |
+| High `embed` time in trace | Slow embedding model or cold model start | Switch to a faster embedder model or use a larger resource tier |
+| High `semantic search` time | Large vector index or high vector dimensions | Reduce vector dimensions, or upgrade RAM |
+| High `resolve universe` time | Complex filter expressions or many filterable attributes | Simplify filters; avoid filtering on high-cardinality attributes |

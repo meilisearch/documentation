@@ -484,15 +484,59 @@
                 ]
               },
               {
-                "group": "Teams",
+                "group": "Platform",
                 "pages": [
-                  "capabilities/teams/overview",
-                  "capabilities/teams/getting_started",
+                  "capabilities/platform/overview",
                   {
-                    "group": "How to",
+                    "group": "Infrastructure",
                     "pages": [
-                      "capabilities/teams/how_to/manage_team_roles",
-                      "capabilities/teams/how_to/configure_sso_for_team"
+                      "capabilities/platform/infrastructure/overview",
+                      "capabilities/platform/infrastructure/create_a_project",
+                      "capabilities/platform/infrastructure/regions",
+                      "capabilities/platform/infrastructure/manage_resources",
+                      "capabilities/platform/infrastructure/version_management",
+                      "capabilities/platform/infrastructure/sharding_and_replication",
+                      "capabilities/platform/infrastructure/backups"
+                    ]
+                  },
+                  {
+                    "group": "Monitoring",
+                    "pages": [
+                      "capabilities/platform/monitoring/overview",
+                      "capabilities/platform/monitoring/search_performance",
+                      "capabilities/platform/monitoring/indexing_performance",
+                      "capabilities/platform/monitoring/usage_metrics"
+                    ]
+                  },
+                  {
+                    "group": "Billing",
+                    "pages": [
+                      "capabilities/platform/billing/overview",
+                      "capabilities/platform/billing/pricing_model",
+                      "capabilities/platform/billing/invoices",
+                      "capabilities/platform/billing/payment_methods"
+                    ]
+                  },
+                  {
+                    "group": "Teams",
+                    "pages": [
+                      "capabilities/platform/teams/overview",
+                      "capabilities/platform/teams/getting_started",
+                      {
+                        "group": "How to",
+                        "pages": [
+                          "capabilities/platform/teams/how_to/manage_team_roles",
+                          "capabilities/platform/teams/how_to/configure_sso_for_team"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "group": "Management",
+                    "pages": [
+                      "capabilities/platform/management/overview",
+                      "capabilities/platform/management/webhooks",
+                      "capabilities/platform/management/experimental_features"
                     ]
                   }
                 ]
@@ -1897,7 +1941,7 @@
     },
     {
       "source": "/learn/teams/teams",
-      "destination": "/capabilities/teams/overview"
+      "destination": "/capabilities/platform/teams/overview"
     },
     {
       "source": "/learn/async/working_with_tasks",
@@ -2214,6 +2258,54 @@
     {
       "source": "/reference/api/settings/reset-vectorstore",
       "destination": "/reference/api/settings/get-embedders"
+    },
+    {
+      "source": "/capabilities/teams",
+      "destination": "/capabilities/platform/teams"
+    },
+    {
+      "source": "/capabilities/teams/overview",
+      "destination": "/capabilities/platform/teams/overview"
+    },
+    {
+      "source": "/capabilities/teams/getting_started",
+      "destination": "/capabilities/platform/teams/getting_started"
+    },
+    {
+      "source": "/capabilities/teams/how_to/configure_sso_for_team",
+      "destination": "/capabilities/platform/teams/how_to/configure_sso_for_team"
+    },
+    {
+      "source": "/capabilities/teams/how_to/manage_team_roles",
+      "destination": "/capabilities/platform/teams/how_to/manage_team_roles"
+    },
+    {
+      "source": "/capabilities/platform/security",
+      "destination": "/capabilities/security/overview"
+    },
+    {
+      "source": "/capabilities/platform/security/overview",
+      "destination": "/capabilities/security/overview"
+    },
+    {
+      "source": "/capabilities/platform/security/getting_started",
+      "destination": "/capabilities/security/getting_started"
+    },
+    {
+      "source": "/capabilities/platform/security/how_to/manage_api_keys",
+      "destination": "/capabilities/security/how_to/manage_api_keys"
+    },
+    {
+      "source": "/capabilities/platform/security/how_to/generate_token_from_scratch",
+      "destination": "/capabilities/security/how_to/generate_token_from_scratch"
+    },
+    {
+      "source": "/capabilities/platform/security/how_to/generate_token_third_party",
+      "destination": "/capabilities/security/how_to/generate_token_third_party"
+    },
+    {
+      "source": "/capabilities/platform/security/advanced/tenant_token_payload",
+      "destination": "/capabilities/security/advanced/tenant_token_payload"
     }
   ]
 }

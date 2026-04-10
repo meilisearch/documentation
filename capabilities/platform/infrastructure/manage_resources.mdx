@@ -1,0 +1,67 @@
+---
+title: Manage resources
+description: Scale your Meilisearch Cloud project's CPU and RAM up or down from the project settings.
+---
+
+{/* Screenshots needed on this page:
+  1. The resource settings panel in project settings (current plan, available tiers)
+  2. The plan selection UI showing available tiers with CPU/RAM/price
+*/}
+
+<Info>
+  Resource management applies to **resource-based projects** only. Usage-based projects scale automatically and do not have a configurable resource tier. If you are on a usage-based plan and want more control over your infrastructure, you can migrate to a resource-based project at any time by creating a new resource-based project and re-indexing your data.
+</Info>
+
+You can change a project's resource tier at any time from the Meilisearch Cloud project settings. Scaling up increases available CPU and RAM, scaling down reduces costs.
+
+## Resource tiers
+
+Each tier defines the CPU, RAM, and storage available to your project. The exact tiers and their prices are shown in the Cloud UI and on the [Meilisearch pricing page](https://www.meilisearch.com/pricing).
+
+General guidelines for choosing a tier:
+
+| Situation | Guidance |
+|-----------|----------|
+| Index fits comfortably in RAM | Keep a tier where RAM exceeds your index size by at least 20% |
+| High query volume (hundreds of QPS) | Choose a tier with more CPU cores |
+| Large vector dimensions or many embedded documents | Prefer higher RAM tiers; vector indexes grow quickly |
+| Development or staging environment | Use the smallest tier to minimize cost |
+
+## When to scale up
+
+Signs that your project needs more resources:
+
+- Search latency (p95 or p99) increases during peak traffic
+- Indexing tasks take significantly longer than usual
+- Memory usage stays near 100% in the [usage metrics dashboard](/capabilities/platform/monitoring/usage_metrics)
+- CPU usage is consistently high during search-heavy periods
+
+## Changing the plan
+
+1. Open your project in the Meilisearch Cloud dashboard.
+2. Go to **Settings** and find the **Resource plan** section.
+3. Click **Change plan**.
+
+<Warning>
+  **Screenshot needed:** Replace this placeholder with a screenshot of the resource settings panel showing the current plan and a "Change plan" button before publishing.
+</Warning>
+
+<Frame>
+  <img src="/images/platform/infrastructure/resource_settings.png" alt="Meilisearch Cloud project resource settings panel" />
+</Frame>
+
+4. Select the desired tier from the plan picker.
+
+<Warning>
+  **Screenshot needed:** Replace this placeholder with a screenshot of the plan selection UI showing available tiers with CPU, RAM, and pricing information before publishing.
+</Warning>
+
+<Frame>
+  <img src="/images/platform/infrastructure/plan_selection.png" alt="Meilisearch Cloud plan selection UI showing available resource tiers" />
+</Frame>
+
+5. Click **Confirm**. The change takes effect shortly. Search and indexing operations remain available during the transition on most plan changes.
+
+## Impact on billing
+
+Resource-based projects are billed by the hour. When you change resource tiers, the new rate applies from the next hour. You are never double-billed: at most, you may be charged for a partial hour at the old rate before the new rate kicks in. See [Pricing model](/capabilities/platform/billing/pricing_model) for details.

@@ -1,0 +1,31 @@
+---
+title: Monitoring
+sidebarTitle: Overview
+description: Monitor search performance, indexing health, and API operations for your Meilisearch Cloud projects.
+---
+
+Meilisearch Cloud includes built-in monitoring dashboards so you can understand how your project is performing and catch issues before they affect users. Monitoring is currently in **Beta**.
+
+The dashboard is organized into three sections:
+
+| Section | What it covers |
+|---------|---------------|
+| **Search performance** | Search latency (p75/p90/p95/p99) and maximum queries per second |
+| **Operations** | Bandwidth (In/Out) and API call volume (Failed/Successful) |
+| **Indexing performance** | Indexing latency TTS (p75/p90/p95/p99) |
+
+All charts support filtering by index, custom date ranges, and a real-time mode. Timestamps are displayed in UTC.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Search performance" href="/capabilities/platform/monitoring/search_performance">
+    Monitor search latency percentiles and query throughput
+  </Card>
+  <Card title="Operations" href="/capabilities/platform/monitoring/usage_metrics">
+    Track bandwidth and API call activity
+  </Card>
+  <Card title="Indexing performance" href="/capabilities/platform/monitoring/indexing_performance">
+    Track time-to-search (TTS) for indexing tasks
+  </Card>
+</CardGroup>

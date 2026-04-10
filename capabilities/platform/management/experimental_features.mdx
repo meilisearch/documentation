@@ -1,0 +1,36 @@
+---
+title: Experimental features
+description: Enable or disable experimental Meilisearch features from the Cloud project settings.
+---
+
+Meilisearch occasionally ships features in an experimental state before promoting them to stable. Experimental features are fully functional but their API or behavior may change between Meilisearch versions without a deprecation period. Be careful when enabling them in production environments.
+
+You can enable or disable experimental features per project from **Project Settings > General**.
+
+<Frame>
+  <img src="/assets/images/platform/management/experimental_features.png" alt="Experimental features section in Project Settings showing checkboxes for each available feature" />
+</Frame>
+
+Check the box next to a feature to enable it. Changes take effect immediately without a restart or re-index.
+
+## Available features
+
+The list of available features evolves with each Meilisearch release and is not fixed. The features shown in the Cloud UI at any given time depend on your project's current Meilisearch version. As an example, the current UI shows:
+
+| Feature | Description |
+|---------|-------------|
+| **Edit documents by function** | Apply custom transformations to documents using Rhai scripts, from simple formatting changes to complex logic |
+| **"CONTAINS" and "STARTS_WITH" filters** | Adds the `CONTAINS` filter operator to filter documents where an attribute includes a specific substring |
+| **Dynamic Search Rules** | Enable rules that change how search results are ordered when specific conditions are met (e.g. pinning) |
+| **Composite embedders** | Use different embedders at search time and indexing time |
+| **Multi-modal search** | Index and search through images, text, and other formats in documents |
+
+For a complete and up-to-date list, see the [experimental features API reference](/reference/api/experimental-features/list-experimental-features) and the [changelog](/changelog).
+
+## Enterprise-only experimental features
+
+Some experimental features are not accessible through the Cloud UI and require direct activation by the Meilisearch team. If you need access to a feature that is not listed in your project settings, contact [support@meilisearch.com](mailto:support@meilisearch.com) or reach out to [sales@meilisearch.com](mailto:sales@meilisearch.com) for Enterprise plans.
+
+## Stability notice
+
+Experimental features are not covered by the standard API stability guarantee. If you rely on one in production, monitor the [changelog](/changelog) for changes or promotion to stable.

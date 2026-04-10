@@ -1,0 +1,112 @@
+---
+title: Pricing model
+description: How Meilisearch Cloud billing works for resource-based and usage-based projects, including pricing and cost estimation.
+---
+
+Meilisearch Cloud bills each project independently. Resource-based projects are billed hourly (prorated), while usage-based projects follow a monthly cycle.
+## Resource-based pricing
+
+Resource-based projects are billed at an hourly rate based on the resource tier you select (Memory and vCPU). You pay for the resources you provision, regardless of how many searches you run or documents you index.
+
+The Cloud UI shows the hourly rate and estimated monthly cost for each tier at project creation and in the project settings. Pricing may vary slightly by region.
+
+## Usage-based pricing
+
+Usage-based projects are billed on what your project actually consumes. There are three plans:
+
+| Plan | Included searches | Extra searches | Included documents | Extra documents | Resources |
+|------|------------------|----------------|--------------------|-----------------|-----------|
+| **Build** | 50K/month | $0.40 per 1,000 | 100K | $0.30 per 1,000 | Shared |
+| **Pro** | 250K/month | $0.30 per 1,000 | 1M | $0.20 per 1,000 | Dedicated |
+
+Resources scale automatically. You do not choose a tier. The Cloud UI shows your accrued costs based on recent usage.
+
+### How usage-based billing is charged
+
+- **Plan cost**: the base plan fee (Build or Pro) is charged upfront at the start of each billing cycle.
+- **Extra usage**: searches and documents beyond the included quota are charged at the end of the billing cycle, once the total is known.
+- **Cancellation**: if you cancel your plan before the end of the month, the unused portion of the base plan fee is prorated and returned as a credit.
+- **Outstanding usage**: if you remove your payment method while extra usage charges are still outstanding, Meilisearch will follow up to collect the owed amount.
+
+## Shared billing rules
+
+Regardless of billing model:
+
+- **Per-project billing.** Each project is billed independently. A team with multiple projects is billed the sum of all project charges.
+- **Prorated daily cycle.** Creating or deleting a project mid-day adjusts the charge proportionally.
+- **No per-seat fees.** Adding team members does not affect billing.
+
+## Regions and pricing
+
+Pricing may vary slightly by region. The Cloud UI shows the exact price for your selected region.
+
+| Region | Location |
+|--------|----------|
+| `FRA` | Frankfurt |
+| `LON` | London |
+| `SGP` | Singapore |
+| `JPN` | Japan |
+| `SFO` | San Francisco |
+| `NYC` | New York |
+
+## Choosing a resource tier
+
+For resource-based projects, the most important factor is **RAM**: Meilisearch keeps indexes in memory for fast search, so your instance needs enough RAM to hold your index comfortably.
+
+### Step 1: Estimate your index size
+
+Your index size depends on how many documents you have and how large each document is. Use these typical document sizes as a starting point:
+
+| Document type | Avg size | Examples |
+|--------------|----------|---------|
+| Small | ~1 KB | SaaS records, simple product listings with few filters |
+| Medium | ~3 KB | E-commerce products with descriptions and ~10 filterable attributes |
+| Large | ~8 KB | Articles, blog posts, rich content |
+| AI (with vectors) | ~12 KB | Any document type with vector embeddings |
+
+**Formula:**
+
+```
+Index size ≈ number of documents × average document size × 5
+```
+
+The ×5 factor accounts for the inverted index, facet data, prefix structures, and other internal data Meilisearch builds from your documents.
+
+**Examples:**
+
+| Documents | Avg size | Estimated index size |
+|-----------|----------|---------------------|
+| 100K | 3 KB (medium) | ~1.4 GB |
+| 500K | 3 KB (medium) | ~7 GB |
+| 100K | 12 KB (AI) | ~5.7 GB |
+| 1M | 8 KB (large) | ~37 GB |
+
+### Step 2: Choose a tier with enough RAM
+
+Choose the smallest tier where **RAM exceeds your estimated index size**. Leave headroom for query cache and peak usage.
+
+| Tier | vCPU | RAM | Suitable for |
+|------|------|-----|-------------|
+| XS | 0.5 | 1 GB | Development and testing |
+| S | 1 | 2 GB | Up to ~80K small documents |
+| M | 2 | 4 GB | Up to ~80K medium or ~160K small documents |
+| L | 2 | 8 GB | Up to ~400K medium documents |
+| XL | 4 | 16 GB | Up to ~800K medium or ~300K AI documents |
+| 2XL | 8 | 32 GB | Up to ~1.6M medium or ~600K AI documents |
+| 4XL | 16 | 64 GB | Up to ~3M medium or ~1.2M AI documents |
+
+For larger workloads, contact [sales@meilisearch.com](mailto:sales@meilisearch.com) to discuss Enterprise options including [sharding and replication](/capabilities/platform/infrastructure/sharding_and_replication).
+
+### Step 3: Consider vCPU for high query volume
+
+RAM is almost always the bottleneck. However, if your workload involves sustained high QPS (hundreds of searches per second), choose a tier with more vCPUs. Tiers L and below share 2 vCPUs, while XL and above provide dedicated cores.
+
+### Interactive estimator
+
+Use the [pricing page calculator](https://www.meilisearch.com/pricing) to get a recommendation based on your document count, document type, and expected search volume.
+
+## Estimating your costs
+
+**Resource-based projects:** the Cloud UI shows the hourly rate and an estimated monthly cost for each tier. You can also multiply the hourly rate by 730 for a full-month estimate.
+
+**Usage-based projects:** monitor the accrued cost shown in the Cloud UI over the first few days and extrapolate. Costs scale with search volume and document count, so factor in expected traffic growth.
