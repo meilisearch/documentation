@@ -140,3 +140,6 @@ yarn-error.log
 # Script output
 missing-redirects.txt
 broken-links.txt
+
+# Claude Code (local only, not committed)
+.claude/
