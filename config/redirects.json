@@ -4274,5 +4274,57 @@
   {
     "source": "/reference/api/settings/reset-vectorstore",
     "destination": "/reference/api/settings/reset-embedders"
+  },
+  {
+    "source": "/capabilities/platform/billing/pricing_model",
+    "destination": "/getting_started/overview"
+  },
+  {
+    "source": "/capabilities/platform/management/experimental_features",
+    "destination": "/resources/help/experimental_features_overview"
+  },
+  {
+    "source": "/capabilities/platform/management/overview",
+    "destination": "/getting_started/overview"
+  },
+  {
+    "source": "/capabilities/platform/monitoring/indexing_performance",
+    "destination": "/capabilities/indexing/tasks_and_batches/optimize_batch_performance"
+  },
+  {
+    "source": "/capabilities/platform/billing/overview",
+    "destination": "/getting_started/overview"
+  },
+  {
+    "source": "/capabilities/platform/teams/overview",
+    "destination": "/capabilities/teams/getting_started"
+  },
+  {
+    "source": "/capabilities/platform/infrastructure/overview",
+    "destination": "/resources/self_hosting/overview"
+  },
+  {
+    "source": "/capabilities/full_text_search/how_to/configure_distinct_attribute.mdx",
+    "destination": "/capabilities/full_text_search/how_to/configure_distinct_attribute"
+  },
+  {
+    "source": "/capabilities/platform/management/webhooks",
+    "destination": "/getting_started/overview"
+  },
+  {
+    "source": "/capabilities/platform/infrastructure/regions",
+    "destination": "/resources/self_hosting/overview"
+  },
+  {
+    "source": "/reference/api/sort",
+    "destination": "/capabilities/filtering_sorting_faceting/how_to/combine_filters_and_sort"
+  },
+  {
+    "source": "/capabilities/platform/infrastructure/sharding_and_replication",
+    "destination": "/resources/self_hosting/sharding/configure_replication"
+  },
+  {
+    "source": "/capabilities/platform/teams/how_to/configure_sso_for_team",
+    "destination": "/capabilities/teams/how_to/configure_sso_for_team"
   }
 ]
