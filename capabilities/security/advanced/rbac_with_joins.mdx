@@ -4,6 +4,9 @@ sidebarTitle: RBAC with joins
 description: Implement role-based access control using foreign filters and tenant tokens to control document visibility based on user roles and teams.
 ---
 
+import RbacSearchWithForeignFilter1 from '/snippets/generated-code-samples/code_samples_rbac_search_with_foreign_filter_1.mdx';
+import RbacMultiLevel1 from '/snippets/generated-code-samples/code_samples_rbac_multi_level_1.mdx';
+
 Combine foreign filters with tenant tokens to implement fine-grained, role-based access control (RBAC). Users see only documents they're authorized to access based on their roles and team memberships.
 
 ## How it works
@@ -118,15 +121,7 @@ The tenant token contains the authenticated user's identity:
 
 When the user searches, the application includes this token and constructs the filter:
 
-```bash
-curl -X POST "http://localhost:7700/indexes/documents/search" \
-  -H "Authorization: Bearer <TENANT_TOKEN>" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "q": "roadmap",
-    "filter": "_foreign(access, user = \"jeremy@meilisearch.com\" OR teams IN [\"product\", \"engineering\"])"
-  }'
-```
+<RbacSearchWithForeignFilter1 />
 
 **Result:** Only documents where the access table has an entry for Jeremy (direct user match) or for the "product" or "engineering" teams are returned.
 
@@ -134,14 +129,7 @@ curl -X POST "http://localhost:7700/indexes/documents/search" \
 
 Combine user, team, and role filtering:
 
-```bash
-curl -X POST "http://localhost:7700/indexes/documents/search" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "q": "sensitive",
-    "filter": "_foreign(access, (user = \"jeremy@meilisearch.com\" AND roles IN [\"editor\", \"owner\"]) OR (teams IN [\"product\", \"engineering\"] AND roles IN [\"editor\"]))"
-  }'
-```
+<RbacMultiLevel1 />
 
 This returns documents where:
 - Jeremy has editor or owner role, OR

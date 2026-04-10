@@ -4,6 +4,14 @@ sidebarTitle: Foreign filters
 description: Use foreign filters to filter search results by properties of related documents in other indices.
 ---
 
+import ForeignFilterBasic1 from '/snippets/generated-code-samples/code_samples_foreign_filter_basic_1.mdx';
+import ForeignFilterEquality1 from '/snippets/generated-code-samples/code_samples_foreign_filter_equality_1.mdx';
+import ForeignFilterMultipleEquality1 from '/snippets/generated-code-samples/code_samples_foreign_filter_multiple_equality_1.mdx';
+import ForeignFilterRange1 from '/snippets/generated-code-samples/code_samples_foreign_filter_range_1.mdx';
+import ForeignFilterDateRange1 from '/snippets/generated-code-samples/code_samples_foreign_filter_date_range_1.mdx';
+import ForeignFilterMultipleConditions1 from '/snippets/generated-code-samples/code_samples_foreign_filter_multiple_conditions_1.mdx';
+import ForeignFilterCombined1 from '/snippets/generated-code-samples/code_samples_foreign_filter_combined_1.mdx';
+
 Foreign filters enable you to find documents based on properties of related documents in other indices. Instead of storing all data in one denormalized document, you can define relationships and use foreign filters to query across them.
 
 ## What are foreign filters?
@@ -34,14 +42,7 @@ With joins, you store only the reference:
 
 Then filter deals by company properties:
 
-```bash
-curl -X POST "http://localhost:7700/indexes/deals/search" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "q": "contract",
-    "filter": "_foreign(company, industry = \"Technology\" AND founded_year >= 2000)"
-  }'
-```
+<ForeignFilterBasic1 />
 
 ## How it works: Normalized vs. Denormalized
 
@@ -85,14 +86,7 @@ Update Acme's industry once. All deals linked to it automatically reflect the ch
 
 Filter deals where the company is a specific one:
 
-```bash
-curl -X POST "http://localhost:7700/indexes/deals/search" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "q": "contract",
-    "filter": "_foreign(company, id = \"company_42\")"
-  }'
-```
+<ForeignFilterEquality1 />
 
 Returns deals with the matching company ID.
 
@@ -100,27 +94,13 @@ Returns deals with the matching company ID.
 
 Find deals from companies with multiple specific criteria:
 
-```bash
-curl -X POST "http://localhost:7700/indexes/deals/search" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "q": "",
-    "filter": "_foreign(company, industry = \"Technology\" OR industry = \"Finance\")"
-  }'
-```
+<ForeignFilterMultipleEquality1 />
 
 ## Range filters
 
 Filter by numeric or date properties of related documents:
 
-```bash
-curl -X POST "http://localhost:7700/indexes/deals/search" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "q": "enterprise",
-    "filter": "_foreign(company, founded_year >= 2000 AND founded_year <= 2020)"
-  }'
-```
+<ForeignFilterRange1 />
 
 Returns deals from companies founded between 2000 and 2020.
 
@@ -128,27 +108,13 @@ Returns deals from companies founded between 2000 and 2020.
 
 Filter by date properties:
 
-```bash
-curl -X POST "http://localhost:7700/indexes/deals/search" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "q": "",
-    "filter": "_foreign(company, last_funding_date >= \"2023-01-01\")"
-  }'
-```
+<ForeignFilterDateRange1 />
 
 ## Multiple conditions with AND/OR
 
 Combine conditions using logical operators:
 
-```bash
-curl -X POST "http://localhost:7700/indexes/deals/search" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "q": "contract",
-    "filter": "_foreign(company, (industry = \"Technology\" AND founded_year >= 2010) OR revenue > 1000000)"
-  }'
-```
+<ForeignFilterMultipleConditions1 />
 
 Returns deals where:
 - Company is in Technology industry AND founded after 2010, OR
@@ -158,14 +124,7 @@ Returns deals where:
 
 Mix filters on source and related documents:
 
-```bash
-curl -X POST "http://localhost:7700/indexes/deals/search" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "q": "contract",
-    "filter": "value >= 100000 AND _foreign(company, industry = \"Technology\")"
-  }'
-```
+<ForeignFilterCombined1 />
 
 Returns deals that are:
 - Worth at least 100k, AND

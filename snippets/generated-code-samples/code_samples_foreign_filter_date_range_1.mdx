@@ -1,0 +1,12 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/deals/search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "q": "",
+    "filter": "_foreign(company, last_funding_date >= \"2023-01-01\")"
+  }'
+```
+</CodeGroup>

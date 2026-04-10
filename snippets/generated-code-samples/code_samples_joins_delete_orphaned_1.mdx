@@ -1,0 +1,11 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/deals/delete-by-filter' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "filter": "company_id = deleted_company_1 OR company_id = deleted_company_2"
+  }'
+```
+</CodeGroup>

@@ -4,6 +4,12 @@ sidebarTitle: Precise filtering with arrays
 description: Use foreign filters to precisely filter documents with array relationships using AND logic across items.
 ---
 
+import ForeignFilterArrayOrLogic1 from '/snippets/generated-code-samples/code_samples_foreign_filter_array_or_logic_1.mdx';
+import ForeignFilterArrayAndLogic1 from '/snippets/generated-code-samples/code_samples_foreign_filter_array_and_logic_1.mdx';
+import ForeignFilterCertifications1 from '/snippets/generated-code-samples/code_samples_foreign_filter_certifications_1.mdx';
+import ForeignFilterTags1 from '/snippets/generated-code-samples/code_samples_foreign_filter_tags_1.mdx';
+import ForeignFilterSkills1 from '/snippets/generated-code-samples/code_samples_foreign_filter_skills_1.mdx';
+
 When a relationship contains an array of related documents, foreign filters enable precise filtering with AND logic across items, unlike normal filters which use OR logic.
 
 ## Array filter logic
@@ -44,13 +50,7 @@ Where the actors are:
 
 ### Query 1: Normal filter (OR logic)
 
-```bash
-curl -X POST "http://localhost:7700/indexes/films/search" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "filter": "actors.country = \"France\" OR actors.age > 35"
-  }'
-```
+<ForeignFilterArrayOrLogic1 />
 
 **Result:** Film is included because:
 - Actor B is French (country = "France") ✓
@@ -60,13 +60,7 @@ Both conditions are met, but by **different actors**.
 
 ### Query 2: Foreign filter (AND logic)
 
-```bash
-curl -X POST "http://localhost:7700/indexes/films/search" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "filter": "_foreign(actors, country = \"France\" AND age > 35)"
-  }'
-```
+<ForeignFilterArrayAndLogic1 />
 
 **Result:** Film is included because:
 - Actor B is BOTH French AND over 35 ✓
@@ -87,27 +81,13 @@ A **single actor** meets both conditions.
 
 Find products that have **both** ISO 9001 and CE certifications issued after 2020:
 
-```bash
-curl -X POST "http://localhost:7700/indexes/products/search" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "q": "motor",
-    "filter": "_foreign(certifications, (standard = \"ISO 9001\" OR standard = \"CE\") AND issued_year >= 2020)"
-  }'
-```
+<ForeignFilterCertifications1 />
 
 ### Find articles with specific tag combinations
 
 Find articles that have **both** the "security" AND "encryption" tags (same article, not different articles):
 
-```bash
-curl -X POST "http://localhost:7700/indexes/articles/search" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "q": "cryptography",
-    "filter": "_foreign(tags, name = \"security\" AND name = \"encryption\")"
-  }'
-```
+<ForeignFilterTags1 />
 
 Wait—this won't work as expected because a single tag can't have multiple names. For this use case, you'd want to check if an article has both tags, which would require a different approach (checking two separate arrays or normalizing differently).
 
@@ -115,14 +95,7 @@ Wait—this won't work as expected because a single tag can't have multiple name
 
 Find employees with **both** Python AND JavaScript at advanced level:
 
-```bash
-curl -X POST "http://localhost:7700/indexes/employees/search" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "q": "fullstack",
-    "filter": "_foreign(skills, (language = \"Python\" AND proficiency = \"advanced\") OR (language = \"JavaScript\" AND proficiency = \"advanced\"))"
-  }'
-```
+<ForeignFilterSkills1 />
 
 ## When to use precise filtering
 

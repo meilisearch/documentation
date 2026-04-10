@@ -1,0 +1,13 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/documents/search' \
+  -H 'Authorization: Bearer TENANT_TOKEN' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "q": "roadmap",
+    "filter": "_foreign(access, user = \"jeremy@meilisearch.com\" OR teams IN [\"product\", \"engineering\"])"
+  }'
+```
+</CodeGroup>
