@@ -1,0 +1,91 @@
+---
+title: Joins and relationships
+sidebarTitle: Overview
+description: Create relationships between documents across indices using joins, reducing data duplication while maintaining flexibility for filtering and hydration.
+---
+
+Joins enable you to define relationships between documents in different indices, similar to foreign keys in relational databases. Instead of duplicating data across documents, you store only IDs and use joins to hydrate full documents at search time or filter by related data.
+
+## What are joins?
+
+A join creates a relationship between two indices by linking documents through specific fields. For example, in a SaaS application:
+- The **Deals** index has a `company_id` field
+- The **Companies** index contains company details
+- A join relationship links deals to their companies via these IDs
+
+## Why use joins?
+
+<CardGroup cols={2}>
+  <Card title="Reduce data duplication" icon="copy">
+    Store company details once; reference from many deals instead of embedding full objects in each deal document.
+  </Card>
+  <Card title="Faster indexing" icon="bolt">
+    Smaller documents mean faster indexing operations and reduced storage requirements.
+  </Card>
+  <Card title="Keep data normalized" icon="sitemap">
+    Update company information once and it's automatically reflected in all deal queries.
+  </Card>
+  <Card title="Flexible queries" icon="sliders">
+    Hydrate related data when needed and filter by related document properties without denormalization.
+  </Card>
+</CardGroup>
+
+## Key concepts
+
+- **Relationship:** A link between documents in two indices defined by foreign key fields
+- **Hydration:** Embedding full related documents into search results (instead of just IDs)
+- **Foreign key:** A field containing the ID(s) of documents in another index
+- **Denormalization:** Storing full copies of related data (the alternative to joins)
+
+## When to use joins
+
+Use joins when:
+- You have **relational data** with independent updates (companies and deals, users and orders)
+- You need to **reduce index size** by avoiding data duplication
+- You want to **filter by related data** (e.g., find all deals where the company is in the Technology industry)
+- Different indices have **different update frequencies** (update companies separately from deals)
+
+## When not to use joins
+
+Consider denormalization (embedding full objects) when:
+- Data changes infrequently (rarely updated together)
+- The related data is small (a few fields, not hundreds)
+- You rarely filter or hydrate the related data
+- Performance overhead of relationships is a concern
+
+## SaaS example
+
+In a typical SaaS application:
+- **Users** index: id, name, email, company_id
+- **Companies** index: id, name, industry, founded_year
+- **Deals** index: id, title, company_id, owner_user_id, value
+
+You can define joins to link:
+- deals → companies (by company_id)
+- deals → users (by owner_user_id)
+- users → companies (by company_id)
+
+Then:
+- **Hydrate** deal searches to include full company and user information
+- **Filter** deals by company properties (e.g., all deals from companies founded after 2000)
+
+## Depth limitation
+
+Joins support hydration and filtering at one level only. You cannot create nested chains like deals → companies → industry_details. Each hydration or filter operates on a direct relationship between two indices.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Define relationships" href="/capabilities/indexing/joins/how_to/define_join_relationships">
+    Learn how to set up join relationships in your indices
+  </Card>
+  <Card title="Use hydration" href="/capabilities/indexing/joins/how_to/hydration_during_search">
+    Embed related data in your search results
+  </Card>
+  <Card title="Filter by relationships" href="/capabilities/filtering_sorting_faceting/advanced/filtering_by_joined_data">
+    Advanced: filter documents by related data properties
+  </Card>
+  <Card title="Optimize with joins" href="/capabilities/indexing/advanced/optimization">
+    Learn how joins reduce index size and improve performance
+  </Card>
+</CardGroup>
