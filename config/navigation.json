@@ -1,0 +1,973 @@
+{
+  "versions": [
+    {
+      "version": "latest",
+      "tabs": [
+        {
+          "tab": "Getting started",
+          "groups": [
+            {
+              "group": "Introduction",
+              "pages": [
+                "getting_started/overview",
+                "getting_started/first_project",
+                "getting_started/features",
+                "getting_started/glossary",
+                "getting_started/good_practices"
+              ]
+            },
+            {
+              "group": "Back-end SDKs",
+              "pages": [
+                "getting_started/sdks/javascript",
+                "getting_started/sdks/python",
+                "getting_started/sdks/php",
+                "getting_started/sdks/ruby",
+                "getting_started/sdks/go",
+                "getting_started/sdks/rust",
+                "getting_started/sdks/java",
+                "getting_started/sdks/dotnet",
+                "getting_started/sdks/swift",
+                "getting_started/sdks/dart"
+              ]
+            },
+            {
+              "group": "Frontend SDKs",
+              "pages": [
+                "getting_started/instant_meilisearch/javascript",
+                "getting_started/instant_meilisearch/react",
+                "getting_started/instant_meilisearch/vue",
+                "getting_started/instant_meilisearch/docsearch"
+              ]
+            },
+            {
+              "group": "Framework integrations",
+              "pages": [
+                "getting_started/frameworks/laravel",
+                "getting_started/frameworks/strapi",
+                "getting_started/frameworks/rails",
+                "getting_started/frameworks/symfony"
+              ]
+            },
+            {
+              "group": "Integrations",
+              "pages": [
+                "getting_started/integrations/firebase",
+                "getting_started/integrations/vercel",
+                "getting_started/integrations/postman",
+                "getting_started/integrations/meilisearch_importer",
+                "getting_started/integrations/mcp",
+                "getting_started/integrations/langchain"
+              ]
+            }
+          ]
+        },
+        {
+          "tab": "Capabilities",
+          "groups": [
+            {
+              "group": "Capabilities",
+              "pages": [
+                "capabilities/overview"
+              ]
+            },
+            {
+              "group": "Full-text search",
+              "pages": [
+                "capabilities/full_text_search/overview",
+                {
+                  "group": "Getting started",
+                  "pages": [
+                    "capabilities/full_text_search/getting_started/basic_search",
+                    "capabilities/full_text_search/getting_started/placeholder_search",
+                    "capabilities/full_text_search/getting_started/search_with_snippets",
+                    "capabilities/full_text_search/getting_started/phrase_search"
+                  ]
+                },
+                {
+                  "group": "How to",
+                  "pages": [
+                    "capabilities/full_text_search/how_to/configure_searchable_attributes",
+                    "capabilities/full_text_search/how_to/configure_stop_words",
+                    "capabilities/full_text_search/how_to/configure_prefix_search",
+                    "capabilities/full_text_search/how_to/highlight_search_results",
+                    "capabilities/full_text_search/how_to/use_matching_strategy",
+                    "capabilities/full_text_search/how_to/configure_search_cutoff",
+                    "capabilities/full_text_search/how_to/configure_displayed_attributes",
+                    "capabilities/full_text_search/how_to/configure_distinct_attribute",
+                    "capabilities/full_text_search/how_to/paginate_search_results"
+                  ]
+                },
+                {
+                  "group": "Relevancy",
+                  "pages": [
+                    "capabilities/full_text_search/relevancy/relevancy",
+                    "capabilities/full_text_search/relevancy/ranking_rules",
+                    "capabilities/full_text_search/relevancy/custom_ranking_rules",
+                    "capabilities/full_text_search/relevancy/ranking_score",
+                    "capabilities/full_text_search/relevancy/attribute_ranking_order",
+                    "capabilities/full_text_search/relevancy/typo_tolerance_settings",
+                    "capabilities/full_text_search/relevancy/synonyms"
+                  ]
+                },
+                {
+                  "group": "Advanced",
+                  "pages": [
+                    "capabilities/full_text_search/advanced/ranking_pipeline",
+                    "capabilities/full_text_search/advanced/performance_tuning",
+                    "capabilities/full_text_search/advanced/debug_search_performance"
+                  ]
+                }
+              ]
+            },
+            {
+              "group": "Hybrid and semantic search",
+              "pages": [
+                "capabilities/hybrid_search/overview",
+                "capabilities/hybrid_search/getting_started",
+                {
+                  "group": "How to",
+                  "pages": [
+                    "capabilities/hybrid_search/how_to/choose_an_embedder",
+                    "capabilities/hybrid_search/how_to/search_with_user_provided_embeddings",
+                    "capabilities/hybrid_search/how_to/image_search_with_multimodal",
+                    "capabilities/hybrid_search/how_to/image_search_with_user_embeddings"
+                  ]
+                },
+                {
+                  "group": "Advanced",
+                  "pages": [
+                    "capabilities/hybrid_search/advanced/semantic_vs_hybrid",
+                    "capabilities/hybrid_search/advanced/document_template_best_practices",
+                    "capabilities/hybrid_search/advanced/custom_hybrid_ranking",
+                    "capabilities/hybrid_search/advanced/composite_embedders",
+                    "capabilities/hybrid_search/advanced/binary_quantization",
+                    "capabilities/hybrid_search/advanced/multiple_embedders"
+                  ]
+                },
+                {
+                  "group": "Providers",
+                  "pages": [
+                    "capabilities/hybrid_search/how_to/configure_openai_embedder",
+                    "capabilities/hybrid_search/how_to/configure_cohere_embedder",
+                    "capabilities/hybrid_search/how_to/configure_huggingface_embedder",
+                    "capabilities/hybrid_search/how_to/configure_rest_embedder",
+                    "capabilities/hybrid_search/providers/mistral",
+                    "capabilities/hybrid_search/providers/gemini",
+                    "capabilities/hybrid_search/providers/cloudflare",
+                    "capabilities/hybrid_search/providers/voyage",
+                    "capabilities/hybrid_search/providers/bedrock",
+                    "capabilities/hybrid_search/providers/jina",
+                    "capabilities/hybrid_search/providers/huggingface"
+                  ]
+                }
+              ]
+            },
+            {
+              "group": "Geo search",
+              "pages": [
+                "capabilities/geo_search/overview",
+                "capabilities/geo_search/getting_started",
+                {
+                  "group": "How to",
+                  "pages": [
+                    "capabilities/geo_search/how_to/filter_by_geo_radius",
+                    "capabilities/geo_search/how_to/filter_by_geo_bounding_box",
+                    "capabilities/geo_search/how_to/filter_by_geo_polygon",
+                    "capabilities/geo_search/how_to/sort_by_geo_point",
+                    "capabilities/geo_search/how_to/use_geojson_format"
+                  ]
+                }
+              ]
+            },
+            {
+              "group": "Conversational search",
+              "pages": [
+                "capabilities/conversational_search/overview",
+                {
+                  "group": "Getting started",
+                  "pages": [
+                    "capabilities/conversational_search/getting_started/setup",
+                    "capabilities/conversational_search/getting_started/chat",
+                    "capabilities/conversational_search/getting_started/one_shot_summarization"
+                  ]
+                },
+                {
+                  "group": "How to",
+                  "pages": [
+                    "capabilities/conversational_search/how_to/configure_chat_workspace",
+                    "capabilities/conversational_search/how_to/configure_index_chat_settings",
+                    "capabilities/conversational_search/how_to/stream_chat_responses",
+                    "capabilities/conversational_search/how_to/configure_guardrails",
+                    "capabilities/conversational_search/how_to/display_source_documents",
+                    "capabilities/conversational_search/how_to/handle_errors_and_fallbacks",
+                    "capabilities/conversational_search/how_to/optimize_chat_prompts"
+                  ]
+                },
+                {
+                  "group": "Advanced",
+                  "pages": [
+                    "capabilities/conversational_search/advanced/reduce_hallucination",
+                    "capabilities/conversational_search/advanced/chat_tooling_reference"
+                  ]
+                }
+              ]
+            },
+            {
+              "group": "Multi-search",
+              "pages": [
+                "capabilities/multi_search/overview",
+                {
+                  "group": "Getting started",
+                  "pages": [
+                    "capabilities/multi_search/getting_started/multi_search",
+                    "capabilities/multi_search/getting_started/federated_search"
+                  ]
+                },
+                {
+                  "group": "How to",
+                  "pages": [
+                    "capabilities/multi_search/how_to/boost_results_across_indexes",
+                    "capabilities/multi_search/how_to/search_with_different_filters",
+                    "capabilities/multi_search/how_to/build_unified_search_bar",
+                    "capabilities/multi_search/how_to/combine_text_and_image_search"
+                  ]
+                }
+              ]
+            },
+            {
+              "group": "Filtering, sorting, and faceting",
+              "pages": [
+                "capabilities/filtering_sorting_faceting/overview",
+                "capabilities/filtering_sorting_faceting/getting_started",
+                {
+                  "group": "How to",
+                  "pages": [
+                    "capabilities/filtering_sorting_faceting/how_to/filter_with_facets",
+                    "capabilities/filtering_sorting_faceting/how_to/sort_results",
+                    "capabilities/filtering_sorting_faceting/how_to/filter_and_sort_by_date",
+                    "capabilities/filtering_sorting_faceting/how_to/combine_filters_and_sort",
+                    "capabilities/filtering_sorting_faceting/how_to/build_faceted_navigation",
+                    "capabilities/filtering_sorting_faceting/how_to/configure_granular_filters",
+                    "capabilities/filtering_sorting_faceting/how_to/search_and_filter_together",
+                    "capabilities/filtering_sorting_faceting/how_to/handle_large_facet_cardinality"
+                  ]
+                },
+                {
+                  "group": "Advanced",
+                  "pages": [
+                    "capabilities/filtering_sorting_faceting/advanced/filter_expression_syntax",
+                    "capabilities/filtering_sorting_faceting/advanced/optimize_facet_performance",
+                    "capabilities/filtering_sorting_faceting/advanced/disjunctive_facets"
+                  ]
+                }
+              ]
+            },
+            {
+              "group": "Personalization",
+              "pages": [
+                "capabilities/personalization/overview",
+                {
+                  "group": "Getting started",
+                  "pages": [
+                    "capabilities/personalization/getting_started/personalized_search",
+                    "capabilities/personalization/getting_started/recommendations"
+                  ]
+                },
+                {
+                  "group": "How to",
+                  "pages": [
+                    "capabilities/personalization/how_to/generate_user_context",
+                    "capabilities/personalization/how_to/personalize_ecommerce_search"
+                  ]
+                }
+              ]
+            },
+            {
+              "group": "Analytics",
+              "pages": [
+                "capabilities/analytics/overview",
+                "capabilities/analytics/getting_started",
+                {
+                  "group": "How to",
+                  "pages": [
+                    "capabilities/analytics/how_to/bind_events_to_user",
+                    "capabilities/analytics/how_to/track_click_events",
+                    "capabilities/analytics/how_to/track_conversion_events"
+                  ]
+                },
+                {
+                  "group": "Advanced",
+                  "pages": [
+                    "capabilities/analytics/advanced/analytics_metrics",
+                    "capabilities/analytics/advanced/events_endpoint",
+                    "capabilities/analytics/advanced/migrate_analytics"
+                  ]
+                }
+              ]
+            },
+            {
+              "group": "Security and tenant tokens",
+              "pages": [
+                "capabilities/security/overview",
+                "capabilities/security/getting_started",
+                {
+                  "group": "How to",
+                  "pages": [
+                    "capabilities/security/how_to/generate_token_third_party",
+                    "capabilities/security/how_to/generate_token_from_scratch",
+                    "capabilities/security/how_to/manage_api_keys"
+                  ]
+                },
+                {
+                  "group": "Advanced",
+                  "pages": [
+                    "capabilities/security/advanced/tenant_token_payload"
+                  ]
+                }
+              ]
+            },
+            {
+              "group": "Teams",
+              "pages": [
+                "capabilities/teams/overview",
+                "capabilities/teams/getting_started",
+                {
+                  "group": "How to",
+                  "pages": [
+                    "capabilities/teams/how_to/manage_team_roles",
+                    "capabilities/teams/how_to/configure_sso_for_team"
+                  ]
+                }
+              ]
+            },
+            {
+              "group": "Indexing",
+              "pages": [
+                "capabilities/indexing/overview",
+                "capabilities/indexing/getting_started",
+                {
+                  "group": "How to",
+                  "pages": [
+                    "capabilities/indexing/how_to/add_and_update_documents",
+                    "capabilities/indexing/how_to/handle_multilingual_data",
+                    "capabilities/indexing/how_to/document_relations",
+                    "capabilities/indexing/how_to/export_data",
+                    "capabilities/indexing/how_to/compact_an_index",
+                    "capabilities/indexing/how_to/import_large_datasets",
+                    "capabilities/indexing/how_to/design_primary_keys",
+                    "capabilities/indexing/how_to/edit_documents_with_functions",
+                    "capabilities/indexing/how_to/delete_documents_at_scale"
+                  ]
+                },
+                {
+                  "group": "Tasks and batches",
+                  "pages": [
+                    "capabilities/indexing/tasks_and_batches/async_operations",
+                    "capabilities/indexing/tasks_and_batches/monitor_tasks",
+                    "capabilities/indexing/tasks_and_batches/filter_tasks",
+                    "capabilities/indexing/tasks_and_batches/manage_task_database"
+                  ]
+                },
+                {
+                  "group": "Advanced",
+                  "pages": [
+                    "capabilities/indexing/advanced/indexing_best_practices",
+                    "capabilities/indexing/advanced/tokenization",
+                    "capabilities/indexing/tasks_and_batches/optimize_batch_performance"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tab": "Reference",
+          "groups": [
+            {
+              "group": "Overview",
+              "pages": [
+                "reference/api/authorization",
+                "reference/api/headers",
+                "reference/api/requests",
+                "reference/api/pagination",
+                "reference/api/openapi"
+              ]
+            },
+            {
+              "group": "API Routes",
+              "openapi": {
+                "source": "assets/open-api/meilisearch-openapi-mintlify.json",
+                "directory": "reference/api"
+              },
+              "internal-meili-fetch-automation": true,
+              "examples": {
+                "languages": [
+                  "curl",
+                  "javascript",
+                  "php",
+                  "python",
+                  "java",
+                  "ruby",
+                  "go",
+                  "csharp",
+                  "rust",
+                  "dart",
+                  "swift"
+                ],
+                "autogenerate": false
+              },
+              "pages": [
+                {
+                  "group": "Indexes",
+                  "pages": [
+                    "GET /indexes",
+                    "POST /indexes",
+                    "GET /indexes/{index_uid}",
+                    "PATCH /indexes/{index_uid}",
+                    "DELETE /indexes/{index_uid}",
+                    "POST /swap-indexes",
+                    "POST /indexes/{index_uid}/fields"
+                  ]
+                },
+                {
+                  "group": "Documents",
+                  "pages": [
+                    "GET /indexes/{index_uid}/documents",
+                    "POST /indexes/{index_uid}/documents/fetch",
+                    "GET /indexes/{index_uid}/documents/{document_id}",
+                    "POST /indexes/{index_uid}/documents",
+                    "PUT /indexes/{index_uid}/documents",
+                    "DELETE /indexes/{index_uid}/documents/{document_id}",
+                    "DELETE /indexes/{index_uid}/documents",
+                    "POST /indexes/{index_uid}/documents/delete",
+                    "POST /indexes/{index_uid}/documents/delete-batch",
+                    "POST /indexes/{index_uid}/documents/edit"
+                  ]
+                },
+                {
+                  "group": "Search",
+                  "pages": [
+                    "POST /indexes/{index_uid}/search",
+                    "GET /indexes/{index_uid}/search"
+                  ]
+                },
+                {
+                  "group": "Multi-search",
+                  "pages": [
+                    "POST /multi-search"
+                  ]
+                },
+                {
+                  "group": "Facet search",
+                  "pages": [
+                    "POST /indexes/{index_uid}/facet-search"
+                  ]
+                },
+                {
+                  "group": "Similar documents",
+                  "pages": [
+                    "POST /indexes/{index_uid}/similar",
+                    "GET /indexes/{index_uid}/similar"
+                  ]
+                },
+                {
+                  "group": "Chats",
+                  "pages": [
+                    "GET /chats",
+                    "GET /chats/{workspace_uid}",
+                    "DELETE /chats/{workspace_uid}",
+                    "POST /chats/{workspace_uid}/chat/completions",
+                    "GET /chats/{workspace_uid}/settings",
+                    "PATCH /chats/{workspace_uid}/settings",
+                    "DELETE /chats/{workspace_uid}/settings"
+                  ]
+                },
+                {
+                  "group": "Search Rules",
+                  "pages": [
+                    "POST /dynamic-search-rules",
+                    "GET /dynamic-search-rules/{uid}",
+                    "PATCH /dynamic-search-rules/{uid}",
+                    "DELETE /dynamic-search-rules/{uid}"
+                  ]
+                },
+                {
+                  "group": "Tasks",
+                  "pages": [
+                    "GET /tasks",
+                    "GET /tasks/{task_id}",
+                    "GET /tasks/{task_id}/documents",
+                    "POST /tasks/cancel",
+                    "DELETE /tasks"
+                  ]
+                },
+                {
+                  "group": "Batches",
+                  "pages": [
+                    "GET /batches",
+                    "GET /batches/{batch_id}"
+                  ]
+                },
+                {
+                  "group": "Keys",
+                  "pages": [
+                    "GET /keys",
+                    "POST /keys",
+                    "GET /keys/{key}",
+                    "PATCH /keys/{key}",
+                    "DELETE /keys/{key}"
+                  ]
+                },
+                {
+                  "group": "Settings",
+                  "pages": [
+                    {
+                      "group": "All settings",
+                      "pages": [
+                        "GET /indexes/{index_uid}/settings",
+                        "PATCH /indexes/{index_uid}/settings",
+                        "DELETE /indexes/{index_uid}/settings"
+                      ]
+                    },
+                    {
+                      "group": "Chat",
+                      "pages": [
+                        "GET /indexes/{index_uid}/settings/chat",
+                        "PATCH /indexes/{index_uid}/settings/chat",
+                        "DELETE /indexes/{index_uid}/settings/chat"
+                      ]
+                    },
+                    {
+                      "group": "Dictionary",
+                      "pages": [
+                        "GET /indexes/{index_uid}/settings/dictionary",
+                        "PUT /indexes/{index_uid}/settings/dictionary",
+                        "DELETE /indexes/{index_uid}/settings/dictionary"
+                      ]
+                    },
+                    {
+                      "group": "Displayed attributes",
+                      "pages": [
+                        "GET /indexes/{index_uid}/settings/displayed-attributes",
+                        "PUT /indexes/{index_uid}/settings/displayed-attributes",
+                        "DELETE /indexes/{index_uid}/settings/displayed-attributes"
+                      ]
+                    },
+                    {
+                      "group": "Distinct attribute",
+                      "pages": [
+                        "GET /indexes/{index_uid}/settings/distinct-attribute",
+                        "PUT /indexes/{index_uid}/settings/distinct-attribute",
+                        "DELETE /indexes/{index_uid}/settings/distinct-attribute"
+                      ]
+                    },
+                    {
+                      "group": "Embedders",
+                      "pages": [
+                        "GET /indexes/{index_uid}/settings/embedders",
+                        "PATCH /indexes/{index_uid}/settings/embedders",
+                        "DELETE /indexes/{index_uid}/settings/embedders"
+                      ]
+                    },
+                    {
+                      "group": "Facet search",
+                      "pages": [
+                        "GET /indexes/{index_uid}/settings/facet-search",
+                        "PUT /indexes/{index_uid}/settings/facet-search",
+                        "DELETE /indexes/{index_uid}/settings/facet-search"
+                      ]
+                    },
+                    {
+                      "group": "Faceting",
+                      "pages": [
+                        "GET /indexes/{index_uid}/settings/faceting",
+                        "PATCH /indexes/{index_uid}/settings/faceting",
+                        "DELETE /indexes/{index_uid}/settings/faceting"
+                      ]
+                    },
+                    {
+                      "group": "Filterable attributes",
+                      "pages": [
+                        "GET /indexes/{index_uid}/settings/filterable-attributes",
+                        "PUT /indexes/{index_uid}/settings/filterable-attributes",
+                        "DELETE /indexes/{index_uid}/settings/filterable-attributes"
+                      ]
+                    },
+                    {
+                      "group": "Foreign keys",
+                      "pages": [
+                        "GET /indexes/{index_uid}/settings/foreign-keys",
+                        "PUT /indexes/{index_uid}/settings/foreign-keys",
+                        "DELETE /indexes/{index_uid}/settings/foreign-keys"
+                      ]
+                    },
+                    {
+                      "group": "Localized attributes",
+                      "pages": [
+                        "GET /indexes/{index_uid}/settings/localized-attributes",
+                        "PUT /indexes/{index_uid}/settings/localized-attributes",
+                        "DELETE /indexes/{index_uid}/settings/localized-attributes"
+                      ]
+                    },
+                    {
+                      "group": "Non-separator tokens",
+                      "pages": [
+                        "GET /indexes/{index_uid}/settings/non-separator-tokens",
+                        "PUT /indexes/{index_uid}/settings/non-separator-tokens",
+                        "DELETE /indexes/{index_uid}/settings/non-separator-tokens"
+                      ]
+                    },
+                    {
+                      "group": "Pagination",
+                      "pages": [
+                        "GET /indexes/{index_uid}/settings/pagination",
+                        "PATCH /indexes/{index_uid}/settings/pagination",
+                        "DELETE /indexes/{index_uid}/settings/pagination"
+                      ]
+                    },
+                    {
+                      "group": "Prefix search",
+                      "pages": [
+                        "GET /indexes/{index_uid}/settings/prefix-search",
+                        "PUT /indexes/{index_uid}/settings/prefix-search",
+                        "DELETE /indexes/{index_uid}/settings/prefix-search"
+                      ]
+                    },
+                    {
+                      "group": "Proximity precision",
+                      "pages": [
+                        "GET /indexes/{index_uid}/settings/proximity-precision",
+                        "PUT /indexes/{index_uid}/settings/proximity-precision",
+                        "DELETE /indexes/{index_uid}/settings/proximity-precision"
+                      ]
+                    },
+                    {
+                      "group": "Ranking rules",
+                      "pages": [
+                        "GET /indexes/{index_uid}/settings/ranking-rules",
+                        "PUT /indexes/{index_uid}/settings/ranking-rules",
+                        "DELETE /indexes/{index_uid}/settings/ranking-rules"
+                      ]
+                    },
+                    {
+                      "group": "Search cutoff",
+                      "pages": [
+                        "GET /indexes/{index_uid}/settings/search-cutoff-ms",
+                        "PUT /indexes/{index_uid}/settings/search-cutoff-ms",
+                        "DELETE /indexes/{index_uid}/settings/search-cutoff-ms"
+                      ]
+                    },
+                    {
+                      "group": "Searchable attributes",
+                      "pages": [
+                        "GET /indexes/{index_uid}/settings/searchable-attributes",
+                        "PUT /indexes/{index_uid}/settings/searchable-attributes",
+                        "DELETE /indexes/{index_uid}/settings/searchable-attributes"
+                      ]
+                    },
+                    {
+                      "group": "Separator tokens",
+                      "pages": [
+                        "GET /indexes/{index_uid}/settings/separator-tokens",
+                        "PUT /indexes/{index_uid}/settings/separator-tokens",
+                        "DELETE /indexes/{index_uid}/settings/separator-tokens"
+                      ]
+                    },
+                    {
+                      "group": "Sortable attributes",
+                      "pages": [
+                        "GET /indexes/{index_uid}/settings/sortable-attributes",
+                        "PUT /indexes/{index_uid}/settings/sortable-attributes",
+                        "DELETE /indexes/{index_uid}/settings/sortable-attributes"
+                      ]
+                    },
+                    {
+                      "group": "Stop words",
+                      "pages": [
+                        "GET /indexes/{index_uid}/settings/stop-words",
+                        "PUT /indexes/{index_uid}/settings/stop-words",
+                        "DELETE /indexes/{index_uid}/settings/stop-words"
+                      ]
+                    },
+                    {
+                      "group": "Synonyms",
+                      "pages": [
+                        "GET /indexes/{index_uid}/settings/synonyms",
+                        "PUT /indexes/{index_uid}/settings/synonyms",
+                        "DELETE /indexes/{index_uid}/settings/synonyms"
+                      ]
+                    },
+                    {
+                      "group": "Typo tolerance",
+                      "pages": [
+                        "GET /indexes/{index_uid}/settings/typo-tolerance",
+                        "PATCH /indexes/{index_uid}/settings/typo-tolerance",
+                        "DELETE /indexes/{index_uid}/settings/typo-tolerance"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "group": "Management",
+                  "pages": [
+                    {
+                      "group": "Stats",
+                      "pages": [
+                        "GET /indexes/{index_uid}/stats",
+                        "GET /stats"
+                      ]
+                    },
+                    {
+                      "group": "Health",
+                      "pages": [
+                        "GET /health"
+                      ]
+                    },
+                    {
+                      "group": "Version",
+                      "pages": [
+                        "GET /version"
+                      ]
+                    },
+                    {
+                      "group": "Snapshots",
+                      "pages": [
+                        "POST /snapshots"
+                      ]
+                    },
+                    {
+                      "group": "Dumps",
+                      "pages": [
+                        "POST /dumps"
+                      ]
+                    },
+                    {
+                      "group": "Logs",
+                      "pages": [
+                        "POST /logs/stream",
+                        "DELETE /logs/stream",
+                        "POST /logs/stderr"
+                      ]
+                    },
+                    {
+                      "group": "Metrics",
+                      "pages": [
+                        "GET /metrics"
+                      ]
+                    },
+                    {
+                      "group": "Experimental features",
+                      "pages": [
+                        "GET /experimental-features",
+                        "PATCH /experimental-features"
+                      ]
+                    },
+                    {
+                      "group": "Network",
+                      "pages": [
+                        "GET /network",
+                        "PATCH /network",
+                        "POST /network/control"
+                      ]
+                    },
+                    {
+                      "group": "Webhooks",
+                      "pages": [
+                        "GET /webhooks",
+                        "POST /webhooks",
+                        "GET /webhooks/{uuid}",
+                        "PATCH /webhooks/{uuid}",
+                        "DELETE /webhooks/{uuid}"
+                      ]
+                    },
+                    {
+                      "group": "Compact",
+                      "pages": [
+                        "POST /indexes/{index_uid}/compact",
+                        "POST /tasks/compact"
+                      ]
+                    },
+                    {
+                      "group": "Export",
+                      "pages": [
+                        "POST /export"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "group": "Errors",
+              "pages": [
+                "reference/errors/overview",
+                "reference/errors/error_codes"
+              ]
+            }
+          ]
+        },
+        {
+          "tab": "Resources",
+          "groups": [
+            {
+              "group": "Self-hosting",
+              "pages": [
+                "resources/self_hosting/overview",
+                {
+                  "group": "Getting started",
+                  "pages": [
+                    "resources/self_hosting/getting_started/quick_start",
+                    "resources/self_hosting/getting_started/install_locally",
+                    "resources/self_hosting/getting_started/docker",
+                    "resources/self_hosting/getting_started/search_preview"
+                  ]
+                },
+                {
+                  "group": "Configuration",
+                  "pages": [
+                    "resources/self_hosting/configuration/overview",
+                    "resources/self_hosting/configuration/reference"
+                  ]
+                },
+                {
+                  "group": "Deployment",
+                  "pages": [
+                    "resources/self_hosting/deployment/overview",
+                    "resources/self_hosting/deployment/running_production",
+                    "resources/self_hosting/deployment/aws",
+                    "resources/self_hosting/deployment/gcp",
+                    "resources/self_hosting/deployment/azure",
+                    "resources/self_hosting/deployment/digitalocean"
+                  ]
+                },
+                {
+                  "group": "Security",
+                  "pages": [
+                    "resources/self_hosting/security/overview",
+                    "resources/self_hosting/security/master_api_keys",
+                    "resources/self_hosting/security/basic_security",
+                    "resources/self_hosting/security/resetting_master_key",
+                    "resources/self_hosting/security/protected_unprotected",
+                    "resources/self_hosting/security/http2_ssl"
+                  ]
+                },
+                {
+                  "group": "Data backup",
+                  "pages": [
+                    "resources/self_hosting/data_backup/overview",
+                    "resources/self_hosting/data_backup/dumps",
+                    "resources/self_hosting/data_backup/snapshots"
+                  ]
+                },
+                {
+                  "group": "Sharding and replication",
+                  "pages": [
+                    "resources/self_hosting/sharding/overview",
+                    "resources/self_hosting/sharding/setup_sharded_cluster",
+                    "resources/self_hosting/sharding/configure_replication",
+                    "resources/self_hosting/sharding/manage_network"
+                  ]
+                },
+                {
+                  "group": "Advanced",
+                  "pages": [
+                    "resources/self_hosting/performance/ram_multithreading",
+                    "resources/self_hosting/webhooks",
+                    "resources/self_hosting/huggingface_gpu"
+                  ]
+                },
+                "resources/self_hosting/enterprise_edition"
+              ]
+            },
+            {
+              "group": "Comparisons",
+              "pages": [
+                "resources/comparisons/alternatives",
+                "resources/comparisons/elasticsearch",
+                "resources/comparisons/algolia",
+                "resources/comparisons/typesense",
+                "resources/comparisons/postgresql",
+                "resources/comparisons/pinecone",
+                "resources/comparisons/qdrant",
+                "resources/comparisons/opensearch",
+                "resources/comparisons/mongodb",
+                "resources/comparisons/typo_tolerance_vs_fuzzy_search"
+              ]
+            },
+            {
+              "group": "Migration",
+              "pages": [
+                "resources/migration/migrating_cloud",
+                "resources/migration/updating",
+                "resources/migration/algolia_migration",
+                "resources/migration/elasticsearch_migration",
+                "resources/migration/qdrant_migration",
+                "resources/migration/mongodb_migration",
+                "resources/migration/postgresql_migration",
+                "resources/migration/supabase_migration"
+              ]
+            },
+            {
+              "group": "Demos",
+              "pages": [
+                "resources/demos/overview",
+                "resources/demos/where_to_watch",
+                "resources/demos/home_booking",
+                "resources/demos/ecommerce",
+                "resources/demos/saas",
+                "resources/demos/flickr",
+                "resources/demos/personalized_search",
+                "resources/demos/playground",
+                "resources/demos/music",
+                "resources/demos/geosearch",
+                "resources/demos/moma",
+                "resources/demos/nobel_prizes",
+                "resources/demos/tenant_tokens",
+                "resources/demos/typo_tolerance",
+                "resources/demos/voice_search",
+                "resources/demos/rubygems",
+                "resources/demos/hydration"
+              ]
+            },
+            {
+              "group": "Under the hood",
+              "pages": [
+                "resources/internals/documents",
+                "resources/internals/indexes",
+                "resources/internals/primary_key",
+                "resources/internals/storage",
+                "resources/internals/datatypes",
+                "resources/internals/ranking",
+                "resources/internals/bucket_sort",
+                "resources/internals/hannoy",
+                "resources/internals/concat",
+                "resources/internals/prefix",
+                "resources/help/language"
+              ]
+            },
+            {
+              "group": "Other resources",
+              "pages": [
+                "resources/help/sdks",
+                "resources/help/faq",
+                "resources/help/known_limitations",
+                "resources/help/experimental_features_overview",
+                "resources/help/telemetry",
+                "resources/help/versioning",
+                "resources/help/contributing_docs",
+                "resources/migration/previous_docs_version"
+              ]
+            }
+          ]
+        },
+        {
+          "tab": "Changelog",
+          "pages": [
+            "changelog/changelog"
+          ]
+        }
+      ]
+    }
+  ]
+}
