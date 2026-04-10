@@ -81,20 +81,6 @@ Store data once:
 
 Update Acme's industry once. All deals linked to it automatically reflect the change.
 
-## Hard limit: Foreign filters with maximum 100 matching documents
-
-<Callout type="warning">
-If a foreign filter returns more than 100 matching documents from the target index, Meilisearch will return an error. Design your foreign filters carefully to stay within this limit by being more specific with your filtering criteria.
-</Callout>
-
-**Example:** If you filter for `_foreign(company, industry = "Technology")` and your database has 150 technology companies, the query fails.
-
-**Solutions:**
-- Add additional filter conditions: `_foreign(company, industry = "Technology" AND founded_year >= 2020)` (narrows results)
-- Use other attributes: `_foreign(company, industry = "Technology" AND revenue > 1000000)`
-- Break into multiple queries with narrower filters
-- Consider denormalization if filtering patterns require very broad queries
-
 ## Simple equality filters
 
 Filter deals where the company is a specific one:
@@ -261,6 +247,20 @@ Before production, verify filter performance:
 - Estimate how many target documents match each filter
 - Ensure results stay under 100 documents
 - Add more specific conditions if needed
+
+## Hard limit: Foreign filters with maximum 100 matching documents
+
+<Callout type="warning">
+If a foreign filter returns more than 100 matching documents from the target index, Meilisearch will return an error. Design your foreign filters carefully to stay within this limit by being more specific with your filtering criteria.
+</Callout>
+
+**Example:** If you filter for `_foreign(company, industry = "Technology")` and your database has 150 technology companies, the query fails.
+
+**Solutions:**
+- Add additional filter conditions: `_foreign(company, industry = "Technology" AND founded_year >= 2020)` (narrows results)
+- Use other attributes: `_foreign(company, industry = "Technology" AND revenue > 1000000)`
+- Break into multiple queries with narrower filters
+- Consider denormalization if filtering patterns require very broad queries
 
 ## Next steps
 
