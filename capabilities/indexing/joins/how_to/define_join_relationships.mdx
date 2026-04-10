@@ -31,14 +31,25 @@ Each source document has exactly one related target document.
 
 **Configuration:**
 ```bash
-curl -X PATCH "http://localhost:7700/indexes/users/settings/join-configurations" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "user_profile": {
-      "sourceField": "profile_id",
-      "targetIndex": "profiles",
-      "targetField": "id"
-    }
+curl -X PATCH 'http://localhost:7700/indexes/users/settings' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "foreignKeys": [
+      {
+        "fieldName": "profile_id",
+        "foreignIndexUid": "profiles"
+      }
+    ],
+    "filterableAttributes": [
+      {
+        "attributePatterns": ["profile_id"],
+        "features": {
+          "filter": {
+            "equality": true
+          }
+        }
+      }
+    ]
   }'
 ```
 
@@ -52,14 +63,25 @@ Each source document has multiple related target documents, stored as an array o
 
 **Configuration:**
 ```bash
-curl -X PATCH "http://localhost:7700/indexes/companies/settings/join-configurations" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "company_employees": {
-      "sourceField": "employee_ids",
-      "targetIndex": "employees",
-      "targetField": "id"
-    }
+curl -X PATCH 'http://localhost:7700/indexes/companies/settings' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "foreignKeys": [
+      {
+        "fieldName": "employee_ids",
+        "foreignIndexUid": "employees"
+      }
+    ],
+    "filterableAttributes": [
+      {
+        "attributePatterns": ["employee_ids"],
+        "features": {
+          "filter": {
+            "equality": true
+          }
+        }
+      }
+    ]
   }'
 ```
 
@@ -74,14 +96,25 @@ Multiple source documents reference multiple target documents, typically using a
 
 **Configuration:**
 ```bash
-curl -X PATCH "http://localhost:7700/indexes/films/settings/join-configurations" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "film_actors": {
-      "sourceField": "actor_ids",
-      "targetIndex": "actors",
-      "targetField": "id"
-    }
+curl -X PATCH 'http://localhost:7700/indexes/films/settings' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "foreignKeys": [
+      {
+        "fieldName": "actor_ids",
+        "foreignIndexUid": "actors"
+      }
+    ],
+    "filterableAttributes": [
+      {
+        "attributePatterns": ["actor_ids"],
+        "features": {
+          "filter": {
+            "equality": true
+          }
+        }
+      }
+    ]
   }'
 ```
 
@@ -89,24 +122,35 @@ curl -X PATCH "http://localhost:7700/indexes/films/settings/join-configurations"
 
 | Parameter | Type | Description | Example |
 |-----------|------|-------------|---------|
-| `sourceField` | string | Field in the source index containing the ID(s) | `"company_id"` or `"employee_ids"` |
-| `targetIndex` | string | Name of the target index | `"companies"` |
-| `targetField` | string | Field in the target index that serves as the primary key | `"id"` |
-| Relationship name | string | Key identifying this relationship | `"company_employees"` |
+| `fieldName` | string | Field in the source index containing the ID(s) | `"company_id"` or `"employee_ids"` |
+| `foreignIndexUid` | string | UID of the target index | `"companies"` or `"actors"` |
+| `attributePatterns` | array | Field patterns to make filterable | `["company_id"]` or `["actor_ids"]` |
+| `features` | object | Filter capabilities (equality, comparison) | `{"filter": {"equality": true}}` |
 
 ## Common patterns
 
 ### E-commerce: Products and Reviews
 
 ```bash
-curl -X PATCH "http://localhost:7700/indexes/products/settings/join-configurations" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "product_reviews": {
-      "sourceField": "review_ids",
-      "targetIndex": "reviews",
-      "targetField": "id"
-    }
+curl -X PATCH 'http://localhost:7700/indexes/products/settings' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "foreignKeys": [
+      {
+        "fieldName": "review_ids",
+        "foreignIndexUid": "reviews"
+      }
+    ],
+    "filterableAttributes": [
+      {
+        "attributePatterns": ["review_ids"],
+        "features": {
+          "filter": {
+            "equality": true
+          }
+        }
+      }
+    ]
   }'
 ```
 
@@ -122,19 +166,37 @@ A product document:
 ### SaaS: Deals, Companies, and Users
 
 ```bash
-curl -X PATCH "http://localhost:7700/indexes/deals/settings/join-configurations" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "deal_company": {
-      "sourceField": "company_id",
-      "targetIndex": "companies",
-      "targetField": "id"
-    },
-    "deal_owner": {
-      "sourceField": "owner_user_id",
-      "targetIndex": "users",
-      "targetField": "id"
-    }
+curl -X PATCH 'http://localhost:7700/indexes/deals/settings' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "foreignKeys": [
+      {
+        "fieldName": "company_id",
+        "foreignIndexUid": "companies"
+      },
+      {
+        "fieldName": "owner_user_id",
+        "foreignIndexUid": "users"
+      }
+    ],
+    "filterableAttributes": [
+      {
+        "attributePatterns": ["company_id"],
+        "features": {
+          "filter": {
+            "equality": true
+          }
+        }
+      },
+      {
+        "attributePatterns": ["owner_user_id"],
+        "features": {
+          "filter": {
+            "equality": true
+          }
+        }
+      }
+    ]
   }'
 ```
 
@@ -152,14 +214,25 @@ A deal document:
 ### Marketplace: Orders and Products
 
 ```bash
-curl -X PATCH "http://localhost:7700/indexes/orders/settings/join-configurations" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "order_items": {
-      "sourceField": "product_ids",
-      "targetIndex": "products",
-      "targetField": "id"
-    }
+curl -X PATCH 'http://localhost:7700/indexes/orders/settings' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "foreignKeys": [
+      {
+        "fieldName": "product_ids",
+        "foreignIndexUid": "products"
+      }
+    ],
+    "filterableAttributes": [
+      {
+        "attributePatterns": ["product_ids"],
+        "features": {
+          "filter": {
+            "equality": true
+          }
+        }
+      }
+    ]
   }'
 ```
 
@@ -192,37 +265,61 @@ While Meilisearch does not enforce referential integrity, design your data model
 Change relationship configurations using `PATCH`:
 
 ```bash
-curl -X PATCH "http://localhost:7700/indexes/deals/settings/join-configurations" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "deal_owner": {
-      "sourceField": "owner_user_id",
-      "targetIndex": "users",
-      "targetField": "id"
-    }
+curl -X PATCH 'http://localhost:7700/indexes/deals/settings' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "foreignKeys": [
+      {
+        "fieldName": "owner_user_id",
+        "foreignIndexUid": "users"
+      }
+    ],
+    "filterableAttributes": [
+      {
+        "attributePatterns": ["owner_user_id"],
+        "features": {
+          "filter": {
+            "equality": true
+          }
+        }
+      }
+    ]
   }'
 ```
 
-To update an existing relationship, provide the same relationship name with new parameters:
+To update an existing relationship, provide the updated configuration:
 
 ```bash
-curl -X PATCH "http://localhost:7700/indexes/deals/settings/join-configurations" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "deal_owner": {
-      "sourceField": "assigned_user_id",
-      "targetIndex": "users",
-      "targetField": "user_uid"
-    }
+curl -X PATCH 'http://localhost:7700/indexes/deals/settings' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "foreignKeys": [
+      {
+        "fieldName": "assigned_user_id",
+        "foreignIndexUid": "users"
+      }
+    ],
+    "filterableAttributes": [
+      {
+        "attributePatterns": ["assigned_user_id"],
+        "features": {
+          "filter": {
+            "equality": true
+          }
+        }
+      }
+    ]
   }'
 ```
 
-To remove a relationship, send an empty configuration:
+To remove a relationship, update the `foreignKeys` array to exclude it:
 
 ```bash
-curl -X PATCH "http://localhost:7700/indexes/deals/settings/join-configurations" \
-  -H "Content-Type: application/json" \
-  -d '{}'
+curl -X PATCH 'http://localhost:7700/indexes/deals/settings' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "foreignKeys": []
+  }'
 ```
 
 ## Self-references
@@ -235,14 +332,25 @@ You can create relationships where a document references other documents in the 
 
 **Configuration:**
 ```bash
-curl -X PATCH "http://localhost:7700/indexes/products/settings/join-configurations" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "product_recommendations": {
-      "sourceField": "frequently_bought_with",
-      "targetIndex": "products",
-      "targetField": "id"
-    }
+curl -X PATCH 'http://localhost:7700/indexes/products/settings' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "foreignKeys": [
+      {
+        "fieldName": "frequently_bought_with",
+        "foreignIndexUid": "products"
+      }
+    ],
+    "filterableAttributes": [
+      {
+        "attributePatterns": ["frequently_bought_with"],
+        "features": {
+          "filter": {
+            "equality": true
+          }
+        }
+      }
+    ]
   }'
 ```
 
