@@ -311,6 +311,36 @@ NOT genres = horror
 
 </CodeGroup>
 
+### `_foreign()`
+
+Filter documents by properties of related documents in other indices using foreign filters. This requires a join relationship to be configured between indices.
+
+The `_foreign()` function takes two arguments:
+- `fieldName`: The join field name (the foreign key reference)
+- `condition`: A filter condition to apply on the related document
+
+The following expression returns all deals where the related company is in the Technology industry:
+
+<CodeGroup>
+
+```
+_foreign(company, industry = "Technology")
+```
+
+</CodeGroup>
+
+You can combine multiple conditions using `AND` and `OR`:
+
+<CodeGroup>
+
+```
+_foreign(company, industry = "Technology" AND founded_year >= 2000)
+```
+
+</CodeGroup>
+
+For detailed examples and use cases, see the [Foreign filters guide](/capabilities/filtering_sorting_faceting/advanced/filtering_by_joined_data).
+
 ## Filter expressions
 
 You can build filter expressions by grouping basic conditions using `AND` and `OR`. Filter expressions can be written as strings, arrays, or a mix of both.
