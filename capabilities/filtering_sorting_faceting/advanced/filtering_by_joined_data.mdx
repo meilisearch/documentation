@@ -1,12 +1,12 @@
 ---
-title: Filter by joined data
-sidebarTitle: Filtering by joined data
-description: Use relationships to filter search results by properties of related documents.
+title: Foreign filters
+sidebarTitle: Foreign filters
+description: Use foreign filters to filter search results by properties of related documents in other indices.
 ---
 
-Filtering by joined data enables you to find documents based on properties of related documents in other indices. Instead of storing all data in one denormalized document, you can define relationships and filter across them.
+Foreign filters enable you to find documents based on properties of related documents in other indices. Instead of storing all data in one denormalized document, you can define relationships and use foreign filters to query across them.
 
-## What is filtering by joined data?
+## What are foreign filters?
 
 Without joins, you must denormalize data:
 
@@ -79,10 +79,10 @@ Store data once:
 
 Update Acme's industry once. All deals linked to it automatically reflect the change.
 
-## Hard limit: Maximum 100 matching documents
+## Hard limit: Foreign filters with maximum 100 matching documents
 
 <Callout type="warning">
-If a foreign filter on a relationship returns more than 100 matching documents from the target index, Meilisearch will return an error. Design your filters carefully to stay within this limit by being more specific with your filtering criteria.
+If a foreign filter returns more than 100 matching documents from the target index, Meilisearch will return an error. Design your foreign filters carefully to stay within this limit by being more specific with your filtering criteria.
 </Callout>
 
 **Example:** If you filter for `company.industry = "Technology"` and your database has 150 technology companies, the query fails.
