@@ -14,9 +14,11 @@ Without joins, you must denormalize data:
 {
   "id": "deal_1",
   "title": "Enterprise Contract",
-  "company_name": "Acme Inc",
-  "company_industry": "Technology",
-  "company_founded_year": 2010
+  "company": {
+    "name": "Acme Inc",
+    "industry": "Technology",
+    "founded_year": 2010
+  }
 }
 ```
 
@@ -49,9 +51,9 @@ Duplicate data in each deal:
 
 ```json
 [
-  {"id": "deal_1", "company_name": "Acme Inc", "company_industry": "Technology"},
-  {"id": "deal_2", "company_name": "Acme Inc", "company_industry": "Technology"},
-  {"id": "deal_3", "company_name": "Beta Corp", "company_industry": "Finance"}
+  {"id": "deal_1", "company": {"name": "Acme Inc", "industry": "Technology"}},
+  {"id": "deal_2", "company": {"name": "Acme Inc", "industry": "Technology"}},
+  {"id": "deal_3", "company": {"name": "Beta Corp", "industry": "Finance"}}
 ]
 ```
 
