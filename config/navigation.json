@@ -379,8 +379,7 @@
                     {
                       "group": "How to",
                       "pages": [
-                        "capabilities/indexing/joins/how_to/define_join_relationships",
-                        "capabilities/indexing/joins/how_to/hydration_during_search"
+                        "capabilities/indexing/joins/how_to/define_join_relationships"
                       ]
                     }
                   ]

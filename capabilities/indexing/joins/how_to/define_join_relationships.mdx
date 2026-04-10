@@ -44,8 +44,10 @@ curl -X PATCH 'http://localhost:7700/indexes/users/settings' \
       {
         "attributePatterns": ["profile_id"],
         "features": {
+          "facetSearch": false,
           "filter": {
-            "equality": true
+            "equality": true,
+            "comparison": false
           }
         }
       }
@@ -76,8 +78,10 @@ curl -X PATCH 'http://localhost:7700/indexes/companies/settings' \
       {
         "attributePatterns": ["employee_ids"],
         "features": {
+          "facetSearch": false,
           "filter": {
-            "equality": true
+            "equality": true,
+            "comparison": false
           }
         }
       }
@@ -109,8 +113,10 @@ curl -X PATCH 'http://localhost:7700/indexes/films/settings' \
       {
         "attributePatterns": ["actor_ids"],
         "features": {
+          "facetSearch": false,
           "filter": {
-            "equality": true
+            "equality": true,
+            "comparison": false
           }
         }
       }
@@ -145,8 +151,10 @@ curl -X PATCH 'http://localhost:7700/indexes/products/settings' \
       {
         "attributePatterns": ["review_ids"],
         "features": {
+          "facetSearch": false,
           "filter": {
-            "equality": true
+            "equality": true,
+            "comparison": false
           }
         }
       }
@@ -183,16 +191,20 @@ curl -X PATCH 'http://localhost:7700/indexes/deals/settings' \
       {
         "attributePatterns": ["company_id"],
         "features": {
+          "facetSearch": false,
           "filter": {
-            "equality": true
+            "equality": true,
+            "comparison": false
           }
         }
       },
       {
         "attributePatterns": ["owner_user_id"],
         "features": {
+          "facetSearch": false,
           "filter": {
-            "equality": true
+            "equality": true,
+            "comparison": false
           }
         }
       }
@@ -227,8 +239,10 @@ curl -X PATCH 'http://localhost:7700/indexes/orders/settings' \
       {
         "attributePatterns": ["product_ids"],
         "features": {
+          "facetSearch": false,
           "filter": {
-            "equality": true
+            "equality": true,
+            "comparison": false
           }
         }
       }
@@ -278,8 +292,10 @@ curl -X PATCH 'http://localhost:7700/indexes/deals/settings' \
       {
         "attributePatterns": ["owner_user_id"],
         "features": {
+          "facetSearch": false,
           "filter": {
-            "equality": true
+            "equality": true,
+            "comparison": false
           }
         }
       }
@@ -303,8 +319,10 @@ curl -X PATCH 'http://localhost:7700/indexes/deals/settings' \
       {
         "attributePatterns": ["assigned_user_id"],
         "features": {
+          "facetSearch": false,
           "filter": {
-            "equality": true
+            "equality": true,
+            "comparison": false
           }
         }
       }
@@ -345,8 +363,10 @@ curl -X PATCH 'http://localhost:7700/indexes/products/settings' \
       {
         "attributePatterns": ["frequently_bought_with"],
         "features": {
+          "facetSearch": false,
           "filter": {
-            "equality": true
+            "equality": true,
+            "comparison": false
           }
         }
       }
@@ -377,21 +397,35 @@ When a referenced document is deleted, what happens depends on how you query:
 
 ### Cleanup strategy
 
-To remove orphaned references from your source index, use the delete by filter function:
+You can handle orphaned references in two ways: delete the source documents entirely, or remove the orphaned IDs from the foreign key fields.
 
-1. **Identify orphaned documents** in your target index (companies with no deals)
-2. **Query for documents** referencing those orphaned IDs
-3. **Delete with filters** to remove source documents that reference non-existent targets
+#### Delete source documents
 
-Example using the delete by filter API:
+Use the [delete by filter](/reference/api/documents#delete-documents-by-filter) API to remove source documents that reference non-existent targets:
 
 ```bash
-curl -X POST "http://localhost:7700/indexes/deals/delete-by-filter" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "filter": [
-      ["company_id", "IN", ["deleted_company_1", "deleted_company_2"]]
-    ]
+curl -X POST 'http://localhost:7700/indexes/deals/delete-by-filter' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "filter": "company_id = deleted_company_1 OR company_id = deleted_company_2"
+  }'
+```
+
+#### Remove orphaned IDs with functions
+
+Use [edit documents by function](/capabilities/indexing/how_to/edit_documents_with_functions) to remove specific orphaned IDs from array foreign key fields without deleting the source documents. This is useful for many-to-many relationships where only some referenced IDs are orphaned.
+
+For example, remove a deleted actor from the `actors` array in all film documents:
+
+```bash
+curl -X POST 'http://localhost:7700/indexes/films/documents/edit' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "function": "doc.actors = doc.actors.filter(|id| id != context.deleted_id)",
+    "context": {
+      "deleted_id": "actor_42"
+    },
+    "filter": "actors = actor_42"
   }'
 ```
 
@@ -406,10 +440,7 @@ curl -X POST "http://localhost:7700/indexes/deals/delete-by-filter" \
 ## Next steps
 
 <CardGroup cols={2}>
-  <Card title="Use hydration" href="/capabilities/indexing/joins/how_to/hydration_during_search">
-    Learn how to embed related documents in search results
-  </Card>
   <Card title="Filter by relationships" href="/capabilities/filtering_sorting_faceting/advanced/filtering_by_joined_data">
-    Advanced: filter documents by related data properties
+    Filter documents by related data properties
   </Card>
 </CardGroup>
