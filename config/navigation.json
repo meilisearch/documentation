@@ -389,7 +389,6 @@
                   "group": "Advanced",
                   "pages": [
                     "capabilities/indexing/advanced/indexing_best_practices",
-                    "capabilities/indexing/advanced/optimization",
                     "capabilities/indexing/advanced/tokenization",
                     "capabilities/indexing/tasks_and_batches/optimize_batch_performance"
                   ]
