@@ -4272,10 +4272,6 @@
     "destination": "/capabilities/hybrid_search/overview"
   },
   {
-    "source": "/reference/api/settings/reset-vectorstore",
-    "destination": "/reference/api/settings/reset-embedders"
-  },
-  {
     "source": "/capabilities/platform/billing/pricing_model",
     "destination": "/getting_started/overview"
   },
