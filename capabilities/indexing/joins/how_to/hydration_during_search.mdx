@@ -1,0 +1,293 @@
+---
+title: Use hydration during search
+sidebarTitle: Hydration during search
+description: Embed full documents from related indices in your search results using hydration.
+---
+
+Hydration is the process of replacing foreign key IDs with full documents from the target index. This guide covers how to enable hydration, control which fields are included, and optimize hydration for your use case.
+
+## What is hydration?
+
+Without hydration, a search result contains only the ID reference:
+
+```json
+{
+  "id": "deal_1",
+  "title": "Enterprise Contract",
+  "company_id": "company_42"
+}
+```
+
+With hydration enabled, the full related document is embedded:
+
+```json
+{
+  "id": "deal_1",
+  "title": "Enterprise Contract",
+  "company": {
+    "id": "company_42",
+    "name": "Acme Inc",
+    "industry": "Technology",
+    "founded_year": 2010
+  }
+}
+```
+
+Hydration only returns data for documents that exist. If a referenced document is deleted, hydration returns the ID instead (see Orphaned References section below).
+
+## Enable hydration with curl
+
+Use the `joins` parameter in search requests to enable hydration:
+
+```bash
+curl -X POST "http://localhost:7700/indexes/deals/search" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "q": "enterprise",
+    "joins": {
+      "company": {}
+    }
+  }'
+```
+
+The relationship name (`company`) must match a configured relationship in the source index.
+
+### Hydrate multiple relationships
+
+Hydrate multiple relationships in a single query:
+
+```bash
+curl -X POST "http://localhost:7700/indexes/deals/search" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "q": "contract",
+    "joins": {
+      "deal_company": {},
+      "deal_owner": {}
+    }
+  }'
+```
+
+The result will include both the full company and user information:
+
+```json
+{
+  "results": [
+    {
+      "id": "deal_1",
+      "title": "Enterprise Contract",
+      "company": {
+        "id": "company_42",
+        "name": "Acme Inc"
+      },
+      "owner": {
+        "id": "user_100",
+        "name": "Jane Smith",
+        "email": "jane@example.com"
+      }
+    }
+  ]
+}
+```
+
+## Control hydrated fields
+
+By default, hydration includes all fields from the target document. Use the optional `fields` parameter to include only specific fields:
+
+```bash
+curl -X POST "http://localhost:7700/indexes/deals/search" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "q": "enterprise",
+    "joins": {
+      "company": {
+        "fields": ["name", "industry"]
+      }
+    }
+  }'
+```
+
+Result with only company name and industry:
+
+```json
+{
+  "results": [
+    {
+      "id": "deal_1",
+      "title": "Enterprise Contract",
+      "company": {
+        "name": "Acme Inc",
+        "industry": "Technology"
+      }
+    }
+  ]
+}
+```
+
+### Limit fields for performance
+
+Hydrating fewer fields reduces response size and latency:
+
+```bash
+curl -X POST "http://localhost:7700/indexes/orders/search" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "q": "headphones",
+    "joins": {
+      "order_items": {
+        "fields": ["id", "name", "price"]
+      }
+    }
+  }'
+```
+
+## Performance considerations
+
+### Response size
+
+Hydration increases response size by embedding full documents. Consider:
+- **Small related documents:** Hydrate freely (e.g., user profiles with a few fields)
+- **Large related documents:** Use `fields` to include only necessary data
+- **Many-to-many relationships:** Be cautious with array hydrations containing large objects
+
+**Example:** Hydrating a product with 50 reviews, each with 10 fields, creates a large response. Consider fetching reviews separately or hydrating only summary data.
+
+### Query latency
+
+Hydration requires fetching related documents for each result. Consider:
+- **Search results size:** Fewer results = less hydration overhead
+- **Relationship cardinality:** One-to-one relationships are faster than one-to-many
+- **Field selection:** Fetching fewer fields is faster
+
+**Optimization:** For expensive hydrations, consider fetching IDs and supplementary data separately:
+
+```bash
+# Search with IDs only (fast)
+curl -X POST "http://localhost:7700/indexes/deals/search" \
+  -H "Content-Type: application/json" \
+  -d '{"q": "enterprise", "limit": 10}'
+
+# Then fetch related data separately in your application
+```
+
+## Common use cases
+
+### Search results display
+
+Hydrate company and owner information for a comprehensive deal result:
+
+```bash
+curl -X POST "http://localhost:7700/indexes/deals/search" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "q": "acme",
+    "joins": {
+      "deal_company": {
+        "fields": ["id", "name", "logo_url"]
+      },
+      "deal_owner": {
+        "fields": ["id", "name", "avatar_url"]
+      }
+    }
+  }'
+```
+
+Display results with company names and user avatars without additional API calls.
+
+### Faceting context
+
+Hydrate category information when faceting products by category:
+
+```bash
+curl -X POST "http://localhost:7700/indexes/products/search" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "q": "headphones",
+    "facets": ["category_id"],
+    "joins": {
+      "product_category": {
+        "fields": ["name", "slug"]
+      }
+    }
+  }'
+```
+
+## Authorization patterns
+
+Joins can be used to implement authorization patterns like tenant tokens and role-based access control (RBAC), enabling you to filter search results based on relationships to authorized resources.
+
+**Example:** User role-based results
+- Store user roles in a separate `roles` index
+- Link users to their assigned roles
+- Hydrate role information with each user result
+- Filter results based on role properties
+
+**Example:** Tenant isolation
+- Use joins to ensure users only see data from their tenant
+- Reference tenant information and enforce visibility rules
+- Hydrate tenant context with each search result
+
+## Limitations
+
+### One level only
+
+Joins support hydration at one level only. You cannot hydrate relationships recursively.
+
+**Example limitation:**
+```
+deals → companies → industry_details  ✗ Not supported
+```
+
+You can hydrate `deals → companies`, but not then hydrate `companies → industry_details` in the same query. Each hydration operation works on direct relationships between two indices.
+
+**Workaround:** If you need nested data, consider:
+- Denormalizing (embedding industry details in company documents)
+- Fetching in multiple API calls from your application
+- Restructuring your indices to combine data at a single relationship level
+
+### Orphaned references
+
+If a referenced document is deleted, hydration will return the document UID instead of the full object.
+
+**Example:** Deleting a company
+- Original result: `"company": {"id": "company_1", "name": "Acme Inc"}`
+- After deletion: `"company": "company_1"`
+
+To clean up orphaned references, use the delete by filter function on the source index:
+
+```bash
+curl -X POST "http://localhost:7700/indexes/deals/delete-by-filter" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "filter": [
+      ["company_id", "IN", ["deleted_company_1", "deleted_company_2"]]
+    ]
+  }'
+```
+
+## Testing at scale
+
+Meilisearch has no documented cardinality limits for relationships. However, you should test your specific use cases with your data scale to understand performance characteristics, especially when hydrating or filtering across large numbers of related documents.
+
+### Performance testing checklist
+
+- Test with your actual data volume
+- Measure response time for typical search queries with hydration enabled
+- Monitor memory and CPU usage during peak load
+- Test edge cases:
+  - Many-to-many relationships with large arrays
+  - Hydrations with many fields from large documents
+  - Queries returning maximum results
+- Compare performance with and without hydration
+- Adjust field selection based on results
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Filter by relationships" href="/capabilities/filtering_sorting_faceting/advanced/filtering_by_joined_data">
+    Learn how to filter documents by related data properties
+  </Card>
+  <Card title="Define relationships" href="/capabilities/indexing/joins/how_to/define_join_relationships">
+    Return to relationship configuration guide
+  </Card>
+</CardGroup>
