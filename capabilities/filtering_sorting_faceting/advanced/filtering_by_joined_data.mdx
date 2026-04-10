@@ -39,7 +39,7 @@ curl -X POST "http://localhost:7700/indexes/deals/search" \
   -H "Content-Type: application/json" \
   -d '{
     "q": "contract",
-    "filter": "company.industry = Technology AND company.founded_year >= 2000"
+    "filter": "_foreign(company, industry = \"Technology\" AND founded_year >= 2000)"
   }'
 ```
 
@@ -87,11 +87,11 @@ Update Acme's industry once. All deals linked to it automatically reflect the ch
 If a foreign filter returns more than 100 matching documents from the target index, Meilisearch will return an error. Design your foreign filters carefully to stay within this limit by being more specific with your filtering criteria.
 </Callout>
 
-**Example:** If you filter for `company.industry = "Technology"` and your database has 150 technology companies, the query fails.
+**Example:** If you filter for `_foreign(company, industry = "Technology")` and your database has 150 technology companies, the query fails.
 
 **Solutions:**
-- Add additional filter conditions: `company.industry = "Technology" AND company.founded_year >= 2020` (narrows results)
-- Use other attributes: `company.industry = "Technology" AND company.revenue > 1000000`
+- Add additional filter conditions: `_foreign(company, industry = "Technology" AND founded_year >= 2020)` (narrows results)
+- Use other attributes: `_foreign(company, industry = "Technology" AND revenue > 1000000)`
 - Break into multiple queries with narrower filters
 - Consider denormalization if filtering patterns require very broad queries
 
@@ -104,7 +104,7 @@ curl -X POST "http://localhost:7700/indexes/deals/search" \
   -H "Content-Type: application/json" \
   -d '{
     "q": "contract",
-    "filter": "company.id = company_42"
+    "filter": "_foreign(company, id = \"company_42\")"
   }'
 ```
 
@@ -119,7 +119,7 @@ curl -X POST "http://localhost:7700/indexes/deals/search" \
   -H "Content-Type: application/json" \
   -d '{
     "q": "",
-    "filter": "company.industry = Technology OR company.industry = Finance"
+    "filter": "_foreign(company, industry = \"Technology\" OR industry = \"Finance\")"
   }'
 ```
 
@@ -132,7 +132,7 @@ curl -X POST "http://localhost:7700/indexes/deals/search" \
   -H "Content-Type: application/json" \
   -d '{
     "q": "enterprise",
-    "filter": "company.founded_year >= 2000 AND company.founded_year <= 2020"
+    "filter": "_foreign(company, founded_year >= 2000 AND founded_year <= 2020)"
   }'
 ```
 
@@ -147,7 +147,7 @@ curl -X POST "http://localhost:7700/indexes/deals/search" \
   -H "Content-Type: application/json" \
   -d '{
     "q": "",
-    "filter": "company.last_funding_date >= \"2023-01-01\""
+    "filter": "_foreign(company, last_funding_date >= \"2023-01-01\")"
   }'
 ```
 
@@ -160,7 +160,7 @@ curl -X POST "http://localhost:7700/indexes/deals/search" \
   -H "Content-Type: application/json" \
   -d '{
     "q": "contract",
-    "filter": "(company.industry = Technology AND company.founded_year >= 2010) OR (company.revenue > 1000000)"
+    "filter": "_foreign(company, (industry = \"Technology\" AND founded_year >= 2010) OR revenue > 1000000)"
   }'
 ```
 
@@ -177,14 +177,13 @@ curl -X POST "http://localhost:7700/indexes/deals/search" \
   -H "Content-Type: application/json" \
   -d '{
     "q": "contract",
-    "filter": "value >= 100000 AND company.industry = Technology AND owner.department = Sales"
+    "filter": "value >= 100000 AND _foreign(company, industry = \"Technology\")"
   }'
 ```
 
 Returns deals that are:
 - Worth at least 100k, AND
-- From a technology company, AND
-- Owned by someone in Sales
+- From a technology company
 
 ## Precise filtering with multiple array items
 
@@ -193,11 +192,11 @@ When a relationship contains an array of related documents, Meilisearch provides
 ### Array filter logic
 
 Normal filters use **OR logic** across array items:
-- Find films where `actors.country = France OR actors.age > 35`
+- Find films where `actors.country = "France" OR actors.age > 35`
 - Returns films with ANY actor who is French OR over 35 (possibly different actors)
 
 Foreign filters use **AND logic** across array items:
-- Find films where `actors.country = France AND actors.age > 35`
+- Find films where `_foreign(actors, country = "France" AND age > 35)`
 - Returns films with an actor who is BOTH French AND over 35 (same actor meets both conditions)
 
 ### Film cast example
@@ -240,7 +239,7 @@ curl -X POST "http://localhost:7700/indexes/films/search" \
 curl -X POST "http://localhost:7700/indexes/films/search" \
   -H "Content-Type: application/json" \
   -d '{
-    "filter": "actors.country = France AND actors.age > 35"
+    "filter": "_foreign(actors, country = \"France\" AND age > 35)"
   }'
 ```
 
@@ -258,7 +257,7 @@ curl -X POST "http://localhost:7700/indexes/tasks/search" \
   -H "Content-Type: application/json" \
   -d '{
     "q": "project",
-    "filter": "assigned_user.role = admin"
+    "filter": "_foreign(assigned_user, role = \"admin\")"
   }'
 ```
 
@@ -271,7 +270,7 @@ curl -X POST "http://localhost:7700/indexes/orders/search" \
   -H "Content-Type: application/json" \
   -d '{
     "q": "laptop",
-    "filter": "customer.tenant_id = tenant_123"
+    "filter": "_foreign(customer, tenant_id = \"tenant_123\")"
   }'
 ```
 
@@ -284,7 +283,7 @@ curl -X POST "http://localhost:7700/indexes/stores/search" \
   -H "Content-Type: application/json" \
   -d '{
     "q": "",
-    "filter": "location.country = USA AND category.name = Electronics"
+    "filter": "_foreign(location, country = \"USA\") AND _foreign(category, name = \"Electronics\")"
   }'
 ```
 
@@ -296,10 +295,10 @@ Broader filters on related data may hit the 100-document limit:
 
 ```bash
 # ✓ Good: Very specific
-filter: "company.industry = Technology AND company.state = CA"
+filter: "_foreign(company, industry = \"Technology\" AND state = \"CA\")"
 
 # ✗ Problematic: May return > 100 docs
-filter: "company.industry = Technology"
+filter: "_foreign(company, industry = \"Technology\")"
 ```
 
 ### Combine filters strategically
@@ -308,7 +307,7 @@ Use multiple conditions to narrow results:
 
 ```bash
 # Combine source and target filters to reduce matching documents
-filter: "value >= 500000 AND company.founded_year >= 2020"
+filter: "value >= 500000 AND _foreign(company, founded_year >= 2020)"
 ```
 
 ### Test with your data
