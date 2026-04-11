@@ -19,8 +19,6 @@ Meilisearch uses embedding models for hybrid and semantic search, making it orde
 
 When you configure an embedder, Meilisearch automatically generates vector embeddings for every document in your index. You don't need to compute or manage embeddings yourself.
 
-<CodeGroup>
-
 ```mermaid
 flowchart LR
     A[Documents] --> B[Meilisearch]
@@ -29,8 +27,6 @@ flowchart LR
     E[Search query] --> B
     B --> F[Merge & rank results]
 ```
-
-</CodeGroup>
 
 At search time, Meilisearch runs both keyword and semantic search in parallel, then merges the results using a smart scoring system.
 
