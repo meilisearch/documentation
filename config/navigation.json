@@ -328,6 +328,25 @@
               ]
             },
             {
+              "group": "Search rules",
+              "pages": [
+                "capabilities/search_rules/overview",
+                "capabilities/search_rules/getting_started",
+                {
+                  "group": "How to",
+                  "pages": [
+                    "capabilities/search_rules/how_to/pinning_patterns"
+                  ]
+                },
+                {
+                  "group": "Advanced",
+                  "pages": [
+                    "capabilities/search_rules/advanced/pinning_behavior"
+                  ]
+                }
+              ]
+            },
+            {
               "group": "Teams",
               "pages": [
                 "capabilities/teams/overview",

@@ -1,0 +1,129 @@
+---
+title: Search rule patterns
+sidebarTitle: Pinning patterns
+description: Task-oriented guides for common search rule patterns such as query-based pinning, empty-query curation, and scheduled promotions.
+---
+
+All create and update examples on this page use `PATCH /dynamic-search-rules/{uid}`. The `uid` comes from the path, and omitted fields remain unchanged when you update an existing rule.
+
+## How do I pin one result for a query?
+
+Pin a document whenever the query contains a specific substring:
+
+```json
+{
+  "description": "Promote billing help for invoice searches",
+  "active": true,
+  "conditions": [
+    { "scope": "query", "contains": "invoice" }
+  ],
+  "actions": [
+    {
+      "selector": { "indexUid": "support", "id": "billing-workspace-overview" },
+      "action": { "type": "pin", "position": 0 }
+    }
+  ]
+}
+```
+
+Use this pattern when you want to promote a landing page, help article, or campaign document for a specific query family.
+
+## How do I pin several results in a fixed order?
+
+Add multiple actions with explicit positions:
+
+```json
+{
+  "description": "Show billing resources first for invoice searches",
+  "active": true,
+  "conditions": [
+    { "scope": "query", "contains": "invoice" }
+  ],
+  "actions": [
+    {
+      "selector": { "indexUid": "support", "id": "billing-workspace-overview" },
+      "action": { "type": "pin", "position": 0 }
+    },
+    {
+      "selector": { "indexUid": "support", "id": "download-monthly-statements" },
+      "action": { "type": "pin", "position": 1 }
+    }
+  ]
+}
+```
+
+This keeps the pinned documents in a predictable order while leaving the rest of the hits in their normal organic order.
+
+## How do I curate the default results for an empty query?
+
+Use the `isEmpty` query condition to curate the browse state when users search with an empty query:
+
+```json
+{
+  "description": "Curate the default help-center browse state",
+  "active": true,
+  "conditions": [
+    { "scope": "query", "isEmpty": true }
+  ],
+  "actions": [
+    {
+      "selector": { "indexUid": "support", "id": "quickstart-overview" },
+      "action": { "type": "pin", "position": 0 }
+    }
+  ]
+}
+```
+
+This is useful when users often start by browsing instead of typing a search.
+
+## How do I schedule a promotion for a limited time?
+
+Combine a query condition with a time condition:
+
+```json
+{
+  "description": "Promote seasonal content during a campaign window",
+  "active": true,
+  "conditions": [
+    { "scope": "query", "contains": "summer sale" },
+    { "scope": "time", "start": "2026-06-01T00:00:00Z", "end": "2026-06-30T23:59:59Z" }
+  ],
+  "actions": [
+    {
+      "selector": { "indexUid": "products", "id": "summer-sale-landing-page" },
+      "action": { "type": "pin", "position": 0 }
+    }
+  ]
+}
+```
+
+Multiple conditions are combined with `AND`, so this rule only applies during the campaign window and only when the query contains `summer sale`.
+
+## How do I list active rules or rules with similar UIDs?
+
+Use `POST /dynamic-search-rules` with pagination and filters:
+
+```json
+{
+  "offset": 0,
+  "limit": 20,
+  "filter": {
+    "attributePatterns": ["promo*"],
+    "active": true
+  }
+}
+```
+
+`attributePatterns` uses attribute-pattern syntax, for example `promo*`.
+
+## How do I pause a rule without deleting it?
+
+Set `active` to `false`:
+
+```json
+{
+  "active": false
+}
+```
+
+Use `DELETE /dynamic-search-rules/{uid}` only when you want to remove the rule entirely.

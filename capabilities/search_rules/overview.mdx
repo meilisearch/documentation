@@ -1,0 +1,94 @@
+---
+title: Search rules
+sidebarTitle: Overview
+description: Curate search results by pinning selected documents at fixed positions when query- or time-based conditions match.
+---
+
+Search rules let you curate search results by pinning selected documents at fixed positions when specific conditions match. They help you promote important results without rewriting your ranking rules.
+
+<Warning>
+Search rules are experimental. Enable them with `PATCH /experimental-features` before using the `/dynamic-search-rules` endpoints.
+</Warning>
+
+<Note>
+In this section, "search rules" refers to the curation feature exposed by `/dynamic-search-rules`. This is different from the [search rules object used in tenant tokens](/capabilities/security/advanced/tenant_token_payload#search-rules), which enforces filters.
+</Note>
+
+## What search rules support today
+
+- Query-based pinning with `contains`
+- Empty-query pinning with `isEmpty`
+- Time-window activation
+- Multiple pins with explicit positions
+- Regular search, hybrid search, federated search, and network search
+
+In this first version, pinning is the only available action.
+
+## How search rules work
+
+When a rule matches, Meilisearch:
+
+1. Computes the normal organic results
+2. Resolves the pinned documents from the rule
+3. Inserts those documents at the requested positions
+4. Removes duplicates and returns the final result set
+
+Search rules do not rewrite ranking rules or assign artificial ranking scores. They act as a controlled insertion step on top of the normal search results.
+
+Pinned documents can appear even if they are not the best lexical match for the query. However, filters still apply. If a pinned document does not satisfy the current filters, Meilisearch drops it.
+
+## Rule structure
+
+Each rule has:
+
+- a `uid`
+- optional metadata such as `description`, `priority`, and `active`
+- one or more `conditions`
+- one or more `actions`
+
+Example body:
+
+```json
+{
+  "description": "Promote billing help for invoice searches",
+  "active": true,
+  "conditions": [
+    { "scope": "query", "contains": "invoice" }
+  ],
+  "actions": [
+    {
+      "selector": { "indexUid": "support", "id": "billing-workspace-overview" },
+      "action": { "type": "pin", "position": 0 }
+    }
+  ]
+}
+```
+
+This rule pins `billing-workspace-overview` to the first result position when the query contains `invoice`.
+
+## What search rules do not support
+
+Search rules do not currently support:
+
+- Regex or wildcard matching
+- Activation from filters, selected facets, locale, user context, or product context
+- Actions other than pinning
+
+If you need exact control over precedence between rules, use `priority`. Lower values take precedence over higher ones.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Getting started" href="/capabilities/search_rules/getting_started">
+    Enable the feature and create your first rule
+  </Card>
+  <Card title="How to" href="/capabilities/search_rules/how_to/pinning_patterns">
+    Common curation patterns for search rules
+  </Card>
+  <Card title="Reference" href="/capabilities/search_rules/reference">
+    Rule fields, endpoints, and update behavior
+  </Card>
+  <Card title="Advanced" href="/capabilities/search_rules/advanced/pinning_behavior">
+    Matching behavior, precedence, and response details
+  </Card>
+</CardGroup>

@@ -1,0 +1,104 @@
+---
+title: Getting started with search rules
+sidebarTitle: Getting started
+description: Enable search rules, create your first rule, and verify how pinned results appear in search.
+---
+
+This guide walks you through enabling search rules, creating your first rule, and checking how it affects search results.
+
+## Prerequisites
+
+- A running Meilisearch instance
+- An admin API key
+- An index with documents. This guide uses a `support` index
+
+## Step 1: Enable search rules
+
+Search rules are experimental. Enable them with `PATCH /experimental-features`:
+
+```json
+{
+  "dynamicSearchRules": true
+}
+```
+
+If the feature is disabled, the `/dynamic-search-rules` routes are not usable and saved rules do not apply at search time.
+
+## Step 2: Create a rule
+
+Create a rule with `PATCH /dynamic-search-rules/invoice-help`:
+
+```json
+{
+  "description": "Promote billing help for invoice searches",
+  "active": true,
+  "conditions": [
+    { "scope": "query", "contains": "invoice" }
+  ],
+  "actions": [
+    {
+      "selector": { "indexUid": "support", "id": "billing-workspace-overview" },
+      "action": { "type": "pin", "position": 0 }
+    }
+  ]
+}
+```
+
+This route behaves as an upsert:
+
+- It returns `201 Created` when the rule does not exist yet
+- It returns `200 OK` when you update an existing rule
+
+## Step 3: Check the stored rule
+
+Retrieve the rule with `GET /dynamic-search-rules/invoice-help`.
+
+The response should include the rule's `uid`, conditions, and actions:
+
+```json
+{
+  "uid": "invoice-help",
+  "description": "Promote billing help for invoice searches",
+  "active": true,
+  "conditions": [
+    { "scope": "query", "contains": "invoice" }
+  ],
+  "actions": [
+    {
+      "selector": { "indexUid": "support", "id": "billing-workspace-overview" },
+      "action": { "type": "pin", "position": 0 }
+    }
+  ]
+}
+```
+
+## Step 4: Run a matching search
+
+Send a normal search request to your index, for example with `POST /indexes/support/search`:
+
+```json
+{
+  "q": "invoice settings"
+}
+```
+
+If `billing-workspace-overview` exists and survives the current filters, Meilisearch inserts it at position `0`.
+
+Search rules do not replace the rest of the result set. Meilisearch still computes the normal organic results, then inserts the pinned documents and removes duplicates.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="How to" href="/capabilities/search_rules/how_to/pinning_patterns">
+    Explore common query, empty-query, and time-window patterns
+  </Card>
+  <Card title="Reference" href="/capabilities/search_rules/reference">
+    Review endpoints, rule fields, and update behavior
+  </Card>
+  <Card title="Advanced" href="/capabilities/search_rules/advanced/pinning_behavior">
+    Learn how search rules interact with ranking and filters
+  </Card>
+  <Card title="Experimental features" href="/resources/help/experimental_features_overview">
+    Learn more about experimental feature management
+  </Card>
+</CardGroup>
