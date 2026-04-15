@@ -1674,7 +1674,6 @@ configure_rest_embedder_1: |-
       }
     }'
 ## BEGIN /capabilities/indexing/joins
-# Define a relationship (deals -> companies)
 joins_define_relationship_1: |-
   curl \
     -X PATCH 'MEILISEARCH_URL/indexes/deals/settings' \
@@ -1699,7 +1698,6 @@ joins_define_relationship_1: |-
         }
       ]
     }'
-# One-to-one relationship (users -> profiles)
 joins_one_to_one_1: |-
   curl \
     -X PATCH 'MEILISEARCH_URL/indexes/users/settings' \
@@ -1724,7 +1722,6 @@ joins_one_to_one_1: |-
         }
       ]
     }'
-# One-to-many relationship (companies -> employees)
 joins_one_to_many_1: |-
   curl \
     -X PATCH 'MEILISEARCH_URL/indexes/companies/settings' \
@@ -1749,7 +1746,6 @@ joins_one_to_many_1: |-
         }
       ]
     }'
-# Many-to-many relationship (films -> actors)
 joins_many_to_many_1: |-
   curl \
     -X PATCH 'MEILISEARCH_URL/indexes/films/settings' \
@@ -1774,7 +1770,6 @@ joins_many_to_many_1: |-
         }
       ]
     }'
-# Self-referencing relationship (products -> products)
 joins_self_reference_1: |-
   curl \
     -X PATCH 'MEILISEARCH_URL/indexes/products/settings' \
@@ -1799,7 +1794,6 @@ joins_self_reference_1: |-
         }
       ]
     }'
-# Multiple relationships in one update
 joins_multiple_relationships_1: |-
   curl \
     -X PATCH 'MEILISEARCH_URL/indexes/deals/settings' \
@@ -1838,7 +1832,6 @@ joins_multiple_relationships_1: |-
         }
       ]
     }'
-# Update a relationship
 joins_update_relationship_1: |-
   curl \
     -X PATCH 'MEILISEARCH_URL/indexes/deals/settings' \
@@ -1863,7 +1856,6 @@ joins_update_relationship_1: |-
         }
       ]
     }'
-# Remove all relationships
 joins_remove_relationships_1: |-
   curl \
     -X PATCH 'MEILISEARCH_URL/indexes/deals/settings' \
@@ -1871,7 +1863,6 @@ joins_remove_relationships_1: |-
     --data-binary '{
       "foreignKeys": []
     }'
-# Delete orphaned source documents by filter
 joins_delete_orphaned_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/deals/delete-by-filter' \
@@ -1879,7 +1870,6 @@ joins_delete_orphaned_1: |-
     --data-binary '{
       "filter": "company_id = deleted_company_1 OR company_id = deleted_company_2"
     }'
-# Remove orphaned IDs with edit-by-function
 joins_remove_orphaned_ids_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/films/documents/edit' \
@@ -1892,7 +1882,6 @@ joins_remove_orphaned_ids_1: |-
       "filter": "actors = actor_42"
     }'
 ## BEGIN /capabilities/filtering_sorting_faceting/advanced/filtering_by_joined_data
-# Basic foreign filter
 foreign_filter_basic_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/deals/search' \
@@ -1901,7 +1890,6 @@ foreign_filter_basic_1: |-
       "q": "contract",
       "filter": "_foreign(company, industry = \"Technology\" AND founded_year >= 2000)"
     }'
-# Simple equality foreign filter
 foreign_filter_equality_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/deals/search' \
@@ -1910,7 +1898,6 @@ foreign_filter_equality_1: |-
       "q": "contract",
       "filter": "_foreign(company, id = \"company_42\")"
     }'
-# Multiple equality conditions
 foreign_filter_multiple_equality_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/deals/search' \
@@ -1919,7 +1906,6 @@ foreign_filter_multiple_equality_1: |-
       "q": "",
       "filter": "_foreign(company, industry = \"Technology\" OR industry = \"Finance\")"
     }'
-# Range filter on foreign data
 foreign_filter_range_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/deals/search' \
@@ -1928,7 +1914,6 @@ foreign_filter_range_1: |-
       "q": "enterprise",
       "filter": "_foreign(company, founded_year >= 2000 AND founded_year <= 2020)"
     }'
-# Date range filter on foreign data
 foreign_filter_date_range_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/deals/search' \
@@ -1937,7 +1922,6 @@ foreign_filter_date_range_1: |-
       "q": "",
       "filter": "_foreign(company, last_funding_date >= \"2023-01-01\")"
     }'
-# Multiple conditions with AND/OR
 foreign_filter_multiple_conditions_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/deals/search' \
@@ -1946,7 +1930,6 @@ foreign_filter_multiple_conditions_1: |-
       "q": "contract",
       "filter": "_foreign(company, (industry = \"Technology\" AND founded_year >= 2010) OR revenue > 1000000)"
     }'
-# Combine source and foreign filters
 foreign_filter_combined_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/deals/search' \
@@ -1956,7 +1939,6 @@ foreign_filter_combined_1: |-
       "filter": "value >= 100000 AND _foreign(company, industry = \"Technology\")"
     }'
 ## BEGIN /capabilities/filtering_sorting_faceting/advanced/precise_filtering_array_items
-# Normal filter with OR logic on array
 foreign_filter_array_or_logic_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/films/search' \
@@ -1964,7 +1946,6 @@ foreign_filter_array_or_logic_1: |-
     --data-binary '{
       "filter": "actors.country = \"France\" OR actors.age > 35"
     }'
-# Foreign filter with AND logic on array
 foreign_filter_array_and_logic_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/films/search' \
@@ -1972,7 +1953,6 @@ foreign_filter_array_and_logic_1: |-
     --data-binary '{
       "filter": "_foreign(actors, country = \"France\" AND age > 35)"
     }'
-# Find products with certifications
 foreign_filter_certifications_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/products/search' \
@@ -1981,7 +1961,6 @@ foreign_filter_certifications_1: |-
       "q": "motor",
       "filter": "_foreign(certifications, (standard = \"ISO 9001\" OR standard = \"CE\") AND issued_year >= 2020)"
     }'
-# Find articles with tag combinations
 foreign_filter_tags_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/articles/search' \
@@ -1990,7 +1969,6 @@ foreign_filter_tags_1: |-
       "q": "cryptography",
       "filter": "_foreign(tags, name = \"security\" AND name = \"encryption\")"
     }'
-# Find employees with specific skill levels
 foreign_filter_skills_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/employees/search' \
@@ -2000,7 +1978,6 @@ foreign_filter_skills_1: |-
       "filter": "_foreign(skills, (language = \"Python\" AND proficiency = \"advanced\") OR (language = \"JavaScript\" AND proficiency = \"advanced\"))"
     }'
 ## BEGIN /capabilities/security/advanced/rbac_with_joins
-# Search with RBAC foreign filter
 rbac_search_with_foreign_filter_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/documents/search' \
@@ -2010,7 +1987,6 @@ rbac_search_with_foreign_filter_1: |-
       "q": "roadmap",
       "filter": "_foreign(access, user = \"jeremy@meilisearch.com\" OR teams IN [\"product\", \"engineering\"])"
     }'
-# Multi-level RBAC search
 rbac_multi_level_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/documents/search' \

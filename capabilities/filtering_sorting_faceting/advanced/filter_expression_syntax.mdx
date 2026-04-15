@@ -319,27 +319,21 @@ The `_foreign()` function takes two arguments:
 - `fieldName`: The join field name (the foreign key reference)
 - `condition`: A filter condition to apply on the related document
 
-The following expression returns all deals where the related company is in the Technology industry:
+The following expression returns all deals linked to a specific company:
 
 <CodeGroup>
 
 ```
-_foreign(company, industry = "Technology")
+_foreign(company, id = "company_42")
 ```
 
 </CodeGroup>
 
-You can combine multiple conditions using `AND` and `OR`:
+<Warning>
+Foreign filters return an error when the filter on the related index matches more than 100 documents. Keep `_foreign()` conditions narrow, and prefer filtering on identifiers or tightly scoped attributes. See [Foreign filters](/capabilities/filtering_sorting_faceting/advanced/filtering_by_joined_data#hard-limit-foreign-filters-with-maximum-100-matching-documents) for details.
+</Warning>
 
-<CodeGroup>
-
-```
-_foreign(company, industry = "Technology" AND founded_year >= 2000)
-```
-
-</CodeGroup>
-
-For detailed examples and use cases, see the [Foreign filters guide](/capabilities/filtering_sorting_faceting/advanced/filtering_by_joined_data).
+For more examples and use cases, see the [Foreign filters guide](/capabilities/filtering_sorting_faceting/advanced/filtering_by_joined_data).
 
 ## Filter expressions
 
