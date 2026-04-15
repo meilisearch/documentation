@@ -4,35 +4,31 @@ sidebarTitle: Pinning behavior
 description: Learn how search rules interact with ranking, filters, precedence, and different search modes.
 ---
 
-Search rules are easiest to reason about as a curation layer that runs alongside normal search. This page covers the behavior that matters most when you build production workflows around them.
+This page explains how search rules interact with ranking, filters, matching, and pagination. Read it before building workflows that depend on pinned results in production.
 
 ## Pinning does not change ranking
 
-In the current implementation, pinning does not rewrite your ranking rules or assign artificial scores to pinned documents. Meilisearch still computes organic results first, then inserts the surviving pinned documents at their requested positions.
+Pinning does not rewrite your ranking rules and does not assign scores to pinned documents. Meilisearch computes organic results first, then inserts the surviving pinned documents at their requested positions. Organic ranking still decides the order of every non-pinned hit.
 
-This behavior is specific to pinning. Other action types, such as boosting or burying, would affect ranking differently, but search rules do not support those actions today.
-
-Organic ranking still decides the order of every non-pinned hit.
+Pinning is the only supported action today. Boosting, demoting, and burying are planned for future releases.
 
 ## Pinned documents do not need to match the query text
 
-A pinned document can appear even if it is not a lexical match for the full query. As long as the rule matches, the document exists, and it survives filters, Meilisearch can insert it into the result list.
+A pinned document can appear even when it is not a lexical match for the query. If the rule matches, the document exists, and it passes filters, Meilisearch inserts it into the result list.
 
-This is often what you want for help centers, promotions, and landing pages.
+This is useful for help centers, promotions, and landing pages, where the document you want to show is not always the best textual match.
 
 ## Filters still apply
 
-Pinned documents do not bypass filters. If the current search filters exclude a pinned document, Meilisearch drops it instead of forcing it into the response.
-
-Use this behavior to keep search rules compatible with visibility restrictions, safety controls, and authenticated content.
+Pinned documents do not bypass filters. If the current search filters exclude a pinned document, Meilisearch drops it instead of forcing it into the response. This keeps pinned results consistent with visibility, safety, and authorization rules already enforced by your filters.
 
 ## Matching behavior of `contains`
 
-The query condition `contains` is a strict substring match. Describe it as a case-insensitive literal substring match, not as fuzzy, semantic, or pattern-aware matching.
+The query condition `contains` performs a case-insensitive literal substring match. It is not fuzzy, semantic, or pattern-aware.
 
-For example, `contains: "call history"` matches `where is call history`, but it should not be described as matching `history of calls`.
+For example, `contains: "call history"` matches `where is call history`, but it does not match `history of calls` because the substring order differs.
 
-Search rules do not currently support regex, wildcards, or numeric-pattern matching such as "any 6-digit code".
+Search rules do not support regex, wildcards, or numeric-pattern matching (such as "any 6-digit code"). For more flexible matching, create several rules with different `contains` values.
 
 ## Precedence between rules
 
@@ -49,19 +45,8 @@ Search rules preserve normal response behavior:
 - Facet distribution stays consistent with the final surviving result set
 - Search rules work in regular search, hybrid search, federated search, and network search
 
-## Current scope
+## Storage model
 
-Search rules are currently instance-level rules. They are not stored as per-index settings.
+Search rules are stored at the instance level, not as per-index settings. A single rule can target documents in any index by setting `indexUid` inside the action selector. This keeps curation configuration centralized, but it also means that rules live outside the usual index-settings lifecycle.
 
-Selectors can optionally include `indexUid` when you need to target a document in a specific index.
-
-## Current limitations
-
-Search rules do not currently support:
-
-- Activation from request filters
-- Activation from selected facets
-- Activation from locale, user context, or page context
-- Actions other than pinning
-
-This makes the current feature well suited to curated pinning, but not to full personalization or broader contextual merchandising.
+For the full list of matching and action capabilities the current version supports (and the ones it does not), see [the overview](/capabilities/search_rules/overview#current-scope).

@@ -1,14 +1,14 @@
 ---
 title: Search rule patterns
 sidebarTitle: Pinning patterns
-description: Task-oriented guides for common search rule patterns such as query-based pinning, empty-query curation, and scheduled promotions.
+description: Task-oriented recipes for common search rule patterns such as query-based pinning, empty-query curation, and scheduled promotions.
 ---
 
-All create and update examples on this page use `PATCH /dynamic-search-rules/{uid}`. The `uid` comes from the path, and omitted fields remain unchanged when you update an existing rule.
+This page collects common curation patterns for search rules. Every create-or-update example uses `PATCH /dynamic-search-rules/{uid}`. The `uid` comes from the path, and any field you omit keeps its previous value when you update an existing rule.
 
-## How do I pin one result for a query?
+## Pin one result for a query
 
-Pin a document whenever the query contains a specific substring:
+Pin a single document whenever the query contains a specific substring:
 
 ```json
 {
@@ -26,9 +26,9 @@ Pin a document whenever the query contains a specific substring:
 }
 ```
 
-Use this pattern when you want to promote a landing page, help article, or campaign document for a specific query family.
+Use this pattern to promote a landing page, help article, or campaign document for a query family.
 
-## How do I pin several results in a fixed order?
+## Pin several results in a fixed order
 
 Add multiple actions with explicit positions:
 
@@ -54,9 +54,9 @@ Add multiple actions with explicit positions:
 
 This keeps the pinned documents in a predictable order while leaving the rest of the hits in their normal organic order.
 
-## How do I curate the default results for an empty query?
+## Curate default results for an empty query
 
-Use the `isEmpty` query condition to curate the browse state when users search with an empty query:
+Use the `isEmpty` query condition to curate the browse state users see when they open search with no query:
 
 ```json
 {
@@ -74,9 +74,9 @@ Use the `isEmpty` query condition to curate the browse state when users search w
 }
 ```
 
-This is useful when users often start by browsing instead of typing a search.
+This is useful when users often start by browsing before typing a query.
 
-## How do I schedule a promotion for a limited time?
+## Schedule a promotion for a limited time
 
 Combine a query condition with a time condition:
 
@@ -97,11 +97,11 @@ Combine a query condition with a time condition:
 }
 ```
 
-Multiple conditions are combined with `AND`, so this rule only applies during the campaign window and only when the query contains `summer sale`.
+Multiple conditions are combined with `AND`, so this rule only applies during the campaign window, and only when the query contains `summer sale`.
 
-## How do I list active rules or rules with similar UIDs?
+## List or filter existing rules
 
-Use `POST /dynamic-search-rules` with pagination and filters:
+Use `POST /dynamic-search-rules` with pagination and a filter body:
 
 ```json
 {
@@ -114,11 +114,11 @@ Use `POST /dynamic-search-rules` with pagination and filters:
 }
 ```
 
-`attributePatterns` uses attribute-pattern syntax, for example `promo*`.
+`attributePatterns` accepts attribute-pattern syntax, so `promo*` returns every rule whose `uid` starts with `promo`. This is handy to audit active campaigns or to find related rules before bulk-editing them.
 
-## How do I pause a rule without deleting it?
+## Pause a rule without deleting it
 
-Set `active` to `false`:
+Flip `active` to `false` instead of deleting the rule:
 
 ```json
 {
@@ -126,4 +126,4 @@ Set `active` to `false`:
 }
 ```
 
-Use `DELETE /dynamic-search-rules/{uid}` only when you want to remove the rule entirely.
+Paused rules remain stored but stop applying at search time. Use `DELETE /dynamic-search-rules/{uid}` only when you want to remove the rule entirely.

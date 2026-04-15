@@ -1,30 +1,38 @@
 ---
 title: Search rules
 sidebarTitle: Overview
-description: Curate search results by pinning selected documents at fixed positions when query- or time-based conditions match.
+description: Pin selected documents at fixed positions in search results when query- or time-based conditions match.
 ---
 
-Search rules let you curate search results by pinning selected documents at fixed positions when specific conditions match. They help you promote important results without rewriting your ranking rules.
+Search rules pin selected documents at fixed positions in search results when specific conditions match. Pinning runs on top of organic search: Meilisearch still ranks results as usual, then inserts the pinned documents at the positions you asked for.
 
 <Warning>
-Search rules are experimental. Enable them with `PATCH /experimental-features` before using the `/dynamic-search-rules` endpoints.
+Search rules are experimental. Enable them with `PATCH /experimental-features` before using the API endpoints.
 </Warning>
 
 <Note>
-In this section, "search rules" refers to the curation feature exposed by `/dynamic-search-rules`. This is different from the [search rules object used in tenant tokens](/capabilities/security/advanced/tenant_token_payload#search-rules), which enforces filters.
+The feature is exposed through the `/dynamic-search-rules` API routes and the `dynamicSearchRules` experimental flag. For readability, this documentation refers to it simply as "search rules" everywhere outside of API payloads.
+
+This is different from the [search rules object used in tenant tokens](/capabilities/security/advanced/tenant_token_payload#search-rules), which enforces filters.
 </Note>
 
-## What search rules support today
+## When to use search rules
 
-- Query-based pinning with `contains`
-- Empty-query pinning with `isEmpty`
-- Time-window activation
-- Multiple pins with explicit positions
-- Regular search, hybrid search, federated search, and network search
+Search rules are a good fit whenever you know exactly which document should appear at which position for a specific query, empty state, or time window. For example, you might pin your billing help article to the top whenever users search for "invoice", feature a seasonal landing page for "summer sale" queries during a time-limited campaign, or curate a default list of onboarding articles for users who open search with an empty query. In each case, organic ranking still decides the rest of the result set. Only the pinned documents are promoted to fixed positions.
 
-In this first version, pinning is the only available action.
+For relevancy that adapts to every query, use [ranking rules](/capabilities/full_text_search/relevancy/ranking_rules) or [hybrid search](/capabilities/hybrid_search/overview) instead.
 
 ## How search rules work
+
+```mermaid
+flowchart LR
+    Q[Search query] --> O[Organic results]
+    Q --> R[Matching rules]
+    R --> P[Resolved pinned documents]
+    O --> M[Merge and deduplicate]
+    P --> M
+    M --> F[Final result set]
+```
 
 When a rule matches, Meilisearch:
 
@@ -33,48 +41,34 @@ When a rule matches, Meilisearch:
 3. Inserts those documents at the requested positions
 4. Removes duplicates and returns the final result set
 
-Search rules do not rewrite ranking rules or assign artificial ranking scores. They act as a controlled insertion step on top of the normal search results.
+Search rules do not change ranking or scoring. They insert pinned documents on top of the normal results. A pinned document can appear even if it does not match the query text, but filters still apply: if a pinned document does not satisfy the current filters, Meilisearch drops it.
 
-Pinned documents can appear even if they are not the best lexical match for the query. However, filters still apply. If a pinned document does not satisfy the current filters, Meilisearch drops it.
+## Key concepts
 
-## Rule structure
+A rule combines three parts:
 
-Each rule has:
+- **Conditions** decide when the rule fires. Query conditions match the search string with `contains` (case-insensitive substring) or `isEmpty` (triggered by empty queries). Time conditions activate the rule during a window between a start and end timestamp. Multiple conditions combine with `AND`.
+- **Actions** decide what the rule does. Pinning is the only available action today. An action targets one document via `indexUid` and `id`, and places it at a fixed `position` in the result list.
+- **Priority** decides which rule wins when several match at once. Lower numeric values take precedence over higher ones. Omitting priority treats the rule as the lowest precedence.
 
-- a `uid`
-- optional metadata such as `description`, `priority`, and `active`
-- one or more `conditions`
-- one or more `actions`
+Rules also carry optional metadata such as `description` and an `active` flag that lets you pause a rule without deleting it.
 
-Example body:
+## Use cases
 
-```json
-{
-  "description": "Promote billing help for invoice searches",
-  "active": true,
-  "conditions": [
-    { "scope": "query", "contains": "invoice" }
-  ],
-  "actions": [
-    {
-      "selector": { "indexUid": "support", "id": "billing-workspace-overview" },
-      "action": { "type": "pin", "position": 0 }
-    }
-  ]
-}
-```
+- **Help centers and documentation**: Pin a specific answer when a user's query matches a known topic, so the most helpful article always appears first.
+- **E-commerce merchandising**: Promote a campaign landing page or featured product during a sale window, then let the rule expire automatically when the campaign ends.
+- **Editorial browse states**: Curate the default list users see when they open search with no query, highlighting starter content or featured collections.
+- **Knowledge bases**: Surface operational runbooks or policy pages at the top when support-critical keywords appear, without rebuilding relevance rules.
 
-This rule pins `billing-workspace-overview` to the first result position when the query contains `invoice`.
+## Current scope
 
-## What search rules do not support
+Search rules apply to regular search, [hybrid search](/capabilities/hybrid_search/overview), [federated search](/capabilities/multi_search/overview), and network search. They do not support:
 
-Search rules do not currently support:
+- Regex, wildcard, or numeric-pattern matching
+- Activation from filters, selected facets, locale, user context, or page context
+- Actions other than pinning. Boosting, demoting, and burying are planned for future releases.
 
-- Regex or wildcard matching
-- Activation from filters, selected facets, locale, user context, or product context
-- Actions other than pinning
-
-If you need exact control over precedence between rules, use `priority`. Lower values take precedence over higher ones.
+See [pinning behavior](/capabilities/search_rules/advanced/pinning_behavior) for details on how rules interact with ranking, filters, and precedence. If your use case needs something search rules do not cover yet, [book a call with the Meilisearch team](https://meet.meilisearch.com/meetings/cloud/presentation) to share your requirements.
 
 ## Next steps
 
@@ -85,10 +79,10 @@ If you need exact control over precedence between rules, use `priority`. Lower v
   <Card title="How to" href="/capabilities/search_rules/how_to/pinning_patterns">
     Common curation patterns for search rules
   </Card>
-  <Card title="Reference" href="/capabilities/search_rules/reference">
-    Rule fields, endpoints, and update behavior
-  </Card>
   <Card title="Advanced" href="/capabilities/search_rules/advanced/pinning_behavior">
     Matching behavior, precedence, and response details
+  </Card>
+  <Card title="API reference" href="/reference/api/dynamic-search-rules">
+    Endpoints, rule fields, and update behavior
   </Card>
 </CardGroup>

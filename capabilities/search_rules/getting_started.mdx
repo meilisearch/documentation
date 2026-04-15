@@ -4,17 +4,55 @@ sidebarTitle: Getting started
 description: Enable search rules, create your first rule, and verify how pinned results appear in search.
 ---
 
-This guide walks you through enabling search rules, creating your first rule, and checking how it affects search results.
+This guide walks you through enabling the experimental flag, creating your first rule, and checking how it affects search results. You can do this from the Meilisearch Cloud dashboard or directly against the API.
 
-## Prerequisites
+## Set up from the Meilisearch Cloud dashboard
 
-- A running Meilisearch instance
-- An admin API key
-- An index with documents. This guide uses a `support` index
+Open your project in the [Meilisearch Cloud dashboard](https://cloud.meilisearch.com) and select the **Search rules** tab.
 
-## Step 1: Enable search rules
+### Activate the feature
 
-Search rules are experimental. Enable them with `PATCH /experimental-features`:
+Search rules are an add-on. On the Search rules tab, click **Enable Search Rules** to turn on the `dynamicSearchRules` experimental flag for the project.
+
+![Meilisearch Cloud Search rules tab with an "Enable Search Rules" button in the add-on panel](/assets/images/cloud-search-rules/01-activate-addon.png)
+
+### Create your first rule
+
+Once the feature is active, the Search rules tab shows a short explainer and a **New rule** button. Click it to start building a rule.
+
+![Search rules landing page with a "New rule" button in the top-right corner](/assets/images/cloud-search-rules/02-create-first-rule.png)
+
+### Fill in the rule's general information
+
+Give the rule a **Rule ID** (used as the `uid`), an optional **Description**, and a **Priority** if several rules might match the same query. Keep the **Active** toggle on to apply the rule at search time.
+
+![Rule editor showing Rule ID "summer-sales", a description, priority 0, and General / Conditions / Actions sections](/assets/images/cloud-search-rules/03-manage-rule.png)
+
+### Add conditions
+
+In the **Conditions** block, click **Add condition** to open the condition dialog. Pick a type (**Query contains**, **Query is empty**, or **Time window**) and fill in the value. Every condition you add is combined with `AND`, so the rule fires only when all conditions are true at the same time.
+
+![Add condition dialog with a "Query contains" type and a "Contains substring" input](/assets/images/cloud-search-rules/04-add-condition.png)
+
+### Pin documents to fixed positions
+
+In the **Actions** block, click **Add pin**. Choose the source **Index**, pick the **Document** to promote, and set its target **Position** in the result list. Repeat for each document you want to pin. When the rule is ready, click **Create rule**.
+
+![Add pin dialog with an index dropdown, a document selector, and a position input](/assets/images/cloud-search-rules/05-add-pin.png)
+
+### Review and manage your rules
+
+Back on the Search rules tab, every rule you have created is listed with its conditions, actions, priority, and active state. Use the row toggle to pause a rule without deleting it, or the icons on the right to edit or remove it.
+
+![Search rules list with one "summer-sales" rule showing its conditions, pin action, priority, and active toggle](/assets/images/cloud-search-rules/06-rules-list.png)
+
+## Set up from the API
+
+Prefer the API? The same flow maps directly to the `/dynamic-search-rules` routes.
+
+### Enable the experimental flag
+
+Send a `PATCH /experimental-features` to turn on the feature:
 
 ```json
 {
@@ -22,9 +60,9 @@ Search rules are experimental. Enable them with `PATCH /experimental-features`:
 }
 ```
 
-If the feature is disabled, the `/dynamic-search-rules` routes are not usable and saved rules do not apply at search time.
+While the flag is disabled, the `/dynamic-search-rules` routes reject requests and saved rules do not apply at search time.
 
-## Step 2: Create a rule
+### Create a rule
 
 Create a rule with `PATCH /dynamic-search-rules/invoice-help`:
 
@@ -44,16 +82,16 @@ Create a rule with `PATCH /dynamic-search-rules/invoice-help`:
 }
 ```
 
-This route behaves as an upsert:
+This rule pins the document `billing-workspace-overview` in the `support` index to the first position whenever a query contains the substring `invoice`.
+
+The route behaves as an upsert:
 
 - It returns `201 Created` when the rule does not exist yet
 - It returns `200 OK` when you update an existing rule
 
-## Step 3: Check the stored rule
+### Check the stored rule
 
-Retrieve the rule with `GET /dynamic-search-rules/invoice-help`.
-
-The response should include the rule's `uid`, conditions, and actions:
+Retrieve the rule you just created with `GET /dynamic-search-rules/invoice-help`. The response should include the `uid`, conditions, and actions you sent:
 
 ```json
 {
@@ -72,9 +110,9 @@ The response should include the rule's `uid`, conditions, and actions:
 }
 ```
 
-## Step 4: Run a matching search
+### Run a matching search
 
-Send a normal search request to your index, for example with `POST /indexes/support/search`:
+Send a normal search request to the index, for example `POST /indexes/support/search`:
 
 ```json
 {
@@ -82,9 +120,9 @@ Send a normal search request to your index, for example with `POST /indexes/supp
 }
 ```
 
-If `billing-workspace-overview` exists and survives the current filters, Meilisearch inserts it at position `0`.
+If `billing-workspace-overview` exists in the `support` index and survives the current filters, Meilisearch inserts it at position `0`. The rest of the response is the normal organic result set, with duplicates removed.
 
-Search rules do not replace the rest of the result set. Meilisearch still computes the normal organic results, then inserts the pinned documents and removes duplicates.
+Search rules do not replace organic results. Meilisearch still computes them, then inserts the pinned documents on top.
 
 ## Next steps
 
@@ -92,11 +130,11 @@ Search rules do not replace the rest of the result set. Meilisearch still comput
   <Card title="How to" href="/capabilities/search_rules/how_to/pinning_patterns">
     Explore common query, empty-query, and time-window patterns
   </Card>
-  <Card title="Reference" href="/capabilities/search_rules/reference">
-    Review endpoints, rule fields, and update behavior
-  </Card>
   <Card title="Advanced" href="/capabilities/search_rules/advanced/pinning_behavior">
     Learn how search rules interact with ranking and filters
+  </Card>
+  <Card title="API reference" href="/reference/api/dynamic-search-rules">
+    Review endpoints and request fields
   </Card>
   <Card title="Experimental features" href="/resources/help/experimental_features_overview">
     Learn more about experimental feature management
