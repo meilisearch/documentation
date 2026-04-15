@@ -1673,7 +1673,6 @@ configure_rest_embedder_1: |-
         "documentTemplate": "SHORT_AND_RELEVANT_DOCUMENT_TEMPLATE"
       }
     }'
-## BEGIN /capabilities/indexing/joins
 joins_define_relationship_1: |-
   curl \
     -X PATCH 'MEILISEARCH_URL/indexes/deals/settings' \
@@ -1881,7 +1880,6 @@ joins_remove_orphaned_ids_1: |-
       },
       "filter": "actors = actor_42"
     }'
-## BEGIN /capabilities/filtering_sorting_faceting/advanced/filtering_by_joined_data
 foreign_filter_basic_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/deals/search' \
@@ -1938,7 +1936,6 @@ foreign_filter_combined_1: |-
       "q": "contract",
       "filter": "value >= 100000 AND _foreign(company, industry = \"Technology\")"
     }'
-## BEGIN /capabilities/filtering_sorting_faceting/advanced/precise_filtering_array_items
 foreign_filter_array_or_logic_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/films/search' \
@@ -1977,7 +1974,6 @@ foreign_filter_skills_1: |-
       "q": "fullstack",
       "filter": "_foreign(skills, (language = \"Python\" AND proficiency = \"advanced\") OR (language = \"JavaScript\" AND proficiency = \"advanced\"))"
     }'
-## BEGIN /capabilities/security/advanced/rbac_with_joins
 rbac_search_with_foreign_filter_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/documents/search' \
