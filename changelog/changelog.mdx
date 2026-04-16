@@ -4,6 +4,97 @@ description: "New features and improvements in Meilisearch"
 rss: true
 ---
 
+<Update label="v1.42" description="2026-04-13">
+
+## New Features
+
+### Remote Availability Status for Query Fallback
+
+The engine now tracks the availability status of remote instances in sharding and replication environments. Each remote is assigned a status (`available` or `unavailable`), allowing the engine to automatically avoid unavailable machines and resume querying them once they're back online.
+
+The `/network` route now exposes remote statuses:
+
+```json
+{
+  "remotes": {
+    "prod2": {
+      "url": "http://localhost:7702",
+      "searchApiKey": "mykey",
+      "writeApiKey": "mykey",
+      "status": "available"
+    },
+    "prod3": {
+      "url": "http://localhost:7703",
+      "searchApiKey": "mykey",
+      "writeApiKey": "mykey",
+      "status": "unavailable"
+    }
+  }
+}
+```
+
+### Document Join Filtering (Experimental)
+
+Filter documents based on attributes in related indexes using the new `_foreign` filter syntax. This extends cross-index document hydration to allow filtering on foreign indexes during retrieval.
+
+To use this feature, enable the `foreignKeys` experimental feature:
+
+```bash
+curl -X PATCH 'http://127.0.0.1:7700/experimental-features' \
+ -H 'Content-Type: application/json' \
+ --data-binary '{"foreignKeys": true}'
+```
+
+Configure foreign keys and filterable attributes in your index settings:
+
+```json
+{
+  "foreignKeys": [
+    {
+      "fieldName": "actors",
+      "foreignIndexUid": "actors"
+    }
+  ],
+  "filterableAttributes": [
+    {
+      "attributePatterns": [
+        "actors"
+      ],
+      "features": {
+        "facetSearch": false,
+        "filter": {
+          "equality": true,
+          "comparison": false
+        }
+      }
+    }
+  ]
+}
+```
+
+Use the `_foreign` filter in search queries to filter on foreign index attributes:
+
+```json
+{
+  "q": "action movies",
+  "filter": "genres = action AND _foreign(actors, birthDate STARTS WITH \"1958-\" AND popularity >= 3.5)"
+}
+```
+
+This allows you to find documents based on conditions in related indexes. For example, find movies with a specific genre where actors match certain criteria.
+
+Note: Nesting foreign filters is not supported. This feature does not support remote sharding environments.
+
+## Improvements
+
+### Better Error Handling for Chat Template Updates
+
+The engine now explicitly validates and reports document template errors when updating chat settings, providing clearer feedback on template configuration issues.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.42.0)
+
+</Update>
+
 <Update label="v1.41" description="2026-03-30">
 
 ## New Features
