@@ -1673,3 +1673,321 @@ configure_rest_embedder_1: |-
         "documentTemplate": "SHORT_AND_RELEVANT_DOCUMENT_TEMPLATE"
       }
     }'
+joins_define_relationship_1: |-
+  curl \
+    -X PATCH 'MEILISEARCH_URL/indexes/deals/settings' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "foreignKeys": [
+        {
+          "fieldName": "company_id",
+          "foreignIndexUid": "companies"
+        }
+      ],
+      "filterableAttributes": [
+        {
+          "attributePatterns": ["company_id"],
+          "features": {
+            "facetSearch": false,
+            "filter": {
+              "equality": true,
+              "comparison": false
+            }
+          }
+        }
+      ]
+    }'
+joins_one_to_one_1: |-
+  curl \
+    -X PATCH 'MEILISEARCH_URL/indexes/users/settings' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "foreignKeys": [
+        {
+          "fieldName": "profile_id",
+          "foreignIndexUid": "profiles"
+        }
+      ],
+      "filterableAttributes": [
+        {
+          "attributePatterns": ["profile_id"],
+          "features": {
+            "facetSearch": false,
+            "filter": {
+              "equality": true,
+              "comparison": false
+            }
+          }
+        }
+      ]
+    }'
+joins_one_to_many_1: |-
+  curl \
+    -X PATCH 'MEILISEARCH_URL/indexes/companies/settings' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "foreignKeys": [
+        {
+          "fieldName": "employee_ids",
+          "foreignIndexUid": "employees"
+        }
+      ],
+      "filterableAttributes": [
+        {
+          "attributePatterns": ["employee_ids"],
+          "features": {
+            "facetSearch": false,
+            "filter": {
+              "equality": true,
+              "comparison": false
+            }
+          }
+        }
+      ]
+    }'
+joins_many_to_many_1: |-
+  curl \
+    -X PATCH 'MEILISEARCH_URL/indexes/films/settings' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "foreignKeys": [
+        {
+          "fieldName": "actor_ids",
+          "foreignIndexUid": "actors"
+        }
+      ],
+      "filterableAttributes": [
+        {
+          "attributePatterns": ["actor_ids"],
+          "features": {
+            "facetSearch": false,
+            "filter": {
+              "equality": true,
+              "comparison": false
+            }
+          }
+        }
+      ]
+    }'
+joins_self_reference_1: |-
+  curl \
+    -X PATCH 'MEILISEARCH_URL/indexes/products/settings' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "foreignKeys": [
+        {
+          "fieldName": "frequently_bought_with",
+          "foreignIndexUid": "products"
+        }
+      ],
+      "filterableAttributes": [
+        {
+          "attributePatterns": ["frequently_bought_with"],
+          "features": {
+            "facetSearch": false,
+            "filter": {
+              "equality": true,
+              "comparison": false
+            }
+          }
+        }
+      ]
+    }'
+joins_multiple_relationships_1: |-
+  curl \
+    -X PATCH 'MEILISEARCH_URL/indexes/deals/settings' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "foreignKeys": [
+        {
+          "fieldName": "company_id",
+          "foreignIndexUid": "companies"
+        },
+        {
+          "fieldName": "owner_user_id",
+          "foreignIndexUid": "users"
+        }
+      ],
+      "filterableAttributes": [
+        {
+          "attributePatterns": ["company_id"],
+          "features": {
+            "facetSearch": false,
+            "filter": {
+              "equality": true,
+              "comparison": false
+            }
+          }
+        },
+        {
+          "attributePatterns": ["owner_user_id"],
+          "features": {
+            "facetSearch": false,
+            "filter": {
+              "equality": true,
+              "comparison": false
+            }
+          }
+        }
+      ]
+    }'
+joins_update_relationship_1: |-
+  curl \
+    -X PATCH 'MEILISEARCH_URL/indexes/deals/settings' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "foreignKeys": [
+        {
+          "fieldName": "assigned_user_id",
+          "foreignIndexUid": "users"
+        }
+      ],
+      "filterableAttributes": [
+        {
+          "attributePatterns": ["assigned_user_id"],
+          "features": {
+            "facetSearch": false,
+            "filter": {
+              "equality": true,
+              "comparison": false
+            }
+          }
+        }
+      ]
+    }'
+joins_remove_relationships_1: |-
+  curl \
+    -X PATCH 'MEILISEARCH_URL/indexes/deals/settings' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "foreignKeys": []
+    }'
+joins_delete_orphaned_1: |-
+  curl \
+    -X POST 'MEILISEARCH_URL/indexes/deals/delete-by-filter' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "filter": "company_id = deleted_company_1 OR company_id = deleted_company_2"
+    }'
+joins_remove_orphaned_ids_1: |-
+  curl \
+    -X POST 'MEILISEARCH_URL/indexes/films/documents/edit' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "function": "doc.actors = doc.actors.filter(|id| id != context.deleted_id)",
+      "context": {
+        "deleted_id": "actor_42"
+      },
+      "filter": "actors = actor_42"
+    }'
+foreign_filter_basic_1: |-
+  curl \
+    -X POST 'MEILISEARCH_URL/indexes/deals/search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "q": "contract",
+      "filter": "_foreign(company, industry = \"Technology\" AND founded_year >= 2000)"
+    }'
+foreign_filter_equality_1: |-
+  curl \
+    -X POST 'MEILISEARCH_URL/indexes/deals/search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "q": "contract",
+      "filter": "_foreign(company, id = \"company_42\")"
+    }'
+foreign_filter_multiple_equality_1: |-
+  curl \
+    -X POST 'MEILISEARCH_URL/indexes/deals/search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "q": "",
+      "filter": "_foreign(company, industry = \"Technology\" OR industry = \"Finance\")"
+    }'
+foreign_filter_range_1: |-
+  curl \
+    -X POST 'MEILISEARCH_URL/indexes/deals/search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "q": "enterprise",
+      "filter": "_foreign(company, founded_year >= 2000 AND founded_year <= 2020)"
+    }'
+foreign_filter_date_range_1: |-
+  curl \
+    -X POST 'MEILISEARCH_URL/indexes/deals/search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "q": "",
+      "filter": "_foreign(company, last_funding_date >= \"2023-01-01\")"
+    }'
+foreign_filter_multiple_conditions_1: |-
+  curl \
+    -X POST 'MEILISEARCH_URL/indexes/deals/search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "q": "contract",
+      "filter": "_foreign(company, (industry = \"Technology\" AND founded_year >= 2010) OR revenue > 1000000)"
+    }'
+foreign_filter_combined_1: |-
+  curl \
+    -X POST 'MEILISEARCH_URL/indexes/deals/search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "q": "contract",
+      "filter": "value >= 100000 AND _foreign(company, industry = \"Technology\")"
+    }'
+foreign_filter_array_or_logic_1: |-
+  curl \
+    -X POST 'MEILISEARCH_URL/indexes/films/search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "filter": "actors.country = \"France\" OR actors.age > 35"
+    }'
+foreign_filter_array_and_logic_1: |-
+  curl \
+    -X POST 'MEILISEARCH_URL/indexes/films/search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "filter": "_foreign(actors, country = \"France\" AND age > 35)"
+    }'
+foreign_filter_certifications_1: |-
+  curl \
+    -X POST 'MEILISEARCH_URL/indexes/products/search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "q": "motor",
+      "filter": "_foreign(certifications, (standard = \"ISO 9001\" OR standard = \"CE\") AND issued_year >= 2020)"
+    }'
+foreign_filter_tags_1: |-
+  curl \
+    -X POST 'MEILISEARCH_URL/indexes/articles/search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "q": "cryptography",
+      "filter": "_foreign(tags, name = \"security\" AND name = \"encryption\")"
+    }'
+foreign_filter_skills_1: |-
+  curl \
+    -X POST 'MEILISEARCH_URL/indexes/employees/search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "q": "fullstack",
+      "filter": "_foreign(skills, (language = \"Python\" AND proficiency = \"advanced\") OR (language = \"JavaScript\" AND proficiency = \"advanced\"))"
+    }'
+rbac_search_with_foreign_filter_1: |-
+  curl \
+    -X POST 'MEILISEARCH_URL/indexes/documents/search' \
+    -H 'Authorization: Bearer TENANT_TOKEN' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "q": "roadmap",
+      "filter": "_foreign(access, user = \"jeremy@meilisearch.com\" OR teams IN [\"product\", \"engineering\"])"
+    }'
+rbac_multi_level_1: |-
+  curl \
+    -X POST 'MEILISEARCH_URL/indexes/documents/search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "q": "sensitive",
+      "filter": "_foreign(access, (user = \"jeremy@meilisearch.com\" AND roles IN [\"editor\", \"owner\"]) OR (teams IN [\"product\", \"engineering\"] AND roles IN [\"editor\"]))"
+    }'

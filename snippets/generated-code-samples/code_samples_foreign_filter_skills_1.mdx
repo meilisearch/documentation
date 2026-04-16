@@ -1,0 +1,12 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/employees/search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "q": "fullstack",
+    "filter": "_foreign(skills, (language = \"Python\" AND proficiency = \"advanced\") OR (language = \"JavaScript\" AND proficiency = \"advanced\"))"
+  }'
+```
+</CodeGroup>

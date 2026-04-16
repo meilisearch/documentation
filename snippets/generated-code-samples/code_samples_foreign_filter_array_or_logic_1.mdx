@@ -1,0 +1,11 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/films/search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "filter": "actors.country = \"France\" OR actors.age > 35"
+  }'
+```
+</CodeGroup>

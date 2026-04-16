@@ -1,0 +1,192 @@
+---
+title: Foreign filters
+sidebarTitle: Foreign filters
+description: Use foreign filters to filter search results by properties of related documents in other indices.
+---
+
+import ForeignFilterBasic1 from '/snippets/generated-code-samples/code_samples_foreign_filter_basic_1.mdx';
+import ForeignFilterEquality1 from '/snippets/generated-code-samples/code_samples_foreign_filter_equality_1.mdx';
+import ForeignFilterMultipleEquality1 from '/snippets/generated-code-samples/code_samples_foreign_filter_multiple_equality_1.mdx';
+import ForeignFilterRange1 from '/snippets/generated-code-samples/code_samples_foreign_filter_range_1.mdx';
+import ForeignFilterDateRange1 from '/snippets/generated-code-samples/code_samples_foreign_filter_date_range_1.mdx';
+import ForeignFilterMultipleConditions1 from '/snippets/generated-code-samples/code_samples_foreign_filter_multiple_conditions_1.mdx';
+import ForeignFilterCombined1 from '/snippets/generated-code-samples/code_samples_foreign_filter_combined_1.mdx';
+
+Foreign filters enable you to find documents based on properties of related documents in other indices. Instead of storing all data in one denormalized document, you can define relationships and use foreign filters to query across them.
+
+## What are foreign filters?
+
+Without joins, you must denormalize data:
+
+```json
+{
+  "id": "deal_1",
+  "title": "Enterprise Contract",
+  "company": {
+    "name": "Acme Inc",
+    "industry": "Technology",
+    "founded_year": 2010
+  }
+}
+```
+
+With joins, you store only the reference:
+
+```json
+{
+  "id": "deal_1",
+  "title": "Enterprise Contract",
+  "company_id": "company_42"
+}
+```
+
+Then filter deals by company properties:
+
+<ForeignFilterBasic1 />
+
+## How it works: Normalized vs. Denormalized
+
+### Without joins (denormalized)
+
+Duplicate data in each deal:
+
+```json
+[
+  {"id": "deal_1", "company": {"name": "Acme Inc", "industry": "Technology"}},
+  {"id": "deal_2", "company": {"name": "Acme Inc", "industry": "Technology"}},
+  {"id": "deal_3", "company": {"name": "Beta Corp", "industry": "Finance"}}
+]
+```
+
+Update Acme's industry and all three deals must be updated.
+
+### With joins (normalized)
+
+Store data once:
+
+**Companies:**
+```json
+[
+  {"id": "company_42", "name": "Acme Inc", "industry": "Technology"}
+]
+```
+
+**Deals:**
+```json
+[
+  {"id": "deal_1", "company_id": "company_42"},
+  {"id": "deal_2", "company_id": "company_42"},
+  {"id": "deal_3", "company_id": "company_99"}
+]
+```
+
+Update Acme's industry once. All deals linked to it automatically reflect the change.
+
+## Simple equality filters
+
+Filter deals where the company is a specific one:
+
+<ForeignFilterEquality1 />
+
+Returns deals with the matching company ID.
+
+### Multiple equality conditions
+
+Find deals from companies with multiple specific criteria:
+
+<ForeignFilterMultipleEquality1 />
+
+## Range filters
+
+Filter by numeric or date properties of related documents:
+
+<ForeignFilterRange1 />
+
+Returns deals from companies founded between 2000 and 2020.
+
+### Date ranges
+
+Filter by date properties:
+
+<ForeignFilterDateRange1 />
+
+## Multiple conditions with AND/OR
+
+Combine conditions using logical operators:
+
+<ForeignFilterMultipleConditions1 />
+
+Returns deals where:
+- Company is in Technology industry AND founded after 2010, OR
+- Company has revenue over 1 million
+
+## Combine with document filters
+
+Mix filters on source and related documents:
+
+<ForeignFilterCombined1 />
+
+Returns deals that are:
+- Worth at least 100k, AND
+- From a technology company
+
+## Precise filtering with multiple array items
+
+When you have array relationships, foreign filters enable **AND logic** across array items. This means you can find documents where a single related item meets multiple conditions simultaneously.
+
+For detailed examples and use cases, see the [Precise filtering with array relationships](/capabilities/filtering_sorting_faceting/advanced/precise_filtering_array_items) guide.
+
+## Performance considerations
+
+### Filter specificity
+
+Broader filters on related data may hit the 100-document limit:
+
+```bash
+# ✓ Good: Very specific
+filter: "_foreign(company, industry = \"Technology\" AND state = \"CA\")"
+
+# ✗ Problematic: May return > 100 docs
+filter: "_foreign(company, industry = \"Technology\")"
+```
+
+### Combine filters strategically
+
+Use multiple conditions to narrow results:
+
+```bash
+# Combine source and target filters to reduce matching documents
+filter: "value >= 500000 AND _foreign(company, founded_year >= 2020)"
+```
+
+### Test with your data
+
+Before production, verify filter performance:
+- Estimate how many target documents match each filter
+- Ensure results stay under 100 documents
+- Add more specific conditions if needed
+
+## Hard limit: Foreign filters with maximum 100 matching documents
+
+<Callout type="warning">
+If a foreign filter returns more than 100 matching documents from the target index, Meilisearch will return an error. Design your foreign filters carefully to stay within this limit by being more specific with your filtering criteria.
+</Callout>
+
+**Example:** If you filter for `_foreign(company, industry = "Technology")` and your database has 150 technology companies, the query fails.
+
+**Solutions:**
+- Add additional filter conditions: `_foreign(company, industry = "Technology" AND founded_year >= 2020)` (narrows results)
+- Use other attributes: `_foreign(company, industry = "Technology" AND revenue > 1000000)`
+- Break into multiple queries with narrower filters
+- Consider denormalization if filtering patterns require very broad queries
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Define relationships" href="/capabilities/indexing/joins/define_index_relationships">
+    Learn how to configure join relationships
+  </Card>
+  <Card title="Filtering basics" href="/capabilities/filtering_sorting_faceting/getting_started">
+    Return to basic filtering guide
+  </Card>
+</CardGroup>

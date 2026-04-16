@@ -1,0 +1,12 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/products/search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "q": "motor",
+    "filter": "_foreign(certifications, (standard = \"ISO 9001\" OR standard = \"CE\") AND issued_year >= 2020)"
+  }'
+```
+</CodeGroup>

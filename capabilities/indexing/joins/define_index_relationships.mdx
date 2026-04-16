@@ -1,0 +1,168 @@
+---
+title: Define index relationships
+sidebarTitle: Define index relationships
+description: Create relationships between documents across indices using joins, reducing data duplication while maintaining flexibility for filtering and hydration.
+---
+
+import JoinsDefineRelationship1 from '/snippets/generated-code-samples/code_samples_joins_define_relationship_1.mdx';
+import JoinsOneToOne1 from '/snippets/generated-code-samples/code_samples_joins_one_to_one_1.mdx';
+import JoinsOneToMany1 from '/snippets/generated-code-samples/code_samples_joins_one_to_many_1.mdx';
+import JoinsManyToMany1 from '/snippets/generated-code-samples/code_samples_joins_many_to_many_1.mdx';
+import JoinsSelfReference1 from '/snippets/generated-code-samples/code_samples_joins_self_reference_1.mdx';
+import JoinsMultipleRelationships1 from '/snippets/generated-code-samples/code_samples_joins_multiple_relationships_1.mdx';
+import JoinsUpdateRelationship1 from '/snippets/generated-code-samples/code_samples_joins_update_relationship_1.mdx';
+import JoinsRemoveRelationships1 from '/snippets/generated-code-samples/code_samples_joins_remove_relationships_1.mdx';
+import JoinsDeleteOrphaned1 from '/snippets/generated-code-samples/code_samples_joins_delete_orphaned_1.mdx';
+import JoinsRemoveOrphanedIds1 from '/snippets/generated-code-samples/code_samples_joins_remove_orphaned_ids_1.mdx';
+
+Joins enable you to define relationships between documents in different indices, similar to foreign keys in relational databases. Instead of duplicating data across documents, you store only IDs and use joins to hydrate full documents at search time or filter by related data.
+
+## Why use joins?
+
+<CardGroup cols={2}>
+  <Card title="Reduce data duplication" icon="copy">
+    Store company details once; reference from many deals instead of embedding full objects in each deal document.
+  </Card>
+  <Card title="Faster indexing" icon="bolt">
+    Smaller documents mean faster indexing operations and reduced storage requirements.
+  </Card>
+  <Card title="Keep data normalized" icon="sitemap">
+    Update company information once and it's automatically reflected in all deal queries.
+  </Card>
+  <Card title="Flexible queries" icon="sliders">
+    Hydrate related data when needed and filter by related document properties without denormalization.
+  </Card>
+</CardGroup>
+
+## How relationships work
+
+A relationship connects a **source index** to a **target index** using foreign key fields. For example, a document in the `deals` index references a document in the `companies` index through a `company_id` field:
+
+```json Deals index
+{
+  "id": "deal_1",
+  "title": "Contract X",
+  "company_id": "company_1"
+}
+```
+
+```json Companies index
+{
+  "id": "company_1",
+  "name": "Acme Inc"
+}
+```
+
+Once the relationship is configured, Meilisearch automatically hydrates the related document in search results, replacing `company_id` with the full company object.
+
+## Define a relationship
+
+Configure foreign keys and filterable attributes in the source index settings:
+
+<JoinsDefineRelationship1 />
+
+### Configuration parameters
+
+| Parameter | Type | Description | Example |
+|-----------|------|-------------|---------|
+| `fieldName` | string | Field in the source index containing the ID(s) | `"company_id"` or `"actor_ids"` |
+| `foreignIndexUid` | string | UID of the target index | `"companies"` or `"actors"` |
+| `attributePatterns` | array | Field patterns to make filterable | `["company_id"]` |
+| `features` | object | Filter capabilities (equality, comparison, facetSearch) | `{"filter": {"equality": true}}` |
+
+## Relationship types
+
+### One-to-one
+
+Each source document has exactly one related target document.
+
+**Example:** Users → Profiles (each user has one profile)
+
+<JoinsOneToOne1 />
+
+### One-to-many
+
+Each source document has multiple related target documents, stored as an array of IDs.
+
+**Example:** Companies → Employees (one company has many employees)
+
+<JoinsOneToMany1 />
+
+### Many-to-many
+
+Multiple source documents reference multiple target documents, typically using array fields.
+
+**Example:** Films → Actors (one film has many actors, many films feature the same actor)
+
+<JoinsManyToMany1 />
+
+### Self-references
+
+You can create relationships where a document references other documents in the same index. This is useful for modeling hierarchical or interconnected data.
+
+**Example:** Products frequently bought together
+
+<JoinsSelfReference1 />
+
+### Multiple relationships
+
+Configure multiple foreign keys in a single settings update:
+
+<JoinsMultipleRelationships1 />
+
+## Update relationships
+
+To replace an existing relationship, provide the updated configuration:
+
+<JoinsUpdateRelationship1 />
+
+To remove all relationships:
+
+<JoinsRemoveRelationships1 />
+
+## Depth limitation
+
+Joins support hydration and filtering at one level only. You cannot create nested chains like deals → companies → industry_details. Each hydration or filter operates on a direct relationship between two indices.
+
+## Data integrity
+
+Meilisearch does not enforce referential integrity. You can create foreign key references to non-existent documents, and deleting a target document does not affect documents that reference it.
+
+When a referenced document is deleted:
+- **Hydration** returns the document UID instead of the full object
+- **Filtering** ignores the reference in filter comparisons
+
+### Cleanup strategy
+
+You can handle orphaned references in two ways: delete the source documents entirely, or remove the orphaned IDs from the foreign key fields.
+
+#### Delete source documents
+
+Use the [delete by filter](/reference/api/documents/delete-documents-by-filter) API to remove source documents that reference non-existent targets:
+
+<JoinsDeleteOrphaned1 />
+
+#### Remove orphaned IDs with functions
+
+Use [edit documents by function](/capabilities/indexing/how_to/edit_documents_with_functions) to remove specific orphaned IDs from array foreign key fields without deleting the source documents. This is useful for many-to-many relationships where only some referenced IDs are orphaned.
+
+For example, remove a deleted actor from the `actors` array in all film documents:
+
+<JoinsRemoveOrphanedIds1 />
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Foreign filters" href="/capabilities/filtering_sorting_faceting/advanced/filtering_by_joined_data">
+    Filter documents by properties of related data across indices
+  </Card>
+  <Card title="Precise array filtering" href="/capabilities/filtering_sorting_faceting/advanced/precise_filtering_array_items">
+    Use AND logic to filter array relationships with joins
+  </Card>
+  <Card title="RBAC with joins" href="/capabilities/security/advanced/rbac_with_joins">
+    Implement role-based access control using joins and tenant tokens
+  </Card>
+  <Card title="Indexing best practices" href="/capabilities/indexing/advanced/indexing_best_practices">
+    Learn best practices including how joins reduce index size
+  </Card>
+</CardGroup>

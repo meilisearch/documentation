@@ -94,6 +94,20 @@ Binary quantization works best with large datasets containing more than 1M docum
 **Activating binary quantization is irreversible.** Once enabled, Meilisearch converts all vectors and discards all vector data that does not fit within 1-bit. The only way to recover the vectors' original values is to re-vectorize the whole index in a new embedder.
 </Warning>
 
+## Use joins to eliminate data duplication
+
+When you have relational data (e.g., deals, companies, and users), storing full related objects in every document increases index size significantly. Instead, store only the IDs of related documents and use joins to hydrate them at search time.
+
+**Example:** A deals index with 100,000 deals. Without joins, each deal would embed the full company object (name, industry, employee count, founding year, etc.), bloating the index. With joins, store only the `company_id`, and hydrate with company data only when needed during search.
+
+**Benefits:**
+- **Smaller indices:** Reduce index size by 20-50% depending on related data volume
+- **Faster indexing:** Fewer bytes to process and index
+- **Easier updates:** Change company information once instead of updating all related deals
+- **Flexible queries:** Hydrate when needed, filter by related data without denormalization
+
+See [define index relationships](/capabilities/indexing/joins/define_index_relationships) for a complete guide to setting up and using relationships.
+
 ## Next steps
 
 <CardGroup cols={2}>

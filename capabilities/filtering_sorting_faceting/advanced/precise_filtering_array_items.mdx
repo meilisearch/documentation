@@ -1,0 +1,120 @@
+---
+title: Precise filtering with array relationships
+sidebarTitle: Precise filtering with arrays
+description: Use foreign filters to precisely filter documents with array relationships using AND logic across items.
+---
+
+import ForeignFilterArrayOrLogic1 from '/snippets/generated-code-samples/code_samples_foreign_filter_array_or_logic_1.mdx';
+import ForeignFilterArrayAndLogic1 from '/snippets/generated-code-samples/code_samples_foreign_filter_array_and_logic_1.mdx';
+import ForeignFilterCertifications1 from '/snippets/generated-code-samples/code_samples_foreign_filter_certifications_1.mdx';
+import ForeignFilterTags1 from '/snippets/generated-code-samples/code_samples_foreign_filter_tags_1.mdx';
+import ForeignFilterSkills1 from '/snippets/generated-code-samples/code_samples_foreign_filter_skills_1.mdx';
+
+When a relationship contains an array of related documents, foreign filters enable precise filtering with AND logic across items, unlike normal filters which use OR logic.
+
+## Array filter logic
+
+Normal filters use **OR logic** across array items:
+- Find films where `actors.country = "France" OR actors.age > 35`
+- Returns films with ANY actor who is French OR over 35 (possibly different actors)
+
+Foreign filters use **AND logic** across array items:
+- Find films where `_foreign(actors, country = "France" AND age > 35)`
+- Returns films with an actor who is BOTH French AND over 35 (same actor meets both conditions)
+
+## Why this matters
+
+Precise filtering is essential when you need to find documents where a related item meets **multiple conditions simultaneously**. Without this capability, you'd need to denormalize data or post-process results in your application code.
+
+## Film cast example
+
+Consider a film with three actors:
+
+```json
+{
+  "id": "film_1",
+  "title": "Ocean's Eleven",
+  "actor_ids": ["actor_1", "actor_2", "actor_3"]
+}
+```
+
+Where the actors are:
+
+```json
+[
+  {"id": "actor_1", "name": "Actor A", "country": "USA", "age": 45},
+  {"id": "actor_2", "name": "Actor B", "country": "France", "age": 38},
+  {"id": "actor_3", "name": "Actor C", "country": "France", "age": 30}
+]
+```
+
+### Query 1: Normal filter (OR logic)
+
+<ForeignFilterArrayOrLogic1 />
+
+**Result:** Film is included because:
+- Actor B is French (country = "France") ✓
+- Actor A is over 35 (age > 35) ✓
+
+Both conditions are met, but by **different actors**.
+
+### Query 2: Foreign filter (AND logic)
+
+<ForeignFilterArrayAndLogic1 />
+
+**Result:** Film is included because:
+- Actor B is BOTH French AND over 35 ✓
+
+A **single actor** meets both conditions.
+
+## Real-world examples
+
+### Find products with multiple required certifications
+
+```json
+{
+  "id": "product_1",
+  "name": "Industrial Motor",
+  "certification_ids": ["cert_1", "cert_2", "cert_3"]
+}
+```
+
+Find products that have **both** ISO 9001 and CE certifications issued after 2020:
+
+<ForeignFilterCertifications1 />
+
+### Find articles with specific tag combinations
+
+Find articles that have **both** the "security" AND "encryption" tags (same article, not different articles):
+
+<ForeignFilterTags1 />
+
+Wait—this won't work as expected because a single tag can't have multiple names. For this use case, you'd want to check if an article has both tags, which would require a different approach (checking two separate arrays or normalizing differently).
+
+### Find employees with specific skill levels
+
+Find employees with **both** Python AND JavaScript at advanced level:
+
+<ForeignFilterSkills1 />
+
+## When to use precise filtering
+
+Use foreign filters with AND logic when:
+- A document has an array of related items
+- You need to find items where **a single related item** meets multiple conditions
+- You're filtering on nested properties of array items
+
+Use normal filters with OR logic when:
+- You're checking if **any item** in an array matches your criteria
+- You need broader matching across multiple array items
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Foreign filters overview" href="/capabilities/filtering_sorting_faceting/advanced/filtering_by_joined_data">
+    Learn about foreign filters and filtering by joined data
+  </Card>
+  <Card title="Define relationships" href="/capabilities/indexing/joins/define_index_relationships">
+    Set up the relationships this filtering depends on
+  </Card>
+</CardGroup>
