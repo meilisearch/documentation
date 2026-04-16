@@ -1,0 +1,127 @@
+---
+title: Curate default results for an empty query
+description: Use the isEmpty condition to control which documents appear when users open search without typing anything.
+---
+
+Many search experiences start with an empty state: a search bar that users click on before typing anything. By default, Meilisearch returns documents in their stored order, which rarely reflects what you want users to see first. The `isEmpty` query condition fires when the query string is empty or missing, so you can curate a welcome list of featured documents without changing any organic ranking.
+
+<Warning>
+Search rules are experimental. Enable the `dynamicSearchRules` flag with `PATCH /experimental-features` before creating rules. See [Getting started](/capabilities/search_rules/getting_started#enable-the-experimental-flag).
+</Warning>
+
+## Example scenario
+
+On the `support` help center, the search bar is visible on every page. When users focus it without typing anything, they currently see the five oldest documents, which are not the most helpful. You want to replace that default list with three curated articles that cover the most common starting questions:
+
+- `quickstart-overview` at position `0`
+- `popular-integrations` at position `1`
+- `contact-support` at position `2`
+
+A single rule with an `isEmpty` condition and three pin actions handles this.
+
+## Set up from the Meilisearch Cloud dashboard
+
+Open your project in the [Meilisearch Cloud dashboard](https://cloud.meilisearch.com) and select the **Search rules** tab.
+
+### 1. Create a new rule
+
+Click **New rule**. Give it a descriptive Rule ID such as `empty-state-help`, add a short description, and keep the **Active** toggle on.
+
+![Rule editor with a Rule ID and description filled in](/assets/images/cloud-search-rules/03-manage-rule.png)
+
+### 2. Add an empty query condition
+
+In the **Conditions** block, click **Add condition**. In the dialog:
+
+- Set **Type** to `Query is empty`
+
+`Query is empty` has no additional fields to fill. The condition simply asserts that the search request has no `q` value, or that `q` is an empty string.
+
+Click **Add condition** to save.
+
+![Add condition dialog with the "Query is empty" type selected](/assets/images/cloud-search-rules/04-add-condition.png)
+
+### 3. Pin the featured documents
+
+In the **Actions** block, click **Add pin** three times, once per document:
+
+- `support` / `quickstart-overview` at position `0`
+- `support` / `popular-integrations` at position `1`
+- `support` / `contact-support` at position `2`
+
+![Add pin dialog configured for the first featured document](/assets/images/cloud-search-rules/05-add-pin.png)
+
+### 4. Save the rule
+
+Click **Create rule**. The new rule appears in the Search rules list with the `isEmpty` condition and three pin actions.
+
+![Search rules list with the curated empty-state rule](/assets/images/cloud-search-rules/06-rules-list.png)
+
+## Set up from the API
+
+Send a `PATCH /dynamic-search-rules/empty-state-help`:
+
+```json
+{
+  "description": "Curate the default help-center browse state",
+  "active": true,
+  "conditions": [
+    { "scope": "query", "isEmpty": true }
+  ],
+  "actions": [
+    {
+      "selector": { "indexUid": "support", "id": "quickstart-overview" },
+      "action": { "type": "pin", "position": 0 }
+    },
+    {
+      "selector": { "indexUid": "support", "id": "popular-integrations" },
+      "action": { "type": "pin", "position": 1 }
+    },
+    {
+      "selector": { "indexUid": "support", "id": "contact-support" },
+      "action": { "type": "pin", "position": 2 }
+    }
+  ]
+}
+```
+
+- `isEmpty: true` means the rule only fires when the search request contains no query text.
+- `isEmpty` and `contains` are mutually exclusive within a single condition. A condition either matches empty queries or matches queries containing a substring.
+- Pinned documents do not need to match the query text, which is convenient here because there is no query text to match.
+
+## When the rule fires
+
+The rule fires whenever Meilisearch receives:
+
+- A search request with `q` missing from the body
+- A search request where `q` is the empty string `""`
+- A search request where `q` contains only whitespace (case-insensitive, accent-insensitive behavior is irrelevant here)
+
+The rule does not fire for requests with a non-empty query, even a single character. For those, use a `contains` condition instead. See [Pin one result for a query](/capabilities/search_rules/how_to/pin_one_result_for_query).
+
+## Variations and tips
+
+- **Pagination**: if your empty-state UI uses `limit` and `offset` to paginate, the pinned documents only appear on the first page. Users scrolling past position `2` see organic results as usual.
+- **Facets and filters**: if users can filter the empty state (for example, by category), pins that do not match the active filters are dropped. The remaining pins stay at their positions, and organic results fill the gaps.
+- **Seasonal overrides**: combine `isEmpty` with a time window condition to swap your default browse list during a campaign. See [Schedule a promotion for a limited time](/capabilities/search_rules/how_to/schedule_promotion).
+- **Separate rules for separate indexes**: if you maintain multiple indexes with their own empty states (for example, `support` and `products`), create one rule per index. A single action's `indexUid` only controls one pin.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Pin one result for a query" href="/capabilities/search_rules/how_to/pin_one_result_for_query">
+    Pin a document for a specific query substring
+  </Card>
+  <Card title="Pin several results in a fixed order" href="/capabilities/search_rules/how_to/pin_multiple_results">
+    Control multiple top positions at once
+  </Card>
+  <Card title="Schedule a promotion" href="/capabilities/search_rules/how_to/schedule_promotion">
+    Limit a rule to a campaign window
+  </Card>
+  <Card title="Pinning behavior" href="/capabilities/search_rules/advanced/pinning_behavior">
+    Learn how pins interact with ranking, filters, and precedence
+  </Card>
+  <Card title="API reference" href="/reference/api/dynamic-search-rules/update-a-dynamic-search-rule-or-create-a-new-one-if-it-doesnt-exist">
+    Full request and response shapes
+  </Card>
+</CardGroup>

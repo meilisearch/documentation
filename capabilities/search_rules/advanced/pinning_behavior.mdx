@@ -1,0 +1,52 @@
+---
+title: Search rule behavior
+sidebarTitle: Pinning behavior
+description: Learn how search rules interact with ranking, filters, precedence, and different search modes.
+---
+
+This page explains how search rules interact with ranking, filters, matching, and pagination. Read it before building workflows that depend on pinned results in production.
+
+## Pinning does not change ranking
+
+Pinning does not rewrite your ranking rules and does not assign scores to pinned documents. Meilisearch computes organic results first, then inserts the surviving pinned documents at their requested positions. Organic ranking still decides the order of every non-pinned hit.
+
+Pinning is the only supported action today. Boosting, demoting, and burying are planned for future releases.
+
+## Pinned documents do not need to match the query text
+
+A pinned document can appear even when it is not a lexical match for the query. If the rule matches, the document exists, and it passes filters, Meilisearch inserts it into the result list.
+
+This is useful for help centers, promotions, and landing pages, where the document you want to show is not always the best textual match.
+
+## Filters still apply
+
+Pinned documents do not bypass filters. If the current search filters exclude a pinned document, Meilisearch drops it instead of forcing it into the response. This keeps pinned results consistent with visibility, safety, and authorization rules already enforced by your filters.
+
+## Matching behavior of `contains`
+
+The query condition `contains` performs a case-insensitive literal substring match. It is not fuzzy, semantic, or pattern-aware.
+
+For example, `contains: "call history"` matches `where is call history`, but it does not match `history of calls` because the substring order differs.
+
+Search rules do not support regex, wildcards, or numeric-pattern matching (such as "any 6-digit code"). For more flexible matching, create several rules with different `contains` values.
+
+## Precedence between rules
+
+Use `priority` to control which rule wins when several matching rules compete. Lower numeric values take precedence over higher ones.
+
+If you omit `priority`, treat the rule as having the lowest precedence.
+
+## Result-set behavior
+
+Search rules preserve normal response behavior:
+
+- A document should not appear twice if it is both organic and pinned
+- Pagination remains coherent
+- Facet distribution stays consistent with the final surviving result set
+- Search rules work in regular search, hybrid search, federated search, and network search
+
+## Storage model
+
+Search rules are stored at the instance level, not as per-index settings. A single rule can target documents in any index by setting `indexUid` inside the action selector. This keeps curation configuration centralized, but it also means that rules live outside the usual index-settings lifecycle.
+
+For the full list of matching and action capabilities the current version supports (and the ones it does not), see [the overview](/capabilities/search_rules/overview#current-scope).

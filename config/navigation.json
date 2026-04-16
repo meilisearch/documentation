@@ -331,6 +331,30 @@
               ]
             },
             {
+              "group": "Search rules",
+              "pages": [
+                "capabilities/search_rules/overview",
+                "capabilities/search_rules/getting_started",
+                {
+                  "group": "How to",
+                  "pages": [
+                    "capabilities/search_rules/how_to/pin_one_result_for_query",
+                    "capabilities/search_rules/how_to/pin_multiple_results",
+                    "capabilities/search_rules/how_to/curate_empty_query",
+                    "capabilities/search_rules/how_to/schedule_promotion",
+                    "capabilities/search_rules/how_to/list_and_filter_rules",
+                    "capabilities/search_rules/how_to/pause_a_rule"
+                  ]
+                },
+                {
+                  "group": "Advanced",
+                  "pages": [
+                    "capabilities/search_rules/advanced/pinning_behavior"
+                  ]
+                }
+              ]
+            },
+            {
               "group": "Teams",
               "pages": [
                 "capabilities/teams/overview",

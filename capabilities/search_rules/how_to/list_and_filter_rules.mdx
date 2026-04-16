@@ -1,0 +1,103 @@
+---
+title: List or filter existing rules
+description: Browse, paginate, and filter stored search rules to audit active campaigns or prepare bulk edits.
+---
+
+As your rule set grows, you will want to review what is active, find a specific rule quickly, or identify every rule that belongs to the same campaign before editing. The dashboard shows a table of every rule, and the API exposes the same view with pagination and attribute-based filters so you can script audits.
+
+<Warning>
+Search rules are experimental. Enable the `dynamicSearchRules` flag with `PATCH /experimental-features` before creating rules. See [Getting started](/capabilities/search_rules/getting_started#enable-the-experimental-flag).
+</Warning>
+
+## Example scenario
+
+You have roughly fifty search rules, and several of them belong to a running promotion cycle. Their Rule IDs all start with `promo-` (for example, `promo-summer-2026`, `promo-back-to-school-2026`). Before launching a new campaign, you want to list every rule with a `uid` starting with `promo-` so you can confirm which ones are still active.
+
+The Cloud dashboard lets you browse the list visually. The API lets you filter by `uid` pattern and by `active` status to narrow the results to exactly the rules you care about.
+
+## Browse rules from the Meilisearch Cloud dashboard
+
+Open your project in the [Meilisearch Cloud dashboard](https://cloud.meilisearch.com) and select the **Search rules** tab.
+
+### 1. Review the rules list
+
+The **Search rules** tab shows every stored rule in a single table. For each rule you can see:
+
+- **Rule ID** (the rule's `uid`)
+- **Conditions** in a readable summary
+- **Actions** (the number of pins and their positions)
+- **Priority**
+- **Active** toggle
+
+![Search rules list with several rules visible](/assets/images/cloud-search-rules/06-rules-list.png)
+
+The row toggle pauses a rule without deleting it. The icons on the right edit or remove a rule.
+
+### 2. Find a specific rule
+
+The dashboard list is designed for a moderate number of rules. If you need to search by `uid` pattern or by active state across many rules, use the API instead. The dashboard is good for spot checks, the API is good for audits.
+
+## List rules from the API
+
+Send a `POST /dynamic-search-rules` with pagination and optional filters:
+
+```json
+{
+  "offset": 0,
+  "limit": 20,
+  "filter": {
+    "attributePatterns": ["promo*"],
+    "active": true
+  }
+}
+```
+
+The response contains the rules that match, with the same structure you used to create them (`uid`, `conditions`, `actions`, `priority`, `active`, `description`).
+
+### Parameters
+
+- `offset` and `limit` control pagination. Defaults are `offset: 0` and `limit: 20`. The maximum `limit` varies by Meilisearch version, keep requests under a few hundred rules per call.
+- `filter.attributePatterns` accepts a list of attribute-pattern strings. `promo*` returns every rule whose `uid` starts with `promo`. `*seasonal*` returns every rule whose `uid` contains `seasonal`. Patterns are case-sensitive.
+- `filter.active` filters by status: `true` returns only active rules, `false` returns only paused rules. Omit the field to return rules regardless of status.
+
+You can combine filters. The example above returns active rules whose `uid` starts with `promo-`, which is exactly the campaign-audit case described above.
+
+### Retrieve a single rule
+
+If you already know a rule's `uid`, send `GET /dynamic-search-rules/{uid}` instead:
+
+```http
+GET /dynamic-search-rules/invoice-help
+```
+
+This returns the full rule definition, which is convenient when you want to edit or duplicate it. The same structure can be sent back to `PATCH /dynamic-search-rules/{uid}` after modification.
+
+## Common auditing patterns
+
+- **Expired promotions**: list every rule with `active: false` to find paused rules you might still want to keep for future campaigns, or delete if they are truly one-off.
+- **Rules per index**: the list response includes each rule's actions, so you can group by `selector.indexUid` locally to see how many pins target each index.
+- **Scheduled promotions**: list every rule whose conditions contain a `time` scope with a `start` in the future. This is a good sanity check before a campaign goes live.
+- **Priority conflicts**: list rules that share a `contains` value and compare their `priority` values. If two rules have the same priority and target different documents for the same query, ordering is not guaranteed.
+
+## Variations and tips
+
+- **Pagination for large rule sets**: page through the rules in batches of 20 to 100. Do not try to fetch everything in a single request if you have hundreds of rules.
+- **Scripting audits**: combine the list API with `DELETE /dynamic-search-rules/{uid}` or `PATCH /dynamic-search-rules/{uid}` to script bulk cleanup. Always list first, inspect the result, then apply changes.
+- **Version control**: search rules live at the instance level, not inside an index settings object, so they are not exported with `meilisearch dumps`. Keep a copy of your important rules in your own version control if you need rollback safety.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Pause a rule" href="/capabilities/search_rules/how_to/pause_a_rule">
+    Stop a rule without deleting it
+  </Card>
+  <Card title="Schedule a promotion" href="/capabilities/search_rules/how_to/schedule_promotion">
+    Combine a query condition with a time window
+  </Card>
+  <Card title="Pinning behavior" href="/capabilities/search_rules/advanced/pinning_behavior">
+    Learn how pins interact with ranking, filters, and precedence
+  </Card>
+  <Card title="API reference" href="/reference/api/dynamic-search-rules/list-dynamic-search-rules">
+    Full request and response shapes
+  </Card>
+</CardGroup>
