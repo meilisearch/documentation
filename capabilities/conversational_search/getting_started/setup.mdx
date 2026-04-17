@@ -6,6 +6,7 @@ description: Enable the chat completions feature, configure your indexes, and cr
 
 import CodeSamplesAuthorizationHeader1 from '/snippets/generated-code-samples/code_samples_authorization_header_1.mdx';
 import CodeSamplesChatCreateKey1 from '/snippets/generated-code-samples/code_samples_chat_create_key_1.mdx';
+import CodeSamplesUpdateExperimentalFeaturesChat1 from '/snippets/generated-code-samples/code_samples_update_experimental_features_chat_1.mdx';
 
 Before building a chat interface or generating summarized answers, you need to enable the feature, configure your indexes, and create a workspace. This setup is shared across all conversational search use cases.
 
@@ -19,12 +20,7 @@ Enable chat completions from your Meilisearch Cloud project in one of two ways:
 <Note>
 For self-hosted instances, enable the feature through the [experimental features API](/reference/api/experimental-features/configure-experimental-features) by sending a `PATCH` request with `chatCompletions` set to `true`:
 
-```sh
-curl \
-  -X PATCH 'MEILISEARCH_URL/experimental-features/' \
-  -H 'Content-Type: application/json' \
-  --data-binary '{ "chatCompletions": true }'
-```
+<CodeSamplesUpdateExperimentalFeaturesChat1 />
 </Note>
 
 ## Find your chat API key
