@@ -52,6 +52,16 @@ add_or_replace_documents_1: |-
         "release_date": "2019-03-23"
       }
     ]'
+add_or_replace_documents_csv_1: |-
+  curl \
+    -X POST 'MEILISEARCH_URL/indexes/movies/documents' \
+    -H 'Content-Type: text/csv' \
+    --data-binary @movies.csv
+add_or_replace_documents_ndjson_1: |-
+  curl \
+    -X POST 'MEILISEARCH_URL/indexes/movies/documents' \
+    -H 'Content-Type: application/x-ndjson' \
+    --data-binary @movies.ndjson
 # put_indexes_indexUid_documents
 add_or_update_documents_1: |-
   curl \
@@ -576,6 +586,23 @@ update_embedders_1: |-
         "apiKey": "OPEN_AI_API_KEY",
         "model": "text-embedding-3-small",
         "documentTemplate": "A document titled '{{doc.title}}' whose description starts with {{doc.overview|truncatewords: 20}}"
+      }
+    }'
+update_embedders_distribution_1: |-
+  curl \
+    -X PATCH 'MEILISEARCH_URL/indexes/INDEX_NAME/settings' \
+    -H 'Content-Type: application/json' \
+    -H 'Authorization: Bearer MEILISEARCH_KEY' \
+    --data-binary '{
+      "embedders": {
+        "default": {
+          "source": "openAi",
+          "model": "text-embedding-3-small",
+          "distribution": {
+            "mean": 0.7,
+            "sigma": 0.3
+          }
+        }
       }
     }'
 # delete_indexes_indexUid_settings_embedders
@@ -1186,6 +1213,15 @@ facet_search_3: |-
       "facetQuery": "c",
       "facetName": "genres"
   }'
+facet_search_exhaustive_1: |-
+  curl \
+    -X POST 'MEILISEARCH_URL/indexes/books/facet-search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "facetName": "genres",
+      "facetQuery": "c",
+      "exhaustiveFacetCount": true
+    }'
 analytics_event_click_1: |-
   curl \
     -X POST 'https://PROJECT_URL/events' \
@@ -1434,6 +1470,18 @@ chat_patch_settings_1: |-
     -H "Authorization: Bearer MEILISEARCH_KEY" \
     -H "Content-Type: application/json" \
     --data-binary '{ "apiKey": "your-valid-api-key" }'
+chat_patch_settings_prompts_1: |-
+  curl \
+    -X PATCH 'MEILISEARCH_URL/chats/WORKSPACE_NAME/settings' \
+    -H 'Authorization: Bearer MEILISEARCH_KEY' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "prompts": {
+        "searchDescription": "Search the outdoor gear catalog whenever the user asks about products, prices, availability, or specifications. Do not use it for generic small talk.",
+        "searchQParam": "A short natural-language query capturing the user intent. Rewrite long questions into 3 to 8 keywords. Preserve product names and brand names verbatim.",
+        "searchIndexUidParam": "Choose between: \"products\" for physical gear, accessories, and apparel; \"guides\" for how-to articles and buying guides; \"reviews\" for customer reviews and ratings. Use \"products\" by default."
+      }
+    }'
 # delete_chats_workspaceUid_settings
 reset_chat_workspace_settings_1: |-
   curl \
