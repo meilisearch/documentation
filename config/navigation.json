@@ -844,6 +844,33 @@
           "tab": "Resources",
           "groups": [
             {
+              "group": "Comparisons",
+              "pages": [
+                "resources/comparisons/alternatives",
+                "resources/comparisons/elasticsearch",
+                "resources/comparisons/algolia",
+                "resources/comparisons/typesense",
+                "resources/comparisons/postgresql",
+                "resources/comparisons/pinecone",
+                "resources/comparisons/qdrant",
+                "resources/comparisons/opensearch",
+                "resources/comparisons/mongodb"
+              ]
+            },
+            {
+              "group": "Migration",
+              "pages": [
+                "resources/migration/migrating_cloud",
+                "resources/migration/updating",
+                "resources/migration/algolia_migration",
+                "resources/migration/elasticsearch_migration",
+                "resources/migration/qdrant_migration",
+                "resources/migration/mongodb_migration",
+                "resources/migration/postgresql_migration",
+                "resources/migration/supabase_migration"
+              ]
+            },
+            {
               "group": "Self-hosting",
               "pages": [
                 "resources/self_hosting/overview",
@@ -911,33 +938,6 @@
                   ]
                 },
                 "resources/self_hosting/enterprise_edition"
-              ]
-            },
-            {
-              "group": "Comparisons",
-              "pages": [
-                "resources/comparisons/alternatives",
-                "resources/comparisons/elasticsearch",
-                "resources/comparisons/algolia",
-                "resources/comparisons/typesense",
-                "resources/comparisons/postgresql",
-                "resources/comparisons/pinecone",
-                "resources/comparisons/qdrant",
-                "resources/comparisons/opensearch",
-                "resources/comparisons/mongodb"
-              ]
-            },
-            {
-              "group": "Migration",
-              "pages": [
-                "resources/migration/migrating_cloud",
-                "resources/migration/updating",
-                "resources/migration/algolia_migration",
-                "resources/migration/elasticsearch_migration",
-                "resources/migration/qdrant_migration",
-                "resources/migration/mongodb_migration",
-                "resources/migration/postgresql_migration",
-                "resources/migration/supabase_migration"
               ]
             },
             {
