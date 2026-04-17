@@ -50,7 +50,7 @@ Each document in the response will include a `_rankingScore` field:
 
 ## Requesting a detailed breakdown
 
-For a deeper understanding of why a document received a particular score, set `showRankingScoreDetails` to `true`. This returns the contribution of each ranking rule:
+For a deeper understanding of why a document received a particular score, set `showRankingScoreDetails` to `true`. This adds a detailed global ranking score field, `_rankingScoreDetails`, to each document in the response. `_rankingScoreDetails` is an object containing one nested object per active ranking rule, showing how each rule contributed to the document's overall score:
 
 <CodeGroup>
 

@@ -186,6 +186,14 @@ By default, Meilisearch queries only return `estimatedTotalHits`. This value is 
 
 When your query contains either [`hitsPerPage`](/reference/api/search/search-with-post#response-one-of-0-hits-per-page), [`page`](/reference/api/search/search-with-post#response-one-of-0-page), or both these search parameters, Meilisearch returns `totalHits` and `totalPages` instead of `estimatedTotalHits`. `totalHits` contains the exhaustive number of results for that query, and `totalPages` contains the exhaustive number of pages of search results for the same query:
 
+<Warning>
+Queries containing `hitsPerPage` are exhaustive, which changes the response shape. `estimatedTotalHits` is replaced by `totalHits` and `totalPages`. If your frontend relies on the presence of `estimatedTotalHits`, switching pagination strategies may break it.
+</Warning>
+
+<Warning>
+`hitsPerPage` and `page` are resource-intensive options and might negatively impact search performance. This is particularly likely if `maxTotalHits` is set to a value higher than its default.
+</Warning>
+
 <CodeGroup>
 
 ```json

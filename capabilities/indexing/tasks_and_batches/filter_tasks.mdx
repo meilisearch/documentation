@@ -28,6 +28,46 @@ Use a comma to separate multiple values and fetch both `canceled` and `failed` t
 
 You may filter tasks based on `uid`, `status`, `type`, `indexUid`, `canceledBy`, or date. Consult the [API reference](/reference/api/tasks/list-tasks) for a full list of task filtering parameters.
 
+## Available filter parameters
+
+All parameters below accept comma-separated values. Filters of different types are combined with a logical `AND`.
+
+| Parameter | Description |
+| --- | --- |
+| `uids` | Filter tasks by their `uid`. Separate multiple `uids` with a comma (`,`). |
+| `batchUids` | Filter tasks by their `batchUid`. Separate multiple `batchUids` with a comma (`,`). |
+| `statuses` | Filter tasks by their `status`: `enqueued`, `processing`, `succeeded`, `failed`, or `canceled`. |
+| `types` | Filter tasks by their `type`, for example `documentAdditionOrUpdate` or `indexDeletion`. |
+| `indexUids` | Filter tasks by their `indexUid`. Case-sensitive. |
+| `canceledBy` | Filter tasks by their `canceledBy` field. Separate multiple task `uids` with a comma (`,`). |
+
+### Date filters
+
+Use the following parameters to filter tasks by one of their timestamp fields. All values must be valid RFC 3339 dates.
+
+| Parameter | Filters tasks whose... |
+| --- | --- |
+| `beforeEnqueuedAt` | `enqueuedAt` is earlier than the provided date |
+| `afterEnqueuedAt` | `enqueuedAt` is later than the provided date |
+| `beforeStartedAt` | `startedAt` is earlier than the provided date |
+| `afterStartedAt` | `startedAt` is later than the provided date |
+| `beforeFinishedAt` | `finishedAt` is earlier than the provided date |
+| `afterFinishedAt` | `finishedAt` is later than the provided date |
+
+<Note>
+Date filters are equivalent to `<` or `>` operations. There is currently no way to perform `≤` or `≥` comparisons with a date filter.
+</Note>
+
+### Pagination parameters
+
+Combine the filters above with the following parameters to paginate results.
+
+| Parameter | Description |
+| --- | --- |
+| `limit` | Number of tasks to return. Defaults to `20`. |
+| `from` | `uid` of the first task returned. Defaults to the `uid` of the last created task. |
+| `reverse` | If `true`, returns results in reverse order, from oldest to most recent. Defaults to `false`. |
+
 ## Combining filters
 
 Use the ampersand character (`&`) to combine filters, equivalent to a logical `AND`:

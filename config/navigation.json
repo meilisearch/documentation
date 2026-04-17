@@ -90,6 +90,7 @@
                     "capabilities/full_text_search/how_to/configure_searchable_attributes",
                     "capabilities/full_text_search/how_to/configure_stop_words",
                     "capabilities/full_text_search/how_to/configure_prefix_search",
+                    "capabilities/full_text_search/how_to/configure_dictionary",
                     "capabilities/full_text_search/how_to/highlight_search_results",
                     "capabilities/full_text_search/how_to/use_matching_strategy",
                     "capabilities/full_text_search/how_to/configure_search_cutoff",
@@ -142,7 +143,8 @@
                     "capabilities/hybrid_search/advanced/custom_hybrid_ranking",
                     "capabilities/hybrid_search/advanced/composite_embedders",
                     "capabilities/hybrid_search/advanced/binary_quantization",
-                    "capabilities/hybrid_search/advanced/multiple_embedders"
+                    "capabilities/hybrid_search/advanced/multiple_embedders",
+                    "capabilities/hybrid_search/advanced/tune_distribution"
                   ]
                 },
                 {
@@ -244,6 +246,7 @@
                   "group": "How to",
                   "pages": [
                     "capabilities/filtering_sorting_faceting/how_to/filter_with_facets",
+                    "capabilities/filtering_sorting_faceting/how_to/facet_search",
                     "capabilities/filtering_sorting_faceting/how_to/sort_results",
                     "capabilities/filtering_sorting_faceting/how_to/filter_and_sort_by_date",
                     "capabilities/filtering_sorting_faceting/how_to/combine_filters_and_sort",

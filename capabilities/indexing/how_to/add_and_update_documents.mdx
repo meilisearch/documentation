@@ -205,6 +205,59 @@ curl \
 
 Meilisearch returns the matching documents in the `results` array. Note that documents are not returned in the order you queried them, and non-existent IDs are silently ignored.
 
+<Warning>
+Prefer `POST /indexes/{index_uid}/documents/fetch` over `GET /indexes/{index_uid}/documents`. The GET variant is discouraged unless you have a specific reason to use it (for example, to take advantage of HTTP caching at the proxy or CDN level). The GET route accepts fewer parameters and only supports string filter expressions, while the POST route accepts the richer JSON body used throughout this guide.
+</Warning>
+
+### Filter the documents you fetch
+
+You can pass a `filter` expression to `POST /indexes/{index_uid}/documents/fetch` to retrieve only documents that match a condition:
+
+<CodeGroup>
+
+```bash
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/movies/documents/fetch' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "filter": "genres = Action AND rating > 8"
+  }'
+```
+
+</CodeGroup>
+
+<Note>
+Any attribute you reference in a document `filter` must first be declared in the index's [`filterableAttributes`](/capabilities/filtering_sorting_faceting/getting_started) setting. This rule is the same as for search filters and is specific to the documents endpoint when filtering the documents you retrieve or delete.
+</Note>
+
+## Supported content types
+
+By default, Meilisearch expects a JSON array in the request body and the `Content-Type: application/json` header. The documents endpoint also accepts NDJSON (`application/x-ndjson`) and CSV (`text/csv`) payloads when you set the matching header.
+
+<CodeGroup>
+
+```bash CSV
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/movies/documents' \
+  -H 'Content-Type: text/csv' \
+  --data-binary @movies.csv
+```
+
+```bash NDJSON
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/movies/documents' \
+  -H 'Content-Type: application/x-ndjson' \
+  --data-binary @movies.ndjson
+```
+
+</CodeGroup>
+
+When uploading CSV data, you can override the default comma separator with the `csvDelimiter` query parameter (for example, `?csvDelimiter=;`).
+
+<Warning>
+`csvDelimiter` is only valid when the request uses `Content-Type: text/csv`. Passing it alongside a JSON or NDJSON payload returns an error.
+</Warning>
+
 ## Next steps
 
 <CardGroup cols={2}>

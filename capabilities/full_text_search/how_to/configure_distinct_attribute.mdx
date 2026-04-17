@@ -20,6 +20,10 @@ You may set a distinct attribute in two ways: using the `distinctAttribute` inde
 There can be only one `distinctAttribute` per index. Trying to set multiple fields as a `distinctAttribute` will return an error.
 </Warning>
 
+<Warning>
+Updating `distinctAttribute` will re-index all documents in the index, which can take some time. When setting up a new index, we recommend updating your index settings first and then adding documents. This reduces RAM consumption compared to adding documents and then changing settings, since Meilisearch would have to re-index the whole dataset.
+</Warning>
+
 The value of a field configured as a distinct attribute will always be unique among returned documents. This means **there will never be more than one occurrence of the same value** in the distinct attribute field among the returned documents.
 
 When multiple documents have the same value for the distinct attribute, Meilisearch returns only the highest-ranked result after applying [ranking rules](/capabilities/full_text_search/relevancy/ranking_rules). If two or more documents are equivalent in terms of ranking, Meilisearch returns the first result according to its `internal_id`.

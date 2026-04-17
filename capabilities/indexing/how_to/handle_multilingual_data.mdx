@@ -118,6 +118,10 @@ client.index('INDEX_NAME').search('schiff', { locales: ['deu'] })
 
 This ensures queries are interpreted with the correct tokenizer and normalization rules, avoiding false mismatches.
 
+<Note>
+If the `locales` search parameter and the `localizedAttributes` index setting disagree, `locales` wins. The value passed on the query takes precedence over the index-level configuration for that request. This is useful when a user explicitly picks a language in your UI (for example, a locale switcher), but it also means a mis-specified `locales` value can override your carefully tuned index settings for that one search.
+</Note>
+
 ## Monitoring search quality across languages
 
 When serving multiple languages, search quality can vary between them. [Meilisearch Cloud analytics](/capabilities/analytics/overview) can help you identify issues such as high no-result rates or low click-through rates for specific languages, so you can fine-tune settings per language or adjust your indexing strategy.

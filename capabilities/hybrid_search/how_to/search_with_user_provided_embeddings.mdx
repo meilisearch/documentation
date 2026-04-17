@@ -25,6 +25,75 @@ Next, use [the `/documents` endpoint](/reference/api/documents/list-documents-wi
 
 <CodeSamplesAiSearchUserEmbeddingsDocuments1 />
 
+## The `_vectors` field in detail
+
+Meilisearch stores pre-computed embeddings under the reserved `_vectors` field of a document. The field is an object whose keys match the names of the embedders configured in your index settings.
+
+### Full object form: `embeddings` + `regenerate`
+
+Each embedder entry accepts two fields, `embeddings` and `regenerate`:
+
+<CodeGroup>
+
+```json
+{
+  "id": 0,
+  "title": "Kung Fu Panda",
+  "_vectors": {
+    "default": {
+      "embeddings": [0.003, 0.1, 0.75],
+      "regenerate": false
+    }
+  }
+}
+```
+
+</CodeGroup>
+
+- `embeddings` is optional. It must be an array of numbers representing a single embedding for that document. It may also be an array of arrays of numbers, representing multiple embeddings for the same document. `embeddings` defaults to `null`.
+- `regenerate` is mandatory and must be a boolean. If `regenerate` is `true`, Meilisearch automatically generates embeddings for that document immediately and every time the document is updated. If `regenerate` is `false`, Meilisearch keeps the last value of `embeddings` on document updates and never overwrites it.
+
+<Tip>
+Use `embeddings` as an array of arrays when a single document should be represented by multiple vectors (for example, one embedding per paragraph, or one per language).
+</Tip>
+
+### Array shorthand
+
+You may also use an array shorthand to add embeddings to a document:
+
+<CodeGroup>
+
+```json
+{
+  "_vectors": {
+    "default": [0.003, 0.1, 0.75]
+  }
+}
+```
+
+</CodeGroup>
+
+Vector embeddings added with the shorthand are not replaced when Meilisearch generates new embeddings. The example above is equivalent to:
+
+<CodeGroup>
+
+```json
+{
+  "_vectors": {
+    "default": {
+      "embeddings": [0.003, 0.1, 0.75],
+      "regenerate": false
+    }
+  }
+}
+```
+
+</CodeGroup>
+
+### Null or empty embedder entries
+
+If the key for an embedder inside `_vectors` is empty or `null`, Meilisearch treats the document as not having any embeddings for that embedder. This document is then returned last during AI-powered searches.
+
 ## Vector search with user-provided embeddings
 
 When using a custom embedder, you must vectorize both your documents and user queries.
@@ -35,6 +104,18 @@ Once you have the query's vector, pass it to the `vector` search parameter to pe
 
 `vector` must be an array of numbers indicating the search vector. You must generate these yourself when using vector search with user-provided embeddings.
 
+<Note>
+`vector` is mandatory when performing searches with `userProvided` embedders. You may also use `vector` with automatic embedders to override an embedder's automatic vector generation, for example to experiment with a custom-generated query vector without changing your embedder configuration.
+</Note>
+
 `vector` can be used together with [other search parameters](/reference/api/search/search-with-post), including [`filter`](/reference/api/search/search-with-post#body-filter) and [`sort`](/reference/api/search/search-with-post#body-sort):
 
 <CodeSamplesAiSearchUserEmbeddingsSearchVectorFilter1 />
+
+## Return stored vectors with `retrieveVectors`
+
+Set `retrieveVectors: true` on a search request to return document and query embeddings alongside the search results. When enabled, Meilisearch displays vector data in each document's `_vectors` field.
+
+<Warning>
+`_vectors` must be included in the index's `displayedAttributes` list for it to be returned in the response. If `displayedAttributes` does not contain `_vectors` (or `*`), `retrieveVectors` has no visible effect on the response payload.
+</Warning>

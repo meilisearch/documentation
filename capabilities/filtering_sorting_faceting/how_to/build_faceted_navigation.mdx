@@ -37,6 +37,10 @@ Add the attributes you want as facets to `filterableAttributes`:
 
 Wait for the settings task to complete before searching.
 
+<Warning>
+If an attribute passed to `facets` has not been added to `filterableAttributes`, Meilisearch silently ignores it. No error is raised; the attribute simply will not appear in the `facetDistribution` response. If a facet is missing from your UI, double-check that it is declared as a filterable attribute.
+</Warning>
+
 ## Step 2: request facet distributions
 
 Use the `facets` search parameter to tell Meilisearch which attributes should include distribution counts in the response:
@@ -86,6 +90,10 @@ The response includes a `facetDistribution` object showing every value for each 
 </CodeGroup>
 
 The `facetDistribution` tells you exactly which values exist and how many documents match each one. The `facetStats` object provides minimum and maximum values for numeric facets, useful for building range sliders.
+
+<Note>
+`facetStats` only considers values stored as JSON numbers. String values are ignored, even when the string contains a numeric value such as `"42"`. If you expect `min`/`max` for a given facet and the object is missing, confirm that the underlying field is indexed as a number rather than a string.
+</Note>
 
 ## Step 3: apply a filter when the user clicks a facet
 
@@ -246,6 +254,27 @@ This pattern:
 2. Builds a filter string from active selections on each search
 3. Renders facet values as checkboxes with document counts
 4. Updates both facets and results when the user toggles a checkbox
+
+## Tune `maxValuesPerFacet`
+
+By default, Meilisearch returns up to 100 distinct values per facet in the `facetDistribution` object. If your UI only displays the top 10 or 20 options, lower `maxValuesPerFacet` to match what you actually render:
+
+<CodeGroup>
+
+```bash
+curl \
+  -X PATCH 'MEILISEARCH_URL/indexes/books/settings/faceting' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "maxValuesPerFacet": 20
+  }'
+```
+
+</CodeGroup>
+
+<Warning>
+Setting `maxValuesPerFacet` to a high value might negatively impact performance. Raising it only makes sense when you genuinely need to surface a large number of facet values at once.
+</Warning>
 
 ## Key points
 

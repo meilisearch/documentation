@@ -19,6 +19,12 @@ Send an array of search queries to the `/multi-search` endpoint. Each query can 
 
 In federated mode, Meilisearch merges and re-ranks results from all indexes using configurable weights, giving you control over which index's results appear higher.
 
+## Error handling
+
+<Warning>
+Multi-search requests fail fast. If Meilisearch encounters an error when handling any of the queries in a multi-search request, it immediately stops processing the request and returns an error message. The returned message only addresses the first error encountered, so earlier queries may succeed but no results are returned until every query is valid.
+</Warning>
+
 ## Next steps
 
 <CardGroup cols={2}>

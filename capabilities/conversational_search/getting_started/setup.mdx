@@ -17,16 +17,36 @@ Enable chat completions from your Meilisearch Cloud project in one of two ways:
 - Or open the **Chat** tab in your project and activate the feature directly from there
 
 <Note>
-For self-hosted instances, enable the feature through the [experimental features API](/reference/api/experimental-features/configure-experimental-features).
+For self-hosted instances, enable the feature through the [experimental features API](/reference/api/experimental-features/configure-experimental-features) by sending a `PATCH` request with `chatCompletions` set to `true`:
+
+```sh
+curl \
+  -X PATCH 'MEILISEARCH_URL/experimental-features/' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{ "chatCompletions": true }'
+```
 </Note>
 
 ## Find your chat API key
 
-Meilisearch automatically generates a "Default Chat API Key" with `chatCompletions` and `search` permissions on all indexes. Check if you have the key using:
+Meilisearch automatically generates a "Default Chat API Key" that combines `chatCompletions` and `search` permissions on all indexes. Conversational search requires both actions: `chatCompletions` authorises the LLM call, and `search` authorises the retrieval step that feeds documents to the model. Any key you use with the `/chats` routes must carry both actions, so prefer the default chat API key unless you have a specific reason to create a custom one.
+
+Check if you have the key using:
 
 <CodeSamplesAuthorizationHeader1 />
 
 Look for the key with the description "Default Chat API Key".
+
+### Restrict chat access to specific indexes
+
+Chat queries only search the indexes that the API key can access. The default chat API key is scoped to all indexes. To limit which indexes a chat client can reach, you have two options:
+
+- Create a new API key with both `chatCompletions` and `search` actions, scoped to the exact indexes you want exposed. See [manage API keys](/capabilities/security/how_to/manage_api_keys) for the full workflow.
+- Generate a [tenant token](/capabilities/security/how_to/generate_token_from_scratch) from the default chat API key. Tenant tokens inherit both the `chatCompletions` and `search` actions from their parent key and let you narrow index access or attach search rules per user.
+
+<Note>
+A tenant token cannot grant access to an index its parent API key does not already cover. Make sure the parent key is scoped to every index the token should be allowed to reach.
+</Note>
 
 ### Troubleshooting: Missing default chat API key
 

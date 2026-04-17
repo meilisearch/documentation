@@ -69,6 +69,22 @@ When the value of `next` is `null`, you have reached the final set of results.
 Use `from` and `limit` together with task filtering parameters to navigate filtered task lists.
 </Tip>
 
+## Deleting tasks from the database
+
+Use the [delete tasks endpoint](/reference/api/tasks/delete-tasks) to remove tasks from the database based on `uid`, `status`, `type`, `indexUid`, `canceledBy`, or date.
+
+<Warning>
+You can only delete **finished** tasks (`succeeded`, `failed`, or `canceled`). `enqueued` and `processing` tasks cannot be deleted: cancel them first using the [cancel tasks endpoint](/reference/api/tasks/cancel-tasks).
+</Warning>
+
+Task deletion is an atomic transaction: either all matched tasks are successfully deleted, or none are.
+
+## Automatic task cleanup
+
+Meilisearch stores up to **1 million tasks** in the task database. If enqueuing a new task would exceed this limit, Meilisearch automatically attempts to delete the oldest **100,000 finished tasks** to make room.
+
+If there are no finished tasks in the database, Meilisearch does not delete anything and enqueues the new task as usual. This automatic cleanup keeps the task database bounded without interrupting ongoing work.
+
 ## Next steps
 
 <CardGroup cols={2}>

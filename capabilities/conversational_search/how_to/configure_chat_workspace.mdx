@@ -6,7 +6,7 @@ description: Set up a chat workspace with a system prompt, tools, and connected 
 import CodeSamplesChatPatchSettings1 from '/snippets/generated-code-samples/code_samples_chat_patch_settings_1.mdx';
 import CodeSamplesChatGetSettings1 from '/snippets/generated-code-samples/code_samples_chat_get_settings_1.mdx';
 
-A chat workspace defines the configuration for a conversational search session, including the LLM provider, system prompt, and search behavior. You can create multiple workspaces targeting different use cases, such as a public-facing knowledge base and an internal support tool.
+A chat workspace groups the chat settings tailored to a specific use case: the LLM provider credentials, the system prompt, and the search behavior. Workspaces are the entry point for conversational search. You must configure at least one workspace before the chat completions endpoint can serve requests. You can also create multiple workspaces targeting different use cases, such as a public-facing knowledge base and an internal support tool.
 
 <Note>
 On Meilisearch Cloud, the default workspace name is `cloud`. Replace `WORKSPACE_NAME` with `cloud` in all API calls. If you need additional workspaces, contact us.
@@ -42,12 +42,20 @@ The `source` field determines which LLM provider Meilisearch uses. Each provider
 
 | Provider | `source` value | Required fields | Optional fields |
 |----------|---------------|-----------------|-----------------|
-| OpenAI | `openAi` | `apiKey` | `baseUrl`, `orgId`, `projectId` |
-| Azure OpenAI | `azureOpenAi` | `apiKey`, `baseUrl` | `deploymentId`, `apiVersion` |
+| OpenAI | `openAi` | `apiKey` | `baseUrl` |
+| Azure OpenAI | `azureOpenAi` | `apiKey`, `baseUrl`, `orgId`, `projectId`, `apiVersion` | `deploymentId` |
 | Mistral | `mistral` | `apiKey`, `baseUrl` | |
-| vLLM | `vLlm` | `baseUrl` | |
+| vLLM | `vLlm` | `baseUrl` | `apiKey` |
 
-`baseUrl` is required for all providers except OpenAI. For OpenAI, it is optional and only needed when using a custom endpoint.
+A few provider-specific rules to keep in mind:
+
+- `orgId`, `projectId`, and `apiVersion` are required for Azure OpenAI and are incompatible with every other `source`. Sending them with `openAi`, `mistral`, or `vLlm` is rejected.
+- `baseUrl` is required for Azure OpenAI and vLLM. For Mistral it points to the Mistral API endpoint. For OpenAI it is optional and only needed when routing through a custom endpoint.
+- `apiKey` is optional for vLLM (self-hosted deployments often run without authentication) and mandatory for every other provider.
+
+<Warning>
+The `apiKey` field is write-only. Meilisearch stores it for outbound LLM calls but redacts it in every response from the workspace settings endpoint. Retrieving the settings will show an obfuscated placeholder rather than the real secret, so keep your own copy in a secure location. To rotate the key, `PATCH` the workspace with the new value.
+</Warning>
 
 ### Azure OpenAI example
 

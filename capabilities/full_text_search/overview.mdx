@@ -17,6 +17,14 @@ Full-text search is the core capability of Meilisearch. When a user types a quer
 
 Full-text search works best when users search with keywords or short phrases and expect results ranked by textual relevance. If your users search with natural language questions or need results based on meaning rather than exact terms, consider [hybrid search](/capabilities/hybrid_search/overview) or [conversational search](/capabilities/conversational_search/overview).
 
+## Choosing a search endpoint
+
+Meilisearch exposes two search routes: `POST /indexes/{index_uid}/search` and `GET /indexes/{index_uid}/search`. **Prefer `POST` in nearly all cases.** `POST` accepts the full range of search parameters, including structured (array) `filter` expressions, and is the endpoint every official SDK uses.
+
+<Warning>
+Use of the `GET /search` route is discouraged unless you have a specific reason to prefer it (for example, to leverage HTTP caching at a proxy layer). The `GET` route only accepts string filter expressions, so array-shaped filters must be serialized to strings before being passed as query parameters.
+</Warning>
+
 ## Next steps
 
 <CardGroup cols={2}>

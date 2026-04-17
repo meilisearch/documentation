@@ -105,7 +105,16 @@ In this example, two modes of search are configured:
 
 Search fragments have access to data present in the query parameters `media` and `q`.
 
-Each semantic search query for this embedder should match exactly one search fragment of this embedder, so the fragments should each have at least one disambiguating field
+Each semantic search query for this embedder should match exactly one search fragment of this embedder, so the fragments should each have at least one disambiguating field.
+
+<Warning>
+`media` must match a single search fragment. If `media` matches more than one fragment, or matches no search fragments at all, Meilisearch returns an error.
+
+When you use `media`:
+
+- it is mandatory to specify an embedder (via `hybrid.embedder`).
+- `media` is incompatible with `vector`. Pass one or the other, never both.
+</Warning>
 
 ### Complete embedder configuration
 

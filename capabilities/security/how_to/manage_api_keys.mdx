@@ -57,6 +57,10 @@ curl \
 
 </CodeGroup>
 
+<Warning>
+For security reasons, we do not recommend creating keys that can perform all actions (`"actions": ["*"]`). Scope each key to the narrowest set of actions it needs so that a compromised key cannot be used to take over your instance.
+</Warning>
+
 ### Available actions
 
 Actions define what operations a key can perform:
@@ -134,6 +138,10 @@ curl \
 </CodeGroup>
 
 Replace `API_KEY_UID` with the key's `uid` value (not the key itself).
+
+<Tip>
+Custom API keys are deterministic: `key` is a SHA256 hash of the `uid` and the master key. To reuse the exact same custom API keys on a new instance, launch that instance with the same master key and recreate each key with the same `uid`. This is useful when restoring from a backup, cloning an environment, or rotating instances without changing client code.
+</Tip>
 
 ## Delete an API key
 
