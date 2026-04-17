@@ -5,6 +5,7 @@ description: Use the facet search endpoint to type-ahead through facet values, b
 ---
 
 import CodeSamplesFacetSearch3 from '/snippets/generated-code-samples/code_samples_facet_search_3.mdx';
+import CodeSamplesFacetSearchExhaustive1 from '/snippets/generated-code-samples/code_samples_facet_search_exhaustive_1.mdx';
 
 Facet search is a dedicated endpoint for searching through the values of a single facet. It is typically used to power auto-complete and type-ahead interfaces on top of filter menus, especially when a facet has too many distinct values to display at once (for example, thousands of brands or authors).
 
@@ -19,20 +20,6 @@ Before you can search a facet's values, the attribute must be declared in [`filt
 Send a `POST` request to `/indexes/{index_uid}/facet-search` with the name of the facet you want to search and the partial string typed by the user:
 
 <CodeSamplesFacetSearch3 />
-
-<CodeGroup>
-
-```bash
-curl \
-  -X POST 'MEILISEARCH_URL/indexes/books/facet-search' \
-  -H 'Content-Type: application/json' \
-  --data-binary '{
-    "facetName": "genres",
-    "facetQuery": "c"
-  }'
-```
-
-</CodeGroup>
 
 The response contains a `facetHits` array with the matching values and the number of documents that carry each one:
 
@@ -80,20 +67,7 @@ This is a deliberate trade-off that keeps the facet-search index compact and fas
 
 By default, the counts returned by facet search are estimates, which is faster on large indexes. To force exact counts, set `exhaustiveFacetCount` to `true`:
 
-<CodeGroup>
-
-```bash
-curl \
-  -X POST 'MEILISEARCH_URL/indexes/books/facet-search' \
-  -H 'Content-Type: application/json' \
-  --data-binary '{
-    "facetName": "genres",
-    "facetQuery": "c",
-    "exhaustiveFacetCount": true
-  }'
-```
-
-</CodeGroup>
+<CodeSamplesFacetSearchExhaustive1 />
 
 Exact counts are slower to compute. Prefer them when accuracy matters (for example, a storefront's category counts) and the defaults when latency matters most.
 

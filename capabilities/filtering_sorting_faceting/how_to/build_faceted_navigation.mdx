@@ -6,6 +6,7 @@ description: Build an ecommerce-style faceted sidebar that shows available optio
 
 import CodeSamplesFacetedSearchUpdateSettings1 from '/snippets/generated-code-samples/code_samples_faceted_search_update_settings_1.mdx';
 import CodeSamplesFacetedSearch1 from '/snippets/generated-code-samples/code_samples_faceted_search_1.mdx';
+import CodeSamplesUpdateFacetingSettingsMaxValuesPerFacet1 from '/snippets/generated-code-samples/code_samples_update_faceting_settings_max_values_per_facet_1.mdx';
 
 Faceted navigation displays filter options alongside the number of matching documents, letting users progressively refine their search. This is the pattern behind product sidebars on ecommerce sites, where users can click "Electronics (42)" or "Books (18)" to narrow results.
 
@@ -259,18 +260,7 @@ This pattern:
 
 By default, Meilisearch returns up to 100 distinct values per facet in the `facetDistribution` object. If your UI only displays the top 10 or 20 options, lower `maxValuesPerFacet` to match what you actually render:
 
-<CodeGroup>
-
-```bash
-curl \
-  -X PATCH 'MEILISEARCH_URL/indexes/books/settings/faceting' \
-  -H 'Content-Type: application/json' \
-  --data-binary '{
-    "maxValuesPerFacet": 20
-  }'
-```
-
-</CodeGroup>
+<CodeSamplesUpdateFacetingSettingsMaxValuesPerFacet1 />
 
 <Warning>
 Setting `maxValuesPerFacet` to a high value might negatively impact performance. Raising it only makes sense when you genuinely need to surface a large number of facet values at once.

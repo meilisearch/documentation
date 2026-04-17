@@ -3,6 +3,8 @@ title: Optimize chat prompts
 description: Improve conversational search response quality by tuning system prompts, document templates, and index chat settings.
 ---
 
+import CodeSamplesChatPatchSettingsPrompts1 from '/snippets/generated-code-samples/code_samples_chat_patch_settings_prompts_1.mdx';
+
 The quality of conversational search responses depends on three layers of configuration: the system prompt, the document template, and the index-level chat settings. Each layer shapes what the LLM receives and how it responds. This guide covers how to tune each one for better results.
 
 ## System prompt strategies
@@ -78,23 +80,7 @@ Beyond `prompts.system`, the workspace `prompts` object exposes three tool-facin
 | `prompts.searchQParam` | Describes the expected user input and the desired query shape. Use it to tell the agent how to reformulate user messages into effective search queries and what output to expect back. |
 | `prompts.searchIndexUidParam` | Describes each index the agent has access to and explains how to pick between them. This is the main lever when you have multiple indexes and want the agent to route queries correctly. |
 
-<CodeGroup>
-
-```bash cURL
-curl \
-  -X PATCH 'MEILISEARCH_URL/chats/WORKSPACE_NAME/settings' \
-  -H 'Authorization: Bearer MEILISEARCH_KEY' \
-  -H 'Content-Type: application/json' \
-  --data-binary '{
-    "prompts": {
-      "searchDescription": "Search the outdoor gear catalog whenever the user asks about products, prices, availability, or specifications. Do not use it for generic small talk.",
-      "searchQParam": "A short natural-language query capturing the user intent. Rewrite long questions into 3 to 8 keywords. Preserve product names and brand names verbatim.",
-      "searchIndexUidParam": "Choose between: \"products\" for physical gear, accessories, and apparel; \"guides\" for how-to articles and buying guides; \"reviews\" for customer reviews and ratings. Use \"products\" by default."
-    }
-  }'
-```
-
-</CodeGroup>
+<CodeSamplesChatPatchSettingsPrompts1 />
 
 <Tip>
 Change one prompt at a time and re-run your evaluation queries. Tool prompts compound: a change in `searchIndexUidParam` can make earlier `searchQParam` wording look wrong even though it hasn't changed.

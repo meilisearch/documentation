@@ -3,6 +3,8 @@ title: Tune the `distribution` of semantic scores
 description: Learn how to use the `distribution` embedder setting to correct `_rankingScore` values for semantic hits and surface more relevant results.
 ---
 
+import CodeSamplesUpdateEmbeddersDistribution1 from '/snippets/generated-code-samples/code_samples_update_embedders_distribution_1.mdx';
+
 Use the `distribution` embedder setting to correct the returned `_rankingScore`s of semantic hits with an affine transformation. Tuning `distribution` is useful when your chosen embedder consistently rates unrelated documents as "somewhat relevant", making it hard for downstream code (or users) to tell truly good matches apart from noise.
 
 <Note>
@@ -43,28 +45,7 @@ Configuring `distribution` requires a certain amount of trial and error. In prac
 
 ## Example configuration
 
-<CodeGroup>
-
-```sh
-curl \
-  -X PATCH 'MEILISEARCH_URL/indexes/INDEX_NAME/settings' \
-  -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer MEILISEARCH_KEY' \
-  --data-binary '{
-    "embedders": {
-      "default": {
-        "source": "openAi",
-        "model": "text-embedding-3-small",
-        "distribution": {
-          "mean": 0.7,
-          "sigma": 0.3
-        }
-      }
-    }
-  }'
-```
-
-</CodeGroup>
+<CodeSamplesUpdateEmbeddersDistribution1 />
 
 In this example, documents the embedder currently rates around `0.7` are treated as "somewhat relevant", and scores are spread out so that truly good matches move toward `1` while weak matches drift toward `0`.
 

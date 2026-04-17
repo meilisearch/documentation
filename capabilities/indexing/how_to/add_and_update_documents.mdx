@@ -6,6 +6,9 @@ description: Add new documents, replace existing ones, or partially update speci
 import CodeSamplesAddOrReplaceDocuments1 from '/snippets/generated-code-samples/code_samples_add_or_replace_documents_1.mdx';
 import CodeSamplesAddOrUpdateDocuments1 from '/snippets/generated-code-samples/code_samples_add_or_update_documents_1.mdx';
 import CodeSamplesDeleteOneDocument1 from '/snippets/generated-code-samples/code_samples_delete_one_document_1.mdx';
+import CodeSamplesGetDocumentsPostWithFilter1 from '/snippets/generated-code-samples/code_samples_get_documents_post_with_filter_1.mdx';
+import CodeSamplesAddOrReplaceDocumentsCsv1 from '/snippets/generated-code-samples/code_samples_add_or_replace_documents_csv_1.mdx';
+import CodeSamplesAddOrReplaceDocumentsNdjson1 from '/snippets/generated-code-samples/code_samples_add_or_replace_documents_ndjson_1.mdx';
 
 Meilisearch provides three document operations: add or replace, add or update, and delete. This guide explains the difference between each operation and when to use them.
 
@@ -213,18 +216,7 @@ Prefer `POST /indexes/{index_uid}/documents/fetch` over `GET /indexes/{index_uid
 
 You can pass a `filter` expression to `POST /indexes/{index_uid}/documents/fetch` to retrieve only documents that match a condition:
 
-<CodeGroup>
-
-```bash
-curl \
-  -X POST 'MEILISEARCH_URL/indexes/movies/documents/fetch' \
-  -H 'Content-Type: application/json' \
-  --data-binary '{
-    "filter": "genres = Action AND rating > 8"
-  }'
-```
-
-</CodeGroup>
+<CodeSamplesGetDocumentsPostWithFilter1 />
 
 <Note>
 Any attribute you reference in a document `filter` must first be declared in the index's [`filterableAttributes`](/capabilities/filtering_sorting_faceting/getting_started) setting. This rule is the same as for search filters and is specific to the documents endpoint when filtering the documents you retrieve or delete.
@@ -234,23 +226,9 @@ Any attribute you reference in a document `filter` must first be declared in the
 
 By default, Meilisearch expects a JSON array in the request body and the `Content-Type: application/json` header. The documents endpoint also accepts NDJSON (`application/x-ndjson`) and CSV (`text/csv`) payloads when you set the matching header.
 
-<CodeGroup>
+<CodeSamplesAddOrReplaceDocumentsCsv1 />
 
-```bash CSV
-curl \
-  -X POST 'MEILISEARCH_URL/indexes/movies/documents' \
-  -H 'Content-Type: text/csv' \
-  --data-binary @movies.csv
-```
-
-```bash NDJSON
-curl \
-  -X POST 'MEILISEARCH_URL/indexes/movies/documents' \
-  -H 'Content-Type: application/x-ndjson' \
-  --data-binary @movies.ndjson
-```
-
-</CodeGroup>
+<CodeSamplesAddOrReplaceDocumentsNdjson1 />
 
 When uploading CSV data, you can override the default comma separator with the `csvDelimiter` query parameter (for example, `?csvDelimiter=;`).
 
