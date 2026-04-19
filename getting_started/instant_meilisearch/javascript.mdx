@@ -18,7 +18,7 @@ description: Build search interfaces with instant-meilisearch and InstantSearch.
 Create an `index.html` file with the following code:
 
 ```html
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -30,9 +30,19 @@ Create an `index.html` file with the following code:
       <div id="hits"></div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@meilisearch/instant-meilisearch/dist/instant-meilisearch.umd.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4"></script>
-    <script>
+    <!-- instant-meilisearch peer dependency -->
+    <script type="importmap">
+      {
+        "imports": {
+          "meilisearch": "https://cdn.jsdelivr.net/npm/meilisearch/dist/index.min.js"
+        }
+      }
+    </script>
+
+    <script type="module">
+      import { instantMeilisearch } from 'https://cdn.jsdelivr.net/npm/@meilisearch/instant-meilisearch/dist/index.min.js'
+      import 'https://cdn.jsdelivr.net/npm/instantsearch.js@4'
+
       const { searchClient } = instantMeilisearch(
         'https://ms-adf78ae33284-106.lon.meilisearch.io',
         'a63da4928426f12639e19d62886f621130f3fa9ff3c7534c5d179f0f51c4f303'
