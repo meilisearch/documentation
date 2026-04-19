@@ -156,9 +156,9 @@ Create a Meilisearch client by passing the host URL and API key of your Meilisea
 <CodeGroup>
 
 ```javascript JavaScript
-const { MeiliSearch } = require("meilisearch");
+const { Meilisearch } = require("meilisearch");
 
-const meiliClient = new MeiliSearch({
+const meiliClient = new Meilisearch({
   host: "MEILI_HOST",
   apiKey: "MEILI_API_KEY",
 });
@@ -233,7 +233,7 @@ ruby script.rb
 
 ```javascript JavaScript
 const algoliaSearch = require("algoliasearch");
-const { MeiliSearch } = require("meilisearch");
+const { Meilisearch } = require("meilisearch");
 
 const BATCH_SIZE = 100000;
 
@@ -248,7 +248,7 @@ const BATCH_SIZE = 100000;
     }
   });
 
-  const meiliClient = new MeiliSearch({
+  const meiliClient = new Meilisearch({
     host: "MEILI_HOST",
     apiKey: "MEILI_API_KEY",
   });

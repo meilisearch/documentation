@@ -32,9 +32,9 @@ Use the following URL and API key to connect to a Meilisearch instance containin
 
 ```jsx
 import React from 'react';
-import { instantMeiliSearch } from '@meilisearch/instant-meilisearch';
+import { instantMeilisearch } from '@meilisearch/instant-meilisearch';
 
-const { searchClient } = instantMeiliSearch(
+const { searchClient } = instantMeilisearch(
   'https://ms-adf78ae33284-106.lon.meilisearch.io',
   'a63da4928426f12639e19d62886f621130f3fa9ff3c7534c5d179f0f51c4f303'
 );
@@ -47,9 +47,9 @@ const { searchClient } = instantMeiliSearch(
 ```jsx
 import React from 'react';
 import { InstantSearch } from 'react-instantsearch';
-import { instantMeiliSearch } from '@meilisearch/instant-meilisearch';
+import { instantMeilisearch } from '@meilisearch/instant-meilisearch';
 
-const { searchClient } = instantMeiliSearch(
+const { searchClient } = instantMeilisearch(
   'https://ms-adf78ae33284-106.lon.meilisearch.io',
   'a63da4928426f12639e19d62886f621130f3fa9ff3c7534c5d179f0f51c4f303'
 );
@@ -74,10 +74,10 @@ Import the CSS library to style the search components.
 ```jsx
 import React from 'react';
 import { InstantSearch, SearchBox, InfiniteHits } from 'react-instantsearch';
-import { instantMeiliSearch } from '@meilisearch/instant-meilisearch';
+import { instantMeilisearch } from '@meilisearch/instant-meilisearch';
 import 'instantsearch.css/themes/satellite.css';
 
-const { searchClient } = instantMeiliSearch(
+const { searchClient } = instantMeilisearch(
   'https://ms-adf78ae33284-106.lon.meilisearch.io',
   'a63da4928426f12639e19d62886f621130f3fa9ff3c7534c5d179f0f51c4f303'
 );

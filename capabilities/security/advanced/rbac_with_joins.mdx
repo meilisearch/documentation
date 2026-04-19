@@ -176,10 +176,10 @@ Filter to include public documents:
 ## Example: Implementing on the server
 
 ```javascript
-import { MeiliSearch } from 'meilisearch'
+import { Meilisearch } from 'meilisearch'
 import jwt from 'jsonwebtoken'
 
-const client = new MeiliSearch({ host: 'http://localhost:7700', apiKey: 'ADMIN_API_KEY' })
+const client = new Meilisearch({ host: 'http://localhost:7700', apiKey: 'ADMIN_API_KEY' })
 
 async function searchDocuments(query, tenantToken) {
   // 1. Validate token server-side

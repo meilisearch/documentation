@@ -22,9 +22,9 @@ yarn add meilisearch
 ## 2. Connect to Meilisearch
 
 ```javascript
-import { MeiliSearch } from 'meilisearch'
+import { Meilisearch } from 'meilisearch'
 
-const client = new MeiliSearch({
+const client = new Meilisearch({
   host: process.env.MEILISEARCH_URL,
   apiKey: process.env.MEILISEARCH_KEY
 })
@@ -83,9 +83,9 @@ const results = await client.index('movies').search('', {
 ## Full example
 
 ```javascript
-import { MeiliSearch } from 'meilisearch'
+import { Meilisearch } from 'meilisearch'
 
-const client = new MeiliSearch({
+const client = new Meilisearch({
   host: process.env.MEILISEARCH_URL,
   apiKey: process.env.MEILISEARCH_KEY
 })

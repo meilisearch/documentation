@@ -33,7 +33,7 @@ Create an `index.html` file with the following code:
     <script src="https://cdn.jsdelivr.net/npm/@meilisearch/instant-meilisearch/dist/instant-meilisearch.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4"></script>
     <script>
-      const { searchClient } = instantMeiliSearch(
+      const { searchClient } = instantMeilisearch(
         'https://ms-adf78ae33284-106.lon.meilisearch.io',
         'a63da4928426f12639e19d62886f621130f3fa9ff3c7534c5d179f0f51c4f303'
       );
@@ -102,7 +102,7 @@ InstantSearch provides many pre-built widgets:
 The example above uses a public demo instance. To use your own Meilisearch instance:
 
 ```javascript
-const { searchClient } = instantMeiliSearch(
+const { searchClient } = instantMeilisearch(
   'https://your-instance.meilisearch.io',  // Your instance URL
   'your_search_api_key'                     // Your search API key
 );

@@ -355,9 +355,9 @@ Create a Meilisearch client by passing the host URL and API key of your Meilisea
 <CodeGroup>
 
 ```javascript JavaScript
-const { MeiliSearch } = require("meilisearch");
+const { Meilisearch } = require("meilisearch");
 
-const meiliClient = new MeiliSearch({
+const meiliClient = new Meilisearch({
   host: "MEILI_HOST",
   apiKey: "MEILI_API_KEY",
 });
@@ -429,7 +429,7 @@ ruby script.rb
 
 ```javascript JavaScript
 const { QdrantClient } = require("@qdrant/js-client-rest");
-const { MeiliSearch } = require("meilisearch");
+const { Meilisearch } = require("meilisearch");
 
 const COLLECTION_NAME = "YOUR_COLLECTION_NAME";
 const FETCH_BATCH_SIZE = 1000;
@@ -479,7 +479,7 @@ const KEEP_VECTORS = false; // set to true to preserve existing vectors
   console.log(`Fetched ${documents.length} points from Qdrant`);
 
   // Upload to Meilisearch
-  const meiliClient = new MeiliSearch({
+  const meiliClient = new Meilisearch({
     host: "MEILI_HOST",
     apiKey: "MEILI_API_KEY",
   });
