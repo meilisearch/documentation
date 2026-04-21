@@ -369,9 +369,9 @@ Create a Meilisearch client by passing the host URL and API key of your Meilisea
 <CodeGroup>
 
 ```javascript JavaScript
-const { MeiliSearch } = require("meilisearch");
+const { Meilisearch } = require("meilisearch");
 
-const meiliClient = new MeiliSearch({
+const meiliClient = new Meilisearch({
   host: "MEILI_HOST",
   apiKey: "MEILI_API_KEY",
 });
@@ -443,7 +443,7 @@ ruby script.rb
 
 ```javascript JavaScript
 const { createClient } = require("@supabase/supabase-js");
-const { MeiliSearch } = require("meilisearch");
+const { Meilisearch } = require("meilisearch");
 
 const TABLE_NAME = "YOUR_TABLE_NAME";
 const FETCH_BATCH_SIZE = 1000;
@@ -490,7 +490,7 @@ const UPLOAD_BATCH_SIZE = 100000;
   console.log(`Fetched ${documents.length} rows from Supabase`);
 
   // Upload to Meilisearch
-  const meiliClient = new MeiliSearch({
+  const meiliClient = new Meilisearch({
     host: "MEILI_HOST",
     apiKey: "MEILI_API_KEY",
   });
@@ -936,9 +936,9 @@ Create an Edge Function that receives webhook payloads and syncs changes to Meil
 
 ```typescript
 // supabase/functions/sync-to-meilisearch/index.ts
-import { MeiliSearch } from "npm:meilisearch";
+import { Meilisearch } from "npm:meilisearch";
 
-const meili = new MeiliSearch({
+const meili = new Meilisearch({
   host: Deno.env.get("MEILI_HOST")!,
   apiKey: Deno.env.get("MEILI_API_KEY")!,
 });

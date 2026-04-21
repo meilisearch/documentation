@@ -353,14 +353,12 @@ function initializeMeilisearchIntegration() {
     // ========= Step 4: Set up Meilisearch for searching =========
     // Load Meilisearch client
     if (!window.meilisearch) {
-      const meilisearchScript = document.createElement('script');
-      meilisearchScript.src = 'https://cdn.jsdelivr.net/npm/meilisearch@latest/dist/bundles/meilisearch.umd.js';
-      meilisearchScript.onload = () => {
-        // The UMD bundle exposes MeiliSearch directly, no need to access .default
-        window.meilisearch = window.MeiliSearch;
-        setupMeilisearchHandlers(searchInput, resultsContainer);
-      };
-      document.head.appendChild(meilisearchScript);
+      import("https://cdn.jsdelivr.net/npm/meilisearch/dist/index.min.js")
+        .then((v) => {
+          window.meilisearch = v.Meilisearch;
+          setupMeilisearchHandlers(searchInput, resultsContainer);
+        })
+        .catch(console.error);
     } else {
       setupMeilisearchHandlers(searchInput, resultsContainer);
     }
