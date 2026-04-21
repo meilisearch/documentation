@@ -17,13 +17,13 @@ curl \
 
 // In your .js file:
 // With the `require` syntax:
-const { Meilisearch } = require('meilisearch')
+const { MeiliSearch } = require('meilisearch')
 const movies = require('./movies.json')
 // With the `import` syntax:
-import { Meilisearch } from 'meilisearch'
+import { MeiliSearch } from 'meilisearch'
 import movies from './movies.json'
 
-const client = new Meilisearch({
+const client = new MeiliSearch({
   host: 'MEILISEARCH_URL',
   apiKey: 'aSampleMasterKey'
 })
