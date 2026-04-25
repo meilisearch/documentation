@@ -89,7 +89,7 @@ Route search requests to the closest cluster. Both regions hold all data, so eit
 
 When a network search runs, Meilisearch builds an internal set of remotes to query: it assigns each shard to a remote, then sends one query per remote with a shard filter. This guarantees that no shard is queried twice and that results are never duplicated.
 
-The downside is that there is no automatic fallback. If the remote assigned to a shard is unreachable, that shard's results are missing from the response — Meilisearch does not yet retry using another replica that holds the same shard.
+Meilisearch supports automatic remote fallback. If the remote assigned to a shard is unreachable, the shard won't be queried, and another remote will be used to retrieve its content. However, if no remote is available for a given shard, that shard's results will be missing from the response. It's a best-effort approach.
 
 ## Scaling read throughput
 
