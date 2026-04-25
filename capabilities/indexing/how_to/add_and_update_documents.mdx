@@ -73,7 +73,7 @@ The `genres` field is gone because it was not included in the replacement.
 
 ## Add or update documents
 
-Use `PUT /indexes/{index_uid}/documents` to add new documents or partially update existing ones. If a document with the same primary key already exists, Meilisearch **merges the new fields** into the existing document. Fields not included in the update remain unchanged.
+Use `PUT /indexes/{index_uid}/documents` to add new documents or partially update existing ones. If a document with the same primary key already exists, Meilisearch **merges the new fields** into the existing document. Fields not included in the update remain unchanged. Partial updates apply only to top-level fields: updating an object field replaces the entire object, removing any omitted subfields.
 
 <CodeSamplesAddOrUpdateDocuments1 />
 
