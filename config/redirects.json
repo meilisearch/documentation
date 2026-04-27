@@ -4326,5 +4326,81 @@
   {
     "source": "/capabilities/platform/teams/how_to/configure_sso_for_team",
     "destination": "/capabilities/teams/how_to/configure_sso_for_team"
+  },
+  {
+    "source": "/learn/cookbooks/azure",
+    "destination": "/resources/self_hosting/deployment/azure"
+  },
+  {
+    "source": "/learn/self_hosted/configure_instance_options",
+    "destination": "/resources/self_hosting/configuration/reference"
+  },
+  {
+    "source": "/learn/update_and_migration/versioning",
+    "destination": "/resources/migration/updating"
+  },
+  {
+    "source": "/capabilities/conversational_search/getting_started/setupmd",
+    "destination": "/capabilities/conversational_search/getting_started/setup"
+  },
+  {
+    "source": "/capabilities/indexing/tasks_and_batches/monitor_tasksno_space_left_on_device",
+    "destination": "/capabilities/indexing/tasks_and_batches/monitor_tasks"
+  },
+  {
+    "source": "/guides/ai",
+    "destination": "/capabilities/conversational_search/overview"
+  },
+  {
+    "source": "/guides/ai/chat",
+    "destination": "/capabilities/conversational_search/getting_started/setup"
+  },
+  {
+    "source": "/learn/advanced/low_level_api/index",
+    "destination": "/reference/api/openapi"
+  },
+  {
+    "source": "/learn/advanced/pagination",
+    "destination": "/capabilities/full_text_search/how_to/paginate_search_results"
+  },
+  {
+    "source": "/learn/ai_powered_search/search_with_vector",
+    "destination": "/capabilities/hybrid_search/overview"
+  },
+  {
+    "source": "/learn/cookbooks/indexing",
+    "destination": "/capabilities/indexing/advanced/indexing_best_practices"
+  },
+  {
+    "source": "/learn/experimental/max_number_of_batched_tasks",
+    "destination": "/capabilities/indexing/tasks_and_batches/async_operations"
+  },
+  {
+    "source": "/learn/fine_tuning_results/highlighting",
+    "destination": "/capabilities/full_text_search/overview"
+  },
+  {
+    "source": "/learn/front_end/search_ui",
+    "destination": "/getting_started/instant_meilisearch/javascript"
+  },
+  {
+    "source": "/learn/getting_started/installation",
+    "destination": "/resources/self_hosting/getting_started/quick_start"
+  },
+  {
+    "source": "/learn/resources/comparisons/alternatives",
+    "destination": "/resources/comparisons/alternatives"
+  },
+  {
+    "source": "/learn/update_and_migration/database_compatibility",
+    "destination": "/resources/migration/updating"
+  },
+  {
+    "source": "/learn/update_and_migration/updating.l",
+    "destination": "/resources/migration/updating"
+  },
+  {
+    "source": "/reference/api/indexes/n",
+    "destination": "/reference/api/indexes/compact-index"
   }
 ]
