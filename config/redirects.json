@@ -4384,7 +4384,7 @@
     "destination": "/getting_started/instant_meilisearch/javascript"
   },
   {
-    "source": "/learn/getting_started/installation",
+    "source": "/learn/getting\\_started/installation",
     "destination": "/resources/self_hosting/getting_started/quick_start"
   },
   {
