@@ -5,29 +5,29 @@ description: Filter search results within a rectangular geographic area defined 
 
 import CodeSamplesGeosearchGuideFilterUsage3 from '/snippets/generated-code-samples/code_samples_geosearch_guide_filter_usage_3.mdx';
 
-The `_geoBoundingBox` filter returns documents located within a rectangle defined by its top-left and bottom-right coordinates. This is especially useful for map-based interfaces where you want to display results that fit within the current viewport.
+The `_geoBoundingBox` filter returns documents located within a rectangle defined by its top-right and bottom-left coordinates. This is especially useful for map-based interfaces where you want to display results that fit within the current viewport.
 
 ## Syntax
 
 <CodeGroup>
 
 ```
-_geoBoundingBox([topLeftLat, topLeftLng], [bottomRightLat, bottomRightLng])
+_geoBoundingBox([topRightLat, topRightLng], [bottomLeftLat, bottomLeftLng])
 ```
 
 </CodeGroup>
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `topLeftLat` | Float | Latitude of the top-left corner (northern boundary) |
-| `topLeftLng` | Float | Longitude of the top-left corner (western boundary) |
-| `bottomRightLat` | Float | Latitude of the bottom-right corner (southern boundary) |
-| `bottomRightLng` | Float | Longitude of the bottom-right corner (eastern boundary) |
+| `topRightLat` | Float | Latitude of the top-right corner (northern boundary) |
+| `topRightLng` | Float | Longitude of the top-right corner (eastern boundary) |
+| `bottomLeftLat` | Float | Latitude of the bottom-left corner (southern boundary) |
+| `bottomLeftLng` | Float | Longitude of the bottom-left corner (western boundary) |
 
-The first coordinate pair defines the **top-left** (northwest) corner of the rectangle, and the second defines the **bottom-right** (southeast) corner. This means:
+The first coordinate pair defines the **top-right** (northeast) corner of the rectangle, and the second defines the **bottom-left** (southwest) corner. This means:
 
-- `topLeftLat` should be greater than `bottomRightLat`
-- `topLeftLng` should be less than `bottomRightLng`
+- `topRightLat` should be greater than `bottomLeftLat`
+- `topRightLng` should be greater than `bottomLeftLng`
 
 ## Filter by bounding box
 
@@ -92,7 +92,7 @@ const sw = bounds.getSouthWest();
 
 // Search for results in the visible area
 const results = await client.index('restaurants').search('', {
-  filter: `_geoBoundingBox([${ne.lat}, ${sw.lng}], [${sw.lat}, ${ne.lng}])`
+  filter: `_geoBoundingBox([${ne.lat}, ${ne.lng}], [${sw.lat}, ${sw.lng}])`
 });
 ```
 
