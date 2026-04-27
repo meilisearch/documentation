@@ -143,3 +143,4 @@ broken-links.txt
 
 # Claude Code (local only, not committed)
 .claude/superpowers
+docs/superpowers
