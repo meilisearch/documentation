@@ -20,4 +20,30 @@ curl \
     ]
   }'
 ```
+
+```javascript JS
+client.updateDynamicSearchRule('RULE_UID', {
+  actions: [{
+    selector: { indexUid: 'movies', id: '299537' },
+    action: { type: 'pin', position: 0 }
+  }]
+})
+```
+
+```php PHP
+$client->updateDynamicSearchRule('RULE_UID', [
+  'actions' => [
+    [
+      'selector' => [
+        'indexUid' => 'movies',
+        'id' => '299537'
+      ],
+      'action' => [
+        'type' => 'pin',
+        'position' => 0
+      ]
+    ]
+  ]
+]);
+```
 </CodeGroup>
