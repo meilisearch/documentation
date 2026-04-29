@@ -1266,13 +1266,6 @@ list_index_fields_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/fields' \
     -H 'Content-Type: application/json'
-update_experimental_features_chat_1: |-
-  curl \
-    -X PATCH 'MEILISEARCH_URL/experimental-features/' \
-    -H 'Content-Type: application/json' \
-    --data-binary '{
-      "chatCompletions": true
-    }'
 update_experimental_features_contains_1: |-
   curl \
     -X PATCH 'MEILISEARCH_URL/experimental-features/' \
