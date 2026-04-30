@@ -50,6 +50,16 @@ Meilisearch includes several endpoints for managing indexes and migrating data:
 
 - **Export**: Transfer data directly from one instance to another over the network, without creating intermediate files. See [Export data to another instance](/capabilities/indexing/how_to/export_data).
 - **Compact**: Reclaim disk space by reorganizing an index's internal data structures after bulk updates or deletions. See [Compact an index](/capabilities/indexing/how_to/compact_an_index).
+
+## Settings updates are atomic
+
+When you update multiple settings in a single request, Meilisearch processes them as an atomic operation.
+
+<Warning>
+If Meilisearch encounters an error when updating any of the settings in a request, it immediately stops processing the request and returns an error message. In this case, the database settings remain unchanged. The returned error message will only address the first error encountered.
+</Warning>
+
+This means a partial update can never leave your index in an inconsistent state, but it also means you cannot rely on later settings in the request being applied if an earlier one fails. Inspect the task's error details to identify the failing setting, fix it, then resubmit the full settings payload.
 ## Next steps
 
 <CardGroup cols={2}>

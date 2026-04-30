@@ -120,6 +120,18 @@ Meilisearch automatically uses the search embedder for the query and the indexin
 
 **Experimental status**: this feature requires the `compositeEmbedders` experimental flag. The API surface may change in future versions. Monitor the [changelog](/changelog) for updates.
 
+## Sub-embedder constraints
+
+Composite embedders impose additional rules on their `indexingEmbedder` and `searchEmbedder` sub-objects. Breaking any of these rules makes the embedder settings invalid.
+
+- `indexingEmbedder` and `searchEmbedder` must use the same model for generating embeddings.
+- `indexingEmbedder` and `searchEmbedder` must have identical `dimensions` and `pooling` methods.
+- `source` is mandatory for both `indexingEmbedder` and `searchEmbedder`.
+- Neither sub-embedder can set `source` to `composite` or `userProvided`.
+- `binaryQuantized` and `distribution` are not valid sub-embedder fields. They must always be declared on the main (composite) embedder.
+- `documentTemplate` and `documentTemplateMaxBytes` are invalid fields for `searchEmbedder`.
+- `documentTemplate` and `documentTemplateMaxBytes` are mandatory for `indexingEmbedder` when its source supports them (that is, every source except `userProvided`).
+
 ## Next steps
 
 <CardGroup cols={3}>

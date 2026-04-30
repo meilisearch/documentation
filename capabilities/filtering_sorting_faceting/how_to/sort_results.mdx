@@ -45,6 +45,10 @@ If a field has values of different types across documents, Meilisearch will give
 This can lead to unexpected behavior when sorting. For optimal user experience, only sort based on fields containing the same type of value.
 </Warning>
 
+<Warning>
+Adding an attribute to `sortableAttributes` that does not exist in any document is accepted silently: if the field does not exist, no error will be thrown. Double-check the attribute name when configuring sorting, as a typo will not surface until you notice results are not sorted as expected.
+</Warning>
+
 #### Example
 
 Suppose you have collection of books containing the following fields:

@@ -94,6 +94,8 @@ curl \
 
 With `byAttribute`, Meilisearch only checks whether query terms appear in the same attribute, not their exact distance within it. This makes indexing significantly faster and reduces the work done during each search.
 
+Calculating the distance between words is a resource-intensive operation. Lowering the precision of this operation may significantly improve performance and will have little impact on result relevancy in most use cases.
+
 The trade-off is that multi-word queries like "dark knight" will rank documents the same whether the words are adjacent or far apart within the same field. For most use cases (ecommerce, documentation, catalogs), this difference is negligible. Word-level precision matters most for long-form content where word proximity is a strong relevancy signal.
 
 ## Lower max values per facet

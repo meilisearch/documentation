@@ -42,6 +42,10 @@ Matched terms appear in the `_formatted` object wrapped in `<em>` tags:
 
 Set `attributesToHighlight` to `["*"]` to highlight matched terms across all [displayed attributes](/capabilities/full_text_search/how_to/configure_displayed_attributes):
 
+<Note>
+`attributesToHighlight` highlights matches within any attribute you list, even attributes that are not part of `searchableAttributes`. Meilisearch does not produce new matches in non-searchable fields, but if the query term happens to appear verbatim in one of those fields, it will still be wrapped in highlight tags.
+</Note>
+
 <CodeGroup>
 
 ```bash
@@ -130,6 +134,14 @@ Result:
 | `attributesToCrop` | Array of strings | `null` | Attributes to crop. Use `["*"]` for all displayed attributes. |
 | `cropLength` | Integer | `10` | Maximum number of words in the cropped result. |
 | `cropMarker` | String | `"..."` | String inserted at the beginning or end of cropped text. |
+
+<Note>
+`cropLength` counts every word in the returned snippet, including query terms and stop words. For example, if `cropLength` is `2` and you search for `shifu`, the cropped value might look like `"…Shifu informs…"`, containing two words in total (the query term plus one surrounding word).
+</Note>
+
+<Note>
+Crop markers are only inserted where content has been removed. If the cropped snippet begins at the first word of the field, no marker is added to the start; likewise, no marker is added to the end when the snippet reaches the end of the field.
+</Note>
 
 ### Per-attribute crop length
 

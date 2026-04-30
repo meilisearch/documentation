@@ -1,0 +1,89 @@
+---
+title: Search within facet values
+sidebarTitle: Facet search
+description: Use the facet search endpoint to type-ahead through facet values, build auto-complete experiences, and narrow large filter lists. This page also covers the two key limitations of facet search.
+---
+
+import CodeSamplesFacetSearch3 from '/snippets/generated-code-samples/code_samples_facet_search_3.mdx';
+import CodeSamplesFacetSearchExhaustive1 from '/snippets/generated-code-samples/code_samples_facet_search_exhaustive_1.mdx';
+
+Facet search is a dedicated endpoint for searching through the values of a single facet. It is typically used to power auto-complete and type-ahead interfaces on top of filter menus, especially when a facet has too many distinct values to display at once (for example, thousands of brands or authors).
+
+If you are new to facets, start with [Search with facets](/capabilities/filtering_sorting_faceting/how_to/filter_with_facets) and [Build faceted navigation](/capabilities/filtering_sorting_faceting/how_to/build_faceted_navigation). This page focuses on the `/facet-search` endpoint itself and the edge cases you need to know about before relying on it.
+
+## Prerequisites
+
+Before you can search a facet's values, the attribute must be declared in [`filterableAttributes`](/capabilities/filtering_sorting_faceting/getting_started). Facet search is enabled by default on every index; you can disable it per index with the `facetSearch` setting if you do not need it and want to speed up indexing.
+
+## Search a facet
+
+Send a `POST` request to `/indexes/{index_uid}/facet-search` with the name of the facet you want to search and the partial string typed by the user:
+
+<CodeSamplesFacetSearch3 />
+
+The response contains a `facetHits` array with the matching values and the number of documents that carry each one:
+
+<CodeGroup>
+
+```json
+{
+  "facetHits": [
+    { "value": "Children's Literature", "count": 1 },
+    { "value": "Classics", "count": 6 },
+    { "value": "Comedy", "count": 2 },
+    { "value": "Coming-of-Age", "count": 1 }
+  ],
+  "facetQuery": "c"
+}
+```
+
+</CodeGroup>
+
+You can further scope the results by combining `facetQuery` with `q`, `filter`, and `matchingStrategy`. See the [facet search API reference](/reference/api/facet-search/search-in-facets) for the full list of parameters.
+
+## Facet search only works on string fields
+
+<Warning>
+Meilisearch does not support facet search on numeric fields. If you need to type-ahead through a numeric facet, convert the values to strings before indexing them (for example, store `"rating": "4.5"` rather than `"rating": 4.5`).
+</Warning>
+
+Internally, Meilisearch stores numbers as `float64`. Floating-point values lack exact decimal precision and can be represented in more than one way, which makes prefix matching on their textual form unreliable. Only string facet values are indexed for facet search.
+
+## Facet search only matches the first term of `facetQuery`
+
+<Warning>
+Meilisearch's facet search is single-term: only the first word in `facetQuery` is used to match facet values. Subsequent words are ignored.
+</Warning>
+
+For example, given a `author` facet that contains `"Jane Austen"`:
+
+- `facetQuery: "Jane"` returns `Jane Austen`
+- `facetQuery: "Austen"` does **not** return `Jane Austen`, because the word `Austen` is not the start of the stored value
+- `facetQuery: "Jane Aus"` effectively behaves like `facetQuery: "Jane"` (the second word is dropped)
+
+This is a deliberate trade-off that keeps the facet-search index compact and fast. If you need multi-word matching across facet values, perform a regular search with the `q` parameter instead and inspect the `facetDistribution` of the response.
+
+## Get exact facet counts
+
+By default, the counts returned by facet search are estimates, which is faster on large indexes. To force exact counts, set `exhaustiveFacetCount` to `true`:
+
+<CodeSamplesFacetSearchExhaustive1 />
+
+Exact counts are slower to compute. Prefer them when accuracy matters (for example, a storefront's category counts) and the defaults when latency matters most.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Search with facets" href="/capabilities/filtering_sorting_faceting/how_to/filter_with_facets">
+    Configure facets and filter search results
+  </Card>
+  <Card title="Build faceted navigation" href="/capabilities/filtering_sorting_faceting/how_to/build_faceted_navigation">
+    Patterns for category and filter menus
+  </Card>
+  <Card title="Handle large facet cardinality" href="/capabilities/filtering_sorting_faceting/how_to/handle_large_facet_cardinality">
+    Strategies for facets with thousands of values
+  </Card>
+  <Card title="Facet search API reference" href="/reference/api/facet-search/search-in-facets">
+    Full list of parameters accepted by `/facet-search`
+  </Card>
+</CardGroup>

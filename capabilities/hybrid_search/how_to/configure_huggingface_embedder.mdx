@@ -49,6 +49,42 @@ In this configuration:
 
 Unlike cloud-based embedders, the HuggingFace source does not require an API key.
 
+### Pin a model revision with `revision`
+
+Use the optional `revision` field to pin a specific revision of a HuggingFace model. The value is a commit hash, branch name, or tag from the model repository.
+
+<CodeGroup>
+
+```json
+{
+  "my-hf": {
+    "source": "huggingFace",
+    "model": "BAAI/bge-base-en-v1.5",
+    "revision": "a5beb1e3e68b9ab74eb54cfb186926f2123bc4b3"
+  }
+}
+```
+
+</CodeGroup>
+
+`revision` is optional and only valid for the `huggingFace` embedder. Pinning a revision makes your indexing output reproducible even if the upstream model is updated.
+
+### Choose a pooling method with `pooling`
+
+HuggingFace models combine per-token output vectors into a single document vector using a pooling strategy. The `pooling` field controls this behavior:
+
+| Value | Behavior |
+|---|---|
+| `"useModel"` | Meilisearch fetches the pooling method from the model configuration. **Default value for new embedders.** |
+| `"forceMean"` | Always use mean pooling. |
+| `"forceCls"` | Always use CLS pooling. |
+
+If in doubt, use `"useModel"`. `"forceMean"` and `"forceCls"` are compatibility options that might be necessary for certain embedders and models.
+
+<Warning>
+`pooling` is optional for embedders with the `huggingFace` source. It is invalid for all other embedder sources.
+</Warning>
+
 ## Update your index settings
 
 Send the embedder configuration to Meilisearch:

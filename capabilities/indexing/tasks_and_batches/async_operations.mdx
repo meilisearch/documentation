@@ -63,7 +63,15 @@ For a comprehensive description of each task object field, consult the [task API
 
 #### Summarized task objects
 
-When you make an API request for an asynchronous operation, Meilisearch returns a [summarized version](/reference/api/tasks/get-task) of the full `task` object.
+Every `POST` and `PUT` endpoint that triggers an asynchronous operation returns a summarized task object rather than the full task. The summary contains only the fields required to track the new task:
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `taskUid` | integer | Unique identifier of the newly created task. |
+| `indexUid` | string | Index the task targets. `null` for [global tasks](#global-tasks). |
+| `status` | string | Always `enqueued` at this point. |
+| `type` | string | Task type, for example `indexCreation` or `documentAdditionOrUpdate`. |
+| `enqueuedAt` | string (RFC 3339) | Date and time the task entered the queue. |
 
 <CodeGroup>
 
@@ -79,7 +87,7 @@ When you make an API request for an asynchronous operation, Meilisearch returns 
 
 </CodeGroup>
 
-Use the summarized task's `taskUid` to [track the progress of a task](/reference/api/tasks/get-task).
+Use the summarized task's `taskUid` to [track the progress of a task](/reference/api/tasks/get-task) and retrieve the full task object.
 
 #### Task `status`
 
@@ -144,12 +152,16 @@ When you make a [request for an asynchronous operation](#which-operations-are-as
 3. Meilisearch finishes the task. Status set to `succeeded` if task was successfully processed, or `failed` if there was an error
 
 <Note>
-**Terminating a Meilisearch instance in the middle of an asynchronous operation is completely safe** and will never adversely affect the database.
+**Terminating a Meilisearch instance in the middle of an asynchronous operation is completely safe** and will never adversely affect the database. Tasks are not canceled when the instance shuts down: any task that was `processing` is reset to `enqueued` on restart, and task handling proceeds as normal once the instance is relaunched.
 </Note>
 
 ### Task batches
 
 Meilisearch processes tasks in batches, grouping tasks for the best possible performance. In most cases, batching should be transparent and have no impact on the overall task workflow. Use [the `/batches` route](/reference/api/batches/list-batches) to obtain more information on batches and how they are processing your tasks.
+
+<Note>
+A batch's `uid` is incremented globally across all indexes in an instance, not per-index. If you see a large `batchUid` on a task, that number reflects batches processed across every index combined.
+</Note>
 
 #### How auto-batching works
 
@@ -165,17 +177,58 @@ Settings update tasks are also batched together when they target the same index.
 
 ### Canceling tasks
 
-You can cancel a task while it is `enqueued` or `processing` by using [the cancel tasks endpoint](/reference/api/tasks/cancel-tasks). Doing so changes a task's `status` to `canceled`.
+Use [the cancel tasks endpoint](/reference/api/tasks/cancel-tasks) to cancel any number of tasks based on their `uid`, `status`, `type`, `indexUid`, or the date at which they were enqueued (`enqueuedAt`) or processed (`startedAt`). Canceling a task changes its `status` to `canceled`.
 
-<Note>
-Tasks are not canceled when you terminate a Meilisearch instance. Meilisearch discards all progress made on `processing` tasks and resets them to `enqueued`. Task handling proceeds as normal once the instance is relaunched.
-</Note>
+<Warning>
+Only `enqueued` and `processing` tasks can be canceled. Calling cancel on finished tasks (`succeeded`, `failed`, or `canceled`) has no effect on their state: the operation still succeeds, but the response reports `canceledTasks: 0`.
+</Warning>
+
+Task cancelation is itself an asynchronous operation that creates a `taskCancelation` task. Because cancelation is an **atomic transaction**, either all matched tasks are successfully canceled, or none are.
+
+<Warning>
+**`POST /tasks/cancel` requires at least one filter.** To prevent users from accidentally canceling every enqueued and processing task, Meilisearch rejects unfiltered cancel requests with the [`missing_task_filters`](/reference/errors/error_codes#missing_task_filters) error.
+</Warning>
+
+You can also cancel `taskCancelation` tasks themselves as long as they are in the `enqueued` or `processing` state. This is possible because `taskCancelation` tasks are processed in **reverse order**: the last one you enqueue is processed first.
+
+#### The `canceledBy` field
+
+Every task object includes a `canceledBy` field:
+
+- If the task was canceled, `canceledBy` contains the `uid` of the `taskCancelation` task that canceled it.
+- If the task was not canceled, `canceledBy` is always `null`.
+
+You can filter tasks by `canceledBy` in [the list tasks endpoint](/reference/api/tasks/list-tasks) to retrieve every task canceled by a given `taskCancelation`.
 
 ### Deleting tasks
 
-[Finished tasks](#task-status) remain visible in [the task list](/reference/api/tasks/list-tasks). To delete them manually, use the [delete tasks route](/reference/api/tasks/delete-tasks).
+[Finished tasks](#task-status) remain visible in [the task list](/reference/api/tasks/list-tasks). To delete them manually, use the [delete tasks route](/reference/api/tasks/delete-tasks). Like cancelation, task deletion is an **atomic transaction**: either all matched tasks are successfully deleted, or none are.
+
+<Warning>
+Only finished tasks can be deleted. If you call the delete endpoint on `enqueued` or `processing` tasks, the request succeeds but `deletedTasks` is `0`. Cancel those tasks first and then delete them once they reach a finished state.
+</Warning>
 
 Meilisearch stores up to 1M tasks in the task database. If enqueuing a new task would exceed this limit, Meilisearch automatically tries to delete the oldest 100K finished tasks. If there are no finished tasks in the database, Meilisearch does not delete anything and enqueues the new task as usual.
+
+### Task `details` by type
+
+Every task object contains a `details` field whose shape depends on the task's `type`. The table below lists the most common task types and the fields their `details` contains.
+
+| Task type | `details` fields |
+| --- | --- |
+| `documentAdditionOrUpdate` | `receivedDocuments`: number of documents in the payload. `indexedDocuments`: number successfully indexed. |
+| `documentDeletion` | `providedIds`: number of document ids received. `originalFilter`: the filter used, if any. `deletedDocuments`: number of documents actually removed. |
+| `indexCreation` / `indexUpdate` | `primaryKey`: the primary key set on the index, or `null`. |
+| `indexDeletion` | `deletedDocuments`: number of documents removed along with the index. |
+| `indexSwap` | `swaps`: array of swapped index pairs. |
+| `settingsUpdate` | A copy of the settings payload applied to the index. |
+| `dumpCreation` | `dumpUid`: identifier of the generated dump. |
+| `taskCancelation` / `taskDeletion` | `matchedTasks`: number of tasks matching the filter. `canceledTasks` or `deletedTasks`: number of tasks actually affected. `originalFilter`: the query string used. |
+| `snapshotCreation` | `details` is always `null` for `snapshotCreation` tasks. |
+
+<Note>
+Count fields such as `indexedDocuments`, `deletedDocuments`, `canceledTasks`, and `deletedTasks` are `null` while the task is `enqueued` or `processing`. They receive their final value only once the task reaches a finished state.
+</Note>
 
 #### Examples
 

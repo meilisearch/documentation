@@ -33,6 +33,20 @@ meilisearch --task-webhook-url http://localhost:8000
 
 You may also define the webhook URL with environment variables or in the configuration file with `MEILI_TASK_WEBHOOK_URL`.
 
+## Limits and constraints
+
+<Note>
+You can create up to 20 webhooks per instance via the [`/webhooks` API route](/reference/api/webhooks). Having many webhooks active at the same time may negatively impact performance, so only register the webhooks you actively need.
+</Note>
+
+<Warning>
+The value of `Authorization` headers is redacted in responses from `GET /webhooks` and `GET /webhooks/{uuid}`. Do not use the redacted header values returned by Meilisearch when updating a webhook, or the webhook will start sending invalid credentials to your endpoint. Store the original secret on your side and resend it explicitly whenever you patch the webhook.
+</Warning>
+
+<Note>
+Meilisearch Cloud may create internal webhooks to support features such as Analytics and monitoring. These Cloud-reserved webhooks are always returned with `isEditable: false` and cannot be updated or deleted through the API.
+</Note>
+
 ## Optional: configure an authorization header and allow requests on private networks
 
 Depending on your setup, you may need to provide an authorization header and allow requests on private networks.

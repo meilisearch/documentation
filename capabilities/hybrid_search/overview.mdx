@@ -39,6 +39,12 @@ Meilisearch handles the entire embedding pipeline for you:
 - **Rate limit handling**: Meilisearch automatically retries when providers return rate limit errors, with no configuration needed
 - **Document templates**: you control exactly which fields are embedded using [Liquid templates](/capabilities/hybrid_search/advanced/document_template_best_practices), so the embedding captures the most relevant parts of each document
 
+<Warning>
+Updating embedder settings may trigger a full reindex. When you partially update an index's embedder settings (for example, changing `model`, `source`, `documentTemplate`, `dimensions`, or `pooling`), Meilisearch may reindex all documents and regenerate their embeddings. For large indexes this can take a long time and, with paid providers, incur significant API costs.
+
+[`distribution`](/capabilities/hybrid_search/advanced/tune_distribution) is a notable exception: changing it does not trigger a reindex.
+</Warning>
+
 ### Smart result ranking
 
 When you perform a hybrid search, Meilisearch does not simply concatenate keyword and semantic results. It uses a scoring system that automatically determines, for each query, whether full-text or semantic results are more relevant:
@@ -87,6 +93,24 @@ Meilisearch supports a wide range of embedding providers. Some have native integ
 ### User-provided embeddings
 
 If you pre-compute embeddings externally (for example, for images or audio content), you can supply them directly. See [search with user-provided embeddings](/capabilities/hybrid_search/how_to/search_with_user_provided_embeddings).
+
+## Embedder field compatibility
+
+Different embedder sources accept different configuration fields. Setting an invalid field for a given source returns an error on settings update.
+
+| Field | `openAi` | `huggingFace` | `ollama` | `rest` | `userProvided` |
+|---|---|---|---|---|---|
+| `url` / `apiKey` | optional | invalid | optional | required (`url`) | invalid |
+| `model` | optional | optional | optional | invalid | invalid |
+| `documentTemplate` / `documentTemplateMaxBytes` | optional | optional | optional | optional | invalid |
+| `dimensions` | optional | optional | optional | optional | **mandatory** |
+| `pooling` | invalid | optional (default `useModel`) | invalid | invalid | invalid |
+| `distribution` | optional | optional | optional | optional | optional |
+| `binaryQuantized` | optional | optional | optional | optional | optional |
+
+<Note>
+For `composite` embedders, these rules apply to each sub-embedder with additional constraints. See [composite embedders](/capabilities/hybrid_search/advanced/composite_embedders#sub-embedder-constraints).
+</Note>
 
 ## Next steps
 

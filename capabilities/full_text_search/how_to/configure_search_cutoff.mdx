@@ -15,7 +15,7 @@ When a search query is processed, Meilisearch iterates through documents and [ra
 
 The search cutoff sets an upper bound on this processing time. If Meilisearch reaches the cutoff before finishing, it returns the results collected up to that point. These results are still ranked correctly according to the ranking rules, but the result set may not include every possible match.
 
-By default, the search cutoff is `null`, meaning there is no time limit.
+By default, `searchCutoffMs` is `null`. When no explicit value is configured, Meilisearch interrupts searches after **1500 milliseconds**. Setting `searchCutoffMs` to an integer overrides this internal default with your chosen limit.
 
 ## Check current search cutoff
 
@@ -39,7 +39,7 @@ Setting the cutoff too low may result in incomplete or empty result sets for bro
 
 ## Reset search cutoff
 
-Remove the search cutoff and return to the default behavior (no time limit):
+Remove the explicit search cutoff and return to the default behavior (`searchCutoffMs: null`, with Meilisearch's internal 1500 ms interruption threshold):
 
 <CodeSamplesResetSearchCutoff1 />
 

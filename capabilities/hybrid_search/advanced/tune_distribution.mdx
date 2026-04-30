@@ -1,0 +1,61 @@
+---
+title: Tune the `distribution` of semantic scores
+description: Learn how to use the `distribution` embedder setting to correct `_rankingScore` values for semantic hits and surface more relevant results.
+---
+
+import CodeSamplesUpdateEmbeddersDistribution1 from '/snippets/generated-code-samples/code_samples_update_embedders_distribution_1.mdx';
+
+Use the `distribution` embedder setting to correct the returned `_rankingScore`s of semantic hits with an affine transformation. Tuning `distribution` is useful when your chosen embedder consistently rates unrelated documents as "somewhat relevant", making it hard for downstream code (or users) to tell truly good matches apart from noise.
+
+<Note>
+Changing `distribution` does not trigger a reindexing operation. This makes it safe to iterate on, unlike most other embedder settings.
+</Note>
+
+## When to tune `distribution`
+
+Different embedding models produce `_rankingScore` values on different effective ranges. Some models report high scores for nearly every document, while others spread their scores more evenly. Tuning `distribution` rescales these raw scores so that:
+
+- Very relevant hits land near `1`.
+- Somewhat relevant hits land near `0.5`.
+- Irrelevant hits land near `0`.
+
+This gives you a consistent scale across indexes and models, which makes it easier to set a score threshold or compare results across embedders.
+
+## How `distribution` works
+
+`distribution` is an optional field compatible with all embedder sources. It is an object with two fields, both numbers between `0` and `1`:
+
+| Field | Meaning |
+|---|---|
+| `mean` | The semantic score of "somewhat relevant" hits before applying the `distribution` setting. |
+| `sigma` | The average absolute difference in `_rankingScore`s between "very relevant" hits and "somewhat relevant" hits, and between "somewhat relevant" hits and "irrelevant" hits. |
+
+Meilisearch applies these values as an affine correction on top of the raw semantic scores.
+
+## Tuning workflow
+
+Configuring `distribution` requires a certain amount of trial and error. In practice:
+
+1. Run representative semantic searches against your index with `showRankingScore: true`.
+2. Note the `_rankingScore`s of hits you consider "very relevant", "somewhat relevant", and "irrelevant".
+3. Record the observed `mean` (the score of your "somewhat relevant" hits) and `sigma` (the average distance between your relevance tiers).
+4. Update your embedder with the new `distribution` values.
+5. Re-run the searches and check that top hits now score near `1`, borderline hits near `0.5`, and poor hits near `0`.
+6. Repeat until the scores match your expectations.
+
+## Example configuration
+
+<CodeSamplesUpdateEmbeddersDistribution1 />
+
+In this example, documents the embedder currently rates around `0.7` are treated as "somewhat relevant", and scores are spread out so that truly good matches move toward `1` while weak matches drift toward `0`.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Choose an embedder" href="/capabilities/hybrid_search/how_to/choose_an_embedder">
+    Compare embedding providers and pick the right one for your use case.
+  </Card>
+  <Card title="Custom hybrid ranking" href="/capabilities/hybrid_search/advanced/custom_hybrid_ranking">
+    Tune `semanticRatio` to balance keyword and semantic results.
+  </Card>
+</CardGroup>

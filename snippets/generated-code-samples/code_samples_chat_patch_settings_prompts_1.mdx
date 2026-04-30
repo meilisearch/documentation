@@ -1,0 +1,16 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X PATCH 'MEILISEARCH_URL/chats/WORKSPACE_NAME/settings' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "prompts": {
+      "searchDescription": "Search the outdoor gear catalog whenever the user asks about products, prices, availability, or specifications. Do not use it for generic small talk.",
+      "searchQParam": "A short natural-language query capturing the user intent. Rewrite long questions into 3 to 8 keywords. Preserve product names and brand names verbatim.",
+      "searchIndexUidParam": "Choose between: \"products\" for physical gear, accessories, and apparel; \"guides\" for how-to articles and buying guides; \"reviews\" for customer reviews and ratings. Use \"products\" by default."
+    }
+  }'
+```
+</CodeGroup>

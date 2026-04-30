@@ -3,6 +3,8 @@ title: Optimize chat prompts
 description: Improve conversational search response quality by tuning system prompts, document templates, and index chat settings.
 ---
 
+import CodeSamplesChatPatchSettingsPrompts1 from '/snippets/generated-code-samples/code_samples_chat_patch_settings_prompts_1.mdx';
+
 The quality of conversational search responses depends on three layers of configuration: the system prompt, the document template, and the index-level chat settings. Each layer shapes what the LLM receives and how it responds. This guide covers how to tune each one for better results.
 
 ## System prompt strategies
@@ -67,6 +69,22 @@ a detailed explanation.
 ```
 
 </CodeGroup>
+
+## Tune the tool prompts
+
+Beyond `prompts.system`, the workspace `prompts` object exposes three tool-facing prompts that Meilisearch injects into the function-calling schema the agent sees. They do not talk to the end user: they talk to the LLM about how to drive the Meilisearch search tool. Small edits here shift which index the agent picks, how it rewrites the query, and whether it decides to search at all.
+
+| Field | What it configures |
+|-------|--------------------|
+| `prompts.searchDescription` | Internal description of the Meilisearch chat tools. Use it to instruct the agent on how and when to use the configured tools, for example encouraging it to search for any factual question or to skip the search for greetings. |
+| `prompts.searchQParam` | Describes the expected user input and the desired query shape. Use it to tell the agent how to reformulate user messages into effective search queries and what output to expect back. |
+| `prompts.searchIndexUidParam` | Describes each index the agent has access to and explains how to pick between them. This is the main lever when you have multiple indexes and want the agent to route queries correctly. |
+
+<CodeSamplesChatPatchSettingsPrompts1 />
+
+<Tip>
+Change one prompt at a time and re-run your evaluation queries. Tool prompts compound: a change in `searchIndexUidParam` can make earlier `searchQParam` wording look wrong even though it hasn't changed.
+</Tip>
 
 ## Configure index chat settings
 

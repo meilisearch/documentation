@@ -5,6 +5,10 @@ description: Control how each index is described to the LLM and how it is search
 
 Each index you want to make available to conversational search must have its chat settings configured. These settings tell the LLM what the index contains, how to format document data, and what search parameters to use.
 
+<Note>
+`chat` is an **index-level** setting, distinct from the workspace-level configuration that connects Meilisearch to an LLM provider. Workspace settings define the model, API key, and global prompts; index chat settings describe each individual index to the LLM and control how it is queried. Both must be configured: first set up a workspace, then configure chat settings on every index you want the agent to access.
+</Note>
+
 ## Update chat settings
 
 Use the `/indexes/{index_uid}/settings/chat` endpoint to configure chat settings for an index:

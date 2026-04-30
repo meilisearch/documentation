@@ -95,6 +95,44 @@ When `status` changes to `succeeded`, Meilisearch has finished processing your r
 
 If the task `status` changes to `failed`, Meilisearch was not able to fulfill your request. Check the task object's `error` field for more information.
 
+### Interpreting timestamps and `duration`
+
+A task object includes three timestamp fields, each formatted as an RFC 3339 date. Each field remains `null` until the task reaches the corresponding state.
+
+| Field | Description |
+| --- | --- |
+| `enqueuedAt` | Date and time when the task was first `enqueued`. Always present once the task exists. |
+| `startedAt` | Date and time when the task began `processing`. `null` while the task is still `enqueued`. |
+| `finishedAt` | Date and time when the task finished `processing`, whether it `succeeded`, `failed`, or was `canceled`. `null` until the task reaches a finished state. |
+
+The `duration` field is formatted according to the [ISO 8601 duration format](https://en.wikipedia.org/wiki/ISO_8601#Durations) (for example, `"PT1S"` for one second). It represents the **total elapsed time the task spent in the `processing` state**. Time spent waiting in the queue is not included. `duration` is `null` until the task finishes.
+
+### The `error` object
+
+When a task fails, its `error` field is populated with an object describing what went wrong. For succeeded, enqueued, processing, and canceled tasks, `error` is `null`.
+
+| Field | Description |
+| --- | --- |
+| `message` | Human-readable description of the error. |
+| `code` | The [error code](/reference/errors/error_codes). |
+| `type` | The error type, for example `invalid_request` or `internal`. |
+| `link` | A URL pointing to the relevant section of the documentation. |
+
+Example `error` object returned for a failed document addition:
+
+<CodeGroup>
+
+```json
+{
+  "message": "Document does not have a `:primaryKey` attribute: `:documentRepresentation`.",
+  "code": "missing_document_id",
+  "type": "invalid_request",
+  "link": "https://docs.meilisearch.com/errors#missing-document-id"
+}
+```
+
+</CodeGroup>
+
 ## Track tasks with custom metadata
 
 You can attach a `customMetadata` query parameter to document operations. This metadata string appears in task responses and webhook payloads, making it easier to track which batch of data triggered a specific task.

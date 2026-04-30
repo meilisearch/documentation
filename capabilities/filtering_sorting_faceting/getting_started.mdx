@@ -51,6 +51,10 @@ If you want to filter results based on an attribute, you must first add it to th
 By default, `filterableAttributes` is empty. Filters do not work without first explicitly adding attributes to the `filterableAttributes` list.
 </Note>
 
+<Tip>
+Calculating `comparison` filters (such as `<`, `>`, or `TO`) is a resource-intensive operation. Disabling them may lead to better search and indexing performance. `equality` filters use fewer resources and have limited impact on performance. Use [granular filterable attributes](/capabilities/filtering_sorting_faceting/how_to/configure_granular_filters) to enable only the filter operations you actually need for each attribute.
+</Tip>
+
 ## Use `filter` when searching
 
 After updating the [`filterableAttributes` index setting](/reference/api/settings/get-filterableattributes), you can use `filter` to fine-tune your search results.

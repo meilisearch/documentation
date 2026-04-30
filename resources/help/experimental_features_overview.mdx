@@ -41,6 +41,10 @@ Some experimental features can be activated via an HTTP call using the [`/experi
 
 Activating or deactivating experimental features this way does not require you to relaunch Meilisearch.
 
+<Warning>
+The **logs** and **metrics** experimental features are not available on Meilisearch Cloud. Both require controlling the Meilisearch process at launch to enable the `--experimental-enable-logs-route` and `--experimental-enable-metrics` flags, which Cloud users cannot do. Use Cloud's built-in Analytics dashboard for observability instead.
+</Warning>
+
 ## Current experimental features
 
 | Name                                                                                            | Description                                                                | How to configure                            |

@@ -5,6 +5,10 @@ description: Reclaim disk space by compacting an index's internal data structure
 
 When you add, update, or delete documents, Meilisearch's internal data structures may retain unused space from previous versions of the data. Compaction reclaims this space by reorganizing the index on disk.
 
+<Note>
+Meilisearch Cloud monitors database fragmentation and compacts indexes automatically as needed. Self-hosted users do not benefit from automatic compaction and may need to build a pipeline that periodically compacts indexes to avoid performance degradation.
+</Note>
+
 ## When to compact
 
 - **After bulk deletions**: Removing a large number of documents leaves gaps in the internal storage.
@@ -12,6 +16,17 @@ When you add, update, or delete documents, Meilisearch's internal data structure
 - **When disk usage seems high**: If an index uses more disk space than expected for its document count, compaction can help.
 
 You do not need to compact after every operation. It is most useful after large batch changes.
+
+### Estimating fragmentation
+
+Fragmentation is directly related to the number of indexing operations Meilisearch performs. Common indexing operations include adding and updating documents, as well as changes to index settings.
+
+To estimate your index's fragmentation, query the [`/stats` route](/reference/api/stats) and compare `databaseSize` to `usedDatabaseSize`:
+
+- If the ratio between `databaseSize` and `usedDatabaseSize` is bigger than 30%, compacting your indexes may improve performance.
+- If you update documents in your indexes a few times per day, checking fragmentation and compacting your database once per week is a reasonable baseline.
+
+Tune this cadence based on your own indexing patterns: higher write volumes warrant more frequent compaction, while mostly read-only indexes rarely need it.
 
 ## Compact an index
 

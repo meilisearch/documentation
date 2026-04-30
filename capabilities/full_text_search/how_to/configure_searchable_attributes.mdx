@@ -42,6 +42,10 @@ Updating `searchableAttributes` triggers a re-indexing of all documents in the i
 After manually updating `searchableAttributes`, new attributes found in subsequently indexed documents will not be automatically added to the list. You must either include them manually or [reset the setting](#reset-searchable-attributes).
 </Warning>
 
+<Warning>
+**Known issue**: due to an implementation bug, manually updating `searchableAttributes` will change the displayed order of document fields in the JSON response. This behavior is inconsistent and will be fixed in a future release. If your application depends on a specific field order in responses, rely on explicit key access rather than the order returned by Meilisearch.
+</Warning>
+
 ## Reset searchable attributes
 
 Reset `searchableAttributes` to its default value (`["*"]`), making all fields searchable again:
@@ -69,6 +73,10 @@ curl \
 </CodeGroup>
 
 This searches only the `title` field for this request, regardless of the index-level `searchableAttributes` setting. The attributes specified must be a subset of the configured `searchableAttributes`.
+
+<Warning>
+`attributesToSearchOn` narrows the search to the fields you list, so documents that only match in other searchable fields are silently excluded from the response. For example, if your index has `searchableAttributes: ["title", "overview", "genre"]` and you set `attributesToSearchOn: ["overview"]`, a document whose only match is in `title` or `genre` will not appear in the results, even though those fields are otherwise searchable. No error is raised; the results are simply narrower than you may expect.
+</Warning>
 
 <Info>
 For more details on how searchable and displayed attributes work together, see [displayed and searchable attributes](/capabilities/full_text_search/how_to/configure_displayed_attributes). For the full API reference, see [get searchable attributes](/reference/api/settings/get-searchableattributes).

@@ -55,6 +55,10 @@ You can modify this behavior using the [update settings endpoint](/reference/api
 
 In the latter case, the field will be completely ignored during search. However, it will still be [stored](/capabilities/full_text_search/how_to/configure_displayed_attributes#data-storing) in the document.
 
+<Note>
+The `fieldDistribution` object returned by the [`/stats` route](/reference/api/stats) is not affected by `searchableAttributes` or `displayedAttributes`. Even if a field is neither displayed nor searchable, it still appears in `fieldDistribution` with its document count. Rely on `displayedAttributes` and permissions, not on stats output, to keep a field name hidden from clients.
+</Note>
+
 To learn more, refer to our [displayed and searchable attributes guide](/capabilities/full_text_search/how_to/configure_displayed_attributes).
 
 ## Primary field

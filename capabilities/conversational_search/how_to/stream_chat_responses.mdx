@@ -199,7 +199,15 @@ The `-N` flag in the cURL example disables output buffering, so you see each chu
 
 ## Understand the SSE response format
 
-Meilisearch streams responses as Server-Sent Events. Each event is a line prefixed with `data: ` followed by a JSON object. The stream ends with a `data: [DONE]` message.
+Meilisearch streams responses as [Server-Sent Events (SSE)](https://developer.mozilla.org/docs/Web/API/Server-sent_events) over a persistent HTTP connection. The wire format is deliberately OpenAI-compatible so you can point the official OpenAI SDKs, the Vercel AI SDK, or any other SSE-aware client at the endpoint without custom parsing.
+
+Concretely, each event on the wire follows three rules:
+
+- Every event is a line that begins with the literal prefix `data: `.
+- The payload after `data: ` is a single JSON object shaped like an OpenAI `chat.completion.chunk` (same `id`, `object`, `choices[].delta` structure as `/v1/chat/completions`).
+- The stream terminates with the sentinel line `data: [DONE]`. The `[DONE]` marker is a literal string, not JSON, so parsers must check for it before calling `JSON.parse`.
+
+Events are separated by blank lines. After consuming `[DONE]`, close the reader and treat the connection as complete.
 
 ### Content chunks
 

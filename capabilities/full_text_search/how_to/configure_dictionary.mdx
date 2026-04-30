@@ -1,0 +1,54 @@
+---
+title: Configure a custom dictionary
+sidebarTitle: Configure dictionary
+description: Teach Meilisearch to treat groups of strings as a single term by supplying a supplementary dictionary of user-defined words.
+---
+
+import CodeSamplesGetDictionary1 from '/snippets/generated-code-samples/code_samples_get_dictionary_1.mdx';
+import CodeSamplesUpdateDictionary1 from '/snippets/generated-code-samples/code_samples_update_dictionary_1.mdx';
+import CodeSamplesResetDictionary1 from '/snippets/generated-code-samples/code_samples_reset_dictionary_1.mdx';
+
+The `dictionary` setting allows you to instruct Meilisearch to consider groups of strings as a single term by adding a supplementary dictionary of user-defined terms. Entries in the dictionary override the default tokenizer, so Meilisearch will recognize them as indivisible tokens during both indexing and search.
+
+## When to use a custom dictionary
+
+A custom dictionary is particularly useful in two situations:
+
+- **Datasets with many domain-specific words and in languages where words are not separated by whitespace**, such as Japanese. Adding domain terms or uninterrupted character sequences to the dictionary ensures Meilisearch treats them as single units instead of fragmenting them during tokenization.
+- **Space-separated languages that contain names or abbreviations with interleaved dots and spaces**, such as `"J. R. R. Tolkien"` and `"W. E. B. Du Bois"`. Without a custom dictionary, the default tokenizer splits these names into separate letters and periods, which makes them hard to match as a cohesive term.
+
+## Check current dictionary
+
+Retrieve the current `dictionary` setting for an index:
+
+<CodeSamplesGetDictionary1 />
+
+By default, the response is an empty array `[]`, meaning no custom dictionary entries are configured.
+
+## Update the dictionary
+
+Add custom terms to the dictionary:
+
+<CodeSamplesUpdateDictionary1 />
+
+After this request completes, Meilisearch treats `"J. R. R."` and `"W. E. B."` as single tokens. Queries for `"J. R. R. Tolkien"` will match documents where the name appears exactly as spelled, instead of being broken into separate characters.
+
+<Warning>
+Updating `dictionary` triggers a re-indexing of all documents in the index. This is an [asynchronous](/capabilities/indexing/tasks_and_batches/async_operations) operation. Use the [task API](/reference/api/tasks/get-all-tasks) to monitor progress.
+</Warning>
+
+## Reset the dictionary
+
+Clear the custom dictionary and return to the default tokenizer behavior:
+
+<CodeSamplesResetDictionary1 />
+
+## Dictionary vs. synonyms vs. stop words
+
+- Use [`synonyms`](/capabilities/full_text_search/relevancy/synonyms) to map different words to the same concept (for example, `NYC` to `New York City`).
+- Use [`stopWords`](/capabilities/full_text_search/how_to/configure_stop_words) to ignore common terms that add no signal to search.
+- Use `dictionary` to preserve multi-character or whitespace-containing sequences that the default tokenizer would otherwise split.
+
+<Info>
+For the full API reference, see [get dictionary](/reference/api/settings/get-dictionary).
+</Info>

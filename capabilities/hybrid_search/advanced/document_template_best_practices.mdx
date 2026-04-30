@@ -34,7 +34,11 @@ Take a look at this document from a database of movies:
 
 Use a custom `documentTemplate` value in your embedder configuration.
 
-The default `documentTemplate` includes all searchable fields with non-`null` values. In most cases, this adds noise and more information than the embedder needs to provide relevant search results.
+<Warning>
+If you do not manually set `documentTemplate`, Meilisearch falls back to a default template that includes **all searchable and non-null document fields**. This may lead to suboptimal performance and relevancy: the resulting prompt is usually longer than necessary, wastes tokens on fields that have little semantic value, and dilutes the parts of the document that actually matter.
+
+For best results, build short templates that only contain highly relevant data. If you are working with a long field, consider truncating it.
+</Warning>
 
 ## Only include highly relevant information
 
