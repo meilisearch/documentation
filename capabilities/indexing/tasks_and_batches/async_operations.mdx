@@ -183,7 +183,7 @@ Use [the cancel tasks endpoint](/reference/api/tasks/cancel-tasks) to cancel any
 Only `enqueued` and `processing` tasks can be canceled. Calling cancel on finished tasks (`succeeded`, `failed`, or `canceled`) has no effect on their state: the operation still succeeds, but the response reports `canceledTasks: 0`.
 </Warning>
 
-Task cancellation is itself an asynchronous operation that creates a `taskCancelation` task. Because cancellation is an **atomic transaction**, either all matched tasks are successfully canceled, or none are.
+Task cancelation is itself an asynchronous operation that creates a `taskCancelation` task. Because cancelation is an **atomic transaction**, either all matched tasks are successfully canceled, or none are.
 
 <Warning>
 **`POST /tasks/cancel` requires at least one filter.** To prevent users from accidentally canceling every enqueued and processing task, Meilisearch rejects unfiltered cancel requests with the [`missing_task_filters`](/reference/errors/error_codes#missing_task_filters) error.
@@ -202,7 +202,7 @@ You can filter tasks by `canceledBy` in [the list tasks endpoint](/reference/api
 
 ### Deleting tasks
 
-[Finished tasks](#task-status) remain visible in [the task list](/reference/api/tasks/list-tasks). To delete them manually, use the [delete tasks route](/reference/api/tasks/delete-tasks). Like cancellation, task deletion is an **atomic transaction**: either all matched tasks are successfully deleted, or none are.
+[Finished tasks](#task-status) remain visible in [the task list](/reference/api/tasks/list-tasks). To delete them manually, use the [delete tasks route](/reference/api/tasks/delete-tasks). Like cancelation, task deletion is an **atomic transaction**: either all matched tasks are successfully deleted, or none are.
 
 <Warning>
 Only finished tasks can be deleted. If you call the delete endpoint on `enqueued` or `processing` tasks, the request succeeds but `deletedTasks` is `0`. Cancel those tasks first and then delete them once they reach a finished state.

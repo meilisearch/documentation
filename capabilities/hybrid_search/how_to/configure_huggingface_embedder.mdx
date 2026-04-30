@@ -71,9 +71,9 @@ Use the optional `revision` field to pin a specific revision of a HuggingFace mo
 
 ### Choose a pooling method with `pooling`
 
-HuggingFace models combine per-token output vectors into a single document vector using a pooling strategy. The `pooling` field controls this behaviour:
+HuggingFace models combine per-token output vectors into a single document vector using a pooling strategy. The `pooling` field controls this behavior:
 
-| Value | Behaviour |
+| Value | Behavior |
 |---|---|
 | `"useModel"` | Meilisearch fetches the pooling method from the model configuration. **Default value for new embedders.** |
 | `"forceMean"` | Always use mean pooling. |

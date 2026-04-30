@@ -40,7 +40,7 @@ You can create up to 20 webhooks per instance via the [`/webhooks` API route](/r
 </Note>
 
 <Warning>
-The value of `Authorization` headers is redacted in responses from `GET /webhooks` and `GET /webhooks/{uid}`. Do not use the redacted header values returned by Meilisearch when updating a webhook, or the webhook will start sending invalid credentials to your endpoint. Store the original secret on your side and resend it explicitly whenever you patch the webhook.
+The value of `Authorization` headers is redacted in responses from `GET /webhooks` and `GET /webhooks/{uuid}`. Do not use the redacted header values returned by Meilisearch when updating a webhook, or the webhook will start sending invalid credentials to your endpoint. Store the original secret on your side and resend it explicitly whenever you patch the webhook.
 </Warning>
 
 <Note>

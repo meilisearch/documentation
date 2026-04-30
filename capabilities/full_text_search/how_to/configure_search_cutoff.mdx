@@ -39,7 +39,7 @@ Setting the cutoff too low may result in incomplete or empty result sets for bro
 
 ## Reset search cutoff
 
-Remove the search cutoff and return to the default behavior (no time limit):
+Remove the explicit search cutoff and return to the default behavior (`searchCutoffMs: null`, with Meilisearch's internal 1500 ms interruption threshold):
 
 <CodeSamplesResetSearchCutoff1 />
 
