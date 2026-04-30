@@ -1,0 +1,38 @@
+---
+title: Carbon footprint of Meilisearch Cloud regions
+sidebarTitle: Carbon footprint
+description: Understand the grid carbon intensity displayed next to Meilisearch Cloud regions, how it is calculated, and why it matters.
+---
+
+When selecting a region for your Meilisearch Cloud project, you may notice a green leaf icon next to certain regions. This page explains what that means and how we calculate the associated figures.
+
+## What is grid carbon intensity?
+
+Grid carbon intensity measures how much CO2 is emitted, on average, to produce one kilowatt-hour (kWh) of electricity in a given location. It is expressed in **grams of CO2 equivalent per kilowatt-hour (gCO2e/kWh)**.
+
+A lower number means the local electricity grid relies more on low-carbon energy sources (hydro, wind, solar, nuclear), while a higher number indicates a heavier reliance on fossil fuels (coal, gas).
+
+The green leaf icon highlights regions with a **low carbon intensity (below 150 gCO2e/kWh)**.
+
+## How is it calculated?
+
+We use the **location-based methodology** recommended by the [GHG Protocol](https://ghgprotocol.org/). This approach reflects the actual carbon mix of the local electricity grid, regardless of any renewable energy certificates (RECs) or power purchase agreements (PPAs) the cloud provider may have purchased.
+
+We chose this methodology because it gives the most honest, comparable picture across regions.
+
+Values are annual averages. Real-time intensity varies by hour, season, and weather conditions. We review these figures yearly as grid mixes evolve.
+
+## Data sources
+
+Figures are aggregated from the following sources:
+
+- **US regions**: [EPA eGRID](https://www.epa.gov/egrid/download-data)
+- **European regions**: [European Environment Agency](https://www.eea.europa.eu/data-and-maps/daviz/co2-emission-intensity-9/)
+- **Asia-Pacific and South America**: [IEA Emissions Factors 2025](https://www.iea.org/data-and-statistics/data-product/emissions-factors-2025)
+- **Aggregated coefficients**: [Cloud Carbon Footprint open methodology](https://www.cloudcarbonfootprint.org/docs/methodology/)
+
+## Why we share this
+
+Carbon intensity is becoming an important criterion for many teams, particularly in enterprise procurement. We want to give you the information you need to make an informed choice. Showing this data does not restrict access to any region; it is provided for transparency only.
+
+If you have questions or feedback, feel free to reach out via [Discord](https://discord.gg/meilisearch) or the [Meilisearch helpdesk](https://help.meilisearch.com/).
