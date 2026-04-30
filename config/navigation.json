@@ -989,6 +989,7 @@
                 "resources/help/telemetry",
                 "resources/help/versioning",
                 "resources/help/contributing_docs",
+                "resources/help/carbon_footprint",
                 "resources/migration/previous_docs_version"
               ]
             }
