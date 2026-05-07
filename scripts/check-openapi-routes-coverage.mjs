@@ -93,19 +93,27 @@ function normalizeRoute(route) {
 }
 
 // --- Resolve $ref pointers in a JSON object (one level deep, relative to baseDir) ---
-function resolveRefs(obj, baseDir) {
+function resolveRefs(obj, baseDir, refStack = new Set()) {
   if (Array.isArray(obj)) {
-    return obj.map((item) => resolveRefs(item, baseDir));
+    return obj.map((item) => resolveRefs(item, baseDir, refStack));
   }
   if (typeof obj === "object" && obj !== null) {
     if (typeof obj["$ref"] === "string") {
       const refPath = resolve(baseDir, obj["$ref"]);
+      if (refStack.has(refPath)) {
+        throw new Error(
+          `Circular $ref detected: ${[...refStack].join(" -> ")} -> ${refPath}`
+        );
+      }
       const refContent = JSON.parse(readFileSync(refPath, "utf8"));
-      return resolveRefs(refContent, dirname(refPath));
+      refStack.add(refPath);
+      const resolved = resolveRefs(refContent, dirname(refPath), refStack);
+      refStack.delete(refPath);
+      return resolved;
     }
     const result = {};
     for (const [key, value] of Object.entries(obj)) {
-      result[key] = resolveRefs(value, baseDir);
+      result[key] = resolveRefs(value, baseDir, refStack);
     }
     return result;
   }
