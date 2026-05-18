@@ -276,6 +276,10 @@
     "destination": "/resources/self_hosting/configuration/overview"
   },
   {
+    "source": "/learn/self_hosting/configure_meilisearch_at_launch",
+    "destination": "/resources/self_hosting/configuration/overview"
+  },
+  {
     "source": "/learn/self_hosted/install_meilisearch_locally",
     "destination": "/resources/self_hosting/getting_started/install_locally"
   },
@@ -582,6 +586,10 @@
   {
     "source": "/learn/ai_powered_search/vector_search",
     "destination": "/capabilities/hybrid_search/getting_started"
+  },
+  {
+    "source": "/learn/ai_powered_search/overview",
+    "destination": "/capabilities/hybrid_search/overview"
   },
   {
     "source": "/learn/ai_powered_search/hybrid_search",
@@ -1228,6 +1236,10 @@
     "destination": "/capabilities/security/overview"
   },
   {
+    "source": "/learn/security",
+    "destination": "/capabilities/security/overview"
+  },
+  {
     "source": "/learn/advanced/meilisearch_vs_elasticsearch",
     "destination": "/resources/comparisons/elasticsearch"
   },
@@ -1589,6 +1601,10 @@
   },
   {
     "source": "/learn/fine_tuning_results/hybrid_search",
+    "destination": "/capabilities/hybrid_search/overview"
+  },
+  {
+    "source": "/learn/fine_tuning_results/vector_search",
     "destination": "/capabilities/hybrid_search/overview"
   },
   {
