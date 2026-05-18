@@ -9,7 +9,7 @@
  */
 
 import { readFileSync } from "fs";
-import { resolve } from "path";
+import { resolve, dirname } from "path";
 
 const OPENAPI_PATH = resolve(
   process.cwd(),
@@ -92,9 +92,38 @@ function normalizeRoute(route) {
   });
 }
 
+// --- Resolve $ref pointers in a JSON object (one level deep, relative to baseDir) ---
+function resolveRefs(obj, baseDir, refStack = new Set()) {
+  if (Array.isArray(obj)) {
+    return obj.map((item) => resolveRefs(item, baseDir, refStack));
+  }
+  if (typeof obj === "object" && obj !== null) {
+    if (typeof obj["$ref"] === "string") {
+      const refPath = resolve(baseDir, obj["$ref"]);
+      if (refStack.has(refPath)) {
+        throw new Error(
+          `Circular $ref detected: ${[...refStack].join(" -> ")} -> ${refPath}`
+        );
+      }
+      const refContent = JSON.parse(readFileSync(refPath, "utf8"));
+      refStack.add(refPath);
+      const resolved = resolveRefs(refContent, dirname(refPath), refStack);
+      refStack.delete(refPath);
+      return resolved;
+    }
+    const result = {};
+    for (const [key, value] of Object.entries(obj)) {
+      result[key] = resolveRefs(value, baseDir, refStack);
+    }
+    return result;
+  }
+  return obj;
+}
+
 // --- Main ---
 const spec = JSON.parse(readFileSync(OPENAPI_PATH, "utf8"));
-const docsJson = JSON.parse(readFileSync(DOCS_JSON_PATH, "utf8"));
+const rawDocsJson = JSON.parse(readFileSync(DOCS_JSON_PATH, "utf8"));
+const docsJson = resolveRefs(rawDocsJson, dirname(DOCS_JSON_PATH));
 
 const openapiRoutes = getOpenapiRoutes(spec);
 const docsJsonRoutes = getDocsJsonRoutes(docsJson);
@@ -146,7 +175,7 @@ if (extra.length > 0) {
 }
 
 if (missing.length === 0 && extra.length === 0) {
-  console.log("✓ All OpenAPI routes are covered in docs.json and vice versa.");
+  console.log("✓ All OpenAPI routes are covered in docs.json (and referenced files) and vice versa.");
 }
 
 if (missing.length > 0) {
