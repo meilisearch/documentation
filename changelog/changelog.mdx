@@ -4,6 +4,132 @@ description: "New features and improvements in Meilisearch"
 rss: true
 ---
 
+<Update label="v1.44" description="2026-05-18">
+
+## New Features
+
+### Remote federated facet search
+
+Facet search now supports searching across all shards in a network. When using the `network` experimental feature with a `leader` defined, facet search calls to `POST /indexes/{indexUid}/facet-search` now default to remote federated search, fetching and merging results from all shards.
+
+You can control this behavior explicitly using the new `useNetwork` parameter in the facet search request body.
+
+### Human-formatted database sizes and detailed internal database breakdown
+
+The stats endpoints now support two new query parameters to give you better visibility into your index storage:
+
+- `showInternalDatabaseSizes`: When set to `true`, index stats include an `internalDatabaseSizes` object showing the size of each internal database component
+- `sizeFormat`: Set to `human` to get human-readable sizes (MiB, GiB, etc.) instead of bytes
+
+Example with both parameters:
+
+```bash
+curl -X GET "http://localhost:7700/indexes/movies/stats?showInternalDatabaseSizes=true&sizeFormat=human"
+```
+
+```json
+{
+  "numberOfDocuments": 31944,
+  "rawDocumentDbSize": "19.64 MiB",
+  "avgDocumentSize": "636 B",
+  "isIndexing": false,
+  "internalDatabaseSizes": {
+    "wordPairProximityDocids": "96.16 MiB",
+    "documents": "19.64 MiB",
+    "wordPositionDocids": "17.83 MiB",
+    "wordFidDocids": "10.22 MiB",
+    "wordPrefixPositionDocids": "9.78 MiB",
+    "wordDocids": "9.02 MiB",
+    "wordPrefixFidDocids": "4.39 MiB",
+    "wordPrefixDocids": "3.27 MiB",
+    "main": "1.36 MiB",
+    "externalDocumentsIds": "976 KiB",
+    "fieldIdWordCountDocids": "240 KiB",
+    "exactWordPrefixDocids": "16 KiB",
+    "celluliteMetadata": "16 KiB"
+  },
+  "fieldDistribution": {
+    "genres": 31944,
+    "id": 31944,
+    "overview": 31944,
+    "poster": 31944,
+    "release_date": 31944,
+    "title": 31944
+  }
+}
+```
+
+The same parameters work with `GET /stats` for global statistics.
+
+## Improvements
+
+### Reduced memory usage during indexing
+
+Indexing memory consumption has been reduced through optimizations in prefix computation and by avoiding unnecessary deserialization. If you still experience high memory usage during post-processing, enable the `--experimental-reduce-indexing-memory-usage` option.
+
+### Improved GeoJSON indexing performance
+
+GeoJSON indexing is now faster and more efficient. The optimization avoids reprocessing documents already indexed in dense cells, handling only newly added documents incrementally as they descend through the spatial cell tree.
+
+### Network settings propagation
+
+Settings changes made through individual settings subroutes are now correctly propagated to other remotes in your network.
+
+### Improved Mistral provider compatibility
+
+Fixed an issue where the chat route could fail when using Mistral as a provider.
+
+## Other
+
+### Breaking changes
+
+**Remote federated facet search is now the default**: When using the `network` experimental feature with sharding enabled (`leader` is not `null`), `POST /indexes/{indexUid}/facet-search` calls now default to remote federated search instead of local-only search. The behavior can be controlled via the new `useNetwork` parameter.
+
+**Embedder timeout now tied to search cutoff**: The timeout for calling an external REST embedder at search time is now based on the `searchCutOffMs` setting in the index, rather than using a fixed timeout. If you observe missing semantic results or HTTP 500 errors for pure semantic search after upgrading, increase the value of `searchCutOffMs` in your index settings.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.44.0)
+
+</Update>
+
+<Update label="v1.43" description="2026-05-04">
+
+## New Features
+
+### New settings indexer
+
+The new settings indexer provides more efficient handling of index settings modifications. It now supports filterable, sortable, facet search, and custom (asc/desc) attributes in addition to the previously-supported searchable, exact, proximity precision, and embedders.
+
+- For Meilisearch Cloud users, the new settings indexer is disabled by default and can be enabled on a case-by-case basis for scaling purposes.
+- For OSS users, the new settings indexer can be disabled by setting the `MEILI_EXPERIMENTAL_NO_EDITION_2024_FOR_SETTINGS` environment variable to `true`.
+
+## Improvements
+
+### Improve facet search indexing performance
+
+Facet search indexing is now faster. The internal data structure generation previously performed multiple full scans on internal entries; it now scans only specific entries dedicated to facet searchable fields.
+
+### Improve task queue compaction integration
+
+The `GET /health` route now returns HTTP 500 after a successful task queue compaction to signal that Meilisearch should be restarted so that tasks can be enqueued again. For Meilisearch Cloud users, this ensures that compacting the task queue will automatically restart the instance after the compaction.
+
+## Other
+
+### Fixed lexicographic filters on strings
+
+Fixed a bug where string facet values used in `<`, `<=`, `>`, `>=`, and `IN` filters were not normalized before comparison to facet values. This caused some values in documents (for example, `2026-01-01T00:00:00`) to appear to have different ordering than expected due to normalization differences (becoming `2026-01-01t00:00:00`).
+
+### Fixed typo tolerance regression
+
+Fixed the `WordDelta::added_or_deleted_words` function that was causing typo tolerance issues introduced in v1.41.
+
+### Security fix in v1.43.1
+
+v1.43.1 contains a fix for an authenticated SSRF vulnerability. Self-hosting users are recommended to upgrade if they allow third parties to configure Meilisearch instances. Meilisearch Cloud users are not required to update.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.43.0)
+
+</Update>
+
 <Update label="v1.42" description="2026-04-13">
 
 ## New Features
