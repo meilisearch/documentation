@@ -27,6 +27,15 @@
   "appearance": {
     "default": "dark"
   },
+  "contextual": {
+    "options": [
+      "copy",
+      "view",
+      "chatgpt",
+      "claude",
+      "cursor"
+    ]
+  },
   "navbar": {
     "primary": {
       "type": "button",
