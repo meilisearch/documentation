@@ -113,7 +113,7 @@ Use a MultiPolygon when a single document covers multiple separate areas:
 
 ## Filtering and sorting with GeoJSON documents
 
-Filtering works the same way with GeoJSON documents as with `_geo` documents. Add `_geo` to [`filterableAttributes`](/capabilities/filtering_sorting_faceting/getting_started), then use `_geoRadius`, `_geoBoundingBox`, or `_geoPolygon` in your search queries.
+Filtering works the same way with GeoJSON documents as with `_geo` documents. Add `_geojson` to [`filterableAttributes`](/capabilities/filtering_sorting_faceting/getting_started), then use `_geoRadius`, `_geoBoundingBox`, or `_geoPolygon` in your search queries.
 
 <CodeGroup>
 
@@ -121,7 +121,7 @@ Filtering works the same way with GeoJSON documents as with `_geo` documents. Ad
 curl \
   -X PUT 'MEILISEARCH_URL/indexes/neighborhoods/settings/filterable-attributes' \
   -H 'Content-type:application/json' \
-  --data-binary '["_geo"]'
+  --data-binary '["_geojson"]'
 ```
 
 </CodeGroup>
