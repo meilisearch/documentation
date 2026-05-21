@@ -3,7 +3,7 @@ title: Use GeoJSON format
 description: Index complex geometries like polygons and multi-polygons using the GeoJSON standard format.
 ---
 
-import CodeSamplesGeosearchGuideFilterSettingsGeojson1 from '/snippets/generated-code-samples/code_samples_geosearch_guide_filter_settings_geojson_1.mdx';
+import CodeSamplesGeosearchGuideFilterSettings2 from '/snippets/generated-code-samples/code_samples_geosearch_guide_filter_settings_2.mdx';
 
 GeoJSON is a standardized format for encoding geographic data structures. Meilisearch supports GeoJSON through the `_geojson` field, allowing you to index complex shapes like polygons and multi-polygons in addition to simple point coordinates.
 
@@ -117,7 +117,7 @@ Use a MultiPolygon when a single document covers multiple separate areas:
 
 Filtering works the same way with GeoJSON documents as with `_geo` documents. Add `_geojson` to [`filterableAttributes`](/capabilities/filtering_sorting_faceting/getting_started), then use `_geoRadius`, `_geoBoundingBox`, or `_geoPolygon` in your search queries.
 
-<CodeSamplesGeosearchGuideFilterSettingsGeojson1 />
+<CodeSamplesGeosearchGuideFilterSettings2 />
 
 Then search as usual:
 
