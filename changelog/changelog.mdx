@@ -4,6 +4,45 @@ description: "New features and improvements in Meilisearch"
 rss: true
 ---
 
+<Update label="v1.45" description="2026-05-26">
+
+## Improvements
+
+**Faster settings indexing performance**
+
+Meilisearch now handles more settings through the optimized settings indexer, significantly improving performance when changing settings. The following settings are now directly handled by the new indexer without requiring a full re-indexing:
+
+- Displayed fields
+- Synonyms
+- Primary key
+- Typo tolerance settings (authorize typos, min word length for one and two typos)
+- Facet settings (max values per facet, sort facet values by)
+- Pagination max total hits
+- Search cutoff
+- Chat settings
+- Foreign keys
+- Global facet search
+
+If you encounter any issues with the new settings indexer, you can disable it by setting the environment variable `MEILI_EXPERIMENTAL_NO_EDITION_2024_FOR_SETTINGS=true` or using the equivalent CLI parameter.
+
+**Improved document fetch performance**
+
+Document fetching no longer blocks Actix worker threads, resulting in better overall system responsiveness when retrieving documents.
+
+**Optimized deletion batching**
+
+Meilisearch now more efficiently batches filter-based deletions when mixed with document additions, improving indexing performance for this operation pattern. However, deleting documents by ID remains the recommended approach for optimal performance.
+
+## Other
+
+**Fixed binary quantization configuration corruption**
+
+Resolved an issue where changing the binary quantization setting in embedder configurations would corrupt the database, preventing future changes to the quantization. If your database was affected by this issue, you may need to recreate the binary-quantized embedder from scratch.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.45.0)
+
+</Update>
+
 <Update label="v1.44" description="2026-05-18">
 
 ## New Features
