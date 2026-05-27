@@ -4,16 +4,8 @@ sidebarTitle: Migrating to Meilisearch Cloud
 description: Meilisearch Cloud is the recommended way of using Meilisearch. This guide walks you through migrating Meilisearch from a self-hosted installation to Meilisearch Cloud.
 ---
 
-import CodeSamplesPostDump1 from '/snippets/generated-code-samples/code_samples_post_dump_1.mdx';
 import CodeSamplesExportPost1 from '/snippets/generated-code-samples/code_samples_export_post_1.mdx';
 
-There are two ways to migrate a self-hosted Meilisearch instance to Meilisearch Cloud:
-
-| | Track 1: Export API | Track 2: Dumps |
-|---|---|---|
-| **How it works** | Pushes data directly from your instance to Cloud over the network | Creates a file on disk that you upload when creating a Cloud project |
-| **Best for** | Running instances with network access to Cloud | Offline transfers, backups, or version upgrades |
-| **File handling** | None | Must download dump file and upload during project creation |
 
 ## Requirements
 
@@ -23,7 +15,7 @@ There are two ways to migrate a self-hosted Meilisearch instance to Meilisearch 
 
 ---
 
-## Track 1: Export API (recommended)
+## Export API
 
 The export API pushes your data directly from your self-hosted instance to a remote Meilisearch instance without creating any intermediate files.
 
@@ -48,54 +40,6 @@ Once the task status is `succeeded`, open your Cloud project and run a few searc
 <Warning>
 Meilisearch Cloud automatically generates a new master key during project creation. If you are using [security keys](/resources/self_hosting/security/basic_security), update your application to use the newly generated Meilisearch Cloud API keys.
 </Warning>
-
----
-
-## Track 2: Dumps
-
-Use this track if your self-hosted instance cannot reach Cloud directly, or if you prefer an offline file-based migration.
-
-### 1. Export a dump from your self-hosted installation
-
-A dump is a compressed file containing all your indexes, documents, and settings. Make sure your instance is running, then run:
-
-<CodeSamplesPostDump1 />
-
-Meilisearch will return a summarized task object and begin creating the dump. [Use the returned object's `taskUid` to monitor its progress.](/capabilities/indexing/tasks_and_batches/async_operations)
-
-Once the task completes, find the dump file in your project's dump directory (default: `/dumps`).
-
-<Note>
-Instance configuration options and experimental features that can only be activated at launch are not included in dumps.
-
-Once you have successfully migrated your data to Meilisearch Cloud, use the project overview interface to reactivate available options. Not all instance options are supported in the Cloud.
-</Note>
-
-### 2. Create a Meilisearch Cloud project and import the dump
-
-Navigate to [Meilisearch Cloud](https://cloud.meilisearch.com) and log in. You can only import dumps into new projects.
-
-Click "Create a project" or "New project":
-
-<Frame>
-  <img src="/assets/images/cloud-migration/1-new-project.png" alt="The Meilisearch Cloud menu, featuring the 'New Project' button" />
-</Frame>
-
-Fill in your project name, choose a server location, and select your plan. Then click "Import .dump" and select the dump file you generated:
-
-<Frame>
-  <img src="/assets/images/cloud-migration/2-import-dump.png" alt="A modal window with three mandatory fields: 'Project name', 'Select a region', and 'Select a plan'. Further down, an optional field: 'Import .dump'" />
-</Frame>
-
-Meilisearch will start creating the project and importing your data. This may take a few moments depending on the size of your dataset.
-
-<Warning>
-Meilisearch Cloud automatically generates a new master key during project creation. If you are using [security keys](/resources/self_hosting/security/basic_security), update your application to use the newly generated Meilisearch Cloud API keys.
-</Warning>
-
-### 3. Verify the migration
-
-Once your project is ready, click on it to open the project overview. Click "Search preview" in the top bar and run a few test searches to confirm all data was migrated successfully.
 
 ---
 
