@@ -1012,6 +1012,11 @@ geosearch_guide_filter_settings_1: |-
     -X PUT 'MEILISEARCH_URL/indexes/restaurants/settings/filterable-attributes' \
     -H 'Content-type:application/json' \
     --data-binary '["_geo"]'
+geosearch_guide_filter_settings_2: |-
+  curl \
+    -X PUT 'MEILISEARCH_URL/indexes/neighborhoods/settings/filterable-attributes' \
+    -H 'Content-type:application/json' \
+    --data-binary '["_geojson"]'
 geosearch_guide_filter_usage_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/restaurants/search' \
