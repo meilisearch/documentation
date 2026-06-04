@@ -39,11 +39,11 @@ Each row shows:
 - **Duration**: total wall-clock time for the batch
 - **Started date**: when the batch began processing
 
-Click a batch to open its detail panel on the right, or use the eye icon to open the full JSON view.
+Click a batch to open its details page.
 
 ### Progress trace
 
-The detail panel includes a `progressTrace` object with timing for every internal step of the indexing pipeline:
+The details page includes a `progressTrace` section with timing for every internal step of the indexing pipeline:
 
 <Frame>
   <img src="/assets/images/platform/monitoring/batch_detail.png" alt="Batch detail JSON panel showing progressTrace with per-step timing, internalDatabaseSizes, embedderRequests, and writeChannelCongestion" />
@@ -70,7 +70,7 @@ Key steps visible in the trace:
 
 ### Internal database sizes
 
-The `internalDatabaseSizes` field shows the current on-disk size of each internal data structure, along with the delta from this batch:
+The Internal DB table shows the current on-disk size of each internal data structure, along with the delta from this batch:
 
 | Field | What it stores |
 |-------|---------------|
