@@ -7,7 +7,7 @@ description: Scale your Meilisearch Cloud project's CPU and RAM up or down from 
   Resource management applies to **resource-based projects** only. Usage-based projects scale automatically and do not have a configurable resource tier. If you are on a usage-based plan and want more control over your infrastructure, you can migrate to a resource-based project at any time by creating a new resource-based project and re-indexing your data.
 </Info>
 
-You can change a project's resource tier at any time from the Meilisearch Cloud project settings. Scaling up increases available CPU and RAM, scaling down reduces costs.
+You can scale a project's resources up at any time from the Meilisearch Cloud dashboard, which increases available CPU and RAM. Scaling down is not available from the dashboard: contact [support@meilisearch.com](mailto:support@meilisearch.com) to reduce a project's resource tier.
 
 ## Resource tiers
 
@@ -34,22 +34,14 @@ Signs that your project needs more resources:
 ## Changing the plan
 
 1. Open your project in the Meilisearch Cloud dashboard.
-2. Go to **Settings** and find the **Resource plan** section.
-3. Click **Change plan**.
-
-<Warning>
-  **Screenshot needed:** Replace this placeholder with a screenshot of the resource settings panel showing the current plan and a "Change plan" button before publishing.
-</Warning>
+2. Go to **Infrastructure** and find the **Manage resources** button.
+3. Click on the dropdown to see all available options.
 
 <Frame>
   <img src="/assets/images/platform/infrastructure/resource_settings.png" alt="Meilisearch Cloud project resource settings panel" />
 </Frame>
 
 4. Select the desired tier from the plan picker.
-
-<Warning>
-  **Screenshot needed:** Replace this placeholder with a screenshot of the plan selection UI showing available tiers with CPU, RAM, and pricing information before publishing.
-</Warning>
 
 <Frame>
   <img src="/assets/images/platform/infrastructure/plan_selection.png" alt="Meilisearch Cloud plan selection UI showing available resource tiers" />
