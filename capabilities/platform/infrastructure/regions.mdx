@@ -3,24 +3,29 @@ title: Cloud regions
 description: Reference of all available Meilisearch Cloud regions with location and latency guidance.
 ---
 
-Meilisearch Cloud is available in six regions. Choosing the right region is one of the most impactful decisions for search latency: network round-trip time between your users and the Meilisearch instance is typically the largest contributor to perceived search speed.
+Meilisearch Cloud is available in nine regions. Choosing the right region is one of the most impactful decisions for search latency: network round-trip time between your users and the Meilisearch instance is typically the largest contributor to perceived search speed.
 
 ## Available regions
 
 | Code | Location | Recommended use case |
 |------|----------|---------------------|
-| `FRA` | Frankfurt, Germany | European users (GDPR-compliant) |
+| `FRA` | Frankfurt, Germany | European users with EU data residency requirements |
+| `PAR` | Paris, France | European users; low-carbon region on the AWS European Sovereign Cloud |
 | `LON` | London, United Kingdom | UK and Western Europe |
-| `SGP` | Singapore | Southeast Asia, Oceania, and APAC |
+| `SGP` | Singapore | Southeast Asia and APAC |
 | `JPN` | Japan | Japan and Northeast Asia |
+| `SYD` | Sydney, Australia | Australia and Oceania |
 | `SFO` | San Francisco, United States | US West Coast and Pacific |
-| `NYC` | New York, United States | US East Coast, Latin America, and global default |
+| `NYC` | New York, United States | US East Coast and global default |
+| `SAO` | São Paulo, Brazil | South America and Latin America |
 
 ## Choosing a region
 
 **Minimize latency for your users.** A search that takes 5 ms to execute on the server can feel instant or sluggish depending on whether the user is 10 ms or 200 ms away. Choose the region closest to the majority of your users.
 
-**Consider data residency requirements.** If your application handles personal data subject to GDPR or other regional regulations, ensure your project is hosted in a compliant region. `FRA` and `LON` are located within the EU and UK.
+**Consider data residency requirements.** If your application handles personal data subject to GDPR or other regional regulations, host your project in an appropriate region and validate your own legal and compliance obligations. `FRA` and `PAR` are located within the EU, and `LON` is in the UK. For workloads with strict European data sovereignty requirements, `PAR` runs on the AWS European Sovereign Cloud.
+
+**Minimize your carbon footprint.** Regions differ in the carbon intensity of their local power grid. `PAR` is a low-carbon region thanks to France's largely low-emission electricity mix. See [carbon footprint](/resources/help/carbon_footprint) for more on how region choice affects emissions.
 
 **Plan for multiple regions if you have a global audience.** You can create separate projects per region and route search traffic to the nearest instance from your application layer. Each project is billed independently.
 
