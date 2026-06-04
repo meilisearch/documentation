@@ -34,7 +34,7 @@ Resources scale automatically. You do not choose a tier. The Cloud UI shows your
 Regardless of billing model:
 
 - **Per-project billing.** Each project is billed independently. A team with multiple projects is billed the sum of all project charges.
-- **Prorated daily cycle.** Creating or deleting a project mid-day adjusts the charge proportionally.
+- **Prorated charges (resource-based).** For resource-based projects, creating or deleting a project mid-cycle adjusts the charge proportionally to the time used.
 - **No per-seat fees.** Adding team members does not affect billing.
 
 ## Regions and pricing
@@ -103,7 +103,7 @@ For larger workloads, contact [sales@meilisearch.com](mailto:sales@meilisearch.c
 
 ### Step 3: Consider vCPU for high query volume
 
-RAM is almost always the bottleneck. However, if your workload involves sustained high QPS (hundreds of searches per second), choose a tier with more vCPUs. Tiers L and below share 2 vCPUs, while XL and above provide dedicated cores.
+RAM is almost always the bottleneck. However, if your workload involves sustained high QPS (hundreds of searches per second), choose a tier with more vCPUs. Tiers L and below share CPU resources, while XL and above provide dedicated cores.
 
 ### Interactive estimator
 
