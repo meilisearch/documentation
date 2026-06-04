@@ -4377,7 +4377,7 @@
   },
   {
     "source": "/capabilities/teams",
-    "destination": "/capabilities/platform/teams"
+    "destination": "/capabilities/platform/teams/overview"
   },
   {
     "source": "/capabilities/teams/overview",
@@ -4425,7 +4425,7 @@
   },
   {
     "source": "/capabilities/search",
-    "destination": "/capabilities/analytics/how_to/ignore_search_requests"
+    "destination": "/capabilities/full_text_search/overview"
   },
   {
     "source": "/getting_started/quick_start",
