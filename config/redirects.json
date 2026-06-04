@@ -4422,5 +4422,109 @@
   {
     "source": "/capabilities/platform/security/advanced/tenant_token_payload",
     "destination": "/capabilities/security/advanced/tenant_token_payload"
+  },
+  {
+    "source": "/capabilities/search",
+    "destination": "/capabilities/analytics/how_to/ignore_search_requests"
+  },
+  {
+    "source": "/getting_started/quick_start",
+    "destination": "/resources/self_hosting/getting_started/quick_start"
+  },
+  {
+    "source": "/guides/front_end/react",
+    "destination": "/getting_started/instant_meilisearch/react"
+  },
+  {
+    "source": "/guides/integration/laravel",
+    "destination": "/getting_started/frameworks/laravel"
+  },
+  {
+    "source": "/learn/administration/update",
+    "destination": "/capabilities/indexing/how_to/add_and_update_documents"
+  },
+  {
+    "source": "/learn/advanced/updating.html.8",
+    "destination": "/capabilities/analytics/advanced/analytics_metrics"
+  },
+  {
+    "source": "/learn/advanced/zh_cn",
+    "destination": "/capabilities/analytics/advanced/analytics_metrics"
+  },
+  {
+    "source": "/learn/analytics/search_analytics",
+    "destination": "/capabilities/analytics/how_to/ignore_search_requests"
+  },
+  {
+    "source": "/learn/architecture/changelog",
+    "destination": "/changelog/changelog"
+  },
+  {
+    "source": "/learn/getting_started/first_project",
+    "destination": "/getting_started/first_project"
+  },
+  {
+    "source": "/learn/self_hosted/install_docker",
+    "destination": "/resources/self_hosting/getting_started/docker"
+  },
+  {
+    "source": "/learn/self_hosted/installing_meilisearch",
+    "destination": "/getting_started/instant_meilisearch/docsearch"
+  },
+  {
+    "source": "/learn/self_hosting/getting_started/installation",
+    "destination": "/resources/self_hosting/getting_started/docker"
+  },
+  {
+    "source": "/learn/update_and_migration/updating.MissingVersionFileMalformedVersionFileVersionMismatchmajorminorpatchE",
+    "destination": "/capabilities/indexing/how_to/add_and_update_documents"
+  },
+  {
+    "source": "/reference/open-api",
+    "destination": "/reference/api/authorization"
+  },
+  {
+    "source": "/resources/self_hosting/getting_started/install_docker",
+    "destination": "/resources/self_hosting/getting_started/docker"
+  },
+  {
+    "source": "/resources/self_hosting/sharding/cluster_setup",
+    "destination": "/resources/self_hosting/sharding/setup_sharded_cluster"
+  },
+  {
+    "source": "/resources/self_hosting/sharding/sharded_cluster",
+    "destination": "/resources/self_hosting/sharding/setup_sharded_cluster"
+  },
+  {
+    "source": "/sdks/dart/quick_start",
+    "destination": "/getting_started/sdks/dart"
+  },
+  {
+    "source": "/sdks/go/quick_start",
+    "destination": "/getting_started/sdks/go"
+  },
+  {
+    "source": "/sdks/java/quick_start",
+    "destination": "/getting_started/sdks/java"
+  },
+  {
+    "source": "/sdks/javascript/quick_start",
+    "destination": "/getting_started/sdks/javascript"
+  },
+  {
+    "source": "/sdks/php/quick_start",
+    "destination": "/getting_started/sdks/php"
+  },
+  {
+    "source": "/sdks/python/quick_start",
+    "destination": "/getting_started/sdks/python"
+  },
+  {
+    "source": "/security/sso",
+    "destination": "/capabilities/platform/teams/how_to/configure_sso_for_team"
+  },
+  {
+    "source": "/zh",
+    "destination": "/getting_started/first_project"
   }
 ]
