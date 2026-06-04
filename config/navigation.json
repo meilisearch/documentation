@@ -298,7 +298,8 @@
                   "pages": [
                     "capabilities/analytics/how_to/bind_events_to_user",
                     "capabilities/analytics/how_to/track_click_events",
-                    "capabilities/analytics/how_to/track_conversion_events"
+                    "capabilities/analytics/how_to/track_conversion_events",
+                    "capabilities/analytics/how_to/ignore_search_requests"
                   ]
                 },
                 {
