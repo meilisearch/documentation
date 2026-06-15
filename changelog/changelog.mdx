@@ -4,6 +4,78 @@ description: "New features and improvements in Meilisearch"
 rss: true
 ---
 
+<Update label="v1.47" description="2026-06-15">
+
+## New Features
+
+**Search personalization on federated search**
+
+You can now use [search personalization](/capabilities/personalization/overview) in federated search requests. As with `page`/`hitsPerPage` and `limit`/`offset`, the personalization option must be set inside the `federation` object. If you place it on an individual query instead, Meilisearch returns an error reminding you to move it into `federation`.
+
+## Improvements
+
+**The new settings indexer is now feature complete**
+
+The new settings indexer now handles tokenizer-related settings, including locales, dictionary, synonyms, stop words, separator tokens, and non-separator tokens. With this addition, all settings tasks are handled by the new indexer unless you set `MEILI_EXPERIMENTAL_NO_EDITION_2024_FOR_SETTINGS=true`. This brings better scaling behavior, much faster task cancellation, and a more precise progress view when updating settings.
+
+**More observability metrics**
+
+Meilisearch now exposes additional Prometheus metrics, including document throughput, making it easier to monitor indexing performance and debug your instance.
+
+## Other
+
+**Search pipeline refactor**
+
+The search pipeline has been refactored so that all search requests run through a unified federated search implementation under the hood. This introduces a small breaking change: some error messages have been updated and a few error codes have changed (for example, in certain cases `MultiSearchError` may now be returned where `SearchError` was previously returned, and vice versa). If your application inspects error codes, review your error handling when upgrading.
+
+**Bug fixes**
+
+- Placing `attributeRank` or `wordPosition` before `words` in `rankingRules` no longer removes hits from the response.
+- `searchCutoffMs` is no longer ignored under certain conditions when embedding documents.
+- Remote federated search and `useNetwork: true` requests no longer fail when a filter contains a single quote (`'`).
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.47.0)
+
+</Update>
+
+<Update label="v1.46" description="2026-06-08">
+
+## New Features
+
+**Queue document fetch routes (experimental)**
+
+A new experimental feature, `queueDocumentsFetch`, makes the `GET /indexes/:uid/documents` and `POST /indexes/:uid/documents/fetch` routes wait in the search queue when no thread is available to process them, improving stability under heavy load.
+
+## Improvements
+
+**Expanded new settings indexer support**
+
+The new settings indexer now handles more parameters, so changing them no longer requires a full re-indexing:
+
+- Exact words and disable-on-words
+- Exact and disable settings on numbers
+- Prefix search settings (prefix computation)
+
+This makes the engine more efficient when updating these settings.
+
+## Other
+
+**Fixed deletion batching regression**
+
+Fixed a regression introduced in v1.45.0 affecting the auto-batching of deletion by filter together with document additions and updates. This operation is now batched correctly.
+
+**Fixed S3 multipart upload part size**
+
+Meilisearch now respects the configured multipart part size when uploading snapshots to S3, never creating a part larger than the defined size (except for the last part).
+
+**Fixed panic on incomplete filters**
+
+An incomplete filter now returns an error instead of causing an internal panic.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.46.0)
+
+</Update>
+
 <Update label="v1.45" description="2026-05-26">
 
 ## Improvements
