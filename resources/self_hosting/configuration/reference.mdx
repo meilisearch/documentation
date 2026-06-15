@@ -125,6 +125,10 @@ Dumpless upgrade are not currently atomic. It is possible some processes fail an
 
 Sets the directory where Meilisearch will create dump files.
 
+<Note>
+`--dump-dir` only controls where the final compressed `.dump` file is written. While creating a dump, Meilisearch first builds an uncompressed copy of your data in a temporary staging directory. This directory is located in the path indicated by the `TMPDIR` environment variable, defaulting to `/tmp` on most systems, and not in `--dump-dir`. On instances with a large database and a small `/tmp` partition, this can cause `No space left on device` errors even when `--dump-dir` points to a volume with plenty of free space. To avoid this, set `TMPDIR` to a directory on a volume with enough space for an uncompressed copy of your data before launching Meilisearch.
+</Note>
+
 [Learn more about creating dumps](/reference/api/management/create-dump).
 
 ### Import dump
@@ -292,6 +296,10 @@ When using the configuration file, it is also possible to explicitly pass a bool
 **Expected value**: a filepath pointing to a valid directory
 
 Sets the directory where Meilisearch will store snapshots.
+
+<Note>
+`--snapshot-dir` only controls where the final `.snapshot` file is written. While creating a snapshot, Meilisearch first copies your entire database (the raw database files) into a temporary staging directory. This directory is located in the path indicated by the `TMPDIR` environment variable, defaulting to `/tmp` on most systems, and not in `--snapshot-dir`. On instances with a large database and a small `/tmp` partition, this can cause `No space left on device` errors even when `--snapshot-dir` points to a volume with plenty of free space. To avoid this, set `TMPDIR` to a directory on a volume with enough space for a full copy of your database before launching Meilisearch.
+</Note>
 
 ### Uncompressed snapshots <NoticeTag type="experimental" label="experimental" />
 
