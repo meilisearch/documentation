@@ -11,8 +11,6 @@ This tutorial will guide you through the steps of building a relevant and powerf
   - [Configuration file](#configuration-file)
   - [Run the scraper](#run-the-scraper)
 - [Integrate the search bar](#integrate-the-search-bar)
-  - [For VuePress documentation sites](#for-vuepress-documentation-sites)
-  - [For all kinds of documentation](#for-all-kinds-of-documentation)
 - [What's next?](#next-steps)
 
 ## Run a Meilisearch instance
@@ -108,63 +106,7 @@ We recommend running the scraper at each new deployment of your documentation us
 
 ## Integrate the search bar
 
-If your documentation is not a VuePress application, you can directly go to [this section](#for-all-kinds-of-documentation).
-
-### For VuePress documentation sites
-
-If you use VuePress for your documentation, we provide a [VuePress plugin](https://github.com/meilisearch/vuepress-plugin-meilisearch). This plugin is used in production in the Meilisearch documentation.
-
-In your VuePress project:
-
-<Tabs>
-<Tab title="yarn">
-
-```bash
-yarn add vuepress-plugin-meilisearch
-```
-
-</Tab>
-
-<Tab title="npm">
-
-```bash
-npm install vuepress-plugin-meilisearch
-```
-
-</Tab>
-</Tabs>
-
-In your `config.js` file:
-
-```js
-module.exports = {
-  plugins: [
-    [
-      "vuepress-plugin-meilisearch",
-      {
-        "hostUrl": "<your-meilisearch-host-url>",
-        "apiKey": "<your-meilisearch-api-key>",
-        "indexUid": "docs"
-      }
-    ],
-  ],
-}
-```
-
-The `hostUrl` and the `apiKey` fields are the credentials of the Meilisearch instance. Following on from this tutorial, they are respectively `MEILISEARCH_URL` and your `Default Search API Key`.
-
-`indexUid` is the index identifier in your Meilisearch instance in which your website content is stored. It has been defined in the [config file](#configuration-file).
-
-These three fields are mandatory, but more [optional fields are available](https://github.com/meilisearch/vuepress-plugin-meilisearch#customization) to customize your search bar.
-
-<Warning>
-Since the configuration file is public, we strongly recommend providing a key that can only access [the search endpoint](/reference/api/search/search-with-post) , such as the `Default Search API Key`, in a production environment.
-Read more about [Meilisearch security](/resources/self_hosting/security/basic_security).
-</Warning>
-
-### For all kinds of documentation
-
-If you don't use VuePress for your documentation, we provide a [front-end SDK](https://github.com/meilisearch/docs-searchbar.js) to integrate a powerful and relevant search bar to any documentation website.
+You can use [meilisearch-docsearch](https://github.com/tauri-apps/meilisearch-docsearch), a community-maintained front-end component, to integrate a search bar into any documentation website.
 
 ![Docxtemplater search bar updating results for "HTML"](/assets/images/tuto-searchbar-for-docs/docxtemplater-searchbar-demo.gif)
 _[Docxtemplater](https://docxtemplater.com/) search bar demo_
@@ -173,45 +115,39 @@ _[Docxtemplater](https://docxtemplater.com/) search bar demo_
 <!DOCTYPE html>
 <html>
   <head>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docs-searchbar.js@{version}/dist/cdn/docs-searchbar.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/meilisearch-docsearch@latest/dist/index.css"
+    />
   </head>
-
   <body>
-    <input type="search" id="search-bar-input">
-    <script src="https://cdn.jsdelivr.net/npm/docs-searchbar.js@{version}/dist/cdn/docs-searchbar.min.js"></script>
+    <div id="docsearch"></div>
+
+    <script src="https://unpkg.com/meilisearch-docsearch@latest/dist/index.global.js"></script>
     <script>
-      docsSearchBar({
-        hostUrl: '<your-meilisearch-host-url>',
+      const { docsearch } = window.__docsearch_meilisearch__;
+      docsearch({
+        container: '#docsearch',
+        host: '<your-meilisearch-host-url>',
         apiKey: '<your-meilisearch-api-key>',
         indexUid: 'docs',
-        inputSelector: '#search-bar-input',
-        debug: true // Set debug to true if you want to inspect the dropdown
       });
     </script>
   </body>
 </html>
 ```
 
-<Note>
-Replace `{version}` in the CDN URLs above with the actual docs-searchbar.js version number, for example `2.0.5`. Check the [docs-searchbar.js releases page](https://github.com/meilisearch/docs-searchbar.js/releases) for the latest version.
-</Note>
-
-The `hostUrl` and the `apiKey` fields are the credentials of the Meilisearch instance. Following on from this tutorial, they are respectively `MEILISEARCH_URL` and your `Default Search API Key`.
+The `host` and the `apiKey` fields are the credentials of the Meilisearch instance. Following on from this tutorial, they are respectively `MEILISEARCH_URL` and your `Default Search API Key`.
 
 `indexUid` is the index identifier in your Meilisearch instance in which your website content is stored. It has been defined in the [config file](#configuration-file).
-`inputSelector` is the `id` attribute of the HTML search input tag.
+
+`container` is the CSS selector of the div element where the search box will be rendered. 
 
 <Warning>
 We strongly recommend providing a `Default Search API Key` in a production environment, which is enough to perform search requests.
 
 Read more about [Meilisearch security](/resources/self_hosting/security/basic_security).
 </Warning>
-
-The default behavior of this library fits perfectly for a documentation search bar, but you might need [some customizations](https://github.com/meilisearch/docs-searchbar.js#customization).
-
-<Note>
-For more concrete examples, you can check out this [basic HTML file](https://github.com/meilisearch/docs-searchbar.js/blob/main/playgrounds/html/index.html) or [this more advanced Vue file](https://github.com/meilisearch/vuepress-plugin-meilisearch/blob/main/MeiliSearchBox.vue).
-</Note>
 
 ## Next steps
 
