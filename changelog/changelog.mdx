@@ -26,7 +26,7 @@ Meilisearch now exposes additional Prometheus metrics, including document throug
 
 **Search pipeline refactor**
 
-The search pipeline has been refactored so that all search requests run through a unified federated search implementation under the hood. This introduces a small breaking change: some error messages have been updated and a few error codes have changed (for example, `MultiSearchError` and `SearchError` may be swapped in certain cases).
+The search pipeline has been refactored so that all search requests run through a unified federated search implementation under the hood. This introduces a small breaking change: some error messages have been updated and a few error codes have changed (for example, in certain cases `MultiSearchError` may now be returned where `SearchError` was previously returned, and vice versa). If your application inspects error codes, review your error handling when upgrading.
 
 **Bug fixes**
 
