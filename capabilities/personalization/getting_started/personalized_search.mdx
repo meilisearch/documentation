@@ -58,7 +58,7 @@ If you need a genuinely personalized candidate set for a homepage feed or infini
 
 **Use `userContext` as `q` with full semantic search.** Set `semanticRatio: 1` and pass the `userContext` string directly as `q`. In this case, the `personalize` parameter is not needed: the semantic retrieval already personalizes which documents are returned. Reserve the `personalize` parameter for when the user has typed their own query.
 
-**Run one search per interest area.** Generate a short list of distinct interest terms from the user profile and run a [multi-search](/references/multi_search) with one semantic query per term. Each query gets its own retrieval pass, so the merged result pool naturally covers more variety. This produces more diverse results but uses more queries.
+**Run one search per interest area.** Generate a short list of distinct interest terms from the user profile and run a [multi-search](/references/api/multi-search/perform-a-multi-search) with one semantic query per term. Each query gets its own retrieval pass, so the merged result pool naturally covers more variety. This produces more diverse results but uses more queries.
 
 **Increase `limit`.** If you keep `q` empty, a higher `limit` gives the reranker a wider fixed pool to reorder within. This is the lowest-effort option but does not change which documents are retrieved.
 
