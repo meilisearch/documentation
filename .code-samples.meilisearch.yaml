@@ -1290,6 +1290,13 @@ analytics_event_bind_event_1: |-
       "objectId": "0",
       "position": 0
     }'
+analytics_exclude_search_requests: |-
+  curl \
+    -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search?analytics=false' \
+    -H 'Content-Type: application/json' \
+    -H 'Authorization: Bearer DEFAULT_SEARCH_API_KEY' \
+    -H 'X-MS-USER-ID: MEILISEARCH_USER_ID' \
+    --data-binary '{}'
 distinct_attribute_guide_filterable_1: |-
   curl \
     -X PUT 'MEILISEARCH_URL/indexes/products/settings/filterable-attributes' \
