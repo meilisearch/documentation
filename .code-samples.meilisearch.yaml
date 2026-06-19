@@ -1323,6 +1323,21 @@ search_parameter_guide_vector_1: |-
         "embedder": "EMBEDDER_NAME"
       }
     }'
+# post_render_template
+post_render_template_1: |-
+  curl \
+    -X POST 'MEILISEARCH_URL/render-template' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "template": {
+        "kind": "inlineDocumentTemplate",
+        "inline": "An inline document template rendered on {{doc.id}}"
+      },
+      "input": {
+        "kind": "inlineDocument",
+        "inline": { "id": "this document" }
+      }
+    }'
 # post_indexes_indexUid_fields
 list_index_fields_1: |-
   curl \
