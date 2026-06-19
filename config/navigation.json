@@ -768,6 +768,12 @@
                       ]
                     },
                     {
+                      "group": "Template",
+                      "pages": [
+                        "POST /render-template"
+                      ]
+                    },
+                    {
                       "group": "Snapshots",
                       "pages": [
                         "POST /snapshots"
