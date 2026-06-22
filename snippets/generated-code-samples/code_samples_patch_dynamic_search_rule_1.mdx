@@ -81,4 +81,31 @@ client.UpdateSearchRule("black-friday", &meilisearch.SearchRulesRequest{
   },
 })
 ```
+
+```csharp C#
+var patchQuery = new PatchDynamicSearchRule
+{
+  Description = "Black Friday 2025 rules",
+  Priority = 10,
+  Active = true,
+  Conditions = new BaseCondition[]
+  {
+    new QueryCondition { IsEmpty = true },
+    new TimeCondition
+    {
+      Start = new DateTimeOffset(2025, 11, 28, 0, 0, 0, TimeSpan.Zero),
+      End = new DateTimeOffset(2025, 11, 28, 23, 59, 59, TimeSpan.Zero)
+    },
+  },
+  Actions = new[]
+  {
+    new DSRAction
+    {
+      Selector = new DSRASelector { IndexUid = "products", Id = "123" },
+      Action = new PinAction { Position = 1 }
+    }
+  }
+};
+await client.CreateOrUpdateDynamicSearchRuleAsync("black-friday", patchQuery);
+```
 </CodeGroup>
