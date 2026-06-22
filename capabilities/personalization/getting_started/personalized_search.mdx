@@ -27,6 +27,41 @@ Submit a search query and include the `personalize` search parameter. `personali
 
 <CodeSamplesPersonalizationSearch1 />
 
+## Reranking scope and the `limit` parameter
+
+The reranker only sees the documents that Meilisearch returns for a given query. This means `limit` directly controls how many documents the reranker can choose from.
+
+If you set `limit` to 20, the reranker picks the best order from those 20 documents. It cannot promote a document that Meilisearch did not return. Increasing `limit` gives the reranker a wider pool to work with, but also increases latency and the number of tokens sent to the reranking model.
+
+A `limit` between 20 and 100 is a reasonable starting point for most personalized search use cases. Go higher if ranking quality matters more than latency for your application.
+
+## Limits
+
+Personalized search is subject to the following [Cohere reranking limits](https://docs.cohere.com/v2/docs/reranking-best-practices#max-number-of-documents):
+
+- `userContext` + `q` combined must stay under 2048 tokens
+- Each document sent to the reranker can be at most 32,664 tokens
+- The reranker accepts at most 10,000 documents per request, so `limit` cannot usefully exceed 10,000
+
+As a rough guide, one word is about 2 to 3 tokens and a paragraph is about 128 tokens.
+
+## Personalized feeds and placeholder search
+
+When `q` is empty, Meilisearch returns a deterministic set of documents based on ranking rules and filters. The `userContext` can only reorder that fixed set. It cannot change which documents are retrieved.
+
+This has two consequences worth understanding before building a personalized feed:
+
+- Two very different `userContext` values will return the same documents, just in a different order, because the underlying candidate pool is the same for both calls
+- Two slightly different phrasings of the same `userContext` can produce different result orders, because the reranker is sensitive to wording
+
+If you need a genuinely personalized candidate set for a homepage feed or infinite scroll, consider these alternatives:
+
+- **Use `userContext` as `q` with full semantic search.** Set `semanticRatio: 1` and pass the `userContext` string directly as `q`. In this case, the `personalize` parameter is not needed: the semantic retrieval already personalizes which documents are returned. Reserve the `personalize` parameter for when the user has typed their own query.
+
+- **Run one search per interest area.** Generate a short list of distinct interest terms from the user profile and run a [multi-search](/references/api/multi-search/perform-a-multi-search) with one semantic query per term. Each query gets its own retrieval pass, so the merged result pool naturally covers more variety. This produces more diverse results but uses more queries.
+
+- **Increase `limit`.** If you keep `q` empty, a higher `limit` gives the reranker a wider fixed pool to reorder within. This is the lowest-effort option but does not change which documents are retrieved.
+
 ## Next steps
 
 <CardGroup cols={2}>
