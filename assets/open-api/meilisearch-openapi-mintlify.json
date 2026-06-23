@@ -11,7 +11,7 @@
       "name": "MIT",
       "identifier": "MIT"
     },
-    "version": "1.41.0"
+    "version": "1.48.1"
   },
   "servers": [
     {
@@ -684,11 +684,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "additionalProperties": {},
-                "propertyNames": {
-                  "type": "string"
-                }
+                "$ref": "#/components/schemas/CreateChatCompletionRequest"
               }
             }
           },
@@ -699,6 +695,9 @@
             "description": "Start a conversation.",
             "content": {
               "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateChatCompletionResponse"
+                },
                 "example": {
                   "id": "chatcmpl-abc123",
                   "choices": [
@@ -776,7 +775,7 @@
         "security": [
           {
             "Bearer": [
-              "chats.completions",
+              "chatsCompletions",
               "*"
             ]
           }
@@ -1159,10 +1158,10 @@
     "/dynamic-search-rules": {
       "post": {
         "tags": [
-          "Dynamic search rules"
+          "Search rules"
         ],
-        "summary": "List dynamic search rules",
-        "description": "Return all dynamic search rules configured on the instance.",
+        "summary": "List search rules",
+        "description": "Return all search rules configured on the instance.",
         "operationId": "list_rules",
         "requestBody": {
           "content": {
@@ -1252,6 +1251,22 @@
           {
             "lang": "cURL",
             "source": "curl \\\n  -X POST 'MEILISEARCH_URL/dynamic-search-rules' \\\n  -H 'Content-Type: application/json'"
+          },
+          {
+            "lang": "JS",
+            "source": "client.getDynamicSearchRules()"
+          },
+          {
+            "lang": "PHP",
+            "source": "$client->getDynamicSearchRules();"
+          },
+          {
+            "lang": "Go",
+            "source": "client.ListSearchRules(&meilisearch.SearchRulesParams{})"
+          },
+          {
+            "lang": "C#",
+            "source": "await client.ListDynamicSearchRulesAsync();"
           }
         ]
       }
@@ -1259,16 +1274,16 @@
     "/dynamic-search-rules/{uid}": {
       "get": {
         "tags": [
-          "Dynamic search rules"
+          "Search rules"
         ],
-        "summary": "Get a dynamic search rule",
-        "description": "Retrieve a single dynamic search rule by its unique identifier.",
+        "summary": "Get a search rule",
+        "description": "Retrieve a single search rule by its unique identifier.",
         "operationId": "get_rule",
         "parameters": [
           {
             "name": "uid",
             "in": "path",
-            "description": "Unique identifier of the dynamic search rule.",
+            "description": "Unique identifier of the search rule.",
             "required": true,
             "schema": {
               "type": "string"
@@ -1363,21 +1378,37 @@
           {
             "lang": "cURL",
             "source": "curl \\\n  -X GET 'MEILISEARCH_URL/dynamic-search-rules/black-friday'"
+          },
+          {
+            "lang": "JS",
+            "source": "client.getDynamicSearchRule('RULE_UID')"
+          },
+          {
+            "lang": "PHP",
+            "source": "$client->getDynamicSearchRule('RULE_UID');"
+          },
+          {
+            "lang": "Go",
+            "source": "client.GetSearchRule(\"black-friday\")"
+          },
+          {
+            "lang": "C#",
+            "source": "await client.GetDynamicSearchRuleAsync(\"black-friday\");"
           }
         ]
       },
       "delete": {
         "tags": [
-          "Dynamic search rules"
+          "Search rules"
         ],
-        "summary": "Delete a dynamic search rule",
-        "description": "Delete a dynamic search rule by its unique identifier.",
+        "summary": "Delete a search rule",
+        "description": "Delete a search rule by its unique identifier.",
         "operationId": "delete_rule",
         "parameters": [
           {
             "name": "uid",
             "in": "path",
-            "description": "Unique identifier of the dynamic search rule.",
+            "description": "Unique identifier of the search rule.",
             "required": true,
             "schema": {
               "type": "string"
@@ -1436,21 +1467,37 @@
           {
             "lang": "cURL",
             "source": "curl \\\n  -X DELETE 'MEILISEARCH_URL/dynamic-search-rules/black-friday'"
+          },
+          {
+            "lang": "JS",
+            "source": "client.deleteDynamicSearchRule('RULE_UID')"
+          },
+          {
+            "lang": "PHP",
+            "source": "$client->deleteDynamicSearchRule('RULE_UID');"
+          },
+          {
+            "lang": "Go",
+            "source": "client.DeleteSearchRule(\"black-friday\")"
+          },
+          {
+            "lang": "C#",
+            "source": "await client.DeleteDynamicSearchRuleAsync(\"black-friday\");"
           }
         ]
       },
       "patch": {
         "tags": [
-          "Dynamic search rules"
+          "Search rules"
         ],
-        "summary": "Update a dynamic search rule or create a new one if it doesn't exist",
-        "description": "Partially update a dynamic search rule by replacing the provided fields.",
+        "summary": "Create or update a search rule",
+        "description": "Partially update a search rule by replacing the provided fields. If the rule doesn't exist, it will be created.",
         "operationId": "update_or_create_rule",
         "parameters": [
           {
             "name": "uid",
             "in": "path",
-            "description": "Unique identifier of the dynamic search rule.",
+            "description": "Unique identifier of the search rule.",
             "required": true,
             "schema": {
               "type": "string"
@@ -1549,6 +1596,22 @@
           {
             "lang": "cURL",
             "source": "curl \\\n  -X PATCH 'MEILISEARCH_URL/dynamic-search-rules/black-friday' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '{\n    \"description\": \"Black Friday 2025 rules\",\n    \"priority\": 10,\n    \"active\": true,\n    \"conditions\": [\n      { \"scope\": \"query\", \"isEmpty\": true },\n      { \"scope\": \"time\", \"start\": \"2025-11-28T00:00:00Z\", \"end\": \"2025-11-28T23:59:59Z\" }\n    ],\n    \"actions\": [\n      {\n        \"selector\": { \"indexUid\": \"products\", \"id\": \"123\" },\n        \"action\": { \"type\": \"pin\", \"position\": 1 }\n      }\n    ]\n  }'"
+          },
+          {
+            "lang": "JS",
+            "source": "client.updateDynamicSearchRule('RULE_UID', {\n  actions: [{\n    selector: { indexUid: 'movies', id: '299537' },\n    action: { type: 'pin', position: 0 }\n  }]\n})"
+          },
+          {
+            "lang": "PHP",
+            "source": "$client->updateDynamicSearchRule('RULE_UID', [\n  'actions' => [\n    [\n      'selector' => [\n        'indexUid' => 'movies',\n        'id' => '299537'\n      ],\n      'action' => [\n        'type' => 'pin',\n        'position' => 0\n      ]\n    ]\n  ]\n]);"
+          },
+          {
+            "lang": "Go",
+            "source": "active := true\nisEmpty := true\nstartTime, _ := time.Parse(time.RFC3339, \"2025-11-28T00:00:00Z\")\nendTime, _ := time.Parse(time.RFC3339, \"2025-11-28T23:59:59Z\")\nclient.UpdateSearchRule(\"black-friday\", &meilisearch.SearchRulesRequest{\n  Description: \"Black Friday 2025 rules\",\n  Priority: 10,\n  Active: &active,\n  Conditions: []meilisearch.Condition{\n    {\n      Scope:   \"query\",\n      IsEmpty: &isEmpty,\n    },\n    {\n      Scope: \"time\",\n      Start: &startTime,\n      End:   &endTime,\n    },\n  },\n  Actions: []meilisearch.Action{\n    {\n      Selector: meilisearch.Selector{\n        IndexUid: \"products\",\n        ID:       \"123\",\n      },\n      Action: meilisearch.ActionDef{\n        Type:     \"pin\",\n        Position: 1,\n      },\n    },\n  },\n})"
+          },
+          {
+            "lang": "C#",
+            "source": "var patchQuery = new PatchDynamicSearchRule\n{\n  Description = \"Black Friday 2025 rules\",\n  Priority = 10,\n  Active = true,\n  Conditions = new BaseCondition[]\n  {\n    new QueryCondition { IsEmpty = true },\n    new TimeCondition\n    {\n      Start = new DateTimeOffset(2025, 11, 28, 0, 0, 0, TimeSpan.Zero),\n      End = new DateTimeOffset(2025, 11, 28, 23, 59, 59, TimeSpan.Zero)\n    },\n  },\n  Actions = new[]\n  {\n    new DSRAction\n    {\n      Selector = new DSRASelector { IndexUid = \"products\", Id = \"123\" },\n      Action = new PinAction { Position = 1 }\n    }\n  }\n};\nawait client.CreateOrUpdateDynamicSearchRuleAsync(\"black-friday\", patchQuery);"
           }
         ]
       }
@@ -1581,7 +1644,10 @@
                   "compositeEmbedders": false,
                   "chatCompletions": false,
                   "multimodal": false,
-                  "foreignKeys": false
+                  "foreignKeys": false,
+                  "disableDocumentsFetchQueue": false,
+                  "legacySearch": false,
+                  "renderRoute": false
                 }
               }
             }
@@ -1642,6 +1708,16 @@
         "summary": "Configure experimental features",
         "description": "Enable or disable experimental features at runtime.",
         "operationId": "patch_features",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RuntimeTogglableFeatures"
+              }
+            }
+          },
+          "required": true
+        },
         "responses": {
           "200": {
             "description": "Experimental features are returned.",
@@ -1662,7 +1738,10 @@
                   "compositeEmbedders": false,
                   "chatCompletions": false,
                   "multimodal": false,
-                  "foreignKeys": false
+                  "foreignKeys": false,
+                  "disableDocumentsFetchQueue": false,
+                  "legacySearch": false,
+                  "renderRoute": false
                 }
               }
             }
@@ -1803,7 +1882,7 @@
           "Health"
         ],
         "summary": "Get health",
-        "description": "The health check endpoint enables you to periodically test the health of your Meilisearch instance. Returns a simple status indicating that the server is available.",
+        "description": "The health check endpoint enables you to periodically test the health of your Meilisearch instance. Returns a simple status indicating that the server is available.\n\nThe engine will return `available` status with a `200` status code when the instance is healthy.\nIt will return `mustRestart` status with a `500` status code if the instance requires a restart.\nThis restart is required after a compaction of the task queue for example.",
         "operationId": "get_health",
         "responses": {
           "200": {
@@ -2826,7 +2905,7 @@
           "Documents"
         ],
         "summary": "Add or update documents",
-        "description": "Add a list of documents or update them if they already exist.\n\nIf you send an already existing document (same id) the old document will\nbe only partially updated according to the fields of the new document.\nThus, any fields not present in the new document are kept and remained\nunchanged.\n\nIf the provided index does not exist, it will be created.\n\nTo completely overwrite a document, see [add or replace documents route](/reference/api/documents/add-or-replace-documents).\n\n> Use the reserved `_geo` object to add geo coordinates to a document.\n> `_geo` is an object made of `lat` and `lng` field.",
+        "description": "Add a list of documents or update them if they already exist.\n\nIf you send an already existing document (same id) the old document will\nbe only partially updated according to the fields of the new document.\nThus, any fields not present in the new document are kept and remained\nunchanged.\n\nIf the provided index does not exist, it will be created.\n\nTo completely overwrite a document, see [add or replace documents route](/docs/reference/api/documents/add-or-replace-documents).\n\n> Use the reserved `_geo` object to add geo coordinates to a document.\n> `_geo` is an object made of `lat` and `lng` field.",
         "operationId": "update_documents",
         "parameters": [
           {
@@ -3001,7 +3080,7 @@
           "Documents"
         ],
         "summary": "Add or replace documents",
-        "description": "Add a list of documents or replace them if they already exist.\n\nIf you send an already existing document (same id) the whole existing\ndocument will be overwritten by the new document. Fields previously in the\ndocument not present in the new document are removed.\n\nIf the provided index does not exist, it will be created.\n\nFor a partial update of the document see [add or update documents route](/reference/api/documents/add-or-update-documents).\n\n> Use the reserved `_geo` object to add geo coordinates to a document.\n> `_geo` is an object made of `lat` and `lng` field.",
+        "description": "Add a list of documents or replace them if they already exist.\n\nIf you send an already existing document (same id) the whole existing\ndocument will be overwritten by the new document. Fields previously in the\ndocument not present in the new document are removed.\n\nIf the provided index does not exist, it will be created.\n\nFor a partial update of the document see [add or update documents route](/docs/reference/api/documents/add-or-update-documents).\n\n> Use the reserved `_geo` object to add geo coordinates to a document.\n> `_geo` is an object made of `lat` and `lng` field.",
         "operationId": "replace_documents",
         "parameters": [
           {
@@ -4422,7 +4501,7 @@
           "Search"
         ],
         "summary": "Search with GET",
-        "description": "Search for documents matching a query in the given index.\n\n> Equivalent to the [search with POST route](/reference/api/search/search-with-post) in the Meilisearch API.",
+        "description": "Search for documents matching a query in the given index.\n\n> Equivalent to the [search with POST route](/docs/reference/api/search/search-with-post) in the Meilisearch API.",
         "operationId": "search_with_url_query",
         "parameters": [
           {
@@ -4843,7 +4922,7 @@
           "Search"
         ],
         "summary": "Search with POST",
-        "description": "Search for documents matching a query in the given index.\n\n> Equivalent to the [search with GET route](/reference/api/search/search-with-get) in the Meilisearch API.",
+        "description": "Search for documents matching a query in the given index.\n\n> Equivalent to the [search with GET route](/docs/reference/api/search/search-with-get) in the Meilisearch API.",
         "operationId": "search_with_post",
         "parameters": [
           {
@@ -5453,7 +5532,7 @@
           },
           {
             "lang": "C#",
-            "source": "Settings newSettings = new Settings\n{\n  RankingRules = new string[]\n  {\n    \"words\",\n    \"typo\",\n    \"proximity\",\n    \"attribute\",\n    \"sort\",\n    \"exactness\",\n    \"release_date:desc\",\n    \"rank:desc\"\n  },\n  DistinctAttribute = \"movie_id\",\n  SearchableAttributes = new string[] { \"title\", \"overview\", \"genres\" },\n  DisplayedAttributes = new string[] { \"title\", \"overview\", \"genres\", \"release_date\" },\n  SortableAttributes = new string[] { \"title\", \"release_date\" },\n  StopWords = new string[] { \"the\", \"a\", \"an\" },\n  Synonyms = new Dictionary<string, IEnumerable<string>>\n  {\n      { \"wolverine\", new string[] { \"xmen\", \"logan\" } },\n      { \"logan\", new string[] { \"wolverine\" } },\n  },\n  FilterableAttributes = new string[] { },\n  TypoTolerance = new TypoTolerance\n  {\n      DisableOnAttributes = new string[] { \"title\" },\n      MinWordSizeForTypos = new TypoTolerance.TypoSize\n      {\n          OneTypo = 8,\n          TwoTypos = 10\n      }\n  },\n  SearchCutoffMs = 150\n};\nTaskInfo task = await client.Index(\"movies\").UpdateSettingsAsync(newFilters);"
+            "source": "Settings newSettings = new Settings\n{\n  RankingRules = new string[]\n  {\n    \"words\",\n    \"typo\",\n    \"proximity\",\n    \"attribute\",\n    \"sort\",\n    \"exactness\",\n    \"release_date:desc\",\n    \"rank:desc\"\n  },\n  DistinctAttribute = \"movie_id\",\n  SearchableAttributes = new string[] { \"title\", \"overview\", \"genres\" },\n  DisplayedAttributes = new string[] { \"title\", \"overview\", \"genres\", \"release_date\" },\n  SortableAttributes = new string[] { \"title\", \"release_date\" },\n  StopWords = new string[] { \"the\", \"a\", \"an\" },\n  Synonyms = new Dictionary<string, IEnumerable<string>>\n  {\n      { \"wolverine\", new string[] { \"xmen\", \"logan\" } },\n      { \"logan\", new string[] { \"wolverine\" } },\n  },\n  FilterableAttributes = new FilterableAttribute[] { },\n  TypoTolerance = new TypoTolerance\n  {\n      DisableOnAttributes = new string[] { \"title\" },\n      MinWordSizeForTypos = new TypoTolerance.TypoSize\n      {\n          OneTypo = 8,\n          TwoTypos = 10\n      }\n  },\n  SearchCutoffMs = 150\n};\nTaskInfo task = await client.Index(\"movies\").UpdateSettingsAsync(newFilters);"
           },
           {
             "lang": "Rust",
@@ -8024,7 +8103,7 @@
           },
           {
             "lang": "C#",
-            "source": "IEnumerable<string> attributes = await client.Index(\"movies\").GetFilterableAttributesAsync();"
+            "source": "IEnumerable<FilterableAttribute> attributes = await client.Index(\"movies\").GetFilterableAttributesAsync();"
           },
           {
             "lang": "Rust",
@@ -8163,7 +8242,7 @@
           },
           {
             "lang": "C#",
-            "source": "List<string> attributes = new() { \"genres\", \"director\" };\nTaskInfo result = await client.Index(\"movies\").UpdateFilterableAttributesAsync(attributes);"
+            "source": "var attributes = new FilterableAttribute[]\n{\n    \"director\",\n    new FilterableAttribute\n    {\n        AttributePatterns = new[] { \"genres\" },\n        Features = new FilterableAttributeFeatures\n        {\n            FacetSearch = true,\n            Filter = new FilterableAttributeFilterFeatures\n            {\n                Equality = true,\n                Comparison = true,\n            },\n        },\n    },\n};\nTaskInfo result = await client.Index(\"movies\").UpdateFilterableAttributesAsync(attributes);"
           },
           {
             "lang": "Rust",
@@ -13875,6 +13954,26 @@
               "type": "string"
             },
             "example": "movies"
+          },
+          {
+            "name": "showInternalDatabaseSizes",
+            "in": "query",
+            "description": "If `true`, adds `internalDatabaseSizes` to the response.",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            },
+            "example": false
+          },
+          {
+            "name": "sizeFormat",
+            "in": "query",
+            "description": "Specify how to format the sizes:\n\n- `\"raw\"` (default): format sizes as a number of bytes\n- `\"human\"`: format sizes as a human-readable string with an appropriate unit.",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/SizeFormat"
+            },
+            "example": "human"
           }
         ],
         "responses": {
@@ -13969,7 +14068,7 @@
           },
           {
             "lang": "Go",
-            "source": "client.Index(\"movies\").GetStats()"
+            "source": "client.Index(\"movies\").GetStats(nil)"
           },
           {
             "lang": "C#",
@@ -14836,7 +14935,7 @@
                 "schema": {
                   "type": "string"
                 },
-                "example": "\n# HELP meilisearch_db_size_bytes Meilisearch DB Size In Bytes\n# TYPE meilisearch_db_size_bytes gauge\nmeilisearch_db_size_bytes 1130496\n# HELP meilisearch_batch_running_progress_trace The currently running progress trace\n# TYPE meilisearch_batch_running_progress_trace gauge\nmeilisearch_batch_running_progress_trace{batch_uid=\"0\",step_name=\"document\"} 0.710618582519409\nmeilisearch_batch_running_progress_trace{batch_uid=\"0\",step_name=\"extracting word proximity\"} 0.2222222222222222\nmeilisearch_batch_running_progress_trace{batch_uid=\"0\",step_name=\"indexing\"} 0.6666666666666666\nmeilisearch_batch_running_progress_trace{batch_uid=\"0\",step_name=\"processing tasks\"} 0\n# HELP meilisearch_http_requests_total Meilisearch HTTP requests total\n# TYPE meilisearch_http_requests_total counter\nmeilisearch_http_requests_total{method=\"GET\",path=\"/metrics\",status=\"400\"} 1\nmeilisearch_http_requests_total{method=\"PATCH\",path=\"/experimental-features\",status=\"200\"} 1\n# HELP meilisearch_http_response_time_seconds Meilisearch HTTP response times\n# TYPE meilisearch_http_response_time_seconds histogram\nmeilisearch_http_response_time_seconds_bucket{method=\"GET\",path=\"/metrics\",le=\"0.005\"} 0\nmeilisearch_http_response_time_seconds_bucket{method=\"GET\",path=\"/metrics\",le=\"0.01\"} 0\nmeilisearch_http_response_time_seconds_bucket{method=\"GET\",path=\"/metrics\",le=\"0.025\"} 0\nmeilisearch_http_response_time_seconds_bucket{method=\"GET\",path=\"/metrics\",le=\"0.05\"} 0\nmeilisearch_http_response_time_seconds_bucket{method=\"GET\",path=\"/metrics\",le=\"0.075\"} 0\nmeilisearch_http_response_time_seconds_bucket{method=\"GET\",path=\"/metrics\",le=\"0.1\"} 0\nmeilisearch_http_response_time_seconds_bucket{method=\"GET\",path=\"/metrics\",le=\"0.25\"} 0\nmeilisearch_http_response_time_seconds_bucket{method=\"GET\",path=\"/metrics\",le=\"0.5\"} 0\nmeilisearch_http_response_time_seconds_bucket{method=\"GET\",path=\"/metrics\",le=\"0.75\"} 0\nmeilisearch_http_response_time_seconds_bucket{method=\"GET\",path=\"/metrics\",le=\"1\"} 0\nmeilisearch_http_response_time_seconds_bucket{method=\"GET\",path=\"/metrics\",le=\"2.5\"} 0\nmeilisearch_http_response_time_seconds_bucket{method=\"GET\",path=\"/metrics\",le=\"5\"} 0\nmeilisearch_http_response_time_seconds_bucket{method=\"GET\",path=\"/metrics\",le=\"7.5\"} 0\nmeilisearch_http_response_time_seconds_bucket{method=\"GET\",path=\"/metrics\",le=\"10\"} 0\nmeilisearch_http_response_time_seconds_bucket{method=\"GET\",path=\"/metrics\",le=\"+Inf\"} 0\nmeilisearch_http_response_time_seconds_sum{method=\"GET\",path=\"/metrics\"} 0\nmeilisearch_http_response_time_seconds_count{method=\"GET\",path=\"/metrics\"} 0\n# HELP meilisearch_last_finished_batches_progress_trace_ms The last few batches progress trace in milliseconds\n# TYPE meilisearch_last_finished_batches_progress_trace_ms gauge\nmeilisearch_last_finished_batches_progress_trace_ms{batch_uid=\"0\",step_name=\"processing tasks\"} 19360\nmeilisearch_last_finished_batches_progress_trace_ms{batch_uid=\"0\",step_name=\"processing tasks > computing document changes\"} 368\nmeilisearch_last_finished_batches_progress_trace_ms{batch_uid=\"0\",step_name=\"processing tasks > computing document changes > preparing payloads\"} 367\nmeilisearch_last_finished_batches_progress_trace_ms{batch_uid=\"0\",step_name=\"processing tasks > computing document changes > preparing payloads > payload\"} 367\nmeilisearch_last_finished_batches_progress_trace_ms{batch_uid=\"0\",step_name=\"processing tasks > indexing\"} 18970\n# HELP meilisearch_index_count Meilisearch Index Count\n# TYPE meilisearch_index_count gauge\nmeilisearch_index_count 1\n# HELP meilisearch_index_docs_count Meilisearch Index Docs Count\n# TYPE meilisearch_index_docs_count gauge\nmeilisearch_index_docs_count{index=\"mieli\"} 2\n# HELP meilisearch_is_indexing Meilisearch Is Indexing\n# TYPE meilisearch_is_indexing gauge\nmeilisearch_is_indexing 0\n# HELP meilisearch_last_update Meilisearch Last Update\n# TYPE meilisearch_last_update gauge\nmeilisearch_last_update 1726675964\n# HELP meilisearch_nb_tasks Meilisearch Number of tasks\n# TYPE meilisearch_nb_tasks gauge\nmeilisearch_nb_tasks{kind=\"indexes\",value=\"mieli\"} 39\nmeilisearch_nb_tasks{kind=\"statuses\",value=\"canceled\"} 0\nmeilisearch_nb_tasks{kind=\"statuses\",value=\"enqueued\"} 0\nmeilisearch_nb_tasks{kind=\"statuses\",value=\"failed\"} 4\nmeilisearch_nb_tasks{kind=\"statuses\",value=\"processing\"} 0\nmeilisearch_nb_tasks{kind=\"statuses\",value=\"succeeded\"} 35\nmeilisearch_nb_tasks{kind=\"types\",value=\"documentAdditionOrUpdate\"} 9\nmeilisearch_nb_tasks{kind=\"types\",value=\"documentDeletion\"} 0\nmeilisearch_nb_tasks{kind=\"types\",value=\"documentEdition\"} 0\nmeilisearch_nb_tasks{kind=\"types\",value=\"dumpCreation\"} 0\nmeilisearch_nb_tasks{kind=\"types\",value=\"indexCreation\"} 0\nmeilisearch_nb_tasks{kind=\"types\",value=\"indexDeletion\"} 8\nmeilisearch_nb_tasks{kind=\"types\",value=\"indexSwap\"} 0\nmeilisearch_nb_tasks{kind=\"types\",value=\"indexUpdate\"} 0\nmeilisearch_nb_tasks{kind=\"types\",value=\"settingsUpdate\"} 22\nmeilisearch_nb_tasks{kind=\"types\",value=\"snapshotCreation\"} 0\nmeilisearch_nb_tasks{kind=\"types\",value=\"taskCancelation\"} 0\nmeilisearch_nb_tasks{kind=\"types\",value=\"taskDeletion\"} 0\n# HELP meilisearch_used_db_size_bytes Meilisearch Used DB Size In Bytes\n# TYPE meilisearch_used_db_size_bytes gauge\nmeilisearch_used_db_size_bytes 409600\n"
+                "example": "\n# HELP meilisearch_db_size_bytes Meilisearch DB Size In Bytes\n# TYPE meilisearch_db_size_bytes gauge\nmeilisearch_db_size_bytes 1130496\n# HELP meilisearch_batch_running_progress_trace The currently running progress trace\n# TYPE meilisearch_batch_running_progress_trace gauge\nmeilisearch_batch_running_progress_trace{batch_uid=\"0\",step_name=\"document\"} 0.710618582519409\nmeilisearch_batch_running_progress_trace{batch_uid=\"0\",step_name=\"extracting word proximity\"} 0.2222222222222222\nmeilisearch_batch_running_progress_trace{batch_uid=\"0\",step_name=\"indexing\"} 0.6666666666666666\nmeilisearch_batch_running_progress_trace{batch_uid=\"0\",step_name=\"processing tasks\"} 0\n# HELP meilisearch_http_requests_total Meilisearch HTTP requests total\n# TYPE meilisearch_http_requests_total counter\nmeilisearch_http_requests_total{method=\"GET\",path=\"/metrics\",status=\"400\"} 1\nmeilisearch_http_requests_total{method=\"PATCH\",path=\"/experimental-features\",status=\"200\"} 1\n# HELP meilisearch_http_response_time_seconds Meilisearch HTTP response times\n# TYPE meilisearch_http_response_time_seconds histogram\nmeilisearch_http_response_time_seconds_bucket{method=\"GET\",path=\"/metrics\",le=\"0.005\"} 0\nmeilisearch_http_response_time_seconds_bucket{method=\"GET\",path=\"/metrics\",le=\"0.01\"} 0\nmeilisearch_http_response_time_seconds_bucket{method=\"GET\",path=\"/metrics\",le=\"0.025\"} 0\nmeilisearch_http_response_time_seconds_bucket{method=\"GET\",path=\"/metrics\",le=\"0.05\"} 0\nmeilisearch_http_response_time_seconds_bucket{method=\"GET\",path=\"/metrics\",le=\"0.075\"} 0\nmeilisearch_http_response_time_seconds_bucket{method=\"GET\",path=\"/metrics\",le=\"0.1\"} 0\nmeilisearch_http_response_time_seconds_bucket{method=\"GET\",path=\"/metrics\",le=\"0.25\"} 0\nmeilisearch_http_response_time_seconds_bucket{method=\"GET\",path=\"/metrics\",le=\"0.5\"} 0\nmeilisearch_http_response_time_seconds_bucket{method=\"GET\",path=\"/metrics\",le=\"0.75\"} 0\nmeilisearch_http_response_time_seconds_bucket{method=\"GET\",path=\"/metrics\",le=\"1\"} 0\nmeilisearch_http_response_time_seconds_bucket{method=\"GET\",path=\"/metrics\",le=\"2.5\"} 0\nmeilisearch_http_response_time_seconds_bucket{method=\"GET\",path=\"/metrics\",le=\"5\"} 0\nmeilisearch_http_response_time_seconds_bucket{method=\"GET\",path=\"/metrics\",le=\"7.5\"} 0\nmeilisearch_http_response_time_seconds_bucket{method=\"GET\",path=\"/metrics\",le=\"10\"} 0\nmeilisearch_http_response_time_seconds_bucket{method=\"GET\",path=\"/metrics\",le=\"+Inf\"} 0\nmeilisearch_http_response_time_seconds_sum{method=\"GET\",path=\"/metrics\"} 0\nmeilisearch_http_response_time_seconds_count{method=\"GET\",path=\"/metrics\"} 0\n# HELP meilisearch_last_finished_batches_progress_trace_ms The last few batches progress trace in milliseconds\n# TYPE meilisearch_last_finished_batches_progress_trace_ms gauge\nmeilisearch_last_finished_batches_progress_trace_ms{batch_uid=\"0\",step_name=\"processing tasks\"} 19360\nmeilisearch_last_finished_batches_progress_trace_ms{batch_uid=\"0\",step_name=\"processing tasks > computing document changes\"} 368\nmeilisearch_last_finished_batches_progress_trace_ms{batch_uid=\"0\",step_name=\"processing tasks > computing document changes > preparing payloads\"} 367\nmeilisearch_last_finished_batches_progress_trace_ms{batch_uid=\"0\",step_name=\"processing tasks > computing document changes > preparing payloads > payload\"} 367\nmeilisearch_last_finished_batches_progress_trace_ms{batch_uid=\"0\",step_name=\"processing tasks > indexing\"} 18970\n# HELP meilisearch_index_count Meilisearch Index Count\n# TYPE meilisearch_index_count gauge\nmeilisearch_index_count 1\n# HELP meilisearch_index_docs_count Meilisearch Index Docs Count\n# TYPE meilisearch_index_docs_count gauge\nmeilisearch_index_docs_count{index=\"mieli\"} 2\n# HELP meilisearch_is_indexing Meilisearch Is Indexing\n# TYPE meilisearch_is_indexing gauge\nmeilisearch_is_indexing 0\n# HELP meilisearch_last_update Meilisearch Last Update\n# TYPE meilisearch_last_update gauge\nmeilisearch_last_update 1726675964\n# HELP meilisearch_nb_tasks Meilisearch Number of tasks\n# TYPE meilisearch_nb_tasks gauge\nmeilisearch_nb_tasks{kind=\"indexes\",value=\"mieli\"} 39\nmeilisearch_nb_tasks{kind=\"statuses\",value=\"canceled\"} 0\nmeilisearch_nb_tasks{kind=\"statuses\",value=\"enqueued\"} 0\nmeilisearch_nb_tasks{kind=\"statuses\",value=\"failed\"} 4\nmeilisearch_nb_tasks{kind=\"statuses\",value=\"processing\"} 0\nmeilisearch_nb_tasks{kind=\"statuses\",value=\"succeeded\"} 35\nmeilisearch_nb_tasks{kind=\"types\",value=\"documentAdditionOrUpdate\"} 9\nmeilisearch_nb_tasks{kind=\"types\",value=\"documentDeletion\"} 0\nmeilisearch_nb_tasks{kind=\"types\",value=\"documentEdition\"} 0\nmeilisearch_nb_tasks{kind=\"types\",value=\"dumpCreation\"} 0\nmeilisearch_nb_tasks{kind=\"types\",value=\"indexCreation\"} 0\nmeilisearch_nb_tasks{kind=\"types\",value=\"indexDeletion\"} 8\nmeilisearch_nb_tasks{kind=\"types\",value=\"indexSwap\"} 0\nmeilisearch_nb_tasks{kind=\"types\",value=\"indexUpdate\"} 0\nmeilisearch_nb_tasks{kind=\"types\",value=\"settingsUpdate\"} 22\nmeilisearch_nb_tasks{kind=\"types\",value=\"snapshotCreation\"} 0\nmeilisearch_nb_tasks{kind=\"types\",value=\"taskCancelation\"} 0\nmeilisearch_nb_tasks{kind=\"types\",value=\"taskDeletion\"} 0\n# HELP meilisearch_used_db_size_bytes Meilisearch Used DB Size In Bytes\n# TYPE meilisearch_used_db_size_bytes gauge\nmeilisearch_used_db_size_bytes 409600\n# HELP meilisearch_last_indexed_documents_count The last number of indexed documents in a batch\n# TYPE meilisearch_last_indexed_documents_count gauge\nmeilisearch_last_indexed_documents_count{batch_uid=\"0\",index=\"movies\"} 31944\n# HELP meilisearch_last_indexed_documents_duration_ms The duration in ms of the last batch that indexed documents\n# TYPE meilisearch_last_indexed_documents_duration_ms gauge\nmeilisearch_last_indexed_documents_duration_ms{batch_uid=\"0\",index=\"movies\"} 17904\n"
               }
             }
           },
@@ -15246,6 +15345,104 @@
         ]
       }
     },
+    "/render-template": {
+      "post": {
+        "tags": [
+          "Template"
+        ],
+        "summary": "Render documents with POST",
+        "operationId": "render_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RenderQuery"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "The rendered result is returned along with the template",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RenderResult"
+                },
+                "example": {
+                  "template": "{{ doc.breed }} called {{ doc.name }}",
+                  "rendered": "A Jack Russell called Iko"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Parameters are incorrect",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "example": {
+                  "message": "cannot find embedder `default` in index `movies`",
+                  "code": "invalid_render_template",
+                  "type": "invalid_request",
+                  "link": "https://docs.meilisearch.com/errors#invalid_render_template_id"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The authorization header is missing.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "example": {
+                  "message": "The Authorization header is missing. It must use the bearer authorization method.",
+                  "code": "missing_authorization_header",
+                  "type": "auth",
+                  "link": "https://docs.meilisearch.com/errors#missing_authorization_header"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Template or document not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "example": {
+                  "message": "Document with ID `9999` not found in index `movies`.",
+                  "code": "render_document_not_found",
+                  "type": "invalid_request",
+                  "link": "https://docs.meilisearch.com/errors#render_document_not_found"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": [
+              "settings.get,documents.get",
+              "*.get",
+              "*"
+            ]
+          }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "cURL",
+            "source": "curl \\\n  -X POST 'MEILISEARCH_URL/render-template' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '{\n    \"template\": {\n      \"kind\": \"inlineDocumentTemplate\",\n      \"inline\": \"An inline document template rendered on {{doc.id}}\"\n    },\n    \"input\": {\n      \"kind\": \"inlineDocument\",\n      \"inline\": { \"id\": \"this document\" }\n    }\n  }'"
+          }
+        ]
+      }
+    },
     "/snapshots": {
       "post": {
         "tags": [
@@ -15350,6 +15547,28 @@
         "summary": "Get stats of all indexes",
         "description": "Return statistics for the Meilisearch instance and for each index. Includes database size, last update time, document counts, and indexing status per index.",
         "operationId": "get_stats",
+        "parameters": [
+          {
+            "name": "showInternalDatabaseSizes",
+            "in": "query",
+            "description": "If `true`, adds `internalDatabaseSizes` to the response.",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            },
+            "example": false
+          },
+          {
+            "name": "sizeFormat",
+            "in": "query",
+            "description": "Specify how to format the sizes:\n\n- `\"raw\"` (default): format sizes as a number of bytes\n- `\"human\"`: format sizes as a human-readable string with an appropriate unit.",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/SizeFormat"
+            },
+            "example": "human"
+          }
+        ],
         "responses": {
           "200": {
             "description": "The stats of the instance.",
@@ -15432,7 +15651,7 @@
           },
           {
             "lang": "Go",
-            "source": "client.GetStats()"
+            "source": "client.GetStats(nil)"
           },
           {
             "lang": "C#",
@@ -15459,7 +15678,7 @@
           "Indexes"
         ],
         "summary": "Swap indexes",
-        "description": "Swap the documents, settings, and task history of two or more indexes.\n\nIndexes are swapped in pairs; a single request can include multiple pairs.\nThe operation is atomic: either all swaps succeed or none do. In the task history, every mention of one index uid is replaced by the other and vice versa.\nEnqueued tasks are left unmodified.",
+        "description": "Swap the documents, primary key, settings, and task history of two or more indexes.\n\nIndexes are swapped in pairs; a single request can include multiple pairs.\nThe operation is atomic: either all swaps succeed or none do. In the task history, every mention of one index uid is replaced by the other and vice versa.\nEnqueued tasks are left unmodified.",
         "operationId": "swap_indexes",
         "requestBody": {
           "content": {
@@ -15884,7 +16103,7 @@
           {
             "name": "uids",
             "in": "query",
-            "description": "Permits to filter tasks by their uid. By default, when the `uids` query\nparameter is not set, all task uids are returned. It's possible to\nspecify several uids by separating them with the `,` character.",
+            "description": "Permits to select tasks by their uid. When the `uids` query\nparameter is set to `*`, all task uids included. It's possible to\nspecify several uids by separating them with the `,` character.",
             "required": false,
             "schema": {
               "type": "array",
@@ -16181,7 +16400,7 @@
           {
             "name": "uids",
             "in": "query",
-            "description": "Permits to filter tasks by their uid. By default, when the `uids` query\nparameter is not set, all task uids are returned. It's possible to\nspecify several uids by separating them with the `,` character.",
+            "description": "Permits to select tasks by their uid. When the `uids` query\nparameter is set to `*`, all task uids included. It's possible to\nspecify several uids by separating them with the `,` character.",
             "required": false,
             "schema": {
               "type": "array",
@@ -16455,7 +16674,7 @@
         "tags": [
           "Async task management"
         ],
-        "summary": "Compact task queue.",
+        "summary": "Compact task queue",
         "description": "Trigger a compaction process on the task queue database and return its size before and\nafter compaction. A successful compaction requires restarting the instance before it can\nsafely resume normal writes.",
         "operationId": "compact_task_queue",
         "responses": {
@@ -16736,6 +16955,14 @@
           {
             "lang": "cURL",
             "source": "curl \\\n  -X GET 'MEILISEARCH_URL/tasks/1/documents'"
+          },
+          {
+            "lang": "JS",
+            "source": "client.tasks.getTaskDocuments(1)"
+          },
+          {
+            "lang": "Go",
+            "source": "var documents []map[string]interface{}\nclient.GetTaskDocuments(1, &documents);"
           }
         ]
       }
@@ -17742,6 +17969,7 @@
           "offset": {
             "type": "integer",
             "description": "Number of documents to skip in the response. Use together with `limit`\nfor pagination through large document sets. For example, to get\ndocuments 151-170, set `offset=150` and `limit=20`. Defaults to `0`.",
+            "default": 0,
             "example": 150,
             "minimum": 0
           },
@@ -17805,6 +18033,920 @@
           }
         }
       },
+      "ChatChoice": {
+        "type": "object",
+        "description": "A chat completion choice generated by the model.",
+        "required": [
+          "index",
+          "message"
+        ],
+        "properties": {
+          "index": {
+            "type": "integer",
+            "format": "u-int32",
+            "description": "The index of the choice in the list of choices.",
+            "minimum": 0
+          },
+          "message": {
+            "$ref": "#/components/schemas/ChatCompletionResponseMessage"
+          },
+          "finish_reason": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/FinishReason",
+                "description": "The reason the model stopped generating tokens. This will be `stop` if the model hit a natural stop point or a provided stop sequence,\n`length` if the maximum number of tokens specified in the request was reached,\n`content_filter` if content was omitted due to a flag from our content filters,\n`tool_calls` if the model called a tool, or `function_call` (deprecated) if the model called a function."
+              }
+            ]
+          },
+          "logprobs": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/ChatChoiceLogprobs",
+                "description": "Log probability information for the choice."
+              }
+            ]
+          }
+        }
+      },
+      "ChatChoiceLogprobs": {
+        "type": "object",
+        "description": "Log probability information for a chat completion choice.",
+        "properties": {
+          "content": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "$ref": "#/components/schemas/ChatCompletionTokenLogprob"
+            },
+            "description": "A list of message content tokens with log probability information."
+          },
+          "refusal": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "$ref": "#/components/schemas/ChatCompletionTokenLogprob"
+            }
+          }
+        }
+      },
+      "ChatCompletionAudio": {
+        "type": "object",
+        "description": "Parameters for audio output. Required when audio output is requested with `modalities: [\"audio\"]`.",
+        "required": [
+          "voice",
+          "format"
+        ],
+        "properties": {
+          "voice": {
+            "$ref": "#/components/schemas/ChatCompletionAudioVoice",
+            "description": "The voice the model uses to respond. Supported voices are `ash`, `ballad`, `coral`, `sage`, and `verse` (also supported but not recommended are `alloy`, `echo`, and `shimmer`; these voices are less expressive)."
+          },
+          "format": {
+            "$ref": "#/components/schemas/ChatCompletionAudioFormat",
+            "description": "Specifies the output audio format. Must be one of `wav`, `mp3`, `flac`, `opus`, or `pcm16`."
+          }
+        }
+      },
+      "ChatCompletionAudioFormat": {
+        "type": "string",
+        "description": "Specifies the output audio format. Must be one of `wav`, `mp3`, `flac`, `opus`, or `pcm16`.",
+        "enum": [
+          "wav",
+          "mp3",
+          "flac",
+          "opus",
+          "pcm16"
+        ]
+      },
+      "ChatCompletionAudioVoice": {
+        "type": "string",
+        "description": "The voice the model uses to respond in audio output.",
+        "enum": [
+          "alloy",
+          "ash",
+          "ballad",
+          "coral",
+          "echo",
+          "sage",
+          "shimmer",
+          "verse"
+        ]
+      },
+      "ChatCompletionFunctionCall": {
+        "oneOf": [
+          {
+            "type": "string",
+            "description": "The model does not call a function, and responds to the end-user.",
+            "enum": [
+              "none"
+            ]
+          },
+          {
+            "type": "string",
+            "description": "The model can pick between an end-user or calling a function.",
+            "enum": [
+              "auto"
+            ]
+          },
+          {
+            "type": "object",
+            "description": "Forces the model to call the specified function.",
+            "required": [
+              "Function"
+            ],
+            "properties": {
+              "Function": {
+                "type": "object",
+                "description": "Forces the model to call the specified function.",
+                "required": [
+                  "name"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "description": "Deprecated in favor of `tool_choice`. Controls which (if any) function is called by the model."
+      },
+      "ChatCompletionFunctions": {
+        "type": "object",
+        "description": "Deprecated: A function the model may generate JSON inputs for. Use `ChatCompletionTool` instead.",
+        "required": [
+          "name",
+          "parameters"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the function to be called. Must be a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64."
+          },
+          "description": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "A description of what the function does, used by the model to choose when and how to call the function."
+          },
+          "parameters": {
+            "description": "The parameters the functions accepts, described as a JSON Schema object. See the [guide](https://platform.openai.com/docs/guides/text-generation/function-calling) for examples, and the [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for documentation about the format.\n\nOmitting `parameters` defines a function with an empty parameter list."
+          }
+        },
+        "deprecated": true
+      },
+      "ChatCompletionMessageToolCall": {
+        "type": "object",
+        "description": "A tool call generated by the model.",
+        "required": [
+          "id",
+          "function"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The ID of the tool call."
+          },
+          "type": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/ChatCompletionToolType",
+                "description": "The type of the tool. Currently, only `function` is supported."
+              }
+            ]
+          },
+          "function": {
+            "$ref": "#/components/schemas/FunctionCall",
+            "description": "The function that the model called."
+          }
+        }
+      },
+      "ChatCompletionModalities": {
+        "type": "string",
+        "description": "Output types that you would like the model to generate for this request.\n\nMost models are capable of generating text, which is the default: `[\"text\"]`\n\nThe `gpt-4o-audio-preview` model can also be used to [generate\naudio](https://platform.openai.com/docs/guides/audio). To request that this model generate both text and audio responses, you can use: `[\"text\", \"audio\"]`",
+        "enum": [
+          "text",
+          "audio"
+        ]
+      },
+      "ChatCompletionNamedToolChoice": {
+        "type": "object",
+        "description": "Specifies a tool the model should use. Use to force the model to call a specific function.",
+        "required": [
+          "type",
+          "function"
+        ],
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/ChatCompletionToolType",
+            "description": "The type of the tool. Currently, only `function` is supported."
+          },
+          "function": {
+            "$ref": "#/components/schemas/FunctionName"
+          }
+        }
+      },
+      "ChatCompletionRequestAssistantMessage": {
+        "type": "object",
+        "description": "An assistant message in the conversation, possibly including tool calls.",
+        "properties": {
+          "content": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/ChatCompletionRequestAssistantMessageContent",
+                "description": "The contents of the assistant message. Required unless `tool_calls` or `function_call` is specified."
+              }
+            ]
+          },
+          "refusal": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The refusal message by the assistant."
+          },
+          "name": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "An optional name for the participant. Provides the model information to differentiate between participants of the same role."
+          },
+          "audio": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/ChatCompletionRequestAssistantMessageAudio",
+                "description": "Data about a previous audio response from the model.\n[Learn more](https://platform.openai.com/docs/guides/audio)."
+              }
+            ]
+          },
+          "tool_calls": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "$ref": "#/components/schemas/ChatCompletionMessageToolCall"
+            }
+          },
+          "function_call": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/FunctionCall",
+                "description": "Deprecated and replaced by `tool_calls`. The name and arguments of a function that should be called, as generated by the model."
+              }
+            ]
+          }
+        }
+      },
+      "ChatCompletionRequestAssistantMessageAudio": {
+        "type": "object",
+        "description": "Data about a previous audio response from the model, used in multi-turn conversations.",
+        "required": [
+          "id"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for a previous audio response from the model."
+          }
+        }
+      },
+      "ChatCompletionRequestAssistantMessageContent": {
+        "oneOf": [
+          {
+            "type": "string",
+            "description": "The text contents of the message."
+          },
+          {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ChatCompletionRequestAssistantMessageContentPart"
+            },
+            "description": "An array of content parts with a defined type. Can be one or more of type `text`, or exactly one of type `refusal`."
+          }
+        ],
+        "description": "The contents of an assistant message: either a text string or an array of content parts (text or refusal)."
+      },
+      "ChatCompletionRequestAssistantMessageContentPart": {
+        "oneOf": [
+          {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ChatCompletionRequestMessageContentPartText"
+              },
+              {
+                "type": "object",
+                "required": [
+                  "type"
+                ],
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "text"
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ChatCompletionRequestMessageContentPartRefusal"
+              },
+              {
+                "type": "object",
+                "required": [
+                  "type"
+                ],
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "refusal"
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        ],
+        "description": "A content part in an assistant message (text or refusal)."
+      },
+      "ChatCompletionRequestDeveloperMessage": {
+        "type": "object",
+        "description": "A developer message in the conversation.",
+        "required": [
+          "content"
+        ],
+        "properties": {
+          "content": {
+            "$ref": "#/components/schemas/ChatCompletionRequestDeveloperMessageContent",
+            "description": "The contents of the developer message."
+          },
+          "name": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "An optional name for the participant. Provides the model information to differentiate between participants of the same role."
+          }
+        }
+      },
+      "ChatCompletionRequestDeveloperMessageContent": {
+        "oneOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ChatCompletionRequestMessageContentPartText"
+            }
+          }
+        ],
+        "description": "The contents of a developer message: either a text string or an array of text content parts."
+      },
+      "ChatCompletionRequestFunctionMessage": {
+        "type": "object",
+        "description": "Deprecated: A function response message. Use tool messages instead.",
+        "required": [
+          "name"
+        ],
+        "properties": {
+          "content": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The return value from the function call, to return to the model."
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the function to call."
+          }
+        }
+      },
+      "ChatCompletionRequestMessage": {
+        "oneOf": [
+          {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ChatCompletionRequestDeveloperMessage"
+              },
+              {
+                "type": "object",
+                "required": [
+                  "role"
+                ],
+                "properties": {
+                  "role": {
+                    "type": "string",
+                    "enum": [
+                      "developer"
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ChatCompletionRequestSystemMessage"
+              },
+              {
+                "type": "object",
+                "required": [
+                  "role"
+                ],
+                "properties": {
+                  "role": {
+                    "type": "string",
+                    "enum": [
+                      "system"
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ChatCompletionRequestUserMessage"
+              },
+              {
+                "type": "object",
+                "required": [
+                  "role"
+                ],
+                "properties": {
+                  "role": {
+                    "type": "string",
+                    "enum": [
+                      "user"
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ChatCompletionRequestAssistantMessage"
+              },
+              {
+                "type": "object",
+                "required": [
+                  "role"
+                ],
+                "properties": {
+                  "role": {
+                    "type": "string",
+                    "enum": [
+                      "assistant"
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ChatCompletionRequestToolMessage"
+              },
+              {
+                "type": "object",
+                "required": [
+                  "role"
+                ],
+                "properties": {
+                  "role": {
+                    "type": "string",
+                    "enum": [
+                      "tool"
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ChatCompletionRequestFunctionMessage"
+              },
+              {
+                "type": "object",
+                "required": [
+                  "role"
+                ],
+                "properties": {
+                  "role": {
+                    "type": "string",
+                    "enum": [
+                      "function"
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        ],
+        "description": "A message in the chat completion conversation. Tagged by `role` (system, user, assistant, tool, developer, or function)."
+      },
+      "ChatCompletionRequestMessageContentPartAudio": {
+        "type": "object",
+        "description": "Learn about [audio inputs](https://platform.openai.com/docs/guides/audio).",
+        "required": [
+          "input_audio"
+        ],
+        "properties": {
+          "input_audio": {
+            "$ref": "#/components/schemas/InputAudio"
+          }
+        }
+      },
+      "ChatCompletionRequestMessageContentPartImage": {
+        "type": "object",
+        "description": "An image content part of a message.",
+        "required": [
+          "image_url"
+        ],
+        "properties": {
+          "image_url": {
+            "$ref": "#/components/schemas/ImageUrl"
+          }
+        }
+      },
+      "ChatCompletionRequestMessageContentPartRefusal": {
+        "type": "object",
+        "description": "A refusal content part of a message.",
+        "required": [
+          "refusal"
+        ],
+        "properties": {
+          "refusal": {
+            "type": "string",
+            "description": "The refusal message generated by the model."
+          }
+        }
+      },
+      "ChatCompletionRequestMessageContentPartText": {
+        "type": "object",
+        "description": "A text content part of a message.",
+        "required": [
+          "text"
+        ],
+        "properties": {
+          "text": {
+            "type": "string"
+          }
+        }
+      },
+      "ChatCompletionRequestSystemMessage": {
+        "type": "object",
+        "description": "A system message setting the behavior of the assistant.",
+        "required": [
+          "content"
+        ],
+        "properties": {
+          "content": {
+            "$ref": "#/components/schemas/ChatCompletionRequestSystemMessageContent",
+            "description": "The contents of the system message."
+          },
+          "name": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "An optional name for the participant. Provides the model information to differentiate between participants of the same role."
+          }
+        }
+      },
+      "ChatCompletionRequestSystemMessageContent": {
+        "oneOf": [
+          {
+            "type": "string",
+            "description": "The text contents of the system message."
+          },
+          {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ChatCompletionRequestSystemMessageContentPart"
+            },
+            "description": "An array of content parts with a defined type. For system messages, only type `text` is supported."
+          }
+        ],
+        "description": "The contents of a system message: either a text string or an array of text content parts."
+      },
+      "ChatCompletionRequestSystemMessageContentPart": {
+        "oneOf": [
+          {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ChatCompletionRequestMessageContentPartText"
+              },
+              {
+                "type": "object",
+                "required": [
+                  "type"
+                ],
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "text"
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        ],
+        "description": "A content part in a system message (text only)."
+      },
+      "ChatCompletionRequestToolMessage": {
+        "type": "object",
+        "description": "Tool message",
+        "required": [
+          "content",
+          "tool_call_id"
+        ],
+        "properties": {
+          "content": {
+            "$ref": "#/components/schemas/ChatCompletionRequestToolMessageContent",
+            "description": "The contents of the tool message."
+          },
+          "tool_call_id": {
+            "type": "string"
+          }
+        }
+      },
+      "ChatCompletionRequestToolMessageContent": {
+        "oneOf": [
+          {
+            "type": "string",
+            "description": "The text contents of the tool message."
+          },
+          {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ChatCompletionRequestToolMessageContentPart"
+            },
+            "description": "An array of content parts with a defined type. For tool messages, only type `text` is supported."
+          }
+        ],
+        "description": "The contents of a tool message: either a text string or an array of text content parts."
+      },
+      "ChatCompletionRequestToolMessageContentPart": {
+        "oneOf": [
+          {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ChatCompletionRequestMessageContentPartText"
+              },
+              {
+                "type": "object",
+                "required": [
+                  "type"
+                ],
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "text"
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        ],
+        "description": "A content part in a tool message (text only)."
+      },
+      "ChatCompletionRequestUserMessage": {
+        "type": "object",
+        "description": "A user message in the conversation.",
+        "required": [
+          "content"
+        ],
+        "properties": {
+          "content": {
+            "$ref": "#/components/schemas/ChatCompletionRequestUserMessageContent",
+            "description": "The contents of the user message."
+          },
+          "name": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "An optional name for the participant. Provides the model information to differentiate between participants of the same role."
+          }
+        }
+      },
+      "ChatCompletionRequestUserMessageContent": {
+        "oneOf": [
+          {
+            "type": "string",
+            "description": "The text contents of the message."
+          },
+          {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ChatCompletionRequestUserMessageContentPart"
+            },
+            "description": "An array of content parts with a defined type. Supported options differ based on the [model](https://platform.openai.com/docs/models) being used to generate the response. Can contain text, image, or audio inputs."
+          }
+        ],
+        "description": "The contents of a user message: either a text string or an array of content parts (text, image, or audio)."
+      },
+      "ChatCompletionRequestUserMessageContentPart": {
+        "oneOf": [
+          {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ChatCompletionRequestMessageContentPartText"
+              },
+              {
+                "type": "object",
+                "required": [
+                  "type"
+                ],
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "text"
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ChatCompletionRequestMessageContentPartImage"
+              },
+              {
+                "type": "object",
+                "required": [
+                  "type"
+                ],
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "image_url"
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ChatCompletionRequestMessageContentPartAudio"
+              },
+              {
+                "type": "object",
+                "required": [
+                  "type"
+                ],
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "input_audio"
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        ],
+        "description": "A content part in a user message (text, image, or audio)."
+      },
+      "ChatCompletionResponseMessage": {
+        "type": "object",
+        "description": "A chat completion message generated by the model.",
+        "required": [
+          "role"
+        ],
+        "properties": {
+          "content": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The contents of the message."
+          },
+          "refusal": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The refusal message generated by the model."
+          },
+          "tool_calls": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "$ref": "#/components/schemas/ChatCompletionMessageToolCall"
+            },
+            "description": "The tool calls generated by the model, such as function calls."
+          },
+          "role": {
+            "$ref": "#/components/schemas/Role",
+            "description": "The role of the author of this message."
+          },
+          "function_call": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/FunctionCall",
+                "description": "Deprecated and replaced by `tool_calls`.\nThe name and arguments of a function that should be called, as generated by the model."
+              }
+            ]
+          },
+          "audio": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/ChatCompletionResponseMessageAudio",
+                "description": "If the audio output modality is requested, this object contains data about the audio response from the model. [Learn more](https://platform.openai.com/docs/guides/audio)."
+              }
+            ]
+          }
+        }
+      },
+      "ChatCompletionResponseMessageAudio": {
+        "type": "object",
+        "description": "Audio data in a chat completion response message.",
+        "required": [
+          "id",
+          "expires_at",
+          "data",
+          "transcript"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for this audio response."
+          },
+          "expires_at": {
+            "type": "integer",
+            "format": "u-int32",
+            "description": "The Unix timestamp (in seconds) for when this audio response will no longer be accessible on the server for use in multi-turn conversations.",
+            "minimum": 0
+          },
+          "data": {
+            "type": "string",
+            "description": "Base64 encoded audio bytes generated by the model, in the format specified in the request."
+          },
+          "transcript": {
+            "type": "string",
+            "description": "Transcript of the audio generated by the model."
+          }
+        }
+      },
       "ChatCompletionSource": {
         "type": "string",
         "description": "LLM provider for chat completions",
@@ -17813,6 +18955,115 @@
           "mistral",
           "azureOpenAi",
           "vLlm"
+        ]
+      },
+      "ChatCompletionStreamOptions": {
+        "type": "object",
+        "description": "Options for streaming response. Only set this when you set `stream: true`.",
+        "required": [
+          "include_usage"
+        ],
+        "properties": {
+          "include_usage": {
+            "type": "boolean",
+            "description": "If set, an additional chunk will be streamed before the `data: [DONE]` message. The `usage` field on this chunk shows the token usage statistics for the entire request, and the `choices` field will always be an empty array. All other chunks will also include a `usage` field, but with a null value."
+          }
+        }
+      },
+      "ChatCompletionTokenLogprob": {
+        "type": "object",
+        "description": "Log probability information for an output token.",
+        "required": [
+          "token",
+          "logprob",
+          "top_logprobs"
+        ],
+        "properties": {
+          "token": {
+            "type": "string",
+            "description": "The token."
+          },
+          "logprob": {
+            "type": "number",
+            "format": "float",
+            "description": "The log probability of this token, if it is within the top 20 most likely tokens. Otherwise, the value `-9999.0` is used to signify that the token is very unlikely."
+          },
+          "bytes": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "type": "integer",
+              "format": "u-int8",
+              "minimum": 0
+            },
+            "description": "A list of integers representing the UTF-8 bytes representation of the token. Useful in instances where characters are represented by multiple tokens and their byte representations must be combined to generate the correct text representation. Can be `null` if there is no bytes representation for the token."
+          },
+          "top_logprobs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TopLogprobs"
+            },
+            "description": "List of the most likely tokens and their log probability, at this token position. In rare cases, there may be fewer than the number of requested `top_logprobs` returned."
+          }
+        }
+      },
+      "ChatCompletionTool": {
+        "type": "object",
+        "description": "A tool the model may call. Currently, only functions are supported as a tool.",
+        "required": [
+          "type",
+          "function"
+        ],
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/ChatCompletionToolType"
+          },
+          "function": {
+            "$ref": "#/components/schemas/FunctionObject"
+          }
+        }
+      },
+      "ChatCompletionToolChoiceOption": {
+        "oneOf": [
+          {
+            "type": "string",
+            "enum": [
+              "none"
+            ]
+          },
+          {
+            "type": "string",
+            "enum": [
+              "auto"
+            ]
+          },
+          {
+            "type": "string",
+            "enum": [
+              "required"
+            ]
+          },
+          {
+            "type": "object",
+            "required": [
+              "named"
+            ],
+            "properties": {
+              "named": {
+                "$ref": "#/components/schemas/ChatCompletionNamedToolChoice"
+              }
+            }
+          }
+        ],
+        "description": "Controls which (if any) tool is called by the model.\n`none` means the model will not call any tool and instead generates a message.\n`auto` means the model can pick between generating a message or calling one or more tools.\n`required` means the model must call one or more tools.\nSpecifying a particular tool via `{\"type\": \"function\", \"function\": {\"name\": \"my_function\"}}` forces the model to call that tool.\n\n`none` is the default when no tools are present. `auto` is the default if tools are present.present."
+      },
+      "ChatCompletionToolType": {
+        "type": "string",
+        "description": "The type of a tool. Currently, only `function` is supported.",
+        "enum": [
+          "function"
         ]
       },
       "ChatSearchParams": {
@@ -17897,8 +19148,7 @@
               }
             ]
           }
-        },
-        "additionalProperties": false
+        }
       },
       "ChatSettings": {
         "type": "object",
@@ -17943,8 +19193,7 @@
             ],
             "default": {}
           }
-        },
-        "additionalProperties": false
+        }
       },
       "ChatWorkspaceSettings": {
         "type": "object",
@@ -18057,14 +19306,12 @@
                     ],
                     "example": "This is index you want to search in..."
                   }
-                },
-                "additionalProperties": false
+                }
               }
             ],
             "description": "Custom prompts for chat completions"
           }
-        },
-        "additionalProperties": false
+        }
       },
       "Code": {
         "type": "string",
@@ -18227,6 +19474,8 @@
           "invalid_settings_typo_tolerance",
           "invalid_settings_localized_attributes",
           "invalid_state",
+          "invalid_stats_show_internal_database_sizes",
+          "invalid_stats_size_format",
           "invalid_store_file",
           "invalid_swap_duplicate_index_found",
           "invalid_swap_indexes",
@@ -18269,6 +19518,7 @@
           "payload_too_large",
           "remote_bad_response",
           "remote_bad_request",
+          "unknown_remote",
           "remote_could_not_send_request",
           "remote_invalid_api_key",
           "remote_remote_error",
@@ -18328,6 +19578,11 @@
           "invalid_index_fields_filter_ranking_rule",
           "invalid_index_fields_filter_filterable",
           "requires_enterprise_edition",
+          "invalid_render_template",
+          "invalid_render_input",
+          "render_document_not_found",
+          "template_parsing_error",
+          "template_rendering_error",
           "invalid_webhooks",
           "invalid_webhook_url",
           "invalid_webhook_headers",
@@ -18348,6 +19603,98 @@
           "invalid_dynamic_search_rule_filter_active",
           "dynamic_search_rule_not_found"
         ]
+      },
+      "CompletionTokensDetails": {
+        "type": "object",
+        "description": "Breakdown of tokens used in a completion.",
+        "properties": {
+          "accepted_prediction_tokens": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "format": "u-int32",
+            "minimum": 0
+          },
+          "audio_tokens": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "format": "u-int32",
+            "description": "Audio input tokens generated by the model.",
+            "minimum": 0
+          },
+          "reasoning_tokens": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "format": "u-int32",
+            "description": "Tokens generated by the model for reasoning.",
+            "minimum": 0
+          },
+          "rejected_prediction_tokens": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "format": "u-int32",
+            "description": " When using Predicted Outputs, the number of tokens in the\nprediction that did not appear in the completion. However, like\nreasoning tokens, these tokens are still counted in the total\ncompletion tokens for purposes of billing, output, and context\nwindow limits.",
+            "minimum": 0
+          }
+        }
+      },
+      "CompletionUsage": {
+        "type": "object",
+        "description": "Usage statistics for the completion request.",
+        "required": [
+          "prompt_tokens",
+          "completion_tokens",
+          "total_tokens"
+        ],
+        "properties": {
+          "prompt_tokens": {
+            "type": "integer",
+            "format": "u-int32",
+            "description": "Number of tokens in the prompt.",
+            "minimum": 0
+          },
+          "completion_tokens": {
+            "type": "integer",
+            "format": "u-int32",
+            "description": "Number of tokens in the generated completion.",
+            "minimum": 0
+          },
+          "total_tokens": {
+            "type": "integer",
+            "format": "u-int32",
+            "description": "Total number of tokens used in the request (prompt + completion).",
+            "minimum": 0
+          },
+          "prompt_tokens_details": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/PromptTokensDetails",
+                "description": "Breakdown of tokens used in the prompt."
+              }
+            ]
+          },
+          "completion_tokens_details": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/CompletionTokensDetails",
+                "description": "Breakdown of tokens used in a completion."
+              }
+            ]
+          }
+        }
       },
       "ComputedFacets": {
         "type": "object",
@@ -18449,7 +19796,8 @@
         "type": "object",
         "required": [
           "actions",
-          "indexes"
+          "indexes",
+          "expiresAt"
         ],
         "properties": {
           "description": {
@@ -18503,6 +19851,350 @@
             ],
             "format": "date-time",
             "description": "Represent the expiration date and time as RFC 3339 format. `null`\nequals to no expiration time."
+          }
+        }
+      },
+      "CreateChatCompletionRequest": {
+        "type": "object",
+        "description": "A chat completion request compatible with the OpenAI API.",
+        "required": [
+          "messages",
+          "model"
+        ],
+        "properties": {
+          "messages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ChatCompletionRequestMessage"
+            },
+            "description": "A list of messages comprising the conversation so far. Depending on the [model](https://platform.openai.com/docs/models) you use, different message types (modalities) are supported, like [text](https://platform.openai.com/docs/guides/text-generation), [images](https://platform.openai.com/docs/guides/vision), and [audio](https://platform.openai.com/docs/guides/audio)."
+          },
+          "model": {
+            "type": "string",
+            "description": "ID of the model to use.\nSee the [model endpoint compatibility](https://platform.openai.com/docs/models#model-endpoint-compatibility) table for details on which models work with the Chat API."
+          },
+          "store": {
+            "type": [
+              "boolean",
+              "null"
+            ],
+            "description": "Whether or not to store the output of this chat completion request\n\nfor use in our [model distillation](https://platform.openai.com/docs/guides/distillation) or [evals](https://platform.openai.com/docs/guides/evals) products."
+          },
+          "reasoning_effort": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/ReasoningEffort",
+                "description": "**o1 models only**\n\nConstrains effort on reasoning for\n[reasoning models](https://platform.openai.com/docs/guides/reasoning).\n\nCurrently supported values are `low`, `medium`, and `high`. Reducing\n\nreasoning effort can result in faster responses and fewer tokens\nused on reasoning in a response."
+              }
+            ]
+          },
+          "metadata": {
+            "description": "Developer-defined tags and values used for filtering completions in the [dashboard](https://platform.openai.com/chat-completions)."
+          },
+          "frequency_penalty": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "format": "float",
+            "description": "Number between -2.0 and 2.0. Positive values penalize new tokens based on their existing frequency in the text so far, decreasing the model's likelihood to repeat the same line verbatim."
+          },
+          "logit_bias": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "description": "Modify the likelihood of specified tokens appearing in the completion.\n\nAccepts a json object that maps tokens (specified by their token ID in the tokenizer) to an associated bias value from -100 to 100.\nMathematically, the bias is added to the logits generated by the model prior to sampling.\nThe exact effect will vary per model, but values between -1 and 1 should decrease or increase likelihood of selection;\nvalues like -100 or 100 should result in a ban or exclusive selection of the relevant token.",
+            "additionalProperties": {},
+            "propertyNames": {
+              "type": "string"
+            }
+          },
+          "logprobs": {
+            "type": [
+              "boolean",
+              "null"
+            ],
+            "description": "Whether to return log probabilities of the output tokens or not. If true, returns the log probabilities of each output token returned in the `content` of `message`."
+          },
+          "top_logprobs": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "format": "u-int8",
+            "description": "An integer between 0 and 20 specifying the number of most likely tokens to return at each token position, each with an associated log probability. `logprobs` must be set to `true` if this parameter is used.",
+            "minimum": 0
+          },
+          "max_tokens": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "format": "u-int32",
+            "description": "The maximum number of [tokens](https://platform.openai.com/tokenizer) that can be generated in the chat completion.\n\nThis value can be used to control [costs](https://openai.com/api/pricing/) for text generated via API.\nThis value is now deprecated in favor of `max_completion_tokens`, and is\nnot compatible with [o1 series models](https://platform.openai.com/docs/guides/reasoning).",
+            "deprecated": true,
+            "minimum": 0
+          },
+          "max_completion_tokens": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "format": "u-int32",
+            "description": "An upper bound for the number of tokens that can be generated for a completion, including visible output tokens and [reasoning tokens](https://platform.openai.com/docs/guides/reasoning).",
+            "minimum": 0
+          },
+          "n": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "format": "u-int8",
+            "description": "How many chat completion choices to generate for each input message. Note that you will be charged based on the number of generated tokens across all of the choices. Keep `n` as `1` to minimize costs.",
+            "minimum": 0
+          },
+          "modalities": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "$ref": "#/components/schemas/ChatCompletionModalities"
+            },
+            "description": "Output types that you would like the model to generate for this request. Most models are capable of generating text, which is the default: `[\"text\"]`."
+          },
+          "prediction": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/PredictionContent",
+                "description": "Configuration for a [Predicted Output](https://platform.openai.com/docs/guides/predicted-outputs),which can greatly improve response times when large parts of the model response are known ahead of time. This is most common when you are regenerating a file with only minor changes to most of the content."
+              }
+            ]
+          },
+          "audio": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/ChatCompletionAudio",
+                "description": "Parameters for audio output. Required when audio output is requested with `modalities: [\"audio\"]`. [Learn more](https://platform.openai.com/docs/guides/audio)."
+              }
+            ]
+          },
+          "presence_penalty": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "format": "float",
+            "description": "Number between -2.0 and 2.0. Positive values penalize new tokens based on whether they appear in the text so far, increasing the model's likelihood to talk about new topics."
+          },
+          "response_format": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/ResponseFormat",
+                "description": "An object specifying the format that the model must output. Compatible with [GPT-4o](https://platform.openai.com/docs/models/gpt-4o), [GPT-4o mini](https://platform.openai.com/docs/models/gpt-4o-mini), [GPT-4 Turbo](https://platform.openai.com/docs/models/gpt-4-and-gpt-4-turbo) and all GPT-3.5 Turbo models newer than `gpt-3.5-turbo-1106`.\n\nSetting to `{ \"type\": \"json_schema\", \"json_schema\": {...} }` enables Structured Outputs which guarantees the model will match your supplied JSON schema. Learn more in the [Structured Outputs guide](https://platform.openai.com/docs/guides/structured-outputs).\n\nSetting to `{ \"type\": \"json_object\" }` enables JSON mode, which guarantees the message the model generates is valid JSON.\n\n**Important:** when using JSON mode, you **must** also instruct the model to produce JSON yourself via a system or user message. Without this, the model may generate an unending stream of whitespace until the generation reaches the token limit, resulting in a long-running and seemingly \"stuck\" request. Also note that the message content may be partially cut off if `finish_reason=\"length\"`, which indicates the generation exceeded `max_tokens` or the conversation exceeded the max context length."
+              }
+            ]
+          },
+          "seed": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "format": "int64",
+            "description": " This feature is in Beta.\nIf specified, our system will make a best effort to sample deterministically, such that repeated requests\nwith the same `seed` and parameters should return the same result.\nDeterminism is not guaranteed, and you should refer to the `system_fingerprint` response parameter to monitor changes in the backend."
+          },
+          "service_tier": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/ServiceTier",
+                "description": "Specifies the latency tier to use for processing the request. This parameter is relevant for customers subscribed to the scale tier service:\n- If set to 'auto', the system will utilize scale tier credits until they are exhausted.\n- If set to 'default', the request will be processed using the default service tier with a lower uptime SLA and no latency guarentee.\n- When not set, the default behavior is 'auto'.\n\nWhen this parameter is set, the response body will include the `service_tier` utilized."
+              }
+            ]
+          },
+          "stop": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/Stop",
+                "description": "Up to 4 sequences where the API will stop generating further tokens."
+              }
+            ]
+          },
+          "stream": {
+            "type": [
+              "boolean",
+              "null"
+            ],
+            "description": "If set, partial message deltas will be sent, like in ChatGPT.\nTokens will be sent as data-only [server-sent events](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events#Event_stream_format)\nas they become available, with the stream terminated by a `data: [DONE]` message. [Example Python code](https://cookbook.openai.com/examples/how_to_stream_completions)."
+          },
+          "stream_options": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/ChatCompletionStreamOptions",
+                "description": "Options for streaming response. Only set this when you set `stream: true`."
+              }
+            ]
+          },
+          "temperature": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "format": "float",
+            "description": "What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random,\nwhile lower values like 0.2 will make it more focused and deterministic.\n\nWe generally recommend altering this or `top_p` but not both."
+          },
+          "top_p": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "format": "float",
+            "description": "An alternative to sampling with temperature, called nucleus sampling,\nwhere the model considers the results of the tokens with top_p probability mass.\nSo 0.1 means only the tokens comprising the top 10% probability mass are considered.\n\n We generally recommend altering this or `temperature` but not both."
+          },
+          "tools": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "$ref": "#/components/schemas/ChatCompletionTool"
+            },
+            "description": "A list of tools the model may call. Currently, only functions are supported as a tool.\nUse this to provide a list of functions the model may generate JSON inputs for. A max of 128 functions are supported."
+          },
+          "tool_choice": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/ChatCompletionToolChoiceOption",
+                "description": "Controls which (if any) tool is called by the model. `none` means the model will not call any tool and instead generates a message. `auto` means the model can pick between generating a message or calling one or more tools. `required` means the model must call one or more tools. `none` is the default when no tools are present. `auto` is the default if tools are present."
+              }
+            ]
+          },
+          "parallel_tool_calls": {
+            "type": [
+              "boolean",
+              "null"
+            ],
+            "description": "Whether to enable [parallel function calling](https://platform.openai.com/docs/guides/function-calling/parallel-function-calling) during tool use."
+          },
+          "user": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "A unique identifier representing your end-user, which can help OpenAI to monitor and detect abuse. [Learn more](https://platform.openai.com/docs/guides/safety-best-practices#end-user-ids)."
+          },
+          "function_call": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/ChatCompletionFunctionCall",
+                "description": "Deprecated in favor of `tool_choice`.\n\nControls which (if any) function is called by the model.\n`none` means the model will not call a function and instead generates a message.\n`auto` means the model can pick between generating a message or calling a function.\nSpecifying a particular function via `{\"name\": \"my_function\"}` forces the model to call that function.\n\n`none` is the default when no functions are present. `auto` is the default if functions are present."
+              }
+            ]
+          },
+          "functions": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "$ref": "#/components/schemas/ChatCompletionFunctions"
+            },
+            "description": "Deprecated in favor of `tools`.\n\nA list of functions the model may generate JSON inputs for.",
+            "deprecated": true
+          }
+        }
+      },
+      "CreateChatCompletionResponse": {
+        "type": "object",
+        "description": "Represents a chat completion response returned by model, based on the provided input.",
+        "required": [
+          "id",
+          "choices",
+          "created",
+          "model",
+          "object"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "A unique identifier for the chat completion."
+          },
+          "choices": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ChatChoice"
+            },
+            "description": "A list of chat completion choices. Can be more than one if `n` is greater than 1."
+          },
+          "created": {
+            "type": "integer",
+            "format": "u-int32",
+            "description": "The Unix timestamp (in seconds) of when the chat completion was created.",
+            "minimum": 0
+          },
+          "model": {
+            "type": "string",
+            "description": "The model used for the chat completion."
+          },
+          "service_tier": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/ServiceTierResponse",
+                "description": "The service tier used for processing the request. This field is only included if the `service_tier` parameter is specified in the request."
+              }
+            ]
+          },
+          "system_fingerprint": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "This fingerprint represents the backend configuration that the model runs with.\n\nCan be used in conjunction with the `seed` request parameter to understand when backend changes have been made that might impact determinism."
+          },
+          "object": {
+            "type": "string",
+            "description": "The object type, which is always `chat.completion`."
+          },
+          "usage": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/CompletionUsage",
+                "description": "Usage statistics for the completion request."
+              }
+            ]
           }
         }
       },
@@ -18839,7 +20531,8 @@
           "filter": {
             "description": "Filter expression to match documents for deletion"
           }
-        }
+        },
+        "additionalProperties": false
       },
       "DocumentEditionByFunction": {
         "type": "object",
@@ -18858,7 +20551,8 @@
             "type": "string",
             "description": "RHAI function to apply to each document"
           }
-        }
+        },
+        "additionalProperties": false
       },
       "DynamicSearchRule": {
         "type": "object",
@@ -19009,8 +20703,7 @@
               "boolean",
               "null"
             ],
-            "description": "When true, vectors are stored as 1-bit (smaller, faster, less precise).\n\n- Available for all sources.\n- Irreversible once enabled.\n- 🏗️ When set to true, embeddings are not regenerated, but they are binary quantized, which takes time.",
-            "default": false
+            "description": "When true, vectors are stored as 1-bit (smaller, faster, less precise).\n\n- Available for all sources.\n- Irreversible once enabled.\n- 🏗️ When set to true, embeddings are not regenerated, but they are binary quantized, which takes time."
           },
           "documentTemplate": {
             "type": [
@@ -19114,8 +20807,7 @@
               }
             ]
           }
-        },
-        "additionalProperties": false
+        }
       },
       "ErrorType": {
         "type": "string",
@@ -19131,10 +20823,7 @@
         "description": "Request body for exporting data to a remote Meilisearch instance",
         "properties": {
           "url": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": "string",
             "description": "URL of the destination Meilisearch instance",
             "example": "https://ms-1234.heaven.meilisearch.com"
           },
@@ -19200,17 +20889,17 @@
         "type": "object",
         "description": "Request body for searching facet values",
         "required": [
-          "facet_name"
+          "facetName"
         ],
         "properties": {
-          "facet_query": {
+          "facetQuery": {
             "type": [
               "string",
               "null"
             ],
             "description": "Query string to search for facet values"
           },
-          "facet_name": {
+          "facetName": {
             "type": "string",
             "description": "Name of the facet to search"
           },
@@ -19249,11 +20938,15 @@
           "filter": {
             "description": "Filter expression to apply before facet search"
           },
-          "matching_strategy": {
-            "$ref": "#/components/schemas/MatchingStrategy",
-            "description": "Strategy used to match query terms"
+          "matchingStrategy": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/MatchingStrategy",
+                "description": "Strategy used to match query terms"
+              }
+            ]
           },
-          "attributes_to_search_on": {
+          "attributesToSearchOn": {
             "type": [
               "array",
               "null"
@@ -19263,7 +20956,7 @@
             },
             "description": "Restrict search to specified attributes"
           },
-          "ranking_score_threshold": {
+          "rankingScoreThreshold": {
             "type": [
               "number",
               "null"
@@ -19281,12 +20974,19 @@
             },
             "description": "Languages to use for query processing"
           },
-          "exhaustive_facet_count": {
+          "exhaustiveFacetCount": {
             "type": [
               "boolean",
               "null"
             ],
             "description": "Return exhaustive facet count instead of an estimate"
+          },
+          "useNetwork": {
+            "type": [
+              "boolean",
+              "null"
+            ],
+            "description": "When `true`, runs the query on the whole network (all shards covered exactly once).\n\nWhen `false`, the query runs locally.\n\nWhen omitted or `null`, the default value depends on whether the sharding is enabled for the instance:\n\n- If the instance has sharding enabled (has a leader), defaults to `true`.\n- Otherwise defaults to `false`.\n\n**Enterprise Edition only.** This feature is available in the Enterprise Edition.\n\nIt also requires the `network` [experimental feature](http://localhost:3000/reference/api/experimental-features/configure-experimental-features).\n\nValues: `true` = use the whole network; `false` = local, default = see above.\n\nWhen using the network, the index must exist with compatible settings on all remotes."
           }
         }
       },
@@ -19350,8 +21050,7 @@
               "*": "alpha"
             }
           }
-        },
-        "additionalProperties": false
+        }
       },
       "FederatedFacets": {
         "type": "object",
@@ -19387,7 +21086,8 @@
               }
             ]
           }
-        }
+        },
+        "additionalProperties": false
       },
       "FederatedSearchResult": {
         "allOf": [
@@ -19512,12 +21212,6 @@
       "Federation": {
         "type": "object",
         "description": "Configuration for federated multi-search",
-        "required": [
-          "limit",
-          "offset",
-          "facetsByIndex",
-          "showPerformanceDetails"
-        ],
         "properties": {
           "limit": {
             "type": "integer",
@@ -19581,15 +21275,24 @@
           "showPerformanceDetails": {
             "type": "boolean",
             "description": "Whether to include performance details in the response"
+          },
+          "personalize": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/Personalize",
+                "description": "Personalize search results"
+              }
+            ]
           }
-        }
+        },
+        "additionalProperties": false
       },
       "FederationOptions": {
         "type": "object",
         "description": "Options for federated multi-search queries",
-        "required": [
-          "weight"
-        ],
         "properties": {
           "weight": {
             "type": "number",
@@ -19611,7 +21314,8 @@
             "description": "Position of this query in the list of queries",
             "minimum": 0
           }
-        }
+        },
+        "additionalProperties": false
       },
       "Field": {
         "type": "object",
@@ -19815,6 +21519,17 @@
           }
         ]
       },
+      "FinishReason": {
+        "type": "string",
+        "description": "The reason the model stopped generating tokens.",
+        "enum": [
+          "stop",
+          "length",
+          "tool_calls",
+          "content_filter",
+          "function_call"
+        ]
+      },
       "ForeignKey": {
         "type": "object",
         "required": [
@@ -19828,8 +21543,68 @@
           "fieldName": {
             "type": "string"
           }
-        },
-        "additionalProperties": false
+        }
+      },
+      "FunctionCall": {
+        "type": "object",
+        "description": "The name and arguments of a function that should be called, as generated by the model.",
+        "required": [
+          "name",
+          "arguments"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the function to call."
+          },
+          "arguments": {
+            "type": "string",
+            "description": "The arguments to call the function with, as generated by the model in JSON format. Note that the model does not always generate valid JSON, and may hallucinate parameters not defined by your function schema. Validate the arguments in your code before calling your function."
+          }
+        }
+      },
+      "FunctionName": {
+        "type": "object",
+        "description": "A wrapper for a function name reference.",
+        "required": [
+          "name"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the function to call."
+          }
+        }
+      },
+      "FunctionObject": {
+        "type": "object",
+        "description": "A function definition for tool use, described as a JSON Schema object.",
+        "required": [
+          "name"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the function to be called. Must be a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64."
+          },
+          "description": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "A description of what the function does, used by the model to choose when and how to call the function."
+          },
+          "parameters": {
+            "description": "The parameters the functions accepts, described as a JSON Schema object. See the [guide](https://platform.openai.com/docs/guides/text-generation/function-calling) for examples, and the [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for documentation about the format.\n\nOmitting `parameters` defines a function with an empty parameter list."
+          },
+          "strict": {
+            "type": [
+              "boolean",
+              "null"
+            ],
+            "description": "Whether to enable strict schema adherence when generating the function call. If set to true, the model will follow the exact schema defined in the `parameters` field. Only a subset of JSON Schema is supported when `strict` is `true`. Learn more about Structured Outputs in the [function calling guide](https://platform.openai.com/docs/guides/function-calling)."
+          }
+        }
       },
       "GetLogs": {
         "type": "object",
@@ -19852,8 +21627,7 @@
           },
           "profileMemory": {
             "type": "boolean",
-            "description": "Enable memory profiling (only useful with profile mode, significantly\nslows down the engine)",
-            "default": false
+            "description": "Enable memory profiling (only useful with profile mode, significantly\nslows down the engine)"
           }
         }
       },
@@ -19872,7 +21646,8 @@
       "HealthStatus": {
         "type": "string",
         "enum": [
-          "available"
+          "available",
+          "mustRestart"
         ]
       },
       "HitsInfo": {
@@ -19958,6 +21733,39 @@
           }
         }
       },
+      "ImageDetail": {
+        "type": "string",
+        "description": "Specifies the detail level of the image.",
+        "enum": [
+          "auto",
+          "low",
+          "high"
+        ]
+      },
+      "ImageUrl": {
+        "type": "object",
+        "description": "An image URL with optional detail level.",
+        "required": [
+          "url"
+        ],
+        "properties": {
+          "url": {
+            "type": "string",
+            "description": "Either a URL of the image or the base64 encoded image data."
+          },
+          "detail": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/ImageDetail",
+                "description": "Specifies the detail level of the image. Learn more in the [Vision guide](https://platform.openai.com/docs/guides/vision/low-or-high-fidelity-image-understanding)."
+              }
+            ]
+          }
+        }
+      },
       "ImportData": {
         "type": "object",
         "description": "Import data stored in a task",
@@ -20004,7 +21812,8 @@
             "description": "[Primary key](https://www.meilisearch.com/docs/learn/getting_started/primary_key) of the index",
             "example": "id"
           }
-        }
+        },
+        "additionalProperties": false
       },
       "IndexStats": {
         "type": "object",
@@ -20024,20 +21833,26 @@
             "minimum": 0
           },
           "rawDocumentDbSize": {
-            "type": "integer",
-            "format": "u-int64",
-            "description": "Size of the documents database, in bytes.",
-            "minimum": 0
+            "$ref": "#/components/schemas/Size",
+            "description": "Size of the documents database, in bytes."
           },
           "avgDocumentSize": {
-            "type": "integer",
-            "format": "u-int64",
-            "description": "Average size of a document in the documents database.",
-            "minimum": 0
+            "$ref": "#/components/schemas/Size",
+            "description": "Average size of a document in the documents database."
           },
           "isIndexing": {
             "type": "boolean",
             "description": "Whether or not the index is currently ingesting document"
+          },
+          "internalDatabaseSizes": {
+            "type": "object",
+            "description": "Size of all the internal databases for the index.\n\nDatabase names can change from version to version.",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/Size"
+            },
+            "propertyNames": {
+              "type": "string"
+            }
           },
           "numberOfEmbeddings": {
             "type": [
@@ -20130,6 +21945,32 @@
             "description": "[Primary key](https://www.meilisearch.com/docs/learn/getting_started/primary_key) of the index"
           }
         }
+      },
+      "InputAudio": {
+        "type": "object",
+        "description": "Input audio data for an audio content part.",
+        "required": [
+          "data",
+          "format"
+        ],
+        "properties": {
+          "data": {
+            "type": "string",
+            "description": "Base64 encoded audio data."
+          },
+          "format": {
+            "$ref": "#/components/schemas/InputAudioFormat",
+            "description": "The format of the encoded audio data. Currently supports \"wav\" and \"mp3\"."
+          }
+        }
+      },
+      "InputAudioFormat": {
+        "type": "string",
+        "description": "The format of the encoded audio data.",
+        "enum": [
+          "wav",
+          "mp3"
+        ]
       },
       "KeyView": {
         "type": "object",
@@ -20255,7 +22096,7 @@
         "type": "object",
         "description": "Filter fields by attribute name patterns or by capability (displayed, searchable, sortable, etc.). All criteria are ANDed.",
         "properties": {
-          "attribute_patterns": {
+          "attributePatterns": {
             "oneOf": [
               {
                 "type": "null"
@@ -20294,7 +22135,7 @@
             ],
             "description": "Only include fields that are used as distinct attribute (true) or not (false)."
           },
-          "ranking_rule": {
+          "rankingRule": {
             "type": [
               "boolean",
               "null"
@@ -20339,7 +22180,7 @@
       "ListRulesFilter": {
         "type": "object",
         "properties": {
-          "attribute_patterns": {
+          "attributePatterns": {
             "oneOf": [
               {
                 "type": "null"
@@ -20572,7 +22413,7 @@
       },
       "MatchingStrategy": {
         "type": "string",
-        "description": "This is unfortunately a duplication of the struct in <meilisearch/src/search/mod.rs>.\nThe reason why it is duplicated is because milli cannot depend on meilisearch. It would be cyclic imports.",
+        "description": "Strategy used to match query terms within documents",
         "enum": [
           "last",
           "all",
@@ -20591,7 +22432,8 @@
             "description": "The maximum number of facet values to return for each facet after\nmerging. Values from all indexes are combined and sorted before\ntruncation. If not specified, uses the default limit from the index\nsettings.",
             "minimum": 0
           }
-        }
+        },
+        "additionalProperties": false
       },
       "Message": {
         "oneOf": [
@@ -20639,6 +22481,31 @@
                 ]
               }
             }
+          },
+          {
+            "type": "object",
+            "description": "The specified remote will see it's status change.\n\nSend this message to change the accessiblity of a remote.",
+            "required": [
+              "remote",
+              "status",
+              "type"
+            ],
+            "properties": {
+              "remote": {
+                "type": "string",
+                "description": "Name of the remote whose status will be changed."
+              },
+              "status": {
+                "$ref": "#/components/schemas/Status",
+                "description": "The new status for the remote."
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "statusChangeForRemote"
+                ]
+              }
+            }
           }
         ]
       },
@@ -20668,8 +22535,7 @@
             "example": 9,
             "minimum": 0
           }
-        },
-        "additionalProperties": false
+        }
       },
       "Network": {
         "type": "object",
@@ -20775,7 +22641,8 @@
               }
             }
           }
-        }
+        },
+        "additionalProperties": false
       },
       "NetworkChange": {
         "type": "object",
@@ -20841,8 +22708,7 @@
             "example": 1000,
             "minimum": 0
           }
-        },
-        "additionalProperties": false
+        }
       },
       "PaginationView_DynamicSearchRule": {
         "type": "object",
@@ -21217,7 +23083,49 @@
             "type": "string",
             "description": "String describing the user (e.g. preferences, behavior).\n\nUsed to return different results for different profiles."
           }
-        }
+        },
+        "additionalProperties": false
+      },
+      "PredictionContent": {
+        "oneOf": [
+          {
+            "type": "object",
+            "description": "The type of the predicted content you want to provide. This type is\ncurrently always `content`.",
+            "required": [
+              "content",
+              "type"
+            ],
+            "properties": {
+              "content": {
+                "$ref": "#/components/schemas/PredictionContentContent",
+                "description": "The type of the predicted content you want to provide. This type is\ncurrently always `content`."
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "content"
+                ]
+              }
+            }
+          }
+        ],
+        "description": "Static predicted output content, such as the content of a text file that is being regenerated."
+      },
+      "PredictionContentContent": {
+        "oneOf": [
+          {
+            "type": "string",
+            "description": "The content used for a Predicted Output. This is often the text of a file you are regenerating with minor changes."
+          },
+          {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ChatCompletionRequestMessageContentPartText"
+            },
+            "description": "An array of content parts with a defined type. Supported options differ based on the [model](https://platform.openai.com/docs/models) being used to generate the response. Can contain text inputs."
+          }
+        ],
+        "description": "The content that should be matched when generating a model response. If generated tokens would match this content, the entire model response can be returned much more quickly."
       },
       "PrefixSearchSettings": {
         "type": "string",
@@ -21275,6 +23183,30 @@
           }
         }
       },
+      "PromptTokensDetails": {
+        "type": "object",
+        "description": "Breakdown of tokens used in a completion.",
+        "properties": {
+          "audio_tokens": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "format": "u-int32",
+            "description": "Audio input tokens present in the prompt.",
+            "minimum": 0
+          },
+          "cached_tokens": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "format": "u-int32",
+            "description": "Cached tokens present in the prompt.",
+            "minimum": 0
+          }
+        }
+      },
       "ProximityPrecisionView": {
         "type": "string",
         "enum": [
@@ -21288,66 +23220,66 @@
             "type": "string",
             "description": "Sorted by decreasing number of matched query terms.",
             "enum": [
-              "Words"
+              "words"
             ]
           },
           {
             "type": "string",
             "description": "Sorted by increasing number of typos.",
             "enum": [
-              "Typo"
+              "typo"
             ]
           },
           {
             "type": "string",
             "description": "Sorted by increasing distance between matched query terms.",
             "enum": [
-              "Proximity"
+              "proximity"
             ]
           },
           {
             "type": "string",
             "description": "Documents with query words contained in more important\nattributes and at a closer-to-the-front position in it\nare considered better.",
             "enum": [
-              "Attribute"
+              "attribute"
             ]
           },
           {
             "type": "string",
             "description": "Documents with query words contained in more important\nattributes are considered better. Position of the\nquery words in an attribute is not considered.",
             "enum": [
-              "AttributeRank"
+              "attributeRank"
             ]
           },
           {
             "type": "string",
             "description": "Documents with query words that are closer to the front\nof an attribute are considered better. Attribute rank\nis not considered.",
             "enum": [
-              "WordPosition"
+              "wordPosition"
             ]
           },
           {
             "type": "string",
             "description": "Dynamically sort at query time the documents. None, one or multiple\nAsc/Desc sortable attributes can be used in place of this criterion at\nquery time.",
             "enum": [
-              "Sort"
+              "sort"
             ]
           },
           {
             "type": "string",
             "description": "Sorted by the similarity of the matched words with the query words.",
             "enum": [
-              "Exactness"
+              "exactness"
             ]
           },
           {
             "type": "object",
             "description": "Sorted by the increasing value of the field specified.",
             "required": [
-              "Asc"
+              "asc"
             ],
             "properties": {
-              "Asc": {
+              "asc": {
                 "type": "string",
                 "description": "Sorted by the increasing value of the field specified."
               }
@@ -21357,10 +23289,10 @@
             "type": "object",
             "description": "Sorted by the decreasing value of the field specified.",
             "required": [
-              "Desc"
+              "desc"
             ],
             "properties": {
-              "Desc": {
+              "desc": {
                 "type": "string",
                 "description": "Sorted by the decreasing value of the field specified."
               }
@@ -21371,6 +23303,15 @@
       "RankingScoreThreshold": {
         "type": "number",
         "format": "double"
+      },
+      "ReasoningEffort": {
+        "type": "string",
+        "description": "Constrains effort on reasoning for reasoning models. Supported values are `low`, `medium`, and `high`.",
+        "enum": [
+          "low",
+          "medium",
+          "high"
+        ]
       },
       "Remote": {
         "type": "object",
@@ -21400,7 +23341,8 @@
             "description": "API key for write operations on this remote",
             "example": "XWnBI8QHUc-4IlqbKPLUDuhftNq19mQtjc6JvmivzJU"
           }
-        }
+        },
+        "additionalProperties": false
       },
       "RemoteTask": {
         "type": "object",
@@ -21425,6 +23367,139 @@
                 "description": "Error details if the task failed to replicate to this remote. Contains\nthe error message, code, and type from the remote instance."
               }
             ]
+          }
+        }
+      },
+      "RenderQuery": {
+        "type": "object",
+        "required": [
+          "template"
+        ],
+        "properties": {
+          "template": {
+            "$ref": "#/components/schemas/RenderQueryTemplate",
+            "description": "Template/fragment to fetch for rendering.\n\nUse its `kind` parameter to determine the type of template or fragment to fetch."
+          },
+          "input": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/RenderQueryInput",
+                "description": "Input for the template to fetch.\n\nInput is injected in the template to render the final string/JSON object.\n\nIf `null` or missing, the template will not be rendered.\n\nUse its `kind` parameter to determine the type of document to fetch."
+              }
+            ]
+          }
+        }
+      },
+      "RenderQueryInput": {
+        "type": "object",
+        "required": [
+          "kind"
+        ],
+        "properties": {
+          "kind": {
+            "$ref": "#/components/schemas/RenderQueryInputKind"
+          },
+          "indexUid": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/IndexUid"
+              }
+            ]
+          },
+          "id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "inline": {}
+        }
+      },
+      "RenderQueryInputKind": {
+        "type": "string",
+        "enum": [
+          "indexDocument",
+          "inlineDocument",
+          "inlineSearch"
+        ]
+      },
+      "RenderQueryTemplate": {
+        "type": "object",
+        "required": [
+          "kind"
+        ],
+        "properties": {
+          "kind": {
+            "$ref": "#/components/schemas/RenderQueryTemplateKind",
+            "description": "Kind of template or fragment to fetch.\n\nDetermines which other parameters are allowed and mandatory."
+          },
+          "indexUid": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/IndexUid",
+                "description": "Index to fetch the template or fragment from.\n\n- Mandatory for `kind`s: `documentTemplate`, `chatDocumentTemplate`, `indexingFragment` and `searchFragment`."
+              }
+            ]
+          },
+          "embedder": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Embedder to fetch the template or fragment from.\n\n- Mandatory for `kind`s: `documentTemplate`, `chatDocumentTemplate`, `indexingFragment` and `searchFragment`."
+          },
+          "fragment": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Name of the fragment to fetch.\n\n- Mandatory for `kind`s: `indexingFragment` and `searchFragment`."
+          },
+          "inline": {
+            "description": "Inline value of the template or fragment.\n\n- Mandatory for `kind`s: `inlineDocumentTemplate` and `inlineFragment`."
+          },
+          "documentTemplateMaxBytes": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "format": "u-int64",
+            "description": "If present, truncate document template rendering to the specified number of bytes.\n\n- Available for `kind`s: `documentTemplate`, `inlineDocumentTemplate` and `chatDocumentTemplate`\n- If present for `documentTemplate` overrides the setting of the index.\n- If missing for `documentTemplate`, the setting of the index is used.\n- If missing for `inlineDocumentTemplate`, the default value of 400 bytes is used.",
+            "minimum": 0
+          }
+        }
+      },
+      "RenderQueryTemplateKind": {
+        "type": "string",
+        "enum": [
+          "documentTemplate",
+          "chatDocumentTemplate",
+          "indexingFragment",
+          "searchFragment",
+          "inlineDocumentTemplate",
+          "inlineFragment"
+        ]
+      },
+      "RenderResult": {
+        "type": "object",
+        "required": [
+          "template"
+        ],
+        "properties": {
+          "template": {
+            "description": "**Un**rendered template or fragment, fetched in index or echoed back from inline template in request."
+          },
+          "rendered": {
+            "description": "Result of rendering the template by injecting the `input` to the template.\n\n`null` if `input` was `null` or missing in the request."
           }
         }
       },
@@ -21454,6 +23529,101 @@
             "description": "A link to the documentation about this specific error."
           }
         }
+      },
+      "ResponseFormat": {
+        "oneOf": [
+          {
+            "type": "object",
+            "description": "The type of response format being defined: `text`",
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "text"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "description": "The type of response format being defined: `json_object`",
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "json_object"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "description": "The type of response format being defined: `json_schema`",
+            "required": [
+              "json_schema",
+              "type"
+            ],
+            "properties": {
+              "json_schema": {
+                "$ref": "#/components/schemas/ResponseFormatJsonSchema"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "json_schema"
+                ]
+              }
+            }
+          }
+        ],
+        "description": "An object specifying the format that the model must output (text, JSON object, or JSON schema)."
+      },
+      "ResponseFormatJsonSchema": {
+        "type": "object",
+        "description": "A JSON Schema-based response format specification for Structured Outputs.",
+        "required": [
+          "name"
+        ],
+        "properties": {
+          "description": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "A description of what the response format is for, used by the model to determine how to respond in the format."
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the response format. Must be a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64."
+          },
+          "schema": {
+            "description": "The schema for the response format, described as a JSON Schema object."
+          },
+          "strict": {
+            "type": [
+              "boolean",
+              "null"
+            ],
+            "description": "Whether to enable strict schema adherence when generating the output. If set to true, the model will always follow the exact schema defined in the `schema` field. Only a subset of JSON Schema is supported when `strict` is `true`. To learn more, read the [Structured Outputs guide](https://platform.openai.com/docs/guides/structured-outputs)."
+          }
+        }
+      },
+      "Role": {
+        "type": "string",
+        "description": "The role of the author of a message.",
+        "enum": [
+          "system",
+          "user",
+          "assistant",
+          "tool",
+          "function"
+        ]
       },
       "RuleAction": {
         "type": "object",
@@ -21560,8 +23730,30 @@
               "null"
             ],
             "description": "Enable foreign key support for document hydration"
+          },
+          "disableDocumentsFetchQueue": {
+            "type": [
+              "boolean",
+              "null"
+            ],
+            "description": "Disable documents fetch queue"
+          },
+          "legacySearch": {
+            "type": [
+              "boolean",
+              "null"
+            ],
+            "description": "Enable legacy search pipeline"
+          },
+          "renderRoute": {
+            "type": [
+              "boolean",
+              "null"
+            ],
+            "description": "Enable the `POST /render-template` route"
           }
-        }
+        },
+        "additionalProperties": false
       },
       "SearchHit": {
         "type": "object",
@@ -21620,6 +23812,13 @@
           "indexUid"
         ],
         "properties": {
+          "query": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Query string set for the query, if not already present in the response.\n\nOnly set if:\n\n1. the metadata corresponds to a query in a federated search request, **and**\n2. that federated search request query is not a placeholder search (empty or missing `q`)\n\nNever set for regular search and non-federated multi-search because\nthe query(ies) are already present in the response."
+          },
           "queryUid": {
             "type": "string",
             "format": "uuid",
@@ -21771,8 +23970,12 @@
             "description": "Return the count of matches per facet value for the listed attributes.\n\nThe response includes `facetDistribution` and, for numeric facets, `facetStats` (min/max).\n\nUse `[\"*\"]` to request counts for all [filterableAttributes](https://www.meilisearch.com/docs/reference/api/settings/update-all-settings#body-filterable-attributes-one-of-0).\n\nThe number of values returned per facet is limited by the index [maxValuesPerFacet](https://www.meilisearch.com/docs/reference/api/settings/update-faceting#body-max-values-per-facet-one-of-0) setting; attributes not in filterableAttributes are ignored.\n\nMore info: [faceting](https://www.meilisearch.com/docs/learn/filtering_and_sorting/search_with_facet_filters)."
           },
           "matchingStrategy": {
-            "$ref": "#/components/schemas/MatchingStrategy",
-            "description": "How to match query terms when there are not enough results to satisfy `limit`.\n\n**`last`**: Returns documents containing all query terms first. If there are not enough such results, Meilisearch removes one query term at a time, starting from the end of the query (e.g. for \"big fat cat\", then \"big fat\", then \"big\").\n\n**`all`**: Only returns documents that contain all query terms. Meilisearch does not relax the query even if fewer than `limit` documents match.\n\n**`frequency`**: Returns documents containing all query terms first. If there are not enough, removes one term at a time starting with the word that is most frequent in the dataset, giving more weight to rarer terms (e.g. in \"white cotton shirt\", prioritizes documents containing \"white\" if \"shirt\" is very common).\n\nDefault: `last`."
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/MatchingStrategy",
+                "description": "How to match query terms when there are not enough results to satisfy `limit`.\n\n**`last`**: Returns documents containing all query terms first. If there are not enough such results, Meilisearch removes one query term at a time, starting from the end of the query (e.g. for \"big fat cat\", then \"big fat\", then \"big\").\n\n**`all`**: Only returns documents that contain all query terms. Meilisearch does not relax the query even if fewer than `limit` documents match.\n\n**`frequency`**: Returns documents containing all query terms first. If there are not enough, removes one term at a time starting with the word that is most frequent in the dataset, giving more weight to rarer terms (e.g. in \"white cotton shirt\", prioritizes documents containing \"white\" if \"shirt\" is very common).\n\nDefault: `last`."
+              }
+            ]
           },
           "attributesToSearchOn": {
             "type": [
@@ -21867,16 +24070,7 @@
         "type": "object",
         "description": "A `SearchQuery` + an index UID and optional FederationOptions.",
         "required": [
-          "indexUid",
-          "cropLength",
-          "cropMarker",
-          "highlightPreTag",
-          "highlightPostTag",
-          "showMatchesPosition",
-          "matchingStrategy",
-          "retrieveVectors",
-          "showRankingScore",
-          "showRankingScoreDetails"
+          "indexUid"
         ],
         "properties": {
           "indexUid": {
@@ -22006,8 +24200,12 @@
             "description": "Display the count of matches per facet"
           },
           "matchingStrategy": {
-            "$ref": "#/components/schemas/MatchingStrategy",
-            "description": "Strategy used to match query terms within documents"
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/MatchingStrategy",
+                "description": "Strategy used to match query terms within documents"
+              }
+            ]
           },
           "attributesToSearchOn": {
             "type": [
@@ -22066,6 +24264,17 @@
           "media": {
             "description": "Perform AI-powered search queries with multimodal content"
           },
+          "personalize": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/Personalize",
+                "description": "Personalize search results"
+              }
+            ]
+          },
           "useNetwork": {
             "type": [
               "boolean",
@@ -22099,7 +24308,8 @@
               }
             ]
           }
-        }
+        },
+        "additionalProperties": false
       },
       "SearchResult": {
         "allOf": [
@@ -22274,6 +24484,23 @@
         },
         "additionalProperties": false
       },
+      "ServiceTier": {
+        "type": "string",
+        "description": "Specifies the latency tier to use for processing the request.",
+        "enum": [
+          "auto",
+          "default"
+        ]
+      },
+      "ServiceTierResponse": {
+        "type": "string",
+        "description": "The service tier used for processing the request, as returned in the response.",
+        "enum": [
+          "scale",
+          "default",
+          "auto"
+        ]
+      },
       "SettingEmbeddingSettings": {
         "type": "object",
         "description": "Configuration for one [embedder](https://www.meilisearch.com/docs/learn/ai_powered_search/getting_started_with_ai_search) used for semantic and hybrid search.\n\nSet `source` (`openAi`, `huggingFace`, `ollama`, `rest`, `userProvided`), then the options that apply: `model`, `apiKey`, `documentTemplate`, `dimensions`, `url`, etc.",
@@ -22347,8 +24574,7 @@
                       "boolean",
                       "null"
                     ],
-                    "description": "When true, vectors are stored as 1-bit (smaller, faster, less precise).\n\n- Available for all sources.\n- Irreversible once enabled.\n- 🏗️ When set to true, embeddings are not regenerated, but they are binary quantized, which takes time.",
-                    "default": false
+                    "description": "When true, vectors are stored as 1-bit (smaller, faster, less precise).\n\n- Available for all sources.\n- Irreversible once enabled.\n- 🏗️ When set to true, embeddings are not regenerated, but they are binary quantized, which takes time."
                   },
                   "documentTemplate": {
                     "type": [
@@ -22452,8 +24678,7 @@
                       }
                     ]
                   }
-                },
-                "additionalProperties": false
+                }
               }
             ]
           }
@@ -23194,7 +25419,8 @@
             "description": "Remotes to remove from the list of owners of this shard.\n\n- The remotes may or may not be part of the network's configuration\n- Setting this to non-`null` will remove the listed remotes from the list of owners of this shard.\n- `remotes` and `addRemotes` are applied before `removeRemotes`\n- Remotes removed from the configuration are automatically removed from all shards and it is not necessary\n  to explicitly pass them as `removeRemotes`.",
             "uniqueItems": true
           }
-        }
+        },
+        "additionalProperties": false
       },
       "SimilarQuery": {
         "type": "object",
@@ -23211,11 +25437,13 @@
           "offset": {
             "type": "integer",
             "description": "Number of documents to skip",
+            "default": 0,
             "minimum": 0
           },
           "limit": {
             "type": "integer",
             "description": "Maximum number of documents returned",
+            "default": 20,
             "minimum": 0
           },
           "filter": {
@@ -23225,7 +25453,7 @@
             "type": "string",
             "description": "Name of the embedder to use for semantic similarity"
           },
-          "attributes_to_retrieve": {
+          "attributesToRetrieve": {
             "type": [
               "array",
               "null"
@@ -23236,23 +25464,23 @@
             "description": "Attributes to display in the returned documents",
             "uniqueItems": true
           },
-          "retrieve_vectors": {
+          "retrieveVectors": {
             "type": "boolean",
             "description": "Return document vector data"
           },
-          "show_ranking_score": {
+          "showRankingScore": {
             "type": "boolean",
             "description": "Display the global ranking score of a document"
           },
-          "show_ranking_score_details": {
+          "showRankingScoreDetails": {
             "type": "boolean",
             "description": "Adds a detailed global ranking score field"
           },
-          "show_performance_details": {
+          "showPerformanceDetails": {
             "type": "boolean",
             "description": "Adds a detailed performance details field"
           },
-          "ranking_score_threshold": {
+          "rankingScoreThreshold": {
             "type": "number",
             "format": "double",
             "description": "Excludes results with low ranking scores"
@@ -23297,6 +25525,27 @@
         ],
         "description": "Response containing similar documents"
       },
+      "Size": {
+        "oneOf": [
+          {
+            "type": "integer",
+            "format": "u-int64",
+            "description": "Size as an integer, in bytes",
+            "minimum": 0
+          },
+          {
+            "type": "string",
+            "description": "Size as a human-readable string with an appropriate unit."
+          }
+        ]
+      },
+      "SizeFormat": {
+        "type": "string",
+        "enum": [
+          "human",
+          "raw"
+        ]
+      },
       "Stats": {
         "type": "object",
         "description": "Global statistics for the Meilisearch instance",
@@ -23307,16 +25556,12 @@
         ],
         "properties": {
           "databaseSize": {
-            "type": "integer",
-            "format": "u-int64",
-            "description": "Total disk space used by the database in bytes",
-            "minimum": 0
+            "$ref": "#/components/schemas/Size",
+            "description": "Total disk space used by the database in bytes"
           },
           "usedDatabaseSize": {
-            "type": "integer",
-            "format": "u-int64",
-            "description": "Actual size of the data in the database in bytes",
-            "minimum": 0
+            "$ref": "#/components/schemas/Size",
+            "description": "Actual size of the data in the database in bytes"
           },
           "lastUpdate": {
             "type": [
@@ -23349,6 +25594,20 @@
           "canceled"
         ],
         "example": "processing"
+      },
+      "Stop": {
+        "oneOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        ],
+        "description": "Up to 4 sequences where the API will stop generating further tokens."
       },
       "SubEmbeddingSettings": {
         "type": "object",
@@ -23546,7 +25805,8 @@
             "type": "boolean",
             "description": "If true, rename the first index to the second instead of swapping"
           }
-        }
+        },
+        "additionalProperties": false
       },
       "TaskCompactionSummary": {
         "type": "object",
@@ -23695,6 +25955,37 @@
           }
         }
       },
+      "TopLogprobs": {
+        "type": "object",
+        "description": "A most likely token and its log probability at a given position.",
+        "required": [
+          "token",
+          "logprob"
+        ],
+        "properties": {
+          "token": {
+            "type": "string",
+            "description": "The token."
+          },
+          "logprob": {
+            "type": "number",
+            "format": "float",
+            "description": "The log probability of this token."
+          },
+          "bytes": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "type": "integer",
+              "format": "u-int8",
+              "minimum": 0
+            },
+            "description": "A list of integers representing the UTF-8 bytes representation of the token. Useful in instances where characters are represented by multiple tokens and their byte representations must be combined to generate the correct text representation. Can be `null` if there is no bytes representation for the token."
+          }
+        }
+      },
       "TypoSettings": {
         "type": "object",
         "description": "Typo tolerance: how spelling mistakes in queries are handled.",
@@ -23764,8 +26055,7 @@
             "default": false,
             "example": false
           }
-        },
-        "additionalProperties": false
+        }
       },
       "Unchecked": {
         "default": null
@@ -23788,7 +26078,8 @@
             ],
             "description": "New uid for the index (for renaming)"
           }
-        }
+        },
+        "additionalProperties": false
       },
       "UpdateOrCreateDynamicSearchRuleRequest": {
         "type": "object",
@@ -23856,13 +26147,6 @@
           "type": "number",
           "format": "float"
         }
-      },
-      "VectorStoreBackend": {
-        "type": "string",
-        "enum": [
-          "stable",
-          "experimental"
-        ]
       },
       "VersionResponse": {
         "type": "object",
@@ -23970,7 +26254,7 @@
         "type": "http",
         "scheme": "bearer",
         "bearerFormat": "Uuidv4, string or JWT",
-        "description": "An API key is a token that you provide when making API calls. Read more about [how to secure your project](https://www.meilisearch.com/docs/learn/security/basic_security).\n\nInclude the API key to the `Authorization` header, for instance:\n```bash\n-H 'Authorization: Bearer 6436fc5237b0d6e0d64253fbaac21d135012ecf1'\n```\n\nIf you use a SDK, ensure you instantiate the client with the API key, for instance with [JS SDK](https://github.com/meilisearch/meilisearch-js):\n```js\nconst client = new Meilisearch({\n  host: 'MEILISEARCH_URL',\n  apiKey: '6436fc5237b0d6e0d64253fbaac21d135012ecf1'\n});\n```"
+        "description": "An API key is a token that you provide when making API calls. Read more about [how to secure your project](https://www.meilisearch.com/docs/learn/security/basic_security).\n\nInclude the API key to the `Authorization` header, for instance:\n```bash\n-H 'Authorization: Bearer 6436fc5237b0d6e0d64253fbaac21d135012ecf1'\n```\n\nIf you use a SDK, ensure you instantiate the client with the API key, for instance with [JS SDK](https://github.com/meilisearch/meilisearch-js):\n```js\nconst client = new MeiliSearch({\n  host: 'MEILISEARCH_URL',\n  apiKey: '6436fc5237b0d6e0d64253fbaac21d135012ecf1'\n});\n```"
       }
     }
   },
@@ -24064,8 +26348,16 @@
       "description": "The `/webhooks` route allows you to register endpoints to be called once tasks are processed."
     },
     {
-      "name": "Dynamic search rules",
-      "description": "The `/dynamic-search-rules` route allows you to configure dynamic search rules."
+      "name": "Search rules",
+      "description": "The `/dynamic-search-rules` route allows you to configure search rules."
+    },
+    {
+      "name": "Render templates",
+      "description": "The /render-template route allows rendering templates used by Meilisearch.",
+      "externalDocs": {
+        "url": "https://www.meilisearch.com/docs/reference/api/render-template",
+        "description": "Render template API reference"
+      }
     }
   ]
 }
