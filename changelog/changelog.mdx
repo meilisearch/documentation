@@ -4,6 +4,80 @@ description: "New features and improvements in Meilisearch"
 rss: true
 ---
 
+<Update label="v1.48" description="2026-06-22">
+
+## New Features
+
+### Render Template Route (Experimental)
+
+A new `POST /render-template` route lets you test document templates and fragments before and after configuring an embedder. This is useful for validating template syntax and seeing how your documents will be rendered.
+
+Before using this route, enable the `renderRoute` experimental feature:
+
+```bash
+PATCH /experimental-features
+```
+
+```json
+{
+  "renderRoute": true
+}
+```
+
+The route accepts a template and optional input, and returns both the unrendered template and the rendered result:
+
+```http
+POST /render-template
+```
+
+```json
+{
+  "template": {
+    "kind": "documentTemplate",
+    "indexUid": "movies",
+    "embedder": "myMoviesEmbedder"
+  },
+  "input": {
+    "kind": "indexDocument",
+    "indexUid": "movies",
+    "id": "2"
+  }
+}
+```
+
+Response:
+
+```json
+{
+  "template": "A movie titled {{doc.title}} whose description starts with {{doc.overview|truncatewords:10}}",
+  "rendered": "A movie titled Ariel whose description starts with Taisto Kasurinen is a Finnish coal miner whose father has..."
+}
+```
+
+You can render templates from embedders, chat settings, or inline templates. You can also provide input from index documents, inline documents, or search queries. If `input` is `null`, the route returns just the template without rendering it.
+
+## Improvements
+
+### Foreign Filters Limited to Retrieval Routes
+
+Foreign filters are now only supported on retrieval routes (search, get document, etc.). They are no longer accepted on routes that write or modify documents. This prevents unexpected behavior when using foreign filters in contexts where they don't make sense.
+
+The following routes no longer support foreign filters:
+
+- Edit documents by function: `POST /indexes/{index_uid}/documents/edit`
+- Delete documents by filter: `POST /indexes/{index_uid}/documents/delete`
+- Export to a remote Meilisearch: `POST /export`
+
+## Other
+
+### Documents Fetch Queue Feature Inverted
+
+The `queueDocumentsFetch` experimental feature has been replaced with `disableDocumentsFetchQueue`. This changes the behavior from opt-in to opt-out. The documents fetch queue is now enabled by default and you must explicitly disable it if needed.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.48.0)
+
+</Update>
+
 <Update label="v1.47" description="2026-06-15">
 
 ## New Features
