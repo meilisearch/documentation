@@ -113,7 +113,23 @@ client.Index("movies").UpdateFilterableAttributes(&filterableAttributes)
 ```
 
 ```csharp C#
-List<string> attributes = new() { "genres", "director" };
+var attributes = new FilterableAttribute[]
+{
+    "director",
+    new FilterableAttribute
+    {
+        AttributePatterns = new[] { "genres" },
+        Features = new FilterableAttributeFeatures
+        {
+            FacetSearch = true,
+            Filter = new FilterableAttributeFilterFeatures
+            {
+                Equality = true,
+                Comparison = true,
+            },
+        },
+    },
+};
 TaskInfo result = await client.Index("movies").UpdateFilterableAttributesAsync(attributes);
 ```
 

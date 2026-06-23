@@ -33,7 +33,7 @@ client.Index("movies").GetFilterableAttributes()
 ```
 
 ```csharp C#
-IEnumerable<string> attributes = await client.Index("movies").GetFilterableAttributesAsync();
+IEnumerable<FilterableAttribute> attributes = await client.Index("movies").GetFilterableAttributesAsync();
 ```
 
 ```rust Rust
