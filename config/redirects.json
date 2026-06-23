@@ -4169,7 +4169,7 @@
   },
   {
     "source": "/learn/front_end/pagination",
-    "destination": "/reference/api/pagination"
+    "destination": "/capabilities/full_text_search/how_to/paginate_search_results"
   },
   {
     "source": "/capabilities/hybrid_search/how_to/custom_hybrid_ranking",

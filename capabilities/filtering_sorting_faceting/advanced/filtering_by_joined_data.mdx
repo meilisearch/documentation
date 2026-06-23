@@ -180,6 +180,18 @@ If a foreign filter returns more than 100 matching documents from the target ind
 - Break into multiple queries with narrower filters
 - Consider denormalization if filtering patterns require very broad queries
 
+## Routes supporting foreign filters
+
+You can use foreign filters only on document retrieval routes:
+- GET/POST `/indexes/{index_uid}/search`
+- POST `/indexes/{index_uid}/facet-search`
+- GET/POST `/indexes/{index_uid}/similar`
+- GET `/indexes/{index_uid}/documents`
+- POST `/indexes/{index_uid}/documents/fetch`
+- POST `/multi-search`
+
+Other routes that accept filters do not support foreign filters. Meilisearch returns an error if you use `_foreign()` on them.
+
 ## Next steps
 
 <CardGroup cols={2}>
