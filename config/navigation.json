@@ -901,7 +901,6 @@
                     "resources/self_hosting/deployment/running_production",
                     "resources/self_hosting/deployment/aws",
                     "resources/self_hosting/deployment/gcp",
-                    "resources/self_hosting/deployment/azure",
                     "resources/self_hosting/deployment/digitalocean"
                   ]
                 },
