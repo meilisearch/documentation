@@ -1,0 +1,19 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/render-template' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "template": {
+      "kind": "inlineDocumentTemplate",
+      "inline": "A movie called {{doc.title}} whose description starts with: {{doc.overview|truncatewords:10}}"
+    },
+    "input": {
+      "kind": "indexDocument",
+      "indexUid": "movies",
+      "id": "2"
+    }
+  }'
+```
+</CodeGroup>

@@ -1,0 +1,23 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/render-template' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "template": {
+      "kind": "documentTemplate",
+      "indexUid": "movies",
+      "embedder": "OpenAI"
+    },
+    "input": {
+      "kind": "inlineDocument",
+      "inline": {
+        "id": "some new docid",
+        "title": "My New Movie",
+        "overview": "A nice overview for my new movie"
+      }
+    }
+  }'
+```
+</CodeGroup>

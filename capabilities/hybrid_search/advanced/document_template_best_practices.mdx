@@ -3,6 +3,10 @@ title: Document template best practices
 description: This guide shows you what to do and what to avoid when writing a `documentTemplate`.
 ---
 
+import CodeSamplesRenderTemplateGuide1 from '/snippets/generated-code-samples/code_samples_render_template_guide_1.mdx';
+import CodeSamplesRenderTemplateGuide2 from '/snippets/generated-code-samples/code_samples_render_template_guide_2.mdx';
+import CodeSamplesRenderTemplateGuide3 from '/snippets/generated-code-samples/code_samples_render_template_guide_3.mdx';
+
 When using AI-powered search, Meilisearch generates prompts by filling in your embedder's `documentTemplate` with each document's data. The better your prompt is, the more relevant your search results.
 
 This guide shows you what to do and what to avoid when writing a `documentTemplate`.
@@ -46,24 +50,7 @@ Use the `POST /render-template` route to test your document template on various 
 
 Before sending the document template as a setting embedder, you can check how it would render on documents from your index:
 
-<CodeGroup>
-
-
-```json
-curl -X POST $MEILISEARCH_URL/render-template --json '{
-  "template": {
-    "kind": "inlineDocumentTemplate",
-    "inline": "A movie called {{doc.title}} whose description starts with: {{doc.overview|truncatewords:10}}"
-  },
-  "input": {
-    "kind": "indexDocument",
-    "indexUid": "movies",
-    "id": "2"
-  }
-}'
-```
-
-</CodeGroup>
+<CodeSamplesRenderTemplateGuide1 />
 
 Meilisearch will respond to this request with:
 
@@ -82,28 +69,7 @@ Meilisearch will respond to this request with:
 
 You can also test how a new document would render on your existing template:
 
-<CodeGroup>
-
-```json
-curl -X POST $MEILISEARCH_URL/render-template --json '{
-  "template": {
-    "kind": "documentTemplate",
-    "indexUid": "movies",
-    "embedder": "OpenAI"
-  },
-  "input": {
-    "kind": "inlineDocument",
-    "inline": {
-      "id": "some new docid",
-      "title": "My New Movie",
-      "overview": "A nice overview for my new movie"
-    }
-  }
-}'
-```
-
-</CodeGroup>
-
+<CodeSamplesRenderTemplateGuide2 />
 
 Meilisearch will fetch the registered document template for the selected embedder and index, and render it on the provided inline document:
 
@@ -120,23 +86,7 @@ Meilisearch will fetch the registered document template for the selected embedde
 
 This is useful to catch unexpected errors while rendering templates:
 
-<CodeGroup>
-
-```json
- curl -X POST $MEILISEARCH_URL/render-template --json '{
-  "template": {
-    "kind": "inlineDocumentTemplate",
-    "inline": "A buggy template that refers to an unavailable field: {{doc.doesnotexist}}"
-  },
-  "input": {
-    "kind": "indexDocument",
-    "indexUid": "movies",
-    "id": "2"
-  }
-}'
-```
-
-</CodeGroup>
+<CodeSamplesRenderTemplateGuide3 />
 
 The field `doesnotexist` does not exist in the document with id 2, so Meilisearch will answer with an error:
 
