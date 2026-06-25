@@ -99,6 +99,10 @@ Cancelling a topology change at step 3 only results in stale documents being ret
 Search requests may return incomplete results during a topology change. Wait for all `NetworkTopologyChange` tasks to complete before resuming normal search traffic.
 </Warning>
 
+<Warning>
+Run the same Meilisearch version on all instances before rebalancing. Network rebalancing is not guaranteed to work across instances on different versions.
+</Warning>
+
 ## Validation
 
 `PATCH /network` rejects requests with a `400 invalid_network_shards` error in the following cases:

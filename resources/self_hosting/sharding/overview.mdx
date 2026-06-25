@@ -142,6 +142,10 @@ Before setting up sharding and replication, you need:
 - Network connectivity between all instances
 - If using private networks (`10.x.x.x`, `192.168.x.x`), the `--experimental-allowed-ip-networks` flag must be set on each instance
 
+<Note>
+Run the same Meilisearch version on all instances. Internal communication between instances has had no breaking changes so far, so instances on different versions can currently communicate, but cross-version compatibility is not guaranteed in future versions. Search and federated features remain compatible on a best-effort basis, while network rebalancing requires all instances on the same version (see [Manage the network](/resources/self_hosting/sharding/manage_network)).
+</Note>
+
 ## Next steps
 
 <CardGroup cols={2}>
