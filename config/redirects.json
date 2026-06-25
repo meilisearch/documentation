@@ -2108,10 +2108,6 @@
     "destination": "/getting_started/first_project"
   },
   {
-    "source": "/reference/api/chats/update-settings-of-a-chat-workspace",
-    "destination": "/getting_started/overview"
-  },
-  {
     "source": "/learn/self_hosted/install_with_binary",
     "destination": "/resources/self_hosting/getting_started/install_locally"
   },
