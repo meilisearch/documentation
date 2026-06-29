@@ -3,6 +3,10 @@ title: Document template best practices
 description: This guide shows you what to do and what to avoid when writing a `documentTemplate`.
 ---
 
+import CodeSamplesRenderTemplateGuide1 from '/snippets/generated-code-samples/code_samples_render_template_guide_1.mdx';
+import CodeSamplesRenderTemplateGuide2 from '/snippets/generated-code-samples/code_samples_render_template_guide_2.mdx';
+import CodeSamplesRenderTemplateGuide3 from '/snippets/generated-code-samples/code_samples_render_template_guide_3.mdx';
+
 When using AI-powered search, Meilisearch generates prompts by filling in your embedder's `documentTemplate` with each document's data. The better your prompt is, the more relevant your search results.
 
 This guide shows you what to do and what to avoid when writing a `documentTemplate`.
@@ -39,6 +43,65 @@ If you do not manually set `documentTemplate`, Meilisearch falls back to a defau
 
 For best results, build short templates that only contain highly relevant data. If you are working with a long field, consider truncating it.
 </Warning>
+
+## Test your template
+
+Use the `POST /render-template` route to test your document template on various documents.
+
+Before sending the document template as a setting embedder, you can check how it would render on documents from your index:
+
+<CodeSamplesRenderTemplateGuide1 />
+
+Meilisearch will respond to this request with:
+
+<CodeGroup>
+
+
+```json
+{
+  "template": "A movie called {{doc.title}} whose description starts with: {{doc.overview|truncatewords:10}}",
+  "rendered": "A movie called Ariel whose description starts with: Taisto Kasurinen is a Finnish coal miner whose father has..."
+}
+```
+
+</CodeGroup>
+
+
+You can also test how a new document would render on your existing template:
+
+<CodeSamplesRenderTemplateGuide2 />
+
+Meilisearch will fetch the registered document template for the selected embedder and index, and render it on the provided inline document:
+
+<CodeGroup>
+
+```json
+{
+  "template": "A movie called {{doc.title}} whose description starts with: {{doc.overview|truncatewords:10}}",
+  "rendered": "A movie called My New Movie whose description starts with: A nice overview for my new movie"
+}
+```
+
+</CodeGroup>
+
+This is useful to catch unexpected errors while rendering templates:
+
+<CodeSamplesRenderTemplateGuide3 />
+
+The field `doesnotexist` does not exist in the document with id 2, so Meilisearch will answer with an error:
+
+<CodeGroup>
+
+```json
+{
+  "message": "error while rendering template: user error: missing field in document: liquid: Unknown index\n  with:\n    variable=doc\n    requested index=doesnotexist\n    available indexes=id, title, overview, genres, poster, release_date\n",
+  "code": "template_rendering_error",
+  "type": "invalid_request",
+  "link": "https://docs.meilisearch.com/errors#template_rendering_error"
+}
+```
+
+</CodeGroup>
 
 ## Only include highly relevant information
 

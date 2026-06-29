@@ -1323,6 +1323,70 @@ search_parameter_guide_vector_1: |-
         "embedder": "EMBEDDER_NAME"
       }
     }'
+# post_render_template
+post_render_template_1: |-
+  curl \
+    -X POST 'MEILISEARCH_URL/render-template' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "template": {
+        "kind": "inlineDocumentTemplate",
+        "inline": "An inline document template rendered on {{doc.id}}"
+      },
+      "input": {
+        "kind": "inlineDocument",
+        "inline": { "id": "this document" }
+      }
+    }'
+render_template_guide_1: |-
+  curl \
+    -X POST 'MEILISEARCH_URL/render-template' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "template": {
+        "kind": "inlineDocumentTemplate",
+        "inline": "A movie called {{doc.title}} whose description starts with: {{doc.overview|truncatewords:10}}"
+      },
+      "input": {
+        "kind": "indexDocument",
+        "indexUid": "movies",
+        "id": "2"
+      }
+    }'
+render_template_guide_2: |-
+  curl \
+    -X POST 'MEILISEARCH_URL/render-template' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "template": {
+        "kind": "documentTemplate",
+        "indexUid": "movies",
+        "embedder": "OpenAI"
+      },
+      "input": {
+        "kind": "inlineDocument",
+        "inline": {
+          "id": "some new docid",
+          "title": "My New Movie",
+          "overview": "A nice overview for my new movie"
+        }
+      }
+    }'
+render_template_guide_3: |-
+  curl \
+    -X POST 'MEILISEARCH_URL/render-template' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "template": {
+        "kind": "inlineDocumentTemplate",
+        "inline": "A buggy template that refers to an unavailable field: {{doc.doesnotexist}}"
+      },
+      "input": {
+        "kind": "indexDocument",
+        "indexUid": "movies",
+        "id": "2"
+      }
+    }'
 # post_indexes_indexUid_fields
 list_index_fields_1: |-
   curl \

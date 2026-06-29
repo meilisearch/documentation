@@ -15434,6 +15434,12 @@
               "*"
             ]
           }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "cURL",
+            "source": "curl \\\n  -X POST 'MEILISEARCH_URL/render-template' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '{\n    \"template\": {\n      \"kind\": \"inlineDocumentTemplate\",\n      \"inline\": \"An inline document template rendered on {{doc.id}}\"\n    },\n    \"input\": {\n      \"kind\": \"inlineDocument\",\n      \"inline\": { \"id\": \"this document\" }\n    }\n  }'"
+          }
         ]
       }
     },
