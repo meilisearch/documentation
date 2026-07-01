@@ -17,7 +17,7 @@ jobs:
     name: Local code samples usage
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Check local code samples are used
         run: npm run check-code-samples-usage
@@ -28,7 +28,7 @@ jobs:
     name: Unused code samples in SDKs
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - uses: actions/setup-node@v6
         with:
@@ -47,7 +47,7 @@ jobs:
     name: "[Info only - never fails] Missing SDK code samples"
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - uses: actions/setup-node@v6
         with:

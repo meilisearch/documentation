@@ -16,7 +16,7 @@ jobs:
     name: Require cURL in x-codeSamples
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - uses: actions/setup-node@v6
         with:
@@ -36,7 +36,7 @@ jobs:
     name: "[Info only - never fails] Missing code samples per route"
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - uses: actions/setup-node@v6
         with:
@@ -55,7 +55,7 @@ jobs:
     name: Require all OpenAPI routes in docs.json
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - uses: actions/setup-node@v6
         with:
