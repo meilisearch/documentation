@@ -1157,7 +1157,7 @@ Meilisearch Enterprise Edition now supports modifying the number of participants
 
 3. The network configuration is automatically propagated to all members.
 
-4. Send documents and settings only to the leader—they will be distributed across all network participants with automatic sharding.
+4. Send documents and settings only to the leader, they will be distributed across all network participants with automatic sharding.
 
 **Adding a new remote:**
 
@@ -1481,7 +1481,7 @@ Enhanced compaction interactions with task cancellation, resulting in more relia
 
 ### Index Compaction Task
 
-A new compaction endpoint is now available for indexes. This task defragments the LMDB environment used by each index, which reduces fragmentation that accumulates over time. Indexes typically experience around 30% fragmentation, and compaction can provide significant performance improvements—2-4x speed-ups in search and indexation operations. This is achieved by reordering LMDB internal pages and removing scattered free pages throughout the file, relocating content to the beginning for better cache efficiency.
+A new compaction endpoint is now available for indexes. This task defragments the LMDB environment used by each index, which reduces fragmentation that accumulates over time. Indexes typically experience around 30% fragmentation, and compaction can provide significant performance improvements (2-4x speed-ups) in search and indexation operations. This is achieved by reordering LMDB internal pages and removing scattered free pages throughout the file, relocating content to the beginning for better cache efficiency.
 
 ## Improvements
 

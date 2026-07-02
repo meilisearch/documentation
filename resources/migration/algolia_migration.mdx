@@ -320,7 +320,7 @@ To customize your index settings, we recommend following [this guide](/resources
 
 One of the key usage differences between Algolia and Meilisearch is how they approach index settings and search parameters.
 
-**In Algolia,** [API parameters](https://www.algolia.com/doc/api-reference/api-parameters/) is a flexible category that includes both index settings and search parameters. Many API parameters can be used both at indexing time—to set default behavior—or at search time—to override that behavior.
+**In Algolia,** [API parameters](https://www.algolia.com/doc/api-reference/api-parameters/) is a flexible category that includes both index settings and search parameters. Many API parameters can be used both at indexing time (to set default behavior) or at search time (to override that behavior).
 
 **In Meilisearch,** [index settings](/reference/api/settings/list-all-settings) and [search parameters](/reference/api/search/search-with-post) are two distinct categories. Settings affect all searches on an index, while parameters affect the results of a single search.
 
@@ -362,7 +362,7 @@ The below table compares Algolia's **API parameters** with the equivalent Meilis
 | `aroundLatLng` / `aroundRadius` | `_geoRadius(lat, lng, radius)` in `filter` | param |
 | `insideBoundingBox` | `_geoBoundingBox([lat, lng], [lat, lng])` in `filter` | param |
 | `insidePolygon` | `_geoPolygon([lat, lng], [lat, lng], ...)` in `filter` | param |
-| `aroundPrecision` | No direct equivalent | — |
+| `aroundPrecision` | No direct equivalent | N/A |
 
 #### Highlighting and snippets
 
@@ -373,7 +373,7 @@ The below table compares Algolia's **API parameters** with the equivalent Meilis
 | `highlightPostTag` | `highlightPostTag` | param |
 | `attributesToSnippet` | `attributesToCrop` + `cropLength` | param |
 | `snippetEllipsisText` | `cropMarker` | param |
-| `restrictHighlightAndSnippetArrays` | Not supported | — |
+| `restrictHighlightAndSnippetArrays` | Not supported | N/A |
 
 #### Attributes and ranking
 
@@ -412,8 +412,8 @@ The below table compares Algolia's **API parameters** with the equivalent Meilis
 
 | Algolia | Meilisearch | Type |
 | :--- | :--- | :--- |
-| `analytics` / `clickAnalytics` | Separate [Analytics API](/capabilities/analytics/advanced/events_endpoint) | — |
-| `disablePrefixOnAttributes` | Not supported | — |
+| `analytics` / `clickAnalytics` | Separate [Analytics API](/capabilities/analytics/advanced/events_endpoint) | N/A |
+| `disablePrefixOnAttributes` | Not supported | N/A |
 | `relevancyStrictness` | `rankingScoreThreshold` | param |
 
 ## API methods

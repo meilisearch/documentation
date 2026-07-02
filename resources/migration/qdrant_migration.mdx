@@ -218,8 +218,8 @@ Qdrant points contain an `id`, a `payload` (key-value data), and one or more `ve
 
 Before preparing your data, decide how you want to handle vectors:
 
-- **Option A: Let Meilisearch re-embed** (recommended) — Configure an [embedder](/capabilities/hybrid_search/getting_started) in Meilisearch and let it generate vectors automatically from your document content. This is simpler and keeps your vectors in sync with your data.
-- **Option B: Keep existing vectors** — Include your Qdrant vectors in the `_vectors` field of each document using a `userProvided` embedder. This avoids re-embedding costs but requires you to manage vector updates yourself.
+- **Option A: Let Meilisearch re-embed** (recommended): Configure an [embedder](/capabilities/hybrid_search/getting_started) in Meilisearch and let it generate vectors automatically from your document content. This is simpler and keeps your vectors in sync with your data.
+- **Option B: Keep existing vectors**: Include your Qdrant vectors in the `_vectors` field of each document using a `userProvided` embedder. This avoids re-embedding costs but requires you to manage vector updates yourself.
 
 ### Transform documents
 
@@ -612,7 +612,7 @@ After importing your data, you need to configure Meilisearch to handle vector se
 
 ### Configure embedders
 
-One of the biggest differences between Qdrant and Meilisearch is how they handle vectors. With Qdrant, your application must compute vectors before indexing and searching. With Meilisearch, you configure an embedder once and Meilisearch handles all embedding automatically — both at indexing time and at search time.
+One of the biggest differences between Qdrant and Meilisearch is how they handle vectors. With Qdrant, your application must compute vectors before indexing and searching. With Meilisearch, you configure an embedder once and Meilisearch handles all embedding automatically, both at indexing time and at search time.
 
 This means you can **remove all embedding logic from your application code**. Instead of calling an embedding API, computing vectors, and sending them to your search engine, you simply send documents and text queries to Meilisearch.
 
@@ -678,9 +678,9 @@ curl -X PATCH 'MEILI_HOST/indexes/MEILI_INDEX_NAME/settings' \
 
 Migrating from Qdrant to Meilisearch gives you several features that work out of the box:
 
-- **No more client-side embedding** — Configure an embedder once, then just send text queries. Meilisearch handles vectorization for both documents and searches
+- **No more client-side embedding**: Configure an embedder once, then just send text queries. Meilisearch handles vectorization for both documents and searches
 - **Full-text search** with typo tolerance, prefix matching, and language-aware tokenization
-- **Hybrid search** combining keyword relevancy and semantic similarity in a single query — no need to orchestrate two search systems
+- **Hybrid search** combining keyword relevancy and semantic similarity in a single query, with no need to orchestrate two search systems
 - **Faceted search** with value distributions for building filter UIs
 - **Highlighting** of matching terms in results
 - **Synonyms and stop words** support
@@ -694,7 +694,7 @@ The below tables compare Qdrant concepts with their Meilisearch equivalents.
 
 | Qdrant | Meilisearch | Notes |
 | :--- | :--- | :--- |
-| Collection | Index | — |
+| Collection | Index | N/A |
 | Point | Document | A Point is vector-first (vector + metadata payload). A Document is content-first (fields + optional vectors) |
 | Payload | Document fields | Payload fields become top-level document fields |
 | Vector | `_vectors` field or auto-generated via [`embedders`](/reference/api/settings/update-embedders) | Meilisearch can auto-generate vectors from document content, so importing vectors is optional |
@@ -710,23 +710,23 @@ The below tables compare Qdrant concepts with their Meilisearch equivalents.
 | HNSW index config | Automatic (DiskANN-based) | No manual tuning needed |
 | Quantization (scalar, product, binary) | Built-in binary quantization via [`embedders`](/reference/api/settings/update-embedders) | Configured per embedder |
 | `on_disk` storage | Automatic | Meilisearch uses memory-mapped storage |
-| Sharding / replication | Automatic ([Meilisearch Cloud](https://www.meilisearch.com/cloud)) | — |
-| Snapshots | [Dumps](/reference/api/backups/create-dump) / [Snapshots](/reference/api/backups/create-snapshot) | — |
+| Sharding / replication | Automatic ([Meilisearch Cloud](https://www.meilisearch.com/cloud)) | N/A |
+| Snapshots | [Dumps](/reference/api/backups/create-dump) / [Snapshots](/reference/api/backups/create-snapshot) | N/A |
 
 #### Search parameters
 
 | Qdrant | Meilisearch | Notes |
 | :--- | :--- | :--- |
-| `query` (precomputed vector) | `q` + `hybrid` with auto-embedder | Meilisearch embeds the query for you — no client-side vector computation |
+| `query` (precomputed vector) | `q` + `hybrid` with auto-embedder | Meilisearch embeds the query for you, no client-side vector computation needed |
 | No built-in full-text search | `q` search param | Full-text search with typo tolerance, works standalone or combined with `hybrid` |
 | No equivalent | `hybrid.semanticRatio` | Tune the balance between keyword and semantic results (0.0–1.0) |
-| `filter.must` | `filter` with `AND` | — |
-| `filter.should` | `filter` with `OR` | — |
-| `filter.must_not` | `filter` with `NOT` | — |
-| `filter.match` (exact value) | `filter` with `=` operator | — |
-| `filter.range` (gt, gte, lt, lte) | `filter` with `>`, `>=`, `<`, `<=` or `TO` | — |
-| `filter.geo_bounding_box` | `_geoBoundingBox([lat, lng], [lat, lng])` in `filter` | — |
-| `filter.geo_radius` | `_geoRadius(lat, lng, radius)` in `filter` | — |
+| `filter.must` | `filter` with `AND` | N/A |
+| `filter.should` | `filter` with `OR` | N/A |
+| `filter.must_not` | `filter` with `NOT` | N/A |
+| `filter.match` (exact value) | `filter` with `=` operator | N/A |
+| `filter.range` (gt, gte, lt, lte) | `filter` with `>`, `>=`, `<`, `<=` or `TO` | N/A |
+| `filter.geo_bounding_box` | `_geoBoundingBox([lat, lng], [lat, lng])` in `filter` | N/A |
+| `filter.geo_radius` | `_geoRadius(lat, lng, radius)` in `filter` | N/A |
 | `with_payload` | `attributesToRetrieve` | Search param |
 | `score_threshold` | `rankingScoreThreshold` | Search param |
 | `limit` | `limit` | Search param |
@@ -739,7 +739,7 @@ The below tables compare Qdrant concepts with their Meilisearch equivalents.
 
 ## Query comparison
 
-This section shows how common Qdrant queries translate to Meilisearch. All Meilisearch examples below assume you have configured an [auto-embedder](#configure-embedders) — you simply send a text query and Meilisearch handles embedding automatically. No need to compute vectors client-side.
+This section shows how common Qdrant queries translate to Meilisearch. All Meilisearch examples below assume you have configured an [auto-embedder](#configure-embedders): you simply send a text query and Meilisearch handles embedding automatically. No need to compute vectors client-side.
 
 ### Semantic search
 
@@ -767,11 +767,11 @@ POST /indexes/my_index/search
 }
 ```
 
-With an auto-embedder configured, Meilisearch embeds the `q` text for you. Setting `semanticRatio` to `1.0` performs pure semantic search, just like Qdrant — but without managing vectors in your application code.
+With an auto-embedder configured, Meilisearch embeds the `q` text for you. Setting `semanticRatio` to `1.0` performs pure semantic search, just like Qdrant, but without managing vectors in your application code.
 
 ### Hybrid search (keyword + semantic)
 
-This is Meilisearch's biggest advantage over Qdrant. A single query combines typo-tolerant keyword matching with semantic similarity — something that would require two separate systems with Qdrant:
+This is Meilisearch's biggest advantage over Qdrant. A single query combines typo-tolerant keyword matching with semantic similarity, something that would require two separate systems with Qdrant:
 
 **Meilisearch:**
 ```json
@@ -818,7 +818,7 @@ POST /indexes/my_index/search
 }
 ```
 
-No need to compute a vector for "wireless headphones" — Meilisearch handles it. The filter syntax is also simpler: a single string instead of nested JSON objects.
+No need to compute a vector for "wireless headphones": Meilisearch handles it. The filter syntax is also simpler: a single string instead of nested JSON objects.
 
 <Note>
 Attributes used in `filter` must first be added to [`filterableAttributes`](/reference/api/settings/update-filterableattributes).
@@ -859,7 +859,7 @@ POST /indexes/my_index/search
 }
 ```
 
-Meilisearch adds geo-distance sorting on top of filtered search — and you still just send a text query instead of a precomputed vector.
+Meilisearch adds geo-distance sorting on top of filtered search, and you still just send a text query instead of a precomputed vector.
 
 <Note>
 The `_geo` attribute must be added to both [`filterableAttributes`](/reference/api/settings/update-filterableattributes) and [`sortableAttributes`](/reference/api/settings/update-sortableattributes).
@@ -882,7 +882,7 @@ POST /indexes/my_index/search
 }
 ```
 
-This returns search results along with a count of documents matching each facet value — useful for building filter UIs.
+This returns search results along with a count of documents matching each facet value, useful for building filter UIs.
 
 ### Full-text search (no vectors)
 
@@ -897,7 +897,7 @@ POST /indexes/my_index/search
 }
 ```
 
-This returns results using keyword matching with automatic typo tolerance (note the typo in "runnign" — Meilisearch handles it). This has no equivalent in Qdrant.
+This returns results using keyword matching with automatic typo tolerance (note the typo in "runnign", Meilisearch handles it). This has no equivalent in Qdrant.
 
 ## API methods
 

@@ -33,7 +33,7 @@ This guide includes examples in JavaScript, Python, and Ruby. The packages used:
 
 - **JavaScript**: [`@supabase/supabase-js`](https://www.npmjs.com/package/@supabase/supabase-js), [`meilisearch`](https://www.npmjs.com/package/meilisearch) (compatible with Meilisearch v1.0+)
 - **Python**: [`supabase`](https://pypi.org/project/supabase/), [`meilisearch`](https://pypi.org/project/meilisearch/)
-- **Ruby**: [`pg`](https://rubygems.org/gems/pg), [`meilisearch`](https://rubygems.org/gems/meilisearch) (there is no official Supabase Ruby client — connect directly to PostgreSQL using your Supabase connection string)
+- **Ruby**: [`pg`](https://rubygems.org/gems/pg), [`meilisearch`](https://rubygems.org/gems/meilisearch) (there is no official Supabase Ruby client, connect directly to PostgreSQL using your Supabase connection string)
 </Note>
 
 ## Export your Supabase data
@@ -627,11 +627,11 @@ To customize your index settings, see [configuring index settings](/resources/in
 
 **Supabase Vector** uses the pgvector extension to store and query vector embeddings. You must generate embeddings in your application code or Supabase Edge Functions, store them in a `vector` column, and write RPC functions like `match_documents()` to perform similarity search. This adds significant complexity to your stack.
 
-**Meilisearch** is a dedicated search engine. You send documents and search queries — everything else is automatic. Tokenization, stemming, typo tolerance, prefix search, and ranking all work out of the box. Because Meilisearch runs as a separate service, search queries never impact your Supabase database performance.
+**Meilisearch** is a dedicated search engine. You send documents and search queries, and everything else is automatic. Tokenization, stemming, typo tolerance, prefix search, and ranking all work out of the box. Because Meilisearch runs as a separate service, search queries never impact your Supabase database performance.
 
 ### Configure embedders for hybrid search
 
-If you currently use Supabase Vector for semantic similarity search, you can replace the entire pipeline — embedding generation in Edge Functions, vector columns, RPC functions, pgvector indexes — with Meilisearch's built-in hybrid search. Configure an [embedder](/capabilities/hybrid_search/getting_started) and Meilisearch handles all vectorization automatically, both at indexing time and at search time.
+If you currently use Supabase Vector for semantic similarity search, you can replace the entire pipeline (embedding generation in Edge Functions, vector columns, RPC functions, pgvector indexes) with Meilisearch's built-in hybrid search. Configure an [embedder](/capabilities/hybrid_search/getting_started) and Meilisearch handles all vectorization automatically, both at indexing time and at search time.
 
 ```bash
 curl -X PATCH 'MEILI_HOST/indexes/MEILI_INDEX_NAME/settings' \
@@ -697,13 +697,13 @@ curl -X PATCH 'MEILI_HOST/indexes/MEILI_INDEX_NAME/settings' \
 
 Migrating your search layer from Supabase to Meilisearch gives you several features that work out of the box:
 
-- **Typo tolerance** — Supabase's `.textSearch()` inherits PostgreSQL's zero typo tolerance. A single typo returns zero results. Meilisearch handles typos automatically, so "reciepe" finds "recipe"
-- **Prefix search** — Users see results as they type, without needing trigram indexes or `LIKE` queries
-- **Instant results** — Sub-50ms search responses regardless of dataset complexity, with no GIN index tuning
+- **Typo tolerance**: Supabase's `.textSearch()` inherits PostgreSQL's zero typo tolerance. A single typo returns zero results. Meilisearch handles typos automatically, so "reciepe" finds "recipe"
+- **Prefix search**: Users see results as they type, without needing trigram indexes or `LIKE` queries
+- **Instant results**: Sub-50ms search responses regardless of dataset complexity, with no GIN index tuning
 - **Highlighting** of matching terms in results, without manually calling `ts_headline()` via RPC
-- **Faceted search** with value distributions for building filter UIs — no `GROUP BY` queries or RPC functions needed
+- **Faceted search** with value distributions for building filter UIs, no `GROUP BY` queries or RPC functions needed
 - **Hybrid search** combining keyword relevancy and semantic similarity in a single query, replacing separate `.textSearch()` and `match_documents()` pipelines
-- **No search infrastructure in your database** — Remove `tsvector` columns, GIN indexes, embedding columns, pgvector indexes, RPC functions, and Edge Functions for embedding generation. Your Supabase database handles what it does best (transactions and relational data), while Meilisearch handles search
+- **No search infrastructure in your database**: Remove `tsvector` columns, GIN indexes, embedding columns, pgvector indexes, RPC functions, and Edge Functions for embedding generation. Your Supabase database handles what it does best (transactions and relational data), while Meilisearch handles search
 
 ## Settings and parameters comparison
 
@@ -711,7 +711,7 @@ Migrating your search layer from Supabase to Meilisearch gives you several featu
 
 | Supabase client | Meilisearch | Notes |
 | :--- | :--- | :--- |
-| `.textSearch(column, query)` | `q` search param | Just send the user's text — no tsquery construction needed |
+| `.textSearch(column, query)` | `q` search param | Just send the user's text, no tsquery construction needed |
 | `.eq(column, value)` | `filter` with `=` | Requires [`filterableAttributes`](/reference/api/settings/update-filterableattributes) |
 | `.gt()` / `.gte()` / `.lt()` / `.lte()` | `filter` with `>`, `>=`, `<`, `<=` | Requires [`filterableAttributes`](/reference/api/settings/update-filterableattributes) |
 | `.in(column, values)` | `filter` with `IN [v1, v2]` | Requires [`filterableAttributes`](/reference/api/settings/update-filterableattributes) |
@@ -727,7 +727,7 @@ Migrating your search layer from Supabase to Meilisearch gives you several featu
 
 | Supabase Vector | Meilisearch | Notes |
 | :--- | :--- | :--- |
-| `match_documents()` RPC function | `hybrid` + auto-embedder | No RPC functions needed — just send a text query |
+| `match_documents()` RPC function | `hybrid` + auto-embedder | No RPC functions needed, just send a text query |
 | pgvector `<=>` cosine operator | Automatic via configured embedder | Distance metric handled internally |
 | `embedding` vector column | Not needed with auto-embedder | Meilisearch generates and stores vectors automatically |
 | Embedding generation in Edge Functions | Automatic via configured embedder | Remove all embedding generation code |
@@ -744,7 +744,7 @@ Migrating your search layer from Supabase to Meilisearch gives you several featu
 | `ts_rank()` / `ts_rank_cd()` | Built-in [ranking rules](/reference/api/settings/update-ranking-rules) | Relevancy ranking is automatic and configurable |
 | `tsvector` column + GIN index | Automatic | Meilisearch indexes all fields automatically |
 | Language configurations (`english`, `french`) | [`localizedAttributes`](/reference/api/settings/update-localizedattributes) | Assign languages to specific fields |
-| `setweight()` (A, B, C, D) | [`searchableAttributes`](/reference/api/settings/update-searchableattributes) | Ordered list — fields listed first have higher priority |
+| `setweight()` (A, B, C, D) | [`searchableAttributes`](/reference/api/settings/update-searchableattributes) | Ordered list, fields listed first have higher priority |
 | `tsvector` update triggers | Automatic | Meilisearch re-indexes on every document update |
 | No typo tolerance | Automatic [typo tolerance](/reference/api/settings/update-typotolerance) | Configurable per index |
 
@@ -772,7 +772,7 @@ POST /indexes/products/search
 }
 ```
 
-No `tsvector` columns, no `@@` operator, no `ts_rank()` function. Just send the text. Meilisearch also handles typos — searching for "runnign shoes" still returns the right results.
+No `tsvector` columns, no `@@` operator, no `ts_rank()` function. Just send the text. Meilisearch also handles typos, so searching for "runnign shoes" still returns the right results.
 
 ### Filtered search
 
@@ -884,7 +884,7 @@ POST /indexes/products/search
 }
 ```
 
-Meilisearch returns search results and value distributions for all requested facets in a single response — no custom RPC functions or `GROUP BY` queries needed.
+Meilisearch returns search results and value distributions for all requested facets in a single response, no custom RPC functions or `GROUP BY` queries needed.
 
 ### Geo search
 
@@ -999,7 +999,7 @@ if (data && data.length > 0) {
 }
 ```
 
-For most applications, Database Webhooks with an Edge Function provide the best balance of simplicity and freshness. Meilisearch's `addDocuments` method is an upsert — sending an existing document with the same primary key updates it automatically.
+For most applications, Database Webhooks with an Edge Function provide the best balance of simplicity and freshness. Meilisearch's `addDocuments` method is an upsert: sending an existing document with the same primary key updates it automatically.
 
 ## Front-end components
 
