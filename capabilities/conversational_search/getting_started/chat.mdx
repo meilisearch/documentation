@@ -99,7 +99,7 @@ This basic request works and the LLM will search your indexes and generate an an
 
 ## Meilisearch tools
 
-Meilisearch provides three special tools that improve the chat experience. Declare them in the `tools` array of your request and Meilisearch intercepts them, they are never forwarded to the LLM provider.
+Meilisearch provides three special tools that improve the chat experience. Declare them in the `tools` array of your request, and Meilisearch intercepts them, so they are never forwarded to the LLM provider.
 
 <Warning>
 These tool definitions must include the exact parameter schemas below. Missing or incorrect parameters will prevent the tools from working.
