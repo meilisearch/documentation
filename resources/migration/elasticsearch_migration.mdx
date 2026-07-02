@@ -615,7 +615,7 @@ To customize your index settings, see [configuring index settings](/resources/in
 
 **Meilisearch** takes a different approach: all fields are automatically indexed and searchable by default. You refine behavior through [index settings](/reference/api/settings/list-all-settings) (which affect all searches) and [search parameters](/reference/api/search/search-with-post) (which affect a single query). Features like typo tolerance, prefix search, and ranking work out of the box without configuration.
 
-This means many Elasticsearch configurations have no direct equivalent in Meilisearch because the behavior is automatic. For example, you don't need to configure analyzers for typo tolerance, prefix matching, or stop words — Meilisearch handles these by default.
+This means many Elasticsearch configurations have no direct equivalent in Meilisearch because the behavior is automatic. For example, you don't need to configure analyzers for typo tolerance, prefix matching, or stop words: Meilisearch handles these by default.
 
 ### Settings and parameters comparison
 
@@ -683,11 +683,11 @@ The below tables compare Elasticsearch **mappings**, **settings**, and **query p
 
 Many Elasticsearch configurations become unnecessary when migrating to Meilisearch:
 
-- **Analyzers and tokenizers** — Meilisearch's built-in text processing handles tokenization, normalization, stemming, and language detection automatically.
-- **Mapping definitions** — Field types are inferred. You don't need to define mappings before indexing documents.
-- **Replicas and shards** — Meilisearch Cloud manages these automatically. Self-hosted instances run as a single process.
-- **Index lifecycle management** — Meilisearch doesn't require index rotation, rollover policies, or shard management.
-- **Query complexity** — Most Elasticsearch `bool` queries with nested `must`, `should`, and `filter` clauses translate to a simple `q` parameter combined with a `filter` string.
+- **Analyzers and tokenizers**: Meilisearch's built-in text processing handles tokenization, normalization, stemming, and language detection automatically.
+- **Mapping definitions**: Field types are inferred. You don't need to define mappings before indexing documents.
+- **Replicas and shards**: Meilisearch Cloud manages these automatically. Self-hosted instances run as a single process.
+- **Index lifecycle management**: Meilisearch doesn't require index rotation, rollover policies, or shard management.
+- **Query complexity**: Most Elasticsearch `bool` queries with nested `must`, `should`, and `filter` clauses translate to a simple `q` parameter combined with a `filter` string.
 
 ## Query comparison
 
@@ -799,7 +799,7 @@ Attributes used in `sort` must first be added to [`sortableAttributes`](/referen
 }
 ```
 
-Meilisearch returns value distributions for each facet. Range aggregations are not supported — use `filter` to narrow results by range.
+Meilisearch returns value distributions for each facet. Range aggregations are not supported: use `filter` to narrow results by range.
 
 ### Geo search
 

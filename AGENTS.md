@@ -15,14 +15,14 @@ Our documentation aims to be:
 
 Use these questions when creating or editing documentation:
 
-1. **Accuracy** — Is the information accurate?
-2. **Clarity** — Is it easy to understand?
-3. **Code samples** — Do the code samples run without errors? Do they help users understand what we are explaining?
-4. **English** — Is the English clear and concise? Can a non-native speaker understand it?
-5. **Grammar and typos** — Is the grammar correct? Are there any typos?
-6. **Brevity** — Can we shorten text without losing any important information?
-7. **Cross-references** — Do the suggested changes require updating other pages in the documentation website?
-8. **Placement and discoverability** — For new content: is the article in the right place? Should other articles in the documentation link to it?
+1. **Accuracy**: Is the information accurate?
+2. **Clarity**: Is it easy to understand?
+3. **Code samples**: Do the code samples run without errors? Do they help users understand what we are explaining?
+4. **English**: Is the English clear and concise? Can a non-native speaker understand it?
+5. **Grammar and typos**: Is the grammar correct? Are there any typos?
+6. **Brevity**: Can we shorten text without losing any important information?
+7. **Cross-references**: Do the suggested changes require updating other pages in the documentation website?
+8. **Placement and discoverability**: For new content, is the article in the right place? Should other articles in the documentation link to it?
 
 ## Practical guidelines
 
@@ -57,6 +57,7 @@ When writing or editing documentation text, apply the following. They replace th
 - **Oxford comma**: use the serial comma in lists (e.g. "A, B, and C").
 - **Acronyms and initialisms**: no periods (e.g. "HTML", "API", not "H.T.M.L").
 - **Semicolons**: use sparingly; prefer splitting into two sentences or rewording for clarity.
+- **Em dashes**: never use em dashes (`—`). Use commas, parentheses, or rewrite the sentence instead.
 - **Spacing**: one space between words and one space after sentence-ending punctuation (e.g. period, question mark) before the next sentence. No double spaces.
 
 ### Style and readability

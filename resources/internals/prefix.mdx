@@ -8,9 +8,9 @@ In Meilisearch, **you can perform a search with only a single letter as your que
 
 Prefix search is when document sorting starts by comparing the search query against the beginning of each word in your dataset. All documents with words that match the query term are added to the [bucket sort](https://en.wikipedia.org/wiki/Bucket_sort), before the [ranking rules](/capabilities/full_text_search/relevancy/ranking_rules) are applied sequentially.
 
-In other words, prefix search means that it's not necessary to type a word in its entirety to find documents containing that word—you can just type the first one or two letters.
+In other words, prefix search means that it's not necessary to type a word in its entirety to find documents containing that word. You can just type the first one or two letters.
 
-Prefix search is only performed on the last word in a search query—prior words must be typed out fully to get accurate results.
+Prefix search is only performed on the last word in a search query; prior words must be typed out fully to get accurate results.
 
 Searching by prefix (rather than using complete words) has a significant impact on search time. The shorter the query term, the more possible matches in the dataset.
 
