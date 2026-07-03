@@ -13,7 +13,7 @@ For a high-level comparison of the two search engines, see [Meilisearch vs Mongo
 
 MongoDB Atlas Search is a full-text search engine built on Apache Lucene, integrated directly into MongoDB Atlas. It uses aggregation pipelines with the `$search` stage to query data. While this tight integration is convenient for MongoDB users, it also means your search is coupled to your database and constrained by the aggregation pipeline syntax.
 
-Meilisearch offers a simpler, faster alternative with typo tolerance, faceted search, and hybrid search out of the box — all through a straightforward REST API.
+Meilisearch offers a simpler, faster alternative with typo tolerance, faceted search, and hybrid search out of the box, all through a straightforward REST API.
 
 This guide walks you through reading documents from a MongoDB collection and importing them into Meilisearch using a script in JavaScript, Python, or Ruby. [You can also skip directly to the finished script](#finished-script).
 
@@ -488,7 +488,7 @@ This means most Atlas Search index configurations have no direct equivalent in M
 
 ### Configure embedders
 
-If you used MongoDB Atlas Vector Search (`$vectorSearch`), you can replace it with Meilisearch's built-in hybrid search. The key difference: with Atlas Vector Search, your application must compute vectors before indexing and searching. With Meilisearch, you configure an embedder once and Meilisearch handles all embedding automatically — both at indexing time and at search time.
+If you used MongoDB Atlas Vector Search (`$vectorSearch`), you can replace it with Meilisearch's built-in hybrid search. The key difference: with Atlas Vector Search, your application must compute vectors before indexing and searching. With Meilisearch, you configure an embedder once and Meilisearch handles all embedding automatically, both at indexing time and at search time.
 
 This means you can **remove all embedding logic from your application code**. Instead of calling an embedding API, computing vectors, and sending them alongside your aggregation pipeline, you simply send documents and text queries to Meilisearch.
 
@@ -560,14 +560,14 @@ curl -X PATCH 'MEILI_HOST/indexes/MEILI_INDEX_NAME/settings' \
 
 Migrating from MongoDB Atlas Search to Meilisearch gives you several advantages:
 
-- **No search index definitions** — Meilisearch indexes all fields automatically. No need to create or maintain search index mappings
-- **Simpler query syntax** — Replace complex aggregation pipelines with a flat JSON search request
-- **Typo tolerance** out of the box — no configuration required
+- **No search index definitions**: Meilisearch indexes all fields automatically. No need to create or maintain search index mappings
+- **Simpler query syntax**: Replace complex aggregation pipelines with a flat JSON search request
+- **Typo tolerance** out of the box, no configuration required
 - **Hybrid search** combining keyword relevancy and semantic similarity in a single query, with automatic embedding
 - **Faceted search** with value distributions for building filter UIs
 - **Highlighting** of matching terms in results
 - **Synonyms and stop words** support
-- **Decoupled search** — Your search engine is independent of your database, so you can scale, tune, and deploy each separately
+- **Decoupled search**: Your search engine is independent of your database, so you can scale, tune, and deploy each separately
 
 ## Settings and parameters comparison
 
@@ -598,7 +598,7 @@ The below tables compare MongoDB Atlas Search concepts with their Meilisearch eq
 | `$search` with `compound` (`must`/`should`/`mustNot`/`filter`) | `q` + `filter` | Combine search query with filter expressions using `AND`, `OR`, `NOT` |
 | `$search` with `range` operator | `filter` search param | Use operators like `field > value` or `field value1 TO value2` |
 | `$search` with `near` (geo) | `_geoRadius(lat, lng, radius)` or `_geoBoundingBox([lat, lng], [lat, lng])` in `filter` | Requires `_geo` in `filterableAttributes` |
-| `$vectorSearch` | `hybrid` + auto-embedder | No need to precompute vectors — Meilisearch embeds queries automatically |
+| `$vectorSearch` | `hybrid` + auto-embedder | No need to precompute vectors, Meilisearch embeds queries automatically |
 | `$searchMeta` with `facet` collector | `facets` search param | Returns value distributions for each facet |
 | `highlight` option in `$search` | `attributesToHighlight` + `highlightPreTag` + `highlightPostTag` | Search params |
 | `$sort` stage after `$search` | `sort` search param | Requires [`sortableAttributes`](/reference/api/settings/update-sortableattributes) |
@@ -763,7 +763,7 @@ db.collection.aggregate([
 }
 ```
 
-Meilisearch returns value distributions for each facet. Range aggregations with custom boundaries are not supported — use `filter` to narrow results by range.
+Meilisearch returns value distributions for each facet. Range aggregations with custom boundaries are not supported. Use `filter` to narrow results by range.
 
 ### Geo search
 
@@ -828,7 +828,7 @@ db.collection.aggregate([
 }
 ```
 
-With an auto-embedder configured, Meilisearch embeds the `q` text for you. Setting `semanticRatio` to `1.0` performs pure semantic search — but without managing vectors in your application code. Set `semanticRatio` to `0.5` to combine keyword and semantic results in a single hybrid query, something that would require running both `$search` and `$vectorSearch` pipelines separately with Atlas.
+With an auto-embedder configured, Meilisearch embeds the `q` text for you. Setting `semanticRatio` to `1.0` performs pure semantic search, but without managing vectors in your application code. Set `semanticRatio` to `0.5` to combine keyword and semantic results in a single hybrid query, something that would require running both `$search` and `$vectorSearch` pipelines separately with Atlas.
 
 ## API methods
 

@@ -641,13 +641,13 @@ To customize your index settings, see [configuring index settings](/resources/in
 
 **PostgreSQL full-text search** requires you to manage every aspect of the search pipeline manually. You must create `tsvector` columns (or expressions), build GIN indexes for performance, choose language configurations for stemming and stop words, construct queries with `to_tsquery()` or `plainto_tsquery()`, and rank results with `ts_rank()`. Search is tightly coupled to your database, competing for the same resources as your transactional queries.
 
-**Meilisearch** is a dedicated search engine. You send documents and search queries — everything else is automatic. Tokenization, stemming, typo tolerance, prefix search, and ranking all work out of the box. Because Meilisearch runs as a separate service, search queries never impact your database performance.
+**Meilisearch** is a dedicated search engine. You send documents and search queries, and everything else is automatic. Tokenization, stemming, typo tolerance, prefix search, and ranking all work out of the box. Because Meilisearch runs as a separate service, search queries never impact your database performance.
 
 The most important difference: **PostgreSQL has no typo tolerance**. A search for "reciepe" returns zero results even if your table contains hundreds of recipes. Meilisearch handles typos automatically, making it dramatically more forgiving for end users.
 
 ### Configure embedders for hybrid search
 
-If you currently use pgvector for semantic similarity search, you can replace it with Meilisearch's built-in hybrid search. Configure an [embedder](/capabilities/hybrid_search/getting_started) and Meilisearch handles all vectorization automatically — both at indexing time and at search time. No more managing embeddings in your application code.
+If you currently use pgvector for semantic similarity search, you can replace it with Meilisearch's built-in hybrid search. Configure an [embedder](/capabilities/hybrid_search/getting_started) and Meilisearch handles all vectorization automatically, both at indexing time and at search time. No more managing embeddings in your application code.
 
 ```bash
 curl -X PATCH 'MEILI_HOST/indexes/MEILI_INDEX_NAME/settings' \
@@ -705,13 +705,13 @@ curl -X PATCH 'MEILI_HOST/indexes/MEILI_INDEX_NAME/settings' \
 
 Migrating your search layer from PostgreSQL to Meilisearch gives you several features that work out of the box:
 
-- **Typo tolerance** — PostgreSQL full-text search has none. A single typo returns zero results. Meilisearch handles typos automatically, so "reciepe" finds "recipe"
-- **Prefix search** — Users see results as they type, without needing `LIKE 'term%'` queries or trigram indexes
-- **Instant results** — Sub-50ms search responses regardless of dataset complexity, with no GIN index tuning or query plan optimization
+- **Typo tolerance**: PostgreSQL full-text search has none. A single typo returns zero results. Meilisearch handles typos automatically, so "reciepe" finds "recipe"
+- **Prefix search**: Users see results as they type, without needing `LIKE 'term%'` queries or trigram indexes
+- **Instant results**: Sub-50ms search responses regardless of dataset complexity, with no GIN index tuning or query plan optimization
 - **Highlighting** of matching terms in results, without manually calling `ts_headline()`
-- **Faceted search** with value distributions for building filter UIs — no `GROUP BY` queries needed
+- **Faceted search** with value distributions for building filter UIs, no `GROUP BY` queries needed
 - **Hybrid search** combining keyword relevancy and semantic similarity in a single query, replacing separate pgvector and `tsvector` pipelines
-- **No search infrastructure in your database** — Remove `tsvector` columns, GIN indexes, triggers, and ranking functions. Your PostgreSQL database handles what it does best (transactions and relational data), while Meilisearch handles search
+- **No search infrastructure in your database**: Remove `tsvector` columns, GIN indexes, triggers, and ranking functions. Your PostgreSQL database handles what it does best (transactions and relational data), while Meilisearch handles search
 
 ## Settings and parameters comparison
 
@@ -719,11 +719,11 @@ Migrating your search layer from PostgreSQL to Meilisearch gives you several fea
 
 | PostgreSQL | Meilisearch | Notes |
 | :--- | :--- | :--- |
-| `tsvector` column + GIN index | Automatic | Meilisearch indexes all fields automatically — no columns or indexes to create |
+| `tsvector` column + GIN index | Automatic | Meilisearch indexes all fields automatically, no columns or indexes to create |
 | `to_tsvector(config, text)` | Automatic tokenization | No text processing functions needed |
 | `ts_rank()` / `ts_rank_cd()` | Built-in [ranking rules](/reference/api/settings/update-ranking-rules) | Relevancy ranking is automatic and configurable |
 | Language configurations (`english`, `french`, etc.) | [`localizedAttributes`](/reference/api/settings/update-localizedattributes) | Assign languages to specific fields |
-| `setweight()` (A, B, C, D) | [`searchableAttributes`](/reference/api/settings/update-searchableattributes) | Ordered list — fields listed first have higher priority |
+| `setweight()` (A, B, C, D) | [`searchableAttributes`](/reference/api/settings/update-searchableattributes) | Ordered list, fields listed first have higher priority |
 | Custom dictionaries | [`synonyms`](/reference/api/settings/update-synonyms) / [`stopWords`](/reference/api/settings/update-stopwords) | Configure equivalent terms and ignored words |
 | `tsvector` update triggers | Automatic | Meilisearch re-indexes on every document update |
 
@@ -731,12 +731,12 @@ Migrating your search layer from PostgreSQL to Meilisearch gives you several fea
 
 | PostgreSQL | Meilisearch | Notes |
 | :--- | :--- | :--- |
-| `to_tsquery()` / `plainto_tsquery()` / `websearch_to_tsquery()` | `q` search param | Just send the user's text — no query construction needed |
-| `@@` operator | Automatic | No matching operator — `q` handles it |
+| `to_tsquery()` / `plainto_tsquery()` / `websearch_to_tsquery()` | `q` search param | Just send the user's text, no query construction needed |
+| `@@` operator | Automatic | No matching operator needed, `q` handles it |
 | `WHERE column = value` | `filter` search param | Requires [`filterableAttributes`](/reference/api/settings/update-filterableattributes) |
 | `ORDER BY column` | `sort` search param | Requires [`sortableAttributes`](/reference/api/settings/update-sortableattributes) |
 | `LIMIT` / `OFFSET` | `limit` / `offset` or `page` / `hitsPerPage` | Search params |
-| `ts_headline()` | `attributesToHighlight` | Search param — returns highlighted snippets automatically |
+| `ts_headline()` | `attributesToHighlight` | Search param, returns highlighted snippets automatically |
 | `COUNT(*)` | `estimatedTotalHits` / `totalHits` | Returned in every search response |
 | `ILIKE '%term%'` | `q` with prefix search | Automatic prefix matching on the last word |
 | No typo tolerance | Automatic [typo tolerance](/reference/api/settings/update-typotolerance) | Configurable per index |
@@ -745,9 +745,9 @@ Migrating your search layer from PostgreSQL to Meilisearch gives you several fea
 
 | PostgreSQL (pgvector) | Meilisearch | Notes |
 | :--- | :--- | :--- |
-| `ORDER BY embedding <=> query_vector` (cosine) | `hybrid` + auto-embedder | Meilisearch embeds queries for you — no client-side vector computation |
+| `ORDER BY embedding <=> query_vector` (cosine) | `hybrid` + auto-embedder | Meilisearch embeds queries for you, no client-side vector computation |
 | `ORDER BY embedding <-> query_vector` (L2) | `hybrid` + auto-embedder | Distance metric is handled automatically |
-| `vector` type + `ivfflat` / `hnsw` index | [`embedders`](/reference/api/settings/update-embedders) setting | Automatic indexing (DiskANN-based) — no index type selection needed |
+| `vector` type + `ivfflat` / `hnsw` index | [`embedders`](/reference/api/settings/update-embedders) setting | Automatic indexing (DiskANN-based), no index type selection needed |
 | Manual embedding generation in application code | Automatic via configured embedder | Meilisearch embeds documents and queries for you |
 | Separate keyword + vector queries | Single `hybrid` query | Combines keyword and semantic search in one request |
 
@@ -922,18 +922,18 @@ POST /indexes/products/search
 }
 ```
 
-Meilisearch returns search results and value distributions for all requested facets in a single response — no separate `GROUP BY` queries needed.
+Meilisearch returns search results and value distributions for all requested facets in a single response, no separate `GROUP BY` queries needed.
 
 ## Keeping data in sync
 
 Since PostgreSQL remains your source of truth, you need a strategy to keep Meilisearch in sync when data changes. Common approaches:
 
-- **Application-level sync** — After every INSERT, UPDATE, or DELETE in your application code, send the corresponding change to Meilisearch. This is the simplest approach and works well for most applications
-- **Database triggers with notifications** — Use PostgreSQL `LISTEN`/`NOTIFY` to broadcast changes, then have a worker process consume notifications and update Meilisearch
-- **Periodic batch sync** — Run a scheduled job (every few minutes) that queries PostgreSQL for recently modified rows (using an `updated_at` timestamp) and sends them to Meilisearch
-- **Change data capture (CDC)** — Use tools like Debezium to stream PostgreSQL WAL changes to Meilisearch in near real-time
+- **Application-level sync**: After every INSERT, UPDATE, or DELETE in your application code, send the corresponding change to Meilisearch. This is the simplest approach and works well for most applications
+- **Database triggers with notifications**: Use PostgreSQL `LISTEN`/`NOTIFY` to broadcast changes, then have a worker process consume notifications and update Meilisearch
+- **Periodic batch sync**: Run a scheduled job (every few minutes) that queries PostgreSQL for recently modified rows (using an `updated_at` timestamp) and sends them to Meilisearch
+- **Change data capture (CDC)**: Use tools like Debezium to stream PostgreSQL WAL changes to Meilisearch in near real-time
 
-For most applications, application-level sync provides the best balance of simplicity and freshness. Meilisearch's `addDocuments` method is an upsert — sending an existing document with the same primary key updates it automatically.
+For most applications, application-level sync provides the best balance of simplicity and freshness. Meilisearch's `addDocuments` method is an upsert: sending an existing document with the same primary key updates it automatically.
 
 ## Front-end components
 

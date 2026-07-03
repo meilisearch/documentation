@@ -101,7 +101,7 @@ curl \
 In this configuration, each shard lives on exactly one remote. Documents are distributed across all three instances, and each instance handles searches for its own shards.
 
 <Note>
-This setup has no replication. If a remote becomes unavailable, its shards are missing from search results — Meilisearch does not yet automatically fall back to another instance. See [Configure replication](/resources/self_hosting/sharding/configure_replication) for a high-availability setup.
+This setup has no replication. If a remote becomes unavailable, its shards are missing from search results. Meilisearch does not yet automatically fall back to another instance. See [Configure replication](/resources/self_hosting/sharding/configure_replication) for a high-availability setup.
 </Note>
 
 ## Step 4: Index documents
