@@ -25,6 +25,10 @@ client.index('INDEX_UID').facet_search_setting
 client.Index("books").GetFacetSearch()
 ```
 
+```csharp C#
+await client.Index("books").GetFacetSearchAsync();
+```
+
 ```rust Rust
 let facet_search: bool = client
   .index(INDEX_UID)

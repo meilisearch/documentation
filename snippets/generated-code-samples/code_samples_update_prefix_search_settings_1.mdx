@@ -27,6 +27,10 @@ client.index('INDEX_UID').update_prefix_search('disabled')
 client.Index("books").UpdatePrefixSearch("disabled")
 ```
 
+```csharp C#
+await client.Index("books").UpdatePrefixSearchAsync("disabled");
+```
+
 ```rust Rust
 let task: TaskInfo = client
   .index(INDEX_UID)

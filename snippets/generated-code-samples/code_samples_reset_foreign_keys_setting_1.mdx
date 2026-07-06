@@ -4,4 +4,12 @@
 curl \
   -X DELETE 'MEILISEARCH_URL/indexes/books/settings/foreign-keys'
 ```
+
+```javascript JS
+client.index('books').resetForeignKeys()
+```
+
+```python Python
+client.index('books').reset_foreign_keys()
+```
 </CodeGroup>

@@ -25,6 +25,10 @@ client.index('INDEX_UID').reset_prefix_search
 client.Index("books").ResetPrefixSearch()
 ```
 
+```csharp C#
+await client.Index("books").ResetPrefixSearchAsync();
+```
+
 ```rust Rust
 let task: TaskInfo = client
   .index(INDEX_UID)

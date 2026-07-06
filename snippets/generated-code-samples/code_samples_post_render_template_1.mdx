@@ -1,0 +1,61 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/render-template' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "template": {
+      "kind": "inlineDocumentTemplate",
+      "inline": "An inline document template rendered on {{doc.id}}"
+    },
+    "input": {
+      "kind": "inlineDocument",
+      "inline": { "id": "this document" }
+    }
+  }'
+```
+
+```javascript JS
+client.renderTemplate({
+  template: {
+    kind: 'inlineDocumentTemplate',
+    inline: 'An inline document template rendered on {{doc.id}}'
+  },
+  input: {
+    kind: 'inlineDocument',
+    inline: { id: 'this document' }
+  }
+})
+```
+
+```python Python
+client.update_experimental_features({"renderRoute": True})
+
+client.render_template(
+  template={
+    'kind': 'inlineDocumentTemplate',
+    'inline': 'An inline document template rendered on {{doc.id}}'
+  },
+  input={
+    'kind': 'inlineDocument',
+    'inline': {'id': 'this document'}
+  }
+)
+```
+
+```go Go
+client.RenderTemplate(&meilisearch.RenderTemplateParams{
+  Template: meilisearch.Template{
+    Kind: meilisearch.InlineDocumentTemplate,
+    Inline: "An inline document template rendered on {{doc.id}}",
+  },
+  Input: &meilisearch.TempelateInput{
+    Kind: meilisearch.InlineDocument,
+    Inline: map[string]any{
+      "id": "this document",
+    },
+  },
+})
+```
+</CodeGroup>

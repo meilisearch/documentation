@@ -25,6 +25,10 @@ client.index('INDEX_UID').prefix_search
 client.Index("books").GetPrefixSearch()
 ```
 
+```csharp C#
+await client.Index("books").GetPrefixSearchAsync();
+```
+
 ```rust Rust
 let prefix_search: PrefixSearchSettings = client
   .index(INDEX_UID)

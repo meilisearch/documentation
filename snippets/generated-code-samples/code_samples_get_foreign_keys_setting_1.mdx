@@ -4,4 +4,12 @@
 curl \
   -X GET 'MEILISEARCH_URL/indexes/books/settings/foreign-keys'
 ```
+
+```javascript JS
+client.index('books').getForeignKeys()
+```
+
+```python Python
+client.index('books').get_foreign_keys()
+```
 </CodeGroup>
