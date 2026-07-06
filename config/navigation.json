@@ -836,6 +836,12 @@
                       "pages": [
                         "POST /export"
                       ]
+                    },
+                    {
+                      "group": "Render template",
+                      "pages": [
+                        "POST /render-template"
+                      ]
                     }
                   ]
                 }
