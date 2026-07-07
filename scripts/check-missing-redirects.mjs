@@ -67,50 +67,58 @@ async function fetchDocsPaths() {
   const dateFrom = ninetyDaysAgo.toISOString().slice(0, 19).replace("T", " ");
   const dateTo = now.toISOString().slice(0, 19).replace("T", " ");
 
-  const params = new URLSearchParams({
-    entity: "pageview",
-    entity_id: FATHOM_SITE_ID,
-    aggregates: "pageviews",
-    field_grouping: "pathname",
-    sort_by: "pageviews:desc",
-    date_from: dateFrom,
-    date_to: dateTo,
-    timezone: "UTC",
-    limit: "10000",
-  });
-
-  const filters = JSON.stringify([
-    { property: "pathname", operator: "is like", value: "/docs/*" },
-  ]);
-  params.set("filters", filters);
-
-  const url = `${FATHOM_API}/aggregations?${params}`;
-
   console.log("Fetching page view data from Fathom Analytics (last 90 days)...");
 
-  const res = await fetch(url, {
-    headers: { Authorization: `Bearer ${FATHOM_API_KEY}` },
-  });
-
-  if (!res.ok) {
-    const body = await res.text();
-    throw new Error(`Fathom API error ${res.status}: ${body}`);
-  }
-
-  const result = await res.json();
-
-  if (!Array.isArray(result)) {
-    throw new Error(`Unexpected Fathom response format: ${JSON.stringify(result).slice(0, 200)}`);
-  }
-
-  // Return ALL paths (no min filter) so we can check redirects too
+  // The Fathom API caps `limit` at 1000, so paginate with `offset`
+  const PAGE_SIZE = 1000;
   const paths = new Map();
-  for (const row of result) {
-    const views = parseInt(row.pageviews, 10) || 0;
-    paths.set(row.pathname, views);
+  let offset = 0;
+
+  while (true) {
+    const params = new URLSearchParams({
+      entity: "pageview",
+      entity_id: FATHOM_SITE_ID,
+      aggregates: "pageviews",
+      field_grouping: "pathname",
+      sort_by: "pageviews:desc",
+      date_from: dateFrom,
+      date_to: dateTo,
+      timezone: "UTC",
+      limit: String(PAGE_SIZE),
+      offset: String(offset),
+    });
+
+    const filters = JSON.stringify([
+      { property: "pathname", operator: "is like", value: "/docs/*" },
+    ]);
+    params.set("filters", filters);
+
+    const res = await fetch(`${FATHOM_API}/aggregations?${params}`, {
+      headers: { Authorization: `Bearer ${FATHOM_API_KEY}` },
+    });
+
+    if (!res.ok) {
+      const body = await res.text();
+      throw new Error(`Fathom API error ${res.status}: ${body}`);
+    }
+
+    const result = await res.json();
+
+    if (!Array.isArray(result)) {
+      throw new Error(`Unexpected Fathom response format: ${JSON.stringify(result).slice(0, 200)}`);
+    }
+
+    // Return ALL paths (no min filter) so we can check redirects too
+    for (const row of result) {
+      const views = parseInt(row.pageviews, 10) || 0;
+      paths.set(row.pathname, views);
+    }
+
+    if (result.length < PAGE_SIZE) break;
+    offset += PAGE_SIZE;
   }
 
-  console.log(`Fetched ${result.length} unique paths from Fathom\n`);
+  console.log(`Fetched ${paths.size} unique paths from Fathom\n`);
   return paths;
 }
 
