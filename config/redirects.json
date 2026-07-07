@@ -4414,5 +4414,201 @@
   {
     "source": "/reference/api/indexes/n",
     "destination": "/reference/api/indexes/compact-index"
+  },
+  {
+    "source": "/reference/api/dynamic-search-rules/list-dynamic-search-rules",
+    "destination": "/reference/api/search-rules/list-search-rules"
+  },
+  {
+    "source": "/reference/api/dynamic-search-rules/update-a-dynamic-search-rule-or-create-a-new-one-if-it-doesnt-exist",
+    "destination": "/reference/api/search-rules/create-or-update-a-search-rule"
+  },
+  {
+    "source": "/reference/api/dynamic-search-rules/get-a-dynamic-search-rule",
+    "destination": "/reference/api/search-rules/get-a-search-rule"
+  },
+  {
+    "source": "/reference/api/dynamic-search-rules/delete-a-dynamic-search-rule",
+    "destination": "/reference/api/search-rules/delete-a-search-rule"
+  },
+  {
+    "source": "/resources/self_hosting/deployment/azure",
+    "destination": "/resources/self_hosting/deployment/overview"
+  },
+  {
+    "source": "/guides/integration/laravel",
+    "destination": "/getting_started/frameworks/laravel"
+  },
+  {
+    "source": "/guides/integration/symfony",
+    "destination": "/getting_started/frameworks/symfony"
+  },
+  {
+    "source": "/guides/front_end/react",
+    "destination": "/getting_started/instant_meilisearch/react"
+  },
+  {
+    "source": "/guides/front_end/vue",
+    "destination": "/getting_started/instant_meilisearch/vue"
+  },
+  {
+    "source": "/guides/deployment/kubernetes",
+    "destination": "/resources/self_hosting/deployment/overview"
+  },
+  {
+    "source": "/sdks/javascript/quick_start",
+    "destination": "/getting_started/sdks/javascript"
+  },
+  {
+    "source": "/sdks/php/quick_start",
+    "destination": "/getting_started/sdks/php"
+  },
+  {
+    "source": "/sdks/python/quick_start",
+    "destination": "/getting_started/sdks/python"
+  },
+  {
+    "source": "/sdks/go/quick_start",
+    "destination": "/getting_started/sdks/go"
+  },
+  {
+    "source": "/sdks/dotnet/quick_start",
+    "destination": "/getting_started/sdks/dotnet"
+  },
+  {
+    "source": "/sdks/java/quick_start",
+    "destination": "/getting_started/sdks/java"
+  },
+  {
+    "source": "/sdks/dart/quick_start",
+    "destination": "/getting_started/sdks/dart"
+  },
+  {
+    "source": "/sdks/rust/quick_start",
+    "destination": "/getting_started/sdks/rust"
+  },
+  {
+    "source": "/learn/getting_started/getting_ready_for_production",
+    "destination": "/resources/self_hosting/deployment/running_production"
+  },
+  {
+    "source": "/reference/open-api",
+    "destination": "/reference/api/openapi"
+  },
+  {
+    "source": "/resources/self_hosting/getting_started/install_docker",
+    "destination": "/resources/self_hosting/getting_started/docker"
+  },
+  {
+    "source": "/learn/advanced/tokenization",
+    "destination": "/capabilities/indexing/advanced/tokenization"
+  },
+  {
+    "source": "/learn/relevancy/dynamic_search_rules",
+    "destination": "/capabilities/search_rules/overview"
+  },
+  {
+    "source": "/reference/api/chats/update-chat-workspaces",
+    "destination": "/reference/api/chats/update-settings-of-a-chat-workspace"
+  },
+  {
+    "source": "/learn/filtering_and_sorting/advanced/filter_by_exact_matches",
+    "destination": "/capabilities/filtering_sorting_faceting/advanced/filter_expression_syntax"
+  },
+  {
+    "source": "/capabilities/platform/teams/how_to/manage_team_roles",
+    "destination": "/capabilities/teams/how_to/manage_team_roles"
+  },
+  {
+    "source": "/capabilities/search",
+    "destination": "/capabilities/full_text_search/overview"
+  },
+  {
+    "source": "/learn/analytics/search_analytics",
+    "destination": "/capabilities/analytics/overview"
+  },
+  {
+    "source": "/learn/getting_started/first_project",
+    "destination": "/getting_started/first_project"
+  },
+  {
+    "source": "/learn/update_and_migration/dumps",
+    "destination": "/resources/self_hosting/data_backup/dumps"
+  },
+  {
+    "source": "/reference/api/chat",
+    "destination": "/reference/api/chats/update-settings-of-a-chat-workspace"
+  },
+  {
+    "source": "/reference/api/chat/completions",
+    "destination": "/reference/api/chats/request-a-chat-completion"
+  },
+  {
+    "source": "/learn/relevancy/phrase_search",
+    "destination": "/capabilities/full_text_search/getting_started/phrase_search"
+  },
+  {
+    "source": "/learn/self_hosted/install_docker",
+    "destination": "/resources/self_hosting/getting_started/docker"
+  },
+  {
+    "source": "/learn/self_hosted/installing_meilisearch",
+    "destination": "/resources/self_hosting/getting_started/install_locally"
+  },
+  {
+    "source": "/learn/self_hosted/getting_started",
+    "destination": "/resources/self_hosting/getting_started/quick_start"
+  },
+  {
+    "source": "/learn/self_hosting/getting_started/installation",
+    "destination": "/resources/self_hosting/getting_started/install_locally"
+  },
+  {
+    "source": "/resources/self_hosting/sharding/cluster_setup",
+    "destination": "/resources/self_hosting/sharding/setup_sharded_cluster"
+  },
+  {
+    "source": "/resources/self_hosting/sharding/sharded_cluster",
+    "destination": "/resources/self_hosting/sharding/setup_sharded_cluster"
+  },
+  {
+    "source": "/getting_started/quick_start",
+    "destination": "/getting_started/first_project"
+  },
+  {
+    "source": "/learn/administration/update",
+    "destination": "/resources/migration/updating"
+  },
+  {
+    "source": "/learn/architecture/changelog",
+    "destination": "/changelog/changelog"
+  },
+  {
+    "source": "/learn/relevancy/hybrid_search",
+    "destination": "/capabilities/hybrid_search/overview"
+  },
+  {
+    "source": "/security/sso",
+    "destination": "/capabilities/teams/how_to/configure_sso_for_team"
+  },
+  {
+    "source": "/learn/benchmarks/search",
+    "destination": "/resources/comparisons/alternatives"
+  },
+  {
+    "source": "/learn/cookbooks/elasticsearch_migration",
+    "destination": "/resources/migration/elasticsearch_migration"
+  },
+  {
+    "source": "/learn/what_is_meilisearch/comparison",
+    "destination": "/resources/comparisons/alternatives"
+  },
+  {
+    "source": "/resources/postman_collection",
+    "destination": "/getting_started/integrations/postman"
+  },
+  {
+    "source": "/references/api",
+    "destination": "/reference/api/authorization"
   }
 ]
