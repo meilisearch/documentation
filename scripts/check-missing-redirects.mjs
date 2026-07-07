@@ -330,7 +330,9 @@ async function main() {
     if (normalized.match(/\.(png|jpg|jpeg|gif|svg|webp|ico|css|js|json|xml|woff2?|ttf|eot)$/i)) continue;
 
     // Skip junk paths (broken URLs, internal framework paths, bot injections, double /docs/)
-    if (normalized.match(/\.(Version|Database|html)$/i)) continue;
+    if (normalized.match(/\.html(\.\d+)?$/i)) continue; // old .html URLs and bot variants like .html.8
+    if (normalized.match(/\.[A-Z]/)) continue; // dot followed by uppercase: mangled error-message URLs (e.g. updating.MissingVersionFile...)
+    if (normalized.match(/(^|\/)zh([-_](cn|tw|hans|hant))?(\/|$)/i)) continue; // Chinese-locale probes (/docs/zh, .../zh_cn)
     if (normalized.endsWith(".")) continue;
     if (normalized.includes("/src/_props/")) continue;
     if (normalized.startsWith("/docs/docs/")) continue;
