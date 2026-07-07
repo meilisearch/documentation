@@ -60,76 +60,107 @@ if (!FATHOM_API_KEY || !FATHOM_SITE_ID) {
 // ---------------------------------------------------------------------------
 const FATHOM_API = "https://api.usefathom.com/v1";
 
-// The Fathom API allows 10 requests per minute; retry on 429 responses,
-// honoring the Retry-After header when present
-async function fetchWithRetry(url, options, maxAttempts = 5) {
+// The Fathom API has an hourly request quota. On 429, honor short Retry-After
+// waits; if the quota is exhausted (long Retry-After), fail fast with a clear
+// message instead of stalling CI.
+const MAX_RETRY_WAIT_SECONDS = 300;
+
+async function fetchWithRetry(url, options, maxAttempts = 3) {
   for (let attempt = 1; ; attempt++) {
     const res = await fetch(url, options);
-    if (res.status !== 429 || attempt === maxAttempts) return res;
+    if (res.status !== 429 && res.status !== 503) return res;
 
     const retryAfter = parseInt(res.headers.get("retry-after"), 10);
     const waitSeconds = Number.isFinite(retryAfter) && retryAfter > 0 ? retryAfter : 60;
+
+    if (waitSeconds > MAX_RETRY_WAIT_SECONDS) {
+      throw new Error(
+        `Fathom API hourly quota exhausted (Retry-After: ${waitSeconds}s, ~${Math.ceil(waitSeconds / 60)} min). ` +
+          `Re-run this job later.`
+      );
+    }
+    if (attempt === maxAttempts) return res;
+
     console.log(`  Rate limited by Fathom, retrying in ${waitSeconds}s (attempt ${attempt}/${maxAttempts})...`);
     await new Promise((resolve) => setTimeout(resolve, waitSeconds * 1000));
   }
+}
+
+async function fetchAggregationWindow(dateFrom, dateTo, limit) {
+  const params = new URLSearchParams({
+    entity: "pageview",
+    entity_id: FATHOM_SITE_ID,
+    aggregates: "pageviews",
+    field_grouping: "pathname",
+    sort_by: "pageviews:desc",
+    date_from: dateFrom,
+    date_to: dateTo,
+    timezone: "UTC",
+    limit: String(limit),
+  });
+
+  const filters = JSON.stringify([
+    { property: "pathname", operator: "is like", value: "/docs/*" },
+  ]);
+  params.set("filters", filters);
+
+  const res = await fetchWithRetry(`${FATHOM_API}/aggregations?${params}`, {
+    headers: {
+      Authorization: `Bearer ${FATHOM_API_KEY}`,
+      Accept: "application/json",
+    },
+  });
+
+  if (!res.ok) {
+    const body = await res.text();
+    throw new Error(`Fathom API error ${res.status}: ${body}`);
+  }
+
+  const result = await res.json();
+
+  if (!Array.isArray(result)) {
+    throw new Error(`Unexpected Fathom response format: ${JSON.stringify(result).slice(0, 200)}`);
+  }
+
+  return result;
 }
 
 async function fetchDocsPaths() {
   const now = new Date();
   const ninetyDaysAgo = new Date(now.getTime() - 90 * 24 * 60 * 60 * 1000);
 
-  const dateFrom = ninetyDaysAgo.toISOString().slice(0, 19).replace("T", " ");
-  const dateTo = now.toISOString().slice(0, 19).replace("T", " ");
-
   console.log("Fetching page view data from Fathom Analytics (last 90 days)...");
 
-  // The Fathom API caps `limit` at 1000, so paginate with `offset`
+  // The aggregations endpoint caps `limit` at 1000 and has no offset-based
+  // pagination, so a single request can't return every unique pathname.
+  // Instead, query one week at a time: each window returns its top 1000
+  // paths by pageviews, and weekly windows are small enough that this
+  // captures effectively all paths with meaningful traffic.
+  const WINDOW_DAYS = 7;
   const PAGE_SIZE = 1000;
+  const toTimestamp = (d) => d.toISOString().slice(0, 19).replace("T", " ");
+
   const paths = new Map();
-  let offset = 0;
+  let truncatedWindows = 0;
 
-  while (true) {
-    const params = new URLSearchParams({
-      entity: "pageview",
-      entity_id: FATHOM_SITE_ID,
-      aggregates: "pageviews",
-      field_grouping: "pathname",
-      sort_by: "pageviews:desc",
-      date_from: dateFrom,
-      date_to: dateTo,
-      timezone: "UTC",
-      limit: String(PAGE_SIZE),
-      offset: String(offset),
-    });
+  for (let start = ninetyDaysAgo; start < now; ) {
+    const end = new Date(Math.min(start.getTime() + WINDOW_DAYS * 24 * 60 * 60 * 1000, now.getTime()));
+    const result = await fetchAggregationWindow(toTimestamp(start), toTimestamp(end), PAGE_SIZE);
 
-    const filters = JSON.stringify([
-      { property: "pathname", operator: "is like", value: "/docs/*" },
-    ]);
-    params.set("filters", filters);
-
-    const res = await fetchWithRetry(`${FATHOM_API}/aggregations?${params}`, {
-      headers: { Authorization: `Bearer ${FATHOM_API_KEY}` },
-    });
-
-    if (!res.ok) {
-      const body = await res.text();
-      throw new Error(`Fathom API error ${res.status}: ${body}`);
-    }
-
-    const result = await res.json();
-
-    if (!Array.isArray(result)) {
-      throw new Error(`Unexpected Fathom response format: ${JSON.stringify(result).slice(0, 200)}`);
-    }
-
-    // Return ALL paths (no min filter) so we can check redirects too
     for (const row of result) {
       const views = parseInt(row.pageviews, 10) || 0;
-      paths.set(row.pathname, views);
+      paths.set(row.pathname, (paths.get(row.pathname) || 0) + views);
     }
 
-    if (result.length < PAGE_SIZE) break;
-    offset += PAGE_SIZE;
+    if (result.length >= PAGE_SIZE) truncatedWindows++;
+    start = end;
+  }
+
+  if (truncatedWindows > 0) {
+    console.log(
+      `  Warning: ${truncatedWindows} weekly window(s) hit the ${PAGE_SIZE}-row API limit; ` +
+        `paths in the very low-traffic tail of those weeks may be missing.`
+    );
   }
 
   console.log(`Fetched ${paths.size} unique paths from Fathom\n`);
