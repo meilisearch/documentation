@@ -1,10 +1,12 @@
 ---
-title: Meilisearch vs PostgreSQL full-text search
+title: Meilisearch vs PostgreSQL search
 sidebarTitle: PostgreSQL
-description: Compare Meilisearch with PostgreSQL's built-in full-text search. Learn when a dedicated search engine outperforms database search.
+description: Compare Meilisearch with PostgreSQL's built-in full-text search and the pgvector extension. Learn when a dedicated search engine outperforms database search.
 ---
 
-PostgreSQL includes built-in full-text search capabilities through its `tsvector` and `tsquery` data types. While convenient for simple use cases, PostgreSQL's search falls short compared to dedicated search engines for user-facing applications.
+PostgreSQL includes built-in full-text search capabilities through its `tsvector` and `tsquery` data types, and the [pgvector](https://github.com/pgvector/pgvector) extension adds vector similarity search. While convenient for simple use cases, PostgreSQL's search falls short compared to dedicated search engines for user-facing applications.
+
+This page compares Meilisearch with both approaches: PostgreSQL full-text search first, then [vector and hybrid search with pgvector](#vector-and-hybrid-search-pgvector).
 
 ## Quick comparison
 
@@ -66,6 +68,72 @@ Full-text search queries on large PostgreSQL datasets compete for resources with
 
 PostgreSQL's `ts_rank` only supports attribute weighting. Meilisearch offers configurable ranking rules for typo count, word proximity, exact matches, and custom business logic.
 
+## Vector and hybrid search: pgvector
+
+The pgvector extension adds a `vector` data type, distance operators, and optional approximate nearest neighbor (ANN) indexes to PostgreSQL. It is a storage and query layer, not a search engine: everything that turns raw vectors into a search experience (embedding generation, hybrid fusion, relevancy scoring, filtered vector search) is left for your application to build. Meilisearch ships all of it out of the box.
+
+|  | Meilisearch | pgvector |
+|---|:---:|:---:|
+| **Embedding generation** | Built-in embedders (OpenAI, Cohere, Mistral, and more) | Application code |
+| **Hybrid search** | Single query, fused inside the engine | Two queries, fused manually |
+| **Score fusion** | Absolute relevancy scores (0 to 1) | Rank-based (RRF) |
+| **Search type** | ANN (HNSW-based, via Hannoy) | Exact KNN by default, optional ANN (HNSW, IVFFlat) |
+| **Filtered vector search** | Native, integrated with the index | Post-filtering on ANN indexes, recall can drop |
+| **Quantization** | Binary quantization | `halfvec`, binary, sparse |
+| **Dimension limits** | No documented limit | 2,000 (`vector`), 4,000 (`halfvec`), 64,000 (binary) |
+
+### Embedding pipeline: built-in vs do-it-yourself
+
+pgvector stores and queries vectors, but it never calls an embedding provider. Generating vectors is entirely your application's responsibility: calling the model API, batching, retries, API key management, and dimension mapping all happen in your code before insertion, and again at query time to embed the user's search terms. This is a permanent piece of infrastructure you have to build, monitor, and maintain.
+
+With Meilisearch, you configure an [embedder declaratively](/capabilities/hybrid_search/how_to/choose_an_embedder): OpenAI, Cohere, Mistral, Voyage, Jina, Hugging Face, Amazon Bedrock, Gemini, or any REST API. Meilisearch calls the model automatically at indexing time and at query time. There is no embedding pipeline to build, and switching models is a settings change, not a code rewrite.
+
+### Hybrid search: one query vs two
+
+With pgvector, hybrid search is not a single query. You run a full-text query and an ANN query separately, then merge the two result lists yourself, either in application code or with SQL CTEs, typically using Reciprocal Rank Fusion (RRF) or a cross-encoder. That fusion logic is search-engine internals you now own, test, and tune.
+
+In Meilisearch, [hybrid search](/capabilities/hybrid_search/overview) is a single query with a `hybrid: { semanticRatio, embedder }` parameter. The fusion of keyword and semantic results happens inside the engine, and one slider controls the balance between the two.
+
+### Score fusion: RRF vs relevancy scores
+
+pgvector's documentation recommends RRF to merge full-text and vector results. RRF combines documents based on their **rank** in each list, not their actual relevance. It assumes the top semantic result is as relevant as the top full-text result, which breaks down whenever one of the two methods performs poorly on a given query.
+
+Meilisearch computes an **absolute relevancy score** between 0 and 1 for every document, comparable across both search methods. It also applies a correction for the typical compression of embedding similarity scores, which often cluster between 0.5 and 0.7 even for unrelated content. A weak semantic match cannot outrank a strong keyword match purely by position: documents win on actual relevance, not on rank arithmetic.
+
+### Exact vs approximate search
+
+pgvector performs exact nearest neighbor search (brute-force KNN) by default. Recall is perfect, but every query scans every vector, so latency grows linearly with your dataset. To make vector search fast at scale, you opt into an ANN index and take on its decisions yourself: HNSW or IVFFlat, index build parameters, and per-query tuning like `ef_search`.
+
+Meilisearch made that choice for you. Vector search runs on [Hannoy](/resources/internals/hannoy), a purpose-built HNSW-based, disk-backed vector store tuned for fast user-facing search at scale, with no index type to pick and no per-query knobs to tune. If your use case genuinely requires 100% recall on every query, pgvector's exact mode covers it; for search experiences, where consistent sub-50ms responses matter more than the last percentile of recall, ANN is the standard and Meilisearch delivers it without the tuning burden.
+
+### Filtering combined with vector search
+
+With a pgvector ANN index, `WHERE` clauses apply **after** the index scan. This is one of the most common production surprises with pgvector: a selective filter silently degrades results. Filtering down to 10% of rows with the default `ef_search` of 40 returns only about 4 results on average, and fixing it means enabling iterative scanning or tuning index parameters query by query.
+
+Meilisearch [filtering](/capabilities/filtering_sorting_faceting/overview) is native to the engine and integrated with vector search. Hannoy adapts its search strategy based on how many documents match the filter relative to the total, switching to linear scanning when the candidate set is small. Selective filters return full result sets with no hidden recall loss and nothing to tune.
+
+### Quantization and dimension limits
+
+pgvector offers several storage formats: `halfvec` (16-bit floats), binary vectors, and sparse vectors. Each is a schema-level decision you make per column, and changing your mind means migrating the column and rebuilding indexes.
+
+Meilisearch offers [binary quantization](/capabilities/hybrid_search/advanced/binary_quantization) as a single index setting. It is particularly effective for high-dimensional models (above roughly 1,500 to 3,000 dimensions), where the impact on recall is minimal compared to the gains in disk usage and indexing speed.
+
+Dimension limits follow the same pattern. pgvector documents hard ceilings: 2,000 dimensions for full-precision `vector`, 4,000 for `halfvec`, and 64,000 for binary vectors. Modern high-dimensional embedding models can bump into the full-precision ceiling, forcing you into a different column type. Meilisearch documents no dimension limit, and vectors above 3,000 dimensions run in production today, with binary quantization as the standard recommendation as dimensions grow.
+
+### Incremental index updates
+
+pgvector's own documentation notes that `VACUUM` on an HNSW index can be slow and recommends reindexing before vacuuming. On a catalog that changes frequently, that is a recurring maintenance cost to schedule and monitor.
+
+Hannoy was designed specifically to keep incremental updates cheap: it merges new vectors into the existing graph and re-indexes less than 1% of existing vectors on a typical insertion. Frequently updated datasets are a first-class scenario for Meilisearch, not a maintenance chore.
+
+## When pgvector might be enough
+
+Consider pgvector if:
+
+- You need exact nearest neighbor search with guaranteed recall on every query
+- You have already built and maintain an embedding pipeline, and vector search is an internal feature rather than a user-facing experience
+- You want vectors to live next to your relational data with transactional guarantees, and search quality is not the priority
+
 ## When PostgreSQL FTS might be enough
 
 Consider PostgreSQL full-text search if:
@@ -82,6 +150,7 @@ Ready to upgrade from PostgreSQL full-text search:
 
 - [Migrating from PostgreSQL](/resources/migration/postgresql_migration) - Step-by-step data export and import guide with query and settings comparison
 - [Quick start guide](/getting_started/first_project) - Set up Meilisearch in minutes
+- [Hybrid search getting started](/capabilities/hybrid_search/getting_started) - Replace your pgvector setup with semantic and hybrid search in a few settings
 - [Indexing documents](/resources/internals/documents) - Import your data
 
 <Note>
