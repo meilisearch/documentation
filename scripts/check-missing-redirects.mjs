@@ -60,6 +60,20 @@ if (!FATHOM_API_KEY || !FATHOM_SITE_ID) {
 // ---------------------------------------------------------------------------
 const FATHOM_API = "https://api.usefathom.com/v1";
 
+// The Fathom API allows 10 requests per minute; retry on 429 responses,
+// honoring the Retry-After header when present
+async function fetchWithRetry(url, options, maxAttempts = 5) {
+  for (let attempt = 1; ; attempt++) {
+    const res = await fetch(url, options);
+    if (res.status !== 429 || attempt === maxAttempts) return res;
+
+    const retryAfter = parseInt(res.headers.get("retry-after"), 10);
+    const waitSeconds = Number.isFinite(retryAfter) && retryAfter > 0 ? retryAfter : 60;
+    console.log(`  Rate limited by Fathom, retrying in ${waitSeconds}s (attempt ${attempt}/${maxAttempts})...`);
+    await new Promise((resolve) => setTimeout(resolve, waitSeconds * 1000));
+  }
+}
+
 async function fetchDocsPaths() {
   const now = new Date();
   const ninetyDaysAgo = new Date(now.getTime() - 90 * 24 * 60 * 60 * 1000);
@@ -93,7 +107,7 @@ async function fetchDocsPaths() {
     ]);
     params.set("filters", filters);
 
-    const res = await fetch(`${FATHOM_API}/aggregations?${params}`, {
+    const res = await fetchWithRetry(`${FATHOM_API}/aggregations?${params}`, {
       headers: { Authorization: `Bearer ${FATHOM_API_KEY}` },
     });
 
