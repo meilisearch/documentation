@@ -4610,5 +4610,9 @@
   {
     "source": "/references/api",
     "destination": "/reference/api/authorization"
+  },
+  {
+    "source": "/instant-search-react-app",
+    "destination": "/getting_started/instant_meilisearch/react"
   }
 ]
