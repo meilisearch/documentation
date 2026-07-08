@@ -116,11 +116,4 @@ client.index("movies").addDocuments(documents: documents) { (result) in
     }
 }
 ```
-
-```dart Dart
-// import 'dart:io';
-// import 'dart:convert';
-final json = await File('movies.json').readAsString();
-await client.index('movies').addDocumentsJson(json);
-```
 </CodeGroup>

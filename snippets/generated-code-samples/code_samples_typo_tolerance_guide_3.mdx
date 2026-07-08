@@ -70,11 +70,4 @@ let task: TaskInfo = client
   .await
   .unwrap();
 ```
-
-```dart Dart
-final toUpdate = TypoTolerance(
-  disableOnWords: ['shrek'],
-);
-await client.index('movies').updateTypoTolerance(toUpdate);
-```
 </CodeGroup>

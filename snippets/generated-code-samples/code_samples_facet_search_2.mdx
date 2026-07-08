@@ -75,14 +75,4 @@ let res = client.index("books")
   .await
   .unwrap();
 ```
-
-```dart Dart
-await client.index('books').updateFaceting(
-      Faceting(
-        sortFacetValuesBy: {
-          'genres': FacetingSortTypes.count,
-        },
-      ),
-    );
-```
 </CodeGroup>

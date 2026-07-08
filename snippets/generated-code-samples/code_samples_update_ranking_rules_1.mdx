@@ -152,17 +152,4 @@ client.index("movies").updateRankingRules(rankingRules) { (result) in
     }
 }
 ```
-
-```dart Dart
-await client.index('movies').updateRankingRules([
-  'words',
-  'typo',
-  'proximity',
-  'attribute',
-  'sort',
-  'exactness',
-  'release_date:asc',
-  'rank:desc',
-]);
-```
 </CodeGroup>

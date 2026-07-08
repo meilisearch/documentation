@@ -63,13 +63,4 @@ let res = client.index("books")
   .await
   .unwrap();
 ```
-
-```dart Dart
-await client.index('books').facetSearch(
-      FacetSearchQuery(
-        facetQuery: 'c',
-        facetName: 'genres',
-      ),
-    );
-```
 </CodeGroup>

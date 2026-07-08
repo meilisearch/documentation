@@ -73,16 +73,4 @@ client.index("movie_ratings").search(searchParameters) { (result: Result<Searcha
     }
 }
 ```
-
-```dart Dart
-await client.index('movie_ratings').search(
-      'Avengers',
-      SearchQuery(
-        filterExpression: Meili.gt(
-          Meili.attr('release_date'),
-          DateTime.utc(1995, 3, 18).toMeiliValue(),
-        ),
-      ),
-    );
-```
 </CodeGroup>

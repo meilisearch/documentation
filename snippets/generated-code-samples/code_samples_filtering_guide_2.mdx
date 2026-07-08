@@ -75,22 +75,4 @@ client.index("movie_ratings").search(searchParameters) { (result: Result<Searcha
     }
 }
 ```
-
-```dart Dart
-await client.index('movie_ratings').search(
-      'Batman',
-      SearchQuery(
-        filterExpression: Meili.and([
-          Meili.attr('release_date')
-              .gt(DateTime.utc(1995, 3, 18).toMeiliValue()),
-          Meili.or([
-            'director'.toMeiliAttribute().eq('Tim Burton'.toMeiliValue()),
-            'director'
-                .toMeiliAttribute()
-                .eq('Christopher Nolan'.toMeiliValue()),
-          ]),
-        ]),
-      ),
-    );
-```
 </CodeGroup>

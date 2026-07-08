@@ -86,14 +86,4 @@ client.getTasks(params: TasksQuery(indexUids: "movies", types: ["documentAdditio
   }
 }
 ```
-
-```dart Dart
-await client.getTasks(
-  params: TasksQuery(
-    indexUids: ['movies'],
-    types: ['documentAdditionOrUpdate', 'documentDeletion'],
-    statuses: ['processing'],
-  ),
-);
-```
 </CodeGroup>

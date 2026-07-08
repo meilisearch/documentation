@@ -48,15 +48,4 @@ let task = DocumentDeletionQuery::new(&index)
   .await
   .unwrap();
 ```
-
-```dart Dart
-await client.index('movies').deleteDocuments(
-      DeleteDocumentsQuery(
-        filterExpression: Meili.or([
-          Meili.attr('genres').eq(Meili.value('action')),
-          Meili.attr('genres').eq(Meili.value('adventure')),
-        ]),
-      ),
-    );
-```
 </CodeGroup>

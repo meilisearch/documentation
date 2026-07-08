@@ -68,16 +68,4 @@ client.index("restaurants").search(searchParameters) { (result: Result<Searchabl
     }
 }
 ```
-
-```dart Dart
-await client.index('restaurants').search(
-      '',
-      SearchQuery(
-        filterExpression: Meili.geoRadius(
-          (lat: 45.472735, lng: 9.184019),
-          2000,
-        ),
-      ),
-    );
-```
 </CodeGroup>

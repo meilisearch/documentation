@@ -73,10 +73,4 @@ client.index("books").search(searchParameters) { (result: Result<Searchable<Mete
     }
 }
 ```
-
-```dart Dart
-await client
-    .index('movie_ratings')
-    .search('thriller', SearchQuery(sort: ['rating.users:asc']));
-```
 </CodeGroup>

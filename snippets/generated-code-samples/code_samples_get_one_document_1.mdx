@@ -61,9 +61,4 @@ client.index("movies").getDocument(25684) { (result: Result<Movie, Swift.Error>)
     }
 }
 ```
-
-```dart Dart
-await client.index('movies').getDocument(25684,
-    fields: ['id', 'title', 'poster', 'release_date']);
-```
 </CodeGroup>

@@ -76,10 +76,4 @@ client.index("books").search(searchParameters) { (result: Result<Searchable<Book
   }
 }
 ```
-
-```dart Dart
-await client
-    .index('books')
-    .search('science fiction', SearchQuery(sort: ['price:asc']));
-```
 </CodeGroup>

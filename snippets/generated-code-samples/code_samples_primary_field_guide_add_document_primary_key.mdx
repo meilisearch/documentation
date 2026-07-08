@@ -150,16 +150,4 @@ client.index("books").addDocuments(documents: documents, primaryKey: "reference_
     }
 }
 ```
-
-```dart Dart
-await client.index('movies').addDocuments([
-  {
-    'reference_number': 287947,
-    'title': 'Diary of a Wimpy Kid',
-    'author': 'Jeff Kinney',
-    'genres': ['comedy', 'humor'],
-    'price': 5.00
-  }
-], primaryKey: 'reference_number');
-```
 </CodeGroup>

@@ -58,12 +58,4 @@ client.getTasks(params: TasksQuery(statuses: [.failed, .canceled])) { result in
   }
 }
 ```
-
-```dart Dart
-await client.getTasks(
-  params: TasksQuery(
-    statuses: ['failed', 'canceled'],
-  ),
-);
-```
 </CodeGroup>

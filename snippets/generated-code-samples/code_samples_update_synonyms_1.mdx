@@ -103,12 +103,4 @@ client.index("movies").updateSynonyms(synonyms) { (result) in
     }
 }
 ```
-
-```dart Dart
-await client.index('movies').updateSynonyms({
-  'wolverine': ['xmen', 'logan'],
-  'logan': ['wolverine', 'xmen'],
-  'wow': ['world of warcraft'],
-});
-```
 </CodeGroup>
