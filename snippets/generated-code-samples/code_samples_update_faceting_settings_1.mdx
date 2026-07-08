@@ -99,4 +99,13 @@ let task: TaskInfo = client
   .await
   .unwrap();
 ```
+
+```dart Dart
+await client.index('books').updateFaceting(Faceting(
+        maxValuesPerFacet: 2,
+        sortFacetValuesBy: {
+          '*': FacetingSortTypes.alpha,
+          'genres': FacetingSortTypes.count
+        }));
+```
 </CodeGroup>

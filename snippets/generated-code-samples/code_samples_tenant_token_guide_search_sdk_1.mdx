@@ -60,4 +60,9 @@ client.index("patient_medical_records")
     }
 }
 ```
+
+```dart Dart
+final frontEndClient = MeiliSearchClient('MEILISEARCH_URL', token);
+await frontEndClient.index('patient_medical_records').search('blood test');
+```
 </CodeGroup>

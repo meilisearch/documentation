@@ -74,4 +74,19 @@ client.index("movie_ratings").search(searchParameters) { (result: Result<Searcha
     }
 }
 ```
+
+```dart Dart
+await client.index('movie_ratings').search(
+      'Planet of the Apes',
+      SearchQuery(
+        filterExpression: Meili.and([
+          Meili.attr('release_date')
+              .gt(DateTime.utc(2020, 1, 1, 13, 15, 50).toMeiliValue()),
+          Meili.not(
+            Meili.attr('director').eq("Tim Burton".toMeiliValue()),
+          ),
+        ]),
+      ),
+    );
+```
 </CodeGroup>

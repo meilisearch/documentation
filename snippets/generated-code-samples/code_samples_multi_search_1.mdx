@@ -156,4 +156,12 @@ let response = client
     .await
     .unwrap();
 ```
+
+```dart Dart
+await client.multiSearch(MultiSearchQuery(queries: [
+  IndexSearchQuery(query: 'pooh', indexUid: 'movies', limit: 5),
+  IndexSearchQuery(query: 'nemo', indexUid: 'movies', limit: 5),
+  IndexSearchQuery(query: 'us', indexUid: 'movies_ratings'),
+]));
+```
 </CodeGroup>

@@ -62,4 +62,9 @@ let task: TaskInfo = client
   .await
   .unwrap();
 ```
+
+```dart Dart
+final toUpdate = TypoTolerance(enabled: false);
+await client.index('movies').updateTypoTolerance(toUpdate);
+```
 </CodeGroup>

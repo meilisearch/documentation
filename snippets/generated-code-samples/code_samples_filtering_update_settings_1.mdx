@@ -75,4 +75,11 @@ client.index("movies").updateFilterableAttributes(["genre", "director"]) { (resu
     }
 }
 ```
+
+```dart Dart
+await client.index('movies').updateFilterableAttributes([
+  'director',
+  'genres',
+]);
+```
 </CodeGroup>

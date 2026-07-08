@@ -74,4 +74,8 @@ client.index("books").updateSortableAttributes(["price", "author"]) { (result: R
   }
 }
 ```
+
+```dart Dart
+await client.index('books').updateSortableAttributes(['author', 'price']);
+```
 </CodeGroup>

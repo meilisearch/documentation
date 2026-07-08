@@ -74,4 +74,22 @@ client.index("games").search(searchParameters) { (result: Result<Searchable<Game
   }
 }
 ```
+
+```dart Dart
+await client.index('games').search(
+      '',
+      SearchQuery(
+        filterExpression: Meili.and([
+          Meili.gte(
+            'release_timestamp'.toMeiliAttribute(),
+            Meili.value(DateTime(2017, 12, 31, 23, 0)),
+          ),
+          Meili.lt(
+            'release_timestamp'.toMeiliAttribute(),
+            Meili.value(DateTime(2022, 12, 31, 23, 0)),
+          ),
+        ]),
+      ),
+    );
+```
 </CodeGroup>

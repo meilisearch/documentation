@@ -99,4 +99,14 @@ let task: TaskInfo = client
   .await
   .unwrap();
 ```
+
+```dart Dart
+final toUpdate = TypoTolerance(
+  minWordSizeForTypos: MinWordSizeForTypos(
+    oneTypo: 4,
+    twoTypos: 10,
+  ),
+);
+await client.index('movies').updateTypoTolerance(toUpdate);
+```
 </CodeGroup>

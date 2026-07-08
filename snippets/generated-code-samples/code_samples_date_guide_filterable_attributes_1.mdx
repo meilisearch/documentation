@@ -60,4 +60,10 @@ client.index("games").updateFilterableAttributes(["release_timestamp"]) { (resul
   }
 }
 ```
+
+```dart Dart
+await client
+    .index('games')
+    .updateFilterableAttributes(['release_timestamp']);
+```
 </CodeGroup>

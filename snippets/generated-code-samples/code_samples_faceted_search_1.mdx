@@ -72,4 +72,10 @@ let results: SearchResults<Book> = SearchQuery::new(&books)
   .await
   .unwrap();
 ```
+
+```dart Dart
+await client
+    .index('books')
+    .search('', SearchQuery(facets: ['genres', 'rating', 'language']));
+```
 </CodeGroup>

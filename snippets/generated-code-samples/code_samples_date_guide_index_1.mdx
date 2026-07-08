@@ -94,4 +94,11 @@ client.index("games").addDocuments(documents: documents) { (result) in
   }
 }
 ```
+
+```dart Dart
+//import 'dart:io';
+//import 'dart:convert';
+final json = await File('games.json').readAsString();
+await client.index('games').addDocumentsJson(json);
+```
 </CodeGroup>

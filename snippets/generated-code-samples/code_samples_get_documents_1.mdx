@@ -66,4 +66,13 @@ client.index("movies").getDocuments(params: DocumentsQuery(limit: 2)) { (result:
     }
 }
 ```
+
+```dart Dart
+await client.index('movies').getDocuments(
+      params: DocumentsQuery(
+        limit: 2,
+        filter: Meili.attr('genres').eq('action'.toMeiliValue()),
+      ),
+    );
+```
 </CodeGroup>

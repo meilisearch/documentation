@@ -61,4 +61,10 @@ client.index("games").updateSortableAttributes(["release_timestamp"]) { (result)
   }
 }
 ```
+
+```dart Dart
+await client
+    .index('games')
+    .updateSortableAttributes(['release_timestamp']);
+```
 </CodeGroup>

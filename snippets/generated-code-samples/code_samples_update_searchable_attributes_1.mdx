@@ -90,4 +90,10 @@ client.index("movies").updateSearchableAttributes(searchableAttributes) { (resul
     }
 }
 ```
+
+```dart Dart
+await client
+    .index('movies')
+    .updateSearchableAttributes(['title', 'overview', 'genres']);
+```
 </CodeGroup>

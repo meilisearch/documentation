@@ -75,4 +75,9 @@ client.index("restaurants").search(searchParameters) { (result: Result<Searchabl
     }
   }
 ```
+
+```dart Dart
+await client.index('restaurants').search(
+    '', SearchQuery(sort: ['_geoPoint(48.8561446, 2.2978204):asc']));
+```
 </CodeGroup>

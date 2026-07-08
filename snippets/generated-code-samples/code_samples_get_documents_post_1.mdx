@@ -81,4 +81,23 @@ let documents: DocumentsResults = DocumentsQuery::new(&index)
   .await
   .unwrap();
 ```
+
+```dart Dart
+await client.index('movies').getDocuments(
+      params: DocumentsQuery(
+        filterExpression: Meili.and([
+          'language'.toMeiliAttribute().eq('English'.toMeiliValue()),
+          Meili.and([
+            'rating'.toMeiliAttribute().gt(3.toMeiliValue()),
+            Meili.or([
+              'genres'.toMeiliAttribute().eq('Adventure'.toMeiliValue()),
+              'genres'.toMeiliAttribute().eq('Fiction'.toMeiliValue()),
+            ]),
+          ]),
+        ]),
+        fields: ['title', 'genres', 'rating', 'language'],
+        limit: 3,
+      ),
+    );
+```
 </CodeGroup>

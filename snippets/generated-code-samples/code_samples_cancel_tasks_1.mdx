@@ -53,4 +53,8 @@ client.cancelTasks(filter: CancelTasksQuery(uids: [1, 2])) { (result) in
     }
 }
 ```
+
+```dart Dart
+await client.cancelTasks(params: CancelTasksQuery(uids: [1, 2]));
+```
 </CodeGroup>

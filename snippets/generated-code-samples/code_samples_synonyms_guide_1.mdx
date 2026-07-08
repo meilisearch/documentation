@@ -89,4 +89,11 @@ client.index("movies").updateSynonyms(synonyms) { (result) in
   }
 }
 ```
+
+```dart Dart
+await client.index('movies').updateSynonyms({
+  'great': ['fantastic'],
+  'fantastic': ['great'],
+});
+```
 </CodeGroup>

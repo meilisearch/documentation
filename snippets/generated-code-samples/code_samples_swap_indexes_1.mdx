@@ -80,4 +80,11 @@ let task = try await self.client.swapIndexes([
   ("indexX", "indexY")
 ])
 ```
+
+```dart Dart
+await client.swapIndexes([
+  SwapIndex(['indexA', 'indexB']),
+  SwapIndex(['indexX', 'indexY']),
+]);
+```
 </CodeGroup>

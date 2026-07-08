@@ -57,4 +57,10 @@ let task: TaskInfo = client
   .await
   .unwrap();
 ```
+
+```dart Dart
+await client
+    .index('books')
+    .updatePagination(Pagination(maxTotalHits: 100));
+```
 </CodeGroup>

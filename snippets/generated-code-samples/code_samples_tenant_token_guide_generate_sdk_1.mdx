@@ -127,4 +127,22 @@ client.generateTenantToken(
   }
 }
 ```
+
+```dart Dart
+final uid = '85c3c2f9-bdd6-41f1-abd8-11fcf80e0f76';
+final apiKey = 'B5KdX2MY2jV6EXfUs6scSfmC...';
+final expiresAt = DateTime.utc(2025, 12, 20);
+final searchRules = {
+  'patient_medical_records': {
+    'filter': 'user_id = 1'
+  }
+};
+
+final token = client.generateTenantToken(
+  uid,
+  searchRules,
+  apiKey: apiKey, // optional
+  expiresAt: expiresAt // optional
+);
+```
 </CodeGroup>

@@ -75,4 +75,18 @@ client.index("movie_ratings").search(searchParameters) { (result: Result<Searcha
     }
 }
 ```
+
+```dart Dart
+await client.index('movie_ratings').search(
+      'thriller',
+      SearchQuery(
+        filterExpression: Meili.gte(
+          //or Meili.attr('rating.users')
+          //or 'rating.users'.toMeiliAttribute()
+          Meili.attrFromParts(['rating', 'users']),
+          Meili.value(90),
+        ),
+      ),
+    );
+```
 </CodeGroup>
