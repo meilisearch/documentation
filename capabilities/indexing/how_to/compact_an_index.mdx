@@ -76,6 +76,12 @@ curl \
 
 Compaction requires temporary disk space roughly equal to the size of the index being compacted. Ensure your machine has sufficient free space before starting. If the disk fills up during compaction, the task fails and the index remains in its pre-compaction state.
 
+## How long compaction takes
+
+Compaction time depends on how fragmented the index is, not only on its size. Compaction works by relocating the index's data on disk into a compact, well-ordered layout. The more documents you add, update, or delete between compactions, the more the data drifts out of order, and the longer the next compaction takes to reorganize it.
+
+Because of this, compacting an index again shortly after a previous compaction is much faster, close to simply copying the index file, because its data is already well ordered on disk. If a first compaction on a large, heavily fragmented index takes a long time, expect later compactions on a regular schedule to be considerably cheaper.
+
 ## Search availability during compaction
 
 Compaction does not block search. Your index remains fully searchable while the operation runs. New [indexing](/capabilities/indexing/overview) tasks will be queued and processed after compaction completes.
