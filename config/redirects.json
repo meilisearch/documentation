@@ -4614,5 +4614,9 @@
   {
     "source": "/instant-search-react-app",
     "destination": "/getting_started/instant_meilisearch/react"
+  },
+  {
+    "source": "/reference/api/facet-search/search-in-facets",
+    "destination": "/reference/api/facet-search/search-for-facet-values"
   }
 ]
