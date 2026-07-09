@@ -144,8 +144,8 @@ Can't find a client you'd like us to support? [Submit your idea here](https://gi
 
 |   | Meilisearch | Algolia | Typesense | Elasticsearch |
 |---|:---:|:----:|:---:|:---:|
-| Semantic Search | ✅ | 🔶 <br /> Under Premium plan | ✅ | ✅ |
-| Hybrid Search | ✅ | 🔶 <br /> Under Premium plan | ✅ | ✅ |
+| Semantic Search | ✅ | 🔶 <br /> NeuralSearch, Elevate plan | ✅ | ✅ |
+| Hybrid Search | ✅ | 🔶 <br /> NeuralSearch, Elevate plan | ✅ | ✅ |
 | Embedding Generation | ✅  <br /> OpenAI <br /> HuggingFace <br /> Ollama <br /> REST embedders <br /> | Undisclosed | ✅ <br/> Built-in ONNX models <br/> OpenAI <br /> Azure OpenAI <br /> GCP Vertex AI | ✅  <br /> ELSER <br/> E5 <br/> Cohere <br/> OpenAI <br/> Azure <br/> Google AI Studio <br/> Hugging Face <br/> |
 | Prompt Templates | ✅ | Undisclosed | ❌ | ❌ |
 | Vector Store | ✅ <br /> Built-in DiskANN | Undisclosed | ✅ | ✅ |
@@ -216,11 +216,11 @@ For a more detailed analysis of how it compares with Meilisearch, refer to our [
 
 ### Meilisearch vs Algolia
 
-Meilisearch was inspired by Algolia's product and the algorithms behind it. We indeed studied most of the algorithms and data structures described in their blog posts in order to implement our own. Meilisearch is thus a new search engine based on the work of Algolia and recent research papers.
+Meilisearch and Algolia solve a similar problem: fast, relevant, typo-tolerant search for end users. Algolia focuses primarily on ecommerce, marketplaces, and retail, with a merchandising toolset built for those use cases. Meilisearch supports these as well as others, including SaaS and enterprise applications, media and content discovery, and AI-driven experiences.
 
-Meilisearch provides similar features and reaches the same level of relevance just as quickly as its competitor.
+Meilisearch is a flexible search engine, written in Rust and built on modern information retrieval research to deliver relevance and speed out of the box. It is AI-native, with hybrid semantic search, built-in vector storage, and agentic retrieval for RAG and AI applications. It is model-agnostic: embeddings and LLMs from providers such as OpenAI, Hugging Face, or Ollama connect through REST embedders and can be swapped as the ecosystem evolves.
 
-If you are a current Algolia user considering a switch to Meilisearch, you may be interested in our [migration guide](/resources/migration/algolia_migration).
+The fastest way to get started is [Meilisearch Cloud](https://www.meilisearch.com/cloud), a fully managed service with a 14-day free trial. Meilisearch is also open-source and can be self-hosted. Current Algolia users can refer to the [migration guide](/resources/migration/algolia_migration).
 
 #### Key similarities
 
@@ -235,15 +235,15 @@ Some of the most significant similarities between Algolia and Meilisearch are:
 
 #### Key differences
 
-Contrary to Algolia, Meilisearch is open-source and can be forked or self-hosted.
-
-Additionally, Meilisearch is written in Rust, a modern systems-level programming language. Rust provides speed, portability, and flexibility, which makes the deployment of our search engine inside virtual machines, containers, or even [Lambda@Edge](https://aws.amazon.com/lambda/edge/) a seamless operation.
+- Meilisearch is available as [Meilisearch Cloud](https://www.meilisearch.com/cloud), a fully managed service, and is also open-source for self-hosting. Algolia is closed-source and cloud-only.
+- Meilisearch supports a range of use cases, including ecommerce, site search, SaaS, media, and AI applications.
+- Meilisearch is AI-native, with hybrid semantic search, built-in vector storage, and agentic retrieval for RAG and AI applications.
+- Model-agnostic embeddings and LLMs: OpenAI, Hugging Face, Ollama, or any provider connect through REST embedders.
+- Written in Rust for speed, portability, and a low deployment footprint.
 
 #### Pricing
 
-The [pricing model for Algolia](https://www.algolia.com/pricing/) is based on the number of records kept and the number of API operations performed. It can be prohibitively expensive for small and medium-sized businesses.
-
-Meilisearch is an **open-source** search engine available via [Meilisearch Cloud](https://meilisearch.com/cloud?utm_campaign=oss&utm_source=docs&utm_medium=comparison) or  self-hosted. Unlike Algolia, [Meilisearch pricing](https://www.meilisearch.com/pricing?utm_campaign=oss&utm_source=docs&utm_medium=comparison) is based on the number of documents stored and the number of search operations performed. However, Meilisearch offers a more generous free tier that allows more documents to be stored as well as fairer pricing for search usage. Meilisearch also offers a Pro tier for larger use cases to allow for more predictable pricing.
+Algolia's pricing is based on the number of records stored and the number of API operations performed. Meilisearch is available through [Meilisearch Cloud](https://www.meilisearch.com/cloud), a fully managed service starting at $20/month with a 14-day free trial, offering usage-based or resource-based billing. An Enterprise plan adds dedicated infrastructure, custom SLAs, and enterprise compliance (SSO/SAML, SOC 2) for mission-critical deployments. For teams that prefer to manage their own infrastructure, Meilisearch is open-source and can be self-hosted.
 
 ## A quick look at the search engine landscape
 
@@ -317,7 +317,7 @@ We cannot, therefore, compare ourselves with Lucene-based or other search engine
 
 In the particular use case we cover, the most similar solution to Meilisearch is Algolia.
 
-While Algolia offers the most advanced and powerful search features, this efficiency comes with an expensive pricing. Moreover, their service is marketed to big companies.
+Algolia offers a mature, polished product focused on ecommerce and retail search. Meilisearch delivers comparable instant-search quality across a range of use cases, as an AI-native, model-agnostic engine available fully managed on Meilisearch Cloud or self-hosted.
 
 Meilisearch is dedicated to all types of developers. Our goal is to deliver a developer-friendly tool, easy to install, and to deploy. Because providing an out-of-the-box awesome search experience for the end-users matters to us, we want to give everyone access to the best search experiences out there with minimum effort and without requiring any financial resources.
 
