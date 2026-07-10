@@ -15,7 +15,7 @@ Check the box next to a feature to enable it. Changes take effect immediately wi
 
 ## Available features
 
-The list of available features evolves with each Meilisearch release and is not fixed. The features shown in the Cloud UI at any given time depend on your project's current Meilisearch version. In the example above, the UI shows:
+The list of available features depends on your project's current Meilisearch version. The table below is a snapshot for illustration:
 
 | Feature | Description |
 |---------|-------------|
@@ -23,6 +23,12 @@ The list of available features evolves with each Meilisearch release and is not 
 | **"CONTAINS" and "STARTS_WITH" filters** | Adds the `CONTAINS` and `STARTS_WITH` filter operators to match attributes containing a substring or starting with a prefix |
 | **Composite embedders** | Use different embedders at search time and indexing time |
 | **Multi-modal search** | Index and search through images, text, and other formats in documents |
+| **Foreign keys** | Connect indexes so Meilisearch can expand references into full documents in results, and filter using fields from a related index |
+| **Render template** | Preview how document templates and fragments render on your content |
+
+<Note>
+  This list changes over time. New features are added, and others are eventually promoted to stable and removed from the experimental list (for example, dynamic search rules). Treat this table as a snapshot rather than an exhaustive reference, and always check your project's **Project Settings > General** in the Cloud UI for the current set.
+</Note>
 
 For a complete and up-to-date list, see the [experimental features API reference](/reference/api/experimental-features/list-experimental-features) and the [changelog](/changelog).
 
