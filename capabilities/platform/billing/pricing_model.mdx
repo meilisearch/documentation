@@ -6,9 +6,19 @@ description: How Meilisearch Cloud billing works for resource-based and usage-ba
 Meilisearch Cloud bills each project independently. Resource-based projects are billed hourly (prorated), while usage-based projects follow a monthly cycle.
 ## Resource-based pricing
 
-Resource-based projects are billed at an hourly rate based on the resource tier you select (Memory and vCPU). You pay for the resources you provision, regardless of how many searches you run or documents you index.
+Resource-based projects are billed for the resources you provision, regardless of how many searches you run or documents you index. Your bill combines three components:
 
-The Cloud UI shows the hourly rate and estimated monthly cost for each tier at project creation and in the project settings. Pricing may vary slightly by region.
+| Component | How it is billed |
+|-----------|------------------|
+| **Compute (Memory and vCPU)** | Hourly rate based on the resource tier you select. The Cloud UI shows the hourly rate and estimated monthly cost for each tier at project creation and in the project settings. |
+| **Disk** | Provisioned with a 32 GB minimum, billed at $0.165 per GiB. |
+| **Bandwidth** | Billed at $0.15 per GB. |
+
+Pricing may vary slightly by region. The Cloud UI shows the exact rates for your selected region.
+
+### High Performance Disk (Enterprise)
+
+Enterprise accounts can enable High Performance Disk on L tiers and above. It provides roughly 5x the IOPS and disk bandwidth of standard disk, which improves indexing throughput and search speed for disk-bound workloads. Contact [sales@meilisearch.com](mailto:sales@meilisearch.com) to enable it.
 
 ## Usage-based pricing
 
