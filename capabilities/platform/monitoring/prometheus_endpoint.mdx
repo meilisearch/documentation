@@ -1,0 +1,179 @@
+---
+title: Prometheus endpoint
+description: Expose Meilisearch instance metrics in Prometheus format for scraping by Prometheus, Grafana, or any compatible monitoring stack.
+---
+
+Meilisearch can expose internal metrics through a `GET /metrics` endpoint in the [Prometheus text exposition format](https://prometheus.io/docs/instrumenting/exposition_formats/). You can scrape this endpoint with Prometheus, visualize it in Grafana, or feed it into any compatible monitoring stack.
+
+<Note>
+Meilisearch Cloud provides managed [monitoring dashboards](/capabilities/platform/monitoring/overview) for search performance, operations, and indexing. The Prometheus endpoint is primarily useful for self-hosted instances that integrate with an existing Prometheus and Grafana setup.
+</Note>
+
+<Warning>
+The `/metrics` endpoint is an [experimental feature](/capabilities/platform/management/experimental_features). Metric names, labels, and behavior may change between Meilisearch versions without following semantic versioning. Track its status in the [product discussion](https://github.com/meilisearch/product/discussions/625).
+</Warning>
+
+## Enabling the endpoint
+
+The endpoint is disabled by default. Enable it in one of three equivalent ways.
+
+**At launch, with a CLI flag or environment variable:**
+
+<CodeGroup>
+```sh CLI flag
+meilisearch --experimental-enable-metrics
+```
+
+```sh Environment variable
+export MEILI_EXPERIMENTAL_ENABLE_METRICS=true
+```
+</CodeGroup>
+
+**At runtime, with the experimental features API** (no restart required):
+
+```sh
+curl -X PATCH "${MEILISEARCH_URL}/experimental-features" \
+  -H 'Authorization: Bearer MASTER_KEY' \
+  -H 'Content-Type: application/json' \
+  --data '{"metrics": true}'
+```
+
+The runtime setting is persisted in the database. On startup, the effective value is the CLI flag or environment variable **OR** the persisted value. This means a flag at launch enables the endpoint even if the persisted setting is `false`, and a persisted `true` survives restarts without the flag.
+
+## Authentication
+
+If your instance has a master key configured, requests to `/metrics` must be authenticated:
+
+- Send the master key, or an API key with one of the `metrics.get`, `metrics.*`, or `*` actions, in the `Authorization` header.
+- The API key must be authorized on **all indexes** (`"indexes": ["*"]`). A key scoped to specific indexes is rejected with an `invalid_api_key` error.
+
+If no master key is configured, no authentication is required.
+
+```sh
+curl "${MEILISEARCH_URL}/metrics" \
+  -H 'Authorization: Bearer MASTER_KEY'
+```
+
+## Response format
+
+A successful request returns `200 OK` with a plain-text body (`text/plain; version=0.0.4`). Each metric is preceded by `# HELP` and `# TYPE` comment lines:
+
+```text
+# HELP meilisearch_index_docs_count Meilisearch Index Docs Count
+# TYPE meilisearch_index_docs_count gauge
+meilisearch_index_docs_count{index="movies"} 31944
+```
+
+### Errors
+
+| Situation | HTTP | Error code |
+|-----------|------|------------|
+| Feature not enabled | 400 | `feature_not_enabled` |
+| Missing `Authorization` header (when a master key is set) | 401 | `missing_authorization_header` |
+| Key lacks the `metrics.get` action or is not scoped to all indexes | 403 | `invalid_api_key` |
+
+## Metrics reference
+
+All metric names are prefixed with `meilisearch_`. Most gauges are computed at scrape time, so their resolution equals your scrape interval.
+
+### Database and index stats
+
+| Metric | Type | Labels | Description |
+|--------|------|--------|-------------|
+| `meilisearch_db_size_bytes` | gauge | None | Total size of the database on disk in bytes, including free space reclaimable by LMDB |
+| `meilisearch_used_db_size_bytes` | gauge | None | Portion of the database actually used, in bytes |
+| `meilisearch_index_count` | gauge | None | Number of indexes on the instance |
+| `meilisearch_index_docs_count` | gauge | `index` | Number of documents per index |
+| `meilisearch_last_update` | gauge | None | Unix timestamp of the last update to the instance |
+| `meilisearch_is_indexing` | gauge | None | `1` if a task is currently being processed, otherwise `0` |
+
+### Task queue
+
+| Metric | Type | Labels | Description |
+|--------|------|--------|-------------|
+| `meilisearch_nb_tasks` | gauge | `kind`, `value` | Task counts broken down by `kind="statuses"`, `kind="types"`, and `kind="indexes"` |
+| `meilisearch_task_queue_latency_seconds` | gauge | None | Age in seconds of the oldest task still enqueued or processing (`0` when the queue is empty) |
+| `meilisearch_task_queue_max_size` | gauge | None | Maximum size of the task queue database, in bytes |
+| `meilisearch_task_queue_used_size` | gauge | None | Currently used size of the task queue database, in bytes |
+| `meilisearch_task_queue_size_until_stop_registering` | gauge | None | Remaining bytes before the queue refuses new tasks |
+
+For `meilisearch_nb_tasks`, the `value` label depends on `kind`: task statuses (enqueued, processing, succeeded, failed, canceled), task types (such as `documentAdditionOrUpdate` or `settingsUpdate`), or index uids.
+
+### Batch and indexing progress
+
+These gauges are recomputed on every scrape and can legitimately be absent from the output when nothing is being processed.
+
+| Metric | Type | Labels | Description |
+|--------|------|--------|-------------|
+| `meilisearch_batch_running_progress_trace` | gauge | `batch_uid`, `step_name` | Completion ratio (0 to 1) of each step of the currently processing batch |
+| `meilisearch_last_finished_batches_progress_trace_ms` | gauge | `batch_uid`, `step_name` | Duration in ms of each step of the most recently finished batch. Step names are hierarchical, joined with `>` (for example `processing tasks > indexing`) |
+| `meilisearch_last_indexed_documents_count` | gauge | `batch_uid`, `index` | Documents indexed, edited, and deleted by the last succeeded document batch |
+| `meilisearch_last_indexed_documents_duration_ms` | gauge | `batch_uid`, `index` | Wall-clock duration in ms of that same batch |
+
+The `last_indexed_documents_*` gauges are useful for computing indexing throughput. They only stay in the output while the batch is "fresh": they disappear once more than the batch duration plus 5 minutes has elapsed. Use a scrape interval of 1 minute or less to reliably capture them.
+
+### HTTP traffic
+
+| Metric | Type | Labels | Description |
+|--------|------|--------|-------------|
+| `meilisearch_http_requests_total` | counter | `method`, `path`, `status` | Total HTTP requests. `path` is the route pattern (for example `/indexes/{index_uid}/search`), not the raw URL |
+| `meilisearch_http_response_time_seconds` | histogram | `method`, `path` | Response-time histogram, with buckets from 0.005 to 10 seconds |
+
+`meilisearch_http_requests_total` is counted for every request regardless of whether the metrics feature is enabled. `meilisearch_http_response_time_seconds` is only observed while the feature is enabled, and only for registered routes.
+
+### Search concurrency
+
+| Metric | Type | Labels | Description |
+|--------|------|--------|-------------|
+| `meilisearch_search_queue_size` | gauge | None | Capacity of the search queue (configurable via `--experimental-search-queue-size`, default 1000) |
+| `meilisearch_searches_running` | gauge | None | Number of searches currently executing |
+| `meilisearch_searches_waiting_to_be_processed` | gauge | None | Number of searches waiting in the queue |
+
+### Feature-specific metrics
+
+| Metric | Type | Labels | Description |
+|--------|------|--------|-------------|
+| `meilisearch_degraded_search_requests` | gauge | None | Number of search requests that were degraded (hit the search cutoff before completing) |
+| `meilisearch_personalized_search_requests` | gauge | None | Number of search requests that used personalization |
+| `meilisearch_chat_searches_total` | counter | `type` | Searches performed by the chat completions route |
+| `meilisearch_chat_prompt_tokens_total` | counter | `workspace`, `model` | LLM prompt tokens consumed by the chat feature |
+| `meilisearch_chat_completion_tokens_total` | counter | `workspace`, `model` | LLM completion tokens consumed |
+| `meilisearch_chat_tokens_total` | counter | `workspace`, `model` | Total tokens consumed (prompt plus completion) |
+
+## Scraping with Prometheus
+
+Add Meilisearch as a scrape target in your `prometheus.yml`. When a master key is configured, provide an API key with the `metrics.get` action on all indexes:
+
+```yaml
+scrape_configs:
+  - job_name: meilisearch
+    scrape_interval: 30s
+    static_configs:
+      - targets: ['MEILISEARCH_URL']
+    authorization:
+      type: Bearer
+      credentials: 'MEILISEARCH_API_KEY'
+```
+
+You can then build dashboards in Grafana on top of these metrics, or configure alerting rules (for example, alerting when `meilisearch_task_queue_size_until_stop_registering` approaches zero).
+
+## Caveats
+
+- **Experimental**: the endpoint, metric names, and labels may change between versions without a deprecation period.
+- **Snapshot resolution**: most gauges are computed at scrape time, so their resolution equals your scrape interval.
+- **Cardinality**: per-index labels (such as `meilisearch_index_docs_count`) grow with your number of indexes. Instances with thousands of indexes will produce large responses.
+- **Freshness window**: the batch-progress and `last_indexed_documents_*` gauges are reset on every scrape and can be absent when nothing is processing or the last batch is too old.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Monitoring overview" href="/capabilities/platform/monitoring/overview">
+    Managed monitoring dashboards on Meilisearch Cloud
+  </Card>
+  <Card title="Experimental features" href="/capabilities/platform/management/experimental_features">
+    Enable and manage experimental features
+  </Card>
+  <Card title="Configuration reference" href="/resources/self_hosting/configuration/reference">
+    All CLI options and environment variables
+  </Card>
+</CardGroup>
