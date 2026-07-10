@@ -380,7 +380,8 @@
                     "capabilities/platform/monitoring/overview",
                     "capabilities/platform/monitoring/search_performance",
                     "capabilities/platform/monitoring/indexing_performance",
-                    "capabilities/platform/monitoring/usage_metrics"
+                    "capabilities/platform/monitoring/usage_metrics",
+                    "capabilities/platform/monitoring/prometheus_endpoint"
                   ]
                 },
                 {
