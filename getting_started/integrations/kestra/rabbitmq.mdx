@@ -1,0 +1,207 @@
+---
+title: Connect RabbitMQ to Meilisearch with Kestra
+sidebarTitle: RabbitMQ
+description: Real-time indexing of a RabbitMQ (AMQP) queue into Meilisearch with Kestra.
+---
+
+If your services already talk over RabbitMQ, your data changes are already a stream of messages: product updates, inventory changes, new content. Turning that stream into a live Meilisearch index normally means writing and operating yet another consumer service. With [Kestra](https://kestra.io) it's a trigger and a couple of tasks, in declarative YAML.
+
+This guide builds it in two stages: a batch consume-and-index flow to see the pieces, then a **real-time** trigger that indexes each message as it arrives. Because a queue consumer acknowledges messages as it goes, this is incremental by construction, so there's no separate "first load versus incremental" to manage, just the stream. (This uses the AMQP 0-9-1 protocol, so it works with RabbitMQ and other AMQP brokers.)
+
+## Why orchestrate the sync
+
+A hand-written RabbitMQ to Meilisearch consumer means managing connections, acknowledgements, deserialization, batching, retries, restarts, and monitoring, a service to keep alive. Kestra collapses that into a trigger plus tasks, with acknowledgement, retries, and observability handled for you.
+
+## Prerequisites
+
+A running Kestra with three plugins (Meilisearch, AMQP, and the transform plugin for reshaping messages), plus a [Meilisearch Cloud](https://www.meilisearch.com/cloud?utm_campaign=oss&utm_source=docs&utm_medium=kestra-integration) project and a RabbitMQ broker:
+
+```yaml
+services:
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    ports: ["5672:5672", "15672:15672"]
+
+  kestra:
+    image: kestra/kestra:latest
+    command: server local
+    ports: ["8080:8080"]
+    environment:
+      # your Meilisearch Cloud Default Admin API key, base64-encoded
+      SECRET_MEILISEARCH_API_KEY: <base64 of your admin API key>
+```
+
+```dockerfile
+FROM kestra/kestra:latest
+RUN /app/kestra plugins install \
+      io.kestra.plugin:plugin-meilisearch:LATEST \
+      io.kestra.plugin:plugin-amqp:LATEST \
+      io.kestra.plugin:plugin-transform-json:LATEST
+```
+
+<Note>
+**Get your Cloud credentials.** In the [Meilisearch Cloud](https://cloud.meilisearch.com) dashboard, create a project and copy its **Project URL** (the `url` in the flows below) and its **Default Admin API Key** (Settings, then API Keys). Store the key as the `MEILISEARCH_API_KEY` Kestra secret, and keep broker credentials in secrets too.
+</Note>
+
+The events are JSON messages describing products, for example `{ "id": "prod-1", "name": "Mechanical Keyboard", "stock": 42 }`.
+
+## Understanding the shape: a batch consume-and-index flow
+
+Before wiring up real-time, here's a flow you can run on demand. It declares a queue, publishes a few test messages, consumes them, reshapes them, and indexes them:
+
+```yaml
+id: amqp_to_meilisearch
+namespace: company.search
+
+variables:
+  meilisearch_url: https://ms-xxxxxxxxxxxx-xxxx.meilisearch.io   # your Meilisearch Cloud Project URL
+  index: amqp_products
+  queue: product-updates
+
+tasks:
+  - id: create_queue
+    type: io.kestra.plugin.amqp.CreateQueue
+    host: rabbitmq
+    port: "5672"
+    username: guest
+    password: guest
+    virtualHost: /
+    name: "{{ vars.queue }}"
+    durability: true
+
+  - id: publish                # stand-in for your real upstream producer
+    type: io.kestra.plugin.amqp.Publish
+    host: rabbitmq
+    port: "5672"
+    username: guest
+    password: guest
+    virtualHost: /
+    exchange: ""               # default exchange: routingKey == queue name
+    routingKey: "{{ vars.queue }}"
+    serdeType: JSON
+    from:
+      - data: { id: prod-1, name: Mechanical Keyboard, stock: 42 }
+      - data: { id: prod-2, name: Wireless Mouse, stock: 130 }
+      - data: { id: prod-3, name: 4K Monitor, stock: 7 }
+
+  - id: consume
+    type: io.kestra.plugin.amqp.Consume
+    host: rabbitmq
+    port: "5672"
+    username: guest
+    password: guest
+    virtualHost: /
+    queue: "{{ vars.queue }}"
+    serdeType: JSON
+    maxRecords: 3
+
+  - id: extract_payload
+    type: io.kestra.plugin.transform.jsonata.TransformItems
+    from: "{{ outputs.consume.uri }}"
+    expression: data           # keep only the message payload
+
+  - id: index_documents
+    type: io.kestra.plugin.meilisearch.DocumentAdd
+    from: "{{ outputs.extract_payload.uri }}"
+    index: "{{ vars.index }}"
+    url: "{{ vars.meilisearch_url }}"
+    key: "{{ secret('MEILISEARCH_API_KEY') }}"
+```
+
+The one non-obvious step is `extract_payload`. The `Consume` task writes a full AMQP envelope per message: `data` (the body), plus `headers`, `contentType`, `messageId`, `timestamp`, and so on. You don't want all that in your search index, just the body, so a JSONata `TransformItems` with `expression: data` plucks the payload out of each record. (In this demo `create_queue` and `publish` set the stage. In production you'd delete them, since your services already produce to the queue.)
+
+## The real deal: real-time indexing
+
+Kestra's AMQP `RealtimeTrigger` holds a persistent consumer open and starts **one execution per message** the instant it's delivered. A published event is searchable in Meilisearch within seconds, with no cron and no polling.
+
+```yaml
+id: amqp_realtime_to_meilisearch
+namespace: company.search
+
+variables:
+  meilisearch_url: https://ms-xxxxxxxxxxxx-xxxx.meilisearch.io   # your Meilisearch Cloud Project URL
+  index: live_products
+
+triggers:
+  - id: on_message
+    type: io.kestra.plugin.amqp.RealtimeTrigger
+    host: rabbitmq
+    port: "5672"
+    username: guest
+    password: guest
+    virtualHost: /
+    queue: live-products
+    serdeType: JSON
+
+tasks:
+  - id: write_document
+    type: io.kestra.plugin.core.storage.Write
+    extension: .ion
+    content: "{{ trigger.data | toJson }}"
+
+  - id: index_document
+    type: io.kestra.plugin.meilisearch.DocumentAdd
+    from: "{{ outputs.write_document.uri }}"
+    index: "{{ vars.index }}"
+    url: "{{ vars.meilisearch_url }}"
+    key: "{{ secret('MEILISEARCH_API_KEY') }}"
+```
+
+Here the message body is available directly as `{{ trigger.data }}`. The flow writes it to internal storage as an ION document and indexes it. Publish a message to `live-products` and it shows up in search seconds later.
+
+Because `DocumentAdd` is add-or-replace, this is automatically an **upsert stream**: publish an updated event for `prod-1` and it overwrites the existing document by primary key, exactly right when a queue carries a changelog of your entities.
+
+## Handling deletes
+
+Represent deletions as messages and act on them. Publish an explicit delete event, for example `{ "id": "prod-1", "op": "delete" }`, and branch on it inside the per-message execution: route delete events to Meilisearch's `documents/delete-batch` endpoint and everything else to `DocumentAdd`. An `If` task reading `trigger.data` does the routing:
+
+```yaml
+triggers:
+  - id: on_message
+    type: io.kestra.plugin.amqp.RealtimeTrigger
+    host: rabbitmq
+    port: "5672"
+    username: guest
+    password: guest
+    virtualHost: /
+    queue: live-products
+    serdeType: JSON
+
+tasks:
+  - id: route
+    type: io.kestra.plugin.core.flow.If
+    condition: "{{ trigger.data.op == 'delete' }}"
+    then:
+      - id: delete_document
+        type: io.kestra.plugin.core.http.Request
+        uri: "{{ vars.meilisearch_url }}/indexes/{{ vars.index }}/documents/delete-batch"
+        method: POST
+        contentType: application/json
+        body: "[{{ trigger.data.id | toJson }}]"
+        headers:
+          Authorization: "Bearer {{ secret('MEILISEARCH_API_KEY') }}"
+    else:
+      - id: write_document
+        type: io.kestra.plugin.core.storage.Write
+        extension: .ion
+        content: "{{ trigger.data | toJson }}"
+      - id: index_document
+        type: io.kestra.plugin.meilisearch.DocumentAdd
+        from: "{{ outputs.write_document.uri }}"
+        index: "{{ vars.index }}"
+        url: "{{ vars.meilisearch_url }}"
+        key: "{{ secret('MEILISEARCH_API_KEY') }}"
+```
+
+The delete branch sends a one-element array (`["prod-1"]`) to `documents/delete-batch`. For the database-side soft-delete pattern (query recently-deleted rows, then delete-batch), see [Connect PostgreSQL to Meilisearch with Kestra](/getting_started/integrations/kestra/postgresql).
+
+## Going to production
+
+- **Drop the producer tasks.** `create_queue` and `publish` are only there to generate test data. In production your services produce to the queue and Kestra only consumes.
+- **Real-time versus batch.** The `RealtimeTrigger` gives second-scale freshness, one execution per message. For very high volume, the batch `Consume` pattern with a larger `maxRecords` on a schedule is more efficient. Choose freshness or throughput.
+- **Acknowledgement.** By default the consumer acks messages as it processes them, so a restart resumes from the queue without reprocessing. Your incrementality comes for free from the broker.
+- **Retries.** Add a `retry` block so a transient Meilisearch error re-attempts the message rather than dropping it. Pair with a dead-letter queue on the broker for poison messages.
+
+## Wrap-up
+
+Kestra turns "keep Meilisearch in sync with a RabbitMQ queue" into a trigger and a couple of tasks. The `RealtimeTrigger` gives you live indexing with acknowledgement handled for you. Add-or-replace semantics make the stream an idempotent upsert feed, and deletes are just another message type. Publish events as you already do, and Kestra keeps search live.

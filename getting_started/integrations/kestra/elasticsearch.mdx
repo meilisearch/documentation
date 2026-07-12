@@ -1,0 +1,117 @@
+---
+title: Migrate Elasticsearch to Meilisearch with Kestra
+sidebarTitle: Elasticsearch
+description: Migrate an existing Elasticsearch index into Meilisearch with a safe, re-runnable Kestra workflow.
+---
+
+You're running Elasticsearch for search, and it's become more than you need: a JVM cluster to babysit, relevance tuning that fights you, and a bill that grows with every shard. Meilisearch gives you instant, typo-tolerant, relevance-ranked search out of the box, and moving to it doesn't have to be a risky big-bang rewrite.
+
+This guide shows a clean migration from an existing Elasticsearch index to Meilisearch using [Kestra](https://kestra.io): a one-flow backfill of your whole index, plus a safe cutover strategy that lets you run both engines in parallel until you're confident.
+
+## Why do the migration in Kestra
+
+You could write a script that scrolls Elasticsearch and pushes to Meilisearch, until it dies halfway through a ten-million-document index with no way to resume and no record of what transferred. Kestra makes the migration an observable, retryable workflow: the extract streams to disk, indexing batches and waits for completion, and every run is logged. You can re-run it safely as many times as you need during cutover.
+
+## Prerequisites
+
+A running Kestra with the Meilisearch and Elasticsearch plugins, plus a [Meilisearch Cloud](https://www.meilisearch.com/cloud?utm_campaign=oss&utm_source=docs&utm_medium=kestra-integration) project. Only Kestra runs locally, since Meilisearch is managed:
+
+```yaml
+services:
+  kestra:
+    image: kestra/kestra:latest
+    command: server local
+    ports: ["8080:8080"]
+    environment:
+      # your Meilisearch Cloud Default Admin API key, base64-encoded
+      SECRET_MEILISEARCH_API_KEY: <base64 of your admin API key>
+```
+
+```dockerfile
+FROM kestra/kestra:latest
+RUN /app/kestra plugins install \
+      io.kestra.plugin:plugin-meilisearch:LATEST \
+      io.kestra.plugin:plugin-elasticsearch:LATEST
+```
+
+<Note>
+**Get your Cloud credentials.** In the [Meilisearch Cloud](https://cloud.meilisearch.com) dashboard, create a project and copy its **Project URL** (the `url` in the flows below) and its **Default Admin API Key** (Settings, then API Keys). Store the key as the `MEILISEARCH_API_KEY` Kestra secret.
+</Note>
+
+This guide migrates a `movies` index whose documents look like `{ "id": 1, "title": "Inception", "year": 2010, "genre": "sci-fi" }`.
+
+## Step 1: Backfill the whole index
+
+The Elasticsearch plugin's `Scroll` task walks an entire index using the scroll API and writes every document to an ION file in Kestra's internal storage, exactly the format the Meilisearch `DocumentAdd` task consumes. Two tasks move your whole index:
+
+```yaml
+id: elasticsearch_to_meilisearch
+namespace: company.search
+
+variables:
+  meilisearch_url: https://ms-xxxxxxxxxxxx-xxxx.meilisearch.io   # your Meilisearch Cloud Project URL
+  index: movies
+
+tasks:
+  - id: scroll
+    type: io.kestra.plugin.elasticsearch.Scroll
+    connection:
+      hosts:
+        - http://elasticsearch:9200
+      # for Elastic Cloud, add basicAuth:
+      #   basicAuth:
+      #     username: elastic
+      #     password: "{{ secret('ES_PASSWORD') }}"
+    indexes:
+      - movies
+    request:
+      query:
+        match_all: {}
+
+  - id: index_documents
+    type: io.kestra.plugin.meilisearch.DocumentAdd
+    from: "{{ outputs.scroll.uri }}"
+    index: "{{ vars.index }}"
+    url: "{{ vars.meilisearch_url }}"
+    key: "{{ secret('MEILISEARCH_API_KEY') }}"
+```
+
+`Scroll` streams the result set to disk rather than holding it in memory, so this scales from five documents to fifty million without changing anything. `DocumentAdd` then batches the documents (1000 per request by default) and waits for Meilisearch to finish indexing, failing the run if any batch fails, so a partial migration surfaces loudly instead of silently.
+
+Meilisearch uses each document's `id` field as its primary key. If your Elasticsearch documents keep their identifier only in `_id` (not inside `_source`), add a JSONata `TransformItems` step to copy it into a real field before indexing.
+
+Run the flow once and your entire index is searchable in Meilisearch.
+
+## Step 2: Cut over safely
+
+The value of doing this in a workflow is a gradual migration rather than a leap. A safe cutover looks like:
+
+1. **Backfill** into Meilisearch with the flow above.
+2. **Dual-run.** Point a copy of your search UI (or a feature-flagged path) at Meilisearch while production still serves from Elasticsearch. Compare relevance and latency on real queries.
+3. **Keep Meilisearch fresh during the overlap.** Re-run the backfill on a schedule, or narrow it to recent changes if your documents carry an `updated_at` field. Swap the `match_all` for a range query so each run only scrolls what changed:
+
+   ```yaml
+       request:
+         query:
+           range:
+             updated_at:
+               gte: "now-15m"
+   ```
+
+   Because `DocumentAdd` is add-or-replace, re-indexing the same document just overwrites it by primary key, so overlapping runs are always safe.
+4. **Flip the switch.** Once you trust the results, point production at Meilisearch and decommission the Elasticsearch cluster.
+
+## A note on deletes
+
+For a one-time migration, deletes don't matter, since you're taking a snapshot. If you dual-run for a while and documents get deleted in Elasticsearch during the overlap, the cleanest way to reconcile is to index each fresh backfill into a **new** Meilisearch index and then repoint an alias at it, so anything absent from the latest scroll simply disappears. Kestra can run that index-then-swap as a two-step flow.
+
+## Going to production
+
+- **Elastic Cloud / secured clusters:** add `basicAuth` (or an API key header) to the `connection`, with the password pulled from a Kestra secret. Set `trustAllSsl: true` only for self-signed dev clusters.
+- **Reshape while you migrate.** A migration is a good moment to clean up your schema. Use a JSONata `TransformItems` step between `scroll` and `index_documents` to rename fields, flatten nesting, or drop what search doesn't need.
+- **Configure Meilisearch settings first.** Define your searchable, filterable, and sortable attributes on the target index (an `http.Request` to the settings API) before the backfill, so the first indexing pass already ranks well.
+- **Retries.** Add a `retry` block to the tasks so a transient cluster hiccup during a long scroll is retried rather than failing the whole migration.
+
+## Wrap-up
+
+Migrating off Elasticsearch is two tasks (`Scroll` to export, `DocumentAdd` to index) wrapped in a workflow you can re-run safely while you dual-run and build confidence. Kestra handles the streaming, batching, and observability, so you get a gradual, reversible path from Elasticsearch to Meilisearch instead of a big-bang rewrite.

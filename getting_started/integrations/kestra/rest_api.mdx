@@ -1,0 +1,163 @@
+---
+title: Connect a REST API to Meilisearch with Kestra
+sidebarTitle: REST API
+description: Backfill and incrementally sync a REST API into Meilisearch with Kestra.
+---
+
+Not all of your data lives in a database you control. Plenty of it sits behind someone else's REST API: a SaaS product catalog, a CMS, a CRM, a public data feed. You still want it searchable in Meilisearch, and you still want it to stay current. This guide wires an arbitrary REST API to Meilisearch with [Kestra](https://kestra.io), covering both the first load and keeping it in sync.
+
+Because "a REST API" is not one thing, the incremental strategy depends on what the API offers. This guide covers the two cases you'll actually meet: APIs that support "give me what changed since X", and APIs that don't.
+
+## Why orchestrate the sync
+
+Pulling from an API on a schedule, handling pagination, converting the payload, indexing it, and tracking what you've already seen is exactly the kind of multi-step, stateful, must-not-silently-die job orchestration exists for. Kestra gives you the HTTP client, the format converters, a schedule, a KV store for watermarks, retries, and logging, all declaratively.
+
+## Prerequisites
+
+A running Kestra with the Meilisearch and serdes plugins (the HTTP client is built into Kestra core), plus a [Meilisearch Cloud](https://www.meilisearch.com/cloud?utm_campaign=oss&utm_source=docs&utm_medium=kestra-integration) project. Only Kestra runs locally, since Meilisearch is managed:
+
+```yaml
+services:
+  kestra:
+    image: kestra/kestra:latest
+    command: server local
+    ports: ["8080:8080"]
+    environment:
+      # your Meilisearch Cloud Default Admin API key, base64-encoded
+      SECRET_MEILISEARCH_API_KEY: <base64 of your admin API key>
+```
+
+```dockerfile
+FROM kestra/kestra:latest
+RUN /app/kestra plugins install \
+      io.kestra.plugin:plugin-meilisearch:LATEST \
+      io.kestra.plugin:plugin-serdes:LATEST
+```
+
+<Note>
+**Get your Cloud credentials.** In the [Meilisearch Cloud](https://cloud.meilisearch.com) dashboard, create a project and copy its **Project URL** (the `url` in the flows below) and its **Default Admin API Key** (Settings, then API Keys). Keep that key and any upstream API tokens in Kestra secrets, referenced as `{{ secret('NAME') }}`.
+</Note>
+
+## Step 1: The first load (backfill)
+
+The pipeline is three steps: download the JSON from the API, convert it to Kestra's ION format, index it. Here's the pattern against a public API:
+
+```yaml
+id: api_to_meilisearch
+namespace: company.search
+
+variables:
+  meilisearch_url: https://ms-xxxxxxxxxxxx-xxxx.meilisearch.io   # your Meilisearch Cloud Project URL
+  index: pokemon
+
+tasks:
+  - id: http_download
+    type: io.kestra.plugin.core.http.Download
+    uri: https://pokeapi.co/api/v2/pokemon/jigglypuff
+
+  - id: to_ion
+    type: io.kestra.plugin.serdes.json.JsonToIon
+    from: "{{ outputs.http_download.uri }}"
+
+  - id: add_documents
+    type: io.kestra.plugin.meilisearch.DocumentAdd
+    from: "{{ outputs.to_ion.uri }}"
+    index: "{{ vars.index }}"
+    url: "{{ vars.meilisearch_url }}"
+    key: "{{ secret('MEILISEARCH_API_KEY') }}"
+```
+
+`http.Download` fetches the response into internal storage, `JsonToIon` converts it, and `DocumentAdd` indexes it. If the API needs authentication, add headers:
+
+```yaml
+  - id: http_download
+    type: io.kestra.plugin.core.http.Download
+    uri: https://api.example.com/v1/products
+    headers:
+      Authorization: "Bearer {{ secret('API_TOKEN') }}"
+```
+
+**Shaping the response.** APIs rarely hand back a flat array of clean documents. When the records are nested under a key, or need renaming/flattening for Meilisearch, drop in a JSONata transform between conversion and indexing:
+
+```yaml
+  - id: reshape
+    type: io.kestra.plugin.transform.jsonata.TransformItems
+    from: "{{ outputs.to_ion.uri }}"
+    expression: 'results.{ "id": id, "name": name, "category": type }'
+```
+
+(That needs the `plugin-transform-json` plugin.) Make sure each document has a field Meilisearch can use as a primary key.
+
+**Pagination.** For APIs that page, wrap the download in a loop that walks pages until the response is empty, appending each page's documents. Kestra's `ForEach`/`EachSequential` tasks or a paginating HTTP pattern handle this; index each page as you go so memory stays flat.
+
+## Step 2: Incremental sync
+
+This is where REST APIs differ from databases: you can't run a `WHERE updated_at > X` query unless the API gives you one. Two cases.
+
+### Case A: the API supports "changed since"
+
+Many well-designed APIs accept a filter like `?updated_since=` or `?modified_after=`. When yours does, incremental sync is clean: on each run, ask only for what changed since the last successful run. Kestra exposes the previous execution's scheduled time, and its KV store can persist a precise watermark.
+
+Using the schedule's own trigger date as the lower bound:
+
+```yaml
+id: api_incremental_sync
+namespace: company.search
+
+variables:
+  meilisearch_url: https://ms-xxxxxxxxxxxx-xxxx.meilisearch.io   # your Meilisearch Cloud Project URL
+  index: products
+
+triggers:
+  - id: schedule
+    type: io.kestra.plugin.core.trigger.Schedule
+    cron: "*/15 * * * *"
+    recoverMissedSchedules: NONE
+
+tasks:
+  - id: http_download
+    type: io.kestra.plugin.core.http.Download
+    # request only records changed since this run's scheduled time
+    uri: "https://api.example.com/v1/products?updated_since={{ trigger.date | date(\"yyyy-MM-dd'T'HH:mm:ss'Z'\", timeZone='UTC') }}"
+    headers:
+      Authorization: "Bearer {{ secret('API_TOKEN') }}"
+
+  - id: to_ion
+    type: io.kestra.plugin.serdes.json.JsonToIon
+    from: "{{ outputs.http_download.uri }}"
+
+  - id: upsert_documents
+    type: io.kestra.plugin.meilisearch.DocumentAdd
+    from: "{{ outputs.to_ion.uri }}"
+    index: "{{ vars.index }}"
+    url: "{{ vars.meilisearch_url }}"
+    key: "{{ secret('MEILISEARCH_API_KEY') }}"
+```
+
+For a precise, gap-free watermark (rather than the schedule time), read a stored timestamp at the start of the run with `io.kestra.plugin.core.kv.Get`, use it in the query, and write the new high-water mark with `io.kestra.plugin.core.kv.Set` after a successful index. Overlap is safe regardless: `DocumentAdd` is add-or-replace, so re-fetching a few already-seen records just overwrites them by primary key.
+
+### Case B: the API has no change filter
+
+When the API can only return the full collection, you have two honest options:
+
+1. **Periodic full re-index.** Just run the Step 1 backfill on a schedule. It's the simplest thing that works, and because upserts are idempotent it's completely safe: every run reconciles the index to the current API state. Fine for small-to-medium collections.
+
+2. **Diff against a fresh index plus alias swap.** Index each full pull into a new index, then atomically point a Meilisearch alias at it. This also handles deletes for free (anything no longer returned by the API simply isn't in the new index), at the cost of re-indexing everything each time.
+
+## Handling deletes
+
+Deletes are the hard part with REST sources, because most APIs don't tell you what was removed: a record just stops appearing.
+
+- If the API exposes deletions (a `deleted` flag, a `/deletions` endpoint, or a status field), fetch those ids and call Meilisearch's `documents/delete-batch` endpoint with an `http.Request` task. The exact pattern is in [Connect PostgreSQL to Meilisearch with Kestra](/getting_started/integrations/kestra/postgresql).
+- If it doesn't, use the **fresh-index-plus-alias-swap** approach from Case B. It's the only reliable way to drop records the API no longer returns.
+
+## Going to production
+
+- **Rate limits.** Add a `retry` block with backoff so `429` responses are retried politely; space out pagination requests if the API is strict.
+- **Watermark durability.** Prefer the KV-store watermark over the schedule date when you need exactly-once semantics. It survives missed runs and backfills correctly after downtime.
+- **Auth refresh.** If the API uses short-lived tokens, add a first task that fetches a fresh token (another `http.Request`) and pass it downstream.
+- **Choose the interval by freshness need.** A 15-minute schedule is a sensible default; tighten or loosen it to match how fast the source changes and the API's rate limits.
+
+## Wrap-up
+
+Any REST API can feed Meilisearch through the same download, convert, index pipeline. For the initial load it's three tasks; for incremental sync, lean on the API's "changed since" filter when it has one, and fall back to a scheduled full re-index (with an alias swap for deletes) when it doesn't. Kestra supplies the HTTP client, converters, scheduling, watermark storage, and retries, so keeping search in sync with a third-party API becomes a short, observable YAML flow.
