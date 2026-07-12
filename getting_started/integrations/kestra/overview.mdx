@@ -12,7 +12,7 @@ A cron job calling a custom script works right up until it doesn't: a network bl
 
 ## How the pipelines work
 
-Every guide in this series follows the same arc: a one-shot **backfill** for the initial load, then an **incremental sync** that keeps Meilisearch current as data is inserted, updated, and deleted. Three ideas recur throughout:
+Most guides in this series follow the same arc: a one-shot **backfill** for the initial load, then an **incremental sync** that keeps Meilisearch current as data is inserted, updated, and deleted. The Elasticsearch and OpenSearch guides are migrations, pairing the backfill with a safe parallel-run cutover. Three ideas recur throughout:
 
 - **ION is the handoff format.** Every Kestra extractor writes [ION](https://amazon-ion.github.io/ion-docs/) to internal storage, and the Meilisearch `DocumentAdd` task reads exactly that. The pipelines are just "extract, convert, index" with no glue code.
 - **Upserts are idempotent.** `DocumentAdd` is add-or-replace, so overlapping sync windows and accidental re-runs are always safe.
@@ -41,5 +41,17 @@ Each guide targets a [Meilisearch Cloud](https://www.meilisearch.com/cloud?utm_c
   </Card>
   <Card title="REST API" icon="cloud" href="/getting_started/integrations/kestra/rest_api">
     HTTP API. A `?updated_since` filter with a KV watermark, or a scheduled full re-index.
+  </Card>
+  <Card title="Elasticsearch" icon="magnifying-glass" href="/getting_started/integrations/kestra/elasticsearch">
+    Search engine migration. Scroll the whole index, then cut over with a parallel run.
+  </Card>
+  <Card title="OpenSearch" icon="binoculars" href="/getting_started/integrations/kestra/opensearch">
+    Search engine migration. Scroll the whole index, then cut over with a parallel run.
+  </Card>
+  <Card title="RabbitMQ" icon="rabbit" href="/getting_started/integrations/kestra/rabbitmq">
+    AMQP queue. Real-time trigger, one execution per message, delete events routed to delete-batch.
+  </Card>
+  <Card title="Shopify" icon="cart-shopping" href="/getting_started/integrations/kestra/shopify">
+    E-commerce platform. Native `updatedAtMin` incremental sync, webhooks for real-time and deletes.
   </Card>
 </CardGroup>

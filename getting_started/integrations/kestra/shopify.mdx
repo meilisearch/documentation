@@ -1,0 +1,149 @@
+---
+title: Connect Shopify to Meilisearch with Kestra
+sidebarTitle: Shopify
+description: Backfill and incrementally sync a Shopify product catalog into Meilisearch with Kestra.
+---
+
+Shopify runs your store, but its built-in product search isn't what your customers deserve, with no real typo tolerance, limited relevance control, and no easy way to power a custom storefront or a headless frontend. Meilisearch does exactly that. The job is to get your catalog into Meilisearch and keep it there as products change.
+
+This guide connects Shopify to Meilisearch with [Kestra](https://kestra.io): a one-flow backfill of your catalog, then a scheduled incremental sync that keeps the index current as products are added, updated, and removed, using the Shopify plugin's native "updated since" support.
+
+## Why orchestrate the sync
+
+Your catalog changes constantly: prices, stock, new products, seasonal retirements. A search index that drifts from the catalog erodes trust fast. Kestra makes the sync an observable, scheduled, retryable workflow, and handles Shopify's pagination and rate limits for you so you're not hand-rolling a resilient API client.
+
+## Prerequisites
+
+A running Kestra with the Meilisearch and Shopify plugins, plus a [Meilisearch Cloud](https://www.meilisearch.com/cloud?utm_campaign=oss&utm_source=docs&utm_medium=kestra-integration) project and a Shopify **Admin API access token** (create a custom app in your Shopify admin under API credentials, and grant it `read_products`). You'll need your store domain (`your-store.myshopify.com`) and the token (`shpat_…`).
+
+```yaml
+services:
+  kestra:
+    image: kestra/kestra:latest
+    command: server local
+    ports: ["8080:8080"]
+    environment:
+      # base64-encoded secrets
+      SECRET_MEILISEARCH_API_KEY: <base64 of your Meilisearch admin API key>
+      SECRET_SHOPIFY_ACCESS_TOKEN: <base64 of your shpat_… token>
+```
+
+```dockerfile
+FROM kestra/kestra:latest
+RUN /app/kestra plugins install \
+      io.kestra.plugin:plugin-meilisearch:LATEST \
+      io.kestra.plugin:plugin-shopify:LATEST
+```
+
+<Note>
+**Get your Cloud credentials.** In the [Meilisearch Cloud](https://cloud.meilisearch.com) dashboard, create a project and copy its **Project URL** (the `url` in the flows below) and its **Default Admin API Key** (Settings, then API Keys). Keep both the Meilisearch key and the Shopify token in Kestra secrets.
+</Note>
+
+<Warning>
+**A note on validation.** The other guides in this series were validated end-to-end against live services. This one is built against the Shopify plugin's actual task schema but not run against a real store. Treat the store domain, token, and API version as the values you'll substitute.
+</Warning>
+
+## Step 1: Backfill the catalog
+
+The Shopify plugin's `products.List` task fetches your products and, with `fetchType: STORE`, writes them to an ION file in internal storage, the format `DocumentAdd` consumes. It paginates and respects Shopify's rate limits for you.
+
+```yaml
+id: shopify_to_meilisearch
+namespace: company.search
+
+variables:
+  meilisearch_url: https://ms-xxxxxxxxxxxx-xxxx.meilisearch.io   # your Meilisearch Cloud Project URL
+  index: products
+
+tasks:
+  - id: extract
+    type: io.kestra.plugin.shopify.products.List
+    storeDomain: your-store.myshopify.com
+    accessToken: "{{ secret('SHOPIFY_ACCESS_TOKEN') }}"
+    apiVersion: "2024-10"
+    status: ACTIVE
+    fetchType: STORE
+
+  - id: index_documents
+    type: io.kestra.plugin.meilisearch.DocumentAdd
+    from: "{{ outputs.extract.uri }}"
+    index: "{{ vars.index }}"
+    url: "{{ vars.meilisearch_url }}"
+    key: "{{ secret('MEILISEARCH_API_KEY') }}"
+```
+
+Shopify products are rich objects (variants, images, options, tags). Meilisearch will happily index them and use the numeric product `id` as the primary key, but you'll usually want to trim them to what search needs. Drop a JSONata `TransformItems` step between extract and index to shape clean documents:
+
+```yaml
+  - id: reshape
+    type: io.kestra.plugin.transform.jsonata.TransformItems
+    from: "{{ outputs.extract.uri }}"
+    expression: |
+      {
+        "id": id,
+        "title": title,
+        "vendor": vendor,
+        "product_type": product_type,
+        "tags": tags,
+        "price": variants[0].price,
+        "image": image.src
+      }
+```
+
+Run it once and your catalog is searchable.
+
+## Step 2: Incremental sync (the real use case)
+
+Re-pulling the whole catalog every few minutes is wasteful and will bump into rate limits. Shopify's API supports "give me what changed since X" natively, and the plugin exposes it as `updatedAtMin`, so incremental sync is clean. On a schedule, ask only for products updated since the run's scheduled time:
+
+```yaml
+id: shopify_incremental_sync
+namespace: company.search
+
+variables:
+  meilisearch_url: https://ms-xxxxxxxxxxxx-xxxx.meilisearch.io   # your Meilisearch Cloud Project URL
+  index: products
+
+triggers:
+  - id: schedule
+    type: io.kestra.plugin.core.trigger.Schedule
+    cron: "*/15 * * * *"
+    recoverMissedSchedules: NONE
+
+tasks:
+  - id: extract
+    type: io.kestra.plugin.shopify.products.List
+    storeDomain: your-store.myshopify.com
+    accessToken: "{{ secret('SHOPIFY_ACCESS_TOKEN') }}"
+    apiVersion: "2024-10"
+    # only products changed since this run's scheduled time
+    updatedAtMin: "{{ trigger.date | date(\"yyyy-MM-dd'T'HH:mm:ss'Z'\", timeZone='UTC') }}"
+    fetchType: STORE
+
+  - id: upsert_documents
+    type: io.kestra.plugin.meilisearch.DocumentAdd
+    from: "{{ outputs.extract.uri }}"
+    index: "{{ vars.index }}"
+    url: "{{ vars.meilisearch_url }}"
+    key: "{{ secret('MEILISEARCH_API_KEY') }}"
+```
+
+Overlap is safe: `DocumentAdd` is add-or-replace, so a product returned in two consecutive windows is just overwritten by its `id`. For a precise, gap-free watermark, store the last-synced timestamp in Kestra's KV store (`io.kestra.plugin.core.kv.Get` / `Set`) and pass it to `updatedAtMin` instead of the schedule time.
+
+## Handling deletes
+
+Deletes are the gap in any poll-based approach: a deleted or unpublished product simply stops appearing in `products.List`, so polling can't see it go. Two options:
+
+- **Filter on publication and reconcile.** Sync only `status: ACTIVE` / published products, and periodically re-index a full pull into a **new** Meilisearch index, then repoint an alias, so anything no longer active drops out.
+- **Use Shopify webhooks (best for real-time).** Configure a `products/delete` (and `products/update`) webhook in Shopify pointing at a Kestra [webhook trigger](https://kestra.io). The delete event carries the product id. Route it to Meilisearch's `documents/delete-batch` endpoint via an `http.Request` task (the delete pattern is shown in full in [Connect PostgreSQL to Meilisearch with Kestra](/getting_started/integrations/kestra/postgresql)). Webhooks also give you near-instant updates without polling.
+
+## Going to production
+
+- **Rate limits** are handled by the plugin's `rateLimitDelay`, but keep the schedule sensible (every 15 minutes is a good default) and prefer webhooks for freshness.
+- **Sync more than products.** The plugin also lists orders and customers, so index those into separate Meilisearch indexes if you want to search them (for example, an internal order-lookup tool).
+- **Configure Meilisearch settings first.** Set searchable attributes (title, vendor, tags), filterable attributes (product_type, price), and sortable attributes before the backfill so results rank well from the first pass.
+- **Backfill once, then sync.** Seed with the Step 1 flow, then let the schedule (or webhooks) take over. Idempotent upserts make a re-run harmless.
+
+## Wrap-up
+
+Shopify to Meilisearch is a backfill flow plus a scheduled incremental sync that leans on Shopify's native `updatedAtMin` filter, with webhooks as the upgrade path for real-time updates and deletes. Kestra handles pagination, rate limits, scheduling, and retries, so a custom, typo-tolerant storefront search stays in step with your catalog.

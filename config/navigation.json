@@ -66,7 +66,11 @@
                     "getting_started/integrations/kestra/mongodb",
                     "getting_started/integrations/kestra/amazon_s3",
                     "getting_started/integrations/kestra/kafka",
-                    "getting_started/integrations/kestra/rest_api"
+                    "getting_started/integrations/kestra/rest_api",
+                    "getting_started/integrations/kestra/elasticsearch",
+                    "getting_started/integrations/kestra/opensearch",
+                    "getting_started/integrations/kestra/rabbitmq",
+                    "getting_started/integrations/kestra/shopify"
                   ]
                 }
               ]
