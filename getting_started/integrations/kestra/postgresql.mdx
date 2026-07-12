@@ -4,9 +4,9 @@ sidebarTitle: PostgreSQL
 description: Backfill and incrementally sync a PostgreSQL table into Meilisearch with Kestra.
 ---
 
-Your product catalog, your users, your articles: the source of truth lives in PostgreSQL. But Postgres was never meant to power a typo-tolerant, instant search box. Meilisearch is. The question every team eventually hits is not "how do I get my rows into Meilisearch once?" but "how do I keep them in sync forever?"
+Your product catalog, your users, your articles: the source of truth lives in PostgreSQL. But Postgres was never meant to power a typo-tolerant, instant search box. Meilisearch is. The question every team eventually hits is not "how do rows get into Meilisearch once?" but "how do they stay in sync forever?"
 
-This guide answers both. We start with a one-shot backfill, then turn it into a scheduled incremental sync that keeps Meilisearch current as rows are inserted, updated, and deleted, all in declarative YAML, orchestrated by [Kestra](https://kestra.io), with no glue code to babysit.
+This guide answers both. It starts with a one-shot backfill, then turns it into a scheduled incremental sync that keeps Meilisearch current as rows are inserted, updated, and deleted, all in declarative YAML, orchestrated by [Kestra](https://kestra.io), with no glue code to babysit.
 
 ## Why orchestrate the sync instead of scripting it
 
@@ -52,7 +52,7 @@ CREATE TABLE products (
 );
 ```
 
-## Step 1: the first load (backfill)
+## Step 1: The first load (backfill)
 
 The whole pipeline is three ideas: query Postgres, hand the result to Meilisearch, done. The glue that makes it effortless is Kestra's internal storage format, ION. The JDBC plugin writes query results as an ION file, and the Meilisearch `DocumentAdd` task reads exactly that format. No serialization code in between.
 
@@ -85,7 +85,7 @@ The key detail is `fetchType: STORE`. It streams the result set to an ION file r
 
 Run it once and your entire table is searchable. Meilisearch uses your table's `id` as the document primary key automatically.
 
-## Step 2: incremental sync (the real use case)
+## Step 2: Incremental sync (the real use case)
 
 A full re-index every few minutes is wasteful and eventually too slow. The production pattern is to sync only what changed since the last run. That needs one thing from your schema: a way to know when a row last changed.
 
@@ -108,7 +108,7 @@ CREATE TRIGGER products_touch_updated_at
     FOR EACH ROW EXECUTE FUNCTION touch_updated_at();
 ```
 
-Note the `deleted_at` column too: we handle deletions with **soft deletes**, for a reason explained below.
+Note the `deleted_at` column too: deletions are handled with **soft deletes**, for a reason explained below.
 
 Now the sync flow. It runs on a schedule and, on each run, selects only rows touched inside a lookback window:
 

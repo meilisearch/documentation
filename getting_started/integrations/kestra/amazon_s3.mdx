@@ -6,7 +6,7 @@ description: Backfill and event-driven sync of Amazon S3 objects into Meilisearc
 
 A huge amount of the world's data arrives as files in object storage: nightly exports, partner data drops, analytics dumps, catalog CSVs. Amazon S3 (and every S3-compatible store, such as MinIO, Cloudflare R2, or Google Cloud Storage in interop mode) is where they land. Meilisearch is where you want them searchable. This guide connects the two with [Kestra](https://kestra.io).
 
-We cover both halves of the real problem: a one-shot load of an existing object, and then an **event-driven** pipeline where dropping a new file into a bucket makes its contents searchable within seconds, with no manual step and no polling script you have to maintain.
+This guide covers both halves of the real problem: a one-shot load of an existing object, and then an **event-driven** pipeline where dropping a new file into a bucket makes its contents searchable within seconds. No manual step or polling script required.
 
 ## Why orchestrate the sync
 
@@ -36,14 +36,14 @@ RUN /app/kestra plugins install \
 ```
 
 <Note>
-**Get your Cloud credentials.** In the [Meilisearch Cloud](https://cloud.meilisearch.com) dashboard, create a project and copy its **Project URL** (the `url` in the flows below) and its **Default Admin API Key** (Settings, then API Keys). Store both AWS and Meilisearch credentials as Kestra secrets. This guide shows an S3-compatible endpoint (MinIO) with inline keys for clarity; for real AWS S3, drop `endpointOverride` / `compatibilityMode` / `forcePathStyle` and supply `accessKeyId` / `secretKeyId` (or an IAM role) via secrets.
+**Get your Cloud credentials.** In the [Meilisearch Cloud](https://cloud.meilisearch.com) dashboard, create a project and copy its **Project URL** (the `url` in the flows below) and its **Default Admin API Key** (Settings, then API Keys). Store both AWS and Meilisearch credentials as Kestra secrets. This guide shows an S3-compatible endpoint (MinIO) with inline keys for clarity. For real AWS S3, drop `endpointOverride` / `compatibilityMode` / `forcePathStyle` and supply `accessKeyId` / `secretKeyId` (or an IAM role) via secrets.
 </Note>
 
-We'll index a `games.csv` file with columns `id,title,platform,genre,rating`.
+The examples index a `games.csv` file with columns `id,title,platform,genre,rating`.
 
-## Step 1: the first load (backfill)
+## Step 1: The first load (backfill)
 
-Three steps: download the object, convert CSV to Kestra's ION format, index it. The serdes plugin bridges the format gap: `DocumentAdd` speaks ION, and `CsvToIon` produces exactly that.
+Three steps: download the object, convert CSV to Kestra's ION format, and index it. The serdes plugin bridges the format gap: `DocumentAdd` speaks ION, and `CsvToIon` produces exactly that.
 
 ```yaml
 id: s3_csv_to_meilisearch
@@ -85,7 +85,7 @@ Swap `CsvToIon` for `JsonToIon` or `AvroToIon` if your files arrive in those for
 
 One thing to know about CSV: `CsvToIon` emits every column as a **string** (`"rating":"96"`). If you want to filter or sort numerically in Meilisearch, either cast the values in a transform step, or configure the attribute accordingly and rely on Meilisearch's numeric handling.
 
-## Step 2: event-driven sync (files as they arrive)
+## Step 2: Event-driven sync (files as they arrive)
 
 The backfill indexes a file you name explicitly. The real workflow is: a new file lands in the bucket and gets indexed on its own. Kestra's S3 `Trigger` polls a prefix and starts an execution whenever new objects appear, and it can move or delete each object after it's handed off, giving you **exactly-once** processing.
 
@@ -141,8 +141,8 @@ Deletes are the one case files don't express well: a file that simply stops appe
 
 ## Going to production
 
-- **Real AWS S3:** remove `endpointOverride`, `compatibilityMode`, and `forcePathStyle`; authenticate with an IAM role or with `accessKeyId` / `secretKeyId` pulled from Kestra secrets.
-- **Large files:** `CsvToIon` and `DocumentAdd` stream through internal storage and batch automatically, so multi-gigabyte files work without tuning; raise `DocumentAdd`'s `batchSize` if you want fewer, larger indexing tasks.
+- **Real AWS S3:** remove `endpointOverride`, `compatibilityMode`, and `forcePathStyle`. Authenticate with an IAM role or with `accessKeyId` / `secretKeyId` pulled from Kestra secrets.
+- **Large files:** `CsvToIon` and `DocumentAdd` stream through internal storage and batch automatically, so multi-gigabyte files work without tuning. Raise `DocumentAdd`'s `batchSize` if you want fewer, larger indexing tasks.
 - **Multiple files at once:** the trigger surfaces every matched object in `{{ trigger.objects }}`. Loop over them with an `EachSequential`/`ForEach` task if a poll can pick up more than one file.
 - **Retries:** add a `retry` block so a transient S3 or Meilisearch hiccup self-heals rather than failing the execution.
 

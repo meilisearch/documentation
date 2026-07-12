@@ -6,7 +6,7 @@ description: Backfill and incrementally sync a REST API into Meilisearch with Ke
 
 Not all of your data lives in a database you control. Plenty of it sits behind someone else's REST API: a SaaS product catalog, a CMS, a CRM, a public data feed. You still want it searchable in Meilisearch, and you still want it to stay current. This guide wires an arbitrary REST API to Meilisearch with [Kestra](https://kestra.io), covering both the first load and keeping it in sync.
 
-Because "a REST API" is not one thing, the incremental strategy depends on what the API offers. We'll cover the two cases you'll actually meet: APIs that support "give me what changed since X", and APIs that don't.
+Because "a REST API" is not one thing, the incremental strategy depends on what the API offers. This guide covers the two cases you'll actually meet: APIs that support "give me what changed since X", and APIs that don't.
 
 ## Why orchestrate the sync
 
@@ -38,7 +38,7 @@ RUN /app/kestra plugins install \
 **Get your Cloud credentials.** In the [Meilisearch Cloud](https://cloud.meilisearch.com) dashboard, create a project and copy its **Project URL** (the `url` in the flows below) and its **Default Admin API Key** (Settings, then API Keys). Keep that key and any upstream API tokens in Kestra secrets, referenced as `{{ secret('NAME') }}`.
 </Note>
 
-## Step 1: the first load (backfill)
+## Step 1: The first load (backfill)
 
 The pipeline is three steps: download the JSON from the API, convert it to Kestra's ION format, index it. Here's the pattern against a public API:
 
@@ -90,7 +90,7 @@ tasks:
 
 **Pagination.** For APIs that page, wrap the download in a loop that walks pages until the response is empty, appending each page's documents. Kestra's `ForEach`/`EachSequential` tasks or a paginating HTTP pattern handle this; index each page as you go so memory stays flat.
 
-## Step 2: incremental sync
+## Step 2: Incremental sync
 
 This is where REST APIs differ from databases: you can't run a `WHERE updated_at > X` query unless the API gives you one. Two cases.
 
@@ -118,7 +118,7 @@ tasks:
   - id: http_download
     type: io.kestra.plugin.core.http.Download
     # request only records changed since this run's scheduled time
-    uri: "https://api.example.com/v1/products?updated_since={{ trigger.date | date('yyyy-MM-dd''T''HH:mm:ss''Z''', timeZone='UTC') }}"
+    uri: "https://api.example.com/v1/products?updated_since={{ trigger.date | date(\"yyyy-MM-dd'T'HH:mm:ss'Z'\", timeZone='UTC') }}"
     headers:
       Authorization: "Bearer {{ secret('API_TOKEN') }}"
 
