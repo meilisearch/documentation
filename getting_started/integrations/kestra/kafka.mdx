@@ -1,0 +1,164 @@
+---
+title: Connect Kafka to Meilisearch with Kestra
+sidebarTitle: Kafka
+description: Real-time indexing of a Kafka topic into Meilisearch with Kestra.
+---
+
+When your data is a stream of events (product updates, user actions, inventory changes, price ticks), Kafka is where it flows. Meilisearch is where you want that state to be instantly searchable. The gap between them is usually a bespoke consumer service someone has to write, deploy, and keep alive. This guide closes that gap with [Kestra](https://kestra.io) instead: no consumer service, just declarative YAML.
+
+We build up in two stages: first a batch consume-and-index flow to understand the moving parts, then a **real-time** trigger that indexes each message as it arrives, produced-to-searchable in seconds. Because a Kafka consumer group tracks its own offsets, this pattern is incremental by construction: there's no "first load versus incremental" split to manage, only the stream.
+
+## Why orchestrate the sync
+
+A hand-written Kafka to Meilisearch consumer means managing offsets, deserialization, batching, back-pressure, retries, restarts, and monitoring: a whole service. Kestra collapses that into a trigger plus two tasks, with offset tracking, retries, and observability handled for you. You focus on the shape of the data, not the plumbing.
+
+## Prerequisites
+
+A running Kestra with three plugins (Meilisearch, Kafka, and the transform plugin for reshaping messages), plus a [Meilisearch Cloud](https://www.meilisearch.com/cloud?utm_campaign=oss&utm_source=docs&utm_medium=kestra-integration) project and a Kafka broker. Meilisearch is managed; for a local broker, Redpanda is a lightweight, Kafka-API-compatible option:
+
+```yaml
+services:
+  redpanda:
+    image: redpandadata/redpanda:latest
+    command: redpanda start --mode dev-container --smp 1 \
+      --kafka-addr PLAINTEXT://0.0.0.0:9092 \
+      --advertise-kafka-addr PLAINTEXT://redpanda:9092
+
+  kestra:
+    image: kestra/kestra:latest
+    command: server local
+    ports: ["8080:8080"]
+    environment:
+      # your Meilisearch Cloud Default Admin API key, base64-encoded
+      SECRET_MEILISEARCH_API_KEY: <base64 of your admin API key>
+```
+
+```dockerfile
+FROM kestra/kestra:latest
+RUN /app/kestra plugins install \
+      io.kestra.plugin:plugin-meilisearch:LATEST \
+      io.kestra.plugin:plugin-kafka:LATEST \
+      io.kestra.plugin:plugin-transform-json:LATEST
+```
+
+<Note>
+**Get your Cloud credentials.** In the [Meilisearch Cloud](https://cloud.meilisearch.com) dashboard, create a project and copy its **Project URL** (the `url` in the flows below) and its **Default Admin API Key** (Settings, then API Keys), then store the key as the `MEILISEARCH_API_KEY` Kestra secret.
+</Note>
+
+Our events are JSON messages describing products, keyed by product id:
+
+```json
+{ "id": "prod-1", "name": "Mechanical Keyboard", "stock": 42 }
+```
+
+## Understanding the shape: a batch consume-and-index flow
+
+Before wiring up real-time, it helps to see the pieces in a flow you can run on demand. This one produces a few test messages, consumes them back, reshapes them, and indexes them:
+
+```yaml
+id: kafka_to_meilisearch
+namespace: company.search
+
+variables:
+  meilisearch_url: https://ms-xxxxxxxxxxxx-xxxx.meilisearch.io   # your Meilisearch Cloud Project URL
+  index: product_updates
+  topic: product-updates
+
+tasks:
+  - id: produce                     # stand-in for your real upstream producer
+    type: io.kestra.plugin.kafka.Produce
+    properties:
+      bootstrap.servers: redpanda:9092
+    topic: "{{ vars.topic }}"
+    keySerializer: STRING
+    valueSerializer: JSON
+    from:
+      - key: "prod-1"
+        value: { id: prod-1, name: Mechanical Keyboard, stock: 42 }
+      - key: "prod-2"
+        value: { id: prod-2, name: Wireless Mouse, stock: 130 }
+      - key: "prod-3"
+        value: { id: prod-3, name: 4K Monitor, stock: 7 }
+
+  - id: consume
+    type: io.kestra.plugin.kafka.Consume
+    properties:
+      bootstrap.servers: redpanda:9092
+      auto.offset.reset: earliest
+    topic: "{{ vars.topic }}"
+    groupId: "kestra-e2e-{{ execution.id }}"
+    keyDeserializer: STRING
+    valueDeserializer: JSON
+    maxRecords: 3
+
+  - id: extract_values
+    type: io.kestra.plugin.transform.jsonata.TransformItems
+    from: "{{ outputs.consume.uri }}"
+    expression: value              # keep only the message payload
+
+  - id: index_documents
+    type: io.kestra.plugin.meilisearch.DocumentAdd
+    from: "{{ outputs.extract_values.uri }}"
+    index: "{{ vars.index }}"
+    url: "{{ vars.meilisearch_url }}"
+    key: "{{ secret('MEILISEARCH_API_KEY') }}"
+```
+
+The one non-obvious step is `extract_values`. Kestra's `Consume` task writes a full record envelope for each message: `key`, `value`, `topic`, `partition`, `offset`, `timestamp`, headers. You don't want all that in your search index, just the payload. The JSONata `TransformItems` task with `expression: value` plucks the `value` field out of each record, leaving clean product documents for `DocumentAdd`. (In this demo the `produce` task stands in for your real upstream; in production you'd delete it.)
+
+## The real deal: real-time indexing
+
+Polling in batches adds latency and offset bookkeeping. Kestra's Kafka `RealtimeTrigger` does better: it holds a persistent consumer open and starts **one execution per message** the instant it arrives. A produced event is searchable in Meilisearch within a couple of seconds, with no cron and no polling loop.
+
+```yaml
+id: kafka_realtime_to_meilisearch
+namespace: company.search
+
+variables:
+  meilisearch_url: https://ms-xxxxxxxxxxxx-xxxx.meilisearch.io   # your Meilisearch Cloud Project URL
+  index: live_products
+
+triggers:
+  - id: on_message
+    type: io.kestra.plugin.kafka.RealtimeTrigger
+    topic: live-products
+    properties:
+      bootstrap.servers: redpanda:9092
+      auto.offset.reset: earliest
+    groupId: kestra-realtime
+    keyDeserializer: STRING
+    valueDeserializer: JSON
+
+tasks:
+  - id: write_document
+    type: io.kestra.plugin.core.storage.Write
+    extension: .ion
+    content: "{{ trigger.value | toJson }}"
+
+  - id: index_document
+    type: io.kestra.plugin.meilisearch.DocumentAdd
+    from: "{{ outputs.write_document.uri }}"
+    index: "{{ vars.index }}"
+    url: "{{ vars.meilisearch_url }}"
+    key: "{{ secret('MEILISEARCH_API_KEY') }}"
+```
+
+Here the message payload is available directly as `{{ trigger.value }}`. We write it to internal storage as an ION document and index it. That's the entire live pipeline: produce a message to `live-products`, and it shows up in search seconds later.
+
+Because `DocumentAdd` is add-or-replace, this is automatically an **upsert stream**. Publish an updated event for `prod-1` and it overwrites the existing document by primary key, exactly the semantics you want when a topic carries a changelog of your entities.
+
+## Handling deletes
+
+Represent deletions as events, then act on them. The idiomatic Kafka approach is a **tombstone** or an explicit delete event, for example `{ "id": "prod-1", "op": "delete" }`. Branch on it in the flow: route delete events to Meilisearch's `documents/delete-batch` endpoint (via `io.kestra.plugin.core.http.Request`) and everything else to `DocumentAdd`. The delete pattern is shown in full in [Connect PostgreSQL to Meilisearch with Kestra](/getting_started/integrations/kestra/postgresql).
+
+## Going to production
+
+- **Drop the producer.** The `Produce` task in the batch example is only there to generate test data. In production your services (or a Debezium connector) produce to the topic; Kestra only consumes.
+- **This is your CDC sink.** Point Debezium at your PostgreSQL/MySQL/MongoDB WAL or oplog, stream changes into Kafka, and this flow becomes a true change-data-capture pipeline into Meilisearch, every row-level change captured in order, in real time.
+- **Throughput.** For very high message rates, the batch `Consume` pattern with a larger `maxRecords` and a schedule can be more efficient than one execution per message. Choose real-time for freshness, batch for volume.
+- **Consumer groups mean incrementality.** A stable `groupId` means Kafka tracks the committed offset, so a restarted flow resumes exactly where it left off, with no missed or double-processed messages and no watermark to manage yourself.
+- **Retries.** Add a `retry` block so a transient Meilisearch error re-attempts the single message rather than dropping it.
+
+## Wrap-up
+
+Kestra turns "keep Meilisearch in sync with a Kafka topic" into a trigger and two tasks. The `RealtimeTrigger` gives you second-scale freshness with offset tracking handled for you; add-or-replace semantics make the stream an idempotent upsert feed; and paired with Debezium, the same flow is a full CDC sink. Publish events as you already do, and Kestra keeps search live.
