@@ -1,0 +1,115 @@
+---
+title: Migrate OpenSearch to Meilisearch with Kestra
+sidebarTitle: OpenSearch
+description: Migrate an existing OpenSearch index into Meilisearch with a safe, re-runnable Kestra workflow.
+---
+
+OpenSearch does a lot, and search is only one slice of it. If search is what you actually need (fast, typo-tolerant, relevance-ranked, with settings you can reason about) Meilisearch is a lighter, more focused home for it. Moving an existing OpenSearch index across doesn't have to be a risky rewrite.
+
+This guide migrates an OpenSearch index to Meilisearch with [Kestra](https://kestra.io): a one-flow backfill of the whole index, plus a safe parallel-run cutover. If you also run Elasticsearch, the [companion guide](/getting_started/integrations/kestra/elasticsearch) is identical apart from the plugin name, so the two are drop-in equivalents here.
+
+## Why do the migration in Kestra
+
+A hand-rolled scroll-and-push script has no memory: kill it mid-run and you don't know what transferred, and there's no retry. Kestra makes the migration an observable, resumable-by-re-run workflow. The export streams to disk, indexing batches and waits for completion, and every run is logged. Re-run it as often as you like during cutover.
+
+## Prerequisites
+
+A running Kestra with the Meilisearch and OpenSearch plugins, plus a [Meilisearch Cloud](https://www.meilisearch.com/cloud?utm_campaign=oss&utm_source=docs&utm_medium=kestra-integration) project. Only Kestra runs locally, since Meilisearch is managed:
+
+```yaml
+services:
+  kestra:
+    image: kestra/kestra:latest
+    command: server local
+    ports: ["8080:8080"]
+    environment:
+      # your Meilisearch Cloud Default Admin API key, base64-encoded
+      SECRET_MEILISEARCH_API_KEY: <base64 of your admin API key>
+```
+
+```dockerfile
+FROM kestra/kestra:latest
+RUN /app/kestra plugins install \
+      io.kestra.plugin:plugin-meilisearch:LATEST \
+      io.kestra.plugin:plugin-opensearch:LATEST
+```
+
+<Note>
+**Get your Cloud credentials.** In the [Meilisearch Cloud](https://cloud.meilisearch.com) dashboard, create a project and copy its **Project URL** (the `url` in the flows below) and its **Default Admin API Key** (Settings, then API Keys). Store the key as the `MEILISEARCH_API_KEY` Kestra secret.
+</Note>
+
+This guide migrates a `movies` index of documents like `{ "id": 3, "title": "Parasite", "year": 2019, "genre": "thriller" }`.
+
+## Step 1: Backfill the whole index
+
+The OpenSearch plugin's `Scroll` task walks the entire index and writes every document to an ION file in internal storage, the exact format the Meilisearch `DocumentAdd` task reads. Two tasks migrate the whole index:
+
+```yaml
+id: opensearch_to_meilisearch
+namespace: company.search
+
+variables:
+  meilisearch_url: https://ms-xxxxxxxxxxxx-xxxx.meilisearch.io   # your Meilisearch Cloud Project URL
+  index: movies
+
+tasks:
+  - id: scroll
+    type: io.kestra.plugin.opensearch.Scroll
+    connection:
+      hosts:
+        - http://opensearch:9200
+      # for a secured cluster, add basicAuth:
+      #   basicAuth:
+      #     username: admin
+      #     password: "{{ secret('OPENSEARCH_PASSWORD') }}"
+    indexes:
+      - movies
+    request:
+      query:
+        match_all: {}
+
+  - id: index_documents
+    type: io.kestra.plugin.meilisearch.DocumentAdd
+    from: "{{ outputs.scroll.uri }}"
+    index: "{{ vars.index }}"
+    url: "{{ vars.meilisearch_url }}"
+    key: "{{ secret('MEILISEARCH_API_KEY') }}"
+```
+
+`Scroll` streams to disk, so it scales to very large indexes. `DocumentAdd` batches and waits for indexing, failing loudly on any error. Meilisearch uses each document's `id` field as the primary key. If yours lives only in `_id`, copy it into a real field with a JSONata `TransformItems` step first.
+
+Run it once and the whole index is searchable in Meilisearch.
+
+## Step 2: Cut over safely
+
+Do it gradually, not all at once:
+
+1. **Backfill** into Meilisearch with the flow above.
+2. **Dual-run** a Meilisearch-backed copy of your search UI next to production and compare relevance and latency on real queries.
+3. **Keep it fresh during the overlap.** Re-run the backfill on a schedule, or scroll only recent changes if your documents carry a timestamp:
+
+   ```yaml
+       request:
+         query:
+           range:
+             updated_at:
+               gte: "now-15m"
+   ```
+
+   Overlapping runs are safe because `DocumentAdd` is add-or-replace: re-indexing a document just overwrites it by primary key.
+4. **Flip production** to Meilisearch once you trust the results, and retire the OpenSearch cluster.
+
+## A note on deletes
+
+For a one-time snapshot migration, deletes are moot. If documents are removed during a long dual-run, reconcile by indexing each fresh backfill into a **new** Meilisearch index and repointing an alias at it, so anything absent from the latest scroll disappears. Kestra can run that index-then-swap as one flow.
+
+## Going to production
+
+- **Secured clusters:** add `basicAuth` (or an API-key header) to the `connection`, with the password from a Kestra secret. Set `trustAllSsl: true` only for self-signed dev clusters.
+- **Reshape while migrating** with a JSONata `TransformItems` step between `scroll` and `index_documents` to rename fields, flatten, and drop noise.
+- **Set Meilisearch index settings first** (searchable, filterable, and sortable attributes via an `http.Request` to the settings API) so the first pass ranks well.
+- **Retries.** Add a `retry` block so a transient hiccup during a long scroll is retried instead of failing the migration.
+
+## Wrap-up
+
+Migrating off OpenSearch is `Scroll` to export plus `DocumentAdd` to index, wrapped in a re-runnable Kestra workflow that supports a safe, gradual cutover. The flow is byte-identical to the Elasticsearch one apart from the plugin name, proof of how uniform the extract-to-index pattern is across sources.

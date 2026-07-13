@@ -57,7 +57,22 @@
                 "getting_started/integrations/postman",
                 "getting_started/integrations/meilisearch_importer",
                 "getting_started/integrations/mcp",
-                "getting_started/integrations/langchain"
+                "getting_started/integrations/langchain",
+                {
+                  "group": "Kestra",
+                  "pages": [
+                    "getting_started/integrations/kestra/overview",
+                    "getting_started/integrations/kestra/postgresql",
+                    "getting_started/integrations/kestra/mongodb",
+                    "getting_started/integrations/kestra/amazon_s3",
+                    "getting_started/integrations/kestra/kafka",
+                    "getting_started/integrations/kestra/rest_api",
+                    "getting_started/integrations/kestra/elasticsearch",
+                    "getting_started/integrations/kestra/opensearch",
+                    "getting_started/integrations/kestra/rabbitmq",
+                    "getting_started/integrations/kestra/shopify"
+                  ]
+                }
               ]
             }
           ]
