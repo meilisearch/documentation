@@ -1,0 +1,151 @@
+---
+title: Connect Amazon S3 to Meilisearch with Kestra
+sidebarTitle: Amazon S3
+description: Backfill and event-driven sync of Amazon S3 objects into Meilisearch with Kestra.
+---
+
+A huge amount of the world's data arrives as files in object storage: nightly exports, partner data drops, analytics dumps, catalog CSVs. Amazon S3 (and every S3-compatible store, such as MinIO, Cloudflare R2, or Google Cloud Storage in interop mode) is where they land. Meilisearch is where you want them searchable. This guide connects the two with [Kestra](https://kestra.io).
+
+This guide covers both halves of the real problem: a one-shot load of an existing object, and then an **event-driven** pipeline where dropping a new file into a bucket makes its contents searchable within seconds. No manual step or polling script required.
+
+## Why orchestrate the sync
+
+Files arrive unpredictably and formats vary. You want a pipeline that reacts to new files automatically, converts whatever format they're in, indexes them reliably, and, crucially, processes each file exactly once. Kestra gives you a bucket trigger, format converters, and the Meilisearch task, wired together declaratively with full logging and retries.
+
+## Prerequisites
+
+A running Kestra with three plugins (Meilisearch, AWS, and the serdes plugin for CSV/JSON conversion), plus a [Meilisearch Cloud](https://www.meilisearch.com/cloud?utm_campaign=oss&utm_source=docs&utm_medium=kestra-integration) project. Only Kestra runs locally, since Meilisearch is managed:
+
+```yaml
+services:
+  kestra:
+    image: kestra/kestra:latest
+    command: server local
+    ports: ["8080:8080"]
+    environment:
+      # your Meilisearch Cloud Default Admin API key, base64-encoded
+      SECRET_MEILISEARCH_API_KEY: <base64 of your admin API key>
+```
+
+```dockerfile
+FROM kestra/kestra:latest
+RUN /app/kestra plugins install \
+      io.kestra.plugin:plugin-meilisearch:LATEST \
+      io.kestra.plugin:plugin-aws:LATEST \
+      io.kestra.plugin:plugin-serdes:LATEST
+```
+
+<Note>
+**Get your Cloud credentials.** In the [Meilisearch Cloud](https://cloud.meilisearch.com) dashboard, create a project and copy its **Project URL** (the `url` in the flows below) and its **Default Admin API Key** (Settings, then API Keys). Store both AWS and Meilisearch credentials as Kestra secrets. This guide shows an S3-compatible endpoint (MinIO) with inline keys for clarity. For real AWS S3, drop `endpointOverride` / `compatibilityMode` / `forcePathStyle` and supply `accessKeyId` / `secretKeyId` (or an IAM role) via secrets.
+</Note>
+
+The examples index a `games.csv` file with columns `id,title,platform,genre,rating`.
+
+## Step 1: The first load (backfill)
+
+Three steps: download the object, convert CSV to Kestra's ION format, and index it. The serdes plugin bridges the format gap: `DocumentAdd` speaks ION, and `CsvToIon` produces exactly that.
+
+```yaml
+id: s3_csv_to_meilisearch
+namespace: company.search
+
+variables:
+  meilisearch_url: https://ms-xxxxxxxxxxxx-xxxx.meilisearch.io   # your Meilisearch Cloud Project URL
+  index: games
+
+tasks:
+  - id: download
+    type: io.kestra.plugin.aws.s3.Download
+    accessKeyId: minioadmin
+    secretKeyId: minioadmin
+    region: us-east-1
+    endpointOverride: http://minio:9000   # omit for real AWS S3
+    compatibilityMode: true               # omit for real AWS S3
+    forcePathStyle: true                  # omit for real AWS S3
+    bucket: datasets
+    key: games.csv
+
+  - id: to_ion
+    type: io.kestra.plugin.serdes.csv.CsvToIon
+    from: "{{ outputs.download.uri }}"
+
+  - id: index_documents
+    type: io.kestra.plugin.meilisearch.DocumentAdd
+    from: "{{ outputs.to_ion.uri }}"
+    index: "{{ vars.index }}"
+    url: "{{ vars.meilisearch_url }}"
+    key: "{{ secret('MEILISEARCH_API_KEY') }}"
+```
+
+<Warning>
+**S3-compatible storage gotcha.** For MinIO, R2, and friends you need both `compatibilityMode: true` and `forcePathStyle: true`. Without them the AWS SDK uses virtual-host addressing (`bucket.your-endpoint`) and fails on DNS resolution. On real AWS S3, leave all three lines out.
+</Warning>
+
+Swap `CsvToIon` for `JsonToIon` or `AvroToIon` if your files arrive in those formats. The rest of the pipeline is identical.
+
+One thing to know about CSV: `CsvToIon` emits every column as a **string** (`"rating":"96"`). If you want to filter or sort numerically in Meilisearch, either cast the values in a transform step, or configure the attribute accordingly and rely on Meilisearch's numeric handling.
+
+## Step 2: Event-driven sync (files as they arrive)
+
+The backfill indexes a file you name explicitly. The real workflow is: a new file lands in the bucket and gets indexed on its own. Kestra's S3 `Trigger` polls a prefix and starts an execution whenever new objects appear, and it can move or delete each object after it's handed off, giving you **exactly-once** processing.
+
+Put incoming files under an `incoming/` prefix and let the trigger drain it:
+
+```yaml
+id: s3_event_to_meilisearch
+namespace: company.search
+
+variables:
+  meilisearch_url: https://ms-xxxxxxxxxxxx-xxxx.meilisearch.io   # your Meilisearch Cloud Project URL
+  index: games
+
+triggers:
+  - id: on_new_file
+    type: io.kestra.plugin.aws.s3.Trigger
+    interval: PT10S            # poll the prefix every 10 seconds
+    accessKeyId: minioadmin
+    secretKeyId: minioadmin
+    region: us-east-1
+    endpointOverride: http://minio:9000
+    compatibilityMode: true
+    forcePathStyle: true
+    bucket: datasets
+    prefix: incoming/
+    action: DELETE            # remove each object once handed to the flow
+
+tasks:
+  - id: to_ion
+    type: io.kestra.plugin.serdes.csv.CsvToIon
+    from: "{{ trigger.objects[0].uri }}"
+
+  - id: index_documents
+    type: io.kestra.plugin.meilisearch.DocumentAdd
+    from: "{{ outputs.to_ion.uri }}"
+    index: "{{ vars.index }}"
+    url: "{{ vars.meilisearch_url }}"
+    key: "{{ secret('MEILISEARCH_API_KEY') }}"
+```
+
+How it behaves: the trigger checks `incoming/` every ten seconds. When a file appears, it downloads it into Kestra's internal storage (available as `{{ trigger.objects[0].uri }}`), fires the flow, and then deletes the object from the bucket per `action: DELETE`. The flow converts and indexes it. Drop a CSV, and its rows are searchable seconds later, hands-off.
+
+Prefer to keep an audit trail of processed files? Use `action: MOVE` with a `moveTo` destination to archive each object into a `processed/` prefix instead of deleting it.
+
+## Handling updates and deletes
+
+Object drops are naturally an **upsert** stream: because `DocumentAdd` is add-or-replace, a file re-exported with corrected rows overwrites the matching documents by primary key when it's dropped again. No special handling needed for updates.
+
+Deletes are the one case files don't express well: a file that simply stops appearing can't tell Meilisearch to remove anything. Two options:
+
+- Include a `deleted` marker column in your exports and add a branch that calls Meilisearch's `documents/delete-batch` endpoint for those ids (the pattern is shown in [Connect PostgreSQL to Meilisearch with Kestra](/getting_started/integrations/kestra/postgresql)).
+- For full-snapshot files, periodically re-index into a fresh index and swap it in with an index alias, so removed rows disappear.
+
+## Going to production
+
+- **Real AWS S3:** remove `endpointOverride`, `compatibilityMode`, and `forcePathStyle`. Authenticate with an IAM role or with `accessKeyId` / `secretKeyId` pulled from Kestra secrets.
+- **Large files:** `CsvToIon` and `DocumentAdd` stream through internal storage and batch automatically, so multi-gigabyte files work without tuning. Raise `DocumentAdd`'s `batchSize` if you want fewer, larger indexing tasks.
+- **Multiple files at once:** the trigger surfaces every matched object in `{{ trigger.objects }}`. Loop over them with an `EachSequential`/`ForEach` task if a poll can pick up more than one file.
+- **Retries:** add a `retry` block so a transient S3 or Meilisearch hiccup self-heals rather than failing the execution.
+
+## Wrap-up
+
+Two flows turn object storage into a live search source: a backfill for files already in the bucket, and an event-driven pipeline where new drops are converted and indexed automatically, each processed exactly once. It works identically on Amazon S3 and any S3-compatible store. Point the trigger at your bucket and let Kestra do the rest.

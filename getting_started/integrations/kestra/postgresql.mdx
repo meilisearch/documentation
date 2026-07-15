@@ -1,0 +1,210 @@
+---
+title: Connect PostgreSQL to Meilisearch with Kestra
+sidebarTitle: PostgreSQL
+description: Backfill and incrementally sync a PostgreSQL table into Meilisearch with Kestra.
+---
+
+Your product catalog, your users, your articles: the source of truth lives in PostgreSQL. But Postgres was never meant to power a typo-tolerant, instant search box. Meilisearch is. The question every team eventually hits is not "how do rows get into Meilisearch once?" but "how do they stay in sync forever?"
+
+This guide answers both. It starts with a one-shot backfill, then turns it into a scheduled incremental sync that keeps Meilisearch current as rows are inserted, updated, and deleted, all in declarative YAML, orchestrated by [Kestra](https://kestra.io), with no glue code to babysit.
+
+## Why orchestrate the sync instead of scripting it
+
+A cron job calling a Python script works right up until it doesn't: a network blip leaves your index half-updated, nobody notices the job died three days ago, and there is no record of what synced when. Kestra makes the sync a first-class workflow: every run is logged, retried on failure, observable in a UI, and triggered by a schedule or an event. You describe what should happen, and Kestra handles execution, state, and failure.
+
+## Prerequisites
+
+You need a running Kestra with two plugins installed (the Meilisearch plugin and the PostgreSQL plugin), plus a [Meilisearch Cloud](https://www.meilisearch.com/cloud?utm_campaign=oss&utm_source=docs&utm_medium=kestra-integration) project. Kestra runs from a small `docker-compose.yml`, and Meilisearch is fully managed, so there's nothing to host:
+
+```yaml
+services:
+  kestra:
+    image: kestra/kestra:latest
+    command: server local
+    ports: ["8080:8080"]
+    environment:
+      # your Meilisearch Cloud Default Admin API key, base64-encoded
+      SECRET_MEILISEARCH_API_KEY: <base64 of your admin API key>
+```
+
+Install the plugins into the Kestra image with a small `Dockerfile`:
+
+```dockerfile
+FROM kestra/kestra:latest
+RUN /app/kestra plugins install \
+      io.kestra.plugin:plugin-meilisearch:LATEST \
+      io.kestra.plugin:plugin-jdbc-postgres:LATEST
+```
+
+<Note>
+**Get your Cloud credentials.** In the [Meilisearch Cloud](https://cloud.meilisearch.com) dashboard, create a project and copy its **Project URL** (used as `url` in the flows below) and its **Default Admin API Key** (Settings, then API Keys). Indexing needs write access, so the search-only key won't do. Kestra reads secrets from `SECRET_`-prefixed, base64-encoded environment variables, referenced in flows as `{{ secret('MEILISEARCH_API_KEY') }}`. Store your database password the same way in production; this guide keeps it inline only to stay readable.
+</Note>
+
+Assume a `products` table:
+
+```sql
+CREATE TABLE products (
+    id          SERIAL PRIMARY KEY,
+    name        TEXT NOT NULL,
+    description TEXT,
+    price       NUMERIC(10, 2),
+    category    TEXT
+);
+```
+
+## Step 1: The first load (backfill)
+
+The whole pipeline is three ideas: query Postgres, hand the result to Meilisearch, done. The glue that makes it effortless is Kestra's internal storage format, ION. The JDBC plugin writes query results as an ION file, and the Meilisearch `DocumentAdd` task reads exactly that format. No serialization code in between.
+
+```yaml
+id: postgres_to_meilisearch
+namespace: company.search
+
+variables:
+  meilisearch_url: https://ms-xxxxxxxxxxxx-xxxx.meilisearch.io   # your Meilisearch Cloud Project URL
+  index: products
+
+tasks:
+  - id: extract
+    type: io.kestra.plugin.jdbc.postgresql.Query
+    url: jdbc:postgresql://postgres:5432/shop
+    username: kestra
+    password: k3str4
+    sql: SELECT id, name, description, price, category FROM products ORDER BY id
+    fetchType: STORE          # write rows to internal storage as ION
+
+  - id: index_documents
+    type: io.kestra.plugin.meilisearch.DocumentAdd
+    from: "{{ outputs.extract.uri }}"
+    index: "{{ vars.index }}"
+    url: "{{ vars.meilisearch_url }}"
+    key: "{{ secret('MEILISEARCH_API_KEY') }}"
+```
+
+The key detail is `fetchType: STORE`. It streams the result set to an ION file rather than loading it into memory, so this scales from eight rows to eight million without changing a line. `DocumentAdd` then batches the documents (1000 per request by default), enqueues an indexing task per batch, and, by default, waits for Meilisearch to finish indexing, failing the run if any batch fails. Your flow is genuinely red or green, not fire-and-forget.
+
+Run it once and your entire table is searchable. Meilisearch uses your table's `id` as the document primary key automatically.
+
+## Step 2: Incremental sync (the real use case)
+
+A full re-index every few minutes is wasteful and eventually too slow. The production pattern is to sync only what changed since the last run. That needs one thing from your schema: a way to know when a row last changed.
+
+Add an `updated_at` column and let the database maintain it, so application code can never forget to bump it:
+
+```sql
+ALTER TABLE products
+  ADD COLUMN updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  ADD COLUMN deleted_at TIMESTAMPTZ;
+
+CREATE FUNCTION touch_updated_at() RETURNS trigger AS $$
+BEGIN
+    NEW.updated_at = now();
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER products_touch_updated_at
+    BEFORE UPDATE ON products
+    FOR EACH ROW EXECUTE FUNCTION touch_updated_at();
+```
+
+Note the `deleted_at` column too: deletions are handled with **soft deletes**, for a reason explained below.
+
+Now the sync flow. It runs on a schedule and, on each run, selects only rows touched inside a lookback window:
+
+```yaml
+id: postgres_incremental_sync
+namespace: company.search
+
+variables:
+  meilisearch_url: https://ms-xxxxxxxxxxxx-xxxx.meilisearch.io   # your Meilisearch Cloud Project URL
+  index: products
+  lookback: 10 minutes
+
+triggers:
+  - id: schedule
+    type: io.kestra.plugin.core.trigger.Schedule
+    cron: "*/5 * * * *"
+    recoverMissedSchedules: NONE
+
+tasks:
+  - id: extract_upserts
+    type: io.kestra.plugin.jdbc.postgresql.Query
+    url: jdbc:postgresql://postgres:5432/shop
+    username: kestra
+    password: k3str4
+    sql: |
+      SELECT id, name, description, price, category
+      FROM products
+      WHERE updated_at >= now() - interval '{{ vars.lookback }}'
+        AND deleted_at IS NULL
+    fetchType: STORE
+
+  - id: upsert_documents
+    type: io.kestra.plugin.meilisearch.DocumentAdd
+    from: "{{ outputs.extract_upserts.uri }}"
+    index: "{{ vars.index }}"
+    url: "{{ vars.meilisearch_url }}"
+    key: "{{ secret('MEILISEARCH_API_KEY') }}"
+```
+
+Two design choices make this robust:
+
+- **The lookback window is larger than the schedule interval** (10 minutes of lookback, runs every 5). Windows deliberately overlap, so a run that is delayed or retried never drops a change.
+- **Overlap is safe because `DocumentAdd` is add-or-replace.** Re-sending a document Meilisearch already has simply overwrites it by primary key. The operation is idempotent, so syncing the same row twice costs nothing and corrupts nothing.
+
+That covers inserts and updates. Deletes need one more step.
+
+## Handling deletes
+
+`DocumentAdd` can add and replace documents, but it never removes them, so a row deleted in Postgres would linger forever in your search results. This is the single most important thing to get right in any search sync.
+
+The clean pattern is soft deletes: instead of `DELETE FROM products`, your application sets `deleted_at = now()`. The sync flow then picks up recently soft-deleted rows and removes them from Meilisearch through its delete-batch API, using Kestra's generic HTTP task:
+
+```yaml
+  - id: extract_deletes
+    type: io.kestra.plugin.jdbc.postgresql.Query
+    url: jdbc:postgresql://postgres:5432/shop
+    username: kestra
+    password: k3str4
+    sql: |
+      SELECT id
+      FROM products
+      WHERE deleted_at >= now() - interval '{{ vars.lookback }}'
+    fetchType: FETCH          # small id list, fetch into memory
+
+  - id: apply_deletes
+    type: io.kestra.plugin.core.flow.If
+    condition: "{{ outputs.extract_deletes.size > 0 }}"
+    then:
+      - id: delete_documents
+        type: io.kestra.plugin.core.http.Request
+        uri: "{{ vars.meilisearch_url }}/indexes/{{ vars.index }}/documents/delete-batch"
+        method: POST
+        contentType: application/json
+        body: "{{ outputs.extract_deletes.rows | jq('map(.id)') | first | toJson }}"
+        headers:
+          Authorization: "Bearer {{ secret('MEILISEARCH_API_KEY') }}"
+```
+
+A couple of things worth knowing, learned the hard way:
+
+- Kestra's `jq` filter returns a list of results, so `jq('map(.id)')` produces `[[1,2,3]]`, not `[1,2,3]`. Piping through `| first | toJson` unwraps it into the JSON array Meilisearch expects.
+- Meilisearch deletions are asynchronous: the endpoint returns `202 Accepted` and enqueues a task. The document disappears a moment later, not instantly.
+
+With both branches in place, one flow keeps the index fully consistent: inserts and updates flow through `upsert_documents`, deletes through `apply_deletes`, every five minutes, forever.
+
+## Going to production
+
+A few refinements turn this from a demo into something you can rely on:
+
+- **Watermark instead of wall-clock.** The lookback window is simple and resilient, but re-syncs a little more than strictly necessary. For exact incrementality, store the last-synced timestamp in Kestra's KV store (`io.kestra.plugin.core.kv.Set` / `Get`) and query `WHERE updated_at > {{ last_run }}`.
+- **Retries.** Add a `retry` block to the tasks so a transient database or network error is retried automatically rather than failing the run.
+- **Backfill once, then sync.** Run the Step 1 flow a single time to seed the index, then let the Step 2 schedule take over. Because upserts are idempotent, an accidental re-run of the backfill is harmless.
+- **This is not CDC.** The lookback pattern captures changes at schedule granularity, not row-by-row in real time. If you need sub-second propagation or must capture every intermediate state, stream your Postgres WAL through Debezium into Kafka and consume that. See the companion guide [Connect Kafka to Meilisearch with Kestra](/getting_started/integrations/kestra/kafka).
+
+## Wrap-up
+
+Two short YAML files give you a complete, production-grade PostgreSQL to Meilisearch pipeline: a backfill for the initial load, and a scheduled incremental sync that handles inserts, updates, and deletes idempotently. The pattern generalizes directly: swap the `Query` task for MySQL, and everything else stays the same.
+
+Point your search box at Meilisearch, keep writing to Postgres as you always have, and let Kestra keep the two in step.

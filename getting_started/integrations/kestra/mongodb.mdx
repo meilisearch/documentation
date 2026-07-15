@@ -1,0 +1,192 @@
+---
+title: Connect MongoDB to Meilisearch with Kestra
+sidebarTitle: MongoDB
+description: Backfill and incrementally sync a MongoDB collection into Meilisearch with Kestra.
+---
+
+MongoDB is a great home for your documents: flexible schema, easy writes, horizontal scale. What it is not is a search engine. Its text search is coarse, has no typo tolerance, and slows down exactly when you need it most. Meilisearch gives you instant, typo-tolerant, relevance-ranked search, provided your documents actually make it in, and stay current.
+
+This guide builds that bridge with [Kestra](https://kestra.io): first a one-shot backfill of a collection, then a scheduled incremental sync that keeps Meilisearch in lock-step with MongoDB as documents are inserted, updated, and deleted, all in declarative YAML.
+
+## Why orchestrate the sync
+
+Keeping a search index in sync is a workflow, not a one-liner: it needs to run on a schedule, retry on failure, skip nothing when a run is delayed, and be observable when something breaks. Kestra gives you all of that declaratively. You describe the extract-and-index steps, and Kestra handles scheduling, state, retries, and logging.
+
+## Prerequisites
+
+A running Kestra with the Meilisearch and MongoDB plugins, plus a [Meilisearch Cloud](https://www.meilisearch.com/cloud?utm_campaign=oss&utm_source=docs&utm_medium=kestra-integration) project. Only Kestra needs to run locally, since Meilisearch is managed:
+
+```yaml
+services:
+  kestra:
+    image: kestra/kestra:latest
+    command: server local
+    ports: ["8080:8080"]
+    environment:
+      # your Meilisearch Cloud Default Admin API key, base64-encoded
+      SECRET_MEILISEARCH_API_KEY: <base64 of your admin API key>
+```
+
+Install the plugins:
+
+```dockerfile
+FROM kestra/kestra:latest
+RUN /app/kestra plugins install \
+      io.kestra.plugin:plugin-meilisearch:LATEST \
+      io.kestra.plugin:plugin-mongodb:LATEST
+```
+
+<Note>
+**Get your Cloud credentials.** In the [Meilisearch Cloud](https://cloud.meilisearch.com) dashboard, create a project and copy its **Project URL** (the `url` in the flows below) and its **Default Admin API Key** (Settings, then API Keys). Indexing needs write access. Kestra reads secrets from `SECRET_`-prefixed, base64-encoded environment variables, referenced as `{{ secret('MEILISEARCH_API_KEY') }}`.
+</Note>
+
+This guide syncs a `books` collection in a `catalog` database. One detail matters up front: **use string or numeric `_id` values**. Meilisearch accepts MongoDB's `_id` as its primary key, but only when it's a string or number. A raw `ObjectId` object won't do. Storing books with ids like `"book-1"` keeps things clean:
+
+```js
+db.books.insertMany([
+  { _id: "book-1", title: "Dune", author: "Frank Herbert", year: 1965,
+    updatedAt: "2026-07-01T00:00:00Z", deletedAt: null },
+  { _id: "book-2", title: "The Left Hand of Darkness", author: "Ursula K. Le Guin",
+    year: 1969, updatedAt: "2026-07-01T00:00:00Z", deletedAt: null }
+  // ...
+]);
+```
+
+Note `updatedAt` and `deletedAt` stored as **ISO-8601 strings**. That choice pays off in the incremental step: string timestamps compare correctly with `$gte`, stay JSON-serializable through the pipeline, and spare you any BSON extended-JSON wrangling in your flow.
+
+## Step 1: The first load (backfill)
+
+The MongoDB plugin's `Find` task, with `store: true`, writes matching documents to Kestra's internal storage as an ION file, precisely the format the Meilisearch `DocumentAdd` task consumes. Two tasks, no glue:
+
+```yaml
+id: mongodb_to_meilisearch
+namespace: company.search
+
+variables:
+  meilisearch_url: https://ms-xxxxxxxxxxxx-xxxx.meilisearch.io   # your Meilisearch Cloud Project URL
+  index: books
+
+tasks:
+  - id: extract
+    type: io.kestra.plugin.mongodb.Find
+    connection:
+      uri: mongodb://mongodb:27017
+    database: catalog
+    collection: books
+    filter:
+      deletedAt: null          # never index soft-deleted docs
+    projection:
+      updatedAt: 0             # drop sync-only metadata from the
+      deletedAt: 0             # documents we send to Meilisearch
+    store: true
+
+  - id: index_documents
+    type: io.kestra.plugin.meilisearch.DocumentAdd
+    from: "{{ outputs.extract.uri }}"
+    index: "{{ vars.index }}"
+    url: "{{ vars.meilisearch_url }}"
+    key: "{{ secret('MEILISEARCH_API_KEY') }}"
+```
+
+The `projection` strips the housekeeping fields so your search documents stay clean. `updatedAt` and `deletedAt` are for the sync machinery, not for your search results. `DocumentAdd` batches the documents and waits for indexing to complete, so the run fails loudly if Meilisearch rejects anything.
+
+Run it once and the collection is fully searchable.
+
+## Step 2: Incremental sync (the real use case)
+
+Re-indexing the whole collection on every run doesn't scale. Instead, sync only what changed since the last run, which is why `updatedAt` is stored on every document. Make sure your application updates it on every write (or use a MongoDB change-tracking mechanism to maintain it).
+
+The sync flow runs on a schedule and selects only documents whose `updatedAt` falls inside a lookback window:
+
+```yaml
+id: mongodb_incremental_sync
+namespace: company.search
+
+variables:
+  meilisearch_url: https://ms-xxxxxxxxxxxx-xxxx.meilisearch.io   # your Meilisearch Cloud Project URL
+  index: books
+  threshold: "{{ now() | dateAdd(-10, 'MINUTES') | date(\"yyyy-MM-dd'T'HH:mm:ss'Z'\", timeZone='UTC') }}"
+
+triggers:
+  - id: schedule
+    type: io.kestra.plugin.core.trigger.Schedule
+    cron: "*/5 * * * *"
+    recoverMissedSchedules: NONE
+
+tasks:
+  - id: extract_upserts
+    type: io.kestra.plugin.mongodb.Find
+    connection:
+      uri: mongodb://mongodb:27017
+    database: catalog
+    collection: books
+    filter:
+      deletedAt: null
+      updatedAt:
+        $gte: "{{ render(vars.threshold) }}"
+    projection:
+      updatedAt: 0
+      deletedAt: 0
+    store: true
+
+  - id: upsert_documents
+    type: io.kestra.plugin.meilisearch.DocumentAdd
+    from: "{{ outputs.extract_upserts.uri }}"
+    index: "{{ vars.index }}"
+    url: "{{ vars.meilisearch_url }}"
+    key: "{{ secret('MEILISEARCH_API_KEY') }}"
+```
+
+The `threshold` variable computes an ISO-8601 timestamp ten minutes in the past, and the `Find` filter uses a plain Mongo `$gte` query against it. Two properties keep this safe:
+
+- **The lookback (10 min) exceeds the schedule interval (5 min)**, so overlapping windows guarantee no change is ever missed, even across a delayed or retried run.
+- **Overlap is harmless because `DocumentAdd` is add-or-replace.** Re-indexing a document Meilisearch already has just overwrites it by `_id`. Idempotent by construction.
+
+## Handling deletes
+
+`DocumentAdd` only ever adds or replaces; it never removes. A book deleted in MongoDB would otherwise haunt your search results forever. The fix is soft deletes: your application sets `deletedAt` to a timestamp instead of removing the document, and the sync flow removes recently-deleted ids from Meilisearch. Add these tasks to the `mongodb_incremental_sync` flow so each run handles both upserts and deletes:
+
+```yaml
+  - id: extract_deletes
+    type: io.kestra.plugin.mongodb.Find
+    connection:
+      uri: mongodb://mongodb:27017
+    database: catalog
+    collection: books
+    filter:
+      deletedAt:
+        $gte: "{{ render(vars.threshold) }}"
+    projection:
+      _id: 1
+
+  - id: apply_deletes
+    type: io.kestra.plugin.core.flow.If
+    condition: "{{ outputs.extract_deletes.rows | length > 0 }}"
+    then:
+      - id: delete_documents
+        type: io.kestra.plugin.core.http.Request
+        uri: "{{ vars.meilisearch_url }}/indexes/{{ vars.index }}/documents/delete-batch"
+        method: POST
+        contentType: application/json
+        body: "{{ outputs.extract_deletes.rows | jq('map(._id)') | first | toJson }}"
+        headers:
+          Authorization: "Bearer {{ secret('MEILISEARCH_API_KEY') }}"
+```
+
+Two practical notes:
+
+- Kestra's `jq` filter returns a list of results, so `jq('map(._id)')` yields `[["book-6"]]`; `| first | toJson` unwraps it to the `["book-6"]` array Meilisearch's delete-batch endpoint expects.
+- The deletion is asynchronous (the API returns `202 Accepted`); the document is gone a moment later.
+
+Inserts and updates flow through `upsert_documents`, deletes through `apply_deletes`, and your index stays perfectly consistent with the collection.
+
+## Going to production
+
+- **What about Change Streams?** MongoDB change streams give true real-time change capture, but they require a replica set and aren't exposed by the Kestra MongoDB plugin. The scheduled-lookback pattern here is the practical, dependency-free answer for the vast majority of cases. If you truly need real-time, stream changes into Kafka and consume them. See [Connect Kafka to Meilisearch with Kestra](/getting_started/integrations/kestra/kafka).
+- **Exact watermarks.** For minimal re-reads, persist the last-synced timestamp in Kestra's KV store and filter with `$gt` against it instead of a fixed window.
+- **Retries.** Add a `retry` block to each task so transient MongoDB or network errors self-heal.
+- **Backfill once, then sync.** Seed the index with the Step 1 flow, then let the schedule run. Idempotent upserts make an accidental re-backfill a no-op.
+
+## Wrap-up
+
+With two YAML flows, MongoDB and Meilisearch stay in sync: a backfill for the initial load, and a scheduled incremental sync that handles inserts, updates, and deletes idempotently, powered by ISO-string timestamps, soft deletes, and Meilisearch's add-or-replace semantics. Keep writing documents to MongoDB, and let Kestra keep search current.
