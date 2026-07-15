@@ -1,10 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X GET 'MEILISEARCH_URL/tasks?statuses=failed,canceled'
-```
-
 ```rust Rust
 let mut query = TasksQuery::new(&client);
 let tasks = query

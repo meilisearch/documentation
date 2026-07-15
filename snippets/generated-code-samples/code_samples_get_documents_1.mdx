@@ -1,10 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X GET 'MEILISEARCH_URL/indexes/movies/documents?limit=2&filter=genres=action'
-```
-
 ```javascript JS
 client.index('movies').getDocuments({
   limit: 2,

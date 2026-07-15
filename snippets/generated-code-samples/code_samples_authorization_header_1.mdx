@@ -1,11 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X GET 'MEILISEARCH_URL/keys' \
-  -H 'Authorization: Bearer MASTER_KEY'
-```
-
 ```javascript JS
 const client = new MeiliSearch({ host: 'MEILISEARCH_URL', apiKey: 'masterKey' })
 client.getKeys()

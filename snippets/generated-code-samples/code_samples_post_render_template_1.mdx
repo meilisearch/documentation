@@ -1,21 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X POST 'MEILISEARCH_URL/render-template' \
-  -H 'Content-Type: application/json' \
-  --data-binary '{
-    "template": {
-      "kind": "inlineDocumentTemplate",
-      "inline": "An inline document template rendered on {{doc.id}}"
-    },
-    "input": {
-      "kind": "inlineDocument",
-      "inline": { "id": "this document" }
-    }
-  }'
-```
-
 ```javascript JS
 client.renderTemplate({
   template: {

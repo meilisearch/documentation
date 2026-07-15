@@ -1,15 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X POST 'MEILISEARCH_URL/indexes/books/facet-search' \
-  -H 'Content-Type: application/json' \
-  --data-binary '{
-    "facetQuery": "c",
-    "facetName": "genres"
-}'
-```
-
 ```javascript JS
 client.index('books').searchForFacetValues({
   facetQuery: 'c',

@@ -1,16 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X POST MEILISEARCH_URL/indexes/books/documents/fetch \
-  -H 'Content-Type: application/json' \
-  --data-binary '{
-    "filter": "(rating > 3 AND (genres = Adventure OR genres = Fiction)) AND language = English",
-    "fields": ["title", "genres", "rating", "language"],
-    "limit": 3
-  }'
-```
-
 ```javascript JS
 client.index('books').getDocuments({
   filter: '(rating > 3 AND (genres = Adventure OR genres = Fiction)) AND language = English',

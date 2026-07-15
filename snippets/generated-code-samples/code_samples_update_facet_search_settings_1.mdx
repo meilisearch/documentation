@@ -1,12 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X PUT 'MEILISEARCH_URL/indexes/INDEX_UID/settings/facet-search' \
-  -H 'Content-Type: application/json' \
-  --data-binary 'false'
-```
-
 ```javascript JS
 client.index('INDEX_NAME').updateFacetSearch(false);
 ```

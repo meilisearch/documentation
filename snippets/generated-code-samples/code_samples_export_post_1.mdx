@@ -1,19 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X POST 'MEILISEARCH_URL/export' \
-  -H 'Content-Type: application/json' \
-  --data-binary '{
-    "url": "TARGET_INSTANCE_URL",
-    "indexes": {
-      "*": {
-        "overrideSettings": true
-      }
-    }
-  }'
-```
-
 ```python Python
 client.export(
   url='https://remote-meilisearch-instance.com',

@@ -1,16 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/similar' \
-  -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer DEFAULT_SEARCH_API_KEY' \
-  --data-binary '{
-    "id": TARGET_DOCUMENT_ID,
-    "embedder": "EMBEDDER_NAME"
-  }'
-```
-
 ```javascript JS
 client.index('INDEX_NAME').searchSimilarDocuments({ id: 'TARGET_DOCUMENT_ID', embedder: 'default' })
 ```

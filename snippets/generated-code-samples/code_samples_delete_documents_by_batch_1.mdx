@@ -1,17 +1,5 @@
 <CodeGroup>
 
-```bash cURL
-curl \
-  -X POST 'MEILISEARCH_URL/indexes/movies/documents/delete-batch' \
-  -H 'Content-Type: application/json' \
-  --data-binary '[
-    23488,
-    153738,
-    437035,
-    363869
-  ]'
-```
-
 ```javascript JS
 client.index('movies').deleteDocuments([23488, 153738, 437035, 363869])
 ```
