@@ -4572,10 +4572,6 @@
     "destination": "/reference/api/facet-search/search-for-facet-values"
   },
   {
-    "source": "/reference/api/chats/update-settings-of-a-chat-workspace",
-    "destination": "/getting_started/overview"
-  },
-  {
     "source": "/capabilities/teams",
     "destination": "/capabilities/platform/teams/overview"
   },
