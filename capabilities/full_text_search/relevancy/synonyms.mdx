@@ -182,7 +182,6 @@ Meilisearch only fetches synonyms for search terms that are between 1 and 3 word
 
 For example, if you set `"lord of the rings"` as a synonym for `"lotr"`, searching for `"lotr"` will return documents containing `"lord of the rings"`. However, if you search for `"lord of the rings"`, Meilisearch will not return documents containing `"lotr"` because the search term has more than 3 words.
 
-This limitation applies regardless of how you configure your synonyms. To work around this, consider using shorter synonym terms or breaking longer phrases into multiple single-word synonyms.
 
 
 ## Maximum number of synonyms per term
