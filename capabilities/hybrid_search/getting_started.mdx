@@ -129,6 +129,10 @@ A good template should be short and only include the most relevant information. 
 
 This template gives general context (`An object used in a kitchen`) and adds the information specific to each document (`doc.name`, with values like `wooden spoon` or `rolling pin`).
 
+<Note>
+The kitchenware sample dataset only contains three fields: `id`, `name`, and `price`. Since `price` is a numeric value with no semantic meaning, this template uses only `name`. In a production dataset with richer fields—descriptions, categories, materials, or tags—include those fields in your template to improve relevancy.
+</Note>
+
 For more advanced templates, see [document template best practices](/capabilities/hybrid_search/advanced/document_template_best_practices).
 
 ### Send the configuration to Meilisearch
@@ -148,6 +152,20 @@ Hybrid searches are very similar to basic text searches. Query the `/search` end
 <CodeSamplesAiSearchGettingStartedSearch1 />
 
 Meilisearch runs both keyword and semantic search, then merges the results using its [smart scoring system](/capabilities/hybrid_search/overview#smart-result-ranking). The most relevant results appear first, whether they matched by exact keywords or by meaning.
+
+<Tip>
+Semantic search can return low-relevancy results when a query has no good match in your index. Use `rankingScoreThreshold` to filter out results below a minimum relevancy score:
+
+```json
+{
+  "q": "plates for hot food",
+  "hybrid": { "semanticRatio": 0.9, "embedder": "products-openai" },
+  "rankingScoreThreshold": 0.5
+}
+```
+
+Values range from `0.0` (return all results) to `1.0` (return only near-perfect matches). Start around `0.5` and adjust based on your data.
+</Tip>
 
 ## Next steps
 
