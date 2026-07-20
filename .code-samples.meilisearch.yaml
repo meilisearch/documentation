@@ -1603,6 +1603,10 @@ patch_dynamic_search_rule_1: |-
 delete_dynamic_search_rule_1: |-
   curl \
     -X DELETE 'MEILISEARCH_URL/dynamic-search-rules/black-friday'
+# delete_dynamic_search_rules
+delete_dynamic_search_rules_1: |-
+  curl \
+    -X DELETE 'MEILISEARCH_URL/dynamic-search-rules'
 # get_indexes_indexUid_settings_foreign_keys
 get_foreign_keys_setting_1: |-
   curl \
@@ -2121,19 +2125,4 @@ rbac_multi_level_1: |-
     --data-binary '{
       "q": "sensitive",
       "filter": "_foreign(access, (user = \"jeremy@meilisearch.com\" AND roles IN [\"editor\", \"owner\"]) OR (teams IN [\"product\", \"engineering\"] AND roles IN [\"editor\"]))"
-    }'
-# post_render_template
-post_render_template_1: |-
-  curl \
-    -X POST 'MEILISEARCH_URL/render-template' \
-    -H 'Content-Type: application/json' \
-    --data-binary '{
-      "template": {
-        "kind": "inlineDocumentTemplate",
-        "inline": "A document template rendered on {{doc.id}}"
-      },
-      "input": {
-        "kind": "inlineDocument",
-        "inline": { "id": "this document" }
-      }
     }'

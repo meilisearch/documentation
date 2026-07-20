@@ -4,6 +4,49 @@ description: "New features and improvements in Meilisearch"
 rss: true
 ---
 
+<Update label="v1.50" description="2026-07-20">
+
+## Breaking Changes
+
+**Dynamic Search Rules API revamp**
+
+The Dynamic Search Rules experimental feature has a revised API:
+
+- `priority` has been renamed to `precedence`
+- `conditions` changed from an array to an object with `query` and `time` fields
+- Listing rules via POST now uses `filter.query` instead of `filter.attributePatterns`
+- PATCH and DELETE operations now register asynchronous tasks and return the registered task instead of the modified rule
+- HTTP 404 is no longer returned for non-existent rule UIDs
+- A new `DELETE /dynamic-search-rules` route removes all rules at once
+- Rules now scale to 75,000 without impacting search performance
+
+**Federated document fetch across shards**
+
+The following document fetch routes now retrieve data across all shards configured in the `network` experimental feature:
+
+- `GET /indexes/{uid}/documents`
+- `GET /indexes/{uid}/documents/{document_id}`
+- `POST /indexes/{uid}/documents/fetch`
+
+Set `useNetwork: false` in your request to maintain previous single-shard behavior.
+
+## New Features
+
+**Wildcard facets**
+
+The `facets` search parameter now supports wildcard patterns containing `*`. For example, `dogs.*` matches all filterable attributes prefixed with `dogs.`.
+
+## Fixes
+
+- Migration from v1.48 and earlier now handles empty synonyms correctly
+- Filter memory consumption no longer increases quadratically with input size
+- Correctly-escaped filters containing backslashes are now accepted
+- S3 snapshot requests are now resent on failure
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.50.0)
+
+</Update>
+
 <Update label="v1.49" description="2026-07-06">
 
 ## Improvements

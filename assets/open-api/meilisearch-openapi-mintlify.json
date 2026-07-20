@@ -11,7 +11,7 @@
       "name": "MIT",
       "identifier": "MIT"
     },
-    "version": "1.49.0"
+    "version": "1.50.0"
   },
   "servers": [
     {
@@ -419,6 +419,7 @@
           "Chats"
         ],
         "summary": "List chat workspaces",
+        "description": "List all chat workspaces registered on the instance, with pagination.\n\nThis route is only available when the `chatCompletions` [experimental feature](https://www.meilisearch.com/docs/resources/help/experimental_features_overview) is enabled.",
         "operationId": "list_workspaces",
         "responses": {
           "200": {
@@ -477,6 +478,7 @@
           "Chats"
         ],
         "summary": "Get a chat workspace",
+        "description": "Get the details of a chat workspace by its unique identifier.\n\nThis route is only available when the `chatCompletions` [experimental feature](https://www.meilisearch.com/docs/resources/help/experimental_features_overview) is enabled.",
         "operationId": "get_chat",
         "parameters": [
           {
@@ -554,6 +556,7 @@
           "Chats"
         ],
         "summary": "Delete a chat workspace",
+        "description": "Delete a chat workspace and its settings by its unique identifier.\n\nThis route is only available when the `chatCompletions` [experimental feature](https://www.meilisearch.com/docs/resources/help/experimental_features_overview) is enabled.",
         "operationId": "delete_chat",
         "parameters": [
           {
@@ -626,6 +629,7 @@
           "Chats"
         ],
         "summary": "Request a chat completion",
+        "description": "Answer a conversational question with the OpenAI-compatible chat completions API,\nusing the documents of the authorized indexes as context.\nOnly streamed responses (`stream: true`) are supported.\n\nThis route is only available when the `chatCompletions` [experimental feature](https://www.meilisearch.com/docs/resources/help/experimental_features_overview) is enabled.",
         "operationId": "chat",
         "parameters": [
           {
@@ -753,6 +757,7 @@
           "Chats"
         ],
         "summary": "Get settings of a chat workspace",
+        "description": "Get the settings of a chat workspace, such as the LLM source, the base prompts,\nand the search parameters. The API key is never returned.\n\nThis route is only available when the `chatCompletions` [experimental feature](https://www.meilisearch.com/docs/resources/help/experimental_features_overview) is enabled.",
         "operationId": "get_settings",
         "parameters": [
           {
@@ -839,6 +844,7 @@
           "Chats"
         ],
         "summary": "Reset the settings of a chat workspace",
+        "description": "Reset all the settings of a chat workspace to their default value.\n\nThis route is only available when the `chatCompletions` [experimental feature](https://www.meilisearch.com/docs/resources/help/experimental_features_overview) is enabled.",
         "operationId": "reset_settings",
         "parameters": [
           {
@@ -924,6 +930,7 @@
           "Chats"
         ],
         "summary": "Update settings of a chat workspace",
+        "description": "Partially update the settings of a chat workspace, such as the LLM source, the base prompts,\nand the search parameters. Fields set to `null` are reset to their default value,\nand missing fields are left unchanged.\n\nThis route is only available when the `chatCompletions` [experimental feature](https://www.meilisearch.com/docs/resources/help/experimental_features_overview) is enabled.",
         "operationId": "patch_settings",
         "parameters": [
           {
@@ -1106,19 +1113,17 @@
                     {
                       "uid": "black-friday",
                       "description": "Black Friday 2025 rules",
-                      "priority": 10,
+                      "precedence": 10,
                       "active": true,
-                      "conditions": [
-                        {
-                          "scope": "query",
+                      "conditions": {
+                        "query": {
                           "isEmpty": true
                         },
-                        {
-                          "scope": "time",
+                        "time": {
                           "start": "2025-11-28T00:00:00Z",
                           "end": "2025-11-28T23:59:59Z"
                         }
-                      ],
+                      },
                       "actions": [
                         {
                           "selector": {
@@ -1173,6 +1178,65 @@
             "source": "curl \\\n  -X POST 'MEILISEARCH_URL/dynamic-search-rules' \\\n  -H 'Content-Type: application/json'"
           }
         ]
+      },
+      "delete": {
+        "tags": [
+          "Search rules"
+        ],
+        "summary": "Delete all search rules.",
+        "description": "This will delete **all** the currently defined search rules.",
+        "operationId": "clear_rules",
+        "responses": {
+          "202": {
+            "description": "Enqueued a task to delete all search rules.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SummarizedTaskView"
+                },
+                "example": {
+                  "taskUid": 147,
+                  "indexUid": null,
+                  "status": "enqueued",
+                  "type": "dsrClear",
+                  "enqueuedAt": "2024-08-08T17:05:55.791772Z"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The authorization header is missing.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "example": {
+                  "message": "The Authorization header is missing. It must use the bearer authorization method.",
+                  "code": "missing_authorization_header",
+                  "type": "auth",
+                  "link": "https://docs.meilisearch.com/errors#missing_authorization_header"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": [
+              "dynamicSearchRules.delete",
+              "dynamicSearchRules.*",
+              "*.delete",
+              "*"
+            ]
+          }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "cURL",
+            "source": "curl \\\n  -X DELETE 'MEILISEARCH_URL/dynamic-search-rules'"
+          }
+        ]
       }
     },
     "/dynamic-search-rules/{uid}": {
@@ -1206,19 +1270,17 @@
                 "example": {
                   "uid": "black-friday",
                   "description": "Black Friday 2025 rules",
-                  "priority": 10,
+                  "precedence": 10,
                   "active": true,
-                  "conditions": [
-                    {
-                      "scope": "query",
+                  "conditions": {
+                    "query": {
                       "isEmpty": true
                     },
-                    {
-                      "scope": "time",
+                    "time": {
                       "start": "2025-11-28T00:00:00Z",
                       "end": "2025-11-28T23:59:59Z"
                     }
-                  ],
+                  },
                   "actions": [
                     {
                       "selector": {
@@ -1305,8 +1367,22 @@
           }
         ],
         "responses": {
-          "204": {
-            "description": "Dynamic search rule deleted."
+          "202": {
+            "description": "Dynamic search rule task deletion.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SummarizedTaskView"
+                },
+                "example": {
+                  "taskUid": 147,
+                  "indexUid": null,
+                  "status": "enqueued",
+                  "type": "dsrUpdate",
+                  "enqueuedAt": "2024-08-08T17:05:55.791772Z"
+                }
+              }
+            }
           },
           "401": {
             "description": "The authorization header is missing.",
@@ -1320,22 +1396,6 @@
                   "code": "missing_authorization_header",
                   "type": "auth",
                   "link": "https://docs.meilisearch.com/errors#missing_authorization_header"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Dynamic search rule not found.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseError"
-                },
-                "example": {
-                  "message": "Dynamic search rule `black-friday` not found.",
-                  "code": "dynamic_search_rule_not_found",
-                  "type": "invalid_request",
-                  "link": "https://docs.meilisearch.com/errors#dynamic_search_rule_not_found"
                 }
               }
             }
@@ -1381,43 +1441,26 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateOrCreateDynamicSearchRuleRequest"
+                "$ref": "#/components/schemas/DynamicSearchRuleUpdateRequest"
               }
             }
           },
           "required": true
         },
         "responses": {
-          "200": {
-            "description": "Dynamic search rule updated.",
+          "202": {
+            "description": "Task enqueued to update dynamic search rule.",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DynamicSearchRule"
+                  "$ref": "#/components/schemas/SummarizedTaskView"
                 },
                 "example": {
-                  "uid": "black-friday",
-                  "description": "Black Friday 2025 rules",
-                  "priority": 5,
-                  "active": true,
-                  "conditions": [
-                    {
-                      "scope": "query",
-                      "isEmpty": true
-                    }
-                  ],
-                  "actions": [
-                    {
-                      "selector": {
-                        "indexUid": "products",
-                        "id": "123"
-                      },
-                      "action": {
-                        "type": "pin",
-                        "position": 1
-                      }
-                    }
-                  ]
+                  "taskUid": 147,
+                  "indexUid": null,
+                  "status": "enqueued",
+                  "type": "dsrUpdate",
+                  "enqueuedAt": "2024-08-08T17:05:55.791772Z"
                 }
               }
             }
@@ -1434,22 +1477,6 @@
                   "code": "missing_authorization_header",
                   "type": "auth",
                   "link": "https://docs.meilisearch.com/errors#missing_authorization_header"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Dynamic search rule not found.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseError"
-                },
-                "example": {
-                  "message": "Dynamic search rule `black-friday` not found.",
-                  "code": "dynamic_search_rule_not_found",
-                  "type": "invalid_request",
-                  "link": "https://docs.meilisearch.com/errors#dynamic_search_rule_not_found"
                 }
               }
             }
@@ -2324,6 +2351,15 @@
             "required": false,
             "schema": {
               "type": "string"
+            }
+          },
+          {
+            "name": "useNetwork",
+            "in": "query",
+            "description": "When `true`, runs the query on the whole network (all shards covered exactly once).\n\nWhen `false`, the query runs locally.\n\nWhen omitted or `null`, the default value depends on whether the sharding is enabled for the instance:\n\n- If the instance has sharding enabled (has a leader), defaults to `true`.\n- Otherwise defaults to `false`.\n\nIt also requires the `network` [experimental feature](http://localhost:3000/reference/api/experimental-features/configure-experimental-features).\n\nValues: `true` = use the whole network; `false` = local, default = see above.\n\nWhen using the network, the index must exist with compatible settings on all remotes.",
+            "required": false,
+            "schema": {
+              "type": "boolean"
             }
           }
         ],
@@ -3266,6 +3302,15 @@
             "schema": {
               "type": "boolean"
             }
+          },
+          {
+            "name": "useNetwork",
+            "in": "query",
+            "description": "When `true`, runs the query on the whole network (all shards covered exactly once).\n\nWhen `false`, the query runs locally.\n\nWhen omitted or `null`, the default value depends on whether the sharding is enabled for the instance:\n\n- If the instance has sharding enabled (has a leader), defaults to `true`.\n- Otherwise defaults to `false`.\n\nIt also requires the `network` [experimental feature](http://localhost:3000/reference/api/experimental-features/configure-experimental-features).\n\nValues: `true` = use the whole network; `false` = local, default = see above.\n\nWhen using the network, the index must exist with compatible settings on all remotes.",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
           }
         ],
         "responses": {
@@ -3889,7 +3934,7 @@
           {
             "name": "facets",
             "in": "query",
-            "description": "Return the count of matches per facet value for the listed attributes.\n\nThe response includes `facetDistribution` and, for numeric facets, `facetStats` (min/max).\n\nUse `[\"*\"]` to request counts for all [filterableAttributes](https://www.meilisearch.com/docs/reference/api/settings/update-all-settings#body-filterable-attributes-one-of-0).\n\nThe number of values returned per facet is limited by the index [maxValuesPerFacet](https://www.meilisearch.com/docs/reference/api/settings/update-faceting#body-max-values-per-facet-one-of-0) setting; attributes not in filterableAttributes are ignored.\n\nMore info: [faceting](https://www.meilisearch.com/docs/learn/filtering_and_sorting/search_with_facet_filters).",
+            "description": "Return the count of matches per facet value for the listed attributes.\n\nThe response includes `facetDistribution` and, for numeric facets, `facetStats` (min/max).\n\nThis route also supports patterns, i.e., \"title\", \"dogs.*\", \"*\", which can match over the [filterableAttributes](https://www.meilisearch.com/docs/reference/api/settings/update-all-settings#body-filterable-attributes-one-of-0).\n\nThe number of values returned per facet is limited by the index [maxValuesPerFacet](https://www.meilisearch.com/docs/reference/api/settings/update-faceting#body-max-values-per-facet-one-of-0) setting; attributes not in filterableAttributes are ignored.\n\nMore info: [faceting](https://www.meilisearch.com/docs/learn/filtering_and_sorting/search_with_facet_filters).",
             "required": false,
             "schema": {
               "type": "array",
@@ -3998,7 +4043,7 @@
           {
             "name": "useNetwork",
             "in": "query",
-            "description": "When `true`, runs the query on the whole network (all shards covered, documents deduplicated across remotes).\n\nWhen `false` or omitted, the query runs locally.\n\n**Enterprise Edition only.** This feature is available in the Enterprise Edition.\n\nIt also requires the `network` [experimental feature](http://localhost:3000/reference/api/experimental-features/configure-experimental-features).\n\nValues: `true` = use the whole network; `false` or omitted = local (default).\n\nWhen using the network, the index must exist with compatible settings on all remotes.\n\nDocuments with the same id are assumed identical for deduplication.",
+            "description": "When `true`, runs the query on the whole network (all shards covered, documents deduplicated across remotes).\n\nWhen `false` or omitted, the query runs locally.\n\nIt also requires the `network` [experimental feature](http://localhost:3000/reference/api/experimental-features/configure-experimental-features).\n\nValues: `true` = use the whole network; `false` or omitted = local (default).\n\nWhen using the network, the index must exist with compatible settings on all remotes.\n\nDocuments with the same id are assumed identical for deduplication.",
             "required": false,
             "schema": {
               "type": "boolean"
@@ -11923,7 +11968,8 @@
         "tags": [
           "Template"
         ],
-        "summary": "Render documents with POST",
+        "summary": "Render template",
+        "description": "Render a template, either fetched from the settings of an index (embedder document template,\nchat document template, indexing or search fragment) or provided inline, by injecting the\ngiven input (a document from an index, an inline document, or a search query).\n\nReturns the template and the rendered result, allowing to preview how Meilisearch renders\ntemplates without indexing any document.\n\nThis route is only available when the `renderRoute` [experimental feature](https://www.meilisearch.com/docs/resources/help/experimental_features_overview) is enabled.",
         "operationId": "render_post",
         "requestBody": {
           "content": {
@@ -12011,7 +12057,7 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
-            "source": "curl \\\n  -X POST 'MEILISEARCH_URL/render-template' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '{\n    \"template\": {\n      \"kind\": \"inlineDocumentTemplate\",\n      \"inline\": \"A document template rendered on {{doc.id}}\"\n    },\n    \"input\": {\n      \"kind\": \"inlineDocument\",\n      \"inline\": { \"id\": \"this document\" }\n    }\n  }'"
+            "source": "curl \\\n  -X POST 'MEILISEARCH_URL/render-template' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '{\n    \"template\": {\n      \"kind\": \"inlineDocumentTemplate\",\n      \"inline\": \"An inline document template rendered on {{doc.id}}\"\n    },\n    \"input\": {\n      \"kind\": \"inlineDocument\",\n      \"inline\": { \"id\": \"this document\" }\n    }\n  }'"
           }
         ]
       }
@@ -13996,7 +14042,9 @@
                 "export",
                 "upgradeDatabase",
                 "indexCompaction",
-                "networkTopologyChange"
+                "networkTopologyChange",
+                "dsrUpdate",
+                "dsrClear"
               ],
               "example": "documentAdditionOrUpdate"
             }
@@ -14186,8 +14234,16 @@
               "title:asc",
               "rating:desc"
             ]
+          },
+          "useNetwork": {
+            "type": [
+              "boolean",
+              "null"
+            ],
+            "description": "When `true`, runs the query on the whole network (all shards covered exactly once).\n\nWhen `false`, the query runs locally.\n\nWhen omitted or `null`, the default value depends on whether the sharding is enabled for the instance:\n\n- If the instance has sharding enabled (has a leader), defaults to `true`.\n- Otherwise defaults to `false`.\n\nIt also requires the `network` [experimental feature](http://localhost:3000/reference/api/experimental-features/configure-experimental-features).\n\nValues: `true` = use the whole network; `false` = local, default = see above.\n\nWhen using the network, the index must exist with compatible settings on all remotes."
           }
-        }
+        },
+        "additionalProperties": false
       },
       "ChatChoice": {
         "type": "object",
@@ -15521,6 +15577,7 @@
           "inconsistent_document_change_headers",
           "invalid_document_filter",
           "invalid_document_sort",
+          "invalid_document_use_network",
           "invalid_document_geo_field",
           "invalid_document_geojson_field",
           "invalid_header_value",
@@ -15756,7 +15813,7 @@
           "invalid_dynamic_search_rule_active",
           "invalid_dynamic_search_rule_conditions",
           "invalid_dynamic_search_rule_actions",
-          "invalid_dynamic_search_rule_filter_attribute_patterns",
+          "invalid_dynamic_search_rule_filter_query",
           "invalid_dynamic_search_rule_filter_active",
           "dynamic_search_rule_not_found"
         ]
@@ -15891,63 +15948,32 @@
           }
         }
       },
-      "Condition": {
-        "oneOf": [
-          {
-            "type": "object",
-            "required": [
-              "scope"
-            ],
-            "properties": {
-              "isEmpty": {
-                "type": [
-                  "boolean",
-                  "null"
-                ]
+      "Conditions": {
+        "type": "object",
+        "properties": {
+          "time": {
+            "oneOf": [
+              {
+                "type": "null"
               },
-              "contains": {
-                "type": [
-                  "string",
-                  "null"
-                ]
-              },
-              "scope": {
-                "type": "string",
-                "enum": [
-                  "query"
-                ]
+              {
+                "$ref": "#/components/schemas/TimeCondition",
+                "description": "Time range where the rule is active"
               }
-            }
+            ]
           },
-          {
-            "type": "object",
-            "required": [
-              "scope"
-            ],
-            "properties": {
-              "start": {
-                "type": [
-                  "string",
-                  "null"
-                ],
-                "format": "date-time"
+          "query": {
+            "oneOf": [
+              {
+                "type": "null"
               },
-              "end": {
-                "type": [
-                  "string",
-                  "null"
-                ],
-                "format": "date-time"
-              },
-              "scope": {
-                "type": "string",
-                "enum": [
-                  "time"
-                ]
+              {
+                "$ref": "#/components/schemas/QueryCondition",
+                "description": "Conditions on the search query that determines whether the rule is active"
               }
-            }
+            ]
           }
-        ]
+        }
       },
       "CreateApiKey": {
         "type": "object",
@@ -16652,6 +16678,26 @@
                   "null"
                 ],
                 "description": "A human-readable message providing additional information about the\ntask, such as status updates or explanatory text about what occurred\nduring processing."
+              },
+              "rule": {
+                "oneOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "$ref": "#/components/schemas/DynamicSearchRuleUpdateRequest",
+                    "description": "The updated dynamic search rule."
+                  }
+                ]
+              },
+              "updatedRules": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "format": "u-int64",
+                "description": "Number of dynamic search rules that were created, modified or deleted.",
+                "minimum": 0
               }
             }
           }
@@ -16729,7 +16775,7 @@
             ],
             "description": "Human-readable description of the dynamic search rule."
           },
-          "priority": {
+          "precedence": {
             "type": [
               "integer",
               "null"
@@ -16743,14 +16789,60 @@
             "description": "Whether the dynamic search rule is active."
           },
           "conditions": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Condition"
-            },
+            "$ref": "#/components/schemas/Conditions",
             "description": "Conditions that must match before the dynamic search rule applies."
           },
           "actions": {
             "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RuleAction"
+            },
+            "description": "Actions to apply when the dynamic search rule matches."
+          }
+        }
+      },
+      "DynamicSearchRuleUpdateRequest": {
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Human-readable description of the dynamic search rule."
+          },
+          "precedence": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "format": "u-int64",
+            "description": "Precedence of the dynamic search rule. Lower numeric values take precedence over higher\nones. If omitted, the rule is treated as having the lowest precedence. This precedence is\nused to resolve conflicts between matching rules:\n- If the same document is selected by multiple rules, the smallest `priority` number wins\n- If different documents are pinned to the same position, they are ordered by ascending `priority`",
+            "minimum": 0
+          },
+          "active": {
+            "type": [
+              "boolean",
+              "null"
+            ],
+            "description": "Whether the dynamic search rule is active."
+          },
+          "conditions": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/Conditions",
+                "description": "Conditions that must match before the dynamic search rule applies."
+              }
+            ]
+          },
+          "actions": {
+            "type": [
+              "array",
+              "null"
+            ],
             "items": {
               "$ref": "#/components/schemas/RuleAction"
             },
@@ -17143,7 +17235,7 @@
               "boolean",
               "null"
             ],
-            "description": "When `true`, runs the query on the whole network (all shards covered exactly once).\n\nWhen `false`, the query runs locally.\n\nWhen omitted or `null`, the default value depends on whether the sharding is enabled for the instance:\n\n- If the instance has sharding enabled (has a leader), defaults to `true`.\n- Otherwise defaults to `false`.\n\n**Enterprise Edition only.** This feature is available in the Enterprise Edition.\n\nIt also requires the `network` [experimental feature](http://localhost:3000/reference/api/experimental-features/configure-experimental-features).\n\nValues: `true` = use the whole network; `false` = local, default = see above.\n\nWhen using the network, the index must exist with compatible settings on all remotes."
+            "description": "When `true`, runs the query on the whole network (all shards covered exactly once).\n\nWhen `false`, the query runs locally.\n\nWhen omitted or `null`, the default value depends on whether the sharding is enabled for the instance:\n\n- If the instance has sharding enabled (has a leader), defaults to `true`.\n- Otherwise defaults to `false`.\n\nIt also requires the `network` [experimental feature](http://localhost:3000/reference/api/experimental-features/configure-experimental-features).\n\nValues: `true` = use the whole network; `false` = local, default = see above.\n\nWhen using the network, the index must exist with compatible settings on all remotes."
           }
         }
       },
@@ -17460,13 +17552,7 @@
             "type": "object",
             "description": "Facets to retrieve per index",
             "additionalProperties": {
-              "type": [
-                "array",
-                "null"
-              ],
-              "items": {
-                "type": "string"
-              }
+              "$ref": "#/components/schemas/AttributePatterns"
             },
             "propertyNames": {
               "type": "string",
@@ -18281,7 +18367,9 @@
           "export",
           "upgradeDatabase",
           "indexCompaction",
-          "networkTopologyChange"
+          "networkTopologyChange",
+          "dsrUpdate",
+          "dsrClear"
         ],
         "example": "documentAdditionOrUpdate"
       },
@@ -18399,16 +18487,12 @@
       "ListRulesFilter": {
         "type": "object",
         "properties": {
-          "attributePatterns": {
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/components/schemas/AttributePatterns",
-                "description": "Only include rules whose names match these patterns (e.g. `[\"black-friday\", \"promo*\"]`)."
-              }
-            ]
+          "query": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Only include rules whose names match these patterns (e.g. `[\"black-friday\", \"promo*\"]`)."
           },
           "active": {
             "type": [
@@ -18958,7 +19042,7 @@
                   ],
                   "description": "Human-readable description of the dynamic search rule."
                 },
-                "priority": {
+                "precedence": {
                   "type": [
                     "integer",
                     "null"
@@ -18972,10 +19056,7 @@
                   "description": "Whether the dynamic search rule is active."
                 },
                 "conditions": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Condition"
-                  },
+                  "$ref": "#/components/schemas/Conditions",
                   "description": "Conditions that must match before the dynamic search rule applies."
                 },
                 "actions": {
@@ -19432,6 +19513,25 @@
           "byWord",
           "byAttribute"
         ]
+      },
+      "QueryCondition": {
+        "type": "object",
+        "properties": {
+          "isEmpty": {
+            "type": [
+              "boolean",
+              "null"
+            ],
+            "description": "If present and non-null, specifies either:\n\n- That this rule can only be active when the search query is empty\n- That this rule can only be active when the search query is non-empty (contains at least one word)"
+          },
+          "words": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "If present and non-null, specifies that the rule can only be active if all the specified words are\npresent in the search query."
+          }
+        }
       },
       "RankingRuleView": {
         "oneOf": [
@@ -20179,14 +20279,15 @@
             "description": "Return only one document per distinct value of the given attribute (e.g. deduplicate by product_id).\n\nThe attribute must be in [filterableAttributes](https://www.meilisearch.com/docs/reference/api/settings/update-all-settings#body-filterable-attributes-one-of-0).\n\nThis overrides the index [distinctAttribute](https://www.meilisearch.com/docs/reference/api/settings/update-all-settings#body-distinct-attribute-one-of-0) setting for this request.\n\nSee [distinct attribute](https://www.meilisearch.com/docs/learn/relevancy/distinct_attribute)."
           },
           "facets": {
-            "type": [
-              "array",
-              "null"
-            ],
-            "items": {
-              "type": "string"
-            },
-            "description": "Return the count of matches per facet value for the listed attributes.\n\nThe response includes `facetDistribution` and, for numeric facets, `facetStats` (min/max).\n\nUse `[\"*\"]` to request counts for all [filterableAttributes](https://www.meilisearch.com/docs/reference/api/settings/update-all-settings#body-filterable-attributes-one-of-0).\n\nThe number of values returned per facet is limited by the index [maxValuesPerFacet](https://www.meilisearch.com/docs/reference/api/settings/update-faceting#body-max-values-per-facet-one-of-0) setting; attributes not in filterableAttributes are ignored.\n\nMore info: [faceting](https://www.meilisearch.com/docs/learn/filtering_and_sorting/search_with_facet_filters)."
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/AttributePatterns",
+                "description": "Return the count of matches per facet value for the listed attributes.\n\nThe response includes `facetDistribution` and, for numeric facets, `facetStats` (min/max).\n\nThis route also supports patterns, i.e., \"title\", \"dogs.*\", \"*\", which can match over the [filterableAttributes](https://www.meilisearch.com/docs/reference/api/settings/update-all-settings#body-filterable-attributes-one-of-0).\n\nThe number of values returned per facet is limited by the index [maxValuesPerFacet](https://www.meilisearch.com/docs/reference/api/settings/update-faceting#body-max-values-per-facet-one-of-0) setting; attributes not in filterableAttributes are ignored.\n\nMore info: [faceting](https://www.meilisearch.com/docs/learn/filtering_and_sorting/search_with_facet_filters)."
+              }
+            ]
           },
           "matchingStrategy": {
             "oneOf": [
@@ -20269,7 +20370,7 @@
               "boolean",
               "null"
             ],
-            "description": "When `true`, runs the query on the whole network (all shards covered exactly once).\n\nWhen `false`, the query runs locally.\n\nWhen omitted or `null`, the default value depends on whether the sharding is enabled for the instance:\n\n- If the instance has sharding enabled (has a leader), defaults to `true`.\n- Otherwise defaults to `false`.\n\n**Enterprise Edition only.** This feature is available in the Enterprise Edition.\n\nIt also requires the `network` [experimental feature](http://localhost:3000/reference/api/experimental-features/configure-experimental-features).\n\nValues: `true` = use the whole network; `false` = local, default = see above.\n\nWhen using the network, the index must exist with compatible settings on all remotes."
+            "description": "When `true`, runs the query on the whole network (all shards covered exactly once).\n\nWhen `false`, the query runs locally.\n\nWhen omitted or `null`, the default value depends on whether the sharding is enabled for the instance:\n\n- If the instance has sharding enabled (has a leader), defaults to `true`.\n- Otherwise defaults to `false`.\n\nIt also requires the `network` [experimental feature](http://localhost:3000/reference/api/experimental-features/configure-experimental-features).\n\nValues: `true` = use the whole network; `false` = local, default = see above.\n\nWhen using the network, the index must exist with compatible settings on all remotes."
           },
           "showRankingScore": {
             "type": "boolean",
@@ -20409,14 +20510,15 @@
             "description": "Restrict search to documents with unique values of specified\nattribute"
           },
           "facets": {
-            "type": [
-              "array",
-              "null"
-            ],
-            "items": {
-              "type": "string"
-            },
-            "description": "Display the count of matches per facet"
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/AttributePatterns",
+                "description": "Display the count of matches per facet"
+              }
+            ]
           },
           "matchingStrategy": {
             "oneOf": [
@@ -20499,7 +20601,7 @@
               "boolean",
               "null"
             ],
-            "description": "When `true`, runs the query on the whole network (all shards covered exactly once).\n\nWhen `false`, the query runs locally.\n\nWhen omitted or `null`, the default value depends on whether the sharding is enabled for the instance:\n\n- If the instance has sharding enabled (has a leader), defaults to `true`.\n- Otherwise defaults to `false`.\n\n**Enterprise Edition only.** This feature is available in the Enterprise Edition.\n\nIt also requires the `network` [experimental feature](http://localhost:3000/reference/api/experimental-features/configure-experimental-features).\n\nValues: `true` = use the whole network; `false` = local, default = see above.\n\nWhen using the network, the index must exist with compatible settings on all remotes."
+            "description": "When `true`, runs the query on the whole network (all shards covered exactly once).\n\nWhen `false`, the query runs locally.\n\nWhen omitted or `null`, the default value depends on whether the sharding is enabled for the instance:\n\n- If the instance has sharding enabled (has a leader), defaults to `true`.\n- Otherwise defaults to `false`.\n\nIt also requires the `network` [experimental feature](http://localhost:3000/reference/api/experimental-features/configure-experimental-features).\n\nValues: `true` = use the whole network; `false` = local, default = see above.\n\nWhen using the network, the index must exist with compatible settings on all remotes."
           },
           "showRankingScore": {
             "type": "boolean",
@@ -20683,6 +20785,9 @@
       },
       "Selector": {
         "type": "object",
+        "required": [
+          "id"
+        ],
         "properties": {
           "indexUid": {
             "oneOf": [
@@ -20695,13 +20800,9 @@
             ]
           },
           "id": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": "string"
           }
-        },
-        "additionalProperties": false
+        }
       },
       "ServiceTier": {
         "type": "string",
@@ -22174,6 +22275,27 @@
           }
         }
       },
+      "TimeCondition": {
+        "type": "object",
+        "properties": {
+          "start": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time",
+            "description": "Start of the time range where this rule can be considered active.\n\nSpecify as a RFC3339 datetime."
+          },
+          "end": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time",
+            "description": "End of the time range where this rule can be considered active.\n\nSpecify as a RFC3339 datetime."
+          }
+        }
+      },
       "TopLogprobs": {
         "type": "object",
         "description": "A most likely token and its log probability at a given position.",
@@ -22299,54 +22421,6 @@
           }
         },
         "additionalProperties": false
-      },
-      "UpdateOrCreateDynamicSearchRuleRequest": {
-        "type": "object",
-        "properties": {
-          "description": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "description": "Human-readable description of the dynamic search rule."
-          },
-          "priority": {
-            "type": [
-              "integer",
-              "null"
-            ],
-            "format": "u-int64",
-            "description": "Precedence of the dynamic search rule. Lower numeric values take precedence over higher\nones. If omitted, the rule is treated as having the lowest precedence. This precedence is\nused to resolve conflicts between matching rules:\n- If the same document is selected by multiple rules, the smallest `priority` number wins\n- If different documents are pinned to the same position, they are ordered by ascending `priority`",
-            "minimum": 0
-          },
-          "active": {
-            "type": [
-              "boolean",
-              "null"
-            ],
-            "description": "Whether the dynamic search rule is active."
-          },
-          "conditions": {
-            "type": [
-              "array",
-              "null"
-            ],
-            "items": {
-              "$ref": "#/components/schemas/Condition"
-            },
-            "description": "Conditions that must match before the dynamic search rule applies."
-          },
-          "actions": {
-            "type": [
-              "array",
-              "null"
-            ],
-            "items": {
-              "$ref": "#/components/schemas/RuleAction"
-            },
-            "description": "Actions to apply when the dynamic search rule matches."
-          }
-        }
       },
       "UpdateStderrLogs": {
         "type": "object",
