@@ -301,13 +301,6 @@ Sets the directory where Meilisearch will store snapshots.
 `--snapshot-dir` only controls where the final `.snapshot` file is written. While creating a snapshot, Meilisearch first copies your entire database (the raw database files) into a temporary staging directory. This directory is located in the path indicated by the `TMPDIR` environment variable, defaulting to `/tmp` on most systems, and not in `--snapshot-dir`. On instances with a large database and a small `/tmp` partition, this can cause `No space left on device` errors even when `--snapshot-dir` points to a volume with plenty of free space. To avoid this, set `TMPDIR` to a directory on a volume with enough space for a full copy of your database before launching Meilisearch.
 </Note>
 
-### Uncompressed snapshots <NoticeTag type="experimental" label="experimental" />
-
-**Environment variable**: `MEILI_EXPERIMENTAL_NO_SNAPSHOT_COMPACTION`<br />
-**CLI option**: `--experimental-no-snapshot-compaction`<br />
-
-Disables snapshot compression. This may significantly speed up snapshot creation at the cost of bigger snapshot files.
-
 ### Import snapshot
 
 **Environment variable**: `MEILI_IMPORT_SNAPSHOT`<br />
@@ -390,22 +383,6 @@ Limit the number of tasks Meilisearch performs in a single batch. May improve st
 
 Sets a maximum payload size for batches in bytes. Smaller batches are less efficient, but consume less RAM and reduce immediate latency.
 
-### Replication parameters <NoticeTag type="experimental" label="experimental" />
-
-<Warning>
-🚩 This option does not take any values. Assigning a value will throw an error. 🚩
-</Warning>
-
-**Environment variable**: `MEILI_EXPERIMENTAL_REPLICATION_PARAMETERS`<br />
-**CLI option**: `--experimental-replication-parameters`<br />
-**Default value**: `None`<br />
-
-Helps running Meilisearch in cluster environments. It does this by modifying task handling in three ways:
-
-- Task auto-deletion is disabled
-- Allows you to manually set task uids by adding a custom `TaskId` header to your API requests
-- Allows you to dry register tasks by specifying a `DryRun: true` header in your request
-
 ### Disable new indexer <NoticeTag type="experimental" label="experimental" />
 
 <Warning>
@@ -417,18 +394,6 @@ Helps running Meilisearch in cluster environments. It does this by modifying tas
 **Default value**: `None`<br />
 
 Falls back to previous settings indexer.
-
-### Disable new indexer for dumps <NoticeTag type="experimental" label="experimental" />
-
-<Warning>
-🚩 This option does not take any values. Assigning a value will throw an error. 🚩
-</Warning>
-
-**Environment variable**: `MEILI_EXPERIMENTAL_NO_EDITION_2024_FOR_DUMPS`<br />
-**CLI option**: `--experimental-no-edition-2024-for-dumps`<br />
-**Default value**: `None`<br />
-
-Falls back to previous indexer when importing dumps.
 
 ### Enable logs route <NoticeTag type="experimental" label="experimental" />
 
