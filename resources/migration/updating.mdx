@@ -5,13 +5,11 @@ description: Learn how to migrate to the latest Meilisearch release.
 sidebarDepth: 3
 ---
 
-import { NoticeTag } from '/snippets/notice_tag.mdx';
-
 import CodeSamplesUpdatingGuideCheckVersionNewAuthorizationHeader from '/snippets/generated-code-samples/code_samples_updating_guide_check_version_new_authorization_header.mdx';
 import CodeSamplesUpdatingGuideCreateDump from '/snippets/generated-code-samples/code_samples_updating_guide_create_dump.mdx';
 import CodeSamplesCreateSnapshot1 from '/snippets/generated-code-samples/code_samples_create_snapshot_1.mdx';
 
-Currently, Meilisearch databases are only compatible with the version of Meilisearch used to create them. The following guide will walk you through using a [dump](/resources/self_hosting/data_backup/dumps) to migrate an existing database from an older version of Meilisearch to the most recent one.
+Meilisearch databases are only compatible with the version of Meilisearch used to create them. The following guide will walk you through upgrading an existing database from an older version of Meilisearch to the most recent one, either with the `--upgrade-db` flag or with a [dump](/resources/self_hosting/data_backup/dumps).
 
 If you're updating your Meilisearch instance on cloud platforms like DigitalOcean or AWS, ensure that you can connect to your cloud instance via SSH. Depending on the user you are connecting with (root, admin, etc.), you may need to prefix some commands with `sudo`.
 
@@ -41,15 +39,19 @@ Once the project has been successfully updated, you will receive an email confir
 
 ## Updating a self-hosted Meilisearch instance
 
-You may update a self-hosted instance in one of two ways: with or without a dump.
+To update a self-hosted instance, create a snapshot of your data, install the new binary, and relaunch Meilisearch with the `--upgrade-db` flag. Meilisearch then upgrades your database on startup.
 
-### Dumpless upgrade <NoticeTag type="experimental" label="experimental" />
+In some cases, Meilisearch cannot upgrade your database this way and returns an error at launch. If that happens, [update your instance using a dump](#using-a-dump) instead.
 
-Dumpless upgrades are available when upgrading from Meilisearch >=v1.12 to Meilisearch >=v1.13
+### Updating with the `--upgrade-db` flag
+
+<Note>
+The `--upgrade-db` flag is available since Meilisearch v1.51. If you are upgrading to an older version, use `--experimental-dumpless-upgrade` instead.
+</Note>
 
 #### Step 1: Make a backup
 
-Dumpless upgrades are an experimental feature. Because of that, it may in rare occasions partially fail and result in a corrupted database. To prevent data loss, create a snapshot of your instance:
+Database upgrades are not atomic. In rare occasions, the process may partially fail and result in a corrupted database. To prevent data loss, create a snapshot of your instance:
 
 <CodeSamplesCreateSnapshot1 />
 
@@ -118,14 +120,14 @@ mv meilisearch /usr/bin/meilisearch
 
 #### Step 4: Relaunch Meilisearch
 
-Execute the command below to import the dump at launch:
+Relaunch Meilisearch with the `--upgrade-db` flag:
 
 <Tabs>
 
 <Tab title="Local installation">
 
 ```bash
-./meilisearch --experimental-dumpless-upgrade
+./meilisearch --upgrade-db
 ```
 
 </Tab>
@@ -133,7 +135,7 @@ Execute the command below to import the dump at launch:
 <Tab title="Cloud platforms">
 
 ```sh
-meilisearch --experimental-dumpless-upgrade
+meilisearch --upgrade-db
 ```
 
 </Tab>
@@ -143,13 +145,23 @@ Meilisearch should launch normally and immediately create a new `UpgradeDatabase
 
 While the task is processing, you may continue making search queries. You may also enqueue new tasks. Meilisearch will only process new tasks once `UpgradeDatabase` is completed.
 
+#### If Meilisearch fails to launch with an error
+
+Meilisearch cannot upgrade databases created with versions older than v1.12. In that case, it fails to launch and returns the following error:
+
+```
+Database version X.Y.Z is too old to be upgraded via `--upgrade-db`. Please generate a dump using the vX.Y.Z and import it in the vA.B.C
+```
+
+If you see this error, reinstall the Meilisearch version your database was created with, relaunch your instance, then [update it using a dump](#using-a-dump).
+
 #### Rolling back an update
 
 If the upgrade is taking too long, or if after the upgrade is completed its task status is set to `failed`, you can cancel the upgrade task.
 
 Cancelling the update task automatically rolls back your database to its state before the upgrade began.
 
-After launching Meilisearch with `--experimental-dumpless-upgrade` flag:
+After launching Meilisearch with the `--upgrade-db` flag:
 
 1. Cancel the `upgradeDatabase` task
 2. If you cancelled the update before it failed, skip to the next step. If the update failed, relaunch Meilisearch using the binary of the version you were upgrading to
@@ -160,6 +172,8 @@ After launching Meilisearch with `--experimental-dumpless-upgrade` flag:
 If you are upgrading Meilisearch to \<= v1.14, you must instead [restart your instance from the snapshot](/resources/self_hosting/data_backup/snapshots#starting-from-a-snapshot) you generated during step 1. You may then retry the upgrade, or upgrade using a dump. You are also welcome to open an issue on the [Meilisearch repository](https://github.com/meilisearch/meilisearch).
 
 ### Using a dump
+
+Use this method when Meilisearch cannot upgrade your database with the `--upgrade-db` flag.
 
 #### Step 1: Export data
 
