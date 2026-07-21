@@ -1,7 +1,13 @@
 <CodeGroup>
 
 ```javascript JS
-client.getDynamicSearchRules()
+client.getDynamicSearchRules({
+  filter: { query: 'invoice' }
+})
+```
+
+```python Python
+client.get_dynamic_search_rules()
 ```
 
 ```php PHP

@@ -2,10 +2,37 @@
 
 ```javascript JS
 client.updateDynamicSearchRule('RULE_UID', {
+  description: 'Promote billing help for invoice searches',
+  precedence: 1,
+  active: true,
+  conditions: {
+    query: { words: 'invoice' }
+  },
   actions: [{
     selector: { indexUid: 'movies', id: '299537' },
     action: { type: 'pin', position: 0 }
   }]
+})
+```
+
+```python Python
+client.update_dynamic_search_rule('black-friday', {
+  'description': 'Black Friday 2025 rules',
+  'precedence': 10,
+  'active': True,
+  'conditions': {
+    'query': {'isEmpty': True},
+    'time': {
+      'start': '2025-11-28T00:00:00Z',
+      'end': '2025-11-28T23:59:59Z'
+    }
+  },
+  'actions': [
+    {
+      'selector': {'indexUid': 'products', 'id': '123'},
+      'action': {'type': 'pin', 'position': 1}
+    }
+  ]
 })
 ```
 
