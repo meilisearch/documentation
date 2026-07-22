@@ -37,20 +37,21 @@ client.update_dynamic_search_rule('black-friday', {
 ```
 
 ```php PHP
-$client->updateDynamicSearchRule('RULE_UID', [
-  'actions' => [
-    [
-      'selector' => [
-        'indexUid' => 'movies',
-        'id' => '299537'
-      ],
-      'action' => [
-        'type' => 'pin',
-        'position' => 0
+$client->updateDynamicSearchRule(
+  (new \Meilisearch\Contracts\UpdateDynamicSearchRuleQuery('RULE_UID'))
+    ->setActions([
+      [
+        'selector' => [
+          'indexUid' => 'movies',
+          'id' => '299537'
+        ],
+        'action' => [
+          'type' => 'pin',
+          'position' => 0
+        ]
       ]
-    ]
-  ]
-]);
+    ])
+);
 ```
 
 ```go Go
