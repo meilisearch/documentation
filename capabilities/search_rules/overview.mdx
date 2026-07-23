@@ -51,7 +51,7 @@ Search rules do not change ranking or scoring. They insert pinned documents on t
 
 A rule combines three parts:
 
-- **Conditions** decide when the rule fires. Query conditions match for emptiness of the search query, or for words contained in the search query. Time conditions activate the rule during a window between a start and end timestamp. If both a query and time condition is provided, both must be met for the rule to apply.
+- **Conditions** decide when the rule fires. Query conditions match for emptiness of the search query, or for words contained in the search query. Time conditions activate the rule during a window between a start and end timestamp. Filter conditions fire when specific facet values are selected in a filter. If multiple conditions are provided, they must all be met for the rule to apply.
 - **Actions** decide what the rule does. Pinning is the only available action today. An action targets one document via `indexUid` and `id`, and places it at a fixed `position` in the result list.
 - **Precedence** decides which rule wins when several match at once. Lower numeric values take precedence over higher ones. Omitting precedence treats the rule as the last precedence, meaning it will be considered after all rules that define a precedence.
 
