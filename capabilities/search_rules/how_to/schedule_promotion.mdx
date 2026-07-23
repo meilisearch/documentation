@@ -88,7 +88,7 @@ Send a `PATCH /dynamic-search-rules/summer-sale-2026`:
 }
 ```
 
-- `scope: "time"` takes a `start` and an `end` timestamp in RFC 3339 UTC format.
+- `time` takes a `start` and an `end` timestamp in RFC 3339 UTC format.
 - You can omit either `start` or `end` to create an open-ended window. For example, a rule with only `end` expires at that date but applies immediately. A rule with only `start` activates at that date and never expires until you remove it.
 - Multiple conditions are combined with `AND`. You cannot express "this query between these dates OR that query between other dates" in a single rule, create two rules with different `uid` values instead.
 

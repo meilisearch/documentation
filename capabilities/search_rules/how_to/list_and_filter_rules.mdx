@@ -60,7 +60,7 @@ The response contains the rules that match, with the same structure you used to 
 - `filter.query` accepts a string query. `promo` returns every rule whose description contains the words "promo". `seasonal` returns every rule whose description contains the word `seasonal`. The search rules applied are similar to a search in a regular index.
 - `filter.active` filters by status: `true` returns only active rules, `false` returns only paused rules. Omit the field to return rules regardless of status.
 
-You can combine filters. The example above returns active rules whose containing `promo`, which is exactly the campaign-audit case described above.
+You can combine filters. The example above returns active rules containing `promo`, which is exactly the campaign-audit case described above.
 
 ### Retrieve a single rule
 
