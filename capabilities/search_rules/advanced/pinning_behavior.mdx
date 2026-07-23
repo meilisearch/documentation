@@ -22,19 +22,20 @@ This is useful for help centers, promotions, and landing pages, where the docume
 
 Pinned documents do not bypass filters. If the current search filters exclude a pinned document, Meilisearch drops it instead of forcing it into the response. This keeps pinned results consistent with visibility, safety, and authorization rules already enforced by your filters.
 
-## Matching behavior of `contains`
+## Matching behavior of `words`
 
-The query condition `contains` performs a case-insensitive literal substring match. It is not fuzzy, semantic, or pattern-aware.
+The query condition `words` acts similarly to the `All` matching strategy in a search, meaning that any words (after normalization) appearing in this condition
+must be present in the search query to match the rule.
 
-For example, `contains: "call history"` matches `where is call history`, but it does not match `history of calls` because the substring order differs.
+For example, `words: "call history"` matches `where is call history`, but it also matches `history of calls`.
 
-Search rules do not support regex, wildcards, or numeric-pattern matching (such as "any 6-digit code"). For more flexible matching, create several rules with different `contains` values.
+Search rules do not support regex, wildcards, or numeric-pattern matching (such as "any 6-digit code"). For more flexible matching, create several rules with different `words` values.
 
 ## Precedence between rules
 
-Use `priority` to control which rule wins when several matching rules compete. Lower numeric values take precedence over higher ones.
+Use `precedence` to control which rule wins when several matching rules compete. Lower numeric values take precedence over higher ones.
 
-If you omit `priority`, treat the rule as having the lowest precedence.
+If you omit `precedence`, treat the rule as having the last precedence, meaning it will appear after any rule that has a set precedence.
 
 ## Result-set behavior
 
@@ -47,6 +48,6 @@ Search rules preserve normal response behavior:
 
 ## Storage model
 
-Search rules are stored at the instance level, not as per-index settings. A single rule can target documents in any index by setting `indexUid` inside the action selector. This keeps curation configuration centralized, but it also means that rules live outside the usual index-settings lifecycle.
+Search rules are stored at the instance level, not as per-index settings. A single rule can target documents in any index by leaving out `indexUid` inside the action selector. This keeps curation configuration centralized, but it also means that rules live outside the usual index-settings lifecycle.
 
 For the full list of matching and action capabilities the current version supports (and the ones it does not), see [the overview](/capabilities/search_rules/overview#current-scope).

@@ -41,7 +41,7 @@ Send a `PATCH /dynamic-search-rules/{uid}` with only the `active` field:
 }
 ```
 
-Because the `PATCH` route is an upsert that only modifies the fields you send, this request leaves every other field untouched. The response returns `200 OK` with the full updated rule, which should now show `"active": false`.
+Because the `PATCH` route is an upsert that only modifies the fields you send, this request leaves every other field untouched. The response returns `202 Accepted` with the corresponding task for the asynchronous update.
 
 To reactivate the rule, send the same request with `true`:
 
@@ -60,7 +60,7 @@ When a rule is paused:
 - It is skipped at search time, no pin is inserted
 - Time conditions are evaluated normally if the rule is reactivated later. A rule reactivated after its `end` date still does not fire because the time condition fails
 
-When a rule is reactivated, it fires again from the next search request on, with no warm-up period.
+When a rule is reactivated, it fires again from the next search request on, as soon as the corresponding asynchronous task has been processed.
 
 ## Pause versus delete versus expire
 
@@ -78,7 +78,7 @@ Prefer pausing over deleting whenever you think the rule might come back. Deleti
 - **Safe rollback after a bad edit**: if you just made changes to a rule and something looks off in production, flip `active` to `false` first, then investigate. Do not delete the rule while debugging.
 - **Seasonal rules on standby**: for recurring campaigns (Black Friday, summer sale), keep the rule paused between campaigns and reactivate it a few days before launch. Remember to update the time window before reactivating.
 - **Bulk pause**: the API has no bulk update, so pausing many rules at once requires a script that iterates over rule IDs. See [List or filter existing rules](/capabilities/search_rules/how_to/list_and_filter_rules) for how to enumerate rules first.
-- **Precedence interactions**: while a rule is paused, it does not participate in priority comparisons. A lower-priority rule that would normally lose to the paused rule can now fire. Double-check after pausing a high-priority rule.
+- **Precedence interactions**: while a rule is paused, it does not participate in precedence comparisons. A late-precedence rule that would normally lose to the paused rule can now fire. Double-check after pausing an early-precedence rule.
 
 ## Next steps
 

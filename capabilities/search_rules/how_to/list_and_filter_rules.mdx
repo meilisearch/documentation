@@ -26,7 +26,7 @@ The **Search rules** tab shows every stored rule in a single table. For each rul
 - **Rule ID** (the rule's `uid`)
 - **Conditions** in a readable summary
 - **Actions** (the number of pins and their positions)
-- **Priority**
+- **Rank**
 - **Active** toggle
 
 ![Search rules list with several rules visible](/assets/images/cloud-search-rules/06-rules-list.png)
@@ -35,7 +35,7 @@ The row toggle pauses a rule without deleting it. The icons on the right edit or
 
 ### 2. Find a specific rule
 
-The dashboard list is designed for a moderate number of rules. If you need to search by `uid` pattern or by active state across many rules, use the API instead. The dashboard is good for spot checks, the API is good for audits.
+The dashboard list is designed for a moderate number of rules. If you need to search by description or by active state across many rules, use the API instead. The dashboard is good for spot checks, the API is good for audits.
 
 ## List rules from the API
 
@@ -46,21 +46,21 @@ Send a `POST /dynamic-search-rules` with pagination and optional filters:
   "offset": 0,
   "limit": 20,
   "filter": {
-    "attributePatterns": ["promo*"],
+    "query": "promo",
     "active": true
   }
 }
 ```
 
-The response contains the rules that match, with the same structure you used to create them (`uid`, `conditions`, `actions`, `priority`, `active`, `description`).
+The response contains the rules that match, with the same structure you used to create them (`uid`, `conditions`, `actions`, `precedence`, `active`, `description`).
 
 ### Parameters
 
 - `offset` and `limit` control pagination. Defaults are `offset: 0` and `limit: 20`. The maximum `limit` varies by Meilisearch version, keep requests under a few hundred rules per call.
-- `filter.attributePatterns` accepts a list of attribute-pattern strings. `promo*` returns every rule whose `uid` starts with `promo`. `*seasonal*` returns every rule whose `uid` contains `seasonal`. Patterns are case-sensitive.
+- `filter.query` accepts a string query. `promo` returns every rule whose description contains the words "promo". `seasonal` returns every rule whose description contains the word `seasonal`. The search rules applied are similar to a search in a regular index.
 - `filter.active` filters by status: `true` returns only active rules, `false` returns only paused rules. Omit the field to return rules regardless of status.
 
-You can combine filters. The example above returns active rules whose `uid` starts with `promo-`, which is exactly the campaign-audit case described above.
+You can combine filters. The example above returns active rules containing `promo`, which is exactly the campaign-audit case described above.
 
 ### Retrieve a single rule
 
@@ -77,13 +77,12 @@ This returns the full rule definition, which is convenient when you want to edit
 - **Expired promotions**: list every rule with `active: false` to find paused rules you might still want to keep for future campaigns, or delete if they are truly one-off.
 - **Rules per index**: the list response includes each rule's actions, so you can group by `selector.indexUid` locally to see how many pins target each index.
 - **Scheduled promotions**: list every rule whose conditions contain a `time` scope with a `start` in the future. This is a good sanity check before a campaign goes live.
-- **Priority conflicts**: list rules that share a `contains` value and compare their `priority` values. If two rules have the same priority and target different documents for the same query, ordering is not guaranteed.
+- **Priority conflicts**: list rules that share a `words` value and compare their `precedence` values. If two rules have the same precedence and target different documents for the same query, ordering is not guaranteed.
 
 ## Variations and tips
 
 - **Pagination for large rule sets**: page through the rules in batches of 20 to 100. Do not try to fetch everything in a single request if you have hundreds of rules.
 - **Scripting audits**: combine the list API with `DELETE /dynamic-search-rules/{uid}` or `PATCH /dynamic-search-rules/{uid}` to script bulk cleanup. Always list first, inspect the result, then apply changes.
-- **Version control**: search rules live at the instance level, not inside an index settings object, so they are not exported with `meilisearch dumps`. Keep a copy of your important rules in your own version control if you need rollback safety.
 
 ## Next steps
 

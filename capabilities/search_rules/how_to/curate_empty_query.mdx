@@ -31,13 +31,7 @@ Click **New rule**. Give it a descriptive Rule ID such as `empty-state-help`, ad
 
 ### 2. Add an empty query condition
 
-In the **Conditions** block, click **Add condition**. In the dialog:
-
-- Set **Type** to `Query is empty`
-
-`Query is empty` has no additional fields to fill. The condition simply asserts that the search request has no `q` value, or that `q` is an empty string.
-
-Click **Add condition** to save.
+In the **Conditions** block, click the combo box under `Query`. Pick the `Empty query` option
 
 ![Add condition dialog with the "Query is empty" type selected](/assets/images/cloud-search-rules/04-add-condition.png)
 
@@ -65,9 +59,11 @@ Send a `PATCH /dynamic-search-rules/empty-state-help`:
 {
   "description": "Curate the default help-center browse state",
   "active": true,
-  "conditions": [
-    { "scope": "query", "isEmpty": true }
-  ],
+  "conditions": {
+    "query": {
+      "isEmpty": true
+    }
+  },
   "actions": [
     {
       "selector": { "indexUid": "support", "id": "quickstart-overview" },
@@ -86,7 +82,7 @@ Send a `PATCH /dynamic-search-rules/empty-state-help`:
 ```
 
 - `isEmpty: true` means the rule only fires when the search request contains no query text.
-- `isEmpty` and `contains` are mutually exclusive within a single condition. A condition either matches empty queries or matches queries containing a substring.
+- `isEmpty: true` and `words` are mutually exclusive within a single condition. A condition either matches empty queries or matches queries containing words.
 - Pinned documents do not need to match the query text, which is convenient here because there is no query text to match.
 
 ## When the rule fires
@@ -97,7 +93,7 @@ The rule fires whenever Meilisearch receives:
 - A search request where `q` is the empty string `""`
 - A search request where `q` contains only whitespace (case-insensitive, accent-insensitive behavior is irrelevant here)
 
-The rule does not fire for requests with a non-empty query, even a single character. For those, use a `contains` condition instead. See [Pin one result for a query](/capabilities/search_rules/how_to/pin_one_result_for_query).
+The rule does not fire for requests with a non-empty query, even a single non separator character. For those, use a `words` condition instead. See [Pin one result for a query](/capabilities/search_rules/how_to/pin_one_result_for_query).
 
 ## Variations and tips
 

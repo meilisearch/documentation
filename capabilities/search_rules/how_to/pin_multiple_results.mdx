@@ -21,13 +21,13 @@ Open your project in the [Meilisearch Cloud dashboard](https://cloud.meilisearch
 
 ### 1. Create or edit the rule
 
-If you have already created an `invoice-help` rule (see [Pin one result for a query](/capabilities/search_rules/how_to/pin_one_result_for_query)), click it in the list to edit it. Otherwise, click **New rule** and fill in the Rule ID, Description, and Priority as usual.
+If you have already created an `invoice-help` rule (see [Pin one result for a query](/capabilities/search_rules/how_to/pin_one_result_for_query)), click it in the list to edit it. Otherwise, click **New rule** and fill in the Rule ID, Description, and Rank as usual.
 
 ![Rule editor with General, Conditions, and Actions sections](/assets/images/cloud-search-rules/03-manage-rule.png)
 
 ### 2. Add the query condition
 
-In the **Conditions** block, add a **Query contains** condition with the substring `invoice`. You only need one condition: both pins fire together whenever the query matches.
+In the **Conditions** block, add a **Query words** condition with the word `invoice`. You only need one condition: both pins fire together whenever the query matches.
 
 ### 3. Add the first pin
 
@@ -67,9 +67,11 @@ Send a `PATCH /dynamic-search-rules/invoice-help` with two actions:
 {
   "description": "Show billing resources first for invoice searches",
   "active": true,
-  "conditions": [
-    { "scope": "query", "contains": "invoice" }
-  ],
+  "conditions": {
+    "query": {
+      "words": "invoice"
+    }
+  },
   "actions": [
     {
       "selector": { "indexUid": "support", "id": "billing-workspace-overview" },
@@ -83,7 +85,7 @@ Send a `PATCH /dynamic-search-rules/invoice-help` with two actions:
 }
 ```
 
-- Positions are zero-indexed. `0` is the first slot, `1` is the second, and so on.
+- Positions in the API are zero-indexed. `0` is the first slot, `1` is the second, and so on.
 - Each action targets exactly one document. To pin three documents, add three actions.
 - You can mix documents from different indexes by setting a different `indexUid` per action. This is useful for federated search layouts where the same rule should promote results across multiple indexes.
 
@@ -102,7 +104,7 @@ If one of the pins is filtered out but the other one is not, only the surviving 
 
 - **Non-contiguous positions**: nothing stops you from pinning at positions `0` and `5`. The gap between the two pins is filled with organic results. Use this when you want to interleave pinned and organic content.
 - **Same document, same rule**: pinning the same document at two different positions is not useful. Meilisearch deduplicates the final result set, so the document only appears once.
-- **Competing rules on the same position**: if two rules both try to pin a different document at position `0`, the rule with the lower `priority` value wins. See [Precedence between rules](/capabilities/search_rules/advanced/pinning_behavior#precedence-between-rules).
+- **Competing rules on the same position**: if two rules both try to pin a different document at position `0`, the rule with the lower `precedence` value wins. See [Precedence between rules](/capabilities/search_rules/advanced/pinning_behavior#precedence-between-rules).
 - **Large pinned lists**: pinning many documents removes relevance control over those slots. Keep pinned sets small, usually two to five documents, and let organic ranking handle the rest.
 
 ## Next steps

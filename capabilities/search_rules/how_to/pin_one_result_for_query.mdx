@@ -27,22 +27,15 @@ Click **New rule** in the top-right corner.
 
 ### 2. Fill in the rule's general information
 
-Give the rule a descriptive **Rule ID**, for example `invoice-help`. This value becomes the rule's `uid` in the API and cannot be changed later without recreating the rule. Add a short **Description** so your team knows what the rule does. Leave **Priority** at `0` unless you already have a competing rule, and keep the **Active** toggle on so the rule applies at search time.
+Give the rule a descriptive **Rule ID**, for example `invoice-help`. This value becomes the rule's `uid` in the API and cannot be changed later without recreating the rule. Add a short **Description** so your team knows what the rule does. Leave **Rank** at `0` unless you already have a competing rule, and keep the **Active** toggle on so the rule applies at search time.
 
-![Rule editor showing Rule ID, Description, and Priority fields with the Active toggle on](/assets/images/cloud-search-rules/03-manage-rule.png)
+![Rule editor showing Rule ID, Description, and Rank fields with the Active toggle on](/assets/images/cloud-search-rules/03-manage-rule.png)
 
 ### 3. Add a query condition
 
-In the **Conditions** block, click **Add condition**. In the dialog:
-
-- Set **Type** to `Query contains`
-- Enter `invoice` in the **Contains substring** field
-
-Click **Add condition** to save.
+In the **Conditions** block, click the combo box below `Query`, then pick `Contains all words`, and enter `invoice` in the nearby field.
 
 ![Add condition dialog with "Query contains" type and a substring input](/assets/images/cloud-search-rules/04-add-condition.png)
-
-The match is case-insensitive and accent-insensitive, so the rule fires for "Invoice", "INVOICE", "invoice settings", and any other query that contains "invoice" as a substring. It does not fire for unrelated words that happen to share letters (for example, "voice").
 
 ### 4. Pin the target document
 
@@ -72,9 +65,11 @@ Send a `PATCH /dynamic-search-rules/invoice-help` with the following body:
 {
   "description": "Promote billing help for invoice searches",
   "active": true,
-  "conditions": [
-    { "scope": "query", "contains": "invoice" }
-  ],
+  "conditions": {
+    "query": {
+      "words": "invoice"
+    }
+  },
   "actions": [
     {
       "selector": { "indexUid": "support", "id": "billing-workspace-overview" },
@@ -87,7 +82,7 @@ Send a `PATCH /dynamic-search-rules/invoice-help` with the following body:
 - `uid` comes from the URL (`invoice-help`), not from the body.
 - `position: 0` targets the first result slot.
 - `indexUid` in the selector scopes the pin to the document living in the `support` index. If you omit it, Meilisearch treats the pin as a cross-index reference.
-- The route is an upsert: it returns `201 Created` on the first write and `200 OK` on subsequent updates.
+- The route returns a `202 ACCEPTED` and the task that needs processing for the rule to be active.
 
 ## How Meilisearch evaluates the rule
 
@@ -99,13 +94,6 @@ At search time, Meilisearch:
 4. Removes duplicates from the final result set
 
 If the pinned document is missing from the index or filtered out by the search request, Meilisearch drops the pin instead of forcing the document into the response. Organic results fill the rest of the positions.
-
-## Variations and tips
-
-- **Shorter substrings for broader matches**: to fire on both "invoice" and "invoices", use `invoic` as the substring.
-- **One substring per rule**: `contains` accepts a single substring. If you want the same pin for multiple unrelated queries, create a separate rule for each substring.
-- **Cross-checking with filters**: if your search uses strict visibility filters, test the rule against a realistic query to confirm the pinned document is not filtered out.
-- **Regex, wildcards, or fuzzy matching**: not supported. See [matching behavior of contains](/capabilities/search_rules/advanced/pinning_behavior#matching-behavior-of-contains).
 
 ## Next steps
 
