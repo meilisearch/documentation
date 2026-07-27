@@ -4,6 +4,89 @@ description: "New features and improvements in Meilisearch"
 rss: true
 ---
 
+<Update label="v1.51" description="2026-07-27">
+
+## Improvements
+
+**Filter condition for Dynamic Search Rules**
+
+Dynamic Search Rules now support a `filter` activation condition. This lets you declare that a rule should only activate when specific facet filter values are present in the search request. The condition contains a `values` object mapping facet names to their required filter values:
+
+```http
+PATCH /dynamic-search-rules/test-filter
+```
+
+```json
+{
+  "conditions": {
+    "filter": {
+      "values": {
+        "color": "red",
+        "category": "shirt"
+      }
+    }
+  },
+  "actions": []
+}
+```
+
+New environment variables control DSR filter fuel allocation: `MEILI_EXPERIMENTAL_DSR_FUEL_FILTER_FUEL`, `MEILI_EXPERIMENTAL_DSR_FUEL_FILTER_OR_FUEL`, `MEILI_EXPERIMENTAL_DSR_FUEL_FILTER_AND_FUEL`, and `MEILI_EXPERIMENTAL_DSR_FUEL_FILTER_DEPTH_FUEL`.
+
+DSR list responses now include a `lastUpdatedAt` field, and the `POST /dynamic-search-rules` endpoint returns rules in descending `lastUpdatedAt` order.
+
+**Faster search on large datasets**
+
+An optimization reduces disk data retrieval to a single occurrence across the search pipeline. This is particularly beneficial for large datasets with many fields, with up to 5.4x speed improvement measured on datasets with 14k+ fields.
+
+## Other
+
+**`--experimental-dumpless-upgrade` renamed to `--upgrade-db`**
+
+The dumpless upgrade flag has been stabilized and renamed. Update your startup configuration to use `--upgrade-db` instead of `--experimental-dumpless-upgrade`.
+
+**Removed experimental flags**
+
+The following experimental flags have been removed: `--experimental-replication-parameters`, `--experimental-no-edition-2024-for-dumps`, and `--experimental-no-snapshot-compaction`.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.51.0)
+
+</Update>
+
+<Update label="v1.50" description="2026-07-20">
+
+## New Features
+
+**Federated document fetch across shards**
+
+When using Meilisearch's network sharding feature, the document fetch routes (`GET` and `POST /indexes/{index_uid}/documents`) now retrieve documents from all shards by default. Set `useNetwork: false` in your request to fetch only from the local instance.
+
+**Wildcard facet patterns in search**
+
+Facet search now supports wildcard patterns. You can filter by patterns containing `*`, for example `dogs.*`, to match all facets under a given prefix.
+
+## Improvements
+
+**Dynamic Search Rules scaling**
+
+Dynamic Search Rules now support configurations with 75,000+ rules without impacting search performance. A new "DSR fuel" concept controls resource allocation. You can tune the behavior using environment variables like `MEILI_EXPERIMENTAL_DSR_FUEL_MAX_ACTIVE_RULES`.
+
+## Other
+
+**Dynamic Search Rules API changes (experimental)**
+
+The experimental Dynamic Search Rules API has several breaking changes in this release:
+
+- The `priority` field has been renamed to `precedence`
+- `conditions` changed from an array to an object with `query` and `time` fields
+- The `contains` field in query conditions is replaced by `words`, which uses normalized word matching
+- Action selectors now require an `id` field
+- The `attributePatterns` filter parameter is replaced by `query`
+- `PATCH` and `DELETE` operations are now asynchronous and return tasks instead of immediate results
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.50.0)
+
+</Update>
+
 <Update label="v1.49" description="2026-07-06">
 
 ## Improvements

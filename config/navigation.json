@@ -584,6 +584,7 @@
                   "group": "Search Rules",
                   "pages": [
                     "POST /dynamic-search-rules",
+                    "DELETE /dynamic-search-rules",
                     "GET /dynamic-search-rules/{uid}",
                     "PATCH /dynamic-search-rules/{uid}",
                     "DELETE /dynamic-search-rules/{uid}"
