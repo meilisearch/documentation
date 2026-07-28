@@ -14,6 +14,11 @@ client.get_dynamic_search_rules()
 $client->getDynamicSearchRules();
 ```
 
+```java Java
+DynamicSearchRulesQuery query = new DynamicSearchRulesQuery();
+Results<DynamicSearchRule> rules = client.listDynamicSearchRules(query);
+```
+
 ```go Go
 client.ListSearchRules(&meilisearch.SearchRulesParams{})
 ```

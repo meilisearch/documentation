@@ -54,6 +54,22 @@ $client->updateDynamicSearchRule(
 );
 ```
 
+```java Java
+List<Map<String, Object>> conditions = List.of(
+    Map.of("scope", "query", "isEmpty", true),
+    Map.of("scope", "time", "start", "2025-11-28T00:00:00Z", "end", "2025-11-28T23:59:59Z"));
+
+List<Map<String, Object>> actions = List.of(
+    Map.of(
+        "selector", Map.of("indexUid", "products", "id", "123"),
+        "action", Map.of("type", "pin", "position", 1)));
+
+DynamicSearchRule rule = new DynamicSearchRule(
+    "black-friday", "Black Friday 2025 rules", 10, true, conditions, actions);
+
+TaskInfo task = client.updateDynamicSearchRule("black-friday", rule);
+```
+
 ```go Go
 active := true
 isEmpty := true
