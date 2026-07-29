@@ -55,9 +55,9 @@ $client->updateDynamicSearchRule(
 ```
 
 ```java Java
-List<Map<String, Object>> conditions = List.of(
-    Map.of("scope", "query", "isEmpty", true),
-    Map.of("scope", "time", "start", "2025-11-28T00:00:00Z", "end", "2025-11-28T23:59:59Z"));
+Map<String, Object> conditions = Map.of(
+    "query", Map.of("isEmpty", true),
+    "time", Map.of("start", "2025-11-28T00:00:00Z", "end", "2025-11-28T23:59:59Z"));
 
 List<Map<String, Object>> actions = List.of(
     Map.of(
