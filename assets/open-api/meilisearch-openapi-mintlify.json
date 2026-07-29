@@ -1494,7 +1494,7 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
-            "source": "curl \\\n  -X PATCH 'MEILISEARCH_URL/dynamic-search-rules/black-friday' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '{\n    \"description\": \"Black Friday 2025 rules\",\n    \"priority\": 10,\n    \"active\": true,\n    \"conditions\": [\n      { \"scope\": \"query\", \"isEmpty\": true },\n      { \"scope\": \"time\", \"start\": \"2025-11-28T00:00:00Z\", \"end\": \"2025-11-28T23:59:59Z\" }\n    ],\n    \"actions\": [\n      {\n        \"selector\": { \"indexUid\": \"products\", \"id\": \"123\" },\n        \"action\": { \"type\": \"pin\", \"position\": 1 }\n      }\n    ]\n  }'"
+            "source": "curl \\\n  -X PATCH 'MEILISEARCH_URL/dynamic-search-rules/black-friday' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '{\n    \"description\": \"Black Friday 2025 rules\",\n    \"precedence\": 10,\n    \"active\": true,\n    \"conditions\": {\n      \"query\": { \"isEmpty\": true },\n      \"time\": { \"start\": \"2025-11-28T00:00:00Z\", \"end\": \"2025-11-28T23:59:59Z\" }\n    },\n    \"actions\": [\n      {\n        \"selector\": { \"indexUid\": \"products\", \"id\": \"123\" },\n        \"action\": { \"type\": \"pin\", \"position\": 1 }\n      }\n    ]\n  }'"
           }
         ]
       }
