@@ -54,15 +54,15 @@ The following experimental flags have been removed: `--experimental-replication-
 
 <Update label="v1.50" description="2026-07-20">
 
-## New Features
+## New features
 
 **Federated document fetch across shards**
 
-When using Meilisearch's network sharding feature, the document fetch routes (`GET` and `POST /indexes/{index_uid}/documents`) now retrieve documents from all shards by default. Set `useNetwork: false` in your request to fetch only from the local instance.
+When using Meilisearch's network sharding feature, the document fetch routes (`GET /indexes/{index_uid}/documents`, `GET /indexes/{index_uid}/documents/{document_id}`, and `POST /indexes/{index_uid}/documents/fetch`) now retrieve documents from all shards by default. Set `useNetwork: false` in your request to fetch only from the local instance.
 
 **Wildcard facet patterns in search**
 
-Facet search now supports wildcard patterns. You can filter by patterns containing `*`, for example `dogs.*`, to match all facets under a given prefix.
+The `facets` parameter in search and federated search now supports wildcard patterns. You can use patterns containing `*`, for example `dogs.*`, to match all facets under a given prefix. Matching fields are included in the facet distribution.
 
 ## Improvements
 

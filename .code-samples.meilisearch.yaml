@@ -1590,7 +1590,7 @@ patch_dynamic_search_rule_1: |-
     -H 'Content-Type: application/json' \
     --data-binary '{
       "description": "Black Friday 2025 rules",
-      "priority": 10,
+      "precedence": 10,
       "active": true,
       "conditions": {
         "query": {
