@@ -185,8 +185,8 @@ namespace Meilisearch_demo
 // In your .toml file:
   [dependencies]
   meilisearch-sdk = "0.33.0"
-  # futures: because we want to block on futures
-  futures = "0.3"
+  # tokio: async runtime required by the Meilisearch SDK
+  tokio = { version = "1", features = ["full"] }
   # serde: required if you are going to use documents
   serde = { version="1.0",   features = ["derive"] }
   # serde_json: required in some parts of this guide
@@ -224,10 +224,14 @@ use meilisearch_sdk::{
 };
 use serde::{Serialize, Deserialize};
 use std::{io::prelude::*, fs::File};
-use futures::executor::block_on;
 
-fn main() { block_on(async move {
-  let client = Client::new("MEILISEARCH_URL", Some("aSampleMasterKey"));
+#[tokio::main]
+async fn main() {
+  let client = Client::new(
+    "MEILISEARCH_URL",
+    Some("aSampleMasterKey"),
+  )
+  .unwrap();
 
   // Reading and parsing the file
   let mut file = File::open("movies.json")
@@ -245,7 +249,7 @@ fn main() { block_on(async move {
     .add_documents(&movies_docs, None)
     .await
     .unwrap();
-})}
+}
 ```
 
 ```swift Swift

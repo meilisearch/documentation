@@ -72,10 +72,14 @@ use meilisearch_sdk::{
 };
 use serde::{Serialize, Deserialize};
 use std::{io::prelude::*, fs::File};
-use futures::executor::block_on;
 
-fn main() { block_on(async move {
-  let client = Client::new("MEILISEARCH_URL", Some("masterKey"));
+#[tokio::main]
+async fn main() {
+  let client = Client::new(
+    "MEILISEARCH_URL",
+    Some("masterKey"),
+  )
+  .unwrap();
 
   // reading and parsing the file
   let mut file = File::open("movies.json")
@@ -93,7 +97,7 @@ fn main() { block_on(async move {
     .add_documents(&movies_docs, None)
     .await
     .unwrap();
-})}
+}
 ```
 
 ```swift Swift
