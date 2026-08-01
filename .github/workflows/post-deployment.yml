@@ -34,7 +34,7 @@ jobs:
           echo "run=${value:-false}" >> "$GITHUB_OUTPUT"
 
       - name: Setup Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: "20"
           cache: "npm"
@@ -86,7 +86,7 @@ jobs:
           token: ${{ secrets.GH_TOKEN }}
 
       - name: Setup Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: "20"
           cache: "npm"
@@ -134,7 +134,7 @@ jobs:
           token: ${{ secrets.GH_TOKEN }}
 
       - name: Setup Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: "20"
           cache: "npm"
@@ -188,7 +188,7 @@ jobs:
           token: ${{ secrets.GH_TOKEN }}
 
       - name: Setup Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: "20"
           cache: "npm"
@@ -269,7 +269,7 @@ jobs:
           token: ${{ secrets.GH_TOKEN }}
 
       - name: Setup Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: "20"
           cache: "npm"
