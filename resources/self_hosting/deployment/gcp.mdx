@@ -45,7 +45,7 @@ sudo mv ./meilisearch /usr/local/bin/
 <Note>
 **SELinux systems: Fedora, RHEL, Rocky Linux, AlmaLinux, and CentOS Stream**
 
-If SELinux runs in enforcing mode, the binary keeps the security context of the directory you downloaded it into. This prevents systemd from running it in [step 4](#step-4-run-meilisearch-as-a-service), which fails with `Failed at step EXEC spawning /usr/local/bin/meilisearch: Permission denied`.
+`mv` preserves the binary's original SELinux context instead of relabeling it for its new location, so the file in `/usr/local/bin` keeps the context of the directory you downloaded it into. If SELinux runs in enforcing mode, this prevents systemd from running it in [step 4](#step-4-run-meilisearch-as-a-service), which fails with `Failed at step EXEC spawning /usr/local/bin/meilisearch: Permission denied`.
 
 Restore the default context of the binary:
 
