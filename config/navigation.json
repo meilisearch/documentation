@@ -584,6 +584,7 @@
                   "group": "Search Rules",
                   "pages": [
                     "POST /dynamic-search-rules",
+                    "DELETE /dynamic-search-rules",
                     "GET /dynamic-search-rules/{uid}",
                     "PATCH /dynamic-search-rules/{uid}",
                     "DELETE /dynamic-search-rules/{uid}"
@@ -596,14 +597,16 @@
                     "GET /tasks/{task_id}",
                     "GET /tasks/{task_id}/documents",
                     "POST /tasks/cancel",
-                    "DELETE /tasks"
+                    "DELETE /tasks",
+                    "GET /tasks/stream"
                   ]
                 },
                 {
                   "group": "Batches",
                   "pages": [
                     "GET /batches",
-                    "GET /batches/{batch_id}"
+                    "GET /batches/{batch_id}",
+                    "GET /batches/stream"
                   ]
                 },
                 {
