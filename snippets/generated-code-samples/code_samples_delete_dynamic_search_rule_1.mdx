@@ -17,7 +17,8 @@ TaskInfo task = client.deleteDynamicSearchRule("black-friday");
 ```
 
 ```go Go
-client.DeleteSearchRule("black-friday")
+uid := "black-friday"
+client.DeleteSearchRule(&uid)
 ```
 
 ```csharp C#

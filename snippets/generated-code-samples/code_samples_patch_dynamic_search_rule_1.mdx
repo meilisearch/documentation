@@ -79,15 +79,13 @@ client.UpdateSearchRule("black-friday", &meilisearch.SearchRulesRequest{
   Description: "Black Friday 2025 rules",
   Priority: 10,
   Active: &active,
-  Conditions: []meilisearch.Condition{
-    {
-      Scope:   "query",
+  Conditions: &meilisearch.Conditions{
+    Query: &meilisearch.QueryCondition{
       IsEmpty: &isEmpty,
     },
-    {
-      Scope: "time",
+    Time: &meilisearch.TimeCondition{
       Start: &startTime,
-      End:   &endTime,
+      End: &endTime,
     },
   },
   Actions: []meilisearch.Action{
