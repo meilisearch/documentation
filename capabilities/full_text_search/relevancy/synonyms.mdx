@@ -20,7 +20,7 @@ The number of search results may vary depending on changes to the `movies` datas
 
 ## Normalization
 
-All synonyms are **lowercased** and **de-unicoded** during the indexing process.
+During the indexing process, all synonyms are processed by using the index settings, i.e., stop words, separator and non-separator tokens. Always make sure no synonyms are treated as separator tokens (e.g., `&`), or they'll be ignored during the search.
 
 ### Example
 
