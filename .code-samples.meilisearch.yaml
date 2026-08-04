@@ -1586,7 +1586,7 @@ patch_dynamic_search_rule_1: |-
     -H 'Content-Type: application/json' \
     --data-binary '{
       "description": "Black Friday 2025 rules",
-      "priority": 10,
+      "precedence": 10,
       "active": true,
       "conditions": {
         "query": {
@@ -2126,19 +2126,4 @@ rbac_multi_level_1: |-
     --data-binary '{
       "q": "sensitive",
       "filter": "_foreign(access, (user = \"jeremy@meilisearch.com\" AND roles IN [\"editor\", \"owner\"]) OR (teams IN [\"product\", \"engineering\"] AND roles IN [\"editor\"]))"
-    }'
-# post_render_template
-post_render_template_1: |-
-  curl \
-    -X POST 'MEILISEARCH_URL/render-template' \
-    -H 'Content-Type: application/json' \
-    --data-binary '{
-      "template": {
-        "kind": "inlineDocumentTemplate",
-        "inline": "A document template rendered on {{doc.id}}"
-      },
-      "input": {
-        "kind": "inlineDocument",
-        "inline": { "id": "this document" }
-      }
     }'

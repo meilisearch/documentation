@@ -4,6 +4,106 @@ description: "New features and improvements in Meilisearch"
 rss: true
 ---
 
+<Update label="v1.52" description="2026-08-03">
+
+## New Features
+
+**SSE streaming routes for tasks and batches (experimental)**
+
+Two new Server-Sent Events (SSE) routes allow you to subscribe to live updates instead of polling:
+
+- `GET /tasks/stream`: streams task status updates in real time
+- `GET /batches/stream`: streams batch status updates in real time
+
+These routes are experimental. Enable them with the `tasksStreamingRoute` experimental feature flag before use.
+
+## Improvements
+
+**Faster document retrieval**
+
+Document formatting has been optimized from O(n) to O(1) complexity, delivering significant speed improvements when retrieving large numbers of documents (more than 20 items).
+
+## Bug Fixes
+
+- Fixed duplicate pins appearing in federated search results
+- Fixed unnecessary settings updates when configuration remains unchanged
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.52.0)
+
+</Update>
+
+<Update label="v1.51" description="2026-07-27">
+
+## New Features
+
+**Filter conditions for Dynamic Search Rules**
+
+Dynamic Search Rules now support a `filter` condition. A rule activates when the search filter matches at least one branch of the condition, giving you finer control over when rules apply.
+
+**New `lastUpdatedAt` field for Dynamic Search Rules**
+
+DSR listings now include a `lastUpdatedAt` field automatically populated with the timestamp of the last modification task. Listings are also sorted by `lastUpdatedAt` in descending order (most recently modified first).
+
+## Improvements
+
+**Faster search on large datasets**
+
+Disk reads have been reduced to a single operation across the entire search pipeline, yielding up to 5.4x performance improvements on datasets with many distinct fields.
+
+**Dumpless upgrade stabilized**
+
+The `--experimental-dumpless-upgrade` flag is now stable and has been renamed `--upgrade-db`. Functionality is unchanged.
+
+## Bug Fixes
+
+- Restored legacy shorthand filterable attributes syntax support
+
+## Breaking Changes
+
+- Removed `--experimental-replication-parameters`, `--experimental-no-edition-2024-for-dumps`, and `--experimental-no-snapshot-compaction` flags
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.51.0)
+
+</Update>
+
+<Update label="v1.50" description="2026-07-20">
+
+## New Features
+
+**Scalable Dynamic Search Rules**
+
+The Dynamic Search Rules API has been revamped to scale to 75,000 rules without impacting search performance. Key changes include:
+
+- New `DELETE /dynamic-search-rules` route to delete all rules at once
+- `priority` field renamed to `precedence`
+- `conditions` restructured with separate `query` and `time` condition objects
+- A DSR Fuel system with configurable limits via environment variables
+
+**Federated document fetching in sharded configurations**
+
+Document retrieval routes now fetch from all shards by default in network configurations. Use the new `useNetwork: false` parameter to limit retrieval to the local instance.
+
+**Facet wildcard support**
+
+The `facets` search parameter now accepts wildcard patterns (for example, `dogs.*`) to match multiple facet fields at once.
+
+## Breaking Changes
+
+- `PATCH` and `DELETE /dynamic-search-rules/{uid}` now return tasks instead of immediate responses
+- `DELETE /dynamic-search-rules/{uid}` no longer returns 404 for non-existent rules
+- The `POST /dynamic-search-rules` filter parameter uses `query` instead of `attributePatterns`
+
+## Bug Fixes
+
+- Fixed migration failures when upgrading from v1.48 with empty synonyms
+- Fixed quadratic memory consumption in filter processing
+- Fixed escaped character handling in filter expressions
+- Improved fault tolerance for AWS S3 multipart snapshot uploads
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.50.0)
+
+</Update>
+
 <Update label="v1.49" description="2026-07-06">
 
 ## Improvements
