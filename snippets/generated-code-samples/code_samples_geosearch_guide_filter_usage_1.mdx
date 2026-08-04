@@ -1,5 +1,12 @@
 <CodeGroup>
 
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/restaurants/search' \
+  -H 'Content-type:application/json' \
+  --data-binary '{ "filter": "_geoRadius(45.472735, 9.184019, 2000)" }'
+```
+
 ```javascript JS
 client.index('restaurants').search('', {
   filter: ['_geoRadius(45.472735, 9.184019, 2000)'],

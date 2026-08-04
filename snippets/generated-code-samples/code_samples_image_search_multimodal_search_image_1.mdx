@@ -1,0 +1,19 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "media": {
+      "image": {
+        "mime": "image/jpeg",
+        "data": "<BASE64_ENCODED_IMAGE>"
+      }
+    },
+    "hybrid": {
+      "embedder": "MULTIMODAL_EMBEDDER_NAME"
+    }
+  }'
+```
+</CodeGroup>

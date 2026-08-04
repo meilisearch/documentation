@@ -1,5 +1,16 @@
 <CodeGroup>
 
+```bash cURL
+curl \
+  -X PUT 'MEILISEARCH_URL/indexes/movies/settings/stop-words' \
+  -H 'Content-Type: application/json' \
+  --data-binary '[
+    "the",
+    "of",
+    "to"
+  ]'
+```
+
 ```javascript JS
 client.index('movies').updateStopWords(['of', 'the', 'to'])
 ```

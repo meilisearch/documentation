@@ -1,5 +1,12 @@
 <CodeGroup>
 
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/restaurants/search' \
+  -H 'Content-type:application/json' \
+  --data-binary '{ "filter": "_geoBoundingBox([45.494181, 9.214024], [45.449484, 9.179175])" }'
+```
+
 ```javascript JS
 client.index('restaurants').search('', {
   filter: ['_geoBoundingBox([45.494181, 9.214024], [45.449484, 9.179175])'],

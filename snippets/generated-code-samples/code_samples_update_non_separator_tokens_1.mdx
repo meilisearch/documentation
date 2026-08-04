@@ -1,5 +1,12 @@
 <CodeGroup>
 
+```bash cURL
+curl \
+  -X PUT 'MEILISEARCH_URL/indexes/articles/settings/non-separator-tokens' \
+  -H 'Content-Type: application/json'  \
+  --data-binary '["@", "#"]'
+```
+
 ```javascript JS
 client.index('books').updateNonSeparatorTokens(['@', '#'])
 ```

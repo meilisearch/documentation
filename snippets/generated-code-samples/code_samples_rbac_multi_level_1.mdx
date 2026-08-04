@@ -1,0 +1,12 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/documents/search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "q": "sensitive",
+    "filter": "_foreign(access, (user = \"jeremy@meilisearch.com\" AND roles IN [\"editor\", \"owner\"]) OR (teams IN [\"product\", \"engineering\"] AND roles IN [\"editor\"]))"
+  }'
+```
+</CodeGroup>

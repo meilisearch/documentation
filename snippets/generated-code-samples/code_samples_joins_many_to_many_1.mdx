@@ -1,0 +1,28 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X PATCH 'MEILISEARCH_URL/indexes/films/settings' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "foreignKeys": [
+      {
+        "fieldName": "actor_ids",
+        "foreignIndexUid": "actors"
+      }
+    ],
+    "filterableAttributes": [
+      {
+        "attributePatterns": ["actor_ids"],
+        "features": {
+          "facetSearch": false,
+          "filter": {
+            "equality": true,
+            "comparison": false
+          }
+        }
+      }
+    ]
+  }'
+```
+</CodeGroup>

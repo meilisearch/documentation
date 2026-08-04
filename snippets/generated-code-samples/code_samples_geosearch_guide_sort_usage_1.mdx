@@ -1,5 +1,12 @@
 <CodeGroup>
 
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/restaurants/search' \
+  -H 'Content-type:application/json' \
+  --data-binary '{ "sort": ["_geoPoint(48.8561446,2.2978204):asc"] }'
+```
+
 ```javascript JS
 client.index('restaurants').search('', {
   sort: ['_geoPoint(48.8561446, 2.2978204):asc'],

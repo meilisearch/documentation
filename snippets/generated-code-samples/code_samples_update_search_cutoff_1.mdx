@@ -1,5 +1,12 @@
 <CodeGroup>
 
+```bash cURL
+curl \
+  -X PUT 'MEILISEARCH_URL/indexes/movies/settings/search-cutoff-ms' \
+  -H 'Content-Type: application/json' \
+  --data-binary '150'
+```
+
 ```javascript JS
 client.index('movies').updateSearchCutoffMs(150)
 ```

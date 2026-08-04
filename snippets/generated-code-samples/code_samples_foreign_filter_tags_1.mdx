@@ -1,0 +1,12 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/articles/search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "q": "cryptography",
+    "filter": "_foreign(tags, name = \"security\" AND name = \"encryption\")"
+  }'
+```
+</CodeGroup>

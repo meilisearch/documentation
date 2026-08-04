@@ -1,0 +1,13 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X PUT 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/localized-attributes' \
+  -H 'Content-Type: application/json' \
+  --data-binary '[
+    { "attributePatterns": ["*_en"], "locales": ["eng"] },
+    { "attributePatterns": ["*_de"], "locales": ["deu"] },
+    { "attributePatterns": ["*_fr"], "locales": ["fra"] }
+  ]'
+```
+</CodeGroup>

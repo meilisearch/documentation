@@ -1,5 +1,10 @@
 <CodeGroup>
 
+```bash cURL
+curl \
+  -X DELETE 'MEILISEARCH_URL/indexes/movies/settings/stop-words'
+```
+
 ```javascript JS
 client.index('movies').resetStopWords()
 ```

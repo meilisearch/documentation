@@ -1,5 +1,12 @@
 <CodeGroup>
 
+```bash cURL
+curl \
+  -X PUT 'MEILISEARCH_URL/indexes/books/settings/proximity-precision' \
+  -H 'Content-Type: application/json' \
+  --data-binary '"byAttribute"'
+```
+
 ```javascript JS
 client.index('books').updateProximityPrecision('byAttribute')
 ```

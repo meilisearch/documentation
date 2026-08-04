@@ -1,5 +1,19 @@
 <CodeGroup>
 
+```bash cURL
+curl \
+  -X PATCH 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/embedders' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "default": {
+      "source":  "openAi",
+      "apiKey": "OPEN_AI_API_KEY",
+      "model": "text-embedding-3-small",
+      "documentTemplate": "A document titled '{{doc.title}}' whose description starts with {{doc.overview|truncatewords: 20}}"
+    }
+  }'
+```
+
 ```javascript JS
 client.index('INDEX_NAME').updateEmbedders({
   default: {

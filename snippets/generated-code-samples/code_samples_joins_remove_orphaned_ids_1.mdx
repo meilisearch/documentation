@@ -1,0 +1,15 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/films/documents/edit' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "function": "doc.actors = doc.actors.filter(|id| id != context.deleted_id)",
+    "context": {
+      "deleted_id": "actor_42"
+    },
+    "filter": "actors = actor_42"
+  }'
+```
+</CodeGroup>

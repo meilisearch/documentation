@@ -1,5 +1,25 @@
 <CodeGroup>
 
+```bash cURL
+curl \
+  -X PUT 'MEILISEARCH_URL/indexes/movies/settings/filterable-attributes' \
+  -H 'Content-Type: application/json' \
+  --data-binary '[
+    "genres",
+    "director",
+    {
+      "attributePatterns": ["*_ratings"],
+      "features": {
+        "facetSearch": false,
+        "filter": {
+          "equality": true,
+          "comparison": false
+        }
+      }
+    }
+  ]'
+```
+
 ```javascript JS
 client.index('movies')
   .updateFilterableAttributes([

@@ -1,5 +1,13 @@
 <CodeGroup>
 
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/medical_records/search' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer DEFAULT_SEARCH_API_KEY' \
+  --data-binary '{ "q": "appointments" }'
+```
+
 ```rust Rust
 let client = Client::new("MEILISEARCH_URL", Some("DEFAULT_SEARCH_API_KEY"));
 let index = client.index("medical_records");

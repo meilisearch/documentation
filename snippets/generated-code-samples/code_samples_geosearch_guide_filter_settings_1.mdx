@@ -1,5 +1,12 @@
 <CodeGroup>
 
+```bash cURL
+curl \
+  -X PUT 'MEILISEARCH_URL/indexes/restaurants/settings/filterable-attributes' \
+  -H 'Content-type:application/json' \
+  --data-binary '["_geo"]'
+```
+
 ```javascript JS
 client.index('restaurants')
 .updateFilterableAttributes([

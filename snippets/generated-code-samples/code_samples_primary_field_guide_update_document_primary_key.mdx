@@ -1,5 +1,12 @@
 <CodeGroup>
 
+```bash cURL
+curl \
+  -X PATCH 'MEILISEARCH_URL/indexes/books' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{ "primaryKey": "title" }'
+```
+
 ```javascript JS
 client.updateIndex('books', {
   primaryKey: 'title'

@@ -1,5 +1,16 @@
 <CodeGroup>
 
+```bash cURL
+curl \
+  -X PATCH 'MEILISEARCH_URL/keys/6062abda-a5aa-4414-ac91-ecd7944c0f8d' \
+  -H 'Authorization: Bearer MASTER_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "name": "Products/Reviews API key",
+    "description": "Manage documents: Products/Reviews API key"
+  }'
+```
+
 ```javascript JS
 client.updateKey('6062abda-a5aa-4414-ac91-ecd7944c0f8d', {
     name: 'Products/Reviews API key',

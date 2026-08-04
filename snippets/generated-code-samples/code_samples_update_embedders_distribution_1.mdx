@@ -1,0 +1,21 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X PATCH 'MEILISEARCH_URL/indexes/INDEX_NAME/settings' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  --data-binary '{
+    "embedders": {
+      "default": {
+        "source": "openAi",
+        "model": "text-embedding-3-small",
+        "distribution": {
+          "mean": 0.7,
+          "sigma": 0.3
+        }
+      }
+    }
+  }'
+```
+</CodeGroup>

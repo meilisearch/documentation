@@ -1,5 +1,10 @@
 <CodeGroup>
 
+```bash cURL
+curl \
+  -X DELETE 'MEILISEARCH_URL/indexes/movies/documents/25684'
+```
+
 ```javascript JS
 client.index('movies').deleteDocument(25684)
 ```

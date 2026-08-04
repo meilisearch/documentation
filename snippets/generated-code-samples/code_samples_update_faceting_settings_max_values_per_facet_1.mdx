@@ -1,0 +1,11 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X PATCH 'MEILISEARCH_URL/indexes/books/settings/faceting' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "maxValuesPerFacet": 20
+  }'
+```
+</CodeGroup>

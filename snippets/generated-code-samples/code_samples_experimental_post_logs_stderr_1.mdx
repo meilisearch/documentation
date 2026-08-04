@@ -1,0 +1,11 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X POST MEILISEARCH_URL/logs/stderr \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+      "target": "milli=trace,index_scheduler=info,actix_web=off"
+  }'
+```
+</CodeGroup>

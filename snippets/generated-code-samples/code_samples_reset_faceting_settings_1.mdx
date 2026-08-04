@@ -1,5 +1,10 @@
 <CodeGroup>
 
+```bash cURL
+curl \
+  -X DELETE 'MEILISEARCH_URL/indexes/books/settings/faceting'
+```
+
 ```javascript JS
 client.index('books').resetFaceting()
 ```

@@ -1,0 +1,12 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/deals/search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "q": "contract",
+    "filter": "value >= 100000 AND _foreign(company, industry = \"Technology\")"
+  }'
+```
+</CodeGroup>

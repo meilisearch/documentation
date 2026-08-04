@@ -1,5 +1,14 @@
 <CodeGroup>
 
+```bash cURL
+curl \
+  -X PUT 'MEILISEARCH_URL/indexes/movies/settings/synonyms' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "great": ["fantastic"], "fantastic": ["great"]
+  }'
+```
+
 ```javascript JS
 client.index('movies').updateSynonyms({
   'great': ['fantastic'],

@@ -1,0 +1,11 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/movies/documents/fetch' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "filter": "genres = Action AND rating > 8"
+  }'
+```
+</CodeGroup>

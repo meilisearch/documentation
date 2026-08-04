@@ -1,5 +1,10 @@
 <CodeGroup>
 
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/INDEX_UID/compact'
+```
+
 ```javascript JS
 client.index('movies').compact()
 ```

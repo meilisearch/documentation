@@ -1,0 +1,19 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/render-template' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "template": {
+      "kind": "inlineDocumentTemplate",
+      "inline": "A buggy template that refers to an unavailable field: {{doc.doesnotexist}}"
+    },
+    "input": {
+      "kind": "indexDocument",
+      "indexUid": "movies",
+      "id": "2"
+    }
+  }'
+```
+</CodeGroup>

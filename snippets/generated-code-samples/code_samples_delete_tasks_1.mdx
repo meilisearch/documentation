@@ -1,5 +1,10 @@
 <CodeGroup>
 
+```bash cURL
+curl \
+  -X DELETE 'MEILISEARCH_URL/tasks?uids=1,2'
+```
+
 ```javascript JS
 client.tasks.deleteTasks({ uids: [1, 2] })
 ```

@@ -1,5 +1,18 @@
 <CodeGroup>
 
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/webhooks' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "url": "WEBHOOK_TARGET_URL",
+    "headers": {
+      "authorization": "SECURITY_KEY",
+      "referer": "https://example.com"
+    }
+  }'
+```
+
 ```javascript JS
 client.createWebhook({
   url: 'WEBHOOK_TARGET_URL',

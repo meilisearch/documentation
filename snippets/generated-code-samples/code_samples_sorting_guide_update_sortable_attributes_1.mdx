@@ -1,5 +1,15 @@
 <CodeGroup>
 
+```bash cURL
+curl \
+  -X PUT 'MEILISEARCH_URL/indexes/books/settings/sortable-attributes' \
+  -H 'Content-Type: application/json' \
+  --data-binary '[
+    "author",
+    "price"
+  ]'
+```
+
 ```javascript JS
 client.index('books').updateSortableAttributes([
     'author',

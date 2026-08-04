@@ -1,5 +1,23 @@
 <CodeGroup>
 
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/books/documents?primaryKey=reference_number' \
+  -H 'Content-Type: application/json' \
+  --data-binary '[
+    {
+      "reference_number": 287947,
+      "title": "Diary of a Wimpy Kid",
+      "author": "Jeff Kinney",
+      "genres": [
+        "comedy",
+        "humor"
+      ],
+      "price": 5.00
+    }
+  ]'
+```
+
 ```javascript JS
 client.index('books').addDocuments([
   {
