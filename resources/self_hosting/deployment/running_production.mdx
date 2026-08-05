@@ -52,7 +52,7 @@ mv ./meilisearch /usr/local/bin/
 Restore the default context of the binary:
 
 ```sh
-restorecon -v /usr/local/bin/meilisearch
+sudo restorecon -v /usr/local/bin/meilisearch
 ```
 
 Then check the resulting label:
