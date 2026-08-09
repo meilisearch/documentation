@@ -41,4 +41,13 @@ client.index('books').update_foreign_keys([
   }
 ])
 ```
+
+```go Go
+client.Index("books").UpdateForeignKeys([]meilisearch.ForeignKey{
+  {
+    FieldName: "author",
+    ForeignIndexUid: "authors",
+  },
+})
+```
 </CodeGroup>
