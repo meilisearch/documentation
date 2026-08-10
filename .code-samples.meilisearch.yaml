@@ -107,6 +107,11 @@ search_get_1: |-
 get_all_tasks_1: |-
   curl \
     -X GET 'MEILISEARCH_URL/tasks'
+# get_tasks_stream
+get_tasks_stream_1: |-
+  curl \
+    -X GET 'MEILISEARCH_URL/tasks/stream' \
+    -H 'Accept: text/event-stream'
 # get_tasks_taskId
 get_task_1: |-
   curl \
@@ -756,6 +761,11 @@ create_snapshot_1: |-
 get_all_batches_1: |-
   curl \
     -X GET 'http://MEILISEARCH_URL/batches'
+# get_batches_stream
+get_batches_stream_1: |-
+  curl \
+    -X GET 'MEILISEARCH_URL/batches/stream' \
+    -H 'Accept: text/event-stream'
 # get_batches_batchId
 get_batch_1: |-
   curl \
@@ -1604,6 +1614,10 @@ patch_dynamic_search_rule_1: |-
         }
       ]
     }'
+# delete_dynamic_search_rules
+delete_all_dynamic_search_rules_1: |-
+  curl \
+    -X DELETE 'MEILISEARCH_URL/dynamic-search-rules'
 # delete_dynamic_search_rules_uid
 delete_dynamic_search_rule_1: |-
   curl \

@@ -11,7 +11,7 @@
       "name": "MIT",
       "identifier": "MIT"
     },
-    "version": "1.52.0"
+    "version": "1.53.0"
   },
   "servers": [
     {
@@ -10333,6 +10333,8 @@
                 },
                 "example": {
                   "numberOfDocuments": 10,
+                  "indexSize": 1572864,
+                  "usedIndexSize": 524288,
                   "rawDocumentDbSize": 10,
                   "avgDocumentSize": 10,
                   "numberOfEmbeddings": 10,
@@ -11484,6 +11486,8 @@
                   "indexes": {
                     "movies": {
                       "numberOfDocuments": 10,
+                      "indexSize": 1572864,
+                      "usedIndexSize": 524288,
                       "rawDocumentDbSize": 100,
                       "maxDocumentSize": 16,
                       "avgDocumentSize": 10,
@@ -14871,6 +14875,7 @@
           "invalid_document_filter",
           "invalid_document_sort",
           "invalid_document_use_network",
+          "invalid_document_retrieve",
           "invalid_document_geo_field",
           "invalid_document_geojson_field",
           "invalid_header_value",
@@ -17449,6 +17454,8 @@
         "description": "Stats of an `Index`, as known to the `stats` route.",
         "required": [
           "numberOfDocuments",
+          "indexSize",
+          "usedIndexSize",
           "rawDocumentDbSize",
           "avgDocumentSize",
           "isIndexing",
@@ -17460,6 +17467,14 @@
             "format": "u-int64",
             "description": "Number of documents in the index",
             "minimum": 0
+          },
+          "indexSize": {
+            "$ref": "#/components/schemas/Size",
+            "description": "Size of the index' DB, in bytes."
+          },
+          "usedIndexSize": {
+            "$ref": "#/components/schemas/Size",
+            "description": "Size of the used pages of the index' DB, in bytes."
           },
           "rawDocumentDbSize": {
             "$ref": "#/components/schemas/Size",
