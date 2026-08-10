@@ -1035,7 +1035,6 @@
                 "resources/demos/nobel_prizes",
                 "resources/demos/tenant_tokens",
                 "resources/demos/typo_tolerance",
-                "resources/demos/voice_search",
                 "resources/demos/rubygems",
                 "resources/demos/hydration",
                 "resources/demos/federated_search"
