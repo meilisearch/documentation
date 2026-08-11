@@ -57,7 +57,7 @@ If your application serves multiple languages, the recommended approach is to cr
 ### Important considerations
 
 - **Stop words are index-specific.** Each index has its own stop word list. If you have multiple indexes with different languages, configure appropriate stop words for each one.
-- **Stop words are case-insensitive.** Adding `"The"` is equivalent to adding `"the"`.
+- **Stop words are case-sensitive.** Adding `"the"` is not equivalent to adding `"The"`.
 - **Stop words affect indexing.** Meilisearch removes stop words from the index, so changing this setting requires re-indexing.
 
 ## Reset stop words
