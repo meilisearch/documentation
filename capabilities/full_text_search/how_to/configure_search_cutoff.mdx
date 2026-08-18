@@ -53,6 +53,21 @@ As a general recommendation, avoid setting the cutoff below **500ms**. This prov
 The cutoff is most useful as a safety net, not as a performance tuning knob. If your searches are consistently slow, address the root cause with the optimizations below rather than lowering the cutoff.
 </Tip>
 
+## Search cutoff and remote embedders
+
+If your index uses an embedder that calls an external API at search time, the cutoff also bounds that call. Meilisearch derives the embedding request timeout from `searchCutoffMs` rather than applying a fixed timeout of its own, so the cutoff has to cover the provider round trip on top of the search itself.
+
+This matters when choosing a value:
+
+- A cutoff that is comfortable for keyword search can be too short once a provider round trip is included. A 150 ms cutoff is fine for a purely lexical query and will usually not survive a call to a hosted embedding API.
+- If the embedder does not answer in time, the query loses its semantic results. For a [pure semantic search](/capabilities/hybrid_search/advanced/semantic_vs_hybrid), where there are no keyword results to fall back on, the request can fail with an HTTP 500 instead.
+
+So if semantic results go missing, or pure semantic searches start returning HTTP 500, raise `searchCutoffMs` before looking elsewhere. Embedders that run locally are not affected, since no network call is involved.
+
+<Tip>
+Measure your provider's typical latency first, then set the cutoff above that plus your normal search time. [Choosing an embedder](/capabilities/hybrid_search/how_to/choose_an_embedder) covers the trade-offs between hosted and local models.
+</Tip>
+
 ## Search cutoff vs. other performance optimizations
 
 The search cutoff is a reactive measure that limits query time after it becomes a problem. For proactive performance improvements, consider:
