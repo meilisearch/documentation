@@ -387,6 +387,14 @@ Limit the number of tasks Meilisearch performs in a single batch. May improve st
 
 Sets a maximum payload size for batches in bytes. Smaller batches are less efficient, but consume less RAM and reduce immediate latency.
 
+### Task queue maximum readers <NoticeTag type="experimental" label="experimental" />
+
+**Environment variable**: `MEILI_EXPERIMENTAL_TASK_QUEUE_MAX_READERS`<br />
+**Default value**: `1024`<br />
+**Expected value**: a positive integer
+
+Sets the maximum number of simultaneous read transactions on the task queue database. Raise it if your instance serves a high number of concurrent reads of the task queue. Meilisearch fails to start if the value is not a valid positive integer. This configuration is only available via environment variable; no CLI flag is available.
+
 ### Disable new indexer <NoticeTag type="experimental" label="experimental" />
 
 <Warning>
