@@ -27,6 +27,35 @@ Submit a search query and include the `personalize` search parameter. `personali
 
 <CodeSamplesPersonalizationSearch1 />
 
+## Personalize a federated search
+
+Personalization also works with [federated search](/capabilities/multi_search/getting_started/federated_search). Set `personalize` inside the `federation` object, alongside options such as `limit` and `offset`, so one user profile reranks the single merged result list:
+
+<CodeGroup>
+
+```bash
+curl \
+  -X POST 'MEILISEARCH_URL/multi-search' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  --data-binary '{
+    "federation": {
+      "limit": 20,
+      "personalize": {
+        "userContext": "Enjoys hiking and camping, recently bought a two-person tent"
+      }
+    },
+    "queries": [
+      { "indexUid": "products", "q": "sleeping bag" },
+      { "indexUid": "guides", "q": "sleeping bag" }
+    ]
+  }'
+```
+
+</CodeGroup>
+
+Setting `personalize` on an individual query inside a federated request returns an error asking you to move it into `federation`.
+
 ## Reranking scope and the `limit` parameter
 
 The reranker only sees the documents that Meilisearch returns for a given query. This means `limit` directly controls how many documents the reranker can choose from.
@@ -34,6 +63,8 @@ The reranker only sees the documents that Meilisearch returns for a given query.
 If you set `limit` to 20, the reranker picks the best order from those 20 documents. It cannot promote a document that Meilisearch did not return. Increasing `limit` gives the reranker a wider pool to work with, but also increases latency and the number of tokens sent to the reranking model.
 
 A `limit` between 20 and 100 is a reasonable starting point for most personalized search use cases. Go higher if ranking quality matters more than latency for your application.
+
+In a federated request the merged result list is what reaches the reranker, so `federation.limit` or `federation.hitsPerPage` sets the pool size instead.
 
 ## Limits
 
