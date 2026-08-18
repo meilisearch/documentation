@@ -158,12 +158,12 @@ Filter to include public documents:
 
 1. **Access table size:** Each document's access rules create entries. For 1000 documents with 10 team access rules each, you need ~10,000 access records.
 
-2. **Filter specificity:** The foreign filter must match ≤ 100 access records. Design your access control structure to stay within this limit:
+2. **Filter specificity:** The foreign filter must match ≤ 1000 access records. Design your access control structure to stay within this limit:
    - Use team-based rules instead of per-user rules where possible
    - Group documents by access level (public, internal, secret)
    - Consider combining user + team checks: `(user = "..." OR (teams IN [...] AND roles IN [...]))`
 
-3. **Denormalization trade-off:** If RBAC queries regularly hit the 100-document limit, consider denormalizing permission fields directly into documents instead of using joins.
+3. **Denormalization trade-off:** If RBAC queries regularly hit the 1000-document limit, consider denormalizing permission fields directly into documents instead of using joins.
 
 ## Security best practices
 
