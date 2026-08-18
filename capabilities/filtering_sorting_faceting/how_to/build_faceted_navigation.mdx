@@ -92,6 +92,23 @@ The response includes a `facetDistribution` object showing every value for each 
 
 The `facetDistribution` tells you exactly which values exist and how many documents match each one. The `facetStats` object provides minimum and maximum values for numeric facets, useful for building range sliders.
 
+### Request several facets with a wildcard
+
+`facets` also accepts wildcard patterns, which is convenient when related facets share a prefix and you do not want to list them one by one. Pass `"*"` to request every filterable attribute, or a pattern containing `*` to request the subset that matches it:
+
+```json
+{
+  "q": "classic",
+  "facets": ["specs.*"]
+}
+```
+
+Given filterable attributes `specs.language`, `specs.binding`, and `specs.edition`, that single entry returns a distribution for all three. Patterns follow the same matching rules as [`filterableAttributes.attributePatterns`](/capabilities/filtering_sorting_faceting/how_to/configure_granular_filters#wildcard-patterns), and only filterable attributes are ever matched.
+
+<Warning>
+A wildcard makes it easy to request far more facets than your interface displays, and every matched attribute costs a distribution computation. Prefer an explicit list for a page whose facets you know, and keep wildcards for cases where the attribute names are genuinely dynamic. See [Optimize facet performance](/capabilities/filtering_sorting_faceting/advanced/optimize_facet_performance) for the cost model.
+</Warning>
+
 <Note>
 `facetStats` only considers values stored as JSON numbers. String values are ignored, even when the string contains a numeric value such as `"42"`. If you expect `min`/`max` for a given facet and the object is missing, confirm that the underlying field is indexed as a number rather than a string.
 </Note>
