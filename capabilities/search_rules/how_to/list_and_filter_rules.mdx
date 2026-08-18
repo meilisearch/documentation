@@ -52,13 +52,16 @@ Send a `POST /dynamic-search-rules` with pagination and optional filters:
 }
 ```
 
-The response contains the rules that match, with the same structure you used to create them (`uid`, `conditions`, `actions`, `precedence`, `active`, `description`).
+The response contains the rules that match, with the same structure you used to create them (`uid`, `conditions`, `actions`, `precedence`, `active`, `description`), plus a read-only `lastUpdatedAt` timestamp.
+
+`lastUpdatedAt` holds the date and time of the task that last modified the rule, and Meilisearch maintains it for you. Listings come back sorted by `lastUpdatedAt` in descending order, so the most recently modified rules appear first.
 
 ### Parameters
 
 - `offset` and `limit` control pagination. Defaults are `offset: 0` and `limit: 20`. The maximum `limit` varies by Meilisearch version, keep requests under a few hundred rules per call.
 - `filter.query` accepts a string query. `promo` returns every rule whose description contains the words "promo". `seasonal` returns every rule whose description contains the word `seasonal`. The search rules applied are similar to a search in a regular index.
 - `filter.active` filters by status: `true` returns only active rules, `false` returns only paused rules. Omit the field to return rules regardless of status.
+- `lastUpdatedAt` is not a filter. To narrow a listing by date, page through the results and stop once the timestamps fall outside the window you care about, which the descending sort makes cheap.
 
 You can combine filters. The example above returns active rules containing `promo`, which is exactly the campaign-audit case described above.
 
@@ -78,6 +81,7 @@ This returns the full rule definition, which is convenient when you want to edit
 - **Rules per index**: the list response includes each rule's actions, so you can group by `selector.indexUid` locally to see how many pins target each index.
 - **Scheduled promotions**: list every rule whose conditions contain a `time` scope with a `start` in the future. This is a good sanity check before a campaign goes live.
 - **Priority conflicts**: list rules that share a `words` value and compare their `precedence` values. If two rules have the same precedence and target different documents for the same query, ordering is not guaranteed.
+- **Recent changes**: because listings are sorted by `lastUpdatedAt` descending, the first page of a plain listing is a change log of the rules touched most recently. This is a quick way to see what someone else edited before a campaign goes live.
 
 ## Variations and tips
 
