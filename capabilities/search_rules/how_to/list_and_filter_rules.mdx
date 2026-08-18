@@ -54,7 +54,7 @@ Send a `POST /dynamic-search-rules` with pagination and optional filters:
 
 The response contains the rules that match, with the same structure you used to create them (`uid`, `conditions`, `actions`, `precedence`, `active`, `description`), plus a read-only `lastUpdatedAt` timestamp.
 
-`lastUpdatedAt` holds the date and time of the task that last modified the rule, and Meilisearch maintains it for you. Listings come back sorted by `lastUpdatedAt` in descending order, so the most recently modified rules appear first.
+`lastUpdatedAt` holds the `enqueuedAt` value of the last task that modified the rule, and Meilisearch maintains it for you. Listings come back sorted by `lastUpdatedAt` in descending order, so the most recently modified rules appear first.
 
 ### Parameters
 
