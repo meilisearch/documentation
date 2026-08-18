@@ -462,6 +462,44 @@ Configures the number of concurrent search requests each CPU core can handle.
 
 Enables search personalization. Must be a valid Cohere API key in string format.
 
+### Search rules fuel <NoticeTag type="experimental" label="experimental" />
+
+Resolving [search rules](/capabilities/search_rules/overview) during a search costs work, and "fuel" is the budget Meilisearch spends on it. These limits keep rule evaluation from degrading search performance as a rule set grows, which is what allows the feature to scale to tens of thousands of rules.
+
+The defaults suit most rule sets. Raise a limit only if rules stop applying as expected and you have confirmed the relevant budget is the cause. Each of these is available via environment variable only; no CLI flag is available.
+
+#### Maximum counted words
+
+**Environment variable**: `MEILI_EXPERIMENTAL_DSR_FUEL_MAX_COUNTED_WORDS`<br />
+**Default value**: `10`<br />
+**Expected value**: an integer up to `255`
+
+Maximum number of words from the search query that Meilisearch considers when looking for `conditions.query.words` constraints. Words beyond this count cannot trigger a rule.
+
+#### Maximum active rules
+
+**Environment variable**: `MEILI_EXPERIMENTAL_DSR_FUEL_MAX_ACTIVE_RULES`<br />
+**Default value**: `1000`<br />
+**Expected value**: an integer up to `4294967295`
+
+Maximum number of active rules whose actions are evaluated for a single search.
+
+#### Maximum pin actions
+
+**Environment variable**: `MEILI_EXPERIMENTAL_DSR_FUEL_MAX_PIN_ACTIONS`<br />
+**Default value**: `100`<br />
+**Expected value**: an integer up to `4294967295`
+
+Maximum number of pin actions applied to a single search. Raise it if a search legitimately needs more pinned documents than this.
+
+#### Word fuel
+
+**Environment variable**: `MEILI_EXPERIMENTAL_DSR_FUEL_WORD_FUEL`<br />
+**Default value**: `4096`<br />
+**Expected value**: an integer up to `4294967295`
+
+Maximum number of constraint combinations evaluated when looking for `conditions.query.words` constraints.
+
 ### Allow requests to private networks <NoticeTag type="experimental" label="experimental" />
 
 **Environment variable**: `MEILI_EXPERIMENTAL_ALLOWED_IP_NETWORKS`<br />
