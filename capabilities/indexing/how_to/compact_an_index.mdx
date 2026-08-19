@@ -21,9 +21,14 @@ You do not need to compact after every operation. It is most useful after large 
 
 Fragmentation is directly related to the number of indexing operations Meilisearch performs. Common indexing operations include adding and updating documents, as well as changes to index settings.
 
-To estimate your index's fragmentation, query the [`/stats` route](/reference/api/stats) and compare `databaseSize` to `usedDatabaseSize`:
+To estimate a single index's fragmentation, query [`GET /indexes/{index_uid}/stats`](/reference/api/stats) and compare `indexSize` to `usedIndexSize`:
 
-- If the ratio between `databaseSize` and `usedDatabaseSize` is bigger than 30%, compacting your indexes may improve performance.
+- `indexSize`: the total size of that index's database on disk, in bytes
+- `usedIndexSize`: the portion of those pages actively holding data, in bytes
+
+The gap between the two is reclaimable space. Compaction targets one index at a time, so these per-index figures tell you which index is worth compacting. `GET /stats` reports the same two fields per index under `indexes`, alongside the instance-wide `databaseSize` and `usedDatabaseSize`.
+
+- If the ratio between `indexSize` and `usedIndexSize` is bigger than 30%, compacting that index may improve performance.
 - If you update documents in your indexes a few times per day, checking fragmentation and compacting your database once per week is a reasonable baseline.
 
 Tune this cadence based on your own indexing patterns: higher write volumes warrant more frequent compaction, while mostly read-only indexes rarely need it.
