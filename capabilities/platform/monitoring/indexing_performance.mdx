@@ -81,6 +81,22 @@ The Internal DB table shows the current on-disk size of each internal data struc
 
 The delta (shown as `+N KiB` or `+N MiB`) tells you how much space each batch adds. A `vectorStore` growing much faster than `documents` indicates a high-dimensional embedding model.
 
+#### Fetch internal sizes from the API
+
+The same breakdown is available outside the dashboard. Pass `showInternalDatabaseSizes=true` to either stats route to add an `internalDatabaseSizes` object to the response, and `sizeFormat=human` to receive readable strings such as `19.64 MiB` instead of raw byte counts:
+
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X GET 'MEILISEARCH_URL/indexes/movies/stats?showInternalDatabaseSizes=true&sizeFormat=human' \
+  -H 'Authorization: Bearer API_KEY'
+```
+
+</CodeGroup>
+
+Both parameters work on `GET /indexes/{index_uid}/stats` and `GET /stats`. `sizeFormat` defaults to `raw`, which reports every size in the response as a number of bytes. Internal database names can change between Meilisearch versions, so treat this breakdown as diagnostic output rather than a stable contract.
+
 ### Other fields
 
 | Field | What it shows |
