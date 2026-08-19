@@ -110,7 +110,7 @@ Both routes are experimental. Enable the `tasksStreamingRoute` flag before using
 curl \
   -X PATCH 'MEILISEARCH_URL/experimental-features' \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  -H 'Authorization: Bearer API_KEY' \
   --data-binary '{ "tasksStreamingRoute": true }'
 ```
 
