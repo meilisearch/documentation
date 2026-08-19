@@ -91,6 +91,39 @@ When a network search runs, Meilisearch builds an internal set of remotes to que
 
 Meilisearch supports automatic remote fallback. If the remote assigned to a shard is unreachable, the shard won't be queried, and another remote will be used to retrieve its content. However, if no remote is available for a given shard, that shard's results will be missing from the response. It's a best-effort approach.
 
+### Inspect remote availability
+
+Meilisearch tracks which remotes are reachable and exposes that judgement on the `/network` route. Each entry under `remotes` carries a `status` field:
+
+<CodeGroup>
+
+```json
+{
+  "remotes": {
+    "ms-01": {
+      "url": "http://ms-01.example.com:7700",
+      "searchApiKey": "SEARCH_KEY_01",
+      "writeApiKey": "WRITE_KEY_01",
+      "status": "available"
+    },
+    "ms-02": {
+      "url": "http://ms-02.example.com:7700",
+      "searchApiKey": "SEARCH_KEY_02",
+      "writeApiKey": "WRITE_KEY_02",
+      "status": "unavailable"
+    }
+  }
+}
+```
+
+</CodeGroup>
+
+`status` is either `available` or `unavailable`, and it defaults to `available`. Meilisearch marks a remote unavailable after it fails to respond, skips it while choosing which remote serves each shard, and starts querying it again once it recovers. That is the mechanism behind the fallback described above.
+
+The field is read only. Meilisearch maintains it, and sending a `status` in a `PATCH /network` body has no effect.
+
+`GET /network` is therefore the quickest way to confirm whether missing results come from an unreachable instance rather than from your shard configuration.
+
 ## Scaling read throughput
 
 Replication is the primary way to scale search throughput in Meilisearch. Each replica can independently handle search requests, so adding more replicas increases the total number of concurrent searches your cluster can handle.
