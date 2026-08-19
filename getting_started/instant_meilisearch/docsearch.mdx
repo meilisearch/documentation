@@ -23,10 +23,10 @@ The host URL and the API key you will provide in the next steps correspond to th
 
 ## Scrape your content
 
-[meilisearch-docsearch](https://github.com/tauri-apps/meilisearch-docsearch) is a community-maintained scraper tool that automatically reads the content of your website and stores it into a Meilisearch index.
+[docs-scraper](https://github.com/meilisearch/docs-scraper) is a scraper tool that automatically reads the content of your website and stores it into a Meilisearch index.
 
 <Note>
-`meilisearch-docsearch` is maintained by the community, not by the Meilisearch team. For issues and feature requests, visit the [GitHub repository](https://github.com/tauri-apps/meilisearch-docsearch).
+docs-scraper is in reduced-maintenance mode. If you're on [Meilisearch Cloud](https://cloud.meilisearch.com), consider using the built-in crawler instead. For a self-hosted alternative, see [Scrapix](https://github.com/meilisearch/scrapix).
 </Note>
 
 ### Configuration file
@@ -75,7 +75,7 @@ The `docs-content` class is the main container of the textual content in this ex
 All searchable `lvl` elements outside this main documentation container (for instance, in a sidebar) must be `global` selectors. They will be globally picked up and injected to every document built from your page.
 
 <Tip>
-Check the [meilisearch-docsearch documentation](https://github.com/tauri-apps/meilisearch-docsearch#readme) for the full list of configuration options.
+Check the [docs-scraper documentation](https://github.com/meilisearch/docs-scraper#readme) for the full list of configuration options.
 </Tip>
 
 ### Run the scraper
@@ -92,7 +92,7 @@ docker run -t --rm \
 ```
 
 <Note>
-For other installation methods, refer to the [meilisearch-docsearch repository](https://github.com/tauri-apps/meilisearch-docsearch#installation-and-usage).
+For other installation methods, refer to the [docs-scraper repository](https://github.com/meilisearch/docs-scraper#run-the-scraper.
 </Note>
 
 `<absolute-path-to-your-config-file>` should be the **absolute** path of your configuration file defined at [the previous step](#configuration-file).
