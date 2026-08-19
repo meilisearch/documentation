@@ -6,15 +6,18 @@
 # get_indexes_indexUid
 get_one_index_1: |-
   curl \
-    -X GET 'MEILISEARCH_URL/indexes/movies'
+    -X GET 'MEILISEARCH_URL/indexes/movies' \
+    -H 'Authorization: Bearer API_KEY'
 # get_indexes
 list_all_indexes_1: |-
   curl \
-    -X GET 'MEILISEARCH_URL/indexes?limit=3'
+    -X GET 'MEILISEARCH_URL/indexes?limit=3' \
+    -H 'Authorization: Bearer API_KEY'
 # post_indexes
 create_an_index_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "uid": "movies",
@@ -24,24 +27,29 @@ create_an_index_1: |-
 update_an_index_1: |-
   curl \
     -X PATCH 'MEILISEARCH_URL/indexes/movies' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{ "primaryKey": "id" }'
 # delete_indexes_indexUid
 delete_an_index_1: |-
   curl \
-    -X DELETE 'MEILISEARCH_URL/indexes/movies'
+    -X DELETE 'MEILISEARCH_URL/indexes/movies' \
+    -H 'Authorization: Bearer API_KEY'
 # get_indexes_indexUid_documents_documentId
 get_one_document_1: |-
   curl \
-    -X GET 'MEILISEARCH_URL/indexes/movies/documents/25684?fields=id,title,poster,release_date'
+    -X GET 'MEILISEARCH_URL/indexes/movies/documents/25684?fields=id,title,poster,release_date' \
+    -H 'Authorization: Bearer API_KEY'
 # get_indexes_indexUid_documents
 get_documents_1: |-
   curl \
-    -X GET 'MEILISEARCH_URL/indexes/movies/documents?limit=2&filter=genres=action'
+    -X GET 'MEILISEARCH_URL/indexes/movies/documents?limit=2&filter=genres=action' \
+    -H 'Authorization: Bearer API_KEY'
 # post_indexes_indexUid_documents
 add_or_replace_documents_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/movies/documents' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '[
       {
@@ -55,17 +63,20 @@ add_or_replace_documents_1: |-
 add_or_replace_documents_csv_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/movies/documents' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: text/csv' \
     --data-binary @movies.csv
 add_or_replace_documents_ndjson_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/movies/documents' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/x-ndjson' \
     --data-binary @movies.ndjson
 # put_indexes_indexUid_documents
 add_or_update_documents_1: |-
   curl \
     -X PUT 'MEILISEARCH_URL/indexes/movies/documents' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '[
       {
@@ -77,15 +88,18 @@ add_or_update_documents_1: |-
 # delete_indexes_indexUid_documents
 delete_all_documents_1: |-
   curl \
-    -X DELETE 'MEILISEARCH_URL/indexes/movies/documents'
+    -X DELETE 'MEILISEARCH_URL/indexes/movies/documents' \
+    -H 'Authorization: Bearer API_KEY'
 # delete_indexes_indexUid_documents_documentId
 delete_one_document_1: |-
   curl \
-    -X DELETE 'MEILISEARCH_URL/indexes/movies/documents/25684'
+    -X DELETE 'MEILISEARCH_URL/indexes/movies/documents/25684' \
+    -H 'Authorization: Bearer API_KEY'
 # post_indexes_indexUid_documents_delete_batch
 delete_documents_by_batch_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/movies/documents/delete-batch' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '[
       23488,
@@ -97,35 +111,43 @@ delete_documents_by_batch_1: |-
 search_post_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/movies/search' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{ "q": "american ninja" }'
 # get_indexes_indexUid_search
 search_get_1: |-
   curl \
-    -X GET 'MEILISEARCH_URL/indexes/movies/search?q=american%20ninja'
+    -X GET 'MEILISEARCH_URL/indexes/movies/search?q=american%20ninja' \
+    -H 'Authorization: Bearer API_KEY'
 # get_tasks
 get_all_tasks_1: |-
   curl \
-    -X GET 'MEILISEARCH_URL/tasks'
+    -X GET 'MEILISEARCH_URL/tasks' \
+    -H 'Authorization: Bearer API_KEY'
 # get_tasks_stream
 get_tasks_stream_1: |-
   curl \
     -X GET 'MEILISEARCH_URL/tasks/stream' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Accept: text/event-stream'
 # get_tasks_taskId
 get_task_1: |-
   curl \
-    -X GET 'MEILISEARCH_URL/tasks/1'
+    -X GET 'MEILISEARCH_URL/tasks/1' \
+    -H 'Authorization: Bearer API_KEY'
 # get_tasks_taskId_documents
 get_task_documents_1: |-
   curl \
-    -X GET 'MEILISEARCH_URL/tasks/1/documents'
+    -X GET 'MEILISEARCH_URL/tasks/1/documents' \
+    -H 'Authorization: Bearer API_KEY'
 get_all_tasks_paginating_1: |-
   curl \
-    -X GET 'MEILISEARCH_URL/tasks?limit=2&from=10
+    -X GET 'MEILISEARCH_URL/tasks?limit=2&from=10 \
+    -H 'Authorization: Bearer API_KEY'
 get_all_tasks_paginating_2: |-
   curl \
-    -X GET 'MEILISEARCH_URL/tasks?limit=2&from=8
+    -X GET 'MEILISEARCH_URL/tasks?limit=2&from=8 \
+    -H 'Authorization: Bearer API_KEY'
 # get_keys_key
 get_one_key_1: |-
   curl \
@@ -168,11 +190,13 @@ delete_a_key_1: |-
 # get_indexes_indexUid_settings
 get_settings_1: |-
   curl \
-    -X GET 'MEILISEARCH_URL/indexes/movies/settings'
+    -X GET 'MEILISEARCH_URL/indexes/movies/settings' \
+    -H 'Authorization: Bearer API_KEY'
 # patch_indexes_indexUid_settings
 update_settings_1: |-
   curl \
     -X PATCH 'MEILISEARCH_URL/indexes/movies/settings' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "rankingRules": [
@@ -232,15 +256,18 @@ update_settings_1: |-
 # delete_indexes_indexUid_settings
 reset_settings_1: |-
   curl \
-    -X DELETE 'MEILISEARCH_URL/indexes/movies/settings'
+    -X DELETE 'MEILISEARCH_URL/indexes/movies/settings' \
+    -H 'Authorization: Bearer API_KEY'
 # get_indexes_indexUid_settings_synonyms
 get_synonyms_1: |-
   curl \
-    -X GET 'MEILISEARCH_URL/indexes/movies/settings/synonyms'
+    -X GET 'MEILISEARCH_URL/indexes/movies/settings/synonyms' \
+    -H 'Authorization: Bearer API_KEY'
 # put_indexes_indexUid_settings_synonyms
 update_synonyms_1: |-
   curl \
     -X PUT 'MEILISEARCH_URL/indexes/movies/settings/synonyms' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "wolverine": [
@@ -256,15 +283,18 @@ update_synonyms_1: |-
 # delete_indexes_indexUid_settings_synonyms
 reset_synonyms_1: |-
   curl \
-    -X DELETE 'MEILISEARCH_URL/indexes/movies/settings/synonyms'
+    -X DELETE 'MEILISEARCH_URL/indexes/movies/settings/synonyms' \
+    -H 'Authorization: Bearer API_KEY'
 # get_indexes_indexUid_settings_stop_words
 get_stop_words_1: |-
   curl \
-    -X GET 'MEILISEARCH_URL/indexes/movies/settings/stop-words'
+    -X GET 'MEILISEARCH_URL/indexes/movies/settings/stop-words' \
+    -H 'Authorization: Bearer API_KEY'
 # put_indexes_indexUid_settings_stop_words
 update_stop_words_1: |-
   curl \
     -X PUT 'MEILISEARCH_URL/indexes/movies/settings/stop-words' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '[
       "the",
@@ -274,15 +304,18 @@ update_stop_words_1: |-
 # delete_indexes_indexUid_settings_stop_words
 reset_stop_words_1: |-
   curl \
-    -X DELETE 'MEILISEARCH_URL/indexes/movies/settings/stop-words'
+    -X DELETE 'MEILISEARCH_URL/indexes/movies/settings/stop-words' \
+    -H 'Authorization: Bearer API_KEY'
 # get_indexes_indexUid_settings_ranking_rules
 get_ranking_rules_1: |-
   curl \
-    -X GET 'MEILISEARCH_URL/indexes/movies/settings/ranking-rules'
+    -X GET 'MEILISEARCH_URL/indexes/movies/settings/ranking-rules' \
+    -H 'Authorization: Bearer API_KEY'
 # put_indexes_indexUid_settings_ranking_rules
 update_ranking_rules_1: |-
   curl \
     -X PUT 'MEILISEARCH_URL/indexes/movies/settings/ranking-rules' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '[
       "words",
@@ -298,29 +331,35 @@ update_ranking_rules_1: |-
 # delete_indexes_indexUid_settings_ranking_rules
 reset_ranking_rules_1: |-
   curl \
-    -X DELETE 'MEILISEARCH_URL/indexes/movies/settings/ranking-rules'
+    -X DELETE 'MEILISEARCH_URL/indexes/movies/settings/ranking-rules' \
+    -H 'Authorization: Bearer API_KEY'
 # get_indexes_indexUid_settings_distinct_attribute
 get_distinct_attribute_1: |-
   curl \
-    -X GET 'MEILISEARCH_URL/indexes/shoes/settings/distinct-attribute'
+    -X GET 'MEILISEARCH_URL/indexes/shoes/settings/distinct-attribute' \
+    -H 'Authorization: Bearer API_KEY'
 # put_indexes_indexUid_settings_distinct_attribute
 update_distinct_attribute_1: |-
   curl \
     -X PUT 'MEILISEARCH_URL/indexes/shoes/settings/distinct-attribute' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '"skuid"'
 # delete_indexes_indexUid_settings_distinct_attribute
 reset_distinct_attribute_1: |-
   curl \
-    -X DELETE 'MEILISEARCH_URL/indexes/shoes/settings/distinct-attribute'
+    -X DELETE 'MEILISEARCH_URL/indexes/shoes/settings/distinct-attribute' \
+    -H 'Authorization: Bearer API_KEY'
 # get_indexes_indexUid_settings_filterable_attributes
 get_filterable_attributes_1: |-
   curl \
-    -X GET 'MEILISEARCH_URL/indexes/movies/settings/filterable-attributes'
+    -X GET 'MEILISEARCH_URL/indexes/movies/settings/filterable-attributes' \
+    -H 'Authorization: Bearer API_KEY'
 # put_indexes_indexUid_settings_filterable_attributes
 update_filterable_attributes_1: |-
   curl \
     -X PUT 'MEILISEARCH_URL/indexes/movies/settings/filterable-attributes' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '[
       "genres",
@@ -339,15 +378,18 @@ update_filterable_attributes_1: |-
 # delete_indexes_indexUid_settings_filterable_attributes
 reset_filterable_attributes_1: |-
   curl \
-    -X DELETE 'MEILISEARCH_URL/indexes/movies/settings/filterable-attributes'
+    -X DELETE 'MEILISEARCH_URL/indexes/movies/settings/filterable-attributes' \
+    -H 'Authorization: Bearer API_KEY'
 # get_indexes_indexUid_settings_searchable_attributes
 get_searchable_attributes_1: |-
   curl \
-    -X GET 'MEILISEARCH_URL/indexes/movies/settings/searchable-attributes'
+    -X GET 'MEILISEARCH_URL/indexes/movies/settings/searchable-attributes' \
+    -H 'Authorization: Bearer API_KEY'
 # put_indexes_indexUid_settings_searchable_attributes
 update_searchable_attributes_1: |-
   curl \
     -X PUT 'MEILISEARCH_URL/indexes/movies/settings/searchable-attributes' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '[
       "title",
@@ -357,15 +399,18 @@ update_searchable_attributes_1: |-
 # delete_indexes_indexUid_settings_searchable_attributes
 reset_searchable_attributes_1: |-
   curl \
-    -X DELETE 'MEILISEARCH_URL/indexes/movies/settings/searchable-attributes'
+    -X DELETE 'MEILISEARCH_URL/indexes/movies/settings/searchable-attributes' \
+    -H 'Authorization: Bearer API_KEY'
 # get_indexes_indexUid_settings_displayed_attributes
 get_displayed_attributes_1: |-
   curl \
-    -X GET 'MEILISEARCH_URL/indexes/movies/settings/displayed-attributes'
+    -X GET 'MEILISEARCH_URL/indexes/movies/settings/displayed-attributes' \
+    -H 'Authorization: Bearer API_KEY'
 # put_indexes_indexUid_settings_displayed_attributes
 update_displayed_attributes_1: |-
   curl \
     -X PUT 'MEILISEARCH_URL/indexes/movies/settings/displayed-attributes' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '[
       "title",
@@ -376,15 +421,18 @@ update_displayed_attributes_1: |-
 # delete_indexes_indexUid_settings_displayed_attributes
 reset_displayed_attributes_1: |-
   curl \
-    -X DELETE 'MEILISEARCH_URL/indexes/movies/settings/displayed-attributes'
+    -X DELETE 'MEILISEARCH_URL/indexes/movies/settings/displayed-attributes' \
+    -H 'Authorization: Bearer API_KEY'
 # get_indexes_indexUid_settings_sortable_attributes
 get_sortable_attributes_1: |-
   curl \
-    -X GET 'MEILISEARCH_URL/indexes/books/settings/sortable-attributes'
+    -X GET 'MEILISEARCH_URL/indexes/books/settings/sortable-attributes' \
+    -H 'Authorization: Bearer API_KEY'
 # put_indexes_indexUid_settings_sortable_attributes
 update_sortable_attributes_1: |-
   curl \
     -X PUT 'MEILISEARCH_URL/indexes/books/settings/sortable-attributes' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '[
       "price",
@@ -393,15 +441,18 @@ update_sortable_attributes_1: |-
 # delete_indexes_indexUid_settings_sortable_attributes
 reset_sortable_attributes_1: |-
   curl \
-    -X DELETE 'MEILISEARCH_URL/indexes/books/settings/sortable-attributes'
+    -X DELETE 'MEILISEARCH_URL/indexes/books/settings/sortable-attributes' \
+    -H 'Authorization: Bearer API_KEY'
 # get_indexes_indexUid_settings_typo_tolerance
 get_typo_tolerance_1: |-
   curl \
-    -X GET 'MEILISEARCH_URL/indexes/books/settings/typo-tolerance'
+    -X GET 'MEILISEARCH_URL/indexes/books/settings/typo-tolerance' \
+    -H 'Authorization: Bearer API_KEY'
 # patch_indexes_indexUid_settings_typo_tolerance
 update_typo_tolerance_1: |-
   curl \
     -X PATCH 'MEILISEARCH_URL/indexes/books/settings/typo-tolerance' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "minWordSizeForTypos": {
@@ -413,15 +464,18 @@ update_typo_tolerance_1: |-
 # delete_indexes_indexUid_settings_typo_tolerance
 reset_typo_tolerance_1: |-
   curl \
-    -X DELETE 'MEILISEARCH_URL/indexes/books/settings/typo-tolerance'
+    -X DELETE 'MEILISEARCH_URL/indexes/books/settings/typo-tolerance' \
+    -H 'Authorization: Bearer API_KEY'
 # get_indexes_indexUid_settings_pagination
 get_pagination_settings_1: |-
   curl \
-    -X GET 'MEILISEARCH_URL/indexes/books/settings/pagination'
+    -X GET 'MEILISEARCH_URL/indexes/books/settings/pagination' \
+    -H 'Authorization: Bearer API_KEY'
 # patch_indexes_indexUid_settings_pagination
 update_pagination_settings_1: |-
   curl \
     -X PATCH 'MEILISEARCH_URL/indexes/books/settings/pagination' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "maxTotalHits": 100
@@ -429,15 +483,18 @@ update_pagination_settings_1: |-
 # delete_indexes_indexUid_settings_pagination
 reset_pagination_settings_1: |-
   curl \
-    -X DELETE 'MEILISEARCH_URL/indexes/books/settings/pagination'
+    -X DELETE 'MEILISEARCH_URL/indexes/books/settings/pagination' \
+    -H 'Authorization: Bearer API_KEY'
 # get_indexes_indexUid_settings_faceting
 get_faceting_settings_1: |-
   curl \
-    -X GET 'MEILISEARCH_URL/indexes/books/settings/faceting'
+    -X GET 'MEILISEARCH_URL/indexes/books/settings/faceting' \
+    -H 'Authorization: Bearer API_KEY'
 # patch_indexes_indexUid_settings_faceting
 update_faceting_settings_1: |-
   curl \
     -X PATCH 'MEILISEARCH_URL/indexes/books/settings/faceting' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "maxValuesPerFacet": 2,
@@ -449,6 +506,7 @@ update_faceting_settings_1: |-
 update_faceting_settings_max_values_per_facet_1: |-
   curl \
     -X PATCH 'MEILISEARCH_URL/indexes/books/settings/faceting' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "maxValuesPerFacet": 20
@@ -456,43 +514,52 @@ update_faceting_settings_max_values_per_facet_1: |-
 # delete_indexes_indexUid_settings_faceting
 reset_faceting_settings_1: |-
   curl \
-    -X DELETE 'MEILISEARCH_URL/indexes/books/settings/faceting'
+    -X DELETE 'MEILISEARCH_URL/indexes/books/settings/faceting' \
+    -H 'Authorization: Bearer API_KEY'
 # get_indexes_indexUid_settings_separator_tokens
 get_separator_tokens_1: |-
   curl \
-    -X GET 'MEILISEARCH_URL/indexes/articles/settings/separator-tokens'
+    -X GET 'MEILISEARCH_URL/indexes/articles/settings/separator-tokens' \
+    -H 'Authorization: Bearer API_KEY'
 # put_indexes_indexUid_settings_separator_tokens
 update_separator_tokens_1: |-
   curl \
     -X PUT 'MEILISEARCH_URL/indexes/articles/settings/separator-tokens' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json'  \
     --data-binary '["|", "&hellip;"]'
 # delete_indexes_indexUid_settings_separator_tokens
 reset_separator_tokens_1: |-
   curl \
-    -X DELETE 'MEILISEARCH_URL/indexes/articles/settings/separator-tokens'
+    -X DELETE 'MEILISEARCH_URL/indexes/articles/settings/separator-tokens' \
+    -H 'Authorization: Bearer API_KEY'
 # get_indexes_indexUid_settings_non_separator_tokens
 get_non_separator_tokens_1: |-
   curl \
-    -X GET 'MEILISEARCH_URL/indexes/articles/settings/non-separator-tokens'
+    -X GET 'MEILISEARCH_URL/indexes/articles/settings/non-separator-tokens' \
+    -H 'Authorization: Bearer API_KEY'
 # put_indexes_indexUid_settings_non_separator_tokens
 update_non_separator_tokens_1: |-
   curl \
     -X PUT 'MEILISEARCH_URL/indexes/articles/settings/non-separator-tokens' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json'  \
     --data-binary '["@", "#"]'
 # delete_indexes_indexUid_settings_non_separator_tokens
 reset_non_separator_tokens_1: |-
   curl \
-    -X DELETE 'MEILISEARCH_URL/indexes/articles/settings/non-separator-tokens'
+    -X DELETE 'MEILISEARCH_URL/indexes/articles/settings/non-separator-tokens' \
+    -H 'Authorization: Bearer API_KEY'
 # get_indexes_indexUid_settings_dictionary
 get_dictionary_1: |-
   curl \
-    -X GET 'MEILISEARCH_URL/indexes/books/settings/dictionary'
+    -X GET 'MEILISEARCH_URL/indexes/books/settings/dictionary' \
+    -H 'Authorization: Bearer API_KEY'
 # put_indexes_indexUid_settings_dictionary
 update_dictionary_1: |-
   curl \
     -X PUT 'MEILISEARCH_URL/indexes/books/settings/dictionary' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '[
       "J. R. R.",
@@ -501,71 +568,86 @@ update_dictionary_1: |-
 # delete_indexes_indexUid_settings_dictionary
 reset_dictionary_1: |-
   curl \
-    -X DELETE 'MEILISEARCH_URL/indexes/books/settings/dictionary'
+    -X DELETE 'MEILISEARCH_URL/indexes/books/settings/dictionary' \
+    -H 'Authorization: Bearer API_KEY'
 # get_indexes_indexUid_settings_proximity_precision
 get_proximity_precision_settings_1: |-
   curl \
-    -X GET 'MEILISEARCH_URL/indexes/books/settings/proximity-precision'
+    -X GET 'MEILISEARCH_URL/indexes/books/settings/proximity-precision' \
+    -H 'Authorization: Bearer API_KEY'
 # put_indexes_indexUid_settings_proximity_precision
 update_proximity_precision_settings_1: |-
   curl \
     -X PUT 'MEILISEARCH_URL/indexes/books/settings/proximity-precision' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '"byAttribute"'
 # delete_indexes_indexUid_settings_proximity_precision
 reset_proximity_precision_settings_1: |-
   curl \
-    -X DELETE 'MEILISEARCH_URL/indexes/books/settings/proximity-precision'
+    -X DELETE 'MEILISEARCH_URL/indexes/books/settings/proximity-precision' \
+    -H 'Authorization: Bearer API_KEY'
 # get_indexes_indexUid_settings_facet_search
 get_facet_search_settings_1: |-
   curl \
-    -X GET 'MEILISEARCH_URL/indexes/INDEX_UID/settings/facet-search'
+    -X GET 'MEILISEARCH_URL/indexes/INDEX_UID/settings/facet-search' \
+    -H 'Authorization: Bearer API_KEY'
 # put_indexes_indexUid_settings_facet_search
 update_facet_search_settings_1: |-
   curl \
     -X PUT 'MEILISEARCH_URL/indexes/INDEX_UID/settings/facet-search' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary 'false'
 # delete_indexes_indexUid_settings_facet_search
 reset_facet_search_settings_1: |-
   curl \
-    -X DELETE 'MEILISEARCH_URL/indexes/INDEX_UID/settings/facet-search'
+    -X DELETE 'MEILISEARCH_URL/indexes/INDEX_UID/settings/facet-search' \
+    -H 'Authorization: Bearer API_KEY'
 # get_indexes_indexUid_settings_prefix_search
 get_prefix_search_settings_1: |-
   curl \
-    -X GET 'MEILISEARCH_URL/indexes/INDEX_UID/settings/prefix-search'
+    -X GET 'MEILISEARCH_URL/indexes/INDEX_UID/settings/prefix-search' \
+    -H 'Authorization: Bearer API_KEY'
 # put_indexes_indexUid_settings_prefix_search
 update_prefix_search_settings_1: |-
   curl \
     -X PUT 'MEILISEARCH_URL/indexes/INDEX_UID/settings/prefix-search' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '"disabled"'
 # delete_indexes_indexUid_settings_prefix_search
 reset_prefix_search_settings_1: |-
   curl \
-    -X DELETE 'MEILISEARCH_URL/indexes/INDEX_UID/settings/prefix-search'
+    -X DELETE 'MEILISEARCH_URL/indexes/INDEX_UID/settings/prefix-search' \
+    -H 'Authorization: Bearer API_KEY'
 # get_indexes_indexUid_settings_search_cutoff_ms
 get_search_cutoff_1: |-
   curl \
-    -X GET 'MEILISEARCH_URL/indexes/movies/settings/search-cutoff-ms'
+    -X GET 'MEILISEARCH_URL/indexes/movies/settings/search-cutoff-ms' \
+    -H 'Authorization: Bearer API_KEY'
 # put_indexes_indexUid_settings_search_cutoff_ms
 update_search_cutoff_1: |-
   curl \
     -X PUT 'MEILISEARCH_URL/indexes/movies/settings/search-cutoff-ms' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '150'
 # delete_indexes_indexUid_settings_search_cutoff_ms
 reset_search_cutoff_1: |-
   curl \
-    -X DELETE 'MEILISEARCH_URL/indexes/movies/settings/search-cutoff-ms'
+    -X DELETE 'MEILISEARCH_URL/indexes/movies/settings/search-cutoff-ms' \
+    -H 'Authorization: Bearer API_KEY'
 # get_indexes_indexUid_settings_localized_attributes
 get_localized_attribute_settings_1: |-
   curl \
-    -X GET 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/localized-attributes'
+    -X GET 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/localized-attributes' \
+    -H 'Authorization: Bearer API_KEY'
 # put_indexes_indexUid_settings_localized_attributes
 update_localized_attribute_settings_1: |-
   curl \
     -X PUT 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/localized-attributes' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '[
       {"locales": ["jpn"], "attributePatterns": ["*_ja"]}
@@ -573,6 +655,7 @@ update_localized_attribute_settings_1: |-
 multilingual_dataset_guide_update_localized_attributes_1: |-
   curl \
     -X PUT 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/localized-attributes' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '[
       { "attributePatterns": ["*_en"], "locales": ["eng"] },
@@ -582,15 +665,18 @@ multilingual_dataset_guide_update_localized_attributes_1: |-
 # delete_indexes_indexUid_settings_localized_attributes
 reset_localized_attribute_settings_1: |-
   curl \
-    -X DELETE 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/localized-attributes'
+    -X DELETE 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/localized-attributes' \
+    -H 'Authorization: Bearer API_KEY'
 # get_indexes_indexUid_settings_embedders
 get_embedders_1: |-
   curl \
-    -X GET 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/embedders'
+    -X GET 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/embedders' \
+    -H 'Authorization: Bearer API_KEY'
 # patch_indexes_indexUid_settings_embedders
 update_embedders_1: |-
   curl \
     -X PATCH 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/embedders' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "default": {
@@ -620,15 +706,18 @@ update_embedders_distribution_1: |-
 # delete_indexes_indexUid_settings_embedders
 reset_embedders_1: |-
   curl \
-    -X DELETE 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/embedders'
+    -X DELETE 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/embedders' \
+    -H 'Authorization: Bearer API_KEY'
 # get_indexes_indexUid_settings_chat
 get_chat_settings_1: |-
   curl \
-    -X GET 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/chat'
+    -X GET 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/chat' \
+    -H 'Authorization: Bearer API_KEY'
 # patch_indexes_indexUid_settings_chat
 update_chat_settings_1: |-
   curl \
     -X PATCH 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/chat' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "description": "An index of movies.",
@@ -638,24 +727,29 @@ update_chat_settings_1: |-
 # delete_indexes_indexUid_settings_chat
 reset_chat_settings_1: |-
   curl \
-    -X DELETE 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/chat'
+    -X DELETE 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/chat' \
+    -H 'Authorization: Bearer API_KEY'
 ### END settings + subroutes
 # post_dumps
 post_dump_1: |-
   curl \
-    -X POST 'MEILISEARCH_URL/dumps'
+    -X POST 'MEILISEARCH_URL/dumps' \
+    -H 'Authorization: Bearer API_KEY'
 # delete_tasks
 delete_tasks_1: |-
   curl \
-    -X DELETE 'MEILISEARCH_URL/tasks?uids=1,2'
+    -X DELETE 'MEILISEARCH_URL/tasks?uids=1,2' \
+    -H 'Authorization: Bearer API_KEY'
 # post_tasks_cancel
 cancel_tasks_1: |-
   curl \
-    -X POST 'MEILISEARCH_URL/tasks/cancel?uids=1,2'
+    -X POST 'MEILISEARCH_URL/tasks/cancel?uids=1,2' \
+    -H 'Authorization: Bearer API_KEY'
 # post_swap_indexes
 swap_indexes_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/swap-indexes' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '[
       {
@@ -675,6 +769,7 @@ swap_indexes_1: |-
 multi_search_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/multi-search' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "queries": [
@@ -698,6 +793,7 @@ multi_search_1: |-
 get_documents_post_1: |-
   curl \
     -X POST MEILISEARCH_URL/indexes/books/documents/fetch \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "filter": "(rating > 3 AND (genres = Adventure OR genres = Fiction)) AND language = English",
@@ -707,6 +803,7 @@ get_documents_post_1: |-
 get_documents_post_with_filter_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/movies/documents/fetch' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "filter": "genres = Action AND rating > 8"
@@ -715,6 +812,7 @@ get_documents_post_with_filter_1: |-
 delete_documents_by_filter_1: |-
   curl \
     -X POST MEILISEARCH_URL/indexes/movies/documents/delete \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "filter": "genres = action OR genres = adventure"
@@ -723,6 +821,7 @@ delete_documents_by_filter_1: |-
 edit_documents_by_function_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/movies/documents/edit' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "function": "doc.new_field = `a]new[value`",
@@ -734,11 +833,13 @@ edit_documents_by_function_1: |-
 # get_experimental_features
 get_experimental_features_1: |-
   curl \
-    -X GET 'MEILISEARCH_URL/experimental-features/'
+    -X GET 'MEILISEARCH_URL/experimental-features/' \
+    -H 'Authorization: Bearer API_KEY'
 # patch_experimental_features
 update_experimental_features_1: |-
   curl \
     -X PATCH 'MEILISEARCH_URL/experimental-features/' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json'  \
     --data-binary '{
       "metrics": true
@@ -747,6 +848,7 @@ update_experimental_features_1: |-
 facet_search_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/books/facet-search' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "facetQuery": "fiction",
@@ -756,20 +858,24 @@ facet_search_1: |-
 # post_snapshots
 create_snapshot_1: |-
   curl \
-    -X POST 'MEILISEARCH_URL/snapshots'
+    -X POST 'MEILISEARCH_URL/snapshots' \
+    -H 'Authorization: Bearer API_KEY'
 # get_batches
 get_all_batches_1: |-
   curl \
-    -X GET 'http://MEILISEARCH_URL/batches'
+    -X GET 'http://MEILISEARCH_URL/batches' \
+    -H 'Authorization: Bearer API_KEY'
 # get_batches_stream
 get_batches_stream_1: |-
   curl \
     -X GET 'MEILISEARCH_URL/batches/stream' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Accept: text/event-stream'
 # get_batches_batchId
 get_batch_1: |-
   curl \
-    -X GET 'http://MEILISEARCH_URL/batches/BATCH_UID'
+    -X GET 'http://MEILISEARCH_URL/batches/BATCH_UID' \
+    -H 'Authorization: Bearer API_KEY'
 # post_indexes_indexUid_similar
 get_similar_post_1: |-
   curl \
@@ -783,11 +889,13 @@ get_similar_post_1: |-
 # get_indexes_indexUid_similar
 get_similar_get_1: |-
   curl \
-    -X GET 'MEILISEARCH_URL/indexes/INDEX_NAME/similar?id=TARGET_DOCUMENT_ID&embedder=EMBEDDER_NAME'
+    -X GET 'MEILISEARCH_URL/indexes/INDEX_NAME/similar?id=TARGET_DOCUMENT_ID&embedder=EMBEDDER_NAME' \
+    -H 'Authorization: Bearer API_KEY'
 # post_export
 export_post_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/export' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "url": "TARGET_INSTANCE_URL",
@@ -800,15 +908,18 @@ export_post_1: |-
 # get_webhooks
 webhooks_get_1: |-
   curl \
-    -X GET 'MEILISEARCH_URL/webhooks'
+    -X GET 'MEILISEARCH_URL/webhooks' \
+    -H 'Authorization: Bearer API_KEY'
 # get_webhooks_uuid
 webhooks_get_single_1: |-
   curl \
-    -X GET 'MEILISEARCH_URL/webhooks/WEBHOOK_UUID'
+    -X GET 'MEILISEARCH_URL/webhooks/WEBHOOK_UUID' \
+    -H 'Authorization: Bearer API_KEY'
 # post_webhooks
 webhooks_post_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/webhooks' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "url": "WEBHOOK_TARGET_URL",
@@ -821,6 +932,7 @@ webhooks_post_1: |-
 webhooks_patch_1: |-
   curl \
     -X PATCH 'MEILISEARCH_URL/webhooks/WEBHOOK_UUID' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "header": {
@@ -830,19 +942,23 @@ webhooks_patch_1: |-
 # delete_webhooks_uuid
 webhooks_delete_1: |-
   curl \
-    -X DELETE 'MEILISEARCH_URL/webhooks/WEBHOOK_UUID'
+    -X DELETE 'MEILISEARCH_URL/webhooks/WEBHOOK_UUID' \
+    -H 'Authorization: Bearer API_KEY'
 # post_indexes_indexUid_compact
 compact_index_1: |-
   curl \
-    -X POST 'MEILISEARCH_URL/indexes/INDEX_UID/compact'
+    -X POST 'MEILISEARCH_URL/indexes/INDEX_UID/compact' \
+    -H 'Authorization: Bearer API_KEY'
 # get_metrics
 experimental_get_metrics_1: |-
   curl \
-    -X GET 'MEILISEARCH_URL/metrics'
+    -X GET 'MEILISEARCH_URL/metrics' \
+    -H 'Authorization: Bearer API_KEY'
 # post_logs_stderr
 experimental_post_logs_stderr_1: |-
   curl \
     -X POST MEILISEARCH_URL/logs/stderr \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
         "target": "milli=trace,index_scheduler=info,actix_web=off"
@@ -851,6 +967,7 @@ experimental_post_logs_stderr_1: |-
 experimental_post_logs_stream_1: |-
   curl \
     -X POST MEILISEARCH_URL/logs/stream \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "mode": "human",
@@ -859,16 +976,19 @@ experimental_post_logs_stream_1: |-
 # delete_logs_stream
 experimental_delete_logs_stream_1: |-
   curl \
-    -X DELETE MEILISEARCH_URL/logs/stream
+    -X DELETE MEILISEARCH_URL/logs/stream \
+    -H 'Authorization: Bearer API_KEY'
   }'
 # get_network
 get_network_1: |-
   curl \
-    -X GET 'MEILISEARCH_URL/network'
+    -X GET 'MEILISEARCH_URL/network' \
+    -H 'Authorization: Bearer API_KEY'
 # patch_network
 update_network_1: |-
   curl \
     -X PATCH 'MEILISEARCH_URL/network' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "self": "ms-00",
@@ -886,28 +1006,34 @@ update_network_1: |-
 # get_indexes_indexUid_stats
 get_index_stats_1: |-
   curl \
-    -X GET 'MEILISEARCH_URL/indexes/movies/stats'
+    -X GET 'MEILISEARCH_URL/indexes/movies/stats' \
+    -H 'Authorization: Bearer API_KEY'
 # get_stats
 get_indexes_stats_1: |-
   curl \
-    -X GET 'MEILISEARCH_URL/stats'
+    -X GET 'MEILISEARCH_URL/stats' \
+    -H 'Authorization: Bearer API_KEY'
 # get_health
 get_health_1: |-
   curl \
-    -X GET 'MEILISEARCH_URL/health'
+    -X GET 'MEILISEARCH_URL/health' \
+    -H 'Authorization: Bearer API_KEY'
 # get_version
 get_version_1: |-
   curl \
-    -X GET 'MEILISEARCH_URL/version'
+    -X GET 'MEILISEARCH_URL/version' \
+    -H 'Authorization: Bearer API_KEY'
 ## END /reference/api
 distinct_attribute_guide_1: |-
   curl \
     -X PUT 'MEILISEARCH_URL/indexes/jackets/settings/distinct-attribute' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '"product_id"'
 field_properties_guide_displayed_1: |-
   curl \
     -X PUT 'MEILISEARCH_URL/indexes/movies/settings/displayed-attributes' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '[
         "title",
@@ -918,6 +1044,7 @@ field_properties_guide_displayed_1: |-
 filtering_guide_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/movie_ratings/search' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "Avengers",
@@ -926,6 +1053,7 @@ filtering_guide_1: |-
 filtering_guide_2: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/movie_ratings/search' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "Batman",
@@ -934,6 +1062,7 @@ filtering_guide_2: |-
 filtering_guide_3: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/movie_ratings/search' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "Planet of the Apes",
@@ -942,6 +1071,7 @@ filtering_guide_3: |-
 filtering_guide_nested_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/movie_ratings/search' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "thriller",
@@ -950,6 +1080,7 @@ filtering_guide_nested_1: |-
 add_movies_json_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/movies/documents'\
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary @movies.json
 getting_started_add_documents: |-
@@ -975,6 +1106,7 @@ authorization_header_1: |-
 sorting_guide_update_sortable_attributes_1: |-
   curl \
     -X PUT 'MEILISEARCH_URL/indexes/books/settings/sortable-attributes' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '[
       "author",
@@ -983,6 +1115,7 @@ sorting_guide_update_sortable_attributes_1: |-
 sorting_guide_update_ranking_rules_1: |-
   curl \
     -X PUT 'MEILISEARCH_URL/indexes/books/settings/ranking-rules' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '[
       "words",
@@ -996,6 +1129,7 @@ sorting_guide_update_ranking_rules_1: |-
 sorting_guide_sort_nested_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/books/search' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "science fiction",
@@ -1004,6 +1138,7 @@ sorting_guide_sort_nested_1: |-
 sorting_guide_sort_parameter_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/books/search' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "science fiction",
@@ -1012,6 +1147,7 @@ sorting_guide_sort_parameter_1: |-
 sorting_guide_sort_parameter_2: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/books/search' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "butler",
@@ -1020,41 +1156,49 @@ sorting_guide_sort_parameter_2: |-
 geosearch_guide_filter_settings_1: |-
   curl \
     -X PUT 'MEILISEARCH_URL/indexes/restaurants/settings/filterable-attributes' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-type:application/json' \
     --data-binary '["_geo"]'
 geosearch_guide_filter_settings_2: |-
   curl \
     -X PUT 'MEILISEARCH_URL/indexes/neighborhoods/settings/filterable-attributes' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-type:application/json' \
     --data-binary '["_geojson"]'
 geosearch_guide_filter_usage_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/restaurants/search' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-type:application/json' \
     --data-binary '{ "filter": "_geoRadius(45.472735, 9.184019, 2000)" }'
 geosearch_guide_filter_usage_2: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/restaurants/search' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-type:application/json' \
     --data-binary '{ "filter": "_geoRadius(45.472735, 9.184019, 2000) AND type = pizza" }'
 geosearch_guide_filter_usage_3: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/restaurants/search' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-type:application/json' \
     --data-binary '{ "filter": "_geoBoundingBox([45.494181, 9.214024], [45.449484, 9.179175])" }'
 geosearch_guide_sort_settings_1: |-
   curl \
     -X PUT 'MEILISEARCH_URL/indexes/restaurants/settings/sortable-attributes' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-type:application/json' \
     --data-binary '["_geo"]'
 geosearch_guide_sort_usage_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/restaurants/search' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-type:application/json' \
     --data-binary '{ "sort": ["_geoPoint(48.8561446,2.2978204):asc"] }'
 geosearch_guide_sort_usage_2: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/restaurants/search' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-type:application/json' \
     --data-binary '{
       "sort": [
@@ -1080,6 +1224,7 @@ basic_security_tutorial_search_1: |-
 primary_field_guide_create_index_primary_key: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "uid": "books",
@@ -1088,6 +1233,7 @@ primary_field_guide_create_index_primary_key: |-
 primary_field_guide_add_document_primary_key: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/books/documents?primaryKey=reference_number' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '[
       {
@@ -1104,6 +1250,7 @@ primary_field_guide_add_document_primary_key: |-
 primary_field_guide_update_document_primary_key: |-
   curl \
     -X PATCH 'MEILISEARCH_URL/indexes/books' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{ "primaryKey": "title" }'
 tenant_token_guide_search_no_sdk_1: |-
@@ -1113,16 +1260,19 @@ tenant_token_guide_search_no_sdk_1: |-
 typo_tolerance_guide_1: |-
   curl \
     -X PATCH 'MEILISEARCH_URL/indexes/movies/settings/typo-tolerance' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{ "enabled": false }'
 typo_tolerance_guide_2: |-
   curl \
     -X PATCH 'MEILISEARCH_URL/indexes/movies/settings/typo-tolerance' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{ "disableOnAttributes": ["title"] }'
 typo_tolerance_guide_3: |-
   curl \
     -X PATCH 'MEILISEARCH_URL/indexes/movies/settings/typo-tolerance' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "disableOnWords": [
@@ -1132,6 +1282,7 @@ typo_tolerance_guide_3: |-
 typo_tolerance_guide_4: |-
   curl \
     -X PATCH 'MEILISEARCH_URL/indexes/movies/settings/typo-tolerance' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "minWordSizeForTypos": {
@@ -1150,6 +1301,7 @@ updating_guide_create_dump: |-
 synonyms_guide_1: |-
   curl \
     -X PUT 'MEILISEARCH_URL/indexes/movies/settings/synonyms' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "great": ["fantastic"], "fantastic": ["great"]
@@ -1157,11 +1309,13 @@ synonyms_guide_1: |-
 date_guide_index_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/games/documents' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary @games.json
 date_guide_filterable_attributes_1: |-
   curl \
     -X PUT 'MEILISEARCH_URL/indexes/games/settings/filterable-attributes' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '[
       "release_timestamp"
@@ -1169,6 +1323,7 @@ date_guide_filterable_attributes_1: |-
 date_guide_filter_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/games/search' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "",
@@ -1177,6 +1332,7 @@ date_guide_filter_1: |-
 date_guide_sortable_attributes_1: |-
   curl \
     -X PUT 'MEILISEARCH_URL/indexes/games/settings/sortable-attributes' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '[
       "release_timestamp"
@@ -1184,6 +1340,7 @@ date_guide_sortable_attributes_1: |-
 date_guide_sort_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/games/search' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "",
@@ -1191,16 +1348,20 @@ date_guide_sort_1: |-
     }'
 async_guide_filter_by_statuses_1: |-
   curl \
-    -X GET 'MEILISEARCH_URL/tasks?statuses=failed'
+    -X GET 'MEILISEARCH_URL/tasks?statuses=failed' \
+    -H 'Authorization: Bearer API_KEY'
 async_guide_filter_by_statuses_2: |-
   curl \
-    -X GET 'MEILISEARCH_URL/tasks?statuses=failed,canceled'
+    -X GET 'MEILISEARCH_URL/tasks?statuses=failed,canceled' \
+    -H 'Authorization: Bearer API_KEY'
 async_guide_multiple_filters_1: |-
   curl \
-    -X GET 'MEILISEARCH_URL/tasks?indexUids=movies&types=documentAdditionOrUpdate,documentDeletion&statuses=processing'
+    -X GET 'MEILISEARCH_URL/tasks?indexUids=movies&types=documentAdditionOrUpdate,documentDeletion&statuses=processing' \
+    -H 'Authorization: Bearer API_KEY'
 faceted_search_update_settings_1: |-
   curl \
     -X PUT 'MEILISEARCH_URL/indexes/books/settings/filterable-attributes' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '[
       "genres", "rating", "language"
@@ -1208,6 +1369,7 @@ faceted_search_update_settings_1: |-
 faceted_search_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/books/search' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "classic",
@@ -1218,6 +1380,7 @@ faceted_search_1: |-
 filtering_update_settings_1: |-
   curl \
     -X PUT 'MEILISEARCH_URL/indexes/movie_ratings/settings/filterable-attributes' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '[
       "genres",
@@ -1228,6 +1391,7 @@ filtering_update_settings_1: |-
 facet_search_2: |-
   curl \
     -X PATCH 'MEILISEARCH_URL/indexes/books/settings/faceting' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "sortFacetValuesBy": {
@@ -1237,6 +1401,7 @@ facet_search_2: |-
 facet_search_3: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/books/facet-search' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "facetQuery": "c",
@@ -1245,6 +1410,7 @@ facet_search_3: |-
 facet_search_exhaustive_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/books/facet-search' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "facetName": "genres",
@@ -1310,6 +1476,7 @@ analytics_exclude_search_requests: |-
 distinct_attribute_guide_filterable_1: |-
   curl \
     -X PUT 'MEILISEARCH_URL/indexes/products/settings/filterable-attributes' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '[
       "product_id",
@@ -1319,13 +1486,16 @@ distinct_attribute_guide_filterable_1: |-
 distinct_attribute_guide_distinct_parameter_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/products/search' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "white shirt",
       "distinct": "sku"
     }'
 search_parameter_guide_vector_1: |-
-  curl -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
+  curl \
+    -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "vector": [0, 1, 2],
@@ -1337,6 +1507,7 @@ search_parameter_guide_vector_1: |-
 post_render_template_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/render-template' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "template": {
@@ -1351,6 +1522,7 @@ post_render_template_1: |-
 render_template_guide_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/render-template' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "template": {
@@ -1366,6 +1538,7 @@ render_template_guide_1: |-
 render_template_guide_2: |-
   curl \
     -X POST 'MEILISEARCH_URL/render-template' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "template": {
@@ -1385,6 +1558,7 @@ render_template_guide_2: |-
 render_template_guide_3: |-
   curl \
     -X POST 'MEILISEARCH_URL/render-template' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "template": {
@@ -1401,10 +1575,12 @@ render_template_guide_3: |-
 list_index_fields_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/fields' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json'
 update_experimental_features_contains_1: |-
   curl \
     -X PATCH 'MEILISEARCH_URL/experimental-features/' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "containsFilter": true
@@ -1412,6 +1588,7 @@ update_experimental_features_contains_1: |-
 update_experimental_features_multimodal_1: |-
   curl \
     -X PATCH 'MEILISEARCH_URL/experimental-features/' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "multimodal": true
@@ -1419,6 +1596,7 @@ update_experimental_features_multimodal_1: |-
 ai_search_user_embeddings_documents_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/documents' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '[
       { "id": 0, "_vectors": { "EMBEDDER_NAME": [0, 0.8, -0.2]}, "text": "frying pan" },
@@ -1427,6 +1605,7 @@ ai_search_user_embeddings_documents_1: |-
 ai_search_user_embeddings_search_vector_filter_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "vector": [0, 1, 2],
@@ -1439,6 +1618,7 @@ ai_search_user_embeddings_search_vector_filter_1: |-
 user_provided_embeddings_settings_1: |-
   curl \
     -X PATCH 'MEILISEARCH_URL/indexes/INDEX_NAME/settings' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "embedders": {
@@ -1451,6 +1631,7 @@ user_provided_embeddings_settings_1: |-
 image_search_user_embeddings_search_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "vector": VECTORIZED_QUERY,
@@ -1459,6 +1640,7 @@ image_search_user_embeddings_search_1: |-
 image_search_user_embeddings_search_q_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "vector": VECTORIZED_QUERY,
@@ -1468,6 +1650,7 @@ image_search_user_embeddings_search_q_1: |-
 federated_search_multi_search_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/multi-search' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "federation": {},
@@ -1489,6 +1672,7 @@ federated_search_multi_search_1: |-
 federated_search_multi_search_weight_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/multi-search' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "federation": {},
@@ -1511,15 +1695,18 @@ federated_search_multi_search_weight_1: |-
 # get_chats
 list_chat_workspaces_1: |-
   curl \
-    -X GET 'MEILISEARCH_URL/chats'
+    -X GET 'MEILISEARCH_URL/chats' \
+    -H 'Authorization: Bearer API_KEY'
 # get_chats_workspaceUid
 get_chat_workspace_1: |-
   curl \
-    -X GET 'MEILISEARCH_URL/chats/WORKSPACE_NAME'
+    -X GET 'MEILISEARCH_URL/chats/WORKSPACE_NAME' \
+    -H 'Authorization: Bearer API_KEY'
 # delete_chats_workspaceUid
 delete_chat_workspace_1: |-
   curl \
-    -X DELETE 'MEILISEARCH_URL/chats/WORKSPACE_NAME'
+    -X DELETE 'MEILISEARCH_URL/chats/WORKSPACE_NAME' \
+    -H 'Authorization: Bearer API_KEY'
 # post_chats_workspaceUid_chat_completions
 post_chat_completion_1: |-
   curl -N \
@@ -1584,15 +1771,18 @@ reset_chat_workspace_settings_1: |-
 list_dynamic_search_rules_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/dynamic-search-rules' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json'
 # get_dynamic_search_rules_uid
 get_dynamic_search_rule_1: |-
   curl \
-    -X GET 'MEILISEARCH_URL/dynamic-search-rules/black-friday'
+    -X GET 'MEILISEARCH_URL/dynamic-search-rules/black-friday' \
+    -H 'Authorization: Bearer API_KEY'
 # patch_dynamic_search_rules_uid
 patch_dynamic_search_rule_1: |-
   curl \
     -X PATCH 'MEILISEARCH_URL/dynamic-search-rules/black-friday' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "description": "Black Friday 2025 rules",
@@ -1617,19 +1807,23 @@ patch_dynamic_search_rule_1: |-
 # delete_dynamic_search_rules
 delete_all_dynamic_search_rules_1: |-
   curl \
-    -X DELETE 'MEILISEARCH_URL/dynamic-search-rules'
+    -X DELETE 'MEILISEARCH_URL/dynamic-search-rules' \
+    -H 'Authorization: Bearer API_KEY'
 # delete_dynamic_search_rules_uid
 delete_dynamic_search_rule_1: |-
   curl \
-    -X DELETE 'MEILISEARCH_URL/dynamic-search-rules/black-friday'
+    -X DELETE 'MEILISEARCH_URL/dynamic-search-rules/black-friday' \
+    -H 'Authorization: Bearer API_KEY'
 # get_indexes_indexUid_settings_foreign_keys
 get_foreign_keys_setting_1: |-
   curl \
-    -X GET 'MEILISEARCH_URL/indexes/books/settings/foreign-keys'
+    -X GET 'MEILISEARCH_URL/indexes/books/settings/foreign-keys' \
+    -H 'Authorization: Bearer API_KEY'
 # put_indexes_indexUid_settings_foreign_keys
 update_foreign_keys_setting_1: |-
   curl \
     -X PUT 'MEILISEARCH_URL/indexes/books/settings/foreign-keys' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '[
       {
@@ -1644,11 +1838,13 @@ update_foreign_keys_setting_1: |-
 # delete_indexes_indexUid_settings_foreign_keys
 reset_foreign_keys_setting_1: |-
   curl \
-    -X DELETE 'MEILISEARCH_URL/indexes/books/settings/foreign-keys'
+    -X DELETE 'MEILISEARCH_URL/indexes/books/settings/foreign-keys' \
+    -H 'Authorization: Bearer API_KEY'
 # post_network_control
 network_control_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/network/control' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "origin": {
@@ -1664,7 +1860,8 @@ network_control_1: |-
 # post_tasks_compact
 compact_task_queue_1: |-
   curl \
-    -X POST 'MEILISEARCH_URL/tasks/compact'
+    -X POST 'MEILISEARCH_URL/tasks/compact' \
+    -H 'Authorization: Bearer API_KEY'
 chat_create_key_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/keys' \
@@ -1680,6 +1877,7 @@ chat_create_key_1: |-
 image_search_multimodal_settings_1: |-
   curl \
     -X PATCH 'MEILISEARCH_URL/indexes/INDEX_NAME/settings' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "embedders": {
@@ -1747,6 +1945,7 @@ image_search_multimodal_settings_1: |-
 image_search_multimodal_search_text_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "a mountain sunset with snow",
@@ -1757,6 +1956,7 @@ image_search_multimodal_search_text_1: |-
 image_search_multimodal_search_image_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "media": {
@@ -1772,6 +1972,7 @@ image_search_multimodal_search_image_1: |-
 ai_search_getting_started_embedders_1: |-
   curl \
     -X PATCH 'MEILISEARCH_URL/indexes/kitchenware/settings/embedders' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "products-openai": {
@@ -1784,6 +1985,7 @@ ai_search_getting_started_embedders_1: |-
 ai_search_getting_started_search_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/kitchenware/search' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "kitchen utensils made of wood",
@@ -1794,6 +1996,7 @@ ai_search_getting_started_search_1: |-
 personalization_search_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "wireless keyboard",
@@ -1804,6 +2007,7 @@ personalization_search_1: |-
 configure_rest_embedder_1: |-
   curl \
     -X PATCH 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/embedders' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "EMBEDDER_NAME": {
@@ -1826,6 +2030,7 @@ configure_rest_embedder_1: |-
 joins_define_relationship_1: |-
   curl \
     -X PATCH 'MEILISEARCH_URL/indexes/deals/settings' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "foreignKeys": [
@@ -1850,6 +2055,7 @@ joins_define_relationship_1: |-
 joins_one_to_one_1: |-
   curl \
     -X PATCH 'MEILISEARCH_URL/indexes/users/settings' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "foreignKeys": [
@@ -1874,6 +2080,7 @@ joins_one_to_one_1: |-
 joins_one_to_many_1: |-
   curl \
     -X PATCH 'MEILISEARCH_URL/indexes/companies/settings' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "foreignKeys": [
@@ -1898,6 +2105,7 @@ joins_one_to_many_1: |-
 joins_many_to_many_1: |-
   curl \
     -X PATCH 'MEILISEARCH_URL/indexes/films/settings' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "foreignKeys": [
@@ -1922,6 +2130,7 @@ joins_many_to_many_1: |-
 joins_self_reference_1: |-
   curl \
     -X PATCH 'MEILISEARCH_URL/indexes/products/settings' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "foreignKeys": [
@@ -1946,6 +2155,7 @@ joins_self_reference_1: |-
 joins_multiple_relationships_1: |-
   curl \
     -X PATCH 'MEILISEARCH_URL/indexes/deals/settings' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "foreignKeys": [
@@ -1984,6 +2194,7 @@ joins_multiple_relationships_1: |-
 joins_update_relationship_1: |-
   curl \
     -X PATCH 'MEILISEARCH_URL/indexes/deals/settings' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "foreignKeys": [
@@ -2008,6 +2219,7 @@ joins_update_relationship_1: |-
 joins_remove_relationships_1: |-
   curl \
     -X PATCH 'MEILISEARCH_URL/indexes/deals/settings' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "foreignKeys": []
@@ -2015,6 +2227,7 @@ joins_remove_relationships_1: |-
 joins_delete_orphaned_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/deals/delete-by-filter' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "filter": "company_id = deleted_company_1 OR company_id = deleted_company_2"
@@ -2022,6 +2235,7 @@ joins_delete_orphaned_1: |-
 joins_remove_orphaned_ids_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/films/documents/edit' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "function": "doc.actors = doc.actors.filter(|id| id != context.deleted_id)",
@@ -2033,6 +2247,7 @@ joins_remove_orphaned_ids_1: |-
 foreign_filter_basic_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/deals/search' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "contract",
@@ -2041,6 +2256,7 @@ foreign_filter_basic_1: |-
 foreign_filter_equality_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/deals/search' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "contract",
@@ -2049,6 +2265,7 @@ foreign_filter_equality_1: |-
 foreign_filter_multiple_equality_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/deals/search' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "",
@@ -2057,6 +2274,7 @@ foreign_filter_multiple_equality_1: |-
 foreign_filter_range_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/deals/search' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "enterprise",
@@ -2065,6 +2283,7 @@ foreign_filter_range_1: |-
 foreign_filter_date_range_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/deals/search' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "",
@@ -2073,6 +2292,7 @@ foreign_filter_date_range_1: |-
 foreign_filter_multiple_conditions_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/deals/search' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "contract",
@@ -2081,6 +2301,7 @@ foreign_filter_multiple_conditions_1: |-
 foreign_filter_combined_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/deals/search' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "contract",
@@ -2089,6 +2310,7 @@ foreign_filter_combined_1: |-
 foreign_filter_array_or_logic_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/films/search' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "filter": "actors.country = \"France\" OR actors.age > 35"
@@ -2096,6 +2318,7 @@ foreign_filter_array_or_logic_1: |-
 foreign_filter_array_and_logic_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/films/search' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "filter": "_foreign(actors, country = \"France\" AND age > 35)"
@@ -2103,6 +2326,7 @@ foreign_filter_array_and_logic_1: |-
 foreign_filter_certifications_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/products/search' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "motor",
@@ -2111,6 +2335,7 @@ foreign_filter_certifications_1: |-
 foreign_filter_tags_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/articles/search' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "cryptography",
@@ -2119,6 +2344,7 @@ foreign_filter_tags_1: |-
 foreign_filter_skills_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/employees/search' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "fullstack",
@@ -2136,6 +2362,7 @@ rbac_search_with_foreign_filter_1: |-
 rbac_multi_level_1: |-
   curl \
     -X POST 'MEILISEARCH_URL/indexes/documents/search' \
+    -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "sensitive",
