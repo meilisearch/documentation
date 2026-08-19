@@ -103,7 +103,7 @@ The `facetDistribution` tells you exactly which values exist and how many docume
 }
 ```
 
-Given filterable attributes `specs.language`, `specs.binding`, and `specs.edition`, that single entry returns a distribution for all three. Patterns follow the same matching rules as [`filterableAttributes.attributePatterns`](/capabilities/filtering_sorting_faceting/how_to/configure_granular_filters#wildcard-patterns), and only filterable attributes are ever matched.
+Given filterable attributes `specs.language`, `specs.binding`, and `specs.edition`, that single entry returns a distribution for all three. Only filterable attributes are ever matched.
 
 <Warning>
 A wildcard makes it easy to request far more facets than your interface displays, and every matched attribute costs a distribution computation. Prefer an explicit list for a page whose facets you know, and keep wildcards for cases where the attribute names are genuinely dynamic. See [Optimize facet performance](/capabilities/filtering_sorting_faceting/advanced/optimize_facet_performance) for the cost model.
