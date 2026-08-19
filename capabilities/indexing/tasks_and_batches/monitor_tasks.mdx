@@ -95,6 +95,41 @@ When `status` changes to `succeeded`, Meilisearch has finished processing your r
 
 If the task `status` changes to `failed`, Meilisearch was not able to fulfill your request. Check the task object's `error` field for more information.
 
+### Streaming task updates instead of polling
+
+Polling `GET /tasks/{task_uid}` works, but it costs a request per check and leaves a gap between a task finishing and your application noticing. Two streaming routes push updates to you instead:
+
+- [`GET /tasks/stream`](/reference/api/async-task-management/stream-tasks-changes) emits a task every time its status changes, so you receive it as it moves through `enqueued`, `processing`, and then `succeeded` or `failed`
+- [`GET /batches/stream`](/reference/api/async-task-management/stream-batches-changes) emits a batch on every status change and also on progress updates, which makes it the better choice for following a long indexing run
+
+Both routes are experimental. Enable the `tasksStreamingRoute` flag before using them:
+
+<CodeGroup>
+
+```bash
+curl \
+  -X PATCH 'MEILISEARCH_URL/experimental-features' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer API_KEY' \
+  --data-binary '{ "tasksStreamingRoute": true }'
+```
+
+</CodeGroup>
+
+Then hold the connection open and read events as they arrive. Pass `-N` so curl does not buffer the stream:
+
+<CodeGroup>
+
+```bash
+curl -N \
+  -X GET 'MEILISEARCH_URL/tasks/stream' \
+  -H 'Authorization: Bearer API_KEY'
+```
+
+</CodeGroup>
+
+Each event carries the same task object the other task routes return, so existing status handling works unchanged. Neither route replays history: you receive changes that happen while you are connected, so treat a stream as a live feed rather than a substitute for [`GET /tasks`](/reference/api/async-task-management/list-tasks) when you need to inspect the past. If your client reconnects, query the task or batch you care about once to resynchronise before relying on the stream again.
+
 ### Interpreting timestamps and `duration`
 
 A task object includes three timestamp fields, each formatted as an RFC 3339 date. Each field remains `null` until the task reaches the corresponding state.
