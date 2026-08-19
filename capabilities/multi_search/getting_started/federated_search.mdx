@@ -149,9 +149,60 @@ The response includes `page`, `hitsPerPage`, and `totalPages` instead of `offset
 
 This makes it straightforward to build paginated UIs that display merged results from multiple indexes.
 
+## Deduplicate results across indexes
+
+The same client may appear in a profile, a chat log, and a support ticket at once. Use the `distinct` property of the `federation` parameter to keep at most one result per value of a given attribute, computed across every query in the request.
+
+`distinct` requires the attribute to be filterable in each participating index, so add `client_name` to `filterableAttributes` for all three indexes first:
+
+<CodeGroup>
+
+```sh
+curl -X PUT 'MEILISEARCH_URL/indexes/profiles/settings/filterable-attributes' -H 'Content-Type: application/json' -H 'Authorization: Bearer MEILISEARCH_KEY' --data-binary '["client_name"]' &&
+curl -X PUT 'MEILISEARCH_URL/indexes/chats/settings/filterable-attributes' -H 'Content-Type: application/json' -H 'Authorization: Bearer MEILISEARCH_KEY' --data-binary '["client_name"]' &&
+curl -X PUT 'MEILISEARCH_URL/indexes/tickets/settings/filterable-attributes' -H 'Content-Type: application/json' -H 'Authorization: Bearer MEILISEARCH_KEY' --data-binary '["client_name"]'
+```
+
+</CodeGroup>
+
+Then set `distinct` inside `federation`:
+
+<CodeGroup>
+
+```bash
+curl \
+  -X POST 'MEILISEARCH_URL/multi-search' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  --data-binary '{
+    "federation": {
+      "distinct": "client_name"
+    },
+    "queries": [
+      { "indexUid": "profiles", "q": "Nguyen" },
+      { "indexUid": "chats", "q": "Nguyen" },
+      { "indexUid": "tickets", "q": "Nguyen" }
+    ]
+  }'
+```
+
+</CodeGroup>
+
+Natasha Nguyen now occupies a single entry in the merged list instead of one per source.
+
+Federation-level `distinct` behaves differently from the [index-level distinct attribute](/capabilities/full_text_search/how_to/configure_distinct_attribute) in three ways:
+
+- It applies across every query in the request, whatever index or remote they target
+- It overrides the distinct attribute configured on each participating index
+- Setting `distinct` on an individual query and on `federation` at the same time returns an HTTP 400 error
+
+<Note>
+When queries reach remote instances, Meilisearch computes facet distribution as accurately as it can but cannot guarantee exact counts, because the distinct computation is not applied to documents held on every remote.
+</Note>
+
 ## Conclusion
 
-You have created three indexes, then performed a federated multi-index search to receive all results in a single list. You then used `weight` to boost results from the index most likely to contain the information you wanted, and paginated through merged results using `federation.page` and `federation.hitsPerPage`.
+You have created three indexes, then performed a federated multi-index search to receive all results in a single list. You then used `weight` to boost results from the index most likely to contain the information you wanted, paginated through merged results using `federation.page` and `federation.hitsPerPage`, and collapsed duplicate matches with `federation.distinct`.
 
 ## Next steps
 
