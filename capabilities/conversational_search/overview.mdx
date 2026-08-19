@@ -45,11 +45,13 @@ Integrate Meilisearch as the retrieval layer in a broader RAG architecture. Meil
 
 ## Implementation strategies
 
-### Chat completions API (recommended)
+{/* TODO: recommended alternative getting started article */}
 
-In the majority of cases, you should use the [`/chats` route](/reference/api/chats/update-chat) to build conversational search. This API consolidates the entire RAG pipeline into a single endpoint, handling retrieval, context management, and generation.
+### Chat completions API (fallback)
 
-Follow the [getting started guide](/capabilities/conversational_search/getting_started/setup) to set up conversational search, then build a [chat interface](/capabilities/conversational_search/getting_started/chat) or generate [summarized answers](/capabilities/conversational_search/getting_started/one_shot_summarization). Consult the [chat completions API reference](/reference/api/chats/request-a-chat-completion) for the full list of supported parameters.
+The [`/chats` route](/reference/api/chats/request-a-chat-completion) consolidates retrieval, context management, and generation into a single endpoint. Use it only if you need to call the Chats API directly.
+
+See the [Chats API fallback](/capabilities/conversational_search/advanced/chats_api_fallback) guide for setup, chat patterns, streaming, and tools. Consult the [chat completions API reference](/reference/api/chats/request-a-chat-completion) for the full list of supported parameters.
 
 ### Model Context Protocol (MCP)
 

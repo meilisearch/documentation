@@ -489,7 +489,7 @@
   },
   {
     "source": "/guides/ai/getting_started_with_chat",
-    "destination": "/capabilities/conversational_search/getting_started/setup"
+    "destination": "/capabilities/conversational_search/advanced/chats_api_fallback"
   },
   {
     "source": "/guides/front_end/pagination",
@@ -705,11 +705,11 @@
   },
   {
     "source": "/learn/chat/getting_started_with_chat",
-    "destination": "/capabilities/conversational_search/getting_started/setup"
+    "destination": "/capabilities/conversational_search/advanced/chats_api_fallback"
   },
   {
     "source": "/learn/chat/chat_tooling_reference",
-    "destination": "/capabilities/conversational_search/advanced/chat_tooling_reference"
+    "destination": "/capabilities/conversational_search/advanced/chats_api_fallback#tools-reference"
   },
   {
     "source": "/learn/chat/conversational_search",
@@ -2977,7 +2977,7 @@
   },
   {
     "source": "/capabilities/chat/getting_started",
-    "destination": "/capabilities/conversational_search/getting_started/setup"
+    "destination": "/capabilities/conversational_search/advanced/chats_api_fallback"
   },
   {
     "source": "/learn/advanced/known-limitations",
@@ -3381,7 +3381,7 @@
   },
   {
     "source": "/learn/chat/g",
-    "destination": "/capabilities/conversational_search/getting_started/setup"
+    "destination": "/capabilities/conversational_search/advanced/chats_api_fallback"
   },
   {
     "source": "/learn/ai/embedders",
@@ -4313,7 +4313,7 @@
   },
   {
     "source": "/capabilities/conversational_search/getting_started/setupmd",
-    "destination": "/capabilities/conversational_search/getting_started/setup"
+    "destination": "/capabilities/conversational_search/advanced/chats_api_fallback"
   },
   {
     "source": "/capabilities/indexing/tasks_and_batches/monitor_tasksno_space_left_on_device",
@@ -4325,7 +4325,7 @@
   },
   {
     "source": "/guides/ai/chat",
-    "destination": "/capabilities/conversational_search/getting_started/setup"
+    "destination": "/capabilities/conversational_search/advanced/chats_api_fallback"
   },
   {
     "source": "/learn/advanced/low_level_api/index",
@@ -4642,5 +4642,33 @@
   {
     "source": "/guides/deployment/gcp",
     "destination": "/resources/self_hosting/deployment/gcp"
+  },
+  {
+    "source": "/capabilities/conversational_search/getting_started/setup",
+    "destination": "/capabilities/conversational_search/advanced/chats_api_fallback"
+  },
+  {
+    "source": "/capabilities/conversational_search/getting_started/chat",
+    "destination": "/capabilities/conversational_search/advanced/chats_api_fallback#chat-interface"
+  },
+  {
+    "source": "/capabilities/conversational_search/getting_started/one_shot_summarization",
+    "destination": "/capabilities/conversational_search/advanced/chats_api_fallback#summarized-answers"
+  },
+  {
+    "source": "/capabilities/conversational_search/how_to/configure_chat_workspace",
+    "destination": "/capabilities/conversational_search/advanced/chats_api_fallback#workspace-settings"
+  },
+  {
+    "source": "/capabilities/conversational_search/how_to/configure_index_chat_settings",
+    "destination": "/capabilities/conversational_search/advanced/chats_api_fallback#index-chat-settings"
+  },
+  {
+    "source": "/capabilities/conversational_search/how_to/stream_chat_responses",
+    "destination": "/capabilities/conversational_search/advanced/chats_api_fallback#streaming"
+  },
+  {
+    "source": "/capabilities/conversational_search/advanced/chat_tooling_reference",
+    "destination": "/capabilities/conversational_search/advanced/chats_api_fallback#tools-reference"
   }
 ]
