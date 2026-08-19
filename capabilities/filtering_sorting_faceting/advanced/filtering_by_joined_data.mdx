@@ -140,13 +140,13 @@ For detailed examples and use cases, see the [Precise filtering with array relat
 
 ### Filter specificity
 
-Broader filters on related data may hit the 100-document limit:
+Broader filters on related data may hit the 1000-document limit:
 
 ```bash
 # ✓ Good: Very specific
 filter: "_foreign(company, industry = \"Technology\" AND state = \"CA\")"
 
-# ✗ Problematic: May return > 100 docs
+# ✗ Problematic: May return > 1000 docs
 filter: "_foreign(company, industry = \"Technology\")"
 ```
 
@@ -163,16 +163,16 @@ filter: "value >= 500000 AND _foreign(company, founded_year >= 2020)"
 
 Before production, verify filter performance:
 - Estimate how many target documents match each filter
-- Ensure results stay under 100 documents
+- Ensure results stay under 1000 documents
 - Add more specific conditions if needed
 
-## Hard limit: Foreign filters with maximum 100 matching documents
+## Hard limit: Foreign filters with maximum 1000 matching documents
 
 <Callout type="warning">
-If a foreign filter returns more than 100 matching documents from the target index, Meilisearch will return an error. Design your foreign filters carefully to stay within this limit by being more specific with your filtering criteria.
+If a foreign filter returns more than 1000 matching documents from the target index, Meilisearch will return an error. Design your foreign filters carefully to stay within this limit by being more specific with your filtering criteria.
 </Callout>
 
-**Example:** If you filter for `_foreign(company, industry = "Technology")` and your database has 150 technology companies, the query fails.
+**Example:** If you filter for `_foreign(company, industry = "Technology")` and your database has 1,500 technology companies, the query fails.
 
 **Solutions:**
 - Add additional filter conditions: `_foreign(company, industry = "Technology" AND founded_year >= 2020)` (narrows results)
