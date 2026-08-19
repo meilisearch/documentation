@@ -2,7 +2,8 @@
 
 ```bash cURL
 curl \
-  -X DELETE 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/embedders'
+  -X DELETE 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/embedders' \
+  -H 'Authorization: Bearer API_KEY'
 ```
 
 ```python Python

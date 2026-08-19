@@ -3,6 +3,7 @@
 ```bash cURL
 curl \
   -X PATCH 'MEILISEARCH_URL/indexes/books/settings/pagination' \
+  -H 'Authorization: Bearer API_KEY' \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "maxTotalHits": 100

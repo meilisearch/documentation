@@ -3,6 +3,7 @@
 ```bash cURL
 curl \
   -X PATCH 'MEILISEARCH_URL/webhooks/WEBHOOK_UUID' \
+  -H 'Authorization: Bearer API_KEY' \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "header": {

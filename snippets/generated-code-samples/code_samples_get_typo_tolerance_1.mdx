@@ -2,7 +2,8 @@
 
 ```bash cURL
 curl \
-  -X GET 'MEILISEARCH_URL/indexes/books/settings/typo-tolerance'
+  -X GET 'MEILISEARCH_URL/indexes/books/settings/typo-tolerance' \
+  -H 'Authorization: Bearer API_KEY'
 ```
 
 ```javascript JS

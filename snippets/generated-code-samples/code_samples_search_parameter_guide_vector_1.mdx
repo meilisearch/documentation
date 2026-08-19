@@ -1,7 +1,9 @@
 <CodeGroup>
 
 ```bash cURL
-curl -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
+curl \
+  -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/search' \
+  -H 'Authorization: Bearer API_KEY' \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "vector": [0, 1, 2],

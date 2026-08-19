@@ -3,6 +3,7 @@
 ```bash cURL
 curl \
   -X PUT 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/localized-attributes' \
+  -H 'Authorization: Bearer API_KEY' \
   -H 'Content-Type: application/json' \
   --data-binary '[
     { "attributePatterns": ["*_en"], "locales": ["eng"] },

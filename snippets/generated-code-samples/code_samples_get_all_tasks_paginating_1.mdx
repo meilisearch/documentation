@@ -2,7 +2,8 @@
 
 ```bash cURL
 curl \
-  -X GET 'MEILISEARCH_URL/tasks?limit=2&from=10
+  -X GET 'MEILISEARCH_URL/tasks?limit=2&from=10 \
+  -H 'Authorization: Bearer API_KEY'
 ```
 
 ```javascript JS

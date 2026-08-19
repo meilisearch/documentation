@@ -3,6 +3,7 @@
 ```bash cURL
 curl \
   -X POST 'MEILISEARCH_URL/indexes/kitchenware/search' \
+  -H 'Authorization: Bearer API_KEY' \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "q": "kitchen utensils made of wood",

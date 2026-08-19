@@ -3,6 +3,7 @@
 ```bash cURL
 curl \
   -X POST 'MEILISEARCH_URL/indexes' \
+  -H 'Authorization: Bearer API_KEY' \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "uid": "movies",

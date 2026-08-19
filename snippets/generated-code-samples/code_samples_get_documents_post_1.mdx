@@ -3,6 +3,7 @@
 ```bash cURL
 curl \
   -X POST MEILISEARCH_URL/indexes/books/documents/fetch \
+  -H 'Authorization: Bearer API_KEY' \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "filter": "(rating > 3 AND (genres = Adventure OR genres = Fiction)) AND language = English",

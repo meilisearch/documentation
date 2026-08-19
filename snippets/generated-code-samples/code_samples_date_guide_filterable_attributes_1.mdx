@@ -3,6 +3,7 @@
 ```bash cURL
 curl \
   -X PUT 'MEILISEARCH_URL/indexes/games/settings/filterable-attributes' \
+  -H 'Authorization: Bearer API_KEY' \
   -H 'Content-Type: application/json' \
   --data-binary '[
     "release_timestamp"

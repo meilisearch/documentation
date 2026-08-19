@@ -2,7 +2,8 @@
 
 ```bash cURL
 curl \
-  -X GET 'MEILISEARCH_URL/indexes/movies/settings/ranking-rules'
+  -X GET 'MEILISEARCH_URL/indexes/movies/settings/ranking-rules' \
+  -H 'Authorization: Bearer API_KEY'
 ```
 
 ```javascript JS

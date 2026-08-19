@@ -3,6 +3,7 @@
 ```bash cURL
 curl \
   -X POST 'MEILISEARCH_URL/indexes/restaurants/search' \
+  -H 'Authorization: Bearer API_KEY' \
   -H 'Content-type:application/json' \
   --data-binary '{ "sort": ["_geoPoint(48.8561446,2.2978204):asc"] }'
 ```

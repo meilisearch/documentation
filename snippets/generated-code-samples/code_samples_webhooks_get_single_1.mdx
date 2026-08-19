@@ -2,7 +2,8 @@
 
 ```bash cURL
 curl \
-  -X GET 'MEILISEARCH_URL/webhooks/WEBHOOK_UUID'
+  -X GET 'MEILISEARCH_URL/webhooks/WEBHOOK_UUID' \
+  -H 'Authorization: Bearer API_KEY'
 ```
 
 ```javascript JS

@@ -2,7 +2,8 @@
 
 ```bash cURL
 curl \
-  -X GET 'MEILISEARCH_URL/indexes/movies/settings/filterable-attributes'
+  -X GET 'MEILISEARCH_URL/indexes/movies/settings/filterable-attributes' \
+  -H 'Authorization: Bearer API_KEY'
 ```
 
 ```javascript JS

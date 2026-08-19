@@ -2,7 +2,8 @@
 
 ```bash cURL
 curl \
-  -X DELETE 'MEILISEARCH_URL/indexes/movies/settings'
+  -X DELETE 'MEILISEARCH_URL/indexes/movies/settings' \
+  -H 'Authorization: Bearer API_KEY'
 ```
 
 ```javascript JS

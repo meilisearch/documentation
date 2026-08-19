@@ -2,7 +2,8 @@
 
 ```bash cURL
 curl \
-  -X DELETE 'MEILISEARCH_URL/indexes/books/settings/dictionary'
+  -X DELETE 'MEILISEARCH_URL/indexes/books/settings/dictionary' \
+  -H 'Authorization: Bearer API_KEY'
 ```
 
 ```javascript JS

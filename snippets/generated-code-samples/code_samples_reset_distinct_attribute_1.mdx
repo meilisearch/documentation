@@ -2,7 +2,8 @@
 
 ```bash cURL
 curl \
-  -X DELETE 'MEILISEARCH_URL/indexes/shoes/settings/distinct-attribute'
+  -X DELETE 'MEILISEARCH_URL/indexes/shoes/settings/distinct-attribute' \
+  -H 'Authorization: Bearer API_KEY'
 ```
 
 ```javascript JS

@@ -3,6 +3,7 @@
 ```bash cURL
 curl \
   -X GET 'MEILISEARCH_URL/tasks/stream' \
+  -H 'Authorization: Bearer API_KEY' \
   -H 'Accept: text/event-stream'
 ```
 </CodeGroup>

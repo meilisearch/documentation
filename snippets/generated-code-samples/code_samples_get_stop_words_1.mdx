@@ -2,7 +2,8 @@
 
 ```bash cURL
 curl \
-  -X GET 'MEILISEARCH_URL/indexes/movies/settings/stop-words'
+  -X GET 'MEILISEARCH_URL/indexes/movies/settings/stop-words' \
+  -H 'Authorization: Bearer API_KEY'
 ```
 
 ```javascript JS

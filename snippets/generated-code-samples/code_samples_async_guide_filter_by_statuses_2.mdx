@@ -2,7 +2,8 @@
 
 ```bash cURL
 curl \
-  -X GET 'MEILISEARCH_URL/tasks?statuses=failed,canceled'
+  -X GET 'MEILISEARCH_URL/tasks?statuses=failed,canceled' \
+  -H 'Authorization: Bearer API_KEY'
 ```
 
 ```rust Rust

@@ -2,7 +2,8 @@
 
 ```bash cURL
 curl \
-  -X GET 'MEILISEARCH_URL/indexes/movies/documents/25684?fields=id,title,poster,release_date'
+  -X GET 'MEILISEARCH_URL/indexes/movies/documents/25684?fields=id,title,poster,release_date' \
+  -H 'Authorization: Bearer API_KEY'
 ```
 
 ```javascript JS

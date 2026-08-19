@@ -3,6 +3,7 @@
 ```bash cURL
 curl \
   -X PATCH 'MEILISEARCH_URL/dynamic-search-rules/black-friday' \
+  -H 'Authorization: Bearer API_KEY' \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "description": "Black Friday 2025 rules",

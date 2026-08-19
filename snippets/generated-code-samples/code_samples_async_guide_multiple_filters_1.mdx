@@ -2,7 +2,8 @@
 
 ```bash cURL
 curl \
-  -X GET 'MEILISEARCH_URL/tasks?indexUids=movies&types=documentAdditionOrUpdate,documentDeletion&statuses=processing'
+  -X GET 'MEILISEARCH_URL/tasks?indexUids=movies&types=documentAdditionOrUpdate,documentDeletion&statuses=processing' \
+  -H 'Authorization: Bearer API_KEY'
 ```
 
 ```javascript JS

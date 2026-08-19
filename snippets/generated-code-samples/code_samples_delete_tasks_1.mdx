@@ -2,7 +2,8 @@
 
 ```bash cURL
 curl \
-  -X DELETE 'MEILISEARCH_URL/tasks?uids=1,2'
+  -X DELETE 'MEILISEARCH_URL/tasks?uids=1,2' \
+  -H 'Authorization: Bearer API_KEY'
 ```
 
 ```javascript JS
