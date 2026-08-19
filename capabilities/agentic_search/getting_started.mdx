@@ -1,0 +1,141 @@
+---
+title: Getting started with agentic search
+sidebarTitle: Getting started
+description: Connect Meilisearch to an AI agent using the AI SDK, then run your first agentic search request.
+---
+
+This guide walks you through [`@meilisearch/ai-sdk`](https://github.com/meilisearch/ai-sdk), the recommended way to build agentic and conversational search on top of Meilisearch. It provides ready-made search tools for the [Vercel AI SDK](https://ai-sdk.dev), so your agent or application code decides when to search and how to use the results, no engine-managed `/chats` workspace required.
+
+## Before you begin
+
+You need:
+
+- A Meilisearch project with at least one index containing documents. If you don't have one yet, follow the [quick start](/getting_started/first_project).
+- A search API key for that project. See [manage API keys](/capabilities/security/how_to/manage_api_keys) if you need to create one.
+- An API key from an LLM provider supported by the Vercel AI SDK. This guide uses OpenAI because it's the simplest to set up.
+
+## Install packages
+
+Install the Vercel AI SDK, a model provider package, and the Meilisearch AI SDK:
+
+<CodeGroup>
+
+```bash npm
+npm install ai @ai-sdk/openai @meilisearch/ai-sdk
+```
+
+</CodeGroup>
+
+## Configure environment variables
+
+Add your Meilisearch and LLM provider credentials to your environment:
+
+<CodeGroup>
+
+```bash .env
+MEILISEARCH_HOST=https://your-project.meilisearch.io
+MEILISEARCH_API_KEY=your-search-api-key
+OPENAI_API_KEY=your-openai-api-key
+```
+
+</CodeGroup>
+
+## Run a first agentic request
+
+Use `meilisearchSearch` to give an agent a search tool scoped to one index. The `description` field tells the model what the index contains and when to use it:
+
+```ts
+import { generateText } from "ai";
+import { openai } from "@ai-sdk/openai";
+import { meilisearchSearch } from "@meilisearch/ai-sdk";
+
+const { text } = await generateText({
+  model: openai("gpt-5.4-mini"),
+  prompt: "Find two useful docs pages for configuring search analytics, then summarize the difference.",
+  tools: {
+    search: meilisearchSearch({
+      host: process.env.MEILISEARCH_HOST!,
+      apiKey: process.env.MEILISEARCH_API_KEY!,
+      indexUid: "docs",
+      description: "Search product docs and help-center content",
+    }),
+  },
+});
+
+console.log(text);
+```
+
+The model decides whether and how many times to call `search` before answering. There is no fixed retrieve-then-generate pipeline: the agent is in control.
+
+## Make the UX conversational if needed
+
+Conversational chat is one possible UX on top of agentic search, not a requirement. If you want a multi-turn interface, keep the message history yourself and use `streamText` to stream the response:
+
+```ts
+import { streamText } from "ai";
+import { openai } from "@ai-sdk/openai";
+import { meilisearchSearch } from "@meilisearch/ai-sdk";
+
+const search = meilisearchSearch({
+  host: process.env.MEILISEARCH_HOST!,
+  apiKey: process.env.MEILISEARCH_API_KEY!,
+  indexUid: "docs",
+  description: "Search product docs and help-center content",
+});
+
+const { textStream } = streamText({
+  model: openai("gpt-5.4-mini"),
+  messages, // your accumulated conversation history
+  tools: { search },
+});
+
+for await (const text of textStream) {
+  process.stdout.write(text);
+}
+```
+
+{/* TODO: add framework-specific chat UI example once ai-sdk-demo is accessible/stable */}
+
+## Improve retrieval
+
+Tighten what the agent can search and how, using the same parameters as a regular search request:
+
+```ts
+meilisearchSearch({
+  host: process.env.MEILISEARCH_HOST!,
+  apiKey: process.env.MEILISEARCH_API_KEY!,
+  indexUid: "docs",
+  description: "Search product docs and help-center content",
+  searchParams: {
+    limit: 5,
+    hybrid: { embedder: "default", semanticRatio: 0.5 },
+  },
+});
+```
+
+- Keep `description` specific if the agent has access to more than one index or tool, so it knows which one to call.
+- Use `hybrid` for natural-language queries; see [choose an embedder](/capabilities/hybrid_search/how_to/choose_an_embedder) to configure one.
+- Lower `limit` keeps the agent's context small and focused.
+
+{/* TODO: document meilisearchMultiSearch and meilisearchSearchSimilar in follow-up guides */}
+
+## Direct `/chats` alternative
+
+`@meilisearch/ai-sdk` gives your own agent a search tool. If you'd rather have Meilisearch manage retrieval, context, and generation behind a single engine-managed endpoint, use the [Chats API fallback](/capabilities/agentic_search/advanced/chats_api_fallback) guide instead.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Choose an embedder" href="/capabilities/hybrid_search/how_to/choose_an_embedder">
+    Configure hybrid search for better natural-language retrieval.
+  </Card>
+  <Card title="Manage API keys" href="/capabilities/security/how_to/manage_api_keys">
+    Scope search API keys to the indexes your agent should access.
+  </Card>
+  <Card title="Display source documents" href="/capabilities/agentic_search/how_to/display_source_documents">
+    Show users which documents an agent used to answer.
+  </Card>
+  <Card title="Chats API fallback" href="/capabilities/agentic_search/advanced/chats_api_fallback">
+    Use the direct `/chats` endpoint instead of the AI SDK.
+  </Card>
+</CardGroup>

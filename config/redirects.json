@@ -489,7 +489,7 @@
   },
   {
     "source": "/guides/ai/getting_started_with_chat",
-    "destination": "/capabilities/conversational_search/advanced/chats_api_fallback"
+    "destination": "/capabilities/agentic_search/advanced/chats_api_fallback"
   },
   {
     "source": "/guides/front_end/pagination",
@@ -705,15 +705,15 @@
   },
   {
     "source": "/learn/chat/getting_started_with_chat",
-    "destination": "/capabilities/conversational_search/advanced/chats_api_fallback"
+    "destination": "/capabilities/agentic_search/advanced/chats_api_fallback"
   },
   {
     "source": "/learn/chat/chat_tooling_reference",
-    "destination": "/capabilities/conversational_search/advanced/chats_api_fallback#tools-reference"
+    "destination": "/capabilities/agentic_search/advanced/chats_api_fallback#tools-reference"
   },
   {
     "source": "/learn/chat/conversational_search",
-    "destination": "/capabilities/conversational_search/overview"
+    "destination": "/capabilities/agentic_search/overview"
   },
   {
     "source": "/learn/personalization/making_personalized_search_queries",
@@ -1669,7 +1669,7 @@
   },
   {
     "source": "/learn/experimental_features/conversational_search",
-    "destination": "/capabilities/conversational_search/overview"
+    "destination": "/capabilities/agentic_search/overview"
   },
   {
     "source": "/learn/self_hosted/running_production",
@@ -2625,7 +2625,7 @@
   },
   {
     "source": "/learn/ai_powered_search/conversational_search",
-    "destination": "/capabilities/conversational_search/overview"
+    "destination": "/capabilities/agentic_search/overview"
   },
   {
     "source": "/learn/analytics/overview",
@@ -2977,7 +2977,7 @@
   },
   {
     "source": "/capabilities/chat/getting_started",
-    "destination": "/capabilities/conversational_search/advanced/chats_api_fallback"
+    "destination": "/capabilities/agentic_search/advanced/chats_api_fallback"
   },
   {
     "source": "/learn/advanced/known-limitations",
@@ -3113,7 +3113,7 @@
   },
   {
     "source": "/products/conversational_search/overview",
-    "destination": "/capabilities/conversational_search/overview"
+    "destination": "/capabilities/agentic_search/overview"
   },
   {
     "source": "/learn/front_end/react_instantsearch",
@@ -3381,7 +3381,7 @@
   },
   {
     "source": "/learn/chat/g",
-    "destination": "/capabilities/conversational_search/advanced/chats_api_fallback"
+    "destination": "/capabilities/agentic_search/advanced/chats_api_fallback"
   },
   {
     "source": "/learn/ai/embedders",
@@ -3477,7 +3477,7 @@
   },
   {
     "source": "/learn/ai_powered_search/conversational_search_with_chat",
-    "destination": "/capabilities/conversational_search/overview"
+    "destination": "/capabilities/agentic_search/overview"
   },
   {
     "source": "/learn/advanced/backups",
@@ -4313,7 +4313,7 @@
   },
   {
     "source": "/capabilities/conversational_search/getting_started/setupmd",
-    "destination": "/capabilities/conversational_search/advanced/chats_api_fallback"
+    "destination": "/capabilities/agentic_search/advanced/chats_api_fallback"
   },
   {
     "source": "/capabilities/indexing/tasks_and_batches/monitor_tasksno_space_left_on_device",
@@ -4321,11 +4321,11 @@
   },
   {
     "source": "/guides/ai",
-    "destination": "/capabilities/conversational_search/overview"
+    "destination": "/capabilities/agentic_search/overview"
   },
   {
     "source": "/guides/ai/chat",
-    "destination": "/capabilities/conversational_search/advanced/chats_api_fallback"
+    "destination": "/capabilities/agentic_search/advanced/chats_api_fallback"
   },
   {
     "source": "/learn/advanced/low_level_api/index",
@@ -4645,30 +4645,58 @@
   },
   {
     "source": "/capabilities/conversational_search/getting_started/setup",
-    "destination": "/capabilities/conversational_search/advanced/chats_api_fallback"
+    "destination": "/capabilities/agentic_search/advanced/chats_api_fallback"
   },
   {
     "source": "/capabilities/conversational_search/getting_started/chat",
-    "destination": "/capabilities/conversational_search/advanced/chats_api_fallback#chat-interface"
+    "destination": "/capabilities/agentic_search/advanced/chats_api_fallback#chat-interface"
   },
   {
     "source": "/capabilities/conversational_search/getting_started/one_shot_summarization",
-    "destination": "/capabilities/conversational_search/advanced/chats_api_fallback#summarized-answers"
+    "destination": "/capabilities/agentic_search/advanced/chats_api_fallback#summarized-answers"
   },
   {
     "source": "/capabilities/conversational_search/how_to/configure_chat_workspace",
-    "destination": "/capabilities/conversational_search/advanced/chats_api_fallback#workspace-settings"
+    "destination": "/capabilities/agentic_search/advanced/chats_api_fallback#workspace-settings"
   },
   {
     "source": "/capabilities/conversational_search/how_to/configure_index_chat_settings",
-    "destination": "/capabilities/conversational_search/advanced/chats_api_fallback#index-chat-settings"
+    "destination": "/capabilities/agentic_search/advanced/chats_api_fallback#index-chat-settings"
   },
   {
     "source": "/capabilities/conversational_search/how_to/stream_chat_responses",
-    "destination": "/capabilities/conversational_search/advanced/chats_api_fallback#streaming"
+    "destination": "/capabilities/agentic_search/advanced/chats_api_fallback#streaming"
   },
   {
     "source": "/capabilities/conversational_search/advanced/chat_tooling_reference",
-    "destination": "/capabilities/conversational_search/advanced/chats_api_fallback#tools-reference"
+    "destination": "/capabilities/agentic_search/advanced/chats_api_fallback#tools-reference"
+  },
+  {
+    "source": "/capabilities/conversational_search/overview",
+    "destination": "/capabilities/agentic_search/overview"
+  },
+  {
+    "source": "/capabilities/conversational_search/how_to/configure_guardrails",
+    "destination": "/capabilities/agentic_search/how_to/configure_guardrails"
+  },
+  {
+    "source": "/capabilities/conversational_search/how_to/display_source_documents",
+    "destination": "/capabilities/agentic_search/how_to/display_source_documents"
+  },
+  {
+    "source": "/capabilities/conversational_search/how_to/handle_errors_and_fallbacks",
+    "destination": "/capabilities/agentic_search/how_to/handle_errors_and_fallbacks"
+  },
+  {
+    "source": "/capabilities/conversational_search/how_to/optimize_chat_prompts",
+    "destination": "/capabilities/agentic_search/how_to/optimize_chat_prompts"
+  },
+  {
+    "source": "/capabilities/conversational_search/advanced/reduce_hallucination",
+    "destination": "/capabilities/agentic_search/advanced/reduce_hallucination"
+  },
+  {
+    "source": "/capabilities/conversational_search/advanced/chats_api_fallback",
+    "destination": "/capabilities/agentic_search/advanced/chats_api_fallback"
   }
 ]

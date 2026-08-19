@@ -9,11 +9,9 @@ import CodeSamplesChatCreateKey1 from '/snippets/generated-code-samples/code_sam
 import CodeSamplesChatGetSettings1 from '/snippets/generated-code-samples/code_samples_chat_get_settings_1.mdx';
 import CodeSamplesChatPatchSettings1 from '/snippets/generated-code-samples/code_samples_chat_patch_settings_1.mdx';
 
-This page documents direct use of the Meilisearch `/chats` API. TODO: explain why you should use the recommended alternative instead.
+This page documents direct use of the Meilisearch `/chats` API: an engine-managed endpoint that consolidates retrieval, context management, and generation into a single call. For most agentic and conversational search projects, start with the [AI SDK getting started guide](/capabilities/agentic_search/getting_started) instead, and come back to this page only if you specifically need to call `/chats` directly.
 
-{/* TODO: point to the recommended alternative article */}
-
-{/* TODO: explain this page documents direct `/chats` usage only */}
+{/* TODO: add short AI SDK vs /chats comparison table if this page grows */}
 
 <Note>
 In code examples, replace `WORKSPACE_NAME` with the name of your workspace. On Meilisearch Cloud, the default workspace name is `cloud`.
@@ -94,7 +92,7 @@ curl \
 - `documentTemplate` is a [Liquid](https://shopify.github.io/liquid/) template that defines the text sent to the LLM for each document
 - `documentTemplateMaxBytes` truncates the rendered template. The default of 400 bytes balances context quality and speed
 
-See [index chat settings](#index-chat-settings) for the remaining fields, then consult [optimize chat prompts](/capabilities/conversational_search/how_to/optimize_chat_prompts) and [document template best practices](/capabilities/hybrid_search/advanced/document_template_best_practices) for tuning.
+See [index chat settings](#index-chat-settings) for the remaining fields, then consult [optimize chat prompts](/capabilities/agentic_search/how_to/optimize_chat_prompts) and [document template best practices](/capabilities/hybrid_search/advanced/document_template_best_practices) for tuning.
 
 ### Configure a workspace
 
@@ -122,7 +120,7 @@ curl \
 
 </CodeGroup>
 
-`baseUrl` is required for all providers except OpenAI. See [workspace settings](#workspace-settings) for the provider matrix, then [configure guardrails](/capabilities/conversational_search/how_to/configure_guardrails) and [optimize chat prompts](/capabilities/conversational_search/how_to/optimize_chat_prompts) for the system prompt.
+`baseUrl` is required for all providers except OpenAI. See [workspace settings](#workspace-settings) for the provider matrix, then [configure guardrails](/capabilities/agentic_search/how_to/configure_guardrails) and [optimize chat prompts](/capabilities/agentic_search/how_to/optimize_chat_prompts) for the system prompt.
 
 ## Chat patterns
 
@@ -359,7 +357,7 @@ await chat('What movies are about artificial intelligence?');
 await chat('Which one has the best reviews?');
 ```
 
-For UI patterns that surface those source documents, see [display source documents](/capabilities/conversational_search/how_to/display_source_documents).
+For UI patterns that surface those source documents, see [display source documents](/capabilities/agentic_search/how_to/display_source_documents).
 
 ### Summarized answers
 
@@ -458,7 +456,7 @@ A few provider-specific rules:
 The `apiKey` field is write-only. Meilisearch stores it for outbound LLM calls but redacts it in every response from the workspace settings endpoint. To rotate the key, `PATCH` the workspace with the new value.
 </Warning>
 
-Set baseline agent instructions with `prompts.system`. The `prompts` object also accepts tool-facing fields (`searchDescription`, `searchQParam`, `searchFilterParam`, `searchIndexUidParam`) that help the LLM decide when and how to search. See [optimize chat prompts](/capabilities/conversational_search/how_to/optimize_chat_prompts) for how to tune them.
+Set baseline agent instructions with `prompts.system`. The `prompts` object also accepts tool-facing fields (`searchDescription`, `searchQParam`, `searchFilterParam`, `searchIndexUidParam`) that help the LLM decide when and how to search. See [optimize chat prompts](/capabilities/agentic_search/how_to/optimize_chat_prompts) for how to tune them.
 
 Retrieve the current settings at any time:
 
@@ -505,7 +503,7 @@ A good `documentTemplate` includes only the fields relevant to answering questio
 | `attributesToSearchOn` | string[] | Restrict search to specific attributes |
 | `rankingScoreThreshold` | number | Minimum ranking score (0.0 to 1.0) for a document to be included |
 
-For conversational queries, a higher `semanticRatio` (0.6 to 0.8) and a lower `limit` (3 to 5) often work better than keyword-oriented defaults. See [optimize chat prompts](/capabilities/conversational_search/how_to/optimize_chat_prompts).
+For conversational queries, a higher `semanticRatio` (0.6 to 0.8) and a lower `limit` (3 to 5) often work better than keyword-oriented defaults. See [optimize chat prompts](/capabilities/agentic_search/how_to/optimize_chat_prompts).
 
 For the full HTTP parameter list, see:
 
@@ -799,7 +797,7 @@ Returns the documents used by the LLM to generate the answer. The `call_id` matc
 
 </CodeGroup>
 
-See [display source documents](/capabilities/conversational_search/how_to/display_source_documents) for UI patterns. See the [complete example](#complete-example-progress-sources-and-history) for a request that declares all three tools.
+See [display source documents](/capabilities/agentic_search/how_to/display_source_documents) for UI patterns. See the [complete example](#complete-example-progress-sources-and-history) for a request that declares all three tools.
 
 ## Troubleshooting
 
@@ -851,23 +849,24 @@ If your instance does not have a Default Chat API Key, [create one manually](#fi
 
 The search still runs and the LLM still answers, but without `_meiliSearchProgress` you receive no visibility into what searches are being performed. Add all three Meilisearch tools as shown in the [complete example](#complete-example-progress-sources-and-history).
 
-For HTTP status handling, rate limits, empty results, and falling back to regular search, see [handle errors and fallbacks](/capabilities/conversational_search/how_to/handle_errors_and_fallbacks).
+For HTTP status handling, rate limits, empty results, and falling back to regular search, see [handle errors and fallbacks](/capabilities/agentic_search/how_to/handle_errors_and_fallbacks).
 
 ## Next steps
 
-{/* TODO: recommended alternative */}
-
 <CardGroup cols={2}>
-  <Card title="Display source documents" href="/capabilities/conversational_search/how_to/display_source_documents">
+  <Card title="Agentic search getting started" href="/capabilities/agentic_search/getting_started">
+    Build agentic and conversational search with the recommended AI SDK.
+  </Card>
+  <Card title="Display source documents" href="/capabilities/agentic_search/how_to/display_source_documents">
     Show users which documents were used to generate responses.
   </Card>
-  <Card title="Configure guardrails" href="/capabilities/conversational_search/how_to/configure_guardrails">
+  <Card title="Configure guardrails" href="/capabilities/agentic_search/how_to/configure_guardrails">
     Restrict AI responses to topics covered by your data.
   </Card>
-  <Card title="Optimize chat prompts" href="/capabilities/conversational_search/how_to/optimize_chat_prompts">
+  <Card title="Optimize chat prompts" href="/capabilities/agentic_search/how_to/optimize_chat_prompts">
     Tune system prompts, tool prompts, and index chat settings.
   </Card>
-  <Card title="Reduce hallucination" href="/capabilities/conversational_search/advanced/reduce_hallucination">
+  <Card title="Reduce hallucination" href="/capabilities/agentic_search/advanced/reduce_hallucination">
     Techniques to keep AI responses grounded in your data.
   </Card>
   <Card title="Chat completions API reference" href="/reference/api/chats/request-a-chat-completion">
