@@ -144,7 +144,7 @@ async function searchWithFallback(query, conversationHistory) {
 
 ## Handle empty search results
 
-When the LLM cannot find relevant documents, it may hallucinate an answer or give a vague response. Use [guardrails](/capabilities/conversational_search/how_to/configure_guardrails) in your system prompt to handle this:
+When the LLM cannot find relevant documents, it may hallucinate an answer or give a vague response. Use [guardrails](/capabilities/agentic_search/how_to/configure_guardrails) in your system prompt to handle this:
 
 <CodeGroup>
 
@@ -263,10 +263,10 @@ When an error occurs, give users clear feedback and actionable next steps. Avoid
 ## Next steps
 
 <CardGroup cols={2}>
-  <Card title="Configure guardrails" href="/capabilities/conversational_search/how_to/configure_guardrails">
+  <Card title="Configure guardrails" href="/capabilities/agentic_search/how_to/configure_guardrails">
     Reduce hallucination with system prompts
   </Card>
-  <Card title="Stream chat responses" href="/capabilities/conversational_search/how_to/stream_chat_responses">
+  <Card title="Stream chat responses" href="/capabilities/agentic_search/advanced/chats_api_fallback#streaming">
     Implement real-time streaming for chat responses
   </Card>
 </CardGroup>

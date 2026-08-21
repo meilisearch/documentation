@@ -3,7 +3,7 @@ title: Configure guardrails
 description: Limit hallucination and restrict conversational search responses to topics covered by your indexed documents.
 ---
 
-Guardrails help ensure the AI only answers questions based on your [indexed](/capabilities/indexing/overview) data and stays within the boundaries you define. The primary mechanism for setting guardrails in Meilisearch is the system prompt, configured through the [chat workspace settings](/capabilities/conversational_search/how_to/configure_chat_workspace).
+Guardrails help ensure the AI only answers questions based on your [indexed](/capabilities/indexing/overview) data and stays within the boundaries you define. The primary mechanism for setting guardrails in Meilisearch is the system prompt, configured through the [chat workspace settings](/capabilities/agentic_search/advanced/chats_api_fallback#workspace-settings).
 
 <Warning>
 Even with well-configured guardrails, LLMs may occasionally hallucinate inaccurate information. Guardrails work by shaping the system prompt to guide the model's behavior, which significantly reduces unwanted responses but cannot eliminate them entirely. Always monitor responses in production environments.
@@ -178,6 +178,6 @@ Adjust your system prompt based on these tests until the agent behaves as expect
 
 ## Next steps
 
-- [Configure a chat workspace](/capabilities/conversational_search/how_to/configure_chat_workspace) to apply your guardrails
-- [Display source documents](/capabilities/conversational_search/how_to/display_source_documents) so users can verify responses
-- Learn about [chat tools](/capabilities/conversational_search/advanced/chat_tooling_reference) to enhance the user experience
+- [Configure a chat workspace](/capabilities/agentic_search/advanced/chats_api_fallback#workspace-settings) to apply your guardrails
+- [Display source documents](/capabilities/agentic_search/how_to/display_source_documents) so users can verify responses
+- Learn about [chat tools](/capabilities/agentic_search/advanced/chats_api_fallback#tools-reference) to enhance the user experience

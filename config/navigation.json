@@ -198,34 +198,24 @@
               ]
             },
             {
-              "group": "Conversational search",
+              "group": "Agentic search",
               "pages": [
-                "capabilities/conversational_search/overview",
-                {
-                  "group": "Getting started",
-                  "pages": [
-                    "capabilities/conversational_search/getting_started/setup",
-                    "capabilities/conversational_search/getting_started/chat",
-                    "capabilities/conversational_search/getting_started/one_shot_summarization"
-                  ]
-                },
+                "capabilities/agentic_search/overview",
+                "capabilities/agentic_search/getting_started",
                 {
                   "group": "How to",
                   "pages": [
-                    "capabilities/conversational_search/how_to/configure_chat_workspace",
-                    "capabilities/conversational_search/how_to/configure_index_chat_settings",
-                    "capabilities/conversational_search/how_to/stream_chat_responses",
-                    "capabilities/conversational_search/how_to/configure_guardrails",
-                    "capabilities/conversational_search/how_to/display_source_documents",
-                    "capabilities/conversational_search/how_to/handle_errors_and_fallbacks",
-                    "capabilities/conversational_search/how_to/optimize_chat_prompts"
+                    "capabilities/agentic_search/how_to/configure_guardrails",
+                    "capabilities/agentic_search/how_to/display_source_documents",
+                    "capabilities/agentic_search/how_to/handle_errors_and_fallbacks",
+                    "capabilities/agentic_search/how_to/optimize_chat_prompts"
                   ]
                 },
                 {
                   "group": "Advanced",
                   "pages": [
-                    "capabilities/conversational_search/advanced/reduce_hallucination",
-                    "capabilities/conversational_search/advanced/chat_tooling_reference"
+                    "capabilities/agentic_search/advanced/reduce_hallucination",
+                    "capabilities/agentic_search/advanced/chats_api_fallback"
                   ]
                 }
               ]
