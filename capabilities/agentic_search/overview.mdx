@@ -1,14 +1,14 @@
 ---
 title: What is agentic search?
 sidebarTitle: Overview
-description: Agentic search lets AI agents and conversational interfaces query your data using natural language and generate answers grounded in your indexed content.
+description: Agentic search lets LLMs query your data using natural language to build AI agents and conversational interfaces that generate answers grounded in your indexed content.
 ---
 
 <Warning>
 **Agentic search is still an early, fast-moving space, and the agents built on top of it can hallucinate.** LLMs may occasionally produce inaccurate or misleading answers even when the retrieved source documents are correct. Monitor responses closely in production, follow the [hallucination reduction guide](/capabilities/agentic_search/advanced/reduce_hallucination), and configure [guardrails](/capabilities/agentic_search/how_to/configure_guardrails) to minimize this risk.
 </Warning>
 
-Agentic search covers any natural-language search experience where an AI agent or LLM decides when and how to query your data, then uses the results to answer a question. Meilisearch acts as the retrieval layer: fast, relevant search that an agent can call as a tool, with an optional built-in Retrieval Augmented Generation (RAG) system for full conversational interfaces.
+Agentic search covers any natural-language search experience where a Large Language Model (LLM) decides when and how to query your data, then uses the results to answer a question. Meilisearch acts as the retrieval layer when implementing Retrieval Augmented Generation (RAG): a fast, relevant search that an agent can call as a tool.
 
 With proper configuration, such as [system prompt engineering](/capabilities/agentic_search/advanced/reduce_hallucination#system-prompt-engineering) and [guardrails](/capabilities/agentic_search/how_to/configure_guardrails), you can ensure that responses are based on your indexed data rather than the LLM's general knowledge.
 
@@ -18,7 +18,7 @@ This is similar to how [Perplexity](https://www.perplexity.ai/) works: every ans
 
 Agentic search covers a range of natural-language search experiences, from AI agents that call Meilisearch as a tool to conversational chat interfaces:
 
-### Agents that call search as a tool
+### Agents with a search tool
 
 Give any AI agent or LLM application the ability to query your Meilisearch indexes as part of a larger task, tool call, or multi-step reasoning process. The agent decides when to search, what to search for, and how to use the results.
 
@@ -44,12 +44,14 @@ Generate a single, concise answer to a user's question without maintaining conve
 
 ## How it works
 
-The steps below describe the built-in `/chats` flow. With the AI SDK, your agent controls query understanding and answer generation itself, and calls Meilisearch only for retrieval.
+Here is how a typical agentic search workflow looks like:
 
-1. **Query understanding**: Meilisearch automatically transforms the user's natural language question into optimized search parameters
-2. **Hybrid retrieval**: combines keyword and semantic search for better relevancy
-3. **Answer generation**: your chosen LLM generates a response using only the retrieved documents as context
-4. **Source attribution**: every response can include references to the source documents used to generate the answer
+1. **Query understanding**: The LLM transforms the user's natural language question into optimized search parameters
+2. **Retrieval**: Search your indexes to find the most relevant documents using hybrid search for better relevancy
+3. **Answer generation**: The LLM generates a response using only the retrieved documents as context
+4. **Source attribution**: Every response can include references to the source documents used to generate the answer
+
+Depending on your application needs, you may give more or less autonomy to the LLM at each given step. Stricter control makes for more predictable behavior (e.g. translating a question into search parameters), while looser allow the model to reason and find more creative solutions (e.g. multi-hop reasoning).
 
 ## Implementation strategies
 
@@ -59,16 +61,16 @@ The steps below describe the built-in `/chats` flow. With the AI SDK, your agent
 
 Get started with the [agentic search getting started guide](/capabilities/agentic_search/getting_started).
 
-### Chat completions API (direct `/chats`)
+### Chat completions API (experimental)
 
-The [`/chats` route](/reference/api/chats/request-a-chat-completion) consolidates retrieval, context management, and generation into a single, engine-managed endpoint. Use it when you want Meilisearch itself to own the chat loop instead of building it with the AI SDK.
+The experimental [`/chats` route](/reference/api/chats/request-a-chat-completion) consolidates retrieval, context management, and generation into a single, engine-managed endpoint.
 
-See the [Chats API fallback](/capabilities/agentic_search/advanced/chats_api_fallback) guide for setup, chat patterns, streaming, and tools. Consult the [chat completions API reference](/reference/api/chats/request-a-chat-completion) for the full list of supported parameters.
+See the [Chats API guide](/capabilities/agentic_search/advanced/chats_api_fallback) for setup, chat patterns, streaming, and tools. Consult the [chat completions API reference](/reference/api/chats/request-a-chat-completion) for the full list of supported parameters.
 
 ### Model Context Protocol (MCP)
 
 {/* TODO: revisit whether MCP wording should move or shrink if agentic-search positioning expands later */}
 
-An alternative method is using a Model Context Protocol (MCP) server. MCPs are designed for broader uses that go beyond answering questions, and are useful in contexts where having up-to-date data matters more than a tightly scoped search tool. For most in-application agentic and conversational search experiences, start with the AI SDK instead.
+An alternative method is using a Model Context Protocol (MCP) server. MCPs are designed for broader uses that go beyond answering questions, and are useful in contexts where having up-to-date data matters more than a tightly scoped search tool.
 
 Follow the [dedicated MCP guide](/getting_started/integrations/mcp) if you want to implement it in your application.
