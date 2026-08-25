@@ -3,7 +3,7 @@ title: Configure guardrails
 description: Limit hallucination and restrict conversational search responses to topics covered by your indexed documents.
 ---
 
-Guardrails help ensure the AI only answers questions based on your [indexed](/capabilities/indexing/overview) data and stays within the boundaries you define. The primary mechanism for setting guardrails in Meilisearch is the system prompt, configured through the [chat workspace settings](/capabilities/agentic_search/advanced/chats_api_fallback#workspace-settings).
+Guardrails help ensure the AI only answers questions based on your [indexed](/capabilities/indexing/overview) data and stays within the boundaries you define. The primary mechanism for setting guardrails is the LLM's system prompt.
 
 <Warning>
 Even with well-configured guardrails, LLMs may occasionally hallucinate inaccurate information. Guardrails work by shaping the system prompt to guide the model's behavior, which significantly reduces unwanted responses but cannot eliminate them entirely. Always monitor responses in production environments.
@@ -11,18 +11,32 @@ Even with well-configured guardrails, LLMs may occasionally hallucinate inaccura
 
 ## How system prompts work
 
-The system prompt is the first instruction the LLM receives before processing any user question. It shapes the agent's behavior, tone, and boundaries for the entire conversation. Set it through the `prompts.system` field in your workspace settings:
+The system prompt is the first instruction the LLM receives before processing any user question. It shapes the agent's behavior, tone, and boundaries for the entire conversation.
 
 <CodeGroup>
 
-```bash cURL
+```ts AI SDK
+import { generateText } from "ai";
+import { openai } from "@ai-sdk/openai";
+import { meilisearchSearch } from "@meilisearch/ai-sdk";
+
+const { text } = await generateText({
+  model: openai("gpt-5.4-mini"),
+  system: "Your system prompt goes here here.",
+  tools: {
+    search: meilisearchSearch({ /* tool configuration */ }),
+  },
+});
+```
+
+```bash Chats completions API (experimental)
 curl \
   -X PATCH 'MEILISEARCH_URL/chats/WORKSPACE_NAME/settings' \
   -H 'Authorization: Bearer MEILISEARCH_KEY' \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "prompts": {
-      "system": "Your system prompt here."
+      "system": "Your system prompt goeshere."
     }
   }'
 ```
@@ -178,6 +192,6 @@ Adjust your system prompt based on these tests until the agent behaves as expect
 
 ## Next steps
 
-- [Configure a chat workspace](/capabilities/agentic_search/advanced/chats_api_fallback#workspace-settings) to apply your guardrails
+- [Get started with the AI SDK](/capabilities/agentic_search/getting_started) to build an agent that applies your guardrails
 - [Display source documents](/capabilities/agentic_search/how_to/display_source_documents) so users can verify responses
-- Learn about [chat tools](/capabilities/agentic_search/advanced/chats_api_fallback#tools-reference) to enhance the user experience
+- [Chats completions API](/capabilities/agentic_search/advanced/chats_api_fallback) for more information on the experimental feature
