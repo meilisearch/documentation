@@ -871,6 +871,177 @@ function handleToolCall(toolCall) {
 
 After the stream finishes, `sources` contains every search query and its documents, keyed by `call_id`. Pass this map to the UI patterns described in [display source documents](/capabilities/agentic_search/how_to/display_source_documents#display-sources-in-your-ui).
 
+## Handle errors and fallbacks with the Chats API
+
+To [handle errors and fallbacks](/capabilities/agentic_search/how_to/handle_errors_and_fallbacks) using this API, check the HTTP status before consuming the stream: Meilisearch forwards errors from your LLM provider on the chat completions endpoint. For generic fallback UX, user-facing messages, and AI SDK patterns, see the linked guide. This section covers what's specific to calling `/chats` directly.
+
+### Check the response status before streaming
+
+Wrap requests to the chat completions endpoint in error handling, and branch on the HTTP status before reading the response body. Once you start consuming the SSE stream, you can no longer branch on the status:
+
+<CodeGroup>
+
+```javascript
+async function chat(messages) {
+  try {
+    const response = await fetch(
+      `${MEILISEARCH_URL}/chats/${WORKSPACE}/chat/completions`,
+      {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${API_KEY}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          model: MODEL,
+          stream: true,
+          messages,
+          tools: MEILISEARCH_TOOLS, // see the tools reference
+        })
+      }
+    );
+
+    if (response.status === 429) {
+      return {
+        role: 'assistant',
+        content: 'The service is currently experiencing high demand. Please try again in a moment.'
+      };
+    }
+
+    if (response.status === 502 || response.status === 504) {
+      return {
+        role: 'assistant',
+        content: 'The AI service is temporarily unavailable. Try a regular search instead.',
+        fallback: true
+      };
+    }
+
+    if (!response.ok) {
+      const error = await response.json();
+      console.error('Chat error:', error);
+      return {
+        role: 'assistant',
+        content: 'Something went wrong. Please try rephrasing your question.'
+      };
+    }
+
+    return response; // pass this to your SSE parser, see Streaming
+  } catch (networkError) {
+    return {
+      role: 'assistant',
+      content: 'Unable to connect to the search service. Please check your connection and try again.'
+    };
+  }
+}
+```
+
+</CodeGroup>
+
+### Retry on rate limiting
+
+The chat completions endpoint returns `429` when your LLM provider rate limits the request. Implement exponential backoff around the fetch call:
+
+<CodeGroup>
+
+```javascript
+async function chatWithRetry(messages, maxRetries = 3) {
+  for (let attempt = 0; attempt < maxRetries; attempt++) {
+    const response = await fetch(
+      `${MEILISEARCH_URL}/chats/${WORKSPACE}/chat/completions`,
+      {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${API_KEY}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ model: MODEL, stream: true, messages, tools: MEILISEARCH_TOOLS })
+      }
+    );
+
+    if (response.status !== 429) {
+      return response;
+    }
+
+    // Exponential backoff: 1s, 2s, 4s
+    const waitMs = Math.pow(2, attempt) * 1000;
+    await new Promise(resolve => setTimeout(resolve, waitMs));
+  }
+
+  return {
+    fallback: true,
+    content: 'The service is busy. Please try again shortly.'
+  };
+}
+```
+
+</CodeGroup>
+
+### Fall back to regular search
+
+When conversational search fails, fall back to a standard keyword or hybrid search against `/indexes/{index_uid}/search`:
+
+<CodeGroup>
+
+```javascript
+async function searchWithFallback(query, conversationHistory) {
+  const chatResponse = await chat([
+    ...conversationHistory,
+    { role: 'user', content: query }
+  ]);
+
+  if (chatResponse.fallback) {
+    const searchResponse = await fetch(
+      `${MEILISEARCH_URL}/indexes/${INDEX}/search`,
+      {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${API_KEY}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          q: query,
+          hybrid: { semanticRatio: 0.5, embedder: EMBEDDER }
+        })
+      }
+    );
+
+    const results = await searchResponse.json();
+    return {
+      type: 'search',
+      hits: results.hits,
+      message: 'Showing search results instead. The AI assistant is temporarily unavailable.'
+    };
+  }
+
+  return { type: 'chat', response: chatResponse };
+}
+```
+
+</CodeGroup>
+
+### Detect empty results from `_meiliSearchSources`
+
+Unlike a regular tool result, `_meiliSearchSources` arrives as a tool call chunk in the stream (see [tools reference](#tools-reference) for its schema). Parse its `documents` argument and, if it is empty, show a fallback message instead of relying on the model's answer:
+
+<CodeGroup>
+
+```javascript
+function handleSources(toolCall) {
+  const args = JSON.parse(toolCall.function.arguments);
+
+  if (!Array.isArray(args.documents) || args.documents.length === 0) {
+    showMessage('No matching documents found. Try different keywords or broaden your search.');
+    return;
+  }
+
+  displaySources(args.documents);
+}
+```
+
+</CodeGroup>
+
+Combine this with [guardrails](/capabilities/agentic_search/how_to/configure_guardrails) in your workspace's system prompt, so the model itself also acknowledges when it found nothing relevant.
+
 ## Troubleshooting
 
 ### Missing default chat API key
@@ -921,7 +1092,7 @@ If your instance does not have a Default Chat API Key, [create one manually](#fi
 
 The search still runs and the LLM still answers, but without `_meiliSearchProgress` you receive no visibility into what searches are being performed. Add all three Meilisearch tools as shown in the [complete example](#complete-example-progress-sources-and-history).
 
-For HTTP status handling, rate limits, empty results, and falling back to regular search, see [handle errors and fallbacks](/capabilities/agentic_search/how_to/handle_errors_and_fallbacks).
+For HTTP status handling, rate limits, empty results, and falling back to regular search when calling `/chats` directly, see [handle errors and fallbacks with the Chats API](#handle-errors-and-fallbacks-with-the-chats-api). For generic fallback UX and AI SDK patterns, see [handle errors and fallbacks](/capabilities/agentic_search/how_to/handle_errors_and_fallbacks).
 
 ## Next steps
 
