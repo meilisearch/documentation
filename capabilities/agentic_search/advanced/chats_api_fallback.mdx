@@ -797,7 +797,79 @@ Returns the documents used by the LLM to generate the answer. The `call_id` matc
 
 </CodeGroup>
 
-See [display source documents](/capabilities/agentic_search/how_to/display_source_documents) for UI patterns. See the [complete example](#complete-example-progress-sources-and-history) for a request that declares all three tools.
+See [display source documents](/capabilities/agentic_search/how_to/display_source_documents) for UI patterns, and [display source documents with the Chats API](#display-source-documents-with-the-chats-api) for how to correlate the two tools by `call_id`. See the [complete example](#complete-example-progress-sources-and-history) for a request that declares all three tools.
+
+## Display source documents with the Chats API
+
+To [display source documents](/capabilities/agentic_search/how_to/display_source_documents) using this API, declare the `_meiliSearchProgress` and `_meiliSearchSources` tools in your request (see [tools reference](#tools-reference) for their exact schemas), then correlate the two by the `call_id` they share as they stream in.
+
+### Understand the response order
+
+During a streamed response, tool calls arrive as chunks alongside content chunks, in this order:
+
+1. `_meiliSearchProgress`: sent when the agent decides to search an index. Reports the query and index, and assigns a `call_id` to the search.
+2. `_meiliSearchSources`: sent once the search completes, with the matching documents. Its `call_id` matches the progress event, so you can associate the documents with the query that produced them.
+3. Content chunks: the AI-generated answer, based on the retrieved documents.
+
+<CodeGroup>
+
+```json _meiliSearchProgress
+{
+  "function": {
+    "name": "_meiliSearchProgress",
+    "arguments": "{\"call_id\":\"abc123\",\"function_name\":\"_meiliSearchInIndex\",\"function_parameters\":\"{\\\"index_uid\\\":\\\"movies\\\",\\\"q\\\":\\\"best sci-fi movies\\\"}\"}"
+  }
+}
+```
+
+```json _meiliSearchSources
+{
+  "function": {
+    "name": "_meiliSearchSources",
+    "arguments": "{\"call_id\":\"abc123\",\"documents\":[{\"id\":11,\"title\":\"Blade Runner 2049\"},{\"id\":27,\"title\":\"Interstellar\"}]}"
+  }
+}
+```
+
+</CodeGroup>
+
+Both events share the `call_id` value `abc123`, linking the "best sci-fi movies" search on the `movies` index to its two documents.
+
+### Correlate sources by call_id
+
+Parse the `tool_calls` chunks from the [SSE stream](#understand-the-sse-response-format) and group them by `call_id` as they arrive:
+
+<CodeGroup>
+
+```javascript
+const sources = new Map(); // call_id -> { query, index, documents }
+
+function handleToolCall(toolCall) {
+  if (!toolCall.function?.name) return;
+
+  const args = JSON.parse(toolCall.function.arguments);
+
+  if (toolCall.function.name === '_meiliSearchProgress') {
+    const params = JSON.parse(args.function_parameters);
+    sources.set(args.call_id, {
+      query: params.q,
+      index: params.index_uid,
+      documents: [],
+    });
+  }
+
+  if (toolCall.function.name === '_meiliSearchSources') {
+    const existing = sources.get(args.call_id);
+    if (existing) {
+      existing.documents = args.documents;
+    }
+  }
+}
+```
+
+</CodeGroup>
+
+After the stream finishes, `sources` contains every search query and its documents, keyed by `call_id`. Pass this map to the UI patterns described in [display source documents](/capabilities/agentic_search/how_to/display_source_documents#display-sources-in-your-ui).
 
 ## Troubleshooting
 
