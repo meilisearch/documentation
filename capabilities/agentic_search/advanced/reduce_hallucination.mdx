@@ -127,15 +127,15 @@ search results.
 
 </CodeGroup>
 
-## Using the Chat completions API
+## Using the Chats API
 
-Meilisearch Cloud provides built-in guardrail options for the experimental [Chats completions API](/capabilities/agentic_search/advanced/chats_api_fallback) through the workspace settings. These guardrails work by injecting carefully crafted instructions into the system prompt to guide the model's behavior.
+Meilisearch Cloud provides built-in guardrail options for the experimental [Chats API](/capabilities/agentic_search/advanced/chats_api) through the workspace settings. These guardrails work by injecting carefully crafted instructions into the system prompt to guide the model's behavior.
 
 <Note>
 Guardrails are prompt-based, meaning they shape the model's behavior through instructions rather than through hard technical constraints. They significantly improve response quality but should be combined with monitoring for production use.
 </Note>
 
-Configure guardrails through the [chat workspace settings](/capabilities/agentic_search/advanced/chats_api_fallback#workspace-settings) or the Meilisearch Cloud UI. Available guardrails include:
+Configure guardrails through the [chat workspace settings](/capabilities/agentic_search/advanced/chats_api#workspace-settings) or the Meilisearch Cloud UI. Available guardrails include:
 
 - **Scope restriction**: limits the topics the agent discusses
 - **Data grounding**: forces the agent to only use retrieved documents
@@ -197,7 +197,7 @@ No prompt configuration is perfect from the start. Build a feedback loop:
   <Card title="Display source documents" href="/capabilities/agentic_search/how_to/display_source_documents">
     Let users verify AI responses by showing source documents.
   </Card>
-  <Card title="Configure a chat workspace" href="/capabilities/agentic_search/advanced/chats_api_fallback#workspace-settings">
+  <Card title="Configure a chat workspace" href="/capabilities/agentic_search/advanced/chats_api#workspace-settings">
     Customize your workspace settings and system prompt.
   </Card>
 </CardGroup>

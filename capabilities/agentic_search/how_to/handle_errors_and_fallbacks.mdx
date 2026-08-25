@@ -206,9 +206,9 @@ When an error occurs, give users clear feedback and actionable next steps. Avoid
 | Network error | "Connection issue. Check your internet and try again." |
 | Context too long | "This conversation is getting long. Start a new conversation for best results." |
 
-## Using the experimental Chats completion API
+## Using the experimental Chats API
 
-When using the experimental [Chats completions API](/capabilities/agentic_search/advanced/chats_api_fallback), Meilisearch forwards HTTP status codes from your LLM provider on the completions endpoint, and you detect empty results by parsing the `_meiliSearchSources` tool call. See [handle errors and fallbacks with the Chats API](/capabilities/agentic_search/advanced/chats_api_fallback#handle-errors-and-fallbacks-with-the-chats-api) for implementation.
+When using the experimental [Chats API](/capabilities/agentic_search/advanced/chats_api), Meilisearch forwards HTTP status codes from your LLM provider on the completions endpoint, and you detect empty results by parsing the `_meiliSearchSources` tool call. See [handle errors and fallbacks with the Chats API](/capabilities/agentic_search/advanced/chats_api#handle-errors-and-fallbacks-with-the-chats-api) for implementation.
 
 ## Next steps
 

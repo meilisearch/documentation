@@ -215,7 +215,7 @@
                   "group": "Advanced",
                   "pages": [
                     "capabilities/agentic_search/advanced/reduce_hallucination",
-                    "capabilities/agentic_search/advanced/chats_api_fallback"
+                    "capabilities/agentic_search/advanced/chats_api"
                   ]
                 }
               ]

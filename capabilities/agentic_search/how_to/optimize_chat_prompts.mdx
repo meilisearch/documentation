@@ -9,7 +9,7 @@ The quality of conversational search responses depends on three layers of config
 
 ## System prompt strategies
 
-The system prompt (set through [workspace settings](/capabilities/agentic_search/advanced/chats_api_fallback#workspace-settings)) defines the LLM's overall behavior. Beyond basic [guardrails](/capabilities/agentic_search/how_to/configure_guardrails), you can shape response quality with specific instructions.
+The system prompt (set through [workspace settings](/capabilities/agentic_search/advanced/chats_api#workspace-settings)) defines the LLM's overall behavior. Beyond basic [guardrails](/capabilities/agentic_search/how_to/configure_guardrails), you can shape response quality with specific instructions.
 
 ### Be specific about the domain
 
@@ -88,7 +88,7 @@ Change one prompt at a time and re-run your evaluation queries. Tool prompts com
 
 ## Configure index chat settings
 
-Each index has chat-specific settings that control how documents are prepared for the LLM. Configure these through the [index chat settings](/capabilities/agentic_search/advanced/chats_api_fallback#index-chat-settings) endpoint:
+Each index has chat-specific settings that control how documents are prepared for the LLM. Configure these through the [index chat settings](/capabilities/agentic_search/advanced/chats_api#index-chat-settings) endpoint:
 
 <CodeGroup>
 
@@ -217,7 +217,7 @@ Adjust the system prompt, index description, and search parameters based on what
   <Card title="Configure guardrails" href="/capabilities/agentic_search/how_to/configure_guardrails">
     Restrict responses to indexed data and defined topics
   </Card>
-  <Card title="Configure index chat settings" href="/capabilities/agentic_search/advanced/chats_api_fallback#index-chat-settings">
+  <Card title="Configure index chat settings" href="/capabilities/agentic_search/advanced/chats_api#index-chat-settings">
     Full reference for index-level chat configuration
   </Card>
   <Card title="Document template best practices" href="/capabilities/hybrid_search/advanced/document_template_best_practices">
