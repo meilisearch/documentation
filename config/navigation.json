@@ -52,12 +52,13 @@
             {
               "group": "Integrations",
               "pages": [
+                "getting_started/integrations/mcp",
+                "getting_started/integrations/ai_sdk",
+                "getting_started/integrations/langchain",
                 "getting_started/integrations/firebase",
                 "getting_started/integrations/vercel",
                 "getting_started/integrations/postman",
                 "getting_started/integrations/meilisearch_importer",
-                "getting_started/integrations/mcp",
-                "getting_started/integrations/langchain",
                 {
                   "group": "Kestra",
                   "pages": [
