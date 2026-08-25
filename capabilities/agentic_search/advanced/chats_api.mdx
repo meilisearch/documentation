@@ -321,11 +321,9 @@ async function chat(userMessage) {
 
       for (const toolCall of delta?.tool_calls ?? []) {
         if (toolCall.id) {
-          pendingToolCalls[toolCall.id] = { name: toolCall.function.name, args: '' };
+          pendingToolCalls[toolCall.index] = { name: toolCall.function.name, args: '' };
         }
-        const pending = toolCall.id
-          ? pendingToolCalls[toolCall.id]
-          : Object.values(pendingToolCalls).at(-1);
+        const pending = pendingToolCalls[toolCall.index];
         if (pending && toolCall.function?.arguments) {
           pending.args += toolCall.function.arguments;
         }
@@ -845,7 +843,7 @@ Parse the `tool_calls` chunks from the [SSE stream](#understand-the-sse-response
 const sources = new Map(); // call_id -> { query, index, documents }
 
 function handleToolCall(toolCall) {
-  if (!toolCall.function?.name) return;
+  if (!toolCall.function?.name || !toolCall.function.arguments) return;
 
   const args = JSON.parse(toolCall.function.arguments);
 

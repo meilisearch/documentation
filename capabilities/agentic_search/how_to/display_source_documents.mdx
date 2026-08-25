@@ -25,12 +25,13 @@ import {
   convertToModelMessages,
   createUIMessageStreamResponse,
   toUIMessageStream,
+  stepCountIs,
   type UIMessage,
 } from "ai";
 
 const search = meilisearchSearch({
-  host: "MEILISEARCH_URL",
-  apiKey: "your search API key",
+  host: process.env.MEILISEARCH_URL,
+  apiKey: process.env.MEILISEARCH_KEY,
   indexUid: "movies",
   description: "Search movies by title or synopsis",
 });
@@ -40,8 +41,9 @@ export async function POST(req: Request) {
 
   const result = streamText({
     model: openai("gpt-5.4-mini"),
-    messages: convertToModelMessages(messages),
+    messages: await convertToModelMessages(messages),
     tools: { search },
+    stopWhen: stepCountIs(5),
   });
 
   return createUIMessageStreamResponse({
@@ -136,7 +138,8 @@ A single question can trigger multiple tool calls, for example when the model se
 
 ```tsx src/components/multiple-sources.tsx
 function MultipleSources({ messages }: { messages: UIMessage[] }) {
-  return messages.parts
+  return messages
+    .flatMap((message) => message.parts)
     .filter((part) => part.type.startsWith("tool-") && part.state === "output-available")
     .map((part) => (
       <Sources

@@ -10,7 +10,7 @@ description: Agentic search lets LLMs query your data using natural language to 
 
 Agentic search covers any natural-language search experience where a Large Language Model (LLM) decides when and how to query your data, then uses the results to answer a question. Meilisearch acts as the retrieval layer when implementing Retrieval Augmented Generation (RAG): a fast, relevant search that an agent can call as a tool.
 
-With proper configuration, such as [system prompt engineering](/capabilities/agentic_search/advanced/reduce_hallucination#system-prompt-engineering) and [guardrails](/capabilities/agentic_search/how_to/configure_guardrails), you can ensure that responses are based on your indexed data rather than the LLM's general knowledge.
+With proper configuration, such as [system prompt engineering](/capabilities/agentic_search/advanced/reduce_hallucination#system-prompt-engineering) and [guardrails](/capabilities/agentic_search/how_to/configure_guardrails), you can help keep responses based on your indexed data rather than the LLM's general knowledge.
 
 This is similar to how [Perplexity](https://www.perplexity.ai/) works: every answer comes with source documents so users can verify the information. Meilisearch brings the same pattern to your own data and your own agents.
 
@@ -51,7 +51,7 @@ Here is how a typical agentic search workflow looks like:
 3. **Answer generation**: The LLM generates a response using only the retrieved documents as context
 4. **Source attribution**: Every response can include references to the source documents used to generate the answer
 
-Depending on your application needs, you may give more or less autonomy to the LLM at each given step. Stricter control makes for more predictable behavior (e.g. translating a question into search parameters), while looser allow the model to reason and find more creative solutions (e.g. multi-hop reasoning).
+Depending on your application needs, you may give more or less autonomy to the LLM at each given step. Stricter control makes for more predictable behavior (for example, translating a question into search parameters), while looser control allows the model to reason and find more creative solutions (for example, multi-hop reasoning).
 
 ## Implementation strategies
 

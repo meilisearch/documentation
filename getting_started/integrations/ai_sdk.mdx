@@ -21,15 +21,15 @@ npm install ai @ai-sdk/openai @meilisearch/ai-sdk
 Add your credentials to your environment:
 
 ```bash .env
-MEILISEARCH_HOST=https://your-project.meilisearch.io
-MEILISEARCH_API_KEY=your-search-api-key
+MEILISEARCH_URL=https://your-project.meilisearch.io
+MEILISEARCH_KEY=your-search-api-key
 OPENAI_API_KEY=your-openai-api-key
 ```
 
 ## Give an agent a search tool
 
 ```ts
-import { generateText } from "ai";
+import { generateText, stepCountIs } from "ai";
 import { openai } from "@ai-sdk/openai";
 import { meilisearchSearch } from "@meilisearch/ai-sdk";
 
@@ -38,12 +38,13 @@ const { text } = await generateText({
   prompt: "Find two movies about time travel, then summarize the difference.",
   tools: {
     search: meilisearchSearch({
-      host: "MEILISEARCH_HOST",
-      apiKey: "MEILISEARCH_API_KEY",
+      host: process.env.MEILISEARCH_URL,
+      apiKey: process.env.MEILISEARCH_KEY,
       indexUid: "movies",
       description: "Search the movies database",
     }),
   },
+  stopWhen: stepCountIs(5),
 });
 
 console.log(text);

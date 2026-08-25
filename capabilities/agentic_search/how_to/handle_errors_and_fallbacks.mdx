@@ -1,9 +1,9 @@
 ---
 title: Handle errors and fallbacks
-description: Build resilient conversational search with the AI SDK by handling LLM failures, empty results, rate limiting, and providing meaningful fallback responses.
+description: Build resilient agentic search with the AI SDK by handling LLM failures, empty results, rate limiting, and providing meaningful fallback responses.
 ---
 
-Conversational search built with [`@meilisearch/ai-sdk`](/capabilities/agentic_search/getting_started) involves multiple systems: Meilisearch, an LLM provider, and your application. Any of these can fail. This guide covers common failure modes and how to handle them gracefully.
+Agentic search built with [`@meilisearch/ai-sdk`](/capabilities/agentic_search/getting_started) involves multiple systems: Meilisearch, an LLM provider, and your application. Any of these can fail. This guide covers common failure modes and how to handle them gracefully.
 
 ## Common error scenarios
 
@@ -39,12 +39,13 @@ async function chat(prompt: string) {
       tools: { search },
     });
 
-    return { role: "assistant", content: text };
+    return { role: "assistant", content: text, fallback: false };
   } catch (error) {
     if (APICallError.isInstance(error) && error.statusCode === 429) {
       return {
         role: "assistant",
         content: "The service is currently experiencing high demand. Please try again in a moment.",
+        fallback: false,
       };
     }
 
@@ -56,7 +57,7 @@ async function chat(prompt: string) {
       };
     }
 
-    return { role: "assistant", content: "Something went wrong. Please try rephrasing your question." };
+    return { role: "assistant", content: "Something went wrong. Please try rephrasing your question.", fallback: false };
   }
 }
 ```
@@ -76,7 +77,7 @@ const result = streamText({
 
 ## Fall back to regular search
 
-When conversational search fails, fall back to a standard keyword or hybrid search using [`meilisearch-js`](/getting_started/sdks/javascript). This ensures users still get results:
+When agentic search fails, fall back to a standard keyword or hybrid search using [`meilisearch-js`](/getting_started/sdks/javascript). This ensures users still get results:
 
 ```ts
 import { MeiliSearch } from "meilisearch";
@@ -181,8 +182,9 @@ function trimConversation(messages: ModelMessage[], maxMessages = 20) {
   // Keep the system message (if any) and the most recent messages
   const systemMessages = messages.filter((m) => m.role === "system");
   const otherMessages = messages.filter((m) => m.role !== "system");
+  const remaining = Math.max(maxMessages - systemMessages.length, 0);
 
-  return [...systemMessages, ...otherMessages.slice(-maxMessages)];
+  return [...systemMessages, ...otherMessages.slice(-remaining)];
 }
 ```
 

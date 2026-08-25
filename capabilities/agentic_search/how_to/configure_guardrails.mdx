@@ -22,7 +22,7 @@ import { meilisearchSearch } from "@meilisearch/ai-sdk";
 
 const { text } = await generateText({
   model: openai("gpt-5.4-mini"),
-  system: "Your system prompt goes here here.",
+  system: "Your system prompt goes here.",
   tools: {
     search: meilisearchSearch({ /* tool configuration */ }),
   },
@@ -36,7 +36,7 @@ curl \
   -H 'Content-Type: application/json' \
   --data-binary '{
     "prompts": {
-      "system": "Your system prompt goeshere."
+      "system": "Your system prompt goes here."
     }
   }'
 ```

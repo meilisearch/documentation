@@ -18,34 +18,26 @@ You need:
 
 Install the AI SDK, a model provider package, and the Meilisearch AI SDK:
 
-<CodeGroup>
-
-```bash npm
+```bash
 npm install ai @ai-sdk/openai @meilisearch/ai-sdk
 ```
-
-</CodeGroup>
 
 ## Configure environment variables
 
 Add your Meilisearch and LLM provider credentials to your environment:
 
-<CodeGroup>
-
 ```bash .env
-MEILISEARCH_HOST=https://your-project.meilisearch.io
-MEILISEARCH_API_KEY=your-search-api-key
+MEILISEARCH_URL=https://your-project.meilisearch.io
+MEILISEARCH_KEY=your-search-api-key
 OPENAI_API_KEY=your-openai-api-key
 ```
-
-</CodeGroup>
 
 ## Run a first agentic request
 
 Use `meilisearchSearch` to give an agent a search tool scoped to one index. The `description` field tells the model what the index contains and when to use it:
 
 ```ts
-import { generateText } from "ai";
+import { generateText, stepCountIs } from "ai";
 import { openai } from "@ai-sdk/openai";
 import { meilisearchSearch } from "@meilisearch/ai-sdk";
 
@@ -54,12 +46,13 @@ const { text } = await generateText({
   prompt: "Find two movies about time travel, then summarize the difference.",
   tools: {
     search: meilisearchSearch({
-      host: 'MEILISEARCH_URL',
-      apiKey: 'your search API key',
+      host: "MEILISEARCH_URL", // or process.env.MEILISEARCH_URL,
+      apiKey: "MEILISEARCH_KEY", // or process.env.MEILISEARCH_KEY,
       indexUid: "movies",
       description: "Search the movies database",
     }),
   },
+  stopWhen: stepCountIs(5),
 });
 
 console.log(text);
@@ -72,24 +65,28 @@ The model decides whether and how many times to call `search` before answering. 
 Chatbots are a common UX on top of agentic search. If you want a multi-turn interface, keep the message history yourself and use `streamText` to stream the response:
 
 ```ts
-import { streamText } from "ai";
+import { streamText, stepCountIs } from "ai";
 import { openai } from "@ai-sdk/openai";
 import { meilisearchSearch } from "@meilisearch/ai-sdk";
 
 const search = meilisearchSearch({
-  host: 'MEILISEARCH_URL',
-  apiKey: 'your search API key',
+  host: "MEILISEARCH_URL", // or process.env.MEILISEARCH_URL,
+  apiKey: "MEILISEARCH_KEY", // or process.env.MEILISEARCH_KEY,
   indexUid: "movies",
   description: "Search the movies database",
 });
 
+const messages = [
+  { role: "user", content: "Find two movies about time travel." },
+];
+
 const { textStream } = streamText({
   model: openai("gpt-5.4-mini"),
-  messages, // your accumulated conversation history
+  messages,
   tools: { search },
+  stopWhen: stepCountIs(5),
 });
 
-// Stream the response
 for await (const text of textStream) {
   process.stdout.write(text);
 }
@@ -106,7 +103,7 @@ For a complete implementation, check out the example application on GitHub.
 
 The `@meilisearch/ai-sdk` provides tools that build upon Meilisearch capabilities. To improve the relevancy of your search results, apply the best practices for tuning your [full-text search](/capabilities/full_text_search/overview) and [hybrid search](/capabilities/hybrid_search/overview).
 
-Since agentic search puts the model in control of the search process, you may find that [semantic search](/capabilities/hybrid_search/advanced/semantic_vs_hybrid) is a better starting point that full-text search. Still, your choice of model, how you configure [document embeddings](/capabilities/hybrid_search/advanced/document_template_best_practices), and your tool configuration will all impact the relevancy of results. We recommend using evals when iterating on your retrieval pipeline.
+Since agentic search puts the model in control of the search process, you may find that [semantic search](/capabilities/hybrid_search/advanced/semantic_vs_hybrid) is a better starting point than full-text search. Still, your choice of model, how you configure [document embeddings](/capabilities/hybrid_search/advanced/document_template_best_practices), and your tool configuration will all impact the relevancy of results. We recommend using evals when iterating on your retrieval pipeline.
 
 For a full list of available tools, see the [SDK API reference](https://github.com/meilisearch/ai-sdk). For advanced retrieval logic, you can build your own agent tools on top of the [`meilisearch-js`](/getting_started/sdks/javascript) SDK.
 {/* TODO: document meilisearchMultiSearch and meilisearchSearchSimilar in follow-up guides */}
