@@ -38,8 +38,8 @@ const { text } = await generateText({
   prompt: "Find two movies about time travel, then summarize the difference.",
   tools: {
     search: meilisearchSearch({
-      host: process.env.MEILISEARCH_URL,
-      apiKey: process.env.MEILISEARCH_KEY,
+      host: "MEILISEARCH_URL",
+      apiKey: "MEILISEARCH_KEY",
       indexUid: "movies",
       description: "Search the movies database",
     }),
