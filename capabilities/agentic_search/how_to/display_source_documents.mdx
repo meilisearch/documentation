@@ -1,0 +1,170 @@
+---
+title: Display source documents
+description: Show users which indexed documents an AI agent used to generate its response.
+---
+
+Displaying source documents builds user trust by showing which data the AI used to formulate its answer. When using [`@meilisearch/ai-sdk`](/capabilities/agentic_search/getting_started), source documents are already part of your search tool's output: whenever the model calls a Meilisearch search tool, the result contains the query it ran and the documents it found.
+
+## Render tool calls in your UI
+
+The [AI SDK](https://ai-sdk.dev) represents each assistant message as an ordered list of parts (`message.parts`) instead of a single string. A tool call becomes its own message part, typed `tool-{toolName}`, with a `state` that tracks its progress.
+
+The examples below are based on a Next.js application, but the AI SDK offers compatible libraries for most frontend frameworks.
+
+### Register the search tool
+
+Give the model a search tool on the server, as described in [getting started with agentic search](/capabilities/agentic_search/getting_started):
+
+```ts src/app/api/chat/route.tsx
+// Next.js API route handler
+
+import { openai } from "@ai-sdk/openai";
+import { meilisearchSearch } from "@meilisearch/ai-sdk";
+import {
+  streamText,
+  convertToModelMessages,
+  createUIMessageStreamResponse,
+  toUIMessageStream,
+  stepCountIs,
+  type UIMessage,
+} from "ai";
+
+const search = meilisearchSearch({
+  host: process.env.MEILISEARCH_URL,
+  apiKey: process.env.MEILISEARCH_KEY,
+  indexUid: "movies",
+  description: "Search movies by title or synopsis",
+});
+
+export async function POST(req: Request) {
+  const { messages }: { messages: UIMessage[] } = await req.json();
+
+  const result = streamText({
+    model: openai("gpt-5.4-mini"),
+    messages: await convertToModelMessages(messages),
+    tools: { search },
+    stopWhen: stepCountIs(5),
+  });
+
+  return createUIMessageStreamResponse({
+    stream: toUIMessageStream({ stream: result.stream }),
+  });
+}
+```
+
+### Render the tool's result
+
+On the client, `useChat` streams each message's parts as they arrive. Check `part.type` and `part.state` to render the right thing for each tool call:
+
+```tsx src/components/chat.tsx
+import { useChat } from "@ai-sdk/react";
+
+function Chat() {
+  const { messages } = useChat();
+
+  return messages.map((message) => (
+    <div key={message.id}>
+      {message.parts.map((part, index) => {
+        if (part.type === "text") {
+          return <p key={index}>{part.text}</p>;
+        }
+
+        if (part.type === "tool-search" && part.state === "output-available") {
+          return (
+            <Sources
+              key={part.toolCallId}
+              query={part.input.q}
+              documents={part.output.hits}
+            />
+          );
+        }
+
+        return null;
+      })}
+    </div>
+  ));
+}
+```
+
+`part.input` holds the arguments the model passed to the tool, including the search query (`q`). `part.output` holds the tool's return value, Meilisearch's search response, with matching documents under `output.hits`.
+
+## Extract documents from the search response
+
+The tool's output shape depends on which Meilisearch tool the model called (`meilisearchSearch`, `meilisearchMultiSearch`, or `meilisearchSearchSimilar`). Guard your extraction so a partial or unexpected output never breaks the UI:
+
+```ts parse-document-hits.ts
+function documentHits(output: unknown) {
+  if (!output || typeof output !== "object") return [];
+  const hits = (output as { hits?: unknown }).hits;
+  return Array.isArray(hits) ? hits : [];
+}
+```
+
+## Display sources in your UI
+
+Here is a simple `Sources` component that lists the documents behind a tool call. This example uses React, but the same pattern, listing documents from a completed tool part, works with any frontend framework:
+
+```tsx src/components/sources.tsx
+function Sources({ query, documents }: { query?: string; documents: Record<string, unknown>[] }) {
+  return (
+    <details>
+      <summary>
+        {documents.length} results{query ? ` for "${query}"` : ""}
+      </summary>
+      <ul>
+        {documents.map((doc) => (
+          <li key={String(doc.id)}>{String(doc.title ?? doc.id)}</li>
+        ))}
+      </ul>
+    </details>
+  );
+}
+```
+
+### Common UI patterns
+
+There are several ways to present source documents to users:
+
+- **Inline citations**: Number each source and reference them in the response text (for example, [1], [2])
+- **Collapsible panel**: Show a "Sources" section below the response that users can expand
+- **Side panel**: Display sources in a sidebar next to the conversation
+- **Footnotes**: List sources at the bottom of each response
+
+Choose the pattern that fits your application's layout and your users' needs.
+
+## Handle multiple searches
+
+A single question can trigger multiple tool calls, for example when the model searches more than one index or issues several queries to compare results. Each tool call keeps its own query and documents, and the AI SDK gives every call a unique `toolCallId`, so you can render them independently or group them together:
+
+```tsx src/components/multiple-sources.tsx
+function MultipleSources({ messages }: { messages: UIMessage[] }) {
+  return messages
+    .flatMap((message) => message.parts)
+    .filter((part) => part.type.startsWith("tool-") && part.state === "output-available")
+    .map((part) => (
+      <Sources
+        key={part.toolCallId}
+        query={part.input.q}
+        documents={part.output.hits}
+      />
+    ));
+}
+```
+
+## Using the experimental Chats API
+
+If you call the experimental [Chats API](/capabilities/agentic_search/advanced/chats_api) directly instead of using the AI SDK, Meilisearch exposes source documents through two special tools rather than through a single tool call. See [display source documents with the Chats API](/capabilities/agentic_search/advanced/chats_api#display-source-documents-with-the-chats-api) for the tool schemas and how to parse them from the response stream.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Agentic search getting started" href="/capabilities/agentic_search/getting_started">
+    Build an agent that returns source documents.
+  </Card>
+  <Card title="Configure guardrails" href="/capabilities/agentic_search/how_to/configure_guardrails">
+    Keep responses grounded in the sources you display.
+  </Card>
+  <Card title="Handle errors and fallbacks" href="/capabilities/agentic_search/how_to/handle_errors_and_fallbacks">
+    Handle searches that return no results.
+  </Card>
+</CardGroup>

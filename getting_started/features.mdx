@@ -50,14 +50,15 @@ Semantic and hybrid search using vector embeddings for meaning-based results.
 | [Multi-embedder](/reference/api/settings/get-embedders) | Multiple embedding models on the same document |
 | [User-provided vectors](/capabilities/hybrid_search/how_to/search_with_user_provided_embeddings) | Bring your own pre-generated embeddings |
 
-### Conversational search
+### Agentic search
 
-Build chat interfaces powered by your search data with LLM integration.
+Let AI agents and chat interfaces use your search data, with LLM integration.
 
 | Feature | Description |
 |---------|-------------|
-| [Chat completions](/capabilities/conversational_search/getting_started/setup) | RAG-powered conversational search |
-| [LLM providers](/capabilities/conversational_search/advanced/chat_tooling_reference) | OpenAI, Azure OpenAI, Mistral, Google Gemini, vLLM, and custom providers |
+| [AI SDK](/getting_started/integrations/ai_sdk) | Give agents a Meilisearch search tool with the Vercel AI SDK |
+| [Chats API](/capabilities/agentic_search/advanced/chats_api) | Engine-managed conversational search via the direct `/chats` API |
+| [LLM providers](/capabilities/agentic_search/advanced/chats_api#workspace-settings) | OpenAI, Azure OpenAI, Mistral, and vLLM |
 | [Streaming responses](/reference/api/chats/request-a-chat-completion) | Stream chat responses in real time |
 | [Chat workspaces](/reference/api/chats/get-settings-of-a-chat-workspace) | Configure chat settings per index |
 

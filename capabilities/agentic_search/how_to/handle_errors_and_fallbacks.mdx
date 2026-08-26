@@ -1,0 +1,224 @@
+---
+title: Handle errors and fallbacks
+description: Build resilient agentic search with the AI SDK by handling LLM failures, empty results, rate limiting, and providing meaningful fallback responses.
+---
+
+Agentic search built with [`@meilisearch/ai-sdk`](/capabilities/agentic_search/getting_started) involves multiple systems: Meilisearch, an LLM provider, and your application. Any of these can fail. This guide covers common failure modes and how to handle them gracefully.
+
+## Common error scenarios
+
+| Scenario | How it surfaces in the AI SDK | Cause |
+|---|---|---|
+| LLM provider unreachable or down | `APICallError` thrown, or an `error` part in the stream | Network issue or provider outage |
+| LLM rate limited | `APICallError` with `statusCode` `429` | Too many requests to the LLM provider |
+| No search results | The search tool succeeds with an empty `hits` array | Query does not match any documents |
+| Tool execution fails | A `tool-error` part in the stream | Meilisearch is unreachable, or the model passed invalid arguments |
+| Context too long | `APICallError` with `statusCode` `400` | Conversation history exceeds the model's context window |
+
+## Handle LLM provider errors
+
+`generateText` throws regular errors that you can catch with `try/catch`. Use `APICallError.isInstance` to distinguish provider errors from other failures and branch on the status code:
+
+```ts
+import { generateText, APICallError } from "ai";
+import { openai } from "@ai-sdk/openai";
+import { meilisearchSearch } from "@meilisearch/ai-sdk";
+
+const search = meilisearchSearch({
+  host: "MEILISEARCH_URL",
+  apiKey: "your search API key",
+  indexUid: "movies",
+  description: "Search movies by title or synopsis",
+});
+
+async function chat(prompt: string) {
+  try {
+    const { text } = await generateText({
+      model: openai("gpt-5.4-mini"),
+      prompt,
+      tools: { search },
+    });
+
+    return { role: "assistant", content: text, fallback: false };
+  } catch (error) {
+    if (APICallError.isInstance(error) && error.statusCode === 429) {
+      return {
+        role: "assistant",
+        content: "The service is currently experiencing high demand. Please try again in a moment.",
+        fallback: false,
+      };
+    }
+
+    if (APICallError.isInstance(error)) {
+      return {
+        role: "assistant",
+        content: "The AI service is temporarily unavailable. Try a regular search instead.",
+        fallback: true,
+      };
+    }
+
+    return { role: "assistant", content: "Something went wrong. Please try rephrasing your question.", fallback: false };
+  }
+}
+```
+
+`streamText` handles errors differently: it starts streaming immediately and turns errors into `error` parts of the stream instead of throwing, so a failing provider does not crash your server. Log them with the `onError` callback:
+
+```ts
+const result = streamText({
+  model: openai("gpt-5.4-mini"),
+  messages,
+  tools: { search },
+  onError({ error }) {
+    console.error(error); // log server-side, the client still receives the stream
+  },
+});
+```
+
+## Fall back to regular search
+
+When agentic search fails, fall back to a standard keyword or hybrid search using [`meilisearch-js`](/getting_started/sdks/javascript). This ensures users still get results:
+
+```ts
+import { MeiliSearch } from "meilisearch";
+
+const client = new MeiliSearch({ host: "MEILISEARCH_URL", apiKey: "your search API key" });
+
+async function searchWithFallback(query: string) {
+  const chatResponse = await chat(query);
+
+  if (chatResponse.fallback) {
+    const { hits } = await client.index("movies").search(query, {
+      hybrid: { semanticRatio: 0.5, embedder: "EMBEDDER" },
+    });
+
+    return {
+      type: "search",
+      hits,
+      message: "Showing search results instead. The AI assistant is temporarily unavailable.",
+    };
+  }
+
+  return { type: "chat", response: chatResponse };
+}
+```
+
+## Handle empty search results
+
+When the search tool returns no matches, the LLM may hallucinate an answer or give a vague response. Use [guardrails](/capabilities/agentic_search/how_to/configure_guardrails) in your system prompt to handle this:
+
+```text System prompt
+When the search results do not contain enough information to answer
+the user's question:
+
+1. Clearly state that you could not find relevant information
+2. Suggest alternative search terms the user might try
+3. Never make up information that is not in the search results
+```
+
+You can also detect empty results on the client side by inspecting the search tool's result. If `hits` is empty, display a helpful message instead of relying on the model:
+
+```ts
+const { toolResults } = await generateText({
+  model: openai("gpt-5.4-mini"),
+  prompt: query,
+  tools: { search },
+});
+
+const searchResult = toolResults.find((result) => result.toolName === "search");
+const hits = Array.isArray(searchResult?.output?.hits) ? searchResult.output.hits : [];
+
+if (hits.length === 0) {
+  showMessage("No matching documents found. Try different keywords or broaden your search.");
+}
+```
+
+See [extract documents from the search response](/capabilities/agentic_search/how_to/display_source_documents#extract-documents-from-the-search-response) for a reusable version of this guard.
+
+## Handle rate limiting
+
+LLM providers enforce rate limits based on requests per minute or tokens per minute. `generateText` and `streamText` retry transient errors automatically (`maxRetries` defaults to `2`), but for full control over backoff timing and user feedback, disable the built-in retries and implement your own:
+
+```ts
+async function chatWithRetry(prompt: string, maxRetries = 3) {
+  for (let attempt = 0; attempt < maxRetries; attempt++) {
+    try {
+      return await generateText({
+        model: openai("gpt-5.4-mini"),
+        prompt,
+        tools: { search },
+        maxRetries: 0, // handle retries ourselves to control backoff and messaging
+      });
+    } catch (error) {
+      if (!APICallError.isInstance(error) || error.statusCode !== 429) throw error;
+
+      const waitMs = Math.pow(2, attempt) * 1000; // 1s, 2s, 4s
+      await new Promise((resolve) => setTimeout(resolve, waitMs));
+    }
+  }
+
+  return { text: "The service is busy. Please try again shortly." };
+}
+```
+
+To reduce rate limiting in production:
+
+- Use a higher-tier API key with your LLM provider
+- Implement client-side debouncing to avoid sending requests on every keystroke
+- Cache responses for repeated questions
+
+## Manage context window limits
+
+Long conversations can exceed the LLM's context window, which surfaces as an `APICallError` with `statusCode` `400`. Trim older messages before passing them to `generateText` or `streamText` to stay within limits:
+
+```ts
+import type { ModelMessage } from "ai";
+
+function trimConversation(messages: ModelMessage[], maxMessages = 20) {
+  if (messages.length <= maxMessages) {
+    return messages;
+  }
+
+  // Keep the system message (if any) and the most recent messages
+  const systemMessages = messages.filter((m) => m.role === "system");
+  const otherMessages = messages.filter((m) => m.role !== "system");
+  const remaining = Math.max(maxMessages - systemMessages.length, 0);
+
+  return [...systemMessages, ...otherMessages.slice(-remaining)];
+}
+```
+
+```ts
+const { text } = await generateText({
+  model: openai("gpt-5.4-mini"),
+  messages: trimConversation(messages),
+  tools: { search },
+});
+```
+
+## Display errors in your UI
+
+When an error occurs, give users clear feedback and actionable next steps. Avoid exposing raw error messages or stack traces:
+
+| Error type | User-facing message |
+|---|---|
+| Provider down | "AI search is temporarily unavailable. Showing regular search results." |
+| Rate limited | "High demand right now. Please wait a moment and try again." |
+| No results | "No results found. Try different keywords or a broader question." |
+| Network error | "Connection issue. Check your internet and try again." |
+| Context too long | "This conversation is getting long. Start a new conversation for best results." |
+
+## Using the experimental Chats API
+
+When using the experimental [Chats API](/capabilities/agentic_search/advanced/chats_api), Meilisearch forwards HTTP status codes from your LLM provider on the completions endpoint, and you detect empty results by parsing the `_meiliSearchSources` tool call. See [handle errors and fallbacks with the Chats API](/capabilities/agentic_search/advanced/chats_api#handle-errors-and-fallbacks-with-the-chats-api) for implementation.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Configure guardrails" href="/capabilities/agentic_search/how_to/configure_guardrails">
+    Reduce hallucination with system prompts
+  </Card>
+  <Card title="Display source documents" href="/capabilities/agentic_search/how_to/display_source_documents">
+    Show users which documents were used to generate responses
+  </Card>
+</CardGroup>
