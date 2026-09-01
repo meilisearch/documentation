@@ -148,10 +148,13 @@ jobs:
       - name: Validate OpenAPI with Mintlify CLI
         run: npx mint openapi-check assets/open-api/meilisearch-openapi-mintlify.json
 
-      - name: Check for changes
+      - name: Generate error codes file
+        run: npm run generate-error-codes
+
+      - name: Check for changes on mintlify OpenAPI changes
         id: mintlify_changes
         run: |
-          if git diff --quiet assets/open-api/meilisearch-openapi-mintlify.json; then
+          if [ git diff --quiet assets/open-api/meilisearch-openapi-mintlify.json ] || [ git diff --quiet reference/errors/error_codes.mdx ]; then
             echo "has_changes=false" >> "$GITHUB_ENV"
           else
             echo "has_changes=true" >> "$GITHUB_ENV"
@@ -160,14 +163,15 @@ jobs:
       - name: Commit changes
         run: |
           if [[ $has_changes == "true" ]]; then
-            echo "There are changes in the Mintlify OpenAPI file."
+            echo "There are changes in the Mintlify OpenAPI or the error code files."
             git config user.name "meili-bot"
             git config user.email "robot@meilisearch.com"
             git add assets/open-api/meilisearch-openapi-mintlify.json
-            git commit -m "[AUTOMATION POST DEPLOYMENT] Update meilisearch-openapi-mintlify.json"
+            git add reference/errors/error_codes.mdx
+            git commit -m "[AUTOMATION POST DEPLOYMENT] Update meilisearch-openapi-mintlify.json or reference/errors/error_codes.mdx"
             git push origin main
           else
-            echo "No changes in the Mintlify OpenAPI file."
+            echo "No changes in the Mintlify OpenAPI and error code files."
           fi
 
   # After the Mintlify OpenAPI file is updated, check if any new routes are missing
