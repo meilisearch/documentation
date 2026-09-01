@@ -91,9 +91,9 @@ The API reference is built from a Mintlify-ready OpenAPI file that includes inje
 
 The base spec is **Meilisearch’s OpenAPI file** from the [latest Meilisearch GitHub release](https://github.com/meilisearch/meilisearch/releases/latest). It is shipped as the asset `meilisearch-openapi.json` in that release.
 
-### Generate the OpenAPI Mintlify file
+### Generate the OpenAPI Mintlify and error code files
 
-1. **Fetch the latest OpenAPI file** from the Meilisearch release (writes to `assets/open-api/meilisearch-openapi.json`):
+1. **Fetch the latest OpenAPI and error code files** from the Meilisearch release (writes `meilisearch-*.json` in `assets/open-api/`):
 
 ```bash
 npm run fetch-meilisearch-openapi-file
@@ -105,6 +105,11 @@ Optional: set `GITHUB_PAT` or `GH_TOKEN` for higher API rate limits.
 
 ```bash
 npm run generate-mintlify-openapi-file
+```
+3. **Generate the error code mdx file** (reads `assets/open-api/meilisearch-error-codes.json` and outputs `reference/errors/error_codes.mdx`):
+
+```bash
+npm run generate-error-codes
 ```
 
 Optional: set `GITHUB_PAT` or `GH_TOKEN` when the script fetches SDK code sample files from GitHub.
