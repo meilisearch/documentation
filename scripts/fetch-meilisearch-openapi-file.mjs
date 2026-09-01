@@ -15,7 +15,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = path.resolve(__dirname, "..");
 const OPENAPI_DIR = path.join(REPO_ROOT, "assets", "open-api");
 
-const OPENAPI_ASSET_NAMES = ["meilisearch-openapi.json"];
+const OPENAPI_ASSET_NAMES = ["meilisearch-openapi.json", "meilisearch-error-codes.json"];
 
 const GITHUB_API_LATEST =
   "https://api.github.com/repos/meilisearch/meilisearch/releases/latest";
