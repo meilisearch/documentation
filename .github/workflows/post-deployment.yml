@@ -154,7 +154,7 @@ jobs:
       - name: Check for changes on mintlify OpenAPI changes
         id: mintlify_changes
         run: |
-          if [ git diff --quiet assets/open-api/meilisearch-openapi-mintlify.json ] || [ git diff --quiet reference/errors/error_codes.mdx ]; then
+          if git diff --quiet assets/open-api/meilisearch-openapi-mintlify.json && git diff --quiet reference/errors/error_codes.mdx; then
             echo "has_changes=false" >> "$GITHUB_ENV"
           else
             echo "has_changes=true" >> "$GITHUB_ENV"
