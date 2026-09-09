@@ -30,7 +30,8 @@ jobs:
       - name: Get Meilisearch fetch automation flag from docs.json
         id: fetch_automation
         run: |
-          value=$(jq -r '.. | select(type == "object" and has("internal-meili-fetch-automation")) | .["internal-meili-fetch-automation"] | select(. != null) | tostring' docs.json 2>/dev/null | head -1)
+          # docs.json references config/*.json via $ref, so look for the flag in both places.
+          value=$(jq -r '.. | select(type == "object" and has("internal-meili-fetch-automation")) | .["internal-meili-fetch-automation"] | select(. != null) | tostring' docs.json config/navigation.json 2>/dev/null | head -1)
           echo "run=${value:-false}" >> "$GITHUB_OUTPUT"
 
       - name: Setup Node.js
