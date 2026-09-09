@@ -93,20 +93,20 @@ The base spec is **Meilisearch’s OpenAPI file** from the [latest Meilisearch G
 
 ### Generate the OpenAPI Mintlify and error code files
 
-1. **Fetch the latest OpenAPI and error code files** from the Meilisearch release (writes `meilisearch-*.json` in `assets/open-api/`):
+1. **Fetch the latest OpenAPI and error code files** from the Meilisearch release (writes `meilisearch-*.json` in `assets/release-assets/`):
 
 ```bash
-npm run fetch-meilisearch-openapi-file
+npm run fetch-meilisearch-release-assets
 ```
 
 Optional: set `GITHUB_PAT` or `GH_TOKEN` for higher API rate limits.
 
-2. **Generate the Mintlify-ready file** (reads `assets/open-api/meilisearch-openapi.json`, injects code samples from this repo and SDK repos, cleans null descriptions; writes `assets/open-api/meilisearch-openapi-mintlify.json`):
+2. **Generate the Mintlify-ready file** (reads `assets/release-assets/meilisearch-openapi.json`, injects code samples from this repo and SDK repos, cleans null descriptions; writes `assets/release-assets/meilisearch-openapi-mintlify.json`):
 
 ```bash
 npm run generate-mintlify-openapi-file
 ```
-3. **Generate the error code mdx file** (reads `assets/open-api/meilisearch-error-codes.json` and outputs `reference/errors/error_codes.mdx`):
+3. **Generate the error code mdx file** (reads `assets/release-assets/meilisearch-error-codes.json` and outputs `reference/errors/error_codes.mdx`):
 
 ```bash
 npm run generate-error-codes

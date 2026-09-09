@@ -19,7 +19,7 @@ jobs:
     name: Build code samples
     runs-on: ubuntu-latest
     outputs:
-      run_openapi_automation: ${{ steps.openapi_automation.outputs.run }}
+      run_fetch_automation: ${{ steps.fetch_automation.outputs.run }}
 
     steps:
       - name: Checkout repository
@@ -27,8 +27,8 @@ jobs:
         with:
           token: ${{ secrets.GH_TOKEN }}
 
-      - name: Get OpenAPI automation flag from docs.json
-        id: openapi_automation
+      - name: Get Meilisearch fetch automation flag from docs.json
+        id: fetch_automation
         run: |
           value=$(jq -r '.. | select(type == "object" and has("internal-meili-fetch-automation")) | .["internal-meili-fetch-automation"] | select(. != null) | tostring' docs.json 2>/dev/null | head -1)
           echo "run=${value:-false}" >> "$GITHUB_OUTPUT"
@@ -67,16 +67,17 @@ jobs:
             echo "No changes in the Git working directory."
           fi
 
+  # Fetches the Meilisearch release assets (OpenAPI spec and error codes files).
   # We need to wait for build-code-samples to commit first so we can push a separate commit
   # (avoid stacking both changes in one run and keep history clear).
   # Only runs when docs.json has "internal-meili-fetch-automation": true.
-  # In case of issues with the latest release OpenAPI file: fetch the desired OpenAPI file
+  # In case of issues with the latest release assets: fetch the desired files
   # manually, then set "internal-meili-fetch-automation" to false to prevent this automation from running.
-  fetch-openapi-file:
-    name: Fetch OpenAPI file from Meilisearch release
+  fetch-release-assets:
+    name: Fetch Meilisearch release assets
     runs-on: ubuntu-latest
     needs: build-code-samples
-    if: needs.build-code-samples.outputs.run_openapi_automation == 'true'
+    if: needs.build-code-samples.outputs.run_fetch_automation == 'true'
 
     steps:
       - name: Checkout repository
@@ -94,13 +95,13 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Fetch latest meilisearch-openapi.json from Meilisearch release
-        run: npm run fetch-meilisearch-openapi-file
+      - name: Fetch latest release assets from Meilisearch release
+        run: npm run fetch-meilisearch-release-assets
 
       - name: Check for changes
-        id: openapi_changes
+        id: release_assets_changes
         run: |
-          if git diff --quiet assets/open-api/meilisearch-openapi.json; then
+          if git diff --quiet assets/release-assets/meilisearch-openapi.json assets/release-assets/meilisearch-error-codes.json; then
             echo "has_changes=false" >> "$GITHUB_ENV"
           else
             echo "has_changes=true" >> "$GITHUB_ENV"
@@ -109,22 +110,23 @@ jobs:
       - name: Commit changes
         run: |
           if [[ $has_changes == "true" ]]; then
-            echo "There are changes in the OpenAPI file."
+            echo "There are changes in the OpenAPI or error codes files."
             git config user.name "meili-bot"
             git config user.email "robot@meilisearch.com"
-            git add assets/open-api/meilisearch-openapi.json
-            git commit -m "[AUTOMATION POST DEPLOYMENT] Update meilisearch-openapi.json from latest Meilisearch release"
+            git add assets/release-assets/meilisearch-openapi.json
+            git add assets/release-assets/meilisearch-error-codes.json
+            git commit -m "[AUTOMATION POST DEPLOYMENT] Update OpenAPI and error codes files from latest Meilisearch release"
             git push origin main
           else
-            echo "No changes in the OpenAPI file."
+            echo "No changes in the OpenAPI and error codes files."
           fi
 
-  # Runs after fetch-openapi-file: generate Mintlify OpenAPI file, validate with mint openapi-check, commit if valid.
+  # Runs after fetch-release-assets: generate Mintlify OpenAPI file, validate with mint openapi-check, commit if valid.
   generate-and-check-mintlify-openapi:
     name: Generate and check Mintlify OpenAPI file
     runs-on: ubuntu-latest
-    needs: [build-code-samples, fetch-openapi-file]
-    if: needs.build-code-samples.outputs.run_openapi_automation == 'true'
+    needs: [build-code-samples, fetch-release-assets]
+    if: needs.build-code-samples.outputs.run_fetch_automation == 'true'
 
     steps:
       - name: Checkout repository
@@ -146,15 +148,12 @@ jobs:
         run: npm run generate-mintlify-openapi-file
 
       - name: Validate OpenAPI with Mintlify CLI
-        run: npx mint openapi-check assets/open-api/meilisearch-openapi-mintlify.json
-
-      - name: Generate error codes file
-        run: npm run generate-error-codes
+        run: npx mint openapi-check assets/release-assets/meilisearch-openapi-mintlify.json
 
       - name: Check for changes on mintlify OpenAPI changes
         id: mintlify_changes
         run: |
-          if git diff --quiet assets/open-api/meilisearch-openapi-mintlify.json && git diff --quiet reference/errors/error_codes.mdx; then
+          if git diff --quiet assets/release-assets/meilisearch-openapi-mintlify.json; then
             echo "has_changes=false" >> "$GITHUB_ENV"
           else
             echo "has_changes=true" >> "$GITHUB_ENV"
@@ -163,15 +162,66 @@ jobs:
       - name: Commit changes
         run: |
           if [[ $has_changes == "true" ]]; then
-            echo "There are changes in the Mintlify OpenAPI or the error code files."
+            echo "There are changes in the Mintlify OpenAPI file."
             git config user.name "meili-bot"
             git config user.email "robot@meilisearch.com"
-            git add assets/open-api/meilisearch-openapi-mintlify.json
-            git add reference/errors/error_codes.mdx
-            git commit -m "[AUTOMATION POST DEPLOYMENT] Update meilisearch-openapi-mintlify.json or reference/errors/error_codes.mdx"
+            git add assets/release-assets/meilisearch-openapi-mintlify.json
+            git commit -m "[AUTOMATION POST DEPLOYMENT] Update meilisearch-openapi-mintlify.json"
             git push origin main
           else
-            echo "No changes in the Mintlify OpenAPI and error code files."
+            echo "No changes in the Mintlify OpenAPI file."
+          fi
+
+  # Generate reference/errors/error_codes.mdx from assets/release-assets/meilisearch-error-codes.json.
+  # Unlike the OpenAPI jobs above, this is NOT gated on "internal-meili-fetch-automation":
+  # it also runs when the JSON file is updated manually, so the page never goes stale.
+  # It still waits for generate-and-check-mintlify-openapi (when it runs) to avoid
+  # concurrent pushes to main.
+  generate-error-codes:
+    name: Generate error codes file
+    runs-on: ubuntu-latest
+    needs: [build-code-samples, generate-and-check-mintlify-openapi]
+    if: ${{ !cancelled() && needs.build-code-samples.result == 'success' && needs.generate-and-check-mintlify-openapi.result != 'failure' }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          ref: main
+          token: ${{ secrets.GH_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Generate error codes file
+        run: npm run generate-error-codes
+
+      - name: Check for changes
+        id: error_codes_changes
+        run: |
+          if git diff --quiet reference/errors/error_codes.mdx; then
+            echo "has_changes=false" >> "$GITHUB_ENV"
+          else
+            echo "has_changes=true" >> "$GITHUB_ENV"
+          fi
+
+      - name: Commit changes
+        run: |
+          if [[ $has_changes == "true" ]]; then
+            echo "There are changes in the error codes file."
+            git config user.name "meili-bot"
+            git config user.email "robot@meilisearch.com"
+            git add reference/errors/error_codes.mdx
+            git commit -m "[AUTOMATION POST DEPLOYMENT] Update reference/errors/error_codes.mdx"
+            git push origin main
+          else
+            echo "No changes in the error codes file."
           fi
 
   # After the Mintlify OpenAPI file is updated, check if any new routes are missing
@@ -180,7 +230,7 @@ jobs:
     name: Open issue for undocumented API routes
     runs-on: ubuntu-latest
     needs: [build-code-samples, generate-and-check-mintlify-openapi]
-    if: needs.build-code-samples.outputs.run_openapi_automation == 'true'
+    if: needs.build-code-samples.outputs.run_fetch_automation == 'true'
     permissions:
       issues: write
 
@@ -256,14 +306,14 @@ jobs:
 
           _This issue was created automatically by the post-deployment workflow._"
 
-  # Runs alongside the OpenAPI automation. A new Meilisearch release triggers both
-  # the OpenAPI update and the changelog update at the same time.
+  # Runs alongside the release assets automation. A new Meilisearch release triggers both
+  # the release assets update and the changelog update at the same time.
   # Only runs when docs.json has "internal-meili-fetch-automation": true.
   update-changelog:
     name: Update changelog if new release exists
     runs-on: ubuntu-latest
     needs: [build-code-samples]
-    if: needs.build-code-samples.outputs.run_openapi_automation == 'true'
+    if: needs.build-code-samples.outputs.run_fetch_automation == 'true'
 
     steps:
       - name: Checkout repository

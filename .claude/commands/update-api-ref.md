@@ -2,9 +2,9 @@ Update the API reference documentation from the OpenAPI spec.
 
 ## Steps
 
-1. **Fetch the latest OpenAPI spec** from the Meilisearch repository:
+1. **Fetch the latest release assets** (OpenAPI spec and error codes) from the Meilisearch repository:
    ```
-   npm run fetch-meilisearch-openapi-file
+   npm run fetch-meilisearch-release-assets
    ```
 
 2. **Generate the Mintlify-compatible OpenAPI file**:

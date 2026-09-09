@@ -14,7 +14,7 @@ import { resolve } from 'path';
 
 const OPENAPI_PATH = resolve(
   process.cwd(),
-  process.argv[3] || 'assets/open-api/meilisearch-openapi-mintlify.json'
+  process.argv[3] || 'assets/release-assets/meilisearch-openapi-mintlify.json'
 );
 
 const spec = JSON.parse(readFileSync(OPENAPI_PATH, 'utf8'));
