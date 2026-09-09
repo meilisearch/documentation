@@ -2,27 +2,32 @@ Update the API reference documentation from the OpenAPI spec.
 
 ## Steps
 
-1. **Fetch the latest OpenAPI spec** from the Meilisearch repository:
+1. **Fetch the latest release assets** (OpenAPI spec and error codes) from the Meilisearch repository:
    ```
-   npm run fetch-meilisearch-openapi-file
+   npm run fetch-meilisearch-release-assets
    ```
 
-2. **Generate the Mintlify-compatible OpenAPI file**:
+2. **Generate the error codes page** (regenerates `reference/errors/error_codes.mdx` from the newly fetched `meilisearch-error-codes.json`):
+   ```
+   npm run generate-error-codes
+   ```
+
+3. **Generate the Mintlify-compatible OpenAPI file**:
    ```
    npm run generate-mintlify-openapi-file
    ```
 
-3. **Check for new routes** that need coverage:
+4. **Check for new routes** that need coverage:
    ```
    npm run check-openapi-routes-coverage
    ```
 
-4. **Generate code sample snippets**:
+5. **Generate code sample snippets**:
    ```
    npm run generate-code-sample-snippets-file
    ```
 
-5. **Check code samples**:
+6. **Check code samples**:
    ```
    npm run check-openapi-code-samples
    npm run check-code-samples-usage
@@ -30,7 +35,7 @@ Update the API reference documentation from the OpenAPI spec.
    npm run check-unused-sdk-samples
    ```
 
-6. **Report**: Summarize what changed:
+7. **Report**: Summarize what changed:
    - New routes added (if any)
    - Missing code samples (if any)
    - Any errors from the scripts

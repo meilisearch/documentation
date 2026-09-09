@@ -2,7 +2,8 @@
 
 /**
  * Fetches the latest Meilisearch release from GitHub and replaces
- * assets/open-api/meilisearch-openapi.json with the one from that release.
+ * the local copies of its assets (OpenAPI spec and error codes)
+ * in assets/release-assets/.
  *
  * Optional: set GITHUB_PAT or GH_TOKEN for higher API rate limits.
  */
@@ -13,9 +14,9 @@ import { fileURLToPath } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = path.resolve(__dirname, "..");
-const OPENAPI_DIR = path.join(REPO_ROOT, "assets", "open-api");
+const TARGET_DIR = path.join(REPO_ROOT, "assets", "release-assets");
 
-const OPENAPI_ASSET_NAMES = ["meilisearch-openapi.json"];
+const RELEASE_ASSET_NAMES = ["meilisearch-openapi.json", "meilisearch-error-codes.json"];
 
 const GITHUB_API_LATEST =
   "https://api.github.com/repos/meilisearch/meilisearch/releases/latest";
@@ -50,12 +51,12 @@ async function main() {
   const tag = release.tag_name;
   console.log(`Latest release: ${tag}`);
 
-  if (!fs.existsSync(OPENAPI_DIR)) {
-    fs.mkdirSync(OPENAPI_DIR, { recursive: true });
+  if (!fs.existsSync(TARGET_DIR)) {
+    fs.mkdirSync(TARGET_DIR, { recursive: true });
   }
 
   const assetNames = release.assets?.map((a) => a.name) ?? [];
-  for (const filename of OPENAPI_ASSET_NAMES) {
+  for (const filename of RELEASE_ASSET_NAMES) {
     const asset = release.assets?.find((a) => a.name === filename);
     if (!asset) {
       throw new Error(
@@ -67,7 +68,7 @@ async function main() {
     const content = await request(asset.browser_download_url, {
       errorContext: "Download asset",
     });
-    const targetPath = path.join(OPENAPI_DIR, filename);
+    const targetPath = path.join(TARGET_DIR, filename);
     fs.writeFileSync(targetPath, content, "utf8");
     console.log(`Written to ${targetPath}`);
   }
