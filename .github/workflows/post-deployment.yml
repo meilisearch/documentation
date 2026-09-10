@@ -71,6 +71,8 @@ jobs:
   # Fetches the Meilisearch release assets (OpenAPI spec and error codes files).
   # We need to wait for build-code-samples to commit first so we can push a separate commit
   # (avoid stacking both changes in one run and keep history clear).
+  # Runs even if build-code-samples failed: fetching the release assets does not
+  # depend on the code samples.
   # Only runs when docs.json has "internal-meili-fetch-automation": true.
   # In case of issues with the latest release assets: fetch the desired files
   # manually, then set "internal-meili-fetch-automation" to false to prevent this automation from running.
@@ -78,7 +80,7 @@ jobs:
     name: Fetch Meilisearch release assets
     runs-on: ubuntu-latest
     needs: build-code-samples
-    if: needs.build-code-samples.outputs.run_fetch_automation == 'true'
+    if: ${{ !cancelled() && needs.build-code-samples.outputs.run_fetch_automation == 'true' }}
 
     steps:
       - name: Checkout repository
@@ -123,11 +125,13 @@ jobs:
           fi
 
   # Runs after fetch-release-assets: generate Mintlify OpenAPI file, validate with mint openapi-check, commit if valid.
+  # Runs even if an upstream job failed (it regenerates from whatever is on main),
+  # but waits for fetch-release-assets to finish to avoid concurrent pushes to main.
   generate-and-check-mintlify-openapi:
     name: Generate and check Mintlify OpenAPI file
     runs-on: ubuntu-latest
     needs: [build-code-samples, fetch-release-assets]
-    if: needs.build-code-samples.outputs.run_fetch_automation == 'true'
+    if: ${{ !cancelled() && needs.build-code-samples.outputs.run_fetch_automation == 'true' }}
 
     steps:
       - name: Checkout repository
@@ -176,13 +180,14 @@ jobs:
   # Generate reference/errors/error_codes.mdx from assets/release-assets/meilisearch-error-codes.json.
   # Unlike the OpenAPI jobs above, this is NOT gated on "internal-meili-fetch-automation":
   # it also runs when the JSON file is updated manually, so the page never goes stale.
-  # It still waits for generate-and-check-mintlify-openapi (when it runs) to avoid
-  # concurrent pushes to main.
+  # It waits for generate-and-check-mintlify-openapi to finish (whatever its result) to
+  # avoid concurrent pushes to main, but runs even if an upstream job failed: the
+  # generation only depends on the error codes JSON present on main.
   generate-error-codes:
     name: Generate error codes file
     runs-on: ubuntu-latest
     needs: [build-code-samples, generate-and-check-mintlify-openapi]
-    if: ${{ !cancelled() && needs.build-code-samples.result == 'success' && needs.generate-and-check-mintlify-openapi.result != 'failure' }}
+    if: ${{ !cancelled() }}
 
     steps:
       - name: Checkout repository
@@ -231,7 +236,7 @@ jobs:
     name: Open issue for undocumented API routes
     runs-on: ubuntu-latest
     needs: [build-code-samples, generate-and-check-mintlify-openapi]
-    if: needs.build-code-samples.outputs.run_fetch_automation == 'true'
+    if: ${{ !cancelled() && needs.build-code-samples.outputs.run_fetch_automation == 'true' }}
     permissions:
       issues: write
 
@@ -307,14 +312,15 @@ jobs:
 
           _This issue was created automatically by the post-deployment workflow._"
 
-  # Runs alongside the release assets automation. A new Meilisearch release triggers both
-  # the release assets update and the changelog update at the same time.
+  # Runs at the end of the push chain (after generate-error-codes) so it never pushes
+  # to main at the same time as the other jobs. Runs even if an upstream job failed,
+  # as long as the workflow was not cancelled.
   # Only runs when docs.json has "internal-meili-fetch-automation": true.
   update-changelog:
     name: Update changelog if new release exists
     runs-on: ubuntu-latest
-    needs: [build-code-samples]
-    if: needs.build-code-samples.outputs.run_fetch_automation == 'true'
+    needs: [build-code-samples, generate-error-codes]
+    if: ${{ !cancelled() && needs.build-code-samples.outputs.run_fetch_automation == 'true' }}
 
     steps:
       - name: Checkout repository
