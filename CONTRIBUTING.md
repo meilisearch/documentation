@@ -122,9 +122,9 @@ It does the following:
 
 1. **Build code samples** — Runs `generate-code-sample-snippets-file`. If `snippets/` has changes, it commits and pushes them to `main` (which triggers a new Mintlify deployment). This keeps generated snippets in sync with `.code-samples.meilisearch.yaml` and the SDK repos.
 
-2. **Fetch OpenAPI file** *(only if `docs.json` has `internal-meili-fetch-automation: true`)* — Fetches the latest `meilisearch-openapi.json` from the Meilisearch GitHub release. If the file changed, it commits and pushes to `main`. To disable this (e.g. if the latest release OpenAPI causes issues), set the flag to `false` or update the OpenAPI file manually.
+2. **Fetch OpenAPI file** — Fetches the latest `meilisearch-openapi.json` from the Meilisearch GitHub release. If the file changed, it commits and pushes to `main`.
 
-3. **Generate and check Mintlify OpenAPI** *(same condition)* — Runs `generate-mintlify-openapi-file`, validates with `npx mint openapi-check`, then commits and pushes `meilisearch-openapi-mintlify.json` if it changed.
+3. **Generate and check Mintlify OpenAPI** — Runs `generate-mintlify-openapi-file`, validates with `npx mint openapi-check`, then commits and pushes `meilisearch-openapi-mintlify.json` if it changed.
 
 Each step commits separately so the history stays clear. Contributors don’t need to run these steps manually for normal edits; the workflow keeps code samples and OpenAPI files up to date after merges to `main`.
 
