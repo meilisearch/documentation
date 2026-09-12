@@ -15,26 +15,6 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  # Reads the "internal-meili-fetch-automation" flag from docs.json and exposes it
-  # to the other jobs. Kept separate from build-code-samples so a failure in that
-  # job can never hide the flag from the rest of the chain.
-  check-automation-flag:
-    name: Check Meilisearch fetch automation flag
-    runs-on: ubuntu-latest
-    outputs:
-      run_fetch_automation: ${{ steps.fetch_automation.outputs.run }}
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v6
-
-      - name: Get Meilisearch fetch automation flag from docs.json
-        id: fetch_automation
-        run: |
-          # docs.json references config/*.json via $ref, so look for the flag in both places.
-          value=$(jq -r '.. | select(type == "object" and has("internal-meili-fetch-automation")) | .["internal-meili-fetch-automation"] | select(. != null) | tostring' docs.json config/navigation.json 2>/dev/null | head -1)
-          echo "run=${value:-false}" >> "$GITHUB_OUTPUT"
-
   build-code-samples:
     name: Build code samples
     runs-on: ubuntu-latest
@@ -84,14 +64,11 @@ jobs:
   # (avoid stacking both changes in one run and keep history clear).
   # Runs even if build-code-samples failed: fetching the release assets does not
   # depend on the code samples.
-  # Only runs when docs.json has "internal-meili-fetch-automation": true.
-  # In case of issues with the latest release assets: fetch the desired files
-  # manually, then set "internal-meili-fetch-automation" to false to prevent this automation from running.
   fetch-release-assets:
     name: Fetch Meilisearch release assets
     runs-on: ubuntu-latest
-    needs: [check-automation-flag, build-code-samples]
-    if: ${{ !cancelled() && needs.check-automation-flag.outputs.run_fetch_automation == 'true' }}
+    needs: [build-code-samples]
+    if: ${{ !cancelled() }}
 
     steps:
       - name: Checkout repository
@@ -141,8 +118,8 @@ jobs:
   generate-and-check-mintlify-openapi:
     name: Generate and check Mintlify OpenAPI file
     runs-on: ubuntu-latest
-    needs: [check-automation-flag, fetch-release-assets]
-    if: ${{ !cancelled() && needs.check-automation-flag.outputs.run_fetch_automation == 'true' }}
+    needs: [fetch-release-assets]
+    if: ${{ !cancelled() }}
 
     steps:
       - name: Checkout repository
@@ -189,8 +166,7 @@ jobs:
           fi
 
   # Generate reference/errors/error_codes.mdx from assets/release-assets/meilisearch-error-codes.json.
-  # Unlike the OpenAPI jobs above, this is NOT gated on "internal-meili-fetch-automation":
-  # it also runs when the JSON file is updated manually, so the page never goes stale.
+  # It also runs when the JSON file is updated manually, so the page never goes stale.
   # It waits for generate-and-check-mintlify-openapi to finish (whatever its result) to
   # avoid concurrent pushes to main, but runs even if an upstream job failed: the
   # generation only depends on the error codes JSON present on main.
@@ -246,8 +222,8 @@ jobs:
   check-undocumented-routes:
     name: Open issue for undocumented API routes
     runs-on: ubuntu-latest
-    needs: [check-automation-flag, generate-and-check-mintlify-openapi]
-    if: ${{ !cancelled() && needs.check-automation-flag.outputs.run_fetch_automation == 'true' }}
+    needs: [generate-and-check-mintlify-openapi]
+    if: ${{ !cancelled() }}
     permissions:
       issues: write
 
@@ -326,12 +302,11 @@ jobs:
   # Runs at the end of the push chain (after generate-error-codes) so it never pushes
   # to main at the same time as the other jobs. Runs even if an upstream job failed,
   # as long as the workflow was not cancelled.
-  # Only runs when docs.json has "internal-meili-fetch-automation": true.
   update-changelog:
     name: Update changelog if new release exists
     runs-on: ubuntu-latest
-    needs: [check-automation-flag, generate-error-codes]
-    if: ${{ !cancelled() && needs.check-automation-flag.outputs.run_fetch_automation == 'true' }}
+    needs: [generate-error-codes]
+    if: ${{ !cancelled() }}
 
     steps:
       - name: Checkout repository
