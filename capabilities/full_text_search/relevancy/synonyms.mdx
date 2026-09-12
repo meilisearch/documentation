@@ -179,7 +179,7 @@ However, depending on the ranking rules, they might be considered less [relevant
 Meilisearch only fetches synonyms for search terms that are between 1 and 3 words. Terms with 4 or more words will not trigger synonym lookup.
 
 <Warning>
-This limitation applies to the **search term** (what the user types), not to the synonym value. A short search term can still resolve to a long synonym, but a long search term will never resolve to a short synonym — even if both directions are configured.
+This limitation applies to the **search term** (what the user types), not to the synonym value. A short search term can still resolve to a long synonym, but a long search term will never resolve to a short synonym, even if both directions are configured.
 </Warning>
 
 ### Example
@@ -199,12 +199,12 @@ Suppose you configure a mutual association between `"lotr"` and `"lord of the ri
 
 | Search query | Synonym lookup triggered? | Why |
 |---|---|---|
-| `lotr` | ✅ Yes | 1 word — within the 1–3 word limit |
-| `lord of the rings` | ❌ No | 4 words — exceeds the limit |
+| `lotr` | ✅ Yes | 1 word, within the 1–3 word limit |
+| `lord of the rings` | ❌ No | 4 words, exceeds the limit |
 
 Searching for `lotr` will return documents containing `"lord of the rings"`. However, searching for `"lord of the rings"` will **not** return documents containing `"lotr"`, because the 4-word search term is excluded from synonym lookup.
 
-To ensure synonym resolution works in both directions, configure the **shorter term as the search entry point**. In this case, users should search for `lotr` to benefit from the synonym, not the other way around.
+Synonym resolution works only from the search term, so configure the **shorter term as the search entry point**. In this case, users should search for `lotr` to benefit from the synonym, not for `lord of the rings`.
 
 ## Maximum number of synonyms per term
 
