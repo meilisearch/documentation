@@ -34,7 +34,7 @@ A multimodal embedder uses `indexingFragments` to describe what to embed from ea
 Three details are specific to TwelveLabs:
 
 - The API authenticates with an `x-api-key` header rather than a bearer token, so the key goes in `headers` instead of `apiKey`.
-- The `multi_input` input type accepts text, media, or both in the same request shape. This lets a single `request` template serve every fragment: Meilisearch injects the fragment into the `multi_input` field.
+- The `multi_input` input type accepts `input_text` alone, `media_sources` alone, or both in the same request shape. This lets a single `request` template serve every fragment: Meilisearch injects the fragment into the `multi_input` field.
 - The API returns one embedding per request, so the `request` and `response` templates do not use `"{{..}}"`. Meilisearch sends one request per fragment.
 
 ```json
@@ -294,6 +294,10 @@ Marengo embeds video into the same space as text and images, so a text query can
 ```
 
 Documents with a `video_url` field get a video embedding. Documents without it keep only their text and image embeddings. No change to `searchFragments` is needed: the same text, image, and composed queries now match video clips too.
+
+<Note>
+Video and audio sources in `multi_input` require `marengo3.5`. With `marengo3.0`, `media_sources` accepts images only.
+</Note>
 
 The synchronous Embed API accepts video and audio files of up to 30 seconds and 32 MB. It returns one embedding for the whole clip. For longer videos, generate embeddings with the [TwelveLabs asynchronous embedding tasks](https://docs.twelvelabs.io/docs/guides/create-embeddings/at-scale/video), one per segment, and send them to Meilisearch as [user-provided embeddings](/capabilities/hybrid_search/how_to/search_with_user_provided_embeddings).
 
