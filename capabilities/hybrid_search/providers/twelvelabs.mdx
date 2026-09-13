@@ -1,0 +1,312 @@
+---
+title: Multimodal search with TwelveLabs Marengo
+sidebarTitle: TwelveLabs
+description: Set up Meilisearch with TwelveLabs Marengo embeddings to search images and video clips using text, images, or both at once.
+---
+
+import CodeSamplesUpdateExperimentalFeaturesMultimodal1 from '/snippets/generated-code-samples/code_samples_update_experimental_features_multimodal_1.mdx';
+
+TwelveLabs' Marengo models embed text, images, video, and audio into a single vector space. With Marengo, users can search a collection of images or video clips using a text description, an example image, or a combination of the two. This guide shows you how to configure Meilisearch's REST embedder with the TwelveLabs Embed API.
+
+You need a Meilisearch project and a [TwelveLabs](https://www.twelvelabs.io/) account with an API key.
+
+## Available models
+
+| Model | Dimensions | Notes |
+|-------|-----------|-------|
+| `marengo3.5` | 512 | Recommended. Text, images, video, audio, and PDF pages. Supports queries that combine text with any media type |
+| `marengo3.0` | 512 | Previous generation. Text up to 500 tokens, combined queries limited to text and images |
+
+Both models return 512-dimensional embeddings. Marengo 3.5 embeddings are not compatible with Marengo 3.0 embeddings, so switching models later means re-embedding your whole index. See the [Marengo documentation](https://docs.twelvelabs.io/docs/concepts/models/marengo) for the full comparison.
+
+## Enable multimodal embeddings
+
+Multimodal embedders are an experimental feature. Enable it before configuring the embedder:
+
+<CodeSamplesUpdateExperimentalFeaturesMultimodal1 />
+
+You may also enable multimodal in your Meilisearch Cloud project's general settings, under "Experimental features".
+
+## Configure the embedder
+
+A multimodal embedder uses `indexingFragments` to describe what to embed from each document, and `searchFragments` to describe what to embed from each query. Meilisearch fills the fragment into the `request` template, sends it to TwelveLabs, and reads the vector from the `response` template.
+
+Three details are specific to TwelveLabs:
+
+- The API authenticates with an `x-api-key` header rather than a bearer token, so the key goes in `headers` instead of `apiKey`.
+- The `multi_input` input type accepts text, media, or both in the same request shape. This lets a single `request` template serve every fragment: Meilisearch injects the fragment into the `multi_input` field.
+- The API returns one embedding per request, so the `request` and `response` templates do not use `"{{..}}"`. Meilisearch sends one request per fragment.
+
+```json
+{
+  "marengo": {
+    "source": "rest",
+    "url": "https://api.twelvelabs.io/v1.3/embed-v2",
+    "headers": {
+      "x-api-key": "<TWELVELABS_API_KEY>"
+    },
+    "dimensions": 512,
+    "indexingFragments": {
+      "text": {
+        "value": {
+          "input_text": "A product named {{doc.name}}: {{doc.description}}"
+        }
+      },
+      "image": {
+        "value": {
+          "media_sources": [
+            { "media_type": "image", "url": "{{doc.image_url}}" }
+          ]
+        }
+      }
+    },
+    "searchFragments": {
+      "text": {
+        "value": {
+          "input_text": "{{q}}"
+        }
+      },
+      "image": {
+        "value": {
+          "media_sources": [
+            { "media_type": "image", "base64_string": "{{media.image.data}}" }
+          ]
+        }
+      },
+      "text_and_image": {
+        "value": {
+          "input_text": "{{media.composed.text}}",
+          "media_sources": [
+            { "media_type": "image", "base64_string": "{{media.composed.image}}" }
+          ]
+        }
+      }
+    },
+    "request": {
+      "input_type": "multi_input",
+      "model_name": "marengo3.5",
+      "multi_input": "{{fragment}}"
+    },
+    "response": {
+      "data": [
+        { "embedding": "{{embedding}}" }
+      ]
+    }
+  }
+}
+```
+
+Send this configuration to Meilisearch:
+
+```sh
+curl \
+  -X PATCH 'MEILISEARCH_URL/indexes/INDEX_NAME/settings' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  --data-binary '{
+    "embedders": {
+      "marengo": {
+        "source": "rest",
+        "url": "https://api.twelvelabs.io/v1.3/embed-v2",
+        "headers": {
+          "x-api-key": "<TWELVELABS_API_KEY>"
+        },
+        "dimensions": 512,
+        "indexingFragments": {
+          "text": {
+            "value": {
+              "input_text": "A product named {{doc.name}}: {{doc.description}}"
+            }
+          },
+          "image": {
+            "value": {
+              "media_sources": [
+                { "media_type": "image", "url": "{{doc.image_url}}" }
+              ]
+            }
+          }
+        },
+        "searchFragments": {
+          "text": {
+            "value": {
+              "input_text": "{{q}}"
+            }
+          },
+          "image": {
+            "value": {
+              "media_sources": [
+                { "media_type": "image", "base64_string": "{{media.image.data}}" }
+              ]
+            }
+          },
+          "text_and_image": {
+            "value": {
+              "input_text": "{{media.composed.text}}",
+              "media_sources": [
+                { "media_type": "image", "base64_string": "{{media.composed.image}}" }
+              ]
+            }
+          }
+        },
+        "request": {
+          "input_type": "multi_input",
+          "model_name": "marengo3.5",
+          "multi_input": "{{fragment}}"
+        },
+        "response": {
+          "data": [
+            { "embedding": "{{embedding}}" }
+          ]
+        }
+      }
+    }
+  }'
+```
+
+Replace `<TWELVELABS_API_KEY>` with your TwelveLabs API key. `dimensions` is mandatory when using fragments, since Meilisearch cannot infer it from a fragment-based request.
+
+### How the fragments work
+
+During indexing, Meilisearch generates two embeddings per document: one from the `text` fragment (built from `name` and `description`) and one from the `image` fragment (built from the image at `image_url`). If a document lacks one of the fields a fragment references, Meilisearch skips that fragment for that document.
+
+At search time, Meilisearch picks the search fragment whose variables are all present in the query:
+
+| Query contains | Matching fragment | What gets embedded |
+|----------------|-------------------|--------------------|
+| `q` | `text` | The query text |
+| `media.image.data` | `image` | A Base64-encoded image |
+| `media.composed.text` and `media.composed.image` | `text_and_image` | Text and image together, as one vector |
+
+<Warning>
+A query must match exactly one search fragment. Sending both `q` and `media.image.data` in the same query matches the `text` and `image` fragments at once, and Meilisearch returns an error. To combine text and an image, use the `media.composed` fields instead.
+</Warning>
+
+<Note>
+TwelveLabs expects `base64_string` to contain raw Base64 data, without the `data:image/jpeg;base64,` prefix used by some other providers. Strip the prefix on the client before sending the query to Meilisearch.
+</Note>
+
+## Add documents
+
+Add documents with a text description and a direct link to the image file:
+
+```json
+[
+  {
+    "id": 1,
+    "name": "Trail running shoes",
+    "description": "Lightweight shoes with a grippy sole for muddy paths",
+    "image_url": "https://cdn.example.com/products/trail-shoes.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Insulated water bottle",
+    "description": "Keeps drinks cold for 24 hours",
+    "image_url": "https://cdn.example.com/products/bottle.jpg"
+  }
+]
+```
+
+TwelveLabs fetches each image from its URL. The URL must point directly to the file. Links to hosting pages or cloud storage sharing links are not supported. Images must be JPEG or PNG, at least 128x128 pixels, and no larger than 32 MB.
+
+Monitor the [tasks queue](/reference/api/tasks/list-tasks) to track embedding progress.
+
+## Search
+
+### Text to image
+
+Describe what you are looking for. Meilisearch combines keyword matches on `name` and `description` with semantic matches against both the text and image embeddings:
+
+```json
+{
+  "q": "shoes for running in the mud",
+  "hybrid": {
+    "semanticRatio": 0.7,
+    "embedder": "marengo"
+  }
+}
+```
+
+### Image to image
+
+Send a Base64-encoded image to find visually similar documents. Omit `q` so that only the `image` fragment matches:
+
+```json
+{
+  "media": {
+    "image": {
+      "data": "<RAW_BASE64_IMAGE>"
+    }
+  },
+  "hybrid": {
+    "semanticRatio": 1.0,
+    "embedder": "marengo"
+  }
+}
+```
+
+Without `q`, Meilisearch runs a pure semantic search. See [Image search with multimodal embeddings](/capabilities/hybrid_search/how_to/image_search_with_multimodal#convert-images-to-base64-on-the-client) for client-side code that reads a file as Base64.
+
+### Text and image together
+
+Marengo can embed a text refinement and an image as a single vector. This is useful for queries such as "this jacket, but in blue":
+
+```json
+{
+  "media": {
+    "composed": {
+      "text": "the same jacket in blue",
+      "image": "<RAW_BASE64_IMAGE>"
+    }
+  },
+  "hybrid": {
+    "semanticRatio": 1.0,
+    "embedder": "marengo"
+  }
+}
+```
+
+## Index video clips
+
+Marengo embeds video into the same space as text and images, so a text query can return video clips alongside images. Add a third indexing fragment that points to a video file:
+
+```json
+"indexingFragments": {
+  "text": {
+    "value": {
+      "input_text": "A product named {{doc.name}}: {{doc.description}}"
+    }
+  },
+  "image": {
+    "value": {
+      "media_sources": [
+        { "media_type": "image", "url": "{{doc.image_url}}" }
+      ]
+    }
+  },
+  "video": {
+    "value": {
+      "media_sources": [
+        { "media_type": "video", "url": "{{doc.video_url}}" }
+      ]
+    }
+  }
+}
+```
+
+Documents with a `video_url` field get a video embedding. Documents without it keep only their text and image embeddings. No change to `searchFragments` is needed: the same text, image, and composed queries now match video clips too.
+
+The synchronous Embed API accepts video and audio files of up to 30 seconds and 32 MB. It returns one embedding for the whole clip. For longer videos, generate embeddings with the [TwelveLabs asynchronous embedding tasks](https://docs.twelvelabs.io/docs/guides/create-embeddings/at-scale/video), one per segment, and send them to Meilisearch as [user-provided embeddings](/capabilities/hybrid_search/how_to/search_with_user_provided_embeddings).
+
+## Limits to keep in mind
+
+- **Text length**: Marengo 3.0 accepts up to 500 tokens per text fragment. Marengo 3.5 accepts up to 2,000 tokens when you add `"auto_truncate": true` to the `request` template. Keep `documentTemplate`-style fragments short and focused.
+- **Media URLs**: direct links to raw files only.
+- **Base64 payloads**: raw Base64, no data URL prefix. Resize images before encoding to keep query payloads small.
+- **Rate limits**: Meilisearch sends one request per fragment. A collection of 10,000 documents with text and image fragments produces 20,000 requests during the initial indexing. Check your TwelveLabs plan limits before indexing large collections.
+
+## Next steps
+
+- [Image search with multimodal embeddings](/capabilities/hybrid_search/how_to/image_search_with_multimodal) for a provider-agnostic explanation of fragments
+- [Multiple embedders](/capabilities/hybrid_search/advanced/multiple_embedders) to combine Marengo with a text-only embedder
+- [Search with user-provided embeddings](/capabilities/hybrid_search/how_to/search_with_user_provided_embeddings) for long videos embedded outside Meilisearch
+- [TwelveLabs Embed API reference](https://docs.twelvelabs.io/api-reference/create-embeddings-v2/create-embeddings) for every request option

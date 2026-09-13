@@ -124,6 +124,10 @@ Your embedder should look similar to this example with all fragments and embeddi
 
 Since the `source` of this embedder is `rest`, you must also specify a `request` and a `response` fields. These respectively instruct Meilisearch on how to structure the request sent to the embeddings provider, and where to find the embeddings in the provider's response.
 
+<Tip>
+For a complete, provider-specific walkthrough that also covers video clips and combined text and image queries, see [Multimodal search with TwelveLabs Marengo](/capabilities/hybrid_search/providers/twelvelabs).
+</Tip>
+
 ## Add documents
 
 Once your embedder is configured, you can [add documents to your index](/getting_started/first_project) with the [`/documents` endpoint](/reference/api/documents/list-documents-with-get).
