@@ -176,6 +176,7 @@
                     "capabilities/hybrid_search/providers/voyage",
                     "capabilities/hybrid_search/providers/bedrock",
                     "capabilities/hybrid_search/providers/jina",
+                    "capabilities/hybrid_search/providers/twelvelabs",
                     "capabilities/hybrid_search/providers/huggingface"
                   ]
                 }
