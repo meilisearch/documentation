@@ -1,0 +1,187 @@
+---
+title: How to build retrieval for an AI agent
+description: Your agent calls a search function and gets back the same payload your search UI uses, blowing the context window and giving the model nothing it can cite.
+keywords: search tool for llm agent, function calling search backend, rag retrieval layer, how many results to give an llm, context window budget retrieval, stable chunk ids for citations, tool parameters for filters, agent knowledge base search, limit tokens in search response, attributesToRetrieve llm, retrieval tool schema, grounding an agent in your data
+boost: 2
+---
+
+An agent's search tool is not a search UI with a different caller. Four things change. Return a **stable id** on every hit so the agent can cite it and refetch it later. Return a **bounded payload**: set `attributesToRetrieve` to the two or three fields the model needs, crop long text with `attributesToCrop` and `cropLength`, and set `limit` to about 5 rather than the default of 20. Expose **filters as typed tool parameters** that your code translates into a filter expression, instead of hoping the model writes valid filter syntax. And return a **shaped object**, not the raw response, so the model never sees `_formatted`, `processingTimeMs`, or highlight markup it will copy into its answer.
+
+## What an agent needs that a human user does not
+
+A human scans twenty results in a second and ignores the nineteen that are wrong. A model reads all twenty, pays for all twenty, and is measurably more likely to answer from the wrong one. Precision matters more than recall at the tool boundary, and everything you return costs context that the agent could spend on reasoning.
+
+| Search UI | Agent tool |
+|---|---|
+| 20 results, paginated | About 5 results, no pagination |
+| Highlight tags for the eye | Plain text, no markup |
+| Result links the user clicks | Id and URL the model quotes |
+| Filters as clickable facets | Filters as tool parameters with enumerated values |
+| Full document fields for display | Only the fields that answer the question |
+
+The rest of this page covers each of those, then gives one complete tool implementation.
+
+## Give every chunk a stable, citable id
+
+If your agent cannot name what it retrieved, nothing downstream can verify it. Your primary key is that name, so it must survive reindexing.
+
+Meilisearch [primary key](/capabilities/indexing/how_to/design_primary_keys) values must be integers or strings, and strings may only contain alphanumeric characters, hyphens, and underscores. That rules out the id shape people reach for first: `docs/security#api-keys` is not a valid primary key because of the slash and the hash. Encode the same information as `docs_security__api-keys`, and keep the human-readable pieces in ordinary fields:
+
+```json
+{
+  "chunk_id": "docs_security__api-keys",
+  "source_url": "https://example.com/docs/security",
+  "anchor": "api-keys",
+  "title": "Managing API keys",
+  "text": "Every Meilisearch instance ships with ...",
+  "product_area": "security",
+  "version": "1.12",
+  "updated_at": 1757808000
+}
+```
+
+Two properties make this id useful. It is **deterministic**, derived from the source path and heading rather than from a counter, so rerunning your ingestion produces the same id and updates the chunk in place instead of duplicating it. And it is **resolvable**: given the id alone, your application can fetch the chunk again, render a link, or expand to the surrounding parent document. Also note the primary key cannot be changed later without deleting and recreating the index, so decide the shape before your first import.
+
+## Bound what the tool returns
+
+Three search parameters do almost all of the work.
+
+**`attributesToRetrieve`** lists the fields in each returned document. If it is not set, Meilisearch falls back to the index [displayed attributes](/capabilities/full_text_search/how_to/configure_displayed_attributes), which usually means the whole document, embedded vectors of metadata included. Name the fields explicitly.
+
+**`attributesToCrop` with `cropLength`** trims long text to the passage around the match. `cropLength` counts words and defaults to 10, which is far too short for a model to reason over, so raise it. You can also set it per attribute by appending `:length` to the name, for example `["text:80", "title:20"]`. Cropped values come back inside a `_formatted` object on each hit, so keep the cropped field in `attributesToRetrieve` and read `hit._formatted.text` rather than `hit.text` when you build the payload for the model. If you do not also pass `attributesToHighlight`, no `<em>` markup is added, which is what you want here. See [search with snippets](/capabilities/full_text_search/getting_started/search_with_snippets).
+
+**`limit`** defaults to 20. Start at 5 and measure. A rough budget: 5 hits at `cropLength: 80` is around 400 words of body text, plus titles and ids, so call it 600 to 700 tokens per tool call before the model writes anything. Multiply that by the number of tool calls a multi-step agent makes in one session and the reason to keep `limit` small becomes obvious.
+
+Add `showRankingScore: true` and a `rankingScoreThreshold` between 0.0 and 1.0 when you would rather the tool return nothing than return weak matches. Documents below the threshold are dropped, and they do not count toward `estimatedTotalHits`, `totalHits`, or the facet distribution. See [ranking score](/capabilities/full_text_search/relevancy/ranking_score).
+
+## Expose filters as parameters, not as prose
+
+Do not let the model write raw filter expressions. It will invent operators, quote strings wrongly, and occasionally filter on an attribute that is not filterable, and every one of those is a failed tool call the agent then retries. Instead, declare each filter as a typed parameter with an enumerated set of values in the tool schema, and build the [filter expression](/capabilities/filtering_sorting_faceting/advanced/filter_expression_syntax) in your own code.
+
+Every attribute you filter on must be listed in `filterableAttributes` first. Filtering is not something you can turn on at query time. See [filtering and faceting](/capabilities/filtering_sorting_faceting/getting_started).
+
+Two rules for the schema text itself, since the description strings are the only instructions the model gets: say when to use each parameter, not just what it holds, and describe the value space concretely ("one of: security, billing, indexing") so the model stops stuffing the constraint into the query string.
+
+## One complete tool
+
+This is the whole retrieval layer: index settings, the tool schema you hand to the model, and the handler that runs the search and shapes the result. It uses the JavaScript SDK and a provider-agnostic JSON Schema, which maps directly onto tool calling in the Anthropic and OpenAI APIs. {/* VERIFY: current tool-definition field names for each provider before copying the schema into their SDKs */}
+
+```javascript
+// npm install meilisearch
+import { Meilisearch } from 'meilisearch'
+
+const client = new Meilisearch({
+  host: process.env.MEILISEARCH_URL, // for example https://your-project.meilisearch.io
+  apiKey: process.env.MEILISEARCH_KEY,
+})
+
+const index = client.index('knowledge_base')
+
+// 1. One-time setup. Filters only work on attributes declared here.
+await client.waitForTask(
+  (await index.updateSettings({
+    searchableAttributes: ['title', 'text'],
+    filterableAttributes: ['product_area', 'version', 'updated_at'],
+    displayedAttributes: ['chunk_id', 'title', 'text', 'source_url', 'anchor'],
+  })).taskUid
+)
+
+// 2. The tool definition the model sees. The descriptions are the prompt.
+export const searchKnowledgeBaseTool = {
+  name: 'search_knowledge_base',
+  description:
+    'Search the product documentation for passages that answer a question. ' +
+    'Returns short excerpts with a chunk_id and a source_url for citation. ' +
+    'Call this before answering any question about product behavior.',
+  input_schema: {
+    type: 'object',
+    properties: {
+      query: {
+        type: 'string',
+        description:
+          'The information need, in natural language or keywords. ' +
+          'Do not put filters such as a version number in this string.',
+      },
+      product_area: {
+        type: 'string',
+        enum: ['security', 'billing', 'indexing', 'search'],
+        description: 'Restrict to one product area. Omit if the question spans areas.',
+      },
+      version: {
+        type: 'string',
+        description:
+          'Restrict to one release, for example "1.12". ' +
+          'Use only when the user names a version.',
+      },
+    },
+    required: ['query'],
+  },
+}
+
+// 3. The handler. Your code owns the filter string, the model never writes it.
+export async function searchKnowledgeBase({ query, product_area, version }) {
+  const clauses = []
+  if (product_area) clauses.push(`product_area = "${product_area}"`)
+  if (version) clauses.push(`version = "${version}"`)
+
+  const response = await index.search(query, {
+    limit: 5,
+    filter: clauses.length ? clauses.join(' AND ') : undefined,
+    // 'text' stays here so its cropped form is returned in _formatted.
+    attributesToRetrieve: ['chunk_id', 'title', 'text', 'source_url', 'anchor'],
+    attributesToCrop: ['text:80'],
+    showRankingScore: true,
+    rankingScoreThreshold: 0.4,
+  })
+
+  if (response.hits.length === 0) {
+    return {
+      results: [],
+      // Tell the model what to do next instead of leaving it to guess.
+      note: `No passages matched${
+        product_area ? ` in product area "${product_area}"` : ''
+      }. Retry once with a broader query and no filters, then say you do not know.`,
+    }
+  }
+
+  return {
+    results: response.hits.map((hit) => ({
+      id: hit.chunk_id,
+      title: hit.title,
+      excerpt: hit._formatted.text, // the cropped excerpt, not the full field
+      url: hit.anchor ? `${hit.source_url}#${hit.anchor}` : hit.source_url,
+      score: Number(hit._rankingScore.toFixed(3)),
+    })),
+    instruction: 'Cite each claim with the id of the passage it came from.',
+  }
+}
+```
+
+Values interpolated into a filter string come from an enumerated schema here. If a parameter is free text, validate it against a known list before it reaches the filter expression.
+
+## Limits and constraints
+
+- **`limit` defaults to 20**, and `limit` plus `offset` cannot exceed the index `maxTotalHits`, which defaults to 1000. Agent tools should never approach either. See [pagination](/capabilities/full_text_search/how_to/paginate_search_results).
+- **`cropLength` defaults to 10 words** and counts both query terms and stop words. Cropping applies only to attributes listed in `attributesToCrop`.
+- **Primary keys** must be integers, or strings of alphanumeric characters, hyphens, and underscores. No slashes, no hash symbols, no dots. The primary key cannot be changed after it is set without recreating the index.
+- **Filters require setup.** An attribute must be in `filterableAttributes` before you can filter on it, and `distinct` requires the attribute to be filterable too. See [distinct attribute](/capabilities/full_text_search/how_to/configure_distinct_attribute).
+- **`rankingScoreThreshold`** takes a value between 0.0 and 1.0. There is no universal correct value: it depends on your data and on whether you use keyword, semantic, or [hybrid search](/capabilities/hybrid_search/getting_started), so tune it against real queries rather than copying a number.
+- **Per-user scoping** is not a search parameter. If different users may see different documents, issue a [tenant token](/capabilities/security/how_to/generate_token_from_scratch) whose signed `filter` your agent cannot remove, and use a distinct token per user session.
+- Meilisearch imposes no token budget of its own. The context cost of a tool result is entirely a function of the parameters above.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Agentic search overview" href="/capabilities/agentic_search/overview">
+    How Meilisearch fits as the retrieval layer of an agent or RAG pipeline
+  </Card>
+  <Card title="Display source documents" href="/capabilities/agentic_search/how_to/display_source_documents">
+    Surfacing the passages behind an answer so a user can verify it
+  </Card>
+  <Card title="Design search tools for tool calling" href="/guides/search-tools-for-tool-calling">
+    Schema wording, zero-result responses, and avoiding pagination loops
+  </Card>
+  <Card title="Chunk documents for agent retrieval" href="/guides/chunk-for-agent-retrieval">
+    Sizing chunks so each one stands alone in a model's context
+  </Card>
+</CardGroup>

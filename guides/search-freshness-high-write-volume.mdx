@@ -1,0 +1,166 @@
+---
+title: How to keep search fresh with high write volume
+description: Your index falls behind a constant stream of updates, tasks pile up faster than they drain, and you need to decide between smaller batches, backpressure, or accepting a longer freshness window.
+keywords: search index falling behind writes, indexing lag under load, task queue backlog growing, no_space_left_on_device task queue, how long until a document is searchable, near real time search updates, backpressure for indexing pipeline, batch size for frequent updates, enqueued tasks piling up, streaming updates into a search index
+boost: 2
+---
+
+Meilisearch processes every write through a single task queue, one batch at a time, in the order tasks were enqueued. Freshness is therefore a rate problem, not a tuning problem: an index stays current only while your enqueue rate stays below the rate the queue drains. Four changes fix almost every case. Buffer writes at the producer and send few large payloads instead of many small ones. Keep the stream homogeneous so [auto-batching](/capabilities/indexing/tasks_and_batches/async_operations#how-auto-batching-works) can group consecutive tasks. Apply settings changes outside the write stream. Measure the depth of the enqueued queue and pause producers when it grows, rather than pushing harder into a queue that is already behind.
+
+## Why a write-per-event pipeline falls behind
+
+Every document addition, update, deletion, and settings change creates a [task](/capabilities/indexing/tasks_and_batches/async_operations). Tasks are queued and processed sequentially, so a thousand single-document writes per minute become a thousand queue entries competing for one worker.
+
+Meilisearch compensates by grouping consecutive compatible tasks into one batch, but grouping only happens when consecutive tasks target the **same index**, are the **same task type**, and use the **same content type**. Any task that breaks that run closes the current batch and opens a new one. A pipeline that interleaves additions, deletions, and an occasional settings update produces batches of one or two tasks each, which is the worst case: per-batch work is paid over and over for very few documents.
+
+Delete-by-filter is the sharpest edge. [Delete-by-filter tasks are never auto-batched with other tasks](/capabilities/indexing/how_to/delete_documents_at_scale) and each one is processed as its own batch, so sprinkling them through an addition stream fragments the whole run.
+
+Some per-batch work also does not shrink with batch size. The post-processing phases shown in a batch's `progressTrace`, such as `post processing words > word fst` and `post processing facets > facet search`, rebuild structures that reflect the state of the whole index rather than only the documents you just sent. Reading a real trace on [the batches route](/reference/api/async-task-management/list-batches) is the fastest way to see where your time actually goes, and [optimize indexing performance with batch statistics](/capabilities/indexing/tasks_and_batches/optimize_batch_performance) explains each phase and what reduces it.
+
+## What "real time" realistically means here
+
+A document is searchable when the task carrying it reaches `succeeded`, not when the HTTP request returns. The request returns a summarized task object with `status: "enqueued"` almost immediately, which is a receipt, not a guarantee.
+
+Visible freshness is therefore queue wait plus batch processing time. The `duration` field on a finished task measures only the processing part: [time spent waiting in the queue is not included](/capabilities/indexing/tasks_and_batches/monitor_tasks#interpreting-timestamps-and-duration). To measure the number your users feel, compare `enqueuedAt` with `finishedAt` instead of reading `duration`.
+
+The useful mental model is a freshness window of seconds that widens under load, not a refresh tick you can configure. Meilisearch has no refresh interval setting to shorten, unlike Elasticsearch, whose near-real-time behavior is governed by a per-index refresh interval that defaults to one second {/* VERIFY: Elasticsearch default index.refresh_interval value and that it is still per-index configurable */}. Searches keep running normally while indexing happens, so a growing backlog shows up as stale results rather than as downtime.
+
+## Batch without letting the buffer become the bottleneck
+
+Buffer on two conditions, size and age, and flush on whichever fires first. Size alone stalls a quiet stream forever, age alone produces tiny payloads during a burst.
+
+For steady streams, [50,000 to 100,000 documents per payload](/capabilities/indexing/how_to/import_large_datasets#choose-the-right-payload-size) is the documented range for large datasets, and smaller buffers are reasonable when you are trading throughput for a tighter freshness window. Send NDJSON rather than a JSON array so the payload streams, and compress it with `gzip`, `deflate`, or `br`.
+
+Two more habits keep batches intact. Use `PUT /indexes/{index_uid}/documents` for field-level changes, since it [merges top-level fields into the existing document](/capabilities/indexing/how_to/add_and_update_documents#add-or-update-documents) and lets you send the changed fields instead of the whole record. And drain deletions in their own scheduled pass rather than interleaving them with additions.
+
+The script below implements the buffer, the flush policy, and the backpressure loop described in the next section.
+
+```javascript
+import { Meilisearch } from 'meilisearch'
+
+// export MEILISEARCH_URL="https://your-project.meilisearch.io"
+// export MEILISEARCH_KEY="your_admin_api_key"
+const HOST = process.env.MEILISEARCH_URL
+const KEY = process.env.MEILISEARCH_KEY
+const INDEX = 'products'
+
+const MAX_BATCH = 50000   // documents per payload
+const MAX_WAIT_MS = 2000  // flush a partial batch after this long
+const PAUSE_AT = 20       // unfinished tasks that trigger backpressure
+const RESUME_AT = 5       // unfinished tasks at which producers resume
+
+const client = new Meilisearch({ host: HOST, apiKey: KEY })
+
+let buffer = []
+let timer = null
+
+// Queue depth: `total` counts every task matching the filter, not just the page.
+async function queueDepth() {
+  const url = `${HOST}/tasks?statuses=enqueued,processing&indexUids=${INDEX}&limit=1`
+  const res = await fetch(url, { headers: { Authorization: `Bearer ${KEY}` } })
+  if (!res.ok) throw new Error(`task query failed with status ${res.status}`)
+  return (await res.json()).total
+}
+
+async function waitForRoom() {
+  if ((await queueDepth()) < PAUSE_AT) return
+  console.warn('queue is behind, pausing producer')
+  while ((await queueDepth()) > RESUME_AT) {
+    await new Promise((resolve) => setTimeout(resolve, 1000))
+  }
+}
+
+async function flush() {
+  if (timer) { clearTimeout(timer); timer = null }
+  if (buffer.length === 0) return null
+  const payload = buffer
+  buffer = []
+  await waitForRoom()
+  // PUT semantics: only the fields you send are changed.
+  const task = await client.index(INDEX).updateDocuments(payload)
+  console.log(`enqueued task ${task.taskUid} carrying ${payload.length} documents`)
+  return task.taskUid
+}
+
+function write(doc) {
+  buffer.push(doc)
+  if (buffer.length >= MAX_BATCH) return flush()
+  if (!timer) timer = setTimeout(() => flush().catch(console.error), MAX_WAIT_MS)
+  return null
+}
+
+async function main() {
+  // Configure settings first: several settings trigger a full reindex.
+  const settings = await client.index(INDEX).updateSettings({
+    searchableAttributes: ['name', 'description'],
+    filterableAttributes: ['category', 'in_stock'],
+    sortableAttributes: ['updated_at']
+  })
+  await client.waitForTask(settings.taskUid)
+
+  for (let i = 0; i < 120000; i++) {
+    await write({ id: i, name: `Product ${i}`, in_stock: i % 2 === 0, updated_at: Date.now() })
+  }
+
+  const lastTask = await flush()
+  if (lastTask !== null) {
+    const done = await client.waitForTask(lastTask)
+    console.log(`finished with status ${done.status}`)
+  }
+}
+
+main().catch((error) => { console.error(error); process.exit(1) })
+```
+
+## Apply settings outside the write stream
+
+A settings update and a document addition are never placed in the same batch, so a settings change dropped into a live stream splits the run in two. Worse, updating [searchable, filterable, or sortable attributes, stop words, synonyms, typo tolerance, embedders, the dictionary, proximity precision, or separator tokens](/capabilities/indexing/advanced/indexing_best_practices#settings-that-trigger-a-full-reindex) reindexes every document in the index. Under sustained writes, that reindex runs while new tasks keep arriving, and the backlog grows for its entire duration.
+
+Configure settings before the first import on a new index. When settings must change on a live index, build a second index, configure it, import into it, and then [swap the two indexes](/reference/api/indexes/swap-indexes). The swap is atomic across all pairs in the request, and enqueued tasks are left unmodified, so plan where in-flight writes should land before you swap.
+
+Also watch what else shares the queue. `taskCancelation`, `upgradeDatabase`, `taskDeletion`, `indexCompaction`, `export`, `snapshotCreation`, and `dumpCreation` are [processed ahead of everything else](/capabilities/indexing/tasks_and_batches/async_operations#task-queue-priority). A nightly dump scheduled during your heaviest write window will hold document tasks behind it.
+
+## Backpressure, and what happens without it
+
+Without a limit, an overloaded pipeline does not degrade gracefully, it hits a wall. When the task queue reaches its limit of roughly 10 GiB, Meilisearch returns a `no_space_left_on_device` error and write operations stop until tasks are deleted. Recovering under load is far more expensive than slowing down early.
+
+Queue depth is the signal: query `GET /tasks?statuses=enqueued,processing&indexUids=products&limit=1` and read `total`, which counts every matching task rather than only the returned page. Set a high-water mark that pauses producers (or spills to a durable buffer such as your message broker) and a lower resume mark, as in the script above. Choose the marks by observation: watch depth during a normal peak, then set the pause mark above that and below the point where lag becomes user-visible.
+
+Three habits keep the queue healthy over time:
+
+- Delete finished tasks on a schedule with `DELETE /tasks` filtered by status and date. Only finished tasks can be deleted, and deletion is atomic.
+- Cancel superseded work with `POST /tasks/cancel`. Only `enqueued` and `processing` tasks can be canceled, and the request [requires at least one filter](/reference/api/async-task-management/cancel-tasks).
+- Tag writes with the `customMetadata` query parameter so a task in the backlog can be traced back to the producer that created it.
+
+For alerting rather than polling, [configure a webhook](/capabilities/platform/management/webhooks) and react to failed tasks as they finish instead of discovering them during the next sweep.
+
+## Limits and constraints
+
+| Limit | Value |
+| --- | --- |
+| Task queue size | About 10 GiB, then `no_space_left_on_device` on further writes |
+| Tasks stored | Up to 1M; enqueuing beyond that triggers automatic deletion of the oldest 100K finished tasks, and nothing is deleted if no task has finished |
+| HTTP payload | 100 MB by default, adjustable with `--http-payload-size-limit` when self-hosting |
+| Concurrency | Tasks are processed one batch at a time, in enqueue order, apart from the priority task types listed above |
+| Auto-batching | Only consecutive tasks sharing index, task type, and content type; delete-by-filter is never batched with other tasks |
+| Task list page size | 20 tasks by default; paginate with `limit`, `from`, and `next` |
+| Cancelation and deletion | Only `enqueued` and `processing` tasks can be canceled; only finished tasks can be deleted |
+
+Meilisearch does not publish a documents-per-second throughput figure, and it would not transfer between datasets anyway. Measure your own: compare `enqueuedAt` with `finishedAt` on real batches, then read `progressTrace` to see which phase dominates.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Tasks and asynchronous operations" href="/capabilities/indexing/tasks_and_batches/async_operations">
+    How the queue, batching, and task states work in detail.
+  </Card>
+  <Card title="Optimize indexing performance" href="/capabilities/indexing/tasks_and_batches/optimize_batch_performance">
+    Read `progressTrace` and find the phase that is costing you time.
+  </Card>
+  <Card title="Import large datasets" href="/capabilities/indexing/how_to/import_large_datasets">
+    Payload sizing, NDJSON streaming, and compression for bulk loads.
+  </Card>
+  <Card title="Indexing best practices" href="/capabilities/indexing/advanced/indexing_best_practices">
+    Trim attributes and documents so every batch does less work.
+  </Card>
+</CardGroup>

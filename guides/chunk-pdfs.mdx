@@ -1,0 +1,186 @@
+---
+title: How to chunk PDFs
+description: You extracted text from a PDF and the search results are garbage, because page breaks split sentences, two columns got interleaved, headers repeat in every chunk, and tables came out as unreadable runs of numbers.
+keywords: chunk pdf for search, pdf text extraction search index, split pdf into chunks, multi column pdf reading order, pymupdf extract text blocks, remove running headers footers pdf, pdf table extraction search, cite page number in search results, pdf rag chunking, index pdf in meilisearch, scanned pdf ocr search, pdf footnotes extraction
+boost: 2
+---
+
+Chunk a PDF on its **semantic** boundaries, not its page boundaries. A page break is a typesetting artifact: it lands wherever the layout engine ran out of room, frequently mid-sentence and often mid-table. Extract the page into positioned text blocks rather than a flat string, reorder those blocks into true reading order (critical for multi-column layouts), drop the running header and footer that repeat on every page, then group the remaining blocks into chunks that follow headings and paragraphs. Carry `page_start` and `page_end` on every chunk so a result can deep-link back to the exact page. Meilisearch indexes JSON documents, so all of this happens in your pipeline before [adding documents](/capabilities/indexing/how_to/add_and_update_documents).
+
+## Why page boundaries produce bad chunks
+
+One document per page is the default that everyone reaches for, and it fails in four specific ways.
+
+A paragraph that spans pages 11 and 12 becomes two chunks, neither of which contains the complete thought. Keyword search still finds one half. Semantic search embeds half an argument and retrieves poorly for it. Worse, a term defined at the bottom of page 11 and used at the top of page 12 now lives in two documents that never rank together.
+
+Second, every page carries the same running header ("Annual Report 2024") and footer ("Confidential, page 12 of 340"). Indexed as-is, that text appears in all 340 chunks. It inflates the index, it pollutes the embedding of short chunks, and a query for "annual report" matches the entire document uniformly instead of the section that actually discusses it.
+
+Third, a two-column page extracted naively interleaves the columns. Line one of the left column is followed by line one of the right column, producing text that is grammatically shredded. Sorting blocks top to bottom does not fix it; that is exactly what causes it.
+
+Fourth, tables lose the link between header and cell. `Revenue 412 388 401` is meaningless to a reader and to an embedding model alike.
+
+## How to fix reading order in a multi-column PDF
+
+A PDF stores glyphs with coordinates, not a reading order. Extract positioned blocks instead of a string, then assign each block to a column before sorting.
+
+The reliable heuristic: find the vertical gutter. Compute the horizontal midpoint of each text block on the page. If blocks cluster on both sides of the page center with very few blocks straddling it, the page has two columns. Assign each block a column index, then sort by `(column, top)`. On a single-column page every block lands in column 0 and the sort degrades gracefully to plain top-to-bottom order.
+
+This one heuristic covers the large majority of real reports and papers. Three-column layouts, sidebars, and rotated pages need per-template handling, and full layout-model detection is a heavier tool than most corpora justify.
+
+## How to strip repeated headers and footers
+
+Do not hardcode a crop margin. Detect boilerplate by repetition across the whole file:
+
+1. For every page, take the blocks whose bounding box sits in the top 8% or bottom 8% of the page height.
+2. Normalize each block's text by replacing every run of digits with a placeholder, so "page 12 of 340" and "page 13 of 340" collapse to the same string.
+3. Any normalized string appearing on at least half the pages is boilerplate. Drop it.
+
+The digit normalization step is what makes this work. Without it, page numbers never repeat identically and nothing is detected.
+
+## How to keep tables and footnotes meaningful
+
+For tables, extract them separately from the prose and serialize each row with its column headers attached, for example `Quarter: Q1; Revenue: 412; Margin: 18%`. The row then stands on its own as a retrievable unit. Store the table as its own chunk with a `kind` field set to `table` so you can filter it in or out at query time. Table extraction is a separate capability from text extraction in most libraries {/* VERIFY: PyMuPDF `page.find_tables()` availability and minimum version */}.
+
+Footnotes are set in a smaller type size than body text and sit at the bottom of the page, so they splice into the middle of a sentence when read in raw order. Measure the most common font size on the page, treat blocks that are meaningfully smaller as notes, and attach them to a separate `notes` field on the chunk rather than inline in `text`. The footnote stays searchable without corrupting the body.
+
+## A complete extraction and indexing script
+
+Save this as `chunk_pdf.py`. It handles column ordering, boilerplate removal, heading-aware chunking, footnote separation, and page provenance, then indexes the result.
+
+```python
+# pip install pymupdf meilisearch
+# export MEILISEARCH_URL="https://ms-xxxxxxxx.meilisearch.io"
+# export MEILISEARCH_KEY="your-admin-key"
+# python chunk_pdf.py report.pdf annual-report-2024
+
+import os, re, sys
+from collections import Counter
+import meilisearch
+
+try:
+    import pymupdf
+except ImportError:            # older releases expose the module as `fitz`
+    import fitz as pymupdf
+
+TARGET_WORDS, OVERLAP_WORDS, EDGE_BAND = 220, 40, 0.08
+path, doc_id = sys.argv[1], sys.argv[2]
+pdf = pymupdf.open(path)
+
+def blocks_of(page):
+    out = []
+    for b in page.get_text("dict")["blocks"]:
+        if b.get("type") != 0:                       # 0 = text, 1 = image
+            continue
+        spans = [s for line in b["lines"] for s in line["spans"]]
+        text = " ".join(s["text"] for s in spans).strip()
+        if text:
+            out.append({"bbox": b["bbox"], "text": re.sub(r"\s+", " ", text),
+                        "size": max(s["size"] for s in spans)})
+    return out
+
+pages = [blocks_of(p) for p in pdf]
+if not any(pages):
+    sys.exit("No text layer found. This PDF is scanned images; run OCR first.")
+
+# 1. Detect running headers and footers by repetition across pages.
+edge = Counter()
+for page, blocks in zip(pdf, pages):
+    top, bottom = page.rect.height * EDGE_BAND, page.rect.height * (1 - EDGE_BAND)
+    for b in blocks:
+        if b["bbox"][1] < top or b["bbox"][3] > bottom:
+            edge[re.sub(r"\d+", "#", b["text"])] += 1
+boilerplate = {t for t, n in edge.items() if n >= max(2, len(pdf) // 2)}
+
+# 2. Body font size, used to separate headings and footnotes from prose.
+sizes = Counter(round(b["size"]) for blocks in pages for b in blocks)
+body_size = sizes.most_common(1)[0][0]
+
+chunks, buf, notes, heading, start_page, n = [], [], [], "", 1, 0
+
+def flush(end_page):
+    global buf, notes, n
+    if not buf:
+        return
+    n += 1
+    chunks.append({
+        "chunk_id": f"{doc_id}_p{start_page}_c{n}",   # letters, digits, - and _ only
+        "doc_id": doc_id, "heading": heading, "kind": "prose",
+        "text": " ".join(buf), "notes": " ".join(notes),
+        "page_start": start_page, "page_end": end_page,
+        "url": f"/files/{doc_id}.pdf#page={start_page}",
+    })
+    buf, notes = buf[-OVERLAP_WORDS:], []
+
+for number, (page, blocks) in enumerate(zip(pdf, pages), start=1):
+    blocks = [b for b in blocks if re.sub(r"\d+", "#", b["text"]) not in boilerplate]
+    center = page.rect.width / 2
+    mids = [(b["bbox"][0] + b["bbox"][2]) / 2 for b in blocks]
+    two_col = (sum(m < center for m in mids) >= 2 and sum(m > center for m in mids) >= 2
+               and all(not (b["bbox"][0] < center < b["bbox"][2]) for b in blocks))
+    blocks.sort(key=lambda b: ((b["bbox"][0] + b["bbox"][2]) / 2 > center if two_col else 0,
+                               b["bbox"][1]))
+    for b in blocks:
+        words = b["text"].split()
+        if b["size"] < body_size * 0.9:                        # footnote or caption
+            notes.extend(words)
+        elif b["size"] > body_size * 1.15 and len(words) <= 12:  # heading
+            flush(number)
+            heading, start_page = b["text"], number
+        else:
+            if not buf:
+                start_page = number
+            buf.extend(words)
+            if len(buf) >= TARGET_WORDS:
+                flush(number)
+flush(len(pdf))
+
+client = meilisearch.Client(os.environ["MEILISEARCH_URL"], os.environ["MEILISEARCH_KEY"])
+index = client.index("pdf_chunks")
+index.update_settings({
+    "searchableAttributes": ["heading", "text", "notes"],
+    "filterableAttributes": ["doc_id", "kind", "page_start"],
+    "sortableAttributes": ["page_start"],
+})
+# Both chunk_id and doc_id end in "id", so the primary key must be explicit.
+task = index.add_documents(chunks, primary_key="chunk_id")
+client.wait_for_task(task.task_uid)
+print(f"indexed {len(chunks)} chunks from {len(pdf)} pages")
+```
+
+At query time, ask for a snippet around the match and filter by document when you need to:
+
+```python
+index.search("revenue guidance", {
+    "attributesToCrop": ["text"], "cropLength": 40,
+    "attributesToHighlight": ["text"], "filter": 'kind = "prose"',
+})
+```
+
+Add `"distinct": "doc_id"` to collapse many chunks of the same PDF into one hit per file. See [distinct attribute](/capabilities/full_text_search/how_to/configure_distinct_attribute) and [search snippets](/capabilities/full_text_search/getting_started/search_with_snippets).
+
+## Limits and constraints
+
+- **65,535 positions per attribute.** Meilisearch indexes at most 65,535 word positions in a single attribute, and words past that point are silently ignored. See [known limitations](/resources/help/known_limitations#maximum-number-of-words-per-attribute). A 300-page PDF pushed into one `text` field will lose most of its content with no error, which alone rules out one document per PDF.
+- **100 MB default payload.** The default maximum request payload is 100 MB, adjustable on self-hosted instances with `--http-payload-size-limit`. Batch large corpora at 50,000 to 100,000 chunks per request, per [import large datasets](/capabilities/indexing/how_to/import_large_datasets).
+- **Primary key charset.** Values must be integers, or strings containing only `a-z`, `A-Z`, `0-9`, `-`, and `_`. A chunk id built from a filename with spaces or slashes is rejected with `invalid_document_id`. See [design primary keys](/capabilities/indexing/how_to/design_primary_keys).
+- **Automatic primary key detection fails here.** Meilisearch auto-detects a field ending in `id`, and errors when several match. `chunk_id` plus `doc_id` is two, so pass the primary key explicitly.
+- **No PDF ingestion endpoint.** Meilisearch accepts JSON, NDJSON, and CSV documents. There is no route that takes a PDF, so extraction and chunking stay in your pipeline.
+- **No text layer means no text.** A scanned PDF holds page images. Extraction returns empty strings and no amount of chunking helps; OCR has to run first.
+- **Embedder templates truncate.** If you enable semantic search on these chunks, the rendered `documentTemplate` is capped by `documentTemplateMaxBytes`, so a 220-word chunk may be cut before it reaches the model. Write an explicit short template rather than relying on the default, which includes every searchable non-null field. See [document template best practices](/capabilities/hybrid_search/advanced/document_template_best_practices).
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="How to chunk documents for search" href="/guides/how-to-chunk-documents">
+    The general strategies, overlap, and how to evaluate a chunking change.
+  </Card>
+  <Card title="How to search PDFs" href="/guides/search-pdfs">
+    The end to end pipeline, including OCR and page-level deep links.
+  </Card>
+  <Card title="Choosing chunk size" href="/guides/choosing-chunk-size">
+    Picking a target word count instead of guessing at 220.
+  </Card>
+  <Card title="Configure searchable attributes" href="/capabilities/full_text_search/how_to/configure_searchable_attributes">
+    Control which chunk fields are searched, and in what order of importance.
+  </Card>
+</CardGroup>

@@ -79,6 +79,130 @@
           ]
         },
         {
+          "tab": "Guides",
+          "icon": "book-open",
+          "groups": [
+            {
+              "group": "Overview",
+              "pages": [
+                "guides/overview"
+              ]
+            },
+            {
+              "group": "Problem explainers",
+              "pages": [
+                "guides/reduce-elasticsearch-memory-usage",
+                "guides/elasticsearch-relevance-tuning",
+                "guides/elasticsearch-fuzzy-search-typos",
+                "guides/elasticsearch-cluster-operations",
+                "guides/elasticsearch-cost-control",
+                "guides/elasticsearch-autocomplete-latency",
+                "guides/elasticsearch-vs-opensearch-licensing",
+                "guides/algolia-cost-predictability",
+                "guides/algolia-record-size-limits",
+                "guides/self-hosting-vs-saas-search",
+                "guides/postgres-full-text-search-typos",
+                "guides/outgrow-postgres-full-text-search",
+                "guides/pgvector-limitations-search",
+                "guides/mongodb-atlas-search-relevance",
+                "guides/vector-database-keyword-search"
+              ]
+            },
+            {
+              "group": "Choosing an approach under constraints",
+              "pages": [
+                "guides/search-solution-10-million-documents",
+                "guides/sizing-search-deployment",
+                "guides/sub-50ms-search-latency",
+                "guides/search-on-a-budget",
+                "guides/keyword-semantic-or-hybrid",
+                "guides/do-you-need-a-vector-database",
+                "guides/self-hosted-or-cloud",
+                "guides/choosing-an-embedding-model",
+                "guides/embedding-model-multilingual",
+                "guides/when-to-use-binary-quantization",
+                "guides/when-to-use-reranking",
+                "guides/choosing-chunk-size"
+              ]
+            },
+            {
+              "group": "Getting real-world documents search-ready",
+              "pages": [
+                "guides/how-to-chunk-documents",
+                "guides/chunk-web-pages",
+                "guides/chunk-pdfs",
+                "guides/chunk-long-form-documents",
+                "guides/chunk-code-and-technical-content",
+                "guides/chunk-transcripts",
+                "guides/search-pdfs",
+                "guides/search-scanned-documents-ocr",
+                "guides/search-office-documents",
+                "guides/search-sharepoint",
+                "guides/search-confluence-and-notion",
+                "guides/search-google-drive",
+                "guides/search-website-crawling",
+                "guides/search-email-archives",
+                "guides/search-images-multimodal",
+                "guides/index-relational-database",
+                "guides/keep-index-in-sync",
+                "guides/handle-large-documents",
+                "guides/enrich-documents-before-indexing"
+              ]
+            },
+            {
+              "group": "Hard search problems done right",
+              "pages": [
+                "guides/multi-tenant-search-performance",
+                "guides/tenant-data-isolation",
+                "guides/multilingual-search",
+                "guides/search-non-latin-scripts",
+                "guides/personalize-search-results",
+                "guides/build-recommendations",
+                "guides/improve-typo-tolerance",
+                "guides/handle-synonyms-and-jargon",
+                "guides/make-search-faster",
+                "guides/faceted-navigation-at-scale",
+                "guides/autocomplete-and-instant-search",
+                "guides/search-freshness-high-write-volume",
+                "guides/handle-zero-result-searches",
+                "guides/merchandise-search-results"
+              ]
+            },
+            {
+              "group": "Diagnosing search quality and speed",
+              "pages": [
+                "guides/semantic-search-irrelevant-results",
+                "guides/semantic-search-slow",
+                "guides/search-is-slow",
+                "guides/document-not-in-results",
+                "guides/wrong-result-ranked-first",
+                "guides/typo-tolerance-not-matching",
+                "guides/facet-counts-wrong",
+                "guides/indexing-slow-or-stuck",
+                "guides/embeddings-failed-to-generate",
+                "guides/unexpected-search-costs",
+                "guides/measure-search-relevance",
+                "guides/debug-with-ranking-scores"
+              ]
+            },
+            {
+              "group": "Agentic and MCP retrieval",
+              "pages": [
+                "guides/knowledge-base-mcp-server",
+                "guides/retrieval-for-ai-agents",
+                "guides/search-tools-for-tool-calling",
+                "guides/rag-with-citations",
+                "guides/evaluate-rag-retrieval",
+                "guides/chunk-for-agent-retrieval",
+                "guides/agent-memory-with-search",
+                "guides/build-documentation-assistant",
+                "guides/keep-agent-knowledge-current",
+                "guides/multi-source-agent-search"
+              ]
+            }
+          ]
+        },
+        {
           "tab": "Capabilities",
           "groups": [
             {
@@ -1072,5 +1196,14 @@
         }
       ]
     }
-  ]
+  ],
+  "global": {
+    "anchors": [
+      {
+        "anchor": "Guides",
+        "icon": "book-open",
+        "href": "/guides/overview"
+      }
+    ]
+  }
 }

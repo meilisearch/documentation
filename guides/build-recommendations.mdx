@@ -1,0 +1,178 @@
+---
+title: How to build recommendations from search data
+description: You want "related items" and "customers also bought" on your product pages but do not have a recommendation pipeline, and the search index you already run holds most of the signal you need.
+keywords: more like this api, related products, item to item recommendations, you might also like, customers also bought, collaborative filtering alternative, content based recommendations, recommendation engine without training, similar documents endpoint, recommendation diversity, cold start recommendations, co-view co-purchase signals
+boost: 2
+---
+
+A search index that already holds embeddings is most of a recommendation engine. The [`/similar` endpoint](/reference/api/similar-documents/get-similar-documents-with-post) takes a document id and an embedder name and returns the documents nearest to it in vector space, which covers "related items" and "more like this" with no training data and no cold start. Behavioral signals (co-view, co-purchase, co-play) are stronger where you have them, but they only exist for items people have already interacted with, so the durable design is content similarity as the floor, behavioral edges layered on top where the data is dense enough, and a hard diversity constraint so the two do not collapse into the same three items on every page.
+
+## Start with embedding similarity, because it always works
+
+Configure an embedder on the index, then call `/similar` with the id of the item the user is currently looking at. The endpoint requires exactly two things, `id` and `embedder`, and accepts `filter`, `limit` (default 20), `offset`, `attributesToRetrieve`, `rankingScoreThreshold`, `showRankingScore`, and `retrieveVectors`.
+
+Two decisions determine whether the output is usable:
+
+- **The `documentTemplate` is your recommendation model.** Similarity is computed over whatever text you put in the template, so a template of `{{doc.title}}: {{doc.description}}` recommends items that read alike, while adding brand, category, and material recommends items that are alike in the ways a shopper cares about. Adding price to the template is almost always a mistake, since numbers make poor embedding text. Filter or sort on price instead. See [document template best practices](/capabilities/hybrid_search/advanced/document_template_best_practices).
+- **Business rules belong in `filter`, not in post-processing.** Out-of-stock items, region restrictions, and age ratings should be excluded by `filter` so the endpoint still returns a full slate. Filtering after the fact leaves you with four recommendations where you asked for twelve.
+
+Use `rankingScoreThreshold` when an empty slate is better than a bad one. Without it, `/similar` returns the 20 nearest documents whether or not they are actually related, which is how a page about a garden hose ends up recommending a garden gnome.
+
+## Where co-view and co-purchase signals fit
+
+Behavioral data is not something Meilisearch collects for you. You compute the pairs offline from your own event log, then store them where search can reach them. The shape that works is a second index of edges, one document per pair:
+
+```json
+{ "id": "sku-1041::sku-2277", "source": "sku-1041", "target": "sku-2277", "strength": 0.81, "kind": "co_purchase" }
+```
+
+Make `source` and `kind` filterable and `strength` sortable, and one query returns the ranked behavioral neighbors of any item. The reason to use a separate index rather than an array field on the product is that pair strength is a property of the pair, not of the product: stored as an array on the product document, you can filter by it but you cannot sort by it, because [sorting](/capabilities/filtering_sorting_faceting/how_to/sort_results) reads a single value per document.
+
+Blend the two lists by rank rather than by raw score. Embedding cosine scores and co-purchase counts are not on the same scale, and normalizing them against each other invents a precision you do not have. Interleaving (take the top behavioral item, then the top embedding item, and so on) is easier to reason about and easier to explain to a merchandiser. Once an item has enough events, weight the behavioral list more heavily; below a few dozen events per item the edges are noise and content similarity should win.
+
+## Mixing recommendations into search results
+
+For a "you might also like" row inside a result page, run both retrievals in one round trip with [multi-search](/reference/api/multi-search/perform-a-multi-search) and let `federation` merge them into a single ranked list. Each query takes a `federationOptions.weight`, a positive multiplier on that query's ranking score, defaulting to `1.0`, so a recommendation query at `0.6` surfaces in the list without displacing the results the user actually searched for. Set `federation.distinct` to deduplicate across the merged list, which matters here because the same item will often be returned by both queries.
+
+Recommendation queries inside a federated request are ordinary search queries, so they can be semantic: pass `semanticRatio: 1.0` with a query derived from the reference item. If you want exact vector similarity rather than a text proxy, read the reference document with `retrieveVectors` and pass the embedding to the `vector` search parameter, which overrides automatic query vector generation.
+
+## A working example
+
+This builds both indexes, configures an embedder, and runs content, behavioral, and blended retrieval. Set `MEILISEARCH_URL`, `MEILISEARCH_KEY`, and `OPENAI_API_KEY` before running.
+
+```javascript
+// npm install meilisearch
+import { Meilisearch } from 'meilisearch'
+
+const client = new Meilisearch({
+  host: process.env.MEILISEARCH_URL, // for example https://your-project.meilisearch.io
+  apiKey: process.env.MEILISEARCH_KEY,
+})
+
+const products = client.index('products')
+const edges = client.index('reco_edges')
+
+await client.waitForTask((await products.addDocuments([
+  { id: 'sku-1041', title: 'Trail running shoe', brand: 'Ridgeline', category: 'footwear',
+    family: 'trail-shoe', in_stock: true, description: 'Lugged outsole for wet rock and mud.' },
+  { id: 'sku-2277', title: 'Merino running sock', brand: 'Ridgeline', category: 'apparel',
+    family: 'sock', in_stock: true, description: 'Cushioned merino sock for long distances.' },
+  { id: 'sku-3310', title: 'Road running shoe', brand: 'Ridgeline', category: 'footwear',
+    family: 'road-shoe', in_stock: true, description: 'Light foam midsole for paved routes.' },
+])).taskUid)
+
+await client.waitForTask((await products.updateSettings({
+  searchableAttributes: ['title', 'brand', 'description'],
+  filterableAttributes: ['category', 'in_stock', 'family'],
+})).taskUid)
+
+await client.waitForTask((await products.updateEmbedders({
+  catalog: {
+    source: 'openAi',
+    model: 'text-embedding-3-small',
+    apiKey: process.env.OPENAI_API_KEY,
+    documentTemplate: '{{doc.title}} by {{doc.brand}} ({{doc.category}}): {{doc.description}}',
+  },
+})).taskUid)
+
+// Behavioral edges, computed offline from your own event log.
+await client.waitForTask((await edges.addDocuments([
+  { id: 'sku-1041::sku-2277', source: 'sku-1041', target: 'sku-2277', strength: 0.81, kind: 'co_purchase' },
+  { id: 'sku-1041::sku-3310', source: 'sku-1041', target: 'sku-3310', strength: 0.44, kind: 'co_view' },
+])).taskUid)
+
+await client.waitForTask((await edges.updateSettings({
+  filterableAttributes: ['source', 'kind'],
+  sortableAttributes: ['strength'],
+})).taskUid)
+
+const reference = 'sku-1041'
+
+// 1. Content similarity. Works for brand new items with no events at all.
+const contentReco = await products.searchSimilarDocuments({
+  id: reference,
+  embedder: 'catalog',
+  filter: 'in_stock = true',
+  limit: 12,
+  rankingScoreThreshold: 0.5,
+  showRankingScore: true,
+})
+
+// 2. Behavioral neighbors, strongest pair first.
+const behavioral = await edges.search('', {
+  filter: `source = "${reference}" AND kind IN [co_purchase, co_view]`,
+  sort: ['strength:desc'],
+  limit: 12,
+})
+
+// 3. Interleave, drop the reference item, cap one item per product family.
+const byFamily = new Map()
+const slate = []
+const behavioralIds = behavioral.hits.map((edge) => edge.target)
+const contentIds = contentReco.hits.map((hit) => hit.id)
+
+for (let i = 0; i < Math.max(behavioralIds.length, contentIds.length); i++) {
+  for (const id of [behavioralIds[i], contentIds[i]]) {
+    if (!id || id === reference || slate.includes(id)) continue
+    const family = contentReco.hits.find((h) => h.id === id)?.family ?? id
+    if ((byFamily.get(family) ?? 0) >= 2) continue
+    byFamily.set(family, (byFamily.get(family) ?? 0) + 1)
+    slate.push(id)
+  }
+}
+console.log(slate.slice(0, 8))
+
+// 4. Same signals folded into a search result page, one round trip.
+const blended = await client.multiSearch({
+  federation: { limit: 20, distinct: 'family' },
+  queries: [
+    { indexUid: 'products', q: 'running shoe', federationOptions: { weight: 1.0 } },
+    {
+      indexUid: 'products',
+      q: 'lugged trail outsole for wet rock',
+      hybrid: { semanticRatio: 1.0, embedder: 'catalog' },
+      federationOptions: { weight: 0.6 },
+    },
+  ],
+})
+console.log(blended.hits.map((hit) => [hit.id, hit._federation.queriesPosition]))
+```
+
+## Avoiding the filter bubble
+
+Nearest-neighbor retrieval is maximally redundant by construction: the closest item to a blue running shoe is usually the same shoe in another color. Three mechanisms fix this, and they are cheap.
+
+- **Deduplicate on a family field, not on the primary key.** Set `distinctAttribute` on the index or `distinct` per query so only one variant of a product group is returned. On a federated request, `federation.distinct` applies across the merged list and overrides the index-level setting, and the field must be settable as distinct in every participating index. See [configure distinct attribute](/capabilities/full_text_search/how_to/configure_distinct_attribute).
+- **Exclude what the user has already seen or bought.** Pass it as a `filter` such as `id NOT IN [sku-1041, sku-2277]` using the [filter expression syntax](/capabilities/filtering_sorting_faceting/advanced/filter_expression_syntax). This is the single highest-impact change on repeat-visit pages, and it requires the field to be in `filterableAttributes`.
+- **Reserve slots for a different bucket.** Request more than you display, then fill two of eight positions from a different `category` using a separate filtered query. Diversity that is enforced by slot allocation survives; diversity that depends on scores drifting apart does not.
+
+Behavioral edges decay. Co-purchase pairs computed once and never recomputed keep recommending last season's bundle forever, which reads to users as staleness rather than as a stale pipeline. Recompute on the same cadence your catalog turns over, and keep a `kind` field so you can drop one signal type without rebuilding the index.
+
+Dedicated recommendation services take the opposite approach: you send them events and they train a model, which produces better behavioral recommendations once enough events exist, at the cost of an event pipeline and a cold-start period during which new items get no recommendations at all. {/* VERIFY: current event-volume minimums and cold-start behavior for Algolia Recommend and comparable hosted recommendation services */}
+
+## Limits and constraints
+
+- `/similar` requires both `id` and `embedder`. It accepts `filter`, `limit` (default 20), `offset` (default 0), `attributesToRetrieve`, `retrieveVectors`, `showRankingScore`, `showRankingScoreDetails`, and `rankingScoreThreshold` (0.0 to 1.0). It does **not** accept `q`, `sort`, `distinct`, or `hybrid`, so ordering is pure vector proximity and deduplication has to come from `distinctAttribute` at the index level or from your application.
+- `/similar` is not a valid query type inside `/multi-search`. Federated requests take search queries, so blend recommendations in with a semantic query or an explicit `vector`, not with a similar-documents call.
+- `federationOptions.weight` must be positive and defaults to `1.0`. A weight of `0.0` effectively excludes that query from the merged list.
+- There is one `distinctAttribute` per index, and changing it reindexes every document.
+- Individual `filterableAttributes` values are capped at 468 bytes, and filter expressions have a maximum depth of 200. Primary key values are capped at 511 bytes, which matters if you build edge ids by concatenating two product ids. See [known limitations](/resources/help/known_limitations).
+- Searches return at most 1000 results by default, governed by the `maxTotalHits` pagination setting.
+- Changing an embedder's `source`, `model`, `documentTemplate`, or `dimensions` regenerates every embedding in the index, with the provider cost that implies. Plan template changes as batched work, not as live tuning.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Recommendations with similar documents" href="/capabilities/personalization/getting_started/recommendations">
+    The end-to-end setup for the /similar endpoint on a sample dataset
+  </Card>
+  <Card title="Federated search" href="/capabilities/multi_search/getting_started/federated_search">
+    Merging several queries into one ranked list with weights
+  </Card>
+  <Card title="Choose an embedder" href="/capabilities/hybrid_search/how_to/choose_an_embedder">
+    Picking the model that decides what "similar" means for your catalog
+  </Card>
+  <Card title="Personalize search results" href="/guides/personalize-search-results">
+    Per-user signals, reranking, and how to measure whether they helped
+  </Card>
+</CardGroup>

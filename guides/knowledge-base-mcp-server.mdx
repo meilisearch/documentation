@@ -1,0 +1,278 @@
+---
+title: How to connect your knowledge base to an MCP server
+description: Your handbook, support articles, and internal wiki pages live in several places and an AI assistant keeps answering from memory instead of from them, so you need a single MCP tool that searches the real content and returns citable passages.
+keywords: mcp server for company docs, expose search as an mcp tool, connect claude to internal wiki, model context protocol retrieval, knowledge base tool for llm, ingest notion confluence into search, per user permissions mcp, tenant token mcp server, stdio mcp search tool, scope agent access to documents, mcp tool schema for search, internal docs assistant without fine tuning
+boost: 2
+---
+
+An MCP knowledge base is five pieces: a loader that pulls each source into plain text, a chunker that splits it on headings and keeps a URL per chunk, a Meilisearch index configured with an embedder and the right filterable attributes, one MCP tool that wraps a search call, and a tenant token that limits what each user's client can retrieve. The whole thing is a single Node file. The parts that decide whether it works are not the protocol, they are the chunk boundaries, the filter attributes you expose as tool parameters, and the result count. Everything below builds one working example you can run today.
+
+## What the MCP server is responsible for
+
+MCP is a transport and a tool schema. It carries a call from a client (Claude Desktop, an IDE, or your own agent) to your process and carries a result back. It does no retrieval, no ranking, and no permission checking. All of that is yours.
+
+That means the quality of the assistant is decided almost entirely by two things you control: what a single search result contains, and whether the model can tell from the tool description when to call it. A tool that returns twenty 3,000 word pages will burn the context window before the model answers. A tool that returns five self-contained passages with a URL each will produce an answer the user can verify.
+
+Meilisearch already ships an [MCP server for managing a project](/getting_started/integrations/mcp) (creating indexes, adding documents, tuning settings). That one is for operating Meilisearch. The server below is different: it is a read-only retrieval tool over content you own.
+
+## Choose sources and decide what a chunk is
+
+Pull every source into the same shape before you think about indexing: an id, a title, a canonical URL, a visibility label, and the body as Markdown. Handbook pages, support articles, and exported wiki pages all normalize to that. Keeping the URL is not optional, because it is what turns a retrieved passage into a citation.
+
+Then split on headings rather than on a character count, and prefix each chunk with its document title so it reads on its own. A chunk saying "submit within 30 days" is useless to a model that cannot see it came from the expense policy. For source types that resist heading splitting, see [how to chunk documents](/guides/how-to-chunk-documents), [chunking web pages](/guides/chunk-web-pages), and [chunking PDFs](/guides/chunk-pdfs).
+
+Store on every chunk: a stable `id`, the parent `doc_id`, the `source`, a `visibility` label, the anchored `url`, the `title`, the `heading`, and the text. `doc_id` and `source` become filters. `visibility` becomes the permission boundary.
+
+## Index the chunks so the tool can filter them
+
+Three settings matter here.
+
+**`filterableAttributes`** must contain every field you want to filter on, and every field you want to deduplicate on. Without it, the tool parameter you expose silently fails. See [configure granular filters](/capabilities/filtering_sorting_faceting/how_to/configure_granular_filters).
+
+**An embedder** gives you [hybrid search](/capabilities/hybrid_search/overview), which matters more for agent queries than for human ones, because a model asks in full sentences that rarely share vocabulary with the source. The `documentTemplate` decides what text gets embedded, and `documentTemplateMaxBytes` truncates the rendered result, defaulting to **400 bytes**. Leave it at the default and a 600 word chunk is represented by its first two sentences. See [document template best practices](/capabilities/hybrid_search/advanced/document_template_best_practices).
+
+**`distinct`** collapses several chunks from the same page into the single best one, so five results cover five documents instead of five sections of the same document. The field must be filterable. See [configure distinct attribute](/capabilities/full_text_search/how_to/configure_distinct_attribute).
+
+## The complete example
+
+Save this as `kb-mcp.mjs`. Run it once with `--setup` to create and populate the index, then let your MCP client launch it with no arguments to serve over stdio.
+
+```javascript
+// npm install meilisearch @modelcontextprotocol/sdk zod
+//
+// One-time indexing:
+//   MEILISEARCH_URL="https://ms-xxxxxxxx.meilisearch.io" \
+//   MEILISEARCH_KEY="your-admin-key" OPENAI_KEY="sk-..." \
+//   node kb-mcp.mjs --setup
+import { Meilisearch } from 'meilisearch'
+import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
+import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js'
+import { z } from 'zod'
+
+const INDEX = 'knowledge_base'
+const client = new Meilisearch({
+  host: process.env.MEILISEARCH_URL,
+  apiKey: process.env.MEILISEARCH_KEY,
+})
+const index = client.index(INDEX)
+
+// 1. Sources, normalized. Replace this array with your own loader.
+const sources = [
+  {
+    doc_id: 'expense-policy',
+    source: 'handbook',
+    visibility: 'all',
+    title: 'Expense policy',
+    url: 'https://wiki.example.com/handbook/expenses',
+    markdown: `## Submitting an expense
+Attach the receipt and submit within 30 days of the purchase date.
+Anything older than 30 days needs written approval from your manager.
+## Travel booking
+Book flights at least 14 days ahead. Rail is preferred under 5 hours.`,
+  },
+  {
+    doc_id: 'sso-setup',
+    source: 'support',
+    visibility: 'engineering',
+    title: 'Configuring SSO',
+    url: 'https://support.example.com/articles/sso',
+    markdown: `## Supported providers
+Okta, Entra ID, and any SAML 2.0 provider.
+## Rotating the signing certificate
+Upload the new certificate before revoking the old one to avoid a lockout.`,
+  },
+]
+
+const slug = (text) =>
+  text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
+
+// 2. Split on H2, prefix the title so every chunk stands alone.
+const chunk = (doc) =>
+  doc.markdown
+    .split(/\n(?=##\s)/)
+    .map((section, order) => {
+      const heading = (/^##\s+(.*)$/m.exec(section) ?? [, doc.title])[1]
+      const body = section.replace(/^##\s+.*$/m, '').trim()
+      return {
+        id: `${doc.doc_id}--${slug(heading)}`,
+        doc_id: doc.doc_id,
+        source: doc.source,
+        visibility: doc.visibility,
+        title: doc.title,
+        heading,
+        order,
+        url: `${doc.url}#${slug(heading)}`,
+        content: `${doc.title} > ${heading}\n\n${body}`,
+      }
+    })
+    .filter((c) => c.content.length > 0)
+
+// 3. Create the index, configure filters and the embedder, then ingest.
+async function setup() {
+  await client.waitForTask(
+    (await client.createIndex(INDEX, { primaryKey: 'id' })).taskUid,
+  )
+  await client.waitForTask(
+    (await index.updateSettings({
+      searchableAttributes: ['title', 'heading', 'content'],
+      filterableAttributes: ['doc_id', 'source', 'visibility'],
+      displayedAttributes: [
+        'id', 'doc_id', 'source', 'title', 'heading', 'url', 'content',
+      ],
+    })).taskUid,
+  )
+  await client.waitForTask(
+    (await index.updateEmbedders({
+      kb: {
+        source: 'openAi',
+        model: 'text-embedding-3-small',
+        apiKey: process.env.OPENAI_KEY,
+        documentTemplate:
+          'Section "{{doc.heading}}" of "{{doc.title}}": {{doc.content}}',
+        documentTemplateMaxBytes: 1200,
+      },
+    })).taskUid,
+  )
+  await client.waitForTask(
+    (await index.addDocuments(sources.flatMap(chunk))).taskUid,
+  )
+}
+
+// 4. One tool. The description is what the model reads to decide to call it.
+const server = new McpServer({ name: 'knowledge-base', version: '1.0.0' })
+
+server.registerTool(
+  'search_knowledge_base',
+  {
+    title: 'Search the internal knowledge base',
+    description:
+      'Search the company handbook and support articles for a passage that ' +
+      'answers a question. Returns short passages, each with the URL it came ' +
+      'from. Always cite that URL. Call this before answering any question ' +
+      'about internal policy, tooling, or product configuration.',
+    inputSchema: {
+      query: z
+        .string()
+        .describe('The question in full, in the user\'s own words.'),
+      source: z
+        .enum(['handbook', 'support'])
+        .optional()
+        .describe(
+          'Restrict to one source. Omit it unless the user named a source; ' +
+          'omitting it searches everything.',
+        ),
+      limit: z
+        .number().int().min(1).max(10).default(5)
+        .describe('Passages to return. Use 3 for a narrow question.'),
+    },
+  },
+  async ({ query, source, limit }) => {
+    const { hits } = await index.search(query, {
+      limit,
+      filter: source ? `source = "${source}"` : undefined,
+      hybrid: { embedder: 'kb', semanticRatio: 0.6 },
+      distinct: 'doc_id',
+      rankingScoreThreshold: 0.4,
+      attributesToRetrieve: ['doc_id', 'source', 'title', 'heading', 'url', 'content'],
+    })
+
+    if (hits.length === 0) {
+      return {
+        content: [{
+          type: 'text',
+          text: `No passage matched "${query}". Try fewer or different words, ` +
+                'or drop the source filter. Do not answer from memory.',
+        }],
+      }
+    }
+
+    return {
+      content: hits.map((hit) => ({
+        type: 'text',
+        text: `${hit.title} > ${hit.heading}\n${hit.content}\nSource: ${hit.url}`,
+      })),
+    }
+  },
+)
+
+if (process.argv.includes('--setup')) {
+  await setup()
+  console.error(`Indexed ${sources.flatMap(chunk).length} chunks.`)
+} else {
+  await server.connect(new StdioServerTransport())
+}
+```
+
+Two details in there are load-bearing. `rankingScoreThreshold: 0.4` drops weak semantic matches, which otherwise arrive looking confident and get cited. And the zero-result branch tells the model what to do instead of returning an empty array, which is the difference between "I could not find that" and a fabricated policy.
+
+## Connect a client
+
+In Claude Desktop, open the Claude menu, go to Settings, then Developer, then Edit Config, and add the server to `claude_desktop_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "knowledge-base": {
+      "command": "node",
+      "args": ["/absolute/path/to/kb-mcp.mjs"],
+      "env": {
+        "MEILISEARCH_URL": "https://ms-xxxxxxxx.meilisearch.io",
+        "MEILISEARCH_KEY": "your-search-key-or-tenant-token"
+      }
+    }
+  }
+}
+```
+
+Restart the client. To test the server without a client at all, run `npx @modelcontextprotocol/inspector node kb-mcp.mjs`, which lists the tool and lets you call it with arguments. On macOS, client-side errors land in `~/Library/Logs/Claude/mcp*.log`, and on Windows in `%APPDATA%\Claude\logs\mcp*.log`.
+
+## Scope access per user
+
+Never put an admin key in a client config. The key in that file can read everything the key is allowed to read, and MCP clients run on user machines.
+
+Use a [tenant token](/capabilities/security/getting_started) instead. It is a JWT signed with one of your search keys that carries a filter Meilisearch enforces on every query made with it, so the scoping happens in the engine rather than in your tool code:
+
+```javascript
+import { generateTenantToken } from 'meilisearch/token'
+
+// user.teams, for example, is ['engineering']
+const token = await generateTenantToken({
+  apiKey: process.env.MEILISEARCH_SEARCH_KEY,
+  apiKeyUid: process.env.MEILISEARCH_SEARCH_KEY_UID,
+  searchRules: {
+    knowledge_base: {
+      filter: `visibility IN ["all", ${user.teams.map((t) => `"${t}"`).join(', ')}]`,
+    },
+  },
+  expiresAt: new Date(Date.now() + 60 * 60 * 1000),
+})
+```
+
+Get the `apiKeyUid` from the [get one API key endpoint](/reference/api/keys/get-api-key); it is the `uid` field, not the key itself. For a stdio server, mint the token when you provision the user's machine and write it into the client config. For a remote MCP server over HTTP, mint one per request from the authenticated identity and build a per-request client with it, so a compromised token expires in an hour and never covers more than one person.
+
+## Limits and constraints
+
+- **Tenant tokens are search-only.** A token has access to exactly the indexes and routes of its parent key, its expiry cannot exceed that key's expiry, and deleting or expiring the parent key invalidates every token made from it. The only way to revoke a token with no expiry is to delete the parent key.
+- **`documentTemplateMaxBytes` defaults to 400 bytes.** Longer renders are truncated silently. Raising it regenerates embeddings for affected documents, and lowering it does not.
+- **Search returns at most 1,000 documents per query by default**, adjustable with `maxTotalHits` in the [pagination settings](/reference/api/settings/update-pagination). The per-query default `limit` is 20, which is far too many for a tool result.
+- **Each `filterableAttributes` value is capped at 468 bytes**, and primary key values at 511 bytes. Build chunk ids from slugs, not from full headings of arbitrary length.
+- **Meilisearch handles 1,000 concurrent search requests**, returning a 503 `too_many_search_requests` beyond that. See [known limitations](/resources/help/known_limitations) for the full list.
+- **MCP does not cap tool result size.** The practical ceiling is the client's context window, so the result count and chunk length you choose are the only real budget. {/* VERIFY: whether any MCP client enforces its own tool-result size cap */}
+- **`distinct` allows one attribute per query.** Deduplicating by `doc_id` means you cannot simultaneously deduplicate by `source`.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Chunk documents for agent retrieval" href="/guides/chunk-for-agent-retrieval">
+    Token budgets and chunks that stand alone without surrounding context.
+  </Card>
+  <Card title="Design search tools for LLM tool calling" href="/guides/search-tools-for-tool-calling">
+    Tool schemas that make a model use filters instead of stuffing the query.
+  </Card>
+  <Card title="Multitenancy and tenant tokens" href="/capabilities/security/getting_started">
+    Generate scoped tokens with an official SDK.
+  </Card>
+  <Card title="AI-powered search" href="/capabilities/hybrid_search/getting_started">
+    Configure an embedder and tune the keyword and semantic balance.
+  </Card>
+</CardGroup>

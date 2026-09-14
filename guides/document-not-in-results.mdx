@@ -1,0 +1,138 @@
+---
+title: Why a document does not appear in results
+description: A document you know is in your index never shows up when you search for it, and you need to work out which step between indexing and ranking is dropping it.
+keywords: meilisearch document missing from search results, why is my document not showing up in search, document indexed but not searchable, search returns 0 hits for an existing document, record not found in search index, document disappeared after reindex, my product is not findable, search skips a document, hit missing from results, document overwritten by duplicate id
+boost: 2
+---
+
+A document you can fetch by its primary key but cannot find by searching is being dropped at exactly one of seven points: it was never indexed, another document overwrote it, the matching field is not in `searchableAttributes`, a filter is removing it, the query terms never match its text, it ranks below your `limit`, or `distinct` collapsed it into a sibling. Work through them in that order, cheapest first. The very first check costs one request: fetch the document by its ID. If that returns nothing, this is an indexing problem and the last five causes are eliminated straight away.
+
+## Run the full diagnostic first
+
+This script answers "indexing or search" and then narrows the search half to a single cause. It needs an admin key, because settings and tasks are not readable with a search key.
+
+```javascript
+import { MeiliSearch } from 'meilisearch'
+
+const client = new MeiliSearch({
+  host: process.env.MEILISEARCH_URL,
+  apiKey: process.env.MEILISEARCH_API_KEY,
+})
+
+const INDEX_UID = 'products'
+const DOCUMENT_ID = '42'
+const QUERY = 'waterproof hiking jacket'
+
+const index = client.index(INDEX_UID)
+
+// 1. Is the document in the index at all?
+try {
+  const stored = await index.getDocument(DOCUMENT_ID, { fields: ['*'] })
+  console.log('stored document:', stored)
+} catch (error) {
+  console.log('not retrievable by primary key:', error.message)
+}
+
+// 2. Did an indexing task fail without anyone noticing?
+const failed = await client.tasks.getTasks({
+  statuses: ['failed'],
+  indexUids: [INDEX_UID],
+  limit: 5,
+})
+console.log('failed tasks:', failed.results.map((t) => [t.uid, t.type, t.error?.message]))
+
+// 3. Which settings are able to exclude a document?
+const settings = await index.getSettings()
+console.log({
+  searchableAttributes: settings.searchableAttributes,
+  filterableAttributes: settings.filterableAttributes,
+  distinctAttribute: settings.distinctAttribute,
+  displayedAttributes: settings.displayedAttributes,
+  typoTolerance: settings.typoTolerance,
+  prefixSearch: settings.prefixSearch,
+  stopWords: settings.stopWords,
+  pagination: settings.pagination,
+})
+
+// 4. Does it come back when nothing optional constrains the request?
+const wideOpen = await index.search(QUERY, { limit: 1000, showRankingScore: true })
+const position = wideOpen.hits.findIndex((h) => String(h.id) === DOCUMENT_ID)
+console.log('position with no filter and a wide limit:', position)
+
+// 5. If it is in there, find out which rule pushed it down.
+if (position > -1) {
+  const detailed = await index.search(QUERY, { limit: 1000, showRankingScoreDetails: true })
+  console.log('score breakdown:', detailed.hits[position]._rankingScoreDetails)
+}
+```
+
+Read step 4 first. A `position` of `-1` means the document is genuinely not in the result set, so go to causes 1 through 5. Any other number means the document does match and your production request is discarding it, so go to causes 6 and 7.
+
+## Cause 1: it was never indexed, or the task failed
+
+Writes in Meilisearch are asynchronous. The `202` response to an add-documents request means the task was accepted, not that the document is searchable. Until the task reaches `succeeded`, the document does not exist as far as search is concerned, and a task that ends in `failed` carries the reason in its `error` field and is otherwise silent.
+
+Step 2 of the script lists recent failures. A `failed` task for a bulk import usually means the whole payload was rejected, not a single row. See [monitoring tasks](/capabilities/indexing/tasks_and_batches/monitor_tasks) and [filtering tasks](/capabilities/indexing/tasks_and_batches/filter_tasks) for the full status model, which is `enqueued`, `processing`, and then `succeeded` or `failed`.
+
+## Cause 2: another document overwrote it
+
+If two documents in the same import share a primary key value, the second one replaces the first. This is deliberate, because it is what makes updates work, but it also means a duplicate key silently deletes data and the missing document is simply gone.
+
+The symptom is distinctive: the document count is lower than the number of rows you sent. Check it against the row count of your source, and read [designing primary keys](/capabilities/indexing/how_to/design_primary_keys) for the selection rules. Meilisearch auto-detects a primary key by looking for exactly one attribute ending in `id`, case-insensitively, so a dataset carrying both `id` and `product_id` returns an error rather than guessing.
+
+## Cause 3: the matching field is not searchable
+
+By default `searchableAttributes` is `["*"]` and every field is searched. The moment you set it explicitly, everything you left out stops being matchable, and no error is raised. A product findable by `title` but not by its `sku` almost always means `sku` was never added to the list.
+
+Two related traps follow from the same setting:
+
+- **New fields are not added automatically.** After a manual update to `searchableAttributes`, attributes that appear in documents indexed later are not appended to the list. You add them yourself or [reset the setting](/capabilities/full_text_search/how_to/configure_searchable_attributes).
+- **`attributesToSearchOn` narrows further, per request.** It restricts a single query to the fields you name, and a document whose only match is in an excluded field is dropped with no warning. It also only accepts attributes already present in `searchableAttributes`.
+
+## Cause 4: a filter is removing it
+
+A filter is applied before relevance is considered, so a filtered-out document cannot be ranked back in. Re-run the query with the `filter` parameter deleted entirely, as the diagnostic script does. If the document reappears, the filter is the cause.
+
+Missing and empty values are where this usually goes wrong. Meilisearch distinguishes three cases, documented in the [filter expression syntax](/capabilities/filtering_sorting_faceting/advanced/filter_expression_syntax) reference: `EXISTS` tests whether a field is present, and fields holding empty or `null` values still count as existing; `IS EMPTY` matches present-but-empty values; `IS NULL` matches `null` specifically. To confirm a document is being excluded because it lacks the field, query `attribute NOT EXISTS` and see whether it turns up.
+
+There is one filter you will not find in your own request. A [tenant token](/capabilities/security/advanced/tenant_token_payload) carries `searchRules`, and Meilisearch applies that rule's `filter` to every search made with the token. A token also reaches only the indexes named in its `searchRules`. If the document appears with an admin key but not in your application, compare the token payload against the document before touching index settings.
+
+## Cause 5: the query never matched the text
+
+Assuming the field is searchable and no filter applies, the terms themselves may not match:
+
+- **Typo tolerance has a length floor.** Meilisearch accepts one typo on query terms of five or more characters, and up to two typos on terms of at least nine. A three-letter term with a typo in it matches nothing. See [typo tolerance settings](/capabilities/full_text_search/relevancy/typo_tolerance_settings).
+- **Prefix matching applies to the last word only.** `adv jack` matches "jacket" on the trailing word, but the earlier `adv` is treated as a complete word. If `prefixSearch` has been set to `disabled`, prefix matching is off entirely and users must type whole words.
+- **`matchingStrategy: "all"` requires every term.** The default is `last`, which drops terms from the end of the query until it finds results. Switching to `all` means one unmatched word removes the document. Compare the two, and read [use matching strategy](/capabilities/full_text_search/how_to/use_matching_strategy).
+- **A stop word carries no weight.** Terms in `stopWords` are ignored during indexing and search, so a query made only of stop words matches on nothing.
+
+## Cause 6: it matches but ranks below your limit
+
+`limit` defaults to `20`. A document at rank 34 is in the result set and invisible. Widen the limit before concluding anything, then use `showRankingScoreDetails` to see which rule is responsible: the response contains one nested object per active ranking rule, with that rule's own inputs. The [ranking score page](/capabilities/full_text_search/relevancy/ranking_score) explains how to read it, and [ranking rules](/capabilities/full_text_search/relevancy/ranking_rules) explains the order they run in.
+
+Two request parameters can also cut the document out on purpose. `rankingScoreThreshold` drops any hit scoring below the value you set, and excluded hits stop counting toward `estimatedTotalHits` and the facet distribution as well. Deep pagination hits `maxTotalHits`, which caps how many results any query can reach.
+
+## Cause 7: `distinct` collapsed it into a sibling
+
+If `distinctAttribute` is set, or the per-request `distinct` parameter is used, Meilisearch returns only one document per unique value of that field, keeping the highest-ranked one and resolving ties by internal ID. A blue variant of a jacket that shares a `product_id` with the black variant will never appear while the black one outranks it. There can be only one `distinctAttribute` per index. See [configure distinct attribute](/capabilities/full_text_search/how_to/configure_distinct_attribute).
+
+A last possibility worth ruling out: the document is in the response and you cannot see its identifying field, because `displayedAttributes` or `attributesToRetrieve` excluded it. Those settings change what is returned, never what matches.
+
+## Limits and constraints
+
+- **`limit`** defaults to `20` and **`offset`** to `0` on the search routes.
+- **`maxTotalHits`** defaults to `1000`. Raising it degrades search performance, and values above `20000` may push queries into whole seconds.
+- **Typo tolerance** allows one typo at five characters and two at nine. The setting is bounded by `0 ≤ oneTypo ≤ twoTypos ≤ 255`, with `2` to `8` and `4` to `14` recommended.
+- **`searchCutoffMs`** defaults to `null`, in which case Meilisearch interrupts a search after **1500 ms** and returns the best results found so far. A partial result set from a firing cutoff can look exactly like a missing document.
+- **Primary key values** must be integers, or strings containing only `a-z`, `A-Z`, `0-9`, hyphens, and underscores. The primary key cannot be changed after it is set without deleting and recreating the index.
+- **One `distinctAttribute` per index.** Setting more than one returns an error.
+- **`attributesToSearchOn`** only accepts attributes already listed in `searchableAttributes`.
+- **`prefixSearch`** defaults to `indexingTime`, and prefix matching covers the last word of the query.
+- Changing `searchableAttributes`, `distinctAttribute`, `stopWords`, or `prefixSearch` re-indexes every document in the index, which is asynchronous. The document stays findable under the old settings until that task succeeds.
+
+## Next steps
+
+- [Handle zero-result searches](/guides/handle-zero-result-searches) covers the case where nothing at all comes back, not just one document.
+- [Why your search ranks the wrong result first](/guides/wrong-result-ranked-first) takes over once the document is in the results but in the wrong place.
+- [Ranking rules](/capabilities/full_text_search/relevancy/ranking_rules) documents the default rule order that decides which matching document wins.
+- [Monitor tasks](/capabilities/indexing/tasks_and_batches/monitor_tasks) shows how to confirm an indexing write actually landed.

@@ -1,0 +1,159 @@
+---
+title: How to make search faster
+description: Your search already works but each query takes longer than you want, and you need an ordered list of changes that actually reduce query time instead of guessing at settings one at a time.
+keywords: speed up search queries, reduce search latency, search optimization checklist, search performance tuning settings, faster search api response, maxTotalHits tuning, lower query time search engine, reduce search response payload, search speed best practices, make autocomplete faster, high impact search settings, search latency reduction steps
+boost: 2
+---
+
+If search works but feels slow, work through these changes in order, because they are ranked by how much latency they remove per hour of effort. Lower `maxTotalHits` to 100 or 200. Set `proximityPrecision` to `byAttribute`. Restrict `searchableAttributes` to the fields people actually search. Make `filterableAttributes` granular so unused filter features stop costing you. Return fewer fields with `attributesToRetrieve`. Prefer `offset` and `limit` pagination over `page` and `hitsPerPage`. Keep query-time embedding inference off the hot path. Put the instance near your users. The first four are one-time index settings that apply to every query forever.
+
+This page is about applying fixes. If you do not yet know which stage is slow, start with [why your search is slow](/guides/search-is-slow) and come back with a `performanceDetails` breakdown.
+
+## The checklist, ordered by payoff per hour
+
+| Change | Where it applies | Effort | Typical payoff |
+| --- | --- | --- | --- |
+| `maxTotalHits` down to 100 to 200 | Index setting | Minutes | Very high on large indexes |
+| `proximityPrecision` to `byAttribute` | Index setting | Minutes, plus a reindex | Very high |
+| Prune `searchableAttributes` | Index setting | An hour of thinking | High |
+| Granular `filterableAttributes` | Index setting | An hour | High when you have many filters |
+| `maxValuesPerFacet` down to what the UI shows | Index setting | Minutes | High on faceted UIs |
+| `attributesToRetrieve` on every query | Search parameter | An afternoon in app code | Medium to high on wide documents |
+| Pagination strategy | Search parameter | An afternoon | Medium |
+| `searchCutoffMs` | Index setting | Minutes | Bounds the worst case, does not move the median |
+| Move embedding inference off the query path | Architecture | Days | Very high, but only for semantic and hybrid search |
+| Region placement | Project creation | Days, and it means reindexing | Very high, and irreversible in place |
+
+## Cut the work the engine does before it ranks
+
+Two settings dominate everything else, and both are index-wide, so you pay for them once.
+
+`maxTotalHits` controls how deep Meilisearch ranks results through the [bucket sort pipeline](/capabilities/full_text_search/advanced/ranking_pipeline). The default is 1,000 documents ranked per query. Values like 100,000 force the full ranking pipeline over a huge candidate set on every single query, for pages no user will ever open. Set it to the realistic maximum somebody would paginate to. A value of 200 covers ten pages of twenty results.
+
+`proximityPrecision` decides how the `proximity` ranking rule measures the distance between matched terms. The default, `byWord`, tracks the exact position of every word in every document, which is one of the most expensive operations in the pipeline at both index time and search time. `byAttribute` only checks whether terms landed in the same attribute. For catalogs, ecommerce, and documentation, the relevance difference is usually negligible. For long-form prose where adjacency is a real signal, test before committing. See [performance tuning](/capabilities/full_text_search/advanced/performance_tuning) for the full ordering.
+
+## Search fewer fields, and filter on fewer features
+
+By default Meilisearch searches every field in every document. Setting [`searchableAttributes`](/capabilities/full_text_search/how_to/configure_searchable_attributes) explicitly removes identifiers, URLs, timestamps, raw HTML, and internal metadata from the term-matching work. It also changes relevance, because attribute order becomes the priority order, so treat this as a relevance decision that happens to be fast.
+
+Filters are the other big lever, and it works in two directions. Filters that eliminate most of the index before ranking make queries faster, so a selective `filter` on a search request is an optimization, not a cost. What is a cost is enabling filter features you never use. Every attribute in `filterableAttributes` builds structures that are evaluated at search time, so declare per attribute exactly which operations you need with [granular filterable attributes](/capabilities/filtering_sorting_faceting/how_to/configure_granular_filters):
+
+```json
+{
+  "filterableAttributes": [
+    {
+      "attributePatterns": ["category", "brand"],
+      "features": { "facetSearch": true, "filter": { "equality": true, "comparison": false } }
+    },
+    {
+      "attributePatterns": ["price", "created_at"],
+      "features": { "facetSearch": false, "filter": { "equality": false, "comparison": true } }
+    }
+  ]
+}
+```
+
+`facetSearch` is the expensive one. Turn it off for any attribute where users will never type inside the facet list.
+
+## Send back less than you compute
+
+Two of the cheapest wins live in the response, not the index.
+
+`attributesToRetrieve` limits which fields come back for a given query. A result card that renders a title, a price, and an image does not need the full description, the specification table, or the vector. Cutting the payload cuts serialization time on the server and parse time in the browser. The related index setting, [`displayedAttributes`](/capabilities/full_text_search/how_to/configure_displayed_attributes), sets the default for every query, while `attributesToRetrieve` narrows it further per request. Fields stay stored either way, so nothing is lost.
+
+`attributesToHighlight` and `attributesToCrop` are the same story. Highlighting a long body field for twenty hits is real work repeated per result. Highlight the title and a cropped excerpt, not everything.
+
+Facets deserve the same discipline. `maxValuesPerFacet` defaults to 100, so Meilisearch counts up to a hundred values per faceted attribute even when the sidebar shows ten.
+
+## Pick the cheaper pagination
+
+Meilisearch supports two [pagination styles](/capabilities/full_text_search/how_to/paginate_search_results), and they do not cost the same. `offset` and `limit` return `estimatedTotalHits`, a partial count, and this is the recommended pattern for previous and next buttons or infinite scroll. `page` and `hitsPerPage` return an exhaustive `totalHits`, which is what numbered page selectors need, and computing that exact count is resource-intensive.
+
+If your design does not require a "page 7 of 42" control, use `offset` and `limit`. Deep offsets also cost more than shallow ones, because ranking has to reach that depth, which is another reason to keep `maxTotalHits` small.
+
+## Apply it all in one pass
+
+This script applies the index-level settings, waits for each task, then runs a tuned query and prints where the time went.
+
+```javascript
+// npm install meilisearch
+import { Meilisearch } from 'meilisearch'
+
+const client = new Meilisearch({
+  host: process.env.MEILISEARCH_URL, // for example https://ms-xxxx.nyc.meilisearch.io
+  apiKey: process.env.MEILISEARCH_KEY, // an admin key, not a search key
+})
+
+const index = client.index('products')
+
+// 1. Index settings, highest payoff first. One task, applied once.
+const task = await index.updateSettings({
+  pagination: { maxTotalHits: 200 },
+  proximityPrecision: 'byAttribute',
+  searchableAttributes: ['name', 'brand', 'category', 'description'],
+  filterableAttributes: [
+    {
+      attributePatterns: ['category', 'brand'],
+      features: { facetSearch: true, filter: { equality: true, comparison: false } },
+    },
+    {
+      attributePatterns: ['price'],
+      features: { facetSearch: false, filter: { equality: false, comparison: true } },
+    },
+  ],
+  faceting: { maxValuesPerFacet: 20 },
+  typoTolerance: { disableOnNumbers: true, disableOnAttributes: ['sku'] },
+  searchCutoffMs: 500,
+})
+await client.waitForTask(task.taskUid)
+
+// 2. Search parameters, applied on every query from your application.
+const results = await index.search('wireless headphone', {
+  limit: 20,
+  offset: 0,
+  filter: 'in_stock = true AND price < 300',
+  attributesToRetrieve: ['id', 'name', 'brand', 'price', 'image'],
+  attributesToHighlight: ['name'],
+  facets: ['brand'],
+  showPerformanceDetails: true, // profiling only, remove in production
+})
+
+console.log('server processing:', results.processingTimeMs, 'ms')
+console.table(results.performanceDetails)
+```
+
+Run it before and after each change and compare `performanceDetails`. The stage names map directly onto the fixes above: `keyword ranking` responds to `maxTotalHits` and `searchableAttributes`, `evaluate filter` to granular filters, `facet distribution` to `maxValuesPerFacet`, `format` to `attributesToRetrieve` and highlighting, and `embed query` to your embedder. See [debug search performance](/capabilities/full_text_search/advanced/debug_search_performance) for the full stage list.
+
+## The two changes that are not settings
+
+**Query-time embedding inference.** For semantic or hybrid search, every query is embedded before anything is searched, and with a hosted provider that call routinely dwarfs the search itself. Cloud monitoring documents a real trace where the semantic step accounted for 430 ms out of 440 ms total. Run the search embedder locally, or use [composite embedders](/capabilities/hybrid_search/advanced/composite_embedders) (experimental) to keep a cloud model for indexing and a local model for search. On latency-critical surfaces such as autocomplete, set `semanticRatio` to `0` and keep hybrid search for the results page.
+
+**Region placement.** Network round-trip time is usually the largest share of perceived search speed, and no setting changes physics. Meilisearch Cloud offers nine [regions](/capabilities/platform/infrastructure/regions). A region cannot be changed after a project is created, so moving means creating a new project and reindexing. Do this before spending a week on settings if the instance is on the wrong continent.
+
+## Limits and constraints
+
+- **`maxTotalHits`** defaults to `1000`. Values above `20000` may result in queries taking seconds to complete.
+- **`maxValuesPerFacet`** defaults to `100`.
+- **`searchCutoffMs`** defaults to `null`, in which case Meilisearch interrupts a search after **1500 ms**. Do not set it below **500 ms**: it is a safety net against pathological queries, not a latency knob, and low values return incomplete result sets. It also bounds the round trip to a remote embedder, so a 150 ms cutoff will usually not survive a call to a hosted embedding API, and a pure semantic search that exceeds it can fail with HTTP 500.
+- **Typo tolerance** allows one typo on words of 5 or more characters and two typos on words of 9 or more. Raising `minWordSizeForTypos` shrinks the fuzzy search space.
+- **`showPerformanceDetails`** works on `POST` and `GET` search, `POST /multi-search`, and the similar-documents routes. It adds a small overhead per request, so keep it out of production traffic.
+- **Regions are immutable** after project creation.
+- **Changing `proximityPrecision`, `searchableAttributes`, or `filterableAttributes`** triggers reindexing work, so apply them during a quiet period and wait for the task to finish before measuring.
+- **There is no documented minimum latency guarantee.** Cloud monitoring describes a healthy p99 as typically under 100 ms for most workloads. Track p99, not the average, because the average hides the queries users complain about.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Performance tuning" href="/capabilities/full_text_search/advanced/performance_tuning">
+    Every index setting ranked by impact, with the exact requests
+  </Card>
+  <Card title="Debug search performance" href="/capabilities/full_text_search/advanced/debug_search_performance">
+    Read per-stage timings and map them to a fix
+  </Card>
+  <Card title="Configure search cutoff" href="/capabilities/full_text_search/how_to/configure_search_cutoff">
+    Bound worst-case query time without breaking results
+  </Card>
+  <Card title="Granular filterable attributes" href="/capabilities/filtering_sorting_faceting/how_to/configure_granular_filters">
+    Enable only the filter operations each attribute needs
+  </Card>
+</CardGroup>

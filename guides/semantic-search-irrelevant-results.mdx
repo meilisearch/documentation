@@ -1,0 +1,207 @@
+---
+title: Why your semantic search returns irrelevant results
+description: Your semantic or hybrid search keeps returning documents that have nothing to do with the query, and you need to work out which part of the pipeline is at fault before changing settings at random.
+keywords: semantic search returns bad results, vector search returning random documents, hybrid search not relevant, embeddings matching the wrong documents, why does vector search always return something, semanticRatio too high, rankingScoreThreshold for vector search, documentTemplate truncated 400 bytes, nearest neighbor returns everything, ai search results make no sense, fix irrelevant embedding matches
+boost: 2
+---
+
+Semantic search never returns nothing. A vector query is a nearest-neighbor lookup, so the closest documents come back whether or not any of them is relevant. "Irrelevant results" therefore nearly always means one of two things: the text that was embedded is not the text you think it is, or nothing in the request set a floor on how weak a match may be. Work through the causes below in order, cheapest first. The most common one in Meilisearch is a [`documentTemplate`](/capabilities/hybrid_search/advanced/document_template_best_practices) whose rendered output is silently truncated at 400 bytes, so start there.
+
+## First, confirm the semantic half is actually at fault
+
+Before changing any setting, run the same query at three ratios and compare.
+
+```javascript
+for (const semanticRatio of [0.0, 0.5, 1.0]) {
+  const r = await index.search('waterproof jacket for hiking', {
+    hybrid: { semanticRatio, embedder: 'products' },
+    showRankingScore: true,
+    limit: 5,
+  })
+  console.log(semanticRatio, r.hits.map((h) => [h.name, h._rankingScore]))
+}
+```
+
+Read the result like this:
+
+- Bad at `0.0` too: not a semantic problem. Look at `searchableAttributes`, typo tolerance, or the matching strategy.
+- Fine at `0.0`, bad at `1.0`: the semantic half is broken. Continue down this page.
+- Fine at both ends, bad at `0.5`: both halves work, but blending them pushes the right answer down. Go to cause 3.
+
+Keep the `_rankingScore` values. You will use them to check whether a fix actually helped.
+
+## Cause 1: the document template is truncating your documents
+
+Meilisearch does not embed your document. It embeds the string produced by rendering that document through the embedder's `documentTemplate`, capped by `documentTemplateMaxBytes`, which **defaults to 400 bytes**. Anything past that is cut off with no error and no warning.
+
+Two failure modes follow:
+
+- **You never set a template.** Meilisearch then falls back to a default including all searchable, non-null fields. On a document with an ID, a URL, a price, a slug, and a description, the 400-byte budget goes to fields with no semantic value, and the description users search for never reaches the model.
+- **Your template is good but too long.** A 4,000-word article is represented by roughly its first paragraph, so every long article embeds to "an article about our product" and they all look equally relevant to every query.
+
+**Check it.** The `POST /render-template` route returns exactly what Meilisearch sends to the embedder for a real document. It is gated behind the `renderRoute` [experimental feature](/resources/help/experimental_features_overview), enabled per instance.
+
+```json
+{
+  "template": { "kind": "documentTemplate", "indexUid": "products", "embedder": "products" },
+  "input": { "kind": "indexDocument", "indexUid": "products", "id": "42" }
+}
+```
+
+If the `rendered` string ends mid-sentence, you found the problem.
+
+**Fix it.** Write a short template naming only the fields that carry meaning, and truncate long ones explicitly with Liquid rather than letting the byte cap do it. Raising `documentTemplateMaxBytes` also works, but increasing it regenerates embeddings for every document whose rendered text changes.
+
+## Cause 2: nothing sets a floor on weak matches
+
+This one is missed because it does not look like a misconfiguration. Vector search returns the *k* nearest documents unconditionally. Ask a movie index about "quantum computing" and it hands back five movies, because five movies are nearer to that query than the rest.
+
+**Fix it** with two parameters already on the search request:
+
+- [`rankingScoreThreshold`](/capabilities/full_text_search/relevancy/ranking_score) (`0.0` to `1.0`) drops any hit scoring below it. Excluded hits stop counting toward `estimatedTotalHits`, `totalHits`, and the facet distribution, so an empty result set becomes an honest empty result set.
+- `filter` removes categorically wrong documents before relevance is considered. A vector is a poor way to express "in stock" or "published after 2023". Declare those fields in `filterableAttributes` and [filter on them](/capabilities/filtering_sorting_faceting/how_to/search_and_filter_together) instead of hoping the embedding encoded them.
+
+Pick the threshold from the `_rankingScore` values you collected above. Start near `0.5`, raise it until the junk disappears, and lower it if good results start vanishing.
+
+## Cause 3: semanticRatio is too high for this query
+
+[`semanticRatio`](/capabilities/hybrid_search/advanced/custom_hybrid_ranking) defaults to `0.5`. At `1.0` Meilisearch ranks purely by vector similarity and throws away exact matching you already have for free. That is right only when there is no text to match, for example an image-only catalog.
+
+The symptom is specific: a query containing an identifier (a SKU, a part number, an error code, a surname) returns *similar* products instead of *that* product. Embedding models preserve topic and drop rare tokens, and a model number is the rarest token in the document. Drop the ratio to `0.2` or `0.3` for identifier-shaped queries and leave it high for descriptive ones. Because `semanticRatio` is per request, you can route by query shape instead of committing the whole index to one value. The [semantic versus hybrid page](/capabilities/hybrid_search/advanced/semantic_vs_hybrid) lists starting ratios per use case.
+
+## Cause 4: your documents are too large to be one vector
+
+Unlike cause 1, this survives raising the byte cap. One embedding per document means one point in vector space per document, so a 30-page manual covering installation, wiring, and warranty collapses into one averaged position representing none of the three. The symptom reads as "vaguely on topic, never the right section".
+
+The fix is structural: split long documents into passages, index one document per passage, and carry a shared parent identifier so you can group or deduplicate at display time. See [how to chunk documents](/guides/how-to-chunk-documents) and [choosing a chunk size](/guides/choosing-chunk-size).
+
+## Cause 5: the model is wrong for your domain or language
+
+Check this after the cheaper causes, because swapping models re-embeds your entire index and, with a paid provider, bills you for it.
+
+- **Language.** A monolingual English model given French or Japanese content produces vectors that cluster by language artifacts rather than meaning. Use a model with explicit multilingual support, and see [multilingual search](/guides/multilingual-search).
+- **Domain.** General-purpose models flatten distinctions that matter in legal, medical, financial, or code corpora, where two passages differing by one crucial term look identical.
+- **Size.** Bigger is not automatically better. In a hybrid setup the keyword side already handles precision, so a small, fast model is usually enough. [Choosing an embedder](/capabilities/hybrid_search/how_to/choose_an_embedder) covers the trade-offs.
+
+A standalone vector database makes this harder to diagnose, because you tune against a raw distance value with no keyword baseline to compare against. {/* VERIFY: whether the major managed vector stores expose only raw distance rather than a normalized relevance score */}
+
+## Cause 6: binary quantization on a low-dimension model
+
+[Binary quantization](/capabilities/hybrid_search/advanced/binary_quantization) stores each dimension as a single bit instead of a 32-bit float. On models of 1500 dimensions and above the quality loss is minimal. Under 512 dimensions it is noticeable, and quantization is not recommended.
+
+If `binaryQuantized` is `true` on a small model such as a 384-dimension BGE variant, that is a plausible source of fuzzy results. One constraint before experimenting: **enabling binary quantization is irreversible**. Meilisearch discards the full-precision originals, and recovering them means a new embedder without quantization plus a full re-index.
+
+## Cause 7: every score looks the same
+
+Some models rate nearly everything as "somewhat relevant", so `_rankingScore` values cluster around one number and no threshold separates good from bad. The [`distribution`](/capabilities/hybrid_search/advanced/tune_distribution) embedder setting applies an affine correction (`mean` and `sigma`) that spreads the scale back out, pushing strong matches toward `1` and weak ones toward `0`. It is the one embedder setting worth iterating on freely, because changing it does not trigger a reindex.
+
+## A complete diagnostic script
+
+This script builds an index from scratch, renders the template to prove what is being embedded, then runs queries across ratios and thresholds so you can see each cause in isolation.
+
+```javascript
+// npm install meilisearch
+import { Meilisearch } from 'meilisearch'
+
+const client = new Meilisearch({
+  host: process.env.MEILISEARCH_URL, // for example https://your-project.meilisearch.io
+  apiKey: process.env.MEILISEARCH_KEY,
+})
+const index = client.index('products')
+
+// 1. Documents with one high-value prose field and several low-value ones.
+await client.waitForTask((await index.addDocuments([
+  { id: 1, sku: 'ARC-900', name: 'Storm shell', category: 'outerwear', inStock: true,
+    description: 'Fully taped waterproof hardshell for mountain hiking in sustained rain.' },
+  { id: 2, sku: 'ARC-410', name: 'Trail fleece', category: 'midlayer', inStock: true,
+    description: 'Breathable grid fleece for cold, dry days on the trail.' },
+  { id: 3, sku: 'ARC-115', name: 'Desk lamp', category: 'home', inStock: false,
+    description: 'Adjustable LED lamp with three brightness levels for a home office.' },
+])).taskUid)
+
+await client.waitForTask((await index.updateSettings({
+  searchableAttributes: ['name', 'sku', 'description'],
+  filterableAttributes: ['category', 'inStock'],
+})).taskUid)
+
+// 2. A short, explicit template. Never rely on the default.
+await client.waitForTask((await index.updateEmbedders({
+  products: {
+    source: 'openAi',
+    model: 'text-embedding-3-small',
+    apiKey: process.env.OPENAI_API_KEY,
+    documentTemplate: '{{doc.name}}: {{doc.description | truncatewords: 30}}',
+    documentTemplateMaxBytes: 600,
+  },
+})).taskUid)
+
+// 3. Prove what is actually embedded. Requires the `renderRoute` experimental feature.
+try {
+  const res = await fetch(`${process.env.MEILISEARCH_URL}/render-template`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${process.env.MEILISEARCH_KEY}`,
+    },
+    body: JSON.stringify({
+      template: { kind: 'documentTemplate', indexUid: 'products', embedder: 'products' },
+      input: { kind: 'indexDocument', indexUid: 'products', id: '1' },
+    }),
+  })
+  console.log('rendered:', (await res.json()).rendered)
+} catch {
+  console.log('render-template unavailable; enable the renderRoute experimental feature')
+}
+
+// 4. Isolate the failing half.
+const query = 'something to wear in heavy rain'
+for (const semanticRatio of [0.0, 0.5, 1.0]) {
+  const r = await index.search(query, {
+    hybrid: { semanticRatio, embedder: 'products' },
+    showRankingScore: true,
+    limit: 5,
+  })
+  console.log(semanticRatio, r.hits.map((h) => `${h.name} ${h._rankingScore}`))
+}
+
+// 5. Add a floor and a filter. Irrelevant nearest neighbors now disappear entirely.
+const clean = await index.search('quantum computing textbook', {
+  hybrid: { semanticRatio: 0.8, embedder: 'products' },
+  filter: 'inStock = true',
+  rankingScoreThreshold: 0.5,
+  showRankingScore: true,
+})
+console.log('off-topic query returns', clean.hits.length, 'hits')
+```
+
+## Limits and constraints
+
+- `documentTemplateMaxBytes` defaults to **400 bytes**. Longer rendered output is truncated silently. Raising it regenerates embeddings for affected documents; lowering it never regenerates anything.
+- `semanticRatio` accepts `0.0` to `1.0` and defaults to `0.5`. At `0.0` no embedder is queried.
+- `rankingScoreThreshold` accepts `0.0` to `1.0`. Combined with `page` and `hitsPerPage` it can reduce performance, because Meilisearch must score every matching document.
+- Changing `model`, `source`, `documentTemplate`, `dimensions`, or `pooling` re-embeds the whole index. `distribution` is the documented exception.
+- Enabling `binaryQuantized` is irreversible. The full-precision vectors are discarded.
+- `POST /render-template` requires the `renderRoute` [experimental feature](/resources/help/experimental_features_overview), toggled at runtime through the `/experimental-features` route with no restart.
+- `retrieveVectors: true` returns each hit's `_vectors` only if `_vectors` is in `displayedAttributes`.
+- Documents with no embedding never appear in semantic or hybrid results. If one specific document is missing rather than the whole set being poor, check indexing errors before tuning relevance.
+
+## How to confirm the fix worked
+
+Impressions of relevance drift, so measure instead. Freeze 20 to 50 real queries from your logs, including the ones that prompted this investigation, and record the document you expect first for each. After every change, re-run the set and count two numbers: how often the expected document is first, and how often a hit above your threshold is obviously wrong. A fix that improves the first while worsening the second has moved the problem, not solved it. Change one cause at a time, in this page's order, and re-run the set in between.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Document template best practices" href="/capabilities/hybrid_search/advanced/document_template_best_practices">
+    Embed only the fields worth embedding.
+  </Card>
+  <Card title="Custom hybrid ranking" href="/capabilities/hybrid_search/advanced/custom_hybrid_ranking">
+    Tune `semanticRatio` against your own queries.
+  </Card>
+  <Card title="Tune the distribution of semantic scores" href="/capabilities/hybrid_search/advanced/tune_distribution">
+    Spread packed scores so a threshold works.
+  </Card>
+  <Card title="Why your semantic search is slow" href="/guides/semantic-search-slow">
+    The other half, once relevance is fixed.
+  </Card>
+</CardGroup>

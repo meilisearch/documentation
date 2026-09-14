@@ -1,0 +1,152 @@
+---
+title: How to merchandise and control result order
+description: You need a specific product or article to appear at a specific position for a specific query, without hand-editing relevance and without the promotion quietly outliving the campaign that justified it.
+keywords: pin product to top of search, promoted search results, query rules search engine, merchandising rules ecommerce search, boost specific document, featured product search position, campaign promotion search results, curated search results, promote landing page for keyword, editorial control search ranking
+boost: 2
+---
+
+Merchandising in Meilisearch splits into three different mechanisms, and picking the wrong one is the usual source of pain. To force a known document into a known slot for a known query, use [search rules](/capabilities/search_rules/overview), which pin documents at fixed positions through the `/dynamic-search-rules` routes. To express a standing business preference such as "in-stock items rank above out-of-stock ones", use a [custom ranking rule](/capabilities/full_text_search/relevancy/custom_ranking_rules), which applies to every query. To let the shopper reorder the page themselves, use the [`sort` search parameter](/capabilities/filtering_sorting_faceting/how_to/sort_results). Pinning is the sharpest tool and the one that ages worst, so it needs a rule budget, an owner, and an expiry date.
+
+## Pin, boost, or sort: which lever to pull
+
+| Goal | Mechanism | Scope | Who owns it |
+|---|---|---|---|
+| "This exact document, first, for this query" | Search rule with a `pin` action | One query condition, optionally one time window | Merchandising or support |
+| "Discounted items should edge out equally relevant ones" | Custom ranking rule, for example `discount:desc` | Every query on that index | Search or platform team |
+| "Cheapest first" | `sort` parameter at query time | One request, chosen by the user | The interface |
+| "Products before blog posts in one merged list" | `federationOptions.weight` in a [federated multi-search](/capabilities/multi_search/how_to/boost_results_across_indexes) | One request across indexes | Search team |
+
+The distinction matters because these levers fail differently. A bad custom ranking rule degrades every query slightly and is hard to notice. A bad pin is invisible everywhere except one query, where it is glaring. Sorting never affects relevance, it replaces it, which is why it belongs to the user and not to a campaign.
+
+## How pinning actually behaves
+
+Search rules run on top of organic search rather than inside it. Meilisearch computes normal results, resolves the pinned documents, inserts them at the requested positions, then deduplicates. Four consequences are worth internalizing before you build workflows on top of them, all documented in [pinning behavior](/capabilities/search_rules/advanced/pinning_behavior):
+
+- **Pinning does not change scores.** Organic ranking still orders every non-pinned hit. A pinned document has no score of its own.
+- **A pinned document does not have to match the query text.** This is what makes campaign landing pages possible.
+- **Filters still apply.** If the current filter excludes a pinned document, Meilisearch drops it rather than forcing it in. Your visibility and authorization filters stay authoritative.
+- **Rules live at the instance level**, not in index settings. A rule can target any index, so it does not travel with an index dump or a settings export the way `rankingRules` does.
+
+Conditions are combined with `AND`. A query condition matches on `words` (all listed words must be present in the query, in any order, similar to the `All` matching strategy) or on `isEmpty` for the no-query browse state. Time conditions take RFC 3339 UTC timestamps. There is no regex, wildcard, or numeric-pattern matching, so "any 6-digit order number" needs a different approach, and there is no `OR`: two variants mean two rules.
+
+## A complete merchandising setup
+
+This script enables the feature, sets a standing business-rule boost, creates a campaign pin that expires on its own, and verifies the result. Set `MEILISEARCH_URL` (your project host) and `MEILISEARCH_KEY` (a key with write access) in your environment first.
+
+```javascript
+import { Meilisearch } from 'meilisearch'
+
+const host = process.env.MEILISEARCH_URL
+const apiKey = process.env.MEILISEARCH_KEY
+const client = new Meilisearch({ host, apiKey })
+
+// 1. Search rules are experimental. Enable the flag once per project.
+//    The Cloud dashboard exposes the same switch on the Search rules tab.
+await fetch(`${host}/experimental-features`, {
+  method: 'PATCH',
+  headers: {
+    Authorization: `Bearer ${apiKey}`,
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({ dynamicSearchRules: true })
+})
+
+// 2. Standing business rules belong in ranking, not in pins.
+//    Custom ranking rules go LAST, after the built-in rules, so they only
+//    break ties between documents that are already equally relevant.
+const index = client.index('products')
+await index.updateSettings({
+  sortableAttributes: ['price'],
+  rankingRules: [
+    'words',
+    'typo',
+    'proximity',
+    'attributeRank',
+    'sort',
+    'wordPosition',
+    'exactness',
+    'margin_score:desc'   // must exist, and be numeric, on every document
+  ]
+})
+
+// 3. One campaign pin, with a built-in expiry date.
+await client.updateDynamicSearchRule('promo-summer-sale-2026', {
+  description: 'Summer sale landing page, owner: merchandising, expires 2026-06-30',
+  precedence: 10,
+  active: true,
+  conditions: {
+    query: { words: 'summer sale' },
+    time: {
+      start: '2026-06-01T00:00:00Z',
+      end: '2026-06-30T23:59:59Z'
+    }
+  },
+  actions: [
+    {
+      selector: { indexUid: 'products', id: 'summer-sale-landing-page' },
+      action: { type: 'pin', position: 0 }
+    }
+  ]
+})
+
+// 4. Verify. Rule writes are asynchronous tasks, so give the task
+//    a moment (or poll /tasks) before checking the search response.
+const results = await index.search('summer sale discount', { limit: 5 })
+console.log(results.hits.map((hit, position) => `${position}: ${hit.id}`))
+
+// 5. Audit what is live, including rules nobody remembers creating.
+const rules = await client.getDynamicSearchRules({ filter: { query: 'promo' } })
+console.log(rules)
+```
+
+Run this once and the campaign needs no teardown: after June 30 the time condition simply stops matching, and the rule goes quiet while remaining available for next year. That is the single most useful governance habit available, because it removes the human step that is always forgotten.
+
+## Boosting by business rules instead of by document
+
+Most requests that arrive as "pin this product" are really requests for a rule. "Always show in-stock items first" is a custom ranking rule on a numeric flag (`in_stock_rank:desc`), not fifty pins. Three constraints shape how you write one:
+
+- The attribute must be numeric or string, and it must be present in **every** document in the index. If some documents lack it, the ordering is undefined.
+- Custom ranking rules sort lexicographically and ignore relevance, so placing one high in the list shows results in alphanumeric order rather than by relevance. Put them after the built-in rules.
+- A composite score works better than several stacked rules. Compute one `margin_score` or `merchandising_score` at indexing time from stock, margin, freshness, and popularity, and tune the formula in your pipeline rather than adding rules you cannot reason about.
+
+Pinning and boosting are also not the only actions you may want. Boosting, demoting, and burying are listed as planned for future releases of search rules, so today a "bury" request has to be modeled as a negative contribution to your composite score instead.
+
+## Keeping merchandising from eating relevance
+
+The failure mode is accumulation. Every pin is a small, permanent override created under deadline pressure by someone who will not be the person debugging it. Four practices contain it:
+
+1. **Give every rule an owner and an expiry in the `description` field.** It is free text and it is the only metadata you get, so use it as the audit trail.
+2. **Prefer pausing to deleting.** Flipping `active` to `false` keeps conditions and actions intact for a seasonal rule, and it is the correct first move when production looks wrong. Note that pausing an early-precedence rule can let a later one fire, so recheck after you flip.
+3. **Set `precedence` explicitly on anything that competes.** Lower numbers win. An omitted `precedence` is treated as last, which makes conflicts order-dependent in a way nobody expects.
+4. **Measure instead of assuming.** Meilisearch [analytics](/capabilities/analytics/overview) reports click-through rate and average click position per search intent, so a pin that nobody clicks is visible as a worse average click position on that query. Wire up [click events](/capabilities/analytics/how_to/track_click_events) before the campaign, not after it.
+
+For comparison, engines that grew query-rule systems earlier tend to accumulate the same debt: Algolia's Rules and Elasticsearch's pinned query solve the same problem with similar mechanics, and teams using them report rule sets that outlive the campaigns that created them {/* VERIFY: exact feature names and current behavior of Algolia Rules and the Elasticsearch pinned query */}. The Meilisearch rule budget is unusually helpful here, because a hard ceiling on rules forces the cleanup conversation on a schedule.
+
+## Limits and constraints
+
+- **Rule count**: every Meilisearch Cloud project includes **3 search rules free**. The Search Rules add-on costs **$25 per month per project** and raises the limit to **10 rules**. Additional packs of 10 rules start at **$50 per month per project per pack** and stack. See [search rules pricing](/capabilities/search_rules/advanced/search_rules_pricing).
+- **Experimental**: search rules require the `dynamicSearchRules` experimental flag. While it is off, the `/dynamic-search-rules` routes reject requests and stored rules do not apply.
+- **Actions**: `pin` is the only supported action today. Boosting, demoting, and burying are planned, not available.
+- **Positions** are zero-based: `position: 0` is the first result.
+- **Matching**: no regex, no wildcards, no numeric patterns. Conditions are `AND` only.
+- **Activation sources**: query emptiness, query words, and time windows. The API also accepts a `filter` condition keyed on facet values. Locale, user context, and page context do not activate rules.
+- **Search modes**: rules apply to regular, hybrid, federated, and network search.
+- **Writes are asynchronous**: creating or updating a rule returns `202 Accepted` with a task, so a rule is not live the instant the call returns.
+- **Listing defaults**: `POST /dynamic-search-rules` returns `offset: 0`, `limit: 20`, sorted by `lastUpdatedAt` descending.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Schedule a promotion" href="/capabilities/search_rules/how_to/schedule_promotion">
+    Pair a query condition with a time window so campaigns expire themselves
+  </Card>
+  <Card title="Pin several results" href="/capabilities/search_rules/how_to/pin_multiple_results">
+    Control the first few slots with one rule and several pin actions
+  </Card>
+  <Card title="Curate the empty query" href="/capabilities/search_rules/how_to/curate_empty_query">
+    Decide what users see before they type anything
+  </Card>
+  <Card title="Custom ranking rules" href="/capabilities/full_text_search/relevancy/custom_ranking_rules">
+    Express standing business preferences without pinning documents
+  </Card>
+</CardGroup>

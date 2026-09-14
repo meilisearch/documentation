@@ -1,0 +1,129 @@
+---
+title: How to debug search with ranking score details
+description: Results are ordered in a way you cannot explain, and you need a field-by-field reading of the score breakdown that proves which ranking rule caused it.
+keywords: showRankingScoreDetails, _rankingScoreDetails explained, meilisearch explain api equivalent, why is this document ranked here, ranking score breakdown fields, matchingWords maxMatchingWords, typoCount maxTypoCount, attributeRankingOrderScore, relevancy debugging tool, prove ranking rule caused order, search relevance audit report, score details per ranking rule
+boost: 2
+---
+
+Add `showRankingScore: true` and `showRankingScoreDetails: true` to any search request. Every hit then carries a `_rankingScore` between `0.0` and `1.0` and a `_rankingScoreDetails` object holding one nested object per active [ranking rule](/capabilities/full_text_search/relevancy/ranking_rules), each with an `order` field matching its position in `rankingRules` and a `score` field. Read the rules in `order` and compare two documents row by row. The first row where their scores differ is the rule that fixed their relative position, and every rule below it was never consulted. That single row is the whole explanation, and it is the thing to quote when someone disagrees with a settings change.
+
+## What each field in the breakdown means
+
+`_rankingScoreDetails` is not a formula trace. It is a per-rule report card, because Meilisearch orders results with a [bucket sort](/resources/internals/bucket_sort) rather than a single additive score. The fields documented on the [ranking score page](/capabilities/full_text_search/relevancy/ranking_score) are:
+
+| Rule key | Fields it reports | How to read it |
+| --- | --- | --- |
+| `words` | `order`, `matchingWords`, `maxMatchingWords`, `score` | `matchingWords` out of `maxMatchingWords` query terms were found. A ratio below 1 means terms were dropped, which points at the [matching strategy](/capabilities/full_text_search/how_to/use_matching_strategy) or at missing [synonyms](/capabilities/full_text_search/relevancy/synonyms). |
+| `typo` | `order`, `typoCount`, `maxTypoCount`, `score` | `typoCount` is how many corrections this document needed. `maxTypoCount` is the budget allowed for the query, derived from [`typoTolerance`](/capabilities/full_text_search/relevancy/typo_tolerance_settings). |
+| `proximity` | `order`, `score` | Lower distance between matched terms, in query order, scores higher. A perfect `1.0` means adjacent and in order. |
+| `attributeRank` | `order`, `attributeRankingOrderScore`, `score` | Which attribute the match landed in, ranked by position in [`searchableAttributes`](/capabilities/full_text_search/relevancy/attribute_ranking_order). The default `["*"]` gives every field the same value, so this rule ties for everything. |
+| `wordPosition` | `order`, `score` | How early in the attribute the match starts. |
+| `exactness` | `order`, `matchType`, `score` | `matchType` labels the kind of match, for example `noExactMatch` when the document matched only a prefix or a variant. |
+| `sort` | `order`, `value` | Reports a `value`, not a `score`, because it does not measure relevance. Only present when the request carried a `sort` parameter. |
+| `<attribute>:asc` or `:desc` | `order`, `value` | A [custom ranking rule](/capabilities/full_text_search/relevancy/custom_ranking_rules). |
+
+Two properties of this output trip people up. A document's scores never depend on the other documents in the index, so the same document returns the same numbers whether it is alone or among a million. And a higher `_rankingScore` does not guarantee a higher position, because `_rankingScore` is a weighted blend of the rule subscores while the actual order is decided rule by rule, and `sort` contributes nothing to the blend at all.
+
+## A script that names the deciding rule for every query
+
+Debugging one query by hand is fine. Justifying a settings change needs a set of queries and a count. This script runs a query list, compares the top two hits of each, and reports which rule decided each pair, so the argument becomes "proximity decided 14 of our 20 head queries before `attributeRank` ever ran" rather than an opinion.
+
+```javascript
+import { Meilisearch } from 'meilisearch'
+
+const client = new Meilisearch({
+  host: process.env.MEILISEARCH_URL,
+  apiKey: process.env.MEILISEARCH_KEY // a key with search permission
+})
+
+const index = client.index('products')
+const queries = ['wireless headphones', 'running shoes', 'usb c cable', 'winter coat']
+
+// sort and custom ranking rules report `value`; relevancy rules report `score`
+const readRule = (detail) => (detail?.score ?? detail?.value ?? null)
+
+const tally = {}
+
+for (const q of queries) {
+  const { hits } = await index.search(q, {
+    limit: 2,
+    showRankingScore: true,
+    showRankingScoreDetails: true
+  })
+
+  if (hits.length < 2) {
+    console.log(`"${q}": fewer than two hits, nothing to compare`)
+    continue
+  }
+
+  const [first, second] = hits
+  // Walk the rules in the order Meilisearch applied them
+  const rules = Object.entries(first._rankingScoreDetails)
+    .sort(([, a], [, b]) => a.order - b.order)
+    .map(([name]) => name)
+
+  let decider = 'none (documents are tied on every rule)'
+  for (const rule of rules) {
+    const a = readRule(first._rankingScoreDetails[rule])
+    const b = readRule(second._rankingScoreDetails[rule])
+    if (String(a) !== String(b)) {
+      decider = rule
+      console.log(
+        `"${q}": ${rule} decided, winner=${a} runner-up=${b} ` +
+        `(_rankingScore ${first._rankingScore} vs ${second._rankingScore})`
+      )
+      break
+    }
+  }
+  tally[decider] = (tally[decider] ?? 0) + 1
+}
+
+console.log('\nDeciding rule across the query set:')
+for (const [rule, count] of Object.entries(tally).sort((a, b) => b[1] - a[1])) {
+  console.log(`  ${rule.padEnd(16)} ${count}`)
+}
+```
+
+Set `MEILISEARCH_URL` to your instance URL and `MEILISEARCH_KEY` to a key with search permission, install the `meilisearch` JavaScript client, and run it. Replace the query list with real queries pulled from your own traffic.
+
+## How to turn the output into an argument
+
+The tally is the evidence. Three patterns come up repeatedly and each implies a different change:
+
+- **A rule near the top decides almost everything.** If `proximity` or `typo` resolves most pairs, every rule below it, including `sort` and your custom ranking rules, is effectively dead code. Moving the dominant rule down is as legitimate a fix as moving another rule up.
+- **`attributeRank` reports the same `attributeRankingOrderScore` for every document.** That is the signature of `searchableAttributes` left at the default `["*"]`. Setting an explicit ordered list gives the rule something to separate on.
+- **A custom rule never appears in the tally.** Custom ranking rules placed last only break ties among documents that every built-in rule scored identically, which on text-heavy data is almost no pairs at all.
+
+Run the script, change one setting, wait for the returned task to finish, then run it again and put the two tallies side by side. A before-and-after count of deciding rules is much harder to argue with than a screenshot of one result page. For measuring whether the change actually helped users rather than just moved documents, see [how to measure and improve search relevance](/guides/measure-search-relevance).
+
+Other engines expose something comparable but shaped around a single additive score. Elasticsearch returns an `_explanation` tree of BM25 term contributions when a query sets `explain`, and Algolia returns a `_rankingInfo` object when a request sets `getRankingInfo`. {/* VERIFY: exact parameter and response field names for Elasticsearch explain and Algolia getRankingInfo */} The practical difference is what the output lets you conclude: a BM25 explanation tells you how a number was accumulated, while `_rankingScoreDetails` tells you which single rule you have to change.
+
+## Limits and constraints
+
+- `showRankingScoreDetails` works on the search routes (`POST` and `GET` on `/indexes/{index_uid}/search`), on `/multi-search`, and on the similar-documents routes (`POST` and `GET` on `/indexes/{index_uid}/similar`). The facet search route accepts `rankingScoreThreshold` but not the score-detail parameters.
+- Both `_rankingScore` and `_rankingScoreDetails` are absent unless you explicitly request them. Neither is returned by default.
+- `_rankingScore` is bounded to `0.0` through `1.0`. It is not comparable across different queries, only across documents answering the same query.
+- Only five index settings can move a ranking score: `searchableAttributes`, `rankingRules`, `stopWords`, `synonyms`, and `typoTolerance`. Changing anything else will not shift a number in the breakdown.
+- The `sort` rule is skipped entirely when a request has no `sort` parameter or the value is invalid, so its entry will not appear in the breakdown for those requests.
+- Ranking rules are index-level. There is no per-query override and no per-rule weight, which is why the deciding rule is always exactly one rule.
+- Changing `rankingRules` returns a task and is applied asynchronously. Wait for the task to complete before rerunning a comparison, or you will compare against the old configuration.
+- In hybrid search the score blends keyword and semantic relevance according to `semanticRatio`, so the keyword rule breakdown alone will not account for the order. See [custom hybrid ranking](/capabilities/hybrid_search/advanced/custom_hybrid_ranking).
+- `rankingScoreThreshold` removes hits below a score rather than reordering them, and excluded hits stop counting toward `estimatedTotalHits`, `totalHits`, and the facet distribution.
+- Score details explain relevancy, not latency. For timing per pipeline stage use [`showPerformanceDetails`](/capabilities/full_text_search/advanced/debug_search_performance) instead.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Ranking score" href="/capabilities/full_text_search/relevancy/ranking_score">
+    The reference for `_rankingScore`, `_rankingScoreDetails`, and the settings that move them
+  </Card>
+  <Card title="Ranking pipeline" href="/capabilities/full_text_search/advanced/ranking_pipeline">
+    How bucket sort turns rule scores into a final order
+  </Card>
+  <Card title="Why your search ranks the wrong result first" href="/guides/wrong-result-ranked-first">
+    The symptom-first version of this workflow, with fixes per deciding rule
+  </Card>
+  <Card title="Debug search performance" href="/capabilities/full_text_search/advanced/debug_search_performance">
+    Per-stage timings when the problem is speed rather than order
+  </Card>
+</CardGroup>

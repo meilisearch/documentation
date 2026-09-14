@@ -1,0 +1,160 @@
+---
+title: How to build multi-tenant search without slowing it down
+description: You need every customer to see only their own data, and you need to know whether one index per tenant or one shared index with a tenant filter will still be fast once you have hundreds or thousands of tenants.
+keywords: multi tenant search architecture, index per tenant vs shared index, saas search per customer data, tenant id filter performance, how many indexes can meilisearch handle, search isolation performance cost, per customer search index scaling, noisy neighbor search latency, tenant token filter speed, row level security search engine, whale tenant data skew, multi tenancy search design
+boost: 2
+---
+
+For almost every SaaS workload the fast answer is a single shared index with a filterable `tenant_id`, and a tenant token that pins the filter server side so the client cannot remove it. Filtering on a filterable attribute is resolved from structures Meilisearch builds at indexing time, so the cost does not grow with the number of tenants, only with how many documents survive the filter. Index count is the axis that actually degrades: Meilisearch places no hard cap on the number of indexes below 2TiB each, but the [known limitations](/resources/help/known_limitations) page warns that accessing hundreds of separate databases in short periods can slow things down. One index per tenant is the exception, not the default, and it earns its place only when tenants are few and large.
+
+## Which architecture to pick
+
+| Tenant profile | Architecture | What breaks first |
+| --- | --- | --- |
+| Many tenants (hundreds to millions), most of them small | Shared index, filterable `tenant_id`, tenant token | Filter selectivity on your largest tenant, not index count |
+| Few tenants (roughly under 50), each large, each needing different settings | One index per tenant | Operational complexity: settings, embedders, and reindexing multiply by tenant |
+| Long tail plus a few whales | Hybrid: shared index for the tail, dedicated index per whale | Routing logic in your application, which now must know where a tenant lives |
+| Strict per-tenant data residency or hard physical isolation | One index per tenant, or one project per tenant | Cost and deployment surface, not search latency |
+
+If you are unsure, start shared. Moving a single tenant out of a shared index later is a document export and an import into a new index, whereas collapsing thousands of indexes into one is a full reindex plus an application rewrite.
+
+## Why a shared index stays fast as tenants grow
+
+Adding a tenant to a shared index is just adding documents. The index settings do not change, the filterable attribute structures do not multiply, and nothing about search execution becomes more expensive because tenant number 4,001 signed up.
+
+What does matter is **filter selectivity**: how much of the index a tenant's filter leaves behind. A tenant holding 0.01% of documents gets an extremely cheap search. A tenant holding 40% of a 50M document index gets a search over 20M candidate documents, and that is the query you need to benchmark. Tenant count is not the risk. Size skew is.
+
+Two practical consequences follow:
+
+- Benchmark your **largest** tenant, not your median one. Median latency in a skewed multi-tenant index is meaningless, because the tenant that complains is always the biggest.
+- Keep per-tenant document counts visible. A facet distribution over `tenant_id` gives you the counts directly, up to the `maxValuesPerFacet` cap (default 100).
+
+## Where index per tenant actually breaks
+
+Index per tenant looks appealing because each search touches a small dataset. Four things bite before that benefit pays off.
+
+**Virtual address space and index count.** Meilisearch supports an arbitrary number of indexes as long as each stays under 2TiB. Above that size, [known limitations](/resources/help/known_limitations) documents a much tighter ceiling of about 20 indexes whose combined size must fit the operating system's virtual address space (approximately 80TiB on 64-bit Linux). The [indexing best practices](/capabilities/indexing/advanced/indexing_best_practices) page is blunter: due to the complexities of dynamic virtual address management, more indexes than necessary can hurt performance, and the symptom to watch for is degraded multi-index search.
+
+**Settings multiply.** Searchable attributes, filterable attributes, ranking rules, synonyms, stop words, and embedders are all per index. A settings change that is one API call in a shared index becomes N calls and N reindexing tasks across N tenant indexes. With AI-powered search this is expensive, because changing an embedder re-vectorizes every document in every index.
+
+**Cross-tenant and admin search gets harder.** Searching across tenants (for internal support tooling, for example) becomes a [multi-index search](/capabilities/multi_search/getting_started/multi_search) or a [federated search](/capabilities/multi_search/getting_started/federated_search) whose query list grows with tenant count, rather than a single query with a relaxed filter.
+
+**Observability gets noisy.** Per-index metrics such as `meilisearch_index_docs_count` carry an index label, so the [Prometheus endpoint](/capabilities/platform/monitoring/prometheus_endpoint) response grows with index count and instances with thousands of indexes produce large scrape payloads.
+
+For comparison, other engines push you the same direction for different reasons. Algolia documents a maximum of 1,000 indexes per application, raisable by contacting support, per the [alternatives comparison](/resources/comparisons/alternatives). In Elasticsearch the index-per-tenant pattern runs into per-shard fixed overhead, since every index carries at least one shard and each shard consumes heap and file handles whether or not it is queried, which is the origin of the standard advice to avoid many tiny shards {/* VERIFY: confirm current Elasticsearch guidance on per-shard heap overhead and recommended shard sizing */}.
+
+## How filterable attributes affect memory and indexing
+
+Every attribute you make filterable causes Meilisearch to build internal structures at indexing time. By default, adding an attribute to `filterableAttributes` enables equality filters, comparison operators, **and** facet search for it, even if you only ever use one of them.
+
+A `tenant_id` needs equality only. Use [granular filterable attributes](/capabilities/filtering_sorting_faceting/how_to/configure_granular_filters) to say so, which reduces both indexing time and memory usage:
+
+```json
+{
+  "attributePatterns": ["tenant_id"],
+  "features": {
+    "facetSearch": false,
+    "filter": { "equality": true, "comparison": false }
+  }
+}
+```
+
+Comparison operators on an opaque identifier are meaningless, and facet search on it would let a client enumerate tenant identifiers through the facet search endpoint. Turning both off is a performance win and a smaller attack surface at once. The same reasoning is applied to internal IDs in [optimize facet performance](/capabilities/filtering_sorting_faceting/advanced/optimize_facet_performance).
+
+## A complete setup you can run
+
+This script configures a shared multi-tenant index, measures tenant size skew so you can see whether any tenant is large enough to need its own index, then issues a scoped tenant token and searches with it. Set `MEILISEARCH_URL` and `MEILISEARCH_KEY` (an admin key) in your environment before running it.
+
+```javascript
+// npm install meilisearch
+import { Meilisearch } from 'meilisearch'
+import { generateTenantToken } from 'meilisearch/token'
+
+const client = new Meilisearch({
+  host: process.env.MEILISEARCH_URL, // for example https://ms-xxxx.sfo.meilisearch.io
+  apiKey: process.env.MEILISEARCH_KEY,
+})
+
+const index = client.index('documents')
+
+// 1. Shared-index settings. tenant_id is equality-only: no comparison
+//    operators, no facet search, which is cheaper and not enumerable.
+await client.waitForTask(
+  (await index.updateFilterableAttributes([
+    {
+      attributePatterns: ['tenant_id'],
+      features: { facetSearch: false, filter: { equality: true, comparison: false } },
+    },
+    {
+      attributePatterns: ['status', 'category'],
+      features: { facetSearch: true, filter: { equality: true, comparison: false } },
+    },
+  ])).taskUid,
+)
+await client.waitForTask(
+  (await index.updateSearchableAttributes(['title', 'body'])).taskUid,
+)
+
+// 2. Measure size skew. facetDistribution returns up to maxValuesPerFacet
+//    distinct values (default 100), so raise it if you have more tenants.
+const { numberOfDocuments } = await index.getStats()
+const probe = await index.search('', { limit: 0, facets: ['tenant_id'] })
+const perTenant = Object.entries(probe.facetDistribution?.tenant_id ?? {})
+  .sort((a, b) => b[1] - a[1])
+
+for (const [tenant, count] of perTenant.slice(0, 5)) {
+  const share = ((count / numberOfDocuments) * 100).toFixed(1)
+  console.log(`${tenant}: ${count} docs (${share}% of the index)`)
+}
+// A tenant above roughly 20% of a large index is a hybrid-architecture candidate.
+
+// 3. Issue a scoped token in your backend, after you have authenticated the user.
+//    apiKeyUid comes from GET /keys; never derive tenant_id from client input.
+const token = await generateTenantToken({
+  apiKey: process.env.MEILISEARCH_SEARCH_KEY,
+  apiKeyUid: process.env.MEILISEARCH_SEARCH_KEY_UID,
+  searchRules: { documents: { filter: 'tenant_id = "acme"' } },
+  expiresAt: new Date(Date.now() + 60 * 60 * 1000), // one hour
+})
+
+// 4. Search as that tenant. The embedded filter is applied by Meilisearch,
+//    and it composes with any filter the client sends.
+const scoped = new Meilisearch({ host: process.env.MEILISEARCH_URL, apiKey: token })
+const results = await scoped.index('documents').search('invoice', {
+  limit: 20,
+  filter: 'status = "open"',
+})
+
+console.log(results.hits.length, 'hits in', results.processingTimeMs, 'ms')
+```
+
+Run step 2 against production data before you commit to an architecture. It answers the only question that matters at design time.
+
+## Limits and constraints
+
+- **Index count**: no hard cap while each index stays under 2TiB. Above 2TiB, roughly 20 indexes whose combined size fits the OS virtual address space (about 80TiB on 64-bit Linux). Hundreds of frequently accessed indexes is documented as a performance risk.
+- **Maximum index size**: about 80TiB on Linux, with under 2TiB recommended for performance.
+- **`maxValuesPerFacet`** defaults to 100, so a facet distribution over `tenant_id` shows at most 100 tenants per request unless you raise it.
+- **Facet search** returns at most 100 facet values, independent of `maxValuesPerFacet`.
+- **Tenant tokens apply to search only.** They do not restrict indexing, settings updates, or key management. Those must be gated by [API key](/reference/api/keys/create-api-key) scope in your backend.
+- **Search rules are per index**, keyed by index name, and support the `*` and `prefix*` wildcards. A specific rule overrides a `*` rule. See the [tenant token payload reference](/capabilities/security/advanced/tenant_token_payload).
+- **Meilisearch cannot validate a token's filter.** An invalid search rule fails at query time, not at token generation time.
+- **There is no documented per-tenant resource quota.** A shared index has no built-in mechanism to stop one tenant's query volume from consuming capacity, so rate limiting belongs in your application or gateway.
+- **Sharding and replication** are Enterprise-only on Meilisearch Cloud and configured by the Meilisearch team. See [sharding and replication](/capabilities/platform/infrastructure/sharding_and_replication).
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Tenant tokens end to end" href="/capabilities/security/getting_started">
+    Generate and use a tenant token with an official SDK
+  </Card>
+  <Card title="Granular filterable attributes" href="/capabilities/filtering_sorting_faceting/how_to/configure_granular_filters">
+    Enable only the filter features each attribute needs
+  </Card>
+  <Card title="Optimize facet performance" href="/capabilities/filtering_sorting_faceting/advanced/optimize_facet_performance">
+    Cut indexing and search cost from faceting
+  </Card>
+  <Card title="Isolate tenant data securely" href="/guides/tenant-data-isolation">
+    The security view: why a client-side filter is not a boundary
+  </Card>
+</CardGroup>

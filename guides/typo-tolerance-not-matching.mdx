@@ -1,0 +1,138 @@
+---
+title: Why your typo tolerance is not matching
+description: A misspelled query returns nothing or returns the wrong record, and you need to know which typo rule, length threshold, or disable switch is responsible.
+keywords: typo not working meilisearch, fuzzy search returns nothing, misspelled query no results, short word typo ignored, spelling correction not applied, sku matched wrong product, three letter search no match, levenshtein distance search, search engine ignores misspelling, partial word no results, quoted search no typo, typoCount ranking score
+boost: 2
+---
+
+Nine times out of ten the query word is simply too short. Meilisearch computes the typo budget from the length of the **query** word, and words of four characters or fewer get zero typos by default, so `tow` can never reach `two`. The next most common causes, in the order worth checking: the typo sits on the first character (which costs two typos, not one), the word needs three or more edits (a hard ceiling no setting raises), the field is listed in `disableOnAttributes`, the term is listed in `disableOnWords`, or the query is quoted. Start by reading the index settings, then read `typoCount` from the ranking score details instead of guessing.
+
+## Read the settings first
+
+This is the cheapest check and it rules out half the possibilities in one request. Typo tolerance is an index setting, not a search parameter, so whatever is configured applies to every query against that index.
+
+```javascript
+console.log(await client.index('products').getTypoTolerance())
+// { enabled: true, minWordSizeForTypos: { oneTypo: 5, twoTypos: 9 },
+//   disableOnWords: [], disableOnAttributes: [], disableOnNumbers: false }
+```
+
+If `enabled` is `false`, nothing else in this page applies: only exact matches are returned, and the `typo` ranking rule is inert. If `disableOnAttributes` contains the field you expected to match, or `disableOnWords` contains the term (the list is case insensitive), that is your answer. All four fields are documented in [typo tolerance settings](/capabilities/full_text_search/relevancy/typo_tolerance_settings).
+
+## The query word is too short
+
+The budget table, with defaults:
+
+| Query word length | Typos allowed |
+| --- | --- |
+| 1 to 4 characters | 0, prefix match only |
+| 5 to 8 characters | 1 |
+| 9 or more characters | 2 |
+
+The cutoffs are `minWordSizeForTypos.oneTypo` (default `5`) and `minWordSizeForTypos.twoTypos` (default `9`). If your catalog is full of short tokens (sizes, color codes, three-letter airport codes), every misspelling of them is unreachable until you lower `oneTypo`. Valid values satisfy `0 ≤ oneTypo ≤ twoTypos ≤ 255`, and the documented recommendation is `oneTypo` between `2` and `8` with `twoTypos` between `4` and `14`.
+
+Lowering `oneTypo` to `4` is usually safe. At `3`, any three-character token can match any other one edit away, which on a large index produces a lot of noise.
+
+## The typo is on the first character
+
+A typo on a word's first character counts as **two** typos. So `caturday` does not match `saturday`: the word is eight characters long, which grants a budget of one, and the first-character substitution costs two. This is deliberate, because initial-character corrections generate a disproportionate share of false positives.
+
+Two related rules work in your favor. A transposition costs one typo, not two, because Meilisearch uses Damerau-Levenshtein distance, so `teh` reaches `the` in a single edit. And concatenation costs one typo, so `any way` also tries `anyway`, and `newspaper` is also tried as the split `news paper` when both halves have real frequency in the index. Split words must stay adjacent in the document. See [concatenated and split queries](/resources/internals/concat).
+
+## The word needs more than two edits
+
+Two typos per word is a hard ceiling. Words requiring three or more edits never match, regardless of length or `minWordSizeForTypos`. `restraunt` reaches `restaurant` in one edit, but heavily mangled input, keyboard-shifted text, and phonetic spellings of long words routinely exceed two. Typo tolerance is not the right tool there. Reach for [synonyms](/capabilities/full_text_search/relevancy/synonyms) for known bad spellings, or add a semantic fallback with [hybrid search](/capabilities/hybrid_search/overview).
+
+## The word is a prefix, and prefix search is off or the word is not last
+
+Prefix matching and typo tolerance are applied together, but prefix matching only applies to the **last word of the query**. Earlier words must match completely, or within their typo budget. So `harry pot` matches "Harry Potter" because `harry` matches exactly and `pot` is a prefix, while `pot harry` does not.
+
+If partial words stopped resolving entirely, check whether `prefixSearch` has been set to `disabled` on the index. That setting is independent of typo tolerance, and turning it off means users must type complete words. See [configure prefix search](/capabilities/full_text_search/how_to/configure_prefix_search).
+
+## Numbers and product codes behave differently
+
+Two separate mechanisms bite here.
+
+If `disableOnNumbers` is `true`, queries containing numbers return exact matches only, which is usually what you wanted (it stops `2024` matching `2025`) but looks like broken typo tolerance if you did not set it yourself. If it is `false` and you are seeing neighboring years or part numbers, setting it to `true` is the fix.
+
+For alphanumeric codes, the tokenizer runs before any typo budget is computed, and the budget is measured against the resulting tokens, not the original string. `BRV-ST220` splits on the hyphen into `brv` and `st220`. The first token gets zero typos, the second gets one, so `st221` matches and the wrong product surfaces. Adding `-` to `nonSeparatorTokens` keeps the code whole, but `brv-st220` is nine characters, which moves it into the two-typo bucket and makes the leak worse. Pair tokenization changes with `disableOnAttributes` on the same field. See [tokenization](/capabilities/indexing/advanced/tokenization).
+
+## The query is quoted
+
+A quoted portion of a query is a [phrase search](/capabilities/full_text_search/getting_started/phrase_search): the words must appear as an exact sequence, consecutively and in order, and the phrase is always a required unit regardless of [matching strategy](/capabilities/full_text_search/how_to/use_matching_strategy). If your front end adds quotes automatically (some autocomplete widgets do this for multi-word suggestions), a misspelling inside the quotes will not be rescued by the matching strategy dropping terms. Run the same query without quotes to confirm.
+
+## Read `typoCount` instead of guessing
+
+Rather than reasoning about budgets, ask the engine. Setting `showRankingScoreDetails` to `true` adds a `_rankingScoreDetails` object to each hit, and its `typo` entry reports `typoCount` and `maxTypoCount`. A hit with `typoCount: 0` matched exactly, so typo tolerance was not involved at all. If the expected document is absent entirely, no typo path reached it. See [ranking score](/capabilities/full_text_search/relevancy/ranking_score).
+
+## A complete diagnostic script
+
+Copy this whole block. It sets up a small index, reproduces the short-word failure, applies the fix, and prints the typo count for each hit. It expects `MEILISEARCH_URL` and `MEILISEARCH_KEY` in the environment.
+
+```javascript
+// npm install meilisearch
+import { Meilisearch } from 'meilisearch'
+
+const client = new Meilisearch({
+  host: process.env.MEILISEARCH_URL, // for example https://your-project.meilisearch.io
+  apiKey: process.env.MEILISEARCH_KEY,
+})
+
+const index = client.index('products')
+
+// 1. Seed a few documents.
+let task = await index.addDocuments([
+  { id: 1, name: 'Two-tone leather belt', sku: 'BRV-ST220' },
+  { id: 2, name: 'Tote bag, canvas', sku: 'BRV-ST221' },
+  { id: 3, name: 'Restaurant supply apron', sku: 'APR-1180' },
+])
+await client.waitForTask(task.taskUid)
+
+// 2. Show what is currently configured. Do this before changing anything.
+console.log('typoTolerance:', await index.getTypoTolerance())
+console.log('prefixSearch:', await index.getPrefixSearch())
+
+// 3. Reproduce the failure. "tow" is 3 characters, so it gets zero typos
+//    and cannot reach "two". Expect an empty hits array.
+const before = await index.search('tow')
+console.log('before fix:', before.hits.length, 'hits')
+
+// 4. Lower the one-typo threshold, and stop identifier fields from
+//    correcting one SKU into its neighbor.
+task = await index.updateTypoTolerance({
+  minWordSizeForTypos: { oneTypo: 3, twoTypos: 9 },
+  disableOnAttributes: ['sku'],
+  disableOnNumbers: true,
+})
+await client.waitForTask(task.taskUid)
+
+// 5. Same query, now with the budget it needed.
+const after = await index.search('tow', { showRankingScoreDetails: true })
+for (const hit of after.hits) {
+  const typo = hit._rankingScoreDetails.typo
+  console.log(hit.name, '| typoCount:', typo.typoCount, 'of', typo.maxTypoCount)
+}
+
+// 6. The SKU query no longer leaks into the neighboring code.
+const exact = await index.search('BRV-ST221')
+console.log('sku hits:', exact.hits.map((h) => h.sku))
+```
+
+## Limits and constraints
+
+- **Two typos per word is absolute.** No setting raises it. Words needing three or more edits never match.
+- **`minWordSizeForTypos` bounds are `0 ≤ oneTypo ≤ twoTypos ≤ 255`.** Defaults: `oneTypo: 5`, `twoTypos: 9`.
+- **The budget is measured against the query word**, and against tokens after tokenization, not against the raw string the user typed or the indexed field value.
+- **A first-character typo always costs two.** There is no setting to change that cost.
+- **There is no per-query typo parameter.** `typoTolerance` exists only as an index setting, so it cannot vary per request. `attributesToSearchOn` narrows the fields searched but does not change budgets.
+- **`disableOnAttributes` is a switch, not a threshold.** You cannot allow two typos in `description` and one in `title` within a single index.
+- **Defaults for the switches:** `enabled` is `true`, `disableOnNumbers` is `false`, and `disableOnWords` and `disableOnAttributes` are empty arrays.
+- **Changing `typoTolerance` does not reindex documents**, so it applies quickly. Changing `prefixSearch` or `dictionary` does trigger a full reindex, which is asynchronous.
+- **Migrating from Elasticsearch:** fuzziness there is opt-in per query rather than an index-wide default, and its `AUTO` mode allows one edit at a shorter word length than Meilisearch's default `oneTypo` of 5. {/* VERIFY: exact Elasticsearch fuzziness AUTO length thresholds per version */}
+
+## Next steps
+
+- [Typo tolerance settings](/capabilities/full_text_search/relevancy/typo_tolerance_settings) documents every field with per-SDK code samples.
+- [How to improve typo tolerance](/guides/improve-typo-tolerance) turns these findings into a tuning plan.
+- [Typo tolerance vs fuzzy search](/resources/internals/typo_tolerance) explains the Levenshtein automaton, splitting, and concatenation in depth.
+- [Why a document does not appear in results](/guides/document-not-in-results) covers the non-typo reasons a record stays hidden.

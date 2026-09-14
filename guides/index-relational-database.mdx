@@ -1,0 +1,181 @@
+---
+title: How to index a relational database for search
+description: Your data lives in normalized tables with foreign keys, and you need to turn it into flat search documents without duplicating half the schema or letting the index drift out of sync with the database.
+keywords: index sql database for search, denormalize joins into search documents, postgres to search engine, mysql full text search replacement, change data capture search index, cdc sync search engine, document grain modeling, flatten relational data for search, keep search index in sync with database, handle hard deletes in search index, etl sql to json documents, search over normalized tables
+boost: 2
+---
+
+A search index is not a database. Start by choosing the **grain**: the single thing a user expects to get back as one result, usually the order, the product, or the line item, but never all three at once. Then write one SQL query that produces one flat JSON document per unit of that grain, with joined data either folded in as denormalized fields or arrays, or left as an id if you use Meilisearch [joins](/capabilities/indexing/joins/define_index_relationships). Keep the index current with an `updated_at` watermark or change data capture, and plan for deletes separately, because a hard `DELETE` leaves nothing behind for a poller to find.
+
+## How to choose the document grain
+
+The grain decision determines everything downstream, so make it first and make it explicit.
+
+Ask what a single result in the results list should be. If a user searching "wireless headphones" should see one card per product, the grain is the product, and the 14 color and size variants collapse into arrays inside that one document. If they should see one card per purchasable variant, the grain is the variant, and the product title is repeated on every one of them.
+
+Getting this wrong shows up as one of two symptoms. Too fine a grain (one document per order line) floods the results page with near-identical entries from the same parent. Too coarse a grain (one document per customer, with every order nested inside) makes it impossible to filter precisely, because a filter matches the customer document if *any* nested order matches, not the specific one you cared about.
+
+If you genuinely need the fine grain for filtering but the coarse grain for display, index at the fine grain and set a [distinct attribute](/capabilities/full_text_search/how_to/configure_distinct_attribute) to the parent id. Meilisearch then returns at most one result per parent while still matching on the precise child row.
+
+## How to flatten joins into one document
+
+Once the grain is fixed, every join is one of three things.
+
+**A one-to-one lookup** (order to customer) becomes flat fields with a prefix: `customer_name`, `customer_country`. Prefixing keeps the field list readable and makes filterable attribute rules easier to write.
+
+**A one-to-many collection** (product to tags, order to line items) becomes an array or an array of objects. Aggregate it in SQL rather than in application code, with `json_agg` in PostgreSQL or `JSON_ARRAYAGG` in MySQL {/* VERIFY: JSON_ARRAYAGG availability by MySQL version */}, so the whole document comes back from one query instead of N+1 round trips.
+
+**A lookup table you only filter on** (category, status, warehouse) becomes a plain string or array of strings. Do not carry the numeric foreign key alone: `category_id: 47` is unsearchable and unreadable in a facet list. Carry the label, and carry the id too if your UI needs it.
+
+The real cost of denormalization is write amplification. If a company renames itself and 400,000 deal documents each carry `company_name`, all 400,000 documents have to be rewritten. Measure this before committing: a rename that fans out to a large fraction of the index turns a trivial source update into a full reindex.
+
+## When to keep the data normalized instead
+
+Meilisearch can hold the relationship rather than the copy. Configure `foreignKeys` on the source index and the referenced document is hydrated into search results automatically, and you can filter on the related document's fields with `_foreign(company, industry = "Technology")`. That removes the write amplification problem entirely: the company row is updated once.
+
+The tradeoffs are specific and worth knowing before you design around them:
+
+- Hydration and filtering work at **one level only**. Chains such as deals to companies to industries are not supported.
+- A foreign filter that matches **more than 1000 documents** in the target index returns an error, so broad filters like "all technology companies" fail once the target table grows.
+- Meilisearch does **not enforce referential integrity**. Deleting a target document does not touch the documents that reference it; hydration then returns the raw id instead of the object.
+
+Joins fit reference data that is large, frequently updated, and narrowly filtered. Denormalization fits attributes that are small, stable, and filtered broadly. Most real schemas end up mixing both. See [foreign filters](/capabilities/filtering_sorting_faceting/advanced/filtering_by_joined_data) for the full filter syntax and route support.
+
+## How to keep the index in sync
+
+Two patterns cover almost every case.
+
+**Watermark polling** is the simple one. Store the highest `updated_at` you have already shipped, then select rows newer than it on each run. It requires an indexed `updated_at` column that is reliably touched on every write, including writes from triggers, batch jobs, and manual fixes.
+
+The trap is joined tables. If a document's grain is the order but the customer's name is denormalized into it, then updating `customers.name` does not change `orders.updated_at`, and the poller never notices. Fix it by watermarking every contributing table and reindexing the affected parents, or by touching the parent row from a trigger when a child changes.
+
+**Change data capture** reads the database's own replication stream, PostgreSQL logical decoding or the MySQL binlog, and emits a per-row event for every insert, update, and delete {/* VERIFY: exact Debezium connector names and supported minimum versions for Postgres and MySQL */}. It catches everything, including deletes, and it does not need an `updated_at` column at all. The cost is operating a streaming pipeline.
+
+For updates, prefer `PUT /indexes/{index_uid}/documents`, which [merges the fields you send](/capabilities/indexing/how_to/add_and_update_documents) into the existing document, over `POST`, which replaces the whole document and silently drops any field you left out.
+
+## How to handle deletes that leave no trace
+
+A row deleted with `DELETE FROM orders WHERE id = 42` is invisible to any query-based sync. The document stays in the index, keeps appearing in results, and clicking it returns a 404. Pick one of these:
+
+1. **Soft deletes.** Add a `deleted_at` column, never physically remove the row, and remove matching documents with [delete by filter](/reference/api/documents/delete-documents-by-filter). Cleanest option when you control the schema.
+2. **An outbox table.** A delete trigger writes the deleted primary key into a `search_outbox` table that the sync job drains and then clears.
+3. **Change data capture.** Delete events arrive on the replication stream with no schema change required.
+4. **Periodic reconciliation.** Page through every id in the index with `POST /indexes/{index_uid}/documents/fetch`, compare against the id set in the database, and delete the difference. Slow, but it is the only method that also catches sync bugs and silent drift, so run it on a schedule even when you use one of the others.
+
+## A complete Postgres to Meilisearch sync script
+
+This script does an initial load and incremental runs from the same code path: it denormalizes the customer join, aggregates line items into an array, tracks a watermark, and reconciles soft deletes.
+
+```python
+# pip install psycopg2-binary meilisearch
+# export MEILISEARCH_URL="https://ms-xxxxxxxx.meilisearch.io"
+# export MEILISEARCH_KEY="your-admin-key"
+# export DATABASE_URL="postgresql://user:pass@host:5432/shop"
+
+import os, json, datetime
+import psycopg2, psycopg2.extras
+import meilisearch
+
+BATCH = 50_000
+STATE = "watermark.json"
+INDEX = "orders"
+
+client = meilisearch.Client(os.environ["MEILISEARCH_URL"], os.environ["MEILISEARCH_KEY"])
+index = client.index(INDEX)
+pg = psycopg2.connect(os.environ["DATABASE_URL"])
+
+# Settings first. Changing them after a large import forces a full reindex.
+task = index.update_settings({
+    "searchableAttributes": ["reference", "customer_name", "items.product_name"],
+    "filterableAttributes": ["status", "customer_country", "total_cents", "placed_at"],
+    "sortableAttributes": ["placed_at", "total_cents"],
+})
+client.wait_for_task(task.task_uid)
+
+since = "1970-01-01T00:00:00+00:00"
+if os.path.exists(STATE):
+    since = json.load(open(STATE))["since"]
+
+# One query, one document per order. json_agg folds the line items in.
+SQL = """
+SELECT o.id, o.reference, o.status, o.total_cents,
+       o.placed_at, o.updated_at, o.deleted_at,
+       c.full_name AS customer_name, c.country AS customer_country,
+       COALESCE(json_agg(json_build_object(
+           'product_name', p.name, 'quantity', l.quantity
+       )) FILTER (WHERE l.id IS NOT NULL), '[]') AS items
+FROM orders o
+JOIN customers c ON c.id = o.customer_id
+LEFT JOIN order_lines l ON l.order_id = o.id
+LEFT JOIN products p ON p.id = l.product_id
+WHERE GREATEST(o.updated_at, c.updated_at) > %s
+GROUP BY o.id, c.full_name, c.country
+ORDER BY o.updated_at
+"""
+
+cur = pg.cursor(name="sync", cursor_factory=psycopg2.extras.RealDictCursor)
+cur.itersize = BATCH
+cur.execute(SQL, (since,))
+
+buffer, high_water, deleted = [], since, []
+for row in cur:
+    high_water = max(high_water, row["updated_at"].isoformat())
+    if row["deleted_at"] is not None:
+        deleted.append(row["id"])
+        continue
+    buffer.append({
+        "id": row["id"],                      # int or string only, no floats
+        "reference": row["reference"],
+        "status": row["status"],
+        "total_cents": row["total_cents"],
+        "placed_at": int(row["placed_at"].timestamp()),   # epoch seconds sort and filter
+        "customer_name": row["customer_name"],
+        "customer_country": row["customer_country"],
+        "items": row["items"],
+    })
+    if len(buffer) >= BATCH:
+        client.wait_for_task(index.update_documents(buffer).task_uid)
+        buffer = []
+
+if buffer:
+    client.wait_for_task(index.update_documents(buffer).task_uid)
+if deleted:
+    client.wait_for_task(index.delete_documents(deleted).task_uid)
+
+cur.close()
+pg.close()
+json.dump({"since": high_water}, open(STATE, "w"))
+print(f"synced up to {high_water}, {len(deleted)} deletions")
+```
+
+`update_documents` maps to `PUT`, so a partial row only overwrites the fields it carries. Run the script on a schedule; the watermark file makes each run resume where the last one stopped.
+
+## Limits and constraints
+
+- **Primary key type.** A primary key must be an integer or a string containing only `a-z`, `A-Z`, `0-9`, `-`, and `_`. Floats, booleans, and `null` are rejected. A composite key such as `order:123:line:4` is invalid because of the colons; use `order_123_line_4`. See [design primary keys](/capabilities/indexing/how_to/design_primary_keys).
+- **The primary key cannot be changed** after it is set without deleting and recreating the index.
+- **Payload size.** The default maximum HTTP payload is 100 MB, adjustable with `--http-payload-size-limit` on self-hosted instances.
+- **Batch size.** For datasets over 100,000 documents, 50,000 to 100,000 documents per batch is the documented range. Fewer, larger payloads beat many small ones. See [import large datasets](/capabilities/indexing/how_to/import_large_datasets).
+- **Foreign filters cap at 1000 matching documents** in the target index, and joins hydrate one level deep only.
+- **Delete by filter is not autobatched** with other task types, so each one becomes its own batch and can slow a busy write queue. See [delete documents at scale](/capabilities/indexing/how_to/delete_documents_at_scale).
+- **Filterable attributes must be configured** before a filter or a delete by filter that uses them, otherwise the request errors.
+- **Dates** have no dedicated type. Store them as UNIX timestamps, or as strings that sort lexicographically such as `"2025-01-13"`, and declare them filterable or sortable explicitly. See [filter and sort by date](/capabilities/filtering_sorting_faceting/how_to/filter_and_sort_by_date).
+
+For a full reindex after a schema change, build into a second index and call [swap indexes](/reference/api/indexes/swap-indexes) so readers never see a partial index.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Define index relationships" href="/capabilities/indexing/joins/define_index_relationships">
+    Configure foreign keys instead of denormalizing reference data
+  </Card>
+  <Card title="Migrate from PostgreSQL" href="/resources/migration/postgresql_migration">
+    A step-by-step export and import walkthrough in Python, JavaScript, or Ruby
+  </Card>
+  <Card title="Add and update documents" href="/capabilities/indexing/how_to/add_and_update_documents">
+    The exact difference between replacing and merging documents
+  </Card>
+  <Card title="Keep an index in sync" href="/guides/keep-index-in-sync">
+    Incremental updates, drift detection, and zero-downtime reindexing
+  </Card>
+</CardGroup>

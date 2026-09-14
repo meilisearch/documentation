@@ -1,0 +1,211 @@
+---
+title: How to chunk transcripts and conversations
+description: Your meeting recordings, support calls, and podcast transcripts return fragments that make no sense out of context, and you need to know where to cut them so each piece stays searchable and playable.
+keywords: split meeting transcript for search, chunk call recordings, speaker turn chunking, transcript rag indexing, search zoom recordings, timestamp deep link search results, diarization chunk boundaries, podcast transcript search, support call transcript index, topic segmentation meeting notes
+boost: 2
+---
+
+Cut on speaker turns, never inside one, then group consecutive turns into windows of roughly 60 to 90 seconds of speech until either a size cap or a topic break closes the window. Each window becomes one Meilisearch document carrying the meeting id, the ordinal position, the start and end timestamps in seconds, the speakers involved, and a short context header (meeting title, date, participants) prefixed into the searchable text. Set `distinctAttribute` to the meeting id so one long call cannot fill the result page, and make the start timestamp sortable so a hit can deep-link into the recording at the right second.
+
+## Why transcripts resist ordinary chunking
+
+Every structural cue that makes prose easy to split is missing here. There are no headings, no sections, and automatic speech recognition output frequently arrives with unreliable sentence punctuation, so a paragraph splitter has nothing to grip. What a transcript has instead is a timeline and a speaker label per segment.
+
+Three properties make conversations harder than articles:
+
+- **The answer is rarely in the same turn as the question.** Someone asks about the renewal date and the actual date lands four turns later. A chunk holding only the question ranks for the query and answers nothing.
+- **Pronouns carry the meaning.** "We should push it to Q3" is unretrievable on its own, because the noun it refers to is upstream, sometimes minutes upstream.
+- **Turn length is wildly uneven.** A monologue runs 900 words while the next six turns are "yeah", "right", "mhm". One chunk per turn produces oversized documents mixed with noise.
+
+This is also the content type where Meilisearch's own guidance bites hardest. Ranking rules such as proximity and word position [work best on paragraph-sized text](/capabilities/full_text_search/relevancy/relevancy#chunking-large-documents), and a single field only indexes [65,535 positions](/resources/help/known_limitations#maximum-number-of-words-per-attribute). A two-hour transcript stored as one `content` field exceeds that comfortably, and the tail is silently unsearchable.
+
+## Speaker turns are the boundary, not the unit
+
+Use the turn as the smallest legal cut point and the window as the unit you actually index.
+
+A turn boundary is safe because nobody finishes another person's sentence inside the same speech segment. Cutting anywhere else splits a thought. But a turn is too small to be the document: most turns are a handful of words, and an embedding of "yeah exactly" is meaningless.
+
+So accumulate turns into a window and close it when any of these fires:
+
+1. The window exceeds your size cap (a character budget, or a duration budget of roughly 60 to 90 seconds of speech).
+2. A silence gap between turns exceeds a few seconds, which in meetings usually marks an agenda shift.
+3. A topic break is detected (see below).
+
+Then never emit a window shorter than a sentence or two. Merge runt windows forward into the next one rather than indexing them.
+
+## How to detect topic drift in a long meeting
+
+Do the cheap checks before the expensive one, because each of them costs nothing at index time.
+
+**Silence gaps.** Most diarization output includes per-segment start and end times, so the gap between the end of one turn and the start of the next is free. A gap above three to five seconds is a strong candidate boundary in scheduled meetings, weaker in casual conversation.
+
+**Speaker floor changes.** When the person holding the floor changes and stays changed for several consecutive turns, the subject usually changed with them.
+
+**Explicit markers.** Phrases such as "moving on", "next item", "let's switch to", and "any questions on that" are reliable agenda hinges and cost one regular expression to find.
+
+**Embedding drift.** Embed each turn, compare adjacent vectors by cosine similarity, and cut where similarity drops below a threshold. This works, but it costs a full embedding pass over the corpus before you index anything, and the boundaries are hard to debug when they look wrong. Reserve it for transcripts where the cheap signals are absent, such as a single-speaker podcast recorded in one take.
+
+If your transcripts come from a vendor that already emits chapters, sections, or topic labels, use those boundaries directly instead of recomputing them. {/* VERIFY: which transcription vendors expose chapter or topic segmentation in their API output */}
+
+## Making a chunk interpretable on its own
+
+A window pulled out of a two-hour call needs enough surrounding context to read as a standalone document, both for a human scanning results and for the embedder.
+
+Prefix a compact context header into the indexed text: the meeting title, the date, and the speakers in this window. "Q3 planning review, 2026-02-11, Priya Raman and Tom Oyelaran" costs a few dozen bytes and repairs most pronoun problems by giving the chunk nouns it otherwise lacks. Keep speaker names attached to their lines inside the body too, so a query for a person plus a topic matches both.
+
+Resist the urge to solve this with large overlaps. Overlap duplicates text, inflates the index, and produces near-identical chunks that compete with each other in the result list. Carrying one previous turn into the next window is usually enough, and the context header does the rest.
+
+The header matters twice over, because on the semantic side Meilisearch does not embed your raw document. It renders the embedder's [`documentTemplate`](/capabilities/hybrid_search/advanced/document_template_best_practices) and truncates the result at `documentTemplateMaxBytes`, which defaults to 400 bytes. Whatever you want the vector to know has to fit in that budget, so put the header first.
+
+## Timestamps that survive into a deep link
+
+Store `start_s` and `end_s` as numbers, not formatted strings. Numbers can go in `sortableAttributes` and `filterableAttributes`, which is what lets you sort a single call chronologically or fetch the neighboring windows around a hit. A formatted `"01:12:04"` string can do neither.
+
+Build the playback URL from that number. Most hosted players accept a start offset in the query string, so a result opens the recording at the exact second the window begins. {/* VERIFY: exact start-time query parameter format for the specific player or hosting platform in use */}
+
+## A complete transcript chunking pipeline
+
+This script reads a diarized transcript as JSON, groups turns into windows, attaches metadata, configures the index, and runs a search. It works against a Meilisearch Cloud project or any self-hosted instance.
+
+```javascript
+// npm install meilisearch
+//
+// export MEILISEARCH_URL="https://ms-example.meilisearch.io"
+// export MEILISEARCH_KEY="$MEILISEARCH_ADMIN_KEY"
+//
+// node chunk-transcript.mjs q3-planning.json
+//
+// Input shape (one entry per diarized speech segment):
+// { "meeting_id": "q3-planning", "title": "Q3 planning review",
+//   "date": "2026-02-11",
+//   "turns": [{ "speaker": "Priya Raman", "start": 0.0, "end": 7.4,
+//               "text": "Let's start with the renewal pipeline." }] }
+
+import { readFile } from 'node:fs/promises'
+import { MeiliSearch } from 'meilisearch'
+
+const MAX_CHARS = 1200        // size cap for one window
+const MAX_SECONDS = 90        // duration cap for one window
+const GAP_SECONDS = 4         // silence long enough to look like a topic shift
+const MIN_CHARS = 200         // below this, merge forward instead of emitting
+const SHIFT = /\b(moving on|next item|let's switch to|next up|any questions on that)\b/i
+
+function windowize(turns) {
+  const windows = []
+  let buffer = []
+
+  const flush = () => {
+    if (buffer.length === 0) return
+    windows.push(buffer)
+    buffer = []
+  }
+
+  for (const turn of turns) {
+    const previous = buffer.at(-1)
+    const chars = buffer.reduce((total, t) => total + t.text.length, 0)
+    const seconds = previous ? previous.end - buffer[0].start : 0
+    const gap = previous ? turn.start - previous.end : 0
+
+    const shouldClose =
+      buffer.length > 0 &&
+      chars >= MIN_CHARS &&
+      (chars + turn.text.length > MAX_CHARS ||
+        seconds > MAX_SECONDS ||
+        gap > GAP_SECONDS ||
+        SHIFT.test(turn.text))
+
+    if (shouldClose) flush()
+    buffer.push(turn)
+  }
+  flush()
+  return windows
+}
+
+const source = JSON.parse(await readFile(process.argv[2], 'utf8'))
+const { meeting_id: meetingId, title, date, turns } = source
+
+const documents = windowize(turns).map((window, position) => {
+  const speakers = [...new Set(window.map((turn) => turn.speaker))]
+  const header = `${title}, ${date}, ${speakers.join(' and ')}`
+  const body = window.map((turn) => `${turn.speaker}: ${turn.text}`).join('\n')
+  const startSeconds = Math.floor(window[0].start)
+
+  return {
+    // Primary keys accept only a-z, A-Z, 0-9, hyphen, and underscore.
+    id: `${meetingId}--${position}`,
+    meeting_id: meetingId,
+    position,
+    title,
+    date,
+    speakers,
+    start_s: startSeconds,
+    end_s: Math.ceil(window.at(-1).end),
+    url: `https://recordings.example.com/${meetingId}?t=${startSeconds}`,
+    // Header first: it is what the embedder sees before truncation.
+    content: `${header}\n\n${body}`,
+  }
+})
+
+const client = new MeiliSearch({
+  host: process.env.MEILISEARCH_URL,
+  apiKey: process.env.MEILISEARCH_KEY,
+})
+const index = client.index('transcripts')
+
+// Settings first: changing distinctAttribute later reindexes everything.
+await client.waitForTask(
+  (
+    await index.updateSettings({
+      searchableAttributes: ['title', 'speakers', 'content'],
+      filterableAttributes: ['meeting_id', 'speakers', 'date', 'start_s'],
+      sortableAttributes: ['start_s'],
+      distinctAttribute: 'meeting_id',
+    })
+  ).taskUid,
+)
+
+await client.waitForTask((await index.addDocuments(documents)).taskUid)
+
+const results = await index.search('when does the contract renew', {
+  limit: 5,
+  showRankingScore: true,
+  attributesToRetrieve: ['meeting_id', 'position', 'speakers', 'start_s', 'url'],
+  attributesToCrop: ['content'],
+  cropLength: 40,
+})
+
+console.log(results.hits)
+```
+
+Two details are load-bearing. `searchableAttributes` is ordered, so attributes listed earlier weigh more, which is why the title and speaker list sit above the body. And [`distinctAttribute`](/capabilities/full_text_search/how_to/configure_distinct_attribute) returns only the best-ranked window per meeting, which is almost always what a search over calls should do. Turn it off while evaluating a boundary change, because you want to see every competing window.
+
+To show a hit in context, filter the same index on `meeting_id = "<id>"` with `position` near the hit and sort by `start_s`, which reconstructs the surrounding conversation without storing overlapping copies.
+
+## Limits and constraints
+
+- **Meilisearch does not transcribe, diarize, or chunk.** All of that happens in your pipeline before [adding documents](/capabilities/indexing/how_to/add_and_update_documents). There is no built-in splitter, no audio ingestion, and no speaker detection.
+- **65,535 positions per attribute.** Words beyond that in one field are ignored silently, which is why a whole transcript cannot live in a single `content` value. See [known limitations](/resources/help/known_limitations#maximum-number-of-words-per-attribute).
+- **`documentTemplateMaxBytes` defaults to 400 bytes.** The embedder reads the rendered template truncated to that size, not the full window. Raising it regenerates embeddings for every affected document.
+- **Primary key values are capped at 511 bytes** and accept only `a-z`, `A-Z`, `0-9`, `-`, and `_`, so build ids from the meeting id and position, never from a speaker name or a quoted line.
+- **Individual filterable values are capped at 468 bytes**, which is ample for speaker names and meeting ids.
+- **Numeric precision.** Integers are exact between -2^53 and 2^53, so second-level or millisecond-level offsets are safe.
+- **One `distinctAttribute` per index**, and changing it reindexes everything, so set it before the first import.
+- **1000 results per search by default**, adjustable through the `maxTotalHits` pagination setting.
+- **No recommended window size is published.** The documentation says paragraph-sized and gives no number. The 60 to 90 second range above is a starting point to test against your own corpus, not a Meilisearch specification.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="How to chunk documents for search" href="/guides/how-to-chunk-documents">
+    The strategies, metadata, and evaluation loop behind every chunking decision
+  </Card>
+  <Card title="Choosing chunk size for semantic search" href="/guides/choosing-chunk-size">
+    Test two window sizes on your corpus instead of guessing
+  </Card>
+  <Card title="Configure distinct attribute" href="/capabilities/full_text_search/how_to/configure_distinct_attribute">
+    Keep one long call from filling the result page
+  </Card>
+  <Card title="Document template best practices" href="/capabilities/hybrid_search/advanced/document_template_best_practices">
+    Control what the embedder reads from each window
+  </Card>
+</CardGroup>

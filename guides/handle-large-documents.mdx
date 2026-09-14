@@ -1,0 +1,182 @@
+---
+title: How to handle documents that exceed size limits
+description: One of your documents is too big to index as a single record, and you need to split it without ending up with ten near-identical results for the same source file.
+keywords: document too large to index, record size limit search engine, split document into chunks with parent id, payload_too_large error, one result per document not per chunk, deduplicate chunks in search results, silently truncated text field, maximum words per attribute, show matching passage in result, index a 400 page manual
+boost: 2
+---
+
+Meilisearch has no per-document byte cap, so an oversized document is rarely rejected outright. It is quietly degraded instead: only the first 65,535 positions of any single attribute are indexed, and everything after that is ignored with no error. The fix is to stop treating the file as one record. Split it into section-sized documents that all carry the same `doc_id`, set `distinctAttribute` to `doc_id` so a search returns one hit per source file, and add `attributesToCrop` so the hit shows the passage that actually matched instead of the opening paragraph. Before doing any of that, check which limit you are really hitting, because three different problems produce the same symptom.
+
+## Which limit are you actually hitting
+
+| Limit | Value | What happens when you cross it |
+| --- | --- | --- |
+| Positions per attribute | 65,535 | Words past the limit are silently ignored. No error, no task failure. |
+| HTTP payload | 100 MB by default | The request is rejected. This covers the whole batch, not one document. |
+| Meilisearch Cloud interface upload | 20 MB | The browser upload is refused. Scripted uploads are not affected. |
+| Primary key value | 511 bytes | The task containing the document fails. |
+| Individual filterable value | 468 bytes | Applies to each value, not to the whole array. |
+| Attributes per index | 65,536 | An error is thrown. |
+
+All of these are listed on the [known limitations](/resources/help/known_limitations) page. Only the payload limit is adjustable, with [`--http-payload-size-limit`](/resources/self_hosting/configuration/reference#payload-limit-size) on a self-hosted instance.
+
+The position limit is the one that bites, because it fails silently and because positions are not words. A hard separator such as a comma consumes eight positions on its own, so a densely punctuated field reaches 65,535 well before it reaches 65,535 words. A book, a 400-page manual, or a merged transcript dumped into one `content` field loses its tail, and nothing in the task response tells you.
+
+A `payload_too_large` response is a different problem with a different fix: send fewer documents per request. See [import large datasets](/capabilities/indexing/how_to/import_large_datasets) for batch sizing.
+
+## What to try before splitting
+
+Splitting multiplies your document count and moves ranking from document level to chunk level, so it is worth spending five minutes on the cheaper options first.
+
+**Remove fields you neither search nor display.** Documents serialized straight out of a database routinely carry raw HTML, audit columns, and nested objects that nothing queries. Restricting [`searchableAttributes`](/capabilities/full_text_search/how_to/configure_searchable_attributes) and [`displayedAttributes`](/capabilities/full_text_search/how_to/configure_displayed_attributes) keeps them out of the matching path.
+
+**Strip markup and normalize whitespace.** Tags and indentation consume positions and contribute nothing to matching.
+
+**Move the long body out of the index.** If the full text only needs to be displayed, not searched, keep a URL or a database key in the document and fetch the body when the user opens the result. [Document relations](/capabilities/indexing/joins/define_index_relationships) let you keep the heavy field in a separate index and reference it by id.
+
+If, after that, a single logical unit still holds more text than a reader would ever want returned in one blob, split it. That is usually anything longer than a few pages.
+
+## Splitting with a shared parent id
+
+Each chunk becomes its own Meilisearch document. The split itself should follow the document's own structure (headings, sections, slides, speaker turns) rather than a raw character count, which is covered in depth in [how to chunk documents for search](/guides/how-to-chunk-documents). What matters here is the metadata every chunk must carry:
+
+- **`doc_id`**, identical across all chunks of one source. This is what collapses the results back together.
+- **A unique primary key** for the chunk itself, such as `${doc_id}-${n}`, under 511 bytes.
+- **The heading or section path**, both for display and because it is worth searching.
+- **A deep link**, so a result opens at the right section instead of the top of the file.
+- **An ordinal**, so you can reassemble or show neighboring chunks later.
+
+Keep shared metadata such as title, author, and permissions on every chunk. Duplicating it costs storage but means a filter or a facet works without a join.
+
+## Collapsing chunks back into one result
+
+Without deduplication, a query matching eight sections of the same manual fills the first page with that manual. Two mechanisms fix this, and they are not interchangeable.
+
+[`distinctAttribute`](/capabilities/full_text_search/how_to/configure_distinct_attribute) is an index setting. Set it to `doc_id` and every search on that index returns at most one document per `doc_id`. There can be only one `distinctAttribute` per index, and changing it reindexes the whole index, so set it before adding documents rather than after.
+
+`distinct` is a search parameter that does the same job per query and takes precedence over the setting. The attribute must be listed in `filterableAttributes` first. Use it when some queries want one hit per source file and others want every matching section, for example a "show all matches in this document" view.
+
+Either way, Meilisearch applies [ranking rules](/capabilities/full_text_search/relevancy/ranking_rules) first and then returns the highest-ranked chunk for each distinct value. That is the behavior you want: the surviving hit is the best-matching section, not the first one.
+
+## Returning the passage that matched
+
+Because the surviving chunk is already the best match, a snippet drawn from it lands on the right text. Add `attributesToCrop` to trim the field around the matched terms and `attributesToHighlight` to wrap them in tags. Both write into a `_formatted` object on each hit, leaving the raw fields untouched. `cropLength` defaults to 10 words and `cropMarker` defaults to `"..."`. Full parameter details are in [search with snippets](/capabilities/full_text_search/getting_started/search_with_snippets).
+
+Display the heading path alongside the snippet. A result reading "Employee handbook > Parental leave" plus 40 cropped words is far more useful than the document title and its first sentence.
+
+## A complete example
+
+This splits one oversized source document, configures the index so chunks collapse to one hit per source, indexes it, and searches with cropping. Set `MEILISEARCH_URL` and `MEILISEARCH_KEY` before running it.
+
+```javascript
+import { Meilisearch } from 'meilisearch'
+
+const client = new Meilisearch({
+  host: process.env.MEILISEARCH_URL,
+  apiKey: process.env.MEILISEARCH_KEY
+})
+const index = client.index('handbook')
+
+const MAX_CHARS = 1200
+
+const source = {
+  id: 'hb-2026',
+  title: 'Employee handbook',
+  url: 'https://example.com/handbook',
+  body: `# Parental leave
+Employees are entitled to sixteen weeks of paid parental leave.
+
+Leave may be taken in up to three separate blocks within the first year.
+
+# Expenses
+Submit receipts within thirty days of the purchase date.`
+}
+
+// Split on headings, then on paragraphs when a section is too long.
+function chunk (doc) {
+  const out = []
+  for (const section of doc.body.split(/\n(?=#{1,6}\s)/)) {
+    const lines = section.trim().split('\n')
+    const heading = lines[0].replace(/^#+\s*/, '')
+    const anchor = heading.toLowerCase().replace(/[^a-z0-9]+/g, '-')
+    const paragraphs = lines.slice(1).join('\n')
+      .split(/\n{2,}/).map(p => p.trim()).filter(Boolean)
+
+    let buffer = ''
+    const flush = () => {
+      if (!buffer) return
+      out.push({
+        id: `${doc.id}-${out.length}`,
+        doc_id: doc.id,
+        title: doc.title,
+        heading,
+        position: out.length,
+        url: `${doc.url}#${anchor}`,
+        content: `${heading}\n${buffer}`
+      })
+      buffer = ''
+    }
+
+    for (const paragraph of paragraphs) {
+      if (buffer && buffer.length + paragraph.length > MAX_CHARS) flush()
+      buffer = buffer ? `${buffer}\n\n${paragraph}` : paragraph
+    }
+    flush()
+  }
+  return out
+}
+
+// Settings first: changing distinctAttribute later reindexes everything.
+await index.updateSettings({
+  searchableAttributes: ['title', 'heading', 'content'],
+  filterableAttributes: ['doc_id'],
+  distinctAttribute: 'doc_id',
+  displayedAttributes: ['doc_id', 'title', 'heading', 'url', 'content']
+})
+
+const task = await index.addDocuments(chunk(source))
+await client.waitForTask(task.taskUid)
+
+const results = await index.search('parental leave', {
+  attributesToCrop: ['content'],
+  cropLength: 40,
+  attributesToHighlight: ['content'],
+  limit: 10
+})
+
+for (const hit of results.hits) {
+  console.log(`${hit.title} > ${hit.heading}`)
+  console.log(hit._formatted.content)
+  console.log(hit.url)
+}
+```
+
+Swap `distinctAttribute` for a per-query `distinct: 'doc_id'` in the search call if you want some queries to return every matching section.
+
+## Limits and constraints
+
+- **65,535 positions per attribute**, silently enforced. Punctuation consumes positions, so treat this as a ceiling well below 65,535 words.
+- **100 MB payload** by default, covering the entire request body. Adjustable only on self-hosted instances.
+- **20 MB** for uploads through the Meilisearch Cloud interface. Use the add documents endpoint or a script for anything larger.
+- **511 bytes** for a primary key value and **468 bytes** for each individual filterable value.
+- **One `distinctAttribute` per index.** Setting it triggers a full reindex.
+- **`distinct` as a search parameter requires the attribute to be filterable**, and overrides `distinctAttribute` for that query.
+- **4,294,967,296 documents per index**, so chunk multiplication is not a practical concern for document count. Search engines that bill per record price this differently: a 40-chunk article becomes 40 billable records on Algolia. {/* VERIFY: whether every chunk counts as a separate billable record under current Algolia pricing */}
+- **No documented per-document byte limit** in Meilisearch. If a document is rejected, the cause is the payload size or the primary key, not the document body.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="How to chunk documents for search" href="/guides/how-to-chunk-documents">
+    Choose split boundaries, decide whether overlap pays for itself, and evaluate a chunking change.
+  </Card>
+  <Card title="Configure distinct attribute" href="/capabilities/full_text_search/how_to/configure_distinct_attribute">
+    The setting and the search parameter, with response examples.
+  </Card>
+  <Card title="Search with snippets" href="/capabilities/full_text_search/getting_started/search_with_snippets">
+    Cropping and highlighting parameters in full.
+  </Card>
+  <Card title="Import large datasets" href="/capabilities/indexing/how_to/import_large_datasets">
+    Batch sizing, payload tuning, and recovering from indexing errors.
+  </Card>
+</CardGroup>

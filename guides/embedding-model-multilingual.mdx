@@ -1,0 +1,173 @@
+---
+title: Choosing an embedding model for multilingual search
+description: Your semantic search works in English and quietly degrades in German, Japanese, or Arabic, and you need to know which embedding model to switch to and whether to split your index by language.
+keywords: multilingual embedding model, cross lingual search, query in english documents in french, best multilingual embeddings for search, multilingual-e5 vs cohere multilingual, one index per language search, non english semantic search quality, japanese chinese embeddings search, multilingual vector search meilisearch, language detection search index, translate query or translate documents, cjk semantic search
+boost: 2
+---
+
+For most applications the right answer is one multilingual model over one index, not one model per language. An embedding model that was trained on many languages places "red shoes", "chaussures rouges", and "rote Schuhe" near each other in the same vector space, so a single index serves every language and cross-language queries work for free. Concrete starting points documented for Meilisearch are Cohere `embed-multilingual-light-v3.0` (384 dimensions), `intfloat/multilingual-e5-large` on HuggingFace (1,024), and Cohere `embed-v4.0` or Voyage `voyage-4` when quality matters more than cost. The part that genuinely does need splitting by language is the keyword side, not the vector side, and that distinction drives every decision below.
+
+## Which models hold up outside English
+
+An English-only model does not throw an error on French input. It tokenizes the text into subword fragments it has weak representations for, produces a vector anyway, and returns results that look plausible and rank badly. The failure is silent, which is why it usually reaches production.
+
+These are the multilingual options documented for Meilisearch, with the dimensions each produces:
+
+| Model | Source | Dimensions | Notes |
+|---|---|---|---|
+| `embed-multilingual-light-v3.0` | Cohere via `rest` | 384 | Cheapest multilingual option, good default |
+| `embed-multilingual-v3.0` | Cohere via `rest` | 1,024 | Higher quality v3 multilingual |
+| `embed-v4.0` | Cohere via `rest` | 256, 512, 1,024, or 1,536 | Latest generation, text and images |
+| `voyage-4` / `voyage-4-large` | Voyage via `rest` | 256, 512, 1,024, or 2,048 | Strong general-purpose multilingual retrieval |
+| `jina-embeddings-v4` | Jina via `rest` | 128 to 2,048 | 32K context, multimodal |
+| `intfloat/multilingual-e5-large` | HuggingFace | 1,024 | Open weights, no per-request cost |
+| `paraphrase-multilingual-MiniLM-L12-v2` | HuggingFace | 384 | Lightweight, runs locally |
+| `@cf/qwen/qwen3-embedding-0.6b` | Cloudflare via `rest` | 1,024 | Edge network, low query latency |
+
+Everything named `-en-`, `english`, or `bge-*-en-v1.5` is English-only and will degrade on other languages. {/* VERIFY: whether OpenAI text-embedding-3-small and -3-large should be listed as multilingual; they are trained on multiple languages but quality by language is not published per language */}
+
+Two caveats that bite in practice. The E5 family expects its inputs to be prefixed with `query: ` and `passage: `, and retrieval quality drops noticeably when the prefixes are missing or applied asymmetrically. {/* VERIFY: current prefix requirement for intfloat/multilingual-e5-* and whether v2 relaxed it */} And a model's language list is not a quality list: coverage of a language in training data is not the same as good retrieval in it, and low-resource languages usually sit far below the headline benchmark number. {/* VERIFY: per-language quality spread on MTEB/MIRACL for the models above */}
+
+## Do you actually need cross-lingual retrieval
+
+"Multilingual" covers two different capabilities, and they have different costs.
+
+**Multilingual within a language.** A German query retrieves German documents, a Japanese query retrieves Japanese documents, and the model handles each language competently. This is what most catalogs, help centers, and marketplaces need, because content and users are already paired by locale.
+
+**Cross-lingual, or aligned.** An English query retrieves French documents because the two languages share one vector space. You need this when your corpus is not translated (a single English product catalog served to users in eight countries), when user-generated content arrives in whatever language the author wrote in, or when you index legal or technical documents that exist only in the original language.
+
+The check takes five minutes: embed a handful of documents in language A, query them in language B, and look at whether the right documents rank first. If they do not, the model handles each language separately but is not aligned across them, and the fix is not a bigger model. It is either translating queries before they reach the index or storing a translated field per document and letting the keyword side do that work.
+
+## One multilingual index, or one index per language
+
+The documentation on [handling multilingual datasets](/capabilities/indexing/how_to/handle_multilingual_data) recommends one index per language, and that recommendation is about tokenization, not embeddings. Keyword search needs language-appropriate stop words, separators, and tokenizers, and languages that do not separate words with spaces (Chinese, Japanese) or that build compounds (German) genuinely behave better in their own index.
+
+Embeddings pull the other way. One multilingual model over one index means one embedder configuration, one set of vectors, one place to tune, and cross-language recall by default. Splitting into per-language indexes means running the same embedder configuration N times and merging results in the application.
+
+The practical resolution:
+
+- **Under roughly 1M documents, Latin-script languages, mostly overlapping content**: one index. Declare per-language fields with [`localizedAttributes`](/reference/api/settings/get-localizedattributes) so each field gets the right tokenizer, and pass [`locales`](/reference/api/search/search-with-post) on the query so the search side matches.
+- **Chinese, Japanese, Korean, Thai, or Arabic in the mix, or more than about 1M documents**: one index per language, each with the same multilingual embedder, queried together with [federated search](/capabilities/multi_search/getting_started/federated_search) when a user should see results from more than one language at once.
+- **One dominant language plus a long tail**: give the dominant language its own index and its own tuning, and put the tail in a shared multilingual index. This is where [multiple embedders](/capabilities/hybrid_search/advanced/multiple_embedders) earn their place, since a language-specific model and a multilingual fallback can coexist on one index.
+
+Do not mix Chinese and Japanese in the same field. Automatic detection cannot reliably separate them, and the wrong tokenizer produces tokens that never match.
+
+## The 400-byte template trap
+
+Meilisearch builds each document's embedding from a [`documentTemplate`](/capabilities/hybrid_search/advanced/document_template_best_practices), and the rendered output is truncated at `documentTemplateMaxBytes`, which defaults to **400 bytes**. Bytes, not characters. Latin text is roughly one byte per character, so 400 bytes is about 400 characters. Cyrillic and Greek are two bytes per character, and Chinese, Japanese, Korean, and most Arabic characters are three. The same template that captures a full English product description captures about 130 characters of Japanese before truncation.
+
+Raise `documentTemplateMaxBytes` for non-Latin corpora, and check what your template actually renders to before assuming the embedding saw the whole field.
+
+## A complete multilingual setup
+
+This block creates an index with per-language fields, wires up a Cohere multilingual embedder through the `rest` source, and runs both a same-language and a cross-language query.
+
+```javascript
+// npm install meilisearch
+import { Meilisearch } from 'meilisearch'
+
+const client = new Meilisearch({
+  host: process.env.MEILISEARCH_URL, // for example https://your-project.meilisearch.io
+  apiKey: process.env.MEILISEARCH_KEY,
+})
+
+const index = client.index('catalog')
+
+// 1. Documents carry one field per language, suffixed so patterns can target them.
+await client.waitForTask(
+  (await index.addDocuments([
+    { id: 1,
+      name_en: 'Waterproof hiking boots', desc_en: 'Leather boots with a sealed membrane for wet trails',
+      name_fr: 'Chaussures de randonnee impermeables', desc_fr: 'Bottines en cuir a membrane etanche pour sentiers humides',
+      name_de: 'Wasserdichte Wanderschuhe', desc_de: 'Lederstiefel mit versiegelter Membran fuer nasse Wege' },
+    { id: 2,
+      name_en: 'Insulated water bottle', desc_en: 'Vacuum flask that keeps drinks cold for 24 hours',
+      name_fr: 'Gourde isotherme', desc_fr: 'Bouteille sous vide qui garde les boissons fraiches 24 heures',
+      name_de: 'Isolierte Trinkflasche', desc_de: 'Vakuumflasche, die Getraenke 24 Stunden kalt haelt' },
+  ])).taskUid
+)
+
+// 2. Tokenization: bind each field pattern to a locale so the right tokenizer runs.
+await client.waitForTask(
+  (await index.updateSettings({
+    searchableAttributes: ['name_en', 'name_fr', 'name_de', 'desc_en', 'desc_fr', 'desc_de'],
+    localizedAttributes: [
+      { attributePatterns: ['*_en'], locales: ['eng'] },
+      { attributePatterns: ['*_fr'], locales: ['fra'] },
+      { attributePatterns: ['*_de'], locales: ['deu'] },
+    ],
+  })).taskUid
+)
+
+// 3. One multilingual embedder over all three languages.
+//    documentTemplateMaxBytes is raised because three languages share one rendered string.
+await client.waitForTask(
+  (await index.updateEmbedders({
+    'catalog-multilingual': {
+      source: 'rest',
+      url: 'https://api.cohere.com/v1/embed',
+      apiKey: process.env.COHERE_API_KEY,
+      dimensions: 384,
+      documentTemplate:
+        '{{doc.name_en}}: {{doc.desc_en}} | {{doc.name_fr}}: {{doc.desc_fr}} | {{doc.name_de}}: {{doc.desc_de}}',
+      documentTemplateMaxBytes: 1200,
+      request: {
+        model: 'embed-multilingual-light-v3.0',
+        texts: ['{{text}}', '{{..}}'],
+        input_type: 'search_document',
+      },
+      response: { embeddings: ['{{embedding}}', '{{..}}'] },
+    },
+  })).taskUid
+)
+
+const embedder = 'catalog-multilingual'
+
+// 4a. Same-language query. `locales` pins query tokenization to German.
+console.log(await index.search('wasserdichte schuhe', {
+  hybrid: { semanticRatio: 0.5, embedder },
+  locales: ['deu'],
+}))
+
+// 4b. Cross-lingual query: English words, French and German documents.
+//     Pure semantic, because the keyword half has nothing to match on.
+console.log(await index.search('boots for rainy hikes', {
+  hybrid: { semanticRatio: 1.0, embedder },
+  rankingScoreThreshold: 0.5,
+}))
+
+// 4c. Restrict results to one language by searching only that language's fields.
+console.log(await index.search('gourde', {
+  hybrid: { semanticRatio: 0.3, embedder },
+  locales: ['fra'],
+  attributesToSearchOn: ['name_fr', 'desc_fr'],
+}))
+```
+
+## Limits and constraints
+
+- **`documentTemplateMaxBytes` defaults to 400 bytes** and truncates the rendered template. In UTF-8, Cyrillic and Greek cost about two bytes per character and CJK about three, so the effective character budget is a third of the Latin one.
+- **`locales` on a search overrides `localizedAttributes` for that request.** A mis-specified value silently overrides carefully tuned index settings for that one query.
+- **Locale values are ISO 639-1 or ISO 639-3 codes** (for example `fr` or `fra`, `ja` or `jpn`, `zh` or `zho`, and `cmn` for Mandarin specifically). A code outside the accepted list is rejected.
+- **`semanticRatio` runs from `0.0` to `1.0` and defaults to `0.5`**, and `hybrid.embedder` is required. There is no implicit default embedder.
+- **Changing `model`, `source`, `dimensions`, or `documentTemplate` re-embeds every document.** Switching from an English-only model to a multilingual one is a full reindex with a full embedding bill, so evaluate on a sample index first.
+- **All embedders on one index must be configured separately**, and a composite embedder's indexing and search models must produce the same number of dimensions.
+- **Binary quantization is documented as effective above 1,400 dimensions and less effective below 512.** A 384-dimension multilingual model is the wrong candidate for it. See [binary quantization](/capabilities/hybrid_search/advanced/binary_quantization).
+- **Per-language retrieval quality is not published per model** by most providers, so treat any single benchmark number as an aggregate and measure on your own corpus in your own languages.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Handling multilingual datasets" href="/capabilities/indexing/how_to/handle_multilingual_data">
+    Index-per-language strategy, tokenizers, and aligning query and document tokenization.
+  </Card>
+  <Card title="Which embedder should I choose" href="/capabilities/hybrid_search/how_to/choose_an_embedder">
+    Provider catalog, dimensions, cost, and why smaller models often win.
+  </Card>
+  <Card title="Tokenization" href="/capabilities/indexing/advanced/tokenization">
+    How Meilisearch splits text into tokens, and where language-specific rules apply.
+  </Card>
+  <Card title="Keyword, semantic or hybrid" href="/guides/keyword-semantic-or-hybrid">
+    Choosing a retrieval mode from the shape of your data and your queries.
+  </Card>
+</CardGroup>

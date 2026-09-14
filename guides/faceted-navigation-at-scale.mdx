@@ -1,0 +1,180 @@
+---
+title: How to build fast faceted navigation at scale
+description: Your facet sidebar has thousands of brands or tags, facet counts are adding milliseconds to every search, and selecting one value collapses every other option in the same group to zero.
+keywords: facet sidebar slow, too many facet values, high cardinality facets, disjunctive facets, or filters same facet, facet count latency, facetDistribution performance, brand filter type ahead, maxValuesPerFacet tuning, sortFacetValuesBy count, ecommerce filter sidebar, refinement list, facet zero counts
+boost: 2
+---
+
+Facet cost scales with the number of attributes you put in the `facets` search parameter multiplied by the number of distinct values each one has in the matching set, so a sidebar that stays fast at ten million documents is one that requests four facets instead of forty. Four levers do most of the work: request only the facets the page renders, lower `maxValuesPerFacet` to the number of values you display, declare each attribute in `filterableAttributes` with only the features it needs, and hand long value lists to the [facet search endpoint](/capabilities/filtering_sorting_faceting/how_to/facet_search) instead of a larger distribution. Disjunctive behavior, where selecting "Red" does not zero out "Blue", is not a setting. You build it with [multi-search](/capabilities/multi_search/overview).
+
+## What a facet distribution actually costs
+
+Every attribute you list in `facets` makes Meilisearch count documents for each distinct value of that attribute across the whole matching set, not just the page of hits you retrieve. That is why facet cost tracks cardinality rather than `limit`, and why a broad query is more expensive to facet than a narrow one.
+
+You do not have to guess how much it costs. Set `showPerformanceDetails` to `true` on a search request and read the `search > facet distribution` stage, which reports the facet work in isolation from ranking and formatting. If that stage dominates, the fix is almost always fewer attributes or fewer values, not a bigger machine. See [debug search performance](/capabilities/full_text_search/advanced/debug_search_performance) for the full stage list.
+
+Two habits inflate this number more than anything else:
+
+- **Requesting facets the page does not render.** `facets` accepts wildcards, so `["*"]` or `["specs.*"]` can quietly pull a distribution for every filterable attribute that matches. Convenient while prototyping, expensive in production. List the attributes explicitly.
+- **Leaving `maxValuesPerFacet` at the default of 100 when the sidebar shows 10.** Meilisearch computes and returns up to that many values per attribute. Set it slightly above what you render, for example 12 or 15 for a list of 10 with a "Show more" affordance.
+
+Indexing cost is separate and is controlled by [granular filterable attributes](/capabilities/filtering_sorting_faceting/how_to/configure_granular_filters). By default, adding an attribute to `filterableAttributes` enables equality filters, comparison filters, and facet search all at once. An internal `tenant_id` needs equality only. A `price` field needs comparison but never facet search. Setting a restrictive `"*"` default and overriding per attribute cuts the structures Meilisearch builds at indexing time, as described in [optimize facet performance](/capabilities/filtering_sorting_faceting/advanced/optimize_facet_performance).
+
+## How to handle a facet with thousands of values
+
+A checkbox list is the wrong interface for 5,000 brands or 10,000 cities. Raising `maxValuesPerFacet` to cover them makes every search slower and every payload larger, and the user still cannot find their brand by scrolling.
+
+The pattern that works is a hybrid. Show the top values from `facetDistribution` in the sidebar, ordered by count, and put a search input under them. When the user types, call `POST /indexes/{index_uid}/facet-search` with `facetName` and `facetQuery`, and pass the current `q` and `filter` so the suggestions stay in context. Searching "ni" without `q` returns Nike, Nikon, and Nintendo. With `q: "running shoes"`, it returns the brands that actually sell running shoes.
+
+Three properties of facet search decide whether it fits your data:
+
+- It matches on the **first term of `facetQuery` only**. Typing "Austen" does not find "Jane Austen"; typing "Jane" does. If you need mid-value matching, run a normal search and read `facetDistribution` instead.
+- It works on **string fields only**. Meilisearch stores numbers as `float64`, and prefix matching on a float's textual form is unreliable, so numeric facets are not searchable. Store the value as a string at indexing time if you genuinely need type-ahead on it.
+- Its counts are **estimates by default**. Set `exhaustiveFacetCount` to `true` when the number is shown to a customer and accuracy matters more than a millisecond.
+
+## How to do disjunctive faceting correctly
+
+Conjunctive faceting is the naive behavior: apply every active filter to the query, then count facets over what survives. Select "Red" and the color group shows Red with a count and every other color at zero, because no document is both Red and Blue. Users read that as a broken filter.
+
+Disjunctive faceting fixes it by counting each group against a result set that excludes that group's own filters. Meilisearch has no built-in mode for this, and it does not need one: [multi-search](/capabilities/multi_search/overview) sends the whole set in a single HTTP request. The rule is one query per facet group that has an active selection, with that group's filters removed and `limit: 0` so Meilisearch skips ranking and document retrieval, plus one main query carrying all filters that returns the hits and the counts for untouched groups. Merging is a plain object assign, because each group appears in exactly one response. {/* VERIFY: Algolia's InstantSearch libraries perform this query fan-out inside the client rather than leaving it to application code */}
+
+Only fan out for groups the user has actually filtered on. With three active selections you send four queries. With none you send one. The full walkthrough, including the filter builder, is in [build disjunctive facets](/capabilities/filtering_sorting_faceting/advanced/disjunctive_facets).
+
+## How to order facet values so the sidebar helps
+
+`sortFacetValuesBy` accepts exactly two orders, `alpha` (ascending alphanumeric) and `count` (descending document count), and it is set per attribute with `*` as the fallback. The default is `{"*": "alpha"}`.
+
+Alphabetical is the wrong default for discovery facets. On a brand or tag list truncated to 12 values, `alpha` shows whatever starts with A, which is close to random from the user's point of view. Use `count` for any facet where the head of the distribution is what people want: brand, category, tag, color, city.
+
+Keep `alpha` where the values form a vocabulary the user reads rather than scans, and note the gap in between: neither order handles a domain with an intrinsic sequence. Clothing sizes sort as L, M, S under `alpha` and by popularity under `count`, neither of which is XS through XXL. For those, request the values from Meilisearch and reorder them in the UI against a fixed list you control.
+
+Two more sidebar rules that are about product design rather than configuration. Hide zero-count values rather than rendering dead checkboxes, except inside a disjunctive group where a zero is meaningful information. And resist adding a facet because the attribute exists: every group you add costs a distribution on every search and dilutes the ones that drive refinement.
+
+## A working example
+
+This configures an index for scale and then runs a disjunctive search and a brand type-ahead against it. Set `MEILISEARCH_URL` and `MEILISEARCH_KEY` before running.
+
+```javascript
+// npm install meilisearch
+import { Meilisearch } from 'meilisearch'
+
+const client = new Meilisearch({
+  host: process.env.MEILISEARCH_URL, // for example https://your-project.meilisearch.io
+  apiKey: process.env.MEILISEARCH_KEY,
+})
+
+const INDEX = 'products'
+const products = client.index(INDEX)
+
+// 1. Give every attribute only the facet features it needs.
+await client.waitForTask(
+  (
+    await products.updateFilterableAttributes([
+      {
+        attributePatterns: ['*'], // restrictive default
+        features: { facetSearch: false, filter: { equality: true, comparison: false } },
+      },
+      {
+        attributePatterns: ['brand'], // thousands of values, needs type-ahead
+        features: { facetSearch: true, filter: { equality: true, comparison: false } },
+      },
+      {
+        attributePatterns: ['price', 'rating'], // numeric ranges, never type-ahead
+        features: { facetSearch: false, filter: { equality: true, comparison: true } },
+      },
+    ])
+  ).taskUid,
+)
+
+// 2. Return only as many values as the sidebar renders, ordered usefully.
+await client.waitForTask(
+  (
+    await products.updateFaceting({
+      maxValuesPerFacet: 12,
+      sortFacetValuesBy: { '*': 'alpha', brand: 'count', color: 'count' },
+    })
+  ).taskUid,
+)
+
+// 3. Disjunctive search: one extra query per group the user has filtered on.
+const FACET_GROUPS = ['brand', 'color', 'size']
+
+function filterFor(selected, excludeGroup) {
+  return Object.entries(selected)
+    .filter(([group, values]) => group !== excludeGroup && values.length > 0)
+    .map(([group, values]) => `(${values.map((v) => `${group} = "${v}"`).join(' OR ')})`)
+    .join(' AND ')
+}
+
+async function facetedSearch(q, selected) {
+  const active = FACET_GROUPS.filter((g) => (selected[g] ?? []).length > 0)
+  const inactive = FACET_GROUPS.filter((g) => !active.includes(g))
+
+  const queries = [
+    {
+      indexUid: INDEX,
+      q,
+      filter: filterFor(selected, null) || undefined,
+      facets: inactive.length > 0 ? inactive : undefined,
+      limit: 24,
+    },
+    ...active.map((group) => ({
+      indexUid: INDEX,
+      q,
+      filter: filterFor(selected, group) || undefined,
+      facets: [group],
+      limit: 0, // counts only, no hits
+    })),
+  ]
+
+  const { results } = await client.multiSearch({ queries })
+
+  return {
+    hits: results[0].hits,
+    estimatedTotalHits: results[0].estimatedTotalHits,
+    facetDistribution: Object.assign({}, ...results.map((r) => r.facetDistribution ?? {})),
+  }
+}
+
+// 4. Type-ahead inside the long brand list, scoped to the current query.
+async function searchBrands(prefix, q) {
+  const { facetHits } = await products.searchForFacetValues({
+    facetName: 'brand',
+    facetQuery: prefix,
+    q,
+  })
+  return facetHits // [{ value: 'Ridgeline', count: 42 }, ...]
+}
+
+const page = await facetedSearch('running shoes', { brand: [], color: ['Red'], size: [] })
+console.log(page.facetDistribution) // color still shows Blue, Green, and their counts
+console.log(await searchBrands('rid', 'running shoes'))
+```
+
+## Limits and constraints
+
+- `maxValuesPerFacet` defaults to **100** and accepts any integer of 0 or more. The documentation states no upper bound, but raising it increases both search latency and payload size.
+- `sortFacetValuesBy` accepts only `alpha` and `count`. Its default is `{"*": "alpha"}`. There is no custom or pinned facet order in Meilisearch, so bespoke ordering belongs in your UI.
+- Facet search matches the **first word of `facetQuery` only**, and works on string values only. Numbers are stored as `float64` and are not facet-searchable.
+- Facet search counts are **estimates unless `exhaustiveFacetCount` is `true`**. Exact counts are slower.
+- An attribute passed to `facets` that is not in `filterableAttributes` is **silently ignored**. No error is returned, the attribute simply never appears in `facetDistribution`.
+- `facetStats` (the `min` and `max` used to drive range sliders) only considers values stored as JSON numbers. The string `"42"` is ignored.
+- Meilisearch has **no built-in disjunctive facet mode**. It is multi-search plus client-side merging, and each active facet group adds one query to the request.
+- The repo does not document a hard cap on how many attributes may be filterable, so treat the practical ceiling as an indexing time and memory question rather than a fixed limit, and measure it on your data.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Build faceted navigation" icon="sidebar" href="/capabilities/filtering_sorting_faceting/how_to/build_faceted_navigation">
+    The end-to-end pattern for configuring facets and rendering a sidebar.
+  </Card>
+  <Card title="Build disjunctive facets" icon="object-ungroup" href="/capabilities/filtering_sorting_faceting/advanced/disjunctive_facets">
+    The multi-search fan-out in full, including the filter builder.
+  </Card>
+  <Card title="Handle large facet cardinality" icon="list" href="/capabilities/filtering_sorting_faceting/how_to/handle_large_facet_cardinality">
+    Strategies for attributes with thousands of distinct values.
+  </Card>
+  <Card title="Optimize facet performance" icon="gauge-high" href="/capabilities/filtering_sorting_faceting/advanced/optimize_facet_performance">
+    The indexing-side cost model and granular filterable attributes.
+  </Card>
+</CardGroup>

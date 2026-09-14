@@ -1,0 +1,170 @@
+---
+title: "Self-hosted or Cloud: choosing how to run Meilisearch"
+description: You need to decide whether to run Meilisearch on your own servers or on Meilisearch Cloud, and you want the responsibility split, the cost crossover, and the ops burden stated honestly.
+keywords: meilisearch cloud vs self hosted, should i self host search engine, managed search service cost comparison, search engine ops burden hours per month, self host vs saas break even, data residency search engine eu, meilisearch community edition vs enterprise edition, search engine total cost of ownership, run search on our own vps, managed search sla backups upgrades
+boost: 2
+---
+
+Run Meilisearch yourself when you have a hard constraint that a managed service cannot satisfy: an air-gapped network, a sovereignty rule that forbids a vendor-operated control plane, or an existing platform team that already operates stateful services and has capacity to spare. Otherwise use [Meilisearch Cloud](/capabilities/platform/overview), because the work you take on when self-hosting is not the install, it is the backups, the version upgrades, the capacity planning, and the on-call rotation that follow forever after. The engine is identical in both cases, and the [export route](/resources/migration/migrating_cloud) moves data between them, so this decision is reversible. Most teams should decide on ops capacity, not on the monthly infrastructure line.
+
+## The responsibility split, line by line
+
+The engine binary is the same. Everything around it is where the two options diverge.
+
+| Responsibility | Self-hosted | Meilisearch Cloud |
+|---|---|---|
+| Provisioning the machine | You choose and pay for the server | Pick a [resource tier](/capabilities/platform/infrastructure/manage_resources), provisioned for you |
+| Process supervision | You run systemd or an orchestrator | Managed |
+| HTTPS termination | You run a reverse proxy such as Nginx or Caddy | Managed |
+| Master key and API keys | You generate and rotate the [master key](/resources/self_hosting/security/master_api_keys) | Master key generated at project creation |
+| Backups | You schedule [snapshots and dumps](/resources/self_hosting/data_backup/overview) yourself | [Weekly automatic backups](/capabilities/platform/infrastructure/backups), two retained |
+| Restore | Your runbook, your test | Request a restore date from support |
+| Version upgrades | Your change window, your rollback plan | One click in [project settings](/capabilities/platform/infrastructure/version_management), seconds of downtime |
+| Capacity planning | You size RAM, CPU, and disk | Scale the tier up from the dashboard |
+| Monitoring | Wire up the [Prometheus endpoint](/capabilities/platform/monitoring/prometheus_endpoint), an experimental feature you must enable | Built-in [latency and indexing dashboards](/capabilities/platform/monitoring/overview) |
+| Sharding and replication | Requires the Enterprise Edition, not free for production | [Enterprise plans](/capabilities/platform/infrastructure/sharding_and_replication), configured by the Meilisearch team |
+| SSO for the operator team | Not available | Enterprise plans, [SAML 2.0](/capabilities/platform/teams/how_to/configure_sso_for_team) |
+| Incident response | Your pager | Meilisearch support |
+
+Two lines decide the outcome for most teams. Backups, because a search index nobody has ever restored is a backup nobody has. And sharding, because Meilisearch splits its editions there: the [Community Edition is MIT licensed](/resources/self_hosting/enterprise_edition) and covers full-text search, filtering, and AI-powered search, while sharding is exclusive to the Enterprise Edition, which is BUSL licensed and cannot be freely used in production.
+
+## Where the cost crossover actually sits
+
+Compare three numbers, not one.
+
+**The Cloud bill.** Resource-based projects bill hourly for compute at the rate shown in the Cloud UI for your tier and region, plus disk at $0.165 per GiB with a 32 GB minimum, plus bandwidth at $0.15 per GB. Usage-based projects bill differently: the self-serve **Build** plan includes 50K searches and 100K documents per month, then charges $0.40 per 1,000 extra searches and $0.30 per 1,000 extra documents. See [pricing model](/capabilities/platform/billing/pricing_model) for the full breakdown.
+
+**The self-hosted infrastructure bill.** A virtual machine with equivalent RAM, plus a block device sized for the index with headroom, plus egress, plus a second machine if you want any redundancy at all. Raw compute from a generic cloud provider is usually cheaper per gigabyte of RAM than a managed search tier. {/* VERIFY: current per-GB VM pricing across major providers, do not quote a figure without checking */}
+
+**The ops bill.** This is the one teams leave out, and it decides the crossover. Meilisearch ships a new version roughly every week, so staying current means a recurring upgrade task, each one preceded by a dump because [dumps are the version-portable backup format and snapshots are not](/resources/self_hosting/data_backup/overview). Add backup verification, certificate renewal, disk growth monitoring, and the occasional out-of-memory incident during a large import.
+
+A defensible estimate for a single production instance is two to six engineer hours per month in steady state, plus a day or two the first time a capacity or upgrade problem bites. {/* VERIFY: this range is an estimate, not a documented Meilisearch figure */} Price those hours at your loaded engineering cost and compare against the tier price. For a small index, the managed service is almost always cheaper once ops time is counted. The crossover moves toward self-hosting when the index is large, traffic is high and steady, and the ops work rides on a platform team already doing all of it for other services.
+
+## Compliance, residency, and sovereignty
+
+These are different requirements, satisfied differently.
+
+**Residency** means the data stays in a jurisdiction. Meilisearch Cloud runs in [nine regions](/capabilities/platform/infrastructure/regions): `FRA`, `PAR`, `LON`, `SGP`, `JPN`, `SYD`, `SFO`, `NYC`, and `SAO`. Choosing an EU region satisfies most GDPR-style residency requirements without self-hosting anything. `PAR` runs on the AWS European Sovereign Cloud.
+
+**Sovereignty** is stricter. If a contract requires that no vendor personnel have technical access to the environment, a managed control plane cannot promise that, and self-hosting is the answer.
+
+**Network isolation** is the one case with no workaround. If the network has no route to a vendor API, a managed service is simply unusable and you self-host.
+
+**Subprocessor overhead** is procedural, not technical. Adding Meilisearch Cloud adds a subprocessor, which means a security review and possibly customer notification. For some organizations that process costs more than running the software itself.
+
+One asymmetry runs the other way: SSO for your operator team is Cloud Enterprise only. If centralized identity control over who can touch production search is itself a compliance requirement, self-hosting works against you.
+
+## Measure your own instance before you decide
+
+Run this against a Meilisearch instance you already have, self-hosted or Cloud. It reports what you are storing, applies the documented sizing formula, and maps the result to a Cloud tier, so the comparison uses your numbers instead of a guess.
+
+```python
+# pip install meilisearch
+#
+# export MEILISEARCH_URL="https://ms-example.meilisearch.io"
+# export MEILISEARCH_API_KEY="$YOUR_ADMIN_KEY"
+
+import os
+import meilisearch
+
+client = meilisearch.Client(
+    os.environ["MEILISEARCH_URL"],
+    os.environ["MEILISEARCH_API_KEY"],
+)
+
+# Cloud resource tiers, from /capabilities/platform/billing/pricing_model
+TIERS = [
+    ("XS", 0.5, 1), ("S", 1, 2), ("M", 2, 4), ("L", 2, 8),
+    ("XL", 4, 16), ("2XL", 8, 32), ("4XL", 16, 64),
+]
+DISK_USD_PER_GIB = 0.165   # 32 GB provisioned minimum
+BANDWIDTH_USD_PER_GB = 0.15
+
+print("engine version:", client.get_version()["pkgVersion"])
+
+stats = client.get_all_stats()
+total_docs = 0
+weighted_bytes = 0
+
+for uid, index_stats in stats["indexes"].items():
+    docs = index_stats["numberOfDocuments"]
+    avg = index_stats.get("avgDocumentSize", 0)
+    total_docs += docs
+    weighted_bytes += docs * avg
+    print(f"  {uid}: {docs:,} documents, avg {avg:,} bytes each")
+
+avg_doc_kb = (weighted_bytes / total_docs / 1024) if total_docs else 0
+# Documented estimate: documents x average size x 5 for inverted index,
+# facet data, prefix structures, and other internal data.
+estimated_gb = (total_docs * avg_doc_kb * 5) / (1024 * 1024)
+on_disk_gb = stats["databaseSize"] / (1024 ** 3)
+
+print(f"\n{total_docs:,} documents, avg {avg_doc_kb:.1f} KB")
+print(f"database on disk now: {on_disk_gb:.2f} GB")
+print(f"estimated index size: {estimated_gb:.2f} GB")
+
+# Choose the smallest tier whose RAM exceeds the estimate with 20% headroom.
+fit = next((t for t in TIERS if t[2] >= estimated_gb * 1.2), None)
+if fit:
+    print(f"smallest fitting tier: {fit[0]} ({fit[1]} vCPU, {fit[2]} GB RAM)")
+else:
+    print("larger than 4XL: sharding or replication territory, contact sales")
+
+disk_gb = max(32, on_disk_gb * 2)  # provision headroom, 32 GB minimum
+print(f"\ndisk component: {disk_gb:.0f} GB x ${DISK_USD_PER_GIB}/GiB "
+      f"= ${disk_gb * DISK_USD_PER_GIB:.2f}/month")
+print(f"bandwidth: ${BANDWIDTH_USD_PER_GB}/GB, "
+      "add compute from the tier rate shown in the Cloud UI")
+
+# The number that decides it: your own ops time.
+ops_hours = float(os.environ.get("OPS_HOURS_PER_MONTH", "4"))
+hourly = float(os.environ.get("ENGINEER_HOURLY_USD", "80"))
+print(f"\nself-hosted ops estimate: {ops_hours} h/month "
+      f"x ${hourly}/h = ${ops_hours * hourly:.0f}/month, "
+      "before any infrastructure cost")
+```
+
+If the tier it prints is XL or smaller, the managed service is very likely cheaper than the same workload plus your own time. If it prints 2XL or larger, the comparison is genuinely open.
+
+## Limits and constraints
+
+Real boundaries on both sides.
+
+- **Cloud backups** run once per week by default and only the two most recent are retained. Restores go through support with a target date in `YYYY-MM-DD` (UTC). Daily or custom schedules and longer retention are Enterprise options.
+- **Cloud regions cannot be changed** after a project is created. Moving means creating a new project in the target region and reindexing.
+- **Cloud version upgrades** cause a short downtime, typically a few seconds, during which both search and indexing pause. The UI offers only the two most recent versions. Zero-downtime upgrades require replication on an Enterprise plan.
+- **Tiers 2XL and above are not self-serve**, and scaling a tier down is not available from the dashboard, only through support.
+- **About 5% of a tier's CPU and RAM** is reserved to run Meilisearch and its tooling, so plan for slightly less than the full allocation.
+- **Self-hosted minimum** is a supported OS and at least 256 MB of RAM, a floor for trying it, not for production.
+- **Self-hosted indexing** uses at most two thirds of available memory and half the CPU cores by default, so search stays responsive. Undersize the machine and the OS out-of-memory killer stops the process mid-import. See [RAM and multi-threading](/resources/self_hosting/performance/ram_multithreading).
+- **Snapshots restore only into the same Meilisearch version.** Dumps are portable across versions but require a full reindex on import.
+- **Sharding requires the Enterprise Edition** (BUSL licensed, not free for production). The Community Edition is MIT and covers everything else.
+- **SSO and multi-region replication** are Cloud Enterprise features with no self-hosted equivalent.
+- The `/metrics` Prometheus endpoint is an [experimental feature](/capabilities/platform/management/experimental_features), disabled by default, and its metric names may change between versions.
+
+Exact compute rates per tier and analytics retention per plan are shown in the Cloud UI rather than fixed in the documentation. Read them there.
+
+## Choosing, with the exclusions stated
+
+**Choose Meilisearch Cloud** if search is a feature of your product rather than your infrastructure, if nobody wants to own a restore runbook, if you want weekly engine releases without a change window each time, or if you need sharding, replication, SSO, or multi-region without building it.
+
+**Choose self-hosting** if the network is air-gapped, if sovereignty rules forbid vendor access to the environment, if your platform team already operates stateful services so the marginal ops cost is near zero, or if your index is large and your traffic steady enough that the infrastructure difference clearly exceeds the ops hours.
+
+**Do not choose self-hosting** because the license is free, because the tier price looked high before you counted engineering time, or as a hedge against lock-in that you have no tested exit plan for. Run the [export route](/resources/migration/migrating_cloud) once in either direction, and the hedge exists either way.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Self-hosting Meilisearch" href="/resources/self_hosting/overview">
+    Install, secure, and deploy the binary yourself.
+  </Card>
+  <Card title="Cloud infrastructure" href="/capabilities/platform/infrastructure/overview">
+    Projects, regions, resource tiers, and billing models.
+  </Card>
+  <Card title="Pricing model" href="/capabilities/platform/billing/pricing_model">
+    Sizing formula, tier table, and cost estimation.
+  </Card>
+  <Card title="Migrating to Cloud" href="/resources/migration/migrating_cloud">
+    Move data between instances with the export route.
+  </Card>
+</CardGroup>

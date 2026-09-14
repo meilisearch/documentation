@@ -1,0 +1,177 @@
+---
+title: How to measure and improve search relevance
+description: Your search results feel wrong but you have no number that proves it, and you need a way to tell whether a settings change actually made things better or just different.
+keywords: measure search relevance, search quality metrics, search relevance testing, golden query set, relevance judgment set, recall at k search, mean reciprocal rank search, ndcg search evaluation, search kpi dashboard, click through rate search, no result rate, average click position, a/b test search settings, offline search evaluation, prove search improved, search relevance benchmark
+boost: 2
+---
+
+Relevance is measured in two loops, and you need both. The offline loop is a fixed set of real queries with the document IDs that should come back, replayed against a candidate configuration to produce recall@k and mean reciprocal rank. It is deterministic, costs nothing, and runs before you ship. The online loop is [Meilisearch analytics](/capabilities/analytics/overview): no-result rate, click-through rate, average click position, and conversion rate, measured on real traffic after you ship. Never tune on a single query you noticed by hand. One query is an anecdote, and fixing it silently breaks twenty others.
+
+## Build the evaluation set from queries people actually type
+
+Start from your own traffic, not from invented examples. The analytics dashboard gives you two lists that seed the set directly: **most searched queries**, which is what you cannot afford to get wrong, and **searches without results**, which is where you are already failing. Both are described in the [analytics metrics reference](/capabilities/analytics/advanced/analytics_metrics).
+
+Aim for 50 to 100 queries, the same size the [hybrid search tuning guidance](/capabilities/hybrid_search/advanced/custom_hybrid_ranking) recommends. Cover the query shapes your users produce, not just the easy ones:
+
+- **Head queries.** The ten to twenty terms that carry most of your volume.
+- **Exact-match queries.** Product names, SKUs, part numbers, and IDs.
+- **Descriptive queries.** Natural language, several words, no exact string in any document.
+- **Known failures.** Queries from the no-result list, and anything a colleague has complained about.
+
+For each query, record the primary key values of the documents that *should* be in the top results. Binary labels (relevant or not) are enough to start. Two people labeling independently and reconciling disagreements produces a far more durable set than one person deciding alone, because it forces you to write down what "relevant" means for your product before you start optimizing toward it.
+
+Store the set in version control next to your index settings. It is the artifact that makes a relevance change reviewable.
+
+## Which metrics tell you something
+
+**Offline, from the judgment set:**
+
+| Metric | What it answers | When it matters most |
+| --- | --- | --- |
+| Recall@k | Did the right documents appear anywhere in the first k results | Retrieval problems: the document is missing, not just misplaced |
+| MRR | How far down the first correct result sits, averaged over queries | Single-answer lookups, where position one is the only good outcome |
+| Precision@k | How much of the first page is junk | Browse-style results and faceted listings |
+| No-result count | How many queries return zero hits | Always. It is the cheapest signal you have |
+
+Recall and MRR answer different questions, and confusing them is the usual mistake. If recall@10 is low, ranking rules will not save you: the document is not being retrieved at all, and the cause is upstream in searchable attributes, typo tolerance, or [synonyms](/capabilities/full_text_search/relevancy/synonyms). If recall@10 is high but MRR is low, retrieval is fine and the problem is ordering, which is where [ranking score details](/capabilities/full_text_search/relevancy/ranking_score) and [why your search ranks the wrong result first](/guides/wrong-result-ranked-first) apply.
+
+**Online, from analytics:** no-result rate, click-through rate, average click position, and conversion rate. Meilisearch computes these per **search ID**, a search intent rather than an HTTP request, so a user typing "run", "runn", "running shoes" counts once rather than three times. That is what makes the rates comparable across a search-as-you-type interface. Click-through rate and average click position are not collected by default: your application must send `click` events to `POST /events`, as described in [configure analytics events](/capabilities/analytics/getting_started).
+
+## Run the offline comparison before you ship
+
+Do not mutate the live index to test a setting. Create a second index, apply the candidate settings there, index the same documents, and evaluate both. If the candidate wins, [swap the two indexes](/reference/api/indexes/swap-indexes), which exchanges documents and settings atomically so search clients never see a partial state.
+
+Send the evaluation traffic in a single [multi-search](/capabilities/multi_search/overview) request per configuration. Exclude it from your analytics by adding `analytics=false` to the search request, or your harness will inflate search volume and depress click-through rate for the period it runs. See [exclude search requests from analytics](/capabilities/analytics/how_to/ignore_search_requests).
+
+```javascript
+// npm install meilisearch
+import { Meilisearch } from 'meilisearch'
+
+const client = new Meilisearch({
+  host: process.env.MEILISEARCH_URL, // for example https://ms-xxxx.nyc.meilisearch.io
+  apiKey: process.env.MEILISEARCH_KEY, // a search key is enough
+})
+
+const BASELINE = 'products'
+const CANDIDATE = 'products_candidate'
+const PRIMARY_KEY = 'id'
+const K = 10
+
+// The judgment set. Keep this in version control, one entry per query,
+// listing the primary key values that should appear in the top K.
+const judgments = [
+  { q: 'wireless headphones', relevant: ['sku-1042', 'sku-2280'] },
+  { q: 'noise cancelling over ear', relevant: ['sku-1042'] },
+  { q: 'usb c to hdmi', relevant: ['sku-7781', 'sku-7782'] },
+  { q: 'bluetooth speekr', relevant: ['sku-3310'] }, // deliberate typo
+]
+
+async function evaluate(indexUid) {
+  const { results } = await client.multiSearch({
+    queries: judgments.map(({ q }) => ({
+      indexUid,
+      q,
+      limit: K,
+      attributesToRetrieve: [PRIMARY_KEY],
+      showRankingScore: true, // profiling only, remove from production queries
+    })),
+  })
+
+  let recallSum = 0
+  let reciprocalRankSum = 0
+  let zeroResults = 0
+  const perQuery = []
+
+  results.forEach((result, i) => {
+    const { q, relevant } = judgments[i]
+    const returned = result.hits.map((hit) => String(hit[PRIMARY_KEY]))
+    const found = relevant.filter((id) => returned.includes(id))
+    const firstHitRank = returned.findIndex((id) => relevant.includes(id)) + 1
+
+    const recall = found.length / relevant.length
+    const reciprocalRank = firstHitRank > 0 ? 1 / firstHitRank : 0
+
+    recallSum += recall
+    reciprocalRankSum += reciprocalRank
+    if (returned.length === 0) zeroResults += 1
+
+    perQuery.push({
+      q,
+      [`recall@${K}`]: Number(recall.toFixed(3)),
+      firstRelevantRank: firstHitRank || null,
+      topScore: result.hits[0]?._rankingScore ?? null,
+    })
+  })
+
+  const n = judgments.length
+  return {
+    perQuery,
+    summary: {
+      [`recall@${K}`]: Number((recallSum / n).toFixed(3)),
+      mrr: Number((reciprocalRankSum / n).toFixed(3)),
+      zeroResultQueries: zeroResults,
+    },
+  }
+}
+
+const before = await evaluate(BASELINE)
+const after = await evaluate(CANDIDATE)
+
+console.log('baseline ', before.summary)
+console.log('candidate', after.summary)
+
+// Aggregates hide regressions. Always print the queries that got worse.
+const regressions = after.perQuery.filter(
+  (row, i) => row[`recall@${K}`] < before.perQuery[i][`recall@${K}`],
+)
+console.log(`regressions: ${regressions.length}/${judgments.length}`)
+console.table(regressions)
+```
+
+A candidate that raises average recall while breaking four head queries is not an improvement. Read the regression list before the summary line.
+
+## Then prove it on real traffic
+
+Meilisearch does not ship a built-in A/B testing feature, so the split happens in your application. Assign each user to a variant, route their searches to the matching index or settings, and tag every search with the variant using `analyticsCustomFields`, which is stored alongside the search event and stripped before the request reaches the search engine, so it cannot affect results:
+
+```json
+{
+  "q": "wireless headphones",
+  "analyticsCustomFields": { "abTestGroup": "variant-b" }
+}
+```
+
+For the comparison to mean anything, each search response must be linked to what the user did next. Send the `Meili-Include-Metadata: true` header, take `metadata.queryUid` from the response, and include it on the `click` and `conversion` events you post to `POST /events` along with a `userId`. Without `queryUid`, clicks are not reliably attributed to the query that produced them. The field list is in the [analytics events endpoint reference](/capabilities/analytics/advanced/events_endpoint).
+
+Then compare variants on outcome metrics, in this order of trustworthiness: conversion rate, then average click position, then click-through rate, then no-result rate. Click-through rate rewards attractive results, conversion rate rewards correct ones.
+
+Other engines handle this differently. Algolia offers built-in A/B testing of search configurations with statistical analysis in its dashboard, as noted in the [Algolia comparison](/resources/comparisons/algolia). Elasticsearch exposes a ranking evaluation API that scores a stored query set against labeled documents, which covers the offline loop but not the online one {/* VERIFY: confirm the Elasticsearch _rank_eval API name and its supported metric list */}.
+
+## Limits and constraints
+
+- **Click-through rate, average click position, and conversion rate are zero until you instrument them.** Meilisearch cannot observe clicks. No-result rate, search volume, latency, and country distribution are collected without any application changes.
+- **A `userId` is required on every event**, either in the payload or through the `X-MS-USER-ID` header. Without it, click and conversion tracking does not work.
+- **One conversion per query.** It is not possible to associate multiple `conversion` events with the same query.
+- **`position` on a click event is 0-based**, which matters if you compute average click position yourself and compare it against the dashboard.
+- **Rates are computed per search ID, not per request.** Do not recompute click-through rate from raw request counts and expect it to match the dashboard.
+- **`_rankingScore` is normalized between `0.0` and `1.0` and is independent of other documents**, so scores are comparable across queries only in the loose sense that both are normalized. A score of `0.6` on one query does not mean the same quality as `0.6` on another. The `sort` rule does not contribute to it at all.
+- **Search returns at most 1000 results by default.** Recall@k beyond that depth requires raising `pagination.maxTotalHits`, which is expensive.
+- **Analytics retention depends on your Meilisearch Cloud plan.** There is no single documented retention window, so check your plan before designing a test that needs a long lookback.
+- **Settings changes trigger reindexing.** Evaluate only after the task finishes, or you are measuring a half-built index.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Configure analytics events" href="/capabilities/analytics/getting_started">
+    Send click and conversion events so the online metrics start filling in
+  </Card>
+  <Card title="Analytics metrics reference" href="/capabilities/analytics/advanced/analytics_metrics">
+    Exactly how each dashboard metric is computed
+  </Card>
+  <Card title="Ranking score" href="/capabilities/full_text_search/relevancy/ranking_score">
+    Read why one document outranked another, rule by rule
+  </Card>
+  <Card title="Handle zero-result searches" href="/guides/handle-zero-result-searches">
+    Fix the queries your no-result rate is pointing at
+  </Card>
+</CardGroup>

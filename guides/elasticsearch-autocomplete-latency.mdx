@@ -1,0 +1,137 @@
+---
+title: Why Elasticsearch is slow for autocomplete
+description: Autocomplete in Elasticsearch feels laggy or bloats the index, and you need to know which of the three standard approaches to pick and what latency to expect.
+keywords: elasticsearch autocomplete slow, edge_ngram index size, search_as_you_type performance, completion suggester memory, elasticsearch type ahead latency, prefix query wildcard slow, instant search backend, suggester heap usage, autocomplete p99 latency
+boost: 2
+---
+
+Elasticsearch has no single prefix-first index. Autocomplete is bolted on through one of three mechanisms, and each trades away something you need: `edge_ngram` multiplies index size and refresh cost, `search_as_you_type` quietly creates several shadow subfields, and the completion suggester is fast but lives in heap memory and cannot filter, sort, or return real documents. The latency you feel is usually not the match itself. It is the extra analysis, the extra fields, the coordinating node fanning a query across every shard for every keystroke, and a ranking pipeline that was designed for one query per search, not one per character.
+
+## Why autocomplete is a different workload
+
+A normal search runs once per user intent. Autocomplete runs once per keystroke, so a six-character query is six searches. That changes the engineering problem in three ways.
+
+Query volume multiplies by the length of the average query. A search backend sized for 100 queries per second now needs to absorb 600. Latency budgets collapse: a response that arrives after the user has typed the next character is wasted work, so the useful ceiling is roughly the inter-keystroke interval, not the 200 ms you would accept for a results page. And the shortest queries are the most expensive ones, because a single letter matches the largest slice of the corpus.
+
+Elasticsearch's inverted index is built around whole analyzed terms. Matching `adv` against `adventure` is not a term lookup, so every approach below is a workaround for that structural fact.
+
+## The three standard approaches and what each one costs
+
+### Edge n-grams
+
+An `edge_ngram` token filter indexes every prefix of every term at index time, so `adventure` becomes `a`, `ad`, `adv`, and so on up to `max_gram`. Prefix matching then becomes an ordinary term lookup, which is genuinely fast at query time.
+
+The cost lands on the index. A field with `max_gram: 20` stores up to 20 postings entries per term instead of one, which inflates index size, segment merge work, and indexing throughput on every write. Two configuration traps make it worse in practice. The default `max_gram` on the `edge_ngram` tokenizer is very low, so long queries silently stop matching unless you raise it {/* VERIFY: confirm current default min_gram/max_gram values for the edge_ngram tokenizer */}. And if you do not set a separate `search_analyzer`, the query itself gets n-grammed too, so typing `adv` searches for `a`, `ad`, and `adv` at once and relevance falls apart.
+
+### The `search_as_you_type` field type
+
+`search_as_you_type` wraps the n-gram pattern in a single mapping. Elasticsearch creates the root field plus shingle subfields and a prefix subfield underneath it, and a `multi_match` of type `bool_prefix` queries them together {/* VERIFY: exact subfield names and the number of shingle subfields created by default */}.
+
+It is the least work to set up and the hardest to reason about. You are now storing several derived representations of the same text, and you cannot see that in your mapping the way you can with an explicit analyzer. It also inherits the same index-size and merge cost as hand-rolled edge n-grams, without exposing the knob that controls it as directly.
+
+### The completion suggester
+
+The completion suggester builds a finite state transducer and keeps it in memory, which is why it is by far the fastest of the three. That is also its constraint: the structure is held in heap, so the suggestion set has to fit in RAM on every node that serves it {/* VERIFY: whether the FST is heap-resident or memory-mapped in current versions */}.
+
+The bigger problem is that it is not search. It returns suggestions, not documents, so filtering is limited to context fields you declare in advance, there is no sorting beyond a static `weight`, and it does not participate in the ranking pipeline the rest of your search uses. Teams end up running the suggester for the dropdown and a second, differently tuned query for the results page, which is two relevance implementations to keep in sync.
+
+## What actually helps inside Elasticsearch
+
+If you are staying, these are the levers that move the number, in rough order of impact.
+
+Cap the n-gram range. Most autocomplete value is in the first 10 to 15 characters. Lowering `max_gram` cuts index size and merge cost directly, and you can fall back to a plain match query for longer input.
+
+Set an explicit `search_analyzer` that does not n-gram the query. This is the single most common misconfiguration and it costs both latency and relevance.
+
+Reduce shard count for the autocomplete index. Every keystroke query fans out to every shard and waits for the slowest one, so an over-sharded small index pays coordination overhead on every character. Autocomplete data is usually small enough for one shard per node.
+
+Debounce on the client and cancel in-flight requests. Nothing in the engine is as effective as not sending the query.
+
+Return fewer fields. Use `_source` filtering so the dropdown fetches only the label and the identifier, not the whole document.
+
+Raise `index.refresh_interval` if suggestions do not need to be second-fresh. The near real time default makes every write visible quickly at a real cost in segment churn {/* VERIFY: current default value of index.refresh_interval */}.
+
+## What prefix-first indexing does differently
+
+Meilisearch treats prefix matching as the default read path rather than a feature you add. Document sorting starts by comparing the query against the beginning of each word in the dataset, so a single-letter query is a normal search, not a special one. See [prefix search internals](/resources/internals/prefix) for the mechanism.
+
+Two consequences matter for autocomplete. First, there is no second index, no suggester field, and no parallel relevance configuration: the dropdown and the results page run the same query against the same index with the same ranking rules, so they cannot disagree. Second, prefix structures are built during indexing, controlled by the `prefixSearch` index setting whose default is `indexingTime`. You can set it to `disabled` to shrink the index when search-as-you-type is not needed, which is the inverse of the Elasticsearch decision: you opt out of prefix cost rather than opting in. See [configure prefix search](/capabilities/full_text_search/how_to/configure_prefix_search).
+
+Typo tolerance is on by default and applies during prefix matching, so `advnt` still reaches `adventure` without a separate fuzzy query. See [typo tolerance settings](/capabilities/full_text_search/relevancy/typo_tolerance_settings).
+
+## A complete autocomplete endpoint
+
+This creates an index, configures it for keystroke-rate queries, and runs a search shaped for a dropdown. Set `MEILISEARCH_URL` and `MEILISEARCH_KEY` before running it.
+
+```javascript
+// npm install meilisearch
+import { Meilisearch } from 'meilisearch'
+
+const client = new Meilisearch({
+  host: process.env.MEILISEARCH_URL,
+  apiKey: process.env.MEILISEARCH_KEY
+})
+
+const index = client.index('products')
+
+// 1. Index some documents
+await client.waitForTask(
+  (await index.addDocuments([
+    { id: 1, name: 'Adventure backpack 40L', brand: 'Norvik', price: 129 },
+    { id: 2, name: 'Advanced trail runners', brand: 'Kessel', price: 89 },
+    { id: 3, name: 'Alpine down jacket', brand: 'Norvik', price: 249 }
+  ])).taskUid
+)
+
+// 2. Configure the index for keystroke-rate queries
+await client.waitForTask(
+  (await index.updateSettings({
+    // Only search text a user would actually type
+    searchableAttributes: ['name', 'brand'],
+    // prefixSearch defaults to 'indexingTime'; set it explicitly so the
+    // intent is visible to whoever reads this next
+    prefixSearch: 'indexingTime',
+    // A dropdown never paginates, so stop ranking beyond what it shows
+    pagination: { maxTotalHits: 50 },
+    // Safety net against pathological queries
+    searchCutoffMs: 500,
+    // Short product codes should not fuzzy match each other
+    typoTolerance: { disableOnNumbers: true }
+  })).taskUid
+)
+
+// 3. The autocomplete query itself
+async function autocomplete(query) {
+  const results = await index.search(query, {
+    limit: 8,
+    attributesToRetrieve: ['id', 'name'],
+    attributesToHighlight: ['name'],
+    attributesToSearchOn: ['name', 'brand']
+  })
+
+  console.log(results.processingTimeMs, 'ms')
+  return results.hits
+}
+
+console.log(await autocomplete('adv'))
+```
+
+`processingTimeMs` on every response is the engine-side time, which is the number to watch when tuning. For a per-stage breakdown, add `showPerformanceDetails: true` to any search request, documented in [debug search performance](/capabilities/full_text_search/advanced/debug_search_performance).
+
+## Limits and constraints
+
+- Prefix matching applies only to the **last word** of a query. Earlier words must match fully, or within typo tolerance. `harry pot` matches "Harry Potter" because `harry` matches and `pot` is a prefix.
+- `prefixSearch` accepts exactly two values: `indexingTime` (default) and `disabled`. Changing it triggers a full re-index of that index, which is asynchronous.
+- `searchCutoffMs` defaults to `null`, in which case Meilisearch interrupts a search after 1500 ms. Setting an integer overrides that. Values below 500 ms are discouraged, because a cutoff that fires returns a partial result set.
+- `maxTotalHits` defaults to 1000 documents ranked per query. Values above 20000 can push queries into seconds.
+- `limit` cannot exceed the index `maxTotalHits`, and is ignored entirely when `page` or `hitsPerPage` is set.
+- `attributesToSearchOn` can only name attributes already present in `searchableAttributes`.
+- Meilisearch documents sub-50 ms responses as the expected range, but no engine can promise a specific p99 for a dataset, hardware profile, and query mix it has not seen. Measure with `processingTimeMs` on your own data.
+- Typo tolerance defaults allow one typo on words of 5 or more characters and two typos on words of 9 or more. Both thresholds accept values from 0 to 255.
+
+## Next steps
+
+- [Configure prefix search](/capabilities/full_text_search/how_to/configure_prefix_search) to turn prefix indexing on or off per index
+- [Performance tuning](/capabilities/full_text_search/advanced/performance_tuning) for the settings that move search latency most, ordered by impact
+- [Configure search cutoff](/capabilities/full_text_search/how_to/configure_search_cutoff) to bound worst-case query time
+- [Build a unified search bar](/capabilities/multi_search/how_to/build_unified_search_bar) if the dropdown needs to span several indexes

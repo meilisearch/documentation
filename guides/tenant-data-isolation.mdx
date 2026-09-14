@@ -1,0 +1,150 @@
+---
+title: How to isolate tenant data securely
+description: Multiple customers share one search index and you need a guarantee that a user cannot see another tenant's documents, even if they edit the request in their browser.
+keywords: multi-tenant search security, tenant token, jwt search filter per user, restrict search results per user, prevent cross tenant data leak, row level security for search, scoped search credentials, expiring search token, rotate search api key, audit tenant isolation, secure client-side search
+boost: 2
+---
+
+Isolate tenants with a [tenant token](/capabilities/security/overview): a JSON web token your backend signs with a Meilisearch API key, carrying a `searchRules` object whose `filter` Meilisearch applies to every search made with that token. The client receives only the token, never the API key, and cannot change the filter without invalidating the signature. A filter your frontend sends in the `filter` search parameter is not a security boundary, because whoever controls the browser controls that value. Scope the parent API key to the `search` action and the exact indexes involved, set an `exp` on every token, and keep token generation server side.
+
+## Why a client-side filter is not a boundary
+
+A single page application that builds `filter: "tenant_id = 42"` in JavaScript and sends it with a search API key has published two things to every user: a credential that can read the whole index, and a filter that user can delete. Opening the network tab, copying the request, and removing the filter takes seconds. The same applies to a filter added by a proxy that trusts a `tenant_id` header the client supplies.
+
+Tenant tokens move the decision to a place the client cannot reach. The filter is part of the signed JWT payload, so modifying it breaks the signature and Meilisearch rejects the token. Meilisearch applies that filter to every search made with the token, so a client cannot widen its result set by editing the `filter` parameter it sends. If you are coming from another system, this is the same idea as Algolia's secured API keys, or as row-level security in PostgreSQL where the predicate lives in the database rather than in the application query. {/* VERIFY: Algolia secured API key filter enforcement semantics and naming */}
+
+## The layers you actually configure
+
+Meilisearch's [security model](/capabilities/security/overview#security-model) has three levels, and tenant isolation uses all three.
+
+- **Master key**: set at launch, at least 16 bytes, never sent in application requests. It generates the default admin and search keys. See [authorization](/reference/api/authorization).
+- **API keys**: authenticate requests, and carry `actions`, `indexes`, and `expiresAt`. Your backend holds these.
+- **Tenant tokens**: signed from an API key, carrying `searchRules`. Your frontend holds these.
+
+A tenant token inherits, and can only narrow, the reach of its parent key. It cannot grant access to an index the parent key does not already cover, and it restricts the search endpoint only. Indexing, settings updates, and key management are not affected by `searchRules`, so those routes must be protected by key scoping instead.
+
+## Setting up the filterable attribute
+
+A tenant token filter is an ordinary [filter expression](/capabilities/filtering_sorting_faceting/advanced/filter_expression_syntax), which means the attribute it references must be in `filterableAttributes` before any search works. This is mandatory and cannot be done at search time.
+
+```js
+await adminClient.index('documents').updateFilterableAttributes(['tenant_id'])
+```
+
+Store `tenant_id` on every document at index time, from your source of truth, never from a client request.
+
+## Generating and using a token end to end
+
+This is the whole flow: an authenticated session on your backend, a short-lived token, and a browser that searches Meilisearch directly.
+
+```js
+// server.js  (Node.js, Express, meilisearch JS SDK)
+import express from 'express'
+import { generateTenantToken } from 'meilisearch/token'
+
+const app = express()
+
+// Server-side secrets. Never ship these to the browser.
+const MEILISEARCH_URL = process.env.MEILISEARCH_URL
+const SEARCH_API_KEY = process.env.MEILISEARCH_SEARCH_API_KEY
+const SEARCH_API_KEY_UID = process.env.MEILISEARCH_SEARCH_API_KEY_UID
+
+const TOKEN_TTL_SECONDS = 15 * 60
+
+app.get('/api/search-token', requireSession, async (req, res) => {
+  // req.session.tenantId comes from your own auth, not from the request body.
+  const tenantId = req.session.tenantId
+
+  const token = await generateTenantToken({
+    apiKey: SEARCH_API_KEY,
+    apiKeyUid: SEARCH_API_KEY_UID,
+    searchRules: {
+      documents: {
+        filter: `tenant_id = ${JSON.stringify(String(tenantId))}`
+      }
+    },
+    expiresAt: new Date(Date.now() + TOKEN_TTL_SECONDS * 1000)
+  })
+
+  res.json({ host: MEILISEARCH_URL, token, expiresIn: TOKEN_TTL_SECONDS })
+})
+
+app.listen(3000)
+```
+
+```js
+// browser.js
+import { MeiliSearch } from 'meilisearch'
+
+async function getClient() {
+  const { host, token } = await fetch('/api/search-token', {
+    credentials: 'include'
+  }).then((r) => r.json())
+  return new MeiliSearch({ host, apiKey: token })
+}
+
+const client = await getClient()
+const results = await client.index('documents').search('quarterly report', { limit: 20 })
+// Any filter added here narrows the results further. It cannot widen them
+// beyond the tenant_id rule baked into the token.
+```
+
+Refetch the token when it expires. A 15 minute lifetime with a silent refresh keeps the exposure window small without a visible interruption. Other languages follow the same shape: the SDKs expose an equivalent generator, and any JWT library can sign the payload with `HS256`, `HS384`, or `HS512`. See [generating a token with a third-party library](/capabilities/security/how_to/generate_token_third_party) and [generating one from scratch](/capabilities/security/how_to/generate_token_from_scratch).
+
+## Scoping the parent key
+
+Generate tenant tokens from a key that can do nothing but search, on nothing but the indexes involved. Create it with [`POST /keys`](/capabilities/security/how_to/manage_api_keys) using `"actions": ["search"]` and an explicit `indexes` array. Avoid `"actions": ["*"]` and `"indexes": ["*"]` for anything that touches a token pipeline, because a token inherits that reach and a wildcard `searchRules` key would then span every index in the instance.
+
+Two properties matter here. First, `actions`, `indexes`, and `expiresAt` are immutable after a key is created, so getting the scope right at creation time is the only chance you get. Second, Meilisearch cannot validate your search rules when you sign the token, since signing happens in your application. An invalid filter surfaces as an error at search time, not at generation time.
+
+## Expiry and rotation
+
+Set `exp` on every token. A token without an expiry date remains valid indefinitely, and the only way to revoke it is to delete its parent API key, which invalidates every other token signed with that key at the same time. A token's expiry also cannot exceed its parent key's `expiresAt`.
+
+Because there is no per-token revocation list, rotation is a key-level operation. Plan it as a two-key overlap:
+
+1. Create a second search key with the same scope, and read its `uid` from `GET /keys/{key}`.
+2. Point token generation at the new key. Existing tokens keep working until they expire.
+3. Wait out the longest token lifetime you issue, then delete the old key.
+
+Keep the token lifetime short for exactly this reason: it sets the floor on how fast a compromised token stops working, and how long a rotation takes.
+
+## Auditing that isolation holds
+
+Treat isolation as something you test, not something you configured once.
+
+- **Decode a live token.** Paste it into a JWT debugger and confirm `apiKeyUid`, `exp`, and the exact `searchRules` filter. The [payload reference](/capabilities/security/advanced/tenant_token_payload) lists every valid field.
+- **Run a negative test in CI.** Index a document belonging to tenant B, search for it with a tenant A token, and assert `estimatedTotalHits` is 0. Run the same query with a filter the client controls and assert the count does not change.
+- **Check rule precedence.** Specific index rules override `*` rules. If a token carries both, assert the effective filter is the one you expect for each index.
+- **Inventory your keys.** List keys periodically and flag any with `"actions": ["*"]`, `"indexes": ["*"]`, or `expiresAt: null` that are reachable from client-facing code paths.
+- **Verify the filterable attribute survives.** A settings change that drops `tenant_id` from `filterableAttributes` turns every tenant token search into an error, which is loud, but a renamed field that silently no longer exists on new documents is not. Assert on both the setting and a sample document.
+
+## Limits and constraints
+
+- Supported signing algorithms: `HS256`, `HS384`, and `HS512`. The signing secret is the API key value itself.
+- The payload accepts exactly three Meilisearch fields: `searchRules` (required), `apiKeyUid` (required), and `exp` (optional, a UNIX timestamp or `null`).
+- Each entry in `searchRules` accepts a single `filter` key. An empty object grants access to all documents in that index.
+- A token can only reach indexes present in `searchRules` **and** covered by its parent API key.
+- Tenant tokens restrict the search endpoint only. They do not apply to indexing, settings, or key management.
+- Token expiry cannot exceed the parent key's `expiresAt`. Deleting or expiring the parent key invalidates every token signed with it.
+- There is no documented per-token revocation mechanism. Revocation happens at the key level.
+- Filter attributes must be in `filterableAttributes`, which requires reindexing when changed.
+- In a sharded deployment, token filters apply on each remote.
+- Meilisearch does not validate search rules at signing time. Invalid filters fail at search time.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Tenant token payload reference" href="/capabilities/security/advanced/tenant_token_payload">
+    Every field, wildcard rule, and precedence case in the JWT payload.
+  </Card>
+  <Card title="Manage API keys" href="/capabilities/security/how_to/manage_api_keys">
+    Create, scope, and delete the keys that tenant tokens are signed from.
+  </Card>
+  <Card title="RBAC with joins" href="/capabilities/security/advanced/rbac_with_joins">
+    Go beyond one tenant id with an access control index and foreign filters.
+  </Card>
+  <Card title="Multi-tenant search performance" href="/guides/multi-tenant-search-performance">
+    Choosing between index per tenant and a shared filtered index.
+  </Card>
+</CardGroup>

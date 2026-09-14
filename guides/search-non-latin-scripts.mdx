@@ -1,0 +1,166 @@
+---
+title: How to search CJK, Arabic, Hebrew and Thai text
+description: Your search works in English but returns nothing, or far too much, for Chinese, Japanese, Thai, Arabic, or Hebrew queries, and you need to know which settings actually fix segmentation, diacritics, and typo tolerance.
+keywords: chinese search not working, japanese full text search, thai word segmentation search, arabic search diacritics, hebrew search niqqud, cjk tokenizer search engine, rtl search results display, localizedAttributes locales meilisearch, jieba lindera segmentation, typo tolerance short words cjk, no results for chinese query, search engine without spaces between words
+boost: 2
+---
+
+Meilisearch segments Chinese, Japanese, Korean, Thai, and Khmer with dictionary-based tokenizers and normalizes Arabic and Hebrew diacritics automatically, so a fresh index usually works without configuration. The three things that do need your attention: declare which fields hold which language with [`localizedAttributes`](/reference/api/settings/get-localizedattributes) and pass [`locales`](/reference/api/search/search-with-post) on the query so document and query tokenization agree, expect typo tolerance to be effectively off for these scripts because tokens are shorter than the 5-character threshold, and handle right-to-left rendering in your frontend because the API returns logical-order text, not display-order text.
+
+## Why segmentation is the whole problem
+
+A tokenizer that splits on whitespace works for English and produces nothing usable for 東京大学に行きました. Meilisearch uses [Charabia](/capabilities/indexing/advanced/tokenization), which first splits each field by writing system, then runs a per-script pipeline. Chinese uses jieba dictionary segmentation, Japanese and Korean use lindera (IPA and KO dictionaries), and Thai and Khmer use dictionary-based segmentation. The full per-script table is in [Language support](/resources/help/language).
+
+Two consequences follow from dictionary segmentation, and both show up as bug reports.
+
+**Domain terms get split wrong.** A product name, a brand, or an internal term that is not in the segmentation dictionary is broken at the wrong boundary, and queries for it never match. The fix is the [`dictionary` setting](/capabilities/full_text_search/how_to/configure_dictionary), which overrides the tokenizer at both index and search time and makes the listed strings indivisible tokens.
+
+**Query segmentation must match document segmentation.** Meilisearch detects language automatically, and detection is reliable on long document fields and unreliable on the two or three characters a user has typed so far. A query segmented under the wrong pipeline produces tokens that cannot match anything in the index. This is the single most common cause of "Japanese search returns zero results".
+
+## Pin the language instead of trusting detection
+
+Declare the language of your fields once, with `localizedAttributes`, which takes rules of `attributePatterns` (`*` is a wildcard) plus `locales`:
+
+```json
+{
+  "localizedAttributes": [
+    { "attributePatterns": ["*_ja"], "locales": ["jpn"] },
+    { "attributePatterns": ["*_zh"], "locales": ["cmn"] },
+    { "attributePatterns": ["*_th"], "locales": ["tha"] }
+  ]
+}
+```
+
+Then pass `locales` on every search where you know the language, usually from your locale switcher or the page's own language. `locales` on a query overrides `localizedAttributes` for that request, which is what you want when the user has explicitly chosen a language and a hazard when the value is wrong.
+
+Two structural rules from [handling multilingual datasets](/capabilities/indexing/how_to/handle_multilingual_data): one index per language is the recommended layout for these scripts, and Chinese and Japanese must never share a field, because automatic detection cannot reliably separate them and the wrong tokenizer yields tokens that never match. Separate fields in one index are acceptable when each field is strictly one language.
+
+## Why typo tolerance behaves differently per script
+
+Meilisearch allows [0 typos for query words of 1 to 4 characters, 1 typo for 5 to 8, and 2 for 9 or more](/resources/internals/typo_tolerance). Those thresholds count characters, and after dictionary segmentation a Chinese or Japanese token is typically one to three characters. The practical result is that typo tolerance almost never applies to CJK text, and that is usually correct: in an ideographic script a one-character edit is a different word, not a misspelling.
+
+The risk runs the other way. If you lower `minWordSizeForTypos.oneTypo` to 2 or 3 to "improve" recall on short tokens, every two-character Chinese word becomes interchangeable with a large set of unrelated two-character words, and precision collapses. Leave the defaults, or raise them for CJK indexes. Thai and Khmer segments are longer and do cross the threshold, so typo tolerance is live there and worth testing against real queries.
+
+Arabic and Hebrew sit in between. Charabia strips nonspacing marks, so Hebrew niqqud and Arabic harakat are removed before matching and never consume typo budget, and the Arabic pipeline segments the definite article ال so الكتاب and كتاب reach the same root. Root-and-pattern morphology beyond that (broken plurals, attached pronouns) is not stemming-aware, so plan to cover those variants with [synonyms](/capabilities/full_text_search/relevancy/synonyms) or a dictionary rather than expecting typo tolerance to bridge them.
+
+One more rule bites short tokens: a typo on the first character costs two typos, so a 5-character word with a wrong first character never matches.
+
+## Right-to-left is a display problem, not an index problem
+
+Meilisearch stores and returns Arabic and Hebrew in logical order as ordinary UTF-8. Nothing about indexing, filtering, or ranking is direction-aware, and you should not reverse strings anywhere in your pipeline. The work is in the browser:
+
+- Render hits inside an element with `dir="rtl"`, or `dir="auto"` if the same list can contain both directions.
+- Wrap each field value in `<bdi>` when it mixes scripts. An Arabic title containing a Latin model number or a price reorders visually without isolation.
+- `_formatted` values contain `<em>` tags by default (configurable with `highlightPreTag` and `highlightPostTag`). The tags are direction-neutral, but the `cropMarker`, `"..."` by default, is inserted at a logical boundary and therefore appears on the visual left in RTL text. That is correct behavior, not a bug.
+- `cropLength` counts words and defaults to 10. After CJK segmentation a "word" is often one or two characters, so the default snippet is much shorter than it looks in English. {/* VERIFY: whether cropLength counts segmented tokens or whitespace-delimited runs for CJK fields */}
+
+## A complete setup
+
+This block creates one index per script with the right locale, a dictionary for terms the segmenter would split, conservative typo settings, and then searches each index with an explicit locale and a federated query across all of them.
+
+```javascript
+// npm install meilisearch
+import { Meilisearch } from 'meilisearch'
+
+const client = new Meilisearch({
+  host: process.env.MEILISEARCH_URL, // for example https://your-project.meilisearch.io
+  apiKey: process.env.MEILISEARCH_KEY,
+})
+
+// One index per language. Locale codes are ISO 639-1 or ISO 639-3.
+const locales = {
+  catalog_ja: { locale: 'jpn', dictionary: ['ヒートテック', '楽天市場'] },
+  catalog_zh: { locale: 'cmn', dictionary: ['小红书', '双十一'] },
+  catalog_th: { locale: 'tha', dictionary: [] },
+  catalog_ar: { locale: 'ara', dictionary: [] },
+  catalog_he: { locale: 'heb', dictionary: [] },
+}
+
+for (const [uid, { locale, dictionary }] of Object.entries(locales)) {
+  const index = client.index(uid)
+
+  await client.waitForTask(
+    (await index.addDocuments([
+      { id: 1, title: '東京大学の歴史', body: '1877年に設立された国立大学です。' },
+      { id: 2, title: '小红书 运动鞋', body: '防水登山鞋，适合雨天使用。' },
+    ])).taskUid
+  )
+
+  await client.waitForTask(
+    (await index.updateSettings({
+      searchableAttributes: ['title', 'body'],
+      // Every field in this index is one language, so one rule covers it.
+      localizedAttributes: [{ attributePatterns: ['*'], locales: [locale] }],
+      // Terms the segmentation dictionary does not know about.
+      dictionary,
+      // Segmented tokens are short; do not lower these thresholds.
+      typoTolerance: {
+        enabled: true,
+        minWordSizeForTypos: { oneTypo: 5, twoTypos: 9 },
+      },
+    })).taskUid
+  )
+}
+
+// Same-language search: pin the query tokenizer to the index language.
+console.log(
+  await client.index('catalog_ja').search('東京大学', {
+    locales: ['jpn'],
+    attributesToHighlight: ['title', 'body'],
+    highlightPreTag: '<mark>',
+    highlightPostTag: '</mark>',
+    attributesToCrop: ['body'],
+    cropLength: 30,
+  })
+)
+
+// Short CJK queries segment into several tokens; `all` keeps precision.
+console.log(
+  await client.index('catalog_zh').search('防水登山鞋', {
+    locales: ['cmn'],
+    matchingStrategy: 'all',
+  })
+)
+
+// One result list across every language index.
+console.log(
+  await client.multiSearch({
+    federation: {},
+    queries: [
+      { indexUid: 'catalog_ja', q: '登山', locales: ['jpn'] },
+      { indexUid: 'catalog_zh', q: '登山', locales: ['cmn'] },
+      { indexUid: 'catalog_th', q: 'เดินป่า', locales: ['tha'] },
+    ],
+  })
+)
+```
+
+## Limits and constraints
+
+- **Dedicated segmentation pipelines exist for Chinese, Japanese, Korean, Thai, and Khmer.** Other space-less scripts fall back to the default pipeline and will segment poorly. Meilisearch says so plainly in [Language support](/resources/help/language).
+- **Locale values are ISO 639-1 or ISO 639-3 codes** from a fixed list, for example `ja`/`jpn`, `zh`/`zho`, `cmn` for Mandarin specifically, `th`/`tha`, `ar`/`ara`, `he`/`heb`, `ko`/`kor`, `km`/`khm`. A code outside that list is rejected.
+- **Typo thresholds count characters, not bytes**: 1 to 4 characters allow 0 typos, 5 to 8 allow 1, 9 or more allow 2, with a hard cap of 2. A first-character typo costs 2.
+- **Changing `dictionary`, `separatorTokens`, `nonSeparatorTokens`, `localizedAttributes`, or `prefixSearch` reindexes the entire index.** These are asynchronous tasks, so budget for them and track task status rather than assuming the change is live.
+- **`locales` on a query overrides `localizedAttributes`** for that request, including when the value is wrong.
+- **Chinese and Japanese in the same field is unsupported in practice.** Detection cannot separate them reliably.
+- **Charabia normalizes, it does not stem.** Arabic and Hebrew morphological variants are not collapsed to a root beyond the documented normalization steps, and the Arabic pipeline's digit conversion handles Arabic-Indic numerals. {/* VERIFY: exact direction and scope of Arabic digit conversion in Charabia */}
+- **Meilisearch does not publish per-language relevancy benchmarks.** Measure no-result rate per locale on your own corpus with [analytics](/capabilities/analytics/overview) instead of assuming parity with English.
+
+For comparison, Elasticsearch handles these scripts through analyzer plugins chosen at index creation (kuromoji for Japanese, nori for Korean, smartcn for Chinese, and ICU for Thai and normalization), and switching analyzers means reindexing. {/* VERIFY: which of these analyzers ship bundled versus as installable plugins in current Elasticsearch and OpenSearch releases */} The tradeoff is configurability against zero setup: Meilisearch picks the pipeline for you and gives you `dictionary`, `separatorTokens`, and `nonSeparatorTokens` to correct it.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Tokenization" href="/capabilities/indexing/advanced/tokenization">
+    How Charabia splits text by writing system, and the three settings that override it.
+  </Card>
+  <Card title="Handling multilingual datasets" href="/capabilities/indexing/how_to/handle_multilingual_data">
+    Index-per-language layout, `localizedAttributes`, and aligning query and document tokenization.
+  </Card>
+  <Card title="Language support" href="/resources/help/language">
+    The per-language table of segmentation and normalization behavior.
+  </Card>
+  <Card title="Build multilingual search" href="/guides/multilingual-search">
+    Choosing between one index per language and a shared index across your whole catalog.
+  </Card>
+</CardGroup>

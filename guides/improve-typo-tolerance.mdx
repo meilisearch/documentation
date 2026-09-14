@@ -1,0 +1,133 @@
+---
+title: How to improve typo tolerance
+description: Users misspell queries and your search either returns nothing or returns the wrong thing, and you need to know which typo setting fixes which failure.
+keywords: typo tolerance tuning, minWordSizeForTypos, disableOnWords, disableOnAttributes, disableOnNumbers, sku matching wrong product, search matches wrong year, short query no results, fuzzy matching too aggressive, exact match brand name search, product code typo, spelling mistake search results
+boost: 2
+---
+
+Typo tolerance in Meilisearch is an index setting, not a query parameter, so you fix it once per index and every search inherits the change. Two failures account for almost all complaints. Users searching short terms get nothing back because words of four characters or fewer allow zero typos by default. Users searching identifiers get the wrong record because a SKU, a part number, or a year is being corrected into a neighboring value. The first is fixed by lowering `oneTypo`, the second by `disableOnAttributes`, `disableOnWords`, and `disableOnNumbers`. Update all of them through [`typoTolerance`](/capabilities/full_text_search/relevancy/typo_tolerance_settings).
+
+## What the defaults actually do
+
+The typo budget is computed per word, from the length of the query word, not the indexed word:
+
+| Query word length | Typos allowed |
+| --- | --- |
+| 1 to 4 characters | 0, prefix match only |
+| 5 to 8 characters | 1 |
+| 9 or more characters | 2 |
+
+Those cutoffs are `minWordSizeForTypos.oneTypo` (default `5`) and `minWordSizeForTypos.twoTypos` (default `9`). Two typos is a hard ceiling that no setting raises.
+
+Three counting rules surprise people:
+
+- **A typo on the first character costs two typos.** `caturday` does not match `saturday`, because an eight-character word has a budget of one.
+- **A transposition costs one typo.** Meilisearch uses Damerau-Levenshtein distance, so `teh` reaches `the` in a single edit. That is the most common real typo, and it is already cheap.
+- **Concatenation costs one typo.** A query for `any way` also tries `anyway`. Meilisearch concatenates up to three consecutive words, and it also splits a single query word when both halves have real frequency in the index, so `newspaper` can reach `news paper`. Split words must stay adjacent in the document. See [concatenated and split queries](/resources/internals/concat).
+
+Prefix search and typo tolerance are applied together on the last word of the query, so a partial and misspelled word still resolves in one pass. If you have turned [prefix search](/capabilities/full_text_search/how_to/configure_prefix_search) off, expect short-query recall to drop independently of anything typo related.
+
+## Why short queries return nothing
+
+A user typing `tow` gets no typo budget, so `two` is unreachable. If your catalog is full of short tokens (sizes, color codes, three-letter airport codes, two-word brand names), lowering `oneTypo` to `4` or `3` is the single highest-impact change you can make.
+
+The tradeoff is real. At `oneTypo: 3`, any three-character token matches any other three-character token one edit away, which on a large index is a lot of noise. Meilisearch's guidance is `oneTypo` between `2` and `8` and `twoTypos` between `4` and `14`. Start at `4` and measure.
+
+## Per-attribute control is on or off, not a threshold
+
+`minWordSizeForTypos` is index-wide. There is no way to say "allow two typos in `description` but only one in `title`". What Meilisearch gives you per attribute is a switch: `disableOnAttributes` lists fields that must match exactly.
+
+That switch is usually what you actually wanted. Put identifier-shaped fields in it:
+
+```json
+{ "disableOnAttributes": ["sku", "isbn", "serial_number", "url"] }
+```
+
+With `sku` disabled, a query for `BRV-ST221` no longer returns `BRV-ST220`. The document is still findable through its other searchable fields, the `sku` field simply stops contributing fuzzy matches.
+
+If you genuinely need different thresholds per field, the only route is separate indexes with separate settings, queried with [multi-search](/capabilities/multi_search/overview). Confirm the on or off switch is insufficient before paying that cost.
+
+## Why product codes leak matches, and what tokenization has to do with it
+
+Before any typo budget is applied, text is split into tokens, and token length is what the budget is measured against. `BRV-ST220` is split on the hyphen into `brv` and `st220`. The first gets zero typos, the second gets one, so `st221` matches. That is the leak.
+
+The instinct is to add `-` to [`nonSeparatorTokens`](/capabilities/indexing/advanced/tokenization) so the code stays whole. Do the arithmetic first: `brv-st220` is nine characters, which moves it into the two-typo bucket and makes the leak worse. Keeping codes whole only helps when combined with `disableOnAttributes` on the same field.
+
+Two related settings also change tokenization, and therefore typo budgets: `separatorTokens` adds characters that should split words (a `|` delimiter inside a field), and [`dictionary`](/capabilities/full_text_search/how_to/configure_dictionary) keeps sequences the tokenizer would otherwise shred, such as `"J. R. R."`, as one token.
+
+`disableOnNumbers` is the blunt instrument for the numeric case. With it set to `true`, `2024` stops matching `2025` and `123` stops matching `132`. It applies to numeric tokens only, so alphanumeric codes still need `disableOnAttributes`.
+
+## Synonyms, phrases, and exact terms
+
+Synonyms are normalized at indexing time using the index's stop words, separator tokens, and non-separator tokens. A synonym made of a character that the index treats as a separator (`&`, for example) is silently ignored at search time, which looks exactly like a typo tolerance bug and is not one. Check [synonyms](/capabilities/full_text_search/relevancy/synonyms) before blaming the typo settings.
+
+One-way synonyms interact with the `typo` ranking rule in a way worth expecting. Declaring `phone => iphone` makes a search for `phone` surface iPhone documents, but a search for `iphone` ranks `phone` documents lower, because `typo` sorts before most other criteria in the [ranking rules](/capabilities/full_text_search/relevancy/ranking_rules) pipeline.
+
+When a user needs adjacency, [phrase search](/capabilities/full_text_search/getting_started/phrase_search) with double quotes is the right lever: the quoted words must appear consecutively and in order. When a user needs a specific term spelled exactly, `disableOnWords` is the right lever, and it is case insensitive, so adding `iPhone` also covers `iphone`.
+
+Be aware that the tokenizer splits CamelCase, so `iPhone` in a document becomes `i` and `phone`. Add both the branded spelling and the plain one to `disableOnWords` if users type either.
+
+## A complete working example
+
+This block configures an index end to end and searches it. It assumes `MEILISEARCH_URL` and `MEILISEARCH_KEY` are set in the environment.
+
+```javascript
+// npm install meilisearch
+import { Meilisearch } from 'meilisearch'
+
+const client = new Meilisearch({
+  host: process.env.MEILISEARCH_URL, // for example https://your-project.meilisearch.io
+  apiKey: process.env.MEILISEARCH_KEY,
+})
+
+const index = client.index('products')
+
+// 1. Index documents that contain both prose and identifier fields.
+const addTask = await index.addDocuments([
+  { id: 1, title: 'Sandwich toaster', sku: 'BRV-ST220', year: 2024, body: 'Two slice press' },
+  { id: 2, title: 'Sandwich press XL', sku: 'BRV-ST221', year: 2025, body: 'Four slice press' },
+  { id: 3, title: 'iPhone 15 Pro', sku: 'APL-IP15P-256', year: 2023, body: 'Titanium smartphone' },
+])
+await client.waitForTask(addTask.taskUid)
+
+// 2. Tune typo tolerance once. Every query on this index inherits it.
+const typoTask = await index.updateTypoTolerance({
+  enabled: true,
+  minWordSizeForTypos: {
+    oneTypo: 4,   // allow 1 typo from 4 characters, default is 5
+    twoTypos: 10, // require 10 characters before allowing 2, default is 9
+  },
+  disableOnAttributes: ['sku'], // identifiers must match exactly
+  disableOnWords: ['iphone'],   // brand term must match exactly, case insensitive
+  disableOnNumbers: true,       // stop 2024 from matching 2025
+})
+await client.waitForTask(typoTask.taskUid)
+
+// 3. A misspelled prose query still works. No per-query parameter exists.
+const corrected = await index.search('sandwhich tosater')
+console.log(corrected.hits.map((h) => h.title))
+
+// 4. An identifier query no longer leaks into its neighbor.
+const exact = await index.search('BRV-ST221')
+console.log(exact.hits.map((h) => h.sku)) // BRV-ST221 only
+
+// 5. Read the settings back to confirm what is live.
+console.log(await index.getTypoTolerance())
+```
+
+## Limits and constraints
+
+- **Two typos per word is a hard ceiling.** Three or more differences never match, whatever `minWordSizeForTypos` says.
+- **`minWordSizeForTypos` bounds are `0 ≤ oneTypo ≤ twoTypos ≤ 255`.** Defaults are `oneTypo: 5` and `twoTypos: 9`. Meilisearch recommends `oneTypo` between 2 and 8 and `twoTypos` between 4 and 14.
+- **Typo tolerance has no search parameter.** `typoTolerance` exists only as an index setting, so it cannot vary per request. `attributesToSearchOn` narrows which fields are searched, but it does not change typo budgets.
+- **Defaults for the switches:** `enabled` is `true`, `disableOnNumbers` is `false`, and `disableOnWords` and `disableOnAttributes` are empty arrays.
+- **Concatenation is limited to three consecutive words**, and each concatenated or split candidate counts as one typo.
+- **Disabling typo tolerance also disables the `typo` ranking rule**, because every returned document then has zero typos by definition.
+- **Updating `dictionary` triggers a reindex** of every document in the index, which is asynchronous. Changing `typoTolerance` itself does not require reindexing documents.
+
+## Next steps
+
+- [Typo tolerance settings](/capabilities/full_text_search/relevancy/typo_tolerance_settings) documents every field with per-SDK samples.
+- [Typo tolerance vs fuzzy search](/resources/internals/typo_tolerance) explains the Levenshtein automaton, the split and concatenate logic, and how other engines differ.
+- [Tokenization](/capabilities/indexing/advanced/tokenization) covers `separatorTokens`, `nonSeparatorTokens`, and `dictionary`, which decide what counts as a word.
+- [Ranking rules](/capabilities/full_text_search/relevancy/ranking_rules) shows where `typo` sits in the pipeline and how to reorder it.

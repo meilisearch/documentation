@@ -1,0 +1,139 @@
+---
+title: Why your search costs more than expected
+description: Your search bill or embedding provider invoice came in higher than budgeted and you need to find which index, setting, or feature generated the spend.
+keywords: search bill higher than expected, meilisearch cloud cost breakdown, embedding api bill too high, openai embedding spend search, unexpected cloud search charges, search usage overage, reindex cost, cost per index attribution, why did my search bill go up, search as you type request volume, vector storage cost
+boost: 2
+---
+
+Search spend almost never grows where people look for it. On [Meilisearch Cloud](/capabilities/platform/billing/pricing_model), a resource-based project bills compute hourly by tier, disk at $0.165 per GiB with a 32 GB provisioned minimum, and bandwidth at $0.15 per GB, so a bill that moved without a tier change is usually disk or bandwidth. A usage-based project bills searches and documents, so it moves with traffic. The three surprises that account for most of the gap are a settings change that forced a full reindex, an embedder change that re-sent every document to a paid embedding API, and a search-as-you-type interface issuing one request per keystroke. The first two are visible in the batch history, the third in the operations dashboard.
+
+## Where the money actually accrues
+
+| Billing model | What you pay for | What makes it move |
+|---|---|---|
+| Resource-based | Compute tier (hourly, prorated), disk at $0.165 per GiB above a 32 GB minimum, bandwidth at $0.15 per GB | Index growth pushing you to a larger tier, disk that never shrinks on its own, response payloads leaving the region |
+| Usage-based (Build) | 50K searches and 100K documents included, then $0.40 per 1,000 extra searches and $0.30 per 1,000 extra documents | Traffic growth, keystroke-level request volume, re-imports that re-count documents |
+| Embedding provider | Tokens sent for indexing and, with a remote embedder, tokens sent at query time | Embedder setting changes, a fat `documentTemplate`, query volume on hybrid search |
+
+Two of those three lines are not on a Meilisearch invoice at all. Embedding spend lands on your provider's bill, and egress charges from your own application to your users are yours. Charges accrue per project and roll up into a single team bill, and only active projects generate charges, so a forgotten staging project is a real line item. See [billing](/capabilities/platform/billing/overview) for the estimated-next-bill breakdown in the Cloud dashboard.
+
+## The reindex that doubled the work
+
+Changing certain index settings makes Meilisearch reprocess every document in the index, not only the ones you touched. Per [indexing best practices](/capabilities/indexing/advanced/indexing_best_practices), the settings that trigger a full reindex are searchable attributes, filterable attributes, sortable attributes, stop words, synonyms, typo tolerance, embedder configuration, dictionary, proximity precision, separator tokens, and non-separator tokens. Displayed attributes and ranking rules do not.
+
+This is why the standard advice is to configure settings first and import documents second. Doing it the other way around doubles the indexing work on a first import, and on a usage-based project the reprocessing shows up as document volume rather than as a one-time setup cost. A team adding one filterable attribute to a 2M document index on a Friday afternoon is buying a full pass over 2M documents, plus, if the index has an embedder, everything in the next section.
+
+## Embedding spend is the line item nobody forecasts
+
+Embeddings are cached and only regenerated when document content changes, so re-indexing unchanged documents costs nothing. The expensive event is a configuration change: updating `model`, `source`, `documentTemplate`, `dimensions`, or `pooling` on an embedder makes Meilisearch regenerate embeddings for every document in the index. [`distribution` is the documented exception](/capabilities/hybrid_search/advanced/tune_distribution) and is safe to iterate on. Three practical consequences:
+
+- **Do not tune a `documentTemplate` on a production index by trial and error.** Every attempt is a full re-embed of the whole index. Test renders with `POST /render-template` first, as shown in [document template best practices](/capabilities/hybrid_search/advanced/document_template_best_practices).
+- **The default template is expensive.** If you do not set `documentTemplate`, Meilisearch falls back to a template containing all searchable, non-null fields. That sends fields with no semantic value to a provider that bills by token, on every document.
+- **Remote embedders also cost money at query time.** A hybrid or semantic search has to embed the query, and with a cloud API that is a billed call per search. [Composite embedders](/capabilities/hybrid_search/advanced/composite_embedders) let you keep a cloud API for bulk indexing and use a local model for search, which removes the per-query cost. Passing your own vector with [user-provided embeddings](/capabilities/hybrid_search/how_to/search_with_user_provided_embeddings) has the same effect.
+
+Vector storage is the quieter half. A 1536-dimension vector occupies about 6 KB at full precision and about 192 bytes with [binary quantization](/capabilities/hybrid_search/advanced/binary_quantization), which is the difference between fitting an index in a tier and paying for the next one up. Enabling it is irreversible, so decide before the index is large.
+
+## Why your request count exceeds your search count
+
+[Analytics](/capabilities/analytics/overview) documents the identifier that explains most request-volume surprises: a request ID is created each time a user types a character in a search-as-you-type implementation, while a search ID groups those keystrokes into one search intent. A user typing "running shoes" produces one intent and up to thirteen requests. A [multi-search](/capabilities/multi_search/overview) request produces one query ID per sub-query, so a four-tab interface multiplies that again.
+
+Debouncing input and canceling in-flight requests is the fix, and it is the same fix that makes the interface feel faster. Analytics events sent to `POST /events` are additional API requests against the project too, so they contribute to API call volume and inbound bandwidth even though the published usage-based pricing table lists only searches and documents. {/* VERIFY: whether keystroke-level search requests and analytics events each count individually toward the billed "searches" quota on usage-based plans */}
+
+## How to attribute cost to a specific index or feature
+
+Meilisearch exposes the two numbers you need: per-index footprint through [`GET /stats`](/reference/api/stats/get-stats-of-all-indexes), and per-batch work through [`GET /batches`](/reference/api/batches/list-batches), whose stats include `embedderRequests` with the total and failed count of embedder API calls made while processing. This script joins them into a per-index report and estimates what a full re-embed would cost.
+
+```javascript
+// npm install meilisearch      (Node.js 18+, for global fetch)
+// export MEILISEARCH_URL="https://your-project.meilisearch.io"
+// export MEILISEARCH_KEY="your_admin_api_key"
+import { Meilisearch } from 'meilisearch'
+
+const HOST = process.env.MEILISEARCH_URL
+const KEY = process.env.MEILISEARCH_KEY
+const DAYS = 30
+const TEMPLATE_BYTES = 600          // avg rendered documentTemplate, check with POST /render-template
+const CHARS_PER_TOKEN = 4           // rough heuristic, verify against your provider
+const USD_PER_MILLION_TOKENS = 0.02 // your embedding provider's indexing rate
+
+const client = new Meilisearch({ host: HOST, apiKey: KEY })
+const api = async (path) => {
+  const res = await fetch(`${HOST}${path}`, { headers: { Authorization: `Bearer ${KEY}` } })
+  if (!res.ok) throw new Error(`${path}: ${res.status} ${await res.text()}`)
+  return res.json()
+}
+const seconds = (iso) => {
+  const m = /^PT(?:([\d.]+)H)?(?:([\d.]+)M)?(?:([\d.]+)S)?$/.exec(iso ?? '')
+  return m ? (+m[1] || 0) * 3600 + (+m[2] || 0) * 60 + (+m[3] || 0) : 0
+}
+
+// 1. Footprint per index.
+const stats = await client.getStats()
+
+// 2. Work performed in the window, attributed to the indexes each batch touched.
+const since = new Date(Date.now() - DAYS * 86400000).toISOString()
+const work = {}
+let from = null
+for (;;) {
+  const q = new URLSearchParams({ limit: '500', afterStartedAt: since })
+  if (from !== null) q.set('from', String(from))
+  const page = await api(`/batches?${q}`)
+  for (const b of page.results) {
+    const dur = seconds(b.duration)
+    for (const [uid, tasks] of Object.entries(b.stats.indexUids ?? {})) {
+      const w = (work[uid] ??= { secs: 0, tasks: 0, settings: 0, embedCalls: 0, embedFails: 0 })
+      w.secs += dur
+      w.tasks += tasks
+      w.settings += b.stats.types?.settingsUpdate ?? 0
+      w.embedCalls += b.stats.embedderRequests?.total ?? 0
+      w.embedFails += b.stats.embedderRequests?.failed ?? 0
+    }
+  }
+  if (page.next == null) break
+  from = page.next
+}
+
+console.log(`last ${DAYS} days\n`)
+console.log('index                  docs   embedded    disk   proc(s)  settings  embed calls  re-embed $')
+for (const [uid, i] of Object.entries(stats.indexes)) {
+  const w = work[uid] ?? { secs: 0, tasks: 0, settings: 0, embedCalls: 0, embedFails: 0 }
+  const embedded = i.numberOfEmbeddedDocuments ?? 0
+  const reEmbedUsd =
+    ((embedded * TEMPLATE_BYTES) / CHARS_PER_TOKEN / 1e6) * USD_PER_MILLION_TOKENS
+  console.log(
+    `${uid.padEnd(18)} ${String(i.numberOfDocuments).padStart(9)} ` +
+    `${String(embedded).padStart(10)} ` +
+    `${(i.indexSize / 1024 ** 3).toFixed(2).padStart(6)}G ` +
+    `${w.secs.toFixed(0).padStart(8)} ${String(w.settings).padStart(9)} ` +
+    `${String(w.embedCalls).padStart(12)} ${reEmbedUsd.toFixed(2).padStart(11)}`
+  )
+  if (w.embedFails > 0) console.log(`  warning: ${w.embedFails} failed embedder requests`)
+  if (w.settings > 0 && embedded > 0) {
+    console.log(`  warning: settings updates on an index with embeddings, check for a full re-embed`)
+  }
+}
+const waste = (stats.databaseSize - stats.usedDatabaseSize) / 1024 ** 3
+console.log(`\ntotal on disk ${(stats.databaseSize / 1024 ** 3).toFixed(2)} GiB, ` +
+  `${waste.toFixed(2)} GiB reclaimable by compaction`)
+```
+
+{/* VERIFY: the four-characters-per-token heuristic and the current per-million-token indexing rate for your specific embedding provider */}
+
+Read the report as follows. A high `proc(s)` value with a low document count means work is being repeated, usually a settings update or an import that rewrites unchanged documents. A non-zero settings count on an index that has embeddings is the signature of the expensive case. A large reclaimable figure means disk you are paying for and not using. Per-phase breakdowns of where indexing time went live in the batch `progressTrace`, documented in [optimizing batch performance](/capabilities/indexing/tasks_and_batches/optimize_batch_performance).
+
+## Limits and constraints
+
+- **Cloud rates.** Disk is $0.165 per GiB with a 32 GB provisioned minimum, bandwidth is $0.15 per GB, and compute is an hourly rate per tier shown in the Cloud UI. The Build usage-based plan includes 50K searches and 100K documents per month, then charges $0.40 per 1,000 extra searches and $0.30 per 1,000 extra documents. Prices vary slightly by region, and the Cloud UI is the authority for your accrued cost.
+- **Billing timing differs by model.** Resource-based projects bill hourly and prorate when a project is created or deleted mid-cycle. Usage-based plan fees are charged upfront and extra usage at the end of the cycle, once the total is known.
+- **Disk does not shrink on its own.** Freed pages are not returned to the operating system automatically, so reclaiming space requires an explicit [index compaction](/capabilities/indexing/how_to/compact_an_index). It is never triggered automatically.
+- **Meilisearch cannot see your embedding provider's prices.** `embedderRequests` counts calls, not tokens or dollars. Token cost must come from your provider's own usage dashboard.
+- **Analytics retention depends on your plan** and is not published as a fixed number, so check your plan details in the Cloud dashboard.
+- **Tiers 2XL and above are not self-serve**, so a cost conversation at that size goes through sales rather than the dashboard.
+- **Per-operation pricing elsewhere behaves differently.** Models that bill per record stored plus per API operation, as [Algolia's does](/resources/comparisons/algolia), make keystroke-level request volume a direct billing multiplier rather than a capacity question. {/* VERIFY: current Algolia billing units and whether search-as-you-type requests bill individually */}
+
+## Next steps
+
+- [Pricing model](/capabilities/platform/billing/pricing_model) for tier sizing, the index size formula, and cost estimation
+- [Operations monitoring](/capabilities/platform/monitoring/usage_metrics) to see bandwidth and API call volume per index
+- [Indexing best practices](/capabilities/indexing/advanced/indexing_best_practices) for avoiding avoidable full reindexes
+- [Hybrid search overview](/capabilities/hybrid_search/overview) for embedder caching and regeneration behavior

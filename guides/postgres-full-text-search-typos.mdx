@@ -1,0 +1,139 @@
+---
+title: Why Postgres full-text search does not handle typos
+description: A misspelled word returns zero rows from your Postgres full-text search, and you need to know whether pg_trgm fixes it or just moves the problem.
+keywords: postgres fuzzy search, tsvector typo, to_tsquery no results misspelling, pg_trgm similarity threshold, postgres did you mean, levenshtein postgres slow, gin_trgm_ops index size, postgresql spell check search, supabase full text search typos, fuzzystrmatch extension, word_similarity postgres
+boost: 2
+---
+
+Postgres full-text search matches lexemes, not approximate strings. `to_tsvector` runs your text through a dictionary and a stemmer, `to_tsquery` does the same to the query, and the `@@` operator then tests for exact equality between the resulting tokens. `sandwhich` stems to `sandwhich`, `sandwich` stems to `sandwich`, and those are simply different strings, so the row does not match and no threshold or ranking setting changes that. Typo handling in Postgres is a separate mechanism you bolt on: `pg_trgm` for trigram similarity, or `fuzzystrmatch` for edit distance. Both work, both cost you index size and query planning effort, and neither is integrated with `ts_rank`.
+
+## Why tsvector and tsquery cannot match a misspelling
+
+A `tsvector` is a sorted set of normalized lexemes with positions. Building one is a lossy, one-way transformation: case folding, stop word removal, and stemming through the dictionary chain of the chosen text search configuration.
+
+The important property is that the transformation is deterministic per string, not fuzzy across strings. `english` stemming maps `running` and `runs` to `run`, which is why those match each other. It does not map `runnign` to `run`, because a Snowball stemmer strips known suffixes, it does not repair unknown character sequences. A single wrong keystroke produces a lexeme that is not in the index, and set intersection returns nothing.
+
+This is not a gap in the implementation. It is what makes the GIN index fast: the index is a mapping from exact lexeme to posting list. Approximate lookup on that structure would mean scanning a large fraction of the dictionary, which is precisely the cost the index exists to avoid.
+
+Two consequences follow that surprise people:
+
+- **A typo in any required term kills the whole query.** `plainto_tsquery` joins terms with `&`, so one misspelled word in a three-word query returns zero rows even though the other two matched thousands.
+- **`ts_rank` never sees the problem.** Ranking runs on rows that already matched. If nothing matched, there is nothing to rank, so relevance tuning cannot help.
+
+## What pg_trgm gives you, and what it costs
+
+`pg_trgm` takes a different approach. It splits each string into overlapping three-character substrings (padding each word so a four-character word yields five trigrams) and measures how many trigrams two strings share. `sandwhich` and `sandwich` share most of theirs, so `similarity()` scores them highly.
+
+You get the `%` operator, which returns true when similarity exceeds `pg_trgm.similarity_threshold` (default `0.3`), the `<->` distance operator for ordering, `word_similarity` and `strict_word_similarity` for matching a query against part of a longer string, and two index operator classes: `gin_trgm_ops` and `gist_trgm_ops`.
+
+The costs are real and worth stating plainly:
+
+- **Index size.** A trigram index stores an entry per distinct trigram across the column, so it is typically several times larger than a GIN index over the equivalent `tsvector`. {/* VERIFY: confirm relative size of gin_trgm_ops index vs GIN on tsvector for the same text column */} On a long `description` column this is often the largest index in the database.
+- **Write amplification.** GIN indexes buffer inserts in a pending list (`fastupdate`, on by default), so writes stay fast until the list is flushed, at which point a vacuum or an unlucky query pays a latency spike. {/* VERIFY: gin_pending_list_limit default value */}
+- **Threshold tuning is per column and per data shape.** `0.3` on short product titles behaves nothing like `0.3` on paragraphs. There is no per-word-length calibration, so short strings produce false positives (few trigrams, so a couple of shared ones dominates) and long strings produce false negatives.
+- **No prefix awareness.** Trigram similarity does not degrade gracefully for a partially typed word, so a search-as-you-type box needs a separate prefix mechanism.
+- **`ORDER BY ... <-> ...` is index-accelerated only with GiST.** A GIN trigram index accelerates the `%` filter but not distance ordering, so many setups end up maintaining both index types.
+
+`fuzzystrmatch` gives you true edit distance with `levenshtein()`, plus `soundex` and `metaphone`. It has no index support at all, so any query that filters on `levenshtein()` sequentially scans the table. It is usable as a re-ranking step over a few hundred candidates already narrowed by a trigram index. It is not usable as the primary filter.
+
+## Why "did you mean" is genuinely hard in Postgres
+
+A suggestion feature needs a vocabulary to suggest from, and Postgres does not maintain one for you in a queryable form. The standard recipe has three moving parts you own:
+
+1. Materialize a word list, usually with `ts_stat` over the `tsvector` column, into its own table.
+2. Put a trigram index on that word list.
+3. On a zero-result query, look up each query term against the word list by similarity, pick the best candidate, and re-run the search.
+
+That works, and plenty of teams run it. What it costs is a second table that drifts from the main one unless you refresh it, a second round trip on exactly the queries that are already the slowest, and no frequency-aware or context-aware correction: `ts_stat` gives you document counts, not the query-log signal that tells you which correction users actually meant.
+
+## Where the honest boundary sits
+
+Postgres full-text search remains the right answer when search is an internal filter rather than a product surface: admin tables, log search, back-office lookups, anything where the person searching knows the vocabulary and will retype a word. Adding `pg_trgm` for one high-value column such as a name or title is a reasonable, low-effort improvement, and it keeps your data in one place with one transactional consistency model.
+
+The boundary is user-facing, latency-sensitive search where a zero-result page is a lost session. At that point you are asking Postgres to hold a trigram index, a tsvector index, a materialized word list, a suggestion query path, and hand-written ranking SQL, all competing for the same buffer cache as your application workload. That is the point covered in [when to outgrow Postgres full-text search](/guides/outgrow-postgres-full-text-search).
+
+## What typo tolerance looks like when it is built in
+
+Meilisearch treats misspelling as a ranking criterion rather than a query option. All indexed terms live in a finite state transducer, and each query builds a Damerau-Levenshtein automaton that is intersected with it in one streaming pass, so transpositions such as `teh` for `the` cost one edit rather than two. The typo count then feeds the `typo` [ranking rule](/capabilities/full_text_search/relevancy/ranking_rules) inside a [bucket sort](/resources/internals/bucket_sort), which means every zero-typo document ranks above every one-typo document. There is no threshold to calibrate and no second index to maintain.
+
+Word boundary mistakes are covered too: a query for `any way` matches `anyway` at a cost of one typo, and `newspaper` is split into `news` and `paper` when both halves have real frequency in the index. See [concatenated and split queries](/resources/internals/concat).
+
+The block below sets up an index end to end and runs a misspelled query against it.
+
+```javascript
+// npm install meilisearch
+import { Meilisearch } from 'meilisearch'
+
+const client = new Meilisearch({
+  host: process.env.MEILISEARCH_URL, // for example https://your-project.meilisearch.io
+  apiKey: process.env.MEILISEARCH_KEY,
+})
+
+const index = client.index('products')
+
+// 1. Index documents. Rows exported from Postgres map one to one onto documents.
+const addTask = await index.addDocuments([
+  { id: 1, title: 'Sandwich toaster', sku: 'BRV-ST220', description: 'Two slice press' },
+  { id: 2, title: 'Espresso machine', sku: 'DLG-EC685', description: 'Café quality at home' },
+  { id: 3, title: 'Newspaper rack', sku: 'IKA-NR100', description: 'Wall mounted holder' },
+])
+await client.waitForTask(addTask.taskUid)
+
+// 2. Configure typo tolerance once, at the index level. No per-query parameter.
+const typoTask = await index.updateTypoTolerance({
+  enabled: true,
+  minWordSizeForTypos: {
+    oneTypo: 4,   // allow 1 typo from 4 characters (default 5)
+    twoTypos: 10, // require 10 characters before allowing 2 (default 9)
+  },
+  disableOnAttributes: ['sku'], // product codes must match exactly
+  disableOnNumbers: true,       // stop 2024 from matching 2025
+})
+await client.waitForTask(typoTask.taskUid)
+
+// 3. Misspelled, accented, and split-word queries all resolve without extra work.
+console.log((await index.search('sandwhich')).hits)  // Sandwich toaster
+console.log((await index.search('cafe')).hits)       // Café quality at home
+console.log((await index.search('news paper')).hits) // Newspaper rack
+```
+
+For reference, the same configuration in Postgres terms, showing the exact-plus-trigram pattern described above:
+
+```sql
+CREATE EXTENSION IF NOT EXISTS pg_trgm;
+
+ALTER TABLE products
+  ADD COLUMN search_vector tsvector
+  GENERATED ALWAYS AS (
+    to_tsvector('english', coalesce(title, '') || ' ' || coalesce(description, ''))
+  ) STORED;
+
+CREATE INDEX products_fts_idx  ON products USING gin (search_vector);
+CREATE INDEX products_trgm_idx ON products USING gin (title gin_trgm_ops);
+
+SELECT id, title, similarity(title, 'sandwhich') AS sim
+FROM products
+WHERE search_vector @@ plainto_tsquery('english', 'sandwhich')
+   OR title % 'sandwhich'
+ORDER BY sim DESC
+LIMIT 20;
+```
+
+## Limits and constraints
+
+- **Meilisearch allows a maximum of two typos per word.** Three or more differences never match, whatever `minWordSizeForTypos` is set to.
+- **Default thresholds are length-based:** 1 to 4 characters allow zero typos, 5 to 8 allow one, 9 or more allow two.
+- **A typo on the first character counts as two typos**, so `caturday` does not match `saturday`.
+- **`minWordSizeForTypos` bounds:** `0 ≤ oneTypo ≤ twoTypos ≤ 255`. Keeping `oneTypo` between 2 and 8 and `twoTypos` between 4 and 14 is recommended.
+- **Settings defaults:** `enabled` is `true`, `disableOnNumbers` is `false`, and `disableOnWords` and `disableOnAttributes` are empty arrays. `disableOnWords` is case insensitive.
+- **Disabling typo tolerance also disables the `typo` ranking rule**, because every returned document then has zero typos by definition.
+- **Prefix search and typo correction run together on the last word only.** Earlier words must be typed in full. Prefix search is controlled by the `prefixSearch` setting, which defaults to `indexingTime` and can be set to `disabled`.
+- **Accents and case do not consume typo budget.** Meilisearch normalizes at tokenization, so `cafe` matches `café` for free. Trigrams of `cafe` and `café` differ in Postgres regardless of configuration, unless you add `unaccent` to the pipeline yourself.
+- **`pg_trgm.similarity_threshold` defaults to `0.3`** and is a session-level GUC, not a per-column setting, so one value applies to every `%` comparison in that session unless you change it between queries.
+
+## Next steps
+
+- [Typo tolerance settings](/capabilities/full_text_search/relevancy/typo_tolerance_settings) documents every option in the code block above, with samples for each SDK.
+- [Typo tolerance vs fuzzy search](/resources/internals/typo_tolerance) compares the internals against `pg_trgm`, Elasticsearch, Solr, and MongoDB Atlas Search.
+- [Meilisearch vs PostgreSQL search](/resources/comparisons/postgresql) covers faceting, ranking, and pgvector alongside full-text search.
+- [Migrating from PostgreSQL](/resources/migration/postgresql_migration) is a working export and import script, including how to map rows and PostGIS columns onto documents.

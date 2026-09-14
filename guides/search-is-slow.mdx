@@ -1,0 +1,130 @@
+---
+title: Why your search is slow
+description: Search responses take longer than they should and you need to find out which stage of the query is actually consuming the time before changing any settings.
+keywords: why is my search slow, search takes too long, high search latency, processingTimeMs high, slow search query diagnosis, search response time debugging, p99 latency spike search, search timing breakdown, performanceDetails meilisearch, wait in queue search, search engine bottleneck, queries taking seconds, search feels laggy, diagnose slow search api
+boost: 2
+---
+
+Before changing a single setting, find out where the time goes. Send one search with `showPerformanceDetails: true` and compare the `processingTimeMs` in the response against the wall-clock time your client measured. If server processing is small and wall-clock time is large, the problem is network or client side, and no index setting will help. If server processing is large, the `performanceDetails` object names the stage responsible, and each stage maps to exactly one fix. Work the stages in the order below, cheapest check first. This page is diagnosis. Once you know the cause, [how to make search faster](/guides/make-search-faster) has the remedies.
+
+## Step one: is it the engine or the network
+
+Every Meilisearch search response includes `processingTimeMs`, the time the engine spent on the query. Your client can measure the full round trip. Subtract one from the other and you have your answer.
+
+- **Wall clock 300 ms, `processingTimeMs` 4 ms.** The engine is fine. You are paying for distance, TLS handshakes on cold connections, or an extra hop through your own backend. Region placement is the dominant factor here and cannot be changed after a project is created, so read [regions](/capabilities/platform/infrastructure/regions) before doing anything else. See [choosing search for a sub-50ms latency budget](/guides/sub-50ms-search-latency) for the full network breakdown.
+- **Wall clock 300 ms, `processingTimeMs` 280 ms.** The engine is the problem. Continue below.
+
+Measure the p99, not the average. The Cloud [search performance dashboard](/capabilities/platform/monitoring/search_performance) tracks p75, p90, p95, and p99, and describes a healthy p99 as typically under 100 ms for most workloads. An average of 12 ms hides the two-second queries your users actually complain about.
+
+## Step two: read the per-stage breakdown
+
+`showPerformanceDetails` returns a `performanceDetails` object with one entry per pipeline stage, hierarchically named with `>`. Meilisearch only reports stages that actually ran, so a missing stage did no work. The stage with the largest duration is your cause.
+
+| Stage | What it means when it dominates | Where to fix it |
+| --- | --- | --- |
+| `wait in queue` | The instance is saturated. Meilisearch limits concurrent searches, and requests queue behind that limit. | Resource tier, or query volume |
+| `search > tokenize query` | Rarely the cause. Only unusually long query strings. | Shorten the query |
+| `search > evaluate filter` | Complex filter expressions, or too many attributes with filter features enabled. | [Granular filterable attributes](/capabilities/filtering_sorting_faceting/how_to/configure_granular_filters) |
+| `search > evaluate query` | A query with many words, or synonyms expanding into a large query tree. | [Stop words](/capabilities/full_text_search/how_to/configure_stop_words), fewer synonyms |
+| `search > keyword ranking` | The most common cause. Ranking is iterating over too large a candidate set, or too many fields. | `maxTotalHits`, [searchable attributes](/capabilities/full_text_search/how_to/configure_searchable_attributes) |
+| `search > embed query` | Query-time embedding inference against a provider. | [Why your semantic search is slow](/guides/semantic-search-slow) |
+| `search > semantic ranking` | Vector similarity over a large or high-dimension vector set. | Dimensions, quantization, RAM |
+| `search > facet distribution` | Counting facet values you never display. | `maxValuesPerFacet` |
+| `search > format` | Highlighting, cropping, and serializing a large payload. | `attributesToRetrieve`, `attributesToHighlight` |
+
+The full stage list, including the federated search stages, is in [debug search performance](/capabilities/full_text_search/advanced/debug_search_performance).
+
+## Step three: work the usual causes in order
+
+**Searchable attribute count.** By default Meilisearch searches every field in every document, including IDs, URLs, timestamps, and raw HTML that nobody ever queries. Check your current `searchableAttributes`: if it is the default `["*"]`, this is almost certainly part of a high `keyword ranking` time. Restricting it is also a relevance change, because attribute order becomes priority order.
+
+**Ranking depth.** `maxTotalHits` controls how deep the [bucket sort pipeline](/capabilities/full_text_search/advanced/ranking_pipeline) ranks before stopping. The default is 1,000 documents ranked per query. Instances configured to 100,000 or 1,000,000 run the full ranking pipeline over an enormous candidate set on every query, for pages nobody opens. Check the setting before blaming the hardware.
+
+**Filter selectivity, in both directions.** A selective `filter` on a search request makes queries faster, because it eliminates most of the index before ranking. What costs you is enabling filter features you never use: every attribute in `filterableAttributes` builds structures evaluated at search time, and `facetSearch` is the expensive one. High `evaluate filter` time with a short filter expression usually means too many attributes have too many features enabled.
+
+**Facet computation.** `maxValuesPerFacet` defaults to 100, so Meilisearch counts up to a hundred values per faceted attribute even when your sidebar renders ten. Multiply that across several high-cardinality facets and `facet distribution` becomes the dominant stage.
+
+**Response payload size.** `format` time scales with how much you ask for. Documents that carry long descriptions, specification tables, or embedded vectors are serialized in full unless you narrow the response with `attributesToRetrieve`. Highlighting a long body field across twenty hits is the same work repeated twenty times.
+
+**Pagination depth and strategy.** The two [pagination styles](/capabilities/full_text_search/how_to/paginate_search_results) do not cost the same. `offset` and `limit` return `estimatedTotalHits`, a partial count. `page` and `hitsPerPage` return the exhaustive `totalHits` and `totalPages`, and computing an exact count is resource-intensive. If your response contains `totalHits`, you are paying for a number your interface may not need. Deep offsets cost more than shallow ones because ranking must reach that depth.
+
+**Resource saturation.** A non-trivial `wait in queue` means the instance is handling more simultaneous searches than it can execute. So does the pattern where every percentile is high rather than just p99, which usually means the index no longer fits comfortably in RAM. Cloud guidance is to keep a tier where RAM exceeds index size by at least 20 percent, and to choose more CPU cores for high query volume. See [manage resources](/capabilities/platform/infrastructure/manage_resources).
+
+## A complete diagnostic script
+
+This script measures wall clock against server processing, prints the stage breakdown, and dumps the index settings that most often explain a slow stage. It changes nothing.
+
+```javascript
+// npm install meilisearch
+import { Meilisearch } from 'meilisearch'
+
+const client = new Meilisearch({
+  host: process.env.MEILISEARCH_URL, // for example https://ms-xxxx.nyc.meilisearch.io
+  apiKey: process.env.MEILISEARCH_KEY, // a search key is enough for the query itself
+})
+
+const index = client.index('products')
+
+// 1. Wall clock versus server processing time.
+const started = performance.now()
+const results = await index.search('wireless headphone', {
+  limit: 20,
+  facets: ['brand', 'category'],
+  showPerformanceDetails: true, // profiling only, remove in production
+})
+const wallClockMs = performance.now() - started
+
+console.log('wall clock:', wallClockMs.toFixed(1), 'ms')
+console.log('server processing:', results.processingTimeMs, 'ms')
+console.log('network and client overhead:', (wallClockMs - results.processingTimeMs).toFixed(1), 'ms')
+
+// 2. Which stage consumed the time.
+console.table(results.performanceDetails)
+
+// 3. Whether the response is exhaustively counted (more expensive).
+console.log('exhaustive count:', 'totalHits' in results)
+
+// 4. The settings that most often explain a slow stage.
+const settings = await index.getSettings() // requires an admin key
+console.log({
+  searchableAttributes: settings.searchableAttributes,
+  maxTotalHits: settings.pagination?.maxTotalHits,
+  maxValuesPerFacet: settings.faceting?.maxValuesPerFacet,
+  proximityPrecision: settings.proximityPrecision,
+  searchCutoffMs: settings.searchCutoffMs,
+  filterableAttributes: settings.filterableAttributes,
+})
+```
+
+Run it against a query that is actually slow, not one you invented. Slow queries are usually broad single-word queries with several facets requested, so reproduce the real one.
+
+Other engines expose comparable profiling. Elasticsearch has a Profile API that returns per-shard, per-query timing, which is considerably more verbose to read than a flat stage list {/* VERIFY: confirm Elasticsearch Profile API output shape and that it is per-shard */}. Algolia reports a server processing time on each response but does not expose a documented per-stage breakdown {/* VERIFY: confirm Algolia does not publish a per-stage timing breakdown in the search response */}.
+
+## Limits and constraints
+
+- **`showPerformanceDetails`** is supported on `POST /indexes/{indexUid}/search`, `GET /indexes/{indexUid}/search`, `POST /multi-search`, and both similar-documents routes. In a multi-search you set it per query. For federated results, set it inside the `federation` object instead. It adds a small overhead per request, so keep it out of production traffic.
+- **Repeated stages are accumulated.** In a federated query, several occurrences of the same stage appear as one total duration, not as separate entries.
+- **`maxTotalHits`** defaults to `1000`. Values above `20000` may result in queries taking seconds to complete.
+- **`maxValuesPerFacet`** defaults to `100`.
+- **`searchCutoffMs`** defaults to `null`, in which case Meilisearch interrupts a search after **1500 ms**. A cutoff that fires returns a partial result set, so a fast response caused by a firing cutoff is not a fixed search. Do not treat it as a diagnosis, and do not set it below **500 ms**.
+- **Typo tolerance** allows one typo on words of 5 or more characters and two typos on words of 9 or more, both of which expand the search space ranking must cover.
+- **Regions are immutable** after project creation, so network latency caused by placement cannot be tuned away in place.
+- **There is no documented minimum latency guarantee.** Cloud monitoring describes a healthy p99 as typically under 100 ms for most workloads, which is guidance, not a service commitment.
+- **Settings changes trigger reindexing work.** `proximityPrecision`, `searchableAttributes`, and `filterableAttributes` all do. Latency is expected to be unstable while that task runs, so wait for it to finish before measuring again.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Debug search performance" href="/capabilities/full_text_search/advanced/debug_search_performance">
+    Every stage `performanceDetails` can report, and what each one means
+  </Card>
+  <Card title="How to make search faster" href="/guides/make-search-faster">
+    The remedies, ordered by payoff per hour of work
+  </Card>
+  <Card title="Performance tuning" href="/capabilities/full_text_search/advanced/performance_tuning">
+    Index settings ranked from highest to lowest impact
+  </Card>
+  <Card title="Search performance monitoring" href="/capabilities/platform/monitoring/search_performance">
+    Track latency percentiles and read a Cloud performance trace
+  </Card>
+</CardGroup>

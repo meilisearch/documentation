@@ -1,0 +1,199 @@
+---
+title: How to search scanned documents with OCR
+description: Your PDFs return no results because they are page images with no text layer, and after running OCR the recognized text is noisy enough that searches still miss.
+keywords: search scanned pdf, ocr pdf for search, index scanned documents, tesseract ocr search index, no text layer pdf, searchable pdf from scan, ocr accuracy search results, ocr errors typo tolerance, scanned invoice search, digitize paper archive search, image only pdf extract text, pytesseract index documents
+boost: 2
+---
+
+A scanned document contains page images, not characters, so text extraction returns empty strings and search finds nothing. The fix is to run OCR before indexing, page by page rather than file by file, because most real archives are mixed. Detect a missing text layer by counting extracted characters per page, OCR only the pages that come back near-empty, apply three cleanup passes (rejoin hyphenated line breaks, normalize letter and digit confusions, discard low-confidence words), then index the result as normal JSON documents. Meilisearch has no OCR route and no PDF ingestion route, so all of this happens in your pipeline before [adding documents](/capabilities/indexing/how_to/add_and_update_documents).
+
+## How to tell whether a page actually needs OCR
+
+Do not decide per file. A 200-page contract bundle routinely holds a born-digital agreement, a scanned signature page, and a faxed appendix, and OCRing pages that already have a text layer is slower and less accurate than reading the characters already there.
+
+The reliable test is character count per page. Extract the text layer, strip whitespace, and count. A page of body prose yields well over a thousand characters; a scanned page yields zero, or a handful from a digital stamp overlaid on the image. Anything under roughly 100 characters on a full-size page is an image scan. That threshold is loose enough to survive title pages and blank exhibits, which carry nothing worth indexing anyway.
+
+One case is worth recognizing: a PDF already OCRed by the scanner, carrying an invisible text layer over the image. Those pages pass the character-count test, and you should use the existing layer even if its quality is mediocre. Re-recognizing it will not reliably beat it and costs a full pipeline run. {/* VERIFY: OCRmyPDF's default behavior of skipping pages that already contain text */}
+
+## What accuracy to expect
+
+OCR quality is dominated by the input image, not the engine, and two variables matter most: resolution and contrast.
+
+Text at 300 DPI, black on white, in a common serif or sans face recognizes at very high character accuracy, typically above 98 percent on clean office documents. {/* VERIFY: the 300 DPI recommendation and the 98 percent figure for Tesseract on clean printed text */} At 150 DPI, the resolution a lot of legacy archives were scanned at, accuracy falls noticeably and small type degrades first. Faxes, photocopies of photocopies, skewed pages, colored backgrounds, and tightly set tables push it down further.
+
+Two categories fail badly enough to plan around rather than tune for. Handwriting is not what a classical OCR engine is built for, and results range from poor to useless. {/* VERIFY: Tesseract's handwriting support and typical accuracy */} Dense numeric tables are the other, because digits carry no linguistic context, so a misread `8` cannot be corrected the way a misread letter inside a word can.
+
+The practical consequence: 98 percent character accuracy is not 98 percent of searches working. Errors cluster in exactly the terms people search for, namely proper nouns, part numbers, and headings set in unusual type.
+
+## How OCR errors interact with typo tolerance
+
+Meilisearch matches query terms against indexed terms using a prefix Levenshtein distance, and typo tolerance is symmetric: it does not care whether the error sits in the query or in the document. A correctly typed query can therefore still reach a corrupted indexed word. The rules, from [typo tolerance settings](/capabilities/full_text_search/relevancy/typo_tolerance_settings), are per word:
+
+- 1 to 4 characters: no typo allowed
+- 5 to 8 characters: one typo
+- more than 8 characters: up to two typos, which is the hard maximum
+
+That means OCR damage to long words is often invisible to the user. `international` scanned as `intemational` (the classic `rn` read as `m`) is one substitution in a 13-character word, so a query for `international` still matches it.
+
+Three cases do not recover, and they explain most of the misses you will see:
+
+1. **Short words.** `cost` misread as `cnst` is four characters, and four-character query terms get zero typo tolerance. The match is gone.
+2. **First-character errors.** A typo on the first character counts as two, consuming the entire budget on a 5 to 8 character word and half of it on a longer one. A corrupted initial capital in a surname is the most damaging error class.
+3. **Word splits and merges.** OCR inserts a space inside a word or drops the one between two. Meilisearch handles the merged case: it concatenates query terms separated by a space and counts that as one typo, so `any way` can match `anyway`. A word broken into two indexed tokens is harder to reach.
+
+You can buy back some of case 1 by lowering `minWordSizeForTypos.oneTypo` to `4`, inside the recommended range of 2 to 8. It costs precision across the whole index, so make it a deliberate choice for a noisy corpus.
+
+Numbers deserve the opposite treatment. Typo tolerance on numeric values is on by default, which lets `2024` match `2025`. On a scanned invoice archive, where people search for an exact document number, set `disableOnNumbers` to `true` and fix digit confusions during cleanup instead.
+
+## Which cleanup steps are worth running
+
+Four passes earn their cost. A fifth is a trap.
+
+**Rejoin hyphenated line breaks.** Justified print splits `agreement` across lines as `agree-` and `ment`, and OCR preserves both halves. Rejoin when a token ends in a hyphen and the next starts lowercase. This pass recovers more searchable terms than any other.
+
+**Normalize letter and digit confusions, but only inside numeric tokens.** `O` for `0`, `l` and `I` for `1`, `S` for `5`, `B` for `8`. Apply the mapping only to tokens that are already almost entirely digits, so you fix `2O24` without turning the word `SO` into `50`.
+
+**Drop low-confidence words.** OCR engines emit a per-word confidence score. {/* VERIFY: pytesseract image_to_data confidence scale, reported as 0 to 100 with -1 for non-text regions */} Words below roughly 40 are usually speckle read as punctuation, which is pure index noise. Keep the page's mean confidence as a field so you can audit later.
+
+**Keep provenance.** Store which pages came from OCR and which from a text layer. When a user reports a missing document, that field tells you in one query whether the problem is recognition or relevance.
+
+The trap is aggressive spell correction. A dictionary-based corrector rewrites proper nouns, part numbers, and technical terms into common words that were never in the document, and the errors are unrecoverable because the original is gone. Leave the noise in and let typo tolerance absorb it. If specific corruptions recur across your corpus, encode them as [synonyms](/capabilities/full_text_search/relevancy/synonyms) instead, which adds a match path without destroying the source text.
+
+## A complete OCR and indexing pipeline
+
+Save this as `ocr_index.py`. It detects image-only pages, OCRs just those, applies the cleanup passes, chunks by word count with page provenance, and indexes with settings tuned for noisy text.
+
+```python
+# pip install pymupdf pytesseract pillow meilisearch
+# Also needs the tesseract binary: `brew install tesseract` or `apt install tesseract-ocr`
+# export MEILISEARCH_URL="https://ms-xxxxxxxx.meilisearch.io"
+# export MEILISEARCH_KEY="your-admin-key"
+# python ocr_index.py scan.pdf contract-2019-0421
+
+import os, re, sys
+import meilisearch
+import pytesseract
+from PIL import Image
+
+try:
+    import pymupdf
+except ImportError:            # older releases expose the module as `fitz`
+    import fitz as pymupdf
+
+MIN_CHARS_PER_PAGE = 100   # below this on a full page, assume it is an image scan
+OCR_DPI = 300              # 150 DPI archives recognize measurably worse
+MIN_WORD_CONF = 40         # below this, the token is almost always speckle
+TARGET_WORDS = 220
+
+path, doc_id = sys.argv[1], sys.argv[2]
+pdf = pymupdf.open(path)
+DIGIT_FIX = str.maketrans({"O": "0", "o": "0", "l": "1", "I": "1", "S": "5", "B": "8"})
+
+def ocr_page(page):
+    pix = page.get_pixmap(dpi=OCR_DPI)
+    img = Image.frombytes("RGB", (pix.width, pix.height), pix.samples).convert("L")
+    data = pytesseract.image_to_data(img, output_type=pytesseract.Output.DICT)
+    words, confs = [], []
+    for word, conf in zip(data["text"], data["conf"]):
+        conf = float(conf)                      # -1 marks a non-text region
+        if word.strip() and conf >= MIN_WORD_CONF:
+            words.append(word)
+            confs.append(conf)
+    return words, round(sum(confs) / len(confs), 1) if confs else 0.0
+
+def normalize(tokens):
+    out = []
+    for tok in tokens:
+        if out and out[-1].endswith("-") and tok[:1].islower():
+            out[-1] = out[-1][:-1] + tok        # "agree-" + "ment" -> "agreement"
+            continue
+        digits = sum(c.isdigit() for c in tok)
+        if digits >= 2 and digits >= len(tok) - 1:
+            tok = tok.translate(DIGIT_FIX)      # "2O24" -> "2024"
+        out.append(tok)
+    return out
+
+chunks = []
+for number, page in enumerate(pdf, start=1):
+    native = page.get_text("text")
+    if len(native.strip()) >= MIN_CHARS_PER_PAGE:
+        tokens, conf, source = native.split(), 100.0, "text_layer"
+    else:
+        tokens, conf = ocr_page(page)
+        source = "ocr"
+    tokens = normalize(tokens)
+    for i in range(0, len(tokens), TARGET_WORDS):
+        window = tokens[i:i + TARGET_WORDS]
+        if len(window) < 5:                     # skip stamps and blank exhibits
+            continue
+        chunks.append({
+            # primary key charset is limited to letters, digits, - and _
+            "chunk_id": f"{doc_id}_p{number}_{i // TARGET_WORDS}",
+            "doc_id": doc_id,
+            "text": " ".join(window),
+            "page": number,
+            "source": source,
+            "ocr_confidence": conf,
+            "url": f"/files/{doc_id}.pdf#page={number}",
+        })
+
+client = meilisearch.Client(os.environ["MEILISEARCH_URL"], os.environ["MEILISEARCH_KEY"])
+index = client.index("scanned_docs")
+index.update_settings({
+    "searchableAttributes": ["text"],
+    "filterableAttributes": ["doc_id", "source", "page"],
+    "sortableAttributes": ["page", "ocr_confidence"],
+    "typoTolerance": {
+        # 4-character words normally get zero typo tolerance, which loses short OCR errors
+        "minWordSizeForTypos": {"oneTypo": 4, "twoTypos": 8},
+        # an exact invoice or case number should never match a neighboring one
+        "disableOnNumbers": True,
+    },
+})
+# chunk_id and doc_id both end in "id", so the primary key must be explicit
+task = index.add_documents(chunks, primary_key="chunk_id")
+client.wait_for_task(task.task_uid)
+ocred = sum(1 for c in chunks if c["source"] == "ocr")
+print(f"indexed {len(chunks)} chunks, {ocred} from OCR, across {len(pdf)} pages")
+```
+
+At query time, crop a snippet around the match and use provenance to triage quality:
+
+```python
+index.search("termination clause", {
+    "attributesToCrop": ["text"], "cropLength": 40,
+    "attributesToHighlight": ["text"],
+    "filter": 'source = "ocr"',      # drop this filter for normal searching
+})
+```
+
+Adding `"distinct": "doc_id"` collapses many chunks of one file into a single hit. See [distinct attribute](/capabilities/full_text_search/how_to/configure_distinct_attribute) and [search snippets](/capabilities/full_text_search/getting_started/search_with_snippets).
+
+## Limits and constraints
+
+- **No OCR and no PDF ingestion in Meilisearch.** Meilisearch accepts JSON, NDJSON, and CSV documents. There is no route that takes an image or a PDF, so recognition and cleanup stay in your pipeline.
+- **Maximum 2 typos per word, always.** Words needing three or more corrections never match, whatever you configure. A badly degraded scan is not recoverable through typo tolerance.
+- **A typo on the first character counts as two.** This is fixed behavior, not a setting.
+- **`minWordSizeForTypos` bounds.** `0 ≤ oneTypo ≤ twoTypos ≤ 255`, with 2 to 8 recommended for `oneTypo` and 4 to 14 for `twoTypos`.
+- **65,535 positions per attribute.** Words past that point in a single attribute are silently ignored, per [known limitations](/resources/help/known_limitations). Chunking a long scan is required, not optional.
+- **Primary key charset.** Integers, or strings of `a-z`, `A-Z`, `0-9`, `-`, and `_` only. A chunk id built from a scanned filename with spaces or slashes is rejected. See [design primary keys](/capabilities/indexing/how_to/design_primary_keys).
+- **100 MB default payload.** Adjustable on self-hosted instances with `--http-payload-size-limit`. Batch large archives per [import large datasets](/capabilities/indexing/how_to/import_large_datasets).
+- **Embedder templates truncate.** If you add semantic search over OCR text, the rendered `documentTemplate` is capped by `documentTemplateMaxBytes`, so write an explicit short template. See [document template best practices](/capabilities/hybrid_search/advanced/document_template_best_practices).
+- **Accuracy figures are corpus-specific.** Any published OCR accuracy number describes someone else's scans. Measure a sample of your own before promising a recall target.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="How to chunk PDFs" href="/guides/chunk-pdfs">
+    Reading order, running headers, tables, and page provenance for text-layer PDFs.
+  </Card>
+  <Card title="Typo tolerance settings" href="/capabilities/full_text_search/relevancy/typo_tolerance_settings">
+    Every knob that decides whether an OCR error still matches.
+  </Card>
+  <Card title="Configure a custom dictionary" href="/capabilities/full_text_search/how_to/configure_dictionary">
+    Keep domain terms and abbreviations from fragmenting during tokenization.
+  </Card>
+  <Card title="How to chunk documents for search" href="/guides/how-to-chunk-documents">
+    Choosing a chunking strategy and evaluating a change to it.
+  </Card>
+</CardGroup>

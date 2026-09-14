@@ -1,0 +1,143 @@
+---
+title: How to handle synonyms, acronyms and jargon
+description: Your users search with abbreviations, brand names, and internal shorthand that never appear in your documents, and you need to decide which of those belong in the synonym list, which belong in the dictionary, and which direction the mapping should run.
+keywords: one way vs two way synonyms, meilisearch synonym list not working, acronym search returns nothing, abbreviation matching search engine, domain terminology mapping search, synonym dictionary maintenance, how many synonyms per term, multi word synonym phrase matching, product code search no results, internal jargon search relevance
+boost: 2
+---
+
+Use a **two-way (mutual) synonym** only when the two terms are genuinely interchangeable in your data, and a **one-way synonym** when one term is narrower than the other. `tv <=> television` is two-way. `phone => iphone` is one-way, because someone searching `iphone` does not want every Android listing. In Meilisearch, direction is expressed by which keys you write: a one-way rule is a single entry, and a two-way rule is the same pair written twice, once in each direction. Terms your tokenizer splits incorrectly (`C++`, `J. R. R.`, `Wi-Fi 6E`) are not a synonym problem at all; they belong in [`dictionary`](/capabilities/full_text_search/how_to/configure_dictionary) or in the separator token settings. Hard limits worth knowing before you start: **50 synonyms per term**, **100 total words per term across all its synonyms**, and synonyms are only fetched for query terms of **1 to 3 words**.
+
+## One-way or two-way, and how to tell
+
+Ask a single question about each pair: if a user typed term B, would they be satisfied by a result that only contains term A? If yes in both directions, make it mutual. If yes in only one direction, make it one-way.
+
+| Pair | Direction | Why |
+|---|---|---|
+| `sneakers`, `trainers` | Two-way | Same object, regional vocabulary |
+| `ny`, `new york` | Two-way | Abbreviation and expansion of one entity |
+| `laptop` => `macbook` | One-way | `macbook` is a subset of `laptop` |
+| `k8s` => `kubernetes` | One-way, usually | The full term appears in the docs, the shorthand does not |
+| `ada` => `americans with disabilities act` | One-way | The acronym is ambiguous outside this context |
+
+The failure mode of over-using two-way rules is quiet. Making `k8s <=> kubernetes` mutual means every query for `kubernetes` also pulls in documents that only say `k8s`, which is usually harmless, but making `card <=> payment` mutual because a support team asked for it will match loyalty cards, ID cards, and SD cards on a query about payments. Two-way rules multiply reach in both directions, so each one should be a claim about the vocabulary, not about a single complaint.
+
+Two behaviors soften the risk. The exact query term always outranks its synonyms, because the [`exactness` ranking rule](/capabilities/full_text_search/relevancy/ranking_rules) favors exact words, so a synonym match lands below a literal match rather than displacing it. And multi-word synonyms are treated as [phrases](/capabilities/full_text_search/relevancy/synonyms#multi-word-synonyms), so `sf` mapped to `san francisco` matches the two words adjacent and in order, not each word independently.
+
+## When the term belongs in the dictionary instead
+
+A synonym maps one token to another token. It cannot help if the term never becomes a token in the first place. That is a [tokenization](/capabilities/indexing/advanced/tokenization) problem, and it has three different fixes:
+
+- **`dictionary`** keeps a string that contains spaces or punctuation together as one indivisible token. Use it for initials like `J. R. R.`, for compound forms such as `icecream` when users type `ice cream`, and for domain terms in languages without whitespace word boundaries. Changing `dictionary` re-indexes the whole index, which is an [asynchronous task](/capabilities/indexing/tasks_and_batches/async_operations).
+- **`nonSeparatorTokens`** stops a character from splitting a word. Without it, `C#` and `C++` are indexed as `c`, and no synonym can recover the difference between them.
+- **`separatorTokens`** adds a character that should split words, for example `|` in a pipe-delimited field.
+
+There is also a trap in the interaction. Synonyms are processed using the index settings, so a synonym that is itself a separator token (`&` is the usual victim) is dropped at search time. If you need `&` to survive, add it to `nonSeparatorTokens` before mapping `and <=> &`.
+
+Two more terms that look like synonym candidates but are not. Product codes and SKUs usually need [typo tolerance disabled](/capabilities/full_text_search/relevancy/typo_tolerance_settings), via `disableOnWords`, rather than a synonym list, since `SKU-4412` matching `SKU-4413` is worse than no match. And a query whose vocabulary you cannot enumerate ("something to keep coffee hot") is a job for [hybrid search](/capabilities/hybrid_search/overview), not for a hand-written list.
+
+## A complete working example
+
+This sets synonyms, the dictionary, and a typo exemption on one index, then verifies that the mapping actually changed the result count. Set `MEILISEARCH_URL` and `MEILISEARCH_KEY` in your environment first.
+
+```javascript
+import { Meilisearch } from 'meilisearch'
+
+const client = new Meilisearch({
+  host: process.env.MEILISEARCH_URL,
+  apiKey: process.env.MEILISEARCH_KEY
+})
+
+const index = client.index('products')
+
+// 1. Synonyms. One-way rules have a single entry.
+//    Two-way rules are written once per direction.
+const synonyms = {
+  // one-way: the shorthand expands, the full term does not narrow
+  k8s: ['kubernetes'],
+  ada: ['americans with disabilities act'],
+  // two-way: genuinely interchangeable vocabulary
+  sneakers: ['trainers', 'running shoes'],
+  trainers: ['sneakers', 'running shoes'],
+  'running shoes': ['sneakers', 'trainers'],
+  ny: ['new york'],
+  'new york': ['ny']
+}
+
+// 2. Terms the tokenizer would otherwise split apart.
+const dictionary = ['J. R. R.', 'Wi-Fi 6E']
+
+// 3. Characters that must stay inside a word.
+const nonSeparatorTokens = ['+', '#']
+
+// 4. Codes where a "near match" is a wrong match.
+const typoTolerance = { disableOnWords: ['SKU', 'ISBN'] }
+
+const tasks = await Promise.all([
+  index.updateSynonyms(synonyms),
+  index.updateDictionary(dictionary),
+  index.updateNonSeparatorTokens(nonSeparatorTokens),
+  index.updateTypoTolerance(typoTolerance)
+])
+
+// Settings updates are asynchronous. Wait before measuring.
+for (const task of tasks) {
+  await client.waitForTask(task.taskUid)
+}
+
+// 5. Verify. A synonym that changes nothing is a synonym to delete.
+for (const q of ['k8s', 'kubernetes', 'trainers', 'sneakers']) {
+  const { estimatedTotalHits } = await index.search(q, { limit: 1 })
+  console.log(`${q}: ${estimatedTotalHits} hits`)
+}
+
+// 6. Read back what is live, so you can diff it against your source file.
+console.log(await index.getSynonyms())
+```
+
+## Keeping a domain dictionary from rotting
+
+Synonym lists rot in a predictable way: someone adds a rule to fix one complaint, nobody records why, and two years later nobody dares delete anything. Three habits prevent it.
+
+**Keep the list in version control, not in the dashboard.** The full synonym object is sent with `PUT /indexes/{index_uid}/settings/synonyms`, which replaces the entire setting rather than merging, so a checked-in JSON file is already the natural shape. Every change then arrives as a reviewable diff with an author and a message.
+
+**Annotate every entry with its origin.** Store the reason (a ticket number, a query from analytics, a merchandising request) alongside the rule in your source file and strip the annotations when you serialize the payload. A rule you can trace is a rule you can retire.
+
+**Generate candidates rather than inventing them.** The best source of new synonyms is your own zero-result queries: a term users repeatedly type that returns nothing is either a missing synonym, a missing document, or a tokenization bug. Review that list on a schedule, and review existing rules at the same time, because product renames and discontinued lines make old mappings actively harmful.
+
+## Measuring whether a synonym helped or hurt
+
+Decide the measurement before you ship the rule. Two checks cover most cases.
+
+The immediate check is result counts. Run the query before and after, as step 5 above does. If `estimatedTotalHits` is unchanged, the rule did nothing, often because the term exceeded the 3-word limit or was silently dropped past the 50-synonym cap.
+
+The real check is behavioral, using [search analytics](/capabilities/analytics/overview). A good synonym lowers the no-result rate for its query without lowering click-through rate or pushing average click position further down the page. A bad synonym does the opposite: zero results become many results, and users click less often and lower down, because the extra results are noise. Track those three metrics per query, not just in aggregate, since a single bad mutual rule can be invisible at the index level. [Click events](/capabilities/analytics/how_to/track_click_events) have to be instrumented in your application for click position and click-through rate to exist at all.
+
+For comparison, Elasticsearch expresses this through `synonym` and `synonym_graph` token filters attached to an analyzer, where index-time synonyms require reindexing to change while search-time synonyms do not {/* VERIFY: current Elasticsearch synonym filter names, and whether search-time synonym set updates still require an analyzer or index reload */}. Algolia exposes named synonym types including one-way synonyms and placeholders as separate objects with their own IDs {/* VERIFY: exact Algolia synonym type names and whether placeholders are still supported */}. Meilisearch has a single flat setting, which is less expressive but has no analyzer chain to reason about: the direction is the shape of the object.
+
+## Limits and constraints
+
+- **50 synonyms per term.** Anything past the 50th is silently ignored, with no error on the task.
+- **100 words per term, summed across all of its synonyms.** Multi-word synonyms consume this budget quickly, and the overflow is also silent.
+- **Synonyms are fetched only for query terms of 1 to 3 words.** Mapping `lotr` to `lord of the rings` works when the user types `lotr`, but a search for `lord of the rings` will not return `lotr` documents, because the query term has four words.
+- **Multi-word synonyms match as phrases**, so word order and adjacency matter.
+- **`PUT` replaces the whole setting.** There is no partial update route for synonyms; send the complete object every time.
+- **Case and accents are normalized**, so `Résumé` and `resume` are handled together, but stop words and separator tokens are applied to synonyms too, and a synonym made of separator characters is discarded.
+- **Synonym changes are asynchronous tasks.** Poll the task before measuring, or you will benchmark the old settings.
+- Meilisearch does not document a hard cap on the total number of entries in the `synonyms` object, only the per-term limits above.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Synonyms reference" href="/capabilities/full_text_search/relevancy/synonyms">
+    Full syntax for one-way, mutual, and multi-word synonyms
+  </Card>
+  <Card title="Configure a custom dictionary" href="/capabilities/full_text_search/how_to/configure_dictionary">
+    Keep initials, compounds, and domain terms as single tokens
+  </Card>
+  <Card title="Tokenization" href="/capabilities/indexing/advanced/tokenization">
+    Separator and non-separator tokens, and why `C#` disappears
+  </Card>
+  <Card title="Typo tolerance settings" href="/capabilities/full_text_search/relevancy/typo_tolerance_settings">
+    Exempt product codes with `disableOnWords`
+  </Card>
+</CardGroup>

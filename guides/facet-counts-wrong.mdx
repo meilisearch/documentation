@@ -1,0 +1,154 @@
+---
+title: Why your facet counts look wrong
+description: Your facet sidebar shows zeros as soon as a filter is applied, a value you know exists is missing from the list, or the counts do not add up to the number of results.
+keywords: facet counts wrong, facetDistribution incorrect, facet count zero after filter, missing facet value, maxValuesPerFacet truncation, facet counts do not add up, disjunctive faceting, facet count higher than hits, facetDistribution missing attribute, facet counts and distinct, exhaustiveFacetCount, facet numbers mismatch sidebar
+boost: 2
+---
+
+Four causes explain almost every facet count that looks wrong, and they are worth checking in this order because the first is free to diagnose and the last is the rarest. First, every other value in a group collapses to zero as soon as the user ticks one box: that is conjunctive faceting working exactly as asked, and the fix is a second query rather than a setting. Second, a value you know exists is missing from the list: `maxValuesPerFacet` truncated the distribution, and `sortFacetValuesBy` decided which values survived. Third, the attribute is absent from `facetDistribution` entirely: it is not in `filterableAttributes`. Fourth, the numbers do not add up: you are comparing them against `estimatedTotalHits`, which is a partial count, or the attribute holds arrays.
+
+## Everything in the same group went to zero
+
+This is the near-universal cause, and it is not a bug. When a user selects "Red", your application adds `color = "Red"` to `filter`. Meilisearch applies that filter to the whole result set and then counts facet values over what survives, so the color group now reports Red with a count and Blue, Green, and Black at zero. No document is both Red and Blue. Users read the zeros as a broken filter.
+
+The behavior you want in a sidebar is disjunctive: values inside the group the user is currently refining keep counts drawn from a result set that excludes that group's own filter, while every other group updates normally. Meilisearch has no setting for this, and it does not need one. You send one query per filtered group through [multi-search](/capabilities/multi_search/overview), each one omitting its own group's filter and setting `limit: 0` so Meilisearch skips ranking and document retrieval, plus one main query that carries every filter and returns the hits. Merging the responses is a plain object assignment, because each group appears in exactly one response. The full filter builder is in [build disjunctive facets](/capabilities/filtering_sorting_faceting/advanced/disjunctive_facets).
+
+{/* VERIFY: Algolia's InstantSearch libraries perform this same query fan-out inside the client, so the behavior is free there and has to be built explicitly here */}
+
+If the zeros appear in a group the user has *not* filtered on, that is correct and you should render it as a disabled or hidden option rather than reworking your queries.
+
+## A value you know exists is missing from the list
+
+Meilisearch returns at most `maxValuesPerFacet` values per attribute in `facetDistribution`. The default is 100. If your `brand` attribute has 5,000 distinct values, 4,900 of them are simply not in the response, and the ones you do get are not the biggest.
+
+Which values survive truncation is decided by `sortFacetValuesBy`, whose default is `{"*": "alpha"}`, ascending alphanumeric order. On a truncated list that means you receive the alphabetically first values, which from a user's point of view is close to random. Set it to `count` for any discovery facet (brand, category, tag, city) so the head of the distribution is what reaches the sidebar:
+
+```json
+{
+  "maxValuesPerFacet": 20,
+  "sortFacetValuesBy": { "*": "alpha", "brand": "count" }
+}
+```
+
+Both fields belong to the `faceting` index setting, patched at `/indexes/{index_uid}/settings/faceting`. Raising `maxValuesPerFacet` is the wrong reflex for a high-cardinality attribute: it makes every search slower and every payload larger, and the user still cannot scroll to their brand. Pair a short distribution with the [facet search endpoint](/capabilities/filtering_sorting_faceting/how_to/facet_search) so typing finds the rest. Note that facet search returns estimated counts by default; set `exhaustiveFacetCount` to `true` when the number is shown to a customer.
+
+## The attribute is missing from facetDistribution entirely
+
+If a key you requested in `facets` never appears in the response, the attribute is not usable as a facet. Requesting a non-filterable attribute by name returns an `invalid_search_facets` error. A wildcard pattern such as `specs.*` or `*` does not error, it just matches nothing, which is why this failure is usually silent in code that facets by pattern.
+
+Add the attribute to [`filterableAttributes`](/capabilities/filtering_sorting_faceting/getting_started) and wait for the resulting task to finish before retesting. If you use [granular filterable attributes](/capabilities/filtering_sorting_faceting/how_to/configure_granular_filters), check the `features` block for that pattern too: a pattern that does not cover the attribute leaves it out of the facetable set, and an attribute configured with `"facetSearch": false` cannot be queried through `/facet-search`, which presents the same way in a type-ahead sidebar.
+
+## The counts do not add up to the number of results
+
+Before assuming the facet counts are wrong, check what you are comparing them against. A default search returns `estimatedTotalHits`, a partial count that changes as a user moves through results, so comparing a facet sum against it may never balance. Send `page` and `hitsPerPage` instead and Meilisearch returns `totalHits` and `totalPages`, which are exhaustive. See [paginate search results](/capabilities/full_text_search/how_to/paginate_search_results).
+
+Once you are comparing against `totalHits`, three things legitimately move the sum:
+
+- **Multi-valued attributes.** A book with `"genres": ["Fiction", "Classics", "Victorian"]` is counted once under each of the three values, so the sum of a `genres` distribution is larger than the hit count by design.
+- **`distinct`.** The `distinctAttribute` index setting applies to searches *and* facet retrievals, and the `distinct` search parameter overrides it per query. Deduplicating by `product_id` changes which documents are counted, so a facet sum computed with `distinct` will not match one computed without it.
+- **`rankingScoreThreshold`.** Excluded hits do not count toward `estimatedTotalHits`, `totalHits`, or the facet distribution, so raising the threshold shrinks both numbers together.
+
+{/* VERIFY: Elasticsearch terms aggregations return approximate counts on multi-shard indices and report the error bound in doc_count_error_upper_bound, which is a different class of inaccuracy from the truncation described here */}
+
+## One script that tells you which cause it is
+
+This reads your faceting settings, runs the search with exhaustive pagination, and reports the three diagnostics above in one pass. Set `MEILISEARCH_URL` and `MEILISEARCH_KEY` in your environment first.
+
+```javascript
+// npm install meilisearch
+import { Meilisearch } from 'meilisearch'
+
+const client = new Meilisearch({
+  host: process.env.MEILISEARCH_URL,
+  apiKey: process.env.MEILISEARCH_KEY
+})
+
+const index = client.index('products')
+const facets = ['brand', 'color', 'size']
+const activeFilters = { color: ['Red'] } // what the user has ticked
+
+const buildFilter = (exclude) =>
+  Object.entries(activeFilters)
+    .filter(([group, values]) => group !== exclude && values.length > 0)
+    .map(([group, values]) => `(${values.map((v) => `${group} = "${v}"`).join(' OR ')})`)
+    .join(' AND ') || undefined
+
+const faceting = await index.getFaceting()
+console.log('maxValuesPerFacet:', faceting.maxValuesPerFacet)
+console.log('sortFacetValuesBy:', faceting.sortFacetValuesBy)
+
+// page + hitsPerPage makes the hit count exhaustive (totalHits, not estimatedTotalHits)
+const main = await index.search('running shoes', {
+  facets,
+  filter: buildFilter(null),
+  page: 1,
+  hitsPerPage: 20
+})
+
+for (const facet of facets) {
+  const distribution = main.facetDistribution?.[facet]
+  if (!distribution) {
+    console.log(`${facet}: absent from facetDistribution, check filterableAttributes`)
+    continue
+  }
+  const values = Object.keys(distribution).length
+  const sum = Object.values(distribution).reduce((a, b) => a + b, 0)
+  const zeros = Object.values(distribution).filter((c) => c === 0).length
+  console.log(`${facet}: ${values} values, sum ${sum}, totalHits ${main.totalHits}`)
+  if (values >= faceting.maxValuesPerFacet) {
+    console.log(`  truncated at maxValuesPerFacet, sorted by ${faceting.sortFacetValuesBy?.[facet] ?? faceting.sortFacetValuesBy?.['*']}`)
+  }
+  if (zeros > 0 && activeFilters[facet]?.length) {
+    console.log('  zeros inside a filtered group, this group needs disjunctive counts')
+  }
+  if (sum > main.totalHits) console.log('  sum > hits: this attribute holds arrays')
+  if (sum < main.totalHits) console.log('  sum < hits: some matching documents contributed no value here')
+}
+
+// Disjunctive comparison: recount one group without its own filter
+const { results } = await client.multiSearch({
+  queries: Object.keys(activeFilters)
+    .filter((group) => activeFilters[group].length > 0)
+    .map((group) => ({
+      indexUid: 'products',
+      q: 'running shoes',
+      filter: buildFilter(group),
+      facets: [group],
+      limit: 0
+    }))
+})
+
+for (const result of results) {
+  console.log('disjunctive counts:', result.facetDistribution)
+}
+```
+
+Run it once with `activeFilters` empty and once with a selection. If a group's counts are identical in both runs, the sidebar is fine. If they collapse in the main query but survive in the disjunctive query, you have confirmed cause one.
+
+## Limits and constraints
+
+- `maxValuesPerFacet` defaults to 100 and applies per attribute, not per request. There is no per-query override on a regular search.
+- `sortFacetValuesBy` accepts exactly two values, `alpha` and `count`. `*` is the fallback key. Neither order can express a domain sequence such as XS through XXL; reorder those in the UI.
+- `exhaustiveFacetCount` exists on `/facet-search` only. Counts returned by that endpoint are estimates unless you set it.
+- Facet search matches the first term of `facetQuery` only, and works on string fields only. Numeric values are stored as `float64` and are not searchable this way.
+- `facetStats` reports `min` and `max` for numeric facets only, over matching documents, and is present only when `facets` was set.
+- In a federated multi-search, per-query `facets` is rejected when `federation` is present (`invalid_multi_search_query_facets`). Use `federation.facetsByIndex`, and `federation.mergeFacets` to combine indexes into one distribution. Two indexes with different `sortFacetValuesBy` for the same facet return `invalid_multi_search_facet_order`.
+- When a federated search reaches remote instances, Meilisearch computes the facet distribution as accurately as it can but cannot guarantee exact counts, because `distinct` is not applied to documents held on every remote.
+- Changing `filterableAttributes` or `distinctAttribute` triggers reindexing and returns a task. Counts will not change until that task completes.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Build disjunctive facets" href="/capabilities/filtering_sorting_faceting/advanced/disjunctive_facets">
+    The multi-search pattern that stops values collapsing to zero
+  </Card>
+  <Card title="Handle large facet cardinality" href="/capabilities/filtering_sorting_faceting/how_to/handle_large_facet_cardinality">
+    Truncation, facet search, and attributes with thousands of values
+  </Card>
+  <Card title="Search with facets" href="/capabilities/filtering_sorting_faceting/how_to/filter_with_facets">
+    How `facetDistribution` and `facetStats` are produced
+  </Card>
+  <Card title="Why your search is slow" href="/guides/search-is-slow">
+    When the facet distribution is correct but expensive
+  </Card>
+</CardGroup>

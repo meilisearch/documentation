@@ -1,0 +1,230 @@
+---
+title: How to keep an index in sync with your source of truth
+description: Your database has the current data but your search index is showing yesterday's version, and you need a sync strategy that handles updates, deletes, and full rebuilds without taking search down.
+keywords: keep search index up to date, incremental indexing strategy, change data capture search index, sync postgres to search engine, zero downtime reindex, index swap alias, search index drift detection, soft delete search index, idempotent upsert indexing, reindex without downtime, stale search results database
+boost: 2
+---
+
+Run incremental updates for row-level changes and a full rebuild only when the shape of the data changes. Incremental means: read every source row whose `updated_at` is at or after your last watermark, upsert it by primary key, and delete the ones your source marked as gone. Full rebuild means: build a second index, verify it, then call [`POST /swap-indexes`](/reference/api/indexes/swap-indexes), which exchanges the documents and settings of two indexes atomically with no downtime for search clients. Both paths rely on the same property: because Meilisearch keys documents on the [primary key](/capabilities/indexing/how_to/design_primary_keys), sending the same document twice is harmless, so every sync step is safe to retry.
+
+## When a full reindex is actually required
+
+Send documents incrementally unless one of these is true.
+
+- **A setting changed that forces reindexing anyway.** Updating `searchableAttributes`, `filterableAttributes`, `sortableAttributes`, stop words, synonyms, typo tolerance, embedders, the dictionary, proximity precision, or separator tokens reindexes every document in that index. [Displayed attributes and ranking rules do not](/capabilities/indexing/advanced/indexing_best_practices#settings-that-trigger-a-full-reindex).
+- **The document schema changed.** A new field, a renamed field, or a different document grain (one document per product instead of one per variant) leaves old documents in a layout your queries no longer expect.
+- **Reconciliation found drift you cannot explain.** A rebuild is faster than an audit.
+- **The enrichment pipeline changed.** New embeddings, new categorization, or a different chunking strategy applies only to documents you resend.
+
+Everything else (a price change, a new row, a deleted row) is incremental.
+
+## Building an incremental sync on a watermark
+
+The watermark pattern is the simplest correct approach: store the timestamp of the last successful run, then select rows where `updated_at >= watermark`. Three details decide whether it works.
+
+**Subtract an overlap.** Read from `watermark - 5 minutes`, not from `watermark`. Databases assign `updated_at` at statement time but make rows visible at commit time, so a long transaction can commit a row whose timestamp is older than a watermark you already advanced past. Because upserts are idempotent, re-reading those rows costs only bandwidth.
+
+**Advance the watermark only after the task succeeds.** Meilisearch [processes writes asynchronously](/capabilities/indexing/tasks_and_batches/async_operations): the API returns a `taskUid` immediately and the documents land later. Save the watermark on the accepted response and those changes are lost for good if the task later fails. Wait for `status: "succeeded"` first.
+
+**Send bulk payloads, not one document per row.** Meilisearch auto-batches consecutive tasks that target the same index, have the same task type, and use the same content type, but one large payload still beats many small ones. Ten thousand documents per request is a reasonable starting size.
+
+Tag each run with the `customMetadata` query parameter (`POST /indexes/products/documents?customMetadata=sync-2026-09-14T08:00Z`). The string comes back in [task objects and webhook payloads](/capabilities/indexing/tasks_and_batches/monitor_tasks), which is how you tell a scheduled sync from an ad hoc backfill later.
+
+## Change data capture when polling is not enough
+
+Polling's freshness floor is your poll interval, and it cannot see a row updated and reverted between two polls. When you need seconds instead of minutes, read the database's replication stream.
+
+- **PostgreSQL** exposes logical decoding through replication slots, so a consumer receives every insert, update, and delete in commit order. {/* VERIFY: exact PostgreSQL logical replication terminology and minimum version for logical decoding */}
+- **MySQL** exposes the binary log, which tools such as Debezium read to emit per-row change events. {/* VERIFY: Debezium connector names and current MySQL binlog format requirements */}
+- **MongoDB** exposes change streams, which report deletes explicitly rather than leaving you to infer them. {/* VERIFY: MongoDB change stream delete event payload contents */}
+
+CDC changes the freshness ceiling, not the write path: you still upsert by primary key and still wait for the task. The warning is that a CDC stream delivers single-row events, and turning each one into its own request produces a task per row. Buffer events for a second or two, coalesce repeated changes to the same primary key, and send one payload.
+
+## Why deletes are the part that breaks
+
+A deleted row is invisible to a watermark query: it has no `updated_at` because it has no row. This is the most common reason a search index shows products nobody can buy.
+
+Pick one of three approaches.
+
+**Soft deletes in the source.** The row stays with `deleted_at` set, so the watermark query sees it like any other change. Your sync then either removes the document by id or rewrites it with `status: "deleted"` and filters it out at search time. Removing it keeps the index smaller; keeping it lets internal tools still find the record.
+
+**A tombstone table.** Write `(id, deleted_at)` on delete, read it during each sync, and truncate entries older than your retention window.
+
+**Periodic sweep by filter.** If neither exists, sweep on a staleness marker. Write a `synced_at` field on every document, add it to `filterableAttributes`, and after each full pass remove what the pass did not touch with [delete by filter](/capabilities/indexing/how_to/delete_documents_at_scale): `synced_at < 1757836800`. Delete-by-filter tasks are not auto-batched, so each becomes its own batch. Run the sweep on a schedule, not after every incremental pass.
+
+## Making upserts idempotent
+
+Meilisearch gives you two write semantics, and the difference matters for sync correctness.
+
+- `POST /indexes/{index_uid}/documents` **replaces** the whole document. Any field present in the stored version but missing from your payload is removed.
+- `PUT /indexes/{index_uid}/documents` **merges** top-level fields into the stored document. Fields you omit survive. Note that a partial update to an object field replaces the entire object, dropping omitted subfields.
+
+Use `POST` when the source row is the complete truth. Use `PUT` when the sync owns only part of the document, for example a job that refreshes `stock_count` while another pipeline owns the description. Both are covered in [add and update documents](/capabilities/indexing/how_to/add_and_update_documents).
+
+Add `skipCreation=true` when a partial pipeline must never create a document. With it, documents whose primary key does not already exist are silently ignored instead of being created half-populated.
+
+## Detecting silent drift
+
+Drift is what makes sync bugs expensive: nothing errors, the index is just wrong. Three cheap checks catch most of it.
+
+**Compare counts.** `GET /indexes/{index_uid}/stats` returns `numberOfDocuments` and `isIndexing`. Compare it against the source count of rows that should be indexed. Matching totals prove little on their own, so pair this with the next check.
+
+**Checksum a sample.** Pull a few hundred random primary keys, fetch those documents (the documents endpoint accepts `ids` and `fields` parameters), hash the fields that matter, and compare against the source. Counts plus a sample checksum catch both missing documents and stale field values.
+
+**Watch for failed tasks.** Query `GET /tasks?statuses=failed&indexUids=products&afterFinishedAt=...` on a schedule, or configure a [webhook](/capabilities/platform/management/webhooks), which posts newline-delimited JSON with one task object per line on completion. One failed task means the watermark advanced over changes that never landed.
+
+## Zero-downtime rebuild with an index swap
+
+When a rebuild is unavoidable, never delete and repopulate the live index. Build into a second index and swap. [`POST /swap-indexes`](/reference/api/indexes/swap-indexes) exchanges the documents, settings, and task history of two indexes as an atomic transaction: either all listed pairs swap, or none do. Search clients keep querying the same index name and see the new data on the next request, and the old data survives under the build index name, so a rollback is a second swap.
+
+Configure the build index settings before adding documents. A settings change after indexing triggers a full reindex of everything you just wrote.
+
+```javascript
+// npm install meilisearch
+//
+// export MEILISEARCH_URL="https://ms-example.meilisearch.io"
+// export MEILISEARCH_KEY="$MEILISEARCH_ADMIN_KEY"
+//
+// node sync.mjs incremental
+// node sync.mjs rebuild
+
+import { MeiliSearch } from 'meilisearch'
+import fs from 'node:fs/promises'
+
+const client = new MeiliSearch({
+  host: process.env.MEILISEARCH_URL,
+  apiKey: process.env.MEILISEARCH_KEY,
+})
+
+const LIVE = 'products'
+const BUILD = 'products_build'
+const STATE = './sync-state.json'
+const BATCH = 10_000
+const OVERLAP_MS = 5 * 60_000
+
+const SETTINGS = {
+  searchableAttributes: ['name', 'description', 'brand'],
+  filterableAttributes: ['brand', 'status', 'synced_at'],
+  sortableAttributes: ['price', 'updated_at'],
+}
+
+// Replace with a real query against your database. It must return every row
+// changed at or after `since`, including rows flagged deleted, and it must
+// include `deleted_at` so the sync can tell removals from updates.
+async function fetchChangedRows(since) {
+  // SELECT id, name, description, brand, price, updated_at, deleted_at
+  //   FROM products WHERE updated_at >= $1 ORDER BY updated_at ASC
+  return []
+}
+
+function toDocument(row, syncedAt) {
+  return {
+    id: String(row.id),
+    name: row.name,
+    description: row.description,
+    brand: row.brand,
+    price: row.price,
+    updated_at: Math.floor(new Date(row.updated_at).getTime() / 1000),
+    synced_at: syncedAt,
+  }
+}
+
+async function writeInBatches(uid, documents) {
+  for (let i = 0; i < documents.length; i += BATCH) {
+    const task = await client.index(uid).addDocuments(documents.slice(i, i + BATCH))
+    const done = await client.tasks.waitForTask(task.taskUid)
+    if (done.status !== 'succeeded') {
+      throw new Error(`task ${done.uid} ${done.status}: ${JSON.stringify(done.error)}`)
+    }
+  }
+}
+
+async function incremental() {
+  const state = JSON.parse(
+    await fs.readFile(STATE, 'utf8').catch(() => '{"watermark":"1970-01-01T00:00:00.000Z"}'),
+  )
+  const since = new Date(Date.parse(state.watermark) - OVERLAP_MS).toISOString()
+  const runStartedAt = new Date().toISOString()
+  const syncedAt = Math.floor(Date.parse(runStartedAt) / 1000)
+
+  const rows = await fetchChangedRows(since)
+  const upserts = rows.filter((r) => !r.deleted_at).map((r) => toDocument(r, syncedAt))
+  const removals = rows.filter((r) => r.deleted_at).map((r) => String(r.id))
+
+  await writeInBatches(LIVE, upserts)
+
+  if (removals.length > 0) {
+    const task = await client.index(LIVE).deleteDocuments(removals)
+    const done = await client.tasks.waitForTask(task.taskUid)
+    if (done.status !== 'succeeded') throw new Error(`delete task ${done.uid} ${done.status}`)
+  }
+
+  // Only now is it safe to advance the watermark.
+  await fs.writeFile(STATE, JSON.stringify({ watermark: runStartedAt }))
+  console.log(`upserted ${upserts.length}, deleted ${removals.length}`)
+}
+
+async function rebuild() {
+  const { results } = await client.getIndexes({ limit: 1000 })
+  if (results.some((index) => index.uid === BUILD)) {
+    await client.tasks.waitForTask((await client.deleteIndex(BUILD)).taskUid)
+  }
+
+  await client.tasks.waitForTask((await client.createIndex(BUILD, { primaryKey: 'id' })).taskUid)
+  // Settings first: changing them after indexing would reindex everything again.
+  await client.tasks.waitForTask((await client.index(BUILD).updateSettings(SETTINGS)).taskUid)
+
+  const runStartedAt = new Date().toISOString()
+  const syncedAt = Math.floor(Date.parse(runStartedAt) / 1000)
+  const rows = await fetchChangedRows('1970-01-01T00:00:00.000Z')
+  const documents = rows.filter((r) => !r.deleted_at).map((r) => toDocument(r, syncedAt))
+
+  await writeInBatches(BUILD, documents)
+
+  // Verify before swapping. A rebuild that silently lost documents is worse
+  // than no rebuild at all.
+  const stats = await client.index(BUILD).getStats()
+  if (stats.numberOfDocuments !== documents.length) {
+    throw new Error(`expected ${documents.length} documents, found ${stats.numberOfDocuments}`)
+  }
+
+  const swap = await client.swapIndexes([{ indexes: [LIVE, BUILD] }])
+  await client.tasks.waitForTask(swap.taskUid)
+  // `products` now serves the rebuilt data. `products_build` holds the old data
+  // for rollback: swap the same pair again to revert.
+  await fs.writeFile(STATE, JSON.stringify({ watermark: runStartedAt }))
+  console.log(`swapped ${documents.length} documents into ${LIVE}`)
+}
+
+const mode = process.argv[2]
+if (mode === 'rebuild') await rebuild()
+else if (mode === 'incremental') await incremental()
+else throw new Error('usage: node sync.mjs [incremental|rebuild]')
+```
+
+## Limits and constraints
+
+- **An index holds at most 4,294,967,296 documents**, and a single index can carry at most 65,536 attributes. See [known limitations](/resources/help/known_limitations).
+- **Primary key values are limited to 511 bytes.** A task containing a document with a longer key fails. If your source uses composite or URL-shaped keys, hash them.
+- **The default payload limit is 100MB** for self-hosted instances and is configurable. The Meilisearch Cloud interface caps uploads at 20mb, so scripted syncs should use the documents endpoint.
+- **The task database is capped at 20GiB.** Past roughly 1M entries, Meilisearch starts deleting finished tasks automatically. Do not treat the task queue as an audit log of your sync history.
+- **Swaps are atomic across all pairs in one request**, but enqueued tasks are not rewritten by a swap. Let in-flight writes finish before swapping.
+- **Delete-by-filter tasks are never auto-batched** with other task types, so a sweep that enqueues many of them alongside document writes slows the whole queue.
+- **Task ordering is preserved**: tasks in a batch are applied in the order they were enqueued. Your pipeline still has to enqueue changes for the same primary key in source order rather than sending them in parallel.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Add and update documents" href="/capabilities/indexing/how_to/add_and_update_documents">
+    The exact semantics of replace versus merge, and the `skipCreation` parameter.
+  </Card>
+  <Card title="Working with tasks" href="/capabilities/indexing/tasks_and_batches/monitor_tasks">
+    Poll, stream, or receive webhooks for task completion and failure.
+  </Card>
+  <Card title="Delete documents at scale" href="/capabilities/indexing/how_to/delete_documents_at_scale">
+    Filter-based and batch deletion for sweeps and bulk removals.
+  </Card>
+  <Card title="How to index a relational database" href="/guides/index-relational-database">
+    Choosing the document grain and flattening joins before you sync them.
+  </Card>
+</CardGroup>

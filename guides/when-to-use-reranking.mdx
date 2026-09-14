@@ -1,0 +1,150 @@
+---
+title: When reranking is worth the latency
+description: You are deciding whether to add a reranking pass to your search pipeline, and you need to know what it actually fixes, what it adds to every query in milliseconds and dollars, and which cheaper fixes to try first.
+keywords: is reranking worth it, cross encoder rerank latency cost, do i need a reranker for search, cohere rerank too slow, second stage ranking tradeoff, rerank top 50 results, reranking vs better ranking rules, when not to use a reranker, rerank pool size limit, search relevance without reranking, two stage retrieval decision, reranker price per query
+boost: 2
+---
+
+Reranking is worth the latency when the right answer is already inside your top 50 results but not inside your top 3. That is the only problem it solves. It reorders a candidate set you already retrieved, so if the right document was never retrieved, reranking cannot help and you have paid for nothing. The cost is a call to a cross-encoder model on every single query, which adds tens to low hundreds of milliseconds plus a per-query fee. Before paying that on every search, exhaust the fixes that cost nothing at query time: a tighter document template, pruned searchable attributes, a corrected attribute order, and the right chunk size. If your queries are mostly navigational (people typing a product name or a code), skip reranking entirely.
+
+## What reranking actually fixes
+
+A reranker is a second-stage model that reads the query and each candidate document together and scores the pair. That is more expensive and more accurate than first-stage retrieval, which has to score a query against millions of documents and therefore compares precomputed representations instead.
+
+The hard boundary is the candidate set. As the [personalized search page](/capabilities/personalization/getting_started/personalized_search) states for Meilisearch's built-in reranking: the reranker only sees the documents Meilisearch returns for a query, and it cannot promote a document that Meilisearch did not return. Increasing `limit` widens the pool the reranker can choose from, and it also increases latency and the number of tokens sent to the model.
+
+So before you consider reranking, answer one question on your own data: for the queries users complain about, is the correct document in the first 50 hits? If yes, you have an ordering problem, and reranking is a legitimate fix. If no, you have a retrieval problem, and reranking is the wrong tool. A retrieval problem is fixed by chunking, by the embedder's `documentTemplate`, by synonyms, or by moving from keyword-only to hybrid search. See [keyword, semantic or hybrid](/guides/keyword-semantic-or-hybrid) for that decision.
+
+Meilisearch ships reranking in one specific form: [personalization](/capabilities/personalization/overview) reranks the returned hits against a `userContext` string describing the user. A reranking pass driven only by the query, with no user profile, is something you would run in your own application layer against the hits Meilisearch returns.
+
+## The cheaper fixes to exhaust first
+
+Each of these changes ranking quality without adding a per-query model call.
+
+| Fix | What it corrects | Cost |
+|---|---|---|
+| Write a custom [`documentTemplate`](/capabilities/hybrid_search/advanced/document_template_best_practices) | The default template includes every searchable, non-null field, which dilutes the fields that actually carry meaning | One reindex |
+| Prune [`searchableAttributes`](/capabilities/full_text_search/how_to/configure_searchable_attributes) | Matches in irrelevant fields competing with matches in the title | One reindex, and it usually makes search faster |
+| Fix the [attribute ranking order](/capabilities/full_text_search/relevancy/attribute_ranking_order) | The right document ranked below a weaker one because the match landed in a late field | One reindex |
+| Add [custom ranking rules](/capabilities/full_text_search/relevancy/custom_ranking_rules) | Ties broken arbitrarily instead of by popularity, rating, or recency | One settings update |
+| Tune [`semanticRatio`](/capabilities/hybrid_search/advanced/custom_hybrid_ranking) | Too much or too little weight on vector similarity for your data | Per-request, free to test |
+| Choose a better chunk size | Long documents whose embedding is dominated by irrelevant sections. See [choosing chunk size](/guides/choosing-chunk-size) | One reindex |
+| [Search rules](/capabilities/search_rules/overview) | A handful of known queries whose top result you can simply pin | Settings only, no model call |
+
+The last one deserves attention. If ten queries account for most of your complaints, pinning the correct document for those ten queries is a complete fix with zero added latency. Reranking every query to correct ten of them is poor economics.
+
+Measure with [`showRankingScore`](/capabilities/full_text_search/relevancy/ranking_score) before changing anything. If the correct document scores close to the one beating it, a ranking rule change will flip it. If it scores far lower, the problem is upstream.
+
+## Measure the cost on your own index
+
+Meilisearch reports a per-stage timing breakdown through [`showPerformanceDetails`](/capabilities/full_text_search/advanced/debug_search_performance), and reranking appears as the `search > personalization` stage. Run the same query with and without reranking and compare. Save this as `measure-rerank.mjs` and run it with Node 18 or later.
+
+```javascript
+// MEILISEARCH_URL="https://ms-xxxxxxxx.meilisearch.io" \
+// MEILISEARCH_KEY="your-search-key" node measure-rerank.mjs
+
+const HOST = process.env.MEILISEARCH_URL;
+const KEY = process.env.MEILISEARCH_KEY;
+
+const INDEX = 'products';
+const QUERY = 'wireless headphones';
+const POOL = 50; // how many documents the reranker may reorder
+const USER_CONTEXT =
+  'Frequently buys electronics. Prefers Sony and Bose. ' +
+  'Values noise cancellation and premium build quality.';
+
+async function search(body) {
+  const startedAt = performance.now();
+  const response = await fetch(`${HOST}/indexes/${INDEX}/search`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${KEY}`,
+    },
+    body: JSON.stringify({ ...body, showPerformanceDetails: true }),
+  });
+  if (!response.ok) {
+    throw new Error(`${response.status}: ${await response.text()}`);
+  }
+  return { body: await response.json(), wallMs: performance.now() - startedAt };
+}
+
+const baseline = await search({ q: QUERY, limit: POOL });
+const reranked = await search({
+  q: QUERY,
+  limit: POOL,
+  personalize: { userContext: USER_CONTEXT },
+});
+
+// Replace "id" with your index's primary key.
+const topTen = (result) => result.body.hits.slice(0, 10).map((hit) => hit.id);
+const before = topTen(baseline);
+const after = topTen(reranked);
+const promoted = after.filter((id) => !before.includes(id)).length;
+
+console.log('baseline processingTimeMs:', baseline.body.processingTimeMs);
+console.log('reranked processingTimeMs:', reranked.body.processingTimeMs);
+console.log('baseline round trip ms:', Math.round(baseline.wallMs));
+console.log('reranked round trip ms:', Math.round(reranked.wallMs));
+console.log('rerank stage:', reranked.body.performanceDetails['search > personalization']);
+console.log(`documents only reranking surfaced in the top 10: ${promoted}/10`);
+console.log('order changed:', JSON.stringify(before) !== JSON.stringify(after));
+```
+
+Run it across 20 or 30 of your real queries, not one. Two numbers decide the case: the added milliseconds, and how often the top 10 actually changed. If the order rarely changes, you are paying for a model that agrees with your existing ranking.
+
+## What it costs in milliseconds and dollars
+
+Reranking latency scales with the size of the candidate pool, because the model reads every candidate. A pool of 100 costs roughly five times a pool of 20. The [personalized search page](/capabilities/personalization/getting_started/personalized_search) recommends a `limit` between 20 and 100 as a starting point, and says to go higher only when ranking quality matters more than latency.
+
+Three cost components are worth separating:
+
+- **The model call.** A hosted cross-encoder adds a network round trip plus inference on every query. Typical hosted reranker latency for a pool of about 50 short documents sits in the tens to low hundreds of milliseconds {/* VERIFY: representative latency figures for Cohere Rerank, Voyage rerank, and Jina reranker at pool size 50 */}.
+- **Tokens.** Cost scales with pool size times document length, not with query volume alone. Reranking 100 long product descriptions costs far more than reranking 100 titles. Hosted rerankers are commonly billed per search or per 1,000 searches rather than per token {/* VERIFY: current Cohere Rerank billing unit and price */}.
+- **Retrieval overhead.** Asking for 50 hits instead of 10 makes the first-stage search itself do more work, visible as a higher `search > keyword ranking` time.
+
+Compare that against your budget. If you are targeting the kind of ceiling described in [sub-50ms search latency](/guides/sub-50ms-search-latency), a reranking pass does not fit, because the model call alone can exceed the entire budget. Reranking belongs in pipelines where 150ms to 400ms end to end is acceptable, such as a results page, and not in as-you-type autocomplete.
+
+One structural saving: reranking is a query-time cost only. Unlike a reindex, turning it off is instant, so you can enable it per route, per user segment, or per query type. Sending it only to exploratory queries and skipping it for navigational ones typically removes most of the spend while keeping most of the benefit.
+
+## When to skip reranking entirely
+
+- **Navigational queries dominate.** If users type SKUs, part numbers, error codes, or exact titles, first-stage keyword matching is already correct, and a reranker will at best agree and at worst reorder a correct list.
+- **The candidate pool is wrong, not mis-ordered.** Fix retrieval first. Reranking a pool that excludes the right answer changes nothing.
+- **Your latency budget is under about 100ms.** The model call will not fit.
+- **You have fewer than a few thousand documents.** With a small corpus, ranking rules and custom ranking rules can usually be tuned to correctness directly.
+- **You cannot measure the result.** Without click and conversion tracking, you cannot tell whether reranking helped. Set up [click event tracking](/capabilities/analytics/how_to/track_click_events) first, then rerank, then compare.
+- **A handful of queries cause most complaints.** Pin them with search rules instead.
+
+## Limits and constraints
+
+Meilisearch's built-in reranking (personalization) is subject to documented limits, sourced from the [personalized search page](/capabilities/personalization/getting_started/personalized_search):
+
+- `userContext` and `q` combined must stay under **2,048 tokens**.
+- Each document sent to the reranker can be at most **32,664 tokens**.
+- The reranker accepts at most **10,000 documents per request**, so `limit` cannot usefully exceed 10,000. In practice, 20 to 100 is the useful range.
+- As a rough guide, one word is about 2 to 3 tokens, and a paragraph is about 128 tokens.
+- The reranking model processes positive signals only. Statements like "dislikes blue" are not interpreted as exclusions, so write preferences affirmatively.
+- In a [federated search](/capabilities/multi_search/getting_started/federated_search), `personalize` goes inside the `federation` object, and `federation.limit` or `federation.hitsPerPage` sets the pool size. Setting `personalize` on an individual query inside a federated request returns an error.
+- With an empty `q`, reranking can only reorder the fixed candidate set that ranking rules and filters produced. Two very different `userContext` values return the same documents in a different order.
+
+Search-side timeouts are separate: `searchCutoffMs` defaults to `null`, and Meilisearch interrupts searches after **1,500 milliseconds** when no explicit value is set. This bounds first-stage search, so budget your reranking time on top of it, not inside it.
+
+This page does not state a price for reranking, because the figure depends on your provider and plan. Measure token volume with the script above, then apply your provider's current rate.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Personalized search" href="/capabilities/personalization/getting_started/personalized_search">
+    Configure Meilisearch's built-in reranking and its pool size.
+  </Card>
+  <Card title="Debug search performance" href="/capabilities/full_text_search/advanced/debug_search_performance">
+    Read per-stage timings to find where your milliseconds go.
+  </Card>
+  <Card title="Document template best practices" href="/capabilities/hybrid_search/advanced/document_template_best_practices">
+    The highest-value fix to try before adding a reranker.
+  </Card>
+  <Card title="Ranking rules" href="/capabilities/full_text_search/relevancy/ranking_rules">
+    Correct ordering at the source, with no per-query cost.
+  </Card>
+</CardGroup>

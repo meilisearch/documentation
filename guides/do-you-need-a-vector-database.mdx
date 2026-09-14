@@ -1,0 +1,143 @@
+---
+title: Do you need a vector database?
+description: You added embeddings to a project and now have to decide whether that justifies running a dedicated vector store next to the database and search engine you already have.
+keywords: do i need a vector database, vector db vs search engine, pinecone alternative, qdrant vs meilisearch, weaviate or search engine, when to use a vector store, embeddings storage options, vector search without a vector database, rag stack architecture, ann index in search engine, hybrid search single system, vector database cost justification
+boost: 2
+---
+
+Most teams that ask this question do not need one. If your embeddings are derived from documents you already store, and those documents also have titles, identifiers, prices, categories, and permissions that users filter and search on, a search engine with built-in vector support covers the job with one system instead of two. A dedicated vector database earns its place when vectors are the primary data model rather than a second index over existing documents: billion-scale collections, embeddings computed from signals that have no text to search, multi-vector retrieval, or an embedding store that several independent pipelines query on their own terms. The deciding factor is not whether you use embeddings. It is whether the vectors or the documents are the thing you are actually storing.
+
+## What a vector database is designed around
+
+A vector database is built around one operation: given a query vector, return the nearest stored vectors under a distance metric, fast, at scale. Everything else (payload fields, metadata filters, namespaces, collections) exists to support that operation. That design center is a real advantage when your workload is shaped the same way. It becomes overhead when the vectors are a derived artifact of documents that need full-text matching, faceting, sorting, and permission filtering anyway, because those capabilities then have to be rebuilt or bolted on around the vector store.
+
+The inverse design also exists. Meilisearch stores embeddings in a disk-backed approximate nearest neighbor graph next to the inverted index for the same documents, so a single query can use keyword matching, vector similarity, or both. See [vector storage](/resources/internals/hannoy) for the implementation and [hybrid search](/capabilities/hybrid_search/overview) for the search-time behavior.
+
+## When the answer is genuinely yes
+
+**Vectors are the primary data model.** If your embeddings come from something other than searchable text (user behavior sequences, audio fingerprints, sensor traces, molecular structures, face or image encoders with no accompanying catalog), there is no keyword half to combine with. You want a nearest-neighbor engine, not a search engine, and the hybrid ranking, typo tolerance, and prefix indexing of a search engine are dead weight.
+
+**You are at billion-vector scale with horizontal sharding.** Distributed vector stores are built to shard a single collection across nodes and rebalance it. {/* VERIFY: current per-collection scale guidance and sharding model for Pinecone, Qdrant, Milvus, and Weaviate */} Meilisearch scales vertically: an index lives on one machine, capped in practice by disk rather than RAM, and the documented ceiling is 4,294,967,296 documents per index with a recommended index size under 2 TiB. That is a very high ceiling for documents, but if you genuinely hold billions of vectors that are not documents, a distributed store is the right tool.
+
+**You need control over the retrieval algorithm itself.** Choosing between graph and inverted-file index families, tuning graph construction parameters per collection, building indexes on GPUs, or running multi-vector late-interaction retrieval such as ColBERT-style scoring are things dedicated stores expose and general-purpose search engines usually do not. {/* VERIFY: which of these specific knobs each major vector database exposes today */} Meilisearch does not expose ANN graph parameters. It exposes [binary quantization](/capabilities/hybrid_search/advanced/binary_quantization) and the embedder configuration, and handles the rest.
+
+**Several independent systems query the same embedding space.** If a recommendation service, an analytics job, a deduplication pipeline, and a search frontend all read the same vectors, a store whose API is the vector space itself is a cleaner boundary than a search engine that treats vectors as an index over documents.
+
+**You do embedding-space work that is not retrieval.** Clustering, drift monitoring, and nearest-neighbor analytics over the full collection are native to a vector store and awkward to express as search queries.
+
+## When a search engine with built-in vectors is enough
+
+If you recognize your workload here, a second system is cost without benefit:
+
+- **Text documents with structure.** Products, articles, tickets, listings, and knowledge base entries all have fields users filter and sort on.
+- **Queries that are sometimes exact.** A SKU, a person's name, an error code, or a quoted phrase has to match exactly. Pure vector similarity systematically fails on these, which is covered in [why a pure vector database gives poor keyword results](/guides/vector-database-keyword-search).
+- **Filters that must be hard constraints.** In Meilisearch the filter is evaluated before the vector graph is traversed, so a filtered semantic search does not quietly return fewer results than requested.
+- **A RAG pipeline over your own documents.** Retrieval quality for most corpora improves with keyword and semantic signals combined, not with vectors alone.
+- **Precomputed embeddings from another modality.** You can still send them directly with the `userProvided` source, which keeps image or audio vectors in the same index as the catalog. See [search with user-provided embeddings](/capabilities/hybrid_search/how_to/search_with_user_provided_embeddings) and [multiple embedders](/capabilities/hybrid_search/advanced/multiple_embedders).
+
+## Five questions that settle it
+
+| Question | Dedicated vector database | Search engine with vectors |
+| --- | --- | --- |
+| Do your vectors have source documents users also search by keyword? | No | Yes |
+| Will users type identifiers, names, or exact phrases? | Rarely | Often |
+| How many vectors in one collection? | Billions | Millions to low billions |
+| Do you need to tune the ANN index itself? | Yes | No |
+| How many teams consume the vectors directly? | Several | One application |
+
+Two or more answers in the left column is a real case for a dedicated store. A single left-column answer usually is not, because the two-system tax (dual writes, two consistency models, fusion logic in application code, two operational surfaces) applies from day one.
+
+## One index that does both
+
+This builds a working index from nothing, then runs keyword-only, semantic-only, filtered semantic, and similar-document queries against it. Set `MEILISEARCH_URL`, `MEILISEARCH_KEY`, and `OPENAI_API_KEY` in your environment first.
+
+```javascript
+// npm install meilisearch
+import { Meilisearch } from 'meilisearch'
+
+const client = new Meilisearch({
+  host: process.env.MEILISEARCH_URL, // for example https://your-project.meilisearch.io
+  apiKey: process.env.MEILISEARCH_KEY,
+})
+
+const index = client.index('support-articles')
+
+await client.waitForTask(
+  (await index.addDocuments([
+    { id: 1, title: 'Resetting a forgotten password', ref: 'KB-1043', plan: 'free',
+      body: 'Use the reset link on the sign-in screen to receive a new password by email.' },
+    { id: 2, title: 'Rotating an API key', ref: 'KB-2210', plan: 'pro',
+      body: 'Generate a replacement key, deploy it, then revoke the previous key.' },
+    { id: 3, title: 'Why my login keeps expiring', ref: 'KB-3388', plan: 'free',
+      body: 'Sessions end after inactivity, and signing in from a new device ends older sessions.' },
+  ])).taskUid
+)
+
+await client.waitForTask(
+  (await index.updateSettings({
+    searchableAttributes: ['title', 'ref', 'body'],
+    filterableAttributes: ['plan', 'ref'],
+    typoTolerance: { disableOnAttributes: ['ref'] },
+  })).taskUid
+)
+
+// Meilisearch generates, batches, and caches every embedding itself.
+await client.waitForTask(
+  (await index.updateEmbedders({
+    articles: {
+      source: 'openAi',
+      model: 'text-embedding-3-small',
+      apiKey: process.env.OPENAI_API_KEY,
+      documentTemplate: '{{doc.title}} ({{doc.ref}}): {{doc.body}}',
+    },
+  })).taskUid
+)
+
+const embedder = 'articles'
+
+// Exact reference: keyword only, no embedding generated, no near-miss neighbors.
+console.log(await index.search('KB-2210', { hybrid: { semanticRatio: 0.0, embedder } }))
+
+// Natural language: semantic only, with a floor on weak matches.
+console.log(await index.search('I keep getting signed out', {
+  hybrid: { semanticRatio: 1.0, embedder },
+  rankingScoreThreshold: 0.5,
+}))
+
+// Semantic search under a hard constraint, evaluated before graph traversal.
+console.log(await index.search('credentials', {
+  hybrid: { semanticRatio: 0.8, embedder },
+  filter: 'plan = free',
+}))
+
+// "More like this" over the same vectors, no separate recommendation store.
+console.log(await index.searchSimilarDocuments({ id: '3', embedder }))
+```
+
+## Limits and constraints
+
+Numbers that matter when you compare the two architectures:
+
+- **Per-vector storage.** Full precision costs about 3 KiB per 768-dimensional vector, 6 KiB at 1536 dimensions, and 12 KiB at 3072. Binary quantization brings those to roughly 100, 200, and 400 bytes. The graph adds about 200 bytes per vector for edges. Source: [vector storage](/resources/internals/hannoy).
+- **Index sizing with vectors.** Meilisearch Cloud's sizing model treats a document carrying embeddings as roughly 12 KB and estimates index size at about five times raw document size. See the [pricing model](/capabilities/platform/billing/pricing_model#step-1-estimate-your-index-size).
+- **Measured behavior at 1M documents.** 768-dimensional embeddings: 506 s build time, 29 ms search latency, 4.03 GiB on disk. 1536 dimensions quantized: 67 s, 13 ms, 481 MiB.
+- **Hard ceilings.** 4,294,967,296 documents per index, 65,536 attributes per index, about 80 TiB maximum index size on 64-bit Linux with under 2 TiB recommended, and 1000 concurrent search requests. See [known limitations](/resources/help/known_limitations).
+- **Dimensions.** Inferred automatically for `openAi`, `ollama`, and `rest` sources, and mandatory for `userProvided`. The documentation states no maximum dimension count.
+- **Reindex cost of changing your mind.** Changing `source`, `model`, `documentTemplate`, `dimensions`, or `pooling` regenerates every embedding in the index, with the provider bill that implies. Changing `distribution` does not.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Hybrid and semantic search" href="/capabilities/hybrid_search/overview">
+    How keyword and vector retrieval are merged in a single query
+  </Card>
+  <Card title="Vector storage" href="/resources/internals/hannoy">
+    The disk-backed ANN implementation, filtering, and quantization
+  </Card>
+  <Card title="Semantic vs hybrid search" href="/capabilities/hybrid_search/advanced/semantic_vs_hybrid">
+    Picking a semanticRatio for your data and query shape
+  </Card>
+  <Card title="Choose an embedder" href="/capabilities/hybrid_search/how_to/choose_an_embedder">
+    Comparing providers, models, and dimensions
+  </Card>
+</CardGroup>

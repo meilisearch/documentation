@@ -1,0 +1,197 @@
+---
+title: How to search a SharePoint site
+description: You need a search box over a SharePoint site where every result respects who the user is, without re-crawling the whole tenant every night or leaking a document to someone who cannot open it in SharePoint.
+keywords: sharepoint search api, index sharepoint in meilisearch, microsoft graph delta query sync, permission aware search sharepoint, sharepoint acl search filter, sharepoint connector search engine, graph api enumerate drive items, sharepoint incremental indexing, secure enterprise search intranet, m365 document search, entra id group membership search filter, replace sharepoint search box
+boost: 2
+---
+
+Indexing a SharePoint site takes four moving parts: enumerate content through the Microsoft Graph API with an app-only token, extract text from each file, capture the item's access control list as an array of principal ids on the document, and re-run the sync with a Graph delta query instead of a full crawl. On the Meilisearch side the whole security model is one array field plus a [tenant token](/capabilities/security/getting_started): store `acl_read` on every document, mark it [filterable](/reference/api/settings/update-filterableattributes), and sign a token per user whose search rule is `acl_read IN [...]` populated with that user's own group memberships. The filter is enforced by Meilisearch, not by your front end, so a user cannot remove it.
+
+## Why permissions have to be baked into the document
+
+SharePoint permissions are not uniform. A site inherits to its libraries, libraries inherit to folders, and any item can break inheritance and carry its own grants. Two files sitting in the same folder can have completely different audiences.
+
+That leaves two possible designs. You can filter after searching, which means asking Graph whether the current user may read each of the 20 hits you just returned, on every keystroke. That adds a round trip per result, it breaks pagination (removing 6 of 20 hits leaves a short page), and it leaks metadata through the total hit count.
+
+Or you can filter during searching. Resolve each item's readers once at index time, flatten them into an array of principal ids, and turn the user's group memberships into a filter. This is the design that holds up: one query, correct counts, no post-processing. The cost is that permission changes in SharePoint are only reflected after the next sync, so the index is eventually consistent with reality rather than instantly consistent.
+
+## How to enumerate content through Microsoft Graph
+
+Register an application in Microsoft Entra ID and grant it application (not delegated) permissions, then authenticate with the client credentials flow. `Sites.Read.All` reads every site in the tenant. `Sites.Selected` is the safer grant: it gives the app no access until an administrator explicitly assigns it to named sites {/* VERIFY: exact admin steps to assign a Sites.Selected app to a specific site */}.
+
+From there the traversal is:
+
+1. Resolve the site from its URL with `GET /v1.0/sites/{hostname}:/sites/{site-path}`.
+2. List its document libraries with `GET /v1.0/sites/{site-id}/drives`.
+3. Walk each library with the delta endpoint, `GET /v1.0/drives/{drive-id}/root/delta`.
+4. Download bytes for each file with `GET /v1.0/drives/{drive-id}/items/{item-id}/content`.
+5. Read grants with `GET /v1.0/drives/{drive-id}/items/{item-id}/permissions`.
+
+Site pages and custom lists live outside the drive model and are enumerated separately through the list items delta endpoint, `GET /v1.0/sites/{site-id}/lists/{list-id}/items/delta` {/* VERIFY: delta support and required $expand for list items */}.
+
+Extracting readable text from the bytes is a separate problem, covered in [how to search Microsoft Word and Office documents](/guides/search-office-documents) and [how to search PDFs](/guides/search-pdfs). Long files should be split before indexing, per [how to chunk documents for search](/guides/how-to-chunk-documents), because Meilisearch indexes at most 65,535 word positions per attribute.
+
+## How to map SharePoint principals onto a filter
+
+Each permission entry returned by Graph names a principal in `grantedToV2` (for single grants) or `grantedToIdentitiesV2` (for sharing links), and carries a `roles` array such as `["read"]` or `["write"]`. A principal is one of three things: an individual user, an Entra ID security group, or a SharePoint site group like Members or Visitors {/* VERIFY: whether site groups surface as `grantedToV2.siteGroup` on driveItem permissions */}.
+
+Do not expand groups into user lists at index time. A 4,000-member group would put 4,000 ids on the document and every membership change would force a reindex. Store the group id itself, and expand on the user side instead, where it is cheap and already cached:
+
+```python
+groups = graph_get(f"/users/{user_id}/transitiveMemberOf?$select=id")["value"]
+principals = [f"u_{user_id}"] + [f"g_{g['id']}" for g in groups]
+```
+
+Prefix user and group ids so the two id spaces cannot collide. Then the search rule is a single `IN` clause, which matches a document when at least one array element matches, per the [filter expression syntax](/capabilities/filtering_sorting_faceting/advanced/filter_expression_syntax#in):
+
+```python
+acl_filter = "acl_read IN [" + ", ".join(f'"{p}"' for p in principals) + "]"
+
+token = client.generate_tenant_token(
+    api_key_uid=os.environ["MEILISEARCH_KEY_UID"],
+    search_rules={"sharepoint": {"filter": acl_filter}},
+    api_key=os.environ["MEILISEARCH_SEARCH_KEY"],
+    expires_at=datetime.now(timezone.utc) + timedelta(minutes=30),
+)
+```
+
+Generate that token on your server, never in the browser, because signing it requires an API key.
+
+## How to sync incrementally with delta queries
+
+The delta endpoint returns a page of changed items plus either an `@odata.nextLink` (more pages now) or an `@odata.deltaLink` (you are caught up). Persist that delta link. On the next run, call it directly and Graph returns only what changed since.
+
+Two details decide whether this works in production. First, deleted and moved items come back as normal entries carrying a `deleted` facet, so the sync must issue Meilisearch deletes for them rather than skipping them. Second, a delta link can be rejected as expired, in which case the only recovery is a full re-enumeration from the root {/* VERIFY: the exact Graph error code returned for an expired delta token */}. Write the sync so a full crawl and an incremental run share the same code path.
+
+## A complete sync and index script
+
+This script authenticates, walks every library in a site, resolves permissions, indexes changed files, deletes removed ones, and stores delta links so the next run is incremental.
+
+```python
+# pip install msal requests meilisearch
+# export GRAPH_TENANT_ID=... GRAPH_CLIENT_ID=... GRAPH_CLIENT_SECRET=...
+# export SP_HOST="contoso.sharepoint.com" SP_SITE_PATH="/sites/handbook"
+# export MEILISEARCH_URL="https://ms-xxxxxxxx.meilisearch.io" MEILISEARCH_KEY="your-admin-key"
+# python sync_sharepoint.py
+
+import hashlib, json, os, pathlib, time
+import msal, requests, meilisearch
+
+GRAPH = "https://graph.microsoft.com/v1.0"
+STATE = pathlib.Path("delta_state.json")
+INDEX = "sharepoint"
+TEXT_SUFFIXES = {".txt", ".md", ".csv", ".json"}   # see the Office and PDF guides for the rest
+
+app = msal.ConfidentialClientApplication(
+    os.environ["GRAPH_CLIENT_ID"],
+    authority=f"https://login.microsoftonline.com/{os.environ['GRAPH_TENANT_ID']}",
+    client_credential=os.environ["GRAPH_CLIENT_SECRET"],
+)
+
+def graph(url, raw=False):
+    if url.startswith("/"):
+        url = GRAPH + url
+    for attempt in range(6):
+        tok = app.acquire_token_for_client(["https://graph.microsoft.com/.default"])
+        r = requests.get(url, headers={"Authorization": "Bearer " + tok["access_token"]})
+        if r.status_code in (429, 503):                 # throttled, Graph tells you how long
+            time.sleep(int(r.headers.get("Retry-After", 2 ** attempt)))
+            continue
+        r.raise_for_status()
+        return r.content if raw else r.json()
+    raise RuntimeError(f"gave up after repeated throttling on {url}")
+
+def readers(drive_id, item_id):
+    """Flatten an item's read grants into prefixed principal ids."""
+    out = set()
+    for p in graph(f"/drives/{drive_id}/items/{item_id}/permissions").get("value", []):
+        if not any(role in ("read", "write", "owner") for role in p.get("roles", [])):
+            continue
+        grants = p.get("grantedToIdentitiesV2") or ([p["grantedToV2"]] if "grantedToV2" in p else [])
+        for g in grants:
+            if "user" in g:       out.add("u_" + g["user"]["id"])
+            elif "group" in g:    out.add("g_" + g["group"]["id"])
+            elif "siteGroup" in g: out.add("s_" + g["siteGroup"]["id"])
+    return sorted(out)
+
+def extract_text(name, blob):
+    if pathlib.Path(name).suffix.lower() in TEXT_SUFFIXES:
+        return blob.decode("utf-8", errors="replace")
+    return ""     # plug your docx/pdf extractor in here
+
+client = meilisearch.Client(os.environ["MEILISEARCH_URL"], os.environ["MEILISEARCH_KEY"])
+index = client.index(INDEX)
+index.update_settings({
+    "searchableAttributes": ["name", "text", "path"],
+    "filterableAttributes": ["acl_read", "drive_id", "site_id", "last_modified"],
+    "sortableAttributes": ["last_modified"],
+})
+
+site = graph(f"/sites/{os.environ['SP_HOST']}:{os.environ['SP_SITE_PATH']}")
+state = json.loads(STATE.read_text()) if STATE.exists() else {}
+docs, gone = [], []
+
+for drive in graph(f"/sites/{site['id']}/drives")["value"]:
+    url = state.get(drive["id"]) or f"/drives/{drive['id']}/root/delta"
+    while url:
+        page = graph(url)
+        for item in page["value"]:
+            doc_id = hashlib.sha1(f"{drive['id']}:{item['id']}".encode()).hexdigest()
+            if "deleted" in item:
+                gone.append(doc_id)
+                continue
+            if "file" not in item:                      # folders carry no text
+                continue
+            blob = graph(f"/drives/{drive['id']}/items/{item['id']}/content", raw=True)
+            docs.append({
+                "doc_id": doc_id,
+                "name": item["name"],
+                "text": extract_text(item["name"], blob),
+                "path": item.get("parentReference", {}).get("path", ""),
+                "web_url": item.get("webUrl"),
+                "site_id": site["id"],
+                "drive_id": drive["id"],
+                "last_modified": item.get("lastModifiedDateTime"),
+                "acl_read": readers(drive["id"], item["id"]),
+            })
+        url = page.get("@odata.nextLink")
+        if not url:
+            state[drive["id"]] = page["@odata.deltaLink"]
+
+if gone:
+    index.delete_documents(gone)
+for i in range(0, len(docs), 1000):
+    task = index.add_documents(docs[i:i + 1000], primary_key="doc_id")
+    client.wait_for_task(task.task_uid)
+
+STATE.write_text(json.dumps(state))
+print(f"indexed {len(docs)} items, removed {len(gone)}")
+```
+
+## Limits and constraints
+
+- **Permissions are only as fresh as the last sync.** Meilisearch filters on `acl_read` as it was written. Revoking access in SharePoint has no effect on the index until that item is resynced, so run the delta sync on a short cadence for sensitive libraries.
+- **Filter length grows with group count.** The tenant token embeds one `IN` clause holding every principal a user belongs to. A user in several hundred groups produces a large filter and a large JWT. There is no documented cap on filter length in the repo, so measure it against your own directory rather than assuming a limit.
+- **Tenant tokens are signed with an API key and cannot be modified client-side**, but they are also not revocable before expiry. Keep `expires_at` short, per the [tenant token payload reference](/capabilities/security/advanced/tenant_token_payload#expiry-date).
+- **65,535 positions per attribute.** Words past that point in a single field are silently dropped, with no error. A long policy manual pushed into one `text` field loses most of its content. See [known limitations](/resources/help/known_limitations#maximum-number-of-words-per-attribute).
+- **Primary key charset.** Values must be integers, or strings of `a-z`, `A-Z`, `0-9`, `-`, and `_` only. Graph item ids do not always satisfy that, which is why the script hashes them. See [design primary keys](/capabilities/indexing/how_to/design_primary_keys).
+- **100 MB default payload.** Batch at 50,000 to 100,000 documents per request for large libraries, per [import large datasets](/capabilities/indexing/how_to/import_large_datasets).
+- **Graph throttles by request volume and returns 429 with `Retry-After`.** The published thresholds vary by workload and by tenant {/* VERIFY: current SharePoint Graph throttling thresholds and whether they are documented as fixed numbers */}, so honor the header rather than tuning to a fixed rate. Fetching permissions for every item is usually the heaviest part of the crawl, so cache results per folder when inheritance is unbroken.
+- **Deny rules have no equivalent.** SharePoint's limited-access and broken-inheritance behavior is a grant model that an array of allowed principals can represent, but any explicitly denied principal has to be subtracted when you build `acl_read`, because a filter has nothing to subtract it with at query time.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Multitenancy and tenant tokens" href="/capabilities/security/getting_started">
+    Generate per-user tokens whose filters Meilisearch enforces on every query.
+  </Card>
+  <Card title="Filter expression syntax" href="/capabilities/filtering_sorting_faceting/advanced/filter_expression_syntax">
+    The full operator set, including how `IN` behaves against array fields.
+  </Card>
+  <Card title="How to search Microsoft Word and Office documents" href="/guides/search-office-documents">
+    Extracting usable text from docx, xlsx, and pptx before indexing.
+  </Card>
+  <Card title="Add and update documents" href="/capabilities/indexing/how_to/add_and_update_documents">
+    How Meilisearch ingests JSON documents, and how updates are applied.
+  </Card>
+</CardGroup>

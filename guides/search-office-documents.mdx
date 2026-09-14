@@ -1,0 +1,242 @@
+---
+title: How to search Microsoft Word and Office documents
+description: You have a shared drive full of docx, xlsx, and pptx files and need to make them searchable, but the text extraction keeps swallowing structure, resurrecting deleted tracked changes, and turning spreadsheets into unreadable number soup.
+keywords: search word documents, index docx files, make office files searchable, extract text from docx python, xlsx full text search, powerpoint slide search, search shared drive documents, ooxml text extraction, tracked changes indexing, word comments search, spreadsheet row indexing, pptx speaker notes search, office 365 document search, index doc xls ppt legacy files
+boost: 2
+---
+
+A `.docx`, `.xlsx`, or `.pptx` file is a ZIP archive of XML parts, so extraction needs no Office install and no conversion service: open the archive, read the part you care about, and emit JSON documents. Chunk Word files by heading like any long-form text, treat each slide in a deck as one document (with its speaker notes attached), and decide per worksheet whether a spreadsheet is a data table (one document per row) or a report (one document per sheet). Handle tracked changes deliberately, because a naive extractor will happily index text the author deleted. Meilisearch accepts JSON, NDJSON, and CSV, so all of this happens in your pipeline before [adding documents](/capabilities/indexing/how_to/add_and_update_documents).
+
+## What is actually inside an Office file
+
+All three modern formats follow the Open Packaging Conventions: a ZIP container holding XML parts plus a relationships graph that says how they connect. The parts you need are few.
+
+| Format | Main text part | Also worth reading |
+| --- | --- | --- |
+| `.docx` | `word/document.xml` | `word/comments.xml`, `word/footnotes.xml` |
+| `.xlsx` | `xl/worksheets/sheetN.xml` | `xl/sharedStrings.xml`, `xl/workbook.xml` |
+| `.pptx` | `ppt/slides/slideN.xml` | `ppt/notesSlides/notesSlideN.xml` |
+
+Two details bite people immediately. In `.xlsx`, most cell values are not stored in the sheet: a cell with `t="s"` holds an index into the shared string table, so reading sheet XML alone gives you a column of integers. And in `.pptx`, notes slides are not numbered in step with their slides. Resolve them through `ppt/slides/_rels/slideN.xml.rels` rather than assuming `notesSlide3.xml` belongs to `slide3.xml`.
+
+The legacy binary formats `.doc`, `.xls`, and `.ppt` are not ZIP archives and share none of this. Convert them first, for example with `soffice --headless --convert-to docx`, then run the same pipeline.
+
+## How to handle tracked changes and comments
+
+In WordprocessingML, an insertion is a run wrapped in `<w:ins>` whose text still sits in a normal `<w:t>` element. A deletion is wrapped in `<w:del>`, and its text moves into `<w:delText>`. That asymmetry is useful: if your extractor collects only `<w:t>` elements, you get the **accepted** view for free, insertions kept and deletions dropped. That is almost always what you want, because indexing struck-through text makes a contract search return clauses that were negotiated away.
+
+If you need the original view instead, collect `<w:delText>` as well and store it in a separate field so it never contaminates the main text. Never merge the two into one string.
+
+Comments live in `word/comments.xml` and carry an author and a date. Index them in their own field rather than inline. A reviewer writing "this figure is wrong" should be findable, but that sentence must not read as part of the document body, and it must not pull the paragraph's embedding sideways if you later enable semantic search. Most convenience wrappers skip comments and tracked-change markup entirely and give you only the flattened paragraph text {/* VERIFY: whether current python-docx exposes w:ins, w:del, and word/comments.xml */}, which is the main reason the script below reads the XML directly.
+
+## Is a spreadsheet one document or one document per row
+
+Decide per worksheet, not per workbook, because a single file often contains both kinds.
+
+A sheet is a **data table** when row 1 is a header (two or more non-empty, unique labels) and the rows below it are consistently populated. Emit one document per row, with each column becoming a field. Search then behaves like search over a database, and users can filter on the columns that matter.
+
+A sheet is a **report** when it holds a budget model, a formatted summary, or scattered labels and totals. Row-splitting produces thousands of meaningless fragments. Serialize the whole sheet as prose instead, one document, keeping each row as a line of `label: value` pairs so a cell keeps its header context.
+
+A useful guard: never map spreadsheet columns to Meilisearch fields blindly across a large corpus. Every distinct column name becomes an attribute in the index, and a few hundred inconsistent sheets can produce an unusable schema.
+
+## How to map a slide deck to searchable units
+
+One document per slide is right. A deck is not a single unit (a 60-slide deck in one field is unsearchable in practice) and a text box is too small to stand alone.
+
+For each slide, capture the title placeholder separately from the body text, pull in the speaker notes (often the only prose in a visual deck), and record the slide number so a result can deep-link. To stop one deck from filling the whole result page, set `"distinct": "doc_id"` at search time, which returns the best-matching slide per deck. See [configure distinct attribute](/capabilities/full_text_search/how_to/configure_distinct_attribute).
+
+## A complete extraction and indexing script
+
+Save this as `index_office.py` and point it at a folder. It uses only the standard library plus the Meilisearch client.
+
+```python
+# pip install meilisearch
+# export MEILISEARCH_URL="https://ms-xxxxxxxx.meilisearch.io"
+# export MEILISEARCH_KEY="your-admin-key"
+# python index_office.py ./shared-drive
+
+import os, re, sys, zipfile, pathlib
+import xml.etree.ElementTree as ET
+import meilisearch
+
+NS = {"w": "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
+      "a": "http://schemas.openxmlformats.org/drawingml/2006/main",
+      "p": "http://schemas.openxmlformats.org/presentationml/2006/main",
+      "x": "http://schemas.openxmlformats.org/spreadsheetml/2006/main"}
+REL = "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}"
+W, A, P, X = ("{%s}" % NS[k] for k in ("w", "a", "p", "x"))
+TARGET_WORDS = 220
+
+def slug(s):                      # primary keys allow only a-z A-Z 0-9 - _
+    return re.sub(r"[^A-Za-z0-9_-]", "_", s)[-160:]
+
+def part(z, name):
+    return ET.fromstring(z.read(name)) if name in z.namelist() else None
+
+def text_of(node, tag):
+    return " ".join((t.text or "") for t in node.iter(tag)).strip()
+
+def read_docx(z, doc_id, title):
+    comments = []
+    croot = part(z, "word/comments.xml")
+    if croot is not None:
+        for c in croot.findall("w:comment", NS):
+            body = text_of(c, W + "t")
+            if body:
+                comments.append(f"{c.get(W + 'author', 'unknown')}: {body}")
+    out, buf, heading, n = [], [], "", 0
+    def flush():
+        nonlocal buf, n
+        if buf:
+            n += 1
+            out.append({"chunk_id": f"{doc_id}_c{n}", "doc_id": doc_id, "kind": "word",
+                        "title": title, "heading": heading, "text": " ".join(buf),
+                        "notes": " ".join(comments), "position": n})
+            buf = []
+    # Collecting only w:t keeps tracked insertions and drops tracked deletions,
+    # which live in w:delText. Paragraphs inside tables are flattened into prose.
+    for para in part(z, "word/document.xml").iter(W + "p"):
+        style = para.find("w:pPr/w:pStyle", NS)
+        style = style.get(W + "val", "") if style is not None else ""
+        line = text_of(para, W + "t")
+        if not line:
+            continue
+        if style.startswith("Heading") or style == "Title":
+            flush()
+            heading = line
+        else:
+            buf.extend(line.split())
+            if len(buf) >= TARGET_WORDS:
+                flush()
+    flush()
+    return out
+
+def read_xlsx(z, doc_id, title):
+    sst = part(z, "xl/sharedStrings.xml")
+    shared = [text_of(si, X + "t") for si in sst] if sst is not None else []
+    rels = {r.get("Id"): r.get("Target") for r in part(z, "xl/_rels/workbook.xml.rels")}
+    out = []
+    for sheet in part(z, "xl/workbook.xml").iter(X + "sheet"):
+        target = rels[sheet.get(REL + "id")].lstrip("/")
+        grid = []
+        for row in part(z, target if target.startswith("xl/") else "xl/" + target).iter(X + "row"):
+            cells = []
+            for c in row.iter(X + "c"):
+                v = c.find("x:v", NS)
+                if c.get("t") == "s" and v is not None:
+                    cells.append(shared[int(v.text)])
+                elif c.get("t") == "inlineStr":
+                    cells.append(text_of(c, X + "t"))
+                else:
+                    cells.append((v.text or "") if v is not None else "")
+            grid.append([c.strip() for c in cells])
+        if not grid:
+            continue
+        name = sheet.get("name", "Sheet")
+        header = grid[0]
+        labels = [h for h in header if h]
+        filled = sum(1 for r in grid[1:] if len([c for c in r if c]) >= 2)
+        is_table = (len(grid) >= 4 and len(labels) >= 2 and len(set(labels)) == len(labels)
+                    and filled >= len(grid[1:]) * 0.6)
+        if is_table:                         # data table: one document per row
+            for i, row in enumerate(grid[1:], start=2):
+                pairs = [f"{h}: {v}" for h, v in zip(header, row) if h and v]
+                if pairs:
+                    out.append({"chunk_id": f"{doc_id}_{slug(name)}_r{i}", "doc_id": doc_id,
+                                "kind": "spreadsheet_row", "title": title, "heading": name,
+                                "text": "; ".join(pairs), "notes": "", "position": i})
+        else:                                # report: one document per sheet
+            lines = ["; ".join(c for c in r if c) for r in grid]
+            out.append({"chunk_id": f"{doc_id}_{slug(name)}", "doc_id": doc_id,
+                        "kind": "spreadsheet_sheet", "title": title, "heading": name,
+                        "text": "\n".join(l for l in lines if l), "notes": "", "position": 1})
+    return out
+
+def read_pptx(z, doc_id, title):
+    names = sorted((n for n in z.namelist() if re.fullmatch(r"ppt/slides/slide\d+\.xml", n)),
+                   key=lambda n: int(re.search(r"\d+", n.rsplit("/", 1)[1]).group()))
+    out = []
+    for i, name in enumerate(names, start=1):
+        root, slide_title, body = part(z, name), "", []
+        for sp in root.iter(P + "sp"):
+            line = text_of(sp, A + "t")
+            ph = sp.find(".//p:nvSpPr/p:nvPr/p:ph", NS)
+            if ph is not None and ph.get("type") in ("title", "ctrTitle") and not slide_title:
+                slide_title = line
+            elif line:
+                body.append(line)
+        notes, num = "", re.search(r"\d+", name.rsplit("/", 1)[1]).group()
+        rels = part(z, f"ppt/slides/_rels/slide{num}.xml.rels")
+        for r in rels if rels is not None else []:
+            if r.get("Type", "").endswith("/notesSlide"):   # resolve, do not assume numbering
+                notes = text_of(part(z, r.get("Target").replace("../", "ppt/")), A + "t")
+        out.append({"chunk_id": f"{doc_id}_s{i}", "doc_id": doc_id, "kind": "slide",
+                    "title": title, "heading": slide_title or f"Slide {i}",
+                    "text": " ".join(body), "notes": notes, "position": i})
+    return out
+
+READERS = {".docx": read_docx, ".xlsx": read_xlsx, ".pptx": read_pptx}
+docs = []
+for path in sorted(pathlib.Path(sys.argv[1]).rglob("*")):
+    reader = READERS.get(path.suffix.lower())
+    if reader is None:
+        if path.suffix.lower() in (".doc", ".xls", ".ppt"):
+            print(f"skip {path.name}: legacy binary format, convert to OOXML first")
+        continue
+    try:
+        with zipfile.ZipFile(path) as z:
+            docs.extend(reader(z, slug(str(path)), path.stem))
+    except (zipfile.BadZipFile, KeyError, ET.ParseError) as err:
+        print(f"skip {path.name}: {err}")
+
+client = meilisearch.Client(os.environ["MEILISEARCH_URL"], os.environ["MEILISEARCH_KEY"])
+index = client.index("office_documents")
+index.update_settings({
+    "searchableAttributes": ["title", "heading", "text", "notes"],
+    "filterableAttributes": ["doc_id", "kind", "heading"],
+    "sortableAttributes": ["position"],
+})
+# chunk_id and doc_id both end in "id", so the primary key must be explicit.
+task = index.add_documents(docs, primary_key="chunk_id")
+client.wait_for_task(task.task_uid)
+print(f"indexed {len(docs)} units")
+```
+
+Search it, collapsing each file to its single best unit:
+
+```python
+index.search("renewal terms", {
+    "distinct": "doc_id",
+    "attributesToCrop": ["text"], "cropLength": 40,
+    "attributesToHighlight": ["text", "notes"],
+    "filter": 'kind != "spreadsheet_row"',
+})
+```
+
+## Limits and constraints
+
+- **65,535 positions per attribute.** Words past that position in a single attribute are silently ignored, with no error. See [known limitations](/resources/help/known_limitations#maximum-number-of-words-per-attribute). This alone rules out pushing a 200-page Word file into one `text` field.
+- **65,536 attributes per index.** Exceeding it throws an error. Mapping every spreadsheet column across a large, inconsistent corpus into its own field can approach this, which is why the script keeps rows as one serialized `text` field.
+- **468 bytes per filterable value.** An individual `filterableAttributes` value is capped at 468 bytes, so a sheet name or heading used as a facet must stay short.
+- **511 bytes per primary key value.** A `chunk_id` built from a deep file path can exceed this, hence the trailing truncation in `slug()`.
+- **Primary key charset.** Values must be integers, or strings of `a-z`, `A-Z`, `0-9`, `-`, and `_` only. Raw filenames with spaces are rejected with `invalid_document_id`. See [design primary keys](/capabilities/indexing/how_to/design_primary_keys).
+- **100 MB default payload, 20 MB via the Cloud interface.** Batch large corpora through the [add documents endpoint](/reference/api/documents/add-or-replace-documents), 50,000 to 100,000 units per request, per [import large datasets](/capabilities/indexing/how_to/import_large_datasets).
+- **No Office ingestion endpoint.** Meilisearch takes JSON, NDJSON, and CSV. There is no route that accepts a `.docx`, so extraction stays in your pipeline.
+- **No permission awareness.** Indexed documents carry no file ACL. If the source drive has per-user permissions, mirror them into a filterable field and enforce them with tenant tokens. See [security](/capabilities/security/overview).
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="How to chunk documents for search" href="/guides/how-to-chunk-documents">
+    Chunking strategies, overlap, and how to evaluate a change.
+  </Card>
+  <Card title="How to chunk long-form documents" href="/guides/chunk-long-form-documents">
+    Using a heading hierarchy as the chunk tree for long Word files.
+  </Card>
+  <Card title="Configure searchable attributes" href="/capabilities/full_text_search/how_to/configure_searchable_attributes">
+    Control which fields are searched, and in what order of importance.
+  </Card>
+  <Card title="Search with snippets" href="/capabilities/full_text_search/getting_started/search_with_snippets">
+    Crop and highlight matches so a result shows the relevant passage.
+  </Card>
+</CardGroup>

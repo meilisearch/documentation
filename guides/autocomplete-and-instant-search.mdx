@@ -1,0 +1,167 @@
+---
+title: How to build autocomplete and instant search
+description: You wired a search box to fire on every keystroke and the results flicker, arrive out of order, and rank badly for the first two or three characters typed.
+keywords: search as you type, type ahead search, instant search box, debounce search input, cancel in flight search request, prefixSearch setting, partial word matching, dropdown suggestions versus results, query suggestions index, out of order search responses, two character query ranking, live search results
+boost: 2
+---
+
+Prefix matching is already on: Meilisearch ships `prefixSearch` set to `indexingTime`, so a query of `adv` matches "adventure" with no configuration. The work that remains is on your side of the wire. Debounce the input to around 100 ms, cancel or discard every in-flight request when a newer keystroke arrives, request a small `limit` with a narrow `attributesToRetrieve`, and add a custom ranking rule such as `popularity:desc` at the end of your ranking rules, because for a two-character query the text ranking rules have almost nothing to separate results on. Then decide, deliberately, whether your dropdown shows query suggestions or actual documents. It should not try to show both in one list.
+
+## What Meilisearch already does, and what it does not
+
+`prefixSearch` has two modes. `indexingTime`, the default, builds prefix structures during indexing so partial words match instantly at query time. `disabled` turns it off entirely, which shrinks the index and speeds up indexing, but forces users to type complete words. Unless your search is form-based with a submit button, leave it on. See [configure prefix search](/capabilities/full_text_search/how_to/configure_prefix_search) for the trade-off and the reindex that switching triggers.
+
+The important detail: prefix matching applies only to the **last word** of a query. Earlier words must match completely, or within [typo tolerance](/capabilities/full_text_search/relevancy/typo_tolerance_settings). So `harry pot` matches "Harry Potter", but `har potter` does not match on `har` as a prefix.
+
+What Meilisearch does not do is manage your request lifecycle. Every keystroke you send is a separate search request, and HTTP responses are not guaranteed to arrive in the order you sent them.
+
+## Why two-character queries rank badly
+
+Meilisearch applies [ranking rules](/capabilities/full_text_search/relevancy/ranking_rules) as a bucket sort in this default order: `words`, `typo`, `proximity`, `attributeRank`, `sort`, `wordPosition`, `exactness`. Walk that list for a query of `ni`:
+
+- `words` sorts by how many query terms matched. There is one term. No separation.
+- `typo` sorts by typo count. Typo tolerance needs five characters for one typo and nine for two, so a two-character term gets zero typo tolerance. No separation.
+- `proximity` measures distance between matched terms. There is one term. No separation.
+
+The first rule that does anything is `attributeRank`, which is why [searchable attribute order](/capabilities/full_text_search/relevancy/attribute_ranking_order) matters far more for autocomplete than for full queries. Put `name` or `title` first and demote `description` and body text. After that, `wordPosition` and `exactness` do a little work, and then you have run out of text signal.
+
+The fix is a business signal as the final tiebreaker. Add a [custom ranking rule](/capabilities/full_text_search/relevancy/custom_ranking_rules) on a numeric field you already have, such as popularity, sales rank, or view count. Without it, the top of a two-character result list is effectively arbitrary among thousands of equally-matching documents, and users read that as "the search is broken".
+
+## Debouncing and canceling in flight
+
+Two separate problems, often conflated.
+
+**Debouncing** limits how many requests you send. A 100 ms to 150 ms delay after the last keystroke removes most of the waste while still feeling instant. Going above roughly 200 ms starts to feel laggy. This matters most on usage-priced search services, where a five-character query billed as five searches multiplies your bill by the average query length. {/* VERIFY: whether Algolia and other per-request-priced services bill each keystroke of a search-as-you-type session as a separate search request */}
+
+**Cancellation** fixes correctness. Debouncing reduces the number of in-flight requests, it does not guarantee they resolve in order. If the request for `ni` takes 80 ms and the request for `nik` takes 20 ms, the user sees results for `nik` and then watches them get replaced by results for `ni`. Use an `AbortController` per request, abort the previous one before issuing the next, and additionally discard any response whose query no longer matches the current input value. Both, not either.
+
+## One list or two
+
+This is a product decision that determines your data model, so make it before you write the dropdown.
+
+**Results as you type (one list).** The dropdown shows real documents. Pressing Enter is optional, because the answer is already visible. Use this for catalogs, documentation, and anything where the target is a single record. It is the simplest option: one index, one query, `limit` of 5 to 8.
+
+**Query suggestions (two lists).** The dropdown shows completed *queries* ("running shoes", "running socks"), and pressing Enter runs a full search. This needs a second index of query strings, typically built from your own search logs, queried alongside the document index. Use this when users browse rather than target a specific item.
+
+If you genuinely need both, do not interleave them. Query them in a single request to `/multi-search` and render them as visually distinct sections, as described in [build a unified search bar](/capabilities/multi_search/how_to/build_unified_search_bar).
+
+A third pattern is worth knowing: for type-ahead inside a filter menu with thousands of values (brands, authors, tags), use the dedicated [facet search](/capabilities/filtering_sorting_faceting/how_to/facet_search) endpoint instead. It returns `facetHits` with a value and a document count per value, which is what a filter picker needs.
+
+## A complete instant search implementation
+
+Run the settings block once, then serve the browser code. The search API key is read-only and [safe to expose in a frontend](/capabilities/security/overview) as long as your data is not multi-tenant.
+
+```javascript
+// ---------- Run once, from a server or a script ----------
+// npm install meilisearch
+import { Meilisearch } from 'meilisearch'
+
+const admin = new Meilisearch({
+  host: process.env.MEILISEARCH_URL,
+  apiKey: process.env.MEILISEARCH_ADMIN_KEY
+})
+
+const task = await admin.index('products').updateSettings({
+  prefixSearch: 'indexingTime',
+  // Order is priority order: short prefixes separate on this first.
+  searchableAttributes: ['name', 'brand', 'category', 'description'],
+  rankingRules: [
+    'words', 'typo', 'proximity', 'attributeRank',
+    'sort', 'wordPosition', 'exactness',
+    'popularity:desc'          // the tiebreaker that saves 2-character queries
+  ],
+  pagination: { maxTotalHits: 200 },
+  searchCutoffMs: 500
+})
+await admin.waitForTask(task.taskUid)
+
+// ---------- Browser: debounce + cancel + stale-response guard ----------
+const HOST = 'https://your-project.meilisearch.io'
+const SEARCH_KEY = 'your_search_api_key'   // search-only key
+
+let timer = null
+let controller = null
+let latestQuery = ''
+
+function onInput(value) {
+  latestQuery = value
+  clearTimeout(timer)
+
+  if (!value) {
+    if (controller) controller.abort()
+    render([])
+    return
+  }
+
+  timer = setTimeout(() => runSearch(value), 120)
+}
+
+async function runSearch(query) {
+  if (controller) controller.abort()      // kill the previous request
+  controller = new AbortController()
+
+  try {
+    const response = await fetch(`${HOST}/indexes/products/search`, {
+      method: 'POST',
+      signal: controller.signal,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${SEARCH_KEY}`
+      },
+      body: JSON.stringify({
+        q: query,
+        limit: 6,
+        attributesToRetrieve: ['id', 'name', 'brand', 'price'],
+        attributesToHighlight: ['name'],
+        highlightPreTag: '<mark>',
+        highlightPostTag: '</mark>',
+        matchingStrategy: 'last'
+      })
+    })
+
+    const data = await response.json()
+    if (query !== latestQuery) return     // a newer keystroke already won
+    render(data.hits)
+  } catch (error) {
+    if (error.name !== 'AbortError') throw error
+  }
+}
+
+function render(hits) {
+  const list = document.getElementById('results')
+  list.innerHTML = hits
+    .map(hit => `<li>${hit._formatted.name} <span>${hit.brand}</span></li>`)
+    .join('')
+}
+
+document.getElementById('search')
+  .addEventListener('input', event => onInput(event.target.value))
+```
+
+`_formatted.name` is safe to inject because Meilisearch escapes it around the highlight tags, but any raw field you render must be escaped yourself. Meilisearch returns document content as stored.
+
+## Limits and constraints
+
+- **Prefix matching covers the last word only.** Every earlier word in a multi-word query must match fully or within typo tolerance.
+- **Typo tolerance has a floor.** One typo requires a term of five characters or more, two typos require nine or more, per the default `minWordSizeForTypos`. Queries of one to four characters get no typo correction at all.
+- **`maxTotalHits` defaults to 1000.** For an autocomplete-only path you never need more than a few dozen. Lowering it cuts ranking work on every query. See [paginate search results](/capabilities/full_text_search/how_to/paginate_search_results).
+- **`searchCutoffMs` defaults to `null`**, and Meilisearch interrupts searches after an internal 1500 ms threshold. The docs recommend not setting it below 500 ms, so treat it as a safety net rather than an autocomplete latency target.
+- **Changing `prefixSearch` reindexes the whole index.** It is an asynchronous task, not an instant toggle.
+- **`prefixSearch` has exactly two values**, `indexingTime` and `disabled`. There is no per-attribute or minimum-prefix-length control.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Configure prefix search" href="/capabilities/full_text_search/how_to/configure_prefix_search">
+    The `prefixSearch` setting, its two modes, and when disabling it pays off
+  </Card>
+  <Card title="Build a unified search bar" href="/capabilities/multi_search/how_to/build_unified_search_bar">
+    Query several indexes in one request for a sectioned dropdown
+  </Card>
+  <Card title="React quick start" href="/getting_started/instant_meilisearch/react">
+    Search-as-you-type components that handle debouncing for you
+  </Card>
+  <Card title="Make search faster" href="/guides/make-search-faster">
+    The full latency checklist, ordered by payoff per hour of work
+  </Card>
+</CardGroup>

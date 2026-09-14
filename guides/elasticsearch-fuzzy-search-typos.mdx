@@ -1,0 +1,131 @@
+---
+title: Making Elasticsearch fuzzy search behave like typo tolerance
+description: Your Elasticsearch queries return nothing when users misspell a word, and adding fuzziness either misses the typo or floods results with false positives.
+keywords: elasticsearch fuzziness auto, fuzzy query not working, prefix_length elasticsearch, multi_match fuzziness ignored, elasticsearch spelling mistakes no results, edit distance search, max_expansions fuzzy, typo tolerance vs fuzzy search, opensearch fuzziness, search misspelled query returns nothing
+boost: 2
+---
+
+Elasticsearch does not correct typos unless you ask it to, on every query, field by field. A plain `match` query for `iphoen` returns zero hits even though `iphone` is indexed. Adding `"fuzziness": "AUTO"` helps, but it is an edit-distance expansion bolted onto the query, not a relevance concept: it caps out at two edits, it ignores typos in the first characters once you set `prefix_length`, it is silently dropped by some `multi_match` types, and it lowers the BM25 score rather than sorting exact matches above corrected ones. This page explains each of those behaviors, shows the tuning that genuinely helps inside Elasticsearch, and then contrasts it with an engine where typo tolerance is on by default and configured per attribute rather than per query.
+
+## What `fuzziness: AUTO` actually does
+
+`AUTO` is shorthand for `AUTO:3,6`. It picks a maximum edit distance based on the length of the *query* term:
+
+| Query term length | Max edits allowed with `AUTO` |
+| --- | --- |
+| 0 to 2 characters | 0 |
+| 3 to 5 characters | 1 |
+| 6 or more characters | 2 |
+
+Two is a hard ceiling. Lucene builds a Levenshtein automaton to intersect the query term against the term dictionary, and that automaton is only implemented for distances 0, 1, and 2. Passing `"fuzziness": 3` is rejected rather than honored.
+
+By default `fuzzy_transpositions` is `true`, so a swapped pair of adjacent characters (`teh` for `the`) costs one edit instead of two. That is the single most common real-world typo, so leave it on.
+
+Note that the threshold comes from what the user typed, not from the indexed term. A user searching `helo` (4 characters) gets a 1-edit budget, which reaches `hello`. A user searching `hlo` gets the same budget, which cannot reach `hello` at all.
+
+## Why `prefix_length` fights the typos users actually make
+
+`prefix_length` is the number of leading characters that must match exactly before any fuzzy expansion is allowed. Its default is `0`.
+
+It exists for performance. With `prefix_length: 0`, the automaton considers every term in the field's dictionary within two edits, which on a large catalog is an expensive scan. Setting `prefix_length: 3` restricts candidates to terms sharing the first three characters, which is far cheaper.
+
+The cost is correctness on exactly the errors people make most: the first keystroke. A user who types `sandwhich` is well served, because the first three characters are correct. A user who types `wifi` for `wi-fi`, `knive` for `knife`, or hits the wrong key first and types `oiphone` gets nothing back. You are trading head-of-word recall for latency, and there is no setting that gives you both.
+
+`max_expansions` (default `50`) {/* VERIFY: max_expansions default is 50 for fuzzy and match queries */} caps how many distinct terms the expansion may produce. It is a second performance lever with a second correctness cost: which 50 terms you get is not guaranteed to be the 50 most relevant, so raising or lowering it can change results in ways that are hard to reason about.
+
+## Why fuzzy matching is off by default
+
+Elasticsearch treats fuzziness as a per-query opt-in because it is genuinely expensive and genuinely lossy:
+
+- **Cost scales with the term dictionary.** Every fuzzy clause runs an automaton intersection against the terms of every field it touches. A three-word query across five fields with fuzziness on is fifteen expansions.
+- **It inflates the candidate set before scoring.** Each expanded term becomes a term clause, so the posting lists to merge grow with it.
+- **Short terms are noise machines.** With `AUTO`, a 4-character term accepts any other 4-character term one edit away, which on a product catalog is a lot of unrelated tokens.
+
+Because it is opt-in, the failure mode is silent. Someone adds a search endpoint, copies a `match` query from an older service, and typo handling quietly disappears there. No index-level setting says "this index tolerates typos," so nothing catches the omission.
+
+## Why fuzziness degrades under `multi_match`
+
+Real applications search several fields at once, which means `multi_match`, and that is where fuzziness gets slippery.
+
+`fuzziness` is not supported by the `cross_fields`, `phrase`, and `phrase_prefix` `multi_match` types. It is ignored rather than rejected {/* VERIFY: confirm Elasticsearch ignores rather than errors on fuzziness with cross_fields, phrase, and phrase_prefix */}, so a query that looks typo-tolerant in code is not typo-tolerant at runtime. This is one of the most common reasons a team concludes "fuzziness does not work."
+
+Even with the default `best_fields` type, fuzziness interacts badly with scoring. A fuzzy match is scored as a term match with a reduced weight, and that weight is folded into one BM25 number alongside term frequency and inverse document frequency. A high-frequency misspelling in a long description field can therefore outrank an exact match in the title. There is no way to express "an exact match always beats a corrected match" because Elasticsearch has one score, not ordered criteria.
+
+Combining fuzzy and prefix behavior is a third problem. `fuzzy` and `prefix` are separate query types. A search-as-you-type box that must handle both an incomplete word and a misspelled one needs a `bool` query carrying both clauses, or an `edge_ngram` tokenizer at index time plus a fuzzy clause at query time, with the two coordinated by hand.
+
+## What actually helps inside Elasticsearch
+
+If you are staying on Elasticsearch, these are the levers worth pulling, roughly in order of payoff:
+
+1. **Audit every query for a missing `fuzziness`.** Centralize query construction so no endpoint can omit it.
+2. **Stop using `cross_fields` if you need typo tolerance.** Use `best_fields` or `most_fields`, which honor `fuzziness`.
+3. **Set `prefix_length` deliberately per field.** Use `0` on short, high-value fields such as titles and brands, and `1` or `2` on long text fields where the expansion cost is real.
+4. **Normalize before you match.** An `asciifolding` token filter and consistent lowercasing stop accents and case differences from consuming the edit budget. Without it, `cafe` to `café` costs one of your two edits.
+5. **Exclude identifier fields.** SKUs, UUIDs, and part numbers should never be fuzzy. Give them a `keyword` mapping and query them separately.
+
+That gets you a long way. What it cannot give you is a default, or a guarantee that exact beats corrected.
+
+## What typo tolerance on by default looks like
+
+Meilisearch inverts the model: typo tolerance is an index setting that applies to every query, and the typo count feeds a [ranking rule](/capabilities/full_text_search/relevancy/ranking_rules) rather than a score.
+
+The default thresholds are length-based, like `AUTO`, but calibrated differently: words of 1 to 4 characters allow no typos, 5 to 8 characters allow one, and 9 or more allow two, with a hard cap of two. A typo on the first character counts as two typos, which is a deliberate precision guard rather than a performance switch, and it means you get head-of-word protection without a `prefix_length` that blocks head-of-word corrections outright. Prefix search and typo correction run together on the last word of a query, so `iphoe` can match `iphone` in a single pass with no second clause to write.
+
+Because typo count is a ranking rule in a [bucket sort](/resources/internals/bucket_sort), the ordering is strict: every 0-typo document ranks above every 1-typo document, which ranks above every 2-typo document. Term frequency cannot overturn that.
+
+Tuning happens per index and per attribute instead of per query. The block below configures an index end to end and searches it with a misspelled query.
+
+```javascript
+// npm install meilisearch
+import { Meilisearch } from 'meilisearch'
+
+const client = new Meilisearch({
+  host: process.env.MEILISEARCH_URL, // for example https://your-project.meilisearch.io
+  apiKey: process.env.MEILISEARCH_KEY,
+})
+
+const index = client.index('products')
+
+// 1. Index a few documents.
+const addTask = await index.addDocuments([
+  { id: 1, title: 'iPhone 15 Pro', sku: 'APL-IP15P-256', description: 'Titanium smartphone' },
+  { id: 2, title: 'Wireless headphones', sku: 'SNY-WH1000XM5', description: 'Noise cancelling' },
+  { id: 3, title: 'Sandwich toaster', sku: 'BRV-ST220', description: 'Two slice press' },
+])
+await client.waitForTask(addTask.taskUid)
+
+// 2. Configure typo tolerance once. It now applies to every query on this index.
+const typoTask = await index.updateTypoTolerance({
+  enabled: true,
+  minWordSizeForTypos: {
+    oneTypo: 4,   // allow 1 typo from 4 characters instead of the default 5
+    twoTypos: 10, // require 10 characters before allowing 2 typos (default 9)
+  },
+  disableOnWords: ['iPhone'],   // brand name must match exactly
+  disableOnAttributes: ['sku'], // product codes must match exactly
+  disableOnNumbers: true,       // stop 2024 from matching 2025
+})
+await client.waitForTask(typoTask.taskUid)
+
+// 3. Search with a misspelled query. No per-query fuzziness parameter.
+const results = await index.search('sandwhich toster')
+console.log(results.hits) // returns the "Sandwich toaster" document
+```
+
+## Limits and constraints
+
+- **Meilisearch allows a maximum of two typos per word.** Three or more differences never match, whatever `minWordSizeForTypos` is set to. Elasticsearch has the same ceiling of two, imposed by Lucene's Levenshtein automaton.
+- **`minWordSizeForTypos` bounds:** `0 ≤ oneTypo ≤ twoTypos ≤ 255`. Meilisearch recommends keeping `oneTypo` between 2 and 8 and `twoTypos` between 4 and 14. Defaults are `oneTypo: 5` and `twoTypos: 9`.
+- **A typo on the first character counts as two typos** in Meilisearch, so `caturday` does not match `saturday`.
+- **Concatenation counts as one typo.** A query for `any way` matches a document containing `anyway`.
+- **`disableOnNumbers` defaults to `false`**, `enabled` defaults to `true`, and `disableOnWords` and `disableOnAttributes` default to empty arrays.
+- **Disabling typo tolerance also disables the `typo` ranking rule**, because every returned document then has zero typos by definition.
+- **`disableOnWords` is case insensitive.** Adding `iPhone` also covers `iphone`.
+- **Elasticsearch `AUTO` allows one edit from three characters**, where Meilisearch's default allows none below five. If you migrate and short-query recall drops, lower `oneTypo` rather than concluding typo tolerance is off.
+
+## Next steps
+
+- [Typo tolerance settings](/capabilities/full_text_search/relevancy/typo_tolerance_settings) covers every option in the block above, with per-SDK samples.
+- [Typo tolerance vs fuzzy search](/resources/internals/typo_tolerance) compares the internals against Elasticsearch, Solr, MongoDB Atlas Search, and PostgreSQL `pg_trgm`.
+- [Ranking rules](/capabilities/full_text_search/relevancy/ranking_rules) explains where `typo` sits in the ordering and how to reorder the pipeline.
+- [Migrating from Elasticsearch](/resources/migration/elasticsearch_migration) maps mappings, analyzers, and Query DSL clauses to their Meilisearch equivalents.

@@ -1,0 +1,146 @@
+---
+title: Choosing a search solution for 10 million documents
+description: You are planning a search index that will hold roughly ten million documents and need to know what disk, memory, indexing time, and reindex cost that actually implies.
+keywords: search engine for 10 million records, large index sizing, how much ram for 10 million documents, search at scale planning, index size estimate formula, reindex time large dataset, 100 million document search, search engine document count limit, faceting performance large index, scaling search infrastructure, search index disk usage
+boost: 2
+---
+
+Ten million documents is the scale at which a search index stops fitting the assumptions you made at one million. The document count itself is not the problem: a Meilisearch index holds up to 4,294,967,296 documents. What changes is that the index no longer fits comfortably in RAM, a settings change you make casually at 1M becomes an hours-long full reindex at 10M, and the task queue that processes those reindexes is sequential, so everything else stalls behind it. Plan for three things: a disk footprint roughly five times your raw document size, a RAM-to-disk ratio you choose deliberately rather than inherit, and a settings schema you freeze before the first bulk import.
+
+## What actually changes between 1M, 10M, and 100M documents
+
+Index size on disk is the number that drives every other decision. A usable estimate is:
+
+```
+index size ≈ number of documents × average document size × 5
+```
+
+The factor of five accounts for the inverted index, facet structures, prefix structures, and other internal data Meilisearch builds from your documents. This estimate and the document size classes below come from the [Cloud pricing model sizing guide](/capabilities/platform/billing/pricing_model#step-1-estimate-your-index-size).
+
+| Documents | Small (~1 KB: SaaS records, simple listings) | Medium (~3 KB: products with descriptions and about 10 filters) | AI (~12 KB: documents with vector embeddings) |
+| --- | --- | --- | --- |
+| 1M | ~5 GB | ~15 GB | ~60 GB |
+| 10M | ~50 GB | ~150 GB | ~600 GB |
+| 100M | ~500 GB | ~1.5 TB | ~6 TB |
+
+At 1M medium documents, a 16 GB machine holds the whole index in memory and you never think about it again. At 10M, a 150 GB index does not fit in any single self-serve machine, and you have crossed into a different operating posture. At 100M, a single instance is no longer the right shape at all: that is where [sharding across multiple instances](/capabilities/platform/infrastructure/sharding_and_replication) stops being optional.
+
+These are estimates, not guarantees. There is no reliable way to predict a search database's final size in advance, for Meilisearch or for any other engine, because settings, facet cardinality, and the languages in your corpus all move the number. Index 100,000 real documents with your real settings, read `indexSize` from the [stats endpoint](/reference/api/stats), and multiply.
+
+## Does the index have to fit in RAM
+
+No, and this is the single most important thing to get right at 10M documents, because it determines whether your budget is plausible.
+
+Meilisearch stores data in [LMDB, a memory-mapped key-value store](/resources/internals/storage). The operating system decides which pages stay resident, so there is no heap to size and no hard failure when the database on disk exceeds available memory. Meilisearch performs best when the full dataset fits in RAM, but a [RAM-to-disk ratio around 1/3 does not materially affect performance](/resources/internals/storage#memory-mapping), and many workloads run well near 1/10. An instance will not crash simply because the index is bigger than RAM.
+
+For a 150 GB index at 10M medium documents, that means roughly 50 GB of RAM at the 1/3 ratio rather than 150 GB. Disk latency becomes the variable that matters instead: an NVMe SSD is meaningfully faster than network-attached or spinning storage, and this is where the upgrade money should go.
+
+This is where engines differ structurally. An architecture that keeps the entire index in RAM by design has no equivalent of the 1/3 ratio, so the scale-out point arrives earlier and the cost curve is steeper. {/* VERIFY: Algolia's documented RAM-resident index requirement and whether it permits any disk spillover */} A JVM-based engine splits the same physical RAM between heap and page cache, which is why oversized heaps make large clusters slower rather than faster. {/* VERIFY: Elasticsearch heap sizing guidance, commonly quoted as at most half of RAM and below the compressed-pointer threshold */}
+
+## What breaks if you planned for 1M and landed at 10M
+
+**A settings change becomes a full reindex.** Updating searchable attributes, filterable attributes, sortable attributes, stop words, synonyms, typo tolerance, embedder configuration, the dictionary, proximity precision, or separator tokens causes Meilisearch to [reindex every document in that index](/capabilities/indexing/advanced/indexing_best_practices#settings-that-trigger-a-full-reindex). At 1M documents that is an inconvenience. At 10M it is a maintenance window. Displayed attributes and ranking rules are the two settings you can change freely.
+
+**The task queue is sequential.** Meilisearch processes [tasks](/capabilities/indexing/tasks_and_batches/async_operations) one after another. A reindex triggered at 10M documents blocks every document update queued behind it. Plan settings changes the way you plan schema migrations, not the way you plan config tweaks.
+
+**Word-level proximity gets expensive.** By default Meilisearch tracks the exact position of every word in every document to power the `proximity` ranking rule. Switching to `byAttribute` precision [drastically reduces that cost](/capabilities/full_text_search/advanced/performance_tuning#reduce-proximity-precision) at both index and query time, with negligible relevance impact for catalogs and ecommerce.
+
+**Faceting cost scales with cardinality, not corpus size.** A `brand` attribute with 5,000 values costs the same whether you have 1M or 10M documents, but at 10M you are more likely to have high-cardinality attributes at all. Use [granular filterable attributes](/capabilities/filtering_sorting_faceting/how_to/configure_granular_filters) to enable only the operations each field needs, and [facet search](/capabilities/filtering_sorting_faceting/how_to/handle_large_facet_cardinality) instead of raising `maxValuesPerFacet`.
+
+**Deleted space is not returned to the operating system.** LMDB marks freed pages reusable but does not shrink the file, so a high-churn 10M index grows over time. Compare `indexSize` to `usedIndexSize`, and if the gap exceeds 30 percent, run [index compaction](/capabilities/indexing/how_to/compact_an_index). Compaction is never automatic and it occupies the task queue while it runs.
+
+## Configure and load a 10 million document index
+
+This script applies the settings that matter at scale, then streams an NDJSON file in batches. Configuring settings first is what avoids the full reindex described above. Set `MEILISEARCH_URL` and `MEILISEARCH_KEY` in your environment, then run it with `npm install meilisearch && node load.mjs`.
+
+```javascript
+import { createReadStream } from 'node:fs'
+import { createInterface } from 'node:readline'
+import { Meilisearch } from 'meilisearch'
+
+const client = new Meilisearch({
+  host: process.env.MEILISEARCH_URL,
+  apiKey: process.env.MEILISEARCH_KEY,
+})
+
+const index = client.index('products')
+const BATCH_SIZE = 50_000
+
+// Settings FIRST. Changing any of these later reindexes all 10M documents.
+const settingsTask = await index.updateSettings({
+  // Only these fields are matched against query words.
+  searchableAttributes: ['name', 'description', 'brand'],
+
+  // Enable only the filter features each attribute actually needs.
+  filterableAttributes: [
+    {
+      attributePatterns: ['brand', 'category'],
+      features: { facetSearch: true, filter: { equality: true, comparison: false } },
+    },
+    {
+      attributePatterns: ['price'],
+      features: { facetSearch: false, filter: { equality: false, comparison: true } },
+    },
+  ],
+  sortableAttributes: ['price'],
+
+  // Attribute-level proximity avoids storing every word position.
+  proximityPrecision: 'byAttribute',
+
+  // Rank only as deep as users actually paginate.
+  pagination: { maxTotalHits: 200 },
+
+  // Compute only the facet values the UI displays.
+  faceting: { maxValuesPerFacet: 20 },
+
+  // Typos on SKUs and years cost work and create false positives.
+  typoTolerance: { disableOnNumbers: true, disableOnAttributes: ['sku'] },
+})
+await client.waitForTask(settingsTask.taskUid)
+
+// Stream NDJSON so the loader never holds 10M documents in memory.
+const lines = createInterface({
+  input: createReadStream('products.ndjson'),
+  crlfDelay: Infinity,
+})
+
+let batch = []
+let sent = 0
+
+async function flush() {
+  if (batch.length === 0) return
+  const task = await index.addDocuments(batch)
+  // Wait per batch: the queue is sequential, so racing ahead gains nothing.
+  await client.waitForTask(task.taskUid)
+  sent += batch.length
+  console.log(`indexed ${sent} documents`)
+  batch = []
+}
+
+for await (const line of lines) {
+  if (line.trim() === '') continue
+  batch.push(JSON.parse(line))
+  if (batch.length >= BATCH_SIZE) await flush()
+}
+await flush()
+
+const stats = await index.getStats()
+console.log(stats.numberOfDocuments, stats.indexSize, stats.usedIndexSize)
+```
+
+## Limits and constraints
+
+- **Documents per index**: 4,294,967,296, the maximum 32-bit unsigned integer. Ten million is not near any hard ceiling. See [known limitations](/resources/help/known_limitations#maximum-number-of-documents-in-an-index).
+- **Attributes per index**: 65,536. Positions per attribute: 65,535, after which words are silently ignored.
+- **Concurrent search requests**: 1,000. Beyond that, Meilisearch drops a random request and returns a 503 `too_many_search_requests` with a `Retry-After` header.
+- **HTTP payload**: 100 MB by default, configurable. Batches of 50K to 100K documents are the [recommended range above 1M documents](/capabilities/indexing/how_to/import_large_datasets#choose-the-right-payload-size). The Cloud web upload form caps at 20 MB, so bulk loads must go through the API.
+- **Self-serve Cloud tiers** top out at 64 GB of RAM, sized for roughly 3M medium documents on the assumption that the index fits entirely in memory. Ten million documents means either accepting a lower RAM-to-disk ratio or a tier arranged with sales. See [manage resources](/capabilities/platform/infrastructure/manage_resources).
+- **Indexing throughput is not published as a fixed rate**, because it depends on document size, settings, cores, and disk. Measure it: the `progressTrace` field on the [batch object](/capabilities/indexing/tasks_and_batches/optimize_batch_performance) breaks down where indexing time actually goes.
+- **Vector indexes grow fastest.** At 12 KB per AI document, 10M documents estimate to around 600 GB. [Binary quantization](/capabilities/hybrid_search/advanced/binary_quantization) compresses each dimension to 1 bit and works best above 1M documents and 1400 dimensions, but it is irreversible and reduces semantic relevance.
+
+## Next steps
+
+- [Performance tuning](/capabilities/full_text_search/advanced/performance_tuning), ordered by impact on search latency
+- [Import large datasets](/capabilities/indexing/how_to/import_large_datasets) for batching, compression, and retry strategy
+- [Storage internals](/resources/internals/storage) for how memory mapping decides your RAM requirement
+- [Sizing a search deployment](/guides/sizing-search-deployment) for RAM, disk, and CPU estimation at other scales

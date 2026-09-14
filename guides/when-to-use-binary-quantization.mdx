@@ -1,0 +1,140 @@
+---
+title: When to use binary quantization
+description: You are deciding whether compressing embedding vectors to one bit per dimension will save enough storage to justify the recall you give up, and the switch cannot be undone.
+keywords: binary quantization tradeoff, is binary quantization worth it, 1 bit vector compression, vector storage cost reduction, embedding compression recall loss, binaryQuantized setting, quantized vs full precision embeddings, measure recall after quantization, hamming distance vector search, high dimensional embeddings memory, shrink vector index size, when not to quantize embeddings
+boost: 2
+---
+
+Enable binary quantization when your embedder produces roughly 1400 dimensions or more and your index holds enough vectors that their storage or indexing time is a real cost, typically from about one million documents up. At 1536 dimensions it takes a vector from 6 KiB to about 200 bytes, and at 3072 dimensions from 12 KiB to about 400 bytes. Below 512 dimensions it is not worth it: the information loss is proportionally larger and the absolute savings are small. Because the conversion is irreversible, measure the quality hit on your own queries first, using two embedders on the same index. The mechanics of enabling it are covered in [binary quantization](/capabilities/hybrid_search/advanced/binary_quantization); this page is about whether you should.
+
+## What you actually save
+
+Binary quantization stores each dimension as one bit instead of a 32-bit float, and switches similarity comparison from cosine distance to Hamming distance, which is much cheaper to compute. The per-vector numbers documented in [vector storage](/resources/internals/hannoy):
+
+| Dimensions | Full precision | Quantized | Ratio |
+| --- | --- | --- | --- |
+| 768 | 3 KiB | about 100 bytes | about 30x |
+| 1536 | 6 KiB | about 200 bytes | about 30x |
+| 3072 | 12 KiB | about 400 bytes | about 30x |
+
+Two things temper that ratio in practice.
+
+First, the approximate nearest neighbor graph adds about 200 bytes per vector for edges, and quantization does not touch it. At 3072 dimensions that overhead is noise. At 768 dimensions it is twice the size of the quantized vector itself, so the effective saving on the vector index as a whole is closer to 10x than 30x. This is one reason the dimension threshold exists.
+
+Second, vectors are only part of an index. The inverted index, the documents themselves, and the filterable attributes are unaffected. If embeddings are not the dominant term in your index size, quantizing them changes your bill less than you expect. Meilisearch Cloud's [pricing model](/capabilities/platform/billing/pricing_model) sizes a document carrying vectors at about 12 KB against roughly 1 KB for a plain document, which tells you how much of the total is in play.
+
+## Is your dimension count high enough
+
+The documented quality bands, from [binary quantization](/capabilities/hybrid_search/advanced/binary_quantization):
+
+- **1500 dimensions and above**: minimal quality loss, often imperceptible.
+- **512 to 1500 dimensions**: slight quality reduction, acceptable for most use cases.
+- **Under 512 dimensions**: noticeable quality reduction, not recommended.
+
+The intuition is that a bit per dimension preserves more of the original geometry when there are more dimensions to average over. Published evaluations of binary quantization on large text embedding models generally report that most of the top-10 recall survives, with the remainder recoverable by rescoring candidates at full precision. {/* VERIFY: cite a specific public benchmark with exact recall@10 figures for 1-bit quantization */} Meilisearch exposes quantization as a single `binaryQuantized` boolean per embedder, with no oversampling or rescoring knob, so the recall you measure is the recall you get.
+
+This produces a useful and slightly counterintuitive option: a large model quantized often beats a small model at full precision, for less storage. `text-embedding-3-large` at 3072 dimensions quantized costs about 400 bytes per vector, against 6 KiB for `text-embedding-3-small` at 1536 dimensions unquantized. If you were going to choose the smaller model to control index size, quantizing the larger one is usually the better trade.
+
+## When to leave it off
+
+- **Fewer than a few hundred thousand vectors.** At 1536 dimensions, 100,000 vectors is about 600 MiB full precision. Quantization saves roughly 580 MiB. That is rarely worth an irreversible change.
+- **Models under 512 dimensions.** `BAAI/bge-small-en-v1.5` at 384 dimensions is explicitly not recommended for quantization, and the absolute saving is about 1.4 KiB per vector.
+- **Pure semantic search with no keyword half.** In [hybrid search](/capabilities/hybrid_search/overview), keyword matching compensates for precision lost in the vector component. At `semanticRatio: 1.0` there is nothing to compensate, so the same quality loss is more visible.
+- **Recall you cannot re-measure.** If you have no query set and no way to judge result quality, you cannot tell whether quantization hurt you, and you will not be able to tell later either.
+- **Tuned score thresholds.** If you rely on `rankingScoreThreshold` or on a custom `distribution`, re-check both after quantizing, since scores are computed from the compressed vectors.
+
+## How to measure the hit on your own corpus
+
+Configure two embedders on the same index with identical `source`, `model`, and `documentTemplate`, differing only in `binaryQuantized`. Run a realistic query set through each with `semanticRatio: 1.0` to isolate the vector half, and treat the full precision results as ground truth. The number you want is the mean overlap of the top 10 between the two.
+
+Set `MEILISEARCH_URL`, `MEILISEARCH_KEY`, and `OPENAI_API_KEY` in your environment, then run this against a sample of your real documents and your real queries.
+
+```javascript
+// npm install meilisearch
+import { Meilisearch } from 'meilisearch'
+
+const client = new Meilisearch({
+  host: process.env.MEILISEARCH_URL, // for example https://your-project.meilisearch.io
+  apiKey: process.env.MEILISEARCH_KEY,
+})
+
+const index = client.index('bq-trial')
+
+// Use a real sample. A few thousand documents shows a difference; ten does not.
+const corpus = [
+  { id: 1, title: 'Resetting a forgotten password', body: 'Use the reset link on the sign-in screen.' },
+  { id: 2, title: 'Rotating an API key', body: 'Generate a replacement key, deploy it, then revoke the old one.' },
+  { id: 3, title: 'Why my login keeps expiring', body: 'Sessions end after inactivity or a sign-in elsewhere.' },
+]
+
+// Queries your users actually type, not queries invented to pass.
+const queries = ['I keep getting signed out', 'change my password', 'replace credentials safely']
+
+await client.waitForTask((await index.addDocuments(corpus)).taskUid)
+
+// Identical configuration except for binaryQuantized, so the only variable is quantization.
+const shared = {
+  source: 'openAi',
+  model: 'text-embedding-3-large',
+  apiKey: process.env.OPENAI_API_KEY,
+  documentTemplate: '{{doc.title}}: {{doc.body}}',
+}
+
+await client.waitForTask(
+  (await index.updateEmbedders({
+    baseline: shared,
+    quantized: { ...shared, binaryQuantized: true },
+  })).taskUid
+)
+
+const K = 10
+
+const topIds = async (embedder, q) =>
+  (await index.search(q, { hybrid: { semanticRatio: 1.0, embedder }, limit: K })).hits.map((h) => h.id)
+
+let total = 0
+for (const q of queries) {
+  const [base, bq] = await Promise.all([topIds('baseline', q), topIds('quantized', q)])
+  const kept = bq.filter((id) => base.includes(id)).length / Math.max(base.length, 1)
+  total += kept
+  if (kept < 0.8) console.log(`weak query: "${q}"`, { base, bq })
+}
+
+console.log(`mean top-${K} agreement with full precision: ${(total / queries.length).toFixed(3)}`)
+
+// Clean up the trial index once you have your number.
+await client.waitForTask((await client.deleteIndex('bq-trial')).taskUid)
+```
+
+Read the result in context. Agreement above about 0.95 means quantization is invisible to your users. Between 0.85 and 0.95, check the individual weak queries the script prints before deciding, since losing the tenth result matters far less than losing the first. Below 0.85, your dimension count is probably too low, or your corpus has many near-duplicate documents whose ordering is genuinely fragile.
+
+Two caveats on the trial itself. Two embedders means two sets of embeddings, so the provider generates and bills for every document twice during the test. And rank agreement is a proxy: if you have click data or human-judged relevance labels, score both embedders against those instead.
+
+When you commit, you do not need to re-embed. Setting `binaryQuantized` to `true` on an existing embedder converts the stored vectors in place rather than regenerating them, so there is no new provider bill, although the conversion itself takes time. Going back is the expensive direction: the original full precision vectors are discarded, and recovering them means re-indexing every document against a new embedder.
+
+## Limits and constraints
+
+- **Irreversible.** Enabling quantization discards the full precision vectors. The only way back is a new embedder and a full re-index.
+- **Available for all embedder sources**, including `openAi`, `huggingFace`, `ollama`, `rest`, and `userProvided`.
+- **Not a sub-embedder field.** On [composite embedders](/capabilities/hybrid_search/advanced/composite_embedders), `binaryQuantized` must be declared on the main embedder, never on `indexingEmbedder` or `searchEmbedder`.
+- **Turning it on does not regenerate embeddings**, it quantizes the existing ones, which takes time proportional to the index size.
+- **Per-vector storage**: about 100, 200, and 400 bytes at 768, 1536, and 3072 dimensions, plus about 200 bytes of graph edges per vector that quantization does not reduce.
+- **Published benchmarks are not a quantization delta.** The 1M-document figures in [vector storage](/resources/internals/hannoy) (4.03 GiB and 29 ms at 768 dimensions full precision, 481 MiB and 13 ms at 1536 dimensions quantized) compare vector store implementations across different configurations. Use them for orders of magnitude, not as a measured cost of quantization.
+- **No published recall figure** for quantization on a general corpus exists in this documentation. Measure it on yours.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Binary quantization" href="/capabilities/hybrid_search/advanced/binary_quantization">
+    How to enable it, and which models hold up well
+  </Card>
+  <Card title="Choose an embedder" href="/capabilities/hybrid_search/how_to/choose_an_embedder">
+    Dimensions, cost, and speed across providers
+  </Card>
+  <Card title="Multiple embedders" href="/capabilities/hybrid_search/advanced/multiple_embedders">
+    Running two vector configurations on one index
+  </Card>
+  <Card title="Vector storage" href="/resources/internals/hannoy">
+    The disk-backed graph, Hamming distance, and per-vector overhead
+  </Card>
+</CardGroup>

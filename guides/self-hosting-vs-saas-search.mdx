@@ -1,0 +1,129 @@
+---
+title: Self-hosting search when your vendor is SaaS only
+description: Your search provider has no on-premises option and compliance, air-gapped networks, or cost at scale mean you need to run the engine yourself.
+keywords: search engine on premise, no self hosted option search vendor, air gapped search engine, data residency search index, gdpr search provider subprocessor, run search engine in our own vpc, on prem alternative to hosted search, sovereign cloud search, vendor lock in search platform, byoc search infrastructure
+boost: 2
+---
+
+If your search vendor is SaaS only, you have three honest options: stay and add compensating controls (regional hosting, a reviewed data processing agreement, indexing a reduced projection of your data instead of the raw records), build the search layer on an engine that can run in your own environment, or accept that the requirement cannot be met and document the exception. Most teams that "need to self-host" actually need one specific property: data staying in a jurisdiction, an index reachable from a network with no egress, or a cost curve that does not track query volume. Identify which one, because the mitigations differ, and self-hosting is not free. Meilisearch ships as a [single binary you can run yourself](/resources/self_hosting/overview) or as a managed service, and the [export route](/resources/migration/migrating_cloud) moves data between the two, so the choice stays reversible.
+
+## When self-hosting is a real requirement
+
+Four cases hold up under scrutiny.
+
+**Data residency and sovereignty.** A regulator, a customer contract, or an internal policy requires that indexed data stay inside a jurisdiction. Note that a managed service in the right region usually satisfies residency. Sovereignty is stricter: some public-sector and defense contracts require that no foreign-controlled entity have technical access, which a managed control plane cannot promise.
+
+**Air-gapped or egress-restricted networks.** Manufacturing floors, hospital networks, and classified environments have no route to a vendor API. No amount of contractual language fixes a network that cannot reach the internet. This is the one case where SaaS is simply unusable.
+
+**Regulated industries with subprocessor constraints.** Adding a vendor means adding a subprocessor, which means a security review, a DPA amendment, and sometimes customer notification. For some organizations the cost of that process exceeds the cost of running the software.
+
+**Cost at scale.** Usage-based search pricing scales with traffic and record count, both of which grow with product success. At some volume, provisioned infrastructure you operate is cheaper than metered consumption. The crossover point is real but usually further out than teams assume, because it must include the engineering time described below.
+
+What does not hold up on its own: a general preference for control, a fear of lock-in that no exit plan addresses, or a belief that self-hosting is free because the license is.
+
+## What you can do without leaving a SaaS-only vendor
+
+These are worth trying first, and they are worth doing even if you never move.
+
+1. **Pick the closest compliant region.** Most hosted search vendors let you choose where an application is hosted, which covers many GDPR-style residency requirements without any architectural change. {/* VERIFY: current per-vendor region lists and whether region choice is available on all plan tiers */}
+2. **Index a projection, not the record.** Send only the fields needed to match and display: a title, a few facets, and an opaque identifier. Hydrate the sensitive fields from your own database after the search returns IDs. This shrinks the compliance surface to almost nothing and often shrinks the bill too, since usage-based plans price on record size and count.
+3. **Keep the source of truth in your own systems.** If the index is fully rebuildable from your primary database, the vendor holds a derived cache, not a record of authority. That changes the risk assessment, the backup requirement, and the difficulty of any future migration.
+4. **Negotiate the exit, not just the price.** A bulk export endpoint, a documented data format, and a defined notice period are worth more than a discount. If the contract has no export guarantee, the lock-in is contractual, not technical.
+5. **Separate the workloads.** Public catalog search and internal search over regulated documents rarely need the same system. Sending only the non-sensitive corpus to the vendor and running the sensitive one internally is a smaller project than moving everything.
+
+If none of these close the gap, the requirement is genuine.
+
+## What you take on when you self-host
+
+Self-hosting a search engine is not the same as self-hosting a stateless web service, because the index is state. Running Meilisearch yourself means owning:
+
+- **Process supervision and configuration.** A service manager such as systemd, plus a [configuration file or environment variables](/resources/self_hosting/configuration/overview) for the instance options.
+- **Transport security and key management.** A reverse proxy for TLS, plus a master key and scoped API keys. Meilisearch requires the [master key to be at least 16 bytes](/resources/self_hosting/security/master_api_keys), and an instance launched without one leaves every route unprotected.
+- **Backups, and a tested restore.** Meilisearch offers [snapshots and dumps](/resources/self_hosting/data_backup/overview), which are not interchangeable. Snapshots restore fast but only into the same Meilisearch version. Dumps are portable across versions but require a full reindex on import.
+- **Version upgrades.** Migrating to a new release is your change window, your rollback plan, and your reindex time.
+- **Capacity planning.** Indexing is memory intensive. By default Meilisearch [limits indexing to about two thirds of available memory and half the CPU cores](/resources/self_hosting/performance/ram_multithreading) so search stays responsive, and an undersized machine gets its process killed by the OS out-of-memory killer during a large import.
+- **Availability.** A single instance is a single point of failure. [Replication and sharding](/resources/self_hosting/sharding/overview) exist, but they require the Enterprise Edition, which is licensed under BUSL and not free for production use. The [Community Edition is MIT](/resources/self_hosting/enterprise_edition) and covers everything else, including full-text search, filtering, and AI-powered search.
+
+## Run the portability drill before you decide
+
+The value of a self-host-or-managed choice is insurance, and insurance you have never tested is a guess. The script below inventories a running instance and moves it to a second instance using the `POST /export` route, which pushes documents and settings directly to a remote Meilisearch without writing an intermediate file. Run it from a self-hosted instance to a managed project, or the reverse, or between two self-hosted instances in different regions. The drill is the same.
+
+```python
+# pip install meilisearch
+#
+# export SOURCE_URL="https://search.internal.example.com"
+# export SOURCE_KEY="$SOURCE_ADMIN_KEY"
+# export TARGET_URL="https://ms-example.meilisearch.io"
+# export TARGET_KEY="$TARGET_ADMIN_KEY"
+
+import os
+import meilisearch
+
+source = meilisearch.Client(os.environ['SOURCE_URL'], os.environ['SOURCE_KEY'])
+target = meilisearch.Client(os.environ['TARGET_URL'], os.environ['TARGET_KEY'])
+
+# 1. Confirm both instances are reachable and note their versions.
+#    Snapshots only restore into an identical version, so a mismatch here
+#    means the portable path is a dump or an export, not a snapshot.
+src_version = source.get_version()
+dst_version = target.get_version()
+print(f"source {src_version['pkgVersion']} -> target {dst_version['pkgVersion']}")
+
+# 2. Inventory what is actually being moved.
+stats = source.get_all_stats()
+total_docs = 0
+for uid, index_stats in stats['indexes'].items():
+    total_docs += index_stats['numberOfDocuments']
+    print(f"  {uid}: {index_stats['numberOfDocuments']} documents")
+print(f"database size: {stats['databaseSize']} bytes, {total_docs} documents total")
+
+# 3. Take a portable backup first. A dump survives a version change,
+#    so it is the artifact to keep if the export has to be retried later.
+dump_task = source.create_dump()
+source.wait_for_task(dump_task.task_uid, timeout_in_ms=1_800_000)
+print("dump created")
+
+# 4. Push every index to the target instance, settings included.
+export_task = source.export(
+    url=os.environ['TARGET_URL'],
+    api_key=os.environ['TARGET_KEY'],
+    payload_size='50 MiB',
+    indexes={'*': {'overrideSettings': True}},
+)
+source.wait_for_task(export_task.task_uid, timeout_in_ms=3_600_000)
+print("export finished")
+
+# 5. Verify on the target side, not the source side.
+for uid, index_stats in target.get_all_stats()['indexes'].items():
+    print(f"  {uid}: {index_stats['numberOfDocuments']} documents on target")
+```
+
+Time the run and record it. That number, not the license, is what your exit plan is worth.
+
+## Limits and constraints
+
+- **Minimum machine.** A Meilisearch instance needs [at least 256 MB of RAM](/resources/self_hosting/overview), which is a floor for a small dataset, not a production sizing.
+- **Master key length.** [At least 16 bytes.](/resources/self_hosting/security/master_api_keys) A shorter value is rejected at launch.
+- **Snapshots are version-locked.** A snapshot restores only into the same Meilisearch version. Dumps import across versions, older to newer; importing a dump from a newer version into an older one is not supported.
+- **Dump and snapshot staging.** Both are built in the directory named by `TMPDIR`, defaulting to `/tmp`, not in `--dump-dir` or `--snapshot-dir`. A small `/tmp` partition produces `No space left on device` even when the destination volume is empty. [See the configuration reference.](/resources/self_hosting/configuration/reference)
+- **Sharding and replication need the Enterprise Edition**, version 1.37 or later, under a BUSL license that does not permit free production use. Self-hosted high availability is therefore a commercial decision, not just a technical one.
+- **Managed regions are fixed at creation.** Meilisearch Cloud offers nine regions, including Frankfurt, Paris (on the AWS European Sovereign Cloud), and London, and a project's [region cannot be changed after it is created](/capabilities/platform/infrastructure/regions). Moving regions means creating a project and re-indexing.
+- **Provisioned disk minimum on managed resource-based projects** is 32 GB, billed at $0.165 per GiB, with bandwidth at $0.15 per GB. [See the pricing model.](/capabilities/platform/billing/pricing_model)
+- **Not documented here:** a supported maximum index size, a maximum document count, or a guaranteed export duration. These depend on hardware and document shape, which is why the drill above measures your own numbers instead of quoting someone else's.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Self-hosting Meilisearch" icon="server" href="/resources/self_hosting/overview">
+    Installation, configuration, security, and production deployment.
+  </Card>
+  <Card title="Snapshots and dumps" icon="database" href="/resources/self_hosting/data_backup/overview">
+    Which backup method survives a version change, and which one restores fastest.
+  </Card>
+  <Card title="Enterprise and Community editions" icon="scale-balanced" href="/resources/self_hosting/enterprise_edition">
+    What the MIT Community Edition covers and where the BUSL Enterprise Edition starts.
+  </Card>
+  <Card title="Moving between self-hosted and managed" icon="right-left" href="/resources/migration/migrating_cloud">
+    Using the export route to move an instance without intermediate files.
+  </Card>
+</CardGroup>

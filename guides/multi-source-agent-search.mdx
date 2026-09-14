@@ -1,0 +1,148 @@
+---
+title: How to search across multiple data sources for an agent
+description: Your agent has to look through docs, tickets, and chat logs to answer one question, and running a separate search per source gives you three unranked lists, no shared permissions, and no way to say where an answer came from.
+keywords: search multiple indexes one request, federated search for llm agent, cross source retrieval rag, merge results from different indexes, agent tool multiple knowledge bases, per user permissions search index, source attribution rag citations, unified retrieval tool call, query several indexes simultaneously, scoped api key per data source, rank heterogeneous search results, one tool call many corpora
+boost: 2
+---
+
+Send one `POST /multi-search` request with a `federation` object and Meilisearch merges every source into a single ranked list instead of returning one list per query. Give each source its own query, its own `filter`, and a `federationOptions.weight` so an authoritative source outranks a chatty one. Set `federation.distinct` to collapse the same entity appearing in several sources. Every hit comes back with a `_federation` object naming the `indexUid` it came from, which is what lets the agent say where an answer originated. Scope access per source with a [tenant token](/capabilities/security/advanced/tenant_token_payload) or a [scoped API key](/capabilities/security/how_to/manage_api_keys), and build the query list from the sources the caller is actually allowed to read.
+
+## Why one federated request beats one tool call per source
+
+The obvious design gives the agent a `search_docs` tool, a `search_tickets` tool, and a `search_chats` tool. It fails in three ways that are hard to patch later.
+
+The model has to decide which sources to query before it knows where the answer lives, and it guesses wrong on exactly the ambiguous questions that made you build retrieval in the first place. Each tool call is a round trip through the model, so three sources cost three inference passes plus three sets of results in the context window. And the results arrive as three separate lists with no common scale, so "best overall" becomes a heuristic in your glue code rather than a ranking.
+
+Federated search collapses that into one call. Meilisearch runs every query, scores hits with the [ranking rules](/capabilities/full_text_search/relevancy/ranking_rules) of their own index, applies the per-query weight, and returns one ordered list. The agent sees one tool, one budget, and one ranking.
+
+{/* VERIFY: Algolia's multiple-queries endpoint returns one result set per query with no server-side merge */}
+Most alternatives leave the merge to you. Algolia's multiple-queries endpoint and Elasticsearch's `_msearch` both batch requests over one connection but hand back a parallel array of responses, so cross-source ranking is client-side work. {/* VERIFY: Elasticsearch _msearch returns per-query responses without a merged ranking */}
+
+## How to model your sources
+
+Two shapes work, and the choice mostly follows permissions.
+
+**One index per source** when the sources have different schemas, different refresh cadences, or different access rules. Support tickets, product documentation, and Slack archives are genuinely different corpora, and per-index settings (searchable attributes, synonyms, embedders) can be tuned separately. This is the shape federated search is built for.
+
+**One index with a `source` field** when the documents are near-identical in shape and everyone who can read one can read all of them. You get a single relevancy model for free, and a filter on `source` replaces federation. This is simpler, but it forecloses per-source weighting and per-source key scoping.
+
+Either way, normalize the fields the agent actually consumes. Give every document a stable id, a `title`, a text body, and a `url` or other deep link, whatever the source calls them internally. See [how to build retrieval for an AI agent](/guides/retrieval-for-ai-agents) for the full field checklist.
+
+## A complete multi-source search tool
+
+This is the whole tool: it takes the user's query and the sources the caller may read, runs one federated request, and returns a uniform, attributed, token-bounded result set.
+
+```js
+import { Meilisearch } from 'meilisearch'
+
+const client = new Meilisearch({
+  host: process.env.MEILISEARCH_URL,
+  apiKey: process.env.MEILISEARCH_API_KEY, // or a per-user tenant token
+})
+
+// Per-source configuration: weight, the filter that scopes it, and how to
+// read a uniform shape back out of a source-specific document.
+const SOURCES = {
+  docs: {
+    weight: 1.3,
+    attributes: ['id', 'title', 'content', 'url', 'version'],
+    normalize: (hit) => ({ title: hit.title, text: hit.content, link: hit.url }),
+  },
+  tickets: {
+    weight: 1.0,
+    attributes: ['id', 'subject', 'body', 'ticket_url', 'status'],
+    normalize: (hit) => ({ title: hit.subject, text: hit.body, link: hit.ticket_url }),
+  },
+  chats: {
+    weight: 0.7,
+    attributes: ['id', 'summary', 'message', 'permalink'],
+    normalize: (hit) => ({ title: hit.summary, text: hit.message, link: hit.permalink }),
+  },
+}
+
+export async function searchAllSources(query, { allowedSources, limit = 8 }) {
+  const sources = allowedSources.filter((name) => name in SOURCES)
+  if (sources.length === 0) return { results: [], sourcesSearched: [] }
+
+  const response = await client.multiSearch({
+    federation: {
+      limit,
+      distinct: 'entity_id',       // must be filterable in every index below
+    },
+    queries: sources.map((name) => ({
+      indexUid: name,
+      q: query,
+      attributesToRetrieve: SOURCES[name].attributes,
+      rankingScoreThreshold: 0.4,  // drop weak matches before they reach the model
+      showRankingScore: true,
+      federationOptions: { weight: SOURCES[name].weight },
+    })),
+  })
+
+  return {
+    sourcesSearched: sources,
+    results: response.hits.map((hit) => {
+      const source = hit._federation.indexUid
+      return {
+        source,
+        score: hit._rankingScore,
+        ...SOURCES[source].normalize(hit),
+      }
+    }),
+  }
+}
+```
+
+Three details carry most of the weight here. `attributesToRetrieve` is set per query, so each source returns only the fields the model will use, which keeps a verbose ticket body from eating the context window. `rankingScoreThreshold` is also per query, so a source that matches nothing relevant contributes nothing rather than padding the list with its best bad hit. And `_federation.indexUid` is read on every hit, so attribution is mechanical rather than reconstructed.
+
+## How to apply per-source permissions
+
+A tenant token carries `searchRules` keyed by index, and **a token only has access to the indexes present in its `searchRules` object** (see the [tenant token payload](/capabilities/security/advanced/tenant_token_payload)). Generate the token server-side from the user's session, with one rule per source the user may read:
+
+```js
+const searchRules = {
+  docs: {},                                   // fully readable
+  tickets: { filter: `org_id = ${user.orgId}` }, // row-scoped
+  // no `chats` key: this user cannot search chat logs at all
+}
+```
+
+The critical consequence is that **multi-search fails fast**: if any query in the request is invalid, Meilisearch stops and returns a single error rather than partial results (see the [multi-search overview](/capabilities/multi_search/overview)). A query against an index missing from the token's rules therefore breaks the entire request, not just that source. That is why `searchAllSources` builds `queries` from `allowedSources` instead of querying everything and hoping the token filters it out. Derive `allowedSources` from the same session data that generates the token so the two never disagree.
+
+For service-to-service access where there is no end user, use a [scoped API key](/capabilities/security/how_to/manage_api_keys) instead: create it with `"actions": ["search"]` and an `indexes` array listing only the sources that service may read.
+
+## How to make the merged ranking behave
+
+Weights are multiplicative on a query's relevancy score, default to `1.0`, and must be positive. A weight of `0.0` effectively excludes that query. Tune them against real questions rather than intuition, and change one at a time.
+
+- **Weight by authority, not by volume.** The instinct is to boost the largest corpus. Do the opposite: boost the source you would want cited.
+- **Deduplicate on an entity field.** `federation.distinct` applies across the whole merged list, overrides the [index-level distinct attribute](/capabilities/full_text_search/how_to/configure_distinct_attribute), and requires that field to be filterable in every participating index. Without it, one incident that exists as a doc, a ticket, and a chat thread occupies three of your eight slots.
+- **Keep the result count low.** Federated `limit` bounds the merged list, not each query, so eight results means eight total. That is usually the right number for a model.
+- **Mix retrieval modes per source.** Each query takes its own `hybrid` object, so a prose corpus can use [hybrid search](/capabilities/hybrid_search/getting_started) while a structured catalog stays keyword-only in the same request.
+
+## Limits and constraints
+
+- **Federation is all or nothing per request.** When `federation` is present, results merge into one `hits` array. Omit it and each query returns its own result set in a `results` array.
+- **`federation.distinct` and per-query `distinct` conflict.** Setting both in the same request returns HTTP 400.
+- **Facets move under `federation`.** Per-query `facets` is rejected when `federation` is present (`invalid_multi_search_query_facets`). Use `federation.facetsByIndex`, and `federation.mergeFacets` to combine indexes into one distribution.
+- **Pagination has two modes.** `federation.limit` and `federation.offset`, or `federation.page` and `federation.hitsPerPage`, which returns `totalHits` and `totalPages` instead of `estimatedTotalHits`.
+- **Keyword matching uses at most 10 query terms.** A verbatim 30-word user question silently drops everything after the tenth word ([known limitations](/resources/help/known_limitations#maximum-number-of-query-words)). Have the agent pass a condensed query, or lean on the semantic half of hybrid search.
+- **Meilisearch handles a maximum of 1,000 concurrent search requests.** A federated request counts against that budget once, which is another reason to prefer it over one call per source.
+- **Cross-instance federation exists but is a separate setup.** `federationOptions.remote` and `useNetwork` route queries to other instances in a configured network. See [sharding](/resources/self_hosting/sharding/overview); a merged response can then include `remoteErrors` for remotes that failed.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Federated search" href="/capabilities/multi_search/getting_started/federated_search">
+    The full tutorial for merging results from several indexes into one list.
+  </Card>
+  <Card title="Boost results across indexes" href="/capabilities/multi_search/how_to/boost_results_across_indexes">
+    How federation weights change the merged ranking.
+  </Card>
+  <Card title="Retrieval for AI agents" href="/guides/retrieval-for-ai-agents">
+    Designing the tool signature, stable ids, and token-bounded results.
+  </Card>
+  <Card title="RAG with citations" href="/guides/rag-with-citations">
+    Carrying source attribution all the way through to the generated answer.
+  </Card>
+</CardGroup>

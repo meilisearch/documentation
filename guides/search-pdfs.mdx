@@ -1,0 +1,179 @@
+---
+title: How to search PDFs
+description: You have a folder of PDFs and need full-text search over them, but Meilisearch takes JSON, some files are scans with no text layer, and a hit has to open the source file at the right page.
+keywords: make pdfs searchable, full text search pdf files, index pdf documents in meilisearch, search inside pdf, pdf search engine self hosted, extract text from pdf for search, ocr scanned pdf search, open pdf at page number from search result, searchable document archive, pdf rag pipeline, pymupdf meilisearch, deep link pdf page
+boost: 2
+---
+
+Searching PDFs means converting them to JSON before Meilisearch ever sees the files. No route accepts a PDF: [documents](/capabilities/indexing/how_to/add_and_update_documents) arrive as JSON, NDJSON, or CSV. The pipeline has four steps. Check each page for a text layer and run OCR on the pages that lack one, split the extracted text into paragraph-sized chunks that each record the page they came from, index one Meilisearch document per chunk with a shared `doc_id`, then search with `distinct` set to `doc_id` so one file cannot flood the results, and attach a `#page=N` fragment to every hit so clicking it opens the PDF at the right page.
+
+## Does this PDF need OCR
+
+There are two kinds of PDF, and they need different handling.
+
+A born-digital PDF (exported from Word, LaTeX, or a reporting tool) stores real glyphs with coordinates. Extraction is fast, lossless, and free. A scanned PDF stores a photograph of a page. Extraction returns an empty string, and no amount of chunking recovers anything, because there is nothing there.
+
+Decide per page, not per file. Mixed files are common: a born-digital contract with a scanned signature page, or a report with photographed appendices. The practical test is character count. Extract the text of a page and, if it comes back under roughly 100 characters, treat that page as an image and send it through OCR. The threshold matters less than having one, because a scanned page with a text-layer page number can return a handful of characters and still be effectively empty.
+
+OCR is the slow part of the pipeline by orders of magnitude, since each page has to be rasterized and then run through a recognition model {/* VERIFY: typical Tesseract throughput per page at 300 DPI on commodity hardware */}. Rasterize at 300 DPI, which is the resolution OCR engines are generally tuned for {/* VERIFY: Tesseract's documented recommended input resolution */}. Cache the OCR output next to the source file so a re-index never pays that cost twice.
+
+OCR output contains errors, and Meilisearch's [typo tolerance](/capabilities/full_text_search/relevancy/typo_tolerance_settings) absorbs some of them for free. By default a query word of 5 to 8 characters matches with one typo, and a word longer than 8 characters matches with up to two. Words of 4 characters or fewer allow no typos at all, so short-word OCR errors (`ot` for `of`) stay broken. That asymmetry is fine in practice: short words rarely carry the query.
+
+## What every chunk has to carry
+
+A chunk with only text in it is a dead end, because a hit cannot be traced back to anything. Each document needs:
+
+- `chunk_id`, the primary key. Letters, digits, `-`, and `_` only.
+- `doc_id`, shared by every chunk of the same PDF. This is what `distinct` collapses on and what filters scope to.
+- `title`, the human-readable file or document name, so a result can be labeled without a second lookup.
+- `text`, the chunk body.
+- `page_start` and `page_end`, the page range this chunk spans. A chunk that crosses a page break has two different values.
+- `url`, a link to the file with `#page=` plus `page_start` appended.
+
+Add whatever you already know about the file (author, department, publication date, access level) as flat fields. Those become filters, and filters are the difference between a searchable archive and a search box.
+
+## The full pipeline
+
+This script takes a PDF path, extracts each page (falling back to OCR when the text layer is missing), chunks on paragraph boundaries with a word budget, and indexes the result. It is complete: install the dependencies, set two environment variables, run it.
+
+```python
+# pip install pymupdf meilisearch
+# OCR fallback also needs: pip install pytesseract pillow  (plus the tesseract binary)
+# export MEILISEARCH_URL="https://ms-xxxxxxxx.meilisearch.io"
+# export MEILISEARCH_KEY="your-admin-api-key"
+# python search_pdfs.py contract.pdf
+
+import io, os, re, sys
+import meilisearch
+
+try:
+    import pymupdf
+except ImportError:              # older releases expose the module as `fitz`
+    import fitz as pymupdf
+
+TARGET_WORDS = 220               # paragraph-sized chunks
+MIN_CHARS_PER_PAGE = 100         # below this, assume the page is a scan
+FILE_BASE_URL = "https://files.example.com/pdfs"
+
+def page_text(page):
+    text = page.get_text("text").strip()
+    if len(text) >= MIN_CHARS_PER_PAGE:
+        return text
+    import pytesseract                      # imported lazily: only scans need it
+    from PIL import Image
+    pixmap = page.get_pixmap(dpi=300)
+    image = Image.open(io.BytesIO(pixmap.tobytes("png")))
+    return pytesseract.image_to_string(image).strip()
+
+def chunk_pdf(path):
+    name = os.path.basename(path)
+    doc_id = re.sub(r"[^A-Za-z0-9_-]", "_", os.path.splitext(name)[0])[:200]
+    pdf = pymupdf.open(path)
+    chunks, buffer, start_page, count = [], [], 1, 0
+
+    def flush(end_page):
+        nonlocal buffer, count
+        if not buffer:
+            return
+        count += 1
+        chunks.append({
+            "chunk_id": f"{doc_id}_{count:04d}",
+            "doc_id": doc_id,
+            "title": name,
+            "text": " ".join(buffer),
+            "page_start": start_page,
+            "page_end": end_page,
+            "page_count": pdf.page_count,
+            "url": f"{FILE_BASE_URL}/{name}#page={start_page}",
+        })
+        buffer = []
+
+    for number, page in enumerate(pdf, start=1):
+        for paragraph in re.split(r"\n\s*\n", page_text(page)):
+            paragraph = re.sub(r"\s+", " ", paragraph).strip()
+            if len(paragraph) < 2:
+                continue
+            if not buffer:
+                start_page = number
+            buffer.append(paragraph)
+            if sum(len(p.split()) for p in buffer) >= TARGET_WORDS:
+                flush(number)
+    flush(pdf.page_count)
+    return chunks
+
+chunks = chunk_pdf(sys.argv[1])
+if not chunks:
+    sys.exit("Nothing extracted. Check that the file is a readable PDF.")
+
+client = meilisearch.Client(os.environ["MEILISEARCH_URL"], os.environ["MEILISEARCH_KEY"])
+index = client.index("pdf_chunks")
+index.update_settings({
+    "searchableAttributes": ["title", "text"],
+    "filterableAttributes": ["doc_id", "page_start"],
+    "sortableAttributes": ["page_start"],
+})
+# chunk_id and doc_id both end in "id", so the primary key must be passed explicitly.
+task = index.add_documents(chunks, primary_key="chunk_id")
+client.wait_for_task(task.task_uid)
+print(f"indexed {len(chunks)} chunks")
+```
+
+Run it over a directory by looping the call to `chunk_pdf`, collecting every chunk list, and sending one `add_documents` batch per few tens of thousands of chunks rather than one request per file.
+
+## How to return a hit that opens the right page
+
+Two search parameters turn chunk documents back into document results.
+
+```python
+results = index.search("termination for convenience", {
+    "attributesToCrop": ["text"],
+    "cropLength": 45,
+    "attributesToHighlight": ["text"],
+    "distinct": "doc_id",
+    "limit": 10,
+})
+
+for hit in results["hits"]:
+    print(hit["title"], "page", hit["page_start"])
+    print(hit["url"])                    # .../contract.pdf#page=7
+    print(hit["_formatted"]["text"])     # snippet with <em> around matches
+```
+
+`distinct` keeps only the best-ranked chunk per `doc_id`, so a 400-page manual returns as one result instead of forty. Drop it when you want a within-document view (for example, after the user has already picked a file), and add `"filter": 'doc_id = "contract"'` to scope the query to that file.
+
+`attributesToCrop` with `attributesToHighlight` returns a `_formatted` object holding an excerpt centered on the match, which is what makes a PDF result readable. See [search with snippets](/capabilities/full_text_search/getting_started/search_with_snippets) and [highlight search results](/capabilities/full_text_search/how_to/highlight_search_results).
+
+The `#page=N` fragment is a PDF viewer open parameter, honored by the built-in viewers in mainstream browsers and by Adobe Reader {/* VERIFY: current browser coverage for the #page= PDF open parameter */}. It does nothing if the file is downloaded rather than viewed inline, so serve PDFs with `Content-Disposition: inline`.
+
+## Adding semantic search over the chunks
+
+Keyword search over PDF text works well when the reader knows the vocabulary of the document. When they do not (searching "can I cancel early" against text that says "termination for convenience"), configure an embedder and run [hybrid search](/capabilities/hybrid_search/getting_started). Chunked documents are exactly the right input shape for this, which is the main reason not to index one document per PDF.
+
+Write an explicit short `documentTemplate` such as `{{doc.title}}: {{doc.text}}`. The default template includes every searchable non-null field, and the rendered result is capped by `documentTemplateMaxBytes`, which defaults to 400 bytes. A 220-word chunk is well over that, so raise the cap or the embedding sees only the opening of each chunk. See [document template best practices](/capabilities/hybrid_search/advanced/document_template_best_practices).
+
+## Limits and constraints
+
+- **65,535 positions per attribute.** Words past that position in a single attribute are silently ignored, with no error. See [known limitations](/resources/help/known_limitations#maximum-number-of-words-per-attribute). This is the hard reason one document per PDF fails: a few hundred pages of text in one `text` field is mostly invisible to search.
+- **10 query terms.** Only the first 10 words of a query are taken into account. Pasting a paragraph from one PDF to find similar ones will not work as expected.
+- **Primary key values: 511 bytes, restricted charset.** Strings may contain only `a-z`, `A-Z`, `0-9`, `-`, and `_`, which is why the script sanitizes the filename. See [design primary keys](/capabilities/indexing/how_to/design_primary_keys).
+- **Filter values: 468 bytes each.** An individual `filterableAttributes` value longer than that is rejected, so do not filter on a full file path.
+- **100 MB default payload, 20 MB through the Cloud interface.** Batch large corpora instead of sending one giant request, per [import large datasets](/capabilities/indexing/how_to/import_large_datasets).
+- **No PDF ingestion route.** Extraction, OCR, and chunking all happen in your pipeline. Meilisearch accepts JSON, NDJSON, and CSV only.
+- **Meilisearch does not store the PDF.** The index holds text and a URL. Hosting the file and enforcing access to it stay your responsibility; for per-user access control, see [tenant tokens](/capabilities/security/overview).
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="How to chunk PDFs" href="/guides/chunk-pdfs">
+    Multi-column reading order, repeated headers and footers, tables, and footnotes.
+  </Card>
+  <Card title="How to chunk documents for search" href="/guides/how-to-chunk-documents">
+    The general strategies and how to evaluate a chunking change.
+  </Card>
+  <Card title="How to search scanned documents with OCR" href="/guides/search-scanned-documents-ocr">
+    Accuracy expectations and the cleanup steps worth running before indexing.
+  </Card>
+  <Card title="Getting started with AI-powered search" href="/capabilities/hybrid_search/getting_started">
+    Configure an embedder and run semantic search over the chunks.
+  </Card>
+</CardGroup>

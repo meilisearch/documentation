@@ -1,0 +1,148 @@
+---
+title: Why Elasticsearch cluster operations are complex
+description: Your Elasticsearch cluster keeps going yellow, shards will not rebalance, and every version upgrade is a project. Here is what each cluster mechanism buys you, how to calm it down, and what a single-binary search engine removes from the job.
+keywords: elasticsearch cluster health red, unassigned shards fix, elasticsearch split brain, number_of_replicas setting, elasticsearch rolling restart procedure, search engine without cluster management, elasticsearch ops burden, oversharding, allocation explain API, elasticsearch alternative single node
+boost: 2
+---
+
+Elasticsearch cluster operations are complex because the cluster is a distributed system you operate yourself, not an implementation detail the engine hides. Data is split into primary shards whose count is fixed when the index is created, availability comes from replica shards that must land on other nodes, and cluster state depends on a quorum of master-eligible nodes agreeing with each other. Adding a node, losing a disk, or changing a version all move shards around, and the cluster reports the outcome as green, yellow, or red. That complexity is not accidental. It is the price of scaling one index across many machines.
+
+## What each cluster mechanism actually buys you
+
+**Primary shards** buy you horizontal capacity. An index is divided into primary shards, and each one is an independent Lucene index that can live on a different node. This is what lets a single logical index exceed the disk and CPU of one machine. The cost is that the number of primaries is chosen at index creation time and cannot be changed in place. Changing it means building a new index and reindexing or using the split and shrink APIs, which also write a new index. {/* VERIFY: primary shard count immutability and that split/shrink create a new index, current ES docs */}
+
+**Replica shards** buy you availability and read throughput. A replica is a full copy of a primary on another node, so it can serve searches and can be promoted if the primary's node disappears. Unlike primaries, the replica count is a dynamic setting you can change at any time with `number_of_replicas`. The cost is linear: one replica doubles your storage and your indexing write amplification.
+
+**Master-eligible nodes and quorum** buy you a consistent cluster state. Every node must agree on which shard lives where, and that agreement needs a majority. Historically, misconfiguring this majority let a network partition produce two halves that each elected a master and accepted writes, the classic split-brain failure. Modern Elasticsearch replaced the hand-set minimum master node count with a built-in voting configuration that maintains the quorum for you, which removes the most common way to cause split-brain by hand. {/* VERIFY: the version where discovery.zen.minimum_master_nodes was replaced by cluster coordination and voting configurations */}
+
+**Rebalancing** buys you even utilization. When a node joins or leaves, the cluster moves shards to even out shard counts and disk usage. It also generates most operational surprises, because it starts on its own, consumes disk and network, and stalls when allocation rules or disk watermarks block a move.
+
+## Why the cluster goes yellow and red
+
+The three-color health status is a summary of shard allocation, and it is more precise than it looks:
+
+- **Green**: every primary and every replica is assigned to a node.
+- **Yellow**: every primary is assigned, but at least one replica is not. Search and indexing still work. You have lost redundancy, not data.
+- **Red**: at least one primary is unassigned. Part of your index is unreadable and writes touching those shards fail.
+
+A single-node cluster with one replica configured sits at yellow permanently, because a replica is never allocated onto the same node as its primary. That is the most common false alarm. The other frequent causes are a disk crossing the high watermark so nothing new can be allocated to that node, allocation filtering or awareness rules that no remaining node satisfies, and a node leaving with the only copy of a primary. {/* VERIFY: default disk watermark values (low, high, and flood stage) in current Elasticsearch */}
+
+The cluster will tell you which case you are in. `GET _cluster/health` gives the status and the unassigned shard count, `GET _cat/shards?v` shows the per-shard state, and `GET _cluster/allocation/explain` names the specific rule blocking a specific shard. Reach for the third one first, because it answers "why" instead of "what".
+
+## How to reduce the operational surface inside Elasticsearch
+
+These are worth doing whether or not you ever change engines:
+
+1. **Stop oversharding.** Shard count is the main driver of cluster state size, heap pressure, and rebalancing time. Elastic's guidance is to size shards in the tens of gigabytes and to keep the shard count per node proportional to heap. Consolidating hundreds of small daily indexes into fewer, larger ones removes more operational pain than any other single change. {/* VERIFY: current Elastic shard sizing guidance, the 10-50 GB shard range and the shards-per-GB-of-heap rule of thumb */}
+2. **Set replicas deliberately per index.** Rebuildable derived data can run at zero replicas. Only the indexes you cannot reconstruct need two.
+3. **Use index lifecycle management for time-series data.** Rollover plus a delete phase caps how many shards ever exist, which caps the rebalancing surface.
+4. **Alert on unassigned shards, not on color.** A permanently yellow development cluster trains people to ignore the metric that matters.
+5. **Script the rolling upgrade.** Disable replica allocation before stopping a node so the cluster does not copy shards during the restart window, upgrade and restart the node, wait for the cluster to return to its prior state, re-enable allocation, and repeat. Supported upgrade paths between versions are constrained, so check yours before you start rather than during the outage. {/* VERIFY: current rolling upgrade steps and the supported version-skip rules between major versions */}
+
+## What a single-binary architecture removes
+
+Meilisearch runs as [a single binary with no external dependencies](/resources/self_hosting/overview) that writes to one database directory. In its default deployment there is no cluster to form, so a category of work disappears: no shards to size, no replica allocation to explain, no quorum to lose, no rebalancing to schedule, and no color-coded status, because with one process the only question is whether that process answers.
+
+Version upgrades collapse from a rolling procedure into a restart: take a snapshot, install the new binary, and relaunch with `--upgrade-db`, which upgrades the database on startup. If that fails, [the dump path](/resources/self_hosting/data_backup/dumps) is the documented fallback. The full procedure is in [updating Meilisearch](/resources/migration/updating).
+
+The script below prints everything you need to judge a Meilisearch deployment's operational state, including the network topology if one is configured. It runs as-is with two environment variables set.
+
+```javascript
+// npm install meilisearch
+// export MEILISEARCH_URL="https://your-instance.meilisearch.io"
+// export MEILISEARCH_KEY="your_admin_api_key"
+// node status.mjs
+
+import { Meilisearch } from 'meilisearch'
+
+const host = process.env.MEILISEARCH_URL
+const apiKey = process.env.MEILISEARCH_KEY
+
+if (!host || !apiKey) {
+  throw new Error('Set MEILISEARCH_URL and MEILISEARCH_KEY before running this script.')
+}
+
+const client = new Meilisearch({ host, apiKey })
+
+async function main() {
+  // 1. Is the process answering, and does it need a restart?
+  const health = await client.health()
+  console.log('health:', health.status)
+
+  // 2. Which build is running? Compare this across instances before any upgrade.
+  const version = await client.getVersion()
+  console.log('version:', version.pkgVersion)
+
+  // 3. Disk usage and per-index document counts, the equivalent of _cat/indices.
+  const stats = await client.getStats()
+  console.log('database size (bytes):', stats.databaseSize)
+  for (const [uid, index] of Object.entries(stats.indexes)) {
+    console.log(`  ${uid}: ${index.numberOfDocuments} documents, indexing: ${index.isIndexing}`)
+  }
+
+  // 4. Any failed background task is the real "red status" signal here.
+  const failed = await client.tasks.getTasks({ statuses: ['failed'], limit: 5 })
+  console.log('recent failed tasks:', failed.results.length)
+  for (const task of failed.results) {
+    console.log(`  uid ${task.uid} (${task.type}): ${task.error?.message ?? 'no message'}`)
+  }
+
+  // 5. Network topology, only present on Enterprise Edition instances with sharding enabled.
+  const response = await fetch(`${host}/network`, {
+    headers: { Authorization: `Bearer ${apiKey}` }
+  })
+
+  if (!response.ok) {
+    console.log('network: not configured on this instance')
+    return
+  }
+
+  const network = await response.json()
+  console.log('leader:', network.leader ?? 'none')
+  for (const [name, remote] of Object.entries(network.remotes ?? {})) {
+    console.log(`  remote ${name}: ${remote.status}`)
+  }
+  for (const [shard, config] of Object.entries(network.shards ?? {})) {
+    console.log(`  shard ${shard}: ${config.remotes.join(', ')}`)
+  }
+}
+
+main()
+```
+
+## What you give up in exchange
+
+Removing the cluster removes the safety properties the cluster was providing. State this plainly before choosing:
+
+- **One process means one failure domain.** A single instance has no automatic failover. Availability comes from a standby restored from a snapshot behind a load balancer, or from the network described below.
+- **Scaling out is explicit.** [Replication and sharding](/resources/self_hosting/sharding/overview) require the Enterprise Edition v1.37 or later, and you define the topology yourself through `PATCH /network`: which remotes exist, and which shards live on which remotes.
+- **There is no automatic leader election.** One instance is the leader and takes all writes. Non-leader instances reject writes with a `not_leader` error, and if the leader goes down you must [promote a new one manually](/resources/self_hosting/sharding/configure_replication).
+- **Rebalancing is still rebalancing.** Changing shard assignments triggers a `NetworkTopologyChange` task, and searches can return incomplete results until it finishes.
+- **Meilisearch is not an analytics engine.** There is no aggregations framework and no hot-warm-cold storage. If your cluster exists partly to hold observability data, that workload does not move.
+
+## Limits and constraints
+
+- **Health status**: there is no green, yellow, or red. `GET /health` returns `available` with a 200 status code, or `mustRestart` with a 500 status code when the instance needs a restart, for example after a compaction of the task queue.
+- **Database and version coupling**: a database is only compatible with the version that created it. Upgrades run through `--upgrade-db`, available since v1.51 (earlier versions use `--experimental-dumpless-upgrade`), or through a dump.
+- **Snapshots**: `--schedule-snapshot` defaults to every 24 hours and accepts an interval in seconds. Each run overwrites the previous snapshot, so only the most recent one exists. Meilisearch Cloud does not support snapshots.
+- **Sharding availability**: replication and sharding are Enterprise Edition features, v1.37 or later. The Community Edition is MIT licensed, and sharding is its only exclusion.
+- **Shard fallback is best-effort**: if the remote assigned to a shard is unreachable, Meilisearch queries another remote holding that shard. If no remote holds it, that shard's results are simply missing from the response.
+- **Version skew across a network**: search across mixed versions is best-effort, and network rebalancing requires every instance to run the same version.
+- **Memory**: indexing targets at most two thirds of available memory (`--max-indexing-memory`) and half the available cores (`--max-indexing-threads`).
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Replication and sharding" href="/resources/self_hosting/sharding/overview">
+    How a Meilisearch network distributes documents and survives an instance going down.
+  </Card>
+  <Card title="Updating Meilisearch" href="/resources/migration/updating">
+    The snapshot, upgrade, and dump fallback procedure in full.
+  </Card>
+  <Card title="Migrating from Elasticsearch" href="/resources/migration/elasticsearch_migration">
+    Export documents from an Elasticsearch index and import them, with a settings and query mapping.
+  </Card>
+  <Card title="Meilisearch vs Elasticsearch" href="/resources/comparisons/elasticsearch">
+    Where each engine is the right answer, including the cases where Elasticsearch is.
+  </Card>
+</CardGroup>

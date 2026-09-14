@@ -1,0 +1,150 @@
+---
+title: Why your semantic search is slow
+description: Your hybrid or semantic queries take hundreds of milliseconds while keyword-only queries are fast, and you need to find out which stage of the pipeline is eating the time before you start changing models.
+keywords: semantic search slow, vector search latency, hybrid search takes too long, embedding api latency search, query embedding slow, openai embedding latency search, reduce vector search latency, showPerformanceDetails, embed query stage, searchCutoffMs embedder timeout, local embedding model low latency, precomputed query vector
+boost: 2
+---
+
+If your keyword queries return in a few milliseconds and your hybrid queries take 200 ms or more, the extra time is almost never spent searching. It is spent waiting for an embedding provider to turn the query string into a vector. Every semantic or hybrid search that does not carry its own `vector` triggers one synchronous HTTP request to your embedder before any ranking can start, so your search latency inherits your provider's latency, its cold starts, and the network distance to it. Confirm this with [`showPerformanceDetails`](/capabilities/full_text_search/advanced/debug_search_performance) before changing anything, then work down the causes below, cheapest first.
+
+## Measure first: find the `embed query` stage
+
+Set `showPerformanceDetails: true` on the search request. Meilisearch returns a `performanceDetails` object with a per-stage timing breakdown, including `search > embed query`, which is the time spent generating the query vector. Run the query several times so a single cold start does not fool you, and run it once with `semanticRatio: 0` as a keyword-only control.
+
+```javascript
+// Node 18+ or any runtime with fetch. No dependencies required.
+// MEILISEARCH_URL is your project host, for example https://ms-1234.sfo.meilisearch.io
+const HOST = process.env.MEILISEARCH_URL
+const KEY = process.env.MEILISEARCH_API_KEY
+const INDEX = 'products'
+const EMBEDDER = 'products'
+const QUERY = 'waterproof jacket for hiking'
+
+async function run(semanticRatio) {
+  const response = await fetch(`${HOST}/indexes/${INDEX}/search`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${KEY}`,
+    },
+    body: JSON.stringify({
+      q: QUERY,
+      limit: 5,
+      hybrid: { semanticRatio, embedder: EMBEDDER },
+      showPerformanceDetails: true,
+    }),
+  })
+  if (!response.ok) throw new Error(`${response.status} ${await response.text()}`)
+  return response.json()
+}
+
+for (const semanticRatio of [0, 1]) {
+  const samples = []
+  for (let i = 0; i < 10; i++) {
+    const result = await run(semanticRatio)
+    samples.push({
+      total: result.processingTimeMs,
+      stages: result.performanceDetails,
+    })
+  }
+  const totals = samples.map((s) => s.total).sort((a, b) => a - b)
+  console.log(`semanticRatio=${semanticRatio}`)
+  console.log(`  median processingTimeMs: ${totals[Math.floor(totals.length / 2)]}`)
+  console.log(`  slowest processingTimeMs: ${totals[totals.length - 1]}`)
+  console.log('  last run stages:', samples[samples.length - 1].stages)
+}
+```
+
+Read the output like this:
+
+- **`search > embed query` dominates**: the provider call is your latency. Go to causes 1, 2, and the architectural fix.
+- **`search > semantic ranking` dominates**: vector comparison is the cost, not inference. Go to cause 4.
+- **`wait in queue` is high**: the instance is saturated, not slow. Go to cause 5.
+- **`semanticRatio: 0` is slow too**: this is not a semantic problem at all. The cost is in filters, facet distribution, or formatting, covered in [why your search is slow](/guides/search-is-slow).
+- **Median is fine, slowest run is 10 times worse**: cold starts or provider throttling. Cause 1.
+
+`showPerformanceDetails` works on `POST /indexes/{indexUid}/search`, the `GET` variant, `POST /multi-search`, and the `similar` routes.
+
+## Cause 1: the provider is on the critical path of every query
+
+With an automatic embedder (`openAi`, `rest`, `ollama`, `cohere` through `rest`, and so on), Meilisearch must call the provider before it can rank anything. That cost is network round trip plus the provider's own inference time plus any retry, and it is paid per search request, not per user session. Three things make it worse than the provider's advertised latency:
+
+- **Distance.** An embedder endpoint in a different region than your Meilisearch project adds the round trip twice over, once from your app to Meilisearch and once from Meilisearch to the provider.
+- **Cold starts.** Serverless or scale-to-zero inference endpoints can take far longer on the first request after idling than in steady state. This is why the slowest sample above matters more than the median.
+- **Throttling.** Low-tier API keys can be rate limited, which turns into queued or retried requests rather than clean errors.
+
+The cheapest fixes, in order: move the embedder endpoint closer to your project, move to a provider with an edge or regional network, and keep the endpoint warm rather than letting it sleep. [Choosing an embedder](/capabilities/hybrid_search/how_to/choose_an_embedder) compares providers on exactly these axes.
+
+## Cause 2: the model is larger than the job requires
+
+Inference time and vector size both scale with the model. In hybrid search the keyword half already handles exact matching, so the semantic half only needs to capture general meaning. A 384-dimension model is usually enough, and it is faster to infer, faster to compare, and cheaper to store than a 3072-dimension one.
+
+Two levers:
+
+- **Switch to a smaller model.** Models like `text-embedding-3-small`, `BAAI/bge-small-en-v1.5`, or a provider's "lite" or "nano" tier are good starting points.
+- **Reduce dimensions on a model that supports it.** OpenAI's `text-embedding-3-small` and `text-embedding-3-large` accept a custom vector size, so setting `"dimensions": 512` in the embedder settings shrinks the vectors at a small cost in accuracy.
+
+Both changes are cheap at query time and expensive once: changing `model` always regenerates every embedding in the index, and for the `openAi` source changing `dimensions` does too. Budget for a full re-embedding pass before you make the switch in production.
+
+## Cause 3: the search cutoff is truncating the provider call
+
+`searchCutoffMs` is not only a keyword-search guardrail. When an index uses an embedder that calls an external API at search time, Meilisearch derives the embedding request timeout from `searchCutoffMs` instead of applying a fixed timeout of its own. When `searchCutoffMs` is `null`, Meilisearch interrupts searches after 1500 ms.
+
+That produces a confusing symptom set: semantic results quietly disappear from hybrid responses, and a pure semantic search (no keyword results to fall back on) can return HTTP 500. If you tightened the cutoff to make search feel fast, you may have made semantic search fail rather than fast. Set the cutoff above your provider's p99 latency plus your normal search time, and fix the latency at the source. See [configure search cutoff](/capabilities/full_text_search/how_to/configure_search_cutoff).
+
+## Cause 4: vector comparison is the cost, not inference
+
+If `search > semantic ranking` is the dominant stage, the query vector arrived quickly and the time goes into comparing it against your documents. This shows up on large indexes with high-dimension embedders. [Binary quantization](/capabilities/hybrid_search/advanced/binary_quantization) stores each dimension as a single bit instead of a 32-bit float, which shrinks a 1536-dimension vector from about 6 KB to 192 bytes and speeds up vector operations. It pays off above roughly 1M documents and at 1400 or more dimensions, and is not recommended below 512 dimensions. Enabling it is irreversible: the original full-precision vectors are discarded.
+
+## Cause 5: the instance is saturated, not slow
+
+A high `wait in queue` value means requests are lining up before the search even starts. Meilisearch queues up to 1000 simultaneous search requests by default; when the queue is full it drops a random request and returns a 503 `too_many_search_requests` with a `Retry-After` header set to 10 seconds. Self-hosted instances can change the size with `--experimental-search-queue-size`, but raising it hides the problem rather than solving it.
+
+Provider latency and saturation compound: every query blocked on a slow embedding call holds its slot, so a 300 ms provider turns a survivable traffic spike into a queue backlog. Fixing causes 1 and 2 usually fixes the queue too.
+
+## The architectural fix: take inference off the query path
+
+Two documented options remove the provider call from search entirely.
+
+**Use a local model for search only.** [Composite embedders](/capabilities/hybrid_search/advanced/composite_embedders) let one embedder index documents and a different one embed queries. A typical setup uses a high-throughput cloud API for indexing and a local `huggingFace` model for search, so query embedding never leaves the machine. Both sides must use the same model with identical `dimensions` and `pooling`, and `binaryQuantized` and `distribution` belong on the parent embedder, not the sub-embedders. This feature requires the `compositeEmbedders` experimental flag.
+
+**Send the query vector yourself.** The `vector` search parameter accepts a pre-computed query embedding. It is mandatory with a `userProvided` embedder, and it also overrides automatic generation on a normal embedder, so you can keep your existing configuration and just skip the inference step:
+
+```json
+{
+  "q": "waterproof jacket for hiking",
+  "vector": [0.12, -0.03, 0.87],
+  "hybrid": { "semanticRatio": 0.5, "embedder": "products" }
+}
+```
+
+Once the vector is yours, you control the latency: embed in your own application or edge function, and cache vectors for repeated queries, which in most catalogs are a small head of very popular searches. The array length must match the embedder's `dimensions`. See [search with user-provided embeddings](/capabilities/hybrid_search/how_to/search_with_user_provided_embeddings).
+
+This is not a Meilisearch-specific tax. Any engine that runs semantic search over text has to turn the query into a vector somewhere, and dedicated vector databases generally push that step onto your application rather than removing it. {/* VERIFY: several vector databases now offer integrated inference, so avoid stating this as universal */}
+
+## Limits and constraints
+
+- `searchCutoffMs` defaults to `null`, which means Meilisearch interrupts searches after 1500 ms. The same value bounds the search-time embedding request; local embedders are unaffected because no network call is involved.
+- The search queue holds 1000 simultaneous requests by default. Overflow returns 503 `too_many_search_requests` with `Retry-After: 10`.
+- `vector` must have exactly the same length as the embedder's `dimensions`, and it cannot be combined with the `media` parameter used for multimodal search.
+- Binary quantization is irreversible. Recovering full-precision vectors requires re-indexing every document into a new embedder.
+- Composite embedders are experimental and require the `compositeEmbedders` flag. Sub-embedders cannot use `composite` or `userProvided` as their source.
+- Changing `model` always regenerates every embedding. For the `openAi` source, so does changing `dimensions`.
+- Meilisearch does not document a server-side cache of query embeddings, so do not assume a repeated query skips the provider call. Cache in your own application if you need that guarantee.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Debug search performance" href="/capabilities/full_text_search/advanced/debug_search_performance">
+    Full reference for every stage reported by `showPerformanceDetails`.
+  </Card>
+  <Card title="Composite embedders" href="/capabilities/hybrid_search/advanced/composite_embedders">
+    Index with a cloud API, embed queries locally.
+  </Card>
+  <Card title="Configure search cutoff" href="/capabilities/full_text_search/how_to/configure_search_cutoff">
+    Set a cutoff that still covers your provider round trip.
+  </Card>
+  <Card title="Why your semantic search returns irrelevant results" href="/guides/semantic-search-irrelevant-results">
+    The relevance half of the same pipeline.
+  </Card>
+</CardGroup>

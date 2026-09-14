@@ -1,0 +1,191 @@
+---
+title: How to chunk code and technical content
+description: You are indexing a codebase and search returns fragments of functions with no signature, so you need to know where to cut source files so each chunk is a retrievable unit.
+keywords: split code into chunks for search, index a git repository for search, ast based chunking, tree sitter chunking for retrieval, code search embeddings function level, how to index source code semantic search, chunk markdown api docs, rag over a codebase, indexing functions and docstrings, code snippet retrieval relevance
+boost: 2
+---
+
+Cut source files on syntactic boundaries, never on character counts. The default unit is one function or method per chunk, with its decorators, its signature, and its docstring kept in the same chunk as its body. Prefix each chunk with its fully qualified name (`module.Class.method`) so the chunk still makes sense when it arrives alone in a result list, and store the file path, language, symbol name, and line range as separate fields. When a single function is too large, split it between top-level statements inside the body and repeat the signature on every piece. Fixed-size windows damage code retrieval more than any other content type, because the identifier a developer searches for and the implementation they need usually end up in different chunks.
+
+## Why fixed-size splitting breaks code specifically
+
+Prose degrades gracefully when you cut it in the wrong place. A paragraph split mid-sentence is still mostly about its topic, so an embedding of it lands roughly where it should. Code does not behave that way, for three reasons.
+
+**The name and the behavior live in different places.** A developer searches for `validateSessionToken` or "where do we refresh the auth token". The identifier appears once, on the `def` or `function` line. The behavior they need is in the twenty lines below it. A 500-character window will frequently put those on opposite sides of a boundary, producing one chunk that matches the query but contains no answer, and one chunk that contains the answer but matches nothing.
+
+**Meaning is defined by enclosing scope.** A chunk containing `self._state = None` or `return cls(**payload)` is uninterpretable on its own. Identical lines appear in hundreds of files. Without the enclosing class and function, both keyword and semantic retrieval treat them as noise.
+
+**Boilerplate dominates.** Import blocks, license headers, and generated code repeat verbatim across a repository. Fixed-size chunks that begin at arbitrary offsets capture large amounts of this, so many chunks end up near-identical in vector space and crowd the results.
+
+## Choosing the unit
+
+| Content | Chunk unit | Notes |
+|---|---|---|
+| Functions and methods | One chunk per function, decorators included | The default. Covers most retrieval questions |
+| Small classes and interfaces | One chunk for the whole class | Below roughly 100 lines, the class reads as one idea |
+| Large classes | One skeleton chunk plus one chunk per method | The skeleton holds the class signature, its docstring, and the list of method names, which is what answers "what can this class do" |
+| Oversized functions | Split between top-level statements | Never inside an expression, a string literal, or a `try` block |
+| Markdown and reStructuredText docs | Split on headings | See [how to chunk long-form documentation and books](/guides/chunk-long-form-documents) |
+| YAML, JSON, and TOML configuration | One chunk per top-level key | Keep the key path as metadata so a result can be located |
+| Notebooks | One chunk per cell, with the preceding markdown cell attached | The markdown cell is usually the only natural-language description the code has |
+
+Tree-sitter is the usual way to get these boundaries for many languages at once, since it produces a concrete syntax tree from source that does not compile. {/* VERIFY: current breadth of official tree-sitter grammar coverage */} For a single-language repository, the language's own parser is simpler: Python's standard library `ast` module is enough, as the example below shows.
+
+## Treat docstrings and comments as first-class content
+
+Docstrings and header comments are the only part of a codebase written in the vocabulary users actually search with. Keep them attached to the code they describe, and also store them in their own field so you can weight them.
+
+Meilisearch's [`searchableAttributes`](/capabilities/full_text_search/how_to/configure_searchable_attributes) is ordered by importance: a match in the first attribute ranks above a match in a later one. Listing `symbol`, `signature`, `docstring`, then `code` makes an exact symbol match outrank an incidental occurrence of the same string deep inside an unrelated function body.
+
+For semantic search, the same reasoning applies to the [`documentTemplate`](/capabilities/hybrid_search/advanced/document_template_best_practices). Embed the description, not the implementation: the qualified symbol name, the signature, and the docstring. Raw code bodies are poor embedding input, and `documentTemplateMaxBytes` defaults to **400 bytes**, so a template that starts with the body is truncated before it reaches anything meaningful.
+
+## Complete example: index a Python repository
+
+This script walks a repository, chunks every `.py` file on function, method, and class boundaries, and indexes the chunks. It uses only the standard library plus the Meilisearch Python client.
+
+```python
+# pip install meilisearch
+# export MEILISEARCH_URL="https://your-project.meilisearch.io"
+# export MEILISEARCH_KEY="your_admin_api_key"
+# export REPO_PATH="/path/to/your/repo"
+
+import ast
+import hashlib
+import os
+import pathlib
+
+import meilisearch
+
+REPO_ROOT = pathlib.Path(os.environ.get("REPO_PATH", "."))
+REPO_NAME = "my-repo"
+CODE_URL = "https://github.com/acme/my-repo/blob/main/{path}#L{start}-L{end}"
+MAX_CHUNK_LINES = 120
+
+client = meilisearch.Client(os.environ["MEILISEARCH_URL"], os.environ["MEILISEARCH_KEY"])
+index = client.index("code")
+
+
+def make_id(*parts):
+    # Document ids accept only a-z A-Z 0-9, hyphens, and underscores, so hash the path.
+    return hashlib.sha1("::".join(parts).encode()).hexdigest()
+
+
+def split_body(node):
+    """Yield (start, end) line ranges, cutting only between top-level statements."""
+    start = min([node.lineno] + [d.lineno for d in node.decorator_list])
+    if node.end_lineno - start + 1 <= MAX_CHUNK_LINES:
+        yield start, node.end_lineno
+        return
+    piece_start = start
+    for stmt in node.body:
+        if stmt.end_lineno - piece_start + 1 >= MAX_CHUNK_LINES:
+            yield piece_start, stmt.end_lineno
+            piece_start = stmt.end_lineno + 1
+    if piece_start <= node.end_lineno:
+        yield piece_start, node.end_lineno
+
+
+def build(rel, qualname, kind, signature, docstring, code, start, end, part):
+    return {
+        "id": make_id(REPO_NAME, rel, qualname, str(part)),
+        "repo": REPO_NAME,
+        "path": rel,
+        "language": "python",
+        "symbol": qualname,
+        "unit": f"{rel}:{qualname}",
+        "kind": kind,
+        "part": part,
+        "signature": signature,
+        "docstring": docstring,
+        "code": code,
+        "start_line": start,
+        "end_line": end,
+        "url": CODE_URL.format(path=rel, start=start, end=end),
+    }
+
+
+def chunk_file(path):
+    source = path.read_text(encoding="utf-8", errors="replace")
+    lines = source.splitlines()
+    rel = path.relative_to(REPO_ROOT).as_posix()
+    chunks = []
+
+    def visit(node, parent=""):
+        for child in ast.iter_child_nodes(node):
+            if not isinstance(child, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+                continue
+            qualname = f"{parent}.{child.name}" if parent else child.name
+            docstring = ast.get_docstring(child) or ""
+            signature = lines[child.lineno - 1].strip()
+            if isinstance(child, ast.ClassDef):
+                methods = [n.name for n in child.body
+                           if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef))]
+                skeleton = signature + "\n" + "\n".join(f"    def {m}(...)" for m in methods)
+                chunks.append(build(rel, qualname, "class", signature, docstring,
+                                    skeleton, child.lineno, child.end_lineno, 0))
+                visit(child, qualname)
+                continue
+            for part, (start, end) in enumerate(split_body(child)):
+                code = "\n".join(lines[start - 1:end])
+                chunks.append(build(rel, qualname, "function", signature, docstring,
+                                    code, start, end, part))
+
+    visit(ast.parse(source))
+    return chunks
+
+
+# Configure settings before adding documents to avoid a full re-index afterwards.
+index.update_settings({
+    "searchableAttributes": ["symbol", "signature", "docstring", "code", "path"],
+    "filterableAttributes": ["repo", "path", "language", "kind", "unit"],
+    "distinctAttribute": "unit",
+    "typoTolerance": {"disableOnAttributes": ["symbol", "signature", "code"]},
+})
+index.update_non_separator_tokens(["+", "#"])
+
+documents = []
+for source_file in REPO_ROOT.rglob("*.py"):
+    try:
+        documents.extend(chunk_file(source_file))
+    except SyntaxError:
+        continue
+
+task = index.add_documents(documents, primary_key="id")
+client.wait_for_task(task.task_uid)
+print(f"indexed {len(documents)} chunks")
+```
+
+Three settings in that block are doing specific work:
+
+- `distinctAttribute: "unit"` returns one result per symbol, so a function that had to be split into three parts does not occupy three slots in the result list. See [configure distinct attribute](/capabilities/full_text_search/how_to/configure_distinct_attribute).
+- `typoTolerance.disableOnAttributes` keeps identifier matching exact. Typo tolerance is valuable on prose and actively harmful on symbols, where `getUser` and `getUsers` are different functions. See [typo tolerance settings](/capabilities/full_text_search/relevancy/typo_tolerance_settings).
+- `nonSeparatorTokens` stops `+` and `#` from acting as word boundaries, which is what keeps `C++` and `C#` searchable. The same setting applies to any operator or sigil your language relies on. If you want snake_case identifiers to also match their individual words, add `_` to `separatorTokens` instead. {/* VERIFY: whether _ is already treated as a separator by the default Meilisearch pipeline */} Both are described in [tokenization](/capabilities/indexing/advanced/tokenization).
+
+## Limits and constraints
+
+These are documented Meilisearch limits that affect code indexing directly, listed in [known limitations](/resources/help/known_limitations):
+
+- **65,535 positions per attribute.** Words past that position in a single field are silently ignored. A minified bundle or a generated file indexed whole will be partly invisible. Chunking avoids this.
+- **10 query terms.** Terms after the tenth in a search query are ignored, so pasting an entire stack trace into the search box does not work as users expect. Extract the exception name and one frame.
+- **511 bytes for primary key values**, and ids may contain only `a-z`, `A-Z`, `0-9`, hyphens, and underscores. A raw `path::symbol` string is not a legal id, which is why the example hashes it. See [design primary keys](/capabilities/indexing/how_to/design_primary_keys).
+- **468 bytes per individual filterable value.** Deeply nested monorepo paths used as filter values can approach this.
+- **100MB default payload limit** per indexing request, so send chunks in batches rather than one request per repository.
+
+Not specified anywhere in these docs: an optimal chunk size in lines or tokens for code. The 120-line ceiling in the example is a starting point, not a documented value. Measure it on your own repository and queries, as described in [choosing chunk size for semantic search](/guides/choosing-chunk-size).
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="How to chunk documents for search" href="/guides/how-to-chunk-documents">
+    The general strategies and how to evaluate a chunking change
+  </Card>
+  <Card title="Tokenization" href="/capabilities/indexing/advanced/tokenization">
+    Separator tokens, non-separator tokens, and the dictionary setting
+  </Card>
+  <Card title="Document template best practices" href="/capabilities/hybrid_search/advanced/document_template_best_practices">
+    What to embed and what to leave out
+  </Card>
+  <Card title="Configure searchable attributes" href="/capabilities/full_text_search/how_to/configure_searchable_attributes">
+    Ordering fields by importance for relevancy
+  </Card>
+</CardGroup>

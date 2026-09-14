@@ -1,0 +1,121 @@
+---
+title: Controlling Elasticsearch costs
+description: Your Elasticsearch bill keeps growing and you need to know which line items you can actually cut before deciding whether to re-platform.
+keywords: elasticsearch bill too high, elastic cloud invoice breakdown, reduce elasticsearch spend, search infrastructure budget, elasticsearch node sizing cost, replica shards cost, hot warm cold tiers price, snapshot storage cost, egress charges search cluster, cheaper elasticsearch alternative
+boost: 2
+---
+
+Most Elasticsearch bills are dominated by three things: nodes provisioned for peak load rather than average load, replicas multiplying every byte you store, and data transfer nobody put in the budget. Snapshot storage and warm or cold tiers are usually the smaller lines. The fastest reductions, in order, are cutting replica counts on indices you can rebuild, consolidating oversharded indices, trimming mappings so fields you never search or aggregate stop consuming disk, and moving clients into the same region as the cluster. Those steps routinely remove a large fraction of a bill without changing vendors. What they cannot change is the floor: a JVM-based, replicated, cluster-oriented engine has a minimum viable footprint that stays expensive even when idle.
+
+## Where the money actually goes
+
+**Nodes sized for peak.** Elasticsearch nodes are provisioned so the worst hour of the month still works. Because the JVM heap has to be reserved up front and the filesystem cache needs room alongside it, a node cannot flex the way a stateless service does. You pay for the peak all month.
+
+**Heap plus cache on the same machine.** Standard guidance is to give the JVM roughly half the machine's RAM and leave the rest to the filesystem cache, with heap capped near 32 GB so the JVM can keep using compressed object pointers. {/* VERIFY: the ~50% heap rule and the compressed-oops threshold near 32 GB */} That means a machine with 64 GB of RAM offers around 32 GB of heap and 32 GB of cache, so the usable capacity per dollar is roughly half of what the instance list price implies.
+
+**Replica multiplication.** Every replica is a full copy of a primary shard, on separate hardware, consuming its own disk and its own cache. Going from one replica to two does not add a little cost, it adds another complete copy of the dataset plus the nodes to hold it.
+
+**Oversharding.** Shards carry fixed overhead in heap and file handles regardless of how much data they hold. A cluster with thousands of small shards burns heap on bookkeeping, which pushes you to nodes you would not otherwise need. Elastic's own sizing guidance points at tens of gigabytes per shard rather than hundreds of megabytes. {/* VERIFY: current Elastic guidance for target shard size and shards per GB of heap */}
+
+**Tiers and snapshots.** Hot, warm, cold, and frozen tiers lower the per-gigabyte rate for aging data, with the coldest tier served from object storage. {/* VERIFY: exact tier names and which ones are backed by searchable snapshots in the current release */} Snapshot repositories are cheap per gigabyte but accumulate forever without a retention policy.
+
+**Data transfer.** The line nobody forecasts. Cross-availability-zone replication traffic, snapshot writes, and responses to clients outside the cluster's region all bill as egress. {/* VERIFY: which transfer categories Elastic Cloud bills and at what boundaries */} A chatty autocomplete integration can generate more transfer than the entire indexing pipeline.
+
+## How to cut the bill without changing engines
+
+These are worth doing first, and they are worth doing even if you never move.
+
+1. **Drop replicas on rebuildable indices.** If an index is derived from a source of truth you still hold, such as a product catalog in Postgres, a replica buys availability, not durability. Reducing `number_of_replicas` from 2 to 1 on those indices removes a full copy of the data and its cache pressure.
+2. **Consolidate shards.** Reindex many small indices into fewer, larger ones, and use rollover so time-based indices reach a sensible size before rotating. Force merge read-only indices to reduce segment count.
+3. **Trim the mapping.** Fields you display but never query do not need to be indexed. Fields you never sort, aggregate, or script on do not need doc values. Disabling both on the right fields is often the single biggest disk reduction available, because on a wide document the analysis structures outweigh the source text.
+4. **Apply lifecycle policies.** Index lifecycle management moving data to cheaper tiers after a defined age turns a flat high rate into a decaying one. Pair it with a snapshot retention policy so backups expire.
+5. **Colocate clients.** Put the application in the same region, and ideally the same zone, as the cluster. Cap `size`, avoid returning `_source` when you only need IDs, and use `_source` filtering to shrink responses.
+6. **Separate analytics from search.** Log and metrics workloads are what make clusters large. If application search shares the cluster with observability data, the search workload is subsidizing an analytics bill.
+
+## Why the floor stays high
+
+After all of that, a production Elasticsearch deployment still needs a minimum of three master-eligible nodes for quorum, heap reserved whether or not queries arrive, and enough RAM that the working set stays in filesystem cache. The architecture is correct for petabyte-scale analytics across hundreds of nodes. It is expensive when the actual job is search over a few million documents, because the cluster machinery is priced in whether you use it or not.
+
+## What a lower resource floor changes
+
+Meilisearch stores data in [LMDB, a memory-mapped key-value store](/resources/internals/storage), so the operating system pages data in from disk on demand instead of the engine reserving a heap up front. In practice a [RAM to disk ratio around 1/3 does not materially affect performance](/resources/internals/storage#memory-mapping), and for many workloads roughly 1/10 works. Meilisearch will not crash simply because the dataset on disk exceeds available RAM. That single property changes the arithmetic, because RAM is the expensive component and you no longer have to buy enough of it to hold everything twice.
+
+On [Meilisearch Cloud](/capabilities/platform/billing/pricing_model), resource-based projects bill compute hourly by tier, disk at $0.165 per GiB with a 32 GB minimum, and bandwidth at $0.15 per GB. Tier sizing is driven by index size, estimated as `documents x average document size x 5`, where the multiplier covers the inverted index, facet data, and prefix structures.
+
+The script below audits an existing instance: it reports per-index disk footprint, flags reclaimable space, recommends a tier, and estimates the disk and bandwidth portion of a monthly bill.
+
+```javascript
+// npm install meilisearch   (Node.js 18+, for global fetch)
+// export MEILISEARCH_URL="https://your-project.meilisearch.io"
+// export MEILISEARCH_KEY="your_admin_api_key"
+import { Meilisearch } from 'meilisearch'
+
+const HOST = process.env.MEILISEARCH_URL
+const KEY = process.env.MEILISEARCH_KEY
+const client = new Meilisearch({ host: HOST, apiKey: KEY })
+
+const GIB = 1024 ** 3
+const DISK_USD_PER_GIB = 0.165   // Cloud resource-based projects
+const MIN_DISK_GIB = 32          // provisioned minimum
+const BANDWIDTH_USD_PER_GB = 0.15
+const TIERS = [
+  { name: 'XS', ramGiB: 1 }, { name: 'S', ramGiB: 2 },
+  { name: 'M', ramGiB: 4 }, { name: 'L', ramGiB: 8 },
+  { name: 'XL', ramGiB: 16 }, { name: '2XL', ramGiB: 32 },
+  { name: '4XL', ramGiB: 64 }
+]
+
+const stats = await client.getStats()
+let reclaimable = 0
+
+console.log('index                 docs        on disk    in use   waste')
+for (const [uid, i] of Object.entries(stats.indexes)) {
+  const waste = i.indexSize - i.usedIndexSize
+  const pct = i.indexSize ? (waste / i.indexSize) * 100 : 0
+  reclaimable += waste
+  console.log(
+    `${uid.padEnd(20)} ${String(i.numberOfDocuments).padStart(9)} ` +
+    `${(i.indexSize / GIB).toFixed(2).padStart(9)}G ` +
+    `${(i.usedIndexSize / GIB).toFixed(2).padStart(7)}G ` +
+    `${pct.toFixed(0).padStart(5)}%`
+  )
+  // Compaction is a normal task and reclaims space one index at a time.
+  if (pct > 30) {
+    const res = await fetch(`${HOST}/indexes/${uid}/compact`, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${KEY}` }
+    })
+    console.log(`  -> compaction enqueued:`, (await res.json()).taskUid)
+  }
+}
+
+const diskGiB = Math.max(stats.databaseSize / GIB, MIN_DISK_GIB)
+const tier = TIERS.find(t => t.ramGiB > stats.usedDatabaseSize / GIB) ?? TIERS.at(-1)
+const monthlyEgressGB = 50 // replace with your measured egress
+
+console.log(`\ntotal on disk     ${(stats.databaseSize / GIB).toFixed(2)} GiB`)
+console.log(`reclaimable       ${(reclaimable / GIB).toFixed(2)} GiB`)
+console.log(`suggested tier    ${tier.name} (${tier.ramGiB} GB RAM)`)
+console.log(`disk + bandwidth  $${(
+  diskGiB * DISK_USD_PER_GIB + monthlyEgressGB * BANDWIDTH_USD_PER_GB
+).toFixed(2)}/month, compute billed separately by tier`)
+```
+
+Run it before and after a settings cleanup. Removing fields from [searchable attributes](/capabilities/full_text_search/how_to/configure_searchable_attributes) is the equivalent of trimming an Elasticsearch mapping, and it shows up directly in `indexSize`.
+
+## Limits and constraints
+
+- **LMDB does not return freed pages to the operating system automatically.** Disk usage grows over time even after deletions. Reclaiming it requires an explicit [index compaction](/capabilities/indexing/how_to/compact_an_index) via `POST /indexes/{index_uid}/compact`. Compaction is never triggered automatically, on Cloud or self-hosted.
+- **Compaction is a queued task.** It delays anything queued behind it, so schedule it during low traffic. Compact when the gap between `indexSize` and `usedIndexSize` exceeds about 30%. Weekly is a reasonable baseline for indices updated a few times a day.
+- **Task queue compaction is separate.** `POST /tasks/compact` compacts the task database and requires an instance restart before writes safely resume.
+- **Final database size cannot be predicted reliably.** It depends on settings, facets, languages, and relevancy rules. The `x5` estimate is a planning figure, not a guarantee. As a measured reference point, a 9.1 MB JSON dataset of 19,553 documents produced a 224 MB database using about 305 MB of RAM.
+- **Indexing is the memory-intensive phase.** By default the indexer uses up to two thirds of available memory and no more than half the CPU cores, so search stays responsive. See [RAM and multi-threading](/resources/self_hosting/performance/ram_multithreading).
+- **Cloud tiers 2XL and above are not self-serve**, and Cloud prices vary slightly by region. The figures above are list rates shown in the Cloud UI at the time of writing.
+- **No claim is made here about Elastic Cloud prices.** Elasticsearch cost items above are architectural, not pricing quotes. Check your own invoice for rates.
+
+## Next steps
+
+- [Meilisearch Cloud pricing model](/capabilities/platform/billing/pricing_model) for tier sizing and the index size formula
+- [Migrating from Elasticsearch](/resources/migration/elasticsearch_migration) for data export, query translation, and settings mapping
+- [Meilisearch vs Elasticsearch](/resources/comparisons/elasticsearch) for where Elasticsearch remains the right tool
+- [Indexing best practices](/capabilities/indexing/advanced/indexing_best_practices) for reducing index size before you size a machine

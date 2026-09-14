@@ -1,0 +1,170 @@
+---
+title: How to design search tools for LLM tool calling
+description: Your model calls the search tool but puts the whole question in the query string, ignores the filter parameters, and keeps paginating after the results run out.
+keywords: llm tool schema for search, function calling search parameters, json schema tool definition search, model ignores filter arguments, agent stuffs everything in query string, tool description writing for retrieval, zero results response for agents, stop agent pagination loop, limit tokens returned to model, enum values in tool parameters, ai sdk tool with meilisearch, structured tool arguments retrieval
+boost: 2
+---
+
+Expose one search tool with a small set of typed parameters, and never hand the model a raw filter string. Give it `query` plus a few named, enumerated filter arguments, then build the [Meilisearch filter expression](/capabilities/filtering_sorting_faceting/advanced/filter_expression_syntax) yourself on the server side. Cap the payload with `limit` and `attributesToRetrieve` so a call costs a predictable number of tokens. Return a structured object rather than a bare array, so a zero-result call can tell the model which filter excluded everything and which values actually exist. That single design choice, structured arguments in and structured meaning out, fixes most of what looks like a bad model and is actually a bad tool schema.
+
+## Why models put everything in the query string
+
+A model fills whichever parameter looks most likely to work. If your schema offers `query: string` and `filter: string`, the filter parameter is the risky one: the model has to guess a syntax it has never seen, guess attribute names it cannot list, and guess valid values it cannot enumerate. Concatenating everything into `query` always "works" in the sense that it returns something. So it does that.
+
+Three fixes, in order of impact.
+
+**Replace the filter string with named parameters.** Instead of `filter`, expose `category`, `max_price`, and `published_after`. Each one has a type, and the ones with a bounded value set have an `enum`. The model now picks from a list instead of inventing syntax, and your server owns the translation into `"category = 'shoes' AND price <= 120"`. A malformed filter becomes impossible rather than a runtime error the model has to recover from.
+
+**Enumerate values from the index, not from memory.** Hardcoded enums drift the moment someone adds a category. Build them at startup from your data: call `POST /indexes/{index_uid}/facet-search` with a `facetName` and an empty `facetQuery` to read the values of a facet, or run a placeholder search with `facets` set and read `facetDistribution`. For a facet with a handful of values, inline the whole list in the enum. For a high-cardinality facet like brand or author, do not inline thousands of values into the schema. Expose a separate lookup tool backed by [facet search](/capabilities/filtering_sorting_faceting/how_to/facet_search) so the model can resolve "nike" to the exact stored value before it filters on it.
+
+**Write the description for a reader who cannot see the index.** The description is the only documentation the model gets. Say what is in the index, in what unit numbers are expressed, and give one example call. "Search the product catalog. `max_price` is in USD. For 'cheap running shoes under 100', call with `query: 'running shoes'`, `category: 'shoes'`, `max_price: 100`" teaches the split between query text and filters more reliably than any instruction in the system prompt.
+
+## Bound what comes back before it reaches the context
+
+A search hit is a whole document by default, which means the model can burn thousands of tokens on fields it will never cite. Three parameters control this.
+
+`attributesToRetrieve` lists the fields to include in each hit. Set it explicitly to the identifier, the title, the URL or anchor, and the text the model will quote. Everything else stays out. Note that [`displayedAttributes`](/capabilities/full_text_search/how_to/configure_displayed_attributes) still applies underneath: a field excluded there cannot be retrieved here.
+
+`attributesToCrop` with `cropLength` returns a short excerpt around the matched terms in each hit's `_formatted` object instead of a full body field. `cropLength` counts words and defaults to `10`, so raise it to something a model can actually reason over, for example 60.
+
+`limit` defaults to `20`. For an agent, that is usually too many. Three to eight hits is the range where the answer is supported and the context is not flooded. Make `limit` a tool parameter with a maximum, and clamp it server side anyway, because a model will ask for 100.
+
+## Return structured results, not a bare array
+
+Serialize the response as an object the model can reason about, with the hits under a key, a count, and a boolean saying whether more exist. A bare JSON array gives the model no place to learn anything except "here are some documents".
+
+This matters most when there are no hits. An empty array reads as "nothing exists", so the model apologizes and stops. What actually happened is usually a filter: a query matching 400 documents intersected with a filter matching 12 can produce zero. Meilisearch already relaxes multi-word queries on its own, since the default `matchingStrategy` is `last`, which drops terms from the end until it finds enough results, so an empty set rarely means the query text was too specific.
+
+So when the hit count is zero, re-run the search without the filters and return a message saying which filters were applied, how many results the unfiltered query would have returned, and the top facet values available. The model then retries correctly instead of giving up. The same guidance applies to human-facing search, covered in [how to handle zero-result searches](/guides/handle-zero-result-searches).
+
+## Prevent pagination loops
+
+Do not expose `offset`. A model given an offset parameter will increment it until something stops it, and nothing will: past the end of the result set, Meilisearch returns an empty `hits` array for every further page, which the model may read as a transient failure worth retrying.
+
+Expose an opaque `cursor` instead, hand back `has_more: false` the moment the returned count is below the requested limit, and refuse cursors past a fixed depth. Say the depth in the tool description, for example "at most 3 pages". Also set a step ceiling in the agent framework itself, `stopWhen: stepCountIs(n)` in the [AI SDK](/getting_started/integrations/ai_sdk), so a loop terminates even if your tool logic has a hole in it.
+
+## A complete search tool
+
+This defines one tool with typed parameters, enum values read from the index at startup, a bounded payload, a terminating cursor, and an informative zero-result path.
+
+```ts
+import { generateText, tool, stepCountIs } from "ai";
+import { openai } from "@ai-sdk/openai";
+import { MeiliSearch } from "meilisearch";
+import { z } from "zod";
+
+const client = new MeiliSearch({
+  host: process.env.MEILISEARCH_URL!,
+  apiKey: process.env.MEILISEARCH_KEY!,
+});
+const index = client.index("products");
+
+const PAGE_SIZE = 5;
+const MAX_PAGES = 3;
+
+// Read real facet values so the enum never drifts from the data.
+const { facetDistribution } = await index.search("", {
+  facets: ["category"],
+  limit: 0,
+});
+const categories = Object.keys(facetDistribution?.category ?? {});
+
+const searchProducts = tool({
+  description:
+    "Search the product catalog. Put only descriptive words in `query`; " +
+    "use `category` and `max_price` for constraints. `max_price` is in USD. " +
+    "Example: for 'cheap running shoes under 100', call with " +
+    "query='running shoes', category='shoes', max_price=100. " +
+    "At most 3 pages are available.",
+  inputSchema: z.object({
+    query: z.string().describe("Descriptive keywords only, no prices or categories"),
+    category: z.enum(categories as [string, ...string[]]).optional(),
+    max_price: z.number().positive().optional(),
+    page: z.number().int().min(1).max(MAX_PAGES).default(1),
+  }),
+  execute: async ({ query, category, max_price, page }) => {
+    // The server owns filter syntax. The model never writes it.
+    const conditions: string[] = [];
+    if (category) conditions.push(`category = '${category.replace(/'/g, "\\'")}'`);
+    if (max_price !== undefined) conditions.push(`price <= ${max_price}`);
+    const filter = conditions.join(" AND ");
+
+    const params = {
+      filter: filter || undefined,
+      limit: PAGE_SIZE,
+      offset: (page - 1) * PAGE_SIZE,
+      attributesToRetrieve: ["id", "name", "price", "category", "url"],
+      attributesToCrop: ["description"],
+      cropLength: 60,
+    };
+
+    const res = await index.search(query, params);
+
+    if (res.hits.length === 0 && filter) {
+      // Explain the empty set instead of returning nothing.
+      const unfiltered = await index.search(query, {
+        limit: 0,
+        facets: ["category"],
+      });
+      return {
+        results: [],
+        has_more: false,
+        note:
+          `No documents matched with filters [${filter}]. ` +
+          `Without filters this query matches about ${unfiltered.estimatedTotalHits} documents. ` +
+          `Available categories: ${Object.keys(unfiltered.facetDistribution?.category ?? {}).join(", ")}. ` +
+          `Retry with a different category or a higher max_price.`,
+      };
+    }
+
+    return {
+      results: res.hits.map((hit) => ({
+        id: hit.id,
+        name: hit.name,
+        price: hit.price,
+        url: hit.url,
+        excerpt: hit._formatted?.description,
+      })),
+      // Terminates: false as soon as a short page or the depth cap is reached.
+      has_more: res.hits.length === PAGE_SIZE && page < MAX_PAGES,
+    };
+  },
+});
+
+const { text } = await generateText({
+  model: openai("gpt-5.4-mini"),
+  prompt: "Find me waterproof running shoes under 120 dollars.",
+  tools: { searchProducts },
+  stopWhen: stepCountIs(5),
+});
+
+console.log(text);
+```
+
+## Limits and constraints
+
+- `limit` defaults to `20` and `offset` to `0`. `limit` and `offset` are ignored when `page` or `hitsPerPage` is set, and `page` and `hitsPerPage` must be used together.
+- `cropLength` defaults to `10` words and applies only when `attributesToCrop` is set. Query terms and stop words both count toward that length.
+- Every attribute used in a filter, in `distinct`, or as a facet must be declared in `filterableAttributes` first. An undeclared attribute returns an error, not an empty result set.
+- Facet search matches only the first word of `facetQuery`, and does not work on numeric fields. Store numeric facet values as strings if you need type-ahead over them.
+- Meilisearch ranks up to `maxTotalHits` documents per query, `1000` by default, set through the [pagination setting](/reference/api/settings/update-pagination). Deep pagination past that returns nothing regardless of your cursor logic.
+- `rankingScoreThreshold` accepts `0.0` to `1.0`, and hits it removes stop counting toward `estimatedTotalHits`, `totalHits`, and the facet distribution. Useful as a floor for agent retrieval, but it makes the count in your zero-result message less informative.
+- Tool schemas are sent with every model request, so a large inline enum is paid for on every call, not once. {/* VERIFY: whether specific providers cap JSON Schema size or enum length for tool definitions, and at what value */}
+- Provider tool-calling APIs generally accept JSON Schema, but support for advanced keywords such as `oneOf`, `$ref`, and `format` varies. Keep parameter schemas to flat objects of strings, numbers, booleans, and enums. {/* VERIFY: current per-provider JSON Schema subset support for OpenAI and Anthropic tool definitions */}
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="AI SDK integration" href="/getting_started/integrations/ai_sdk">
+    The prebuilt Meilisearch search tool for the Vercel AI SDK.
+  </Card>
+  <Card title="Filter expression reference" href="/capabilities/filtering_sorting_faceting/advanced/filter_expression_syntax">
+    Every operator your server-side filter builder can emit.
+  </Card>
+  <Card title="Facet search" href="/capabilities/filtering_sorting_faceting/how_to/facet_search">
+    Resolve a model's approximate value to an exact stored one.
+  </Card>
+  <Card title="Display source documents" href="/capabilities/agentic_search/how_to/display_source_documents">
+    Show users which documents the agent actually used.
+  </Card>
+</CardGroup>

@@ -1,0 +1,144 @@
+---
+title: Why a pure vector database gives poor keyword results
+description: Your vector search returns plausible but wrong results when someone types a SKU, a person's name, or an exact phrase, and you need to know whether sparse vectors fix it or you need a different engine.
+keywords: vector search exact match fails, embedding search sku not found, semantic search wrong results product code, pinecone keyword search, qdrant bm25 hybrid, sparse dense vectors, reciprocal rank fusion rrf, vector database full text search, rag retrieval misses exact terms, cosine similarity part number, dense retrieval negation, hybrid retrieval vs pure semantic
+boost: 2
+---
+
+A vector search never fails to return results, which is exactly the problem. Nearest neighbor search over embeddings always hands back the `k` closest vectors ranked by distance, so a query for `BRV-ST220` returns the ten products whose descriptions happen to sit nearest in embedding space, not the one product that actually carries that code. Embeddings compress a passage into a few hundred or few thousand floats, and that compression preserves topic and tone while discarding the low-frequency tokens (identifiers, surnames, model numbers, exact word order) that exact-match queries depend on. There is no `contains` operator in a dot product. The usual repair is to run a sparse keyword index alongside the dense one and fuse the two result lists, which works but leaves you operating two retrieval systems.
+
+## What embedding similarity actually measures
+
+An embedding model maps variable-length text to a fixed-length vector, then retrieval scores candidates by cosine similarity or dot product against the query vector. Two properties of that pipeline cause most of the surprises:
+
+**Rare tokens contribute almost nothing.** Text is split into subword pieces before embedding, so a code like `BRV-ST220` becomes a handful of fragments that carry no learned meaning. The model has no signal to preserve them, and pooling across the sequence averages whatever weak signal exists into near-nothing. The resulting vector is dominated by the words around the code, which is why searching for a SKU returns products in the same category rather than the product itself.
+
+**Every query gets an answer.** A keyword index can return zero documents, and zero is a truthful answer that your application can handle with a "no results" state or a spelling suggestion. Approximate nearest neighbor search returns the closest vectors regardless of how far away they are. Distance thresholds help, but they are a single global cutoff applied to a similarity distribution that shifts with query length, language, and document type.
+
+## The four query classes that break
+
+| Query class | Example | What a pure vector search returns |
+|---|---|---|
+| Identifiers and codes | `BRV-ST220`, `ISBN 9780143105954`, `error 0x80070005` | Items from the same category, ranked by topical closeness |
+| Proper nouns | `Hannah Arendt`, `Costa Rica`, `Acme Corp` | Documents about similar people, places, or companies |
+| Exact phrases | `"terms of service"`, `"right to be forgotten"` | Documents on the topic, with the phrase absent or split apart |
+| Negation and exclusion | `laptop without a touchscreen` | Touchscreen laptops, because the embedding of the phrase sits close to the embedding of the thing being excluded |
+
+Numeric constraints behave the same way. `under 50 dollars` embeds as "cheap," not as a range predicate, so the result set is a mood rather than a filter.
+
+None of these is a tuning problem. Changing the model, raising dimensions, or rewriting the document template shifts the results without changing the mechanism, because the mechanism is lossy compression followed by a distance comparison.
+
+## What to try inside the vector database first
+
+Before adding a second system, three mitigations are available in most vector stores and are worth exhausting.
+
+**Move exact match into metadata filtering.** Store the SKU, ISBN, or slug as a payload field and filter on it rather than searching for it. Detect identifier-shaped queries in your application with a regular expression and route them to a filtered lookup with no vector component at all. This is the highest-value change and covers the identifier class completely.
+
+**Use sparse vectors for the keyword half.** Pinecone and Qdrant both support sparse vector representations (BM25-style term weights, or learned sparse encoders such as SPLADE) alongside dense vectors, so you can run both retrievals and fuse them. {/* VERIFY: current sparse vector support and naming in Pinecone and Qdrant, including whether fusion is server-side */} Fusion is usually reciprocal rank fusion, which combines result lists by rank position rather than by score. {/* VERIFY: default RRF k constant used by each vendor, commonly cited as 60 */}
+
+**Augment the text you embed.** If your documents put the model number only in a `sku` field, add it to the embedded text with surrounding context ("model number BRV-ST220"). This will not make exact match reliable, but it raises the odds that the code appears in the retrieved chunk that you pass to a reranker or an LLM.
+
+Where these stop helping is ranking quality. Sparse-dense fusion by rank position throws away score magnitude, so a document that keyword matching considered a perfect hit and a document it considered marginal arrive at the fusion step as "rank 1" and "rank 2". There is no shared relevance model, no typo handling on the sparse side unless you build one, and no way to express "exact matches always outrank semantic matches" because the two lists are merged after both are already ranked.
+
+## What the two-system architecture costs
+
+Running a vector database next to a keyword engine is a real, common, and workable design. It is also an ongoing tax:
+
+- **Dual writes.** Every document update has to land in both systems, and every failure mode produces drift that surfaces as results present in one index and missing from the other.
+- **Two consistency models.** Indexing latency differs between the two, so a freshly written document can be semantically findable and keyword invisible for a window you do not control.
+- **Fusion is application code.** The merge lives in your service, which means relevance changes are code deploys instead of configuration.
+- **Two operational surfaces.** Separate scaling, separate backups, separate access control, separate failure alerts.
+
+## How one engine with both retrieval modes avoids it
+
+Meilisearch indexes the keyword side and the vector side of the same documents in the same engine and merges them inside a single query. The [`hybrid`](/capabilities/hybrid_search/overview) search parameter takes a `semanticRatio` between `0.0` (keyword only) and `1.0` (semantic only), defaulting to `0.5`, plus the name of an [embedder](/capabilities/hybrid_search/how_to/choose_an_embedder) configured on the index. Because `semanticRatio` is set per request, the identifier query and the descriptive query in the same application can use different balances without a second index.
+
+The exact-match half is a real full-text engine rather than a bolt-on. Double quotes give you [phrase search](/capabilities/full_text_search/getting_started/phrase_search), a leading `-` excludes a word or phrase, and misspellings are absorbed by [typo tolerance](/capabilities/full_text_search/relevancy/typo_tolerance_settings), which can be disabled per attribute so that product codes still have to match exactly. Filters are evaluated before the vector graph is traversed rather than after retrieval, so a filtered semantic search cannot silently return fewer results than requested. See [vector storage](/resources/internals/hannoy) for how that is implemented.
+
+The block below builds a working index from nothing and runs the four query classes against it.
+
+```javascript
+// npm install meilisearch
+import { Meilisearch } from 'meilisearch'
+
+const client = new Meilisearch({
+  host: process.env.MEILISEARCH_URL, // for example https://your-project.meilisearch.io
+  apiKey: process.env.MEILISEARCH_KEY,
+})
+
+const index = client.index('products')
+
+// 1. Documents. A vector store's payload fields map directly onto document fields.
+await client.waitForTask(
+  (await index.addDocuments([
+    { id: 1, name: 'Sandwich toaster', sku: 'BRV-ST220', brand: 'Breville',
+      description: 'Two slice press with non-stick plates', price: 79, touchscreen: false },
+    { id: 2, name: 'Espresso machine', sku: 'DLG-EC685', brand: 'De Longhi',
+      description: 'Manual espresso maker with milk frother', price: 249, touchscreen: false },
+    { id: 3, name: 'Smart oven', sku: 'BRV-SO900', brand: 'Breville',
+      description: 'Countertop convection oven with a touchscreen panel', price: 399, touchscreen: true },
+  ])).taskUid
+)
+
+// 2. Keyword-side settings. Codes must match exactly, so typo tolerance is off for `sku`.
+await client.waitForTask(
+  (await index.updateSettings({
+    searchableAttributes: ['name', 'brand', 'sku', 'description'],
+    filterableAttributes: ['sku', 'brand', 'price', 'touchscreen'],
+    typoTolerance: { disableOnAttributes: ['sku'], disableOnNumbers: true },
+  })).taskUid
+)
+
+// 3. Vector side. Meilisearch generates and caches every embedding itself.
+await client.waitForTask(
+  (await index.updateEmbedders({
+    'products-openai': {
+      source: 'openAi',
+      model: 'text-embedding-3-small',
+      apiKey: process.env.OPENAI_API_KEY,
+      documentTemplate: '{{doc.brand}} {{doc.name}} ({{doc.sku}}): {{doc.description}}',
+    },
+  })).taskUid
+)
+
+const embedder = 'products-openai'
+
+// 4a. Identifier: keyword only. No embedding is generated, so no wrong-but-close neighbors.
+console.log(await index.search('BRV-ST220', { hybrid: { semanticRatio: 0.0, embedder } }))
+
+// 4b. Description: semantic only. Matches meaning with none of the query words present.
+console.log(await index.search('something to make coffee at home', {
+  hybrid: { semanticRatio: 1.0, embedder },
+  rankingScoreThreshold: 0.5, // drop weak neighbors instead of returning them anyway
+}))
+
+// 4c. Mixed intent: both halves, merged and ranked in one pass.
+console.log(await index.search('Breville countertop oven', { hybrid: { semanticRatio: 0.5, embedder } }))
+
+// 4d. Exclusion: a filter is a hard constraint, unlike "without" inside an embedded query.
+console.log(await index.search('oven', {
+  hybrid: { semanticRatio: 0.3, embedder },
+  filter: 'touchscreen = false AND price < 300',
+}))
+
+// 4e. Exact phrase, plus a negated term, on the keyword side.
+console.log(await index.search('"milk frother" -toaster', { hybrid: { semanticRatio: 0.0, embedder } }))
+```
+
+## Limits and constraints
+
+- **`semanticRatio` runs from `0.0` to `1.0` and defaults to `0.5`.** The `embedder` field inside `hybrid` is required; there is no implicit default embedder. When `q` is empty and `semanticRatio` is above `0`, the search is purely semantic.
+- **Only the first 10 words of a query are considered.** Everything after the tenth term is ignored, which matters for pasted natural-language queries coming out of a chat interface.
+- **Typo tolerance allows at most two typos per word**, gated by word length (1 to 4 characters allow none, 5 to 8 allow one, 9 or more allow two). A typo on the first character counts as two.
+- **`rankingScoreThreshold` takes a value between `0.0` and `1.0`.** Excluded hits do not count toward `estimatedTotalHits`, `totalHits`, or the facet distribution. Combined with `page` and `hitsPerPage` it can reduce performance, because every matching document must be scored.
+- **A search returns at most 1000 results by default**, adjustable through the `maxTotalHits` pagination setting. An index holds at most 4,294,967,296 documents.
+- **Changing `model`, `source`, `documentTemplate`, `dimensions`, or `pooling` on an embedder re-embeds every document**, which costs real money with a paid provider on a large index. Changing [`distribution`](/capabilities/hybrid_search/advanced/tune_distribution) is the documented exception and does not trigger a reindex.
+- **Vector storage is disk-backed, not RAM-resident.** The graph costs roughly 200 bytes per vector in edges, and [binary quantization](/capabilities/hybrid_search/advanced/binary_quantization) compresses a 1536-dimension vector from about 6 KB to about 192 bytes, at the cost of approximate rather than full-precision similarity.
+- **Filters are applied before the vector graph is traversed**, so filtered semantic search does not suffer the post-filtering recall loss where a fixed `k` is retrieved first and then thinned.
+
+## Next steps
+
+- [Semantic vs hybrid search](/capabilities/hybrid_search/advanced/semantic_vs_hybrid) gives a per-use-case table of starting `semanticRatio` values, including when pure semantic really is the right answer.
+- [Custom hybrid ranking](/capabilities/hybrid_search/advanced/custom_hybrid_ranking) covers tuning the ratio systematically and running more than one embedder on the same index.
+- [Vector storage](/resources/internals/hannoy) documents the disk-backed ANN implementation, its distance metrics, and how filtered search is evaluated.
+- [Migrating from Qdrant](/resources/migration/qdrant_migration) is a working export and import script that maps collection points onto documents, with a settings and query comparison.

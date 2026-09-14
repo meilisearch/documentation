@@ -1,0 +1,145 @@
+---
+title: When to outgrow Postgres full-text search
+description: Your tsvector search works but is getting slow, ranking is thin, and facet counts are expensive, and you need to know whether to keep tuning Postgres or move search to a dedicated engine.
+keywords: postgres full text search slow, tsvector performance millions of rows, gin index bloat, ts_rank slow order by, postgres faceted search counts, when to replace postgres search, gin_pending_list_limit, postgres search scaling limits, replace tsvector with search engine, postgres search read replica, search engine vs database search
+boost: 2
+---
+
+Keep Postgres full-text search while your searchable set is small, your ranking needs are simple, and search is a minor share of database load. Move search to a dedicated engine when any of these are true: `ORDER BY ts_rank(...) LIMIT n` has to score most of the matching set on every query, you need facet counts across several attributes at once, relevance requires typo tolerance or ordered criteria rather than one score, or GIN index maintenance has become a scheduled operational event. Below are the thresholds, the tuning that helps first, an explicit list of cases where you should stay on Postgres, and one complete migration script.
+
+## The thresholds worth watching
+
+None of these is a hard cliff. They are the points where teams typically stop getting returns from tuning.
+
+**Rows in the searchable set.** Row count alone is a weak signal: a `tsvector` over a short title column behaves very differently from one over long article bodies. What matters is how many rows a typical query matches before ranking. Below roughly 100,000 documents with short text, Postgres is comfortable. Between 100,000 and a few million, broad queries match tens of thousands of rows and ranking becomes the cost center. Above that, latency is dominated by work the index cannot help with. These are rules of thumb, not product limits.
+
+**Ranking cost.** A GIN index finds matching rows quickly. It cannot order them. `ts_rank` and `ts_rank_cd` are functions over the `tsvector`, so `ORDER BY ts_rank(...) DESC LIMIT 10` scores every matching row before discarding all but ten. A query matching 200 rows is fine. One matching 200,000 rows pays 200,000 score computations to return a single page. This is the most common reason Postgres search latency is unpredictable: cheap queries and expensive queries look identical in application code.
+
+**Faceting.** Facet counts are `GROUP BY` aggregations over the matched set, one per facet attribute. Five facets means five aggregations over the same rows, or one pass with `FILTER` clauses to assemble. Either way the cost scales with match count, not page size, and it repeats on every keystroke of a search-as-you-type interface. No index turns a facet count into a lookup.
+
+**Ranking sophistication.** `ts_rank` gives you four weight classes via `setweight` (A, B, C, D) and a normalization flag. That is the whole vocabulary. It cannot express "an exact match always outranks a corrected one", it does not model typos (`pg_trgm` is a separate similarity operator, not part of the rank), and phrase proximity is limited to what `phraseto_tsquery` and the `<->` operator encode. Once product asks for "boost in-stock items, but never above an exact SKU match", you are writing scoring arithmetic by hand in SQL and retuning it by deploy.
+
+**Query concurrency.** Every Postgres connection is a backend process, and search queries share the buffer pool and CPU with your transactional workload. A slow search does not only make search slow, it holds a connection slot and evicts OLTP pages from cache. The threshold is not a QPS number, it is the moment a search spike shows up in unrelated endpoint latency.
+
+**GIN maintenance.** GIN indexes have `fastupdate` enabled by default: new entries land in an unordered pending list and are merged into the main index later. The list is bounded by `gin_pending_list_limit` (default 4MB) {/* VERIFY: gin_pending_list_limit default value and units */}, and whichever query or autovacuum run trips the limit pays for the merge, producing exactly the latency outliers that are hardest to explain. GIN indexes on high-churn text also grow, and reclaiming that space means `REINDEX`, which needs `CONCURRENTLY` {/* VERIFY: REINDEX CONCURRENTLY availability by Postgres version */} or a maintenance window.
+
+## What to fix inside Postgres first
+
+Do these before concluding you have outgrown it. Many teams never need step two.
+
+1. **Store the `tsvector`, do not compute it.** A generated or trigger-maintained `tsvector` column with a GIN index on it, rather than a functional index over `to_tsvector(...)` recomputed at query time.
+2. **Stop ranking the whole match set.** Two-phase it: a CTE that applies selective `WHERE` filters and a `LIMIT` on a cheap ordering, then `ts_rank` over that candidate subset only. You lose global ranking correctness, and for most catalogs nobody notices.
+3. **Weight your fields.** `setweight(to_tsvector('english', title), 'A') || setweight(to_tsvector('english', body), 'B')` gets you title-over-body ordering for free.
+4. **Consider `fastupdate = off`** on GIN indexes where predictable read latency matters more than insert throughput. It trades a slower write path for the absence of merge spikes.
+5. **Offload search to a read replica**, and cache the shapes that are identical for every user, such as empty-query listings and top facet counts.
+
+## Stay on Postgres if
+
+This list covers a lot of applications.
+
+- Your searchable set is small and stable, in the low tens of thousands of rows, and queries are selective.
+- Search is an internal tool, an admin filter, or a report, not a customer-facing feature judged on feel.
+- Users search for identifiers they know exactly: order numbers, email addresses, SKUs. Typo tolerance and relevance ranking add nothing there.
+- You need search results inside a transaction, or consistent with a write that just committed. Any external engine is eventually consistent with your database by construction.
+- Search is one predicate among many in a query with joins and aggregates, and the text match is not the primary selector.
+- You cannot add infrastructure, or you are on a managed Postgres that restricts extensions.
+- The full result set is what you want, not a ranked page of it.
+
+If you are on this list, tune Postgres and move on. A search engine adds a sync pipeline, a second failure mode, and a consistency model to reason about.
+
+## What a dedicated engine changes structurally
+
+The difference is not raw speed at the same work. It is that ranking, faceting, and typo handling become index-time structures rather than query-time computation.
+
+Ranking in Meilisearch is a [bucket sort over ordered criteria](/capabilities/full_text_search/relevancy/ranking_rules), not a single score: `words`, `typo`, `proximity`, `attributeRank`, `sort`, `wordPosition`, `exactness`, applied in that order, with [custom rules](/capabilities/full_text_search/relevancy/custom_ranking_rules) such as `popularity:desc` appended. Every zero-typo document ranks above every one-typo document, and no term frequency can overturn that. Facet counts return in the same response as `facetDistribution` and `facetStats` from [one search request](/capabilities/filtering_sorting_faceting/how_to/filter_with_facets), not from extra aggregations. The corpus also lives in its own process, so a search spike cannot evict your transactional working set.
+
+Postgres remains the source of truth, and you sync a projection of it. The script below does the export, the settings, and a faceted query end to end.
+
+```javascript
+// npm install pg meilisearch
+// Env: PG_CONNECTION_STRING, MEILISEARCH_URL, MEILISEARCH_KEY
+import { Pool } from 'pg'
+import { Meilisearch } from 'meilisearch'
+
+const pool = new Pool({ connectionString: process.env.PG_CONNECTION_STRING })
+
+const client = new Meilisearch({
+  host: process.env.MEILISEARCH_URL, // for example https://your-project.meilisearch.io
+  apiKey: process.env.MEILISEARCH_KEY,
+})
+
+const index = client.index('products')
+
+// 1. Configure the index once. These settings replace ts_rank weighting,
+//    GROUP BY facet counts, and hand-written boosting.
+const settingsTask = await index.updateSettings({
+  searchableAttributes: ['title', 'brand', 'description'], // order sets attribute rank
+  filterableAttributes: ['brand', 'category', 'in_stock', 'price'],
+  sortableAttributes: ['price', 'created_at'],
+  rankingRules: [
+    'words',
+    'typo',
+    'proximity',
+    'attributeRank',
+    'sort',
+    'wordPosition',
+    'exactness',
+    'popularity:desc', // custom rule, applied only as a tiebreaker
+  ],
+  faceting: { maxValuesPerFacet: 20 },
+  pagination: { maxTotalHits: 200 }, // rank 200 deep, not the whole match set
+  searchCutoffMs: 500,
+})
+await client.waitForTask(settingsTask.taskUid)
+
+// 2. Stream rows out of Postgres in batches and push them.
+const BATCH = 5000
+for (let offset = 0; ; offset += BATCH) {
+  const { rows } = await pool.query(
+    `SELECT id, title, brand, category, description,
+            price, in_stock, popularity, created_at
+     FROM products
+     ORDER BY id
+     LIMIT $1 OFFSET $2`,
+    [BATCH, offset],
+  )
+  if (rows.length === 0) break
+
+  const task = await index.addDocuments(rows, { primaryKey: 'id' })
+  await client.waitForTask(task.taskUid)
+  console.log(`indexed ${offset + rows.length} documents`)
+}
+
+// 3. One request returns hits, facet counts, and numeric facet ranges.
+const results = await index.search('wireles hedphones', {
+  filter: ['in_stock = true', 'price < 300'],
+  facets: ['brand', 'category', 'price'],
+  limit: 20,
+})
+
+console.log(results.hits.length)
+console.log(results.facetDistribution) // { brand: { Sony: 12, ... }, ... }
+console.log(results.facetStats)        // { price: { min: 19, max: 299 } }
+
+await pool.end()
+```
+
+## Limits and constraints
+
+- **Meilisearch is not a database replacement.** It holds a searchable projection, Postgres stays the source of truth, and the two are eventually consistent. Read-your-own-write search is not available.
+- **Documents per index: 4,294,967,296.** Attributes per index: 65,536. See [known limitations](/resources/help/known_limitations).
+- **Query terms: 10.** Words after the tenth in a search query are ignored.
+- **Concurrent search requests: 1,000.** Beyond that Meilisearch drops a random queued request and returns a 503 `too_many_search_requests` with `Retry-After: 10`.
+- **`maxTotalHits` defaults to 1,000**, the depth of the ranking pipeline. Lowering it to 100 or 200 is the highest-impact [performance setting](/capabilities/full_text_search/advanced/performance_tuning).
+- **`maxValuesPerFacet` defaults to 100.** Facet cost scales with distinct values, so set it to what your UI actually renders.
+- **`searchCutoffMs` defaults to `null`**, with an internal interruption at 1,500 ms. Do not set it below 500 ms; see [configure search cutoff](/capabilities/full_text_search/how_to/configure_search_cutoff).
+- **Individual `filterableAttributes` values are limited to 468 bytes**, and primary key values to 511 bytes.
+- **Default payload limit is 100 MB** per request, and the Meilisearch Cloud upload interface caps files at 20 MB. Batch large imports.
+- **Postgres numbers above are rules of thumb**, not specifications. Measure your own match counts with `EXPLAIN (ANALYZE, BUFFERS)` before deciding.
+
+## Next steps
+
+- [Migrating from PostgreSQL full-text search](/resources/migration/postgresql_migration) has the full export, transform, and sync walkthrough in JavaScript, Python, and Ruby.
+- [Meilisearch vs PostgreSQL search](/resources/comparisons/postgresql) compares `tsvector` and pgvector feature by feature.
+- [Performance tuning](/capabilities/full_text_search/advanced/performance_tuning) and [optimize facet performance](/capabilities/filtering_sorting_faceting/advanced/optimize_facet_performance) cover the settings used above.
+- [Import large datasets](/capabilities/indexing/how_to/import_large_datasets) covers batching, NDJSON, and task monitoring for the backfill.

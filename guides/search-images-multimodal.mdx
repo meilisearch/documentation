@@ -1,0 +1,190 @@
+---
+title: How to search images and media with multimodal embeddings
+description: You have a folder of photos, product shots, or video thumbnails with no useful text attached, and you need users to find them by describing what they look like.
+keywords: image search by description, text to image search api, search photos without tags, reverse image search, multimodal embeddings pipeline, auto caption images for search, visual product search, video thumbnail search, image similarity search, searchable media library, clip embeddings search, embed pixels and captions
+boost: 2
+---
+
+Embed two things per image, not one: the pixels, and a short text caption. The pixels catch queries about what a picture looks like ("empty beach at sunset"), the caption catches queries about what it *is* ("Eames lounge chair", "invoice", a brand name), and no single representation covers both. In Meilisearch this is one multimodal embedder with two `indexingFragments`, one built from the image URL and one from your text fields. Keep everything you want to filter on (price, date, owner, license) as ordinary document fields, never inside the embedded text. Then search with `q` for words, or with `media` for an uploaded image. The mechanics of the embedder are covered in [image search with multimodal embeddings](/capabilities/hybrid_search/how_to/image_search_with_multimodal); this page is about the pipeline around it.
+
+## What to embed: pixels, captions, or both
+
+Start by classifying your corpus.
+
+**Pixels only** works when queries describe appearance and your images have no text worth indexing: stock photography, user-uploaded moodboards, real estate interiors. A visual embedding handles color, composition, scene, and object presence without you writing a word of metadata.
+
+**Text only** is the right answer more often than people expect. If every image already has a curated title, a category, and a description written by a human, a plain text embedder over those fields will beat a visual embedding on most queries, and it costs less to generate and store. Reach for [a standard text embedder](/capabilities/hybrid_search/how_to/choose_an_embedder) first and only add pixels when you can name the queries it fails on.
+
+**Both** is the default for catalogs. A shopper searching "red running shoes" wants a visual match; a shopper searching "Gel-Kayano 30" wants an exact model name that no vision model can read off a shoe. Configuring two indexing fragments stores one embedding per fragment on each document, so the document can be retrieved through whichever representation is closer to the query.
+
+A useful test: write down twenty real queries from your logs. If more than a few are proper nouns, part numbers, or words printed inside the image, you need the text side too.
+
+## How to generate captions when you have none
+
+Most media libraries have filenames like `IMG_4417.jpg` and nothing else. Generate the text side with a vision language model before indexing, as a batch job, not at query time.
+
+Three rules make generated captions useful rather than decorative:
+
+1. **Constrain the output.** Ask for one or two sentences naming the subject, the setting, and any visible text. Unconstrained captioning produces flowery paragraphs that dilute the embedding.
+2. **Give the model the context it has and the model does not.** Pass the product category, the folder name, or the source page title into the prompt. A model cannot invent that a chair is an Eames lounge chair, but it can use the fact once you supply it.
+3. **Store the caption in its own field and keep it visible.** Put it in `caption`, keep your human-written `title` separate, and never overwrite the human text. When a caption is wrong you want to see which field caused the bad result.
+
+Captioning is a one-time cost per image, so cache aggressively and key the cache on a content hash. Recaption only when the source file changes.
+
+## What metadata to carry, and what not to embed
+
+Every image document should carry, at minimum: a stable `id`, the public `url` of the image, `width` and `height`, a `source` or `owner` field, and whatever your access rules need. Add these to [`filterableAttributes`](/capabilities/filtering_sorting_faceting/getting_started) so a user can narrow a visual search to their own library or to images they are licensed to use.
+
+Do not put that metadata inside the embedded caption. A filter is exact, free, and reversible; an embedding of `"owner: team-42"` is none of those, and it drags the vector away from the visual content. Filters apply to semantic and hybrid searches the same way they apply to keyword search, so there is no reason to smuggle structured data into the text.
+
+One field deserves special care: the image URL. Meilisearch sends that URL to your embedding provider at indexing time, so it must be publicly reachable, or reachable by the provider, for the whole indexing run. Signed URLs that expire in fifteen minutes will fail partway through a large batch. Do not store base64 image bytes in the document itself either; you will multiply your index size for data nobody searches.
+
+## A complete image indexing and search pipeline
+
+This script enables the feature, captions a folder of images, configures the two-fragment embedder, indexes, and runs both search modes. Swap the provider endpoint, model name, and captioning model for whichever services you use. {/* VERIFY: Voyage multimodal endpoint path is written as /v1/multimodal-embeddings in the generated code sample and /v1/multimodalembeddings in combine_text_and_image_search; confirm the current one against Voyage's API docs. Also confirm the captioning model id. */}
+
+```python
+# pip install meilisearch requests
+# export MEILISEARCH_URL="https://ms-xxxxxxxx.meilisearch.io"
+# export MEILISEARCH_KEY="your-admin-key"
+# export VOYAGE_API_KEY="..."          # multimodal embedding provider
+# export CAPTION_API_KEY="..."         # any OpenAI-compatible vision model
+# python index_images.py images.json
+#
+# images.json: [{"id": "1", "url": "https://cdn.example.com/1.jpg",
+#                "title": "Gel-Kayano 30", "category": "running shoes",
+#                "owner": "team-42", "price": 160}]
+
+import base64, json, os, sys
+import requests, meilisearch
+
+MEILI_URL = os.environ["MEILISEARCH_URL"]
+MEILI_KEY = os.environ["MEILISEARCH_KEY"]
+HEADERS = {"Authorization": f"Bearer {MEILI_KEY}"}
+
+# 1. Enable the multimodal experimental feature (once per instance).
+#    On Meilisearch Cloud you can also toggle it in project settings.
+requests.patch(f"{MEILI_URL}/experimental-features",
+               headers=HEADERS, json={"multimodal": True}).raise_for_status()
+
+client = meilisearch.Client(MEILI_URL, MEILI_KEY)
+index = client.index("images")
+
+# 2. Caption every image with a vision model, keyed by id so reruns are cheap.
+CACHE = "captions.json"
+cache = json.load(open(CACHE)) if os.path.exists(CACHE) else {}
+
+def caption(doc):
+    if doc["id"] in cache:
+        return cache[doc["id"]]
+    prompt = (f"This is a product photo in the category '{doc['category']}'. "
+              "In one or two sentences, name the subject, the setting, and any "
+              "text visible in the image. No adjectives you cannot see.")
+    r = requests.post(
+        "https://api.openai.com/v1/chat/completions",
+        headers={"Authorization": f"Bearer {os.environ['CAPTION_API_KEY']}"},
+        json={"model": "gpt-4o-mini", "messages": [{"role": "user", "content": [
+            {"type": "text", "text": prompt},
+            {"type": "image_url", "image_url": {"url": doc["url"]}}]}]},
+        timeout=60)
+    r.raise_for_status()
+    text = r.json()["choices"][0]["message"]["content"].strip()
+    cache[doc["id"]] = text
+    json.dump(cache, open(CACHE, "w"))
+    return text
+
+docs = json.load(open(sys.argv[1]))
+for doc in docs:
+    doc["caption"] = caption(doc)
+
+# 3. Configure one multimodal embedder with two indexing fragments.
+index.update_settings({
+    "filterableAttributes": ["owner", "category", "price"],
+    "searchableAttributes": ["title", "caption", "category"],
+    "embedders": {
+        "visual": {
+            "source": "rest",
+            "url": "https://api.voyageai.com/v1/multimodal-embeddings",
+            "apiKey": os.environ["VOYAGE_API_KEY"],
+            "indexingFragments": {
+                "text": {"value": {"content": [
+                    {"type": "text",
+                     "text": "{{doc.title}}, {{doc.category}}. {{doc.caption}}"}]}},
+                "image": {"value": {"content": [
+                    {"type": "image_url", "image_url": "{{doc.url}}"}]}},
+            },
+            "searchFragments": {
+                "query_text": {"value": {"content": [
+                    {"type": "text", "text": "{{q}}"}]}},
+                "query_image": {"value": {"content": [
+                    {"type": "image_base64",
+                     "image_base64": "data:{{media.image.mime}};base64,{{media.image.data}}"}]}},
+            },
+            "request": {"inputs": ["{{fragment}}", "{{..}}"],
+                        "model": "voyage-multimodal-3"},
+            "response": {"data": [{"embedding": "{{embedding}}"}, "{{..}}"]},
+        }
+    }
+})
+
+# 4. Index. Embeddings are generated by Meilisearch during the task.
+task = index.add_documents(docs, primary_key="id")
+client.wait_for_task(task.task_uid, timeout_in_ms=600_000)
+
+# 5a. Search by description. semanticRatio 0.7 keeps exact model names working.
+print(index.search("red running shoes", {
+    "hybrid": {"embedder": "visual", "semanticRatio": 0.7},
+    "filter": "owner = 'team-42'",
+    "showRankingScore": True,
+    "limit": 10,
+}))
+
+# 5b. Search by example image. Pure semantic, no q, one matching fragment.
+with open("query.jpg", "rb") as f:
+    data = base64.b64encode(f.read()).decode()
+
+print(index.search("", {
+    "hybrid": {"embedder": "visual", "semanticRatio": 1.0},
+    "media": {"image": {"mime": "image/jpeg", "data": data}},
+    "filter": "price < 200",
+    "limit": 10,
+}))
+```
+
+## What quality to expect
+
+Set expectations before you ship, because "it found a beach photo" is not an evaluation.
+
+Visual embeddings are reliable for scenes, dominant colors, object presence, coarse style, and overall composition. They are unreliable for reading text printed inside an image, counting objects, distinguishing near-identical variants (two black sneakers differing in a stitch pattern), identifying specific people, and fine-grained part names. Those are exactly the failures the caption fragment exists to absorb, and even then a caption inherits whatever the vision model got wrong.
+
+If your images are mostly documents rather than pictures, this is the wrong pipeline. Run text extraction instead, as described in [how to search scanned documents with OCR](/guides/search-scanned-documents-ocr).
+
+Measure it: assemble 50 to 100 real queries with a hand-marked correct result each, then track recall at 10 as you change fragments, captions, or `semanticRatio`. Turn on `showRankingScore` while tuning, and use `rankingScoreThreshold` to cut the long tail of weak semantic matches that a pure vector search will always return.
+
+## Limits and constraints
+
+- **Multimodal embedders are experimental.** They require the `multimodal` flag on [the `/experimental-features` route](/reference/api/experimental-features/list-experimental-features), and an experimental API can change between releases, so pin your Meilisearch version before depending on it in production.
+- **Multimodal fragments only work with `source: "rest"`.** `indexingFragments` and `searchFragments` are documented for `rest` embedders, and you must also supply `request` and `response`.
+- **`media` must match exactly one search fragment.** Matching zero fragments or more than one returns an error, so give each fragment a disambiguating field.
+- **`media` is incompatible with `vector`**, requires `hybrid.embedder`, and works on POST search only. See [search with POST](/reference/api/search/search-with-post).
+- **Image-to-image search requires client-side base64 encoding.** Resize to roughly 1024x1024 before encoding to keep payload size and embedding latency down. Self-hosted instances reject payloads above the `--http-payload-size-limit`, which defaults to 100 MB.
+- **Editing fragments has an indexing cost.** Modifying an indexing fragment regenerates the affected embeddings; deleting one by passing `null` removes those embeddings from every document. Changing a search fragment never regenerates anything.
+- **Embedding storage is the real scaling cost.** Two fragments means two vectors per document. [Binary quantization](/capabilities/hybrid_search/advanced/binary_quantization) shrinks them at some loss of precision and cannot be undone once enabled.
+- Per-request caps on image dimensions, file size, and batch size come from your embedding provider, not from Meilisearch. Check your provider's documentation, because Meilisearch surfaces those errors rather than defining them.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Image search with multimodal embeddings" href="/capabilities/hybrid_search/how_to/image_search_with_multimodal">
+    Full embedder reference, fragment syntax, and base64 helpers.
+  </Card>
+  <Card title="Combine text and image search" href="/capabilities/multi_search/how_to/combine_text_and_image_search">
+    Run text and image queries together and weight the results.
+  </Card>
+  <Card title="Image search with user-provided embeddings" href="/capabilities/hybrid_search/how_to/image_search_with_user_embeddings">
+    Generate embeddings yourself when you need a local or custom model.
+  </Card>
+  <Card title="Choose an embedding model" href="/guides/choosing-an-embedding-model">
+    Pick between hosted and self-run models before you commit an index.
+  </Card>
+</CardGroup>

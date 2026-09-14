@@ -1,0 +1,169 @@
+---
+title: Why your embeddings failed to generate
+description: An indexing task failed with a vector or embedding error, some documents have no embeddings, and you need to find the cause and regenerate only the affected documents.
+keywords: vector_embedding_error, template_rendering_error, meilisearch embedding task failed, could not reach embedding server, openai api key invalid indexing, embedder rate limit indexing slow, documents missing embeddings, backfill embeddings, dimension mismatch embedder, embedderRequests failed, regenerate vectors for some documents
+boost: 2
+---
+
+Embeddings are generated while documents are indexed, so a failure appears as a **failed task**, not as a search error. Read the task's `error.code` first, because it splits the problem in two: [`vector_embedding_error`](/reference/errors/error_codes#vector_embedding_error) means the call to the embedding provider failed or the embedder settings are wrong, and `template_rendering_error` means your `documentTemplate` could not be rendered against a document. By default, either one fails the **entire batch**, so none of those documents are indexed at all. Work through the causes below in order, then backfill with the script at the end.
+
+## Read the failed task before changing anything
+
+List failed tasks for the index and print their error objects. A [task's `error`](/capabilities/indexing/tasks_and_batches/monitor_tasks) has four fields: `message`, `code`, `type`, and `link`. It is `null` on any task that did not fail.
+
+```javascript
+const { results } = await client.tasks.getTasks({
+  statuses: ['failed'],
+  indexUids: ['products'],
+})
+results.forEach((t) => console.log(t.uid, t.error?.code, t.error?.message))
+```
+
+Then look at the batch that ran the task. When a batch involves embedding operations, its `stats` object carries `embedderRequests` with `total`, `failed`, and `lastError`. A non-zero `failed` count with a still-succeeding batch is the signal that something is wrong at the provider even though indexing completed. The same fields are visible in the Meilisearch Cloud batch detail panel, documented under [indexing performance](/capabilities/platform/monitoring/indexing_performance).
+
+## Cause 1: the provider rejected your API key
+
+This is the most common `vector_embedding_error`. The key is wrong, revoked, or the account has run out of credit. The message comes from the provider, so it usually names the problem directly.
+
+Fix it by writing a new key into the embedder settings with a partial update, which leaves the rest of the configuration alone:
+
+```javascript
+await client.index('products').updateEmbedders({
+  'products-openai': { source: 'openAi', apiKey: process.env.OPENAI_KEY },
+})
+```
+
+Rotating the key does not re-embed anything by itself. Documents that failed still need the backfill below.
+
+## Cause 2: rate limits and provider outages
+
+Meilisearch [retries rate limit errors automatically](/capabilities/hybrid_search/overview), with no configuration on your side. On a free or low-tier provider account, the symptom is therefore a task that stays in `processing` for a very long time rather than one that fails. If indexing crawls rather than breaks, this is usually why, and the fix is a higher provider tier rather than a Meilisearch setting. See [configuring an OpenAI embedder](/capabilities/hybrid_search/how_to/configure_openai_embedder) for the tier guidance.
+
+An outright outage looks different. The error message states that Meilisearch "could not reach embedding server". Check the provider's status page, then re-enqueue the documents.
+
+## Cause 3: the template references a field some documents do not have
+
+This one fails per document and only on part of your corpus, which is why it often survives testing. If a `documentTemplate` reads `doc.description` and one document in ten thousand has no `description`, rendering throws and the whole batch containing it fails.
+
+The error names the missing field and lists the fields that were available:
+
+```json
+{
+  "message": "error while rendering template: user error: missing field in document: liquid: Unknown index\n  with:\n    variable=doc\n    requested index=doesnotexist\n",
+  "code": "template_rendering_error",
+  "type": "invalid_request"
+}
+```
+
+Fix it by guarding every optional field with a Liquid conditional rather than referencing it directly:
+
+```
+{% if doc.title %}A product called {{ doc.title }}.{% endif %}
+{% if doc.description %}{{ doc.description | truncatewords: 30 }}{% endif %}
+```
+
+You can rehearse this before indexing. The `POST /render-template` route renders your template against a real document and returns the exact string sent to the provider. It is gated behind the `renderRoute` [experimental feature](/resources/help/experimental_features_overview). Full guidance is in [document template best practices](/capabilities/hybrid_search/advanced/document_template_best_practices).
+
+## Cause 4: dimensions, model name, or REST shape do not match
+
+The remaining `vector_embedding_error` causes are configuration mismatches, all listed in the [error reference](/reference/errors/error_codes#vector_embedding_error):
+
+- **Dimension mismatch.** The `dimensions` value in the embedder settings does not match what the model returns. Remove `dimensions` and let Meilisearch infer it, or set it to the model's real output size.
+- **Wrong model name.** A typo in `model`, or a model the account cannot access.
+- **Bad REST embedder wiring.** An invalid `url`, or a `request` and `response` pair that does not describe the provider's actual payload shape. Check both against [configure a REST embedder](/capabilities/hybrid_search/how_to/configure_rest_embedder).
+- **Input too large.** The rendered template exceeds the model's maximum input length. Shorten the template or lower `documentTemplateMaxBytes`.
+
+## When failures are silent instead of loud
+
+The default is loud: one failure kills the batch. The experimental `MEILI_EXPERIMENTAL_CONFIG_EMBEDDER_FAILURE_MODES` environment variable changes that, accepting `ignore_document_template_failures`, `ignore_embedder_failures`, or both as a comma-separated list. With it set, the batch succeeds and the affected documents are indexed **without embeddings**.
+
+That trade is often worth making for a bulk import, but it has a real consequence: documents with no embedding do not appear in semantic or hybrid results. Nothing errors, a slice of your catalog is just invisible to vector search. On Meilisearch Cloud, contact support to enable this flag.
+
+Whichever mode you run, find the gap the same way, using a [vector filter](/capabilities/filtering_sorting_faceting/advanced/filter_expression_syntax):
+
+```
+NOT _vectors.products-openai EXISTS
+```
+
+## Backfill only the affected documents
+
+Do not re-import the whole index. Re-sending every document is billable with a paid provider and pointless for documents that already embedded correctly. Instead, select the documents with no embedding and update them with `_vectors.<embedder>.regenerate` set to `true`, which tells Meilisearch to [generate the embedding for that document on update](/capabilities/hybrid_search/how_to/search_with_user_provided_embeddings).
+
+```javascript
+import { Meilisearch } from 'meilisearch'
+
+const client = new Meilisearch({
+  host: process.env.MEILISEARCH_URL,
+  apiKey: process.env.MEILISEARCH_KEY,
+})
+
+const INDEX = 'products'
+const EMBEDDER = 'products-openai'
+const index = client.index(INDEX)
+
+// 1. Diagnose: what failed, and with which error code.
+const { results: failedTasks } = await client.tasks.getTasks({
+  statuses: ['failed'],
+  indexUids: [INDEX],
+  limit: 20,
+})
+for (const task of failedTasks) {
+  console.log(task.uid, task.type, task.error?.code, task.error?.message)
+}
+
+// 2. Confirm at the provider boundary: how many embedder calls failed.
+const { results: batches } = await client.batches.getBatches({ limit: 10 })
+for (const batch of batches) {
+  const stats = batch.stats?.embedderRequests
+  if (stats) console.log(batch.uid, stats.total, stats.failed, stats.lastError)
+}
+
+// 3. Find documents that are indexed but carry no embedding.
+const missing = await index.getDocuments({
+  filter: `NOT _vectors.${EMBEDDER} EXISTS`,
+  fields: ['id'],
+  limit: 1000,
+})
+console.log(`${missing.total} documents have no embedding`)
+
+// 4. Backfill those documents only, in small batches.
+const ids = missing.results.map((doc) => doc.id)
+for (let i = 0; i < ids.length; i += 100) {
+  const payload = ids.slice(i, i + 100).map((id) => ({
+    id,
+    _vectors: { [EMBEDDER]: { regenerate: true } },
+  }))
+  const task = await index.updateDocuments(payload)
+  const finished = await client.waitForTask(task.taskUid)
+  console.log(finished.status, finished.error?.message ?? '')
+}
+```
+
+Run step 3 again afterwards. When `missing.total` reaches zero, every document has an embedding. If it stops falling, the underlying cause is not fixed yet and you are re-triggering the same failure.
+
+## Limits and constraints
+
+- **A failed batch indexes nothing.** By default, one template rendering failure or one embedder request failure fails the whole batch, including documents that had no problem. Only the experimental failure modes change this.
+- **`documentTemplateMaxBytes` defaults to 400 bytes.** Rendered text past that is truncated silently. Truncation never produces an error, so it is not a cause of failure, only of poor relevance.
+- **Retries on rate limits are automatic** and not configurable. Slow indexing against a free provider tier is expected behavior, not a fault.
+- **Vector filters accept only `EXISTS`.** `_vectors`, `_vectors.{embedder}`, `_vectors.{embedder}.userProvided`, `_vectors.{embedder}.documentTemplate`, `_vectors.{embedder}.regenerate`, and `_vectors.{embedder}.fragments.{fragment}` cannot be used with any other operator.
+- **Changing `source`, `model`, `documentTemplate`, `dimensions`, or `pooling` regenerates every embedding in the index.** Use a targeted backfill instead when only some documents are affected, and expect the provider bill if you change one of those fields on a large index.
+- **Documents without embeddings are excluded from semantic results.** They remain fully searchable by keyword.
+- **REST embedder timeouts** are controlled by the experimental `MEILI_EXPERIMENTAL_REST_EMBEDDER_TIMEOUT_SECONDS` environment variable, set in seconds.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Document template best practices" href="/capabilities/hybrid_search/advanced/document_template_best_practices">
+    Write a template that renders on every document, including incomplete ones.
+  </Card>
+  <Card title="Working with tasks" href="/capabilities/indexing/tasks_and_batches/monitor_tasks">
+    How to read task status, errors, and timestamps.
+  </Card>
+  <Card title="Why your semantic search returns irrelevant results" href="/guides/semantic-search-irrelevant-results">
+    What to check once embeddings generate but the results are still wrong.
+  </Card>
+  <Card title="Why indexing is slow or stuck" href="/guides/indexing-slow-or-stuck">
+    When embedder inference is the hidden bottleneck in your task queue.
+  </Card>
+</CardGroup>

@@ -1,0 +1,165 @@
+---
+title: How to personalize search results
+description: Two users type the same query and should not get the same results: which user signals are worth collecting, which personalization mechanism to use, and how to prove it actually helped.
+keywords: personalized search results, per-user ranking, user profile search, userContext parameter, search personalization cold start, reranking vs user embeddings, boost results per user, search personalization privacy, A/B test search relevance, personalized feed, user preference ranking
+boost: 2
+---
+
+Personalizing search in Meilisearch means sending a short plain-text description of the user with each query. Add a `personalize` object containing a `userContext` string to a search request, and a reranking model reorders the results that query already returned, so a shopper who buys running gear sees trail shoes first for "shoes". That is the cheapest mechanism, and it only reorders. If you need personalization to change *which* documents come back, you need retrieval-level personalization (semantic search over a preference string, or your own user vectors) instead. Everything below assumes you send the profile from your backend: Meilisearch never stores it.
+
+## Which signals are actually worth collecting
+
+Collecting more signals is not the same as personalizing better. The reranker reads a sentence, not a feature vector, so a signal is only worth collecting if it can be stated as a short, affirmative preference.
+
+The signals that survive that test, roughly in order of value:
+
+- **Purchases or completions.** Strong intent, low volume, slow to go stale.
+- **Explicit preferences** from onboarding or a preference center. Cheap, accurate, and the only signal available on day one.
+- **Repeat category or brand views.** Useful once a user has several sessions.
+- **Current-session browsing.** The freshest signal you have and often the most predictive of the next click.
+- **Location and season**, when your catalog is genuinely seasonal or regional.
+
+Two rules constrain how you phrase them. The reranking model [only processes positive signals](/capabilities/personalization/getting_started/personalized_search): "dislikes blue" is not interpretable, "prefers red and black" is. And longer profiles are not better, because extra sentences dilute the important ones while adding latency and tokens. One to three sentences is the working range recommended in [generate user context](/capabilities/personalization/how_to/generate_user_context).
+
+## The three mechanisms and what each costs
+
+| Mechanism | What it changes | Cost |
+| --- | --- | --- |
+| Reranking with `personalize` | Order of the returned set only | One reranking model call per search, plus tokens for the profile |
+| Personalized retrieval with embeddings | Which documents are retrieved | Embedder setup and embedding generation for the whole index |
+| Segment boosting with federated weights | Order, deterministically, by rule | Extra queries per request, no model call |
+
+**Reranking** is the `personalize` parameter. Meilisearch runs the query normally, then the reranker reorders the hits it returned. Because the reranker only sees what the search returned, `limit` sets the size of the pool it can reorder. A `limit` between 20 and 100 is a reasonable starting point; raising it widens the pool but adds latency and tokens.
+
+**Personalized retrieval** changes the candidate set. Two documented routes: pass the profile string as `q` with `hybrid.semanticRatio: 1` so semantic retrieval itself is personalized (in that case you do not need `personalize` at all), or configure a `userProvided` embedder and pass your own user preference vector in the [`vector` search parameter](/capabilities/hybrid_search/how_to/search_with_user_provided_embeddings). The second route means you own vector generation for both documents and users, which is real work, but it is the only option where "the user's taste" is a first-class object you can update incrementally.
+
+**Segment boosting** needs no model. Send a [federated multi-search](/capabilities/multi_search/getting_started/federated_search) with two queries against the same index: one filtered to the user's preferred segment with `federationOptions.weight` above `1.0`, one unfiltered at the default `1.0`. Weight multiplies the relevancy score of results from that query, so preferred items rise without disappearing from the tail. Set `federation.distinct` to a filterable attribute to collapse the document that matches both queries into one hit. This is coarse but deterministic, debuggable, and free of per-request model latency.
+
+## A complete personalized search request
+
+This script builds a profile from stored user data, runs a personalized search, and reports the click back so you can measure the result later. Set `MEILISEARCH_URL` and `MEILISEARCH_KEY` in your environment first, and install the client with `npm install meilisearch`.
+
+```javascript
+import { Meilisearch } from 'meilisearch'
+
+const HOST = process.env.MEILISEARCH_URL
+const KEY = process.env.MEILISEARCH_KEY
+const client = new Meilisearch({ host: HOST, apiKey: KEY })
+
+// 1. Turn stored signals into a short, affirmative profile.
+function buildUserContext(user) {
+  const parts = []
+  if (user.topCategories?.length) parts.push(`Shops for ${user.topCategories.join(' and ')}.`)
+  if (user.favoriteBrands?.length) parts.push(`Prefers ${user.favoriteBrands.join(', ')}.`)
+  if (user.avgOrderValue) {
+    parts.push(user.avgOrderValue < 80 ? 'Budget-conscious.' : 'Buys premium products.')
+  }
+  if (user.sessionCategory) parts.push(`Currently browsing ${user.sessionCategory}.`)
+  return parts.join(' ')
+}
+
+const user = {
+  id: 'user_8412',
+  topCategories: ['running gear'],
+  favoriteBrands: ['Hoka', 'Salomon'],
+  avgOrderValue: 140,
+  sessionCategory: 'trail shoes',
+}
+
+const userContext = buildUserContext(user)
+
+// 2. Search. Omit `personalize` entirely when the profile is empty.
+const params = {
+  limit: 50, // the reranker can only reorder what is returned
+  attributesToRetrieve: ['id', 'title', 'brand', 'price'],
+}
+if (userContext) params.personalize = { userContext }
+
+const results = await client.index('products').search('shoes', params)
+
+console.log(results.hits.map((h, i) => `${i}. ${h.title}`))
+
+// 3. Report the click so personalization can be measured, not assumed.
+async function trackClick(hit, position) {
+  await fetch(`${HOST}/events`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${KEY}`,
+    },
+    body: JSON.stringify({
+      eventType: 'click',
+      eventName: 'Search Result Clicked',
+      indexUid: 'products',
+      objectId: String(hit.id),
+      position,
+      userId: user.id,
+    }),
+  })
+}
+
+await trackClick(results.hits[0], 0)
+```
+
+The `userId` field on the event is mandatory, and it is what lets you compare personalized and non-personalized buckets later. Send the same identifier with the search request itself, using an `X-MS-USER-ID` header, so searches and clicks are attributed to one person instead of one anonymous session. See [bind events to a user](/capabilities/analytics/how_to/bind_events_to_user) and the [`/events` endpoint](/capabilities/analytics/advanced/events_endpoint) for the full field list.
+
+## How to handle cold start
+
+A new user has no profile, and an invented one is worse than none.
+
+1. **Send no `personalize` at all** when the profile string is empty, as in the script above. An empty or near-empty context still costs a reranking round trip and gives the model nothing to work with.
+2. **Fall back to a segment profile.** "Popular with first-time visitors browsing running gear" is a real, honest signal derived from the entry point rather than the person.
+3. **Switch to a personal profile after a handful of interactions.** Current-session category views are usually enough to write one useful sentence.
+4. **Do not personalize the empty-query state with `personalize` alone.** With an empty `q`, Meilisearch returns a fixed candidate set based on ranking rules and filters, so the context can only reorder that fixed set. For a genuinely personalized feed, use the profile as `q` with full semantic search, or run one query per interest area in a [multi-search](/reference/api/multi-search/perform-a-multi-search).
+
+## Where the privacy boundary sits
+
+The `userContext` string leaves your infrastructure: on a self-hosted instance, personalization is enabled with the experimental [`MEILI_EXPERIMENTAL_PERSONALIZATION_API_KEY` option](/resources/self_hosting/configuration/reference), which takes a Cohere API key, so the profile and the query are sent to that reranking provider. Three consequences:
+
+- Keep names, emails, exact addresses, and anything special-category out of the profile. "Based in Montreal, winter season" personalizes; a street address does not.
+- Meilisearch does not store the context. It is a per-request parameter, so deleting a user's profile on your side is sufficient to stop personalizing them.
+- Personalization is not access control. Reranking changes order, never visibility. To restrict what a user can retrieve at all, use tenant tokens and API key scoping described in [security](/capabilities/security/overview), and see [how to isolate tenant data securely](/guides/tenant-data-isolation).
+
+Analytics user IDs are arbitrary strings, so use a pseudonymous identifier that you can rotate rather than an email address.
+
+## How to measure lift rather than assume it
+
+Personalization is the feature most likely to feel like it works while doing nothing, because reordering always looks intentional.
+
+Split traffic deterministically (hash the user ID, send `personalize` for one bucket only), keep both buckets running for at least one full behavioral cycle, then compare on [analytics metrics](/capabilities/analytics/advanced/analytics_metrics):
+
+- **Average click position** is the most sensitive signal. If reranking helps, users click higher in the list.
+- **Click-through rate** tells you whether the reordered set is more attractive overall.
+- **Conversion rate** is the one that pays, though it moves slowest.
+
+Both require [click](/capabilities/analytics/how_to/track_click_events) and [conversion](/capabilities/analytics/how_to/track_conversion_events) events: Meilisearch cannot infer them. On self-hosted instances the `meilisearch_personalized_search_requests` gauge on the [Prometheus endpoint](/capabilities/platform/monitoring/prometheus_endpoint) tells you how many requests actually used personalization, which is the fastest way to catch a bucket that silently stopped sending the parameter.
+
+Algolia and Elasticsearch both ship personalization as a trained model over collected events rather than a per-request profile string, which shifts the work from writing a good sentence to maintaining an event pipeline {/* VERIFY: current Algolia Personalization and Elastic learning-to-rank productization and whether either supports per-request profiles */}.
+
+## Limits and constraints
+
+- `userContext` plus `q` must stay under **2048 tokens** combined. Roughly, one word is 2 to 3 tokens and a paragraph about 128 tokens.
+- Each document sent to the reranker can be at most **32,664 tokens**.
+- The reranker accepts at most **10,000 documents** per request, so `limit` cannot usefully exceed that. Practically, 20 to 100 is the useful range.
+- The reranker can only reorder documents the query returned. It can never promote a document Meilisearch did not retrieve.
+- In a [federated search](/capabilities/multi_search/getting_started/federated_search), `personalize` goes inside the `federation` object. Setting it on an individual query returns an error, and `federation.limit` or `federation.hitsPerPage` sets the reranking pool.
+- Results are sensitive to wording: two phrasings of the same preference can produce different orders. Generate profiles from a template rather than free-form text if you need reproducibility.
+- Meilisearch has no native per-document boost parameter. Use federated weights, or [search rules](/capabilities/search_rules/overview) when you know exactly which document belongs at which position.
+- `federation.distinct` requires the attribute to be filterable in every participating index.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Performing personalized search queries" href="/capabilities/personalization/getting_started/personalized_search">
+    The full reference for the `personalize` parameter, federated search, and feeds.
+  </Card>
+  <Card title="Generate user context" href="/capabilities/personalization/how_to/generate_user_context">
+    Strategies for turning raw behavior into a profile string, and when to regenerate it.
+  </Card>
+  <Card title="Personalize ecommerce search" href="/capabilities/personalization/how_to/personalize_ecommerce_search">
+    An end-to-end product catalog example with signal weighting.
+  </Card>
+  <Card title="Recommendations" href="/capabilities/personalization/getting_started/recommendations">
+    Use the `/similar` endpoint for "related items" alongside personalized search.
+  </Card>
+</CardGroup>

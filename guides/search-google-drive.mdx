@@ -1,0 +1,241 @@
+---
+title: How to search Google Drive
+description: You need a search index over a Google Drive folder that mixes Docs, Sheets, PDFs, and uploaded Office files, without downloading the whole drive every night or showing people files they are not allowed to open.
+keywords: search google drive, index google drive files, google drive search api, make google docs searchable, drive api files list python, google drive changes feed incremental sync, export google docs to text, permission aware drive search, shared drive indexing, google workspace search engine, drive acl filtering, service account domain wide delegation search
+boost: 2
+---
+
+Indexing Google Drive comes down to four decisions. Traverse with `files.list` and a parent query rather than trying to mirror the folder tree. Branch on `mimeType`, because Google-native files (Docs, Sheets, Slides) cannot be downloaded as bytes at all and must go through `files.export`, while uploaded PDFs and Office files download normally. Copy each file's permissions onto every chunk you emit, then enforce them at search time with a [tenant token](/capabilities/security/overview) so a query can never return a file the viewer cannot open in Drive. And after the first crawl, use the changes feed instead of re-enumerating, because a full walk of a large drive costs thousands of API calls to discover that almost nothing moved.
+
+Meilisearch has no Drive connector and accepts only JSON, NDJSON, and CSV, so everything below happens in your pipeline before [adding documents](/capabilities/indexing/how_to/add_and_update_documents).
+
+## How to traverse a drive without walking a tree
+
+`files.list` takes a query string in `q`. The useful form is `'FOLDER_ID' in parents and trashed = false`, which returns the direct children of one folder. Push folders onto a stack, pop until it is empty, and page with `pageToken`. Three flags matter more than the traversal itself:
+
+- `supportsAllDrives` and `includeItemsFromAllDrives` must both be true, or shared drive content is silently missing from every response. This is the single most common reason a crawl returns a fraction of what a person sees in the Drive interface.
+- `fields` is mandatory in practice. The default response carries almost nothing useful, so request `id`, `name`, `mimeType`, `modifiedTime`, `webViewLink`, `shortcutDetails`, and `permissions` explicitly.
+- Shortcuts (`application/vnd.google-apps.shortcut`) hold no content. If you index them directly you get a record with a title and an empty body. Resolve `shortcutDetails.targetId` and index the target once, deduplicating by file id.
+
+For authentication, a service account with domain-wide delegation lets one job read every user's drive, which is what you want for a central index. Per-user OAuth is simpler to set up but means one crawl per user, and it cannot see files shared with people who have not connected their account.
+
+## One pipeline for a folder of mixed file types
+
+A single Drive folder routinely holds four unrelated content types. Branch on `mimeType` once, at the top, and everything downstream stays the same.
+
+| `mimeType` | How to get text |
+| --- | --- |
+| `application/vnd.google-apps.document` | `files.export` as `text/plain` |
+| `application/vnd.google-apps.spreadsheet` | `files.export` as `text/csv` |
+| `application/vnd.google-apps.presentation` | `files.export` as `text/plain` |
+| `application/pdf` | `files.get(alt="media")`, then extract |
+| `.docx`, `.xlsx`, `.pptx` | `files.get(alt="media")`, then unzip the XML |
+| `text/plain`, `text/csv`, `text/markdown` | `files.get(alt="media")`, decode |
+
+Calling `files.get(alt="media")` on a Google-native file fails rather than returning the document, so the branch is not optional. Two export quirks are worth planning around: exporting a Sheet as CSV returns only the first worksheet, so a multi-sheet workbook needs the Sheets API or a per-sheet export, and exporting a Doc as `text/plain` flattens the heading hierarchy you would otherwise chunk on. Exporting as `text/markdown` preserves headings as `#` prefixes {/* VERIFY: whether text/markdown is an accepted export MIME type for Google Docs */}, which makes structural chunking possible.
+
+Chunk after extraction, not before. Whole files make poor search units, and a long Doc will hit a hard attribute limit described below. For PDFs see [how to search PDFs](/guides/search-pdfs), and for uploaded Office files see [how to search Office documents](/guides/search-office-documents).
+
+## How to scope results to each user's actual access
+
+Drive permissions are per file, and your index has no idea they exist. Mirror them.
+
+Request `permissions(type, emailAddress, domain, role)` in `fields` and flatten each entry into a prefixed string: `user:alice@example.com`, `group:eng@example.com`, `domain:example.com`, or `anyone`. Store that array on every chunk as a filterable attribute. Prefixing keeps the user and group id spaces from colliding.
+
+At search time, build the viewer's principal set on your server (their email, their group memberships from the Admin SDK Directory API, their domain, plus `anyone`) and sign a tenant token whose search rule is a single `IN` clause. A document matches when at least one array element matches, per the [filter expression syntax](/capabilities/filtering_sorting_faceting/advanced/filter_expression_syntax#in).
+
+```python
+acl = "principals IN [" + ", ".join(f'"{p}"' for p in viewer_principals) + "]"
+token = client.generate_tenant_token(
+    api_key_uid=os.environ["MEILISEARCH_KEY_UID"],
+    search_rules={"drive": {"filter": acl}},
+    api_key=os.environ["MEILISEARCH_SEARCH_KEY"],
+    expires_at=datetime.now(timezone.utc) + timedelta(minutes=30),
+)
+```
+
+Sign tokens server side only, because signing requires an API key. See [generating tenant tokens](/capabilities/security/how_to/generate_token_third_party) and the [token payload reference](/capabilities/security/advanced/tenant_token_payload). One caveat to test early: Drive returns the `permissions` field only to callers allowed to read it, so a crawler with plain reader access can receive files with no permission list at all {/* VERIFY: exact Drive role required to read the permissions field */}. Treat a missing list as "index nothing readable" rather than as "open to everyone".
+
+## Incremental sync with the changes feed
+
+Call `changes.getStartPageToken` **before** the first crawl and persist the result. Anything modified during the crawl then shows up in the first delta instead of being lost.
+
+Afterwards, poll `changes.list` with that token. Each entry gives a `fileId` plus either a `file` object or `removed: true`. Three cases:
+
+1. `removed` is true, or `file.trashed` is true: delete every chunk for that file with [delete documents by filter](/reference/api/documents/delete-documents-by-filter) on `file_id`.
+2. The file changed: re-extract, re-chunk, and upsert. Delete the old chunks first, because a shorter revision produces fewer chunks and the extras would otherwise linger.
+3. Only permissions changed: the feed does not tell you what changed, so re-read permissions on every event and rewrite the `principals` array. A permission revocation that never reaches the index is a data leak.
+
+The final page returns `newStartPageToken`. Persist it only after the batch has been applied successfully, so a crash replays rather than skips. Page tokens can expire if you stop polling for long enough, in which case the API rejects the token and you need a full recrawl {/* VERIFY: the exact error Drive returns for an expired change page token */}.
+
+## A complete crawl and index script
+
+```python
+# pip install google-api-python-client google-auth meilisearch
+# export MEILISEARCH_URL="https://ms-xxxxxxxx.meilisearch.io"
+# export MEILISEARCH_KEY="your-admin-key"
+# export GOOGLE_APPLICATION_CREDENTIALS="./service-account.json"
+# python index_drive.py <folder_id>
+
+import io, os, re, sys, csv, json
+import meilisearch
+from google.oauth2 import service_account
+from googleapiclient.discovery import build
+from googleapiclient.http import MediaIoBaseDownload
+
+FOLDER = "application/vnd.google-apps.folder"
+SHORTCUT = "application/vnd.google-apps.shortcut"
+EXPORT = {"application/vnd.google-apps.document": "text/plain",
+          "application/vnd.google-apps.spreadsheet": "text/csv",
+          "application/vnd.google-apps.presentation": "text/plain"}
+DECODABLE = ("text/plain", "text/csv", "text/markdown", "application/json")
+FILE_FIELDS = ("id, name, mimeType, modifiedTime, webViewLink, shortcutDetails, "
+               "permissions(type, emailAddress, domain, role)")
+TARGET_WORDS = 220
+
+creds = service_account.Credentials.from_service_account_file(
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"],
+    scopes=["https://www.googleapis.com/auth/drive.readonly"])
+drive = build("drive", "v3", credentials=creds)
+
+def principals(f):
+    out = set()
+    for p in f.get("permissions", []):
+        if p["type"] in ("user", "group") and p.get("emailAddress"):
+            out.add(f'{p["type"]}:{p["emailAddress"].lower()}')
+        elif p["type"] == "domain" and p.get("domain"):
+            out.add(f'domain:{p["domain"].lower()}')
+        elif p["type"] == "anyone":
+            out.add("anyone")
+    return sorted(out)
+
+def fetch(f):
+    mime = f["mimeType"]
+    req = (drive.files().export_media(fileId=f["id"], mimeType=EXPORT[mime])
+           if mime in EXPORT
+           else drive.files().get_media(fileId=f["id"], supportsAllDrives=True))
+    buf = io.BytesIO()
+    downloader, done = MediaIoBaseDownload(buf, req), False
+    while not done:
+        _, done = downloader.next_chunk()
+    return buf.getvalue()
+
+def to_text(blob, mime):
+    if EXPORT.get(mime) == "text/csv" or mime == "text/csv":
+        rows = csv.reader(io.StringIO(blob.decode("utf-8", "replace")))
+        return "\n".join("; ".join(c for c in r if c) for r in rows)
+    if mime in EXPORT or mime in DECODABLE:
+        return blob.decode("utf-8", "replace")
+    return ""   # PDF and Office bytes: plug in your extractor here
+
+def split(text):
+    out, buf = [], []
+    for block in re.split(r"\n\s*\n", text):
+        words = block.split()
+        if not words:
+            continue
+        buf.extend(words)
+        if len(buf) >= TARGET_WORDS:
+            out.append(" ".join(buf))
+            buf = []
+    if buf:
+        out.append(" ".join(buf))
+    return out
+
+def walk(folder_id):
+    stack, seen = [folder_id], set()
+    while stack:
+        token = None
+        parent = stack.pop()
+        while True:
+            resp = drive.files().list(
+                q=f"'{parent}' in parents and trashed = false",
+                fields=f"nextPageToken, files({FILE_FIELDS})", pageSize=1000,
+                pageToken=token, supportsAllDrives=True,
+                includeItemsFromAllDrives=True).execute()
+            for f in resp.get("files", []):
+                if f["mimeType"] == FOLDER:
+                    stack.append(f["id"])
+                    continue
+                if f["mimeType"] == SHORTCUT:
+                    target = f.get("shortcutDetails", {}).get("targetId")
+                    if not target:
+                        continue
+                    f = drive.files().get(fileId=target, fields=FILE_FIELDS,
+                                          supportsAllDrives=True).execute()
+                if f["id"] not in seen:
+                    seen.add(f["id"])
+                    yield f
+            token = resp.get("nextPageToken")
+            if not token:
+                break
+
+# Take the change token first, so edits made during the crawl are not lost.
+start = drive.changes().getStartPageToken(supportsAllDrives=True).execute()
+
+docs = []
+for f in walk(sys.argv[1]):
+    try:
+        text = to_text(fetch(f), f["mimeType"])
+    except Exception as err:                  # 403 on non-exportable types, 404 on races
+        print(f"skip {f['name']}: {err}")
+        continue
+    acl = principals(f)
+    if not text.strip() or not acl:
+        continue
+    for n, chunk in enumerate(split(text), start=1):
+        docs.append({"chunk_id": f"{f['id']}_c{n}", "file_id": f["id"],
+                     "name": f["name"], "text": chunk, "position": n,
+                     "mime_type": f["mimeType"], "link": f.get("webViewLink", ""),
+                     "modified_time": f["modifiedTime"], "principals": acl})
+
+client = meilisearch.Client(os.environ["MEILISEARCH_URL"], os.environ["MEILISEARCH_KEY"])
+index = client.index("drive")
+index.update_settings({
+    "searchableAttributes": ["name", "text"],
+    "filterableAttributes": ["file_id", "principals", "mime_type", "modified_time"],
+    "sortableAttributes": ["position", "modified_time"],
+})
+# chunk_id and file_id both end in "id", so the primary key must be explicit.
+for i in range(0, len(docs), 50000):
+    client.wait_for_task(index.add_documents(docs[i:i + 50000],
+                                             primary_key="chunk_id").task_uid)
+json.dump({"page_token": start["startPageToken"]}, open("drive_sync.json", "w"))
+print(f"indexed {len(docs)} chunks")
+```
+
+Search it, collapsing each file to its single best chunk with `distinct`:
+
+```python
+index.search("renewal terms", {"distinct": "file_id", "attributesToCrop": ["text"],
+                               "cropLength": 40, "attributesToHighlight": ["text"]})
+```
+
+## Limits and constraints
+
+- **65,535 positions per attribute.** Words past that position in one attribute are silently ignored, with no error, which is why a long Doc must be chunked rather than stored in a single `text` field. See [known limitations](/resources/help/known_limitations#maximum-number-of-words-per-attribute).
+- **511 bytes per primary key value, and a restricted charset.** Values must be integers or strings of `a-z`, `A-Z`, `0-9`, `-`, and `_`. Drive file ids already satisfy this, but a key built from a file name does not. See [design primary keys](/capabilities/indexing/how_to/design_primary_keys).
+- **468 bytes per filterable value.** Each entry in `principals` is an individual filterable value and must stay under that. Normal email addresses and domains are far below it.
+- **65,536 attributes per index.** Relevant if you flatten arbitrary Drive metadata into fields.
+- **100 MB default payload, 20 MB through the Cloud interface.** Batch through the [add documents endpoint](/reference/api/documents/add-or-replace-documents), as in the 50,000-chunk loop above. See [import large datasets](/capabilities/indexing/how_to/import_large_datasets).
+- **Tenant tokens carry one `filter` per index rule.** Compose the whole access expression into that single string; there is no way to add a second, independent rule for the same index.
+- **Drive export has a size ceiling** above which `files.export` fails and you must fall back to another route {/* VERIFY: current Google Drive files.export maximum size, often cited as 10 MB */}.
+- **`files.list` caps `pageSize`** well below a full drive, so paging is required no matter how small the folder looks {/* VERIFY: current maximum pageSize for Drive files.list, believed to be 1000 */}.
+- **Drive API quota is per project and per user, measured per minute** {/* VERIFY: current Drive API default queries-per-minute quota values */}. A large first crawl will hit it, so retry `403` and `429` responses with exponential backoff rather than raising concurrency.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="How to chunk documents for search" href="/guides/how-to-chunk-documents">
+    Chunk sizes, overlap, and how to evaluate a chunking change.
+  </Card>
+  <Card title="How to keep an index in sync" href="/guides/keep-index-in-sync">
+    Change data capture, soft deletes, and zero-downtime reindexing.
+  </Card>
+  <Card title="Security overview" href="/capabilities/security/overview">
+    API keys and tenant tokens for per-user result scoping.
+  </Card>
+  <Card title="Configure distinct attribute" href="/capabilities/full_text_search/how_to/configure_distinct_attribute">
+    Return one result per file instead of five chunks of the same document.
+  </Card>
+</CardGroup>

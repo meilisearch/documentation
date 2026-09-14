@@ -1,0 +1,146 @@
+---
+title: "Keyword, semantic or hybrid: choosing for your data"
+description: You need to decide whether to run full-text search, vector search, or a blend of both, and the answer depends on whether your documents carry identifiers or prose and whether your users already know what they are looking for.
+keywords: bm25 or embeddings which one, do i need vector search for my catalog, is semantic search worth it for ecommerce, full text vs vector retrieval decision, what semanticRatio value should i use, when not to use embeddings, navigational vs exploratory queries, search mode for sku catalog, retrieval mode choice for rag, blend keyword and vector results, embeddings useless for part numbers
+boost: 2
+---
+
+Decide by looking at two things: what a document is actually made of, and what a user already knows when they start typing. If the information that distinguishes one of your documents from another is a token (a SKU, a surname, a part number, an error code) and users arrive knowing roughly what they want, keyword search wins and adding semantic search will push the right answer down. If the distinguishing information is meaning spread across sentences and users describe a problem rather than naming a thing, you need the semantic half. Most real datasets are mixed, which is why hybrid is the usual answer. In Meilisearch this is a per-request [`semanticRatio`](/capabilities/hybrid_search/advanced/custom_hybrid_ranking) between `0.0` and `1.0`, so the decision is made per query, not once for the whole index.
+
+## What your data shape tells you
+
+| Data shape | Typical records | What the semantic half can do |
+|---|---|---|
+| Identifier-bearing and short | Product catalog with SKUs, people directory, parts list, code symbols, invoice lines, legal citations | Very little. The tokens that make a record unique are exactly the ones an embedding discards |
+| Prose | Support articles, documentation, ticket bodies, transcripts, reviews, research abstracts | A lot. Meaning is spread across sentences, and users rarely reuse the document's vocabulary |
+| Mixed | Ecommerce (title plus description plus attributes), job listings, real estate, media catalogs | Depends per field. The description benefits, the model number does not |
+
+An embedding model compresses a passage into a fixed-length vector that preserves topic and tone and drops low-frequency tokens. A short record made of a brand, a model number, and four attributes has almost nothing left to compress, so every record in the same category lands in roughly the same region of vector space. That is why, as the [semantic vs hybrid page](/capabilities/hybrid_search/advanced/semantic_vs_hybrid) puts it, a query for a specific model code can return similar products instead of that product.
+
+The reverse trap applies to prose. Meilisearch builds each document's embedding from a [`documentTemplate`](/capabilities/hybrid_search/advanced/document_template_best_practices), a Liquid template whose rendered output is capped by `documentTemplateMaxBytes`, which defaults to **400 bytes**. A 4,000-word support article embedded through the default template is represented by its first few hundred bytes. If your data shape is prose, you are not choosing between keyword and semantic so much as committing to chunk your documents first, so that each record is a passage the template can fit.
+
+## What your query shape tells you
+
+- **Navigational.** The user knows the target and is typing its name: `iPhone 15 Pro Max 256GB`, `error 0x80070005`, `Hannah Arendt`, `INV-2024-8831`. Only one document is correct. The metric that matters is whether it is in position one.
+- **Exploratory.** The user knows the problem, not the answer: `something to keep my coffee warm at my desk`, `why is my build slow on CI`. Many documents are acceptable. The metric is whether a good one appears at all.
+- **Mixed.** A constraint plus a description: `waterproof jacket for hiking under 200`, `python async database connection`. Part of the query must match literally, part needs meaning.
+
+You do not have to guess the split. Read your search logs and count: short queries containing digits, capitalized tokens, or hyphenated codes are navigational, and longer queries with function words (`for`, `with`, `how`, `without`) are exploratory. In most catalogs the navigational share is far larger than product teams expect, and those are the queries where a high `semanticRatio` does visible damage.
+
+## Putting the two together
+
+Starting values, to be adjusted against your own queries:
+
+| Data shape | Mostly navigational queries | Mostly exploratory queries | Mixed |
+|---|---|---|---|
+| Identifier-bearing | `0.0`, keyword only. Skip the embedder entirely | `0.2` to `0.4`. Expect modest gains | `0.0` to `0.3` |
+| Prose | `0.3` to `0.5`. Exact phrases still matter | `0.7` to `1.0` | `0.5` to `0.7` |
+| Mixed | `0.2` to `0.4` | `0.6` to `0.8` | `0.5`, the default |
+
+At `semanticRatio: 0.0` no embedder is queried at all, so a keyword-only decision costs you nothing at search time even on an index that has an embedder configured. That is what makes per-query routing practical: configure the embedder once, then spend it only on the queries that need it.
+
+## What the semantic half actually costs
+
+- **Query latency.** A semantic or hybrid search has to embed the query first. With a hosted provider that is a network round trip to a third party on every search. With the local `huggingFace` source there is no network call, but the inference runs on your own CPU.
+- **Indexing cost.** Changing `model`, `source`, `documentTemplate`, `dimensions`, or `pooling` re-embeds every document in the index, which is billable with a paid provider. [`distribution`](/capabilities/hybrid_search/advanced/tune_distribution) is the documented exception.
+- **Storage.** Each document carries a vector. [Binary quantization](/capabilities/hybrid_search/advanced/binary_quantization) cuts a 1536-dimension vector from about 6 KB to about 192 bytes, but enabling it is irreversible.
+- **Explainability.** Keyword ranking is inspectable rule by rule through [`showRankingScoreDetails`](/capabilities/full_text_search/relevancy/ranking_score). Vector similarity gives you a distance and no reason.
+
+A separate cost appears only if you split the two modes across two systems: the merge becomes application code, and rank-based fusion discards score magnitude, so a keyword result the engine considered a perfect match and one it considered marginal both arrive as "rank 1" and "rank 2". {/* VERIFY: whether the common vector-store plus keyword-engine stacks still default to reciprocal rank fusion rather than score-based fusion */} Keeping both modes in one engine avoids that, because merging happens inside the same query.
+
+## Routing per query instead of choosing once
+
+The block below builds an index from nothing, configures both halves, classifies a query, and searches with the matching ratio.
+
+```javascript
+// npm install meilisearch
+import { Meilisearch } from 'meilisearch'
+
+const client = new Meilisearch({
+  host: process.env.MEILISEARCH_URL, // for example https://your-project.meilisearch.io
+  apiKey: process.env.MEILISEARCH_KEY,
+})
+const index = client.index('catalog')
+
+// 1. A deliberately mixed dataset: codes plus prose.
+await client.waitForTask((await index.addDocuments([
+  { id: 1, sku: 'BRV-ST220', name: 'Sandwich toaster', brand: 'Breville',
+    description: 'Two slice press with non-stick plates that seals the edges of a toastie.' },
+  { id: 2, sku: 'DLG-EC685', name: 'Espresso machine', brand: 'De Longhi',
+    description: 'Manual espresso maker with a steam wand for frothing milk at home.' },
+  { id: 3, sku: 'BRV-SO900', name: 'Smart oven', brand: 'Breville',
+    description: 'Countertop convection oven for roasting and reheating without the main oven.' },
+])).taskUid)
+
+// 2. Keyword half. Codes must match literally, so typo tolerance is off for `sku`.
+await client.waitForTask((await index.updateSettings({
+  searchableAttributes: ['name', 'brand', 'sku', 'description'],
+  filterableAttributes: ['brand', 'sku'],
+  typoTolerance: { disableOnAttributes: ['sku'], disableOnNumbers: true },
+})).taskUid)
+
+// 3. Semantic half. Keep the template short: it is capped at 400 bytes by default.
+await client.waitForTask((await index.updateEmbedders({
+  catalog: {
+    source: 'openAi',
+    model: 'text-embedding-3-small',
+    apiKey: process.env.OPENAI_API_KEY,
+    documentTemplate: '{{doc.brand}} {{doc.name}}: {{doc.description}}',
+  },
+})).taskUid)
+
+// 4. Query-shape classifier. Codes and short named queries go keyword-only.
+const looksNavigational = (q) =>
+  /[0-9]/.test(q) || /\b[A-Z]{2,}\b/.test(q) || q.trim().split(/\s+/).length <= 2
+
+function ratioFor(q) {
+  if (looksNavigational(q)) return 0.0          // identifier or product name
+  if (q.trim().split(/\s+/).length >= 5) return 0.7 // descriptive sentence
+  return 0.4                                    // short but wordy
+}
+
+async function search(q) {
+  const semanticRatio = ratioFor(q)
+  const results = await index.search(q, {
+    hybrid: { semanticRatio, embedder: 'catalog' },
+    // Only meaningful above 0.0: drops weak nearest neighbors instead of returning them.
+    ...(semanticRatio > 0 ? { rankingScoreThreshold: 0.5 } : {}),
+    showRankingScore: true,
+    limit: 5,
+  })
+  console.log(q, '->', semanticRatio, results.hits.map((h) => h.name))
+}
+
+await search('BRV-ST220')                              // 0.0, exact code
+await search('Breville oven')                          // 0.0, short named query
+await search('something to froth milk for a latte')    // 0.7, descriptive
+await search('"steam wand" espresso')                  // 0.4, phrase plus term
+```
+
+## When keyword only is the right answer
+
+Do not add an embedder at all if any of these describe you:
+
+- **Your index is entirely identifiers, enums, and short names.** There is no meaning to retrieve.
+- **You need search-as-you-type.** Prefix matching on the last word is a keyword-index feature, controlled by the [`prefixSearch`](/capabilities/full_text_search/how_to/configure_prefix_search) setting and built at indexing time. A half-typed word does not embed into anything useful, so the semantic half contributes noise until the user stops typing.
+- **Your latency budget cannot absorb a round trip to an embedding provider** and you do not want inference on your own CPU.
+- **You need to justify every ranking decision**, for example in regulated or audited contexts. [Ranking rules](/capabilities/full_text_search/relevancy/ranking_rules) and [synonyms](/capabilities/full_text_search/relevancy/synonyms) are inspectable and deterministic in a way vector distance is not.
+
+Conversely, go to pure semantic (`1.0`) only when there is genuinely no text to match: image-only catalogs using multimodal embeddings, recommendation-style similarity, or pre-computed embeddings over non-textual data. Everywhere else, `1.0` throws away exact matching you already have for free.
+
+## Limits and constraints
+
+- **`semanticRatio` runs from `0.0` to `1.0` and defaults to `0.5`.** The `embedder` field inside the `hybrid` object is required; there is no implicit default embedder.
+- **`documentTemplateMaxBytes` defaults to 400 bytes.** Rendered template output beyond that is truncated, so long prose must be chunked before indexing rather than embedded whole.
+- **A search query uses at most 10 terms.** Words after the tenth are [ignored](/resources/help/known_limitations), which bites with pasted natural-language queries.
+- **Typo tolerance allows at most two typos per word**, gated by word length, and can be [disabled per attribute](/capabilities/full_text_search/relevancy/typo_tolerance_settings) so identifiers still have to match exactly.
+- **`rankingScoreThreshold` takes a value between `0.0` and `1.0`**, and excluded hits do not count toward the reported result totals or facet distribution.
+- **Searches are interrupted after 1500 ms** unless you set [`searchCutoffMs`](/capabilities/full_text_search/how_to/configure_search_cutoff) explicitly. An index holds at most 4,294,967,296 documents.
+- **Binary quantization is irreversible.** Recovering full-precision vectors requires reindexing into a new embedder.
+
+## Next steps
+
+- [Semantic vs hybrid search](/capabilities/hybrid_search/advanced/semantic_vs_hybrid) explains the mechanism behind the three modes and lists starting ratios by use case.
+- [Custom hybrid ranking](/capabilities/hybrid_search/advanced/custom_hybrid_ranking) covers tuning the ratio systematically once you have real queries to test against.
+- [Choose an embedder](/capabilities/hybrid_search/how_to/choose_an_embedder) walks through provider selection once you have decided you need the semantic half.
+- [Matching strategy](/capabilities/full_text_search/how_to/use_matching_strategy) controls recall on the keyword half, which is often the cheaper fix when results feel too narrow.

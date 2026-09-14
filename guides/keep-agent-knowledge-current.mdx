@@ -1,0 +1,191 @@
+---
+title: How to keep an agent's knowledge base up to date
+description: Your agent answers confidently from documentation that changed last month, and you need an incremental sync that reindexes only what moved, removes what disappeared, and tells the model how old its evidence is.
+keywords: incremental sync knowledge base, keep rag index fresh, stale embeddings agent, detect stale documents search index, content hash reindex, delete removed documents index, versioned documentation rag, freshness metadata llm citation, resync vector index cheaply, agent answers outdated information, scheduled crawl reindex, last updated field search results
+boost: 2
+---
+
+Sync incrementally and stamp every document with its own freshness. Store a `content_hash` and a `source_updated_at` on each chunk, compare hashes against the source on every run, and write only the documents whose hash changed. Delete the ones that vanished from the source in the same pass. Then return `source_updated_at` and `source_version` in search results so the model can say "as of March 2026" instead of asserting a stale fact. Meilisearch caches embeddings and regenerates them only when document content changes, so a hash-gated sync keeps the embedding bill proportional to what actually moved, not to the size of the corpus.
+
+## Why a stale index hurts an agent more than a user
+
+A person who lands on a documentation page sees the date in the header, notices the old screenshot, and discounts what they read. An agent gets a bare passage with no visual context, and there is nothing in "the timeout defaults to 30 seconds" that marks it as two releases out of date. The model then states it as current fact, with the fluency of a correct answer.
+
+Three failure modes account for most of it:
+
+- **Silent drift.** The source changed, the sync ran, but the job failed partway and nobody looked at the task queue.
+- **Ghost documents.** A page was deleted at the source and nothing deleted it from the index, so it keeps ranking forever.
+- **Version collision.** Documentation for v1 and v2 sits in one index with nothing distinguishing them, and the agent retrieves whichever chunk scores higher.
+
+Each has a different fix, and all three depend on the same metadata being present on the document.
+
+## What to store on every document
+
+Add these fields at ingestion time, alongside the fields you already carry for citations (see [how to chunk documents for agent retrieval](/guides/chunk-for-agent-retrieval)).
+
+| Field | Purpose |
+| --- | --- |
+| `content_hash` | A hash of the chunk text. The comparison key that decides whether to rewrite the document. |
+| `source_updated_at` | Unix timestamp from the source system, not from your crawler. This is what the agent quotes. |
+| `indexed_at` | Unix timestamp of the sync run that wrote the document. Use it to spot documents no run has touched recently. |
+| `source_version` | The release, branch, or snapshot the chunk belongs to, for example `v1.52`. |
+| `source` | Which connector produced it, so you can resync one source without rebuilding the index. |
+
+`source_updated_at`, `indexed_at`, `source_version`, and `source` must be listed in [`filterableAttributes`](/capabilities/filtering_sorting_faceting/getting_started) before you can filter on them, and in `sortableAttributes` before you can sort by them. Timestamps as integers are safe here: Meilisearch [represents integers exactly between -2⁵³ and 2⁵³](/resources/help/known_limitations#size-of-integer-fields), which covers Unix seconds and milliseconds comfortably.
+
+## How to run an incremental sync
+
+The pattern is one pass over the stored hashes, one pass over the source, then two write requests. Everything below is a single runnable script.
+
+```js sync-knowledge-base.mjs
+import { createHash } from "node:crypto";
+import { Meilisearch } from "meilisearch";
+
+const client = new Meilisearch({
+  host: process.env.MEILISEARCH_URL,
+  apiKey: process.env.MEILISEARCH_KEY,
+});
+const index = client.index("kb_chunks");
+
+// One-time setup. Safe to leave in: re-sending identical settings is a no-op.
+await client.waitForTask(
+  (await index.updateFilterableAttributes([
+    "doc_id", "source", "source_version", "source_updated_at", "indexed_at",
+  ])).taskUid,
+);
+await client.waitForTask(
+  (await index.updateSortableAttributes(["source_updated_at", "indexed_at"])).taskUid,
+);
+
+// 1. Page through the index and collect the hash of every stored chunk.
+const stored = new Map();
+for (let offset = 0; ; offset += 1000) {
+  const { results } = await index.getDocuments({
+    offset,
+    limit: 1000,
+    fields: ["id", "content_hash"],
+  });
+  if (results.length === 0) break;
+  for (const doc of results) stored.set(doc.id, doc.content_hash);
+}
+
+// 2. Walk the source of truth, keeping only chunks whose text actually changed.
+const now = Math.floor(Date.now() / 1000);
+const upserts = [];
+const seen = new Set();
+
+for await (const chunk of readSourceChunks()) { // your crawler, database query, or file walk
+  const contentHash = createHash("sha256").update(chunk.text).digest("hex");
+  seen.add(chunk.id);
+  if (stored.get(chunk.id) === contentHash) continue; // unchanged, skip the write
+
+  upserts.push({
+    id: chunk.id,
+    doc_id: chunk.docId,
+    text: chunk.text,
+    url: chunk.url,
+    source: chunk.source,
+    source_version: chunk.version,
+    source_updated_at: chunk.updatedAt, // from the source system, in Unix seconds
+    indexed_at: now,
+    content_hash: contentHash,
+  });
+}
+
+// 3. Whatever is stored but absent from the source has been deleted upstream.
+const removed = [...stored.keys()].filter((id) => !seen.has(id));
+
+// 4. Write in a few large requests rather than many small ones.
+const tasks = [];
+for (let i = 0; i < upserts.length; i += 5000) {
+  tasks.push(await index.addDocuments(upserts.slice(i, i + 5000)));
+}
+if (removed.length > 0) tasks.push(await index.deleteDocuments(removed));
+
+for (const task of tasks) {
+  const finished = await client.waitForTask(task.taskUid);
+  if (finished.status === "failed") throw new Error(finished.error.message);
+}
+
+console.log(
+  `${upserts.length} written, ${removed.length} deleted, ` +
+  `${seen.size - upserts.length} unchanged`,
+);
+```
+
+`addDocuments` replaces each document completely, which is what you want when the chunk text is regenerated anyway. Use `updateDocuments` instead when you only want to merge a few fields into existing documents, for example stamping a new `source_version` without resending text. Be aware that a partial update applies to top-level fields only: updating an object field replaces that whole object. Both behaviors are spelled out in [add and update documents](/capabilities/indexing/how_to/add_and_update_documents).
+
+If the corpus is too large to list every hash, scope the run with a filter instead. Fetch and compare one source at a time with `getDocuments({ filter: "source = 'handbook'" })`, and sweep deletions with a filtered delete, as described in [delete documents at scale](/capabilities/indexing/how_to/delete_documents_at_scale).
+
+## How to detect staleness before a user does
+
+Run these as a scheduled check, not as a debugging step after a bad answer.
+
+```js
+// How many chunks claim to be older than 90 days at the source?
+const cutoff = Math.floor(Date.now() / 1000) - 90 * 24 * 3600;
+const { total } = await index.getDocuments({
+  filter: `source_updated_at < ${cutoff}`,
+  limit: 0,
+});
+
+// Which chunks has no recent sync run touched? A non-empty result means
+// the crawler stopped seeing them without ever deleting them.
+const orphans = await index.getDocuments({
+  filter: `indexed_at < ${Math.floor(Date.now() / 1000) - 7 * 24 * 3600}`,
+  limit: 20,
+  sort: ["indexed_at:asc"],
+  fields: ["id", "url", "indexed_at"],
+});
+```
+
+The document routes return `{ results, offset, limit, total }`, so `limit: 0` gives you a count without transferring documents.
+
+Staleness is often a failed sync rather than a slow one, so watch the write side too. Every document operation returns a `taskUid`, and a failed task carries an `error` object explaining why. Attach a `customMetadata` query parameter to document requests to label each run, and the label comes back in task responses and webhook payloads. See [working with tasks](/capabilities/indexing/tasks_and_batches/monitor_tasks) for task monitoring, webhooks, and the experimental streaming routes.
+
+## How to handle versioned content
+
+Do not let two releases compete on relevance alone. Keep `source_version` on every chunk and make the version an explicit part of retrieval, either as a filter the agent must supply or as a fixed filter your tool applies. A question about the current release should never be answerable from a chunk belonging to an older one just because its wording matched better.
+
+For a full rebuild, for example after re-chunking or a documentation migration, build into a second index and swap. [Index swapping](/resources/internals/indexes) exchanges the documents, settings, and task history of two indexes atomically, with no downtime for clients still querying the original name, and you can swap back if the new build is wrong.
+
+## How to tell the agent how fresh its data is
+
+Return the freshness fields with the results, then instruct the model to use them. With the [AI SDK integration](/capabilities/agentic_search/getting_started), the search tool's output is what reaches the model, so including `source_updated_at`, `source_version`, and `url` in the retrieved fields is enough for it to caveat and cite. Pair it with a system instruction such as: state the date of the source when it is older than six months, and say the information may be outdated rather than guessing at the current value.
+
+If you use the [chats API](/capabilities/agentic_search/advanced/chats_api), the index chat settings take their own `documentTemplate` that defines the text sent to the LLM per document. That is the right place for a freshness line:
+
+```
+{{doc.text}}
+
+Source: {{doc.url}} (version {{doc.source_version}})
+```
+
+Keep freshness metadata out of the *embedder* `documentTemplate`. Dates add nothing to a vector, and changing an embedder's `documentTemplate`, `model`, `source`, or `dimensions` triggers re-embedding of every document in the index, which is exactly the cost incremental sync exists to avoid. See [document template best practices](/capabilities/hybrid_search/advanced/document_template_best_practices) and the caching note in the [hybrid search overview](/capabilities/hybrid_search/overview).
+
+## Limits and constraints
+
+- **Embedding cost follows content changes.** Embeddings are cached and regenerated when document content changes, so unchanged documents that you skip cost nothing. Editing embedder settings is the opposite: it re-embeds the whole index. In a standalone vector database you typically compute vectors yourself before upserting, so a naive resync pays the embedding provider for unchanged records unless your pipeline dedupes them first. {/* VERIFY: upsert and re-embedding behavior for Pinecone and Qdrant specifically */}
+- **Filters need declared attributes.** Any attribute used in a document filter, including `source_updated_at` and `indexed_at`, must be declared in `filterableAttributes` first, or the request errors.
+- **Payload size.** The default maximum HTTP payload is 100MB, configurable when self-hosting. Uploads through the Meilisearch Cloud interface are capped at 20mb; use the documents endpoint for anything larger.
+- **Batch shape matters.** Meilisearch auto-batches consecutive tasks of the same type on the same index. A delete-by-filter task cannot join a batch and closes the current one, so interleaving per-record deletes with per-record writes produces many tiny batches. Group writes, then deletes, as the script above does.
+- **Task database.** The task database has a 20GiB ceiling, roughly 10M to 30M tasks. Past about 1M entries Meilisearch starts deleting finished tasks automatically. A sync that fires one task per document at high frequency will churn this; batching keeps it bounded.
+- **Document listing pagination.** `getDocuments` defaults to a `limit` of 20, so always page explicitly when collecting hashes.
+- **Not documented here:** Meilisearch does not expose a built-in change-data-capture or scheduled crawler. The comparison loop is yours to run, on cron, a queue worker, or a webhook from the source system.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Add and update documents" href="/capabilities/indexing/how_to/add_and_update_documents">
+    Replace versus merge semantics, and `skipCreation` for update-only writes.
+  </Card>
+  <Card title="Delete documents at scale" href="/capabilities/indexing/how_to/delete_documents_at_scale">
+    Filter-based deletion for sweeping removed content.
+  </Card>
+  <Card title="Working with tasks" href="/capabilities/indexing/tasks_and_batches/monitor_tasks">
+    Monitor, stream, and label the tasks your sync enqueues.
+  </Card>
+  <Card title="Chunk documents for agent retrieval" href="/guides/chunk-for-agent-retrieval">
+    Stable ids and citable anchors that survive a resync.
+  </Card>
+</CardGroup>

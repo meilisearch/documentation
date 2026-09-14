@@ -1,0 +1,145 @@
+---
+title: Why MongoDB Atlas Search results feel irrelevant
+description: Your $search aggregation returns results in an order nobody can explain, misspellings return nothing, and you need to know whether the analyzer, the fuzzy options, or the scoring model is at fault.
+keywords: atlas search bad results, mongodb $search relevance, atlas search fuzzy not working, lucene.standard analyzer mongodb, atlas search scoreDetails, mongodb text search ranking wrong, atlas search boost field, $search compound should score, mongodb search typo tolerance, atlas search synonyms mapping, mongodb full text search alternative, atlas search prefixLength
+boost: 2
+---
+
+Atlas Search is Apache Lucene behind the `$search` aggregation stage, and three properties of that design explain most complaints about result order. The analyzer declared in your search index definition decides what tokens exist before any scoring happens, and the default one does not stem words or fold accents. Typo tolerance is off unless you add a `fuzzy` block to each individual operator. And BM25 returns one opaque float per document, so "why is B above A" has no answer you can read off the response unless you request `scoreDetails`. Check those three in that order.
+
+## What actually runs when you call $search
+
+Atlas Search does not query your collection directly. It maintains a separate Lucene index, described by a JSON **search index definition**, and keeps it synchronized with the collection in the background. Queries go through the `$search` stage, which must be the first stage of the pipeline: it returns documents already ordered by Lucene score, and later stages can only reshape that output.
+
+Two consequences matter here:
+
+- **The index definition is the configuration surface.** Mappings, analyzers, and synonym sources live there, not in the query, and changing them requires an asynchronous rebuild. {/* VERIFY: whether every analyzer or mapping change triggers a full index rebuild */}
+- **Synchronization is eventually consistent.** A document written a moment ago may not be searchable yet, which reads as a relevance bug when it is replication lag. {/* VERIFY: mechanism and typical lag for Atlas Search index synchronization */}
+
+By default the index uses **dynamic mappings**, indexing every field it can with one analyzer. That is the single most common reason results feel arbitrary: a 40-field document indexes its `internal_notes` and its `slug` with the same weight as its `title`.
+
+## Why the analyzer decides your results before scoring does
+
+An analyzer converts a string into tokens, and everything downstream operates on those tokens only. If the analyzer never produced the token, no amount of boosting will surface the document.
+
+The default `lucene.standard` tokenizes on word boundaries and lowercases. It does not stem, so `running shoes` does not match a document containing `run shoe`, and it does not fold accents, so `cafe` does not match `café`. Switching a field to `lucene.english` adds stemming and stop word removal, which fixes that and introduces a new problem: stemmed fields are bad at exact matching, so product codes and proper nouns get mangled.
+
+The standard workaround is to index the same field twice, once with a language analyzer for recall and once with a keyword analyzer for exact matching, then query both in a `compound` operator with different boosts. {/* VERIFY: exact name and syntax of the multi-analyzer field option in an Atlas Search index definition */} It works, at the cost of two mappings per mixed-content field, two operators in every query, and a boost ratio someone maintains by hand.
+
+## Why there is no typo tolerance by default
+
+A plain `text` operator matches tokens exactly, so misspellings return nothing. Tolerance is opt in, per operator, through a `fuzzy` block:
+
+```json
+{
+  "$search": {
+    "text": {
+      "query": "iphoen",
+      "path": "title",
+      "fuzzy": { "maxEdits": 2, "prefixLength": 3 }
+    }
+  }
+}
+```
+
+Each of the following produces its own class of bug report:
+
+- **`prefixLength` blocks early typos.** At `3`, the first three characters must match exactly, so `iphoen` is corrected but `ihpone` is not. Lowering it to `0` fixes that and widens term expansion, which costs latency.
+- **`maxEdits` caps at two edits** {/* VERIFY: confirm the maximum accepted value of maxEdits in Atlas Search */} and counts them per token against plain edit distance, so a word split mistake such as `news paper` for `newspaper` is not a one-edit fix and does not match.
+- **Fuzzy matches score lower rather than sorting separately.** A document matched with two typos in a short title can therefore outrank a document matched exactly in a long description, purely through field length normalization. That is usually the opposite of what a user expects.
+
+Because `fuzzy` lives on the operator, a `compound` query with four `should` clauses needs four copies of the same block, and every clause added later is exact again unless someone remembers.
+
+## Why the scoring is hard to diagnose
+
+BM25 gives you one number per document. `8.72` is not interpretable on its own and not comparable across queries. Atlas does expose a breakdown: set `scoreDetails: true` in the `$search` stage and read `$meta: "searchScoreDetails"` in a `$project` stage. Do this first, because the problem is rarely where the team assumed.
+
+It typically reveals one of three things:
+
+- **Field length normalization dominates short fields.** A one-word `tag` scores higher per match than a long `description`, which is why tag matches float to the top uninvited.
+- **`compound.should` sums clause scores.** Adding a clause to fix one query reorders every other query.
+- **IDF is corpus-relative.** A term that is rare today is common after the next bulk import, so a ranking tuned last quarter drifts with nobody touching the code.
+
+Boosting through the `score` option (a constant, a multiplier, or a function of a numeric path) is the intended lever. {/* VERIFY: exact set of score modifier types available in the Atlas Search score option */} The difficulty is that these multiply a value whose scale you do not control, so tuning becomes a loop of changing a boost, rerunning a query set, and eyeballing the order.
+
+## What to try in Atlas before looking elsewhere
+
+Cheapest first:
+
+1. **Turn on `scoreDetails`** for a few visibly wrong queries and read the breakdown before changing anything.
+2. **Replace dynamic mappings with static mappings**, indexing only the fields that should be searchable. This alone removes most of the noise.
+3. **Choose the analyzer per field:** a language analyzer for prose, keyword or standard for identifiers, both for mixed fields.
+4. **Add `fuzzy` with a low `prefixLength`** on fields where users type names, and leave it off identifiers.
+5. **Move to `compound` with explicit per-path boosts** instead of one `text` operator over a wildcard path, so field importance is stated rather than inferred from field length.
+6. **Add synonym mappings** for the vocabulary gap your logs show. Synonyms come from a source collection referenced by the index definition. {/* VERIFY: whether the synonym source collection must live in the same database as the indexed collection */}
+7. **Use `phrase` with `slop`** where word order carries meaning, rather than hoping proximity falls out of BM25.
+
+If the end state is a large index definition, long compound queries, and a boost table only one person understands, the problem is no longer configuration. It is that relevance is expressed as arithmetic on a single score.
+
+## How rule-based ranking changes the diagnosis
+
+Meilisearch replaces the single score with an ordered list of [ranking rules](/capabilities/full_text_search/relevancy/ranking_rules) applied as a [bucket sort](/resources/internals/bucket_sort): `words`, `typo`, `proximity`, `attributeRank`, `sort`, `wordPosition`, `exactness`. Each rule partitions the candidates and the next only breaks ties inside a bucket, so every document matching all query terms ranks above every document matching fewer, and no multiplier inverts that.
+
+Typo tolerance is a ranking criterion rather than a query option, on by default for every index and query, so zero-typo documents always precede one-typo ones. Field importance comes from the order of [`searchableAttributes`](/capabilities/full_text_search/relevancy/attribute_ranking_order), set once at the index level instead of repeated as boosts in every query. And `showRankingScoreDetails` returns one object per active rule carrying that rule's own inputs, for example `typoCount` and `maxTypoCount` for `typo`, so "why is B above A" resolves to naming the first rule where they differ.
+
+```javascript
+// npm install meilisearch
+import { Meilisearch } from 'meilisearch'
+
+const client = new Meilisearch({
+  host: process.env.MEILISEARCH_URL, // for example https://your-project.meilisearch.io
+  apiKey: process.env.MEILISEARCH_KEY,
+})
+
+const index = client.index('products')
+
+// 1. Documents map one to one onto MongoDB documents, with _id converted to a string.
+const addTask = await index.addDocuments([
+  { id: '1', title: 'Wireless noise cancelling headphones', sku: 'SNY-WH1000', tag: 'audio' },
+  { id: '2', title: 'Headphone stand', sku: 'ELG-HS200', tag: 'audio accessory' },
+  { id: '3', title: 'Café grinder', sku: 'BAR-CG820', tag: 'kitchen' },
+])
+await client.waitForTask(addTask.taskUid)
+
+// 2. Field importance is an ordered list, not a boost multiplier per query clause.
+const settingsTask = await index.updateSettings({
+  searchableAttributes: ['title', 'tag', 'sku'],
+  rankingRules: ['words', 'typo', 'proximity', 'attributeRank', 'sort', 'wordPosition', 'exactness'],
+  synonyms: { headphones: ['headset', 'earphones'] },
+  typoTolerance: {
+    enabled: true,
+    minWordSizeForTypos: { oneTypo: 4, twoTypos: 10 },
+    disableOnAttributes: ['sku'], // identifiers must match exactly
+  },
+})
+await client.waitForTask(settingsTask.taskUid)
+
+// 3. Misspelled and accented queries resolve without a per-query fuzzy block.
+const results = await index.search('headphnoes', {
+  showRankingScore: true,
+  showRankingScoreDetails: true,
+})
+
+for (const hit of results.hits) {
+  console.log(hit.title, hit._rankingScore, hit._rankingScoreDetails.typo)
+}
+```
+
+## Limits and constraints
+
+- **Meilisearch allows a maximum of two typos per word.** Three or more differences never match, whatever the settings.
+- **Default thresholds are length based:** 1 to 4 characters allow zero typos, 5 to 8 allow one, 9 or more allow two. A typo on the first character counts as two.
+- **`minWordSizeForTypos` bounds are `0 ≤ oneTypo ≤ twoTypos ≤ 255`**, with `2` to `8` and `4` to `14` recommended respectively.
+- **`_rankingScore` is normalized between `0.0` and `1.0`** and independent of other documents in the index, so it is comparable across queries. It is not returned unless `showRankingScore` is `true`.
+- **The `sort` ranking rule contributes no score.** A document with a higher `_rankingScore` can still rank lower when `sort` takes priority.
+- **Only five settings influence the ranking score:** `searchableAttributes`, `rankingRules`, `stopWords`, `synonyms`, and `typoTolerance`.
+- **`words` is always applied** at a higher priority than `attributeRank`, `exactness`, `typo`, and `proximity`, even when removed from the array or placed lower.
+- **On the Atlas side**, `maxEdits` accepts at most two edits and `prefixLength` characters at the start of a term are always exempt from correction. {/* VERIFY: confirm both the maxEdits ceiling and the exact prefixLength semantics against current Atlas Search documentation */}
+
+## Next steps
+
+- [Built-in ranking rules](/capabilities/full_text_search/relevancy/ranking_rules) explains each of the seven rules and when reordering them helps.
+- [Ranking score](/capabilities/full_text_search/relevancy/ranking_score) documents `_rankingScoreDetails` field by field, with a worked tie break.
+- [Typo tolerance vs fuzzy search](/resources/internals/typo_tolerance) compares the finite state transducer approach against the Lucene `fuzzy` option Atlas Search uses.
+- [Migrating from MongoDB Atlas Search](/resources/migration/mongodb_migration) is a working export and import script, plus a mapping table from `$search` operators to search parameters.
+- [Meilisearch vs MongoDB Atlas Search](/resources/comparisons/mongodb) covers faceting, self-hosting, and vector search alongside relevance.

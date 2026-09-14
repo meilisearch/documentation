@@ -1,0 +1,161 @@
+---
+title: How to build multilingual search
+description: You have content in several languages and need to decide between one index per language and one shared index, and to make sure a query in one language matches documents in that language.
+keywords: multilingual search index per language, one index per language vs single index, localizedAttributes, locales search parameter, query language detection, cross lingual search, search french german english together, cjk index strategy, attributePatterns wildcard, language switcher search, federated search across languages, per language stop words and synonyms
+boost: 2
+---
+
+Start from how your users and your content are paired. If each document exists in one language and each user searches in one language they have already chosen in your interface, build **one index per language**: that is the strategy Meilisearch [recommends](/capabilities/indexing/how_to/handle_multilingual_data), and it gives every language its own stop words, synonyms, and tokenizer settings. If instead one document carries parallel fields in several languages, the corpus is under roughly a million documents, and the languages all separate words with spaces, **one shared index with [`localizedAttributes`](/reference/api/settings/get-localizedattributes)** is simpler and works. Cross-language retrieval, where an English query returns French documents, is a third, separate problem that neither topology solves on its own.
+
+## Which question actually decides the architecture
+
+Two requirements get collapsed into the word "multilingual" and they have different costs.
+
+**Per-language correctness.** A German query retrieves German documents with German compound splitting, German stop words, and German normalization applied. A Japanese query gets dictionary-based segmentation. This is what a localized storefront, help center, or marketplace needs, because content and users are already matched by locale. Both topologies below deliver it.
+
+**Cross-lingual retrieval.** An English query returns documents that exist only in French. Keyword search cannot do this at all, in any index layout, because the tokens simply do not overlap. It needs a multilingual embedding model and [hybrid search](/capabilities/hybrid_search/getting_started), covered in [choosing an embedding model for multilingual search](/guides/embedding-model-multilingual).
+
+Answer the second question first. If you only need per-language correctness, you never have to touch embeddings, and the rest of this page is the whole job.
+
+## One index per language
+
+This is the default recommendation, and the reason is that almost every relevance setting in Meilisearch is language-specific and lives on the index:
+
+- [Stop words](/reference/api/settings/get-stopwords) are a per-language list. English stop words in a French index do nothing useful.
+- [Synonyms](/reference/api/settings/get-synonyms) and the [dictionary](/reference/api/settings/get-dictionary) are vocabulary, so they never transfer across languages.
+- [Separator tokens](/reference/api/settings/get-separatortokens) and non-separator tokens depend on the writing system.
+- Typo tolerance thresholds behave differently for a script where the average word is three characters.
+
+Splitting by language means each of these is tuned once, for one language, without compromise. It also shards the data naturally, which keeps each index smaller and each query cheaper.
+
+The cost is on the serving side. When a user should see results from more than one language at once, query several indexes with [multi-search](/capabilities/multi_search/getting_started/multi_search), or merge them into one ranked list with [federated search](/capabilities/multi_search/getting_started/federated_search):
+
+```javascript
+await client.multiSearch({
+  federation: { limit: 20 },
+  queries: [
+    { indexUid: 'products_en', q: 'rain jacket', federationOptions: { weight: 1.0 } },
+    { indexUid: 'products_fr', q: 'rain jacket', federationOptions: { weight: 0.5 } },
+  ],
+})
+```
+
+The other cost is drift. Settings live in N places, and a synonym added to `products_en` in a hurry will not exist in `products_de` six months later unless a script applies settings to every language index from one source file. Treat index settings as code, not as something configured by hand.
+
+## One shared index with localizedAttributes
+
+A single index is the right call when a document is a single logical thing with translated fields, for example a product with `name_en`, `name_fr`, and `name_de`. Meilisearch detects the language of each field automatically, but detection on short strings is unreliable, so declare it instead. The [`localizedAttributes`](/reference/api/settings/update-localizedattributes) setting binds attribute name patterns to locales, and `*` works as a wildcard:
+
+```json
+[
+  { "attributePatterns": ["*_en"], "locales": ["eng"] },
+  { "attributePatterns": ["*_fr"], "locales": ["fra"] },
+  { "attributePatterns": ["*_de"], "locales": ["deu"] }
+]
+```
+
+Declaring locales does more than pick a tokenizer. It restricts detection to the set you named, so Meilisearch chooses between English and German rather than between every language it knows, which makes the result consistent from one document to the next.
+
+The shared index stops working when languages stop behaving alike. German compounds, Swedish normalization, and any writing system without spaces (Chinese, Japanese, Korean, Thai, Khmer) benefit from their own index and their own settings. Chinese and Japanese in particular must never share a field: automatic separation of the two is unreliable, and the wrong segmenter produces tokens that never match anything.
+
+## How to know which language the query is in
+
+Meilisearch detects query language automatically, and on a two-word query typed into a search-as-you-type box, detection is a guess. Do not leave it to chance when you already know the answer.
+
+Your interface almost always knows the user's locale: the URL prefix, the language switcher, the account setting. Pass it as the [`locales`](/reference/api/search/search-with-post) search parameter. Note the precedence rule: `locales` on a query wins over `localizedAttributes` for that request, which is useful for a language switcher and dangerous if a wrong value gets hardcoded.
+
+On a shared index, pair `locales` with `attributesToSearchOn` so a French query does not return a hit that only matched in the English field.
+
+## A complete shared-index setup
+
+This block creates the index, declares the locales, indexes two documents, and runs three searches. It runs as written once `MEILISEARCH_URL` and `MEILISEARCH_KEY` are set.
+
+```javascript
+// npm install meilisearch
+import { Meilisearch } from 'meilisearch'
+
+const client = new Meilisearch({
+  host: process.env.MEILISEARCH_URL, // for example https://your-project.meilisearch.io
+  apiKey: process.env.MEILISEARCH_KEY,
+})
+
+const index = client.index('catalog')
+
+// 1. Parallel fields, suffixed so one pattern can target each language.
+await client.waitForTask(
+  (await index.addDocuments([
+    {
+      id: 1,
+      name_en: 'Waterproof hiking boots', desc_en: 'Leather boots with a sealed membrane',
+      name_fr: 'Chaussures de randonnee impermeables', desc_fr: 'Bottines en cuir a membrane etanche',
+      name_de: 'Wasserdichte Wanderschuhe', desc_de: 'Lederstiefel mit versiegelter Membran',
+    },
+    {
+      id: 2,
+      name_en: 'Insulated water bottle', desc_en: 'Vacuum flask that keeps drinks cold',
+      name_fr: 'Gourde isotherme', desc_fr: 'Bouteille sous vide qui garde les boissons fraiches',
+      name_de: 'Isolierte Trinkflasche', desc_de: 'Vakuumflasche, die Getraenke kalt haelt',
+    },
+  ])).taskUid
+)
+
+// 2. Bind each field pattern to a locale, and keep search restricted to real text fields.
+await client.waitForTask(
+  (await index.updateSettings({
+    searchableAttributes: [
+      'name_en', 'desc_en', 'name_fr', 'desc_fr', 'name_de', 'desc_de',
+    ],
+    localizedAttributes: [
+      { attributePatterns: ['*_en'], locales: ['eng'] },
+      { attributePatterns: ['*_fr'], locales: ['fra'] },
+      { attributePatterns: ['*_de'], locales: ['deu'] },
+    ],
+  })).taskUid
+)
+
+// 3a. German query, pinned to German tokenization and German fields only.
+console.log(await index.search('wasserdichte schuhe', {
+  locales: ['deu'],
+  attributesToSearchOn: ['name_de', 'desc_de'],
+}))
+
+// 3b. French query. Without attributesToSearchOn it could match on an English field.
+console.log(await index.search('gourde isotherme', {
+  locales: ['fra'],
+  attributesToSearchOn: ['name_fr', 'desc_fr'],
+}))
+
+// 3c. No locale known (a crawler, an API caller). Detection falls back to the
+//     locales declared on the index, which is already better than unrestricted.
+console.log(await index.search('hiking boots'))
+```
+
+Per-language settings that a shared index cannot split, such as stop words, are the signal to move to one index per language.
+
+## Limits and constraints
+
+- **Meilisearch accepts 70 locales**, each as an ISO 639-1 or ISO 639-3 code (`fr` or `fra`, `ja` or `jpn`, `zh` or `zho`), plus `cmn` for Mandarin specifically. A code outside that list is rejected.
+- **Optimized tokenization exists for a subset of those**, including Latin scripts, German compound decomposition, Swedish, Greek, Cyrillic, Armenian, Arabic, Persian, Hebrew, Turkish, Chinese, Japanese, Korean, Thai, and Khmer. Other languages fall back to the default whitespace pipeline, which works but is less precise. The full table is in [Language](/resources/help/language).
+- **`locales` on a search overrides `localizedAttributes`** for that request. There is no warning when the value is wrong.
+- **The shared-index approach is documented as suitable up to roughly 1M documents**, for space-separated languages with similar tokenization. Above that, relevance and performance degrade because every query runs over a larger mixed dataset.
+- **Index count is not free.** Meilisearch handles an arbitrary number of indexes as long as each stays under 2TiB, but hitting hundreds of different indexes in short intervals degrades performance. Beyond 2TiB per index the ceiling is about 20 indexes, bound by the operating system's virtual address space (roughly 80TiB on 64-bit Linux). See [known limitations](/resources/help/known_limitations).
+- **Nothing here translates anything.** Meilisearch does not translate queries or documents. Parallel fields come from your own pipeline.
+- **Settings do not inherit between indexes.** Per-language indexes mean N copies of stop words, synonyms, and ranking rules, applied by your own tooling.
+- Coming from Algolia, `naturalLanguages` maps to `localizedAttributes` plus the `locales` parameter; see the [Algolia migration guide](/resources/migration/algolia_migration). Elasticsearch presents the same fork as per-language analyzers on one index versus one index per language, with analyzer changes requiring a reindex. {/* VERIFY: whether changing an Elasticsearch analyzer always requires a full reindex, and the exact name of the per-language field pattern approach */}
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Handling multilingual datasets" href="/capabilities/indexing/how_to/handle_multilingual_data">
+    The reference strategy page, with tokenizer alignment between documents and queries.
+  </Card>
+  <Card title="Tokenization" href="/capabilities/indexing/advanced/tokenization">
+    How text is split into tokens, and the separator and dictionary settings that adjust it.
+  </Card>
+  <Card title="Language support" href="/resources/help/language">
+    The full table of languages with optimized segmentation and normalization.
+  </Card>
+  <Card title="Choosing an embedding model for multilingual search" href="/guides/embedding-model-multilingual">
+    What to do when you genuinely need a query in one language to match documents in another.
+  </Card>
+</CardGroup>

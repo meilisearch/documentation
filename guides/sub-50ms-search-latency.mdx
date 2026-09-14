@@ -1,0 +1,136 @@
+---
+title: Choosing search for a sub-50ms latency budget
+description: You have committed to a 50 millisecond search response and need to know where the milliseconds actually go, which features fit inside that budget, and which targets are physically impossible.
+keywords: sub 50ms search latency, low latency search engine, search response time budget, p99 search latency target, instant search speed, search latency breakdown, network round trip time search, query embedding latency, reduce search response time, fast autocomplete backend, search performance budget, how fast can search be
+boost: 2
+---
+
+A 50 millisecond budget is almost always a network problem, not a search engine problem. Keyword search on a well-configured Meilisearch index routinely completes in single-digit milliseconds of server processing, so the engine is rarely what breaks the budget. What breaks it is distance: if your users are 90 ms away from your instance, no amount of tuning gets you to 50 ms, because the packets cannot travel faster. Decide first whether your 50 ms is server-side processing time or end-to-end perceived latency. The first is routinely achievable. The second is achievable only within a region, and only if you keep query-time embedding inference out of the path.
+
+## Where the milliseconds actually go
+
+A search request spends time in five distinct places, and only two of them are under the search engine's control.
+
+| Stage | Typical share of a 50 ms budget | Who controls it |
+| --- | --- | --- |
+| Client to server network round trip | The dominant cost, often larger than everything else combined | Region placement, CDN, connection reuse |
+| Connection setup (TCP plus TLS) | Additional round trips on a cold connection, zero on a warm one | Keep-alive, HTTP/2 |
+| Queue wait before execution | Near zero when provisioned correctly, unbounded when not | Resource tier, query volume |
+| Search execution (filter, rank, facet, format) | Single-digit to low tens of milliseconds on a tuned index | Index settings, search parameters |
+| Query embedding inference | Tens to hundreds of milliseconds with a hosted provider | Embedder choice, or avoiding semantic search |
+
+The practical consequence is that the ordering of your work is fixed. Fix placement, then remove embedding inference from the hot path, then tune the index. Tuning an index that sits on the wrong continent is wasted effort.
+
+## Why region placement dominates everything else
+
+Network round-trip time is a function of physical distance and routing, and it is the same for every search engine on the market. Meilisearch Cloud offers nine regions (`FRA`, `PAR`, `LON`, `SGP`, `JPN`, `SYD`, `SFO`, `NYC`, `SAO`), and the [regions reference](/capabilities/platform/infrastructure/regions) states the trade-off plainly: a search that takes 5 ms on the server feels instant or sluggish depending on whether the user is 10 ms or 200 ms away.
+
+Two numbers set the ceiling. Within a metropolitan area or a single cloud region, round trips are typically in the low single-digit to low tens of milliseconds. Across an ocean, a round trip commonly lands somewhere between 70 and 150 ms depending on the pair {/* VERIFY: confirm representative transatlantic and transpacific RTT ranges from a public latency dataset */}. If your budget is 50 ms end-to-end and your users span two continents, one instance cannot satisfy it. You need either a project per region with routing at the application layer, or multi-region replication, which is an Enterprise arrangement.
+
+Region cannot be changed after a project is created. Moving means creating a new project in the target region and reindexing, so this is the decision to get right before anything else.
+
+Two cheaper wins sit alongside placement. Reuse connections, because a cold HTTPS connection pays TCP and TLS handshake round trips before the query is even sent. And search directly from the browser with a [tenant-scoped or search-only key](/capabilities/security/overview) rather than proxying through your own backend, which otherwise adds a second network hop to every keystroke.
+
+## What each feature costs inside the budget
+
+Not all search features are equally affordable at 50 ms.
+
+**Keyword search** is the cheapest path and the only one that reliably fits a tight end-to-end budget. No external calls, no inference.
+
+**Filters** are usually cheap, but cost scales with how many filter features you enable. Every attribute in `filterableAttributes` builds structures that are evaluated at search time.
+
+**Facet distribution** scales with the number of faceted attributes and their distinct values. `maxValuesPerFacet` defaults to 100, which means Meilisearch computes counts for up to 100 values per facet even if your sidebar shows 10.
+
+**Result formatting** scales with how much you ask for back. Highlighting and cropping across large text fields is real work, repeated for every hit.
+
+**Semantic and hybrid search** is the feature most likely to destroy a 50 ms budget, because every query must be embedded before it can be searched. The [Cloud monitoring documentation](/capabilities/platform/monitoring/search_performance) shows a real performance trace where the semantic step accounted for 430 ms out of 440 ms total. If you need semantic retrieval inside a tight budget, run a local embedder rather than a hosted API, or use [composite embedders](/capabilities/hybrid_search/advanced/composite_embedders) (experimental) to pair a cloud model for indexing with a local model for search. Otherwise, set `semanticRatio` to `0` on latency-critical surfaces such as autocomplete and keep hybrid search for the results page. See [semantic versus hybrid](/capabilities/hybrid_search/advanced/semantic_vs_hybrid).
+
+## Measure before you tune
+
+Meilisearch reports `processingTimeMs` on every search response, and `showPerformanceDetails` breaks that number into per-stage timings. Comparing server processing time against your own wall-clock measurement tells you immediately whether you have a network problem or an engine problem.
+
+This script configures an index for low latency, then reports both numbers.
+
+```javascript
+// npm install meilisearch
+import { Meilisearch } from 'meilisearch'
+
+const client = new Meilisearch({
+  host: process.env.MEILISEARCH_URL, // for example https://ms-xxxx.sfo.meilisearch.io
+  apiKey: process.env.MEILISEARCH_KEY,
+})
+
+const index = client.index('products')
+
+// 1. Settings that buy the most latency headroom, highest impact first.
+await client.waitForTask(
+  (await index.updatePagination({ maxTotalHits: 200 })).taskUid,
+)
+await client.waitForTask(
+  (await index.updateProximityPrecision('byAttribute')).taskUid,
+)
+await client.waitForTask(
+  (await index.updateFaceting({ maxValuesPerFacet: 20 })).taskUid,
+)
+await client.waitForTask(
+  (await index.updateSearchableAttributes(['name', 'brand', 'category'])).taskUid,
+)
+await client.waitForTask(
+  (await index.updateSearchCutoffMs(500)).taskUid,
+)
+
+// 2. Measure a representative query, server time and wall-clock time.
+const started = performance.now()
+const results = await index.search('wireless headphone', {
+  limit: 20,
+  attributesToRetrieve: ['id', 'name', 'price', 'image'],
+  filter: 'in_stock = true',
+  facets: ['brand'],
+  showPerformanceDetails: true,
+})
+const wallClockMs = performance.now() - started
+
+console.log('server processing:', results.processingTimeMs, 'ms')
+console.log('end to end:', Math.round(wallClockMs), 'ms')
+console.log('network and client overhead:',
+  Math.round(wallClockMs - results.processingTimeMs), 'ms')
+console.table(results.performanceDetails)
+```
+
+If `processingTimeMs` is 4 and wall-clock is 120, stop tuning settings and move the instance. If `processingTimeMs` is 180, read `performanceDetails` and target the slowest stage. The stage names and what each one means are documented in [debug search performance](/capabilities/full_text_search/advanced/debug_search_performance).
+
+Collecting performance details adds a small overhead per request, so use it for profiling and remove it from production queries.
+
+## Limits and constraints
+
+- **`showPerformanceDetails`** is available on `POST` and `GET` search, `POST /multi-search`, and the similar-documents routes.
+- **`searchCutoffMs`** defaults to `null`. With no explicit value, Meilisearch interrupts a search after **1500 ms**. Do not set it below **500 ms**: it is a safety net against pathological queries, not a latency knob, and a low cutoff returns incomplete result sets. It also bounds the round trip to a remote embedder, so a 150 ms cutoff will usually not survive a call to a hosted embedding API. Pure semantic searches that exceed it can fail with HTTP 500.
+- **`maxTotalHits`** defaults to 1000 documents ranked per query. Values of 100 to 200 cover 5 to 10 pages of 20 results and remove work nobody sees.
+- **`maxValuesPerFacet`** defaults to 100.
+- **Typo tolerance** allows one typo on words of 5 or more characters and two on words of 9 or more. Raising these thresholds shrinks the fuzzy search space.
+- **`wait in queue`** appearing in a trace means concurrent searches are being throttled. That is a provisioning signal, not a settings problem.
+- **Regions are immutable** after project creation.
+- **There is no documented minimum latency guarantee.** Meilisearch Cloud monitoring describes a healthy p99 as typically under 100 ms for most workloads, which is the number to hold yourself to before promising 50 ms.
+
+## Which budgets are realistic
+
+A 50 ms *server-side* budget is realistic for keyword search with filters on a tuned index, at essentially any scale you can fit in one instance. A 50 ms *end-to-end* budget is realistic for users in the same region as the instance, over warm connections, without query-time embedding inference. A 50 ms end-to-end budget for a globally distributed audience from a single instance is not realistic and no configuration change will make it so. A 50 ms budget that includes a hosted embedding API call is not realistic either.
+
+Track p99, not the average. The average hides exactly the queries your users complain about.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Debug search performance" href="/capabilities/full_text_search/advanced/debug_search_performance">
+    Read per-stage timings with showPerformanceDetails
+  </Card>
+  <Card title="Performance tuning" href="/capabilities/full_text_search/advanced/performance_tuning">
+    Index settings ordered from highest to lowest impact
+  </Card>
+  <Card title="Cloud regions" href="/capabilities/platform/infrastructure/regions">
+    Pick the region that sets your latency floor
+  </Card>
+  <Card title="Configure search cutoff" href="/capabilities/full_text_search/how_to/configure_search_cutoff">
+    Bound worst-case query time without breaking results
+  </Card>
+</CardGroup>

@@ -1,0 +1,166 @@
+---
+title: How to handle zero-result searches
+description: Your search bar returns an empty list for queries that clearly should match something, and you need to know which setting is suppressing results and what to show the user instead.
+keywords: no results found search, search returns empty array, why does my search return nothing, matchingStrategy all vs last, query relaxation fallback search, removeWordsIfNoResults equivalent, did you mean spelling fallback, empty state search results page, zero result rate tracking, filters return no matches, search recall too low, fallback to semantic search
+boost: 2
+---
+
+Meilisearch already relaxes multi-word queries on its own. The default `matchingStrategy` is `last`, which drops query terms from the end until it finds enough documents, so a genuinely empty result set almost never means "the query was too long". It means one of five other things: you set `matchingStrategy` to `all`, a filter excluded everything, no single query term matched any document, a `rankingScoreThreshold` cut the whole set, or `attributesToSearchOn` narrowed the search to fields that do not contain the match. Check those in that order. Then build a fallback ladder so the user sees something useful instead of an empty page.
+
+## Why a query returns nothing
+
+Relaxation is not unconditional. Meilisearch relaxes a query only when there are not enough results to satisfy `limit`. With `limit: 20` and 40 documents containing every term, no term is ever dropped, and the behavior you observe is indistinguishable from `all`. That is fine. The zero-result case is the one worth debugging, and these are the causes, cheapest to check first.
+
+**`matchingStrategy: "all"`.** This is the only strategy that refuses to relax. It returns documents containing every query term and nothing else, no matter how few that is. If you set it for precision on a product catalog, you also opted into empty result sets on long queries. See [use matching strategy](/capabilities/full_text_search/how_to/use_matching_strategy) for the full comparison.
+
+**A filter, not the query.** Filters are applied as a hard constraint. A query that matches 400 documents and a filter that matches 12 of them can intersect at zero. Verify by re-running the same `q` with no `filter`. This is the most common cause in faceted interfaces, and it is why facet counts matter: a facet value showing `0` should not be clickable in the first place. See [search and filter together](/capabilities/filtering_sorting_faceting/how_to/search_and_filter_together).
+
+**No term matched at all.** Vocabulary mismatch ("trainers" against a catalog that says "sneakers"), an internal code the tokenizer split, or a misspelling outside the typo budget. Typo tolerance allows 0 typos for words of 1 to 4 characters, 1 typo for 5 to 8, and 2 for 9 or more, with a hard cap of 2, and a typo on the first character costs 2. Those rules are in [typo tolerance internals](/resources/internals/typo_tolerance) and are adjustable through [`minWordSizeForTypos`](/capabilities/full_text_search/relevancy/typo_tolerance_settings).
+
+**`rankingScoreThreshold`.** Any document scoring below the threshold is removed, and removed hits do not count toward `estimatedTotalHits`, `totalHits`, or the facet distribution. A threshold tuned on one query set will silently zero out another.
+
+**`attributesToSearchOn`.** This narrows the search to the fields you list and raises no error when a document matched only in an excluded field. The [searchable attributes page](/capabilities/full_text_search/how_to/configure_searchable_attributes) documents that silent exclusion explicitly.
+
+## Matching strategy is the first lever
+
+Three values exist, and the choice changes your zero-result rate more than anything else you can configure:
+
+- `last` (default) drops terms from the end of the query, so `big fat cat` becomes `big fat`, then `big`. Highest recall.
+- `frequency` drops the most common terms first, using how often each term appears across the index. Better than `last` for natural-language queries with filler words, and it does not require you to maintain a [stop word list](/capabilities/full_text_search/how_to/configure_stop_words).
+- `all` requires every term. Lowest recall, and the strategy that produces empty result sets.
+
+Quoted terms are exempt. A [phrase search](/capabilities/full_text_search/getting_started/phrase_search) is always a required unit regardless of strategy, so `"dark knight" batman` will never drop the phrase. If your UI quotes anything automatically, that alone can produce zero results.
+
+Coming from another engine: Algolia's `removeWordsIfNoResults` is the closest analog to `matchingStrategy`, and Elasticsearch's `minimum_should_match` on a `bool` query covers part of the same ground, though it sets a threshold rather than an ordering for which terms to drop. {/* VERIFY: exact Algolia parameter values (lastWords, firstWords, allOptional, none) and whether minimum_should_match supports percentage syntax in current Elasticsearch */}
+
+## Build a fallback ladder, not a single query
+
+The right shape is a ranked list of attempts where each rung trades precision for recall, and you stop at the first rung that returns hits. Run the rungs in a single [multi-search](/capabilities/multi_search/getting_started/multi_search) request so the whole ladder costs one round trip instead of four sequential ones. The response returns a `results` array in the same order as the `queries` you sent, so the index of the first non-empty entry tells you which rung answered, which is exactly the signal you want to log and to surface in the UI ("showing broader matches for ...").
+
+A sensible ladder for a product catalog:
+
+1. Exact: `matchingStrategy: "all"` with the user's filter. If this hits, the user got precisely what they asked for.
+2. Relaxed: `matchingStrategy: "frequency"` with the filter.
+3. Filter dropped: same query, no filter, so you can tell the user "no waterproof boots in footwear, but here are waterproof boots".
+4. Semantic: [hybrid search](/capabilities/hybrid_search/overview) with a high `semanticRatio`, which is the only rung that survives a total vocabulary mismatch such as "something to flip pancakes" against a catalog that only says "spatula".
+5. Curated empty state: a [placeholder search](/capabilities/full_text_search/getting_started/placeholder_search) sorted by popularity, or a pinned list via [search rules](/capabilities/search_rules/how_to/curate_empty_query).
+
+```javascript
+// npm install meilisearch
+import { Meilisearch } from 'meilisearch'
+
+const client = new Meilisearch({
+  host: process.env.MEILISEARCH_URL, // for example https://your-project.meilisearch.io
+  apiKey: process.env.MEILISEARCH_KEY,
+})
+
+const index = client.index('products')
+
+// One-time setup. These settings prevent most zero-result searches before
+// any fallback logic runs.
+await client.waitForTask(
+  (await index.updateSettings({
+    searchableAttributes: ['name', 'description', 'brand'],
+    filterableAttributes: ['category', 'in_stock'],
+    sortableAttributes: ['popularity'],
+    // Close the vocabulary gap your users actually have.
+    synonyms: {
+      sneakers: ['trainers', 'running shoes'],
+      tv: ['television'],
+    },
+    // Keep multi-word product terms as single indivisible tokens.
+    dictionary: ['Gore-Tex', 'W-40'],
+    typoTolerance: {
+      enabled: true,
+      minWordSizeForTypos: { oneTypo: 5, twoTypos: 9 },
+      // SKUs must match exactly; a typo-corrected SKU is always wrong.
+      disableOnAttributes: ['sku'],
+    },
+  })).taskUid
+)
+
+const BASE = { limit: 20, attributesToHighlight: ['name'] }
+const RUNGS = ['exact', 'relaxed', 'filter-dropped', 'semantic']
+
+async function searchWithFallback(q, filter) {
+  const { results } = await client.multiSearch({
+    queries: [
+      { indexUid: 'products', q, filter, matchingStrategy: 'all', ...BASE },
+      { indexUid: 'products', q, filter, matchingStrategy: 'frequency', ...BASE },
+      { indexUid: 'products', q, matchingStrategy: 'frequency', ...BASE },
+      // Remove this rung if you have no embedder configured on the index.
+      {
+        indexUid: 'products',
+        q,
+        filter,
+        hybrid: { embedder: 'products-openai', semanticRatio: 0.9 },
+        ...BASE,
+      },
+    ],
+  })
+
+  for (let i = 0; i < results.length; i++) {
+    if (results[i].hits.length > 0) {
+      return { rung: RUNGS[i], ...results[i] }
+    }
+  }
+
+  // Nothing matched. Show a curated list rather than an empty page.
+  const fallback = await index.search('', { ...BASE, sort: ['popularity:desc'] })
+  return { rung: 'empty-state', ...fallback }
+}
+
+const outcome = await searchWithFallback('waterproof hikeing boots', 'category = footwear')
+console.log(outcome.rung, outcome.hits.length, outcome.estimatedTotalHits)
+
+// Every rung below 'exact' is a content or configuration gap. Log it.
+if (outcome.rung !== 'exact') {
+  await recordDegradedSearch({
+    query: 'waterproof hikeing boots',
+    filter: 'category = footwear',
+    rung: outcome.rung,
+    hits: outcome.hits.length,
+  })
+}
+
+async function recordDegradedSearch(record) {
+  // Send this to your own store: a table, a log pipeline, or a metrics backend.
+  console.log(JSON.stringify(record))
+}
+```
+
+## Turn the no-result list into a work queue
+
+The list of queries that returned nothing is the highest-signal backlog in search. On Meilisearch Cloud, [analytics](/capabilities/analytics/overview) reports a **no-result rate** and a **searches without results** list of the most common queries that returned no hits. Both are computed per search ID, which groups the keystrokes of one search intent ("run", "runn", "running shoes") into a single search, so the numbers reflect users rather than typing speed. See the [metrics reference](/capabilities/analytics/advanced/analytics_metrics) for every metric and how it is derived.
+
+Read the list weekly and sort each entry into one of three buckets. Vocabulary gaps become [synonyms](/capabilities/full_text_search/relevancy/synonyms), one-way where the mapping is not symmetric. Terms the tokenizer split wrongly become [dictionary](/capabilities/full_text_search/how_to/configure_dictionary) entries. Everything left is a content gap, which is a merchandising or catalog decision rather than a search one, and it is the most valuable output of the exercise.
+
+## Limits and constraints
+
+- `matchingStrategy` accepts exactly three values: `last` (default), `all`, and `frequency`. There is no percentage or per-term syntax.
+- Relaxation triggers only when fewer than `limit` documents match. Raising `limit` can therefore change which documents appear, not just how many.
+- Phrase search overrides matching strategy. Quoted terms are always required.
+- Typo budget: 0 typos at 1 to 4 characters, 1 at 5 to 8, 2 at 9 or more, hard capped at 2. A first-character typo costs 2.
+- `rankingScoreThreshold` is between `0.0` and `1.0`, and excluded hits do not count toward `estimatedTotalHits`, `totalHits`, or the facet distribution. Combined with `page` and `hitsPerPage` it also costs performance, because every matching document must be scored.
+- Multi-search fails fast. One invalid query in the `queries` array fails the entire request, so a fallback ladder with a bad filter on rung 3 returns no results at all rather than the rungs that would have succeeded. Validate filters before sending.
+- An empty `q` is a placeholder search and returns documents. It is not a zero-result case.
+- Synonyms do not guarantee that two terms return identical counts. Typo tolerance and query splitting still apply independently to each term.
+- Search rules are experimental and must be enabled with the `dynamicSearchRules` flag. Each project includes 3 rules at no cost.
+- Analytics data retention depends on your Meilisearch Cloud plan. Keep your own copy of the no-result log if you need longer history.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Use matching strategy" href="/capabilities/full_text_search/how_to/use_matching_strategy">
+    Full comparison of last, all, and frequency
+  </Card>
+  <Card title="Semantic vs hybrid search" href="/capabilities/hybrid_search/advanced/semantic_vs_hybrid">
+    Pick a semanticRatio for the semantic fallback rung
+  </Card>
+  <Card title="Synonyms" href="/capabilities/full_text_search/relevancy/synonyms">
+    One-way and mutual associations for vocabulary gaps
+  </Card>
+  <Card title="Analytics metrics reference" href="/capabilities/analytics/advanced/analytics_metrics">
+    No-result rate and searches without results
+  </Card>
+</CardGroup>

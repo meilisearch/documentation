@@ -1,0 +1,139 @@
+---
+title: Working around Algolia record size limits
+description: Your Algolia indexing job fails because a record is too big, and you need to know whether to split it, strip it, or move to an engine without the cap.
+keywords: algolia record too big, record size limit exceeded, algolia 10kb record, split records algolia, attributeForDistinct dedupe, chunking long documents search, algolia object size error, indexing large documents, record count billing, searchable attributes trimming
+boost: 2
+---
+
+If an Algolia indexing job rejects a record for exceeding the size cap, you have three real options: strip attributes you do not search or display, split the record into several smaller ones and collapse them at query time with `attributeForDistinct`, or move the large field out of the search engine entirely and store only a reference. Splitting is the workaround most teams land on, and it works, but it multiplies your record count (which is what you are billed on), changes how relevance is computed, and makes facet counts and pagination harder to reason about. The cap itself is a consequence of a RAM-first architecture, not an arbitrary policy.
+
+## Why a per-record cap exists at all
+
+Algolia keeps its index structures in memory so that a query never touches disk. That design is what produces its latency numbers, and it is also what forces a size ceiling: every byte of every record competes for a finite, expensive resource on every server in the cluster. A hard per-record limit is the simplest way to keep one pathological document from degrading an entire index.
+
+The commonly cited ceiling is 10 KB per record on standard plans, with a higher allowance on enterprise tiers. {/* VERIFY: current per-record size limits by Algolia plan tier, and whether the limit is measured on the raw JSON payload or a processed representation */}
+
+The practical consequence is that any content type whose natural unit is longer than a few paragraphs collides with the cap: documentation pages, legal contracts, support articles, transcripts, product manuals, and job descriptions. These are exactly the corpora where full text search is most valuable.
+
+## The standard workaround, and what it actually costs
+
+The accepted pattern is to split one logical item into many records, each carrying a shared identifier, then set `attributeForDistinct` to that identifier so a search returns one hit per logical item rather than one per chunk.
+
+It works. It also charges you in four places.
+
+**Record count.** Algolia bills on records, so a 40-chunk article is 40 billable records. A corpus that was 50,000 documents becomes 2 million. {/* VERIFY: whether every chunk counts as a separate billable record under current Algolia pricing */} This is the same compounding described in [why Algolia costs are hard to predict](/guides/algolia-cost-predictability).
+
+**Relevance.** Ranking now happens at chunk level, not document level. A term that appears once in each of twenty chunks looks weaker than a term appearing three times in one chunk, even though the document as a whole is more relevant. Chunk boundaries also break phrase matching: a phrase that straddles a split simply does not match.
+
+**Facet counts and pagination.** Deduplication happens after ranking, so the number of results you display and the totals you show are computed on different populations. Getting "showing 1 to 10 of N articles" to agree with what the user sees takes care. {/* VERIFY: exact interaction between Algolia's distinct feature and facet count computation */}
+
+**Pipeline complexity.** You now own a chunker. Chunk size, overlap, and boundary rules become code you maintain, and every change to them means a full reindex.
+
+## What helps before you split
+
+If you are staying on Algolia, try these in order. They are cheaper than chunking and often sufficient.
+
+Remove attributes you never search on and never display. Records commonly carry raw HTML, internal metadata, audit fields, and full nested objects that exist only because the record was serialized straight out of a database.
+
+Strip markup and normalize whitespace. HTML tags and indentation can account for a large fraction of a record's bytes while contributing nothing to matching.
+
+Store long bodies outside the index. Keep a URL or a database key in the record and fetch the body when the user opens the result. Search engines rarely need to be the system of record.
+
+Truncate deliberately rather than accidentally. If the first 2,000 characters of an article carry most of the matching signal, index those and accept that deep matches will be missed, as an explicit product decision rather than a silent failure.
+
+## What a disk-first architecture changes
+
+Meilisearch stores its index in a memory-mapped key-value store on disk, so index size is bounded by disk rather than by RAM. The repo's [known limitations](/resources/help/known_limitations) page lists every hard limit in the engine, and there is no per-document byte cap among them. The constraints that do apply are different in kind:
+
+- A maximum of **65,535 positions per attribute**. Words past that point in a single field are silently ignored, so an extremely long field is truncated for matching purposes rather than rejected.
+- A default **100 MB HTTP payload limit** covering a whole batch, not a single document, and adjustable with `--http-payload-size-limit`.
+- **511 bytes** for a primary key value, and **468 bytes** for any individual filterable value.
+
+So the usual reason to split a document disappears. You can index a full article as one document, keep relevance at document level, and keep your document count equal to your content count.
+
+Two settings do most of the work. [`searchableAttributes`](/capabilities/full_text_search/how_to/configure_searchable_attributes) controls what is matched against, and [`displayedAttributes`](/capabilities/full_text_search/how_to/configure_displayed_attributes) controls what comes back. A field that is neither searchable nor displayed is still stored, but it costs nothing at query time. If you genuinely want to keep large fields out of the search index, [document relations](/capabilities/indexing/joins/define_index_relationships) let you store them in a separate index and reference them by ID.
+
+If you already chunked your content for Algolia and want to migrate the chunks as-is rather than reassemble them, `distinctAttribute` does the same job as `attributeForDistinct`.
+
+## A complete example
+
+This indexes whole articles with no chunking, keeps heavy fields out of the search path, and shows the `distinct` fallback for a chunked dataset. Set `MEILISEARCH_URL` and `MEILISEARCH_KEY` before running it.
+
+```javascript
+// npm install meilisearch
+import { Meilisearch } from 'meilisearch'
+
+const client = new Meilisearch({
+  host: process.env.MEILISEARCH_URL,
+  apiKey: process.env.MEILISEARCH_KEY
+})
+
+const index = client.index('articles')
+
+// 1. Whole documents, no chunking. `body` can be the full article text.
+await client.waitForTask(
+  (await index.addDocuments([
+    {
+      id: 'a-1',
+      title: 'Deploying at the edge',
+      section: 'Infrastructure',
+      body: 'A long article body of several thousand words ...',
+      raw_html: '<article>...</article>',
+      internal_notes: 'reviewed 2026-01-12'
+    },
+    {
+      id: 'a-2',
+      title: 'Rolling upgrades without downtime',
+      section: 'Infrastructure',
+      body: 'Another long article body ...',
+      raw_html: '<article>...</article>',
+      internal_notes: 'draft'
+    }
+  ])).taskUid
+)
+
+// 2. Match only on text worth matching; return only what the UI renders.
+//    `raw_html` and `internal_notes` stay stored but are never searched
+//    or sent to the client.
+await client.waitForTask(
+  (await index.updateSettings({
+    searchableAttributes: ['title', 'body'],
+    displayedAttributes: ['id', 'title', 'section', 'body'],
+    filterableAttributes: ['section', 'article_id'],
+    // Only needed if your documents ARE chunks, each carrying article_id
+    distinctAttribute: 'article_id'
+  })).taskUid
+)
+
+// 3. Search. `attributesToCrop` returns a short excerpt of `body` in
+//    each hit's `_formatted` object instead of the whole article.
+const results = await index.search('rolling upgrade', {
+  limit: 10,
+  attributesToCrop: ['body'],
+  cropLength: 40,
+  attributesToHighlight: ['title', 'body'],
+  // Per-query override; takes precedence over distinctAttribute
+  distinct: 'article_id'
+})
+
+console.log(results.estimatedTotalHits, results.processingTimeMs + 'ms')
+console.log(results.hits.map((h) => h._formatted.body))
+```
+
+## Limits and constraints
+
+- Meilisearch's documented hard limits include no per-document size cap. The binding constraints are 65,535 indexed positions per attribute, 65,536 attributes per index, and 4,294,967,296 documents per index.
+- The 100 MB default payload limit applies to the whole HTTP request. A batch of 50,000 documents must fit inside it, or the task fails with `payload_too_large`.
+- Uploading through the Meilisearch Cloud interface is capped at 20 MB. Larger datasets go through the add documents endpoint.
+- Only one `distinctAttribute` is allowed per index, and setting it triggers a full reindex of that index.
+- The `distinct` search parameter requires the attribute to be listed in `filterableAttributes` first, and takes precedence over `distinctAttribute`.
+- When several documents share a distinct value, Meilisearch returns the highest ranked one, falling back to internal document order on a tie.
+- Search returns at most 1,000 documents per query by default, configurable through `maxTotalHits`.
+- A field that is neither searchable nor displayed is still stored on disk and still appears in `fieldDistribution` from the stats route.
+
+## Next steps
+
+- [Known limitations](/resources/help/known_limitations) for every hard limit in the engine, with the reason behind each one
+- [Configure distinct attribute](/capabilities/full_text_search/how_to/configure_distinct_attribute) to collapse near-duplicate results
+- [Import large datasets](/capabilities/indexing/how_to/import_large_datasets) for batch sizing, compression, and error recovery
+- [Migrate from Algolia](/resources/migration/algolia_migration) for the full settings mapping, including `attributeForDistinct`

@@ -1,0 +1,148 @@
+---
+title: Why indexing is slow or stuck
+description: Documents you sent are still not searchable, tasks sit in the queue without finishing, and you need to tell a genuinely stuck queue from one that is simply working through a backlog.
+keywords: indexing stuck, task stuck processing, documents not showing up after import, enqueued tasks not processing, indexing takes forever, task queue not draining, slow document import, reindex taking hours, indexedDocuments null, batch never finishes, no_space_left_on_device, indexing hangs, import hangs, why is my import so slow, indexing latency high
+boost: 2
+---
+
+Query the task queue before changing anything. `GET /tasks?statuses=enqueued,processing` returns a `total` that counts every pending task, and `GET /batches?limit=1` returns the batch running right now, including a `progress.percentage` field. If that percentage moves between two calls, indexing is slow, not stuck, and the cause is one of five things: a backlog ahead of your task, a settings change that triggered a full reindex, fragmented batches, embedder inference waiting on a provider, or disk and memory pressure. A truly frozen queue is almost always a full task database returning `no_space_left_on_device`. Work the checks below in order.
+
+## Step one: is it stuck, or is something ahead of it
+
+A task reports `enqueued` until it reaches the front of the queue. Meilisearch processes tasks one batch at a time in enqueue order, so a task sitting at `enqueued` for ten minutes is not stuck, it is waiting. Read the numbers in this order:
+
+- **Queue depth.** `GET /tasks?statuses=enqueued,processing&limit=1` and read `total`, which counts all matching tasks rather than the returned page. Compare it against the depth during a normal peak. A depth that grows monotonically means your enqueue rate exceeds your drain rate, which is a throughput problem, not a hang.
+- **What is actually running.** `GET /tasks?statuses=processing`. Compare `enqueuedAt` with `startedAt` on that task. A large gap is queue wait. A large gap between `startedAt` and now is real processing time.
+- **What is ahead of you.** `taskCancelation`, `upgradeDatabase`, `taskDeletion`, `indexCompaction`, `export`, `snapshotCreation`, and `dumpCreation` are [processed ahead of everything else](/capabilities/indexing/tasks_and_batches/async_operations#task-queue-priority). A nightly dump or a version upgrade will hold your document tasks behind it for as long as it runs.
+- **Whether it failed instead of hanging.** `GET /tasks?statuses=failed`. A failed task stops being your problem and starts being an error message: read its `error.message` and `error.code`.
+
+Two behaviors surprise people here. Restarting the instance does not lose work: any task that was `processing` is reset to `enqueued` and resumes after the restart. And the `duration` field on a finished task measures only processing time, so [queue wait is excluded](/capabilities/indexing/tasks_and_batches/monitor_tasks#interpreting-timestamps-and-duration). To measure the delay your users feel, subtract `enqueuedAt` from `finishedAt` yourself.
+
+## Step two: read the batch trace
+
+Tasks are grouped into batches, and the batch object is where the timing lives. `GET /batches` returns, for the current or most recent batch:
+
+- `progress.percentage` and `progress.steps`, the live completion state, `null` once the batch finishes
+- `batchStrategy`, which explains why the batch stopped accepting more tasks
+- `stats.totalNbTasks`, `stats.types`, and `stats.indexUids`, the composition of the batch
+- `stats.progressTrace`, a per-phase timing breakdown such as `"processing tasks > indexing > extracting word proximity": "33.71s"`
+- `stats.embedderRequests`, with `total`, `failed`, and `lastError`, present only when the batch produced embeddings
+- `stats.writeChannelCongestion`, with `attempts` and `blocking_attempts`
+
+The single longest entry in `progressTrace` is your cause. Each phase maps to a specific fix, documented phase by phase in [optimize indexing performance with batch statistics](/capabilities/indexing/tasks_and_batches/optimize_batch_performance). On Meilisearch Cloud, the same data is rendered in the [indexing performance dashboard](/capabilities/platform/monitoring/indexing_performance), which also charts time-to-search at p75, p90, p95, and p99.
+
+A batch of one or two tasks with a large `progressTrace` is the signature of fragmentation, covered below. A batch whose trace is dominated by `writing embeddings to database` or whose `embedderRequests.total` is large points at the embedder.
+
+## Step three: work the causes in order
+
+**A settings change triggered a full reindex.** This is the most common reason an import that used to take minutes now takes hours. Updating searchable, filterable, or sortable attributes, stop words, synonyms, typo tolerance, embedders, the dictionary, proximity precision, or separator tokens [reindexes every document in the index](/capabilities/indexing/advanced/indexing_best_practices#settings-that-trigger-a-full-reindex). Displayed attributes and ranking rules do not. Check for a recent `settingsUpdate` task with `GET /tasks?types=settingsUpdate&indexUids=products`. The fix is ordering: configure an index completely before the first import. When settings must change on a live index, build a second index, configure it, import into it, and [swap the two indexes](/reference/api/indexes/swap-indexes).
+
+**Batches are fragmented.** Meilisearch groups consecutive tasks into one batch only when they target the same index, are the same task type, and use the same content type. A pipeline that interleaves additions, deletions, and settings updates produces batches of one or two tasks, and per-batch post-processing is then paid over and over. Phases like `post processing words > word fst` rebuild structures that reflect the whole index, not just the documents you sent, so they do not shrink with batch size. Send few large payloads instead of many small ones: [50,000 to 100,000 documents per payload](/capabilities/indexing/how_to/import_large_datasets#choose-the-right-payload-size) is the documented range for large datasets, sent as NDJSON and compressed with `gzip`, `deflate`, or `br`.
+
+**Too much is being indexed.** By default every field is searchable, including IDs, URLs, timestamps, and raw HTML nobody queries. Every entry in `filterableAttributes` and `sortableAttributes` adds extraction and post-processing work. If `extracting words` or `merging word caches` dominates the trace, trim `searchableAttributes`. If `extracting facets` or `post processing facets` dominates, trim filterable attributes, and disable [facet search](/reference/api/settings/update-facetsearch) if your interface never searches facet values.
+
+**Embedder inference is the hidden bottleneck.** With a remote embedder, indexing throughput is bounded by your provider, not by Meilisearch. Read `stats.embedderRequests`: a high `total` with a slow batch means you are rate-limited, and a non-zero `failed` with a populated `lastError` means documents are being indexed without vectors. Reduce the work by [including fewer attributes in `documentTemplate`](/capabilities/hybrid_search/advanced/document_template_best_practices), lowering the template size limit, choosing a lower-dimension model, or enabling binary quantization on the [embedder settings](/reference/api/settings/update-embedders). Binary quantization is irreversible, so decide before enabling it.
+
+**Disk and memory pressure.** A high `waiting for database writes` time means the disk is the limit: avoid HDDs and check that your provider is not throttling I/O credits. A high `waiting for extractors` time means CPU, and more cores help indexing more than more RAM does. `writeChannelCongestion.blocking_attempts` climbing means concurrent writes are contending on the same index. Keep RAM above index size by at least 20 percent on [Cloud resource tiers](/capabilities/platform/infrastructure/manage_resources). If the index has grown far beyond its document count after heavy updates or deletions, [compact it](/capabilities/indexing/how_to/compact_an_index).
+
+**The queue itself is full.** When the task database reaches roughly 10 GiB, writes fail with [`no_space_left_on_device`](/reference/errors/error_codes#no_space_left_on_device) and nothing drains until finished tasks are deleted with `DELETE /tasks`. This is the one failure mode that genuinely looks frozen.
+
+## A complete diagnostic script
+
+This script reads the queue, the running batch, recent settings updates, failures, and database sizes. It changes nothing. Set `MEILISEARCH_URL` and `MEILISEARCH_KEY` in your environment, then run `npm install meilisearch && node diagnose.mjs`.
+
+```javascript
+import { Meilisearch } from 'meilisearch'
+
+const HOST = process.env.MEILISEARCH_URL
+const KEY = process.env.MEILISEARCH_KEY
+const INDEX_UID = 'products'
+
+const client = new Meilisearch({ host: HOST, apiKey: KEY })
+const api = async (path) => {
+  const response = await fetch(`${HOST}${path}`, { headers: { Authorization: `Bearer ${KEY}` } })
+  if (!response.ok) throw new Error(`${path} returned ${response.status}`)
+  return response.json()
+}
+
+// 1. Queue depth, instance-wide and for this index
+const allPending = await client.tasks.getTasks({ statuses: ['enqueued', 'processing'], limit: 1 })
+const mine = await client.tasks.getTasks({
+  statuses: ['enqueued', 'processing'],
+  indexUids: [INDEX_UID],
+  limit: 1,
+})
+console.log('pending tasks, all indexes:', allPending.total, '| this index:', mine.total)
+
+// 2. What is running right now, and how long has it been running
+const running = await client.tasks.getTasks({ statuses: ['processing'], limit: 5 })
+for (const task of running.results) {
+  const waited = new Date(task.startedAt) - new Date(task.enqueuedAt)
+  const elapsed = Date.now() - new Date(task.startedAt)
+  console.log(`#${task.uid} ${task.type} on ${task.indexUid}: waited ${waited}ms, running ${elapsed}ms`)
+}
+
+// 3. The current batch: progress, composition, and per-phase timing
+const { results: [batch] } = await api('/batches?limit=1')
+console.log('batch', batch.uid, '| strategy:', batch.batchStrategy, '| duration:', batch.duration)
+console.log('progress:', batch.progress ? `${batch.progress.percentage.toFixed(1)}%` : 'finished')
+console.log('tasks in batch:', batch.stats.totalNbTasks, batch.stats.types)
+console.log('embedder requests:', batch.stats.embedderRequests ?? 'none')
+console.log('write congestion:', batch.stats.writeChannelCongestion ?? 'none')
+console.log('progress trace:')
+for (const [phase, time] of Object.entries(batch.stats.progressTrace ?? {})) {
+  console.log(' ', time, phase)
+}
+
+// 4. Did a settings update quietly queue a full reindex?
+const settingsTasks = await client.tasks.getTasks({
+  types: ['settingsUpdate'],
+  indexUids: [INDEX_UID],
+  limit: 3,
+})
+console.log('recent settings updates:', settingsTasks.results.map((t) => [t.uid, t.status, t.enqueuedAt]))
+
+// 5. Did anything fail rather than hang?
+const failed = await client.tasks.getTasks({ statuses: ['failed'], limit: 5 })
+console.log('failed tasks:', failed.results.map((t) => [t.uid, t.type, t.error?.code, t.error?.message]))
+
+// 6. Disk pressure: reclaimable space per index
+const stats = await api('/stats?showInternalDatabaseSizes=true&sizeFormat=human')
+console.log('database size:', stats.databaseSize, '| used:', stats.usedDatabaseSize)
+```
+
+Run it twice, thirty seconds apart. If `progress.percentage` moved and queue depth fell, you are watching a slow batch finish, and the trace tells you which phase to attack. If nothing moved and no task is `processing`, check for `no_space_left_on_device` on your next write.
+
+## Limits and constraints
+
+| Constraint | Value |
+| --- | --- |
+| Task processing | One batch at a time, in enqueue order, apart from the priority task types listed above |
+| Task queue size | About 10 GiB, then `no_space_left_on_device` on further writes |
+| Tasks stored | Up to 1M; enqueuing beyond that automatically deletes the oldest 100K finished tasks, and nothing is deleted if no task has finished |
+| HTTP payload | 100 MB by default, adjustable with `--http-payload-size-limit` when self-hosting |
+| Auto-batching | Only consecutive tasks sharing index, task type, and content type |
+| Task list page size | 20 tasks by default; paginate with `limit`, `from`, and `next` |
+| Cancelation | Only `enqueued` and `processing` tasks; `POST /tasks/cancel` requires at least one filter |
+| Deletion | Only finished tasks can be deleted |
+| Restart behavior | A `processing` task is reset to `enqueued` and resumes; no work is lost |
+| Compaction | Never automatic; trigger `POST /indexes/{index_uid}/compact` yourself |
+
+Meilisearch does not publish a documents-per-second throughput figure, and one would not transfer between datasets anyway. There is also no refresh interval to tune, unlike Elasticsearch, where near-real-time visibility is governed by a per-index refresh setting {/* VERIFY: Elasticsearch index.refresh_interval default value and whether it remains per-index configurable */}. Measure your own numbers from `enqueuedAt`, `finishedAt`, and `progressTrace`.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Optimize batch performance" href="/capabilities/indexing/tasks_and_batches/optimize_batch_performance">
+    What each `progressTrace` phase measures and the setting that reduces it.
+  </Card>
+  <Card title="Tasks and asynchronous operations" href="/capabilities/indexing/tasks_and_batches/async_operations">
+    Task statuses, queue priority, auto-batching rules, and cancelation.
+  </Card>
+  <Card title="Indexing best practices" href="/capabilities/indexing/advanced/indexing_best_practices">
+    Settings that trigger a full reindex, payload sizing, and hardware guidance.
+  </Card>
+  <Card title="Import large datasets" href="/capabilities/indexing/how_to/import_large_datasets">
+    Batch sizing, NDJSON streaming, compression, and retry strategy.
+  </Card>
+</CardGroup>

@@ -1,0 +1,142 @@
+---
+title: Why your search ranks the wrong result first
+description: A relevant-looking document sits below a worse one for the same query, and you need to find which ranking rule put it there and change that rule.
+keywords: wrong result first, top result not relevant, result ordering wrong, _rankingScoreDetails, showRankingScoreDetails, ranking rule order debug, custom ranking rule ignored, sort parameter not working search, attribute ranking order relevancy, why is this document ranked higher, boost specific document, tiebreaker search results
+boost: 2
+---
+
+The first result is rarely first because it "scored higher" overall. Meilisearch ranks with a [bucket sort](/resources/internals/bucket_sort): it applies ranking rules one at a time, and the first rule that assigns two documents different scores decides their relative order permanently. Every later rule is ignored for that pair. So there is always exactly one rule responsible. Find it by rerunning the query with `showRankingScoreDetails: true`, lining up the two documents rule by rule, and looking for the first row where their scores differ. Then either change what that rule measures, or move it in `rankingRules`.
+
+## Read the score details for both documents
+
+Run the query once with scores turned on, pull out the document that won and the document you expected, and compare them in rule order. This script prints the comparison and names the rule that decided the outcome.
+
+```javascript
+import { Meilisearch } from 'meilisearch'
+
+const client = new Meilisearch({
+  host: process.env.MEILISEARCH_URL,
+  apiKey: process.env.MEILISEARCH_KEY
+})
+
+const index = client.index('products')
+const query = 'wireless headphones'
+const expectedId = 'SKU-4471' // the document you believe should rank first
+
+const { hits } = await index.search(query, {
+  limit: 50,
+  showRankingScore: true,
+  showRankingScoreDetails: true
+})
+
+const winner = hits[0]
+const expected = hits.find((hit) => String(hit.id) === expectedId)
+
+if (!expected) {
+  console.log(`${expectedId} is not in the top 50 for "${query}".`)
+  console.log('This is a matching problem, not a ranking problem.')
+} else {
+  // Rules appear in _rankingScoreDetails with an "order" field matching rankingRules
+  const rules = [...new Set([
+    ...Object.keys(winner._rankingScoreDetails),
+    ...Object.keys(expected._rankingScoreDetails)
+  ])].sort((a, b) =>
+    (winner._rankingScoreDetails[a]?.order ?? 99) -
+    (winner._rankingScoreDetails[b]?.order ?? 99)
+  )
+
+  let decided = false
+  for (const rule of rules) {
+    const a = winner._rankingScoreDetails[rule] ?? {}
+    const b = expected._rankingScoreDetails[rule] ?? {}
+    // The sort rule reports a "value", not a "score"
+    const aScore = a.score ?? a.value
+    const bScore = b.score ?? b.value
+    const verdict = !decided && String(aScore) !== String(bScore) ? '  <-- decided here' : ''
+    if (verdict) decided = true
+    console.log(`${rule.padEnd(16)} winner=${aScore}  expected=${bScore}${verdict}`)
+  }
+
+  console.log(`\n_rankingScore: winner=${winner._rankingScore}, expected=${expected._rankingScore}`)
+}
+```
+
+Set `MEILISEARCH_URL` to your instance URL and `MEILISEARCH_KEY` to a key with search permission before running it. The same two parameters, [`showRankingScore` and `showRankingScoreDetails`](/capabilities/full_text_search/relevancy/ranking_score), work on every search endpoint.
+
+## What each rule in the output means
+
+`_rankingScoreDetails` contains one nested object per active [ranking rule](/capabilities/full_text_search/relevancy/ranking_rules), each with an `order` and a `score` between `0.0` and `1.0`.
+
+| Rule | Diverges when |
+| --- | --- |
+| `words` | One document matches more of the query terms. Terms are dropped from the right, so word order in the query matters. |
+| `typo` | One document matched with fewer typos. Check `typoCount` against `maxTypoCount`. |
+| `proximity` | The query terms sit closer together, and in query order, in one document. |
+| `attributeRank` | The match landed in a field listed earlier in `searchableAttributes`. |
+| `sort` | Reports a `value`, not a score. Only active when the request includes a `sort` parameter. |
+| `wordPosition` | The match starts closer to the beginning of the attribute. |
+| `exactness` | One document contains the query terms exactly, the other matched a prefix or a variant. |
+| `<attribute>:asc` or `:desc` | A [custom ranking rule](/capabilities/full_text_search/relevancy/custom_ranking_rules) separated them. |
+
+Two things surprise people here. First, a document with a higher `_rankingScore` can still rank lower, because the overall score is a weighted blend while the actual ordering is decided rule by rule, and `sort` does not contribute to the score at all. Second, a document's score never depends on the other documents in the index, so a stable-looking score can still lose a comparison it used to win once the losing document changes.
+
+## The usual causes, cheapest to check first
+
+**`searchableAttributes` order is wrong.** This is the most common cause of a plausible result losing to a worse one. If the deciding rule is `attributeRank`, the winner matched in a field you ranked higher. Attributes in the [`searchableAttributes` array](/capabilities/full_text_search/how_to/configure_searchable_attributes) are ranked by their position, and the default `["*"]` gives every field equal weight. Fields such as `description`, `tags`, or `body` placed above `title` will quietly outrank it forever.
+
+**Proximity or word position won before your business logic ran.** `attributeRank` is fourth by default, and `wordPosition` and `exactness` come after `sort`. If `proximity` decides, no amount of custom ranking or sorting will ever get a look. Moving a rule down is as valid a fix as moving one up.
+
+**A custom ranking rule is sitting too low to matter.** Custom rules such as `popularity:desc` run last by default, so they only break ties among documents that every built-in rule scored identically. On a text-heavy index that pair almost never exists. If your popularity boost appears to do nothing, this is why. Move it up one position at a time and recheck, because placing it too high makes results look alphanumerically sorted instead of relevant.
+
+**A custom ranking rule is sorting the wrong way.** Custom ranking rules sort lexicographically, so `Elena` ranks above `Ryu` and below `11` in a descending sort. Numbers stored as strings will not order the way you expect. Worse, if some documents lack the attribute entirely, the rule's behavior on those documents is undefined and results can look random. Every document must carry the attribute.
+
+**Two custom rules are fighting.** Only the first one that separates a pair has any effect. `discounted:desc` above `popularity:desc` means popularity is consulted only within documents that share the same `discounted` value. Reordering them changes which signal wins, and there is no way to weight them against each other.
+
+**`sort` is in the wrong place, or was never active.** The `sort` rule is skipped entirely when the request has no `sort` parameter or the value is invalid, and attributes must be in `sortableAttributes`. When it is active but appears to do nothing, `proximity` or `attributeRank` probably resolved the pair first. The documented balance point is after `words`, `typo`, and `proximity`, and before `attributeRank`, `wordPosition`, and `exactness`. See [sorting results](/capabilities/filtering_sorting_faceting/how_to/sort_results).
+
+**The winner genuinely matches better.** If `words` or `exactness` decides, the fix is in the text, not the rules: add a [synonym](/capabilities/full_text_search/relevancy/synonyms), or review your [matching strategy](/capabilities/full_text_search/how_to/use_matching_strategy), which controls how terms get dropped when there are not enough results.
+
+Apply a new order to the index, then rerun the comparison script:
+
+```javascript
+await client.index('products').updateRankingRules([
+  'words',
+  'typo',
+  'proximity',
+  'sort',
+  'attributeRank',
+  'wordPosition',
+  'exactness',
+  'popularity:desc'
+])
+```
+
+## Limits and constraints
+
+- Ranking rules are an index-level setting. There is no per-query override, and no per-query weight for an individual rule.
+- Updating `rankingRules` returns a task, so the change is asynchronous. Wait for the task to finish before retesting.
+- Meilisearch always sorts as if `words` were present and ahead of `typo`, `proximity`, `attributeRank`, and `exactness`, even if you remove it or demote it.
+- The legacy `attribute` rule cannot be combined with `attributeRank` or `wordPosition`. Using both returns an error.
+- Only five settings influence the ranking score: `searchableAttributes`, `rankingRules`, `stopWords`, `synonyms`, and `typoTolerance`. Changing anything else will not move a document.
+- `attributesToSearchOn` restricts which fields are searched, but its order does not affect relevancy. Only `searchableAttributes` does.
+- The `sort` entry in `_rankingScoreDetails` reports a `value` rather than a `score`, because it does not measure relevance.
+- In hybrid search the score is a blend of keyword and semantic relevance controlled by `semanticRatio`, so the keyword rule breakdown alone will not explain the order. See [custom hybrid ranking](/capabilities/hybrid_search/advanced/custom_hybrid_ranking).
+- `rankingScoreThreshold` drops documents below a score instead of reordering them, and excluded hits do not count toward `estimatedTotalHits`, `totalHits`, or the facet distribution.
+- If one specific document must always be first for one specific query, ranking rules are the wrong tool. Use [search rules](/capabilities/search_rules/how_to/pin_one_result_for_query) to pin it, keeping in mind the feature is experimental and each project includes three rules for free.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Ranking score" href="/capabilities/full_text_search/relevancy/ranking_score">
+    Full reference for reading `_rankingScore` and `_rankingScoreDetails`
+  </Card>
+  <Card title="Built-in ranking rules" href="/capabilities/full_text_search/relevancy/ranking_rules">
+    What each rule measures and where to place it
+  </Card>
+  <Card title="Attribute ranking order" href="/capabilities/full_text_search/relevancy/attribute_ranking_order">
+    How `searchableAttributes` order changes which field wins
+  </Card>
+  <Card title="Why a document does not appear in results" href="/guides/document-not-in-results">
+    When the document is missing entirely rather than ranked low
+  </Card>
+</CardGroup>

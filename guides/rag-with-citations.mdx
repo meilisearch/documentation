@@ -1,0 +1,194 @@
+---
+title: How to build a RAG pipeline that cites its sources
+description: Your assistant gives good answers but the user cannot check them, and you need every sentence to link back to the exact passage it came from.
+keywords: rag citations, cite sources in llm answer, footnotes for ai answers, source attribution for chatbots, traceable ai answers, grounding check on llm output, deep link to the passage that matched, prevent fabricated citations, verify an answer against retrieved documents, stable chunk id that survives reindexing
+boost: 2
+---
+
+A citation is decided at chunk time, not at answer time. Give every chunk a deterministic id, the canonical URL of its source, and a fragment anchor, store those fields on the document, and return them with every hit using `attributesToRetrieve`. Hand the model a numbered list of passages, require a `[n]` marker on every claim, then check after generation that each marker maps to a passage that was actually retrieved. If the identifiers are not attached to the text before indexing, no amount of prompt engineering will recover them later, because the model never saw them.
+
+## Why citations disappear before the model ever runs
+
+Three things go missing during ingestion, and all three are invisible until a user clicks a source and lands on the wrong page.
+
+**Ids are regenerated per run.** If chunk ids come from an array position or an autoincrement, re-ingesting a source that gained a paragraph shifts every downstream id. Yesterday's logged citation now points at different text. Derive the id instead from content that does not move: the source identifier, the anchor, and the position within the section.
+
+**Anchors are flattened.** HTML and Markdown extractors usually keep the heading text and discard the `id` attribute that makes the heading linkable. Capture it during extraction, when the DOM or the heading node is still in scope. For PDFs, capture the page number in the same pass. See [how to chunk documents for search](/guides/how-to-chunk-documents) and [how to chunk PDFs](/guides/chunk-pdfs) for the extraction side.
+
+**Titles never reach the chunk.** A chunk that stores only its body has nothing citable in it. Store the document title and the full heading path on every chunk, not just on the parent.
+
+## The fields a citable chunk needs
+
+| Field | Purpose |
+| --- | --- |
+| `chunk_id` | Primary key. Deterministic hash, stable across re-ingestion. |
+| `source_id` | Groups chunks from the same source. Used for deduplication. |
+| `title` | What the citation is labeled with. |
+| `url` | Canonical link to the source. |
+| `anchor` | Fragment appended to `url` so the link lands on the passage. |
+| `heading_path` | Array of ancestor headings, for example `["Billing", "Refunds"]`. |
+| `order` | Position inside the source, for ordering and for the id hash. |
+| `text` | The chunk body. |
+
+Primary key values must be integers or strings containing only `a-z`, `A-Z`, `0-9`, hyphens, and underscores, so a hex digest is a safe choice. See [design primary keys](/capabilities/indexing/how_to/design_primary_keys).
+
+## Returning only what a citation needs
+
+Retrieval for a model is not retrieval for a result page. Four search parameters do most of the work:
+
+- `attributesToRetrieve` limits each hit to the citation fields plus the body, instead of the index [displayed attributes](/capabilities/full_text_search/how_to/configure_displayed_attributes). Every field you leave in is context you pay for on every call.
+- `attributesToCrop` with `cropLength` returns a trimmed excerpt under `_formatted`, centered on the match. `cropLength` counts words and defaults to `10`, which is far too short to reason over, so set it explicitly. See [search with snippets](/capabilities/full_text_search/getting_started/search_with_snippets).
+- `distinct` set to `source_id` returns at most one chunk per source, so a single long document cannot occupy all the citation slots. The attribute must be in `filterableAttributes`. See [configure distinct attribute](/capabilities/full_text_search/how_to/configure_distinct_attribute).
+- `rankingScoreThreshold` drops weak matches entirely rather than letting the model cite them. Excluded hits do not count toward `estimatedTotalHits`. Pair it with `showRankingScore` while you calibrate the cutoff, as described in [ranking score](/capabilities/full_text_search/relevancy/ranking_score).
+
+## A complete example
+
+This script indexes chunks with citation metadata, exposes a search tool that numbers each passage, generates an answer, and then verifies the citations. It uses [`meilisearch-js`](/getting_started/sdks/javascript) with the [Vercel AI SDK](https://ai-sdk.dev), the same foundation as [agentic search](/capabilities/agentic_search/getting_started).
+
+```javascript rag-citations.mjs
+// npm install meilisearch ai @ai-sdk/openai zod
+// Env: MEILISEARCH_URL, MEILISEARCH_KEY, OPENAI_API_KEY
+import { createHash } from "node:crypto";
+import { Meilisearch } from "meilisearch";
+import { generateText, tool, stepCountIs } from "ai";
+import { openai } from "@ai-sdk/openai";
+import { z } from "zod";
+
+const client = new Meilisearch({
+  host: process.env.MEILISEARCH_URL,
+  apiKey: process.env.MEILISEARCH_KEY,
+});
+const index = client.index("docs_chunks");
+
+// 1. Deterministic id: same source, anchor, and position give the same id forever.
+const chunkId = (sourceId, anchor, order) =>
+  createHash("sha1").update(`${sourceId}|${anchor}|${order}`).digest("hex");
+
+await client.createIndex("docs_chunks", { primaryKey: "chunk_id" });
+await index.updateSettings({
+  searchableAttributes: ["title", "heading_path", "text"],
+  filterableAttributes: ["source_id", "product"],
+  displayedAttributes: ["*"],
+});
+
+const chunks = [
+  {
+    source_id: "billing-guide",
+    order: 3,
+    anchor: "refund-window",
+    title: "Billing guide",
+    url: "https://example.com/docs/billing",
+    heading_path: ["Billing", "Refunds"],
+    product: "cloud",
+    text: "Refunds are issued to the original payment method within 14 days of the request.",
+  },
+];
+
+const task = await index.addDocuments(
+  chunks.map((c) => ({ ...c, chunk_id: chunkId(c.source_id, c.anchor, c.order) })),
+);
+await client.waitForTask(task.taskUid);
+
+// 2. One registry per conversation turn: citation number -> chunk actually retrieved.
+const sources = new Map();
+
+const searchDocs = tool({
+  description:
+    "Search the product documentation. Returns numbered passages. Cite each passage as [n].",
+  inputSchema: z.object({
+    query: z.string().describe("A natural language question or keywords"),
+    product: z.string().optional().describe("Restrict to one product"),
+  }),
+  execute: async ({ query, product }) => {
+    const { hits } = await index.search(query, {
+      limit: 6,
+      distinct: "source_id",
+      attributesToRetrieve: [
+        "chunk_id", "source_id", "title", "url", "anchor", "heading_path", "text",
+      ],
+      attributesToCrop: ["text"],
+      cropLength: 80,
+      showRankingScore: true,
+      rankingScoreThreshold: 0.4,
+      ...(product ? { filter: `product = "${product}"` } : {}),
+    });
+
+    return hits.map((hit) => {
+      const n = sources.size + 1;
+      sources.set(n, hit);
+      return {
+        n,
+        title: hit.title,
+        section: hit.heading_path.join(" > "),
+        url: `${hit.url}#${hit.anchor}`,
+        excerpt: hit._formatted?.text ?? hit.text,
+        score: hit._rankingScore,
+      };
+    });
+  },
+});
+
+const { text: answer } = await generateText({
+  model: openai("gpt-5.4-mini"),
+  system: [
+    "Answer only from the passages returned by searchDocs.",
+    "End every sentence that states a fact with the marker of the passage it came from, for example [2].",
+    "Never cite a number that searchDocs did not return.",
+    "If the passages do not answer the question, say so and cite nothing.",
+  ].join(" "),
+  prompt: "How long do refunds take?",
+  tools: { searchDocs },
+  stopWhen: stepCountIs(5),
+});
+
+// 3. Verify before showing the answer to anyone.
+const used = new Set([...answer.matchAll(/\[(\d+)\]/g)].map((m) => Number(m[1])));
+const invented = [...used].filter((n) => !sources.has(n));
+const unsupported = answer
+  .split(/(?<=[.!?])\s+/)
+  .filter((s) => s.trim().length > 0 && !/\[\d+\]/.test(s));
+
+console.log(answer);
+console.log("Invented citations:", invented);
+console.log("Sentences with no citation:", unsupported.length);
+for (const n of [...used].filter((n) => sources.has(n))) {
+  const s = sources.get(n);
+  console.log(`[${n}] ${s.title} > ${s.heading_path.join(" > ")} ${s.url}#${s.anchor}`);
+}
+```
+
+## How to check that each claim maps to a retrieved chunk
+
+The registry above turns verification into set arithmetic, which is cheap and deterministic:
+
+1. **Invented markers.** Any `[n]` not in `sources` means the model fabricated a reference. Treat this as a hard failure and regenerate rather than rendering a link that goes nowhere.
+2. **Uncited sentences.** Factual sentences with no marker are the more common failure and the easier one to miss, because the answer still looks well sourced. Flag them for review.
+3. **Marker points at the wrong passage.** Set arithmetic cannot catch this. Run a second, cheap model call that receives one sentence and its cited excerpt and answers whether the excerpt supports the sentence. Run it on a sample offline rather than on every request.
+
+Tighten the prompt alongside the check. [Reduce hallucination](/capabilities/agentic_search/advanced/reduce_hallucination) covers the few-shot patterns that make a model refuse rather than guess, and [display source documents](/capabilities/agentic_search/how_to/display_source_documents) covers rendering the sources in a UI.
+
+## Limits and constraints
+
+- **Primary key values are limited to 511 bytes** and, for strings, to alphanumeric characters, hyphens, and underscores. A hex digest is well inside that. See [known limitations](/resources/help/known_limitations).
+- **`limit` defaults to 20** hits, and **`cropLength` defaults to 10 words**. Both defaults are wrong for a model context: set them explicitly.
+- **`rankingScoreThreshold` accepts values between 0.0 and 1.0.** There is no universally correct cutoff. Calibrate it on your own queries with `showRankingScore` before hardcoding one.
+- **`distinct` requires the attribute to be in `filterableAttributes`**, and it overrides the index `distinctAttribute` setting for that request.
+- **Embedded chunks are truncated by the template, not the field.** If the index uses [hybrid or semantic search](/capabilities/hybrid_search/overview), the embedder renders a [`documentTemplate`](/capabilities/hybrid_search/advanced/document_template_best_practices) and truncates it at `documentTemplateMaxBytes`, which defaults to 400 bytes. A chunk longer than that is embedded from its opening only, so it may never be retrieved to be cited.
+- **Meilisearch returns documents, not citations.** Numbering, marker parsing, and verification live in your application. There is no search parameter that formats a citation.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="How to chunk documents for search" href="/guides/how-to-chunk-documents">
+    Split sources so each chunk is worth citing on its own.
+  </Card>
+  <Card title="How to evaluate RAG retrieval quality" href="/guides/evaluate-rag-retrieval">
+    Tell retrieval failures apart from generation failures.
+  </Card>
+  <Card title="Configure guardrails" href="/capabilities/agentic_search/how_to/configure_guardrails">
+    Keep answers inside the passages you retrieved.
+  </Card>
+  <Card title="Ranking score" href="/capabilities/full_text_search/relevancy/ranking_score">
+    Calibrate the score threshold your retrieval uses.
+  </Card>
+</CardGroup>

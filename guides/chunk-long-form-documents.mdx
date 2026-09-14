@@ -1,0 +1,212 @@
+---
+title: How to chunk long-form documentation and books
+description: You are indexing a handbook, a manual, or a book and need to split it into searchable pieces without losing the section context, the cross-references, and the surrounding text that make each passage make sense.
+keywords: split a book for search, chunk a handbook by section, markdown heading splitter, chunk manual for rag, parent document retrieval, small to big retrieval, heading path prefix chunk, cross reference breaks when chunked, index a pdf manual by chapter, section hierarchy chunking, return full section from chunk hit, deduplicate chunks per document
+boost: 2
+---
+
+For long-form content, split on the heading hierarchy, not on a character count. Use the deepest heading level that still produces a passage of a few hundred words, prefix every chunk with its full heading path (book, chapter, then section) so it reads on its own, and store `parent_id`, `anchor`, and `order` on every chunk. Then index chunks and whole sections in two indexes: search the small chunks for precision, deduplicate the hits with `distinct`, and fetch the matching sections to display or to feed a model. That is the parent-document retrieval pattern, and it is the reason long-form search feels different from splitting text every 512 characters.
+
+## Why the heading hierarchy is the right boundary
+
+A book already contains a chunking plan. The author spent effort deciding that "Chapter 4: Leave policy" contains "4.2 Parental leave" which contains "Eligibility". Those boundaries are semantic by construction, and free. A fixed-size splitter ignores all of it and will happily cut the eligibility rule in half, leaving the condition in one chunk and the exception in the next. A user searching for the exception then gets a passage that contradicts the answer.
+
+Heading-based splitting has one real failure mode: the sections are wildly uneven. A handbook will have a 40 word section next to an 8,000 word one. Handle both cases explicitly:
+
+- **Too small.** Merge a section into the next sibling under the same parent until the merged text clears your floor (roughly 100 words works well). Never merge across parents, because that is exactly the join the author decided against.
+- **Too large.** Split the oversized section on paragraph boundaries into sub-chunks that keep the same heading path, the same `parent_id`, and an incrementing `order`. Do not re-split on sentences unless the paragraph itself exceeds your ceiling.
+
+Your ceiling should be driven by what consumes the text. If the chunk feeds a [semantic or hybrid search](/capabilities/hybrid_search/overview) embedder, the [`documentTemplate`](/capabilities/hybrid_search/advanced/document_template_best_practices) renders it and `documentTemplateMaxBytes` truncates the result, defaulting to **400 bytes**. A 3,000 word chunk embedded through a default template is represented by its opening sentences and nothing else. For keyword-only search the ceiling is looser, but long chunks still dilute the [attribute ranking order](/capabilities/full_text_search/relevancy/attribute_ranking_order) and produce unhelpfully large results.
+
+## Prefix parent headings so a chunk stands alone
+
+A chunk titled "Eligibility" containing "You must have been employed for 12 continuous months" is useless in isolation. Eligibility for what? Both the user reading a result and the embedder building a vector need that context inside the text itself.
+
+Build a `heading_path` array as you walk the document, then render it into a prefix:
+
+```javascript
+// heading_path: ["Employee handbook", "Leave policy", "Parental leave", "Eligibility"]
+const contextualized =
+  `${chunk.heading_path.join(' > ')}\n\n${chunk.body}`
+```
+
+Store both the raw `body` and the prefixed `content`. Index `content` as the searchable field so the ancestry participates in matching and in embeddings, and keep `body` for display so the user does not see the breadcrumb twice. Keep `heading_path` as a separate array field too, so you can render breadcrumbs in the results list and filter by chapter.
+
+## Cross-references that break when you split
+
+Long-form content is full of pointers: "as described above", "see section 4.2", "the table on the previous page", and footnote markers. Splitting turns each one into a dead end. Three fixes, in order of effort:
+
+1. **Resolve the reference inline at build time.** If your source is Markdown or HTML with real links, replace `[see 4.2](#parental-leave)` with the target heading text, for example `see "Parental leave" in "Leave policy"`. The chunk now names its target instead of pointing at a location the reader cannot see.
+2. **Inline short dependencies.** Footnotes, definitions, and a legend under a table belong in the same chunk as the text that needs them. Pull the footnote body into the chunk rather than emitting it as its own chunk, which would otherwise match queries on its own and return an orphan.
+3. **Store the graph.** Keep a `references` array of target section ids on the chunk. That lets your application load the referenced section alongside the hit, and it gives an agent a way to follow the pointer. See [document relations](/capabilities/indexing/how_to/document_relations) for linking documents across indexes with foreign keys.
+
+Vague back-references ("as noted above") that resolve to nothing cannot be repaired automatically. Strip them, or accept that the heading path prefix carries enough context to make the chunk readable anyway.
+
+## Parent-document retrieval, end to end
+
+Search wants small chunks. Readers and language models want whole sections. The pattern is to do both: match chunks, return parents.
+
+In Meilisearch this is two indexes plus the `distinct` search parameter. `distinct` returns only one document per unique value of a field, which collapses the five chunks from the same section into the single best-ranked one. It requires that field to be in `filterableAttributes`, and there can be only one `distinctAttribute` per index if you set it as a default instead. See [configure distinct attribute](/capabilities/full_text_search/how_to/configure_distinct_attribute).
+
+Save the following as `chunk-book.mjs` and run it with Node 18 or later. It splits a Markdown document on its heading tree, builds both indexes, and runs a parent-document retrieval query.
+
+```javascript
+// MEILISEARCH_URL="https://ms-xxxxxxxx.meilisearch.io" \
+// MEILISEARCH_KEY="your-admin-key" node chunk-book.mjs
+import { Meilisearch } from 'meilisearch'
+
+const client = new Meilisearch({
+  host: process.env.MEILISEARCH_URL,
+  apiKey: process.env.MEILISEARCH_KEY,
+})
+
+const MIN_WORDS = 100
+const MAX_WORDS = 350
+
+const markdown = `# Employee handbook
+## Leave policy
+Leave is granted per calendar year and does not roll over.
+### Parental leave
+Parental leave is 16 weeks at full pay.
+#### Eligibility
+You must have been employed for 12 continuous months before the due date.
+Contractors are covered from their first day, see "Leave policy".
+`
+
+const slug = (text) =>
+  text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
+const words = (text) => text.trim().split(/\s+/).filter(Boolean).length
+
+// 1. Walk the heading tree, carrying the ancestry down.
+function parseSections(source) {
+  const sections = []
+  const stack = []
+  for (const line of source.split('\n')) {
+    const heading = /^(#{1,6})\s+(.*)$/.exec(line)
+    if (heading) {
+      const level = heading[1].length
+      while (stack.length && stack[stack.length - 1].level >= level) stack.pop()
+      const path = [...stack.map((s) => s.title), heading[2]]
+      const section = {
+        id: path.map(slug).join('--'),
+        level,
+        title: heading[2],
+        heading_path: path,
+        anchor: `#${slug(heading[2])}`,
+        body: '',
+      }
+      stack.push(section)
+      sections.push(section)
+    } else if (sections.length) {
+      sections[sections.length - 1].body += `${line}\n`
+    }
+  }
+  return sections.map((s) => ({ ...s, body: s.body.trim() }))
+}
+
+// 2. Merge undersized sections into the next one, split oversized ones on
+//    paragraphs. Tighten the merge to same-parent siblings for deeper trees.
+function toChunks(sections) {
+  const chunks = []
+  let carry = ''
+  for (const section of sections) {
+    const text = carry ? `${carry}\n\n${section.body}` : section.body
+    carry = ''
+    if (!text) continue
+    if (words(text) < MIN_WORDS && section.level > 1) {
+      carry = text
+      continue
+    }
+    const paragraphs = text.split(/\n{2,}/)
+    let buffer = []
+    let order = 0
+    const flush = () => {
+      if (!buffer.length) return
+      const body = buffer.join('\n\n')
+      chunks.push({
+        id: `${section.id}--${order}`,
+        parent_id: section.id,
+        chapter: section.heading_path[1] ?? section.heading_path[0],
+        heading_path: section.heading_path,
+        anchor: section.anchor,
+        order: order++,
+        body,
+        // The prefix is what makes the chunk readable on its own.
+        content: `${section.heading_path.join(' > ')}\n\n${body}`,
+      })
+      buffer = []
+    }
+    for (const paragraph of paragraphs) {
+      buffer.push(paragraph)
+      if (words(buffer.join(' ')) >= MAX_WORDS) flush()
+    }
+    flush()
+  }
+  return chunks
+}
+
+const sections = parseSections(markdown)
+const chunks = toChunks(sections)
+
+// 3. Two indexes: small chunks to match, full sections to return.
+const chunkIndex = client.index('handbook_chunks')
+const sectionIndex = client.index('handbook_sections')
+
+const settingsTask = await chunkIndex.updateSettings({
+  searchableAttributes: ['heading_path', 'content'],
+  filterableAttributes: ['parent_id', 'chapter'],
+  displayedAttributes: ['id', 'parent_id', 'heading_path', 'anchor', 'order', 'body'],
+})
+await client.waitForTask(settingsTask.taskUid)
+
+const sectionSettings = await sectionIndex.updateSettings({
+  searchableAttributes: ['title', 'body'],
+  filterableAttributes: ['id'],
+})
+await client.waitForTask(sectionSettings.taskUid)
+
+await client.waitForTask((await chunkIndex.addDocuments(chunks)).taskUid)
+await client.waitForTask((await sectionIndex.addDocuments(sections)).taskUid)
+
+// 4. Match chunks, collapse to one per section, then load the parents.
+const hits = (
+  await chunkIndex.search('parental leave eligibility', {
+    limit: 5,
+    distinct: 'parent_id',
+    attributesToHighlight: ['body'],
+  })
+).hits
+
+const parentIds = hits.map((hit) => hit.parent_id)
+const parents = (
+  await sectionIndex.search('', {
+    filter: parentIds.map((id) => `id = "${id}"`).join(' OR '),
+    limit: parentIds.length,
+  })
+).hits
+
+for (const hit of hits) {
+  const parent = parents.find((section) => section.id === hit.parent_id)
+  console.log(hit.heading_path.join(' > '), hit.anchor)
+  console.log('  matched:', hit._formatted.body.slice(0, 120))
+  console.log('  full section words:', words(parent.body))
+}
+```
+
+The chunk index answers the query, and the section index supplies the context you show or send to a model. Reordering by `order` before concatenating parents gives you the original reading order.
+
+## Limits and constraints
+
+- **`documentTemplateMaxBytes` defaults to 400 bytes.** Anything past that is truncated before the embedder sees it, so a chunk that exceeds it is only partly represented in its vector. Set a custom [`documentTemplate`](/capabilities/hybrid_search/advanced/document_template_best_practices) and raise the byte cap deliberately rather than relying on the default, which includes every searchable, non-null field.
+- **One `distinctAttribute` per index.** Setting more than one returns an error, and changing it re-indexes every document. The `distinct` search parameter is per-request and takes precedence over the setting, so prefer it when an index serves more than one access pattern.
+- **`distinct` requires the field to be in `filterableAttributes`.** `parent_id` will not work as a distinct value until you add it.
+- **Default payload limit is 100MB per request.** A large book easily exceeds this once chunked, so batch your `addDocuments` calls. See [import large datasets](/capabilities/indexing/how_to/import_large_datasets).
+- **`estimatedTotalHits` counts chunks, not documents.** With `distinct` applied, the returned hit count and the total are not directly comparable, so do not build "N results found" copy from the raw total.
+- This repo does not document a hard cap on the number of fields per document or on individual field length, so size your chunks against indexing time and embedder cost rather than against a stated limit.
+
+## Next steps
+
+- [How to chunk documents for search](/guides/how-to-chunk-documents) for the strategy comparison and how to evaluate a chunking change
+- [Configure distinct attribute](/capabilities/full_text_search/how_to/configure_distinct_attribute) for the full behavior of `distinct` and `distinctAttribute`
+- [Document template best practices](/capabilities/hybrid_search/advanced/document_template_best_practices) before you embed chunks for hybrid search
+- [Search with snippets](/capabilities/full_text_search/getting_started/search_with_snippets) to crop and highlight the matched passage inside a long chunk

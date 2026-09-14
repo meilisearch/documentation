@@ -1,0 +1,301 @@
+---
+title: How to search Confluence and Notion
+description: Your team wiki has the answer but the built-in search cannot find it, and you need to pull Confluence and Notion content into your own search index without leaking pages people should not see.
+keywords: index confluence in meilisearch, notion api search integration, sync notion database to search engine, confluence rest api pagination, notion blocks to plain text, wiki search across tools, internal knowledge base search, confluence page restrictions search filter, notion incremental sync last_edited_time, unified company wiki search
+boost: 2
+---
+
+Both tools expose everything you need through their REST APIs, so the pipeline is the same in both cases: page through the content API with cursor pagination, flatten the block or storage-format body into plain text, attach the page's access list as a filterable array, and write one Meilisearch document per page (or per section, for long pages). Then sync incrementally on `last_edited_time` in Notion and a `lastmodified` CQL query in Confluence instead of recrawling. Permissions are enforced at search time with a [tenant token](/capabilities/security/advanced/tenant_token_payload) carrying a filter such as `acl IN [user-42, engineering, everyone]`.
+
+## Why wiki content needs a pipeline and not a dump
+
+A Confluence page body is XHTML in Atlassian's storage format, full of `<ac:structured-macro>` elements that render as panels, tables of contents, or embedded Jira issues. A Notion page is not a document at all: it is a tree of block objects you assemble by walking children recursively. Neither returns something you can index as is.
+
+Two consequences matter. First, macro markup and block scaffolding are noise that dilutes relevancy and eats into the [65,535 positions Meilisearch indexes per attribute](/resources/help/known_limitations#maximum-number-of-words-per-attribute). Second, both formats carry structure worth keeping: heading levels, block ids, and page ancestry. Heading text prefixed onto each section makes a chunk understandable on its own, and block ids become anchors so a result opens at the right paragraph rather than the top of a 4,000-word runbook.
+
+## How to page through both APIs without getting throttled
+
+Both APIs are cursor based, not offset based, so never compute a page number.
+
+- **Notion** returns `has_more` and `next_cursor` on every list response, and you pass the cursor back as `start_cursor`. The maximum `page_size` is 100. {/* VERIFY: Notion API maximum page_size value */} Notion documents a rate limit averaging around three requests per second per integration and returns HTTP 429 with a `Retry-After` header when you exceed it. {/* VERIFY: Notion published rate limit figure and header */}
+- **Confluence Cloud** returns a `_links.next` relative URL on v2 endpoints; follow it until it is absent. Rate limits are dynamic rather than a fixed published quota, so the only safe strategy is to honor `Retry-After` on 429 responses and back off. {/* VERIFY: Confluence Cloud rate limiting model and whether a fixed quota is published */}
+
+The practical pattern is one worker, a small concurrency cap on the block or body fetches, and exponential backoff on 429 and 5xx. Wikis are small by search-engine standards, so there is no reason to push hard.
+
+## Turning blocks and storage format into clean text
+
+For Confluence, request the body in the `storage` representation, then strip the XHTML. Remove `ac:structured-macro` elements whose bodies are navigation (table of contents, page trees, children displays) and keep the ones whose bodies are prose (info, note, warning panels, and code blocks). Convert headings to a heading path you carry as metadata, not just as inline text.
+
+For Notion, walk `GET /v1/blocks/{id}/children` recursively. Each block type puts its text in a `rich_text` array, so concatenate `plain_text` across it and map the block type to structure: `heading_1` through `heading_3` become boundaries, `bulleted_list_item` and `numbered_list_item` become list lines, `code` keeps its language, and `child_page` becomes a separate document rather than part of the parent. Blocks that hold no text (dividers, breadcrumbs, embeds) are skipped.
+
+Long pages should be split. One document per top-level heading section, each carrying the page id in a `page_id` field, gives you precise hits without flooding results, because [`distinctAttribute`](/capabilities/full_text_search/how_to/configure_distinct_attribute) set to `page_id` collapses sibling sections back down to one result per page. The boundary logic is covered in [how to chunk documents for search](/guides/how-to-chunk-documents).
+
+## Mapping workspace permissions onto search filters
+
+The rule is simple: compute the access list at index time, enforce it at query time.
+
+Each document gets an `acl` array holding every principal allowed to read it: user ids, group names, a space or workspace key, or the literal `everyone` for open content. Add `acl` to [`filterableAttributes`](/capabilities/filtering_sorting_faceting/advanced/filter_expression_syntax), then issue each user a tenant token whose `searchRules` filter is `acl IN [...]` built from that user's own memberships. The filter is signed into the JWT, so a browser cannot alter it.
+
+In Confluence, the access list is space permissions intersected with any page-level read restrictions, which you read from the content restriction endpoints. {/* VERIFY: exact Confluence Cloud endpoint path for reading page read restrictions */} In Notion, an integration only sees pages explicitly shared with it, and the public API does not expose a per-user permission list for a page, so most teams map Notion access at the workspace or top-level page level and derive group membership from their identity provider instead. {/* VERIFY: whether the Notion API exposes per-page user permissions */}
+
+Two failure modes are worth planning for. Permissions change more often than content, so a page whose restrictions changed needs reindexing even though its text did not. And a page that becomes restricted must be updated promptly, because a stale `acl` is a data leak, not a stale result.
+
+## Syncing on updates instead of recrawling
+
+Store the timestamp of the last successful run. On each pass:
+
+- **Notion**: call `POST /v1/search` sorted by `last_edited_time` descending and stop reading pages once you cross your watermark. {/* VERIFY: Notion search endpoint sort keys */}
+- **Confluence**: run a CQL query such as `lastmodified >= "2026-09-01 00:00"` against the content search endpoint. {/* VERIFY: exact CQL date format accepted by Confluence Cloud */}
+
+Neither approach surfaces deletions, because a deleted page simply stops appearing. Handle that by archiving: Notion exposes `archived` and `in_trash` flags on page objects, and Confluence pages move to a `trashed` status. Sweep for those separately and remove them with [delete by filter](/capabilities/indexing/how_to/delete_documents_at_scale), which clears every section of a page in one task: `page_id = "abc123"`.
+
+## A complete sync pipeline
+
+This script pulls Notion and Confluence pages changed since a watermark, flattens them to text, sections them on headings, indexes them with an access list, and signs a tenant token for a search.
+
+```javascript
+// npm install meilisearch jsonwebtoken
+//
+// export MEILISEARCH_URL="https://ms-example.meilisearch.io"
+// export MEILISEARCH_KEY="$MEILISEARCH_ADMIN_KEY"
+// export SEARCH_KEY="$MEILISEARCH_SEARCH_KEY"
+// export SEARCH_KEY_UID="..."          // the `uid` field of that search key
+// export NOTION_TOKEN="ntn_..."
+// export CONFLUENCE_BASE="https://your-team.atlassian.net"
+// export CONFLUENCE_AUTH="you@example.com:atlassian-api-token"
+//
+// node sync-wiki.mjs 2026-09-01T00:00:00Z
+
+import { MeiliSearch } from 'meilisearch'
+import jwt from 'jsonwebtoken'
+
+const since = process.argv[2] ?? '1970-01-01T00:00:00Z'
+const INDEX = 'wiki'
+const MAX_CHARS = 1500
+
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
+
+// Shared fetch with 429 backoff. Both APIs send Retry-After.
+async function api(url, init = {}, attempt = 0) {
+  const res = await fetch(url, init)
+  if ((res.status === 429 || res.status >= 500) && attempt < 5) {
+    const wait = Number(res.headers.get('retry-after') ?? 2 ** attempt) * 1000
+    await sleep(wait)
+    return api(url, init, attempt + 1)
+  }
+  if (!res.ok) throw new Error(`${res.status} ${url} ${await res.text()}`)
+  return res.json()
+}
+
+// --- Notion -----------------------------------------------------------------
+const notionHeaders = {
+  authorization: `Bearer ${process.env.NOTION_TOKEN}`,
+  'notion-version': '2022-06-28',
+  'content-type': 'application/json',
+}
+
+async function notionPages() {
+  const out = []
+  let cursor
+  do {
+    const body = {
+      page_size: 100,
+      filter: { property: 'object', value: 'page' },
+      sort: { direction: 'descending', timestamp: 'last_edited_time' },
+      ...(cursor ? { start_cursor: cursor } : {}),
+    }
+    const data = await api('https://api.notion.com/v1/search', {
+      method: 'POST',
+      headers: notionHeaders,
+      body: JSON.stringify(body),
+    })
+    for (const page of data.results) {
+      if (page.last_edited_time < since) return out
+      if (page.archived || page.in_trash) continue
+      out.push(page)
+    }
+    cursor = data.has_more ? data.next_cursor : undefined
+  } while (cursor)
+  return out
+}
+
+const richText = (arr = []) => arr.map((t) => t.plain_text).join('')
+
+async function notionBlocks(blockId, depth = 0) {
+  if (depth > 4) return []
+  const lines = []
+  let cursor
+  do {
+    const url = new URL(`https://api.notion.com/v1/blocks/${blockId}/children`)
+    url.searchParams.set('page_size', '100')
+    if (cursor) url.searchParams.set('start_cursor', cursor)
+    const data = await api(url, { headers: notionHeaders })
+    for (const b of data.results) {
+      const text = richText(b[b.type]?.rich_text)
+      if (b.type.startsWith('heading_')) lines.push({ heading: text, id: b.id })
+      else if (text) lines.push({ text, id: b.id })
+      if (b.has_children && b.type !== 'child_page') {
+        lines.push(...(await notionBlocks(b.id, depth + 1)))
+      }
+    }
+    cursor = data.has_more ? data.next_cursor : undefined
+  } while (cursor)
+  return lines
+}
+
+// --- Confluence -------------------------------------------------------------
+const confluenceHeaders = {
+  authorization: `Basic ${Buffer.from(process.env.CONFLUENCE_AUTH).toString('base64')}`,
+  accept: 'application/json',
+}
+
+async function confluencePages() {
+  const out = []
+  let next = `/wiki/api/v2/pages?body-format=storage&limit=100&sort=-modified-date`
+  while (next) {
+    const data = await api(process.env.CONFLUENCE_BASE + next, { headers: confluenceHeaders })
+    for (const page of data.results) {
+      if (page.version?.createdAt && page.version.createdAt < since) return out
+      if (page.status !== 'current') continue
+      out.push(page)
+    }
+    next = data._links?.next ?? null
+  }
+  return out
+}
+
+// Strip storage-format XHTML down to heading and paragraph lines.
+function storageToLines(xhtml = '') {
+  const lines = []
+  const cleaned = xhtml
+    .replace(/<ac:structured-macro[^>]*ac:name="(toc|children|pagetree)"[\s\S]*?<\/ac:structured-macro>/g, '')
+    .replace(/<ac:[^>]*>|<\/ac:[^>]*>|<ri:[^>]*>/g, ' ')
+  const blockRe = /<(h[1-6]|p|li|pre)[^>]*>([\s\S]*?)<\/\1>/g
+  let m
+  while ((m = blockRe.exec(cleaned))) {
+    const text = m[2].replace(/<[^>]+>/g, ' ').replace(/&[a-z]+;/g, ' ').replace(/\s+/g, ' ').trim()
+    if (!text) continue
+    if (/^h[1-3]$/.test(m[1])) lines.push({ heading: text })
+    else lines.push({ text })
+  }
+  return lines
+}
+
+// --- Shared sectioning ------------------------------------------------------
+function toDocuments({ source, pageId, title, url, acl, updatedAt, lines }) {
+  const sections = [{ heading: title, anchor: null, parts: [] }]
+  for (const line of lines) {
+    const last = sections[sections.length - 1]
+    const tooLong = last.parts.join(' ').length > MAX_CHARS
+    if (line.heading || tooLong) {
+      sections.push({ heading: line.heading ?? last.heading, anchor: line.id ?? null, parts: [] })
+    } else {
+      last.parts.push(line.text)
+    }
+  }
+  return sections
+    .filter((s) => s.parts.length > 0)
+    .map((s, i) => ({
+      id: `${source}-${pageId}-${i}`.replace(/[^a-zA-Z0-9_-]/g, '-'),
+      page_id: `${source}-${pageId}`,
+      source,
+      title,
+      heading: s.heading,
+      content: `${title} > ${s.heading}\n${s.parts.join('\n')}`,
+      url: s.anchor ? `${url}#${s.anchor.replace(/-/g, '')}` : url,
+      acl,
+      updated_at: Math.floor(new Date(updatedAt).getTime() / 1000),
+    }))
+}
+
+// --- Run --------------------------------------------------------------------
+const client = new MeiliSearch({ host: process.env.MEILISEARCH_URL, apiKey: process.env.MEILISEARCH_KEY })
+const index = client.index(INDEX)
+
+await index.updateSettings({
+  searchableAttributes: ['title', 'heading', 'content'],
+  filterableAttributes: ['acl', 'source', 'page_id', 'updated_at'],
+  sortableAttributes: ['updated_at'],
+  distinctAttribute: 'page_id',
+})
+
+const documents = []
+
+for (const page of await notionPages()) {
+  const title = richText(Object.values(page.properties ?? {}).find((p) => p.type === 'title')?.title) || 'Untitled'
+  documents.push(...toDocuments({
+    source: 'notion',
+    pageId: page.id,
+    title,
+    url: page.url,
+    // Replace with real memberships resolved from your identity provider.
+    acl: ['everyone'],
+    updatedAt: page.last_edited_time,
+    lines: await notionBlocks(page.id),
+  }))
+}
+
+for (const page of await confluencePages()) {
+  documents.push(...toDocuments({
+    source: 'confluence',
+    pageId: page.id,
+    title: page.title,
+    url: `${process.env.CONFLUENCE_BASE}/wiki${page._links?.webui ?? ''}`,
+    acl: [`space:${page.spaceId}`],
+    updatedAt: page.version?.createdAt ?? new Date().toISOString(),
+    lines: storageToLines(page.body?.storage?.value),
+  }))
+}
+
+for (let i = 0; i < documents.length; i += 1000) {
+  const task = await index.addDocuments(documents.slice(i, i + 1000))
+  await client.tasks.waitForTask(task.taskUid)
+}
+console.log(`indexed ${documents.length} sections`)
+
+// Search as a specific user: the filter is signed into the token.
+const token = jwt.sign(
+  {
+    searchRules: { [INDEX]: { filter: `acl IN ["everyone", "space:12345", "user:42"]` } },
+    apiKeyUid: process.env.SEARCH_KEY_UID,
+    exp: Math.floor(Date.now() / 1000) + 20 * 60,
+  },
+  process.env.SEARCH_KEY,
+  { algorithm: 'HS256' },
+)
+
+const scoped = new MeiliSearch({ host: process.env.MEILISEARCH_URL, apiKey: token })
+const results = await scoped.index(INDEX).search('on-call rotation', {
+  attributesToHighlight: ['content'],
+  cropLength: 40,
+})
+console.log(results.hits.map((h) => `${h.title} :: ${h.url}`))
+```
+
+## Limits and constraints
+
+- **Primary keys** must be integers, or strings limited to `a-z`, `A-Z`, `0-9`, `-`, and `_`, at most [511 bytes](/resources/help/known_limitations#length-of-primary-key-values). Notion ids contain hyphens and are fine; Confluence page ids are numeric. Prefixing the source keeps the two namespaces apart.
+- **Each individual `acl` value is capped at [468 bytes](/resources/help/known_limitations#length-of-individual-filterableattributes-values)**, though the array itself has no length cap. Long distribution list names and email-shaped principals fit comfortably; full group paths from some directories may not.
+- **65,535 positions per attribute.** Hard separators such as commas consume eight positions each, so a single giant `content` field on a long runbook loses its tail silently. Section long pages.
+- **One `distinctAttribute` per index**, and changing it reindexes everything, so set `page_id` before the first import.
+- **Payload size** defaults to 100MB per request. The Meilisearch Cloud interface caps manual uploads at 20MB, so run syncs from a script, batching as described in [import large datasets](/capabilities/indexing/how_to/import_large_datasets).
+- **Tenant tokens support `HS256`, `HS384`, and `HS512`**, and a token only reaches indexes named in its `searchRules`. There is no way to widen the filter from the client.
+- **Meilisearch does not fetch, convert, or chunk wiki content for you.** Everything above the `addDocuments` call is your pipeline's responsibility.
+- **Indexing is asynchronous.** `addDocuments` returns a task, so wait on it before asserting that a permission change has taken effect. See [asynchronous operations](/capabilities/indexing/tasks_and_batches/async_operations).
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Tenant token payload reference" href="/capabilities/security/advanced/tenant_token_payload">
+    The exact shape of `searchRules`, `apiKeyUid`, and `exp`.
+  </Card>
+  <Card title="Generate tenant tokens without an SDK" href="/capabilities/security/how_to/generate_token_third_party">
+    Signing tokens with any JWT library, in any language.
+  </Card>
+  <Card title="Delete documents at scale" href="/capabilities/indexing/how_to/delete_documents_at_scale">
+    Removing every section of an archived or newly restricted page in one task.
+  </Card>
+  <Card title="How to chunk documents for search" href="/guides/how-to-chunk-documents">
+    Choosing boundaries, carrying metadata, and evaluating a chunking change.
+  </Card>
+</CardGroup>

@@ -1,0 +1,141 @@
+---
+title: Why Algolia costs are hard to predict
+description: Your Algolia invoice jumped without a traffic spike and you need to know which multiplier caused it and how to stop the bill from moving on its own.
+keywords: algolia bill went up, algolia search units explained, algolia record count exploded, why is algolia so expensive, algolia pricing unpredictable, search unit overage charges, algolia replica index cost, forecast search spend, fixed price search engine, search billing capacity planning
+boost: 2
+---
+
+An Algolia bill moves because two independent counters drive it: how many records sit in your indices, and how many search requests your front end sends. Neither counter is something a product team decides directly. Records are multiplied by schema decisions (variant-level records, split long documents, replica indices for extra sort orders), and search requests are multiplied by interface decisions (as-you-type queries, faceted refinements, multi-index search bars). A change to either side can double a line item in a week without anyone changing a price or shipping a feature. The fix in Algolia is to instrument both counters and cap the multipliers. The structural fix is to bill on provisioned capacity instead, so traffic growth does not appear on the invoice at all.
+
+## Why the bill moves when you did not change anything
+
+Usage-based search pricing bills on two counters, and both of them are downstream of decisions that no one files under "cost".
+
+**Records are not documents.** A record is a row in an index, not an item in your catalog. One product can become dozens of records, and the same record counted in two indices is billed twice. {/* VERIFY: that Algolia counts records per index, so a record duplicated across indices counts once per index */}
+
+**Search requests are not user searches.** A single person typing one query in a search-as-you-type interface generates one request per keystroke after the minimum character threshold, plus a request for each refinement and each page of results. Algolia groups these into search units, commonly described as one unit per 1,000 search requests. {/* VERIFY: current definition and ratio of an Algolia search unit */}
+
+So the arithmetic behind an invoice is roughly `records x indices` on one side and `sessions x queries per session x indices queried` on the other. Both sides compound, and neither is visible in a product roadmap.
+
+## The multipliers that actually cause jumps
+
+**Record splitting to fit the size cap.** Algolia enforces a maximum size per record, with a lower cap on entry plans than on higher ones. {/* VERIFY: the exact per-record size limits by plan tier */} The standard workaround is to split a long document into many smaller records that share an identifier, then collapse them at query time with `distinct`. It works, and it multiplies your record count by however many chunks each document produces. A documentation site that moves from page-level to section-level records can grow ten times overnight without gaining a single page.
+
+**Replica indices for alternative sort orders.** Alternate sort orders are served by replica indices. A standard replica holds its own copy of every record, so offering "price ascending" and "price descending" alongside relevance turns one index into three. Virtual replicas exist specifically to avoid that duplication, but they carry their own constraints on which sorts they can express. {/* VERIFY: which record-count and feature constraints apply to virtual versus standard replicas today */}
+
+**A fuller crawl.** Crawler-fed indices are the classic overnight surprise. Following pagination, enabling a new locale, or removing an exclusion pattern can multiply record count in one scheduled run. Nobody reviews a crawler config as a pricing change, but it is one.
+
+**Variant-level modeling.** Moving from one record per product to one record per size and color combination is a relevance improvement and a record-count multiplication at the same time.
+
+**Interface changes that multiply requests.** Lowering the minimum query length from three characters to one, adding a second index to the search bar, or introducing facet value search all raise requests per session. Each index queried in a multi-index request is generally counted separately. {/* VERIFY: whether each query in an Algolia multi-index request counts as its own search request */}
+
+## How to make an Algolia bill more predictable
+
+These are worth doing whether or not you ever change engines.
+
+1. **Debounce the search box and raise the minimum query length.** Sending a request every 150 to 250 milliseconds of idle typing instead of every keystroke is the single largest reduction available on the request side, and users rarely notice.
+2. **Audit indices for orphans.** Staging, test, and abandoned replica indices hold records that bill exactly like production records.
+3. **Shrink records before splitting them.** Attributes you display but never search or filter can often be fetched from your own database at render time. Smaller records mean fewer splits, and fewer splits mean fewer records.
+4. **Prefer virtual replicas where the sort allows it,** and delete standard replicas that exist only for a sort order nobody uses.
+5. **Cap pagination.** Deep result pages generate requests and almost never generate conversions. Limiting reachable pages bounds the tail of your request count.
+6. **Alert on the counters, not the invoice.** Track record count per index and requests per session as product metrics with thresholds, so a crawler change shows up as an alert rather than as a line item next month.
+
+## Why usage-based billing penalizes the growth you want
+
+The uncomfortable property of per-record and per-request pricing is that its cost curve tracks your success curve. A marketing campaign that doubles sessions doubles the search side of the bill. A catalog expansion that doubles SKUs doubles the record side. A relevance improvement that gets people searching more raises cost per session. The finance question "what does search cost next quarter" becomes a forecast of user behavior, which is exactly the variable you least control and most want to grow.
+
+## What resource-based pricing changes about capacity planning
+
+[Meilisearch Cloud offers both models](/capabilities/platform/billing/pricing_model), and the distinction matters for this problem.
+
+**Resource-based projects** bill for provisioned resources regardless of how many searches you run or documents you index: compute at an hourly rate for the tier you choose, disk at $0.165 per GiB with a 32 GB minimum, and bandwidth at $0.15 per GB. Search volume does not appear. Capacity planning becomes a sizing question with one input, index size, estimated as `documents x average document size x 5`, where the multiplier covers the inverted index, facet data, and prefix structures.
+
+**Usage-based projects** use the self-serve Build plan: 50,000 searches and 100,000 documents included per month, then $0.40 per 1,000 extra searches and $0.30 per 1,000 extra documents. This model has the same variability property as any usage-based plan, which is why the tier model exists alongside it.
+
+Two structural differences reduce the record-count multipliers described above. [Sorting uses the `sortableAttributes` setting on the same index](/capabilities/filtering_sorting_faceting/how_to/sort_results), so alternate sort orders never duplicate data. And there is no per-document size cap to split around, only a 100 MB limit on the HTTP payload of a whole batch, so a long document stays one document. Deduplication is still available when you want it, through [the `distinctAttribute` setting or the `distinct` search parameter](/capabilities/full_text_search/how_to/configure_distinct_attribute), but it is a relevance tool rather than a workaround for a size limit.
+
+The script below forecasts both Meilisearch models from your real document counts, so you can see where the flat line and the variable line cross.
+
+```javascript
+// npm install meilisearch   (Node.js 18+, for global fetch)
+// export MEILISEARCH_URL="https://your-project.meilisearch.io"
+// export MEILISEARCH_KEY="your_admin_api_key"
+import { Meilisearch } from 'meilisearch'
+
+const client = new Meilisearch({
+  host: process.env.MEILISEARCH_URL,
+  apiKey: process.env.MEILISEARCH_KEY
+})
+
+// --- your front end's request amplification -------------------------------
+const SESSIONS_PER_MONTH = 200_000
+const QUERIES_PER_SESSION = 4      // keystroke requests after debouncing
+const INDEXES_PER_QUERY = 1        // a 3-index search bar makes this 3
+
+// --- documented Meilisearch Cloud rates -----------------------------------
+const BUILD_INCLUDED_SEARCHES = 50_000
+const BUILD_INCLUDED_DOCUMENTS = 100_000
+const BUILD_EXTRA_SEARCH_PER_1K = 0.40
+const BUILD_EXTRA_DOCUMENT_PER_1K = 0.30
+const DISK_USD_PER_GIB = 0.165
+const MIN_DISK_GIB = 32
+const BANDWIDTH_USD_PER_GB = 0.15
+const SIZE_MULTIPLIER = 5          // documents x avg size x 5
+const TIERS = [
+  { name: 'XS', ramGiB: 1 }, { name: 'S', ramGiB: 2 },
+  { name: 'M', ramGiB: 4 }, { name: 'L', ramGiB: 8 },
+  { name: 'XL', ramGiB: 16 }, { name: '2XL', ramGiB: 32 },
+  { name: '4XL', ramGiB: 64 }
+]
+
+const GIB = 1024 ** 3
+const stats = await client.getStats()
+
+let documents = 0
+for (const index of Object.values(stats.indexes)) {
+  documents += index.numberOfDocuments
+}
+
+// Average document size measured from the live instance, not guessed.
+const avgDocBytes = documents ? stats.databaseSize / SIZE_MULTIPLIER / documents : 0
+const estimatedIndexGiB = (documents * avgDocBytes * SIZE_MULTIPLIER) / GIB
+const tier = TIERS.find(t => t.ramGiB > estimatedIndexGiB) ?? TIERS.at(-1)
+
+const searches = SESSIONS_PER_MONTH * QUERIES_PER_SESSION * INDEXES_PER_QUERY
+const extraSearches = Math.max(0, searches - BUILD_INCLUDED_SEARCHES)
+const extraDocuments = Math.max(0, documents - BUILD_INCLUDED_DOCUMENTS)
+const usageBill =
+  (extraSearches / 1000) * BUILD_EXTRA_SEARCH_PER_1K +
+  (extraDocuments / 1000) * BUILD_EXTRA_DOCUMENT_PER_1K
+
+const diskGiB = Math.max(stats.databaseSize / GIB, MIN_DISK_GIB)
+const monthlyEgressGB = 50 // replace with your measured bandwidth
+const fixedBill = diskGiB * DISK_USD_PER_GIB + monthlyEgressGB * BANDWIDTH_USD_PER_GB
+
+console.log(`documents           ${documents.toLocaleString()}`)
+console.log(`avg document size   ${(avgDocBytes / 1024).toFixed(1)} KB (measured)`)
+console.log(`estimated index     ${estimatedIndexGiB.toFixed(2)} GiB`)
+console.log(`suggested tier      ${tier.name} (${tier.ramGiB} GB RAM)`)
+console.log(`billable searches   ${searches.toLocaleString()}/month`)
+console.log(`\nusage-based extra   $${usageBill.toFixed(2)}/month on top of the Build plan fee`)
+console.log(`resource-based      $${fixedBill.toFixed(2)}/month disk + bandwidth,`)
+console.log(`                    compute billed hourly at the ${tier.name} rate, flat at any search volume`)
+```
+
+Change `SESSIONS_PER_MONTH` and rerun. The resource-based line does not move. That is the entire difference in capacity planning.
+
+## Limits and constraints
+
+- **Meilisearch has no documented per-document size limit.** The documented boundary is the HTTP payload limit, 100 MB by default, configurable with `--http-payload-size-limit`. See [importing large datasets](/capabilities/indexing/how_to/import_large_datasets).
+- **Meilisearch Cloud usage-based Build plan:** 50,000 searches and 100,000 documents included per month, then $0.40 per 1,000 extra searches and $0.30 per 1,000 extra documents, on shared resources. Higher volumes require a Custom plan.
+- **Meilisearch Cloud resource-based projects:** disk at $0.165 per GiB with a 32 GB provisioned minimum, bandwidth at $0.15 per GB, compute hourly by tier. Rates vary slightly by region, and tiers 2XL and above are not self-serve.
+- **The `x5` index size estimate is a planning figure, not a guarantee.** Actual size depends on settings, facets, languages, and relevancy rules.
+- **One `distinctAttribute` per index.** Changing it re-indexes every document in that index, so set it before bulk loading.
+- **No Algolia prices are quoted here.** The Algolia mechanics above are structural, drawn from how record and request counting works, not from a rate card. Check your own plan and invoice for current rates and limits.
+
+## Next steps
+
+- [Meilisearch Cloud pricing model](/capabilities/platform/billing/pricing_model) for tier sizing, the index size formula, and both billing models
+- [Migrating from Algolia to Meilisearch](/resources/migration/algolia_migration) for exporting indices and mapping settings
+- [Meilisearch vs Algolia](/resources/comparisons/algolia) for where Algolia remains the stronger choice
+- [Working around Algolia record size limits](/guides/algolia-record-size-limits) for the record-splitting problem in detail

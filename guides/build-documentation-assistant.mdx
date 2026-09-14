@@ -1,0 +1,190 @@
+---
+title: How to build a documentation assistant
+description: Your docs chatbot answers confidently but cites the wrong page or the wrong release. Here is the crawl, chunk, index, and chat pipeline that keeps its answers grounded and version-correct.
+keywords: docs chatbot, documentation search bot, ask my docs, developer docs AI assistant, help center chatbot, version-aware RAG, answer bot for documentation, technical docs question answering, knowledge base chat, support docs assistant
+boost: 2
+---
+
+A documentation assistant is four things in a line: crawl your docs into chunks, index each chunk with its URL and its release version, give the model a search tool that filters on that version, and render the retrieved chunks as clickable sources. The part most teams get wrong is the version field. Without it, an assistant trained to be helpful will happily answer a v1 question with v3 syntax, because both chunks look equally relevant to an embedding model. Make version a filterable attribute, default the filter to the release the reader is on, and the whole class of confident-but-wrong answers disappears.
+
+## What each chunk needs to carry
+
+A documentation assistant retrieves fragments, not pages, so every fragment has to stand on its own. Give each chunk these fields:
+
+- `id`: a stable identifier. Meilisearch [primary keys](/capabilities/indexing/how_to/design_primary_keys) accept only integers or strings made of `a-z`, `A-Z`, `0-9`, `-`, and `_`, so a raw URL cannot be an id. Slugify the path and append the anchor, for example `capabilities-hybrid-search-getting-started__configure-an-embedder`.
+- `url` and `anchor`: what the answer links to. Without an anchor the reader lands at the top of a long page and has to hunt.
+- `title` and `section`: the page title and the nearest heading. Include both in the chunk text so the fragment makes sense with no surrounding context.
+- `version`: the release this content describes. Use the literal string `"all"` for pages that are version-independent.
+- `content`: the chunk body.
+
+Chunk on heading boundaries rather than at a fixed character count. Documentation is already structured by `h2` and `h3`, and those boundaries map to how people ask questions. For the mechanics of splitting HTML, see [how to chunk web pages](/guides/chunk-web-pages).
+
+For crawling, [docs-scraper](/getting_started/instant_meilisearch/docsearch) reads a site by CSS selector and writes level fields (`lvl0` through `lvl6`) plus the page content straight into an index. It is in reduced-maintenance mode, and Meilisearch Cloud ships a built-in crawler with JS rendering and a DocSearch mode, so on Cloud prefer that. Either way, the output you want is the chunk shape above.
+
+## Why the version field does the heavy lifting
+
+Semantic retrieval scores meaning, not currency. A chunk describing a removed parameter and a chunk describing its replacement are near-identical in embedding space. Reranking does not fix this, and neither does a system prompt asking the model to prefer recent content, because the model cannot see a publication date it was never given.
+
+Filtering does fix it. Declare `version` in [`filterableAttributes`](/reference/api/settings/update-filterableattributes), then pass a filter on every search:
+
+```text
+version IN ["v3", "all"]
+```
+
+That expression is standard [filter syntax](/capabilities/filtering_sorting_faceting/advanced/filter_expression_syntax): `IN` matches any listed value, so version-specific and version-independent chunks come back together. Expose the version as a tool parameter so the model can widen it when a user explicitly asks about an older release, but default it to the version the reader is currently browsing.
+
+## The complete pipeline
+
+This script configures the index, loads two sample chunks, and answers a question with a version-filtered search tool. It runs as written once you set three environment variables.
+
+```ts docs-assistant.ts
+// npm install meilisearch ai @ai-sdk/openai zod
+// MEILISEARCH_URL=https://your-project.meilisearch.io
+// MEILISEARCH_KEY=your-admin-api-key
+// OPENAI_API_KEY=your-openai-api-key
+
+import { Meilisearch } from "meilisearch";
+import { openai } from "@ai-sdk/openai";
+import { generateText, tool, stepCountIs } from "ai";
+import { z } from "zod";
+
+const CURRENT_VERSION = "v3";
+
+const client = new Meilisearch({
+  host: process.env.MEILISEARCH_URL,
+  apiKey: process.env.MEILISEARCH_KEY,
+});
+
+const index = client.index("docs_chunks");
+
+// 1. Settings before documents: changing settings later re-indexes everything.
+await client.waitForTask(
+  (await index.updateSearchableAttributes(["title", "section", "content"])).taskUid,
+);
+await client.waitForTask(
+  (await index.updateFilterableAttributes(["version", "product", "url"])).taskUid,
+);
+await client.waitForTask(
+  (
+    await index.updateEmbedders({
+      docs: {
+        source: "openAi",
+        model: "text-embedding-3-small",
+        apiKey: process.env.OPENAI_API_KEY,
+        documentTemplate:
+          "Documentation page '{{doc.title}}', section '{{doc.section}}': {{doc.content}}",
+      },
+    })
+  ).taskUid,
+);
+
+// 2. Load chunks. Ids are slugified, because a raw URL is not a valid primary key.
+await client.waitForTask(
+  (
+    await index.addDocuments([
+      {
+        id: "guides-rate-limits__burst",
+        url: "https://docs.example.com/guides/rate-limits",
+        anchor: "burst",
+        title: "Rate limits",
+        section: "Burst allowance",
+        version: "v3",
+        product: "api",
+        content:
+          "Each API key allows 60 requests per second with a burst of 120. Exceeding the burst returns HTTP 429 with a Retry-After header.",
+      },
+      {
+        id: "guides-rate-limits__burst-v2",
+        url: "https://docs.example.com/v2/guides/rate-limits",
+        anchor: "burst",
+        title: "Rate limits",
+        section: "Burst allowance",
+        version: "v2",
+        product: "api",
+        content:
+          "Each API key allows 10 requests per second. There is no burst allowance in v2.",
+      },
+    ])
+  ).taskUid,
+);
+
+// 3. A search tool the model can call, with version exposed as a parameter.
+const searchDocs = tool({
+  description:
+    "Search the product documentation. Returns passages with the URL and anchor to cite.",
+  inputSchema: z.object({
+    query: z.string().describe("A natural language question or keywords."),
+    version: z
+      .string()
+      .default(CURRENT_VERSION)
+      .describe("Release to search. Only change it if the user names a version."),
+  }),
+  execute: async ({ query, version }) => {
+    const results = await index.search(query, {
+      filter: `version IN ["${version}", "all"]`,
+      hybrid: { semanticRatio: 0.7, embedder: "docs" },
+      rankingScoreThreshold: 0.4,
+      limit: 6,
+      distinct: "url",
+      attributesToRetrieve: ["title", "section", "content", "url", "anchor", "version"],
+    });
+
+    return results.hits.map((hit) => ({
+      title: `${hit.title} > ${hit.section}`,
+      link: `${hit.url}#${hit.anchor}`,
+      version: hit.version,
+      text: String(hit.content).slice(0, 1200),
+    }));
+  },
+});
+
+// 4. Answer, grounded and cited.
+const { text } = await generateText({
+  model: openai("gpt-5.4-mini"),
+  system: `You are the documentation assistant for Example API, version ${CURRENT_VERSION}.
+Answer only from search results. If the results do not contain the answer, say so
+and suggest what to search instead. Never state a limit, parameter, or endpoint
+that does not appear in a retrieved passage. End every answer with a Sources list
+of the links you used. If a passage is from a version other than ${CURRENT_VERSION},
+say which version it describes.`,
+  prompt: "What happens if I go over the rate limit?",
+  tools: { searchDocs },
+  stopWhen: stepCountIs(5),
+});
+
+console.log(text);
+```
+
+Three details in that block matter more than the rest. `distinct: "url"` returns at most one chunk per page, which stops a single long page from filling the model's context with six near-identical fragments (the field must be in `filterableAttributes`, which is why `url` is listed there). `rankingScoreThreshold` drops weak semantic matches instead of handing the model marginal text it will try to use anyway. And returning `link` as a pre-assembled `url#anchor` means the model copies a working deep link rather than assembling one itself.
+
+## Showing sources and setting guardrails
+
+Asking for a Sources list in the system prompt is the cheap version. The reliable version renders the tool call itself: the AI SDK exposes each call as a message part typed `tool-{toolName}`, and `part.output` holds exactly what your `execute` returned. Rendering that list is described in [display source documents](/capabilities/agentic_search/how_to/display_source_documents), and it has a property prompting does not: the citations are the retrieved passages by construction, so the assistant cannot cite a page it did not open.
+
+On the prompt side, the instructions that measurably help are explicit boundaries ("only answer using the search results"), an escape hatch ("if the results do not contain the answer, say so"), and required attribution. See [configure guardrails](/capabilities/agentic_search/how_to/configure_guardrails) and [reduce hallucination](/capabilities/agentic_search/advanced/reduce_hallucination) for the full set, including few-shot examples of good and bad answers.
+
+## Limits and constraints
+
+- **Primary keys** accept integers or strings limited to `a-z`, `A-Z`, `0-9`, `-`, and `_`. URLs must be slugified or hashed. Once set, the primary key cannot be changed without deleting and recreating the index.
+- **[`distinctAttribute`](/capabilities/full_text_search/how_to/configure_distinct_attribute) is one field per index.** Using the `distinct` search parameter instead lets you vary it per query, and either way the field must be in `filterableAttributes`.
+- **Meilisearch ranks up to 1,000 documents per query by default** through the `maxTotalHits` pagination setting. That ceiling is far above anything an assistant should retrieve, so leave it alone.
+- **Changing `distinctAttribute` or `filterableAttributes` re-indexes the whole index.** Configure settings before the first import, as in the script above.
+- **Embeddings are cached**, so re-running an import only sends new or modified documents to the embedding provider. A settings change that forces a re-index does not have that protection.
+- **Guardrails reduce hallucination, they do not eliminate it.** Meilisearch documentation is explicit on this point, so monitor production answers rather than assuming the prompt holds.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Getting started with agentic search" href="/capabilities/agentic_search/getting_started">
+    The `@meilisearch/ai-sdk` search tools and a streaming chat loop.
+  </Card>
+  <Card title="Design a document template" href="/capabilities/hybrid_search/advanced/document_template_best_practices">
+    Control which fields shape each chunk's embedding.
+  </Card>
+  <Card title="Build a RAG pipeline that cites its sources" href="/guides/rag-with-citations">
+    Carry ids and anchors through chunking so they survive to the answer.
+  </Card>
+  <Card title="Keep an agent's knowledge base up to date" href="/guides/keep-agent-knowledge-current">
+    Incremental re-crawls, staleness detection, and versioned content.
+  </Card>
+</CardGroup>

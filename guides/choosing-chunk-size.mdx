@@ -1,0 +1,186 @@
+---
+title: "Choosing chunk size for semantic search"
+description: You have long documents and need to decide how big each indexed piece should be before embedding them, because chunks that are too small lose context and chunks that are too large blur the one passage the user wanted.
+keywords: how many words per chunk rag, best splitter size for embeddings, token window for document splitting, should i overlap chunks, passage size for vector retrieval, paragraph vs page level indexing, how to benchmark two splitting strategies, chunk too big embedding dilution, documentTemplateMaxBytes too small, splitting long articles before indexing
+boost: 2
+---
+
+Start at one structural unit, usually a heading section or two to three paragraphs, which for English prose lands between **150 and 400 words per chunk**. Below roughly 50 words a chunk loses the context that makes it interpretable on its own. Above roughly 600 words the embedding averages several topics together and stops matching any of them sharply. Then stop guessing and measure, because the right size depends on how specific your queries are, not on a rule. One Meilisearch-specific detail decides half of this for you: the text that actually reaches the embedder is capped by [`documentTemplateMaxBytes`](/capabilities/hybrid_search/advanced/document_template_best_practices), which **defaults to 400 bytes**, about 400 Latin characters or 65 English words. The chunk you index and the text you embed are two separate budgets, and if you only set the first one, your 400-word chunks are being embedded from their first paragraph.
+
+## What chunk size actually trades
+
+Chunking trades context against focus, and both failure modes show up in results.
+
+Take a 4,000-word billing guide, indexed whole. A user searches `how long does a refund take`. The answer is one sentence, surrounded by 3,990 words about invoices, seats, and tax. The embedding of that page represents "a billing guide", not "refund timing". It ranks behind any short FAQ entry that is entirely about refunds, and if it does rank first, the user still has to find the sentence.
+
+Now split the same guide into 30-word chunks. The sentence `This usually takes five business days.` becomes its own document, no longer mentioning refunds at all, because that word was in the preceding sentence. Its embedding is close to every other short sentence about timing in your corpus. The keyword half degrades too, because a multi-term query now has no single document containing all of its terms.
+
+The workable middle is the smallest unit that is still self-explanatory when read alone. Practically:
+
+| Content | Natural unit | Typical size |
+|---|---|---|
+| Documentation, knowledge base, help center | One H2 or H3 section | 150 to 400 words |
+| Long-form articles and reports | Two to four paragraphs | 200 to 500 words |
+| Support tickets, reviews, chat logs | One message or one ticket | Whatever it is, do not split |
+| Transcripts and subtitles | 60 to 120 seconds of speech | 150 to 300 words |
+| Product catalogs, directories, records | One record | Do not chunk, see [keyword, semantic or hybrid](/guides/keyword-semantic-or-hybrid) |
+| Legal and policy text | One numbered clause | Highly variable, keep the clause intact |
+
+Test any candidate size with one question: read alone, with nothing else on screen, is this chunk still interpretable? If it only makes sense under its heading, put the heading inside the chunk rather than growing the chunk.
+
+## The two budgets: what you index and what you embed
+
+Meilisearch indexes the whole document for keyword search and displays whatever you return, but the vector is built from a rendered [Liquid `documentTemplate`](/capabilities/hybrid_search/advanced/document_template_best_practices), truncated at `documentTemplateMaxBytes`. The 400-byte default is deliberate: template guidance recommends prompts of roughly 15 to 45 words, tuned for catalog records where the template is mostly metadata. Prose chunks sit well above that band, so the cap has to be raised on purpose.
+
+Three consequences worth internalizing:
+
+- **Bytes, not characters, and not tokens.** Latin text is about one byte per character. Cyrillic and Greek cost about two, and Chinese, Japanese, and Korean about three, so 400 bytes is closer to 130 CJK characters.
+- **Raising the cap re-embeds.** Increasing `documentTemplateMaxBytes` regenerates embeddings for every document whose rendered text changes, which is billable with a paid provider. Decreasing it never regenerates. Set it before a bulk import, not after.
+- **You can embed less than you index.** A 400-word chunk can be stored and displayed in full while the template embeds only the heading path plus the first 200 words. That is often the better configuration: the keyword half gets the full text, the vector stays focused, and storage per vector is unchanged.
+
+## How model context limits cap your options
+
+Every embedding model has a maximum input length, measured in tokens rather than words. Roughly, one English token is about four characters, so a 400-word chunk is around 500 to 550 tokens. Hosted models generally accept a few thousand tokens, which means the model ceiling is rarely what constrains you {/* VERIFY: current maximum input token counts for OpenAI text-embedding-3-small and text-embedding-3-large, and for the common Hugging Face sentence-transformer models */}, while many locally run sentence-transformer models are trained on much shorter passages and silently truncate longer input {/* VERIFY: typical max sequence length for popular Hugging Face sentence-transformer checkpoints */}.
+
+Two rules follow. First, if you run a small local model through the `huggingFace` source, treat its training passage length as your real chunk ceiling. Second, whatever the model accepts, the Meilisearch cap bites first unless you raise it, so check what your template renders before blaming the model. The `POST /render-template` route returns the rendered string for a real document, which is the fastest way to see whether truncation is happening.
+
+## Does overlap earn its storage cost
+
+Usually not. Overlap exists to stop a sentence that answers a question from being split across a boundary. It costs proportionally: 25 percent overlap produces about 25 percent more chunks, and each chunk carries its own vector. At 1536 dimensions a full-precision vector is about [6 KB](/capabilities/hybrid_search/advanced/binary_quantization), so a million chunks with 25 percent overlap adds roughly 1.5 GB of vectors plus the extra keyword index, in exchange for a boundary problem that structural splitting mostly prevents.
+
+Cheaper fixes to try first:
+
+- **Split on structure, not on a character count.** Headings, paragraph breaks, and clause numbers are boundaries an author already chose, and answers rarely straddle them.
+- **Repeat context instead of text.** Put the document title and the heading path into every chunk (`Billing > Refunds > Partial refunds`). This costs a few dozen bytes per chunk instead of a duplicated vector, and it makes short chunks interpretable alone.
+- **Never split mid-sentence.** Most boundary losses come from fixed-size splitters cutting inside a sentence, not from paragraph breaks.
+
+Add overlap only for continuous text with no structure to exploit: transcripts, OCR of scanned books, and minutes. One or two sentences is enough. Anything beyond about 20 percent pays twice for the same content.
+
+Whatever you choose, deduplicate at search time. Give every chunk a `sourceId` pointing at its parent document and set [`distinct`](/capabilities/full_text_search/how_to/configure_distinct_attribute) to that field, so one long page cannot occupy the entire first results screen. The attribute must be in `filterableAttributes` to be used as a search-time `distinct`.
+
+## Testing two chunk sizes on your own corpus
+
+Build two indexes from the same source, run the same queries against both, and compare where the correct document lands. Write down the expected answer for 30 or more real queries from your search logs first, before you look at any results.
+
+```javascript
+// npm install meilisearch
+import { Meilisearch } from 'meilisearch'
+
+const client = new Meilisearch({
+  host: process.env.MEILISEARCH_URL, // for example https://your-project.meilisearch.io
+  apiKey: process.env.MEILISEARCH_KEY,
+})
+
+// 1. Source documents, before chunking. In practice, load these from your CMS.
+const sources = [
+  { sourceId: 'refunds', title: 'Billing > Refunds', body:
+      'A refund returns money to the original payment method. Partial refunds are allowed.\n\n' +
+      'Refunds are processed within five business days. Card issuers may take longer to show them.\n\n' +
+      'A refunded invoice keeps its number and gains a credit note linked to it.' },
+  { sourceId: 'seats', title: 'Accounts > Seats and members', body:
+      'Every member of a workspace occupies one seat, including members who never sign in.\n\n' +
+      'Adding a seat mid-cycle is charged pro rata. Removing one credits the next invoice.\n\n' +
+      'Deactivating a member frees the seat immediately but keeps their activity history.' },
+  { sourceId: 'sso', title: 'Security > Single sign-on', body:
+      'Single sign-on is configured per workspace with a SAML metadata file from your provider.\n\n' +
+      'Once enforced, password sign-in is disabled for every member except break-glass admins.\n\n' +
+      'Group claims can be mapped to roles so access follows your directory.' },
+]
+
+// 2. A paragraph-aware splitter. It never cuts mid-sentence and never cuts mid-paragraph.
+function chunk(text, targetWords) {
+  const paragraphs = text.split(/\n{2,}/).map((p) => p.trim()).filter(Boolean)
+  const chunks = []
+  let buffer = [], words = 0
+  for (const p of paragraphs) {
+    const n = p.split(/\s+/).length
+    if (words > 0 && words + n > targetWords) { chunks.push(buffer.join('\n\n')); buffer = []; words = 0 }
+    buffer.push(p); words += n
+  }
+  if (buffer.length) chunks.push(buffer.join('\n\n'))
+  return chunks
+}
+
+// 3. Build one index per candidate size. maxBytes must cover the chunk,
+//    otherwise you are measuring truncation rather than chunk size.
+async function buildIndex(uid, targetWords, maxBytes) {
+  const index = client.index(uid)
+  const docs = sources.flatMap((s) =>
+    chunk(s.body, targetWords).map((content, i) => ({
+      id: `${s.sourceId}-${i}`,
+      sourceId: s.sourceId,
+      title: s.title,          // heading path repeated in every chunk, instead of overlap
+      content,
+    })))
+
+  await client.waitForTask((await index.updateSettings({
+    searchableAttributes: ['title', 'content'],
+    filterableAttributes: ['sourceId'],   // required to use sourceId as `distinct`
+  })).taskUid)
+
+  await client.waitForTask((await index.updateEmbedders({
+    passages: {
+      source: 'openAi',
+      model: 'text-embedding-3-small',
+      apiKey: process.env.OPENAI_API_KEY,
+      documentTemplate: '{{doc.title}}: {{doc.content}}',
+      documentTemplateMaxBytes: maxBytes,  // default is 400, far below a prose chunk
+    },
+  })).taskUid)
+
+  await client.waitForTask((await index.addDocuments(docs)).taskUid)
+  console.log(`${uid}: ${docs.length} chunks`)
+  return index
+}
+
+// 4. The evaluation set. Expand this to 30+ real queries before trusting the result.
+const tests = [
+  { q: 'how long before the money is back on my card', expect: 'refunds' },
+  { q: 'do I pay for someone who never logs in', expect: 'seats' },
+  { q: 'can people still use a password after we turn this on', expect: 'sso' },
+  { q: 'what happens to the invoice number when we give money back', expect: 'refunds' },
+]
+
+async function evaluate(index) {
+  let reciprocalRankSum = 0, top1 = 0
+  for (const t of tests) {
+    const { hits } = await index.search(t.q, {
+      hybrid: { semanticRatio: 0.7, embedder: 'passages' },
+      distinct: 'sourceId',   // one chunk per source document, so ranks are comparable
+      showRankingScore: true,
+      limit: 10,
+    })
+    const rank = hits.findIndex((h) => h.sourceId === t.expect) + 1
+    if (rank === 1) top1++
+    reciprocalRankSum += rank > 0 ? 1 / rank : 0
+    console.log(`  "${t.q}" -> rank ${rank || 'not found'}`)
+  }
+  return { top1, mrr: (reciprocalRankSum / tests.length).toFixed(3) }
+}
+
+const small = await buildIndex('docs_150w', 150, 1200)
+const large = await buildIndex('docs_400w', 400, 3000)
+
+console.log('150-word chunks:', await evaluate(small))
+console.log('400-word chunks:', await evaluate(large))
+```
+
+Read the output as a pair. Mean reciprocal rank says whether the right document moved up overall; the top-1 count says whether it reached position one. If the two sizes land within a few percent, take the larger one: fewer chunks means fewer vectors, less disk, and a cheaper reindex. A four-query test set will happily tell you the wrong thing, so confirm on a second set before deleting the losing index.
+
+## Limits and constraints
+
+- **`documentTemplateMaxBytes` defaults to 400 bytes**, has a minimum of 0, and truncates the rendered template. Increasing it regenerates embeddings for affected documents; decreasing it never does.
+- **Meilisearch indexes at most 65,535 positions per attribute.** Words past that position in a single field are silently ignored, so a very long unchunked field is partly invisible to keyword search anyway.
+- **A search query uses at most 10 terms.** Words after the tenth are [ignored](/resources/help/known_limitations), which matters when users paste a sentence.
+- **An index holds at most 4,294,967,296 documents**, and chunking multiplies your document count by the number of chunks per source.
+- **`distinct` accepts one attribute**, which must be in `filterableAttributes`. There is one `distinctAttribute` per index, and changing it reindexes every document.
+- **Searches return at most 1,000 documents** by default, controlled by `maxTotalHits`.
+- **There is no chunking API.** Meilisearch indexes the documents you send, so splitting happens in your pipeline before ingestion.
+- **Embedding model input limits are set by the provider**, not by Meilisearch, and exceeding them is handled by the provider, not the engine.
+
+## Next steps
+
+- [Document template best practices](/capabilities/hybrid_search/advanced/document_template_best_practices) covers writing and testing the template that turns a chunk into an embedding prompt.
+- [Configure distinct attribute](/capabilities/full_text_search/how_to/configure_distinct_attribute) shows both the index setting and the search-time parameter for collapsing chunks back to one result per source.
+- [Good practices](/getting_started/good_practices) has the document formatting and batching rules that apply to any chunked import.
+- [Relevancy](/capabilities/full_text_search/relevancy/relevancy) explains how chunk-level documents interact with ranking rules on the keyword half.

@@ -1,0 +1,131 @@
+---
+title: Why pgvector alone is not enough for search
+description: Your pgvector similarity search returns plausible but wrong products, misses exact SKUs, and loses results as soon as you add a WHERE clause, and you need to know whether that is fixable.
+keywords: pgvector exact match problem, vector search misses sku, pgvector where clause fewer results, hnsw ef_search recall, pgvector hybrid search rrf, embedding search wrong results, semantic search product code, pgvector index build time, postgres vector search slow, supabase vector search relevance, pgvector vs search engine, negation vector search
+boost: 2
+---
+
+pgvector gives PostgreSQL a `vector` type, distance operators, and optional approximate nearest neighbor indexes. That is a storage and query layer, not a search experience. Nearest neighbor over embeddings has no concept of an exact token, so a query for a part number returns products that look like part numbers, and a query containing "without nuts" returns the nut version first. Add a `WHERE` clause and an HNSW index can silently return a handful of rows instead of the twenty you asked for. The fix is not a better embedding model. It is keeping a keyword index alongside the vector index and fusing the two, which is what hybrid retrieval means and what pgvector leaves to your application.
+
+## Why similarity search misses SKUs, names, and negation
+
+An embedding maps text to a point in a few hundred to a few thousand dimensions, trained so that semantically related text lands nearby. Retrieval is then a distance comparison. Nothing in that pipeline preserves the identity of a token.
+
+Three failure classes follow directly from the geometry:
+
+- **Identifiers and codes.** `BRV-ST220` gets split into subword pieces by the tokenizer, and those pieces carry almost no trained meaning. Every alphanumeric code in your catalog ends up in roughly the same neighborhood, so the nearest neighbors of one SKU are other SKUs, not the right one. The document that contains the literal string ranks no higher than the ones that do not.
+- **Proper nouns and rare terms.** Brand names, author names, and model numbers that were rare or absent in the embedding model's training data get weak, generic representations. Two different brands in the same category can sit closer to each other than either sits to its own product page.
+- **Negation and constraints.** "Wireless keyboard without a numpad" embeds very close to "wireless keyboard with a numpad", because most of the sentence is identical and negation is a single low-signal token. Distance cannot express a hard constraint. Only a filter can.
+
+None of this is a defect in pgvector, which does exactly what it promises. The mismatch is that product, documentation, and support search are mostly lookups with some conceptual queries mixed in, and pure vector retrieval optimizes only for the second half.
+
+## What HNSW costs at build time and in memory
+
+pgvector performs exact nearest neighbor search by default: perfect recall, and a scan of every vector per query. Latency grows linearly with row count, so at some size you add an ANN index and inherit its operational profile. The costs that surprise teams are the build and the maintenance, not the query:
+
+- **Index builds are memory-bound.** HNSW graph construction wants the graph in `maintenance_work_mem`. If the graph does not fit, the build spills and slows down by a large factor rather than a small one. {/* VERIFY: confirm pgvector build fallback behavior and the exact wording of its maintenance_work_mem guidance */}
+- **Build time scales with `m` and `ef_construction`.** Raising either improves recall and lengthens the build, and both are fixed at index creation, so changing your mind means a rebuild. {/* VERIFY: pgvector default values for m and ef_construction */}
+- **Vacuum is expensive on HNSW.** pgvector's own documentation notes that `VACUUM` on an HNSW index can be slow and suggests reindexing first, which is a recurring maintenance window on a catalog that changes daily.
+- **Dimensions are capped by column type.** Full-precision `vector` tops out at 2,000 dimensions, `halfvec` at 4,000, and binary vectors at 64,000. A high-dimensional model forces a column type migration, not a setting change.
+
+These are documented in the [PostgreSQL comparison](/resources/comparisons/postgresql#vector-and-hybrid-search-pgvector).
+
+## Why a WHERE clause returns fewer results than it should
+
+This is the most reported production surprise with pgvector, and the mechanism is worth stating precisely.
+
+An HNSW index scan walks a graph and returns roughly `ef_search` candidates. The `WHERE` clause is applied to those candidates afterward. If your filter matches 10% of rows and `ef_search` is the default 40, the scan hands the planner 40 rows, of which about 4 survive the filter. You asked for 20 results and got 4, with no error and no warning. Narrow the filter further and you can get zero.
+
+The available mitigations in Postgres, honestly stated:
+
+1. **Raise `hnsw.ef_search`.** Works, costs latency on every query, and the right value depends on that particular filter's selectivity, so there is no single correct setting.
+2. **Enable iterative index scans**, which keep pulling more candidates until enough rows pass the filter. This directly targets the problem and is the right lever if your pgvector version has it. {/* VERIFY: pgvector version that introduced iterative index scans and its GUC names */}
+3. **Partial indexes per filter value.** Excellent when you have one low-cardinality filter such as tenant or language, unworkable once filters combine.
+4. **Force exact KNN for selective filters.** Pre-filter to a small candidate set in a CTE, then order by distance with no index. Correct, and the plan flips to a sequential scan, so it only holds while the candidate set stays small.
+5. **Overfetch and re-rank in the application.** Ask for far more rows than you need and filter in code. Hides the problem at low traffic, becomes the bottleneck later.
+
+All five are used in production. What none of them gives you is a filter that participates in the search rather than trimming it afterward.
+
+## Why hybrid retrieval beats pure semantic for product search
+
+Adding a second retrieval path is the standard answer, and pgvector's documentation points there too: run a `tsvector` query and an ANN query separately, then fuse them with Reciprocal Rank Fusion. RRF merges by position in each list, not by how relevant either result actually was, so a weak semantic result that ranks first in an otherwise empty list can outrank a strong keyword hit. You now own two indexes, a fusion function, and a tuning surface with no ground truth.
+
+In Meilisearch, both retrieval modes live in one engine and one query. [Hybrid search](/capabilities/hybrid_search/overview) takes a `hybrid` object with `semanticRatio` and `embedder`, generates the query embedding for you, and merges on absolute relevancy scores between 0 and 1 rather than on rank. Filtering is evaluated before the vector graph walk, so a selective filter returns a full result set instead of a truncated one, as described in [vector storage](/resources/internals/hannoy). The embedding pipeline is a settings object rather than application code: Meilisearch batches documents to the provider, caches embeddings, and retries on rate limits.
+
+The block below is complete. It configures an embedder, declares filterable attributes, indexes documents, and runs the three query shapes that pure vector search handles badly.
+
+```javascript
+// npm install meilisearch
+import { Meilisearch } from 'meilisearch'
+
+const client = new Meilisearch({
+  host: process.env.MEILISEARCH_URL, // for example https://your-project.meilisearch.io
+  apiKey: process.env.MEILISEARCH_KEY,
+})
+
+const index = client.index('products')
+
+// 1. Configure the embedder once. Meilisearch calls the provider at index
+//    time and at query time, so there is no embedding pipeline in your code.
+const embedderTask = await index.updateEmbedders({
+  'products-openai': {
+    source: 'openAi',
+    model: 'text-embedding-3-small',
+    apiKey: process.env.OPENAI_API_KEY,
+    documentTemplate: "A product named '{{doc.name}}' by {{doc.brand}}: {{doc.description}}",
+  },
+})
+await client.waitForTask(embedderTask.taskUid)
+
+// 2. Declare the attributes you want to filter on. Filters are applied
+//    before the vector search, not after it.
+const filterTask = await index.updateFilterableAttributes(['brand', 'price', 'nut_free'])
+await client.waitForTask(filterTask.taskUid)
+
+// 3. Index documents. Rows exported from Postgres map one to one onto
+//    documents. Embeddings are generated and cached automatically.
+const addTask = await index.addDocuments([
+  { id: 1, sku: 'BRV-ST220', name: 'Sandwich toaster', brand: 'Breville', price: 89, nut_free: true, description: 'Two slice press with removable plates' },
+  { id: 2, sku: 'DLG-EC685', name: 'Espresso machine', brand: 'DeLonghi', price: 249, nut_free: true, description: 'Fifteen bar pump for cafe quality at home' },
+  { id: 3, sku: 'KTA-HZ100', name: 'Hazelnut spread', brand: 'Kitara', price: 6, nut_free: false, description: 'Chocolate and hazelnut spread' },
+])
+await client.waitForTask(addTask.taskUid)
+
+// 4a. Exact identifier. semanticRatio 0 keeps the query on the keyword index,
+//     where the literal string wins.
+console.log(await index.search('BRV-ST220', {
+  hybrid: { semanticRatio: 0.0, embedder: 'products-openai' },
+}))
+
+// 4b. Descriptive query. A higher ratio leans on meaning.
+console.log(await index.search('something to make a hot pressed lunch', {
+  hybrid: { semanticRatio: 0.9, embedder: 'products-openai' },
+  rankingScoreThreshold: 0.5, // drop weak semantic matches entirely
+}))
+
+// 4c. A constraint the embedding cannot express, handled by a filter
+//     that runs before the vector search rather than after it.
+console.log(await index.search('chocolate spread', {
+  hybrid: { semanticRatio: 0.7, embedder: 'products-openai' },
+  filter: 'nut_free = true AND price < 50',
+  showRankingScore: true,
+}))
+```
+
+## Limits and constraints
+
+- **`semanticRatio` runs from `0.0` to `1.0` and defaults to `0.5`.** `0.0` is keyword only and queries no embedder, `1.0` is semantic only. The `embedder` field inside `hybrid` is required and must name an embedder that exists in index settings.
+- **When `q` is empty and `semanticRatio` is above 0, the search is purely semantic.**
+- **`rankingScoreThreshold` runs from `0.0` to `1.0`** and removes hits below that relevancy score. Around `0.5` is a reasonable starting point for semantic queries with no good answer in the index.
+- **An attribute must be listed in `filterableAttributes` before it can be used in `filter`.** This applies to hybrid and semantic searches exactly as it does to keyword searches.
+- **Changing `model`, `source`, `documentTemplate`, `dimensions`, or `pooling` can trigger a full re-embedding** of the index, with the provider costs that implies. Changing `distribution` does not.
+- **`dimensions` is mandatory for `userProvided` embedders and invalid for `rest` ones.** The full per-source rules are in the [embedder field compatibility table](/capabilities/hybrid_search/overview#embedder-field-compatibility).
+- **Meilisearch documents no maximum vector dimension.** Vectors above 3,000 dimensions run in production, with [binary quantization](/capabilities/hybrid_search/advanced/binary_quantization) recommended as dimensions grow. Binary quantization is most effective above roughly 1,400 dimensions and least effective below 512.
+- **pgvector dimension ceilings are per column type:** 2,000 for `vector`, 4,000 for `halfvec`, 64,000 for binary. These are schema decisions, not query-time ones.
+
+## Next steps
+
+- [Getting started with AI-powered search](/capabilities/hybrid_search/getting_started) walks through the embedder configuration above field by field, including document templates.
+- [Semantic vs hybrid search](/capabilities/hybrid_search/advanced/semantic_vs_hybrid) gives a per-use-case starting value for `semanticRatio`, including why catalogs with part numbers should stay low.
+- [Meilisearch vs PostgreSQL search](/resources/comparisons/postgresql) covers full-text search, faceting, and pgvector side by side.
+- [Migrating from PostgreSQL](/resources/migration/postgresql_migration) is a working export and import script for moving rows onto documents.

@@ -1,0 +1,143 @@
+---
+title: "Sizing a search deployment: RAM, disk and CPU"
+description: You need to pick a machine size for a search index and have no idea how much disk, memory, and CPU the index will actually consume.
+keywords: how much ram does a search index need, search server sizing calculator, index size estimate documents, disk space per million documents search, provision search instance cpu cores, search engine hardware requirements, memory footprint vector embeddings index, right size search cluster, estimate index size before migration, search instance too small out of memory
+boost: 2
+---
+
+Size a search deployment in this order: disk first, RAM second, CPU last. Disk is driven by document count times average document size times a settings-dependent expansion factor, which is why the only honest estimate comes from indexing a sample and measuring it. RAM does not need to hold the whole index. Meilisearch memory-maps its LMDB store, and the docs state that a [RAM-to-disk ratio around 1/3 does not materially impact performance, with ~1/10 working for many workloads](/resources/internals/storage#memory-mapping). CPU matters for indexing and for embedding inference, rarely for serving searches. The one number you cannot skip is peak indexing memory, because that is what gets a process killed.
+
+## Why you cannot calculate index size from document count
+
+The docs are explicit: **there is no reliable way to predict the final size of a database**, because size depends on settings, the number of searchable attributes, facet cardinality, and the languages present, not just on how many documents you have. The only published measurement gives a useful anchor. The 19,553-document `movies.json` dataset, 9.1 MB as raw JSON, produces a [224 MB database using roughly 305 MB of RAM](/resources/internals/storage#measured-disk-usage). That is about a 24x expansion, with default settings where every field is searchable.
+
+Two documents of identical byte size can differ by an order of magnitude on disk: a 2 KB record with two searchable text fields and three filterable enums is cheap, while the same record with every field searchable, a high-cardinality filterable ID, and a sortable timestamp is not. This is why [trimming searchable, filterable, and sortable attributes](/capabilities/indexing/advanced/indexing_best_practices) is the highest-leverage sizing decision available to you, and it has to be made before you index, since changing any of those settings [triggers a full reindex](/capabilities/indexing/advanced/indexing_best_practices#settings-that-trigger-a-full-reindex).
+
+## Measure a sample, then extrapolate
+
+Index 1% of production data (or 50,000 documents, whichever is larger) with the exact settings you intend to ship, read `GET /stats`, and multiply. This script does that end to end.
+
+```python
+# pip install meilisearch
+#
+# export MEILI_URL="https://ms-example.meilisearch.io"
+# export MEILI_KEY="$MEILISEARCH_ADMIN_KEY"
+
+import json
+import os
+
+import meilisearch
+
+SAMPLE_INDEX = "sizing_sample"
+TARGET_DOCUMENTS = 5_000_000   # what production will hold
+BYTES_PER_VECTOR = 0           # 0 if no embedders; see the vector table below
+
+client = meilisearch.Client(os.environ["MEILI_URL"], os.environ["MEILI_KEY"])
+index = client.index(SAMPLE_INDEX)
+
+# 1. Apply production settings FIRST. Settings drive size more than volume does.
+task = index.update_settings({
+    "searchableAttributes": ["title", "description"],
+    "filterableAttributes": ["category", "brand", "price", "in_stock"],
+    "sortableAttributes": ["price"],
+})
+client.wait_for_task(task.task_uid, timeout_in_ms=600_000)
+
+# 2. Index a representative sample, not the first N rows of a sorted export.
+with open("sample.json") as sample_file:
+    sample = json.load(sample_file)
+task = index.add_documents(sample)
+client.wait_for_task(task.task_uid, timeout_in_ms=3_600_000)
+
+# 3. Read the measured numbers back.
+stats = client.get_all_stats()["indexes"][SAMPLE_INDEX]
+sampled = stats["numberOfDocuments"]
+index_size = stats["indexSize"]
+used_size = stats["usedIndexSize"]
+
+bytes_per_doc = used_size / sampled
+projected_text = bytes_per_doc * TARGET_DOCUMENTS
+projected_vectors = (BYTES_PER_VECTOR + 200) * TARGET_DOCUMENTS  # ~200B graph edges
+projected_total = projected_text + projected_vectors
+
+gib = 1024 ** 3
+print(f"sampled documents:      {sampled:,}")
+print(f"avg raw document size:  {stats['avgDocumentSize']:,} bytes")
+print(f"bytes per doc indexed:  {bytes_per_doc:,.0f}")
+print(f"fragmentation:          {(index_size - used_size) / index_size:.1%}")
+print(f"projected index:        {projected_text / gib:,.1f} GiB")
+print(f"projected vectors:      {projected_vectors / gib:,.1f} GiB")
+print(f"provision disk (x2):    {projected_total * 2 / gib:,.1f} GiB")
+print(f"comfortable RAM (1/3):  {projected_total / 3 / gib:,.1f} GiB")
+print(f"peak indexing RAM:      {projected_total / gib:,.1f} GiB or batch smaller")
+```
+
+Provision roughly double the projected index size on disk. LMDB [marks deleted space as free without returning it to the operating system](/resources/internals/storage#database-size), so a write-heavy index grows past its logical size until you [compact it](/capabilities/indexing/how_to/compact_an_index). The `fragmentation` line above is the same `indexSize` versus `usedIndexSize` gap that tells you when compaction is worth running: above 30%, it is.
+
+## What actually drives RAM
+
+Raw document count is a weak predictor of memory. Three things dominate.
+
+**Peak indexing memory.** Indexing is the memory-intensive phase, not search. By default Meilisearch [caps indexing at two thirds of available RAM](/resources/self_hosting/performance/ram_multithreading), configurable with [`--max-indexing-memory`](/resources/self_hosting/configuration/reference#max-indexing-memory). Set that value at or above total machine memory and the instance is likely to crash. The practical guideline in the docs is that the machine should have enough RAM to hold the dataset during indexing. If it does not, send [smaller batches](/capabilities/indexing/advanced/indexing_best_practices) rather than buying more memory.
+
+**Embeddings.** Vectors are the single largest driver of index growth. Meilisearch stores them in [Hannoy, a disk-backed HNSW implementation](/resources/internals/hannoy), so vector count is bounded by disk rather than RAM, but the bytes still have to live somewhere. Published per-vector costs, plus about 200 bytes of graph edges per vector:
+
+| Dimensions | Full precision | Binary quantized |
+|---|---|---|
+| 768 | 3 KiB | ~100 bytes |
+| 1536 | 6 KiB | ~200 bytes |
+| 3072 | 12 KiB | ~400 bytes |
+
+[Binary quantization](/capabilities/hybrid_search/advanced/binary_quantization) is a 30x reduction at 1536 dimensions, works best above 1M documents and 1400+ dimensions, and is **irreversible**: the discarded precision cannot be recovered without re-vectorizing into a new embedder.
+
+**Filterable and sortable attributes.** Each one adds internal databases and increases indexing memory requirements. High-cardinality facets cost more than low-cardinality ones.
+
+## When CPU is the bottleneck
+
+Almost never at search time, and almost always at index time. The indexer [uses at most half the available cores by default](/resources/self_hosting/configuration/reference#max-indexing-threads) specifically so searches stay responsive while a batch runs, and the docs warn against raising it to the full core count. For faster indexing, [more cores beat more RAM](/capabilities/indexing/advanced/indexing_best_practices).
+
+CPU becomes a search-side concern in two cases: sustained high query volume (the Cloud guidance is to [pick more cores at hundreds of QPS](/capabilities/platform/infrastructure/manage_resources)), and query-time embedding inference when the embedder runs locally instead of calling a provider API. A [composite embedder](/capabilities/hybrid_search/how_to/choose_an_embedder) that uses a remote model for indexing and a small local model for queries moves that cost around deliberately.
+
+Disk latency matters more than most teams expect. Use NVMe SSD: HDD, NFS, and other network-mounted storage are explicitly called out as worse, and provider IOPS credit limits can throttle indexing badly.
+
+## Three worked examples
+
+These are projections from the published per-vector figures and the measured expansion anchor above. Treat them as starting points to validate with the script, not as guarantees.
+
+**500,000 product records, keyword only.** Two searchable fields, four facets, 1.5 KB average document. Expect single-digit GB on disk. A tier with 2 to 4 GB of RAM and 2 vCPU is typically enough, and the binding constraint is the indexing burst during a full catalog refresh, not steady-state search.
+
+**5 million documents with 768-dimension embeddings.** Vectors alone are about 5M x (3 KiB + 200 B), near 16 GiB, before any text index. Disk is the constraint here, not RAM: at a 1/3 ratio, roughly 7 to 8 GB of RAM keeps this comfortable, while disk should be provisioned at 40 GB or more to absorb fragmentation.
+
+**50 million documents, hybrid, 1536 dimensions quantized.** Quantized vectors run about 50M x 400 B, near 20 GB, versus roughly 300 GB unquantized. This is the scale where binary quantization stops being an optimization and becomes the thing that makes the deployment affordable. Plan the reindex window, not just the machine: any settings change here is measured in hours.
+
+For comparison, engines that keep the whole HNSW graph resident in memory force RAM to scale with vector count instead of disk, which is why their sizing guides read so differently. {/* VERIFY: current in-RAM index requirements for Pinecone, Qdrant, and Elasticsearch dense_vector fields */} JVM-based engines add a second constraint, a heap that is conventionally capped well below total machine memory. {/* VERIFY: the exact Elasticsearch heap ceiling and the recommended heap-to-RAM split in current versions */}
+
+## Limits and constraints
+
+- **4,294,967,296 documents** maximum per index, and **65,536 attributes** per index. [Both are hard limits.](/resources/help/known_limitations)
+- **65,535 positions per attribute** are indexed. Words past that point are silently ignored, which caps the effective size of very long text fields.
+- **511 bytes** for a primary key value, **468 bytes** for an individual `filterableAttributes` value. Exceeding either fails the task.
+- **100 MB default payload limit** per request, adjustable with [`--http-payload-size-limit`](/resources/self_hosting/configuration/reference#payload-limit-size). Larger payloads index faster but consume more RAM.
+- **1,000 concurrent search requests.** Beyond that Meilisearch drops a random request and returns a 503 `too_many_search_requests` with a 10 second `Retry-After`.
+- **256 MB RAM minimum** to run at all. That is a floor for a toy dataset, not a production size.
+- **Indexing defaults**: two thirds of RAM, half of available threads.
+- **Not documented anywhere**: a formula mapping document count to index size, a supported maximum index size in bytes, or a guaranteed indexing throughput. Measure instead.
+
+Track the real numbers in production with [`GET /stats`](/reference/api/stats) or the Prometheus gauges `meilisearch_db_size_bytes`, `meilisearch_used_db_size_bytes`, and `meilisearch_task_queue_latency_seconds`.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Storage internals" icon="database" href="/resources/internals/storage">
+    How LMDB memory mapping, database growth, and the RAM-to-disk ratio actually work.
+  </Card>
+  <Card title="RAM and multi-threading" icon="memory" href="/resources/self_hosting/performance/ram_multithreading">
+    Diagnosing memory crashes and tuning indexing memory and thread limits.
+  </Card>
+  <Card title="Indexing best practices" icon="gauge-high" href="/capabilities/indexing/advanced/indexing_best_practices">
+    The settings choices that decide index size before you index a single document.
+  </Card>
+  <Card title="Monitoring an instance" icon="chart-line" href="/capabilities/platform/monitoring/prometheus_endpoint">
+    Metric names for database size, task queue latency, and search concurrency.
+  </Card>
+</CardGroup>

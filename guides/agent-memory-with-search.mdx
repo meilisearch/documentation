@@ -1,0 +1,168 @@
+---
+title: How to give an agent memory with search
+description: Your agent forgets everything between sessions, and bolting on a memory store means deciding what to save, how to rank old facts against new ones, and how to stop the index growing forever.
+keywords: agent memory store, llm long term memory, conversation history search, remember user preferences agent, chatbot memory backend, recency vs relevance ranking, per user memory isolation, tenant token memory scoping, prune old memories, session history retrieval, memory index schema, stateful agent context
+boost: 2
+---
+
+Agent memory is a search index with three extra rules. Store each memory as one small document with a `user_id`, a `created_at` timestamp, and a `kind` so you can treat a durable preference differently from a throwaway transcript line. Retrieve in two passes: the last few turns of the current session, fetched chronologically with `sort: ["created_at:desc"]`, plus a relevance pass over everything that user has ever stored, gated with `rankingScoreThreshold` so a weak match returns nothing instead of noise. Isolate users with a [tenant token](/capabilities/security/advanced/tenant_token_payload) whose search rule pins `user_id`, so a scoping bug cannot leak one user's memory into another's context. And prune on a schedule with [delete by filter](/reference/api/documents/delete-documents-by-filter), because Meilisearch has no document expiry.
+
+## What a memory document should look like
+
+Write one fact per document. A whole conversation stored as a single document retrieves as a single blob, and the agent pays for all of it to use one sentence.
+
+```json
+{
+  "id": "mem_u4821_01h9qz",
+  "user_id": "u_4821",
+  "session_id": "s_7f31",
+  "kind": "preference",
+  "text": "Deploys to the eu-west-1 region and wants cost estimates in euros.",
+  "created_at": 1757808000
+}
+```
+
+Four fields carry the work.
+
+**`kind`** is the field people leave out and regret. Separating `preference`, `decision`, `fact`, and `event` lets you retrieve only durable memories for a first-turn system prompt, and it lets you expire transcript events on a 30 day window while keeping stated preferences indefinitely. Without it, pruning is all or nothing.
+
+**`created_at`** is a UNIX timestamp, not a formatted date string. Meilisearch can filter and sort on numeric timestamps directly, as described in [filtering and sorting by date](/capabilities/filtering_sorting_faceting/how_to/filter_and_sort_by_date).
+
+**`user_id`** is what both the filter and the tenant token pin. It must be in `filterableAttributes` for either to work.
+
+**`id`** is the [primary key](/capabilities/indexing/how_to/design_primary_keys). Values must be integers or strings, and strings may contain only alphanumeric characters, hyphens, and underscores. Deriving it from the user and the source message makes writes idempotent: replaying the same message updates the memory in place instead of creating a duplicate.
+
+## Balancing recency against relevance
+
+These pull in opposite directions, and trying to serve both from one query is where most agent memory gets muddy. Run two queries instead.
+
+The **recency pass** is not really a search. Filter to the current session, sort by time, take a handful:
+
+```js
+await index.search('', {
+  filter: `user_id = "${userId}" AND session_id = "${sessionId}"`,
+  sort: ['created_at:desc'],
+  limit: 6
+})
+```
+
+The **relevance pass** searches everything that user has stored, with no session filter, and leans on the ranking score to decide whether anything is worth including at all. `rankingScoreThreshold` takes a value between 0.0 and 1.0 and drops documents scoring below it. Excluded hits do not count toward `estimatedTotalHits`, `totalHits`, or the facet distribution, so an empty `hits` array is a real "nothing relevant here" signal.
+
+A detail worth knowing before you reach for `sort` in the relevance pass: `sort` sits fifth in Meilisearch's [default ranking rules](/capabilities/full_text_search/relevancy/ranking_rules), which makes it a tie-breaker applied after relevance, not an override. Adding `sort: ["created_at:desc"]` to a relevance query will not float a recent memory above a much better older match. If you genuinely want strict recency ordering, move `sort` higher in the index ranking rules, and accept that every query on that index becomes less relevant. Usually the two-pass split is the better trade.
+
+If the same fact gets restated in different words across sessions, keyword matching will miss the paraphrase. Configure an [embedder](/capabilities/hybrid_search/getting_started) and add `hybrid: { embedder: 'memories', semanticRatio: 0.7 }` to the relevance pass. The `embedder` name is required whenever `hybrid` is present.
+
+## A complete memory layer
+
+This module writes, retrieves, scopes, and prunes. Set `MEILISEARCH_URL` and `MEILISEARCH_KEY` in your environment, then run it once against a fresh index.
+
+```js
+// npm install meilisearch
+import { Meilisearch } from 'meilisearch'
+import { generateTenantToken } from 'meilisearch/token'
+
+const client = new Meilisearch({
+  host: process.env.MEILISEARCH_URL,
+  apiKey: process.env.MEILISEARCH_KEY
+})
+const index = client.index('agent_memories')
+
+// 1. One-time setup. Both lists are required: user_id and kind for filtering,
+//    created_at for both the recency window and chronological sort.
+export async function setup() {
+  await index.updateFilterableAttributes(['user_id', 'session_id', 'kind', 'created_at'])
+  await index.updateSortableAttributes(['created_at'])
+}
+
+// 2. Write. A deterministic id makes replays idempotent.
+export async function remember({ userId, sessionId, kind, text, sourceMessageId }) {
+  return index.addDocuments([{
+    id: `mem_${userId}_${sourceMessageId}`,
+    user_id: userId,
+    session_id: sessionId,
+    kind,
+    text,
+    created_at: Math.floor(Date.now() / 1000)
+  }])
+}
+
+// 3. Retrieve. Two passes, then merge and deduplicate by id.
+export async function recall({ userId, sessionId, query }) {
+  const scope = `user_id = "${userId}"`
+
+  const recent = await index.search('', {
+    filter: `${scope} AND session_id = "${sessionId}"`,
+    sort: ['created_at:desc'],
+    limit: 6,
+    attributesToRetrieve: ['id', 'kind', 'text', 'created_at']
+  })
+
+  const relevant = await index.search(query, {
+    filter: scope,
+    limit: 5,
+    rankingScoreThreshold: 0.5,
+    attributesToRetrieve: ['id', 'kind', 'text', 'created_at']
+  })
+
+  const merged = new Map()
+  for (const hit of [...recent.hits, ...relevant.hits]) merged.set(hit.id, hit)
+  return [...merged.values()]
+}
+
+// 4. Scope. Generate this in your backend, never in the browser.
+export async function memoryToken(userId) {
+  return generateTenantToken({
+    apiKey: process.env.MEILISEARCH_KEY,
+    apiKeyUid: process.env.MEILISEARCH_KEY_UID,
+    searchRules: { agent_memories: { filter: `user_id = "${userId}"` } },
+    expiresAt: new Date(Date.now() + 20 * 60 * 1000)
+  })
+}
+
+// 5. Prune. Keep preferences and decisions, expire transcript events after 30 days.
+export async function prune(days = 30) {
+  const cutoff = Math.floor(Date.now() / 1000) - days * 86400
+  return index.deleteDocuments({
+    filter: `created_at < ${cutoff} AND (kind = "event" OR kind = "fact")`
+  })
+}
+```
+
+## Scoping memory per user
+
+A filter in application code is one forgotten line away from a leak. A tenant token moves the guarantee to the server: it is a JWT signed with a Meilisearch API key, carrying a `searchRules` object that Meilisearch enforces on every query made with that token. A token only has access to the indexes named in `searchRules`, and specific index rules override a `*` rule.
+
+Two things to keep straight. The token is signed with your API key, so generating it anywhere the key is exposed defeats the point: keep `memoryToken` server-side and hand the client only the resulting token. And because the token is built in your application, Meilisearch cannot validate the filter when the token is created, so an invalid search rule surfaces as an error at search time rather than at signing time. Set a short `expiresAt`, since a leaked token is valid until it expires.
+
+## Pruning so memory does not grow without bound
+
+Meilisearch has no document time-to-live and no automatic expiry, so nothing removes old memories unless you do. Run the `prune` function above from a cron job or a scheduled worker.
+
+Delete by filter returns a `taskUid` with status `enqueued` rather than deleting synchronously, so poll the task if you need to confirm completion. One operational note from [deleting documents at scale](/capabilities/indexing/how_to/delete_documents_at_scale): delete-by-filter tasks are not autobatched with other task types, and each one is processed as its own batch, so a stream of small hourly prunes competes with your writes more than one larger nightly prune does.
+
+## Limits and constraints
+
+- **No TTL.** Meilisearch does not expire documents. Pruning is your scheduled job.
+- **Primary key values** are limited to 511 bytes and may contain only alphanumeric characters, hyphens, and underscores.
+- **Individual `filterableAttributes` values** are limited to 468 bytes. Long free-text values do not belong in a filterable field, so keep `kind` and `user_id` short and keep `text` out of the filterable list.
+- **An index holds at most 4,294,967,296 documents**, which is not the ceiling you will hit first. Retrieval quality degrades from unpruned noise long before storage does.
+- **Search returns at most 1000 results** by default, controlled by `maxTotalHits` in the pagination settings. Irrelevant for memory recall, where useful limits are single digits.
+- **Filter depth is capped at 200** levels of nested `AND` and `OR`.
+- Vector-only memory stores typically make the per-user filter a secondary concern, applied after or alongside approximate nearest neighbor search rather than as a first-class index setting. {/* VERIFY: how pgvector, Pinecone, and Qdrant each handle metadata filtering relative to the ANN scan, and whether pre-filtering is exact */}
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Tenant token payload reference" href="/capabilities/security/advanced/tenant_token_payload">
+    Every field in the tenant token payload, and how search rules are enforced.
+  </Card>
+  <Card title="Filter and sort by date" href="/capabilities/filtering_sorting_faceting/how_to/filter_and_sort_by_date">
+    Working with UNIX timestamps in filters and sort expressions.
+  </Card>
+  <Card title="Delete documents at scale" href="/capabilities/indexing/how_to/delete_documents_at_scale">
+    Batch and filter-based deletion, and how they are scheduled.
+  </Card>
+  <Card title="Build retrieval for an AI agent" href="/guides/retrieval-for-ai-agents">
+    Shaping a search tool for a model instead of for a user interface.
+  </Card>
+</CardGroup>

@@ -1,0 +1,148 @@
+---
+title: Why Elasticsearch relevance tuning is hard
+description: Every relevance change in Elasticsearch is a query-building change, so tuning search results means writing code, reviewing a pull request, and shipping a deploy.
+keywords: elasticsearch relevance tuning, function_score alternative, boost field elasticsearch, why are my elasticsearch results wrong, multi_match best_fields cross_fields, bm25 tuning, search relevance without engineers, elasticsearch query dsl boosting, ranking rules, tune search ranking without deploying
+boost: 2
+---
+
+Elasticsearch relevance is hard to tune because relevance does not live in configuration. It lives in the query you build at request time: a BM25 base score, reshaped by `multi_match` field boosts, `function_score` or `script_score` wrappers, and `boosting` clauses. Changing how results rank means editing the query-building code in your application, opening a pull request, and deploying. The people who can tell that a result is wrong (merchandisers, support leads, content owners) are never the people who can fix it. An engine that expresses relevance as an ordered list of index settings moves that change from a deploy to an API call.
+
+## Why every relevance change becomes a code change
+
+A typical Elasticsearch product search is a hand-assembled `multi_match` query with per-field boosts (`name^5`, `brand^2`, `description`), often wrapped in `function_score` to fold in popularity or recency. Three properties of that design make iteration slow:
+
+- **The scoring formula is an application artifact.** It is Java, Python, or JavaScript that serializes a JSON query. Tuning a boost from `^3` to `^5` is a code diff, so it inherits your review and release process.
+- **The formula is per-query.** Autocomplete, the results page, and the category page each build their own query, so a single relevance fix often has to be applied in several places and can drift between them.
+- **Effects are non-local.** Raising one field boost changes the ordering of documents that had nothing to do with the field you touched, because all contributions are summed or maximized into one opaque score.
+
+Elasticsearch does expose `_explain` and the `explain` search flag, which return the term-level score breakdown for a document. {/* VERIFY: exact name and response shape of the explain API in current Elasticsearch versions */} That tells you what happened, but reading a nested BM25 explanation is an engineering task, not a merchandising one.
+
+## The analyzer decision you make once
+
+Relevance in Elasticsearch is also fixed at index time by the analyzer chain (tokenizer, plus filters such as lowercasing, stemming, ASCII folding, and synonyms). The analyzer determines what tokens exist, and therefore what can possibly match.
+
+The constraint is that you cannot change the analyzer of an existing field in place. Changing stemming or the tokenizer means creating a new index with a new mapping and reindexing into it, usually behind an alias so the switch is atomic. That is a well-understood operation, but it turns "search for `running shoes` should also match `run shoe`" into a data migration rather than a setting change.
+
+Synonyms are the partial escape hatch. Search-time synonym graphs can be updated without a full reindex, and Elasticsearch added a synonyms management API for updating synonym sets. {/* VERIFY: which Elasticsearch version introduced the synonyms API and whether reloading applies to search-time analyzers only */} Index-time synonyms still require a reindex.
+
+## The multi_match type trap
+
+`multi_match` accepts a `type` parameter, and the choice silently changes the scoring model:
+
+- `best_fields` (the default) scores a document by its single best-matching field, with other fields contributing only through `tie_breaker`. {/* VERIFY: default tie_breaker value for best_fields */} A document matching every term in one field beats a document that spreads the terms across `name` and `description`.
+- `most_fields` sums the per-field scores, which rewards documents that repeat the same content across many fields. Copy-heavy documents win for the wrong reason.
+- `cross_fields` treats the listed fields as one big field and reasons about term frequency across them, which is usually what people mean by "search the whole product", but it has constraints around analyzers and per-field boosts. {/* VERIFY: exact cross_fields restrictions, in particular how it groups fields by analyzer */}
+
+Nothing in the query errors when you pick the wrong one. You get plausible-looking results that are subtly wrong for a subset of queries, which is the hardest failure mode to detect without a labeled relevance test set.
+
+## What actually helps inside Elasticsearch
+
+If you are staying on Elasticsearch, these levers reduce the deploy tax without changing engines:
+
+1. **Move the query into a search template.** Stored Mustache templates let you change the query body through an API call instead of an application deploy, with the application passing only parameters.
+2. **Precompute signals into `rank_feature` fields.** Storing popularity or authority as a `rank_feature` (or `rank_features`) field lets you boost with a dedicated query clause instead of a `script_score`, which is cheaper and easier to reason about. {/* VERIFY: Elasticsearch version that introduced rank_feature and whether rank_features is still the multi-valued variant */}
+3. **Use pinned queries for known-answer cases.** The `pinned` query promotes specific document IDs to the top for a given query, which handles the "this one query must return this one product" requests without touching the scoring formula. {/* VERIFY: availability of the pinned query and the query rules API by license tier */}
+4. **Build a judgment list before tuning.** Fifty queries with expected top results, replayed after every change, turns relevance work from opinion into a regression test. This matters more than any single lever above.
+5. **Consolidate query construction.** One shared module that builds the query for every surface removes the drift between autocomplete and the results page.
+
+## How a configurable ranking pipeline changes who can tune
+
+Meilisearch expresses relevance as an ordered array of [ranking rules](/capabilities/full_text_search/relevancy/ranking_rules) stored in index settings, not in the query. Meilisearch applies them as a bucket sort: the first rule sorts all matching documents into groups, and each later rule only breaks ties inside those groups. The seven built-in rules, in default order, are `words`, `typo`, `proximity`, `attributeRank`, `sort`, `wordPosition`, and `exactness`.
+
+Three consequences follow:
+
+- **Field importance is a list, not a number.** Instead of tuning `name^5` against `description^1`, you order [`searchableAttributes`](/capabilities/full_text_search/how_to/configure_searchable_attributes). Attributes earlier in the array matter more to the [attribute ranking order](/capabilities/full_text_search/relevancy/attribute_ranking_order). There is no boost arithmetic to balance.
+- **Business signals are appended, not multiplied in.** [Custom ranking rules](/capabilities/full_text_search/relevancy/custom_ranking_rules) such as `popularity:desc` are added to the same array, normally at the end, so they act as tiebreakers after text relevance rather than distorting it.
+- **The change is an API call.** Updating ranking rules is a settings update, so a tuning UI or an internal tool can expose it to non-engineers, and a change can be reverted by writing the previous array back.
+
+For debugging, `showRankingScoreDetails` returns one entry per active rule with the subscore it produced, so "why is this document second" has a per-rule answer rather than a nested term-frequency tree. See [ranking score](/capabilities/full_text_search/relevancy/ranking_score).
+
+## One complete example
+
+This script configures field importance, rule order, a business signal, synonyms, and typo behavior, then inspects why a document ranked where it did. Set `MEILISEARCH_URL` and `MEILISEARCH_KEY` first, and install the client with `npm install meilisearch`.
+
+```javascript
+import { Meilisearch } from 'meilisearch'
+
+const client = new Meilisearch({
+  host: process.env.MEILISEARCH_URL,
+  apiKey: process.env.MEILISEARCH_KEY
+})
+
+const index = client.index('products')
+
+const settingsTask = await index.updateSettings({
+  // Field importance: earlier attributes weigh more than later ones.
+  searchableAttributes: ['name', 'brand', 'description', 'tags'],
+
+  // Relevance pipeline. Custom rules go last so they break ties
+  // only after text relevance has been established.
+  rankingRules: [
+    'words',
+    'typo',
+    'proximity',
+    'sort',
+    'attributeRank',
+    'wordPosition',
+    'exactness',
+    'popularity:desc'
+  ],
+
+  // Query expansion without reindexing an analyzer chain.
+  synonyms: {
+    sneakers: ['trainers', 'running shoes'],
+    tv: ['television']
+  },
+
+  // Typo behavior per attribute instead of a global fuzziness setting.
+  typoTolerance: {
+    enabled: true,
+    minWordSizeForTypos: { oneTypo: 4, twoTypos: 9 },
+    disableOnAttributes: ['sku']
+  }
+})
+
+await client.waitForTask(settingsTask.taskUid)
+
+const results = await index.search('runing shoes', {
+  limit: 5,
+  showRankingScore: true,
+  showRankingScoreDetails: true
+})
+
+for (const hit of results.hits) {
+  console.log(hit.name, hit._rankingScore)
+  console.log(hit._rankingScoreDetails)
+}
+```
+
+Every field in that settings object is an index setting, so the same change can be made from any SDK, from a script, or from an internal tool, without redeploying the application that runs the search.
+
+## Limits and constraints
+
+- There are **seven built-in ranking rules**. The legacy `attribute` rule is equivalent to `attributeRank` plus `wordPosition` together, and combining `attribute` with either of them returns an error.
+- The `words` rule is **always applied** with higher priority than `attributeRank`, `exactness`, `typo`, and `proximity`, even if you remove it or move it down.
+- The `sort` rule is **inert unless the request includes the `sort` parameter**. If sorting appears to do nothing, move `sort` up one position at a time.
+- Custom ranking rule attributes must hold a **numeric or string value in every document**. If some documents lack the attribute, ordering is undefined.
+- Typo tolerance allows a **maximum of two typos per word**. Words with three or more typos never match. `minWordSizeForTypos` must satisfy `0 <= oneTypo <= twoTypos <= 255`.
+- For any single term, **multi-word synonyms may total at most 100 words**. Synonyms beyond that limit are silently ignored.
+- Changing `searchableAttributes` **triggers a reindex of the whole index** as an asynchronous task. Changing rule order or custom rules does not require reindexing documents.
+- [Search rules](/capabilities/search_rules/overview), which pin specific documents for specific queries, are experimental and must be enabled through the experimental features endpoint. They are a paid add-on with three rules included per project.
+- The documentation does not state a maximum number of ranking rules or searchable attributes, so treat any such number you have seen elsewhere as unverified.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Built-in ranking rules" href="/capabilities/full_text_search/relevancy/ranking_rules">
+    The seven rules, what each one sorts by, and how to order them
+  </Card>
+  <Card title="Ranking score" href="/capabilities/full_text_search/relevancy/ranking_score">
+    Read per-rule subscores to explain why a document ranked where it did
+  </Card>
+  <Card title="Migrating from Elasticsearch" href="/resources/migration/elasticsearch_migration">
+    Export documents, map settings, and translate queries
+  </Card>
+  <Card title="Meilisearch vs Elasticsearch" href="/resources/comparisons/elasticsearch">
+    Where each engine fits, including what Elasticsearch does better
+  </Card>
+</CardGroup>

@@ -1,0 +1,212 @@
+---
+title: How to search email archives
+description: You have an mbox export, a Gmail account, or years of shared mailbox history, and you need a search box over it that finds the right message without every result being a wall of quoted text, and without one person seeing another person's mail.
+keywords: mbox search, index gmail mailbox, search email archive, email thread search, strip quoted reply text, remove email signature indexing, search email attachments, imap message indexing, message-id in-reply-to threading, per user mailbox privacy search, ediscovery mailbox search, outlook conversation search, takeout mbox full text search
+boost: 2
+---
+
+Index one document per message, not one per thread. Split the body into the part the sender actually wrote and the quoted history below it, and make only the written part searchable, otherwise a popular thread matches every query through text nobody typed in it. Rebuild threads yourself from the `Message-ID`, `In-Reply-To`, and `References` headers, store the result as `thread_id`, and use the [`distinct` search parameter](/capabilities/full_text_search/how_to/configure_distinct_attribute) to collapse a thread into one hit. Put an `owner_id` on every document and enforce it with a [tenant token](/capabilities/security/getting_started), so the privacy boundary lives in Meilisearch and not in your front end.
+
+## Why one document per message beats one document per thread
+
+A thread is the unit people think in, but it is a terrible indexing unit. Threads grow without bound, and Meilisearch indexes at most 65,535 positions per attribute, so a long thread concatenated into one field silently loses its tail. Threads also have mixed authorship, mixed dates, and mixed recipients, which makes every filter on them approximate.
+
+Index messages, then collapse at search time. Each message carries `thread_id`, so a query with `distinct: "thread_id"` returns the best-matching message per conversation while still ranking on the exact message that matched. Drop `distinct` and the same index gives you message-level results inside a single thread view. One index, both behaviors.
+
+## How to reconstruct threads from message headers
+
+Mail clients disagree about threading, and an mbox export carries no thread field at all. The headers defined in RFC 5322 are what you have: every message has a `Message-ID`, a reply carries the parent's id in `In-Reply-To`, and `References` holds the ancestry chain.
+
+Treat this as a connected-components problem rather than a tree. Union each message with every id it references, then hash the root of each component into a stable `thread_id`. This is more robust than walking parent pointers, because real archives are full of broken chains: a client that drops `References`, a message whose parent was deleted before the export, or a forward that starts a new chain. Union-find still groups what it can and leaves orphans as single-message threads.
+
+Do not fall back to subject matching except as a last resort. Grouping on a normalized subject merges every "Re: lunch?" in the archive into one conversation. If you are pulling from an API instead of an mbox, use the provider's own id: Gmail's API returns a `threadId` on every message, and Microsoft Graph returns `conversationId` {/* VERIFY: exact field names on Gmail users.messages and Graph message resources */}. IMAP servers may expose the THREAD extension from RFC 5256, but support is uneven, so header-based threading is the portable path.
+
+## How to strip quoted replies and signatures
+
+This is the single highest-impact step for email relevance. If quoted history stays in the searchable body, the fiftieth message in a thread contains all forty-nine before it, so it matches nearly every query and outranks the message where the phrase was actually written.
+
+Three markers do most of the work:
+
+- Lines beginning with `>` are quoted text. Everything from the first such line to the end of the body is usually history.
+- An attribution line immediately above it, such as `On <date>, <person> wrote:` or `-----Original Message-----`, belongs to the quoted block.
+- A line containing exactly `-- ` (two hyphens and a trailing space) is the conventional signature separator {/* VERIFY: the RFC that standardizes the "-- " signature delimiter */}. Everything after it is a signature.
+
+Keep the stripped parts. Store them in `quoted_text` and `signature` fields that you leave out of [`searchableAttributes`](/capabilities/full_text_search/how_to/configure_searchable_attributes), so they are still returned and displayable but carry zero relevance weight. HTML mail needs the same treatment applied to its DOM, where quoted history is typically wrapped in a `blockquote`. Purpose-built libraries such as Mailgun's `talon` and GitHub's `email-reply-parser` handle far more edge cases than the heuristics above, at the cost of a dependency {/* VERIFY: current maintenance status of both libraries */}.
+
+## How to index attachments alongside the message body
+
+Index an attachment as its own document rather than appending its text to the message. A 200-page PDF pasted into a message body will hit the 65,535-position ceiling and push the actual message text out of relevance, and it makes the whole message the hit when the match is really in the file.
+
+Give each attachment document the same `owner_id` and `thread_id` as its parent message, plus `parent_message_id` and the filename. Because the attachment shares `thread_id`, a `distinct` search still returns one hit per conversation, and your UI can show either the message or the file depending on which document won. Always index the filename itself, even when you cannot extract the contents, since people search for `q3-forecast.xlsx` far more often than for a phrase inside it. Text extraction is a separate pipeline, covered in [how to search PDFs](/guides/search-pdfs) and [how to search Microsoft Word and Office documents](/guides/search-office-documents).
+
+## How to enforce a per-user privacy boundary
+
+Never filter mail by owner in application code. Put `owner_id` in [`filterableAttributes`](/capabilities/filtering_sorting_faceting/how_to/configure_granular_filters) and issue every user a tenant token whose search rule is `owner_id = "..."`. The filter is baked into a signed JWT, so the client cannot remove or widen it, and it applies to facets and hit counts as well as hits. Sign tokens on your server only, because signing requires an API key.
+
+For shared mailboxes and delegated access, use an array field instead: store `readers` as a list of principal ids and filter with `readers IN [...]`, which matches when any array element matches, per the [filter expression syntax](/capabilities/filtering_sorting_faceting/advanced/filter_expression_syntax#in). Keep token lifetimes short, since a tenant token cannot be revoked before it expires.
+
+## A complete mbox to Meilisearch pipeline
+
+```python
+# pip install meilisearch
+# export MEILISEARCH_URL="https://ms-xxxxxxxx.meilisearch.io"
+# export MEILISEARCH_KEY="your-admin-key"
+# export MEILISEARCH_SEARCH_KEY="your-default-search-key"
+# export MEILISEARCH_KEY_UID="uid-of-that-search-key"
+# python index_mailbox.py alice@example.com ~/Takeout/Mail/All-mail.mbox
+
+import email.policy, hashlib, mailbox, os, re, sys
+from datetime import datetime, timedelta, timezone
+from email.utils import getaddresses, parsedate_to_datetime
+import meilisearch
+
+OWNER, MBOX_PATH, INDEX = sys.argv[1], sys.argv[2], "mail"
+
+QUOTE = re.compile(r"^\s*>")
+ATTRIB = re.compile(r"^\s*(On .{0,200}\bwrote:|-{2,}\s*(Original|Forwarded) Message)", re.I)
+SIG = re.compile(r"^-- $")
+
+def sid(value):                      # primary keys allow only a-z A-Z 0-9 - _
+    return hashlib.sha1(value.encode("utf-8", "replace")).hexdigest()
+
+def split_quoted(text):
+    lines = text.splitlines()
+    for i, line in enumerate(lines):
+        if QUOTE.match(line) or ATTRIB.match(line):
+            return "\n".join(lines[:i]).strip(), "\n".join(lines[i:]).strip()
+    return text.strip(), ""
+
+def split_signature(text):
+    lines = text.splitlines()
+    for i, line in enumerate(lines):
+        if SIG.match(line):
+            return "\n".join(lines[:i]).strip(), "\n".join(lines[i + 1:]).strip()
+    return text, ""
+
+def plain_body(msg):
+    part = msg.get_body(preferencelist=("plain",))
+    return part.get_content() if part is not None else ""
+
+def addresses(msg, header):
+    return [addr.lower() for _, addr in getaddresses(msg.get_all(header, []))]
+
+def ids(raw):                        # "<a@x> <b@y>" -> ["<a@x>", "<b@y>"]
+    return re.findall(r"<[^<>]+>", raw or "")
+
+parent = {}
+def find(x):
+    parent.setdefault(x, x)
+    while parent[x] != x:
+        parent[x] = parent[parent[x]]
+        x = parent[x]
+    return x
+
+def union(a, b):
+    ra, rb = find(a), find(b)
+    if ra != rb:
+        parent[rb] = ra
+
+box = mailbox.mbox(
+    MBOX_PATH,
+    factory=lambda f: email.message_from_binary_file(f, policy=email.policy.default),
+)
+
+# Pass 1: link every message to everything it references.
+keys = []
+for key, msg in box.items():
+    mid = (msg.get("Message-ID") or f"<generated-{key}@local>").strip()
+    keys.append((key, mid))
+    for ref in ids(msg.get("References")) + ids(msg.get("In-Reply-To")):
+        union(mid, ref.strip())
+
+# Pass 2: build one document per message, plus one per attachment.
+docs = []
+for key, mid in keys:
+    msg = box[key]
+    reply, quoted = split_quoted(plain_body(msg))
+    reply, signature = split_signature(reply)
+    try:
+        sent_at = int(parsedate_to_datetime(msg["Date"]).timestamp())
+    except (TypeError, ValueError, KeyError):
+        sent_at = 0
+    message_id, thread_id = sid(OWNER + mid), sid(OWNER + find(mid))
+    names = [p.get_filename() for p in msg.iter_attachments() if p.get_filename()]
+
+    docs.append({
+        "doc_id": message_id, "kind": "message",
+        "owner_id": OWNER, "thread_id": thread_id,
+        "subject": (msg.get("Subject") or "").strip(),
+        "body": reply, "quoted_text": quoted, "signature": signature,
+        "from_email": (addresses(msg, "From") or [""])[0],
+        "to_emails": addresses(msg, "To") + addresses(msg, "Cc"),
+        "attachment_names": names, "has_attachments": bool(names),
+        "sent_at": sent_at,
+    })
+    for name in names:
+        docs.append({
+            "doc_id": sid(message_id + name), "kind": "attachment",
+            "owner_id": OWNER, "thread_id": thread_id,
+            "parent_message_id": message_id, "subject": name,
+            "body": "",                      # plug a PDF or Office extractor in here
+            "attachment_names": [name], "has_attachments": True,
+            "sent_at": sent_at,
+        })
+
+client = meilisearch.Client(os.environ["MEILISEARCH_URL"], os.environ["MEILISEARCH_KEY"])
+index = client.index(INDEX)
+index.update_settings({
+    # order matters: earlier attributes weigh more. quoted_text and signature are absent
+    # on purpose, so they are stored and returned but never scored.
+    "searchableAttributes": ["subject", "body", "attachment_names", "from_email", "to_emails"],
+    "filterableAttributes": ["owner_id", "thread_id", "from_email", "to_emails",
+                             "has_attachments", "kind", "sent_at"],
+    "sortableAttributes": ["sent_at"],
+})
+
+for i in range(0, len(docs), 1000):
+    task = index.add_documents(docs[i:i + 1000], primary_key="doc_id")
+    client.wait_for_task(task.task_uid)
+
+# One token per signed-in user. The filter cannot be edited by the client.
+token = client.generate_tenant_token(
+    api_key_uid=os.environ["MEILISEARCH_KEY_UID"],
+    search_rules={INDEX: {"filter": f'owner_id = "{OWNER}"'}},
+    api_key=os.environ["MEILISEARCH_SEARCH_KEY"],
+    expires_at=datetime.now(timezone.utc) + timedelta(minutes=30),
+)
+
+scoped = meilisearch.Client(os.environ["MEILISEARCH_URL"], token)
+print(scoped.index(INDEX).search(
+    "quarterly forecast",
+    {"distinct": "thread_id", "sort": ["sent_at:desc"], "attributesToCrop": ["body"],
+     "cropLength": 30, "attributesToHighlight": ["subject", "body"]},
+)["hits"][:3])
+```
+
+## Limits and constraints
+
+- **65,535 positions per attribute.** Words past that point in a single field are dropped with no error, which is the real reason to split threads into messages and attachments into their own documents. See [known limitations](/resources/help/known_limitations#maximum-number-of-words-per-attribute).
+- **Primary keys accept only integers or strings of `a-z`, `A-Z`, `0-9`, `-`, and `_`, up to 511 bytes.** A `Message-ID` contains `<`, `>`, and `@`, so it must be hashed before use. See [design primary keys](/capabilities/indexing/how_to/design_primary_keys).
+- **Individual filterable values are capped at 468 bytes.** Long distribution-list addresses are fine, but do not push raw header blobs into a filterable field.
+- **`distinct` requires the attribute to be in `filterableAttributes`**, and it returns at most one document per value, so hit counts after collapsing are thread counts, not message counts.
+- **Tenant tokens are not revocable before expiry.** Access removed in your identity provider stays valid until the token expires, so keep lifetimes in the minutes. See the [tenant token payload reference](/capabilities/security/advanced/tenant_token_payload#expiry-date).
+- **Default payload limit is 100MB.** Batch documents rather than sending a whole mailbox in one request, per [import large datasets](/capabilities/indexing/how_to/import_large_datasets).
+- **`Message-ID` is not guaranteed unique or present.** Drafts, some mailing list software, and truncated exports produce duplicates or omissions. Namespacing the hash with `owner_id`, as above, keeps one user's archive from colliding with another's.
+- **Quoted-text detection is heuristic, not exact.** Top-posted replies without `>` markers, mobile clients with unusual attribution lines, and forwarded chains will occasionally be misclassified. Measure on a sample of your own archive before trusting the split.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Multitenancy and tenant tokens" href="/capabilities/security/getting_started">
+    Generate per-user tokens whose filters Meilisearch enforces on every query.
+  </Card>
+  <Card title="Configure searchable attributes" href="/capabilities/full_text_search/how_to/configure_searchable_attributes">
+    Control which fields are scored and how much weight each one carries.
+  </Card>
+  <Card title="Configure distinct attribute" href="/capabilities/full_text_search/how_to/configure_distinct_attribute">
+    Collapse a thread, or a message and its attachments, into a single hit.
+  </Card>
+  <Card title="How to chunk documents for search" href="/guides/how-to-chunk-documents">
+    What to do when a single message or attachment is still too long to index as one record.
+  </Card>
+</CardGroup>

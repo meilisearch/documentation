@@ -1,0 +1,212 @@
+---
+title: How to chunk documents for agent retrieval
+description: Your RAG agent retrieves chunks that read as fragments, burns its context window on near-duplicates, and cannot cite where an answer came from, and you need a chunking scheme built for a model rather than for a human reading a result page.
+keywords: chunking for rag agents, chunk size for llm context window, token budget retrieval, parent document retrieval meilisearch, self contained chunks rag, agent knowledge base chunking, mcp server document splitting, how many chunks to send to an llm, context stuffing retrieval, chunk metadata for tool calling, neighbor expansion retrieval, deduplicate chunks agent context
+boost: 2
+---
+
+Chunk smaller than you would for a human result page, then make each chunk survive on its own. An agent never sees the surrounding page, so a chunk that starts with "this value defaults to 30 seconds" is unusable no matter how well it ranks. Aim for one self-contained idea per chunk, roughly 200 to 400 words, prefixed with its document title and heading path, and carrying a stable `doc_id`, an ordinal `position`, and a deep link. At query time, bound what the agent receives: set `limit` low, use `distinct` on `doc_id` so one page cannot fill the window, and use `attributesToRetrieve` to return only fields the model will act on. Expand to neighboring chunks only when the top hit is too narrow to answer.
+
+## Why agent retrieval is not human search
+
+A human reading a result list does the repair work automatically. They see a truncated snippet, recognize the page title above it, click through, and read the paragraph in place. None of that happens for an agent. Retrieved text is pasted into a prompt, stripped of layout, and the model has exactly what the chunk contains and nothing else.
+
+Three constraints follow from that, and they push in a different direction than human search does.
+
+- **The chunk is the answer surface, not a preview.** Ranking a document first is worthless if the retrieved text does not contain the fact. Optimizing for click-through gives way to optimizing for answerability.
+- **Every retrieved token is spent twice.** It costs money per request and it crowds out the conversation history. Ten mediocre chunks are strictly worse than three good ones, because the irrelevant seven also increase the chance of the model answering from the wrong passage.
+- **Attribution has to be mechanical.** A human can tell which page they are reading. A model can only cite what you handed it as a field, so a URL, page number, or timestamp must travel with the text.
+
+The foundations still apply: split on structure before size, keep the heading path, and never cut mid-sentence. See [how to chunk documents for search](/guides/how-to-chunk-documents) for the underlying strategies and [choosing chunk size](/guides/choosing-chunk-size) for the size trade-off itself.
+
+## How to size chunks against a token budget
+
+Work backwards from the prompt, not from the document. Decide the context allowance for retrieved material first, for example 2,000 tokens, then divide by how many independent sources the answer needs.
+
+English text runs roughly four characters per token, so 2,000 tokens is about 8,000 characters. Five chunks at 1,400 characters each fit that with room for the system prompt and the question. That arithmetic, not a rule of thumb, is what sets the chunk ceiling.
+
+Two adjustments matter in practice. First, agents ask questions, not keywords, and Meilisearch takes [a maximum of 10 terms per search query](/resources/help/known_limitations#maximum-number-of-query-words) into account for keyword matching, so a tool that forwards a 30-word user question verbatim is silently dropping most of it. Have the agent pass a condensed query, or lean on the semantic half with [hybrid search](/capabilities/hybrid_search/getting_started). Second, if the index uses an embedder, the text that gets vectorized is the rendered [`documentTemplate`](/capabilities/hybrid_search/advanced/document_template_best_practices), truncated at `documentTemplateMaxBytes`, which defaults to 400 bytes. A 1,400-character chunk is embedded from its first paragraph unless that cap is raised on purpose.
+
+## How to make a chunk stand on its own
+
+Read each chunk with nothing else on screen. If it needs a heading to make sense, put the heading inside it.
+
+- **Prefix the heading path into the searchable text**, for example `Billing > Refunds > Partial refunds`. This costs a few dozen bytes, improves keyword ranking, and tells the model what the passage is about.
+- **Resolve pronouns and bare references at the boundary.** A section that opens with "It supports three modes" should be rewritten or prefixed so the subject appears in the chunk.
+- **Keep tables, code blocks, and numbered clauses intact**, even when that pushes a chunk past the budget. A half table is worse than a long chunk.
+- **Do not rely on overlap to fix this.** Overlap duplicates text and produces near-identical competitors in the result list. Repeating context is cheaper than repeating content.
+
+## When to expand to the parent document
+
+Small chunks retrieve precisely and answer incompletely. The parent-document pattern resolves that: search the small chunks, then fetch surrounding context by `doc_id` and `position` before handing anything to the model. Because chunks are stored as ordinary documents, expansion is a filtered document fetch, not a second search.
+
+Expand when the winning chunk is short, when several top hits share a `doc_id`, or when the question asks for a procedure rather than a fact. Do not expand by default: it is the fastest way to refill the window with the text the chunking was meant to exclude. The same neighbor fetch is what lets a citation point at a section rather than a fragment, covered in [RAG with citations](/guides/rag-with-citations).
+
+## Which metadata an agent can actually act on
+
+A field is only worth storing if the agent or the user does something with it.
+
+| Field | What it enables |
+|---|---|
+| `doc_id` | Deduplication with `distinct`, neighbor expansion, deleting every chunk of a source in one filtered operation |
+| `position` | Fetching the chunk before and after a hit |
+| `heading_path` | Self-contained text, and a human-readable location in a citation |
+| `url` | A link the user can open to verify the claim |
+| `updated_at` | Letting the agent caveat stale answers instead of asserting them |
+| Permission or tenant fields | Filtering per user, enforced with [tenant tokens](/capabilities/security/how_to/generate_token_from_scratch) rather than trusted to the model |
+
+Anything filterable should also be exposed as a tool parameter, so the model narrows with a filter instead of stuffing constraints into the query string.
+
+## A complete chunk, index, and retrieve pipeline
+
+This script splits a Markdown file on headings, caps oversized sections at a paragraph boundary, indexes the chunks, and runs a budgeted retrieval with optional neighbor expansion. It works against a Meilisearch Cloud project or any self-hosted instance.
+
+```javascript
+// npm install meilisearch
+//
+// export MEILISEARCH_URL="https://ms-example.meilisearch.io"
+// export MEILISEARCH_KEY="$MEILISEARCH_ADMIN_KEY"
+//
+// node agent-chunks.mjs handbook.md "how long does a partial refund take"
+
+import { readFile } from 'node:fs/promises'
+import { basename } from 'node:path'
+import { MeiliSearch } from 'meilisearch'
+
+const MAX_CHARS = 1400            // about 350 tokens per chunk
+const CONTEXT_BUDGET = 8000       // about 2000 tokens of retrieved context
+const SHORT_CHUNK = 500           // below this, pull in the neighbors
+
+const slugify = (value) =>
+  value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
+
+// Structural pass: one section per heading, tracking the full heading path.
+function sectionize(markdown) {
+  const sections = []
+  const headings = {}
+  let current = { path: [], body: [] }
+  sections.push(current)
+
+  for (const line of markdown.split('\n')) {
+    const match = /^(#{1,4})\s+(.+)$/.exec(line)
+    if (!match) {
+      current.body.push(line)
+      continue
+    }
+    const level = match[1].length
+    headings[level] = match[2].trim()
+    for (const key of Object.keys(headings)) {
+      if (Number(key) > level) delete headings[key]
+    }
+    current = { path: Object.keys(headings).sort().map((k) => headings[k]), body: [] }
+    sections.push(current)
+  }
+  return sections.filter((section) => section.body.join('').trim().length > 0)
+}
+
+// Size pass: split only oversized sections, always on a paragraph break.
+function capSize(section) {
+  const paragraphs = section.body.join('\n').split(/\n{2,}/).map((p) => p.trim()).filter(Boolean)
+  const pieces = []
+  let buffer = []
+  let size = 0
+
+  for (const paragraph of paragraphs) {
+    if (size > 0 && size + paragraph.length > MAX_CHARS) {
+      pieces.push({ path: section.path, text: buffer.join('\n\n') })
+      buffer = []
+      size = 0
+    }
+    buffer.push(paragraph)
+    size += paragraph.length
+  }
+  if (buffer.length > 0) pieces.push({ path: section.path, text: buffer.join('\n\n') })
+  return pieces
+}
+
+const [file, question] = process.argv.slice(2)
+const source = await readFile(file, 'utf8')
+const docId = slugify(basename(file).replace(/\.[^.]+$/, ''))
+
+const documents = sectionize(source)
+  .flatMap(capSize)
+  .map((chunk, position) => {
+    const section = chunk.path.at(-1) ?? null
+    return {
+      id: `${docId}--${position}`,
+      doc_id: docId,
+      position,
+      heading_path: chunk.path.join(' > '),
+      url: section ? `/docs/${docId}#${slugify(section)}` : `/docs/${docId}`,
+      updated_at: new Date().toISOString().slice(0, 10),
+      // The heading path lives inside the text so the chunk reads alone.
+      content: [chunk.path.join(' > '), chunk.text].filter(Boolean).join('\n\n'),
+    }
+  })
+
+const client = new MeiliSearch({
+  host: process.env.MEILISEARCH_URL,
+  apiKey: process.env.MEILISEARCH_KEY,
+})
+const index = client.index('agent_kb')
+
+// Settings before documents: changing them later reindexes everything.
+await client.waitForTask(
+  (await index.updateSettings({
+    searchableAttributes: ['heading_path', 'content'],
+    filterableAttributes: ['doc_id', 'position', 'updated_at'],
+    displayedAttributes: ['id', 'doc_id', 'position', 'heading_path', 'url', 'updated_at', 'content'],
+  })).taskUid,
+)
+await client.waitForTask((await index.addDocuments(documents)).taskUid)
+
+// Retrieval: one hit per source, weak matches dropped, payload trimmed.
+const { hits } = await index.search(question, {
+  limit: 5,
+  distinct: 'doc_id',
+  rankingScoreThreshold: 0.4,
+  showRankingScore: true,
+  attributesToRetrieve: ['id', 'doc_id', 'position', 'heading_path', 'url', 'updated_at', 'content'],
+})
+
+async function expand(hit) {
+  if (hit.content.length >= SHORT_CHUNK) return hit.content
+  const { results } = await index.getDocuments({
+    filter: `doc_id = "${hit.doc_id}" AND position >= ${hit.position - 1} AND position <= ${hit.position + 1}`,
+    fields: ['position', 'content'],
+    limit: 3,
+  })
+  return results.sort((a, b) => a.position - b.position).map((r) => r.content).join('\n\n')
+}
+
+const context = []
+let used = 0
+for (const hit of hits) {
+  const text = await expand(hit)
+  if (used + text.length > CONTEXT_BUDGET) break
+  used += text.length
+  context.push({ source: hit.url, section: hit.heading_path, updated: hit.updated_at, text })
+}
+
+console.log(`${context.length} chunks, ~${Math.round(used / 4)} tokens`)
+console.log(context.map((c) => `[${c.section}](${c.source})\n${c.text}`).join('\n\n---\n\n'))
+```
+
+`distinct` at search time requires the attribute to be in `filterableAttributes`, and it takes precedence over the `distinctAttribute` index setting. See [configure distinct attribute](/capabilities/full_text_search/how_to/configure_distinct_attribute).
+
+## Limits and constraints worth knowing
+
+- **Query terms**: Meilisearch considers at most [10 terms per search query](/resources/help/known_limitations#maximum-number-of-query-words). Terms after the tenth are ignored, which matters when an agent forwards a full sentence.
+- **Words per attribute**: a maximum of [65,535 positions per attribute](/resources/help/known_limitations#maximum-number-of-words-per-attribute) are indexed. Anything past that is silently unsearchable, which is one reason not to index a whole book in one field.
+- **Embedded text**: `documentTemplateMaxBytes` defaults to **400 bytes**, measured in bytes rather than characters, so non-Latin scripts reach it sooner. Raising it re-embeds every affected document.
+- **Chunk ids**: primary key values are limited to [511 bytes](/resources/help/known_limitations#length-of-primary-key-values), and individual filterable values to [468 bytes](/resources/help/known_limitations#length-of-individual-filterableattributes-values). Build ids from a source id plus position, never from heading text.
+- **Result ceiling**: a search returns up to [1,000 documents](/resources/help/known_limitations#maximum-number-of-results-per-search) by default, adjustable through `maxTotalHits`. Agent retrieval should sit far below that regardless.
+- **Snippets**: `cropLength` defaults to 10 words, far too short for an agent. Either return the full `content` field or set an explicit length, as in `attributesToCrop: ["content:200"]`. See [search with snippets](/capabilities/full_text_search/getting_started/search_with_snippets).
+- **Not a documented limit**: there is no ideal chunk size published anywhere, including here. Model context windows differ by an order of magnitude between providers {/* VERIFY: current context window sizes across major LLM providers */}, and popular framework splitters default to fixed character counts with no structural awareness {/* VERIFY: default chunk sizes in common retrieval framework text splitters */}. Measure against your own question set.
+
+## Next steps
+
+- [How to chunk documents for search](/guides/how-to-chunk-documents) for the underlying splitting strategies
+- [Choosing chunk size for semantic search](/guides/choosing-chunk-size) for the size and overlap trade-off
+- [Agentic search overview](/capabilities/agentic_search/overview) for the conversational layer on top of retrieval
+- [Chats API](/capabilities/agentic_search/advanced/chats_api) for per-index `description`, `documentTemplate`, and `searchParameters`

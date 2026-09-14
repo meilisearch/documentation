@@ -1,0 +1,166 @@
+---
+title: How to evaluate RAG retrieval quality
+description: Your RAG answers are wrong and you cannot tell whether the search step failed to find the right passage or the model ignored a passage it was given.
+keywords: evaluate rag retrieval, rag evaluation metrics, recall at k rag, retrieval vs generation failure, context recall, is it the retriever or the llm, rag debugging, chunk level evaluation, gold chunk labeling, rag test set, measure retrieval quality, rag answer wrong, llm ignored context, retrieval accuracy benchmark, rag regression testing
+boost: 2
+---
+
+Evaluate retrieval before you touch a single prompt. Almost every "the RAG answer was wrong" report resolves to one question: was the chunk containing the answer among the top `k` results the model actually received? If it was not, the failure is in retrieval, and no amount of prompt engineering will fix it. If it was, and the answer is still wrong, the failure is in generation. You measure this with a set of question-to-chunk pairs and a recall@k script that calls no LLM at all, so it runs in a second and costs nothing. This page shows how to build that set, run it, and read the result.
+
+## Why retrieval and generation must be measured separately
+
+Teams debug RAG end to end, see a bad answer, and start rewriting the system prompt. That is the single most common and most expensive mistake in RAG work, because the two layers fail for unrelated reasons and the symptom looks identical from the outside.
+
+Split every evaluation question into two independent booleans: was the gold chunk retrieved, and was the answer correct. Four outcomes, four different fixes.
+
+| Gold chunk retrieved | Answer correct | What actually happened | Where to fix it |
+| --- | --- | --- | --- |
+| No | No | Retrieval failure | Chunking, searchable attributes, embedder, `semanticRatio`, filters |
+| No | Yes | The model answered from its training data | Generation. This is the dangerous cell: correct today, confidently wrong the moment your data diverges |
+| Yes | No | Generation failure, or the chunk was truncated before the model saw it | Prompt, context assembly, template size |
+| Yes | Yes | Working | Nothing |
+
+The second row is why you cannot evaluate RAG by reading answers. An answer that looks right can be entirely ungrounded, and only the retrieval measurement exposes it.
+
+## Build an evaluation set of questions and gold chunks
+
+The unit of labeling is the chunk, not the document. A document can be large enough that "the document was retrieved" tells you nothing about whether the model saw the sentence it needed. This only works if your chunks carry stable identifiers that survive re-indexing, which is the same requirement that makes citations possible. See [how to chunk documents](/guides/how-to-chunk-documents) and [how to build a RAG pipeline that cites its sources](/guides/rag-with-citations).
+
+Aim for 30 to 100 questions, drawn from real user questions rather than invented ones, and deliberately cover four shapes:
+
+- **Single-chunk questions.** Exactly one chunk answers them. These measure raw retrieval.
+- **Multi-chunk questions.** The answer requires two or more chunks. Recall on these is usually much worse, and it is where a too-small `k` shows up.
+- **Paraphrases.** The same question in wording that shares no vocabulary with the chunk. These are what semantic retrieval is for, and they fail loudly when your embedder or `semanticRatio` is wrong.
+- **Unanswerable questions.** Nothing in the corpus answers them. Label the gold set as empty. A retriever that confidently returns something for these feeds the model a plausible wrong passage, and the model will usually use it.
+
+Store the set as JSON in version control next to your index settings. It is the artifact that makes a retrieval change reviewable by someone else.
+
+## Measure recall@k, at the k you actually ship
+
+Report recall at the number of chunks you genuinely put in the prompt. Recall@50 is a comforting number and a meaningless one if your context assembly stops at 5.
+
+Then measure a second, deeper `k` (roughly four times the first) to split the retrieval failures into two very different problems. If the gold chunk appears at depth 20 but not at depth 5, retrieval found it and ranking buried it. If it does not appear at depth 20 either, it was never a candidate, and the cause is upstream in chunking, indexing, or the embedder.
+
+This script sends every question in one [multi-search](/capabilities/multi_search/overview) request and prints both numbers plus the per-question misses:
+
+```javascript
+// npm install meilisearch
+import { Meilisearch } from 'meilisearch'
+import { readFileSync } from 'node:fs'
+
+const client = new Meilisearch({
+  host: process.env.MEILISEARCH_URL, // for example https://ms-xxxx.nyc.meilisearch.io
+  apiKey: process.env.MEILISEARCH_KEY, // a search key is enough
+})
+
+const INDEX = 'docs_chunks'
+const CHUNK_ID = 'chunk_id'  // stable primary key of each chunk
+const EMBEDDER = 'docs-openai' // name from your index embedders setting
+const K = 5        // chunks you actually put in the prompt
+const DEEP_K = 20  // 4x K, to separate "never retrieved" from "ranked too low"
+const NOISE_FLOOR = 0.5 // calibrate on your own data, see limits below
+
+// questions.json: [{ "question": "...", "goldChunks": ["guide-rag#c3"] }, ...]
+// An empty goldChunks array means the corpus cannot answer this question.
+const questions = JSON.parse(readFileSync('./questions.json', 'utf8'))
+
+const { results } = await client.multiSearch({
+  queries: questions.map(({ question }) => ({
+    indexUid: INDEX,
+    q: question,
+    limit: DEEP_K,
+    attributesToRetrieve: [CHUNK_ID],
+    showRankingScore: true,
+    hybrid: { embedder: EMBEDDER, semanticRatio: 0.7 },
+  })),
+})
+
+let recallAtK = 0
+let recallAtDeepK = 0
+let reciprocalRank = 0
+let answerable = 0
+let falsePositives = 0
+const misses = []
+
+results.forEach((result, i) => {
+  const { question, goldChunks } = questions[i]
+  const ranked = result.hits.map((hit) => String(hit[CHUNK_ID]))
+
+  if (goldChunks.length === 0) {
+    // Nothing should score high enough to be handed to the model.
+    const topScore = result.hits[0]?._rankingScore ?? 0
+    if (topScore >= NOISE_FLOOR) falsePositives += 1
+    return
+  }
+
+  answerable += 1
+  const topK = ranked.slice(0, K)
+  const atK = goldChunks.filter((id) => topK.includes(id)).length / goldChunks.length
+  const atDeep = goldChunks.filter((id) => ranked.includes(id)).length / goldChunks.length
+  const goldRank = ranked.findIndex((id) => goldChunks.includes(id)) + 1
+
+  recallAtK += atK
+  recallAtDeepK += atDeep
+  reciprocalRank += goldRank > 0 ? 1 / goldRank : 0
+
+  if (atK < 1) {
+    misses.push({
+      question,
+      [`recall@${K}`]: Number(atK.toFixed(2)),
+      [`recall@${DEEP_K}`]: Number(atDeep.toFixed(2)),
+      goldRank: goldRank || null,
+      verdict:
+        atDeep === 0
+          ? 'never retrieved: chunking, indexing, or embedder'
+          : 'retrieved but ranked too low: ranking or semanticRatio',
+    })
+  }
+})
+
+console.log({
+  [`recall@${K}`]: Number((recallAtK / answerable).toFixed(3)),
+  [`recall@${DEEP_K}`]: Number((recallAtDeepK / answerable).toFixed(3)),
+  mrr: Number((reciprocalRank / answerable).toFixed(3)),
+  falsePositivesOnUnanswerable: falsePositives,
+})
+console.table(misses) // read this before the summary line
+```
+
+Run it against your current index, record the numbers, then run it again after any change to chunking, embedder, or search parameters. Averages hide regressions, so read the miss table first.
+
+## Which layer to fix, given the numbers
+
+- **Low recall at both `k` values.** The chunk is not a candidate. Check that the chunk text is in a searchable attribute, that the embedder finished generating embeddings, and that your chunks are not so large that the answer is diluted in unrelated text. See [choose an embedder](/capabilities/hybrid_search/how_to/choose_an_embedder) and [how to chunk documents for agent retrieval](/guides/chunk-for-agent-retrieval).
+- **High deep recall, low recall at `k`.** Ranking, not retrieval. Adjust `semanticRatio` in increments of `0.1` as described in [custom hybrid ranking](/capabilities/hybrid_search/advanced/custom_hybrid_ranking), or inspect why a weaker chunk outranked the gold one using [ranking score details](/capabilities/full_text_search/relevancy/ranking_score).
+- **Paraphrase questions failing while exact-wording questions pass.** The semantic side is underweighted or the embedder is a poor fit for your domain. See [semantic versus hybrid search](/capabilities/hybrid_search/advanced/semantic_vs_hybrid) and [why semantic search returns irrelevant results](/guides/semantic-search-irrelevant-results).
+- **Recall is high and answers are still wrong.** Now, and only now, it is a generation problem. Check that the retrieved text actually reaches the model intact, then work on the prompt with [reduce hallucination](/capabilities/agentic_search/advanced/reduce_hallucination).
+
+For the generation layer, the equivalent check is attribution: for each claim in the answer, does a retrieved chunk support it? Rendering the retrieved sources in your interface, as in [display source documents](/capabilities/agentic_search/how_to/display_source_documents), makes this checkable by a human in seconds. Automated frameworks such as Ragas and DeepEval publish retrieval-specific metrics alongside answer-level ones, which cover roughly the same split described here {/* VERIFY: confirm the current metric names these frameworks use for context recall and context precision */}.
+
+## Limits and constraints
+
+- **Meilisearch has no built-in RAG evaluation endpoint.** The offline loop lives entirely in your own harness. What Meilisearch provides is the search request and `_rankingScore`.
+- **`_rankingScore` is normalized between `0.0` and `1.0` and is computed per document, independent of the other results.** It is not comparable across queries. A `NOISE_FLOOR` of `0.5` is a starting point, not a constant: calibrate it against your own answerable and unanswerable questions. The `sort` ranking rule contributes nothing to the score.
+- **`rankingScoreThreshold` silently changes your recall measurement.** Excluded hits do not count toward `estimatedTotalHits`, `totalHits`, or the facet distribution, so a threshold set in [search parameters](/reference/api/search/search-with-post) will remove gold chunks before your script ever sees them.
+- **Search ranks at most 1,000 documents per query by default**, controlled by the `maxTotalHits` pagination setting. Measuring recall at depths beyond that requires raising it, and values above `20000` may push queries into seconds. See [performance tuning](/capabilities/full_text_search/advanced/performance_tuning) and [paginate search results](/capabilities/full_text_search/how_to/paginate_search_results).
+- **If you use the built-in chat completions API, the model sees a rendered template, not the raw chunk.** The index-level `documentTemplateMaxBytes` defaults to `400` bytes and truncates anything longer, which produces exactly the "retrieved but answered wrong" cell above. See [chats API](/capabilities/agentic_search/advanced/chats_api) and [document template best practices](/capabilities/hybrid_search/advanced/document_template_best_practices).
+- **`semanticRatio` defaults to `0.5`** when you pass `hybrid` without it, so an unspecified ratio is a real configuration choice, not a neutral one.
+- **Settings changes trigger reindexing.** Wait for the task to finish before evaluating, or you are measuring a half-built index.
+- **Purely vector-based stores make chunk-level recall harder to reproduce**, because a nearest-neighbor index tuned for approximate search can return slightly different neighbors between runs {/* VERIFY: confirm which approximate nearest neighbor implementations in Pinecone and Qdrant produce run-to-run variance under identical parameters */}.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Measure and improve search relevance" href="/guides/measure-search-relevance">
+    The broader methodology this page specializes for RAG
+  </Card>
+  <Card title="Build a RAG pipeline that cites its sources" href="/guides/rag-with-citations">
+    Carry stable chunk ids through to the answer so labeling is possible
+  </Card>
+  <Card title="Reduce hallucination" href="/capabilities/agentic_search/advanced/reduce_hallucination">
+    What to do once you have confirmed retrieval is not the problem
+  </Card>
+  <Card title="Custom hybrid ranking" href="/capabilities/hybrid_search/advanced/custom_hybrid_ranking">
+    Tune semanticRatio when deep recall is high but recall at k is low
+  </Card>
+</CardGroup>

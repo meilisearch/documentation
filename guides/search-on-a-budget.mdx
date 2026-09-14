@@ -1,0 +1,171 @@
+---
+title: "Search on a tight budget: what $30 a month buys"
+description: You have roughly $30 a month for search and need to know how many documents, how much traffic, and which features that budget actually covers.
+keywords: cheapest hosted search engine, search engine under 30 dollars a month, how much does meilisearch cloud cost, affordable alternative to elasticsearch cloud, search api pricing for a side project, algolia too expensive for a small site, smallest search instance size, self host search to save money, startup search budget, hosted search free trial
+boost: 2
+---
+
+At around $30 a month you can run one small production search project holding a few hundred thousand lean documents, serving tens of thousands of searches, with keyword search, filtering, faceting, and typo tolerance fully available. What that budget does not cover is vector embeddings at scale, a dedicated CPU, a second instance for redundancy, a separate always-on staging project, or paid add-ons. On [Meilisearch Cloud](/capabilities/platform/billing/pricing_model), the two billing models fail in different ways at this level: a resource-based project has a fixed floor you cannot go under, and a usage-based project has no ceiling at all. Pick based on which risk you can absorb.
+
+## Where the money goes on a resource-based project
+
+A resource-based project bills three separate things, and only one of them is the machine:
+
+| Component | Documented rate |
+|---|---|
+| Compute (RAM and vCPU) | Hourly rate per tier, shown in the Cloud UI |
+| Disk | $0.165 per GiB, with a **32 GB minimum** |
+| Bandwidth | $0.15 per GB |
+
+The 32 GB disk minimum is the part that surprises people. At $0.165 per GiB that is about **$5.28 a month before a single document is indexed**, whether the index is 200 MB or 30 GB. That leaves roughly $24.70 for compute, which is about $0.034 an hour across the 730 hours in a month. The docs do not publish per-tier hourly rates, so read the number for your region in the Cloud UI: [rates vary by region](/capabilities/platform/infrastructure/overview#regions), and [billing is hourly and prorated](/capabilities/platform/billing/pricing_model#shared-billing-rules).
+
+Bandwidth is usually the smallest line: 50,000 searches returning 20 KB each is about 1 GB, or $0.15. It stops being small when responses carry whole documents instead of the fields the interface renders.
+
+## What the usage-based plan includes, and where it breaks
+
+The self-serve usage-based plan is **Build**, and its documented quotas are precise:
+
+- **50,000 searches a month included**, then **$0.40 per 1,000 extra searches**
+- **100,000 documents included**, then **$0.30 per 1,000 extra documents**
+- Shared resources, scaled automatically, with no tier to choose
+
+The overages move fast at this budget. Going from 50,000 to 100,000 searches a month adds **$20**; going to 200,000 adds **$60**, double the entire budget on search volume alone. Growing the corpus from 100,000 to 200,000 documents adds **$30**. Usage-based is the right call when traffic is genuinely low and unpredictable, and the wrong call the moment a launch, a crawler, or a search-as-you-type interface multiplies request counts. The base plan fee is not published in the docs, so confirm it in the Cloud UI alongside the [accrued cost for the current cycle](/capabilities/platform/billing/overview#the-billing-tab).
+
+## How many documents actually fit
+
+Meilisearch Cloud documents a sizing formula and the tier capacities that follow from it:
+
+```
+Index size ≈ number of documents × average document size × 5
+```
+
+The x5 factor covers the inverted index, facet data, and prefix structures. Average document size depends on shape, not just length: about 1 KB for small records, 3 KB for an ecommerce product with a description and around ten filterable attributes, 8 KB for articles, and **12 KB once vector embeddings are attached**.
+
+Published capacities for the tiers a small budget can reach:
+
+| Tier | vCPU | RAM | Documented capacity |
+|---|---|---|---|
+| XS | 0.5 | 1 GB | Development and testing |
+| S | 1 | 2 GB | Up to ~80K small documents |
+| M | 2 | 4 GB | Up to ~80K medium or ~160K small documents |
+| L | 2 | 8 GB | Up to ~400K medium documents |
+
+Tiers L and below **share CPU resources**; dedicated cores start at XL. About [5% of a tier's RAM and CPU is reserved](/capabilities/platform/infrastructure/overview#resource-tiers) for Meilisearch and its tooling, so plan for slightly less than the label. One detail with teeth: [scaling up is self-serve, scaling down is not](/capabilities/platform/infrastructure/manage_resources). Reducing a tier requires contacting support, so start small and move up, never the reverse.
+
+## Measure the bill you would actually get
+
+This script reads real numbers from a running instance and projects both billing models against your budget. Set `COMPUTE_HOURLY_RATE` and `BUILD_PLAN_FEE` from the Cloud UI.
+
+```python
+# pip install meilisearch
+#
+# export MEILI_URL="https://ms-example.meilisearch.io"
+# export MEILI_KEY="$MEILISEARCH_ADMIN_KEY"
+
+import os
+import meilisearch
+
+BUDGET = 30.00
+
+# Documented Cloud rates.
+DISK_RATE_PER_GIB = 0.165
+DISK_MINIMUM_GIB = 32
+BANDWIDTH_RATE_PER_GB = 0.15
+INCLUDED_SEARCHES = 50_000
+EXTRA_SEARCH_RATE = 0.40 / 1_000
+INCLUDED_DOCUMENTS = 100_000
+EXTRA_DOCUMENT_RATE = 0.30 / 1_000
+
+# Read these two from the Cloud UI for your region and plan.
+COMPUTE_HOURLY_RATE = 0.020
+BUILD_PLAN_FEE = 0.00
+
+# Your own traffic assumptions.
+MONTHLY_SEARCHES = 120_000
+AVG_RESPONSE_KB = 20
+HOURS_PER_MONTH = 730
+
+client = meilisearch.Client(os.environ["MEILI_URL"], os.environ["MEILI_KEY"])
+stats = client.get_all_stats()
+
+documents = sum(i["numberOfDocuments"] for i in stats["indexes"].values())
+used_bytes = sum(i["usedIndexSize"] for i in stats["indexes"].values())
+gib = 1024 ** 3
+
+# Provision about double the used size: LMDB does not return freed space to the OS.
+disk_gib = max(DISK_MINIMUM_GIB, (used_bytes * 2) / gib)
+bandwidth_gb = (MONTHLY_SEARCHES * AVG_RESPONSE_KB * 1024) / 1_000_000_000
+
+resource_cost = (
+    COMPUTE_HOURLY_RATE * HOURS_PER_MONTH
+    + disk_gib * DISK_RATE_PER_GIB
+    + bandwidth_gb * BANDWIDTH_RATE_PER_GB
+)
+usage_cost = (
+    BUILD_PLAN_FEE
+    + max(0, MONTHLY_SEARCHES - INCLUDED_SEARCHES) * EXTRA_SEARCH_RATE
+    + max(0, documents - INCLUDED_DOCUMENTS) * EXTRA_DOCUMENT_RATE
+)
+
+print(f"documents indexed:      {documents:,}")
+print(f"index size (used):      {used_bytes / gib:,.2f} GiB")
+print(f"billable disk:          {disk_gib:,.1f} GiB  (${disk_gib * DISK_RATE_PER_GIB:,.2f})")
+print(f"bandwidth:              {bandwidth_gb:,.2f} GB  (${bandwidth_gb * BANDWIDTH_RATE_PER_GB:,.2f})")
+print(f"resource-based / month: ${resource_cost:,.2f}")
+print(f"usage-based / month:    ${usage_cost:,.2f}  (excl. base fee if unset)")
+print(f"budget headroom:        ${BUDGET - min(resource_cost, usage_cost):,.2f}")
+```
+
+Run it against a project holding real production data. The document count and `usedIndexSize` come straight from [`GET /stats`](/reference/api/stats/get-stats-of-all-indexes), so the disk line is measured rather than guessed.
+
+## What is genuinely out of reach at $30
+
+- **Hybrid and semantic search at volume.** Embeddings push the average document from roughly 3 KB to 12 KB, a 4x index increase that costs you two tiers, and the embedding provider bills separately. [Binary quantization](/capabilities/hybrid_search/advanced/binary_quantization) cuts vector storage sharply but is documented as most effective above 1M documents and 1400+ dimensions, and it is irreversible. If semantic search is non-negotiable, use a [provider with a free tier or a local model](/capabilities/hybrid_search/how_to/choose_an_embedder) and keep the corpus small.
+- **More than three search rules.** Every project includes 3 free; the add-on raising the limit to 10 costs [$25 a month per project](/capabilities/search_rules/advanced/search_rules_pricing), almost the whole budget on its own.
+- **Redundancy.** Sharding and replication are Enterprise features, so this budget buys a single instance and a single point of failure.
+- **A permanent staging project.** A second always-on project doubles the fixed floor, disk minimum included. Use separate indexes in one project, or create staging only for the hours you need it: charges are prorated hourly and [deleting a project stops billing immediately](/capabilities/platform/billing/overview#what-affects-your-bill).
+
+## Self-host or managed, honestly
+
+Self-hosting looks free because the [Community Edition is open source and ships as a single binary](/resources/self_hosting/overview) with no external dependencies and a 256 MB RAM floor. The server is not free: a small VPS with 2 to 4 GB of RAM and NVMe storage lands in the same price range as an entry managed tier, not dramatically below it. {/* VERIFY: current small-VPS pricing at DigitalOcean, Hetzner, and Vultr for 2-4 GB NVMe instances */}
+
+The real cost is time. Running it yourself adds a reverse proxy for TLS, a systemd unit, a [master key of at least 16 bytes](/resources/self_hosting/security/master_api_keys), [snapshots or dumps plus a restore you have actually tested](/resources/self_hosting/data_backup/overview), version upgrades with their reindex windows, and [capacity planning around indexing memory](/resources/self_hosting/performance/ram_multithreading), which defaults to two thirds of available RAM and is what gets a process killed on an undersized box. One hour of engineering attention a month costs more than the $30 at any realistic loaded rate. Self-hosting wins here in exactly one case: you already operate servers with spare capacity and monitoring, so the marginal cost is close to zero.
+
+## What to cut first when the budget will not move
+
+1. **Trim `searchableAttributes`, `filterableAttributes`, and `sortableAttributes`.** This is the highest-leverage decision available and it shrinks the index directly. Decide before you index: [changing any of them triggers a full reindex](/capabilities/indexing/advanced/indexing_best_practices#settings-that-trigger-a-full-reindex).
+2. **Index a projection, not the whole record.** Send the fields you match and display, plus an identifier, then hydrate the rest from your own database. Smaller documents mean a smaller tier and less bandwidth.
+3. **Debounce the search box.** On a usage-based plan, every keystroke reaching the API is a billed search. Debouncing to 200 milliseconds and requiring two or three characters is the largest single reduction available.
+4. **Drop embeddings until keyword search is measurably insufficient.** Typo tolerance, filtering, and faceting are available at every tier.
+5. **Delete idle projects.** Billing stops immediately.
+
+Note what is not worth cutting: disk usage below 32 GB saves nothing, because the minimum is billed regardless. Shrinking the index helps only by letting you drop a RAM tier.
+
+The default recommendation at this budget is one resource-based project on the smallest tier that holds the index, keyword only, with a debounced front end. Choose usage-based instead only when monthly searches stay comfortably under 50,000 and the corpus is small.
+
+## Limits and constraints
+
+- **Disk minimum is 32 GB**, billed at **$0.165 per GiB**, so about **$5.28 a month** is unavoidable on a resource-based project. Bandwidth is **$0.15 per GB**.
+- **Build plan quotas**: 50,000 searches and 100,000 documents included; **$0.40 per 1,000 extra searches** and **$0.30 per 1,000 extra documents**.
+- **Tiers 2XL and above are not self-serve.** Provisioning them requires contacting sales. Dedicated CPU starts at XL; L and below share CPU.
+- **Scaling down requires contacting support.** Only scaling up is self-serve.
+- **1,000 concurrent search requests** is a [hard engine limit](/resources/help/known_limitations#maximum-number-of-concurrent-search-requests), reached long after the budget is.
+- **Not documented here**: per-tier hourly compute rates, the Build base plan fee, and whether a full reindex re-counts documents on a usage-based plan. Read the rates in the Cloud UI and check accrued cost after your first full reindex rather than assuming. A 14-day free trial is [available on Cloud](/resources/comparisons/alternatives), which is enough time to measure a real bill before committing.
+- **Competitor entry tiers are not directly comparable**, because they meter different things: records and search units rather than provisioned RAM and disk. Compare a projected monthly total for your own document count and traffic, never a headline starting price. {/* VERIFY: current entry-tier pricing and included quotas for Algolia, Elastic Cloud, and Typesense Cloud */}
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Pricing model" icon="receipt" href="/capabilities/platform/billing/pricing_model">
+    Full rates, tier capacities, and the index size formula.
+  </Card>
+  <Card title="Sizing a search deployment" icon="ruler" href="/guides/sizing-search-deployment">
+    Measure a sample and extrapolate before you pick a machine.
+  </Card>
+  <Card title="Indexing best practices" icon="gauge-high" href="/capabilities/indexing/advanced/indexing_best_practices">
+    The settings that decide index size, and therefore cost.
+  </Card>
+  <Card title="Monitor usage" icon="chart-line" href="/capabilities/platform/monitoring/usage_metrics">
+    Bandwidth and API call volume, so overages are never a surprise.
+  </Card>
+</CardGroup>

@@ -1,0 +1,208 @@
+---
+title: How to chunk web pages
+description: Your crawler indexes whole HTML pages, so every result is the same page with the navigation menu matching the query instead of the section the reader actually wanted.
+keywords: split html page into search records, strip nav and footer before indexing, chunk documentation site by heading, deep link search result to anchor, extract main content from html, index single page app content, infinite scroll indexing search, boilerplate removal web scraping search, one result per page not per section, breadcrumb metadata search records
+boost: 2
+---
+
+Chunk a web page by discarding the page chrome first, then splitting what remains on its heading hierarchy: one document per `h2` or `h3` section, each carrying the page URL plus that section's anchor id so a result deep-links straight to it. That is the whole method. The hard parts are deciding what counts as chrome (repeated navigation, cookie banners, and related-article rails) without deleting content that merely looks like chrome (breadcrumbs, code blocks, tables, collapsed tab panels), and getting the rendered HTML at all when the page is built client side. In Meilisearch each section becomes a document, and `distinctAttribute` collapses several matching sections of one page back into a single result.
+
+## Why the page is the wrong unit
+
+A full HTML page fails as a search document in three specific ways.
+
+**It gets silently truncated.** Meilisearch indexes at most [65,535 positions per attribute](/resources/help/known_limitations#maximum-number-of-words-per-attribute), and words past that limit are ignored without an error. Positions are not words: a comma is a hard separator consuming eight positions on its own. A long reference page dumped into one `content` field can cross that line, and what disappears is the tail.
+
+**It ranks on the wrong evidence.** Meilisearch's [ranking rules](/capabilities/full_text_search/relevancy/ranking_rules) reward query terms that appear close together and early in an attribute, so on a concatenated page two words from sections eight screens apart look adjacent. Worse, if the navigation menu survives into the indexed text, every page contains every menu label, and a search for a product name matches the entire site.
+
+**It cannot be displayed.** A hit whose `content` is 9,000 words has no useful snippet, and the reader lands at the top of the page with no idea which section matched.
+
+## Stripping navigation and boilerplate without losing content
+
+Work through these in order, stopping at the first one that applies.
+
+1. **Take an explicit container.** `main`, `article`, or `[role="main"]` if the site sets it. This is by far the most reliable option and costs one line.
+2. **Remove a chrome list.** Drop `nav`, `header`, `footer`, `aside`, `script`, `style`, `noscript`, plus site-specific classes for the sidebar, the table of contents, the cookie banner, and the "related articles" rail.
+3. **Detect repeated blocks.** On a site you do not control, hash the normalized text of each block across a sample of 20 to 50 pages and drop any that appears on more than about a third of them. This catches promo banners and localized footers no selector list predicts.
+4. **Use a readability extractor as a last resort.** Article-oriented extractors work well on blog posts and news, but they tend to discard tables, code blocks, and definition lists, which is exactly the content a documentation or reference site is made of {/* VERIFY: which structural elements Mozilla Readability and similar extractors drop by default */}.
+
+What to keep, because every one of these gets deleted by an over-aggressive rule:
+
+- **Breadcrumbs.** Not content, but the best metadata on the page. Pull them out before removing the element.
+- **Code blocks and tables.** `pre` and `table` carry the answer on technical pages.
+- **Collapsed tab panels, accordions, and `details` bodies.** The inactive tab is real content sitting in the DOM. A rule stripping `[aria-hidden="true"]` or `[hidden]` removes half of a tabbed installation guide.
+- **Image alt text and figure captions.** Often the only text describing a diagram.
+
+## Heading hierarchy as chunk boundaries
+
+Headings are an author-supplied outline, so use them instead of inventing boundaries at a fixed character count. Split on `h2` and `h3`. Treat the text before the first `h2` as its own chunk, headed by the `h1`. Then apply two corrections:
+
+- **Merge thin sections.** A heading followed by one sentence is not worth a document. Fold anything under roughly 20 words into the next section.
+- **Split fat sections.** Split anything over roughly 350 words at paragraph boundaries into numbered parts repeating the same heading and anchor. Never split inside a `pre` block or a table.
+
+Make every chunk readable alone by storing the path to it, not just the leaf heading. A chunk headed "Configuration" is meaningless; "Command line interface > Configuration" is not. Put that path in its own field and list it in [`searchableAttributes`](/capabilities/full_text_search/how_to/configure_searchable_attributes) ahead of `content`, because attribute order sets the [attribute ranking order](/capabilities/full_text_search/relevancy/attribute_ranking_order).
+
+## Breadcrumbs and anchor ids, so results deep-link
+
+Each chunk needs enough metadata that the frontend can send a reader to the exact section:
+
+| Field | Value | Why |
+|---|---|---|
+| `id` | Hash of the page URL plus the anchor and part number | Primary key values accept only `a-z`, `A-Z`, `0-9`, `-`, and `_`, so a raw URL containing `/`, `:`, or `#` is [not a valid primary key](/capabilities/indexing/how_to/design_primary_keys) |
+| `url` | `https://example.com/docs/cli#configuration` | The deep link the result opens |
+| `page_url` | The canonical page URL | Grouping key for `distinctAttribute` |
+| `heading_path` | `Command line interface > Configuration` | Makes the chunk self-contained, and reads well in the result list |
+| `breadcrumb` | `["Docs", "Guides", "CLI"]` | Filterable, so a search can be scoped to one part of the site |
+
+Take the anchor from the heading's `id` attribute when the site emits one. Slugifying the heading text instead is a guess that breaks the moment the heading is edited. Read `link rel="canonical"` and use it as `page_url`, which collapses tracking parameters, trailing slashes, and print variants into one group.
+
+Then set `distinctAttribute` to `page_url`. Meilisearch [returns at most one document per distinct value](/capabilities/full_text_search/how_to/configure_distinct_attribute), keeping the highest-ranked one, so the reader sees one result per page pointing at the section that actually matched, rather than six near-identical rows from the same article.
+
+## Single-page apps and infinite scroll
+
+A plain HTTP fetch of a client-rendered app returns an empty shell, and the resulting index is a set of documents all containing the same loading message.
+
+- **Render before extracting.** Drive a headless browser and wait for a content signal (the `h1` exists, or the network has gone idle) rather than a fixed timeout, which either wastes seconds or truncates slow pages. Meilisearch Cloud's built-in [crawler](/getting_started/features#cloud-features) does JS rendering and DocSearch-style extraction, removing this step entirely.
+- **Discover routes from a manifest, not by clicking.** `sitemap.xml`, the router configuration, or the CMS API gives a complete URL list. Link-following through a JS app misses everything behind a filter or a tab.
+- **Watch hash routing.** If the app routes on `#/pricing`, the fragment is taken and cannot also carry a section anchor. Store route and section in separate fields, and build the link in the frontend.
+- **Index the feed source, not the scroll.** Infinite scroll is a paginated API with a scroll listener attached, so call the API and page through it. And skip listing pages entirely: a feed, a tag archive, or a paginated index is navigation, and indexing it produces chunks that are lists of titles, which outrank the articles themselves.
+
+## A complete working example
+
+This script fetches pages, strips chrome, chunks on headings, indexes into Meilisearch, and runs a search that returns one deep-linked result per page.
+
+```javascript
+// npm install cheerio meilisearch     (Node 18+ for global fetch)
+//
+// export MEILISEARCH_URL="https://ms-example.meilisearch.io"
+// export MEILISEARCH_KEY="$MEILISEARCH_ADMIN_KEY"
+
+import { createHash } from 'node:crypto'
+import * as cheerio from 'cheerio'
+import { MeiliSearch } from 'meilisearch'
+
+const PAGES = [
+  'https://example.com/docs/getting-started',
+  'https://example.com/docs/cli',
+]
+
+const CHROME = 'nav, header, footer, aside, script, style, noscript, .sidebar, .toc, .cookie-banner'
+const MIN_WORDS = 20
+const MAX_WORDS = 350
+
+const slug = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
+
+function chunkPage(html, requestedUrl) {
+  const $ = cheerio.load(html)
+  const pageUrl = $('link[rel="canonical"]').attr('href') || requestedUrl
+  const pageTitle = ($('h1').first().text() || $('title').text()).trim()
+  const breadcrumb = $('[aria-label="Breadcrumb"] a, .breadcrumb a')
+    .map((_, el) => $(el).text().trim()).get()
+
+  $(CHROME).remove()
+  const root = ['main', 'article', '[role="main"]']
+    .map((sel) => $(sel).first()).find((el) => el.length) || $('body')
+
+  const sections = []
+  let current = { heading: pageTitle, anchor: '', text: [] }
+
+  root.find('h2, h3, p, li, pre, td').each((_, el) => {
+    const tag = el.tagName.toLowerCase()
+    const text = $(el).text().replace(/\s+/g, ' ').trim()
+    if (!text) return
+    if (tag === 'h2' || tag === 'h3') {
+      sections.push(current)
+      current = { heading: text, anchor: $(el).attr('id') || slug(text), text: [] }
+    } else {
+      current.text.push(text)
+    }
+  })
+  sections.push(current)
+
+  const documents = []
+  for (const section of sections) {
+    const words = section.text.join(' ').split(' ').filter(Boolean)
+    if (words.length < MIN_WORDS) continue          // too thin to stand alone
+    for (let i = 0, part = 0; i < words.length; i += MAX_WORDS, part++) {
+      const anchor = section.anchor
+      documents.push({
+        // Hashed because primary keys allow only a-zA-Z0-9-_ and 511 bytes.
+        id: createHash('sha1').update(`${pageUrl}#${anchor}:${part}`).digest('hex'),
+        url: anchor ? `${pageUrl}#${anchor}` : pageUrl,
+        page_url: pageUrl,
+        page_title: pageTitle,
+        heading_path: [pageTitle, section.heading].filter(Boolean).join(' > '),
+        breadcrumb,
+        part,
+        content: words.slice(i, i + MAX_WORDS).join(' '),
+      })
+    }
+  }
+  return documents
+}
+
+const client = new MeiliSearch({
+  host: process.env.MEILISEARCH_URL,
+  apiKey: process.env.MEILISEARCH_KEY,
+})
+const index = client.index('site-chunks')
+
+// Settings first: changing them later reindexes every document.
+await client.waitForTask(
+  (await index.updateSettings({
+    searchableAttributes: ['page_title', 'heading_path', 'content'],
+    filterableAttributes: ['page_url', 'breadcrumb'],
+    distinctAttribute: 'page_url',
+  })).taskUid,
+)
+
+const documents = []
+for (const url of PAGES) {
+  const html = await (await fetch(url)).text()   // headless browser here for a JS app
+  documents.push(...chunkPage(html, url))
+}
+console.log(`${documents.length} chunks from ${PAGES.length} pages`)
+
+await client.waitForTask((await index.addDocuments(documents)).taskUid)
+
+const results = await index.search('configure the cli', {
+  attributesToHighlight: ['content'],
+  attributesToCrop: ['content'],
+  cropLength: 30,
+  limit: 5,
+})
+
+for (const hit of results.hits) {
+  console.log(`${hit.heading_path}\n  ${hit.url}\n  ${hit._formatted.content}\n`)
+}
+```
+
+Swap the `fetch` line for a headless browser call returning `page.content()` and the same chunking logic works on a client-rendered app.
+
+## Limits and constraints
+
+- **65,535 positions per attribute.** Words beyond that are silently ignored. Hard separators such as commas consume eight positions each, so the effective word budget is lower than the number suggests.
+- **Primary keys** must be integers, or strings of `a-z`, `A-Z`, `0-9`, `-`, and `_`, at most **511 bytes**. URLs are not valid primary keys, so hash them.
+- **Individual `filterableAttributes` values are capped at 468 bytes.** Long URLs and deep breadcrumb labels can exceed this; the number of values in an array is not limited, only each value's length.
+- **65,536 attributes per index**, and **4,294,967,296 documents per index**. Chunking multiplies document count by the number of sections per page, which stays far below either ceiling.
+- **Payload size** defaults to 100MB per request, configurable with `http-payload-size-limit`. Uploads through the Meilisearch Cloud interface are capped at 20MB, so [import from a script](/capabilities/indexing/how_to/import_large_datasets) for a real crawl.
+- **One `distinctAttribute` per index**, and changing it reindexes everything. Set it before the first import.
+- **`cropLength` defaults to 10 words** and counts query terms and stop words, so raise it for prose snippets.
+- **Meilisearch does not parse HTML or chunk for you.** Extraction and splitting happen in your pipeline, and the engine indexes the documents you send. The Cloud crawler is the exception.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="How to chunk documents for search" href="/guides/how-to-chunk-documents">
+    The strategies behind the boundaries: fixed, structural, and semantic splitting.
+  </Card>
+  <Card title="Search a website by crawling it" href="/guides/search-website-crawling">
+    Sitemap versus link discovery, recrawl cadence, and near-duplicate detection.
+  </Card>
+  <Card title="Configure distinct attribute" href="/capabilities/full_text_search/how_to/configure_distinct_attribute">
+    Return one result per page instead of six chunks of the same article.
+  </Card>
+  <Card title="Highlight and crop results" href="/capabilities/full_text_search/how_to/highlight_search_results">
+    Turn a chunk into a readable snippet with `_formatted`.
+  </Card>
+</CardGroup>

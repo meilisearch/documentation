@@ -1,0 +1,144 @@
+---
+title: Elasticsearch or OpenSearch after the license change
+description: Your legal or procurement team flagged the Elasticsearch license and you need to decide between staying on Elasticsearch, moving to OpenSearch, or rethinking the stack. Here is what each license actually permits and how to run the review.
+keywords: is elasticsearch still open source, SSPL vs Apache 2.0, elastic license 2.0 restrictions, elasticsearch agpl option, opensearch fork history, elasticsearch license audit, search engine license compliance, sspl managed service clause, opensearch software foundation, replace elasticsearch open source
+boost: 2
+---
+
+If you only self-host a search engine to power your own product, every license in this discussion permits that. Elastic License 2.0 (ELv2), the Server Side Public License (SSPL), the AGPLv3 option Elastic added later, and the Apache 2.0 license that covers OpenSearch all allow you to run the software, index your data, and serve search to your users. The restrictions bite in two narrower places: offering the search engine itself as a managed service to third parties, and internal policies that only accept licenses approved by the Open Source Initiative. Decide which of those two applies to you before comparing features, because for most teams neither does, which turns an urgent legal question back into an ordinary engineering one.
+
+## What actually changed
+
+In January 2021, Elastic announced that Elasticsearch and Kibana would stop being distributed under the Apache 2.0 license. From the next minor release onward, the source was dual-licensed under SSPL and ELv2, and users pick which of the two they accept. {/* VERIFY: the exact first dual-licensed release, commonly cited as 7.11, and the last Apache 2.0 release 7.10.2 */}
+
+AWS responded by forking the last Apache 2.0 code. [OpenSearch is derived from Elasticsearch 7.10.2](/resources/comparisons/opensearch), was created in 2021, and remains fully Apache 2.0 with no proprietary components. Since September 2024, it is governed by the OpenSearch Software Foundation under the Linux Foundation rather than by AWS alone.
+
+In August 2024, Elastic added AGPLv3 as a third license option for the Elasticsearch and Kibana source, so the project once again offers an OSI-approved choice alongside the two source-available ones. {/* VERIFY: the first release that shipped with the AGPLv3 option, and that the option covers both Elasticsearch and Kibana */}
+
+None of this is retroactive. Code you already obtained under Apache 2.0 stays under Apache 2.0. The licenses apply to the versions released under them, which is why pinning to an old release is technically a valid answer and practically a bad one.
+
+## What each license permits in practice
+
+| | OSI-approved | Self-host for your own product | Offer the engine itself as a managed service | Source disclosure trigger |
+|---|:---:|:---:|:---:|---|
+| **Apache 2.0** (OpenSearch) | Yes | Yes | Yes | None |
+| **AGPLv3** (Elasticsearch option) | Yes | Yes | Yes | Network users must be able to get the source of your modified version |
+| **ELv2** | No | Yes | No | None, but you may not work around license key functionality or strip notices |
+| **SSPL** | No | Yes | Only if you publish the full service source under SSPL | Offering the program as a service |
+
+Three practical readings follow from that table.
+
+**Embedding search in your application is not "offering the software as a service."** The SSPL and ELv2 clauses target hosting the search engine as a product other people connect to. A SaaS application that happens to use search internally is not the target. If your product is a search API, it is. {/* VERIFY: this is the widely held reading of SSPL section 13 and the ELv2 hosting limitation, but it is not settled by case law */}
+
+**AGPLv3 is copyleft, not a formality.** Running unmodified Elasticsearch behind your application is fine. Patching it and exposing the result over a network brings an obligation to offer that modified source. Separately, plenty of corporate policies ban AGPL outright for anything that ships, so choosing the OSI-approved option can still fail an internal review. {/* VERIFY: prevalence of blanket AGPL bans in corporate open source policies */}
+
+**Most reviews fail on policy, not on the license text.** Automated dependency scanners classify SSPL and ELv2 as non-open-source, and enterprise customers increasingly ask for a license inventory during procurement. That is why teams that are fully compliant still get told to change something.
+
+## How to stay where you are
+
+If the review is the only pressure you are under, these are real options and they are cheaper than a migration:
+
+1. **Pick a license and document the decision.** Write down which option you accept, why your usage is inside it, and who approved it. Many reviews close here.
+2. **Switch to the AGPLv3 option** if the blocker is specifically "must be OSI-approved" and your policy tolerates copyleft.
+3. **Move to OpenSearch.** It preserves the Elasticsearch 7.x API surface, so most queries, mappings, and operational knowledge carry over. Use the OpenSearch clients rather than Elastic's, because recent Elastic clients check the server they are talking to and refuse unfamiliar ones. {/* VERIFY: current Elastic client product-check behavior against non-Elastic servers, and how far OpenSearch 2.x and 3.x have diverged from the ES 7.10 API */}
+4. **Buy a managed service.** Elastic Cloud and Amazon OpenSearch Service both make the license the provider's problem, at the cost of a per-node bill.
+
+Option 3 is the usual default, and it is a fork, not a mirror. The two projects have been diverging since 2021, so the further your workload sits from core search and aggregations, the more you should test rather than assume.
+
+## Why this is the right moment to re-scope the stack
+
+A license review forces you to write down what the cluster actually does. That inventory is worth more than the license answer, because most clusters are doing two unrelated jobs: log and metric analytics, where Elasticsearch and OpenSearch are genuinely strong, and user-facing product search, where a search-and-analytics platform is a heavy way to get instant, typo-tolerant results.
+
+If the second job is the one you care about, the evaluation is cheap: export a sample, index it elsewhere, and compare relevance and latency on your own data. The script below does exactly that against either an Elasticsearch or an OpenSearch cluster, using plain HTTP so it works with both.
+
+```javascript
+// npm install meilisearch
+// export SOURCE_URL="https://your-cluster:9200"
+// export SOURCE_INDEX="products"
+// export SOURCE_AUTH="user:password"          // omit if your cluster is unauthenticated
+// export MEILISEARCH_URL="https://your-instance.meilisearch.io"
+// export MEILISEARCH_KEY="your_admin_api_key"
+// node evaluate.mjs
+
+import { Meilisearch } from 'meilisearch'
+
+const SAMPLE_SIZE = 5000   // stays under the default 10000 result window
+const PAGE_SIZE = 1000
+const TARGET_INDEX = 'evaluation'
+
+const headers = { 'Content-Type': 'application/json' }
+if (process.env.SOURCE_AUTH) {
+  headers.Authorization =
+    'Basic ' + Buffer.from(process.env.SOURCE_AUTH).toString('base64')
+}
+
+async function fetchSample () {
+  const documents = []
+  for (let from = 0; from < SAMPLE_SIZE; from += PAGE_SIZE) {
+    const response = await fetch(
+      `${process.env.SOURCE_URL}/${process.env.SOURCE_INDEX}/_search`,
+      {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({
+          from,
+          size: PAGE_SIZE,
+          query: { match_all: {} }
+        })
+      }
+    )
+    if (!response.ok) throw new Error(`source cluster: ${response.status}`)
+    const { hits } = await response.json()
+    if (hits.hits.length === 0) break
+    for (const hit of hits.hits) {
+      // Meilisearch stores flat JSON, so keep only top-level fields
+      documents.push({ ...hit._source, id: hit._id })
+    }
+  }
+  return documents
+}
+
+const documents = await fetchSample()
+console.log(`exported ${documents.length} documents`)
+
+const client = new Meilisearch({
+  host: process.env.MEILISEARCH_URL,
+  apiKey: process.env.MEILISEARCH_KEY
+})
+const index = client.index(TARGET_INDEX)
+
+const addTask = await index.addDocumentsInBatches(documents, 1000)
+for (const task of addTask) {
+  await client.waitForTask(task.taskUid)
+}
+
+// Relevance is configuration here, not query construction:
+// attribute order below is the tie-breaking order for matches.
+const settingsTask = await index.updateSettings({
+  searchableAttributes: ['title', 'description'],
+  filterableAttributes: ['category'],
+  sortableAttributes: ['price']
+})
+await client.waitForTask(settingsTask.taskUid)
+
+const results = await index.search('your test query')
+console.log(results.hits.slice(0, 5), `${results.processingTimeMs}ms`)
+```
+
+Replace `title`, `description`, `category`, and `price` with fields that exist in your documents. Run the same query against both systems and compare the top ten results, not the total count.
+
+## Limits and constraints
+
+- **Licenses apply per release, not per project.** Downgrading to an Apache 2.0 Elasticsearch release is legal and unwise: those versions no longer receive security fixes.
+- **OpenSearch compatibility has an edge.** It started from the Elasticsearch 7.10.2 API. Anything Elastic shipped after the fork, and anything OpenSearch added since, exists on one side only.
+- **Meilisearch is not uniformly MIT.** The [Community Edition is MIT](/resources/self_hosting/enterprise_edition) and covers full-text and AI-powered search. The Enterprise Edition is BUSL-licensed, which is source-available rather than open source, and cannot be used freely in production. The only Enterprise-exclusive feature today is [sharding](/resources/self_hosting/sharding/overview), and Meilisearch Cloud runs the Enterprise Edition.
+- **The sample script caps at 10,000 documents** because `from` plus `size` paging is bounded by the default result window on both Elasticsearch and OpenSearch. For a full migration, use point-in-time paging as shown in the [migration guide](/resources/migration/elasticsearch_migration). {/* VERIFY: index.max_result_window default of 10000 in current Elasticsearch and OpenSearch */}
+- **Meilisearch accepts payloads up to about 100 MB by default**, controlled by `MEILI_HTTP_PAYLOAD_SIZE_LIMIT`, so batch large imports.
+- **This page is not legal advice.** It describes what these licenses are commonly understood to permit. A licensing decision that carries real risk belongs with your counsel.
+
+## Next steps
+
+- [Meilisearch vs OpenSearch](/resources/comparisons/opensearch) for a feature-level comparison of the two.
+- [Meilisearch vs Elasticsearch](/resources/comparisons/elasticsearch) if you are staying with a Lucene-based engine or leaving it.
+- [Migrating from Elasticsearch to Meilisearch](/resources/migration/elasticsearch_migration) for full exports with point-in-time paging.
+- [Enterprise and Community editions](/resources/self_hosting/enterprise_edition) for what each Meilisearch license covers.

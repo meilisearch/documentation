@@ -1,0 +1,227 @@
+---
+title: How to chunk documents for search
+description: Your long PDFs, articles, and handbooks return vague results or nothing at all, and you need to know how to split them into searchable pieces without destroying the meaning.
+keywords: how to split documents for search, chunking strategy retrieval, chunk overlap worth it, semantic chunking vs fixed size, split long article into search documents, rag chunking best practices, document splitting embeddings, how big should a chunk be, deduplicate chunks search results, parent document id chunk metadata
+boost: 2
+---
+
+Split on structure before you split on size. Walk the document's own boundaries (headings, sections, paragraphs, slides, speaker turns), emit one chunk per coherent idea, and fall back to a character budget only when a section is too long to stay intact. Every chunk becomes its own Meilisearch document carrying a shared `doc_id` back to the source, plus a heading path and a deep link. Then set `distinctAttribute` to that `doc_id` so a single source document cannot flood the result page. Fixed-size splitting with no awareness of structure is the fallback, not the default.
+
+## Why chunking matters more than it looks
+
+Meilisearch is [optimized for paragraph-sized chunks of text](/capabilities/full_text_search/relevancy/relevancy#chunking-large-documents). Two mechanics make that concrete.
+
+On the keyword side, ranking rules such as proximity and word position are computed inside an attribute. When a whole 40-page handbook sits in one `content` field, every term is technically present, so the query matches, but the rules have little left to discriminate with. Meilisearch also indexes [a maximum of 65,535 positions per attribute](/resources/help/known_limitations#maximum-number-of-words-per-attribute), and words past that limit are silently ignored. A long enough field has a tail that is simply not searchable, with no error to tell you.
+
+On the semantic side, the embedder does not vectorize your raw document. It renders a [`documentTemplate`](/capabilities/hybrid_search/advanced/document_template_best_practices) and truncates the result at `documentTemplateMaxBytes`, which defaults to 400 bytes. One vector cannot summarize ten pages, and most of those pages never reach the model at all. Chunking is what makes a vector correspond to something a user might actually ask for.
+
+## Why naive fixed-size splitting hurts retrieval
+
+Cutting every N characters is easy to implement and it damages retrieval in ways that are hard to see from the outside:
+
+- **It separates questions from answers.** A troubleshooting section split at the wrong offset puts the error message in one chunk and the fix in the next. Both chunks rank weakly for the query that should have been a perfect hit.
+- **It orphans context.** A chunk that begins "This value defaults to 30 seconds" does not say what value, so neither keyword matching nor an embedding can connect it to the feature it describes.
+- **It shreds structured content.** Tables, code blocks, and lists lose meaning when cut across rows or lines.
+- **It produces unusable snippets.** Users read chunks in the result list, and a fragment starting mid-sentence looks broken even when the ranking was right.
+
+Fixed-size splitters shipped with popular retrieval frameworks default to a character count in the low thousands with no structural awareness {/* VERIFY: default chunk sizes of common framework text splitters */}, which is why so many pipelines inherit these problems without a decision ever being made.
+
+## The three strategies and when each fits
+
+| Strategy | How it splits | Fits | Main cost |
+|---|---|---|---|
+| **Fixed-size** | Every N characters or tokens, optionally with overlap | Plain text with no markup at all, OCR output, last-resort fallback | Cuts mid-idea, orphaned chunks, poor snippets |
+| **Structural** | On the document's own boundaries: headings, sections, paragraphs, slides, speaker turns, function definitions | Almost everything with markup or an outline, and the right default | Section sizes vary a lot, so very long sections still need a size cap |
+| **Semantic** | On topic shifts detected by comparing embeddings of adjacent sentences or paragraphs | Unstructured prose where structure genuinely does not exist: transcripts, scanned reports, continuous narrative | Costs an embedding pass over the whole corpus before indexing, and boundaries are harder to debug |
+
+The practical recipe for most corpora is structural first, with a character budget as a guard rail, and semantic splitting reserved for the subset of content where structure is absent. Content types differ enough to deserve their own treatment: [web pages](/guides/chunk-web-pages), [PDFs](/guides/chunk-pdfs), [code](/guides/chunk-code-and-technical-content), and [transcripts](/guides/chunk-transcripts).
+
+## Does overlap pay for itself
+
+Overlap repeats the tail of one chunk at the head of the next so that an idea straddling a boundary still appears whole somewhere. It is a patch for bad boundaries, so the better the boundaries, the less it buys.
+
+Overlap is not free. Duplicated text inflates index size, and near-identical chunks compete against each other in the result list, which is exactly the pattern `distinctAttribute` exists to suppress. Before reaching for overlap, try the cheaper fix: prefix each chunk with its heading path so it stands on its own. "Billing > Refunds > Partial refunds" costs a few dozen bytes and repairs most of what overlap was covering for.
+
+If you do split at fixed sizes, a small overlap in the range of 10 to 15 percent of chunk length is the common convention {/* VERIFY: typical overlap ratio recommended in retrieval literature */}. Measure it rather than assume it, using the evaluation loop below.
+
+## The metadata every chunk must carry
+
+A chunk with no metadata is a fragment nobody can act on. Each one needs, at minimum:
+
+- **A stable chunk id** derived from the source id and position, so reindexing updates rather than duplicates. Primary key values are [limited to 511 bytes](/resources/help/known_limitations#length-of-primary-key-values), so do not build one out of the heading text.
+- **A parent `doc_id`**, which is what `distinctAttribute` collapses on and what lets you delete every chunk of a source document in one filtered operation.
+- **An ordinal position**, so you can fetch the chunk before and after a hit.
+- **The heading path or section title**, prefixed into the searchable text as well as stored as its own field.
+- **A deep link**: a URL with an anchor, a page number, or a timestamp, so the result opens at the right place instead of the top of a long document.
+- **Whatever the source filters on**: permissions, product, version, language, date. Individual filterable values are [capped at 468 bytes](/resources/help/known_limitations#length-of-individual-filterableattributes-values).
+
+## A complete chunk and index pipeline
+
+This script splits a Markdown file on headings, caps oversized sections at a paragraph boundary, attaches metadata, configures the index, and runs a search. It works against a Meilisearch Cloud project or any self-hosted instance.
+
+```javascript
+// npm install meilisearch
+//
+// export MEILISEARCH_URL="https://ms-example.meilisearch.io"
+// export MEILISEARCH_KEY="$MEILISEARCH_ADMIN_KEY"
+//
+// node chunk-and-index.mjs handbook.md
+
+import { readFile } from 'node:fs/promises'
+import { basename } from 'node:path'
+import { MeiliSearch } from 'meilisearch'
+
+const MAX_CHARS = 1200 // guard rail, not the primary boundary
+
+const slugify = (value) =>
+  value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
+
+// Structural pass: one section per heading, tracking the full heading path.
+function sectionize(markdown) {
+  const sections = []
+  const headings = {}
+  let current = { path: [], body: [] }
+  sections.push(current)
+
+  for (const line of markdown.split('\n')) {
+    const match = /^(#{1,4})\s+(.+)$/.exec(line)
+    if (!match) {
+      current.body.push(line)
+      continue
+    }
+    const level = match[1].length
+    headings[level] = match[2].trim()
+    for (const key of Object.keys(headings)) {
+      if (Number(key) > level) delete headings[key]
+    }
+    const path = Object.keys(headings)
+      .sort()
+      .map((key) => headings[key])
+    current = { path, body: [] }
+    sections.push(current)
+  }
+  return sections.filter((section) => section.body.join('').trim().length > 0)
+}
+
+// Size pass: split only sections that exceed the budget, always on a paragraph.
+function capSize(section) {
+  const paragraphs = section.body
+    .join('\n')
+    .split(/\n{2,}/)
+    .map((paragraph) => paragraph.trim())
+    .filter(Boolean)
+
+  const pieces = []
+  let buffer = []
+  let size = 0
+
+  for (const paragraph of paragraphs) {
+    if (size > 0 && size + paragraph.length > MAX_CHARS) {
+      pieces.push({ path: section.path, text: buffer.join('\n\n') })
+      buffer = []
+      size = 0
+    }
+    buffer.push(paragraph)
+    size += paragraph.length
+  }
+  if (buffer.length > 0) {
+    pieces.push({ path: section.path, text: buffer.join('\n\n') })
+  }
+  return pieces
+}
+
+const file = process.argv[2]
+const source = await readFile(file, 'utf8')
+const docId = slugify(basename(file).replace(/\.[^.]+$/, ''))
+
+const documents = sectionize(source)
+  .flatMap(capSize)
+  .map((chunk, position) => {
+    const section = chunk.path.at(-1) ?? null
+    return {
+      id: `${docId}--${position}`,
+      doc_id: docId,
+      position,
+      title: chunk.path[0] ?? docId,
+      section,
+      heading_path: chunk.path.join(' > '),
+      url: section ? `/docs/${docId}#${slugify(section)}` : `/docs/${docId}`,
+      // Prefixing the heading path makes the chunk self-contained for keyword
+      // ranking and for the embedder prompt alike.
+      content: [chunk.path.join(' > '), chunk.text].filter(Boolean).join('\n\n'),
+    }
+  })
+
+const client = new MeiliSearch({
+  host: process.env.MEILISEARCH_URL,
+  apiKey: process.env.MEILISEARCH_KEY,
+})
+const index = client.index('handbook')
+
+// Settings first: changing distinctAttribute later reindexes everything.
+await client.waitForTask(
+  (
+    await index.updateSettings({
+      searchableAttributes: ['title', 'heading_path', 'content'],
+      filterableAttributes: ['doc_id', 'position'],
+      distinctAttribute: 'doc_id',
+    })
+  ).taskUid,
+)
+
+await client.waitForTask((await index.addDocuments(documents)).taskUid)
+
+const results = await index.search('how do partial refunds work', {
+  limit: 5,
+  showRankingScore: true,
+  attributesToRetrieve: ['doc_id', 'heading_path', 'url'],
+})
+
+console.log(
+  results.hits.map((hit) => ({
+    where: hit.heading_path,
+    url: hit.url,
+    score: hit._rankingScore,
+  })),
+)
+```
+
+`searchableAttributes` order matters: attributes earlier in the list carry more weight, so the title and heading path outrank body text. [`distinctAttribute`](/capabilities/full_text_search/how_to/configure_distinct_attribute) returns only the best-ranked chunk per source document. Turn it off while evaluating, because you want to see every competing chunk.
+
+## How to tell whether a chunking change helped
+
+Chunking is cheap to measure, so do not judge it by skimming a few result pages.
+
+1. **Write a fixed query set.** Thirty to fifty real queries from your logs, each labeled with the `id` of the chunk that should win.
+2. **Index each variant separately.** `handbook-structural` and `handbook-fixed-1200`, same source documents, different splitter. Reindexing in place destroys the baseline.
+3. **Score both.** Run every query against both indexes with `showRankingScore: true` and record where the expected chunk landed. Two numbers suffice: the share of queries where it appears in the top 5, and its mean position. A [`_rankingScore`](/capabilities/full_text_search/relevancy/ranking_score) that drops while position holds means the chunk got diluted, not misplaced.
+4. **Read the losses.** The queries that regressed name the faulty boundary rule faster than any aggregate does.
+5. **Confirm in production.** [Search analytics](/capabilities/analytics/overview) report no-result rate and click-through rate per query, the ground truth your labeled set approximates.
+
+## Limits and constraints
+
+- **Meilisearch does not chunk for you.** Splitting happens in your pipeline before [adding documents](/capabilities/indexing/how_to/add_and_update_documents). There is no built-in splitter and no extraction step.
+- **65,535 positions per attribute.** Words beyond that in a single field are silently ignored. See [known limitations](/resources/help/known_limitations#maximum-number-of-words-per-attribute).
+- **`documentTemplateMaxBytes` defaults to 400 bytes.** The embedder sees the rendered template, truncated, not the full chunk. Raising it regenerates embeddings for every affected document.
+- **Primary key values: 511 bytes. Individual filterable values: 468 bytes.** Both are hard LMDB limits, and exceeding the primary key limit fails the whole task.
+- **One `distinctAttribute` per index.** Changing it reindexes every document, so set it before the first import. The `distinct` search parameter overrides it per query, but that attribute must be in `filterableAttributes` first.
+- **65,536 attributes per index** and up to **4,294,967,296 documents per index**, so chunk counts in the millions are fine.
+- **Payload limits.** The default maximum payload is 100MB, and the Meilisearch Cloud web interface caps file uploads at 20mb. Send chunks in large batches rather than one request per chunk.
+- **No official recommended chunk size.** The documentation says paragraph-sized and publishes no number, because the right size depends on your content and your embedding model. Measure it on your corpus.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Choosing chunk size for semantic search" href="/guides/choosing-chunk-size">
+    Pick a size by testing two candidates on your own corpus
+  </Card>
+  <Card title="Configure distinct attribute" href="/capabilities/full_text_search/how_to/configure_distinct_attribute">
+    Stop one source document from filling the result page
+  </Card>
+  <Card title="Document template best practices" href="/capabilities/hybrid_search/advanced/document_template_best_practices">
+    Control what the embedder actually reads from each chunk
+  </Card>
+  <Card title="Indexing good practices" href="/getting_started/good_practices#chunking-content">
+    Document shape, batching, and primary key guidance
+  </Card>
+</CardGroup>

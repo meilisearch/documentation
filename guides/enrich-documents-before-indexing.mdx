@@ -1,0 +1,190 @@
+---
+title: How to enrich documents before indexing
+description: Your pipeline can call a model to tag, summarize, or classify every document before it reaches the index, and you need to know which of those enrichments actually improve retrieval and which just burn tokens.
+keywords: enrich documents before indexing, llm enrichment search pipeline, auto tagging documents for search, entity extraction indexing, generated keywords seo search index, language detection before indexing, document classification taxonomy facets, metadata extraction retrieval, summarize documents for embeddings, index time enrichment cost
+boost: 2
+---
+
+Enrich only when the enrichment adds something the index cannot derive from the raw text: a filter dimension, a language tag, a canonical entity id, or vocabulary the user types but the document never contains. Language detection, entity extraction, and classification into a small closed taxonomy pay for themselves because they create new filters and better tokenization. Generated keyword lists and summaries pasted back into searchable text usually do not, because they repeat words the index already has. Meilisearch runs no enrichment step of its own, so all of this happens in your pipeline before you call `addDocuments`. Cache results by content hash so you re-enrich only what changed.
+
+## Which enrichments earn their cost
+
+| Enrichment | What it adds that raw text lacks | Where it belongs | Verdict |
+|---|---|---|---|
+| **Language detection** | A per-document or per-field locale, so the right tokenizer runs | `localizedAttributes`, or a `lang` filter | Worth it |
+| **Entity and field extraction** | Dates, part numbers, authors, prices, and ids pulled out of prose into typed fields | `filterableAttributes`, `sortableAttributes` | Worth it |
+| **Classification into a closed taxonomy** | A facet users can navigate, which no amount of matching produces | `filterableAttributes` | Worth it |
+| **Vocabulary mapping** (jargon, abbreviations, product codenames) | Terms users type that documents never contain | `synonyms` and `dictionary` index settings | Worth it, and cheap |
+| **Quality or authority scoring** | A tiebreaker across otherwise equally relevant documents | `sortableAttributes` plus a custom ranking rule | Worth it when the corpus has real quality spread |
+| **Generated keyword lists** | Mostly words already present in the body | Nowhere | Theater |
+| **Summarization** | A shorter restatement of indexed text | The embedder's `documentTemplate`, or a display field | Only for embeddings and display |
+| **Sentiment and tone labels** | A dimension almost no search UI filters on | Nowhere, unless a filter actually ships | Theater |
+
+The dividing line is simple. If the output changes what a user can filter, sort, or tokenize by, it is structure and the index benefits. If the output is prose that paraphrases prose, the index already had it.
+
+## Why summaries and generated keywords rarely help keyword search
+
+Meilisearch matches query terms against the fields listed in [`searchableAttributes`](/capabilities/full_text_search/how_to/configure_searchable_attributes). A summary drawn from the body contributes the same terms a second time, so a document that was unfindable stays unfindable.
+
+Worse, the extra field is not neutral. Attributes listed earlier in `searchableAttributes` [carry more weight in ranking](/capabilities/full_text_search/relevancy/attribute_ranking_order), so inserting a generated field near the front lets a thin paraphrase outrank the real content. And [every additional indexed field costs indexing time and disk](/capabilities/indexing/advanced/indexing_best_practices#define-searchable-attributes).
+
+There is one genuine exception. If your generator produces vocabulary that is genuinely absent from the document ("laptop" for a page that only ever says "notebook"), that is vocabulary expansion, not summarization. Handle it with [synonyms](/capabilities/full_text_search/relevancy/synonyms) or a [custom dictionary](/capabilities/full_text_search/how_to/configure_dictionary), which are index settings applied once rather than text duplicated across every document.
+
+## The trap: enrichment fields leak into your embedder prompt
+
+If you use AI-powered search and have not set a custom `documentTemplate`, Meilisearch falls back to a default template that includes **all searchable, non-null fields**, and truncates the rendered prompt at `documentTemplateMaxBytes`, which defaults to 400 bytes. Add three generated metadata fields and they will consume part of that budget, pushing the actual content out of the prompt entirely. Write an explicit template naming only the fields that carry meaning. See [document template best practices](/capabilities/hybrid_search/advanced/document_template_best_practices).
+
+## A complete enrichment and indexing pipeline
+
+This script reads NDJSON records, runs deterministic enrichment (language detection, entity extraction, taxonomy classification, a quality score), caches by content hash so unchanged documents skip the work, configures the index before adding documents, and indexes in batches. Swap `classify` for a model call when a closed rule set is not enough.
+
+```javascript
+// npm install meilisearch
+//
+// export MEILISEARCH_URL="https://ms-example.meilisearch.io"
+// export MEILISEARCH_KEY="$MEILISEARCH_ADMIN_KEY"
+//
+// node enrich-and-index.mjs articles.ndjson
+
+import { readFile, mkdir, readdir, writeFile } from 'node:fs/promises'
+import { createHash } from 'node:crypto'
+import { MeiliSearch } from 'meilisearch'
+
+const CACHE_DIR = '.enrich-cache'
+// Bump this whenever the taxonomy or extraction rules change, so every
+// document is recomputed instead of served from a stale cache entry.
+const ENRICH_VERSION = 'v3'
+
+const TAXONOMY = {
+  billing: ['invoice', 'refund', 'subscription', 'payment'],
+  security: ['permission', 'token', 'encryption', 'audit'],
+  indexing: ['index', 'document', 'ingest', 'reindex'],
+}
+
+const hash = (value) => createHash('sha256').update(value).digest('hex')
+
+// Replace with a real detector (for example CLD3 or franc) or a model call.
+function detectLanguage(text) {
+  const french = /\b(le|la|les|des|pour|avec|sans)\b/gi
+  return (text.match(french) ?? []).length > 4 ? 'fra' : 'eng'
+}
+
+// Extraction turns prose into typed, filterable fields.
+function extractEntities(text) {
+  return {
+    part_numbers: [...new Set(text.match(/\b[A-Z]{2,4}-\d{3,6}\b/g) ?? [])],
+    versions: [...new Set(text.match(/\bv\d+\.\d+(?:\.\d+)?\b/g) ?? [])],
+  }
+}
+
+function classify(text) {
+  const lower = text.toLowerCase()
+  const scored = Object.entries(TAXONOMY)
+    .map(([label, terms]) => [label, terms.filter((t) => lower.includes(t)).length])
+    .filter(([, score]) => score > 0)
+    .sort((a, b) => b[1] - a[1])
+  return scored.length > 0 ? scored[0][0] : 'uncategorized'
+}
+
+function qualityScore(doc) {
+  const length = Math.min(doc.body.length / 4000, 1)
+  const hasTitle = doc.title ? 0.3 : 0
+  return Number((length * 0.7 + hasTitle).toFixed(3))
+}
+
+async function enrich(doc) {
+  const key = hash(`${ENRICH_VERSION}:${doc.id}:${doc.title}:${doc.body}`)
+  const path = `${CACHE_DIR}/${key}.json`
+  const cached = await readFile(path, 'utf8').catch(() => null)
+  if (cached) return JSON.parse(cached)
+
+  const text = `${doc.title}\n${doc.body}`
+  const enriched = {
+    ...doc,
+    lang: detectLanguage(text),
+    category: classify(text),
+    quality: qualityScore(doc),
+    ...extractEntities(text),
+  }
+  await writeFile(path, JSON.stringify(enriched))
+  return enriched
+}
+
+await mkdir(CACHE_DIR, { recursive: true })
+const before = (await readdir(CACHE_DIR)).length
+
+const lines = (await readFile(process.argv[2], 'utf8')).split('\n').filter(Boolean)
+const documents = await Promise.all(lines.map((line) => enrich(JSON.parse(line))))
+
+const client = new MeiliSearch({
+  host: process.env.MEILISEARCH_URL,
+  apiKey: process.env.MEILISEARCH_KEY,
+})
+const index = client.index('articles')
+
+// Settings first: several of these trigger a full reindex if changed later.
+await client.waitForTask(
+  (
+    await index.updateSettings({
+      // Generated fields are deliberately absent from searchableAttributes.
+      searchableAttributes: ['title', 'body'],
+      filterableAttributes: ['lang', 'category', 'part_numbers', 'versions'],
+      sortableAttributes: ['quality'],
+      localizedAttributes: [
+        { attributePatterns: ['title', 'body'], locales: ['eng', 'fra'] },
+      ],
+      rankingRules: [
+        'words', 'typo', 'proximity', 'attribute', 'sort', 'exactness',
+        'quality:desc',
+      ],
+    })
+  ).taskUid,
+)
+
+for (let i = 0; i < documents.length; i += 1000) {
+  const batch = documents.slice(i, i + 1000)
+  await client.waitForTask((await index.addDocuments(batch)).taskUid)
+}
+
+const cacheHits = documents.length - ((await readdir(CACHE_DIR)).length - before)
+console.log(`indexed ${documents.length} documents, ${cacheHits} served from cache`)
+
+const results = await index.search('refund a subscription', {
+  filter: 'category = billing AND lang = eng',
+  limit: 5,
+  attributesToRetrieve: ['title', 'category', 'quality'],
+})
+console.log(results.hits)
+```
+
+Note what the enrichment output does **not** do: it never gets written back into `title` or `body`. Generated values live in their own fields, which are filterable and sortable but not searchable.
+
+## Freshness and cost at index time
+
+Enrichment computed at index time is a cache, and it goes stale in two ways: the source document changes, or your extraction rules and taxonomy change. The content hash in the script above covers the first. The `ENRICH_VERSION` string covers the second, and it is the part teams forget, which is how a corpus ends up with three generations of labels sharing a facet.
+
+Three constraints shape the economics:
+
+- **Re-enrichment is a full pass.** Changing a taxonomy label means recomputing every document, not just new ones. Keep taxonomies small and stable, and prefer deterministic rules over model calls wherever the rules are good enough.
+- **The model call dominates latency, not Meilisearch.** Batch enrichment concurrently and index in large payloads, since [a single large payload is processed faster than several small ones](/capabilities/indexing/advanced/indexing_best_practices#prefer-bigger-http-payloads).
+- **Adding an enrichment field later is not free.** Updating `searchableAttributes`, `filterableAttributes`, `sortableAttributes`, `synonyms`, `stopWords`, `dictionary`, or the embedder configuration [triggers a full reindex](/capabilities/indexing/advanced/indexing_best_practices#settings-that-trigger-a-full-reindex). Declare the fields you plan to add before the first import.
+
+Search engines that expose a server-side ingest stage let some of this run inside the engine rather than in your pipeline, which is convenient but moves the cost to indexing throughput rather than removing it {/* VERIFY: Elasticsearch ingest pipeline processors and their inference processor, exact capabilities and naming */}. Meilisearch makes the boundary explicit instead.
+
+## Limits and constraints
+
+- Meilisearch performs **no enrichment of its own** at index time. The single external call it makes during indexing is to the embedder configured in your index settings. Everything else must exist in the document you send.
+- Individual `filterableAttributes` values are [limited to 468 bytes](/resources/help/known_limitations#length-of-individual-filterableattributes-values), so a generated label must be a label, not a sentence.
+- Primary key values are [limited to 511 bytes](/resources/help/known_limitations#length-of-primary-key-values).
+- An index supports [at most 65,536 attributes](/resources/help/known_limitations#maximum-number-of-attributes-per-index), and Meilisearch indexes [at most 65,535 positions per attribute](/resources/help/known_limitations#maximum-number-of-words-per-attribute), with words past that limit silently ignored.
+- `documentTemplateMaxBytes` defaults to **400 bytes**, and the default `documentTemplate` includes every searchable non-null field.
+- The default maximum HTTP payload is **100MB** for a self-hosted instance, and uploads through the Meilisearch Cloud interface are [capped at 20MB](/resources/help/known_limitations#maximum-meilisearch-cloud-upload-size).
+- For deterministic transforms on documents already indexed (renaming a field, normalizing a date), [editing documents with functions](/capabilities/indexing/how_to/edit_documents_with_functions) avoids a full re-upload. It is experimental, it runs Rhai, and it cannot call an external service.
+- Third-party enrichment API pricing and rate limits vary by provider and change often, so budget against your own provider's current published figures {/* VERIFY: no pricing or rate limit figures asserted here on purpose */}.
+
+## Next steps
+
+- [Indexing best practices](/capabilities/indexing/advanced/indexing_best_practices) for field selection, payload sizing, and the settings that force a reindex.
+- [Document template best practices](/capabilities/hybrid_search/advanced/document_template_best_practices) to keep enrichment fields out of your embedder prompt.
+- [Handling multilingual datasets](/capabilities/indexing/how_to/handle_multilingual_data) for where detected languages should go.
+- [How to chunk documents for search](/guides/how-to-chunk-documents), since enrichment is applied per chunk once documents are split.

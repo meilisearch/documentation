@@ -1,0 +1,134 @@
+---
+title: Reducing Elasticsearch memory usage
+description: Your Elasticsearch nodes keep hitting heap pressure and circuit breakers, and you need to know which memory levers actually move the number.
+keywords: elasticsearch high memory usage, jvm heap pressure, circuit breaking exception data too large, elasticsearch out of memory, too many shards per node, fielddata heap, elasticsearch ram sizing, reduce elasticsearch heap, elasticsearch oom killer, search engine memory footprint, lower search infrastructure ram
+boost: 2
+---
+
+Elasticsearch memory is two budgets competing for the same physical RAM: the JVM heap, which holds cluster state, per-shard bookkeeping, indexing buffers, and caches, and the operating system page cache, which holds the Lucene index files read through memory mapping. Heap pressure is almost never solved by adding heap. The levers that actually work, in order of impact, are: reduce shard count, cap the heap at half of RAM and below the compressed-pointer threshold, keep fielddata off text fields, and move cold indices off hot nodes with index lifecycle management. What none of them change is the structural floor: heap consumption scales with shards, segments, and mapped fields, not with query volume.
+
+## Where the memory actually goes
+
+Splitting the budget is the first diagnostic step, because the fix differs completely depending on which half is under pressure.
+
+**JVM heap** holds the data structures Elasticsearch itself allocates: the cluster state, per-shard and per-segment metadata, the indexing buffer, the node query cache, the shard request cache, fielddata, and the working memory of in-flight searches and aggregations. Heap is finite, garbage collected, and the thing that throws `CircuitBreakingException: [parent] Data too large`.
+
+**Off-heap memory** is the page cache. Lucene segment files are memory mapped, so doc values, stored fields, `_source`, and the terms dictionary are read from disk through the OS cache rather than allocated on the heap. Recent Elasticsearch versions moved substantial parts of the terms index off heap specifically to lower this pressure. {/* VERIFY: which Elasticsearch version moved the terms index off heap, commonly cited as 7.7 */}
+
+This is why a node with 64 GB of RAM and a 48 GB heap can perform worse than the same node with a 30 GB heap. The oversized heap starves the page cache, so every search that would have been served from cached segments goes to disk instead.
+
+## Why shard count is usually the real problem
+
+Every shard is a separate Lucene index with its own segments, its own metadata, and its own fixed heap overhead, whether it holds ten documents or ten million. A cluster with thousands of tiny daily indices pays that overhead thousands of times over, and no heap size fixes it.
+
+Elastic's own guidance is a rule of thumb: keep shards in the range of tens of gigabytes, and keep the number of shards per node proportional to the heap on that node. {/* VERIFY: exact published figures, commonly cited as 10 to 50 GB per shard and roughly 20 shards per GB of heap */}
+
+Mapping size compounds the problem. Every field in every mapping adds to the cluster state, which is replicated to every node. Dynamic mapping on semi-structured data (log payloads, user-supplied JSON, analytics events) creates mapping explosion, where a handful of indices accumulate thousands of fields nobody queries. Elasticsearch ships a hard cap on total fields per index to contain this. {/* VERIFY: default value of index.mapping.total_fields.limit */}
+
+## Which tuning levers actually help
+
+**Size the heap deliberately.** Set the minimum and maximum heap to the same value so the JVM never resizes. Keep the heap at or below half of the machine's RAM, leaving the rest for the page cache. Stay below the compressed ordinary object pointer threshold: past roughly 30 GB the JVM switches to uncompressed 64-bit pointers, and a larger heap can hold less usable data than a smaller one. {/* VERIFY: exact compressed oops threshold, typically quoted between 26 GB and 32 GB depending on JVM and platform */} When you need more capacity, add nodes with moderate heaps rather than growing one heap.
+
+**Consolidate shards.** Roll indices over on size rather than on a fixed daily schedule, use the shrink API to reduce primary shard count on indices that are no longer written to, and force merge read-only indices down to fewer segments. Fewer, larger shards is nearly always the single biggest win.
+
+**Keep fielddata off.** Aggregating or sorting on an analyzed `text` field requires fielddata, which is built in heap and is the classic cause of a node falling over. Index the field as `keyword` instead and let doc values, which live on disk and are read through the page cache, do the work. For fields that are never aggregated, sorted, or scripted on, disabling doc values saves disk. For fields that are never queried at all, disabling indexing saves both.
+
+**Cap the caches.** The node query cache and shard request cache are both sized as a percentage of heap. Lowering them trades some repeat-query speed for headroom. {/* VERIFY: default sizes of indices.queries.cache.size and indices.requests.cache.size */} Circuit breakers are worth tightening too, but understand what they do: they convert an out-of-memory crash into a failed request. They do not reduce memory usage.
+
+**Use index lifecycle management.** Move indices through hot, warm, cold, and frozen tiers so that aging data stops occupying heap on your most expensive nodes. Rollover plus force merge plus shrink, applied automatically by an ILM policy, is what keeps shard count from growing without bound.
+
+Applied together, these routinely cut a cluster's memory footprint substantially, and they are worth doing whether or not you ever change engines.
+
+## What tuning cannot remove
+
+The floor remains. Heap usage tracks shards, segments, and mapped fields, so it grows with your data topology rather than with your traffic. You still run a garbage-collected runtime in the search path, which means stop-the-world pauses show up as latency outliers. And you still have to provision RAM for the worst case, because exceeding it means a circuit breaker trip or an OOM kill rather than graceful degradation.
+
+## Why a memory-mapped engine has a different floor
+
+Meilisearch has no JVM and no configurable heap. It stores everything in [LMDB](/resources/internals/storage), a memory-mapped key-value store, so the operating system decides which pages stay resident. There is no number to tune that trades "engine memory" against "cache memory", because they are the same thing.
+
+The practical consequence is that the dataset does not have to fit in RAM. Meilisearch performs best when it does, but a [RAM-to-disk ratio around 1/3 does not materially affect performance](/resources/internals/storage#memory-mapping), and many workloads run well near 1/10. An instance will not crash simply because the database on disk is larger than available RAM. Disk latency matters more than raw RAM at that point, so an NVMe SSD is the meaningful upgrade.
+
+Memory pressure in Meilisearch is concentrated in indexing, not search. By default the indexer uses at most [two thirds of available RAM](/resources/self_hosting/performance/ram_multithreading) and at most half the available cores, and both are configurable.
+
+## Configure a memory-lean Meilisearch index
+
+This complete script creates an index, applies the settings that most reduce indexing and search memory, adds documents, and prints the resulting size. Set `MEILISEARCH_URL` and `MEILISEARCH_KEY` in your environment first, then run it with `npm install meilisearch && node index.mjs`.
+
+```javascript
+import { Meilisearch } from 'meilisearch'
+
+const client = new Meilisearch({
+  host: process.env.MEILISEARCH_URL,
+  apiKey: process.env.MEILISEARCH_KEY,
+})
+
+const index = client.index('products')
+
+// Apply settings BEFORE adding documents: several of these
+// trigger a full reindex if changed later.
+const settingsTask = await index.updateSettings({
+  // Only these fields are matched against query words.
+  searchableAttributes: ['name', 'description', 'brand'],
+
+  // Enable only the filter features each attribute needs.
+  filterableAttributes: [
+    {
+      attributePatterns: ['brand', 'category'],
+      features: {
+        facetSearch: false,
+        filter: { equality: true, comparison: false },
+      },
+    },
+    {
+      attributePatterns: ['price'],
+      features: {
+        facetSearch: false,
+        filter: { equality: false, comparison: true },
+      },
+    },
+  ],
+
+  // Attribute-level proximity avoids storing every word position.
+  proximityPrecision: 'byAttribute',
+
+  // Rank only as deep as users actually paginate.
+  pagination: { maxTotalHits: 200 },
+
+  // Compute only the facet values the UI displays.
+  faceting: { maxValuesPerFacet: 20 },
+})
+await client.waitForTask(settingsTask.taskUid)
+
+const documents = [
+  { id: 1, name: 'Trail runner', description: 'Grippy outsole', brand: 'Acme', category: 'shoes', price: 119 },
+  { id: 2, name: 'Rain shell', description: 'Waterproof and packable', brand: 'Borealis', category: 'jackets', price: 210 },
+]
+
+const addTask = await index.addDocuments(documents)
+await client.waitForTask(addTask.taskUid)
+
+const stats = await index.getStats()
+console.log(stats)
+
+const instanceStats = await client.getStats()
+console.log(instanceStats.databaseSize, instanceStats.usedDatabaseSize)
+```
+
+## Limits and constraints
+
+- **Indexing memory**: `--max-indexing-memory` defaults to two thirds of available RAM. Setting it at or above the machine's total memory is likely to crash the instance. See the [configuration reference](/resources/self_hosting/configuration/reference#max-indexing-memory).
+- **Indexing threads**: `--max-indexing-threads` defaults to half of the machine's processing units.
+- **Payload size**: the default maximum HTTP payload is 100 MB. Larger payloads index faster but consume more RAM.
+- **Ranking depth**: `maxTotalHits` defaults to 1,000 documents ranked per query. `maxValuesPerFacet` defaults to 100.
+- **Database size is not predictable**: there is no reliable way to compute the final size of a Meilisearch database in advance, and this is true of search engines generally. As a reference point, a 9.1 MB JSON dataset of 19,553 documents produced a 224 MB database using roughly 305 MB of RAM. Your numbers will differ with settings, languages, and facets.
+- **Freed space is not returned to the OS**: LMDB marks deleted space as reusable but does not shrink the file. Compare `indexSize` to `usedIndexSize` from the stats endpoint, and if the gap exceeds 30 percent, run [index compaction](/capabilities/indexing/how_to/compact_an_index). Compaction is never automatic.
+- **Virtual memory is not real memory**: Meilisearch reserves a very large memory map. Resident set size, not virtual size, is the number to watch.
+- **Vector memory**: with [binary quantization](/capabilities/hybrid_search/advanced/binary_quantization), a 1536-dimension vector drops from 6 KB to 192 bytes. It is most effective above 1M documents and 1400 dimensions.
+
+## Next steps
+
+- [Search performance tuning](/capabilities/full_text_search/advanced/performance_tuning), ordered by impact
+- [Indexing best practices](/capabilities/indexing/advanced/indexing_best_practices) for keeping indexing memory low
+- [Impact of RAM and multi-threading](/resources/self_hosting/performance/ram_multithreading), including how to diagnose OOM kills
+- [Migrating from Elasticsearch](/resources/migration/elasticsearch_migration) when the tuning ceiling is the real constraint

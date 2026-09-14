@@ -1,0 +1,161 @@
+---
+title: Choosing an embedding model for your use case
+description: You need to pick an embedding model for semantic search and cannot tell whether dimensions, context window, price, or benchmark score is the number that actually matters.
+keywords: which embedding model should i use, embedding model comparison search, 384 vs 1536 dimensions, embedding model context window chunk size, cheapest embedding model semantic search, text-embedding-3-small vs large, embedding cost per million documents, embedding model latency query time, pick vector model for product search, open source embedding model self hosted
+boost: 2
+---
+
+Pick the smallest model that covers your languages and your domain vocabulary, then stop. In a Meilisearch [hybrid search](/capabilities/hybrid_search/overview) setup the keyword side already handles SKUs, proper nouns, and exact phrases, so the embedding model only has to carry general meaning. That changes the arithmetic: a 384-dimension model usually loses very little against a 3072-dimension one while costing about 30 times less disk per vector. Judge candidates on four axes, in this order: language and domain coverage, the text you actually send the model (400 bytes by default, not your whole document), dimension count, and provider price plus rate limits. Choose carefully, because changing `model` later regenerates every embedding in the index.
+
+## The text you send is 400 bytes, not your document
+
+Model comparison tables lead with context window. In Meilisearch that is rarely the binding constraint, because Meilisearch does not embed the raw document. It renders a [`documentTemplate`](/capabilities/hybrid_search/advanced/document_template_best_practices), a Liquid template you write, and truncates the rendered output at `documentTemplateMaxBytes`, which defaults to **400 bytes**. The document template guidance recommends prompts of 15 to 45 words, and 400 bytes is already above that.
+
+So a model advertising a 32K-token window and one advertising 512 tokens behave identically on a default configuration, because neither comes close to its limit. Context window becomes a real selection criterion only when you deliberately raise `documentTemplateMaxBytes` to embed long-form text such as full support articles or contract clauses. At that point convert your budget to tokens before shortlisting models: English text runs roughly four bytes per token {/* VERIFY: bytes-per-token heuristic for common tokenizers */}, so 8,000 bytes is on the order of 2,000 tokens, which almost every current model accepts.
+
+Before you commit, render your template against real documents with the `POST /render-template` route, which is an [experimental feature](/resources/help/experimental_features_overview) you enable per instance. Truncation is silent, and the failure mode is a template that cuts off exactly the paragraph a user searches for. Raising `documentTemplateMaxBytes` regenerates embeddings for every document whose rendered text changes. Lowering it never regenerates anything.
+
+## What dimensions actually cost
+
+Dimension count is the one model attribute with a directly measurable price in your own infrastructure. Meilisearch stores vectors in a disk-backed HNSW graph, with these [per-vector costs](/resources/internals/hannoy#quantization-support):
+
+| Dimensions | Full precision | Binary quantized |
+|---|---|---|
+| 768 | 3 KiB per vector | about 100 bytes per vector |
+| 1536 | 6 KiB per vector | about 200 bytes per vector |
+| 3072 | 12 KiB per vector | about 400 bytes per vector |
+
+Add about 200 bytes per vector for graph edges. At five million documents, a 1536-dimension model at full precision is roughly 30 GiB of vectors. The same model [binary quantized](/capabilities/hybrid_search/advanced/binary_quantization) is roughly 1 GiB.
+
+That inverts the naive "bigger is better" advice into two sensible shapes, and one to avoid:
+
+- **Small model, full precision** (384 to 768 dimensions). Cheap to generate, cheap to store, fast to query. Binary quantization is explicitly not recommended below 512 dimensions, because the information loss is noticeable.
+- **Large model, binary quantized** (1536 to 3072 dimensions). The docs state that a large model with quantization often outperforms a small model without it, and quantization works best above 1400 dimensions on indexes past one million documents.
+- **Large model, full precision, millions of documents.** This is the combination that quietly triples your storage bill for a relevance gain most users never notice.
+
+Binary quantization is irreversible once enabled. The only way back is reindexing into a new embedder.
+
+## Where the search latency goes
+
+Every semantic or hybrid query embeds the query string at search time, so the model choice sits directly in your latency budget:
+
+- **Remote API sources** (`openAi`, or any provider through the [REST embedder](/capabilities/hybrid_search/how_to/configure_rest_embedder)) add a network round trip to every search. Provider region matters more than model size here.
+- **Local models** (`huggingFace` source) remove the network hop entirely but spend CPU and RAM on the Meilisearch host. [Recommended local models](/capabilities/hybrid_search/how_to/configure_huggingface_embedder) include `BAAI/bge-small-en-v1.5` at 384 dimensions and `BAAI/bge-base-en-v1.5` at 768.
+- **[Composite embedders](/capabilities/hybrid_search/advanced/composite_embedders)** let you use a cloud provider for indexing throughput and a local model for query-time speed. Both halves must produce the same number of dimensions, and the generated embeddings must be exactly the same regardless of provider.
+
+## A decision table by use case
+
+| Use case | What decides the choice | Reasonable starting point | Watch out for |
+|---|---|---|---|
+| Ecommerce catalog, short titles and SKUs | Keyword retrieval already covers precise queries | Small general model, 384 to 1536 dimensions, full precision | Paying for a large model whose benefit shows up in a small slice of queries |
+| Documentation or support knowledge base | Articles are far longer than the default template budget | General model, with `documentTemplateMaxBytes` raised deliberately | Truncation silently discarding the answer-bearing paragraph |
+| Long-form editorial, legal, or research | Context window finally becomes a real limit | A large-context model, for example Jina v4 at [32K context](/capabilities/hybrid_search/providers/jina) | One vector is a poor summary of ten pages, so consider indexing sections as documents |
+| Multilingual catalog | Language coverage, not dimensions | An explicitly multilingual model such as Cohere `embed-multilingual-v3.0`, multilingual BGE, or Jina | English-trained models that degrade quietly outside English. See [choosing a model for multilingual search](/guides/embedding-model-multilingual) |
+| Code or identifier search | How the tokenizer treats identifiers | A code-specialized model if your provider ships one | General prose models on symbol-heavy text |
+| Regulated or air-gapped deployment | Data must not leave your infrastructure | `huggingFace` local source, no API key required | CPU and RAM headroom on the Meilisearch host |
+| Image or multimodal search | The model must accept the modality at all | A multimodal model through the REST embedder, or [user-provided vectors](/capabilities/hybrid_search/how_to/search_with_user_provided_embeddings) | Feeding an image URL string to a text model, which embeds the URL, not the image |
+
+## Run the bake-off on your own data
+
+Public benchmarks measure a corpus that is not yours. Meilisearch supports [multiple embedders on one index](/capabilities/hybrid_search/advanced/multiple_embedders), each with its own vector graph, so you can score two candidates against the same documents and the same queries in a single script. Use a throwaway index, since `binaryQuantized` cannot be turned off.
+
+```javascript
+// npm install meilisearch
+//
+// export MEILISEARCH_URL="https://ms-example.meilisearch.io"
+// export MEILISEARCH_KEY="$MEILISEARCH_ADMIN_KEY"
+// export OPENAI_API_KEY="sk-..."
+
+import { MeiliSearch } from 'meilisearch'
+
+const client = new MeiliSearch({
+  host: process.env.MEILISEARCH_URL,
+  apiKey: process.env.MEILISEARCH_KEY,
+})
+
+const index = client.index('model-bakeoff')
+
+await client.waitForTask(
+  (await index.addDocuments([
+    { id: 1, sku: 'HX-4410', title: 'Vacuum travel mug, 350ml',
+      description: 'Double-walled stainless steel mug that keeps drinks hot for six hours.' },
+    { id: 2, sku: 'BL-2020', title: 'Compact blender, 600W',
+      description: 'Low-noise motor and a 500ml jug, sized for a single smoothie.' },
+    { id: 3, sku: 'KT-8801', title: 'Cast iron skillet, 26cm',
+      description: 'Pre-seasoned pan for searing, oven safe and induction compatible.' },
+  ])).taskUid
+)
+
+await client.waitForTask(
+  (await index.updateSettings({
+    searchableAttributes: ['title', 'sku', 'description'],
+  })).taskUid
+)
+
+// Two candidates, one index. Each embedder keeps its own vector graph.
+await client.waitForTask(
+  (await index.updateEmbedders({
+    small: {
+      source: 'openAi',
+      model: 'text-embedding-3-small',
+      apiKey: process.env.OPENAI_API_KEY,
+      documentTemplate: '{{doc.title}}: {{doc.description | truncatewords: 25}}',
+      documentTemplateMaxBytes: 400,
+    },
+    largeQuantized: {
+      source: 'openAi',
+      model: 'text-embedding-3-large',
+      apiKey: process.env.OPENAI_API_KEY,
+      documentTemplate: '{{doc.title}}: {{doc.description | truncatewords: 25}}',
+      documentTemplateMaxBytes: 400,
+      binaryQuantized: true,
+    },
+  })).taskUid
+)
+
+// Use queries your users actually type: one exact reference, one descriptive,
+// one that a keyword engine alone would miss.
+const queries = ['HX-4410', 'something to keep coffee hot at my desk', 'quiet morning appliance']
+
+for (const embedder of ['small', 'largeQuantized']) {
+  console.log(`\n=== ${embedder} ===`)
+  for (const query of queries) {
+    const result = await index.search(query, {
+      hybrid: { embedder, semanticRatio: 0.5 },
+      showRankingScore: true,
+      limit: 3,
+    })
+    const ranked = result.hits.map((hit) => `${hit.title} (${hit._rankingScore.toFixed(3)})`)
+    console.log(`${query} -> ${ranked.join(' | ')}  [${result.processingTimeMs} ms]`)
+  }
+}
+```
+
+Judge the output on ranking quality for the descriptive queries, and on `processingTimeMs`. If the two columns look the same, the cheaper model is the right answer.
+
+## Limits and constraints
+
+- **Template budget.** `documentTemplateMaxBytes` defaults to 400 bytes, and longer rendered output is truncated. Increasing it regenerates embeddings for documents whose rendered text changes. Decreasing it never regenerates.
+- **Dimensions.** Inferred automatically for `openAi`, `ollama`, and `rest` sources, optional for `huggingFace`, and mandatory for `userProvided`. The documentation states no maximum dimension count. Some providers let you request a shorter vector than the model's native size {/* VERIFY: which providers currently support truncated or Matryoshka embedding dimensions */}, which is worth checking before you pay for dimensions you discard.
+- **Storage.** 3 KiB per 768-dimension vector, 6 KiB at 1536, and 12 KiB at 3072, plus about 200 bytes of graph edges per vector. Binary quantization brings those to roughly 100, 200, and 400 bytes.
+- **Quantization thresholds.** Recommended above 1400 dimensions and past one million documents. Not recommended below 512 dimensions. Irreversible once enabled.
+- **Field compatibility.** `model` is invalid for the `rest` and `userProvided` sources, `pooling` applies only to `huggingFace`, and `documentTemplate` is invalid for `userProvided`. See the [field compatibility table](/capabilities/hybrid_search/overview#embedder-field-compatibility).
+- **Cost of changing your mind.** Changing `source`, `model`, `documentTemplate`, `dimensions`, or `pooling` regenerates every embedding, with the provider bill that implies on a large index. Changing `distribution` does not.
+- **Rate limits.** Meilisearch batches embedding requests and retries automatically when a provider returns a rate limit error, so a low provider tier slows indexing rather than breaking it.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Compare embedder providers" href="/capabilities/hybrid_search/how_to/choose_an_embedder">
+    Provider-by-provider catalog once you know which model shape you need.
+  </Card>
+  <Card title="Write a document template" href="/capabilities/hybrid_search/advanced/document_template_best_practices">
+    Control exactly which fields reach the model, and keep prompts short.
+  </Card>
+  <Card title="Binary quantization" href="/capabilities/hybrid_search/advanced/binary_quantization">
+    Trade a little precision for roughly 30 times less vector storage.
+  </Card>
+  <Card title="Configure your first embedder" href="/capabilities/hybrid_search/getting_started">
+    End-to-end setup with a working embedder and a first semantic search.
+  </Card>
+</CardGroup>
