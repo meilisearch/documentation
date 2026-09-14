@@ -103,7 +103,8 @@ function windowize(turns) {
   for (const turn of turns) {
     const previous = buffer.at(-1)
     const chars = buffer.reduce((total, t) => total + t.text.length, 0)
-    const seconds = previous ? previous.end - buffer[0].start : 0
+    // Candidate duration: includes the turn we are about to add.
+    const seconds = previous ? turn.end - buffer[0].start : 0
     const gap = previous ? turn.start - previous.end : 0
 
     const shouldClose =

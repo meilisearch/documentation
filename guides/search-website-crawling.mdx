@@ -25,6 +25,7 @@ These are not alternatives so much as a primary and a fallback.
 - **The longest matching rule wins.** When both an `Allow` and a `Disallow` rule match a path, the longer pattern takes precedence, so `Allow: /docs/public/` beats `Disallow: /docs/`.
 - **`Crawl-delay` is not part of the standard.** It is widely published and widely honored, but it is not in the Robots Exclusion Protocol specification, and some major crawlers ignore it in favor of their own scheduling {/* VERIFY: which crawlers document ignoring Crawl-delay, and whether RFC 9309 mentions it at all */}. Honor it when present, and pick your own default when it is not.
 - **A missing `robots.txt` is permission, a `5xx` is not.** A `404` means no restrictions. A server error means unknown, so back off rather than crawl freely.
+- **Every URL the site hands you is untrusted input.** `Sitemap:` lines, sitemap `loc` entries, page links, `link rel="canonical"` values, and redirect targets are all controlled by the site, not by you. Parse each candidate and require `new URL(candidate).origin` to equal your crawl origin before fetching it. A string prefix test is not enough: `https://example.com@169.254.169.254/` starts with `https://example.com`, but its host is a cloud metadata service, so a crawler that only checks the prefix can be steered into your private network.
 
 For rate limits, one request at a time with a delay of about one second is a safe starting point for a site you do not own, and still covers a few thousand pages overnight. Send a descriptive `User-Agent` with a contact URL so an operator can reach you instead of blocking you. Treat `429` and `503` as instructions: read `Retry-After`, sleep that long, and retry once. On a second `429`, double the delay for the rest of the run.
 
@@ -82,6 +83,35 @@ const CHROME = 'nav, header, footer, aside, script, style, noscript, .sidebar, .
 const sha1 = (s) => createHash('sha1').update(s).digest('hex')
 const flatten = (s) => s.toLowerCase().replace(/\s+/g, ' ').trim()
 
+// Every destination is parsed and compared against the crawl origin. A string
+// prefix test would accept https://example.com@169.254.169.254/, whose real host
+// is the metadata service.
+const sameOrigin = (href, base = ORIGIN) => {
+  try {
+    return new URL(href, base).origin === new URL(ORIGIN).origin
+  } catch {
+    return false
+  }
+}
+
+const REDIRECTS = new Set([301, 302, 303, 307, 308])
+
+// Checks the origin before every request, including each redirect hop.
+async function safeFetch(url, extraHeaders = {}) {
+  let target = url
+  for (let hop = 0; hop < 5; hop++) {
+    if (!sameOrigin(target)) throw new Error(`refusing off-origin fetch: ${target}`)
+    const res = await fetch(target, {
+      headers: { 'user-agent': AGENT, ...extraHeaders },
+      redirect: 'manual',
+    })
+    const location = REDIRECTS.has(res.status) ? res.headers.get('location') : null
+    if (!location) return res
+    target = new URL(location, target).toString()
+  }
+  throw new Error(`too many redirects: ${url}`)
+}
+
 // Persist this between runs (a JSON file or a table) to make recrawls incremental.
 const state = new Map()   // url -> { etag, lastModified, contentHash }
 
@@ -98,7 +128,7 @@ function normalize(href, base) {
 
 async function readRobots() {
   const rules = { allow: [], disallow: [], delay: DEFAULT_DELAY, sitemaps: [] }
-  const res = await fetch(`${ORIGIN}/robots.txt`, { headers: { 'user-agent': AGENT } })
+  const res = await safeFetch(`${ORIGIN}/robots.txt`)
   if (res.status >= 500) throw new Error('robots.txt unavailable, not crawling')
   if (!res.ok) return rules                       // 404 means no restrictions
   let applies = false
@@ -126,9 +156,9 @@ function permitted(url, rules) {
 }
 
 async function readSitemap(url, seen = new Set()) {
-  if (seen.has(url)) return []
+  if (seen.has(url) || !sameOrigin(url)) return []   // robots.txt can name any host
   seen.add(url)
-  const res = await fetch(url, { headers: { 'user-agent': AGENT } })
+  const res = await safeFetch(url)
   if (!res.ok) return []
   const $ = cheerio.load(await res.text(), { xmlMode: true })
   const children = $('sitemapindex > sitemap > loc').map((_, el) => $(el).text().trim()).get()
@@ -137,28 +167,35 @@ async function readSitemap(url, seen = new Set()) {
     for (const child of children) out.push(...(await readSitemap(child, seen)))
     return out
   }
-  return $('urlset > url').map((_, el) => ({
-    url: normalize($(el).find('loc').text().trim(), ORIGIN),
+  const entries = $('urlset > url').map((_, el) => ({
+    loc: $(el).find('loc').text().trim(),
     lastmod: $(el).find('lastmod').text().trim() || null,
   })).get()
+  return entries
+    .filter((e) => sameOrigin(e.loc))                  // a sitemap can list any host
+    .map((e) => ({ url: normalize(e.loc, ORIGIN), lastmod: e.lastmod }))
 }
 
 async function fetchPage(url) {
   const cached = state.get(url) ?? {}
-  const headers = { 'user-agent': AGENT }
+  const headers = {}
   if (cached.etag) headers['if-none-match'] = cached.etag
   if (cached.lastModified) headers['if-modified-since'] = cached.lastModified
-  let res = await fetch(url, { headers })
+  let res = await safeFetch(url, headers)
   if (res.status === 429 || res.status === 503) {
     await sleep(Number(res.headers.get('retry-after') ?? 30) * 1000)
-    res = await fetch(url, { headers })
+    res = await safeFetch(url, headers)
   }
   return res
 }
 
 function chunkPage(html, requestedUrl) {
   const $ = cheerio.load(html)
-  const pageUrl = normalize($('link[rel="canonical"]').attr('href') || requestedUrl, requestedUrl)
+  const canonical = $('link[rel="canonical"]').attr('href')   // the page can claim any host
+  const pageUrl = normalize(
+    canonical && sameOrigin(canonical, requestedUrl) ? canonical : requestedUrl,
+    requestedUrl,
+  )
   const title = ($('h1').first().text() || $('title').text()).trim()
   $(CHROME).remove()
   const root = $('main').first().length ? $('main').first() : $('body')
@@ -204,7 +241,7 @@ const liveUrls = []
 
 while (queue.length && liveUrls.length < MAX_PAGES) {
   const url = queue.shift()
-  if (!url.startsWith(ORIGIN) || !permitted(url, rules)) continue
+  if (!sameOrigin(url) || !permitted(url, rules)) continue
 
   const res = await fetchPage(url)
   await sleep(rules.delay)                         // politeness delay, every request
@@ -227,8 +264,10 @@ while (queue.length && liveUrls.length < MAX_PAGES) {
   if (!sitemapUrls.length) {                       // link discovery fallback
     const $ = cheerio.load(html)
     $('a[href]').each((_, el) => {
-      const next = normalize($(el).attr('href'), url)
-      if (next.startsWith(ORIGIN) && !queued.has(next)) { queued.add(next); queue.push(next) }
+      const href = $(el).attr('href')
+      if (!sameOrigin(href, url)) return
+      const next = normalize(href, url)
+      if (!queued.has(next)) { queued.add(next); queue.push(next) }
     })
   }
 }

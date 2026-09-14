@@ -86,8 +86,11 @@ function flush() {
   if (buffer.length === 0) return inFlight.then(() => null)
   const payload = buffer
   buffer = []
-  inFlight = inFlight.then(() => send(payload))
-  return inFlight
+  const current = inFlight.then(() => send(payload))
+  // Recover the tail so one failed batch does not stop every later payload,
+  // but return the original promise so the caller still sees this error.
+  inFlight = current.catch(() => null)
+  return current
 }
 
 function write(doc) {

@@ -55,8 +55,15 @@ console.log({
 })
 
 // 4. Does it come back when nothing optional constrains the request?
+const { primaryKey } = await index.getRawInfo()
 const wideOpen = await index.search(QUERY, { limit: 1000, showRankingScore: true })
-const position = wideOpen.hits.findIndex((h) => String(h.id) === DOCUMENT_ID)
+
+if (wideOpen.hits.length > 0 && !(primaryKey in wideOpen.hits[0])) {
+  // displayedAttributes hides the primary key, so hits cannot be identified
+  console.log(`add "${primaryKey}" to displayedAttributes, then run this script again`)
+}
+
+const position = wideOpen.hits.findIndex((h) => String(h[primaryKey]) === DOCUMENT_ID)
 console.log('position with no filter and a wide limit:', position)
 
 // 5. If it is in there, find out which rule pushed it down.
@@ -66,7 +73,7 @@ if (position > -1) {
 }
 ```
 
-Read step 4 first. A `position` of `-1` means the document is genuinely not in the result set, so go to causes 1 through 5. Any other number means the document does match and your production request is discarding it, so go to causes 6 and 7.
+Read step 4 first. If it printed the `displayedAttributes` warning, act on that before anything else: the primary key is not returned in the hits, so no position can be computed and every document looks missing. Otherwise, a `position` of `-1` means the document is genuinely not in the result set, so go to causes 1 through 5. Any other number means the document does match and your production request is discarding it, so go to causes 6 and 7.
 
 ## Cause 1: it was never indexed, or the task failed
 

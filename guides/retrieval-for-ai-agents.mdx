@@ -87,6 +87,9 @@ await client.waitForTask(
 )
 
 // 2. The tool definition the model sees. The descriptions are the prompt.
+// One list of allowed areas, used by both the schema and the handler.
+const PRODUCT_AREAS = ['security', 'billing', 'indexing', 'search']
+
 export const searchKnowledgeBaseTool = {
   name: 'search_knowledge_base',
   description:
@@ -104,7 +107,7 @@ export const searchKnowledgeBaseTool = {
       },
       product_area: {
         type: 'string',
-        enum: ['security', 'billing', 'indexing', 'search'],
+        enum: PRODUCT_AREAS,
         description: 'Restrict to one product area. Omit if the question spans areas.',
       },
       version: {
@@ -123,7 +126,16 @@ const VERSION_PATTERN = /^\d+(\.\d+){0,2}$/
 
 export async function searchKnowledgeBase({ query, product_area, version }) {
   const clauses = []
-  if (product_area) clauses.push(`product_area = "${product_area}"`)
+  // The schema enum is a hint to the model, not a runtime guarantee, so check it here.
+  if (product_area) {
+    if (!PRODUCT_AREAS.includes(product_area)) {
+      return {
+        results: [],
+        note: `Unknown product area "${product_area}". Retry without a product area.`,
+      }
+    }
+    clauses.push(`product_area = "${product_area}"`)
+  }
   // version is free text, so validate it before it reaches the filter expression.
   if (version) {
     if (!VERSION_PATTERN.test(version)) {
@@ -168,7 +180,7 @@ export async function searchKnowledgeBase({ query, product_area, version }) {
 }
 ```
 
-Never interpolate an unchecked value into a filter string. `product_area` is constrained by the schema enum, and `version` is free text, so the handler checks it against a version pattern and refuses the call when it does not match. A value carrying a double quote would otherwise close the string literal and rewrite the filter.
+Never interpolate an unchecked value into a filter string. The schema enum on `product_area` is a description handed to the model, not a constraint the runtime enforces, so the handler checks the value against the same allowed list and refuses the call when it does not match. `version` is free text and gets the same treatment against a version pattern. A value carrying a double quote, such as `search" OR product_area EXISTS`, would otherwise close the string literal and rewrite the filter.
 
 ## Limits and constraints
 

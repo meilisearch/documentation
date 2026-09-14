@@ -68,6 +68,8 @@ const markdown = `# Employee handbook
 Leave is granted per calendar year and does not roll over.
 ### Parental leave
 Parental leave is 16 weeks at full pay.
+#### Notice period
+Tell your manager at least four weeks before the leave starts.
 #### Eligibility
 You must have been employed for 12 continuous months before the due date.
 Contractors are covered from their first day, see "Leave policy".
@@ -104,21 +106,13 @@ function parseSections(source) {
   return sections.map((s) => ({ ...s, body: s.body.trim() }))
 }
 
-// 2. Merge undersized sections into the next one, split oversized ones on
-//    paragraphs. Tighten the merge to same-parent siblings for deeper trees.
+// 2. Merge an undersized section into its next sibling only, and split
+//    oversized ones on paragraphs.
 function toChunks(sections) {
   const chunks = []
-  let carry = ''
-  // The last section with a body always emits, so trailing carry is never lost.
-  const lastWithBody = sections.filter((s) => s.body).at(-1)
-  for (const section of sections) {
-    const text = carry ? `${carry}\n\n${section.body}` : section.body
-    carry = ''
-    if (!text) continue
-    if (words(text) < MIN_WORDS && section.level > 1 && section !== lastWithBody) {
-      carry = text
-      continue
-    }
+  const parentPath = (section) => section.heading_path.slice(0, -1).join(' > ')
+
+  const emit = (section, text) => {
     const paragraphs = text.split(/\n{2,}/)
     let buffer = []
     let order = 0
@@ -144,6 +138,26 @@ function toChunks(sections) {
     }
     flush()
   }
+
+  // A short section waits here for its next sibling. Anything else, including
+  // the end of the document, emits it on its own so that it keeps its own
+  // heading path, anchor, and parent_id.
+  let carry = null
+  for (const section of sections) {
+    if (carry && !(section.body && parentPath(section) === parentPath(carry.section))) {
+      emit(carry.section, carry.text)
+      carry = null
+    }
+    if (!section.body) continue
+    const text = carry ? `${carry.text}\n\n${section.body}` : section.body
+    carry = null
+    if (words(text) < MIN_WORDS && section.level > 1) {
+      carry = { section, text }
+      continue
+    }
+    emit(section, text)
+  }
+  if (carry) emit(carry.section, carry.text)
   return chunks
 }
 

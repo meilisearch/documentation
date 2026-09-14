@@ -47,6 +47,8 @@ Two patterns cover almost every case.
 
 **Watermark polling** is the simple one. Store the highest `updated_at` you have already shipped, then select rows newer than it on each run. It requires an indexed `updated_at` column that is reliably touched on every write, including writes from triggers, batch jobs, and manual fixes.
 
+A strict cursor at the exact high-water mark is not safe on its own. A write transaction stamps `updated_at` when it starts but becomes visible only when it commits, so a long transaction can commit a row whose timestamp already sits below the mark your last run saved. That row is then invisible to every future run. Re-scan a small overlap window on each pass instead of resuming exactly where you stopped, and size it above the longest write transaction the database permits. Replaying rows costs nothing because indexing the same document twice is idempotent.
+
 The trap is joined tables. If a document's grain is the order but the customer's name is denormalized into it, then updating `customers.name` does not change `orders.updated_at`, and the poller never notices. Fix it by watermarking every contributing table and reindexing the affected parents, or by touching the parent row from a trigger when a child changes.
 
 **Change data capture** reads the database's own replication stream, PostgreSQL logical decoding or the MySQL binlog, and emits a per-row event for every insert, update, and delete {/* VERIFY: exact Debezium connector names and supported minimum versions for Postgres and MySQL */}. It catches everything, including deletes, and it does not need an `updated_at` column at all. The cost is operating a streaming pipeline.
@@ -79,6 +81,11 @@ import meilisearch
 BATCH = 50_000
 STATE = "watermark.json"
 INDEX = "orders"
+# Every run re-scans this much already-shipped history. Rows are upserted by
+# primary key, so replaying them is a no-op, and the overlap is what stops a
+# row committed after its own timestamp from being missed forever. Set it
+# above the longest write transaction the database permits.
+OVERLAP = datetime.timedelta(minutes=5)
 
 client = meilisearch.Client(os.environ["MEILISEARCH_URL"], os.environ["MEILISEARCH_KEY"])
 index = client.index(INDEX)
@@ -92,13 +99,22 @@ task = index.update_settings({
 })
 client.wait_for_task(task.task_uid)
 
-since = "1970-01-01T00:00:00+00:00"
+EPOCH = datetime.datetime(1970, 1, 1, tzinfo=datetime.timezone.utc)
+since = EPOCH
 if os.path.exists(STATE):
-    since = json.load(open(STATE))["since"]
+    with open(STATE) as state_file:
+        since = datetime.datetime.fromisoformat(json.load(state_file)["since"])
+
+# Resume from the saved mark rewound by the overlap window, never from the
+# mark itself. Compare datetimes, not strings: string ordering only matches
+# chronological ordering while every value carries the same UTC offset.
+cursor_start = max(EPOCH, since - OVERLAP)
 
 # One query, one document per order. json_agg folds the line items in.
 # changed_at covers every table that feeds the document, so an edit to a
 # product name or a line item advances the watermark like an order edit does.
+# Every updated_at column is timestamptz, so psycopg2 returns timezone-aware
+# datetimes that compare directly against the cursor.
 SQL = """
 SELECT o.id, o.reference, o.status, o.total_cents,
        o.placed_at, o.deleted_at,
@@ -122,11 +138,11 @@ ORDER BY changed_at
 
 cur = pg.cursor(name="sync", cursor_factory=psycopg2.extras.RealDictCursor)
 cur.itersize = BATCH
-cur.execute(SQL, (since,))
+cur.execute(SQL, (cursor_start,))
 
 buffer, high_water, deleted = [], since, []
 for row in cur:
-    high_water = max(high_water, row["changed_at"].isoformat())
+    high_water = max(high_water, row["changed_at"])
     if row["deleted_at"] is not None:
         deleted.append(row["id"])
         continue
@@ -151,11 +167,12 @@ if deleted:
 
 cur.close()
 pg.close()
-json.dump({"since": high_water}, open(STATE, "w"))
-print(f"synced up to {high_water}, {len(deleted)} deletions")
+with open(STATE, "w") as state_file:
+    json.dump({"since": high_water.isoformat()}, state_file)
+print(f"synced up to {high_water.isoformat()}, {len(deleted)} deletions")
 ```
 
-`update_documents` maps to `PUT`, so a partial row only overwrites the fields it carries. Run the script on a schedule; the watermark file makes each run resume where the last one stopped.
+`update_documents` maps to `PUT`, so a partial row only overwrites the fields it carries. Run the script on a schedule; each run resumes from the saved watermark minus the overlap window, so a row that became visible after its own timestamp is still picked up on the following pass.
 
 ## Limits and constraints
 

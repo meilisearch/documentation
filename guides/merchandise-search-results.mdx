@@ -55,7 +55,7 @@ await fetch(`${host}/experimental-features`, {
 //    Custom ranking rules go LAST, after the built-in rules, so they only
 //    break ties between documents that are already equally relevant.
 const index = client.index('products')
-await index.updateSettings({
+const settingsTask = await index.updateSettings({
   sortableAttributes: ['price'],
   rankingRules: [
     'words',
@@ -68,6 +68,7 @@ await index.updateSettings({
     'margin_score:desc'   // must exist, and be numeric, on every document
   ]
 })
+await client.waitForTask(settingsTask.taskUid)
 
 // 3. One campaign pin, with a built-in expiry date. The window is computed
 //    at run time so the rule is live while you test it. In production, use
@@ -75,7 +76,7 @@ await index.updateSettings({
 const start = new Date()
 const end = new Date(start.getTime() + 30 * 24 * 60 * 60 * 1000)
 
-await client.updateDynamicSearchRule('promo-summer-sale', {
+const ruleTask = await client.updateDynamicSearchRule('promo-summer-sale', {
   description: `Summer sale landing page, owner: merchandising, expires ${end.toISOString().slice(0, 10)}`,
   precedence: 10,
   active: true,
@@ -93,9 +94,10 @@ await client.updateDynamicSearchRule('promo-summer-sale', {
     }
   ]
 })
+await client.waitForTask(ruleTask.taskUid)
 
-// 4. Verify. Rule writes are asynchronous tasks, so give the task
-//    a moment (or poll /tasks) before checking the search response.
+// 4. Verify. Both writes above are tasks, and both have been waited on,
+//    so the pin is already active when this search runs.
 const results = await index.search('summer sale discount', { limit: 5 })
 console.log(results.hits.map((hit, position) => `${position}: ${hit.id}`))
 

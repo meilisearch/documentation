@@ -32,7 +32,7 @@ Add these fields at ingestion time, alongside the fields you already carry for c
 | `source_version` | The release, branch, or snapshot the chunk belongs to, for example `v1.52`. |
 | `source` | Which connector produced it, so you can resync one source without rebuilding the index. |
 
-`source_updated_at`, `indexed_at`, `last_seen_at`, `source_version`, and `source` must be listed in [`filterableAttributes`](/capabilities/filtering_sorting_faceting/getting_started) before you can filter on them, and in `sortableAttributes` before you can sort by them. Timestamps as integers are safe here: Meilisearch [represents integers exactly between -2⁵³ and 2⁵³](/resources/help/known_limitations#size-of-integer-fields), which covers Unix seconds and milliseconds comfortably.
+The two settings have separate requirements. Any field you filter on, including `source_updated_at`, `indexed_at`, `last_seen_at`, `source_version`, and `source`, must be listed in [`filterableAttributes`](/capabilities/filtering_sorting_faceting/getting_started) first. Only the fields you actually sort by need to be in `sortableAttributes`, which is why the script below declares all of them as filterable but limits `sortableAttributes` to the three timestamps. Timestamps as integers are safe here: Meilisearch [represents integers exactly between -2⁵³ and 2⁵³](/resources/help/known_limitations#size-of-integer-fields), which covers Unix seconds and milliseconds comfortably.
 
 ## How to run an incremental sync
 

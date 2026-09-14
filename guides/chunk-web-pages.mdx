@@ -94,7 +94,8 @@ const slug = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g
 
 function chunkPage(html, requestedUrl) {
   const $ = cheerio.load(html)
-  const pageUrl = $('link[rel="canonical"]').attr('href') || requestedUrl
+  // Canonical hrefs are often relative, so resolve against the requested URL.
+  const pageUrl = new URL($('link[rel="canonical"]').attr('href') || requestedUrl, requestedUrl).href
   const pageTitle = ($('h1').first().text() || $('title').text()).trim()
   const breadcrumb = $('[aria-label="Breadcrumb"] a, .breadcrumb a')
     .map((_, el) => $(el).text().trim()).get()

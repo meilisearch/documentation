@@ -17,7 +17,11 @@ Index messages, then collapse at search time. Each message carries `thread_id`, 
 
 Mail clients disagree about threading, and an mbox export carries no thread field at all. The headers defined in RFC 5322 are what you have: every message has a `Message-ID`, a reply carries the parent's id in `In-Reply-To`, and `References` holds the ancestry chain.
 
-Treat this as a connected-components problem rather than a tree. Union each message with every id it references, then hash the root of each component into a stable `thread_id`. This is more robust than walking parent pointers, because real archives are full of broken chains: a client that drops `References`, a message whose parent was deleted before the export, or a forward that starts a new chain. Union-find still groups what it can and leaves orphans as single-message threads.
+Treat this as a connected-components problem rather than a tree. Union each message with every id it references, then hash the root of each component into a `thread_id`. This is more robust than walking parent pointers, because real archives are full of broken chains: a client that drops `References`, a message whose parent was deleted before the export, or a forward that starts a new chain. Union-find still groups what it can and leaves orphans as single-message threads.
+
+A component root is derived, not permanent, and this is the part that bites in production. Taking the lexicographically smallest id in a component as its root makes the root independent of the order messages are processed in, so re-importing a whole mailbox always derives the same `thread_id`. It does not survive an incremental import. A late reply whose id sorts below the current root, or a forward that joins two components that were previously separate, moves the root and changes the `thread_id` for the entire conversation. Messages you indexed earlier keep the old value, so one conversation splits into two groups and `distinct` collapses it into two hits instead of one.
+
+Pick one of two fixes before you run this incrementally. Either rewrite every document in a component whenever its root moves, which is what the full-mailbox script below does implicitly by recomputing every document on every run, or hold a `message_id` to `thread_id` table in your own database, assign a `thread_id` the first time a message appears, and on a merge choose one surviving value and reindex the losing side. The table is the better choice for a live mailbox, because it bounds the rewrite to the smaller component instead of reprocessing the archive.
 
 Do not fall back to subject matching except as a last resort. Grouping on a normalized subject merges every "Re: lunch?" in the archive into one conversation. If you are pulling from an API instead of an mbox, use the provider's own id: Gmail's API returns a `threadId` on every message, and Microsoft Graph returns `conversationId` {/* VERIFY: exact field names on Gmail users.messages and Graph message resources */}. IMAP servers may expose the THREAD extension from RFC 5256, but support is uneven, so header-based threading is the portable path.
 
@@ -104,8 +108,11 @@ def find(x):
 def union(a, b):
     ra, rb = find(a), find(b)
     if ra != rb:
-        # Always keep the lexicographically smallest id as the root, so the component
-        # root, and therefore thread_id, does not change as later replies are imported.
+        # Keeping the lexicographically smallest id as the root makes the root, and so
+        # thread_id, independent of the order messages are read in. It is NOT stable as
+        # the archive grows: a later message can become the new root or merge two
+        # components. This script is safe because it recomputes every document on every
+        # run; an incremental importer must reindex the whole component when a root moves.
         ra, rb = min(ra, rb), max(ra, rb)
         parent[rb] = ra
 
@@ -195,6 +202,7 @@ print(scoped.index(INDEX).search(
 - **Tenant tokens are not revocable before expiry.** Access removed in your identity provider stays valid until the token expires, so keep lifetimes in the minutes. See the [tenant token payload reference](/capabilities/security/advanced/tenant_token_payload#expiry-date).
 - **Default payload limit is 100MB.** Batch documents rather than sending a whole mailbox in one request, per [import large datasets](/capabilities/indexing/how_to/import_large_datasets).
 - **`Message-ID` is not guaranteed unique or present.** Drafts, some mailing list software, and truncated exports produce duplicates or omissions. Namespacing the hash with `owner_id`, as above, keeps one user's archive from colliding with another's.
+- **A `thread_id` derived from a component root is not permanent.** A later message can become the new root of its component, or link two components that were separate, which changes the `thread_id` of a conversation you already indexed. Reindex every document in the component when its root moves, or persist a `thread_id` per message in your own store and rewrite the losing side on a merge.
 - **Quoted-text detection is heuristic, not exact.** Top-posted replies without `>` markers, mobile clients with unusual attribution lines, and forwarded chains will occasionally be misclassified. Measure on a sample of your own archive before trusting the split.
 
 ## Next steps

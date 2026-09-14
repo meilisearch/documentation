@@ -59,7 +59,7 @@ Anything filterable should also be exposed as a tool parameter, so the model nar
 
 ## A complete chunk, index, and retrieve pipeline
 
-This script splits a Markdown file on headings, caps oversized sections at a paragraph boundary, indexes the chunks, and runs a budgeted retrieval with optional neighbor expansion. It works against a Meilisearch Cloud project or any self-hosted instance.
+This script splits a Markdown file on headings, splits oversized sections at a paragraph boundary and an oversized paragraph at a sentence boundary, indexes the chunks, and runs a budgeted retrieval with optional neighbor expansion. It works against a Meilisearch Cloud project or any self-hosted instance.
 
 ```javascript
 // npm install meilisearch
@@ -104,9 +104,33 @@ function sectionize(markdown) {
   return sections.filter((section) => section.body.join('').trim().length > 0)
 }
 
+// A paragraph over the ceiling is split on sentence boundaries, never mid-sentence.
+// A block with no sentence break, such as a table, stays whole and runs over on purpose.
+function fitParagraph(paragraph) {
+  if (paragraph.length <= MAX_CHARS) return [paragraph]
+  const sentences = paragraph.match(/[^.!?]+(?:[.!?]+|$)/g) ?? [paragraph]
+  const pieces = []
+  let buffer = ''
+
+  for (const sentence of sentences) {
+    if (buffer.length > 0 && buffer.length + sentence.length > MAX_CHARS) {
+      pieces.push(buffer.trim())
+      buffer = ''
+    }
+    buffer += sentence
+  }
+  if (buffer.trim().length > 0) pieces.push(buffer.trim())
+  return pieces
+}
+
 // Size pass: split only oversized sections, always on a paragraph break.
 function capSize(section) {
-  const paragraphs = section.body.join('\n').split(/\n{2,}/).map((p) => p.trim()).filter(Boolean)
+  const paragraphs = section.body
+    .join('\n')
+    .split(/\n{2,}/)
+    .map((p) => p.trim())
+    .filter(Boolean)
+    .flatMap(fitParagraph)
   const pieces = []
   let buffer = []
   let size = 0
@@ -183,7 +207,8 @@ const context = []
 let used = 0
 for (const hit of hits) {
   const text = await expand(hit)
-  if (used + text.length > CONTEXT_BUDGET) break
+  // Skip a hit that does not fit, rather than dropping every hit after it.
+  if (used + text.length > CONTEXT_BUDGET) continue
   used += text.length
   context.push({ source: hit.url, section: hit.heading_path, updated: hit.updated_at, text })
 }

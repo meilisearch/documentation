@@ -44,6 +44,7 @@ This script takes a PDF path, extracts each page (falling back to OCR when the t
 # python search_pdfs.py contract.pdf
 
 import hashlib, io, os, re, sys
+from urllib.parse import quote
 import meilisearch
 
 try:
@@ -68,8 +69,10 @@ def page_text(page):
 def chunk_pdf(path, root="."):
     name = os.path.basename(path)
     # derived from the path, not the filename: two directories can hold the same name
-    rel = os.path.splitext(os.path.relpath(path, root))[0]
-    doc_id = re.sub(r"[^A-Za-z0-9_-]", "_", rel)[-180:] + "_" + hashlib.sha1(rel.encode()).hexdigest()[:8]
+    rel = os.path.relpath(path, root).replace(os.sep, "/")
+    stem = os.path.splitext(rel)[0]
+    doc_id = re.sub(r"[^A-Za-z0-9_-]", "_", stem)[-180:] + "_" + hashlib.sha1(stem.encode()).hexdigest()[:8]
+    file_url = f"{FILE_BASE_URL}/{quote(rel)}"   # keeps the subdirectory, so two files named alike stay apart
     pdf = pymupdf.open(path)
     chunks, buffer, start_page, count = [], [], 1, 0
 
@@ -86,7 +89,7 @@ def chunk_pdf(path, root="."):
             "page_start": start_page,
             "page_end": end_page,
             "page_count": pdf.page_count,
-            "url": f"{FILE_BASE_URL}/{name}#page={start_page}",
+            "url": f"{file_url}#page={start_page}",
         })
         buffer = []
 
@@ -120,7 +123,7 @@ client.wait_for_task(task.task_uid)
 print(f"indexed {len(chunks)} chunks")
 ```
 
-Run it over a directory by looping the call to `chunk_pdf` with that directory as `root`, so every `doc_id` stays unique, collecting every chunk list, and sending one `add_documents` batch per few tens of thousands of chunks rather than one request per file.
+Run it over a directory by looping the call to `chunk_pdf` with that directory as `root`, so every `doc_id` and every `url` keeps the subdirectory that tells `legal/contract.pdf` apart from `hr/contract.pdf`, collecting every chunk list, and sending one `add_documents` batch per few tens of thousands of chunks rather than one request per file.
 
 ## How to return a hit that opens the right page
 
@@ -137,15 +140,15 @@ results = index.search("termination for convenience", {
 
 for hit in results["hits"]:
     print(hit["title"], "page", hit["page_start"])
-    print(hit["url"])                    # .../contract.pdf#page=7
+    print(hit["url"])                    # .../legal/contract.pdf#page=7
     print(hit["_formatted"]["text"])     # snippet with <em> around matches
 ```
 
-`distinct` keeps only the best-ranked chunk per `doc_id`, so a 400-page manual returns as one result instead of forty. Drop it when you want a within-document view (for example, after the user has already picked a file), and add `"filter": 'doc_id = "contract"'` to scope the query to that file.
+`distinct` keeps only the best-ranked chunk per `doc_id`, so a 400-page manual returns as one result instead of forty. Drop it when you want a within-document view (for example, after the user has already picked a file), and add `"filter": f'doc_id = "{hit["doc_id"]}"'` to scope the query to the file the user picked.
 
 `attributesToCrop` with `attributesToHighlight` returns a `_formatted` object holding an excerpt centered on the match, which is what makes a PDF result readable. See [search with snippets](/capabilities/full_text_search/getting_started/search_with_snippets) and [highlight search results](/capabilities/full_text_search/how_to/highlight_search_results).
 
-The `#page=N` fragment is a PDF viewer open parameter, honored by the built-in viewers in mainstream browsers and by Adobe Reader {/* VERIFY: current browser coverage for the #page= PDF open parameter */}. It does nothing if the file is downloaded rather than viewed inline, so serve PDFs with `Content-Disposition: inline`.
+The `#page=N` fragment is a PDF viewer open parameter. Adobe Acrobat Reader honors it, as do the built-in viewers in Chrome, Edge, and Firefox. Safari, and mobile browsers that hand the file to a system viewer, often ignore it and open page 1, so keep the page number visible in the result itself rather than relying on the fragment alone. It does nothing if the file is downloaded rather than viewed inline, so serve PDFs with `Content-Disposition: inline`.
 
 ## Adding semantic search over the chunks
 

@@ -45,11 +45,16 @@ principals = [f"u_{user_id}"] + [f"g_{g['id']}" for g in groups]
 # transitiveMemberOf never returns them. Resolve them per site with the SharePoint REST
 # API, or a user whose only grant comes through Members gets no results at all.
 login = quote(f"i:0#.f|membership|{user_principal_name}")
-site_groups = sp_get(f"{site_url}/_api/web/siteusers/getByLoginName('{login}')/groups")["value"]
-principals += [f"s_{g['Id']}" for g in site_groups]
+
+# Site group ids restart at 1 in every site, so namespace each one with the same
+# immutable site key the indexer wrote into acl_read. INDEXED_SITES holds one
+# (site_key, site_url) pair per site you index.
+for site_key, site_url in INDEXED_SITES:
+    site_groups = sp_get(f"{site_url}/_api/web/siteusers/getByLoginName('{login}')/groups")["value"]
+    principals += [f"s_{site_key}_{g['Id']}" for g in site_groups]
 ```
 
-Site group ids are integers scoped to one site, so resolve them for each site you index {/* VERIFY: whether siteGroup ids returned by Graph match the SharePoint REST `Id` values */}. Prefix user, group, and site-group ids so the three id spaces cannot collide. Then the search rule is a single `IN` clause, which matches a document when at least one array element matches, per the [filter expression syntax](/capabilities/filtering_sorting_faceting/advanced/filter_expression_syntax#in):
+Site group ids are small integers scoped to a single site, so Members can be id 3 in a dozen sites at once. A bare `s_3` principal would let a member of one site read every document granted to `s_3` in another, so both the indexer and the token builder have to qualify site-group ids with an immutable site key. The script below uses the web GUID at the end of the Graph site id, which survives site renames {/* VERIFY: whether siteGroup ids returned by Graph match the SharePoint REST `Id` values */}. Prefix user, group, and site-group ids as well, so the three id spaces cannot collide. Then the search rule is a single `IN` clause, which matches a document when at least one array element matches, per the [filter expression syntax](/capabilities/filtering_sorting_faceting/advanced/filter_expression_syntax#in):
 
 ```python
 acl_filter = "acl_read IN [" + ", ".join(f'"{p}"' for p in principals) + "]"
@@ -108,7 +113,12 @@ def graph(url, raw=False):
         return r.content if raw else r.json()
     raise RuntimeError(f"gave up after repeated throttling on {url}")
 
-def readers(drive_id, item_id):
+def site_key(site):
+    """Graph site ids read `{hostname},{site-collection-guid},{web-guid}`. The web guid is
+    immutable and unique across the tenant, so use it to namespace site-group principals."""
+    return site["id"].split(",")[-1]
+
+def readers(key, drive_id, item_id):
     """Flatten an item's read grants into prefixed principal ids."""
     out = set()
     for p in graph(f"/drives/{drive_id}/items/{item_id}/permissions").get("value", []):
@@ -118,7 +128,8 @@ def readers(drive_id, item_id):
         for g in grants:
             if "user" in g:       out.add("u_" + g["user"]["id"])
             elif "group" in g:    out.add("g_" + g["group"]["id"])
-            elif "siteGroup" in g: out.add("s_" + g["siteGroup"]["id"])
+            # site group ids are unique only within their own site, so qualify them
+            elif "siteGroup" in g: out.add(f"s_{key}_{g['siteGroup']['id']}")
     return sorted(out)
 
 def extract_text(name, blob):
@@ -135,6 +146,7 @@ index.update_settings({
 })
 
 site = graph(f"/sites/{os.environ['SP_HOST']}:{os.environ['SP_SITE_PATH']}")
+key = site_key(site)          # the same value the token builder must use for this site
 state = json.loads(STATE.read_text()) if STATE.exists() else {}
 docs, gone = [], []
 
@@ -159,7 +171,7 @@ for drive in graph(f"/sites/{site['id']}/drives")["value"]:
                 "site_id": site["id"],
                 "drive_id": drive["id"],
                 "last_modified": item.get("lastModifiedDateTime"),
-                "acl_read": readers(drive["id"], item["id"]),
+                "acl_read": readers(key, drive["id"], item["id"]),
             })
         url = page.get("@odata.nextLink")
         if not url:

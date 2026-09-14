@@ -189,7 +189,10 @@ async function rebuild() {
   }
 
   const swap = await client.swapIndexes([{ indexes: [LIVE, BUILD] }])
-  await client.tasks.waitForTask(swap.taskUid)
+  const swapped = await client.tasks.waitForTask(swap.taskUid)
+  if (swapped.status !== 'succeeded') {
+    throw new Error(`swap task ${swapped.uid} ${swapped.status}: ${JSON.stringify(swapped.error)}`)
+  }
   // `products` now serves the rebuilt data. `products_build` holds the old data
   // for rollback: swap the same pair again to revert.
   await fs.writeFile(STATE, JSON.stringify({ watermark: runStartedAt }))
