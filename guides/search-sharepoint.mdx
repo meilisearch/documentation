@@ -40,9 +40,16 @@ Do not expand groups into user lists at index time. A 4,000-member group would p
 ```python
 groups = graph_get(f"/users/{user_id}/transitiveMemberOf?$select=id")["value"]
 principals = [f"u_{user_id}"] + [f"g_{g['id']}" for g in groups]
+
+# SharePoint site groups (Members, Visitors, Owners) are not Entra ID objects, so
+# transitiveMemberOf never returns them. Resolve them per site with the SharePoint REST
+# API, or a user whose only grant comes through Members gets no results at all.
+login = quote(f"i:0#.f|membership|{user_principal_name}")
+site_groups = sp_get(f"{site_url}/_api/web/siteusers/getByLoginName('{login}')/groups")["value"]
+principals += [f"s_{g['Id']}" for g in site_groups]
 ```
 
-Prefix user and group ids so the two id spaces cannot collide. Then the search rule is a single `IN` clause, which matches a document when at least one array element matches, per the [filter expression syntax](/capabilities/filtering_sorting_faceting/advanced/filter_expression_syntax#in):
+Site group ids are integers scoped to one site, so resolve them for each site you index {/* VERIFY: whether siteGroup ids returned by Graph match the SharePoint REST `Id` values */}. Prefix user, group, and site-group ids so the three id spaces cannot collide. Then the search rule is a single `IN` clause, which matches a document when at least one array element matches, per the [filter expression syntax](/capabilities/filtering_sorting_faceting/advanced/filter_expression_syntax#in):
 
 ```python
 acl_filter = "acl_read IN [" + ", ".join(f'"{p}"' for p in principals) + "]"

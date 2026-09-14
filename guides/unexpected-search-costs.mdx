@@ -73,20 +73,39 @@ const stats = await client.getStats()
 // 2. Work performed in the window, attributed to the indexes each batch touched.
 const since = new Date(Date.now() - DAYS * 86400000).toISOString()
 const work = {}
+// Duration, settings updates, and embedder requests are batch-level totals, not
+// per-index measurements. Attribute them only when a batch touched one index;
+// otherwise count them once here, outside the per-index report.
+const shared = { secs: 0, settings: 0, embedCalls: 0, embedFails: 0 }
 let from = null
 for (;;) {
   const q = new URLSearchParams({ limit: '500', afterStartedAt: since })
   if (from !== null) q.set('from', String(from))
   const page = await api(`/batches?${q}`)
   for (const b of page.results) {
-    const dur = seconds(b.duration)
-    for (const [uid, tasks] of Object.entries(b.stats.indexUids ?? {})) {
+    const batch = {
+      secs: seconds(b.duration),
+      settings: b.stats.types?.settingsUpdate ?? 0,
+      embedCalls: b.stats.embedderRequests?.total ?? 0,
+      embedFails: b.stats.embedderRequests?.failed ?? 0,
+    }
+    const uids = Object.entries(b.stats.indexUids ?? {})
+    const target = uids.length === 1 ? null : shared
+    for (const [uid, tasks] of uids) {
       const w = (work[uid] ??= { secs: 0, tasks: 0, settings: 0, embedCalls: 0, embedFails: 0 })
-      w.secs += dur
       w.tasks += tasks
-      w.settings += b.stats.types?.settingsUpdate ?? 0
-      w.embedCalls += b.stats.embedderRequests?.total ?? 0
-      w.embedFails += b.stats.embedderRequests?.failed ?? 0
+      if (target === null) {
+        w.secs += batch.secs
+        w.settings += batch.settings
+        w.embedCalls += batch.embedCalls
+        w.embedFails += batch.embedFails
+      }
+    }
+    if (target !== null && uids.length > 0) {
+      target.secs += batch.secs
+      target.settings += batch.settings
+      target.embedCalls += batch.embedCalls
+      target.embedFails += batch.embedFails
     }
   }
   if (page.next == null) break
@@ -111,6 +130,12 @@ for (const [uid, i] of Object.entries(stats.indexes)) {
   if (w.settings > 0 && embedded > 0) {
     console.log(`  warning: settings updates on an index with embeddings, check for a full re-embed`)
   }
+}
+if (shared.secs > 0 || shared.embedCalls > 0) {
+  console.log(
+    `\nmulti-index batches, not attributable to one index: ` +
+    `${shared.secs.toFixed(0)}s proc, ${shared.settings} settings, ${shared.embedCalls} embed calls`
+  )
 }
 const waste = (stats.databaseSize - stats.usedDatabaseSize) / 1024 ** 3
 console.log(`\ntotal on disk ${(stats.databaseSize / 1024 ** 3).toFixed(2)} GiB, ` +

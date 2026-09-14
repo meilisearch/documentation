@@ -50,10 +50,10 @@ This defines one tool with typed parameters, enum values read from the index at 
 ```ts
 import { generateText, tool, stepCountIs } from "ai";
 import { openai } from "@ai-sdk/openai";
-import { MeiliSearch } from "meilisearch";
+import { Meilisearch } from "meilisearch";
 import { z } from "zod";
 
-const client = new MeiliSearch({
+const client = new Meilisearch({
   host: process.env.MEILISEARCH_URL!,
   apiKey: process.env.MEILISEARCH_KEY!,
 });

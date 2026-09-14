@@ -64,7 +64,7 @@ A row deleted with `DELETE FROM orders WHERE id = 42` is invisible to any query-
 
 ## A complete Postgres to Meilisearch sync script
 
-This script does an initial load and incremental runs from the same code path: it denormalizes the customer join, aggregates line items into an array, tracks a watermark, and reconciles soft deletes.
+This script does an initial load and incremental runs from the same code path: it denormalizes the customer join, aggregates line items into an array, tracks a watermark across every joined table, and reconciles soft deletes.
 
 ```python
 # pip install psycopg2-binary meilisearch
@@ -97,20 +97,27 @@ if os.path.exists(STATE):
     since = json.load(open(STATE))["since"]
 
 # One query, one document per order. json_agg folds the line items in.
+# changed_at covers every table that feeds the document, so an edit to a
+# product name or a line item advances the watermark like an order edit does.
 SQL = """
 SELECT o.id, o.reference, o.status, o.total_cents,
-       o.placed_at, o.updated_at, o.deleted_at,
+       o.placed_at, o.deleted_at,
        c.full_name AS customer_name, c.country AS customer_country,
        COALESCE(json_agg(json_build_object(
            'product_name', p.name, 'quantity', l.quantity
-       )) FILTER (WHERE l.id IS NOT NULL), '[]') AS items
+       )) FILTER (WHERE l.id IS NOT NULL), '[]') AS items,
+       GREATEST(o.updated_at, c.updated_at,
+                MAX(COALESCE(l.updated_at, o.updated_at)),
+                MAX(COALESCE(p.updated_at, o.updated_at))) AS changed_at
 FROM orders o
 JOIN customers c ON c.id = o.customer_id
 LEFT JOIN order_lines l ON l.order_id = o.id
 LEFT JOIN products p ON p.id = l.product_id
-WHERE GREATEST(o.updated_at, c.updated_at) > %s
-GROUP BY o.id, c.full_name, c.country
-ORDER BY o.updated_at
+GROUP BY o.id, c.id
+HAVING GREATEST(o.updated_at, c.updated_at,
+                MAX(COALESCE(l.updated_at, o.updated_at)),
+                MAX(COALESCE(p.updated_at, o.updated_at))) > %s
+ORDER BY changed_at
 """
 
 cur = pg.cursor(name="sync", cursor_factory=psycopg2.extras.RealDictCursor)
@@ -119,7 +126,7 @@ cur.execute(SQL, (since,))
 
 buffer, high_water, deleted = [], since, []
 for row in cur:
-    high_water = max(high_water, row["updated_at"].isoformat())
+    high_water = max(high_water, row["changed_at"].isoformat())
     if row["deleted_at"] is not None:
         deleted.append(row["id"])
         continue

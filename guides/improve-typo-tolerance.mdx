@@ -123,7 +123,7 @@ console.log(await index.getTypoTolerance())
 - **Defaults for the switches:** `enabled` is `true`, `disableOnNumbers` is `false`, and `disableOnWords` and `disableOnAttributes` are empty arrays.
 - **Concatenation is limited to three consecutive words**, and each concatenated or split candidate counts as one typo.
 - **Disabling typo tolerance also disables the `typo` ranking rule**, because every returned document then has zero typos by definition.
-- **Updating `dictionary` triggers a reindex** of every document in the index, which is asynchronous. Changing `typoTolerance` itself does not require reindexing documents.
+- **Updating `typoTolerance` or `dictionary` triggers a reindex** of every document in the index, which is asynchronous. Configure both before adding documents where you can, and use the [task API](/reference/api/tasks/get-all-tasks) to monitor progress.
 
 ## Next steps
 

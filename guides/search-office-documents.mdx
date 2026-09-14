@@ -70,6 +70,12 @@ TARGET_WORDS = 220
 def slug(s):                      # primary keys allow only a-z A-Z 0-9 - _
     return re.sub(r"[^A-Za-z0-9_-]", "_", s)[-160:]
 
+def col_index(ref):               # "C4" -> 2, so omitted empty cells keep their column
+    n = 0
+    for ch in re.match(r"[A-Z]*", ref or "").group():
+        n = n * 26 + ord(ch) - 64
+    return n - 1
+
 def part(z, name):
     return ET.fromstring(z.read(name)) if name in z.namelist() else None
 
@@ -122,6 +128,9 @@ def read_xlsx(z, doc_id, title):
         for row in part(z, target if target.startswith("xl/") else "xl/" + target).iter(X + "row"):
             cells = []
             for c in row.iter(X + "c"):
+                col = col_index(c.get("r", ""))
+                while len(cells) < col:        # sheet XML omits empty cells
+                    cells.append("")
                 v = c.find("x:v", NS)
                 if c.get("t") == "s" and v is not None:
                     cells.append(shared[int(v.text)])

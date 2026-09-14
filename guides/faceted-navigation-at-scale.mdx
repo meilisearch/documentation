@@ -102,7 +102,9 @@ const FACET_GROUPS = ['brand', 'color', 'size']
 function filterFor(selected, excludeGroup) {
   return Object.entries(selected)
     .filter(([group, values]) => group !== excludeGroup && values.length > 0)
-    .map(([group, values]) => `(${values.map((v) => `${group} = "${v}"`).join(' OR ')})`)
+    // JSON.stringify quotes and escapes the value, so quotes or backslashes
+    // inside a facet value cannot break the filter expression.
+    .map(([group, values]) => `(${values.map((v) => `${group} = ${JSON.stringify(String(v))}`).join(' OR ')})`)
     .join(' AND ')
 }
 

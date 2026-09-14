@@ -236,12 +236,16 @@ Use a [tenant token](/capabilities/security/getting_started) instead. It is a JW
 import { generateTenantToken } from 'meilisearch/token'
 
 // user.teams, for example, is ['engineering']
+const visibility = ['all', ...user.teams]
+  .map((value) => JSON.stringify(value))
+  .join(', ')
+
 const token = await generateTenantToken({
   apiKey: process.env.MEILISEARCH_SEARCH_KEY,
   apiKeyUid: process.env.MEILISEARCH_SEARCH_KEY_UID,
   searchRules: {
     knowledge_base: {
-      filter: `visibility IN ["all", ${user.teams.map((t) => `"${t}"`).join(', ')}]`,
+      filter: `visibility IN [${visibility}]`,
     },
   },
   expiresAt: new Date(Date.now() + 60 * 60 * 1000),

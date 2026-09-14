@@ -88,10 +88,10 @@ Configure the build index settings before adding documents. A settings change af
 // node sync.mjs incremental
 // node sync.mjs rebuild
 
-import { MeiliSearch } from 'meilisearch'
+import { Meilisearch } from 'meilisearch'
 import fs from 'node:fs/promises'
 
-const client = new MeiliSearch({
+const client = new Meilisearch({
   host: process.env.MEILISEARCH_URL,
   apiKey: process.env.MEILISEARCH_KEY,
 })
@@ -114,7 +114,7 @@ const SETTINGS = {
 async function fetchChangedRows(since) {
   // SELECT id, name, description, brand, price, updated_at, deleted_at
   //   FROM products WHERE updated_at >= $1 ORDER BY updated_at ASC
-  return []
+  throw new Error('Implement fetchChangedRows before running this script')
 }
 
 function toDocument(row, syncedAt) {

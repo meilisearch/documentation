@@ -53,6 +53,7 @@ const client = new Meilisearch({ host: HOST, apiKey: KEY })
 
 let buffer = []
 let timer = null
+let inFlight = Promise.resolve()  // serializes flushes so updates keep their order
 
 // Queue depth: `total` counts every task matching the filter, not just the page.
 async function queueDepth() {
@@ -70,16 +71,23 @@ async function waitForRoom() {
   }
 }
 
-async function flush() {
-  if (timer) { clearTimeout(timer); timer = null }
-  if (buffer.length === 0) return null
-  const payload = buffer
-  buffer = []
+async function send(payload) {
   await waitForRoom()
   // PUT semantics: only the fields you send are changed.
   const task = await client.index(INDEX).updateDocuments(payload)
   console.log(`enqueued task ${task.taskUid} carrying ${payload.length} documents`)
   return task.taskUid
+}
+
+// Chain each flush behind the previous one. A timer-triggered flush paused in
+// waitForRoom() must not let a later payload reach the task queue first.
+function flush() {
+  if (timer) { clearTimeout(timer); timer = null }
+  if (buffer.length === 0) return inFlight.then(() => null)
+  const payload = buffer
+  buffer = []
+  inFlight = inFlight.then(() => send(payload))
+  return inFlight
 }
 
 function write(doc) {

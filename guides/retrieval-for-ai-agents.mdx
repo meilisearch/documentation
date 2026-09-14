@@ -119,10 +119,21 @@ export const searchKnowledgeBaseTool = {
 }
 
 // 3. The handler. Your code owns the filter string, the model never writes it.
+const VERSION_PATTERN = /^\d+(\.\d+){0,2}$/
+
 export async function searchKnowledgeBase({ query, product_area, version }) {
   const clauses = []
   if (product_area) clauses.push(`product_area = "${product_area}"`)
-  if (version) clauses.push(`version = "${version}"`)
+  // version is free text, so validate it before it reaches the filter expression.
+  if (version) {
+    if (!VERSION_PATTERN.test(version)) {
+      return {
+        results: [],
+        note: `Unknown version "${version}". Retry without a version.`,
+      }
+    }
+    clauses.push(`version = "${version}"`)
+  }
 
   const response = await index.search(query, {
     limit: 5,
@@ -157,7 +168,7 @@ export async function searchKnowledgeBase({ query, product_area, version }) {
 }
 ```
 
-Values interpolated into a filter string come from an enumerated schema here. If a parameter is free text, validate it against a known list before it reaches the filter expression.
+Never interpolate an unchecked value into a filter string. `product_area` is constrained by the schema enum, and `version` is free text, so the handler checks it against a version pattern and refuses the call when it does not match. A value carrying a double quote would otherwise close the string literal and rewrite the filter.
 
 ## Limits and constraints
 

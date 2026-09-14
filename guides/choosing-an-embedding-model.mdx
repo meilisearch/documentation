@@ -5,7 +5,7 @@ keywords: which embedding model should i use, embedding model comparison search,
 boost: 2
 ---
 
-Pick the smallest model that covers your languages and your domain vocabulary, then stop. In a Meilisearch [hybrid search](/capabilities/hybrid_search/overview) setup the keyword side already handles SKUs, proper nouns, and exact phrases, so the embedding model only has to carry general meaning. That changes the arithmetic: a 384-dimension model usually loses very little against a 3072-dimension one while costing about 30 times less disk per vector. Judge candidates on four axes, in this order: language and domain coverage, the text you actually send the model (400 bytes by default, not your whole document), dimension count, and provider price plus rate limits. Choose carefully, because changing `model` later regenerates every embedding in the index.
+Pick the smallest model that covers your languages and your domain vocabulary, then stop. In a Meilisearch [hybrid search](/capabilities/hybrid_search/overview) setup the keyword side already handles SKUs, proper nouns, and exact phrases, so the embedding model only has to carry general meaning. That changes the arithmetic: a 384-dimension model usually loses very little against a 3072-dimension one while costing about eight times less disk per vector. Judge candidates on four axes, in this order: language and domain coverage, the text you actually send the model (400 bytes by default, not your whole document), dimension count, and provider price plus rate limits. Choose carefully, because changing `model` later regenerates every embedding in the index.
 
 ## The text you send is 400 bytes, not your document
 
@@ -66,9 +66,9 @@ Public benchmarks measure a corpus that is not yours. Meilisearch supports [mult
 // export MEILISEARCH_KEY="$MEILISEARCH_ADMIN_KEY"
 // export OPENAI_API_KEY="sk-..."
 
-import { MeiliSearch } from 'meilisearch'
+import { Meilisearch } from 'meilisearch'
 
-const client = new MeiliSearch({
+const client = new Meilisearch({
   host: process.env.MEILISEARCH_URL,
   apiKey: process.env.MEILISEARCH_KEY,
 })

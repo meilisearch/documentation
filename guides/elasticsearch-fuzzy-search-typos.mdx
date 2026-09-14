@@ -5,7 +5,7 @@ keywords: elasticsearch fuzziness auto, fuzzy query not working, prefix_length e
 boost: 2
 ---
 
-Elasticsearch does not correct typos unless you ask it to, on every query, field by field. A plain `match` query for `iphoen` returns zero hits even though `iphone` is indexed. Adding `"fuzziness": "AUTO"` helps, but it is an edit-distance expansion bolted onto the query, not a relevance concept: it caps out at two edits, it ignores typos in the first characters once you set `prefix_length`, it is silently dropped by some `multi_match` types, and it lowers the BM25 score rather than sorting exact matches above corrected ones. This page explains each of those behaviors, shows the tuning that genuinely helps inside Elasticsearch, and then contrasts it with an engine where typo tolerance is on by default and configured per attribute rather than per query.
+Elasticsearch does not correct typos unless you ask it to, on every query, field by field. A plain `match` query for `iphoen` returns zero hits even though `iphone` is indexed. Adding `"fuzziness": "AUTO"` helps, but it is an edit-distance expansion bolted onto the query, not a relevance concept: it caps out at two edits, it ignores typos in the first characters once you set `prefix_length`, it is rejected outright by some `multi_match` types, and it lowers the BM25 score rather than sorting exact matches above corrected ones. This page explains each of those behaviors, shows the tuning that genuinely helps inside Elasticsearch, and then contrasts it with an engine where typo tolerance is on by default and configured per attribute rather than per query.
 
 ## What `fuzziness: AUTO` actually does
 
@@ -47,7 +47,7 @@ Because it is opt-in, the failure mode is silent. Someone adds a search endpoint
 
 Real applications search several fields at once, which means `multi_match`, and that is where fuzziness gets slippery.
 
-`fuzziness` is not supported by the `cross_fields`, `phrase`, and `phrase_prefix` `multi_match` types. It is ignored rather than rejected {/* VERIFY: confirm Elasticsearch ignores rather than errors on fuzziness with cross_fields, phrase, and phrase_prefix */}, so a query that looks typo-tolerant in code is not typo-tolerant at runtime. This is one of the most common reasons a team concludes "fuzziness does not work."
+`fuzziness` is not supported by the `cross_fields`, `phrase`, and `phrase_prefix` `multi_match` types. Elasticsearch rejects the combination at parse time rather than ignoring it: the request fails with a `400` and `Fuzziness not allowed for type [cross_fields]`. Versions before 5.0 accepted the parameter and silently dropped it, so a query carried over from an older service starts erroring after an upgrade. Either way the fix belongs in the request, not in relevance tuning: switch to `best_fields` or `most_fields`, or move the fuzzy term into its own `match` clause.
 
 Even with the default `best_fields` type, fuzziness interacts badly with scoring. A fuzzy match is scored as a term match with a reduced weight, and that weight is folded into one BM25 number alongside term frequency and inverse document frequency. A high-frequency misspelling in a long description field can therefore outrank an exact match in the title. There is no way to express "an exact match always beats a corrected match" because Elasticsearch has one score, not ordered criteria.
 

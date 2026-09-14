@@ -70,7 +70,7 @@ This script reads `robots.txt`, expands the sitemap, falls back to link discover
 import { createHash } from 'node:crypto'
 import { setTimeout as sleep } from 'node:timers/promises'
 import * as cheerio from 'cheerio'
-import { MeiliSearch } from 'meilisearch'
+import { Meilisearch } from 'meilisearch'
 
 const ORIGIN = 'https://example.com'
 const START = `${ORIGIN}/docs/`
@@ -178,8 +178,8 @@ function chunkPage(html, requestedUrl) {
   const body = flatten(sections.flatMap((s) => s.text).join(' '))
   const documents = sections
     .filter((s) => s.text.join(' ').split(' ').length >= 20)   // skip thin sections
-    .map((s) => ({
-      id: sha1(`${pageUrl}#${s.anchor}`),
+    .map((s, i) => ({
+      id: sha1(`${pageUrl}#${i}:${s.anchor}`),   // index keeps anchorless sections distinct
       url: s.anchor ? `${pageUrl}#${s.anchor}` : pageUrl,
       page_url: pageUrl,
       page_title: title,
@@ -233,7 +233,7 @@ while (queue.length && liveUrls.length < MAX_PAGES) {
   }
 }
 
-const client = new MeiliSearch({
+const client = new Meilisearch({
   host: process.env.MEILISEARCH_URL,
   apiKey: process.env.MEILISEARCH_KEY,
 })

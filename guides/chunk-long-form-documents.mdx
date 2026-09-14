@@ -109,11 +109,13 @@ function parseSections(source) {
 function toChunks(sections) {
   const chunks = []
   let carry = ''
+  // The last section with a body always emits, so trailing carry is never lost.
+  const lastWithBody = sections.filter((s) => s.body).at(-1)
   for (const section of sections) {
     const text = carry ? `${carry}\n\n${section.body}` : section.body
     carry = ''
     if (!text) continue
-    if (words(text) < MIN_WORDS && section.level > 1) {
+    if (words(text) < MIN_WORDS && section.level > 1 && section !== lastWithBody) {
       carry = text
       continue
     }

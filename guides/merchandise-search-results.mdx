@@ -69,16 +69,21 @@ await index.updateSettings({
   ]
 })
 
-// 3. One campaign pin, with a built-in expiry date.
-await client.updateDynamicSearchRule('promo-summer-sale-2026', {
-  description: 'Summer sale landing page, owner: merchandising, expires 2026-06-30',
+// 3. One campaign pin, with a built-in expiry date. The window is computed
+//    at run time so the rule is live while you test it. In production, use
+//    the real campaign dates.
+const start = new Date()
+const end = new Date(start.getTime() + 30 * 24 * 60 * 60 * 1000)
+
+await client.updateDynamicSearchRule('promo-summer-sale', {
+  description: `Summer sale landing page, owner: merchandising, expires ${end.toISOString().slice(0, 10)}`,
   precedence: 10,
   active: true,
   conditions: {
     query: { words: 'summer sale' },
     time: {
-      start: '2026-06-01T00:00:00Z',
-      end: '2026-06-30T23:59:59Z'
+      start: start.toISOString(),
+      end: end.toISOString()
     }
   },
   actions: [
@@ -99,7 +104,7 @@ const rules = await client.getDynamicSearchRules({ filter: { query: 'promo' } })
 console.log(rules)
 ```
 
-Run this once and the campaign needs no teardown: after June 30 the time condition simply stops matching, and the rule goes quiet while remaining available for next year. That is the single most useful governance habit available, because it removes the human step that is always forgotten.
+Run this once and the campaign needs no teardown: once the end date passes, the time condition simply stops matching, and the rule goes quiet while remaining available for next year. That is the single most useful governance habit available, because it removes the human step that is always forgotten.
 
 ## Boosting by business rules instead of by document
 

@@ -104,6 +104,9 @@ def find(x):
 def union(a, b):
     ra, rb = find(a), find(b)
     if ra != rb:
+        # Always keep the lexicographically smallest id as the root, so the component
+        # root, and therefore thread_id, does not change as later replies are imported.
+        ra, rb = min(ra, rb), max(ra, rb)
         parent[rb] = ra
 
 box = mailbox.mbox(

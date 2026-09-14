@@ -66,7 +66,7 @@ This script pulls Notion and Confluence pages changed since a watermark, flatten
 //
 // node sync-wiki.mjs 2026-09-01T00:00:00Z
 
-import { MeiliSearch } from 'meilisearch'
+import { Meilisearch } from 'meilisearch'
 import jwt from 'jsonwebtoken'
 
 const since = process.argv[2] ?? '1970-01-01T00:00:00Z'
@@ -185,13 +185,13 @@ function storageToLines(xhtml = '') {
 function toDocuments({ source, pageId, title, url, acl, updatedAt, lines }) {
   const sections = [{ heading: title, anchor: null, parts: [] }]
   for (const line of lines) {
-    const last = sections[sections.length - 1]
+    let last = sections[sections.length - 1]
     const tooLong = last.parts.join(' ').length > MAX_CHARS
     if (line.heading || tooLong) {
       sections.push({ heading: line.heading ?? last.heading, anchor: line.id ?? null, parts: [] })
-    } else {
-      last.parts.push(line.text)
+      last = sections[sections.length - 1]
     }
+    if (line.text) last.parts.push(line.text)
   }
   return sections
     .filter((s) => s.parts.length > 0)
@@ -209,7 +209,7 @@ function toDocuments({ source, pageId, title, url, acl, updatedAt, lines }) {
 }
 
 // --- Run --------------------------------------------------------------------
-const client = new MeiliSearch({ host: process.env.MEILISEARCH_URL, apiKey: process.env.MEILISEARCH_KEY })
+const client = new Meilisearch({ host: process.env.MEILISEARCH_URL, apiKey: process.env.MEILISEARCH_KEY })
 const index = client.index(INDEX)
 
 await index.updateSettings({
@@ -264,7 +264,7 @@ const token = jwt.sign(
   { algorithm: 'HS256' },
 )
 
-const scoped = new MeiliSearch({ host: process.env.MEILISEARCH_URL, apiKey: token })
+const scoped = new Meilisearch({ host: process.env.MEILISEARCH_URL, apiKey: token })
 const results = await scoped.index(INDEX).search('on-call rotation', {
   attributesToHighlight: ['content'],
   cropLength: 40,

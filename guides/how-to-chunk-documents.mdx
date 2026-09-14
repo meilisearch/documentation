@@ -69,7 +69,7 @@ This script splits a Markdown file on headings, caps oversized sections at a par
 
 import { readFile } from 'node:fs/promises'
 import { basename } from 'node:path'
-import { MeiliSearch } from 'meilisearch'
+import { Meilisearch } from 'meilisearch'
 
 const MAX_CHARS = 1200 // guard rail, not the primary boundary
 
@@ -116,13 +116,17 @@ function capSize(section) {
   let size = 0
 
   for (const paragraph of paragraphs) {
-    if (size > 0 && size + paragraph.length > MAX_CHARS) {
-      pieces.push({ path: section.path, text: buffer.join('\n\n') })
-      buffer = []
-      size = 0
+    // A single paragraph can exceed the budget on its own, so slice it first.
+    for (let start = 0; start < paragraph.length; start += MAX_CHARS) {
+      const part = paragraph.slice(start, start + MAX_CHARS)
+      if (size > 0 && size + part.length > MAX_CHARS) {
+        pieces.push({ path: section.path, text: buffer.join('\n\n') })
+        buffer = []
+        size = 0
+      }
+      buffer.push(part)
+      size += part.length
     }
-    buffer.push(paragraph)
-    size += paragraph.length
   }
   if (buffer.length > 0) {
     pieces.push({ path: section.path, text: buffer.join('\n\n') })
@@ -152,7 +156,7 @@ const documents = sectionize(source)
     }
   })
 
-const client = new MeiliSearch({
+const client = new Meilisearch({
   host: process.env.MEILISEARCH_URL,
   apiKey: process.env.MEILISEARCH_KEY,
 })

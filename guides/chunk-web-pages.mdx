@@ -79,7 +79,7 @@ This script fetches pages, strips chrome, chunks on headings, indexes into Meili
 
 import { createHash } from 'node:crypto'
 import * as cheerio from 'cheerio'
-import { MeiliSearch } from 'meilisearch'
+import { Meilisearch } from 'meilisearch'
 
 const PAGES = [
   'https://example.com/docs/getting-started',
@@ -141,7 +141,7 @@ function chunkPage(html, requestedUrl) {
   return documents
 }
 
-const client = new MeiliSearch({
+const client = new Meilisearch({
   host: process.env.MEILISEARCH_URL,
   apiKey: process.env.MEILISEARCH_KEY,
 })

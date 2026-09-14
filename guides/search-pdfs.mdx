@@ -43,7 +43,7 @@ This script takes a PDF path, extracts each page (falling back to OCR when the t
 # export MEILISEARCH_KEY="your-admin-api-key"
 # python search_pdfs.py contract.pdf
 
-import io, os, re, sys
+import hashlib, io, os, re, sys
 import meilisearch
 
 try:
@@ -65,9 +65,11 @@ def page_text(page):
     image = Image.open(io.BytesIO(pixmap.tobytes("png")))
     return pytesseract.image_to_string(image).strip()
 
-def chunk_pdf(path):
+def chunk_pdf(path, root="."):
     name = os.path.basename(path)
-    doc_id = re.sub(r"[^A-Za-z0-9_-]", "_", os.path.splitext(name)[0])[:200]
+    # derived from the path, not the filename: two directories can hold the same name
+    rel = os.path.splitext(os.path.relpath(path, root))[0]
+    doc_id = re.sub(r"[^A-Za-z0-9_-]", "_", rel)[-180:] + "_" + hashlib.sha1(rel.encode()).hexdigest()[:8]
     pdf = pymupdf.open(path)
     chunks, buffer, start_page, count = [], [], 1, 0
 
@@ -118,7 +120,7 @@ client.wait_for_task(task.task_uid)
 print(f"indexed {len(chunks)} chunks")
 ```
 
-Run it over a directory by looping the call to `chunk_pdf`, collecting every chunk list, and sending one `add_documents` batch per few tens of thousands of chunks rather than one request per file.
+Run it over a directory by looping the call to `chunk_pdf` with that directory as `root`, so every `doc_id` stays unique, collecting every chunk list, and sending one `add_documents` batch per few tens of thousands of chunks rather than one request per file.
 
 ## How to return a hit that opens the right page
 

@@ -49,6 +49,9 @@ import { generateText, tool, stepCountIs } from "ai";
 import { z } from "zod";
 
 const CURRENT_VERSION = "v3";
+// Releases the assistant may search. The tool validates against this list, so a
+// model-supplied value can never inject filter syntax.
+const VERSIONS = ["v3", "v2"] as const;
 
 const client = new Meilisearch({
   host: process.env.MEILISEARCH_URL,
@@ -115,7 +118,7 @@ const searchDocs = tool({
   inputSchema: z.object({
     query: z.string().describe("A natural language question or keywords."),
     version: z
-      .string()
+      .enum(VERSIONS)
       .default(CURRENT_VERSION)
       .describe("Release to search. Only change it if the user names a version."),
   }),

@@ -74,13 +74,13 @@ app.listen(3000)
 
 ```js
 // browser.js
-import { MeiliSearch } from 'meilisearch'
+import { Meilisearch } from 'meilisearch'
 
 async function getClient() {
   const { host, token } = await fetch('/api/search-token', {
     credentials: 'include'
   }).then((r) => r.json())
-  return new MeiliSearch({ host, apiKey: token })
+  return new Meilisearch({ host, apiKey: token })
 }
 
 const client = await getClient()

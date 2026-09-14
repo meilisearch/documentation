@@ -48,7 +48,7 @@ This script reads NDJSON records, runs deterministic enrichment (language detect
 
 import { readFile, mkdir, readdir, writeFile } from 'node:fs/promises'
 import { createHash } from 'node:crypto'
-import { MeiliSearch } from 'meilisearch'
+import { Meilisearch } from 'meilisearch'
 
 const CACHE_DIR = '.enrich-cache'
 // Bump this whenever the taxonomy or extraction rules change, so every
@@ -116,7 +116,7 @@ const before = (await readdir(CACHE_DIR)).length
 const lines = (await readFile(process.argv[2], 'utf8')).split('\n').filter(Boolean)
 const documents = await Promise.all(lines.map((line) => enrich(JSON.parse(line))))
 
-const client = new MeiliSearch({
+const client = new Meilisearch({
   host: process.env.MEILISEARCH_URL,
   apiKey: process.env.MEILISEARCH_KEY,
 })

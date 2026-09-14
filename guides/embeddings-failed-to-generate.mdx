@@ -79,13 +79,15 @@ The default is loud: one failure kills the batch. The experimental `MEILI_EXPERI
 
 That trade is often worth making for a bulk import, but it has a real consequence: documents with no embedding do not appear in semantic or hybrid results. Nothing errors, a slice of your catalog is just invisible to vector search. On Meilisearch Cloud, contact support to enable this flag.
 
-Whichever mode you run, find the gap the same way, using a [vector filter](/capabilities/filtering_sorting_faceting/advanced/filter_expression_syntax):
+With a failure mode enabled, the documents are in the index and you can find the gap with a [vector filter](/capabilities/filtering_sorting_faceting/advanced/filter_expression_syntax):
 
 ```
 NOT _vectors.products-openai EXISTS
 ```
 
 ## Backfill only the affected documents
+
+Which recovery you need depends on how the batch failed. After a default failed batch, the documents were never indexed, so no filter can find them: fix the cause above, then re-enqueue those documents from your own source data. The script below handles the other case, documents that a failure mode let through and indexed without embeddings.
 
 Do not re-import the whole index. Re-sending every document is billable with a paid provider and pointless for documents that already embedded correctly. Instead, select the documents with no embedding and update them with `_vectors.<embedder>.regenerate` set to `true`, which tells Meilisearch to [generate the embedding for that document on update](/capabilities/hybrid_search/how_to/search_with_user_provided_embeddings).
 

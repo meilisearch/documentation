@@ -25,13 +25,14 @@ Add these fields at ingestion time, alongside the fields you already carry for c
 
 | Field | Purpose |
 | --- | --- |
-| `content_hash` | A hash of the chunk text. The comparison key that decides whether to rewrite the document. |
+| `content_hash` | A hash of the chunk text **and** of every source-backed field stored beside it. The comparison key that decides whether to rewrite the document. |
 | `source_updated_at` | Unix timestamp from the source system, not from your crawler. This is what the agent quotes. |
-| `indexed_at` | Unix timestamp of the sync run that wrote the document. Use it to spot documents no run has touched recently. |
+| `indexed_at` | Unix timestamp of the sync run that last wrote the document. |
+| `last_seen_at` | Unix timestamp of the last run that saw the chunk at the source, whether or not it changed. Use it to spot documents no run has touched recently. |
 | `source_version` | The release, branch, or snapshot the chunk belongs to, for example `v1.52`. |
 | `source` | Which connector produced it, so you can resync one source without rebuilding the index. |
 
-`source_updated_at`, `indexed_at`, `source_version`, and `source` must be listed in [`filterableAttributes`](/capabilities/filtering_sorting_faceting/getting_started) before you can filter on them, and in `sortableAttributes` before you can sort by them. Timestamps as integers are safe here: Meilisearch [represents integers exactly between -2⁵³ and 2⁵³](/resources/help/known_limitations#size-of-integer-fields), which covers Unix seconds and milliseconds comfortably.
+`source_updated_at`, `indexed_at`, `last_seen_at`, `source_version`, and `source` must be listed in [`filterableAttributes`](/capabilities/filtering_sorting_faceting/getting_started) before you can filter on them, and in `sortableAttributes` before you can sort by them. Timestamps as integers are safe here: Meilisearch [represents integers exactly between -2⁵³ and 2⁵³](/resources/help/known_limitations#size-of-integer-fields), which covers Unix seconds and milliseconds comfortably.
 
 ## How to run an incremental sync
 
@@ -50,11 +51,11 @@ const index = client.index("kb_chunks");
 // One-time setup. Safe to leave in: re-sending identical settings is a no-op.
 await client.waitForTask(
   (await index.updateFilterableAttributes([
-    "doc_id", "source", "source_version", "source_updated_at", "indexed_at",
+    "doc_id", "source", "source_version", "source_updated_at", "indexed_at", "last_seen_at",
   ])).taskUid,
 );
 await client.waitForTask(
-  (await index.updateSortableAttributes(["source_updated_at", "indexed_at"])).taskUid,
+  (await index.updateSortableAttributes(["source_updated_at", "indexed_at", "last_seen_at"])).taskUid,
 );
 
 // 1. Page through the index and collect the hash of every stored chunk.
@@ -69,15 +70,25 @@ for (let offset = 0; ; offset += 1000) {
   for (const doc of results) stored.set(doc.id, doc.content_hash);
 }
 
-// 2. Walk the source of truth, keeping only chunks whose text actually changed.
+// 2. Walk the source of truth, keeping only chunks that actually changed.
 const now = Math.floor(Date.now() / 1000);
 const upserts = [];
+const touches = [];
 const seen = new Set();
 
 for await (const chunk of readSourceChunks()) { // your crawler, database query, or file walk
-  const contentHash = createHash("sha256").update(chunk.text).digest("hex");
+  // Hash every source-backed field you store, not just the text, so a moved URL
+  // or a bumped version is not silently skipped.
+  const contentHash = createHash("sha256")
+    .update(JSON.stringify([
+      chunk.text, chunk.url, chunk.source, chunk.version, chunk.updatedAt,
+    ]))
+    .digest("hex");
   seen.add(chunk.id);
-  if (stored.get(chunk.id) === contentHash) continue; // unchanged, skip the write
+  if (stored.get(chunk.id) === contentHash) {
+    touches.push({ id: chunk.id, last_seen_at: now }); // unchanged, but this run saw it
+    continue;
+  }
 
   upserts.push({
     id: chunk.id,
@@ -88,6 +99,7 @@ for await (const chunk of readSourceChunks()) { // your crawler, database query,
     source_version: chunk.version,
     source_updated_at: chunk.updatedAt, // from the source system, in Unix seconds
     indexed_at: now,
+    last_seen_at: now,
     content_hash: contentHash,
   });
 }
@@ -100,6 +112,9 @@ const tasks = [];
 for (let i = 0; i < upserts.length; i += 5000) {
   tasks.push(await index.addDocuments(upserts.slice(i, i + 5000)));
 }
+for (let i = 0; i < touches.length; i += 5000) {
+  tasks.push(await index.updateDocuments(touches.slice(i, i + 5000)));
+}
 if (removed.length > 0) tasks.push(await index.deleteDocuments(removed));
 
 for (const task of tasks) {
@@ -109,11 +124,11 @@ for (const task of tasks) {
 
 console.log(
   `${upserts.length} written, ${removed.length} deleted, ` +
-  `${seen.size - upserts.length} unchanged`,
+  `${touches.length} unchanged`,
 );
 ```
 
-`addDocuments` replaces each document completely, which is what you want when the chunk text is regenerated anyway. Use `updateDocuments` instead when you only want to merge a few fields into existing documents, for example stamping a new `source_version` without resending text. Be aware that a partial update applies to top-level fields only: updating an object field replaces that whole object. Both behaviors are spelled out in [add and update documents](/capabilities/indexing/how_to/add_and_update_documents).
+`addDocuments` replaces each document completely, which is what you want when the chunk text is regenerated anyway. Use `updateDocuments` instead when you only want to merge a few fields into existing documents, for example stamping a new `source_version` without resending text. Be aware that a partial update applies to top-level fields only: updating an object field replaces that whole object. Both behaviors are spelled out in [add and update documents](/capabilities/indexing/how_to/add_and_update_documents). The `last_seen_at` pass above is exactly that kind of partial update: it resends no text, so embeddings are not regenerated for unchanged chunks.
 
 If the corpus is too large to list every hash, scope the run with a filter instead. Fetch and compare one source at a time with `getDocuments({ filter: "source = 'handbook'" })`, and sweep deletions with a filtered delete, as described in [delete documents at scale](/capabilities/indexing/how_to/delete_documents_at_scale).
 
@@ -132,10 +147,10 @@ const { total } = await index.getDocuments({
 // Which chunks has no recent sync run touched? A non-empty result means
 // the crawler stopped seeing them without ever deleting them.
 const orphans = await index.getDocuments({
-  filter: `indexed_at < ${Math.floor(Date.now() / 1000) - 7 * 24 * 3600}`,
+  filter: `last_seen_at < ${Math.floor(Date.now() / 1000) - 7 * 24 * 3600}`,
   limit: 20,
-  sort: ["indexed_at:asc"],
-  fields: ["id", "url", "indexed_at"],
+  sort: ["last_seen_at:asc"],
+  fields: ["id", "url", "last_seen_at", "indexed_at"],
 });
 ```
 

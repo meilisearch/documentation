@@ -23,7 +23,7 @@ Use `rankingScoreThreshold` when an empty slate is better than a bad one. Withou
 Behavioral data is not something Meilisearch collects for you. You compute the pairs offline from your own event log, then store them where search can reach them. The shape that works is a second index of edges, one document per pair:
 
 ```json
-{ "id": "sku-1041::sku-2277", "source": "sku-1041", "target": "sku-2277", "strength": 0.81, "kind": "co_purchase" }
+{ "id": "sku-1041__sku-2277", "source": "sku-1041", "target": "sku-2277", "strength": 0.81, "kind": "co_purchase" }
 ```
 
 Make `source` and `kind` filterable and `strength` sortable, and one query returns the ranked behavioral neighbors of any item. The reason to use a separate index rather than an array field on the product is that pair strength is a property of the pair, not of the product: stored as an array on the product document, you can filter by it but you cannot sort by it, because [sorting](/capabilities/filtering_sorting_faceting/how_to/sort_results) reads a single value per document.
@@ -77,8 +77,8 @@ await client.waitForTask((await products.updateEmbedders({
 
 // Behavioral edges, computed offline from your own event log.
 await client.waitForTask((await edges.addDocuments([
-  { id: 'sku-1041::sku-2277', source: 'sku-1041', target: 'sku-2277', strength: 0.81, kind: 'co_purchase' },
-  { id: 'sku-1041::sku-3310', source: 'sku-1041', target: 'sku-3310', strength: 0.44, kind: 'co_view' },
+  { id: 'sku-1041__sku-2277', source: 'sku-1041', target: 'sku-2277', strength: 0.81, kind: 'co_purchase' },
+  { id: 'sku-1041__sku-3310', source: 'sku-1041', target: 'sku-3310', strength: 0.44, kind: 'co_view' },
 ])).taskUid)
 
 await client.waitForTask((await edges.updateSettings({
@@ -156,7 +156,7 @@ Dedicated recommendation services take the opposite approach: you send them even
 - `/similar` is not a valid query type inside `/multi-search`. Federated requests take search queries, so blend recommendations in with a semantic query or an explicit `vector`, not with a similar-documents call.
 - `federationOptions.weight` must be positive and defaults to `1.0`. A weight of `0.0` effectively excludes that query from the merged list.
 - There is one `distinctAttribute` per index, and changing it reindexes every document.
-- Individual `filterableAttributes` values are capped at 468 bytes, and filter expressions have a maximum depth of 200. Primary key values are capped at 511 bytes, which matters if you build edge ids by concatenating two product ids. See [known limitations](/resources/help/known_limitations).
+- Individual `filterableAttributes` values are capped at 468 bytes, and filter expressions have a maximum depth of 200. Primary key values accept only letters, digits, hyphens, and underscores, and are capped at 511 bytes, both of which matter if you build edge ids by concatenating two product ids. See [known limitations](/resources/help/known_limitations).
 - Searches return at most 1000 results by default, governed by the `maxTotalHits` pagination setting.
 - Changing an embedder's `source`, `model`, `documentTemplate`, or `dimensions` regenerates every embedding in the index, with the provider cost that implies. Plan template changes as batched work, not as live tuning.
 

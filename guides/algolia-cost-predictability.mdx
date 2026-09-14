@@ -92,13 +92,15 @@ const GIB = 1024 ** 3
 const stats = await client.getStats()
 
 let documents = 0
+let rawDocBytes = 0
 for (const index of Object.values(stats.indexes)) {
   documents += index.numberOfDocuments
+  rawDocBytes += index.rawDocumentDbSize
 }
 
-// Average document size measured from the live instance, not guessed.
-const avgDocBytes = documents ? stats.databaseSize / SIZE_MULTIPLIER / documents : 0
-const estimatedIndexGiB = (documents * avgDocBytes * SIZE_MULTIPLIER) / GIB
+// Raw document bytes measured from the live instance, then the x5 planning multiplier.
+const avgDocBytes = documents ? rawDocBytes / documents : 0
+const estimatedIndexGiB = (rawDocBytes * SIZE_MULTIPLIER) / GIB
 const tier = TIERS.find(t => t.ramGiB > estimatedIndexGiB) ?? TIERS.at(-1)
 
 const searches = SESSIONS_PER_MONTH * QUERIES_PER_SESSION * INDEXES_PER_QUERY

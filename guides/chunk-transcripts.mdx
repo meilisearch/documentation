@@ -82,7 +82,7 @@ This script reads a diarized transcript as JSON, groups turns into windows, atta
 //               "text": "Let's start with the renewal pipeline." }] }
 
 import { readFile } from 'node:fs/promises'
-import { MeiliSearch } from 'meilisearch'
+import { Meilisearch } from 'meilisearch'
 
 const MAX_CHARS = 1200        // size cap for one window
 const MAX_SECONDS = 90        // duration cap for one window
@@ -146,7 +146,7 @@ const documents = windowize(turns).map((window, position) => {
   }
 })
 
-const client = new MeiliSearch({
+const client = new Meilisearch({
   host: process.env.MEILISEARCH_URL,
   apiKey: process.env.MEILISEARCH_KEY,
 })

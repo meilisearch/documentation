@@ -5,7 +5,7 @@ keywords: multilingual embedding model, cross lingual search, query in english d
 boost: 2
 ---
 
-For most applications the right answer is one multilingual model over one index, not one model per language. An embedding model that was trained on many languages places "red shoes", "chaussures rouges", and "rote Schuhe" near each other in the same vector space, so a single index serves every language and cross-language queries work for free. Concrete starting points documented for Meilisearch are Cohere `embed-multilingual-light-v3.0` (384 dimensions), `intfloat/multilingual-e5-large` on HuggingFace (1,024), and Cohere `embed-v4.0` or Voyage `voyage-4` when quality matters more than cost. The part that genuinely does need splitting by language is the keyword side, not the vector side, and that distinction drives every decision below.
+For most applications the right answer is one multilingual model over one index, not one model per language. An embedding model that was trained on many languages places "red shoes", "chaussures rouges", and "rote Schuhe" near each other in the same vector space, so a single index serves every language and cross-language queries work for free. Concrete starting points documented for Meilisearch are Cohere `embed-multilingual-light-v3.0` (384 dimensions), `intfloat/multilingual-e5-large` on Hugging Face (1,024), and Cohere `embed-v4.0` or Voyage `voyage-4` when quality matters more than cost. The part that genuinely does need splitting by language is the keyword side, not the vector side, and that distinction drives every decision below.
 
 ## Which models hold up outside English
 
@@ -20,8 +20,8 @@ These are the multilingual options documented for Meilisearch, with the dimensio
 | `embed-v4.0` | Cohere via `rest` | 256, 512, 1,024, or 1,536 | Latest generation, text and images |
 | `voyage-4` / `voyage-4-large` | Voyage via `rest` | 256, 512, 1,024, or 2,048 | Strong general-purpose multilingual retrieval |
 | `jina-embeddings-v4` | Jina via `rest` | 128 to 2,048 | 32K context, multimodal |
-| `intfloat/multilingual-e5-large` | HuggingFace | 1,024 | Open weights, no per-request cost |
-| `paraphrase-multilingual-MiniLM-L12-v2` | HuggingFace | 384 | Lightweight, runs locally |
+| `intfloat/multilingual-e5-large` | Hugging Face | 1,024 | Open weights, no per-request cost |
+| `paraphrase-multilingual-MiniLM-L12-v2` | Hugging Face | 384 | Lightweight, runs locally |
 | `@cf/qwen/qwen3-embedding-0.6b` | Cloudflare via `rest` | 1,024 | Edge network, low query latency |
 
 Everything named `-en-`, `english`, or `bge-*-en-v1.5` is English-only and will degrade on other languages. {/* VERIFY: whether OpenAI text-embedding-3-small and -3-large should be listed as multilingual; they are trained on multiple languages but quality by language is not published per language */}

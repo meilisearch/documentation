@@ -93,7 +93,7 @@ const task = await index.updateSettings({
   searchableAttributes: ['name', 'brand', 'category', 'description'],
   filterableAttributes: [
     {
-      attributePatterns: ['category', 'brand'],
+      attributePatterns: ['category', 'brand', 'in_stock'],
       features: { facetSearch: true, filter: { equality: true, comparison: false } },
     },
     {

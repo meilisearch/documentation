@@ -12,9 +12,9 @@ A document you can fetch by its primary key but cannot find by searching is bein
 This script answers "indexing or search" and then narrows the search half to a single cause. It needs an admin key, because settings and tasks are not readable with a search key.
 
 ```javascript
-import { MeiliSearch } from 'meilisearch'
+import { Meilisearch } from 'meilisearch'
 
-const client = new MeiliSearch({
+const client = new Meilisearch({
   host: process.env.MEILISEARCH_URL,
   apiKey: process.env.MEILISEARCH_API_KEY,
 })

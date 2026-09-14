@@ -77,7 +77,6 @@
     },
     {
       "tab": "Guides",
-      "icon": "book-open",
       "groups": [
         {
           "group": "Overview",
@@ -1191,14 +1190,5 @@
         "changelog/changelog"
       ]
     }
-  ],
-  "global": {
-    "anchors": [
-      {
-        "anchor": "Guides",
-        "icon": "book-open",
-        "href": "/guides/overview"
-      }
-    ]
-  }
+  ]
 }

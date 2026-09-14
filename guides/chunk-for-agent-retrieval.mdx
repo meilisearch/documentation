@@ -71,7 +71,7 @@ This script splits a Markdown file on headings, caps oversized sections at a par
 
 import { readFile } from 'node:fs/promises'
 import { basename } from 'node:path'
-import { MeiliSearch } from 'meilisearch'
+import { Meilisearch } from 'meilisearch'
 
 const MAX_CHARS = 1400            // about 350 tokens per chunk
 const CONTEXT_BUDGET = 8000       // about 2000 tokens of retrieved context
@@ -144,7 +144,7 @@ const documents = sectionize(source)
     }
   })
 
-const client = new MeiliSearch({
+const client = new Meilisearch({
   host: process.env.MEILISEARCH_URL,
   apiKey: process.env.MEILISEARCH_KEY,
 })

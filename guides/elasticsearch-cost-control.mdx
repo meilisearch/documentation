@@ -42,7 +42,7 @@ Meilisearch stores data in [LMDB, a memory-mapped key-value store](/resources/in
 
 On [Meilisearch Cloud](/capabilities/platform/billing/pricing_model), resource-based projects bill compute hourly by tier, disk at $0.165 per GiB with a 32 GB minimum, and bandwidth at $0.15 per GB. Tier sizing is driven by index size, estimated as `documents x average document size x 5`, where the multiplier covers the inverted index, facet data, and prefix structures.
 
-The script below audits an existing instance: it reports per-index disk footprint, flags reclaimable space, recommends a tier, and estimates the disk and bandwidth portion of a monthly bill.
+The script below audits an existing instance: it reports per-index disk footprint, flags reclaimable space, recommends a tier, and estimates the disk and bandwidth portion of a monthly bill. It is read-only by default and only prints its findings; pass `--compact` to also enqueue compaction on the indices it flags.
 
 ```javascript
 // npm install meilisearch   (Node.js 18+, for global fetch)
@@ -53,6 +53,7 @@ import { Meilisearch } from 'meilisearch'
 const HOST = process.env.MEILISEARCH_URL
 const KEY = process.env.MEILISEARCH_KEY
 const client = new Meilisearch({ host: HOST, apiKey: KEY })
+const COMPACT = process.argv.includes('--compact') // audit is read-only without it
 
 const GIB = 1024 ** 3
 const DISK_USD_PER_GIB = 0.165   // Cloud resource-based projects
@@ -80,7 +81,9 @@ for (const [uid, i] of Object.entries(stats.indexes)) {
     `${pct.toFixed(0).padStart(5)}%`
   )
   // Compaction is a normal task and reclaims space one index at a time.
-  if (pct > 30) {
+  if (pct > 30 && !COMPACT) {
+    console.log(`  -> compaction recommended (re-run with --compact)`)
+  } else if (pct > 30) {
     const res = await fetch(`${HOST}/indexes/${uid}/compact`, {
       method: 'POST',
       headers: { Authorization: `Bearer ${KEY}` }
