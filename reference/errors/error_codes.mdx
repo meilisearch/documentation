@@ -14,6 +14,13 @@ A key with this [`uid`](/reference/api/keys/get-api-key#response-uid) already ex
 
 The requested API key could not be found.
 
+## `bad_parameter`
+
+A parameter in the request is invalid, check the error message for more information.
+
+This error code is no longer emitted and can be found in tasks imported from a dump created using a previous version of Meilisearch.
+
+
 ## `bad_request`
 
 The request is invalid, check the error message for more information.
@@ -22,21 +29,41 @@ The request is invalid, check the error message for more information.
 
 The requested batch does not exist. Please ensure that you are using the correct [`uid`](/reference/api/batches/list-batches).
 
+## `chat_not_found`
+
+There is not configured chat corresponding to the specified workspace uid.
+
 ## `database_size_limit_reached`
 
 The requested database has reached its maximum size.
 
-## `document_fields_limit_reached`
-
-A document exceeds the [maximum limit of 65,536 attributes](/resources/help/known_limitations#maximum-number-of-attributes-per-document).
-
 ## `document_not_found`
 
-The requested document can't be retrieved. Either it doesn't exist, or the database was left in an inconsistent state.
+The requested document cannot be retrieved because it does not exist.
+
+## `dump_already_processing`
+
+This error code is no longer emitted and can be found in tasks imported from a dump created using a previous version of Meilisearch.
+
+## `dump_not_found`
+
+This error code is no longer emitted and can be found in tasks imported from a dump created using a previous version of Meilisearch.
 
 ## `dump_process_failed`
 
 An error occurred during the dump creation process. The task was aborted.
+
+## `duplicate_index_found`
+
+This error code is no longer emitted and can be found in tasks imported from a dump created using a previous version of Meilisearch.
+
+## `dynamic_search_rule_not_found`
+
+This error occurs when the provided `uid` does not correspond to any configured dynamic search rule.
+
+## `edit_documents_by_function_error`
+
+Could not compile the provided [`function`](/reference/api/documents/edit-documents-by-function#body-function) as RHAI code.
 
 ## `facet_search_disabled`
 
@@ -74,9 +101,9 @@ The [`uid`](/reference/api/keys/get-api-key#response-uid) field of an API key ca
 
 The [`updatedAt`](/reference/api/keys/get-api-key#response-updated-at) field of an API key cannot be modified.
 
-## `immutable_index_uid`
+## `immutable_index_created_at`
 
-The [`uid`](/reference/api/indexes/get-index) field of an index cannot be modified.
+The [`createdAt`](/reference/api/indexes/get-index) field of an index cannot be modified.
 
 ## `immutable_index_updated_at`
 
@@ -86,13 +113,42 @@ The [`updatedAt`](/reference/api/indexes/get-index) field of an index cannot be 
 
 You tried to modify a reserved [webhook](/reference/api/management/list-webhooks). Reserved webhooks are configured by Meilisearch Cloud and have `isEditable` set to `false`. Webhooks created with an instance option are also immutable.
 
+## `immutable_webhook_is_editable`
+
+You tried to manually set a webhook's `isEditable` field. Meilisearch automatically sets `isEditable` for all webhooks. Only reserved webhooks have `isEditable` set to `false`.
+
 ## `immutable_webhook_uuid`
 
 You tried to manually set a webhook `uuid`. Meilisearch automatically generates `uuid` for webhooks.
 
-## `immutable_webhook_is_editable`
+## `import_task_already_received`
 
-You tried to manually set a webhook's `isEditable` field. Meilisearch automatically sets `isEditable` for all webhooks. Only reserved webhooks have `isEditable` set to `false`.
+The proposed import task has already been received by this remote.
+
+This error occurs when a cluster of Meilisearch instances are rebalancing their documents,
+and an exporting instance re-exports the same documents multiple times for some reason (reboot, etc).
+
+
+## `import_task_unknown_remote`
+
+The proposed import task refers to a remote that is unknown to this Meilisearch instance.
+
+This error occurs when a cluster of Meilisearch instances are rebalancing their documents,
+and an exporting instance exports its documents using a remote name that is unexpected to this Meilisearch instance.
+
+Check the network configuration.
+
+## `import_task_without_network_task`
+
+The proposed import task was received by an instance that is not in the middle of rebalancing its documents.
+This error occurs when a cluster of Meilisearch instances are rebalancing their documents,
+and an exporting instance exports its documents to an unsuspecting remote.
+
+Check the network configuration.
+
+## `inconsistent_document_change_headers`
+
+This error code is no longer emitted and can be found in tasks imported from a dump created using a previous version of Meilisearch.
 
 ## `index_already_exists`
 
@@ -100,7 +156,7 @@ An index with this [`uid`](/reference/api/indexes/get-index) already exists, che
 
 ## `index_creation_failed`
 
-An error occurred while trying to create an index, check out our guide on [index creation](/resources/internals/indexes).
+This error code is no longer emitted and can be found in tasks imported from a dump created using a previous version of Meilisearch.
 
 ## `index_not_found`
 
@@ -113,6 +169,17 @@ The requested index already has a primary key that [cannot be changed](/resource
 ## `index_primary_key_multiple_candidates_found`
 
 [Primary key inference](/resources/internals/primary_key#meilisearch-guesses-your-primary-key) failed because the received documents contain multiple fields ending with `id`. Use the [update index endpoint](/reference/api/indexes/update-index) to manually set a primary key.
+
+## `index_primary_key_no_candidate_found`
+
+[Primary key inference](/resources/internals/primary_key#meilisearch-guesses-your-primary-key) failed as the received documents do not contain any fields ending with `id`. [Manually designate the primary key](/resources/internals/primary_key#setting-the-primary-key), or add some field ending with `id` to your documents.
+
+## `index_scoped_api_key_with_global_action`
+
+This errors occurs when calling an endpoint that requires a global API key with an API key that is scoped to a subset of index.
+
+Call the endpoint with an API key that has `"indexes": ["*"]`
+
 
 ## `internal`
 
@@ -154,39 +221,96 @@ The [`offset`](/reference/api/keys/list-api-keys) parameter is invalid. It shoul
 
 The given [`uid`](/reference/api/keys/get-api-key#response-uid) is invalid. The `uid` must follow the [uuid v4](https://www.sohamkamani.com/uuid-versions-explained) format.
 
-## `invalid_search_attributes_to_search_on`
+## `invalid_batch_uids`
 
-The value passed to [`attributesToSearchOn`](/reference/api/search/search-with-post#body-attributes-to-search-on) is invalid. `attributesToSearchOn` accepts an array of strings indicating document attributes. Attributes given to `attributesToSearchOn` must be present in the [`searchableAttributes` list](/capabilities/full_text_search/how_to/configure_displayed_attributes#the-searchableattributes-list).
+The [`batchUids`](/reference/api/tasks/list-tasks) parameter is invalid. It must be an array of positive integers.
 
-## `invalid_search_media`
+## `invalid_chat_completion_api_key`
 
-The value passed to [`media`](/reference/api/search/search-with-post#body-media) is not a valid JSON object.
+Invalid `apiKey` parameter. It should be a string.
 
-## `invalid_search_media_and_vector`
+## `invalid_chat_completion_api_version`
 
-The search query contains non-`null` values for both [`media`](/reference/api/search/search-with-post#body-media) and [`vector`](/reference/api/search/search-with-post#body-media). These two parameters are mutually exclusive, since `media` generates vector embeddings via the embedder configured in `hybrid`.
+Invalid API version for the chat completion. It should be a string.
 
-## `invalid_filter`
+## `invalid_chat_completion_base_api`
 
-The provided [filter expression](/capabilities/filtering_sorting_faceting/advanced/filter_expression_syntax) is invalid. This may happen if the filter syntax is malformed, uses an unsupported operator, or references an attribute not listed in [`filterableAttributes`](/reference/api/settings/get-filterableattributes).
+Invalid `baseUrl` parameter. It should be a valid URL to an LLM provider.
+
+## `invalid_chat_completion_deployment_id`
+
+Invalid `deploymentId` parameter.
+
+## `invalid_chat_completion_org_id`
+
+Invalid `orgId` parameter.
+
+## `invalid_chat_completion_pre_query_prompt`
+
+This error code is no longer emitted by Meilisearch.
+
+## `invalid_chat_completion_project_id`
+
+Invalid `projectId` parameter.
+
+## `invalid_chat_completion_prompts`
+
+This error code is no longer emitted by Meilisearch.
+
+## `invalid_chat_completion_search_description_prompt`
+
+Invalid `searchDescription` parameter. It should be a string.
+
+## `invalid_chat_completion_search_filter_param_prompt`
+
+Invalid `searchFilterParam` parameter. It should be a string.
+
+## `invalid_chat_completion_search_index_uid_param_prompt`
+
+Invalid `searchIndexUidParam` parameter. It should be a string.
+
+## `invalid_chat_completion_search_query_param_prompt`
+
+Invalid `searchQParam` parameter. It should be a string.
+
+## `invalid_chat_completion_source`
+
+This error code is no longer emitted by Meilisearch.
+
+## `invalid_chat_completion_system_prompt`
+
+Invalid system prompt. It should be a string.
+
+## `invalid_chat_setting_document_template`
+
+Rendering a document using the document template configured in the chat settings for this index failed. Make sure that the configured document template can render any document from the index.
 
 ## `invalid_content_type`
 
-The [Content-Type header](/reference/api/headers) is not supported by Meilisearch. Currently, Meilisearch only supports JSON, CSV, and NDJSON.
+The [Content-Type header](/reference/api/headers) is not supported by Meilisearch.
+
+- For document additions, Meilisearch supports JSON, CSV and NDJSON.
+- For other routes, Meilisearch expects JSON content.
+
 
 ## `invalid_document_csv_delimiter`
 
 The [`csvDelimiter`](/reference/api/documents/add-or-replace-documents) parameter is invalid. It should either be a string or [a single ASCII character](https://www.rfc-editor.org/rfc/rfc20).
 
-## `invalid_document_id`
+## `invalid_document_edition_context`
 
-The provided [document identifier](/resources/internals/primary_key#document-id) does not meet the format requirements. A document identifier must be of type integer or string, composed only of alphanumeric characters (a-z A-Z 0-9), hyphens (-), and underscores (_).
+The [`context`](/reference/api/documents/edit-documents-by-function#body-context) parameter is not an object.
+
+## `invalid_document_edition_function_filter`
+
+The [`filter`](/reference/api/documents/edit-documents-by-function#body-filter) parameter is not a valid Meilisearch filter.
 
 ## `invalid_document_fields`
 
 The [`fields`](/reference/api/documents/list-documents-with-get) parameter is invalid. It should be a string.
 
 ## `invalid_document_filter`
+
 
 This error occurs if:
 
@@ -196,21 +320,6 @@ This error occurs if:
 - The attribute used for filtering is not defined in the [`filterableAttributes` list](/reference/api/settings/get-filterableattributes)
 - The [filter expression](/capabilities/filtering_sorting_faceting/advanced/filter_expression_syntax) has a missing or invalid operator. [Read more about our supported operators](/capabilities/filtering_sorting_faceting/advanced/filter_expression_syntax)
 
-## `invalid_document_limit`
-
-The [`limit`](/reference/api/documents/list-documents-with-get) parameter is invalid. It should be an integer.
-
-## `invalid_document_offset`
-
-The [`offset`](/reference/api/documents/list-documents-with-get) parameter is invalid. It should be an integer.
-
-## `invalid_document_sort`
-
-This error occurs if:
-
-- The syntax for the [`sort`](/reference/api/documents/list-documents-with-post) parameter is invalid
-- The attribute used for sorting is not defined in the [`sortableAttributes`](/reference/api/settings/get-sortableattributes) list or the `sort` ranking rule is missing from the settings
-- A reserved keyword like `_geo`, `_geoDistance`, `_geoRadius`, or `_geoBoundingBox` is used as a filter
 
 ## `invalid_document_geo_field`
 
@@ -220,33 +329,166 @@ The provided `_geo` field of one or more documents is invalid. Meilisearch expec
 
 The `geojson` field in one or more documents is invalid or doesn't match the [GeoJSON specification](https://datatracker.ietf.org/doc/html/rfc7946).
 
-## `invalid_export_url`
+## `invalid_document_id`
 
-The export target instance URL is invalid or could not be reached.
+The provided [document identifier](/resources/internals/primary_key#document-id) does not meet the format requirements. A document identifier must be of type integer or string, composed only of alphanumeric characters (a-z A-Z 0-9), hyphens (-), and underscores (_).
+
+## `invalid_document_ids`
+
+The [`ids`](/reference/api/documents/list-documents-with-post#body-ids-one-of-0) parameter is invalid. It should be an array of valid document ids.
+
+## `invalid_document_limit`
+
+The [`limit`](/reference/api/documents/list-documents-with-get) parameter is invalid. It should be an integer.
+
+## `invalid_document_offset`
+
+The [`offset`](/reference/api/documents/list-documents-with-get) parameter is invalid. It should be an integer.
+
+## `invalid_document_retrieve`
+
+This error code is no longer emitted and can be found in tasks imported from a dump created using a previous version of Meilisearch.
+
+## `invalid_document_retrieve_vectors`
+
+The [`retrieveVectors`](/reference/api/documents/list-documents-with-get#parameter-retrieve-vectors) parameter is invalid. It should be a boolean.
+
+## `invalid_document_sort`
+
+
+This error occurs if:
+
+- The syntax for the [`sort`](/reference/api/documents/list-documents-with-post) parameter is invalid
+- The attribute used for sorting is not defined in the [`sortableAttributes`](/reference/api/settings/get-sortableattributes) list or the `sort` ranking rule is missing from the settings
+- A reserved keyword like `_geo`, `_geoDistance`, `_geoRadius`, or `_geoBoundingBox` is used as a filter
+
+
+## `invalid_document_use_network`
+
+The [`useNetwork`](/reference/api/documents/get-document#parameter-use-network) parameter is invalid. It should be a boolean.
+
+## `invalid_dynamic_search_rule_actions`
+
+The [`actions`](/reference/api/search-rules/create-or-update-a-search-rule#body-actions-one-of-0) parameter is invalid.
+
+## `invalid_dynamic_search_rule_active`
+
+The [`active`](/reference/api/search-rules/create-or-update-a-search-rule#body-active-one-of-0) parameter is invalid. It should be a boolean.
+
+## `invalid_dynamic_search_rule_conditions`
+
+The [`conditions`](/reference/api/search-rules/create-or-update-a-search-rule#body-conditions-one-of-1) parameter is invalid.
+
+## `invalid_dynamic_search_rule_description`
+
+The [`description`](/reference/api/search-rules/create-or-update-a-search-rule#body-description-one-of-0) parameter is invalid. It should be a string.
+
+## `invalid_dynamic_search_rule_filter`
+
+The [`filter`](/reference/api/search-rules/list-search-rules#body-filter-one-of-1) parameter is invalid.
+
+## `invalid_dynamic_search_rule_filter_active`
+
+The [`filter.active`](/reference/api/search-rules/list-search-rules#body-filter-one-of-1-active-one-of-0) parameter is invalid. It should be a boolean
+
+## `invalid_dynamic_search_rule_filter_query`
+
+The [`filter.query`](/reference/api/search-rules/list-search-rules#body-filter-one-of-1-query-one-of-0) parameter is invalid. It should be a string.
+
+## `invalid_dynamic_search_rule_limit`
+
+The [`limit`](/reference/api/search-rules/list-search-rules#body-limit) parameter is invalid. It should be a positive integer.
+
+## `invalid_dynamic_search_rule_offset`
+
+The [`offset`](/reference/api/search-rules/list-search-rules#body-offset) parameter is invalid. It should be a positive integer.
+
+## `invalid_dynamic_search_rule_priority`
+
+The [`precedence`](/reference/api/search-rules/create-or-update-a-search-rule#body-precedence-one-of-0) parameter is invalid. It should be a positive number
 
 ## `invalid_export_api_key`
 
 The supplied security key does not have the required permissions to access the target instance.
 
-## `invalid_export_payload_size`
+## `invalid_export_index_filter`
 
-The provided payload size is invalid. The payload size must be a string indicating the maximum payload size in a human-readable format.
+The provided index export filter is not a valid [filter expression](/capabilities/filtering_sorting_faceting/advanced/filter_expression_syntax).
+
+## `invalid_export_index_override_settings`
+
+The [`indexes[].overrideSettings`](/reference/api/export/export-to-a-remote-meilisearch#body-indexes-one-of-0-additional-properties-override-settings-one-of-0) parameter is invalid. It should be a boolean.
 
 ## `invalid_export_indexes_patterns`
 
 The provided index pattern is invalid. The index pattern must be an alphanumeric string, optionally including a wildcard.
 
-## `invalid_export_index_filter`
+## `invalid_export_payload_size`
 
-The provided index export filter is not a valid [filter expression](/capabilities/filtering_sorting_faceting/advanced/filter_expression_syntax).
+The provided payload size is invalid. The payload size must be a string indicating the maximum payload size in a human-readable format.
+
+## `invalid_export_url`
+
+The export target instance URL is invalid or could not be reached.
+
+If the target instance URL is in your private network, please check that it [resolves to an IP in an allowed range](/resources/self_hosting/sharding/manage_network#private-network-security).
+
+
+## `invalid_facet_search_exhaustive_facet_count`
+
+The [`exhaustiveFacetCount`](/reference/api/facet-search/search-for-facet-values#body-exhaustive-facet-count-one-of-0) parameter is invalid. It should be a boolean.
 
 ## `invalid_facet_search_facet_name`
 
 The attribute used for the `facetName` field is either not a string or not defined in the [`filterableAttributes` list](/reference/api/settings/get-filterableattributes).
 
-## `invalid_facet_search_facet_query`
+## `invalid_facet_search_name`
+
+This error code is no longer emitted by Meilisearch.
+
+## `invalid_facet_search_query`
 
 The provided value for `facetQuery` is invalid. It should either be a string or `null`.
+
+## `invalid_header_value`
+
+A header from this request has an unexpected value.
+
+## `invalid_index_custom_metadata`
+
+The [`customMetadata`](/reference/api/documents/add-or-replace-documents#parameter-custom-metadata) query parameter is invalid. It should be a string.
+
+## `invalid_index_fields_filter`
+
+Invalid [`filter`](/reference/api/indexes/list-index-fields#body-filter-one-of-1) parameter.
+
+## `invalid_index_fields_filter_attribute_patterns`
+
+Invalid [`filter.attributePatterns`](/reference/api/indexes/list-index-fields#body-filter-one-of-1-attribute-patterns-one-of-1) parameter. It should be an array of strings.
+
+## `invalid_index_fields_filter_displayed`
+
+Invalid [`filter.displayed](/reference/api/indexes/list-index-fields#body-filter-one-of-1-displayed-one-of-0) parameter. It should be a boolean.
+
+## `invalid_index_fields_filter_distinct`
+
+Invalid [`filter.distinct`](/reference/api/indexes/list-index-fields#body-filter-one-of-1-distinct-one-of-0) parameter. It should be a boolean.
+
+## `invalid_index_fields_filter_filterable`
+
+Invalid [`filter.filterable`](/reference/api/indexes/list-index-fields#body-filter-one-of-1-filterable-one-of-0) parameter. It should be a boolean.
+
+## `invalid_index_fields_filter_ranking_rule`
+
+Invalid [`filter.rankingRule`](/reference/api/indexes/list-index-fields#body-filter-one-of-1-ranking-rule-one-of-0) parameter. It should be a boolean.
+
+## `invalid_index_fields_filter_searchable`
+
+Invalid [`filter.searchable](/reference/api/indexes/list-index-fields#body-filter-one-of-1-searchable-one-of-0) parameter. It should be a boolean.
+
+## `invalid_index_fields_filter_sortable`
+
+Invalid [`filter.sortable`](/reference/api/indexes/list-index-fields#body-filter-one-of-1-sortable-one-of-0) parameter. It should be a boolean.
 
 ## `invalid_index_limit`
 
@@ -256,81 +498,131 @@ The [`limit`](/reference/api/indexes/list-all-indexes) parameter is invalid. It 
 
 The [`offset`](/reference/api/indexes/list-all-indexes) parameter is invalid. It should be an integer.
 
-## `invalid_index_uid`
-
-There is an error in the provided index format, check out our guide on [index creation](/resources/internals/indexes).
-
 ## `invalid_index_primary_key`
 
 The [`primaryKey`](/reference/api/indexes/swap-indexes) field is invalid. It should either be a string or set to `null`.
 
-## `invalid_multi_search_query_federated`
+## `invalid_index_uid`
 
-A multi-search query includes `federationOptions` but the top-level `federation` object is `null` or missing.
+There is an error in the provided index format, check out our guide on [index creation](/resources/internals/indexes).
 
-## `invalid_multi_search_query_pagination`
+## `invalid_multi_search_distinct`
 
-A multi-search query contains `page`, `hitsPerPage`, `limit` or `offset`, but the top-level federation object is not `null`.
-
-## `invalid_multi_search_query_position`
-
-`federationOptions.queryPosition` is not a positive integer.
-
-## `invalid_multi_search_weight`
-
-A multi-search query contains a negative value for `federated.weight`.
-
-## `invalid_multi_search_queries_ranking_rules`
-
-Two or more queries in a multi-search request have incompatible results.
-
-## `invalid_multi_search_facets`
-
-`federation.facetsByIndex.<INDEX_NAME>` contains a value that is not in the filterable attributes list.
-
-## `invalid_multi_search_sort_facet_values_by`
-
-`federation.mergeFacets.sortFacetValuesBy` is not a string or doesn't have one of the allowed values.
-
-## `invalid_multi_search_query_facets`
-
-A query in the queries array contains `facets` when federation is present and non-`null`.
-
-## `invalid_multi_search_merge_facets`
-
-`federation.mergeFacets`  is not an object or contains unexpected fields.
-
-## `invalid_multi_search_max_values_per_facet`
-
-`federation.mergeFacets.maxValuesPerFacet` is not a positive integer.
+This error occurs when both `federation.distinct` and `distinct` inside of a queries are specified. Remove one of these parameters
 
 ## `invalid_multi_search_facet_order`
 
 Two or more indexes have a different `faceting.sortFacetValuesBy` for the same requested facet.
 
+## `invalid_multi_search_facets`
+
+`federation.facetsByIndex.<INDEX_NAME>` contains a value that is not in the filterable attributes list.
+
 ## `invalid_multi_search_facets_by_index`
 
 `facetsByIndex` is not an object or contains unknown fields.
+
+## `invalid_multi_search_federated`
+
+The [`federation`](/reference/api/multi-search/perform-a-multi-search#body-federation-one-of-1) parameter is invalid. It should either be an object or set to `null`.
+
+## `invalid_multi_search_federation_options`
+
+This error occurs when a query inside of a federated search specifies both `useNetwork` and a non-`null` `federationOptions.remote`. Remove one of these parameters.
+
+## `invalid_multi_search_max_values_per_facet`
+
+`federation.mergeFacets.maxValuesPerFacet` is not a positive integer.
+
+## `invalid_multi_search_merge_facets`
+
+`federation.mergeFacets` is not an object or contains unexpected fields.
+
+## `invalid_multi_search_query_facets`
+
+A query in the queries array contains `facets` when federation is present and non-`null`.
+
+## `invalid_multi_search_query_pagination`
+
+A multi-search query contains `page`, `hitsPerPage`, `limit` or `offset`, but the top-level federation object is not `null`.
+
+## `invalid_multi_search_query_personalization`
+
+Using `.personalize` is not allowed in federated queries.
+
+## `invalid_multi_search_query_position`
+
+`federationOptions.queryPosition` is not a positive integer.
+
+## `invalid_multi_search_query_ranking_rules`
+
+Two or more queries in a multi-search request have incompatible results.
+
+## `invalid_multi_search_query_show_performance_details`
+
+[`showPerformanceDetails`](/reference/api/search/search-with-post#body-show-performance-details) was used at the search query level in a federated search. Use [`federation.showPerformanceDetails`](/reference/api/multi-search/perform-a-multi-search#body-federation-one-of-1-show-performance-details) in federated search requests.
 
 ## `invalid_multi_search_remote`
 
 `federationOptions.remote` is not `network.self` and is not a key in `network.remotes`.
 
-## `invalid_network_self`
+## `invalid_multi_search_weight`
 
-The [network object](/reference/api/network/get-network) contains a `self` that is not a string or `null`.
+A multi-search query contains a negative value for `federated.weight`.
+
+## `invalid_network_leader`
+
+The error occurs if:
+
+- The `leader` parameter is not a string.
+- The specified leader is not part of the declared remotes.
+- The specified leader is not `self`.
+
 
 ## `invalid_network_remotes`
 
 The [network object](/reference/api/network/get-network) contains a `remotes` that is not an object or `null`.
 
+## `invalid_network_search_api_key`
+
+One of the remotes in the [network object](/reference/api/network/get-network) contains a `searchApiKey` that is not a string or `null`.
+
+## `invalid_network_self`
+
+The [network object](/reference/api/network/get-network) contains a `self` that is not a string or `null`.
+
+## `invalid_network_shards`
+
+This error occurs if:
+
+- The [`shards`](/reference/api/experimental-features/configure-network-topology#body-shards-one-of-0) parameter is invalid. It must be an object or `null`.
+- The `shards` parameter contains at least one shard referencing an undeclared remote.
+- The `shards` parameter contains at least one shard referencing no remotes.
+
+
 ## `invalid_network_url`
 
 One of the remotes in the [network object](/reference/api/network/get-network) contains a `url` that is not a string.
 
-## `invalid_network_search_api_key`
+## `invalid_network_write_api_key`
 
-One of the remotes in the [network object](/reference/api/network/get-network) contains a `searchApiKey` that is not a string or `null`.
+One of the remotes in the [network object](/reference/api/network/get-network) contains a `writeApiKey` that is not a string or `null`.
+
+## `invalid_render_input`
+
+The [`input`](/reference/api/template/render-template#body-input-one-of-1) parameter is invalid.
+
+## `invalid_render_template`
+
+The [`template`](/reference/api/template/render-template#body-template) parameter is invalid.
+
+## `invalid_s_3_snapshot_parameters`
+
+Invalid [S3 snapshot configuration](/resources/self_hosting/configuration/reference#s3-options)
+
+## `invalid_s_3_snapshot_request`
+
+This Meilisearch instance sent a bad S3 snapshot request.
 
 ## `invalid_search_attributes_to_crop`
 
@@ -344,6 +636,10 @@ The [`attributesToHighlight`](/reference/api/search/search-with-post#body-attrib
 
 The [`attributesToRetrieve`](/reference/api/search/search-with-post#body-attributes-to-retrieve) parameter is invalid. It should be an array of strings, a string, or set to `null`.
 
+## `invalid_search_attributes_to_search_on`
+
+The value passed to [`attributesToSearchOn`](/reference/api/search/search-with-post#body-attributes-to-search-on) is invalid. `attributesToSearchOn` accepts an array of strings indicating document attributes. Attributes given to `attributesToSearchOn` must be present in the [`searchableAttributes` list](/capabilities/full_text_search/how_to/configure_displayed_attributes#the-searchableattributes-list).
+
 ## `invalid_search_crop_length`
 
 The [`cropLength`](/reference/api/search/search-with-post#body-crop-length) parameter is invalid. It should be an integer.
@@ -351,6 +647,14 @@ The [`cropLength`](/reference/api/search/search-with-post#body-crop-length) para
 ## `invalid_search_crop_marker`
 
 The [`cropMarker`](/reference/api/search/search-with-post#body-crop-marker) parameter is invalid. It should be a string or set to `null`.
+
+## `invalid_search_distinct`
+
+This error occurs if:
+
+- [`distinct`](/reference/api/search/search-with-post#body-distinct-one-of-0) is not a string.
+- The selected distinct attribute is not a filterable attribute.
+
 
 ## `invalid_search_embedder`
 
@@ -363,6 +667,7 @@ This error occurs if:
 - The [`facets`](/reference/api/search/search-with-post#body-facets) parameter is invalid. It should be an array of strings, a string, or set to `null`
 - The attribute used for faceting is not defined in the [`filterableAttributes` list](/reference/api/settings/get-filterableattributes)
 
+
 ## `invalid_search_filter`
 
 This error occurs if:
@@ -370,6 +675,7 @@ This error occurs if:
 - The syntax for the [`filter`](/reference/api/search/search-with-post#body-filter) parameter is invalid
 - The attribute used for filtering is not defined in the [`filterableAttributes` list](/reference/api/settings/get-filterableattributes)
 - A reserved keyword like `_geo`, `_geoDistance`, or `_geoPoint` is used as a filter
+
 
 ## `invalid_search_highlight_post_tag`
 
@@ -395,33 +701,33 @@ The [`limit`](/reference/api/search/search-with-post#body-limit) parameter is in
 
 The [`locales`](/reference/api/search/search-with-post#body-locales) parameter is invalid.
 
-## `invalid_settings_embedder`
-
-The [`embedders`](/reference/api/settings/get-embedders) index setting value is invalid.
-
-## `invalid_settings_facet_search`
-
-The [`facetSearch`](/reference/api/settings/get-facetsearch) index setting value is invalid.
-
-## `invalid_settings_localized_attributes`
-
-The [`localizedAttributes`](/reference/api/settings/get-localizedattributes) index setting value is invalid.
-
 ## `invalid_search_matching_strategy`
 
 The [`matchingStrategy`](/reference/api/search/search-with-post#body-matching-strategy) parameter is invalid. It should either be set to `last` or `all`.
+
+## `invalid_search_media`
+
+The value passed to [`media`](/reference/api/search/search-with-post#body-media) is not a valid JSON object.
+
+## `invalid_search_media_and_vector`
+
+The search query contains non-`null` values for both [`media`](/reference/api/search/search-with-post#body-media) and [`vector`](/reference/api/search/search-with-post#body-media). These two parameters are mutually exclusive, since `media` generates vector embeddings via the embedder configured in `hybrid`.
 
 ## `invalid_search_offset`
 
 The [`offset`](/reference/api/search/search-with-post#body-offset) parameter is invalid. It should be an integer.
 
-## `invalid_settings_prefix_search`
-
-The [`prefixSearch`](/reference/api/settings/get-prefixsearch) index setting value is invalid.
-
 ## `invalid_search_page`
 
 The [`page`](/reference/api/search/search-with-post#body-page) parameter is invalid. It should be an integer.
+
+## `invalid_search_personalize`
+
+[`personalize`](/reference/api/search/search-with-post#body-personalize-one-of-1) is not an object with the expected keys.
+
+## `invalid_search_personalize_user_context`
+
+The [`personalizeUserContext`](/reference/api/search/search-with-get#parameter-personalize-user-context) query parameter is invalid. It should be a string
 
 ## `invalid_search_q`
 
@@ -431,9 +737,29 @@ The [`q`](/reference/api/search/search-with-post#body-q) parameter is invalid. I
 
 The [`rankingScoreThreshold`](/reference/api/search/search-with-post#body-show-ranking-score-threshold) in a search or multi-search request is not a number between `0.0` and `1.0`.
 
+## `invalid_search_retrieve_vectors`
+
+The [`retrieveVectors`](/reference/api/search/search-with-post#body-retrieve-vectors) parameter is invalid. It should be a boolean.
+
+## `invalid_search_semantic_ratio`
+
+The [`hybrid.semanticRatio`](/reference/api/search/search-with-post#body-hybrid-one-of-1-semantic-ratio) parameter is invalid. It should be a number between 0.0 and 1.0
+
 ## `invalid_search_show_matches_position`
 
 The [`showMatchesPosition`](/reference/api/search/search-with-post#body-show-matches-position) parameter is invalid. It should either be a boolean or set to `null`.
+
+## `invalid_search_show_performance_details`
+
+[`showPerformanceDetails`](/reference/api/search/search-with-post#body-show-performance-details) is invalid. It should be a boolean.
+
+## `invalid_search_show_ranking_score`
+
+[`showRankingScore`](/reference/api/search/search-with-post#body-show-ranking-score) is invalid. It should be a boolean.
+
+## `invalid_search_show_ranking_score_details`
+
+[`showRankingScoreDetails`](/reference/api/search/search-with-post#body-show-ranking-score-details) is invalid. It should be a boolean.
 
 ## `invalid_search_sort`
 
@@ -443,6 +769,19 @@ This error occurs if:
 - The attribute used for sorting is not defined in the [`sortableAttributes`](/reference/api/settings/get-sortableattributes) list or the `sort` ranking rule is missing from the settings
 - A reserved keyword like `_geo`, `_geoDistance`, `_geoRadius`, or `_geoBoundingBox` is used as a filter
 
+
+## `invalid_search_use_network`
+
+[`useNetwork`](/reference/api/search/search-with-post#body-use-network-one-of-0) is invalid. It should be a boolean.
+
+## `invalid_search_vector`
+
+The [`vector`](/reference/api/search/search-with-post#body-vector-one-of-0) parameter is invalid. It should be an array of numbers.
+
+## `invalid_settings_dictionary`
+
+The value of the [dictionary](/reference/api/settings/update-dictionary) is invalid.
+
 ## `invalid_settings_displayed_attributes`
 
 The value of [displayed attributes](/capabilities/full_text_search/how_to/configure_displayed_attributes#displayed-fields) is invalid. It should be an empty array, an array of strings, or set to `null`.
@@ -451,21 +790,49 @@ The value of [displayed attributes](/capabilities/full_text_search/how_to/config
 
 The value of [distinct attributes](/capabilities/full_text_search/how_to/configure_distinct_attribute) is invalid. It should be a string or set to `null`.
 
-## `invalid_settings_faceting_sort_facet_values_by`
+## `invalid_settings_embedders`
 
-The value provided for the [`sortFacetValuesBy`](/reference/api/settings/get-faceting) object is incorrect. The accepted values are `alpha` or `count`.
+The [`embedders`](/reference/api/settings/get-embedders) index setting value is invalid.
 
-## `invalid_settings_faceting_max_values_per_facet`
+## `invalid_settings_facet_search`
 
-The value for the [`maxValuesPerFacet`](/reference/api/settings/get-faceting) field is invalid. It should either be an integer or set to `null`.
+The [`facetSearch`](/reference/api/settings/get-facetsearch) index setting value is invalid.
+
+## `invalid_settings_faceting`
+
+The [`faceting`](/reference/api/settings/update-faceting) index setting is invalid.
 
 ## `invalid_settings_filterable_attributes`
 
 The value of [filterable attributes](/reference/api/settings/get-filterableattributes) is invalid. It should be an empty array, an array of strings, or set to `null`.
 
+## `invalid_settings_foreign_keys`
+
+The value of [foreign keys](/reference/api/settings/update-foreignkeys) is invalid.
+
+## `invalid_settings_index_chat`
+
+The [chat](/reference/api/settings/update-chat) index settings are invalid.
+
+## `invalid_settings_localized_attributes`
+
+The [`localizedAttributes`](/reference/api/settings/get-localizedattributes) index setting value is invalid.
+
+## `invalid_settings_non_separator_tokens`
+
+The value of [non-separator tokens](/reference/api/settings/update-nonseparatortokens) is invalid.
+
 ## `invalid_settings_pagination`
 
 The value for the [`maxTotalHits`](/reference/api/settings/update-pagination) field is invalid. It should either be an integer or set to `null`.
+
+## `invalid_settings_prefix_search`
+
+The [`prefixSearch`](/reference/api/settings/get-prefixsearch) index setting value is invalid.
+
+## `invalid_settings_proximity_precision`
+
+[`proximityPrecision`](/reference/api/settings/update-proximityprecision#update-proximityprecision) does not have one of allowed values
 
 ## `invalid_settings_ranking_rules`
 
@@ -476,13 +843,18 @@ This error occurs if:
 - A custom ranking rule is malformed
 - A reserved keyword like `_geo`, `_geoDistance`, `_geoRadius`, `_geoBoundingBox`, or `_geoPoint` is used as a custom ranking rule
 
-## `invalid_settings_searchable_attributes`
-
-The value of [searchable attributes](/reference/api/settings/get-searchableattributes) is invalid. It should be an empty array, an array of strings or set to `null`.
 
 ## `invalid_settings_search_cutoff_ms`
 
 The specified value for [`searchCutoffMs`](/reference/api/settings/update-searchcutoffms) is invalid. It should be an integer indicating the cutoff in milliseconds.
+
+## `invalid_settings_searchable_attributes`
+
+The value of [searchable attributes](/reference/api/settings/get-searchableattributes) is invalid. It should be an empty array, an array of strings or set to `null`.
+
+## `invalid_settings_separator_tokens`
+
+The value of [separator tokens](/reference/api/settings/update-separatortokens) is invalid.
 
 ## `invalid_settings_sortable_attributes`
 
@@ -506,13 +878,6 @@ This error occurs if:
 - The [`minWordSizeForTypos`](/reference/api/settings/get-typotolerance) field is invalid. It should either be an integer or set to `null`
 - The value of either [`oneTypo`](/reference/api/settings/get-typotolerance) or [`twoTypos`](/reference/api/settings/get-typotolerance) is invalid. It should either be an integer or set to `null`
 
-## `invalid_similar_id`
-
-The provided target document identifier is invalid. A document identifier can be of type integer or string, only composed of alphanumeric characters (a-z A-Z 0-9), hyphens (-) and underscores (_).
-
-## `not_found_similar_id`
-
-Meilisearch could not find the target document. Make sure your target document identifier corresponds to a document in your index.
 
 ## `invalid_similar_attributes_to_retrieve`
 
@@ -528,6 +893,11 @@ Meilisearch could not find the target document. Make sure your target document i
 
 Meilisearch also throws this error if the attribute used for filtering is not defined in the `filterableAttributes` list.
 
+
+## `invalid_similar_id`
+
+The provided target document identifier is invalid. A document identifier can be of type integer or string, only composed of alphanumeric characters (a-z A-Z 0-9), hyphens (-) and underscores (_).
+
 ## `invalid_similar_limit`
 
 [`limit`](/reference/api/search/search-with-post#body-limit) is invalid. It should be an integer.
@@ -536,21 +906,44 @@ Meilisearch also throws this error if the attribute used for filtering is not de
 
 [`offset`](/reference/api/search/search-with-post#body-offset) is invalid. It should be an integer.
 
+## `invalid_similar_ranking_score_threshold`
+
+The [`rankingScoreThreshold`](/reference/api/search/search-with-post#body-show-ranking-score-threshold) in a similar documents request is not a number between `0.0` and `1.0`.
+
+## `invalid_similar_retrieve_vectors`
+
+The [`retrieveVectors`](/reference/api/similar-documents/get-similar-documents-with-post#body-retrieve-vectors) parameter is invalid. It should be a boolean.
+
+## `invalid_similar_show_performance_details`
+
+[`showPerformanceDetails`](/reference/api/similar-documents/get-similar-documents-with-get#parameter-show-performance-details) is invalid. It should be a boolean.
+
 ## `invalid_similar_show_ranking_score`
 
-[`ranking_score`](/reference/api/search/search-with-post#body-show-ranking-score) is invalid. It should be a boolean.
+[`showRankingScore`](/reference/api/search/search-with-post#body-show-ranking-score) is invalid. It should be a boolean.
 
 ## `invalid_similar_show_ranking_score_details`
 
 [`ranking_score_details`](/reference/api/search/search-with-post#body-show-ranking-score-details) is invalid. It should be a boolean.
 
-## `invalid_similar_ranking_score_threshold`
+## `invalid_skip_creation`
 
-The [`rankingScoreThreshold`](/reference/api/search/search-with-post#body-show-ranking-score-threshold) in a similar documents request is not a number between `0.0` and `1.0`.
+The [`skipCreation`](/reference/api/documents/add-or-replace-documents#parameter-skip-creation) query parameter is invalid. It should be a boolean.
 
 ## `invalid_state`
 
 The database is in an invalid state. Deleting the database and re-indexing should solve the problem.
+
+This error code is no longer emitted and can be found in tasks imported from a dump created using a previous version of Meilisearch.
+
+
+## `invalid_stats_show_internal_database_sizes`
+
+The [`showInternalDatabaseSizes`](/reference/api/indexes/get-stats-of-index#parameter-show-internal-database-sizes) query parameter is invalid. It should be a boolean.
+
+## `invalid_stats_size_format`
+
+The [`sizeFormat`](/reference/api/indexes/get-stats-of-index#parameter-size-format) query parameter is invalid.
 
 ## `invalid_store_file`
 
@@ -566,6 +959,11 @@ This error happens if:
 
 - The payload doesn't contain exactly two index [`uids`](/reference/api/indexes/swap-indexes) for a swap operation
 - The payload contains an invalid index name in the [`indexes`](/reference/api/indexes/swap-indexes) array
+
+
+## `invalid_swap_rename`
+
+The [`rename`](/reference/api/indexes/swap-indexes#body-items-rename) parameter is invalid. It should be a boolean.
 
 ## `invalid_task_after_enqueued_at`
 
@@ -595,13 +993,17 @@ The [`beforeStartedAt`](/reference/api/tasks/list-tasks) query parameter is inva
 
 The [`canceledBy`](/reference/api/tasks/list-tasks) query parameter is invalid. It should be an integer. Multiple `uid`s should be separated by commas (`,`).
 
-## `invalid_task_index_uids`
+## `invalid_task_from`
 
-The [`indexUids`](/reference/api/tasks/list-tasks) query parameter contains an invalid index uid.
+The [`from`](/reference/api/tasks/list-tasks) parameter is invalid. It must be a positive integer.
 
 ## `invalid_task_limit`
 
-The [`limit`](/reference/api/tasks/list-tasks) parameter is invalid. It must be an integer.
+The [`limit`](/reference/api/tasks/list-tasks) parameter is invalid. It must be a positive integer.
+
+## `invalid_task_reverse`
+
+The [`reverse`](/reference/api/tasks/list-tasks) parameter is invalid. It must be a boolean.
 
 ## `invalid_task_statuses`
 
@@ -615,33 +1017,46 @@ The requested task type is invalid. Please use one of the [possible values](/ref
 
 The [`uids`](/reference/api/tasks/list-tasks) query parameter is invalid.
 
-## `invalid_webhooks`
+## `invalid_vector_dimensions`
 
-The create webhook request did not contain a valid JSON payload. Meilisearch also returns this error when you try to create more than 20 webhooks.
+This error occurs:
 
-## `invalid_webhook_url`
+- When an embedder returns a vector whose dimensions are not consistent with the declared dimensions for this embedder. Check the declared dimensions for this embedder.
+- When a document contains a manually provided vector whose dimensions are not consistent with the declared dimensions for this embedder. Check the declared dimensions for this embedder and the vector associated to the document.
+- Internal: when attempting to insert a vector whose dimensions are not consistent with the dimensions of vectors in the vector store. Check the error message, and [open an issue](https://github.com/meilisearch/meilisearch/issues/new?assignees=&labels=&template=bug_report&title=) if necessary.
 
-The provided webhook URL isn’t a valid JSON string, is `null`, is missing, or its value cannot be parsed as a valid URL.
+
+## `invalid_vectors_type`
+
+The [`_vectors`](/capabilities/hybrid_search/how_to/search_with_user_provided_embeddings#add-documents-to-meilisearch) field of a document is invalid
 
 ## `invalid_webhook_headers`
 
 The provided webhook `headers` field is not a JSON object or not a valid HTTP header. Meilisearch also returns this error if you set more than 200 header fields for a single webhook.
 
+## `invalid_webhook_url`
+
+The provided webhook URL isn’t a valid JSON string, is `null`, is missing, or its value cannot be parsed as a valid URL.
+
 ## `invalid_webhook_uuid`
 
-The provided webhook `uuid` is not a valid uuid v4 value.
+The provided webhook `uuid` is not a valid UUID.
+
+## `invalid_webhooks`
+
+The create webhook request did not contain a valid JSON payload. Meilisearch also returns this error when you try to create more than 20 webhooks.
 
 ## `io_error`
 
 This error generally occurs when the host system has no space left on the device or when the database doesn't have read or write access.
 
-## `index_primary_key_no_candidate_found`
-
-[Primary key inference](/resources/internals/primary_key#meilisearch-guesses-your-primary-key) failed as the received documents do not contain any fields ending with `id`. [Manually designate the primary key](/resources/internals/primary_key#setting-the-primary-key), or add some field ending with `id` to your documents.
-
 ## `malformed_payload`
 
 The [Content-Type header](/reference/api/headers) does not match the request body payload format or the format is invalid.
+
+## `max_fields_limit_exceeded`
+
+The index exceeds the [maximum limit of 65,536 attributes](/resources/help/known_limitations#maximum-number-of-attributes-per-index).
 
 ## `missing_api_key_actions`
 
@@ -661,25 +1076,34 @@ This error happens if:
 
 - The requested resources are protected with an API key that was not provided in the request header. Check our [security tutorial](/resources/self_hosting/security/basic_security) for more information
 
+
 ## `missing_content_type`
 
-The payload does not contain a [Content-Type header](/reference/api/headers). Currently, Meilisearch only supports JSON, CSV, and NDJSON.
+The payload does not contain a [Content-Type header](/reference/api/headers).
+
+- For document additions, Meilisearch supports JSON, CSV and NDJSON.
+- For other routes, Meilisearch expects JSON content.
+
+
+## `missing_document_edition_function`
+
+The [`function`](/reference/api/documents/edit-documents-by-function#body-function) parameter is missing.
 
 ## `missing_document_filter`
 
-This payload is missing the [`filter`](/reference/api/documents/delete-documents-by-filter) field.
+The [`filter`](/reference/api/documents/delete-documents-by-filter#body-filter) parameter is missing.
 
 ## `missing_document_id`
 
 A document does not contain any value for the required primary key, and is thus invalid. Check documents in the current addition for the invalid ones.
 
-## `missing_index_uid`
-
-The payload is missing the [`uid`](/reference/api/indexes/get-index) field.
-
 ## `missing_facet_search_facet_name`
 
 The [`facetName`](/reference/api/facet-search/search-for-facet-values) parameter is required.
+
+## `missing_index_uid`
+
+The payload is missing the [`uid`](/reference/api/indexes/get-index) field.
 
 ## `missing_master_key`
 
@@ -693,6 +1117,10 @@ One of the remotes in the [network object](/reference/api/network/get-network) d
 
 The Content-Type header was specified, but no request body was sent to the server or the request body is empty.
 
+## `missing_search_hybrid`
+
+The [`hybrid`](/reference/api/search/search-with-post#body-hybrid-one-of-1) parameter is missing when `vector` or `media` were provided.
+
 ## `missing_swap_indexes`
 
 The index swap payload is missing the [`indexes`](/reference/api/indexes/swap-indexes) object.
@@ -701,54 +1129,54 @@ The index swap payload is missing the [`indexes`](/reference/api/indexes/swap-in
 
 The [cancel tasks](/reference/api/tasks/cancel-tasks) and [delete tasks](/reference/api/tasks/delete-tasks) endpoints require one of the available query parameters.
 
+## `network_version_mismatch`
+
+The network version of the current task does not match the current version.
+
+Check that the sender belongs to the current network. Check the network configuration.
+
+## `network_version_too_old`
+
+The task could not be processed because its version was older than the current network version.
+
 ## `no_space_left_on_device`
+
 
 This error occurs if:
 
 - The host system partition reaches its maximum capacity and can no longer accept writes
 - The tasks queue reaches its limit and can no longer accept writes. You can delete tasks using the [delete tasks endpoint](/reference/api/tasks/delete-tasks) to continue write operations
+- While indexing, the temporary storage partition (for example, `/tmp`) ran out and can no longer accept writes
 
-## `not_found`
 
-The requested resources could not be found.
+## `not_found_similar_id`
+
+Meilisearch could not find the target document. Make sure your target document identifier corresponds to a document in your index.
+
+## `not_leader`
+
+The task was sent to a remote which is not the leader of the network. Send the task to the leader of the network.
 
 ## `payload_too_large`
 
 The payload sent to the server was too large. Check out this [guide](/resources/self_hosting/configuration/reference#payload-limit-size) to customize the maximum payload size accepted by Meilisearch.
 
-## `task_not_found`
+## `receive_import_finished_unknown_remote`
 
-The requested task does not exist. Please ensure that you are using the correct [`uid`](/reference/api/tasks/get-task).
+The proposed import finish signal refers to a remote that is unknown to this Meilisearch instance.
 
-## `too_many_open_files`
+This error occurs when a cluster of Meilisearch instances are rebalancing their documents,
+and an exporting instance exports its documents using a remote name that is unexpected to this Meilisearch instance.
 
-Indexing a large batch of documents, such as a JSON file over 3.5GB in size, can result in Meilisearch opening too many file descriptors. Depending on your machine, this might reach your system's default resource usage limits and trigger the `too_many_open_files` error. Use [`ulimit`](https://www.ibm.com/docs/en/aix/7.1?topic=u-ulimit-command) or a similar tool to increase resource consumption limits before running Meilisearch. For example, call `ulimit -Sn 3000` in a UNIX environment to raise the number of allowed open file descriptors to 3000.
-
-## `too_many_search_requests`
-
-You have reached the limit of concurrent search requests. You may configure it by relaunching your instance and setting a higher value to [`--experimental-search-queue-size`](/resources/self_hosting/configuration/overview).
-
-## `unretrievable_document`
-
-The document exists in store, but there was an error retrieving it. This probably comes from an inconsistent state in the database.
-
-## `vector_embedding_error`
-
-Error while generating embeddings. Common causes include:
-
-- **Provider unavailability**: The embedding provider service is temporarily down or unreachable. Most providers offer status pages to monitor the state of their services, such as OpenAI's https://status.openai.com/. Errors of this type usually include a message stating Meilisearch "could not reach embedding server".
-- **Invalid or expired API key**: The API key configured for your external embedding provider (OpenAI, Cohere, etc.) is incorrect, expired, or has exceeded its rate limit. Verify your key is valid and has sufficient quota.
-- **Misconfigured embedder settings**: The [`embedders`](/reference/api/settings/get-embedders) index setting contains incorrect values, such as a wrong model name, an invalid URL for a REST embedder, or missing required fields.
-- **Dimension mismatch**: The dimensions of the vectors provided or generated do not match the dimensions expected by the embedder configuration. Ensure the `dimensions` value in your embedder settings matches the output of your embedding model.
-- **Input too large**: The document content sent to the embedding provider exceeds the model's maximum token or input length. Consider reducing the size of your [`documentTemplate`](/capabilities/hybrid_search/advanced/document_template_best_practices) or limiting the attributes included in it.
-
-## `remote_bad_response`
-
-The remote instance answered with a response that this instance could not use as a federated search response.
+Check the network configuration.
 
 ## `remote_bad_request`
 
 The remote instance answered with `400 BAD REQUEST`.
+
+## `remote_bad_response`
+
+The remote instance answered with a response that this instance could not use as a federated search response.
 
 ## `remote_could_not_send_request`
 
@@ -756,7 +1184,7 @@ There was an error while sending the remote federated search request.
 
 ## `remote_invalid_api_key`
 
-The remote instance answered with `403 FORBIDDEN` or `401 UNAUTHORIZED` to this instance’s request. The configured search API key is either missing, invalid, or lacks the required search permission.
+The remote instance answered with `403 FORBIDDEN` or `401 UNAUTHORIZED` to this instance’s request. The configured API keys are either missing, invalid, or lack the required permissions.
 
 ## `remote_remote_error`
 
@@ -764,7 +1192,87 @@ The remote instance answered with `500 INTERNAL ERROR`.
 
 ## `remote_timeout`
 
-The proxy did not answer in the allocated time.
+The remote did not answer in the allocated time.
+
+## `render_document_not_found`
+
+The requested document was not found.
+
+## `requires_enterprise_edition`
+
+Using this feature requires the [Enterprise Edition](/resources/self_hosting/enterprise_edition) of Meilisearch.
+
+## `s_3_snapshot_server_error`
+
+The S3 server returned an HTTP 5xx error.
+
+## `task_file_not_found`
+
+The task requires a payload stored on disk, but it could not be opened.
+
+## `task_not_found`
+
+The requested task uid does not exist. Please ensure that you are using the correct `uid`.
+
+## `template_parsing_error`
+
+Could not parse the specified [document template](/getting_started/glossary#document-template)
+
+## `template_rendering_error`
+
+Could not render the specified [document template](/getting_started/glossary#document-template)
+
+## `too_many_open_files`
+
+Reached the maximum number of simultaneously opened files. Raise the OS' limit of open files.
+
+## `too_many_search_requests`
+
+This Meilisearch instance is currently experiencing a high volume of search requests. Retry later.
+
+## `too_many_vectors`
+
+A given document would have more than the accepted limit of embeddings for an embedder.
+
+## `unexpected_network_previous_remotes`
+
+The reserved field `previousRemotes` was used. Remove this field.
+
+## `unimplemented_external_function_calling`
+
+Custom tools are not yet supported in chat completion requests. Remove custom tools from the `tools` parameter.
+
+## `unimplemented_multi_choice_chat_completions`
+
+Unsupported value of the `n` parameter. The only supported value is `1`.
+
+## `unimplemented_non_streaming_chat_completions`
+
+Non-streaming chat completion is not implemented. Use the streaming variant.
+
+## `unknown_remote`
+
+Attempt to contact a remote that was not declared in the network configuration. Check the network configuration and the remote name in the request.
+
+## `unprocessed_network_task`
+
+One or multiple remotes of the network are already processing a network task. Cancel these tasks or let them finish processing before sending another network task.
+
+## `unretrievable_document`
+
+This error code is no longer emitted and can be found in tasks imported from a dump created using a previous version of Meilisearch.
+
+## `unretrievable_error_code`
+
+This error code is no longer emitted and can be found in tasks imported from a dump created using a previous version of Meilisearch.
+
+## `unsupported_media_type`
+
+The media type of the request is not supported.
+
+## `vector_embedding_error`
+
+The batch failed because one or more documents could not be embedded. Read the error message for specifics.
 
 ## `webhook_not_found`
 

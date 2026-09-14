@@ -91,20 +91,25 @@ The API reference is built from a Mintlify-ready OpenAPI file that includes inje
 
 The base spec is **Meilisearch’s OpenAPI file** from the [latest Meilisearch GitHub release](https://github.com/meilisearch/meilisearch/releases/latest). It is shipped as the asset `meilisearch-openapi.json` in that release.
 
-### Generate the OpenAPI Mintlify file
+### Generate the OpenAPI Mintlify and error code files
 
-1. **Fetch the latest OpenAPI file** from the Meilisearch release (writes to `assets/open-api/meilisearch-openapi.json`):
+1. **Fetch the latest OpenAPI and error code files** from the Meilisearch release (writes `meilisearch-*.json` in `assets/release-assets/`):
 
 ```bash
-npm run fetch-meilisearch-openapi-file
+npm run fetch-meilisearch-release-assets
 ```
 
 Optional: set `GITHUB_PAT` or `GH_TOKEN` for higher API rate limits.
 
-2. **Generate the Mintlify-ready file** (reads `assets/open-api/meilisearch-openapi.json`, injects code samples from this repo and SDK repos, cleans null descriptions; writes `assets/open-api/meilisearch-openapi-mintlify.json`):
+2. **Generate the Mintlify-ready file** (reads `assets/release-assets/meilisearch-openapi.json`, injects code samples from this repo and SDK repos, cleans null descriptions; writes `assets/release-assets/meilisearch-openapi-mintlify.json`):
 
 ```bash
 npm run generate-mintlify-openapi-file
+```
+3. **Generate the error code mdx file** (reads `assets/release-assets/meilisearch-error-codes.json` and outputs `reference/errors/error_codes.mdx`):
+
+```bash
+npm run generate-error-codes
 ```
 
 Optional: set `GITHUB_PAT` or `GH_TOKEN` when the script fetches SDK code sample files from GitHub.
@@ -117,9 +122,9 @@ It does the following:
 
 1. **Build code samples** — Runs `generate-code-sample-snippets-file`. If `snippets/` has changes, it commits and pushes them to `main` (which triggers a new Mintlify deployment). This keeps generated snippets in sync with `.code-samples.meilisearch.yaml` and the SDK repos.
 
-2. **Fetch OpenAPI file** *(only if `docs.json` has `internal-meili-fetch-automation: true`)* — Fetches the latest `meilisearch-openapi.json` from the Meilisearch GitHub release. If the file changed, it commits and pushes to `main`. To disable this (e.g. if the latest release OpenAPI causes issues), set the flag to `false` or update the OpenAPI file manually.
+2. **Fetch OpenAPI file** — Fetches the latest `meilisearch-openapi.json` from the Meilisearch GitHub release. If the file changed, it commits and pushes to `main`.
 
-3. **Generate and check Mintlify OpenAPI** *(same condition)* — Runs `generate-mintlify-openapi-file`, validates with `npx mint openapi-check`, then commits and pushes `meilisearch-openapi-mintlify.json` if it changed.
+3. **Generate and check Mintlify OpenAPI** — Runs `generate-mintlify-openapi-file`, validates with `npx mint openapi-check`, then commits and pushes `meilisearch-openapi-mintlify.json` if it changed.
 
 Each step commits separately so the history stays clear. Contributors don’t need to run these steps manually for normal edits; the workflow keeps code samples and OpenAPI files up to date after merges to `main`.
 

@@ -11,7 +11,7 @@
       "name": "MIT",
       "identifier": "MIT"
     },
-    "version": "1.53.0"
+    "version": "1.53.2"
   },
   "servers": [
     {
@@ -17857,6 +17857,7 @@
           "cs",
           "da",
           "de",
+          "cy",
           "el",
           "en",
           "eo",
@@ -17926,6 +17927,7 @@
           "ces",
           "dan",
           "deu",
+          "cym",
           "ell",
           "eng",
           "epo",

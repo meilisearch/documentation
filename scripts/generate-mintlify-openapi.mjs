@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 
 /**
- * Generates a Mintlify-ready OpenAPI file from assets/open-api/meilisearch-openapi.json.
+ * Generates a Mintlify-ready OpenAPI file from assets/release-assets/meilisearch-openapi.json.
  *
  * - Fetches code samples from the docs repo and SDK repos (.code-samples.meilisearch.yaml),
  *   maps them to OpenAPI operation keys (e.g. get_indexes), and injects x-codeSamples.
  * - Removes null or "null" description fields in tags (and nested objects) for Mintlify.
  *
- * Output: assets/open-api/meilisearch-openapi-mintlify.json
+ * Output: assets/release-assets/meilisearch-openapi-mintlify.json
  *
  * Optional: set GITHUB_TOKEN, GITHUB_PAT, or GH_TOKEN for higher rate limits when fetching SDK samples.
  */
@@ -19,7 +19,7 @@ import yaml from "js-yaml";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = path.resolve(__dirname, "..");
-const OPENAPI_DIR = path.join(REPO_ROOT, "assets", "open-api");
+const OPENAPI_DIR = path.join(REPO_ROOT, "assets", "release-assets");
 const SOURCE_OPENAPI = path.join(OPENAPI_DIR, "meilisearch-openapi.json");
 const TARGET_OPENAPI = path.join(OPENAPI_DIR, "meilisearch-openapi-mintlify.json");
 const LOCAL_CODE_SAMPLES = path.join(REPO_ROOT, ".code-samples.meilisearch.yaml");

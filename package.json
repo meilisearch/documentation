@@ -6,18 +6,18 @@
   "bugs": "https://github.com/meilisearch/documentation/issues",
   "dependencies": {
     "@octokit/rest": "^22.0.1",
-    "js-yaml": "^4.3.0",
+    "js-yaml": "^4.3.1",
     "node-fetch": "^2.7.0",
     "@anthropic-ai/sdk": "^0.39.0"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
-    "mint": "^4.2.715",
+    "mint": "^4.2.791",
     "typescript": "^5.0.0"
   },
   "scripts": {
     "generate-mintlify-openapi-file": "node scripts/generate-mintlify-openapi.mjs",
-    "fetch-meilisearch-openapi-file": "node scripts/fetch-meilisearch-openapi-file.mjs",
+    "fetch-meilisearch-release-assets": "node scripts/fetch-meilisearch-release-assets.mjs",
     "generate-code-sample-snippets-file": "node scripts/generate-code-sample-snippets.mjs",
     "check-unused-sdk-samples": "node scripts/check-unused-sdk-samples.mjs",
     "check-openapi-code-samples": "node scripts/check-openapi-code-samples.mjs",
@@ -25,6 +25,7 @@
     "check-code-samples-usage": "node scripts/check-code-samples-usage.mjs",
     "check-openapi-routes-coverage": "node scripts/check-openapi-routes-coverage.mjs",
     "generate-changelog": "npx tsx scripts/generate-changelog.ts",
+    "generate-error-codes": "node scripts/generate-error-codes.mjs",
     "check-broken-links": "node scripts/check-broken-links.mjs"
   }
 }

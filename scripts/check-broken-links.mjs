@@ -72,7 +72,7 @@ function buildValidPaths() {
   // 2. OpenAPI-generated reference pages
   //    Mintlify generates one page per operation: /docs/reference/api/<tag-slug>/<summary-slug>
   //    This matches the pattern observed in the live sitemap.
-  const openapiPath = path.join(REPO_ROOT, "assets/open-api/meilisearch-openapi-mintlify.json");
+  const openapiPath = path.join(REPO_ROOT, "assets/release-assets/meilisearch-openapi-mintlify.json");
   if (fs.existsSync(openapiPath)) {
     const openapi = JSON.parse(fs.readFileSync(openapiPath, "utf-8"));
     for (const [, methods] of Object.entries(openapi.paths || {})) {

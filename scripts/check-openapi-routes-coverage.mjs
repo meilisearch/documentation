@@ -13,7 +13,7 @@ import { resolve, dirname } from "path";
 
 const OPENAPI_PATH = resolve(
   process.cwd(),
-  process.argv[2] || "assets/open-api/meilisearch-openapi-mintlify.json"
+  process.argv[2] || "assets/release-assets/meilisearch-openapi-mintlify.json"
 );
 const DOCS_JSON_PATH = resolve(
   process.cwd(),
