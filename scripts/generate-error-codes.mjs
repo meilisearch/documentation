@@ -5,7 +5,7 @@ import { fileURLToPath } from "url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = path.resolve(__dirname, "..");
 
-const RELEASE_ASSETS_DIR = path.join(REPO_ROOT, "assets", "release-assets");
+const RELEASE_ASSETS_DIR = path.join(REPO_ROOT, "assets", "engine-release-assets");
 const SOURCE_ERROR_CODES = path.join(RELEASE_ASSETS_DIR, "meilisearch-error-codes.json");
 const TARGET_ERROR_CODES = path.join(REPO_ROOT, "reference", "errors", "error_codes.mdx");
 
