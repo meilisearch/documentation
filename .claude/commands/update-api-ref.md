@@ -2,9 +2,9 @@ Update the API reference documentation from the OpenAPI spec.
 
 ## Steps
 
-1. **Fetch the latest release assets** (OpenAPI spec and error codes) from the Meilisearch repository:
+1. **Fetch the latest assets** (OpenAPI spec and error codes from the Meilisearch repository, and the Meilisearch Cloud OpenAPI spec from the private meilisearch-cloud repository; the latter requires `GITHUB_PAT` or `GH_TOKEN`):
    ```
-   npm run fetch-meilisearch-release-assets
+   npm run fetch-assets
    ```
 
 2. **Generate the error codes page** (regenerates `reference/errors/error_codes.mdx` from the newly fetched `meilisearch-error-codes.json`):
