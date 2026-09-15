@@ -107,7 +107,7 @@ This is the default configuration of Meilisearch's ranking rules:
 Placing `"sort"` ranking rule higher in the list will emphasize exhaustive sorting over relevant sorting: your results will more closely follow the sorting order your user chose, but will not be as relevant.
 
 <Tip>
-Sorting applies equally to all documents. Meilisearch does not offer native support for promoting, pinning, and boosting specific documents so they are displayed more prominently than other search results. Consult these Meilisearch blog articles for workarounds on [implementing promoted search results with React InstantSearch](https://blog.meilisearch.com/promoted-search-results-with-react-instantsearch) and [document boosting](https://blog.meilisearch.com/document-boosting).
+Sorting applies equally to all documents. For promoting, pinning, and boosting specific documents so they are displayed more prominently than other search results, use [search rules](/capabilities/search_rules/overview). They pin selected documents at fixed positions in search results when query- or time-based conditions match.
 </Tip>
 
 #### Example
