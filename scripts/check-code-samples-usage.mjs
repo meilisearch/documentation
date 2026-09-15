@@ -23,7 +23,7 @@ const YAML_PATH = path.join(ROOT, '.code-samples.meilisearch.yaml');
 const OPENAPI_PATH = path.join(
   ROOT,
   'assets',
-  'release-assets',
+  'engine-release-assets',
   'meilisearch-openapi-mintlify.json'
 );
 
