@@ -3876,6 +3876,10 @@
     "destination": "/capabilities/filtering_sorting_faceting/overview"
   },
   {
+    "source": "/learn/filtering_and_sorting/facets_vs_filters",
+    "destination": "/capabilities/filtering_sorting_faceting/overview"
+  },
+  {
     "source": "/resources/self_hosting/known_limitations",
     "destination": "/resources/self_hosting/overview"
   },
