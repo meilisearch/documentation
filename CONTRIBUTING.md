@@ -128,11 +128,11 @@ The docs are deployed by Mintlify when changes are pushed to `main`. After each 
 
 It does the following:
 
-1. **Build code samples** — Runs `generate-code-sample-snippets-file`. If `snippets/` has changes, it commits and pushes them to `main` (which triggers a new Mintlify deployment). This keeps generated snippets in sync with `.code-samples.meilisearch.yaml` and the SDK repos.
+1. **Build code samples**: Runs `generate-code-sample-snippets-file`. If `snippets/` has changes, it commits and pushes them to `main` (which triggers a new Mintlify deployment). This keeps generated snippets in sync with `.code-samples.meilisearch.yaml` and the SDK repos.
 
-2. **Fetch assets** — Fetches the latest `meilisearch-openapi.json` and `meilisearch-error-codes.json` from the Meilisearch GitHub release, and the Meilisearch Cloud OpenAPI spec (`assets/cloud-assets/meilisearch-cloud-openapi.yaml`) from the private `meilisearch-cloud` repository. Each changed file is committed separately and pushed to `main`. The Cloud spec is validated with `npx mint openapi-check` before being committed.
+2. **Fetch assets**: Fetches the latest `meilisearch-openapi.json` and `meilisearch-error-codes.json` from the Meilisearch GitHub release, and the Meilisearch Cloud OpenAPI spec (`assets/cloud-assets/meilisearch-cloud-openapi.yaml`) from the private `meilisearch-cloud` repository. Each changed file is committed separately and pushed to `main`. The Cloud spec is validated with `npx mint openapi-check` before being committed.
 
-3. **Generate and check Mintlify OpenAPI** — Runs `generate-mintlify-openapi-file` for the engine spec (with code samples) and the Cloud spec (without), validates both with `npx mint openapi-check`, then commits and pushes each generated file separately if it changed.
+3. **Generate and check Mintlify OpenAPI**: Runs `generate-mintlify-openapi-file` for the engine spec (with code samples) and the Cloud spec (without), validates both with `npx mint openapi-check`, then commits and pushes each generated file separately if it changed.
 
 Each step commits separately so the history stays clear. Contributors don’t need to run these steps manually for normal edits; the workflow keeps code samples and OpenAPI files up to date after merges to `main`.
 
