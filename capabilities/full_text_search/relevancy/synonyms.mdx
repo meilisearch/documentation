@@ -188,7 +188,7 @@ If any synonyms for a term contain more than one word, the sum of all words acro
 
 ## Typo tolerance and synonyms
 
-Meilisearch looks up synonyms using the search terms exactly as the user typed them. [Typo tolerance](/capabilities/full_text_search/relevancy/typo_tolerance_settings) does not apply to this lookup.
+Meilisearch looks up synonyms using normalized search terms. [Typo tolerance](/capabilities/full_text_search/relevancy/typo_tolerance_settings) does not apply to this lookup.
 
 Suppose you configure `San Francisco` and `SF` as synonyms:
 
@@ -224,7 +224,7 @@ To make this kind of synonym work, add the term to the [dictionary](/capabilitie
 
 </CodeGroup>
 
-After a reindex, `S.W.A.T.` counts as one word. A synonym between `S.W.A.T.` and `swat` now resolves in both directions.
+After a reindex, `S.W.A.T.` counts as one word. A mutually associated synonym between `S.W.A.T.` and `swat` now resolves in both directions.
 
 ## Synonyms and search performance
 
