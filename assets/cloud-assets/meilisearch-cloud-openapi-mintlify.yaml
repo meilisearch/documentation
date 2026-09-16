@@ -1,0 +1,42 @@
+openapi: 3.0.1
+info:
+  title: Meilisearch Cloud API V2
+  version: v2
+paths:
+  /api/v2/me:
+    get:
+      summary: Retrieves the authenticated user identity
+      tags:
+        - Me
+      security:
+        - personal_access_token: []
+      responses:
+        '200':
+          description: current user identity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  email:
+                    type: string
+                required:
+                  - name
+                  - email
+        '401':
+          description: unauthorized
+components:
+  securitySchemes:
+    personal_access_token:
+      type: http
+      scheme: bearer
+      description: Personal Access Token (PAT), authenticates as the token's owning user.
+security:
+  - personal_access_token: []
+servers:
+  - url: https://{defaultHost}
+    variables:
+      defaultHost:
+        default: api.meilisearch.com

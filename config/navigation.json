@@ -908,7 +908,7 @@
         {
           "group": "Cloud API Routes",
           "openapi": {
-            "source": "assets/cloud-assets/meilisearch-cloud-openapi.yaml",
+            "source": "assets/cloud-assets/meilisearch-cloud-openapi-mintlify.yaml",
             "directory": "reference/cloud-api"
           }
         }

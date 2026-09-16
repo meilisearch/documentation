@@ -12,9 +12,10 @@ Update the API reference documentation from the OpenAPI spec.
    npm run generate-error-codes
    ```
 
-3. **Generate the Mintlify-compatible OpenAPI file**:
+3. **Generate the Mintlify-compatible OpenAPI files** (engine with code samples, Cloud without):
    ```
-   npm run generate-mintlify-openapi-file
+   npm run generate-mintlify-openapi-file -- --with-code-samples assets/engine-release-assets/meilisearch-openapi.json
+   npm run generate-mintlify-openapi-file -- assets/cloud-assets/meilisearch-cloud-openapi.yaml
    ```
 
 4. **Check for new routes** that need coverage:
