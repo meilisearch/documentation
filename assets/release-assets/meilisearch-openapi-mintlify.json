@@ -1775,7 +1775,7 @@
           },
           {
             "lang": "C#",
-            "source": "var patchQuery = new PatchDynamicSearchRule\n{\n  Description = \"Black Friday 2025 rules\",\n  Priority = 10,\n  Active = true,\n  Conditions = new BaseCondition[]\n  {\n    new QueryCondition { IsEmpty = true },\n    new TimeCondition\n    {\n      Start = new DateTimeOffset(2025, 11, 28, 0, 0, 0, TimeSpan.Zero),\n      End = new DateTimeOffset(2025, 11, 28, 23, 59, 59, TimeSpan.Zero)\n    },\n  },\n  Actions = new[]\n  {\n    new DSRAction\n    {\n      Selector = new DSRASelector { IndexUid = \"products\", Id = \"123\" },\n      Action = new PinAction { Position = 1 }\n    }\n  }\n};\nawait client.CreateOrUpdateDynamicSearchRuleAsync(\"black-friday\", patchQuery);"
+            "source": "var patchQuery = new PatchDynamicSearchRule\n{\n  Description = \"Black Friday 2025 rules\",\n  Precedence = 10,\n  Active = true,\n  Conditions = new DynamicSearchRuleConditions\n  {\n    Query = new QueryCondition { IsEmpty = true },\n    Time = new TimeCondition\n    {\n      Start = new DateTimeOffset(2025, 11, 28, 0, 0, 0, TimeSpan.Zero),\n      End = new DateTimeOffset(2025, 11, 28, 23, 59, 59, TimeSpan.Zero)\n    }\n  },\n  Actions = new[]\n  {\n    new DSRAction\n    {\n      Selector = new DSRASelector { IndexUid = \"products\", Id = \"123\" },\n      Action = new PinAction { Position = 1 }\n    }\n  }\n};\nawait client.CreateOrUpdateDynamicSearchRuleAsync(\"black-friday\", patchQuery);"
           }
         ]
       }
