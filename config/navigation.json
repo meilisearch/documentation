@@ -483,7 +483,7 @@
         {
           "group": "API Routes",
           "openapi": {
-            "source": "assets/release-assets/meilisearch-openapi-mintlify.json",
+            "source": "assets/engine-release-assets/meilisearch-openapi-mintlify.json",
             "directory": "reference/api"
           },
           "examples": {
@@ -904,6 +904,13 @@
             "reference/errors/overview",
             "reference/errors/error_codes"
           ]
+        },
+        {
+          "group": "Cloud API Routes",
+          "openapi": {
+            "source": "assets/cloud-assets/meilisearch-cloud-openapi-mintlify.yaml",
+            "directory": "reference/cloud-api"
+          }
         }
       ]
     },
