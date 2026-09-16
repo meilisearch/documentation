@@ -274,7 +274,7 @@ The response groups facet data under `facetsByIndex`. Each index has its own `di
 
 Use the `mergeFacets` property of the `federation` parameter to combine facet distributions from every index into a single result set.
 
-`mergeFacets` accepts a `maxValuesPerFacet` object. It sets the maximum number of facet values Meilisearch returns per facet after merging distributions from all indexes. If you do not set it, Meilisearch uses the default limit from the index settings.
+`mergeFacets` is an object. Its `maxValuesPerFacet` property sets the maximum number of facet values Meilisearch returns per facet after merging distributions from all indexes. If you do not set it, Meilisearch uses the default limit from the index settings.
 
 All participating indexes must use the same [`faceting.sortFacetValuesBy`](/reference/api/settings/update-settings) value for a shared facet. Otherwise Meilisearch returns an `invalid_multi_search_facet_order` error.
 
