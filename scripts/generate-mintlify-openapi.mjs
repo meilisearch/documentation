@@ -8,6 +8,8 @@
  * - Removes null or "null" description fields anywhere in the document for
  *   Mintlify, except inside example and default values, where a description
  *   field is payload data (e.g. an API key's null description), not metadata.
+ *   In `examples` maps, only the named Example Objects' own description
+ *   metadata is cleaned; their value payloads are left untouched.
  * - With --with-code-samples: fetches code samples from the docs repo and SDK repos
  *   (.code-samples.meilisearch.yaml), maps them to OpenAPI operation keys
  *   (e.g. get_indexes), and injects x-codeSamples. Used for the engine OpenAPI
@@ -310,18 +312,39 @@ function addCodeSamplesToOpenapi(openapi, codeSamples, options = {}) {
 // Keys whose values hold payload data rather than OpenAPI metadata: a
 // "description" field inside them is real data (e.g. an API key's null
 // description in a response example) and must be kept.
-const DATA_KEYS = new Set(["example", "examples", "default"]);
+const DATA_KEYS = new Set(["example", "default"]);
+
+function deleteNullDescription(value) {
+  if ("description" in value) {
+    const d = value.description;
+    if (d == null || (typeof d === "string" && d === "null")) {
+      delete value.description;
+    }
+  }
+}
+
+// An `examples` map holds named Example Objects whose `description` is
+// metadata but whose `value` is payload data. In OpenAPI 3.1 schemas,
+// `examples` can instead be an array of raw example values (pure payload),
+// which is left untouched.
+function cleanExamplesMap(examples) {
+  if (examples == null || typeof examples !== "object" || Array.isArray(examples)) return;
+  for (const exampleObject of Object.values(examples)) {
+    if (exampleObject && typeof exampleObject === "object" && !Array.isArray(exampleObject)) {
+      deleteNullDescription(exampleObject);
+    }
+  }
+}
 
 function removeNullDescriptionsRecursive(value) {
   if (value && typeof value === "object" && !Array.isArray(value)) {
-    if ("description" in value) {
-      const d = value.description;
-      if (d == null || (typeof d === "string" && d === "null")) {
-        delete value.description;
-      }
-    }
+    deleteNullDescription(value);
     for (const k of Object.keys(value)) {
       if (DATA_KEYS.has(k)) continue;
+      if (k === "examples") {
+        cleanExamplesMap(value[k]);
+        continue;
+      }
       removeNullDescriptionsRecursive(value[k]);
     }
   } else if (Array.isArray(value)) {
