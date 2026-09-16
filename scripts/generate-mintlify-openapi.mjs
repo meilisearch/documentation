@@ -1,13 +1,18 @@
 #!/usr/bin/env node
 
 /**
- * Generates a Mintlify-ready OpenAPI file from assets/engine-release-assets/meilisearch-openapi.json.
+ * Generates a Mintlify-ready OpenAPI file from a source OpenAPI spec (JSON or YAML).
  *
- * - Fetches code samples from the docs repo and SDK repos (.code-samples.meilisearch.yaml),
- *   maps them to OpenAPI operation keys (e.g. get_indexes), and injects x-codeSamples.
+ * Usage: node scripts/generate-mintlify-openapi.mjs <openapi-file> [--with-code-samples] [--debug]
+ *
  * - Removes null or "null" description fields in tags (and nested objects) for Mintlify.
+ * - With --with-code-samples: fetches code samples from the docs repo and SDK repos
+ *   (.code-samples.meilisearch.yaml), maps them to OpenAPI operation keys
+ *   (e.g. get_indexes), and injects x-codeSamples. Used for the engine OpenAPI
+ *   file, not for the Meilisearch Cloud one.
  *
- * Output: assets/engine-release-assets/meilisearch-openapi-mintlify.json
+ * Output: written next to the source file, with a -mintlify suffix and the same
+ * format (e.g. meilisearch-openapi.json -> meilisearch-openapi-mintlify.json).
  *
  * Optional: set GITHUB_TOKEN, GITHUB_PAT, or GH_TOKEN for higher rate limits when fetching SDK samples.
  */
@@ -19,10 +24,10 @@ import yaml from "js-yaml";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = path.resolve(__dirname, "..");
-const OPENAPI_DIR = path.join(REPO_ROOT, "assets", "engine-release-assets");
-const SOURCE_OPENAPI = path.join(OPENAPI_DIR, "meilisearch-openapi.json");
-const TARGET_OPENAPI = path.join(OPENAPI_DIR, "meilisearch-openapi-mintlify.json");
 const LOCAL_CODE_SAMPLES = path.join(REPO_ROOT, ".code-samples.meilisearch.yaml");
+
+const USAGE =
+  "Usage: node scripts/generate-mintlify-openapi.mjs <openapi-file> [--with-code-samples] [--debug]";
 
 const HTTP_METHODS = ["get", "post", "put", "patch", "delete"];
 
@@ -324,28 +329,53 @@ function cleanNullDescriptions(openapi) {
 }
 
 async function main() {
-  const debug = process.argv.includes("--debug");
+  const args = process.argv.slice(2);
+  const flags = args.filter((a) => a.startsWith("--"));
+  const positional = args.filter((a) => !a.startsWith("--"));
 
-  if (!fs.existsSync(SOURCE_OPENAPI)) {
-    throw new Error(`Source OpenAPI file not found: ${SOURCE_OPENAPI}`);
+  const unknownFlags = flags.filter((f) => !["--with-code-samples", "--debug"].includes(f));
+  if (unknownFlags.length > 0) {
+    throw new Error(`Unknown option(s): ${unknownFlags.join(", ")}\n${USAGE}`);
   }
+  if (positional.length !== 1) {
+    throw new Error(`Expected exactly one source OpenAPI file path.\n${USAGE}`);
+  }
+  const withCodeSamples = flags.includes("--with-code-samples");
+  const debug = flags.includes("--debug");
 
-  console.log("Reading OpenAPI spec...");
-  const openapi = JSON.parse(fs.readFileSync(SOURCE_OPENAPI, "utf8"));
+  const sourcePath = path.resolve(positional[0]);
+  const ext = path.extname(sourcePath).toLowerCase();
+  if (![".json", ".yaml", ".yml"].includes(ext)) {
+    throw new Error(`Unsupported file extension "${ext}" (expected .json, .yaml or .yml).\n${USAGE}`);
+  }
+  const baseName = path.basename(sourcePath, ext);
+  if (baseName.endsWith("-mintlify")) {
+    throw new Error(`Source file looks like a generated Mintlify file: ${sourcePath}`);
+  }
+  if (!fs.existsSync(sourcePath)) {
+    throw new Error(`Source OpenAPI file not found: ${sourcePath}`);
+  }
+  const targetPath = path.join(path.dirname(sourcePath), `${baseName}-mintlify${ext}`);
 
-  console.log("Fetching code samples...");
-  const codeSamples = await fetchAllCodeSamples({ debug });
-  addCodeSamplesToOpenapi(openapi, codeSamples, { debug });
+  console.log(`Reading OpenAPI spec from ${sourcePath}...`);
+  const raw = fs.readFileSync(sourcePath, "utf8");
+  const openapi = ext === ".json" ? JSON.parse(raw) : yaml.load(raw);
+
+  if (withCodeSamples) {
+    console.log("Fetching code samples...");
+    const codeSamples = await fetchAllCodeSamples({ debug });
+    addCodeSamplesToOpenapi(openapi, codeSamples, { debug });
+  }
 
   console.log("Cleaning null descriptions for Mintlify...");
   cleanNullDescriptions(openapi);
 
-  if (!fs.existsSync(OPENAPI_DIR)) {
-    fs.mkdirSync(OPENAPI_DIR, { recursive: true });
-  }
-
-  fs.writeFileSync(TARGET_OPENAPI, JSON.stringify(openapi, null, 2), "utf8");
-  console.log(`Written: ${TARGET_OPENAPI}`);
+  const output =
+    ext === ".json"
+      ? JSON.stringify(openapi, null, 2)
+      : yaml.dump(openapi, { lineWidth: -1 });
+  fs.writeFileSync(targetPath, output, "utf8");
+  console.log(`Written: ${targetPath}`);
 }
 
 main().catch((err) => {
