@@ -5,7 +5,9 @@
  *
  * Usage: node scripts/generate-mintlify-openapi.mjs <openapi-file> [--with-code-samples] [--debug]
  *
- * - Removes null or "null" description fields in tags (and nested objects) for Mintlify.
+ * - Removes null or "null" description fields anywhere in the document for
+ *   Mintlify, except inside example and default values, where a description
+ *   field is payload data (e.g. an API key's null description), not metadata.
  * - With --with-code-samples: fetches code samples from the docs repo, the CLI repo and SDK repos
  *   (.code-samples.meilisearch.yaml), maps them to OpenAPI operation keys
  *   (e.g. get_indexes), and injects x-codeSamples. cURL and CLI samples share the cURL lang,
@@ -317,6 +319,11 @@ function addCodeSamplesToOpenapi(openapi, codeSamples, options = {}) {
   }
 }
 
+// Keys whose values hold payload data rather than OpenAPI metadata: a
+// "description" field inside them is real data (e.g. an API key's null
+// description in a response example) and must be kept.
+const DATA_KEYS = new Set(["example", "examples", "default"]);
+
 function removeNullDescriptionsRecursive(value) {
   if (value && typeof value === "object" && !Array.isArray(value)) {
     if ("description" in value) {
@@ -326,6 +333,7 @@ function removeNullDescriptionsRecursive(value) {
       }
     }
     for (const k of Object.keys(value)) {
+      if (DATA_KEYS.has(k)) continue;
       removeNullDescriptionsRecursive(value[k]);
     }
   } else if (Array.isArray(value)) {
@@ -334,10 +342,7 @@ function removeNullDescriptionsRecursive(value) {
 }
 
 function cleanNullDescriptions(openapi) {
-  const tags = openapi.tags;
-  if (Array.isArray(tags)) {
-    tags.forEach(removeNullDescriptionsRecursive);
-  }
+  removeNullDescriptionsRecursive(openapi);
 }
 
 async function main() {
