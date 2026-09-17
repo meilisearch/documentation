@@ -200,9 +200,133 @@ Federation-level `distinct` behaves differently from the [index-level distinct a
 When queries reach remote instances, Meilisearch computes facet distribution as accurately as it can but cannot guarantee exact counts, because the distinct computation is not applied to documents held on every remote.
 </Note>
 
+## Get facet distributions per index
+
+Use the `facetsByIndex` property of the `federation` parameter to request facet distributions and stats for each index separately.
+
+First, add the attributes you want to facet on to `filterableAttributes` in every participating index:
+
+<CodeGroup>
+
+```sh
+curl -X PUT 'MEILISEARCH_URL/indexes/profiles/settings/filterable-attributes' -H 'Content-Type: application/json' -H 'Authorization: Bearer MEILISEARCH_KEY' --data-binary '["client_name"]' &&
+curl -X PUT 'MEILISEARCH_URL/indexes/chats/settings/filterable-attributes' -H 'Content-Type: application/json' -H 'Authorization: Bearer MEILISEARCH_KEY' --data-binary '["client_name"]' &&
+curl -X PUT 'MEILISEARCH_URL/indexes/tickets/settings/filterable-attributes' -H 'Content-Type: application/json' -H 'Authorization: Bearer MEILISEARCH_KEY' --data-binary '["client_name"]'
+```
+
+</CodeGroup>
+
+Then request facets for each index:
+
+<CodeGroup>
+
+```bash
+curl \
+  -X POST 'MEILISEARCH_URL/multi-search' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  --data-binary '{
+    "federation": {
+      "facetsByIndex": {
+        "profiles": ["client_name"],
+        "chats": ["client_name"],
+        "tickets": ["client_name"]
+      }
+    },
+    "queries": [
+      { "indexUid": "profiles", "q": "Natasha Nguyen" },
+      { "indexUid": "chats", "q": "Natasha Nguyen" },
+      { "indexUid": "tickets", "q": "Natasha Nguyen" }
+    ]
+  }'
+```
+
+</CodeGroup>
+
+The response groups facet data under `facetsByIndex`. Each index has its own `distribution` and numeric `stats`:
+
+<CodeGroup>
+
+```json
+{
+  "hits": [ … ],
+  "processingTimeMs": 1,
+  "facetsByIndex": {
+    "profiles": {
+      "distribution": { "client_name": { "Natasha Nguyen": 1 } },
+      "stats": {}
+    },
+    "chats": {
+      "distribution": { "client_name": { "Natasha Nguyen": 1 } },
+      "stats": {}
+    },
+    "tickets": {
+      "distribution": { "client_name": { "Natasha Nguyen": 1 } },
+      "stats": {}
+    }
+  }
+}
+```
+
+</CodeGroup>
+
+## Merge facets from multiple indexes
+
+Use the `mergeFacets` property of the `federation` parameter to combine facet distributions from every index into a single result set.
+
+`mergeFacets` is an object. Its `maxValuesPerFacet` property sets the maximum number of facet values Meilisearch returns per facet after merging distributions from all indexes. If you do not set it, Meilisearch uses the default limit from the index settings.
+
+All participating indexes must use the same [`faceting.sortFacetValuesBy`](/reference/api/settings/update-settings) value for a shared facet. Otherwise Meilisearch returns an `invalid_multi_search_facet_order` error.
+
+<CodeGroup>
+
+```bash
+curl \
+  -X POST 'MEILISEARCH_URL/multi-search' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer MEILISEARCH_KEY' \
+  --data-binary '{
+    "federation": {
+      "facetsByIndex": {
+        "profiles": ["client_name"],
+        "chats": ["client_name"],
+        "tickets": ["client_name"]
+      },
+      "mergeFacets": {
+        "maxValuesPerFacet": 10
+      }
+    },
+    "queries": [
+      { "indexUid": "profiles", "q": "Natasha Nguyen" },
+      { "indexUid": "chats", "q": "Natasha Nguyen" },
+      { "indexUid": "tickets", "q": "Natasha Nguyen" }
+    ]
+  }'
+```
+
+</CodeGroup>
+
+This time the response contains a single merged `facetDistribution`:
+
+<CodeGroup>
+
+```json
+{
+  "hits": [ … ],
+  "processingTimeMs": 1,
+  "facetDistribution": {
+    "client_name": { "Natasha Nguyen": 3 }
+  }
+}
+```
+
+</CodeGroup>
+
+Merging facets across several large indexes can noticeably increase response size and processing time. To keep responses lean, request only the facets you need with `facetsByIndex`, and cap the returned values with `mergeFacets.maxValuesPerFacet`.
+
 ## Conclusion
 
-You have created three indexes, then performed a federated multi-index search to receive all results in a single list. You then used `weight` to boost results from the index most likely to contain the information you wanted, paginated through merged results using `federation.page` and `federation.hitsPerPage`, and collapsed duplicate matches with `federation.distinct`.
+You have created three indexes, then performed a federated multi-index search to receive all results in a single list. You then used `weight` to boost results from the index most likely to contain the information you wanted, paginated through merged results using `federation.page` and `federation.hitsPerPage`, collapsed duplicate matches with `federation.distinct`, and merged facet distributions with `facetsByIndex` and `mergeFacets`.
 
 ## Next steps
 
