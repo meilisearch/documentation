@@ -569,6 +569,10 @@
               ]
             },
             {
+              "group": "MCP",
+              "pages": ["POST /mcp"]
+            },
+            {
               "group": "Search Rules",
               "pages": [
                 "POST /dynamic-search-rules",
