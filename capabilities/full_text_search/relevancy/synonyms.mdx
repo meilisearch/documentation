@@ -185,3 +185,47 @@ For example, if you set `"lord of the rings"` as a synonym for `"lotr"`, searchi
 A single term may have up to 50 synonyms. Meilisearch silently ignores any synonyms beyond this limit. For example, if you configure 51 synonyms for `book`, Meilisearch will only return results containing the term itself and the first 50 synonyms.
 
 If any synonyms for a term contain more than one word, the sum of all words across all synonyms for that term cannot exceed 100 words. Meilisearch silently ignores any synonyms beyond this limit. For example, if you configure 40 synonyms for `computer` in your application, taken together these synonyms must contain fewer than 100 words.
+
+## Typo tolerance and synonyms
+
+Meilisearch looks up synonyms using normalized search terms. [Typo tolerance](/capabilities/full_text_search/relevancy/typo_tolerance_settings) does not apply to this lookup.
+
+Suppose you configure `San Francisco` and `SF` as synonyms:
+
+<CodeGroup>
+
+```json
+{
+  "san francisco": [
+    "sf"
+  ]
+}
+```
+
+</CodeGroup>
+
+Searching for `San Francisco` returns documents containing `SF`. However, searching for the misspelled `San Franciso` does not, because Meilisearch does not correct the search term before looking up its synonyms. Typo tolerance may still match documents containing `San Francisco` itself, but the synonym `SF` is never considered.
+
+## Synonyms with punctuation
+
+During indexing, the tokenizer splits terms according to the [separator and non-separator tokens](/capabilities/indexing/advanced/tokenization). A term such as `S.W.A.T.` is split into four tokens (`S`, `W`, `A`, and `T`), so it counts as four words toward the [synonym term length limitation](#synonym-term-length-limitation). Meilisearch then ignores any synonym configured for `S.W.A.T.`.
+
+To make this kind of synonym work, add the term to the [dictionary](/capabilities/full_text_search/how_to/configure_dictionary). The dictionary overrides the default tokenizer and treats `S.W.A.T.` as a single token:
+
+<CodeGroup>
+
+```json
+{
+  "dictionary": [
+    "S.W.A.T."
+  ]
+}
+```
+
+</CodeGroup>
+
+After a reindex, `S.W.A.T.` counts as one word. A mutually associated synonym between `S.W.A.T.` and `swat` now resolves in both directions.
+
+## Synonyms and search performance
+
+Every synonym adds more terms for Meilisearch to match during a search. A large number of synonyms, and especially synonyms with multi-word values, increases the work required to answer each query and can affect response times. Keep synonym lists focused on the terms your users actually search for.
