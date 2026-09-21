@@ -1767,6 +1767,25 @@ reset_chat_workspace_settings_1: |-
   curl \
     -X DELETE 'MEILISEARCH_URL/chats/WORKSPACE_NAME/settings' \
     -H "Authorization: Bearer MEILISEARCH_KEY"
+# post_mcp
+mcp_1: |-
+  curl \
+    -X POST 'MEILISEARCH_URL/mcp' \
+    -H 'Authorization: Bearer API_KEY' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "jsonrpc": "2.0",
+      "id": 1,
+      "method": "initialize",
+      "params": {
+        "protocolVersion": "2026-07-28",
+        "capabilities": {},
+        "clientInfo": {
+          "name": "MyClient",
+          "version": "1.0.0"
+        }
+      }
+    }'
 # post_dynamic_search_rules
 list_dynamic_search_rules_1: |-
   curl \
