@@ -4,6 +4,48 @@ description: "New features and improvements in Meilisearch"
 rss: true
 ---
 
+<Update label="v1.54" description="2026-09-21">
+
+## New Features
+
+**Document boosting, demotion, and hiding**
+
+Dynamic search rules now support a `scale` action that adjusts document relevancy based on a weight value:
+
+- Weight above `1.0` boosts selected documents higher in results
+- Weight below `1.0` demotes documents lower in results
+- Weight of `0.0` hides documents from results entirely (unless pinned)
+
+Score details now include a `ruleUid` field for pinned documents and a `scale` field containing order, actions array, and `totalWeight` for scaled documents.
+
+Two new environment variables control scale operations: `MEILI_EXPERIMENTAL_DSR_FUEL_MAX_SCALE_ACTIONS` (default: 10) and `MEILI_EXPERIMENTAL_DSR_FUEL_SCALE_FUEL` (default: 10).
+
+**MCP endpoint**
+
+A new `/mcp` route implements the [Model Context Protocol](https://modelcontextprotocol.io) HTTP+SSE transport, enabling seamless integration with LLM applications. Enable it with the `mcpRoute` experimental feature flag. The endpoint uses bearer authentication only.
+
+## Improvements
+
+**Granular multi-search performance details**
+
+Federated search now provides timing breakdowns per query, separating preprocessing filters, process execution, hydration, and facet merging stages.
+
+## Breaking Changes
+
+The `dynamicSearchRules` experimental feature has been restructured:
+
+- `POST /dynamic-search-rules` now returns `actions` as an object rather than a list
+- `pin` is an array of Pin objects with `id`, `position`, and optional `indexUid` fields
+- `scale` is an array of Scale objects with `weight`, optional `ids`, optional `filter`, and optional `indexUid`
+- `PATCH /dynamic-search-rules/{:ruleUid}` expects the updated `actions` field structure
+- The uid `__meilisearch_metadata` is now reserved and cannot be used as a `ruleUid`
+
+Cloud users will see automatic migration. Database upgrades using `--upgrade-db` will migrate rules automatically.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.54.0)
+
+</Update>
+
 <Update label="v1.53" description="2026-08-10">
 
 ## New Features

@@ -11,7 +11,7 @@
       "name": "MIT",
       "identifier": "MIT"
     },
-    "version": "1.53.2"
+    "version": "1.54.0"
   },
   "servers": [
     {
@@ -1135,18 +1135,15 @@
                           "end": "2025-11-28T23:59:59Z"
                         }
                       },
-                      "actions": [
-                        {
-                          "selector": {
+                      "actions": {
+                        "pin": [
+                          {
                             "indexUid": "products",
-                            "id": "123"
-                          },
-                          "action": {
-                            "type": "pin",
+                            "id": "123",
                             "position": 1
                           }
-                        }
-                      ]
+                        ]
+                      }
                     }
                   ],
                   "offset": 0,
@@ -1280,18 +1277,15 @@
                       "end": "2025-11-28T23:59:59Z"
                     }
                   },
-                  "actions": [
-                    {
-                      "selector": {
+                  "actions": {
+                    "pin": [
+                      {
                         "indexUid": "products",
-                        "id": "123"
-                      },
-                      "action": {
-                        "type": "pin",
+                        "id": "123",
                         "position": 1
                       }
-                    }
-                  ]
+                    ]
+                  }
                 }
               }
             }
@@ -1512,7 +1506,8 @@
                   "foreignKeys": false,
                   "disableDocumentsFetchQueue": false,
                   "legacySearch": false,
-                  "renderRoute": false
+                  "renderRoute": false,
+                  "mcpRoute": false
                 }
               }
             }
@@ -1585,7 +1580,8 @@
                   "foreignKeys": false,
                   "disableDocumentsFetchQueue": false,
                   "legacySearch": false,
-                  "renderRoute": false
+                  "renderRoute": false,
+                  "mcpRoute": false
                 }
               }
             }
@@ -10974,6 +10970,77 @@
         ]
       }
     },
+    "/mcp": {
+      "post": {
+        "tags": [
+          "MCP connection"
+        ],
+        "summary": "Model context protocol (MCP)",
+        "description": "The `/mcp` route exposes [the MCP open protocol](https://modelcontextprotocol.io) that enables seamless integration between LLM\napplications and external data sources and tools.",
+        "operationId": "mcp",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/McpQuery"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Stream of batches changes.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/McpResponse"
+                },
+                "example": {
+                  "jsonrpc": "2.0",
+                  "id": 42,
+                  "result": {
+                    "resultType": "complete",
+                    "supportedVersions": [
+                      "2026-07-28"
+                    ],
+                    "capabilities": {
+                      "tools": {}
+                    },
+                    "_meta": {
+                      "io.modelcontextprotocol/serverInfo": {
+                        "name": "Meilisearch",
+                        "version": "1.52.0"
+                      }
+                    },
+                    "instructions": "This is a Meilisearch instance that is capable of returning documents based on a search query.",
+                    "ttlMs": 3600000,
+                    "cacheScope": "public"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The authorization header is missing.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "example": {
+                  "message": "The Authorization header is missing. It must use the bearer authorization method.",
+                  "code": "missing_authorization_header",
+                  "type": "auth",
+                  "link": "https://docs.meilisearch.com/errors#missing_authorization_header"
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
     "/metrics": {
       "get": {
         "tags": [
@@ -13257,25 +13324,14 @@
         }
       },
       "AttributePatterns": {
-        "type": "object",
-        "description": "A collection of patterns used to match attribute names. Patterns can\ninclude wildcards (`*`) for flexible matching. For example, `title`\nmatches exactly, `overview_*` matches any attribute starting with\n`overview_`, and `*_date` matches any attribute ending with `_date`.",
-        "required": [
-          "patterns"
-        ],
-        "properties": {
-          "patterns": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "description": "An array of attribute name patterns. Each pattern can be an exact\nattribute name, or include wildcards (`*`) at the start, end, or\nboth. Examples: `[\"title\", \"description_*\", \"*_date\", \"*content*\"]`.",
-            "example": [
-              "title",
-              "overview_*",
-              "release_date"
-            ]
-          }
-        }
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "A collection of patterns used to match attribute names. Patterns can include wildcards (`*`) for flexible matching. For example, `title` matches exactly, `overview_*` matches any attribute starting with `overview_`, and `*_date` matches any attribute ending with `_date`.",
+        "examples": [
+          "[\"*\", \"title\", \"description_*\", \"*_date\", \"*content*\"]"
+        ]
       },
       "BatchStats": {
         "type": "object",
@@ -14822,6 +14878,21 @@
           }
         }
       },
+      "ClientServerInfo": {
+        "type": "object",
+        "required": [
+          "name",
+          "version"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        }
+      },
       "Code": {
         "type": "string",
         "enum": [
@@ -15103,6 +15174,7 @@
           "webhook_not_found",
           "immutable_webhook_uuid",
           "immutable_webhook_is_editable",
+          "invalid_dynamic_search_rule_uid",
           "invalid_dynamic_search_rule_offset",
           "invalid_dynamic_search_rule_limit",
           "invalid_dynamic_search_rule_filter",
@@ -16069,8 +16141,7 @@
       "DynamicSearchRule": {
         "type": "object",
         "required": [
-          "uid",
-          "actions"
+          "uid"
         ],
         "properties": {
           "uid": {
@@ -16110,10 +16181,7 @@
             "description": "Conditions that must match before the dynamic search rule applies."
           },
           "actions": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/RuleAction"
-            },
+            "$ref": "#/components/schemas/RuleActions",
             "description": "Actions to apply when the dynamic search rule matches."
           }
         }
@@ -16156,14 +16224,15 @@
             ]
           },
           "actions": {
-            "type": [
-              "array",
-              "null"
-            ],
-            "items": {
-              "$ref": "#/components/schemas/RuleAction"
-            },
-            "description": "Actions to apply when the dynamic search rule matches."
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/RuleActions",
+                "description": "Actions to apply when the dynamic search rule matches."
+              }
+            ]
           }
         }
       },
@@ -18064,6 +18133,304 @@
           "frequency"
         ]
       },
+      "McpCapabilities": {
+        "type": "object",
+        "properties": {
+          "tools": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "additionalProperties": {
+              "default": null
+            },
+            "propertyNames": {
+              "default": null
+            }
+          }
+        }
+      },
+      "McpClientMeta": {
+        "type": "object",
+        "required": [
+          "io.modelcontextprotocol/protocolVersion",
+          "io.modelcontextprotocol/clientInfo"
+        ],
+        "properties": {
+          "io.modelcontextprotocol/protocolVersion": {
+            "type": "string"
+          },
+          "io.modelcontextprotocol/clientInfo": {},
+          "io.modelcontextprotocol/clientCapabilities": {}
+        }
+      },
+      "McpError": {
+        "type": "object",
+        "required": [
+          "code",
+          "message"
+        ],
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/McpErrorData"
+              }
+            ]
+          }
+        }
+      },
+      "McpErrorData": {
+        "type": "object",
+        "required": [
+          "statusCode",
+          "errorName",
+          "errorType",
+          "errorLink"
+        ],
+        "properties": {
+          "statusCode": {
+            "type": "integer",
+            "format": "u-int16",
+            "minimum": 0
+          },
+          "errorName": {
+            "type": "string"
+          },
+          "errorType": {
+            "type": "string"
+          },
+          "errorLink": {
+            "type": "string"
+          }
+        }
+      },
+      "McpQuery": {
+        "type": "object",
+        "required": [
+          "jsonrpc",
+          "id",
+          "method",
+          "params"
+        ],
+        "properties": {
+          "jsonrpc": {
+            "type": "string",
+            "description": "Defines the version of a JSON-RPC request.\n\nYou can find more information about this field on [the JSON-RPC specification](https://www.jsonrpc.org/specification#request_object)."
+          },
+          "id": {
+            "$ref": "#/components/schemas/RequestId",
+            "description": "Defines the id of a JSON-RPC request.\n\nYou can find more information about this field on [the JSON-RPC specification](https://www.jsonrpc.org/specification#request_object)."
+          },
+          "method": {
+            "type": "string",
+            "description": "The method to call using the JSON-RPC format.\n\nYou can find more information about this field on [the JSON-RPC specification](https://www.jsonrpc.org/specification#request_object)."
+          },
+          "params": {
+            "$ref": "#/components/schemas/ParamsWithMeta",
+            "description": "The parameters to call the method with following the JSON-RPC format.\n\nYou can find more information about this field on [the JSON-RPC specification](https://www.jsonrpc.org/specification#request_object)."
+          }
+        }
+      },
+      "McpResponse": {
+        "type": "object",
+        "required": [
+          "jsonrpc",
+          "id"
+        ],
+        "properties": {
+          "jsonrpc": {
+            "type": "string",
+            "description": "The JSON-RPC version."
+          },
+          "id": {
+            "$ref": "#/components/schemas/RequestId",
+            "description": "The JSON-RPC request ID."
+          },
+          "result": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/McpResult",
+                "description": "The JSON-RPC result."
+              }
+            ]
+          },
+          "error": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/McpError",
+                "description": "The JSON-RPC error."
+              }
+            ]
+          }
+        }
+      },
+      "McpResult": {
+        "type": "object",
+        "required": [
+          "resultType",
+          "ttlMs",
+          "cacheScope"
+        ],
+        "properties": {
+          "resultType": {
+            "type": "string"
+          },
+          "isError": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          },
+          "supportedVersions": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "type": "string"
+            },
+            "description": "Protocol versions the server supports. The client should choose one of these for subsequent requests."
+          },
+          "tools": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "$ref": "#/components/schemas/McpToolDefinition"
+            }
+          },
+          "resources": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {}
+          },
+          "prompts": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {}
+          },
+          "_meta": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/McpServerMeta"
+              }
+            ]
+          },
+          "capabilities": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/McpCapabilities",
+                "description": "Capabilities the server supports (tools, resources, prompts, etc.)."
+              }
+            ]
+          },
+          "content": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "$ref": "#/components/schemas/McpTextContentOutput"
+            }
+          },
+          "structuredContent": {},
+          "instructions": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Optional natural-language guidance for LLMs on how to use this server effectively."
+          },
+          "ttlMs": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "cacheScope": {
+            "type": "string"
+          }
+        }
+      },
+      "McpServerMeta": {
+        "type": "object",
+        "required": [
+          "io.modelcontextprotocol/serverInfo"
+        ],
+        "properties": {
+          "io.modelcontextprotocol/serverInfo": {
+            "$ref": "#/components/schemas/ClientServerInfo"
+          }
+        }
+      },
+      "McpTextContentOutput": {
+        "type": "object",
+        "required": [
+          "type",
+          "text"
+        ],
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          }
+        }
+      },
+      "McpToolDefinition": {
+        "type": "object",
+        "description": "<https://modelcontextprotocol.io/specification/2026-07-28/server/tools#data-types>",
+        "required": [
+          "name",
+          "title",
+          "description",
+          "inputSchema"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Unique identifier for the tool."
+          },
+          "title": {
+            "type": "string",
+            "description": "Optional human-readable name of the tool for display purposes."
+          },
+          "description": {
+            "type": "string",
+            "description": "Human-readable description of functionality."
+          },
+          "inputSchema": {
+            "description": "JSON Schema defining expected parameters."
+          }
+        }
+      },
       "MergeFacets": {
         "type": "object",
         "description": "Options for merging facets from multiple indexes in federated search.\nWhen multiple indexes are queried, this controls how their facet values\nare combined into a single facet distribution.",
@@ -18368,8 +18735,7 @@
             "items": {
               "type": "object",
               "required": [
-                "uid",
-                "actions"
+                "uid"
               ],
               "properties": {
                 "uid": {
@@ -18409,10 +18775,7 @@
                   "description": "Conditions that must match before the dynamic search rule applies."
                 },
                 "actions": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/RuleAction"
-                  },
+                  "$ref": "#/components/schemas/RuleActions",
                   "description": "Actions to apply when the dynamic search rule matches."
                 }
               }
@@ -18699,6 +19062,32 @@
           }
         }
       },
+      "ParamsWithMeta": {
+        "type": "object",
+        "properties": {
+          "_meta": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/McpClientMeta",
+                "description": "The _meta property used by the MCP protocol.\n\nYou can find more information about this field on [the MCP specification](https://modelcontextprotocol.io/specification/2026-07-28/basic/index#_meta)."
+              }
+            ]
+          },
+          "name": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The tool name to call used by the MCP protocol.\n\nYou can find more information about this field on [the MCP specification](https://modelcontextprotocol.io/specification/2026-07-28/server/tools#tool-names)."
+          },
+          "arguments": {
+            "description": "The arguments to give to the tool from the MCP protocol.\n\nYou can find more information about this field on [the MCP specification](https://modelcontextprotocol.io/specification/2026-07-28/schema#calltoolrequestparams)."
+          }
+        }
+      },
       "PatchApiKey": {
         "type": "object",
         "description": "Request body for updating an existing API key. Only the name and\ndescription can be modified - other properties like actions, indexes,\nand expiration are immutable after creation.",
@@ -18734,6 +19123,33 @@
           }
         },
         "additionalProperties": false
+      },
+      "PinAction": {
+        "type": "object",
+        "description": "An action that pins a selected document.",
+        "required": [
+          "id",
+          "position"
+        ],
+        "properties": {
+          "indexUid": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Index name.\n\nFor the action to select any document, when this parameter is provided,\nthe index of the query must match the provided parameter."
+          },
+          "id": {
+            "type": "string",
+            "description": "Document ID of the document to select.\n\nOnly the document whose [primary key](https://www.meilisearch.com/docs/learn/getting_started/primary_key) value\nmatches the specified id will be selected by the action.\n\nIf there is no such document in the index of the query, then no documents will be selected and no pinning will occur."
+          },
+          "position": {
+            "type": "integer",
+            "format": "u-int32",
+            "description": "Position at which the document should be pinned.",
+            "minimum": 0
+          }
+        }
       },
       "PredictionContent": {
         "oneOf": [
@@ -19171,6 +19587,17 @@
           }
         }
       },
+      "RequestId": {
+        "oneOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "string"
+          }
+        ],
+        "description": "The request ID MUST NOT match the ID of any other request the sender has issued and not yet received a response for"
+      },
       "ResponseError": {
         "type": "object",
         "required": [
@@ -19293,23 +19720,25 @@
           "function"
         ]
       },
-      "RuleAction": {
+      "RuleActions": {
         "type": "object",
-        "required": [
-          "selector",
-          "action"
-        ],
+        "description": "List of actions to apply when this rule is active for the query.",
         "properties": {
-          "selector": {
-            "$ref": "#/components/schemas/Selector",
-            "description": "Target document selector for this action."
+          "pin": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PinAction"
+            },
+            "description": "Pins a selected document."
           },
-          "action": {
-            "type": "object",
-            "description": "Action payload to apply to the selected document."
+          "scale": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ScaleAction"
+            },
+            "description": "Applies a multiplicative factor to the score of selected documents."
           }
-        },
-        "additionalProperties": false
+        }
       },
       "RuntimeTogglableFeatures": {
         "type": "object",
@@ -19426,9 +19855,50 @@
               "null"
             ],
             "description": "Enable the `POST /render-template` route"
+          },
+          "mcpRoute": {
+            "type": [
+              "boolean",
+              "null"
+            ],
+            "description": "Enable the `POST /mcp` route"
           }
         },
         "additionalProperties": false
+      },
+      "ScaleAction": {
+        "type": "object",
+        "description": "An action that applies a multiplicative factor to the score of selected documents.",
+        "required": [
+          "weight"
+        ],
+        "properties": {
+          "indexUid": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "List of index patterns.\n\nFor the action to select any document, when this parameter is provided,\nthe index of the query must match the provided parameter."
+          },
+          "ids": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "type": "string"
+            },
+            "description": "Array of specific document IDs to select.\n\nOnly documents whose [primary key](https://www.meilisearch.com/docs/learn/getting_started/primary_key) value\nmatches the specified ids will be selected by the action.\n\nIf `filter` is also specified,\nthe documents must also satisfy the filter to be selected."
+          },
+          "filter": {
+            "description": "Filter expression to select documents. Attributes must be added to the\n`filterableAttributes` index setting before they can be used in filters.\nAccepts a string or an array of arrays of strings for AND/OR combinations.\n\nOnly documents matching the specified filter will be selected.\n\nIf `ids` is also specified,\nthe documents matching the filter must also have their primary key part of the `ids`\nlist to be selected.\n\nIf the filter cannot be evaluated for the current index due to referencing attributes\nthat are not filterable, then no document will be applied for this action."
+          },
+          "weight": {
+            "type": "number",
+            "format": "double",
+            "description": "Scale factor for selected documents.\n\n- Set it >1.0 to boost the selected documents.\n- Set it <1.0 to deboost the selected documents.\n- Set it =0.0 to hide the selected documents."
+          }
+        }
       },
       "SearchHit": {
         "type": "object",
@@ -20136,27 +20606,6 @@
               "$ref": "#/components/schemas/SearchResultWithIndex"
             },
             "description": "Array of search results for each query"
-          }
-        }
-      },
-      "Selector": {
-        "type": "object",
-        "required": [
-          "id"
-        ],
-        "properties": {
-          "indexUid": {
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/components/schemas/IndexUid"
-              }
-            ]
-          },
-          "id": {
-            "type": "string"
           }
         }
       },
@@ -21935,6 +22384,10 @@
     {
       "name": "Chats",
       "description": "The `/chats` route allows you to manage chat workspaces."
+    },
+    {
+      "name": "MCP",
+      "description": "Model Context Protocol (MCP) is an open protocol that enables seamless integration between LLM applications and external data sources and tools."
     },
     {
       "name": "Tasks",
