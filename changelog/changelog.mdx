@@ -4,6 +4,118 @@ description: "New features and improvements in Meilisearch"
 rss: true
 ---
 
+<Update label="v1.54" description="2026-09-21">
+
+## New Features
+
+### Scale actions for boosting, demoting, and hiding documents
+
+Dynamic search rules now support a new `scale` action that lets you adjust document relevancy in search results:
+
+- **Boost documents**: Set `weight > 1.0` to increase relevancy scores (e.g., `weight: 4.0`)
+- **Demote documents**: Set `weight < 1.0` to decrease relevancy scores (e.g., `weight: 0.5`)
+- **Hide documents**: Set `weight = 0.0` to exclude documents from results (unless they're also pinned)
+
+Each scale action can target documents using:
+- `filter`: A Meilisearch filter expression to select documents
+- `ids`: An explicit list of document IDs
+- `indexUid`: The index this action applies to (optional; applies to any matching index if omitted)
+
+Example: Boost all Batman products by a factor of 4.0:
+
+```json
+{
+  "conditions": {
+    "time": {
+      "start": "2026-09-21T19:00:00Z",
+      "end": "2026-09-28T18:59:00Z"
+    }
+  },
+  "actions": {
+    "scale": [
+      {
+        "filter": "series = batman",
+        "weight": 4
+      }
+    ]
+  }
+}
+```
+
+Score details now include a `scale` object showing which rules were applied and their combined weight effect.
+
+Note: Scale operations have little measurable effect when the first ranking rule is not a relevancy rule.
+
+### MCP (Model Context Protocol) endpoint
+
+A new `/mcp` endpoint implements the Model Context Protocol, allowing you to register Meilisearch with LLM applications like Claude Code. The endpoint uses HTTP+SSE transport and bearer authentication. Enable the `mcpRoute` experimental feature to use it.
+
+### Improved performance details in multi-search queries
+
+Federated search results now provide detailed performance timing that separates metrics per query, making it easier to identify performance bottlenecks in multi-index searches.
+
+## Improvements
+
+### Enhanced ranking score details
+
+- Pinned documents now show a `ruleUid` field in score details, indicating which dynamic search rule caused the pin
+- Scaled documents display a new `scale` section in score details showing:
+ - `actions`: Array of applied scale actions with `ruleUid` and `weight`
+ - `totalWeight`: The combined multiplicative factor from all applied scale actions
+
+### New environment variables for scale operation limits
+
+Control scale operation behavior with:
+- `MEILI_EXPERIMENTAL_DSR_FUEL_MAX_SCALE_ACTIONS`: Maximum applicable scale actions per search (range 1-255, default 10)
+- `MEILI_EXPERIMENTAL_DSR_FUEL_SCALE_FUEL`: Maximum scale constraint combinations evaluated per search (range 1-255, default 10)
+
+## Other
+
+### Breaking changes to dynamic search rules API
+
+The `dynamicSearchRules` experimental feature has breaking API changes:
+
+**1. POST /dynamic-search-rules response structure**
+
+The `actions` field is now an object with two properties instead of a list:
+
+```json
+{
+  "pin": [
+    {
+      "id": "document-id",
+      "position": 0,
+      "indexUid": null
+    }
+  ],
+  "scale": [
+    {
+      "weight": 2,
+      "ids": [
+        "doc1",
+        "doc2"
+      ],
+      "filter": "available = true",
+      "indexUid": null
+    }
+  ]
+}
+```
+
+**2. PATCH /dynamic-search-rules/{ruleUid} changes**
+
+The endpoint now expects rules with the updated `actions` object structure (see above).
+
+**3. Reserved rule UID**
+
+The uid `__meilisearch_metadata` is now reserved and cannot be used as a `ruleUid`.
+
+**Migration**: Cloud users will have rules migrated automatically, and the UI will adapt to the new API. Self-hosted users upgrading with `--upgrade-db` will have rules migrated automatically.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.54.0)
+
+</Update>
+
 <Update label="v1.53" description="2026-08-10">
 
 ## New Features
