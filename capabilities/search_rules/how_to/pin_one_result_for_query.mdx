@@ -70,12 +70,15 @@ Send a `PATCH /dynamic-search-rules/invoice-help` with the following body:
       "words": "invoice"
     }
   },
-  "actions": [
-    {
-      "selector": { "indexUid": "support", "id": "billing-workspace-overview" },
-      "action": { "type": "pin", "position": 0 }
-    }
-  ]
+  "actions": {
+    "pin": [
+      {
+        "indexUid": "support",
+        "id": "billing",
+        "position": 0
+      }
+    ]
+  }
 }
 ```
 

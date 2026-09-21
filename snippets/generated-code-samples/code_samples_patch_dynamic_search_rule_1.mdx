@@ -18,12 +18,15 @@ curl \
         "end": "2025-11-28T23:59:59Z"
       }
     },
-    "actions": [
-      {
-        "selector": { "indexUid": "products", "id": "123" },
-        "action": { "type": "pin", "position": 1 }
-      }
-    ]
+    "actions": {
+      "pin": [
+        {
+          "indexUid": "products",
+          "id": "123",
+          "position": 1
+        }
+      ]
+    }
   }'
 ```
 

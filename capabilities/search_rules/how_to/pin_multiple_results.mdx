@@ -72,16 +72,20 @@ Send a `PATCH /dynamic-search-rules/invoice-help` with two actions:
       "words": "invoice"
     }
   },
-  "actions": [
-    {
-      "selector": { "indexUid": "support", "id": "billing-workspace-overview" },
-      "action": { "type": "pin", "position": 0 }
-    },
-    {
-      "selector": { "indexUid": "support", "id": "download-monthly-statements" },
-      "action": { "type": "pin", "position": 1 }
-    }
-  ]
+  "actions": {
+    "pin": [
+      {
+        "indexUid": "support",
+        "id": "billing-workspace-overview",
+        "position": 0
+      },
+      {
+        "indexUid": "support",
+        "id": "download-monthly-statements",
+        "position": 1
+      }
+    ]
+  }
 }
 ```
 
