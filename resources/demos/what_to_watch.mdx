@@ -35,6 +35,12 @@ The application is a Next.js app. Its chat route gives Claude Sonnet 4.5 two Mei
 ```ts
 import { meilisearchSearch, meilisearchSearchSimilar } from "@meilisearch/ai-sdk";
 
+const meilisearch = {
+  host: process.env.MEILISEARCH_HOST,
+  apiKey: process.env.MEILISEARCH_SEARCH_API_KEY,
+  indexUid: process.env.MEILISEARCH_INDEX,
+};
+
 const tools = {
   searchMovies: meilisearchSearch({
     ...meilisearch,
@@ -51,7 +57,7 @@ const tools = {
 };
 ```
 
-Both tools use an [embedder](/capabilities/hybrid_search/how_to/choose_an_embedder) named `small` and a [search API key](/capabilities/security/how_to/manage_api_keys) scoped to the movies index. Responses stream back with `streamText` and `stopWhen: stepCountIs(5)`, which caps how many tool calls the agent can chain before it must answer. The movies dataset is public, so you can clone the repository and run the same demo locally.
+Both tools use an [embedder](/capabilities/hybrid_search/how_to/choose_an_embedder) named `small` and a [search API key](/capabilities/security/how_to/manage_api_keys) scoped to the movies index. Responses stream back with `streamText`. The `stopWhen: stepCountIs(5)` option stops the tool-calling loop after five model steps, which is what limits how many searches the agent can chain together. Reaching that limit ends the loop, so it does not by itself guarantee a final answer. The movies dataset is public, so you can clone the repository and run the same demo locally.
 
 To build the same thing step by step with your own data, follow the [agentic search getting started guide](/capabilities/agentic_search/getting_started).
 
