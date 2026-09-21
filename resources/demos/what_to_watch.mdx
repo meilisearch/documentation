@@ -14,13 +14,13 @@ What to Watch is a movie recommendation chatbot built with [`@meilisearch/ai-sdk
 
 ## Key features
 
-- **Agent-driven queries**: The model writes its own search queries instead of searching for the user's words. Asking for "films d'auteur, nothing boring" leads it to search for "auteur art house drama" and "Quentin Tarantino".
+- **Agent-driven queries**: The model writes its own search queries instead of searching for the user's words. Asking for "films d'auteur, nothing boring" leads it to search for "auteur art house drama" and "Quentin Tarantino". This is the core idea behind [agentic search](/capabilities/agentic_search/overview).
 - **Multiple searches per question**: The agent keeps searching until it has enough material to answer, running up to five steps per turn to cover different angles.
-- **Two search tools**: `meilisearchSearch` looks up movies by title or description, and `meilisearchSearchSimilar` finds related titles from a movie the user already likes.
-- **Hybrid search under the hood**: The search tool is configured with a semantic ratio of 0.5, so queries such as "art house" match on meaning as well as on keywords.
-- **Visible search steps**: Every search appears above the answer as "20 results found for ...". Expand any step to see the exact documents Meilisearch returned, so you can check the answer against the data.
+- **Two search tools**: `meilisearchSearch` looks up movies by title or description, and `meilisearchSearchSimilar` finds related titles through the [`/similar` endpoint](/capabilities/personalization/getting_started/recommendations) from a movie the user already likes.
+- **Hybrid search under the hood**: The search tool is configured with [hybrid search](/capabilities/hybrid_search/overview) and a [`semanticRatio`](/capabilities/hybrid_search/advanced/custom_hybrid_ranking#understanding-semanticratio) of 0.5, so queries such as "art house" match on meaning as well as on keywords.
+- **Visible search steps**: Every search appears above the answer as "20 results found for ...". Expand any step to see the exact documents Meilisearch returned, which is the same idea as [displaying source documents](/capabilities/agentic_search/how_to/display_source_documents) in your own agent.
 - **Rich results**: The model interleaves prose with movie blocks, which the interface renders as cards with posters and release years instead of a plain list of titles.
-- **Conversational refinement**: Follow-up messages keep the context, and the agent suggests ways to narrow down, such as choosing between more cerebral and more kinetic picks.
+- **Conversational refinement**: Follow-up messages keep the context, and the agent suggests ways to narrow down, such as choosing between more cerebral and more kinetic picks. Its behavior is steered by a system prompt, as described in [optimize chat prompts](/capabilities/agentic_search/how_to/optimize_chat_prompts).
 - **Genre shortcuts**: The home screen offers 12 genres for visitors who would rather browse than describe what they want.
 
 ## Example conversation
@@ -51,7 +51,9 @@ const tools = {
 };
 ```
 
-Responses stream back with `streamText` and `stopWhen: stepCountIs(5)`, which caps how many tool calls the agent can chain before it must answer. The movies dataset is public, so you can clone the repository and run the same demo locally.
+Both tools use an [embedder](/capabilities/hybrid_search/how_to/choose_an_embedder) named `small` and a [search API key](/capabilities/security/how_to/manage_api_keys) scoped to the movies index. Responses stream back with `streamText` and `stopWhen: stepCountIs(5)`, which caps how many tool calls the agent can chain before it must answer. The movies dataset is public, so you can clone the repository and run the same demo locally.
+
+To build the same thing step by step with your own data, follow the [agentic search getting started guide](/capabilities/agentic_search/getting_started).
 
 ## Links
 
