@@ -18,6 +18,10 @@ A pinned document can appear even when it is not a lexical match for the query. 
 
 This is useful for help centers, promotions, and landing pages, where the document you want to show is not always the best textual match.
 
+## Pinning wins over hiding
+
+If a scale action with a `weight` of 0 and a pin action both select the same document, then the document is pinned rather than hidden.
+
 ## Filters still apply
 
 Pinned documents do not bypass filters. If the current search filters exclude a pinned document, Meilisearch drops it instead of forcing it into the response. This keeps pinned results consistent with visibility, safety, and authorization rules already enforced by your filters.
