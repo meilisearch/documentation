@@ -1,0 +1,75 @@
+---
+title: What to Watch
+sidebarTitle: What to Watch
+description: Movie recommendation agent built with @meilisearch/ai-sdk and the Vercel AI SDK
+---
+
+<Info>
+**Live demo**: [what2watch.meilisearch.com](https://what2watch.meilisearch.com)
+</Info>
+
+What to Watch is a movie recommendation chatbot built with [`@meilisearch/ai-sdk`](/getting_started/integrations/ai_sdk) and the [Vercel AI SDK](https://ai-sdk.dev). Describe the evening you have in mind, and the agent decides which searches to run against the movies index before recommending anything.
+
+![What to Watch demo showing an agent running two searches and recommending auteur films](/assets/images/demos/what-to-watch-demo.png)
+
+## Key features
+
+- **Agent-driven queries**: The model writes its own search queries instead of searching for the user's words. Asking for "films d'auteur, nothing boring" leads it to search for "auteur art house drama" and "Quentin Tarantino".
+- **Multiple searches per question**: The agent keeps searching until it has enough material to answer, running up to five steps per turn to cover different angles.
+- **Two search tools**: `meilisearchSearch` looks up movies by title or description, and `meilisearchSearchSimilar` finds related titles from a movie the user already likes.
+- **Hybrid search under the hood**: The search tool is configured with a semantic ratio of 0.5, so queries such as "art house" match on meaning as well as on keywords.
+- **Visible search steps**: Every search appears above the answer as "20 results found for ...". Expand any step to see the exact documents Meilisearch returned, so you can check the answer against the data.
+- **Rich results**: The model interleaves prose with movie blocks, which the interface renders as cards with posters and release years instead of a plain list of titles.
+- **Conversational refinement**: Follow-up messages keep the context, and the agent suggests ways to narrow down, such as choosing between more cerebral and more kinetic picks.
+- **Genre shortcuts**: The home screen offers 12 genres for visitors who would rather browse than describe what they want.
+
+## Example conversation
+
+1. **"A friend is coming over tonight and he loves films d'auteur. What would you recommend? Nothing boring please."** The agent searches for "auteur art house drama" and "Quentin Tarantino", then recommends Pulp Fiction, Django Unchained, and Inglourious Basterds, explaining why each one fits.
+2. **"Something more cerebral"** Runs a new search and moves toward Kubrick and slower-burn titles, keeping the earlier constraints in mind.
+
+## How it works
+
+The application is a Next.js app. Its chat route gives Claude Sonnet 4.5 two Meilisearch tools and lets the model decide when to call them:
+
+```ts
+import { meilisearchSearch, meilisearchSearchSimilar } from "@meilisearch/ai-sdk";
+
+const tools = {
+  searchMovies: meilisearchSearch({
+    ...meilisearch,
+    description: "Search movies by title or description",
+    searchParams: {
+      hybrid: { embedder: "small", semanticRatio: 0.5 },
+    },
+  }),
+  searchSimilarMovies: meilisearchSearchSimilar({
+    ...meilisearch,
+    description: "Find similar movies by document ID",
+    searchSimilarParams: { embedder: "small", limit: 10 },
+  }),
+};
+```
+
+Responses stream back with `streamText` and `stopWhen: stepCountIs(5)`, which caps how many tool calls the agent can chain before it must answer. The movies dataset is public, so you can clone the repository and run the same demo locally.
+
+## Links
+
+<CardGroup cols={2}>
+  <Card title="Try the demo" icon="globe" href="https://what2watch.meilisearch.com">
+    Ask for a recommendation and watch the agent search
+  </Card>
+  <Card title="Source code" icon="github" href="https://github.com/meilisearch/ai-sdk-demo">
+    Next.js application on GitHub
+  </Card>
+  <Card title="AI SDK integration" icon="plug" href="/getting_started/integrations/ai_sdk">
+    Give your own agent a Meilisearch search tool
+  </Card>
+  <Card title="Agentic search" icon="robot" href="/capabilities/agentic_search/overview">
+    Learn how agentic search works with Meilisearch
+  </Card>
+</CardGroup>
+
+<Tip>
+Looking for classic search on the same kind of movie data? See the [Where to Watch demo](/resources/demos/where_to_watch), which showcases hybrid search, recommendations, and custom ranking rules.
+</Tip>
