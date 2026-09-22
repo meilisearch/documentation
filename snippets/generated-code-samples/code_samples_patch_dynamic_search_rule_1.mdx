@@ -35,10 +35,9 @@ client.updateDynamicSearchRule('RULE_UID', {
   conditions: {
     query: { words: 'invoice' }
   },
-  actions: [{
-    selector: { indexUid: 'movies', id: '299537' },
-    action: { type: 'pin', position: 0 }
-  }]
+  actions: {
+    pin: [{ id: '299537', position: 0, indexUid: 'movies' }]
+  }
 })
 ```
 
