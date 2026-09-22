@@ -1749,7 +1749,7 @@
           },
           {
             "lang": "JS",
-            "source": "client.updateDynamicSearchRule('RULE_UID', {\n  description: 'Promote billing help for invoice searches',\n  precedence: 1,\n  active: true,\n  conditions: {\n    query: { words: 'invoice' }\n  },\n  actions: [{\n    selector: { indexUid: 'movies', id: '299537' },\n    action: { type: 'pin', position: 0 }\n  }]\n})"
+            "source": "client.updateDynamicSearchRule('RULE_UID', {\n  description: 'Promote billing help for invoice searches',\n  precedence: 1,\n  active: true,\n  conditions: {\n    query: { words: 'invoice' }\n  },\n  actions: {\n    pin: [{ id: '299537', position: 0, indexUid: 'movies' }]\n  }\n})"
           },
           {
             "lang": "PHP",
