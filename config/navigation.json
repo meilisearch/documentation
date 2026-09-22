@@ -557,6 +557,10 @@
               ]
             },
             {
+              "group": "MCP",
+              "pages": ["POST /mcp"]
+            },
+            {
               "group": "Chats",
               "pages": [
                 "GET /chats",
