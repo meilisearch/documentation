@@ -557,6 +557,10 @@
               ]
             },
             {
+              "group": "MCP",
+              "pages": ["POST /mcp"]
+            },
+            {
               "group": "Chats",
               "pages": [
                 "GET /chats",
@@ -567,10 +571,6 @@
                 "PATCH /chats/{workspace_uid}/settings",
                 "DELETE /chats/{workspace_uid}/settings"
               ]
-            },
-            {
-              "group": "MCP",
-              "pages": ["POST /mcp"]
             },
             {
               "group": "Search Rules",
