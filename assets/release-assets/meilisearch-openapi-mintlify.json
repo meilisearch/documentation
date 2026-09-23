@@ -1753,7 +1753,7 @@
           },
           {
             "lang": "PHP",
-            "source": "$client->updateDynamicSearchRule(\n  (new \\Meilisearch\\Contracts\\UpdateDynamicSearchRuleQuery('RULE_UID'))\n    ->setActions([\n      [\n        'selector' => [\n          'indexUid' => 'movies',\n          'id' => '299537'\n        ],\n        'action' => [\n          'type' => 'pin',\n          'position' => 0\n        ]\n      ]\n    ])\n);"
+            "source": "$client->updateDynamicSearchRule(\n  (new \\Meilisearch\\Contracts\\UpdateDynamicSearchRuleQuery('RULE_UID'))\n    ->setActions([\n      'pin' => [\n        [\n          'id' => '299537',\n          'position' => 0,\n          'indexUid' => 'movies'\n        ]\n      ]\n    ])\n);"
           },
           {
             "lang": "Python",
