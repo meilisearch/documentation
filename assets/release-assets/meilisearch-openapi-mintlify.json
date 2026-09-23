@@ -11693,7 +11693,7 @@
     "/mcp": {
       "post": {
         "tags": [
-          "MCP connection"
+          "MCP"
         ],
         "summary": "Model context protocol (MCP)",
         "description": "The `/mcp` route exposes [the MCP open protocol](https://modelcontextprotocol.io) that enables seamless integration between LLM\napplications and external data sources and tools.",
@@ -11710,7 +11710,7 @@
         },
         "responses": {
           "200": {
-            "description": "Stream of batches changes.",
+            "description": "The JSON-RPC response to the MCP request.",
             "content": {
               "application/json": {
                 "schema": {
@@ -11730,7 +11730,7 @@
                     "_meta": {
                       "io.modelcontextprotocol/serverInfo": {
                         "name": "Meilisearch",
-                        "version": "1.52.0"
+                        "version": "1.54.0"
                       }
                     },
                     "instructions": "This is a Meilisearch instance that is capable of returning documents based on a search query.",
@@ -11758,11 +11758,15 @@
             }
           }
         },
-        "security": [],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
         "x-codeSamples": [
           {
             "lang": "cURL",
-            "source": "curl \\\n  -X POST 'MEILISEARCH_URL/mcp' \\\n  -H 'Authorization: Bearer API_KEY' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '{\n    \"jsonrpc\": \"2.0\",\n    \"id\": 1,\n    \"method\": \"initialize\",\n    \"params\": {\n      \"protocolVersion\": \"2026-07-28\",\n      \"capabilities\": {},\n      \"clientInfo\": {\n        \"name\": \"MyClient\",\n        \"version\": \"1.0.0\"\n      }\n    }\n  }'"
+            "source": "curl \\\n  -X POST 'MEILISEARCH_URL/mcp' \\\n  -H 'Authorization: Bearer API_KEY' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '{\n    \"jsonrpc\": \"2.0\",\n    \"id\": 1,\n    \"method\": \"server/discover\"\n  }'"
           }
         ]
       }

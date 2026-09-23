@@ -1776,15 +1776,7 @@ mcp_1: |-
     --data-binary '{
       "jsonrpc": "2.0",
       "id": 1,
-      "method": "initialize",
-      "params": {
-        "protocolVersion": "2026-07-28",
-        "capabilities": {},
-        "clientInfo": {
-          "name": "MyClient",
-          "version": "1.0.0"
-        }
-      }
+      "method": "server/discover"
     }'
 # post_dynamic_search_rules
 list_dynamic_search_rules_1: |-

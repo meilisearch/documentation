@@ -75,12 +75,11 @@ Create a rule with `PATCH /dynamic-search-rules/invoice-help`:
       "words": "invoice"
     }
   },
-  "actions": [
-    {
-      "selector": { "indexUid": "support", "id": "billing-workspace-overview" },
-      "action": { "type": "pin", "position": 0 }
-    }
-  ]
+  "actions": {
+    "pin": [
+      { "indexUid": "support", "id": "billing-workspace-overview", "position": 0 }
+    ]
+  }
 }
 ```
 
@@ -102,12 +101,11 @@ Retrieve the rule you just created with `GET /dynamic-search-rules/invoice-help`
       "words": "invoice"
     }
   },
-  "actions": [
-    {
-      "selector": { "indexUid": "support", "id": "billing-workspace-overview" },
-      "action": { "type": "pin", "position": 0 }
-    }
-  ]
+  "actions": {
+    "pin": [
+      { "indexUid": "support", "id": "billing-workspace-overview", "position": 0 }
+    ]
+  }
 }
 ```
 

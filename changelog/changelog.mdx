@@ -16,7 +16,7 @@ Dynamic search rules now support a `scale` action that adjusts document relevanc
 - Weight below `1.0` demotes documents lower in results
 - Weight of `0.0` hides documents from results entirely (unless pinned)
 
-Score details now include a `ruleUid` field for pinned documents and a `scale` field containing order, actions array, and `totalWeight` for scaled documents.
+Score details now include a `ruleUid` field for pinned documents and a `scale` field containing order, actions array, and `totalWeight` for scaled documents. Note that `ruleUid` values are returned in score details, which may expose internal rule identifiers to end users if score details are surfaced in your application.
 
 Two new environment variables control scale operations: `MEILI_EXPERIMENTAL_DSR_FUEL_MAX_SCALE_ACTIONS` (default: 10) and `MEILI_EXPERIMENTAL_DSR_FUEL_SCALE_FUEL` (default: 10).
 
