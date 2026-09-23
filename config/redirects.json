@@ -4730,5 +4730,9 @@
   {
     "source": "/reference/api/template/render-template",
     "destination": "/reference/api/render-templates/render-template"
+  },
+  {
+    "source": "/reference/errors/overview",
+    "destination": "/reference/errors/error_codes"
   }
 ]
