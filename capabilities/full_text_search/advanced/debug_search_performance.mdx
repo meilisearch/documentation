@@ -68,25 +68,27 @@ Each key in `performanceDetails` represents a stage of the search pipeline. Stag
 | Stage | Description |
 |-------|-------------|
 | `wait in queue` | Time waiting in search queue. Meilisearch limits concurrent searches, so a high value here means your instance is handling too many simultaneous queries. |
-| `search` | Total time for the entire search operation, including all sub-stages below. |
-| `similar` | Total time for a similar documents request (instead of `search`). |
+| `preprocess filters` | Time to process the foreign filters before starting the main process. |
+| `process` | Total time for the search/similar operation, including all sub-stages below. |
 
-### Search sub-stages
+### Sub-stages
 
-These appear as children of the `search` stage. Not all stages appear in every query; Meilisearch only reports stages that were actually executed.
+These appear as children of the stages. Not all stages appear in every query; Meilisearch only reports stages that were actually executed.
 
 | Stage | Description |
 |-------|-------------|
-| `search > tokenize query` | Breaking the query string into individual tokens. Typically very fast unless the query is unusually long. |
-| `search > embed query` | Generating vector embeddings for the query. Only appears when using [hybrid or semantic search](/capabilities/hybrid_search/overview). Duration depends on your embedder provider and network latency. |
-| `search > evaluate filter` | Evaluating [filter expressions](/capabilities/filtering_sorting_faceting/advanced/filter_expression_syntax) to narrow the candidate set. Complex filters or many filterable attributes increase this time. |
-| `search > evaluate query` | Retrieving the set of documents matching the query. This combines filter results with the full document set to establish which documents are eligible for ranking. |
-| `search > keyword ranking` | Ranking candidates using the keyword ranking rules. Often the most significant stage for broad queries on large datasets. |
-| `search > placeholder ranking` | Ranking candidates using the sort and the custom ranking rules ([placeholder search](/capabilities/full_text_search/getting_started/placeholder_search)). Appears instead of `keyword ranking` when `q` is empty or missing. |
-| `search > semantic ranking` | Ranking candidates based on the vector similarity with the embedding. Only appears when using [hybrid or semantic search](/capabilities/hybrid_search/overview). |
-| `search > personalization` | Applying [search personalization](/capabilities/personalization/overview) to re-rank results based on user context. Only appears when personalization is configured. |
-| `search > facet distribution` | Computing facet value counts for the `facets` parameter. Cost scales with the number of faceted attributes and unique values. See [maxValuesPerFacet](/capabilities/full_text_search/advanced/performance_tuning#lower-max-values-per-facet). |
-| `search > format` | Formatting results: [highlighting, cropping](/capabilities/full_text_search/how_to/highlight_search_results), building the response payload. Cost scales with the number of attributes to highlight/crop and the size of document fields. |
+| `prepare` | Time at the start of each step, gathering and reshaping everything for the execution. |
+| `tokenize query` | Breaking the query string into individual tokens. Typically very fast unless the query is unusually long. |
+| `embed query` | Generating vector embeddings for the query. Only appears when using [hybrid or semantic search](/capabilities/hybrid_search/overview). Duration depends on your embedder provider and network latency. |
+| `evaluate filter` | Evaluating [filter expressions](/capabilities/filtering_sorting_faceting/advanced/filter_expression_syntax) to narrow the candidate set. Complex filters or many filterable attributes increase this time. |
+| `evaluate query` | Retrieving the set of documents matching the query. This combines filter results with the full document set to establish which documents are eligible for ranking. |
+| `keyword ranking` | Ranking candidates using the keyword ranking rules. Often the most significant stage for broad queries on large datasets. |
+| `placeholder ranking` | Ranking candidates using the sort and the custom ranking rules ([placeholder search](/capabilities/full_text_search/getting_started/placeholder_search)). Appears instead of `keyword ranking` when `q` is empty or missing. |
+| `semantic ranking` | Ranking candidates based on the vector similarity with the embedding. Only appears when using [hybrid or semantic search](/capabilities/hybrid_search/overview). |
+| `personalization` | Applying [search personalization](/capabilities/personalization/overview) to re-rank results based on user context. Only appears when personalization is configured. |
+| `facet distribution` | Computing facet value counts for the `facets` parameter. Cost scales with the number of faceted attributes and unique values. See [maxValuesPerFacet](/capabilities/full_text_search/advanced/performance_tuning#lower-max-values-per-facet). |
+| `format` | Formatting results: [highlighting, cropping](/capabilities/full_text_search/how_to/highlight_search_results), building the response payload. Cost scales with the number of attributes to highlight/crop and the size of document fields. |
+| `hydrate documents` | Fetching full document data, including [linked index](/capabilities/indexing/how_to/document_relations) joins. |
 
 ### Federated search stages
 
@@ -94,17 +96,12 @@ When using `showPerformanceDetails` at the `federation` level, you see these sta
 
 | Stage | Description |
 |-------|-------------|
-| `federating results > partition queries` | Organizing queries by index and remote host. |
-| `federating results > start remote search` | Initiating search requests to remote Meilisearch instances. Only appears when using [network search](/resources/self_hosting/sharding/overview). |
-| `federating results > execute local search` | Executing queries against local indexes. |
-| `federating results > wait for remote results` | Waiting for remote instances to respond. High values indicate network latency or slow remote instances. |
-| `federating results > merge results` | Merging and deduplicating results from all sources into a single ranked list. |
-| `federating results > hydrate documents` | Fetching full document data, including [linked index](/capabilities/indexing/how_to/document_relations) joins. |
-| `federating results > merge facets` | Combining facet distributions from all sources. |
-
-<Note>
-Multiple occurrences of the same stage (e.g., multiple `search > keyword ranking` in a federated query) are automatically accumulated into a single total duration.
-</Note>
+| `partition queries` | Organizing queries by index and remote host. |
+| `start remote search` | Initiating search requests to remote Meilisearch instances. Only appears when using [network search](/resources/self_hosting/sharding/overview). |
+| `execute local search` | Executing queries against local indexes. |
+| `wait for remote results` | Waiting for remote instances to respond. High values indicate network latency or slow remote instances. |
+| `merge` | Merging and deduplicating results from all sources into a single ranked list. |
+| `merge facets` | Combining facet distributions from all sources. |
 
 ## Multi-search
 
@@ -184,13 +181,13 @@ curl \
 Look for the stage with the highest duration. Common patterns:
 
 - **High `wait in queue`**: your instance is overloaded with concurrent searches. Scale your hardware or reduce query volume.
-- **High `search > evaluate filter`**: complex [filters](/capabilities/filtering_sorting_faceting/getting_started) expressions or too many filterable attributes. Use [granular filterable attributes](/capabilities/filtering_sorting_faceting/how_to/configure_granular_filters) to disable unused filter features.
-- **High `search > evaluate query`**: complex query containing a lot of words or matching a lot of synonyms, generating a complex query tree that is expensive to evaluate. Add [stop words](/capabilities/full_text_search/how_to/configure_stop_words), reduce synonyms cardinality.
-- **High `search > keyword ranking`**: the query necessitates a lot of iterations in the ranking rules to retrieve the requested amount of documents, reduce the offset and limit parameters, limit [searchable attributes](/capabilities/full_text_search/how_to/configure_searchable_attributes), or lower [`maxTotalHits`](/capabilities/full_text_search/advanced/performance_tuning#lower-max-total-hits).
-- **High `search > embed query`**: your embedder is slow. Consider switching to a faster model, using a local embedder for search with [composite embedders](/capabilities/hybrid_search/advanced/composite_embedders), or caching embeddings.
-- **High `search > facet distribution`**: too many faceted attributes or high `maxValuesPerFacet`. Lower it to the number of facet values you actually display.
-- **High `search > format`**: large `attributesToRetrieve`, `attributesToHighlight`, or `attributesToCrop`. Reduce to only the fields your UI needs.
-- **High `federating results > wait for remote results`**: network latency to remote instances. Check network connectivity or colocate instances.
+- **High `evaluate filter`**: complex [filters](/capabilities/filtering_sorting_faceting/getting_started) expressions or too many filterable attributes. Use [granular filterable attributes](/capabilities/filtering_sorting_faceting/how_to/configure_granular_filters) to disable unused filter features.
+- **High `evaluate query`**: complex query containing a lot of words or matching a lot of synonyms, generating a complex query tree that is expensive to evaluate. Add [stop words](/capabilities/full_text_search/how_to/configure_stop_words), reduce synonyms cardinality.
+- **High `keyword ranking`**: the query necessitates a lot of iterations in the ranking rules to retrieve the requested amount of documents, reduce the offset and limit parameters, limit [searchable attributes](/capabilities/full_text_search/how_to/configure_searchable_attributes), or lower [`maxTotalHits`](/capabilities/full_text_search/advanced/performance_tuning#lower-max-total-hits).
+- **High `embed query`**: your embedder is slow. Consider switching to a faster model, using a local embedder for search with [composite embedders](/capabilities/hybrid_search/advanced/composite_embedders), or caching embeddings.
+- **High `facet distribution`**: too many faceted attributes or high `maxValuesPerFacet`. Lower it to the number of facet values you actually display.
+- **High `format`**: large `attributesToRetrieve`, `attributesToHighlight`, or `attributesToCrop`. Reduce to only the fields your UI needs.
+- **High `wait for remote results`**: network latency to remote instances. Check network connectivity or colocate instances.
 
 ### Compare before and after
 
