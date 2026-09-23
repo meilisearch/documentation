@@ -4702,5 +4702,9 @@
   {
     "source": "/capabilities/conversational_search/advanced/chats_api",
     "destination": "/capabilities/agentic_search/advanced/chats_api"
+  },
+  {
+    "source": "/reference/errors/overview",
+    "destination": "/reference/errors/error_codes"
   }
 ]
