@@ -910,10 +910,10 @@
           ]
         },
         {
-          "group": "Cloud API Routes",
+          "group": "Management API Routes",
           "openapi": {
             "source": "assets/cloud-assets/meilisearch-cloud-openapi-mintlify.yaml",
-            "directory": "reference/cloud-api"
+            "directory": "reference/management-api"
           }
         }
       ]
