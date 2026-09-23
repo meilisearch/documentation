@@ -15,7 +15,8 @@ HackerSearch is a full replacement for HN Search. It indexes all of Hacker News 
 ## Key features
 
 - **The entire corpus**: Stories, Ask HN, Show HN, Launch HN, jobs, polls, and comments, all in one index. Two tabs, News and Comments, split the corpus and the facet rail adapts to each.
-- **Disjunctive facet counts**: Each keystroke sends one [multi-search](/capabilities/multi_search/overview) request containing the main query plus one facet query per dimension, with that dimension's own filter excluded. Counts stay accurate while you combine filters.
+- **Inline autocompletion**: As you type, the search box suggests the rest of the current word in grey, taken from the most popular matching story title. Press `Tab` or `→` to accept it.
+- **Disjunctive facet counts**: Each keystroke sends a single [multi-search](/capabilities/multi_search/overview) request. For every facet with an active selection, it adds a query that excludes that facet's own filter, so counts stay accurate while you combine filters.
 - **Filters on every dimension**: Narrow results by type, time range, minimum points, domain, and author. Domain and author use [facet search](/capabilities/filtering_sorting_faceting/overview) to find values among thousands of options.
 - **Relevance, newest, or points**: Switch between relevancy ranking and explicit sorts. The `sort` ranking rule sits before `attribute` so the Newest and Points modes take priority, and `points:desc` acts as a final tiebreaker for relevancy.
 - **Live sync**: A Rust indexer reads the Hacker News Firebase API, backfills the full history, then polls for new and updated items every 30 seconds.
@@ -31,6 +32,31 @@ The index configuration keeps full-text search focused on content:
 - **Searchable attributes**: `title` and `text` only. URLs, domains, and author names are excluded from full-text search to avoid noisy matches (for example, "dan" matching every post by the user "dang") and remain reachable through filters.
 - **Granular filterable attributes**: Each attribute only enables the features the UI needs. `domain` and `author` support facet search, `points` and `created_at` support comparison operators, and the rest only use equality.
 - **Proximity by attribute**: `proximityPrecision` is set to `byAttribute`, which lowers indexing cost since titles and comment text are independent fields.
+
+## How autocompletion works
+
+Autocompletion needs no dedicated suggestions index. It rides along in the same multi-search request as the results and facets, as one extra query:
+
+```json
+{
+  "indexUid": "hn",
+  "q": "meil",
+  "attributesToSearchOn": ["title"],
+  "filter": "type != \"comment\"",
+  "sort": ["points:desc"],
+  "limit": 1,
+  "attributesToRetrieve": ["title"]
+}
+```
+
+- **`attributesToSearchOn`** limits matching to story titles, so suggestions read like real headlines rather than fragments of comments. See [configure searchable attributes](/capabilities/full_text_search/how_to/configure_searchable_attributes).
+- **`filter`** excludes comments, which have no title.
+- **`sort: ["points:desc"]`** returns the most upvoted matching story. Meilisearch treats the last query word as a prefix, so `meil` already matches "Meilisearch".
+- **`limit: 1`** and **`attributesToRetrieve`** keep the response tiny, since only one title is needed.
+
+On the client, the app scans that title for the first word that starts with the word being typed and shows the missing letters as a grey overlay after the caret. "meil" plus the title "Meilisearch 1.6 released" becomes the suggestion "isearch". The query is skipped when the last word is shorter than two characters or the query is longer than 40 characters, so it costs nothing when no suggestion could appear.
+
+## Optional semantic search
 
 The indexer also supports optional article enrichment and [hybrid search](/capabilities/hybrid_search/overview). It can crawl each story's link, extract the article text, and feed it to an embedder so semantic search understands what an article is about, not just its title.
 
