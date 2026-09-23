@@ -67,10 +67,6 @@ Autocompletion needs no dedicated suggestions index. It rides along in the same 
 
 On the client, the app scans that title for the first word that starts with the word being typed and shows the missing letters as a grey overlay after the caret. "meil" plus the title "Meilisearch 1.6 released" becomes the suggestion "isearch". The query is skipped when the last word is shorter than two characters or the query is longer than 40 characters, so it costs nothing when no suggestion could appear.
 
-## Optional semantic search
-
-The indexer also supports optional article enrichment and [hybrid search](/capabilities/hybrid_search/overview). It can crawl each story's link, extract the article text, and feed it to an embedder so semantic search understands what an article is about, not just its title.
-
 ## Links
 
 <CardGroup cols={2}>
