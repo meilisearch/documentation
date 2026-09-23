@@ -66,14 +66,11 @@ client.update_dynamic_search_rule('black-friday', {
 $client->updateDynamicSearchRule(
   (new \Meilisearch\Contracts\UpdateDynamicSearchRuleQuery('RULE_UID'))
     ->setActions([
-      [
-        'selector' => [
-          'indexUid' => 'movies',
-          'id' => '299537'
-        ],
-        'action' => [
-          'type' => 'pin',
-          'position' => 0
+      'pin' => [
+        [
+          'id' => '299537',
+          'position' => 0,
+          'indexUid' => 'movies'
         ]
       ]
     ])
