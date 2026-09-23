@@ -5,32 +5,41 @@ description: Search Meilisearch indexes from AI agents and LLM clients using the
 ---
 
 import CodeSamplesUpdateExperimentalFeaturesMcp1 from '/snippets/generated-code-samples/code_samples_update_experimental_features_mcp_1.mdx';
-
-The [Model Context Protocol](https://modelcontextprotocol.io/) (MCP) lets AI agents and LLM clients call external tools. Meilisearch ships a native MCP server at the `POST /mcp` route so any MCP-compatible client can search your indexes directly.
+The [Model Context Protocol](https://modelcontextprotocol.io/) (MCP) lets AI agents and LLM clients call external tools. Meilisearch ships a native MCP server at the [`POST /mcp`](/reference/api/mcp-connection/model-context-protocol-mcp) route so any MCP-compatible client can search your indexes directly. Clients send JSON-RPC requests with HTTP POST. The route does not stream events over SSE.
 
 The server exposes four read-only, search-focused tools. It does not expose index, document, settings, or API key management. Use the Meilisearch API or the Cloud UI for those operations.
 
 ## Requirements
 
 - A Meilisearch project running v1.54 or later
-- Your project's host URL and an API key
+- Your project's host URL and an [API key with the permissions below](#create-an-api-key-for-mcp)
 - An MCP client that supports remote HTTP servers, such as Claude Code, Codex, or Cursor
 
 ## Enable the MCP route
 
-The MCP server is gated behind the `mcpRoute` experimental feature. Enable it with a `PATCH` request to `/experimental-features`:
+The MCP server is gated behind the `mcpRoute` [experimental feature](/resources/help/experimental_features_overview). On Meilisearch Cloud, enable **MCP server** in your project's experimental features. On self-hosted instances, send a `PATCH` request to `/experimental-features`:
 
 <CodeSamplesUpdateExperimentalFeaturesMcp1 />
 
-<Note>
-Enabling or disabling experimental features through this route takes effect immediately and does not require a restart. Read more about [experimental features](/resources/help/experimental_features_overview).
-</Note>
+## Create an API key for MCP
+
+Each MCP tool requires the same API key action as the route it wraps:
+
+- `listIndexes` requires `indexes.get`
+- `describeIndex` requires `documents.get`
+- `searchInIndexes` and `facetSearch` require `search`
+
+[Create a key](/capabilities/security/how_to/manage_api_keys#create-an-api-key) with only these three actions, limited to the indexes you want agents to reach. Do not use the master key or an admin key.
+
+A search-only key can call `searchInIndexes` and `facetSearch`, but not `listIndexes` or `describeIndex`, so agents cannot discover indexes or inspect sample documents.
 
 ## Connect an MCP client
 
-Register `https://your-host/mcp` as a remote MCP server and send your Meilisearch API key as a bearer token in the `Authorization` header. There is no OAuth flow: the API key is the only credential required.
+Register `https://your-host/mcp` as a remote MCP server and send the API key you created as a bearer token in the `Authorization` header. There is no OAuth flow. The API key is the only credential.
 
-```json
+Clients that store MCP servers in an `mcpServers` JSON file, including Cursor, use this shape:
+
+```json Cursor
 {
   "mcpServers": {
     "meilisearch": {
@@ -43,7 +52,9 @@ Register `https://your-host/mcp` as a remote MCP server and send your Meilisearc
 }
 ```
 
-The exact configuration format depends on your client. Two common examples:
+Claude Desktop adds remote servers through its connectors settings. It does not read this JSON file.
+
+Other clients use their own configuration format:
 
 <CodeGroup>
 
@@ -60,28 +71,24 @@ http_headers = { "Authorization" = "Bearer YOUR_API_KEY" }
 
 </CodeGroup>
 
-Consult your client's documentation for the exact syntax it expects for remote MCP servers with custom headers.
+See the [Claude Code](https://code.claude.com/docs/en/mcp-servers), [Codex](https://developers.openai.com/codex/config-reference), and [Cursor](https://cursor.com/docs/mcp) documentation for the syntax each client expects for remote MCP servers with custom headers.
 
 ## Available tools
 
 | Tool | Wraps | Description |
 |------|-------|-------------|
 | `listIndexes` | `GET /indexes` | Lists available indexes. Accepts `offset` and `limit` |
-| `describeIndex` | `POST /indexes/{indexUid}/documents/fetch` | Returns up to 5 sample documents from an index, so an agent can understand its shape and purpose |
+| `describeIndex` | `POST /indexes/{indexUid}/documents/fetch` | Returns up to 5 sample documents from an index. Accepts only `indexUid`. Other fetch parameters are not supported |
 | `searchInIndexes` | `POST /multi-search` | Searches one or more indexes at once. Accepts the full multi-search body: query, filter, sort, facets, hybrid search, and federated results |
 | `facetSearch` | `POST /indexes/{indexUid}/facet-search` | Searches facet values for an index. Accepts the same body as facet search, plus a required `indexUid` |
 
-The server recommends agents call `listIndexes`, then `describeIndex`, then `searchInIndexes`, in that order, so the agent understands what data is available before searching it.
+The server's instructions tell agents to call `listIndexes`, then `describeIndex`, then `searchInIndexes`, in that order, so the agent understands what data is available before searching it.
 
-There is no single-index search tool. `searchInIndexes` covers single-index search too: pass one index in the `indexUid` list of the multi-search body.
+There is no single-index search tool. To search one index, send a single query, for example `{"queries": [{"indexUid": "movies", "q": "batman"}]}`. See [multi-search](/reference/api/multi-search/perform-a-multi-search).
 
 <Note>
 `describeIndex` only returns sample documents. It does not return an index's settings or configured embedders.
 </Note>
-
-## Authentication and permissions
-
-Every tool call runs with the same permissions as the API key or [tenant token](/capabilities/security/getting_started) you provide in the `Authorization` header. A search-only key can only retrieve indexes and documents that the key allows. There is no separate permission model for MCP: whatever your key can do through the search API, it can do through MCP, and nothing more.
 
 ## What you can't do with MCP
 
@@ -91,13 +98,14 @@ The MCP server only exposes search-related tools. It cannot create or delete ind
 
 If your MCP client can't connect or calls fail:
 
-- Confirm the `mcpRoute` experimental feature is enabled on your project
-- Confirm your API key or tenant token is valid and has search permissions on the indexes you're querying
+- Confirm the `mcpRoute` experimental feature is enabled. When it is off, `/mcp` returns [`feature_not_enabled`](/reference/errors/error_codes#feature_not_enabled)
+- Confirm the client sends your API key in an `Authorization: Bearer` header. A missing header returns [`missing_authorization_header`](/reference/errors/error_codes#missing_authorization_header)
+- Confirm the key has `search`, `documents.get`, and `indexes.get` on the indexes you're querying. A call that fails a permission check returns a JSON-RPC error
 - Confirm your client supports remote MCP servers over HTTP, rather than only local stdio servers
 - Check your client's own logs for the raw error returned by the `/mcp` route
 
 <Accordion title="Legacy: the meilisearch-mcp Python server">
 Before Meilisearch shipped a native MCP route, [`meilisearch-mcp`](https://github.com/meilisearch/meilisearch-mcp) was a separate Python package that ran as a local stdio process alongside desktop clients like Claude Desktop. It exposed a much larger, management-oriented tool set: creating and deleting indexes, adding documents, updating settings, managing API keys, and checking tasks and instance health, in addition to search.
 
-This package is now archived in favor of the built-in `/mcp` route described on this page. If you still rely on the Python server, consult its [README](https://github.com/meilisearch/meilisearch-mcp) for installation and configuration instructions. It is no longer actively maintained and is not compatible with the guidance above.
+This package is deprecated in favor of the built-in `/mcp` route described on this page, and it is no longer actively maintained. If you still rely on the Python server, consult its [README](https://github.com/meilisearch/meilisearch-mcp) for installation and configuration instructions. It is not compatible with the guidance above.
 </Accordion>
