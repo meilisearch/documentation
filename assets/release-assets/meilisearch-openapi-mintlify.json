@@ -11766,7 +11766,7 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
-            "source": "curl \\\n  -X POST 'MEILISEARCH_URL/mcp' \\\n  -H 'Authorization: Bearer API_KEY' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '{\n    \"jsonrpc\": \"2.0\",\n    \"id\": 1,\n    \"method\": \"server/discover\"\n  }'"
+            "source": "curl \\\n  -X POST 'MEILISEARCH_URL/mcp' \\\n  -H 'Authorization: Bearer API_KEY' \\\n  -H 'Content-Type: application/json' \\\n  -H 'Accept: application/json, text/event-stream' \\\n  -H 'MCP-Protocol-Version: 2026-07-28' \\\n  -H 'Mcp-Method: server/discover' \\\n  --data-binary '{\n    \"jsonrpc\": \"2.0\",\n    \"id\": 1,\n    \"method\": \"server/discover\",\n    \"params\": {\n      \"_meta\": {\n        \"io.modelcontextprotocol/protocolVersion\": \"2026-07-28\",\n        \"io.modelcontextprotocol/clientCapabilities\": {}\n      }\n    }\n  }'"
           }
         ]
       }

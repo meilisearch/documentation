@@ -1773,10 +1773,19 @@ mcp_1: |-
     -X POST 'MEILISEARCH_URL/mcp' \
     -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
+    -H 'Accept: application/json, text/event-stream' \
+    -H 'MCP-Protocol-Version: 2026-07-28' \
+    -H 'Mcp-Method: server/discover' \
     --data-binary '{
       "jsonrpc": "2.0",
       "id": 1,
-      "method": "server/discover"
+      "method": "server/discover",
+      "params": {
+        "_meta": {
+          "io.modelcontextprotocol/protocolVersion": "2026-07-28",
+          "io.modelcontextprotocol/clientCapabilities": {}
+        }
+      }
     }'
 # post_dynamic_search_rules
 list_dynamic_search_rules_1: |-

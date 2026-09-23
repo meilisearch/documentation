@@ -80,7 +80,7 @@ Send a `PATCH /dynamic-search-rules/invoice-help` with the following body:
 
 - `uid` comes from the URL (`invoice-help`), not from the body.
 - `position: 0` targets the first result slot.
-- `indexUid` in the selector scopes the pin to the document living in the `support` index. If you omit it, Meilisearch treats the pin as a cross-index reference.
+- `indexUid` on each item in `actions.pin` scopes the pin to the document living in that index. If you omit it, Meilisearch treats the pin as a cross-index reference.
 - The route returns a `202 ACCEPTED` and the task that needs processing for the rule to be active.
 
 ## How Meilisearch evaluates the rule
