@@ -1,0 +1,52 @@
+---
+title: HackerSearch
+sidebarTitle: HackerSearch
+description: Every Hacker News story and comment indexed in Meilisearch, with faceted search and live sync
+---
+
+<Info>
+**Live demo**: [hackersearch.meilisearch.com](https://hackersearch.meilisearch.com)
+</Info>
+
+HackerSearch is a full replacement for HN Search. It indexes all of Hacker News in Meilisearch, every story and every comment, and serves it through a single faceted search interface. Millions of documents are searchable as you type, and new items appear within seconds of being posted on Hacker News.
+
+![HackerSearch showing the newest Hacker News stories with type, time, and points facets](/assets/images/demos/hackersearch-demo.png)
+
+## Key features
+
+- **The entire corpus**: Stories, Ask HN, Show HN, Launch HN, jobs, polls, and comments, all in one index. Two tabs, News and Comments, split the corpus and the facet rail adapts to each.
+- **Disjunctive facet counts**: Each keystroke sends one [multi-search](/capabilities/multi_search/overview) request containing the main query plus one facet query per dimension, with that dimension's own filter excluded. Counts stay accurate while you combine filters.
+- **Filters on every dimension**: Narrow results by type, time range, minimum points, domain, and author. Domain and author use [facet search](/capabilities/filtering_sorting_faceting/overview) to find values among thousands of options.
+- **Relevance, newest, or points**: Switch between relevancy ranking and explicit sorts. The `sort` ranking rule sits before `attribute` so the Newest and Points modes take priority, and `points:desc` acts as a final tiebreaker for relevancy.
+- **Live sync**: A Rust indexer reads the Hacker News Firebase API, backfills the full history, then polls for new and updated items every 30 seconds.
+- **Threaded comments**: Open any story or comment to read its full discussion tree, fetched directly from the index.
+- **Shareable searches**: The query, filters, and sort live in the URL, so every search can be shared as a link.
+
+## How it's built
+
+A Rust indexer (`hn-indexer`) pulls items from the Hacker News API, strips comment HTML, and sends plain-text documents to a single `hn` index. A Next.js front end queries Meilisearch directly from the browser.
+
+The index configuration keeps full-text search focused on content:
+
+- **Searchable attributes**: `title` and `text` only. URLs, domains, and author names are excluded from full-text search to avoid noisy matches (for example, "dan" matching every post by the user "dang") and remain reachable through filters.
+- **Granular filterable attributes**: Each attribute only enables the features the UI needs. `domain` and `author` support facet search, `points` and `created_at` support comparison operators, and the rest only use equality.
+- **Proximity by attribute**: `proximityPrecision` is set to `byAttribute`, which lowers indexing cost since titles and comment text are independent fields.
+
+The indexer also supports optional article enrichment and [hybrid search](/capabilities/hybrid_search/overview). It can crawl each story's link, extract the article text, and feed it to an embedder so semantic search understands what an article is about, not just its title.
+
+## Links
+
+<CardGroup cols={2}>
+  <Card title="Try the demo" icon="globe" href="https://hackersearch.meilisearch.com">
+    Search every Hacker News story and comment
+  </Card>
+  <Card title="Source code" icon="github" href="https://github.com/meilisearch/hackersearch">
+    Explore the indexer and front end on GitHub
+  </Card>
+  <Card title="Faceted search" icon="filter" href="/capabilities/filtering_sorting_faceting/overview">
+    Build filters and facets in your app
+  </Card>
+  <Card title="Multi-search" icon="layer-group" href="/capabilities/multi_search/overview">
+    Send several queries in one request
+  </Card>
+</CardGroup>
