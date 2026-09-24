@@ -1,196 +1,102 @@
 ---
 title: Model Context Protocol (MCP)
 sidebarTitle: MCP
-description: Manage your Meilisearch project with natural language using Claude Desktop and the Meilisearch MCP server.
+description: Search Meilisearch indexes from AI agents and LLM clients using the built-in MCP server.
 ---
 
-The [Model Context Protocol](https://modelcontextprotocol.io/) (MCP) lets AI assistants like Claude interact directly with Meilisearch. Once configured, you can create indexes, add documents, configure settings, and perform searches using natural language prompts.
+The [Model Context Protocol](https://modelcontextprotocol.io/) (MCP) lets AI agents and LLM clients call external tools. Meilisearch ships a native MCP server at the [`POST /mcp`](/reference/api/mcp-connection/model-context-protocol-mcp) route so any MCP-compatible client can search your indexes directly.
+
+The server exposes four read-only, search-focused tools: `listIndexes`, `describeIndex`, `searchInIndexes`, and `facetSearch`.
 
 ## Requirements
 
-To follow this guide, you'll need:
+- A Meilisearch project running v1.54 or later
+- Your project's host URL and an [API key with the permissions below](#create-an-api-key-for-mcp)
+- An MCP client that supports remote HTTP servers, such as Claude Code, Codex, or Cursor
 
-- [Claude Desktop](https://claude.ai/download) (free)
-- [A Meilisearch Cloud project](https://www.meilisearch.com/cloud) (14 days free-trial)
-- Python ≥ 3.9
-- From the Meilisearch Cloud dashboard, your Meilisearch host & api key
+## Enable the MCP route
 
-## Setting up Claude Desktop with the Meilisearch MCP Server
+The MCP server is currently an experimental feature. Configure [experimental features](/capabilities/platform/management/experimental_features) to enable it.
 
-### 1. Install Claude Desktop
+## Create an API key for MCP
 
-Download and install [Claude Desktop](https://claude.ai/download).
+Each MCP tool requires the same API key action as the route it wraps:
 
-### 2. Install the Meilisearch MCP Server
+- `listIndexes` requires `indexes.get`
+- `describeIndex` requires `documents.get`
+- `searchInIndexes` and `facetSearch` require `search`
 
-You can install the Meilisearch MCP server using `uv` or `pip`:
+[Create a key](/capabilities/security/how_to/manage_api_keys#create-an-api-key) with the `indexes.get`, `documents.get`, and `search` actions, limited to the indexes you want agents to reach.
 
-```bash
-# Using uv (recommended)
-uv pip install meilisearch-mcp
+<Note>
+The default Search API key does not have permissions for `indexes.get` and `documents.get`, so calls to `listIndexes` or `describeIndex` will fail.
+</Note>
 
-# Using pip
-pip install meilisearch-mcp
+## Connect an MCP client
+
+Register `https://your-host/mcp` as a remote MCP server and send the API key you created as a bearer token in the `Authorization` header. There is no OAuth flow. The API key is the only credential.
+
+Most clients allow configuring MCP servers through their UI. Some clients prefer configuration files, or accept configuration through CLI commands.
+
+<CodeGroup>
+
+```bash Claude Code
+claude mcp add --transport http meilisearch https://your-host/mcp \
+  --header "Authorization: Bearer YOUR_API_KEY"
 ```
 
-### 3. Configure Claude Desktop
+```toml Codex
+[mcp_servers.meilisearch]
+url = "https://your-host/mcp"
+http_headers = { "Authorization" = "Bearer YOUR_API_KEY" }
+```
 
-Open Claude Desktop, click on the Claude menu in the top bar, and select "Settings". In the Settings window, click on "Developer" in the left sidebar, then click "Edit Config". This will open your `claude_desktop_config.json` file.
-
-Add the Meilisearch MCP server to your configuration:
-
-```json
+```json Cursor
 {
   "mcpServers": {
     "meilisearch": {
-      "command": "uvx",
-      "args": ["-n", "meilisearch-mcp"]
+      "url": "https://your-host/mcp",
+      "headers": {
+        "Authorization": "Bearer YOUR_API_KEY"
+      }
     }
   }
+}
 ```
+</CodeGroup>
 
-Save the file and restart Claude.
+See the [Claude Code](https://code.claude.com/docs/en/mcp-servers), [Codex](https://developers.openai.com/codex/config-reference), and [Cursor](https://cursor.com/docs/mcp) documentation for the syntax each client expects for remote MCP servers with custom headers.
 
-## Connecting to Your Meilisearch Instance
+## Available tools
 
-Once Claude Desktop is set up with the Meilisearch MCP server, you can connect to your Meilisearch instance by asking Claude to update the connection settings.
+| Tool | Wraps | Description |
+|------|-------|-------------|
+| `listIndexes` | `GET /indexes` | Lists available indexes. Accepts `offset` and `limit` |
+| `describeIndex` | `POST /indexes/{indexUid}/documents/fetch` | Returns up to 5 sample documents from an index. Accepts only `indexUid`. Other fetch parameters are not supported |
+| `searchInIndexes` | `POST /multi-search` | Searches one or more indexes at once. Accepts the full multi-search body: query, filter, sort, facets, hybrid search, and federated results |
+| `facetSearch` | `POST /indexes/{indexUid}/facet-search` | Searches facet values for an index. Accepts the same body as facet search, plus a required `indexUid` |
 
-Open Claude Desktop and start a new conversation.
+The server's instructions tell agents to call `listIndexes`, then `describeIndex`, then `searchInIndexes`, in that order, so the agent understands what data is available before searching it.
 
-Next, connect to your Meilisearch instance by asking Claude to update the connection settings, replacing `MEILISEARCH_URL` with your project URL and `API_KEY` with your project's API key:
+<Note>
+`describeIndex` only returns sample documents. It does not return an index's settings or configured embedders.
+</Note>
 
-```
-Please connect to my Meilisearch instance at MEILISEARCH_URL using the API key API_KEY
-```
+## Limitations
 
-Claude will use the MCP server's `update-connection-settings` tool to establish a connection to your Meilisearch instance.
-
-Finally, verify the connection by asking:
-
-```
-Can you check the connection to my Meilisearch instance and tell me what version it's running?
-```
-
-Claude will use the `get-version` and `health-check` tools to verify the connection and provide information about your instance.
-
-## Create an e-commerce index
-
-Now you have configured the MCP to work with Meilisearch, you can use it to manage your indexes.
-
-First, verify what indexes you have in your project:
-
-```
-What indexes do I have in my Meilisearch instance?
-```
-
-Next, ask Claude to create an index optimized for e-commerce:
-
-```
-Create a new index called "products" for our e-commerce site with the primary key "product_id"
-```
-
-Finally, check the index has been created successfully and is completely empty:
-
-```
-How many documents are in my "products" index and what's its size?
-```
-
-## Add documents to your new index
-
-Ask Calude to add a couple of test documents to your "products" index:
-
-```
-Add these products to my "products" index:
-[
-  {"product_id": 1, "name": "Ergonomic Chair", "description": "Comfortable office chair", "price": 299.99, "category": "Furniture"},
-  {"product_id": 2, "name": "Standing Desk", "description": "Adjustable height desk", "price": 499.99, "category": "Furniture"}
-]
-```
-
-Since you are only using "products" for testing, you can also ask Claude to automatically populate it with placeholder data:
-
-```
-Add 10 documents in the index "products" with a name, category, price, and description of your choice
-```
-
-To verify data insertion worked as expected, retrieve the first few documents in your index:
-
-```
-Show me the first 5 products in my "products" index
-```
-
-## Configure your index
-
-Before performing your first search, set a few index settings to ensure relevant results.
-
-Ask Claude to prioritize exact word matches over multiple partial matches:
-
-```
-Update the ranking rules for the "products" index to prioritize word matches and handle typos, but make exact matches more important than proximity
-```
-
-It's also a good practice to limit searchable attributes only to highly-relevant fields, and only return attributes you are going to display in your search interface:
-
-```
-Configure my "products" index to make the "name" and "description" fields searchable, but only "name", "price", and "category" should be displayed in results
-```
-
-## Perform searches with MCP
-
-Perform your first search with the following prompt:
-
-```
-Search the "products" index for "desk" and return the top 3 results
-```
-
-You can also request your search uses other Meilisearch features such as filters and sorting:
-
-```
-Search the "products" index for "chair" where the price is less than 200 and the category is "Furniture". Sort results by price in ascending order.
-```
-
-<Warning>
-
-### Important note about LLM limitation
-
-Large Language Models like Claude tend to say "yes" to most requests, even if they can't actually perform them.
-
-Claude can only perform actions that are exposed through the Meilisearch API and implemented in the MCP server. If you're unsure whether a particular operation is possible, refer to the [Meilisearch documentation](https://docs.meilisearch.com) and the [MCP server README](https://github.com/meilisearch/meilisearch-mcp).
-</Warning>
+This MCP server only exposes search-related tools. It cannot create or delete indexes, add or edit documents, change index settings, manage API keys, or check tasks or instance health. Use the Meilisearch API or the Cloud UI for anything beyond search.
 
 ## Troubleshooting
 
-If you encounter issues with the Meilisearch MCP integration, try these steps
+If your MCP client can't connect or calls fail:
 
-### 1. Ask Claude to verify your connection settings
+- Confirm the `mcpRoute` experimental feature is enabled. When it is off, `/mcp` returns [`feature_not_enabled`](/reference/errors/error_codes#feature_not_enabled)
+- Confirm the client sends your API key in an `Authorization: Bearer` header. A missing header returns [`missing_authorization_header`](/reference/errors/error_codes#missing_authorization_header)
+- Confirm the key has `search`, `documents.get`, and `indexes.get` on the indexes you're querying. A call that fails a permission check returns a JSON-RPC error
+- Confirm your client supports remote MCP servers over HTTP, rather than only local stdio servers
+- Check your client's own logs for the raw error returned by the `/mcp` route
 
-```
-What are the current Meilisearch connection settings?
-```
+## Legacy `meilisearch-mcp` server
 
-### 2. Ask Claude to check your Meilisearch instance health
+The [`meilisearch-mcp`](https://github.com/meilisearch/meilisearch-mcp) Python package is as a local stdio process alongside desktop clients like Claude Desktop. It is deprecated in favor of the built-in `/mcp` route described on this page, and it is no longer actively maintained.
 
-```
-Run a health check on my Meilisearch instance
-```
-
-### 3. Review Claude's logs
-
-Open the logs file in your text editor or log viewer:
-
-- On macOS: `~/Library/Logs/Claude/mcp*.log`
-- On Windows: `%APPDATA%\Claude\logs\mcp*.log`
-
-### 4. Test the MCP server independently
-
-Open your terminal and query the MCP Inspector with `npx`:
-
-```bash
-npx @modelcontextprotocol/inspector uvx -n meilisearch-mcp
-```
-
-## Conclusion
-
-The Meilisearch MCP integration with Claude can transform multiple API calls and configuration tasks into conversational requests. This can help you focus more on building your application and less on implementation details.
-
-For more information about advanced configurations and capabilities, refer to the [Meilisearch documentation](https://docs.meilisearch.com) and the [Meilisearch MCP server repository](https://github.com/meilisearch/meilisearch-mcp).
