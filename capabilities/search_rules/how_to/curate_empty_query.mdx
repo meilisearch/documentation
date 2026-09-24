@@ -64,20 +64,25 @@ Send a `PATCH /dynamic-search-rules/empty-state-help`:
       "isEmpty": true
     }
   },
-  "actions": [
-    {
-      "selector": { "indexUid": "support", "id": "quickstart-overview" },
-      "action": { "type": "pin", "position": 0 }
-    },
-    {
-      "selector": { "indexUid": "support", "id": "popular-integrations" },
-      "action": { "type": "pin", "position": 1 }
-    },
-    {
-      "selector": { "indexUid": "support", "id": "contact-support" },
-      "action": { "type": "pin", "position": 2 }
-    }
-  ]
+  "actions": {
+    "pin": [
+      {
+        "indexUid": "support",
+        "id": "quickstart-overview",
+        "position": 0
+      },
+      {
+        "indexUid": "support",
+        "id": "popular-integrations",
+        "position": 1
+      },
+      {
+        "indexUid": "support",
+        "id": "contact-support",
+        "position": 2
+      }
+    ]
+  }
 }
 ```
 
