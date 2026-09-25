@@ -1,0 +1,534 @@
+openapi: 3.0.1
+info:
+  title: Meilisearch Cloud API V2
+  version: v2
+paths:
+  /api/v2/me:
+    get:
+      summary: Retrieves the authenticated user identity
+      tags:
+        - Me
+      security:
+        - personal_access_token: []
+      responses:
+        '200':
+          description: current user identity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  email:
+                    type: string
+                required:
+                  - name
+                  - email
+        '401':
+          description: unauthorized
+  /api/v2/meilisearch_versions:
+    get:
+      summary: Lists the active Meilisearch versions
+      tags:
+        - Meilisearch Versions
+      security:
+        - personal_access_token: []
+      responses:
+        '200':
+          description: meilisearch versions list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MeilisearchVersion'
+        '401':
+          description: unauthorized
+  /api/v2/organizations:
+    get:
+      summary: Lists organizations the authenticated user can access
+      tags:
+        - Organizations
+      security:
+        - personal_access_token: []
+      responses:
+        '200':
+          description: organizations list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Organization'
+        '401':
+          description: unauthorized
+  /api/v2/organizations/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+    get:
+      summary: Retrieves an organization
+      tags:
+        - Organizations
+      security:
+        - personal_access_token: []
+      responses:
+        '200':
+          description: organization found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization'
+        '403':
+          description: organization not accessible
+    patch:
+      summary: Updates an organization
+      tags:
+        - Organizations
+      security:
+        - personal_access_token: []
+      parameters: []
+      responses:
+        '200':
+          description: organization updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization'
+        '403':
+          description: not the organization owner
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                organization:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+  /api/v2/regions:
+    get:
+      summary: Lists the active regions
+      tags:
+        - Regions
+      security:
+        - personal_access_token: []
+      responses:
+        '200':
+          description: regions list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Region'
+        '401':
+          description: unauthorized
+  /api/v2/resources:
+    get:
+      summary: Lists the active resources and their plan pricing
+      tags:
+        - Resources
+      security:
+        - personal_access_token: []
+      parameters:
+        - name: region_id
+          in: query
+          required: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: resources list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Resource'
+        '401':
+          description: unauthorized
+  /api/v2/team_members:
+    get:
+      summary: Lists the members and pending invitees of a team
+      tags:
+        - Team Members
+      security:
+        - personal_access_token: []
+      parameters:
+        - name: team_id
+          in: query
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: team members list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TeamMember'
+        '403':
+          description: team not accessible
+    post:
+      summary: Invites a member to a team
+      tags:
+        - Team Members
+      security:
+        - personal_access_token: []
+      parameters: []
+      responses:
+        '201':
+          description: member invited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamMember'
+        '403':
+          description: not the team or organization owner
+        '422':
+          description: email is already a member
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                team_id:
+                  type: integer
+                email:
+                  type: string
+    delete:
+      summary: Removes a member from a team
+      tags:
+        - Team Members
+      security:
+        - personal_access_token: []
+      parameters: []
+      responses:
+        '204':
+          description: member removed
+        '403':
+          description: not the team or organization owner
+        '422':
+          description: owner cannot be removed
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                team_id:
+                  type: integer
+                email:
+                  type: string
+  /api/v2/teams:
+    get:
+      summary: Lists teams the authenticated user can access
+      tags:
+        - Teams
+      security:
+        - personal_access_token: []
+      responses:
+        '200':
+          description: teams list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Team'
+        '401':
+          description: unauthorized
+    post:
+      summary: Creates a team
+      tags:
+        - Teams
+      security:
+        - personal_access_token: []
+      parameters: []
+      responses:
+        '201':
+          description: team created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Team'
+        '403':
+          description: not the organization owner
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                team:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    organization_id:
+                      type: integer
+                  required:
+                    - organization_id
+              required:
+                - team
+  /api/v2/teams/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+    get:
+      summary: Retrieves a team
+      tags:
+        - Teams
+      security:
+        - personal_access_token: []
+      responses:
+        '200':
+          description: team found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Team'
+        '403':
+          description: team not accessible
+    patch:
+      summary: Updates a team
+      tags:
+        - Teams
+      security:
+        - personal_access_token: []
+      parameters: []
+      responses:
+        '200':
+          description: team updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Team'
+        '403':
+          description: not the team or organization owner
+        '422':
+          description: new owner is not a team member
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                team:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    owner_id:
+                      type: string
+                      description: New owner's uuid, must already be a team member
+components:
+  securitySchemes:
+    personal_access_token:
+      type: http
+      scheme: bearer
+      description: Personal Access Token (PAT), authenticates as the token's owning user.
+  schemas:
+    Organization:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        identifier:
+          type: string
+        owner_id:
+          type: string
+        is_admin:
+          type: boolean
+        default_team_id:
+          type: integer
+          nullable: true
+        customer_tier:
+          type: string
+          nullable: true
+      required:
+        - id
+        - name
+        - identifier
+        - owner_id
+        - is_admin
+        - default_team_id
+        - customer_tier
+    Team:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        organization_id:
+          type: integer
+        owner_id:
+          type: string
+        is_admin:
+          type: boolean
+      required:
+        - id
+        - name
+        - organization_id
+        - owner_id
+        - is_admin
+    TeamMember:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        email:
+          type: string
+        name:
+          type: string
+          nullable: true
+        is_owner:
+          type: boolean
+          nullable: true
+        status:
+          type: string
+          enum:
+            - accepted
+            - invited
+        invited_at:
+          type: string
+          format: date-time
+          nullable: true
+      required:
+        - email
+        - status
+    PlanFeature:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        name:
+          type: string
+        kind:
+          type: string
+        enabled:
+          type: boolean
+        nickname:
+          type: string
+          nullable: true
+        description:
+          type: string
+          nullable: true
+        product_name:
+          type: string
+          nullable: true
+        unit_price:
+          type: number
+          nullable: true
+        monthly_estimation:
+          type: number
+          nullable: true
+      required:
+        - name
+        - kind
+        - enabled
+    Plan:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        code:
+          type: string
+        features:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlanFeature'
+      required:
+        - id
+        - name
+        - code
+        - features
+    Resource:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        display_name:
+          type: string
+          nullable: true
+        plan:
+          type: string
+        region_id:
+          type: integer
+        storage:
+          type: number
+          nullable: true
+        memory:
+          type: number
+          nullable: true
+        vcpu:
+          type: number
+          nullable: true
+        full_plan:
+          nullable: true
+          allOf:
+            - $ref: '#/components/schemas/Plan'
+      required:
+        - id
+        - name
+        - plan
+        - region_id
+    Region:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        aws_region:
+          type: string
+        country_code:
+          type: string
+        green_label:
+          type: boolean
+      required:
+        - id
+        - name
+        - aws_region
+        - country_code
+    MeilisearchVersion:
+      type: object
+      properties:
+        name:
+          type: string
+        tag:
+          type: string
+        latest:
+          type: boolean
+      required:
+        - name
+        - tag
+        - latest
+security:
+  - personal_access_token: []
+servers:
+  - url: https://{defaultHost}
+    variables:
+      defaultHost:
+        default: api.meilisearch.com

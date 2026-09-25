@@ -469,21 +469,23 @@
     },
     {
       "tab": "Reference",
-      "groups": [
+      "pages": [
+        "reference/overview",
         {
-          "group": "Overview",
+          "group": "Engine API",
           "pages": [
             "reference/api/authorization",
             "reference/api/headers",
             "reference/api/requests",
             "reference/api/pagination",
-            "reference/api/openapi"
+            "reference/api/openapi",
+            "reference/errors/error_codes"
           ]
         },
         {
-          "group": "API Routes",
+          "group": "Engine API Routes",
           "openapi": {
-            "source": "assets/release-assets/meilisearch-openapi-mintlify.json",
+            "source": "assets/engine-release-assets/meilisearch-openapi-mintlify.json",
             "directory": "reference/api"
           },
           "examples": {
@@ -903,11 +905,17 @@
           ]
         },
         {
-          "group": "Errors",
+          "group": "Management API",
           "pages": [
-            "reference/errors/overview",
-            "reference/errors/error_codes"
+            "reference/management-api/authentication"
           ]
+        },
+        {
+          "group": "Management API Routes",
+          "openapi": {
+            "source": "assets/cloud-assets/meilisearch-cloud-openapi-mintlify.yaml",
+            "directory": "reference/management-api"
+          }
         }
       ]
     },
