@@ -1,0 +1,41 @@
+---
+title: Paperscope
+sidebarTitle: Paperscope
+description: Search, explore, and chat with 6,000 AI research papers using hybrid search, similar documents, and conversational search
+---
+
+<Info>
+**Live demo**: [paperscope-one.vercel.app](https://paperscope-one.vercel.app)
+</Info>
+
+Paperscope indexes around 6,000 AI and machine learning papers from arXiv, enriched with citation counts from Semantic Scholar. Type a title, an author, or describe an idea in your own words: Meilisearch matches both the words and the meaning. Open any paper to find related work, then ask questions across the whole corpus, your reading list, or a single paper.
+
+![Paperscope search page showing a hybrid search for "attention is all you need" with category and year facets](/assets/images/demos/paperscope-demo.png)
+
+## Key features
+
+- **Hybrid search slider**: Move from exact words to meaning in real time by changing `semanticRatio`. The results header shows how many papers were found only by meaning, using `semanticHitCount`.
+- **Built-in embeddings**: Documents and queries are embedded inside Meilisearch with a HuggingFace model (`BAAI/bge-small-en-v1.5`), with no external embedding service.
+- **Similar papers**: Each paper lists its nearest neighbours from the `/similar` endpoint, optionally filtered to the same arXiv category.
+- **Faceted navigation**: Filter by category, topic, author, and year. The year slider uses `facetStats`, and the author box uses facet search.
+- **Citation-aware ranking**: A custom ranking rule on `citationCount` breaks ties in favor of influential papers, and results can be sorted by citations or date.
+- **Multi-search**: Papers and matching authors come back in a single request across two indexes.
+- **Chat with the papers**: The "Ask the papers" page uses the `/chats` route. The LLM runs hybrid searches as a tool and streams its progress and sources.
+- **Scoped chat with tenant tokens**: Chatting with a reading list or a single paper uses a short-lived tenant token whose search rule restricts retrieval to those papers.
+
+## Links
+
+<CardGroup cols={2}>
+  <Card title="Try the demo" icon="globe" href="https://paperscope-one.vercel.app">
+    Search and chat with AI research papers
+  </Card>
+  <Card title="Hybrid search" icon="magnifying-glass" href="/capabilities/hybrid_search/overview">
+    Combine keyword and semantic search
+  </Card>
+  <Card title="Chat route" icon="message-bot" href="/capabilities/agentic_search/overview">
+    Learn about the chat route
+  </Card>
+  <Card title="Tenant tokens" icon="lock" href="/capabilities/security/overview">
+    Restrict what each user can search
+  </Card>
+</CardGroup>
