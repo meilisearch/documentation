@@ -1,0 +1,71 @@
+---
+title: Talk with Lex
+sidebarTitle: Talk with Lex
+description: Find any moment of the Lex Fridman Podcast and chat with every transcript, using hybrid search and the chats API
+---
+
+<Info>
+**Live demo**: [talk-with-lex.vercel.app](https://talk-with-lex.vercel.app)
+</Info>
+
+This demo indexes every Lex Fridman Podcast transcript as one-minute passages: 414 episodes, 97,512 passages, and about 10 million words. Search for a quote, an idea, or a name, and each result links to the exact second of the video. A chat page answers questions about the whole show, or about a single episode, with a timestamped citation for every claim.
+
+![Searching "is AGI going to kill us": hybrid results with highlighted matches, speaker and chapter labels, and the video playing at the matching second](/assets/images/demos/talk-with-lex-demo.png)
+
+## Key features
+
+- **Passages as documents**: Each document is about one minute of speech (110 to 190 words) that never mixes two speakers. It keeps its episode, guest, speaker, chapter, and start time, so every result can point to `youtube.com/watch?v=…&t=…s`.
+- **Exact phrases and typos**: Wrapping a query in double quotes, such as `"love is the answer"`, runs a phrase search that returns the 7 moments where it was said. A misspelled `Dostoyevski` still finds Dostoevsky thanks to [typo tolerance](/capabilities/full_text_search/relevancy/typo_tolerance_settings).
+- **Words to meaning slider**: The slider sets the [`semanticRatio`](/capabilities/hybrid_search/advanced/custom_hybrid_ranking#understanding-semanticratio) of a [hybrid search](/capabilities/hybrid_search/overview). The embedder is a [HuggingFace model](/capabilities/hybrid_search/how_to/configure_huggingface_embedder) (`BAAI/bge-small-en-v1.5`) running inside Meilisearch, so a query like "afraid to die" finds conversations about mortality that never use those words.
+- **Who said it**: A filter on the `isLex` field keeps only Lex's own words or only his guests, and facet counts show how many passages each side has. A guest list uses [facet search](/capabilities/filtering_sorting_faceting/how_to/facet_search) to type-ahead across more than 350 guests.
+- **One result per episode**: A toggle adds `distinct: "episodeId"` to the query, so each episode appears once with its best passage. Because facets are then counted per episode, a second query without `distinct` in the same [multi-search](/capabilities/multi_search/overview) request provides the "+18 more moments in this episode" counts. See [distinct attribute](/capabilities/full_text_search/how_to/configure_distinct_attribute).
+- **Conversation around a hit**: Expanding a result filters on the same `episodeId` and a `position` range, sorted by `position`, to show the passages just before and after.
+- **Chat with the archive**: The chat page uses the [chats API](/capabilities/agentic_search/advanced/chats_api). The model searches the transcripts on its own, often several times per question, and cites the second each claim comes from. The interface lists the searches it ran and the passages it read, as described in [display source documents](/capabilities/agentic_search/how_to/display_source_documents).
+- **Chat with one episode**: The same chat, restricted to a single episode by a [tenant token](/capabilities/security/how_to/generate_token_from_scratch) whose search rule filters on `episodeId`. The model cannot retrieve passages from any other episode.
+
+## Example search and conversation
+
+1. **Search `meaning of life` and choose "Lex"**: Returns only the questions Lex asked about the meaning of life, each with the timestamp and the chapter it belongs to.
+2. **Turn on "One per episode"**: The list switches from passages to episodes, and each result shows how many other matching moments its episode contains.
+3. **Ask the chat "What does Lex think love is?"**: The model runs searches such as "what is love" and "love is the answer", each with the filter `isLex = true`, then answers with links that jump to the moments it quotes.
+
+## How it works
+
+The application is a Next.js app. Search requests go through API routes that use a read-only [API key](/capabilities/security/how_to/manage_api_keys) scoped to the two indexes. For chat, the server hands the browser a short-lived tenant token, and the browser streams the answer straight from Meilisearch:
+
+```ts
+import { generateTenantToken } from "meilisearch/token";
+
+// Parent key: actions ["search", "chatCompletions"] on the chunks index only
+const token = await generateTenantToken({
+  apiKey: process.env.MEILI_CHAT_KEY,
+  apiKeyUid: process.env.MEILI_CHAT_KEY_UID,
+  searchRules: {
+    "lex-chunks": episodeId ? { filter: `episodeId = "${episodeId}"` } : {},
+  },
+  expiresAt: new Date(Date.now() + 30 * 60 * 1000),
+});
+
+// The browser then calls POST /chats/talk-with-lex/chat/completions with this token
+```
+
+The chat workspace prompts tell the model to cite each claim with the `Link` field of the passage, and the index `chat` settings render each passage with its episode, speaker, chapter, timestamp, and link. The whole configuration, including settings, synonyms, embedder, and chat prompts, lives in a single setup script in the repository.
+
+To build a conversational search on your own data, follow the [agentic search getting started guide](/capabilities/agentic_search/getting_started).
+
+## Links
+
+<CardGroup cols={2}>
+  <Card title="Try the demo" icon="globe" href="https://talk-with-lex.vercel.app">
+    Find a moment or ask the archive a question
+  </Card>
+  <Card title="Source code" icon="github" href="https://github.com/meilisearch/demo-talk-with-lex">
+    Next.js application and data pipeline on GitHub
+  </Card>
+  <Card title="Chats API" icon="comments" href="/capabilities/agentic_search/advanced/chats_api">
+    Conversational search with the /chats route
+  </Card>
+  <Card title="Hybrid search" icon="wand-magic-sparkles" href="/capabilities/hybrid_search/overview">
+    Combine keyword and semantic search
+  </Card>
+</CardGroup>
