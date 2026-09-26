@@ -1015,6 +1015,7 @@
           "pages": [
             "resources/demos/overview",
             "resources/demos/agentic_movie_search",
+            "resources/demos/talk_with_lex",
             "resources/demos/judilibre",
             "resources/demos/where_to_watch",
             "resources/demos/home_booking",
