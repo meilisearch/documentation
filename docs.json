@@ -175,6 +175,11 @@
     },
     "gtm": {
       "tagId": "GTM-TNSCGVBH"
+    },
+    "posthog": {
+      "apiKey": "phc_D5VtJkw6WyBzLtZ5tBvwR7ac4LvQZdFGYQTQfegRjh9n",
+      "apiHost": "https://t.meilisearch.com",
+      "sessionRecording": true
     }
   },
   "redirects": {
