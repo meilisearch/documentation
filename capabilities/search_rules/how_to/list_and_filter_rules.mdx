@@ -78,7 +78,7 @@ This returns the full rule definition, which is convenient when you want to edit
 ## Common auditing patterns
 
 - **Expired promotions**: list every rule with `active: false` to find paused rules you might still want to keep for future campaigns, or delete if they are truly one-off.
-- **Rules per index**: the list response includes each rule's actions, so you can group by `selector.indexUid` locally to see how many pins target each index.
+- **Rules per index**: the list response includes each rule's actions, so you can group pin items by `indexUid` locally to see how many pins target each index.
 - **Scheduled promotions**: list every rule whose conditions contain a `time` scope with a `start` in the future. This is a good sanity check before a campaign goes live.
 - **Priority conflicts**: list rules that share a `words` value and compare their `precedence` values. If two rules have the same precedence and target different documents for the same query, ordering is not guaranteed.
 - **Recent changes**: because listings are sorted by `lastUpdatedAt` descending, the first page of a plain listing is a change log of the rules touched most recently. This is a quick way to see what someone else edited before a campaign goes live.

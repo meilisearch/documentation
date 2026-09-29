@@ -63,6 +63,8 @@ Federated search results now provide detailed performance timing that separates 
  - `actions`: Array of applied scale actions with `ruleUid` and `weight`
  - `totalWeight`: The combined multiplicative factor from all applied scale actions
 
+Score details expose `ruleUid` values to end users. Keep sensitive information in the rule's `description` rather than in the `uid`.
+
 ### New environment variables for scale operation limits
 
 Control scale operation behavior with:

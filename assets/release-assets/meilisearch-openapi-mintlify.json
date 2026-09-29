@@ -1745,7 +1745,7 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
-            "source": "curl \\\n  -X PATCH 'MEILISEARCH_URL/dynamic-search-rules/black-friday' \\\n  -H 'Authorization: Bearer API_KEY' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '{\n    \"description\": \"Black Friday 2025 rules\",\n    \"precedence\": 10,\n    \"active\": true,\n    \"conditions\": {\n      \"query\": {\n        \"isEmpty\": true\n      },\n      \"time\": {\n        \"start\": \"2025-11-28T00:00:00Z\",\n        \"end\": \"2025-11-28T23:59:59Z\"\n      }\n    },\n    \"actions\": [\n      {\n        \"selector\": { \"indexUid\": \"products\", \"id\": \"123\" },\n        \"action\": { \"type\": \"pin\", \"position\": 1 }\n      }\n    ]\n  }'"
+            "source": "curl \\\n  -X PATCH 'MEILISEARCH_URL/dynamic-search-rules/black-friday' \\\n  -H 'Authorization: Bearer API_KEY' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '{\n    \"description\": \"Black Friday 2025 rules\",\n    \"precedence\": 10,\n    \"active\": true,\n    \"conditions\": {\n      \"query\": {\n        \"isEmpty\": true\n      },\n      \"time\": {\n        \"start\": \"2025-11-28T00:00:00Z\",\n        \"end\": \"2025-11-28T23:59:59Z\"\n      }\n    },\n    \"actions\": {\n      \"pin\": [\n        {\n          \"indexUid\": \"products\",\n          \"id\": \"123\",\n          \"position\": 1\n        }\n      ]\n    }\n  }'"
           },
           {
             "lang": "JS",
@@ -15209,7 +15209,7 @@
     "/mcp": {
       "post": {
         "tags": [
-          "MCP connection"
+          "MCP"
         ],
         "summary": "Model context protocol (MCP)",
         "description": "The `/mcp` route exposes [the MCP open protocol](https://modelcontextprotocol.io) that enables seamless integration between LLM\napplications and external data sources and tools.",
@@ -15226,7 +15226,7 @@
         },
         "responses": {
           "200": {
-            "description": "Stream of batches changes.",
+            "description": "The JSON-RPC response to the MCP request.",
             "content": {
               "application/json": {
                 "schema": {
@@ -15246,7 +15246,7 @@
                     "_meta": {
                       "io.modelcontextprotocol/serverInfo": {
                         "name": "Meilisearch",
-                        "version": "1.52.0"
+                        "version": "1.54.1"
                       }
                     },
                     "instructions": "This is a Meilisearch instance that is capable of returning documents based on a search query.",
@@ -15274,7 +15274,17 @@
             }
           }
         },
-        "security": []
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "cURL",
+            "source": "curl \\\n  -X POST 'MEILISEARCH_URL/mcp' \\\n  -H 'Authorization: Bearer API_KEY' \\\n  -H 'Content-Type: application/json' \\\n  -H 'Accept: application/json, text/event-stream' \\\n  --data-binary '{\n    \"jsonrpc\": \"2.0\",\n    \"id\": 1,\n    \"method\": \"server/discover\",\n    \"params\": {\n      \"_meta\": {\n        \"io.modelcontextprotocol/protocolVersion\": \"2026-07-28\",\n        \"io.modelcontextprotocol/clientInfo\": {\n          \"name\": \"ExampleClient\",\n          \"version\": \"1.0.0\"\n        }\n      }\n    }\n  }'"
+          }
+        ]
       }
     },
     "/metrics": {

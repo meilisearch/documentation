@@ -45,14 +45,14 @@ When a rule matches, Meilisearch:
 3. Inserts those documents at the requested positions
 4. Removes duplicates and returns the final result set
 
-Search rules do not change ranking or scoring. They insert pinned documents on top of the normal results. A pinned document can appear even if it does not match the query text, but filters still apply: if a pinned document does not satisfy the current filters, Meilisearch drops it.
+Pin actions insert documents at fixed positions without rewriting ranking rules. Scale actions adjust the relevance scores of matching documents. A pinned document can appear even if it does not match the query text, but filters still apply: if a pinned document does not satisfy the current filters, Meilisearch drops it.
 
 ## Key concepts
 
 A rule combines three parts:
 
 - **Conditions** decide when the rule fires. Query conditions match for emptiness of the search query, or for words contained in the search query. Time conditions activate the rule during a window between a start and end timestamp. Filter conditions fire when specific facet values are selected in a filter. If multiple conditions are provided, they must all be met for the rule to apply.
-- **Actions** decide what the rule does. Pinning is the only available action today. An action targets one document via `indexUid` and `id`, and places it at a fixed `position` in the result list.
+- **Actions** decide what the rule does. Pin actions target a document via `indexUid` and `id` and place it at a fixed `position` in the result list. Scale actions apply a numeric weight that boosts the relevance score of matching documents.
 - **Precedence** decides which rule wins when several match at once. Lower numeric values take precedence over higher ones. Omitting precedence treats the rule as the last precedence, meaning it will be considered after all rules that define a precedence.
 
 Rules also carry optional metadata such as `description` and an `active` flag that lets you pause a rule without deleting it.
@@ -70,7 +70,7 @@ Search rules apply to regular search, [hybrid search](/capabilities/hybrid_searc
 
 - Regex, wildcard, or numeric-pattern matching
 - Activation from filters, selected facets, locale, user context, or page context
-- Actions other than pinning. Boosting, demoting, and burying are planned for future releases.
+- Demoting or burying documents
 
 See [pinning behavior](/capabilities/search_rules/advanced/pinning_behavior) for details on how rules interact with ranking, filters, and precedence. If your use case needs something search rules do not cover yet, [book a call with the Meilisearch team](https://meet.meilisearch.com/meetings/cloud/presentation) to share your requirements.
 

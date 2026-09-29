@@ -10,7 +10,7 @@ This page explains how search rules interact with ranking, filters, matching, an
 
 Pinning does not rewrite your ranking rules and does not assign scores to pinned documents. Meilisearch computes organic results first, then inserts the surviving pinned documents at their requested positions. Organic ranking still decides the order of every non-pinned hit.
 
-Pinning is the only supported action today. Boosting, demoting, and burying are planned for future releases.
+Scale actions, available as of v1.54, adjust the relevance scores of matching documents without inserting them at a fixed position.
 
 ## Pinned documents do not need to match the query text
 
@@ -48,6 +48,6 @@ Search rules preserve normal response behavior:
 
 ## Storage model
 
-Search rules are stored at the instance level, not as per-index settings. A single rule can target documents in any index by leaving out `indexUid` inside the action selector. This keeps curation configuration centralized, but it also means that rules live outside the usual index-settings lifecycle.
+Search rules are stored at the instance level, not as per-index settings. A single rule can target documents in any index by leaving out `indexUid` on the pin or scale item. This keeps curation configuration centralized, but it also means that rules live outside the usual index-settings lifecycle.
 
 For the full list of matching and action capabilities the current version supports (and the ones it does not), see [the overview](/capabilities/search_rules/overview#current-scope).

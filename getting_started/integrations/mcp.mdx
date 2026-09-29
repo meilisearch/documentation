@@ -4,7 +4,7 @@ sidebarTitle: MCP
 description: Search Meilisearch indexes from AI agents and LLM clients using the built-in MCP server.
 ---
 
-The [Model Context Protocol](https://modelcontextprotocol.io/) (MCP) lets AI agents and LLM clients call external tools. Meilisearch ships a native MCP server at the [`POST /mcp`](/reference/api/mcp-connection/model-context-protocol-mcp) route so any MCP-compatible client can search your indexes directly.
+The [Model Context Protocol](https://modelcontextprotocol.io/) (MCP) lets AI agents and LLM clients call external tools. Meilisearch ships a native MCP server at the [`POST /mcp`](/reference/api/mcp/model-context-protocol-mcp) route so any MCP-compatible client can search your indexes directly.
 
 The server exposes four read-only, search-focused tools: `listIndexes`, `describeIndex`, `searchInIndexes`, and `facetSearch`.
 
@@ -51,7 +51,6 @@ url = "https://your-host/mcp"
 http_headers = { "Authorization" = "Bearer YOUR_API_KEY" }
 ```
 
-```
 </CodeGroup>
 
 See the [Claude Code](https://code.claude.com/docs/en/mcp-servers) and [Codex](https://developers.openai.com/codex/config-reference) documentation for more information on how to configure MCP servers with custom headers.

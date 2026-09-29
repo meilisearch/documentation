@@ -79,12 +79,11 @@ Send a `PATCH /dynamic-search-rules/summer-sale-2026`:
       "end": "2026-06-30T23:59:59Z"
     }
   },
-  "actions": [
-    {
-      "selector": { "indexUid": "products", "id": "summer-sale-landing-page" },
-      "action": { "type": "pin", "position": 0 }
-    }
-  ]
+  "actions": {
+    "pin": [
+      { "indexUid": "products", "id": "summer-sale-landing-page", "position": 0 }
+    ]
+  }
 }
 ```
 
