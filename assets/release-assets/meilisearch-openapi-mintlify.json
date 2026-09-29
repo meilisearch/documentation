@@ -1745,7 +1745,7 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
-            "source": "curl \\\n  -X PATCH 'MEILISEARCH_URL/dynamic-search-rules/black-friday' \\\n  -H 'Authorization: Bearer API_KEY' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '{\n    \"description\": \"Black Friday 2025 rules\",\n    \"precedence\": 10,\n    \"active\": true,\n    \"conditions\": {\n      \"query\": {\n        \"isEmpty\": true\n      },\n      \"time\": {\n        \"start\": \"2025-11-28T00:00:00Z\",\n        \"end\": \"2025-11-28T23:59:59Z\"\n      }\n    },\n    \"actions\": [\n      {\n        \"selector\": { \"indexUid\": \"products\", \"id\": \"123\" },\n        \"action\": { \"type\": \"pin\", \"position\": 1 }\n      }\n    ]\n  }'"
+            "source": "curl \\\n  -X PATCH 'MEILISEARCH_URL/dynamic-search-rules/black-friday' \\\n  -H 'Authorization: Bearer API_KEY' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '{\n    \"description\": \"Black Friday 2025 rules\",\n    \"precedence\": 10,\n    \"active\": true,\n    \"conditions\": {\n      \"query\": {\n        \"isEmpty\": true\n      },\n      \"time\": {\n        \"start\": \"2025-11-28T00:00:00Z\",\n        \"end\": \"2025-11-28T23:59:59Z\"\n      }\n    },\n    \"actions\": {\n      \"pin\": [\n        {\n          \"indexUid\": \"products\",\n          \"id\": \"123\",\n          \"position\": 1\n        }\n      ]\n    }\n  }'"
           },
           {
             "lang": "JS",
