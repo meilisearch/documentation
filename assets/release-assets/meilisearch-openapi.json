@@ -11,7 +11,7 @@
       "name": "MIT",
       "identifier": "MIT"
     },
-    "version": "1.54.0"
+    "version": "1.54.1"
   },
   "servers": [
     {
@@ -11010,7 +11010,7 @@
                     "_meta": {
                       "io.modelcontextprotocol/serverInfo": {
                         "name": "Meilisearch",
-                        "version": "1.54.0"
+                        "version": "1.54.1"
                       }
                     },
                     "instructions": "This is a Meilisearch instance that is capable of returning documents based on a search query.",
@@ -11038,7 +11038,11 @@
             }
           }
         },
-        "security": [{"Bearer": []}]
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
       }
     },
     "/metrics": {

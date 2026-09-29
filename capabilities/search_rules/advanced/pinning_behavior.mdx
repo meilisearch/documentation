@@ -48,6 +48,6 @@ Search rules preserve normal response behavior:
 
 ## Storage model
 
-Search rules are stored at the instance level, not as per-index settings. A single rule can target documents in any index by leaving out `indexUid` inside the action selector. This keeps curation configuration centralized, but it also means that rules live outside the usual index-settings lifecycle.
+Search rules are stored at the instance level, not as per-index settings. A single rule can target documents in any index by leaving out `indexUid` on the pin or scale item. This keeps curation configuration centralized, but it also means that rules live outside the usual index-settings lifecycle.
 
 For the full list of matching and action capabilities the current version supports (and the ones it does not), see [the overview](/capabilities/search_rules/overview#current-scope).

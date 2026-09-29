@@ -1,0 +1,85 @@
+---
+title: HackerSearch
+sidebarTitle: HackerSearch
+description: Every Hacker News story and comment indexed in Meilisearch, with faceted search and live sync
+---
+
+<Info>
+**Live demo**: [hackersearch.meilisearch.com](https://hackersearch.meilisearch.com)
+</Info>
+
+HackerSearch is a full replacement for HN Search. It indexes all of Hacker News in Meilisearch, every story and every comment, and serves it through a single faceted search interface. Millions of documents are searchable as you type, and new items appear within seconds of being posted on Hacker News.
+
+![HackerSearch showing the newest Hacker News stories with type, time, and points facets](/assets/images/demos/hackersearch-demo.png)
+
+## Key features
+
+- **The entire corpus**: Stories, Ask HN, Show HN, Launch HN, jobs, polls, and comments, all in one index. Two tabs, News and Comments, split the corpus and the facet rail adapts to each.
+- **Inline autocompletion**: As you type, the search box suggests the rest of the current word in grey, taken from the most popular matching story title. Press `Tab` or `→` to accept it.
+- **Disjunctive facet counts**: Each keystroke sends a single [multi-search](/capabilities/multi_search/overview) request. For every facet with an active selection, it adds a query that excludes that facet's own filter, so counts stay accurate while you combine filters ([disjunctive facets](/capabilities/filtering_sorting_faceting/advanced/disjunctive_facets)).
+- **Filters on every dimension**: Narrow results by type, time range, minimum points, domain, and author. Domain and author use [facet search](/capabilities/filtering_sorting_faceting/how_to/facet_search) to find values among thousands of options.
+- **Relevance, newest, or points**: Switch between relevancy ranking and explicit sorts. The `sort` ranking rule sits before `attribute` so the Newest and Points modes take priority, and `points:desc` acts as a final tiebreaker for relevancy.
+- **Live sync**: A Rust indexer reads the Hacker News Firebase API, backfills the full history, then polls for new and updated items every 30 seconds.
+- **Threaded comments**: Open any story or comment to read its full discussion tree, fetched directly from the index.
+- **Shareable searches**: The query, filters, and sort live in the URL, so every search can be shared as a link.
+
+## How it's built
+
+A Rust indexer (`hn-indexer`) pulls items from the Hacker News API, strips comment HTML, and sends plain-text documents to a single `hn` index. A Next.js front end queries Meilisearch directly from the browser.
+
+The index configuration keeps full-text search focused on content:
+
+- **Searchable attributes**: `title` and `text` only. URLs, domains, and author names are excluded from full-text search to avoid noisy matches (for example, "dan" matching every post by the user "dang") and remain reachable through filters.
+- **Granular filterable attributes**: Each attribute only enables the features the UI needs. `domain` and `author` support facet search, `points` and `created_at` support comparison operators, and the rest only use equality.
+- **Proximity by attribute**: `proximityPrecision` is set to `byAttribute`, which lowers indexing cost since titles and comment text are independent fields.
+
+## How faceting stays fast
+
+`domain` and `author` have a huge number of distinct values across roughly 45 million documents, so computing their distributions on every keystroke would be expensive. HackerSearch only asks Meilisearch for facet counts that are actually displayed:
+
+- **High-cardinality facets load on demand**: The Domain and Author sections start collapsed. Their names are only added to the `facets` parameter once you expand them, and a section stays open automatically while it has a selected value. The low-cardinality `tags` facet (story, Ask HN, Show HN, and so on) is always computed on the News tab and skipped entirely on the Comments tab.
+- **Exclusion queries only for active selections**: Disjunctive faceting needs a separate query per facet, with that facet's own filter removed. HackerSearch only sends that query for facets where you have selected a value. For the others, the counts from the main query are already correct.
+- **Facet search instead of long lists**: Each expanded section shows its top values. Typing in its filter box calls the [facet search](/capabilities/filtering_sorting_faceting/how_to/facet_search) endpoint to search across all values, so the page never has to load full distributions. This is why only `domain` and `author` enable `facetSearch` in the index settings.
+- **Cancel superseded requests**: When you keep typing, the in-flight request for the previous query is aborted, so slow responses never pile up.
+
+The result: typing a fresh query with no filters selected and all sections collapsed sends just the main query (plus the autocompletion query below), instead of up to five queries. See [optimize facet performance](/capabilities/filtering_sorting_faceting/advanced/optimize_facet_performance) for more techniques.
+
+## How autocompletion works
+
+Autocompletion needs no dedicated suggestions index. It rides along in the same multi-search request as the results and facets, as one extra query:
+
+```json
+{
+  "indexUid": "hn",
+  "q": "meil",
+  "attributesToSearchOn": ["title"],
+  "filter": "type != \"comment\"",
+  "sort": ["points:desc"],
+  "limit": 1,
+  "attributesToRetrieve": ["title"]
+}
+```
+
+- **`attributesToSearchOn`** limits matching to story titles, so suggestions read like real headlines rather than fragments of comments. See [configure searchable attributes](/capabilities/full_text_search/how_to/configure_searchable_attributes).
+- **`filter`** excludes comments, which have no title.
+- **`sort: ["points:desc"]`** returns the most upvoted matching story. Meilisearch treats the last query word as a prefix, so `meil` already matches "Meilisearch".
+- **`limit: 1`** and **`attributesToRetrieve`** keep the response tiny, since only one title is needed.
+
+On the client, the app scans that title for the first word that starts with the word being typed and shows the missing letters as a grey overlay after the caret. "meil" plus the title "Meilisearch 1.6 released" becomes the suggestion "isearch". The query is skipped when the last word is shorter than two characters or the query is longer than 40 characters, so it costs nothing when no suggestion could appear.
+
+## Links
+
+<CardGroup cols={2}>
+  <Card title="Try the demo" icon="globe" href="https://hackersearch.meilisearch.com">
+    Search every Hacker News story and comment
+  </Card>
+  <Card title="Source code" icon="github" href="https://github.com/meilisearch/hackersearch">
+    Explore the indexer and front end on GitHub
+  </Card>
+  <Card title="Faceted search" icon="filter" href="/capabilities/filtering_sorting_faceting/overview">
+    Build filters and facets in your app
+  </Card>
+  <Card title="Multi-search" icon="layer-group" href="/capabilities/multi_search/overview">
+    Send several queries in one request
+  </Card>
+</CardGroup>

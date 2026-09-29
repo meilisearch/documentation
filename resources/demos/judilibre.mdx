@@ -1,0 +1,74 @@
+---
+title: Judilibre legal search
+sidebarTitle: Judilibre legal search
+description: Search French codes and Cour de cassation case law with instant search, hybrid search, and a conversational assistant
+---
+
+<Info>
+**Live demo**: [judilibre.meilisearch.com](https://judilibre.meilisearch.com)
+</Info>
+
+This demo makes French law searchable in a single interface: the 161,296 in-force articles of 77 French codes (from the LEGI open-data archive published on Légifrance) and the decisions of the Cour de cassation (from the Judilibre API). Type a legal concept, an article number, or an appeal number, and results appear on every keystroke. An assistant built on Meilisearch [chat completions](/capabilities/agentic_search/overview) answers legal questions and cites the articles and decisions it relied on.
+
+![The Judilibre demo showing articles of the Code civil and other codes for the query "responsabilité du fait des choses"](/assets/images/demos/judilibre-demo.png)
+
+## Key features
+
+- **Two corpora, one search bar**: A switch toggles between **Codes** (one hit per article) and **Décisions** (one hit per ruling). Facets follow the corpus: code and subdivision for articles; chamber, solution, publication, and year for decisions.
+- **Search-as-you-type over long legal texts**: Queries return in milliseconds across the full text of every article and decision, with [highlighted matches](/capabilities/full_text_search/how_to/highlight_search_results) and cropped snippets when the match is deep in the body.
+- **Exact references**: [Typo tolerance](/capabilities/full_text_search/relevancy/typo_tolerance_settings) is disabled on article numbers, appeal numbers, and ECLI identifiers, so searching `L110-1` never returns `L110-11`, while typos in legal concepts are still forgiven.
+- **French stop words**: Common words such as "le", "du", or "des" are declared as [stop words](/capabilities/full_text_search/how_to/configure_stop_words), so a query like "responsabilité du fait des choses" ranks on the words that carry meaning.
+- **Hybrid search with a legal embedder**: The **IA** button enables [hybrid search](/capabilities/hybrid_search/overview) with a `semanticRatio` of 0.6, using Voyage AI's `voyage-law-2` model configured as a [REST embedder](/capabilities/hybrid_search/how_to/configure_rest_embedder). It finds relevant articles even when the user's wording differs from the legislator's.
+- **Faceted navigation**: Facet counts update with every query, with `OR` inside a facet and `AND` across facets, as described in [build faceted navigation](/capabilities/filtering_sorting_faceting/how_to/build_faceted_navigation).
+- **Articles linked to case law**: Each article page lists the decisions that apply it, and each decision links to the articles it cites. Both directions are a simple filter on a normalized reference key (for example `code-du-travail:L1152-1`) stored in a filterable attribute.
+- **Conversational assistant**: The **Assistant** tab answers questions in French, searches the codes and the case law on its own, and lists the retrieved documents as numbered sources.
+
+## Example queries
+
+1. **"responsabilité du fait des choses"** Returns article 1242 of the Code civil first, the founding text on liability for things in one's custody.
+2. **"L1152-1"** Jumps straight to the Code du travail article on workplace harassment, then open it to see the Cour de cassation decisions applying it.
+3. **"licenciement pour inaptitude"** with **Décisions** selected, then filter on the social chamber and sort by date to read the latest rulings on dismissals for unfitness.
+4. **"Mon propriétaire refuse de me rendre mon dépôt de garantie, que dit la loi ?"** in the assistant searches the codes first, then the case law, and answers with citations.
+
+## How it works
+
+The project has two parts. A Rust indexer exports decisions from the Judilibre API, streams the 5.25 million XML files of the LEGI archive without extracting them, and pushes the documents to Meilisearch. A Next.js application queries Meilisearch directly from the browser with a [search-only API key](/capabilities/security/how_to/manage_api_keys), so no admin key is ever deployed.
+
+Each index is tuned for its documents. The `legi` index, for example, uses these settings:
+
+```json
+{
+  "searchableAttributes": ["reference", "number", "code", "section", "hierarchy", "text"],
+  "filterableAttributes": ["id", "code", "code_id", "number", "reference_key", "section", "year", "date_debut_timestamp"],
+  "sortableAttributes": ["date_debut_timestamp", "code", "number"],
+  "typoTolerance": { "disableOnAttributes": ["number", "reference_key"] },
+  "stopWords": ["le", "la", "les", "de", "des", "du", "un", "une", "et", "en", "au", "aux"]
+}
+```
+
+The [searchable attributes](/capabilities/full_text_search/how_to/configure_searchable_attributes) list the article reference and number before its text, so a query matching a reference outranks one matching a word in the body.
+
+The assistant uses the `/chats` route. Meilisearch runs the retrieval loop itself: the LLM decides what to search and with which filters, Meilisearch executes the searches on the indexes that have a chat description, and the answer streams back as OpenAI-compatible server-sent events. The application reads the `_meiliSearchProgress` and `_meiliSearchSources` events to show each search step and the [source documents](/capabilities/agentic_search/how_to/display_source_documents) behind the answer.
+
+To build the same kind of assistant with your own data, follow the [agentic search getting started guide](/capabilities/agentic_search/getting_started).
+
+## Links
+
+<CardGroup cols={2}>
+  <Card title="Try the demo" icon="globe" href="https://judilibre.meilisearch.com">
+    Search French codes and case law
+  </Card>
+  <Card title="Source code" icon="github" href="https://github.com/meilisearch/demo-judilibre">
+    Rust indexer and Next.js application on GitHub
+  </Card>
+  <Card title="Hybrid search" icon="brain" href="/capabilities/hybrid_search/overview">
+    Combine keyword and semantic search
+  </Card>
+  <Card title="Agentic search" icon="robot" href="/capabilities/agentic_search/overview">
+    Build a conversational assistant on your indexes
+  </Card>
+</CardGroup>
+
+<Note>
+Judilibre data is published by the Cour de cassation under the Licence Ouverte 2.0, and decisions are pseudonymized. This demo is a technical showcase, not legal advice.
+</Note>

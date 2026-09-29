@@ -31,7 +31,7 @@ The requested batch does not exist. Please ensure that you are using the correct
 
 ## `chat_not_found`
 
-There is not configured chat corresponding to the specified workspace uid.
+No chat is configured for the specified workspace UID.
 
 ## `database_size_limit_reached`
 
@@ -176,7 +176,7 @@ The requested index already has a primary key that [cannot be changed](/resource
 
 ## `index_scoped_api_key_with_global_action`
 
-This errors occurs when calling an endpoint that requires a global API key with an API key that is scoped to a subset of index.
+This error occurs when calling an endpoint that requires a global API key with an API key that is scoped to a subset of indexes.
 
 Call the endpoint with an API key that has `"indexes": ["*"]`
 
@@ -323,7 +323,7 @@ This error occurs if:
 
 ## `invalid_document_geo_field`
 
-The provided `_geo` field of one or more documents is invalid. Meilisearch expects `_geo` to be an object with two fields, `lat` and `lng`, each containing geographic coordinates expressed as a string or floating point number. Read more about `_geo` and how to troubleshoot it in [our dedicated guide](/capabilities/geo_search/getting_started).
+The provided `_geo` field of one or more documents is invalid. Meilisearch expects `_geo` to be an object with two fields, `lat` and `lng`, each containing geographic coordinates expressed as a string or floating-point number. Read more about `_geo` and how to troubleshoot it in [our dedicated guide](/capabilities/geo_search/getting_started).
 
 ## `invalid_document_geojson_field`
 
@@ -407,6 +407,10 @@ The [`offset`](/reference/api/search-rules/list-search-rules#body-offset) parame
 
 The [`precedence`](/reference/api/search-rules/create-or-update-a-search-rule#body-precedence-one-of-0) parameter is invalid. It should be a positive number
 
+## `invalid_dynamic_search_rule_uid`
+
+The [`uid`](/reference/api/search-rules/create-or-update-a-search-rule#parameter-uid) path parameter is invalid.
+
 ## `invalid_export_api_key`
 
 The supplied security key does not have the required permissions to access the target instance.
@@ -468,7 +472,7 @@ Invalid [`filter.attributePatterns`](/reference/api/indexes/list-index-fields#bo
 
 ## `invalid_index_fields_filter_displayed`
 
-Invalid [`filter.displayed](/reference/api/indexes/list-index-fields#body-filter-one-of-1-displayed-one-of-0) parameter. It should be a boolean.
+Invalid [`filter.displayed`](/reference/api/indexes/list-index-fields#body-filter-one-of-1-displayed-one-of-0) parameter. It should be a boolean.
 
 ## `invalid_index_fields_filter_distinct`
 
@@ -484,7 +488,7 @@ Invalid [`filter.rankingRule`](/reference/api/indexes/list-index-fields#body-fil
 
 ## `invalid_index_fields_filter_searchable`
 
-Invalid [`filter.searchable](/reference/api/indexes/list-index-fields#body-filter-one-of-1-searchable-one-of-0) parameter. It should be a boolean.
+Invalid [`filter.searchable`](/reference/api/indexes/list-index-fields#body-filter-one-of-1-searchable-one-of-0) parameter. It should be a boolean.
 
 ## `invalid_index_fields_filter_sortable`
 
@@ -508,7 +512,7 @@ There is an error in the provided index format, check out our guide on [index cr
 
 ## `invalid_multi_search_distinct`
 
-This error occurs when both `federation.distinct` and `distinct` inside of a queries are specified. Remove one of these parameters
+This error occurs when both `federation.distinct` and the `distinct` parameter of a query are specified. Remove one of these parameters.
 
 ## `invalid_multi_search_facet_order`
 
@@ -711,7 +715,7 @@ The value passed to [`media`](/reference/api/search/search-with-post#body-media)
 
 ## `invalid_search_media_and_vector`
 
-The search query contains non-`null` values for both [`media`](/reference/api/search/search-with-post#body-media) and [`vector`](/reference/api/search/search-with-post#body-media). These two parameters are mutually exclusive, since `media` generates vector embeddings via the embedder configured in `hybrid`.
+The search query contains non-`null` values for both [`media`](/reference/api/search/search-with-post#body-media) and [`vector`](/reference/api/search/search-with-post#body-vector-one-of-0). These two parameters are mutually exclusive, since `media` generates vector embeddings via the embedder configured in `hybrid`.
 
 ## `invalid_search_offset`
 
@@ -832,7 +836,7 @@ The [`prefixSearch`](/reference/api/settings/get-prefixsearch) index setting val
 
 ## `invalid_settings_proximity_precision`
 
-[`proximityPrecision`](/reference/api/settings/update-proximityprecision#update-proximityprecision) does not have one of allowed values
+[`proximityPrecision`](/reference/api/settings/update-proximityprecision#update-proximityprecision) does not have one of the allowed values.
 
 ## `invalid_settings_ranking_rules`
 

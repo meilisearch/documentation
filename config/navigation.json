@@ -557,6 +557,10 @@
               ]
             },
             {
+              "group": "MCP",
+              "pages": ["POST /mcp"]
+            },
+            {
               "group": "Chats",
               "pages": [
                 "GET /chats",
@@ -566,12 +570,6 @@
                 "GET /chats/{workspace_uid}/settings",
                 "PATCH /chats/{workspace_uid}/settings",
                 "DELETE /chats/{workspace_uid}/settings"
-              ]
-            },
-            {
-              "group": "MCP",
-              "pages": [
-                "POST /mcp"
               ]
             },
             {
@@ -1016,11 +1014,16 @@
           "group": "Demos",
           "pages": [
             "resources/demos/overview",
+            "resources/demos/agentic_movie_search",
+            "resources/demos/talk_with_lex",
+            "resources/demos/judilibre",
+            "resources/demos/paperscope",
             "resources/demos/where_to_watch",
             "resources/demos/home_booking",
             "resources/demos/ecommerce",
             "resources/demos/saas",
             "resources/demos/flickr",
+            "resources/demos/hackersearch",
             "resources/demos/personalized_search",
             "resources/demos/playground",
             "resources/demos/music",
