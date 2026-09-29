@@ -1774,8 +1774,6 @@ mcp_1: |-
     -H 'Authorization: Bearer API_KEY' \
     -H 'Content-Type: application/json' \
     -H 'Accept: application/json, text/event-stream' \
-    -H 'MCP-Protocol-Version: 2026-07-28' \
-    -H 'Mcp-Method: server/discover' \
     --data-binary '{
       "jsonrpc": "2.0",
       "id": 1,
@@ -1783,7 +1781,10 @@ mcp_1: |-
       "params": {
         "_meta": {
           "io.modelcontextprotocol/protocolVersion": "2026-07-28",
-          "io.modelcontextprotocol/clientCapabilities": {}
+          "io.modelcontextprotocol/clientInfo": {
+            "name": "ExampleClient",
+            "version": "1.0.0"
+          }
         }
       }
     }'
