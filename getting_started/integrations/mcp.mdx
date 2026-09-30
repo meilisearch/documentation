@@ -12,7 +12,7 @@ The server exposes four read-only, search-focused tools: `listIndexes`, `describ
 
 - A Meilisearch project running v1.54 or later
 - Your project's host URL and an [API key with the permissions below](#create-an-api-key-for-mcp)
-- An MCP client that supports remote HTTP servers, such as Claude Code, Codex, or Cursor
+- An MCP client that supports remote HTTP servers, such as Claude Code or the ChatGPT desktop app
 
 ## Enable the MCP route
 
@@ -45,7 +45,10 @@ claude mcp add --transport http meilisearch https://your-host/mcp \
   --header "Authorization: Bearer YOUR_API_KEY"
 ```
 
-```toml Codex
+```toml ChatGPT desktop
+[features]
+mcp_2026_07_28 = true
+
 [mcp_servers.meilisearch]
 url = "https://your-host/mcp"
 http_headers = { "Authorization" = "Bearer YOUR_API_KEY" }
@@ -53,7 +56,13 @@ http_headers = { "Authorization" = "Bearer YOUR_API_KEY" }
 
 </CodeGroup>
 
-See the [Claude Code](https://code.claude.com/docs/en/mcp-servers) and [Codex](https://developers.openai.com/codex/config-reference) documentation for more information on how to configure MCP servers with custom headers.
+<Warning>
+For ChatGPT and Codex, only the desktop app works.
+
+Meilisearch uses MCP protocol version `2026-07-28`. Enable that version by setting `mcp_2026_07_28 = true` under `[features]` in `~/.codex/config.toml`, as shown in the ChatGPT desktop example. This flag is an [experimental workaround](https://github.com/openai/codex/issues/33952#issuecomment-5729806585). Restart the desktop app after you save the file.
+</Warning>
+
+See the [Claude Code](https://code.claude.com/docs/en/mcp-servers) and [Codex](https://developers.openai.com/codex/mcp) documentation for more information on how to configure MCP servers with custom headers.
 
 ## Available tools
 
@@ -82,6 +91,7 @@ If your MCP client can't connect or calls fail:
 - Confirm the client sends your API key in an `Authorization: Bearer` header. A missing header returns [`missing_authorization_header`](/reference/errors/error_codes#missing_authorization_header)
 - Confirm the key has `search`, `documents.get`, and `indexes.get` on the indexes you're querying. A call that fails a permission check returns a JSON-RPC error
 - Confirm your client supports remote MCP servers over HTTP, rather than only local stdio servers
+- For ChatGPT or Codex, use the desktop app and set `mcp_2026_07_28 = true` in `~/.codex/config.toml`
 - Check your client's own logs for the raw error returned by the `/mcp` route
 
 ## Legacy `meilisearch-mcp` server
