@@ -91,7 +91,6 @@ If your MCP client can't connect or calls fail:
 - Confirm the client sends your API key in an `Authorization: Bearer` header. A missing header returns [`missing_authorization_header`](/reference/errors/error_codes#missing_authorization_header)
 - Confirm the key has `search`, `documents.get`, and `indexes.get` on the indexes you're querying. A call that fails a permission check returns a JSON-RPC error
 - Confirm your client supports remote MCP servers over HTTP, rather than only local stdio servers
-- Set `mcp_2026_07_28 = true` in `~/.codex/config.toml`. Use the ChatGPT desktop app, or Codex CLI 0.147.0 and later. Restart the app after updating settings.
 - Check your client's own logs for the raw error returned by the `/mcp` route
 
 ## Legacy `meilisearch-mcp` server
