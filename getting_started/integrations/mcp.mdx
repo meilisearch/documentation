@@ -4,7 +4,7 @@ sidebarTitle: MCP
 description: Search Meilisearch indexes from AI agents and LLM clients using the built-in MCP server.
 ---
 
-The [Model Context Protocol](https://modelcontextprotocol.io/) (MCP) lets AI agents and LLM clients call external tools. Meilisearch ships a native MCP server at the [`POST /mcp`](/reference/api/mcp/model-context-protocol-mcp) route so any MCP-compatible client can search your indexes directly.
+The [Model Context Protocol](https://modelcontextprotocol.io/) (MCP) lets AI agents and LLM clients call external tools. Meilisearch ships a native MCP server at the [`POST /mcp`](/reference/api/mcp-connection/model-context-protocol-mcp) route so any MCP-compatible client can search your indexes directly.
 
 The server exposes four read-only, search-focused tools: `listIndexes`, `describeIndex`, `searchInIndexes`, and `facetSearch`.
 
@@ -12,7 +12,7 @@ The server exposes four read-only, search-focused tools: `listIndexes`, `describ
 
 - A Meilisearch project running v1.54 or later
 - Your project's host URL and an [API key with the permissions below](#create-an-api-key-for-mcp)
-- An MCP client that supports remote HTTP servers, such as Claude Code, Codex, or Cursor
+- An MCP client that supports MCP protocol version `2026-07-28`
 
 ## Enable the MCP route
 
@@ -46,6 +46,9 @@ claude mcp add --transport http meilisearch https://your-host/mcp \
 ```
 
 ```toml Codex
+[features]
+mcp_2026_07_28 = true
+
 [mcp_servers.meilisearch]
 url = "https://your-host/mcp"
 http_headers = { "Authorization" = "Bearer YOUR_API_KEY" }
@@ -53,7 +56,13 @@ http_headers = { "Authorization" = "Bearer YOUR_API_KEY" }
 
 </CodeGroup>
 
-See the [Claude Code](https://code.claude.com/docs/en/mcp-servers) and [Codex](https://developers.openai.com/codex/config-reference) documentation for more information on how to configure MCP servers with custom headers.
+<Warning>
+For ChatGPT, only the desktop app and Codex CLI work.
+
+Meilisearch uses MCP protocol version `2026-07-28`. Enable that version by setting `mcp_2026_07_28 = true` under `[features]` in `~/.codex/config.toml`, as shown in the Codex example. This flag is an [experimental workaround](https://github.com/openai/codex/issues/33952#issuecomment-5729806585). Restart the ChatGPT desktop app after you save the file. Quit Codex CLI and start it again.
+</Warning>
+
+See the [Claude Code](https://code.claude.com/docs/en/mcp-servers) and [Codex](https://developers.openai.com/codex/mcp) documentation for more information on how to configure MCP servers with custom headers.
 
 ## Available tools
 
