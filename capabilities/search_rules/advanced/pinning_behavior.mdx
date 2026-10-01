@@ -10,6 +10,8 @@ This page explains how search rules interact with ranking, filters, matching, an
 
 Pinning does not rewrite your ranking rules and does not assign scores to pinned documents. Meilisearch computes organic results first, then inserts the surviving pinned documents at their requested positions. Organic ranking still decides the order of every non-pinned hit.
 
+Scale actions, available as of v1.54, adjust the relevance scores of matching documents without inserting them at a fixed position.
+
 ## Pinned documents do not need to match the query text
 
 A pinned document can appear even when it is not a lexical match for the query. If the rule matches, the document exists, and it passes filters, Meilisearch inserts it into the result list.
