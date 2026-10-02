@@ -112,6 +112,142 @@ paths:
                   properties:
                     name:
                       type: string
+    delete:
+      summary: Deletes an organization
+      tags:
+        - Organizations
+      security:
+        - personal_access_token: []
+      responses:
+        '204':
+          description: organization deleted
+        '403':
+          description: not the organization owner
+        '422':
+          description: organization still has active projects
+  /api/v2/projects:
+    get:
+      summary: Lists the projects of the accessible teams
+      tags:
+        - Projects
+      security:
+        - personal_access_token: []
+      parameters:
+        - name: team_id
+          in: query
+          required: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: projects list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Project'
+        '401':
+          description: unauthorized
+    post:
+      summary: Creates a project in a team
+      tags:
+        - Projects
+      security:
+        - personal_access_token: []
+      parameters: []
+      responses:
+        '201':
+          description: project created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+        '403':
+          description: team not accessible
+        '422':
+          description: invalid project attributes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - project
+              properties:
+                project:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    team_id:
+                      type: integer
+                    resource_id:
+                      type: integer
+  /api/v2/projects/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+    get:
+      summary: Retrieves a project
+      tags:
+        - Projects
+      security:
+        - personal_access_token: []
+      responses:
+        '200':
+          description: project found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+        '403':
+          description: project not accessible
+    patch:
+      summary: Updates a project
+      tags:
+        - Projects
+      security:
+        - personal_access_token: []
+      parameters: []
+      responses:
+        '200':
+          description: project updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+        '403':
+          description: project not accessible
+        '422':
+          description: invalid project attributes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - project
+              properties:
+                project:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+    delete:
+      summary: Deletes a project
+      tags:
+        - Projects
+      security:
+        - personal_access_token: []
+      responses:
+        '204':
+          description: project deleted
+        '403':
+          description: project not accessible
   /api/v2/regions:
     get:
       summary: Lists the active regions
@@ -334,6 +470,19 @@ paths:
                     owner_id:
                       type: string
                       description: New owner's uuid, must already be a team member
+    delete:
+      summary: Deletes a team
+      tags:
+        - Teams
+      security:
+        - personal_access_token: []
+      responses:
+        '204':
+          description: team deleted
+        '403':
+          description: not the team or organization owner
+        '422':
+          description: team still has active projects
 components:
   securitySchemes:
     personal_access_token:
@@ -525,6 +674,64 @@ components:
         - name
         - tag
         - latest
+    Project:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        project_uid:
+          type: string
+        url:
+          type: string
+          nullable: true
+        apikey:
+          type: string
+        team_id:
+          type: integer
+        resource_id:
+          type: integer
+        ms_version:
+          type: string
+        workload_type:
+          type: string
+          enum:
+            - production
+            - dev
+        read_only:
+          type: boolean
+        status:
+          type: string
+        paused:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+        terminated_at:
+          type: string
+          format: date-time
+          nullable: true
+        free_trial_ends_at:
+          type: string
+          format: date-time
+          nullable: true
+        resource:
+          $ref: '#/components/schemas/Resource'
+      required:
+        - id
+        - name
+        - project_uid
+        - apikey
+        - team_id
+        - resource_id
+        - ms_version
+        - workload_type
+        - read_only
+        - status
+        - paused
+        - created_at
+        - resource
 security:
   - personal_access_token: []
 servers:
