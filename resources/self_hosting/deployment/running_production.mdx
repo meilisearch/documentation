@@ -44,6 +44,30 @@ Next, you need to make the binary accessible from anywhere in your system. Move 
 mv ./meilisearch /usr/local/bin/
 ```
 
+<Note>
+**SELinux systems: Fedora, RHEL, Rocky Linux, AlmaLinux, and CentOS Stream**
+
+`mv` preserves the binary's original SELinux context instead of relabeling it for its new location, so the file in `/usr/local/bin` keeps the context of the directory you downloaded it into. If SELinux runs in enforcing mode, this prevents systemd from running it in [step 4](#step-4-run-meilisearch-as-a-service), which fails with `Failed at step EXEC spawning /usr/local/bin/meilisearch: Permission denied`.
+
+Restore the default context of the binary:
+
+```sh
+sudo restorecon -v /usr/local/bin/meilisearch
+```
+
+Then check the resulting label:
+
+```sh
+ls -Z /usr/local/bin/meilisearch
+```
+
+The type must be `bin_t`:
+
+```
+unconfined_u:object_r:bin_t:s0 /usr/local/bin/meilisearch
+```
+</Note>
+
 Meilisearch is now installed in your system, but it is not publicly accessible.
 
 ## Step 2: Create system user
