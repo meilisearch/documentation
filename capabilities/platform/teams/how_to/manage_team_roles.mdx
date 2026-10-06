@@ -17,8 +17,9 @@ The team owner has full administrative control:
 - Change team member roles
 - Rename the team
 - Transfer team ownership
+- [Delete the team](#delete-a-team)
 
-A team may only have one owner at a time.
+A team may only have one owner at a time. The organization owner can also delete any team in the organization.
 
 ### Member
 
@@ -29,7 +30,7 @@ Team members have operational access:
 - View project settings and [API keys](/capabilities/security/how_to/manage_api_keys)
 - Access project metrics and logs
 
-Members cannot modify billing information, delete projects, or manage team membership.
+Members cannot modify billing information, delete projects, manage team membership, or delete the team.
 
 ## Transfer team ownership
 
@@ -41,6 +42,16 @@ To transfer ownership to another team member:
 4. Click **Transfer ownership**
 
 This action transfers your owner privileges to the selected member. You become a regular member of the team. This action cannot be undone without the new owner's cooperation.
+
+## Delete a team
+
+The team owner or the organization owner can delete a team. A team can only be deleted if all of the following are true:
+
+- It has no active projects.
+- It has no active add-ons.
+- It is not the last team in the organization.
+
+Deleting a team hides it from the dashboard and cancels its pending invitations.
 
 ## Role inheritance for projects
 
